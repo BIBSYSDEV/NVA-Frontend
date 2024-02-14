@@ -22,7 +22,7 @@ import { ExportResultsButton } from '../ExportResultsButton';
 import { SearchPageProps } from '../SearchPage';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
-import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
+import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 
 const facetParams: string[] = [
   ResultParam.Category,
@@ -42,6 +42,15 @@ interface SelectedFacet {
   param: string;
   value: string;
 }
+interface SearchTermProperties {
+  searchTerm: string;
+  properties: SearchTermProperty[];
+}
+
+interface SearchTermProperty {
+  fieldName: ResultParam;
+  value: string;
+}
 
 export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -58,12 +67,9 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
     }
   });
 
-  const initialSearchParams = createSearchConfigFromSearchParams(searchParams);
+  const initialSearchParams: SearchTermProperties = createSearchConfigFromSearchParams(searchParams);
 
-  function processSearchParamProperties(
-    values: { searchTerm: string; properties: { fieldName: ResultParam; value: string }[] },
-    searchParam: ResultParam
-  ) {
+  function processSearchParamProperties(values: SearchTermProperties, searchParam: ResultParam) {
     const paramValues =
       values.properties
         ?.filter((property) => property.fieldName === searchParam && property.value)
