@@ -5,6 +5,7 @@ import { Organization } from '../../../types/organization.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { useEffect, useState } from 'react';
+import { getUnitTopLevelCode } from '../../../utils/institutions-helpers';
 
 interface CustomerInstitutionInformationFromCristinProps {
   cristinId: string | undefined;
@@ -19,7 +20,7 @@ export const CustomerInstitutionInformationFromCristin = ({
   setName,
   displayName,
 }: CustomerInstitutionInformationFromCristinProps) => {
-  const [topLevelCristinCode, setTopLevelCristinCode] = useState<string>();
+  const [topLevelCristinCode, setTopLevelCristinCode] = useState<string | null>();
   const customerInformationFromCristinQuery = useQuery({
     queryKey: ['organization', cristinId, customerData],
     enabled: !!cristinId,
@@ -31,15 +32,7 @@ export const CustomerInstitutionInformationFromCristin = ({
   });
 
   useEffect(() => {
-    const snipToplevelOrganization = (cristinId: string) => {
-      const cristinOrg = cristinId.replace('https://api.dev.nva.aws.unit.no/cristin/organization/', '');
-      return cristinOrg.replace('.0.0.0', '');
-    };
-
-    const extractInstitutionTopLevelCode = (cristinId: string | undefined) => {
-      return cristinId ? snipToplevelOrganization(cristinId) : undefined;
-    };
-    setTopLevelCristinCode(extractInstitutionTopLevelCode(cristinId));
+    setTopLevelCristinCode(getUnitTopLevelCode(cristinId));
   }, [cristinId]);
 
   const customerInformation = customerData ?? customerInformationFromCristinQuery.data;
