@@ -35,62 +35,64 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   return (
-    <TableContainer component={Paper} elevation={3}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>{t('common.financier')}</TableCell>
-            <TableCell>{t('registration.description.funding.funding_name')}</TableCell>
-            <TableCell>{t('registration.description.funding.funding_id')}</TableCell>
-            <TableCell>{t('registration.description.funding.funding_sum')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {fundings.map((funding) => (
-            <TableRow key={funding.source + funding.identifier}>
-              <TableCell>
-                {fundingSourcesQuery.isLoading ? (
-                  <Skeleton />
-                ) : (
-                  <Typography>
-                    {getLanguageString(
-                      fundingSourcesList?.find((fundingSource) => fundingSource.id === funding.source)?.name
-                    )}
-                  </Typography>
-                )}
-              </TableCell>
-              <TableCell>
-                <Typography>{getLanguageString(funding.labels)}</Typography>
-              </TableCell>
-              <TableCell>
-                {fundingSourceIsNfr(funding.source) && funding.identifier ? (
-                  <Link
-                    href={getNfrProjectUrl(funding.identifier)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.25rem',
-                    }}>
-                    {funding.identifier}
-                    <OpenInNewIcon />
-                  </Link>
-                ) : (
-                  <Typography>{funding.identifier}</Typography>
-                )}
-              </TableCell>
-              <TableCell>
-                {!fundingSourceIsNfr(funding.source) && (
-                  <Typography>
-                    {funding.fundingAmount?.amount} {funding.fundingAmount?.currency}
-                  </Typography>
-                )}
-              </TableCell>
+    <div style={{ display: 'grid' }}>
+      <TableContainer component={Paper} elevation={3} sx={{ overflowX: 'auto' }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>{t('common.financier')}</TableCell>
+              <TableCell>{t('registration.description.funding.funding_name')}</TableCell>
+              <TableCell>{t('registration.description.funding.funding_id')}</TableCell>
+              <TableCell>{t('registration.description.funding.funding_sum')}</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {fundings.map((funding) => (
+              <TableRow key={funding.source + funding.identifier}>
+                <TableCell>
+                  {fundingSourcesQuery.isLoading ? (
+                    <Skeleton />
+                  ) : (
+                    <Typography>
+                      {getLanguageString(
+                        fundingSourcesList?.find((fundingSource) => fundingSource.id === funding.source)?.name
+                      )}
+                    </Typography>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <Typography>{getLanguageString(funding.labels)}</Typography>
+                </TableCell>
+                <TableCell>
+                  {fundingSourceIsNfr(funding.source) && funding.identifier ? (
+                    <Link
+                      href={getNfrProjectUrl(funding.identifier)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.25rem',
+                      }}>
+                      {funding.identifier}
+                      <OpenInNewIcon />
+                    </Link>
+                  ) : (
+                    <Typography>{funding.identifier}</Typography>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {!fundingSourceIsNfr(funding.source) && (
+                    <Typography>
+                      {funding.fundingAmount?.amount} {funding.fundingAmount?.currency}
+                    </Typography>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
