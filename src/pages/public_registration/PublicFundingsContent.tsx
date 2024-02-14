@@ -35,8 +35,8 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   return (
-    <div style={{ display: 'grid' }}>
-      <TableContainer component={Paper} elevation={3} sx={{ overflowX: 'auto' }}>
+    <div style={{ display: 'grid' }} /* To avoid un-managed overflow on small screens */>
+      <TableContainer component={Paper} elevation={3}>
         <Table>
           <TableHead>
             <TableRow>
