@@ -628,7 +628,9 @@
         "DoiRequest": "DOI",
         "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publisering"
-      }
+      },
+      "x_files_publised_one": "{{count}} fil publisert",
+      "x_files_publised_other": "{{count}} filer publisert"
     },
     "my_page": "Min side",
     "my_profile": {

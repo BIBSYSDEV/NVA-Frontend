@@ -33,7 +33,10 @@ import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { PublishingRequestMessagesColumn } from '../../messages/components/PublishingRequestMessagesColumn';
+import {
+  CompletedPublishingRequestStatusBox,
+  StyledStatusMessageBox,
+} from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { TicketAssignee } from './TicketAssignee';
 
@@ -67,9 +70,9 @@ export const PublishingAccordion = ({
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
-
   const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
   const publishingRequestTicket = [...publishingRequestTickets].pop();
+  const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
 
   const ticketMutation = useMutation({
     mutationFn: publishingRequestTicket
@@ -195,7 +198,20 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {publishingRequestTicket && <PublishingRequestMessagesColumn ticket={publishingRequestTicket} />}
+        {/* Show approval history */}
+        {registration.status === RegistrationStatus.Published && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+              <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
+              {registration.publishedDate && (
+                <Typography>{new Date(registration.publishedDate).toLocaleDateString()}</Typography>
+              )}
+            </StyledStatusMessageBox>
+            {completedTickets.map((ticket) => (
+              <CompletedPublishingRequestStatusBox ticket={ticket} />
+            ))}
+          </Box>
+        )}
 
         {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
