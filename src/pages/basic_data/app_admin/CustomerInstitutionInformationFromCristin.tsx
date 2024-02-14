@@ -47,11 +47,11 @@ export const CustomerInstitutionInformationFromCristin = ({
     <Grid aria-live="polite" aria-busy={customerInformationFromCristinQuery.isFetching} container spacing={2}>
       {!customerInformation && customerInformationFromCristinQuery.isFetching ? (
         <Grid item xs={12}>
-          <PageSpinner />
+          <PageSpinner aria-label={t('basic_data.institutions.loading_institution_information')} />
         </Grid>
       ) : (
         <>
-          <Grid aria-live="polite" aria-busy={customerInformationFromCristinQuery.isFetching} item xs={12} md={3}>
+          <Grid item xs={12} md={3}>
             <TextField
               label={t('basic_data.institutions.institution_norwegian_name')}
               fullWidth
@@ -60,7 +60,7 @@ export const CustomerInstitutionInformationFromCristin = ({
               variant="filled"
             />
           </Grid>
-          <Grid aria-live="polite" aria-busy={customerInformationFromCristinQuery.isFetching} item xs={12} md={3}>
+          <Grid item xs={12} md={3}>
             <TextField
               label={t('basic_data.institutions.institution_english_name')}
               fullWidth
@@ -69,7 +69,7 @@ export const CustomerInstitutionInformationFromCristin = ({
               variant="filled"
             />
           </Grid>
-          <Grid aria-live="polite" aria-busy={customerInformationFromCristinQuery.isFetching} item xs={12} md={3}>
+          <Grid item xs={12} md={3}>
             <TextField
               disabled
               fullWidth
@@ -78,7 +78,7 @@ export const CustomerInstitutionInformationFromCristin = ({
               label={t('basic_data.institutions.short_name')}
             />
           </Grid>
-          <Grid aria-live="polite" aria-busy={customerInformationFromCristinQuery.isFetching} item xs={12} md={3}>
+          <Grid item xs={12} md={3}>
             <TextField
               disabled
               fullWidth

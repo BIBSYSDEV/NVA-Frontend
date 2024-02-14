@@ -160,8 +160,8 @@ export const CustomerInstitutionMetadataForm = ({
                       fullWidth
                       required
                       variant="filled"
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
+                      labelId="sector-select-label"
+                      id="sector-select"
                       value={field.value}
                       onChange={(sector) => setFieldValue(field.name, sector.target.value)}>
                       {Object.values(Sector).map((sector) => (
