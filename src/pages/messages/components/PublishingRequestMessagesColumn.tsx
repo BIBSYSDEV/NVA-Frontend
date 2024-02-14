@@ -42,12 +42,14 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
           {registrationHasFiles &&
             (ticket.status === 'Pending' || ticket.status === 'New' ? (
               <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-                <Typography>{t('registration.files_and_license.files_awaits_approval_unknown')}</Typography>
+                <Typography>
+                  {t('registration.files_and_license.files_awaits_approval_unknown')} {ticket.filesForApproval.length}
+                </Typography>
               </StyledStatusMessageBox>
             ) : (
               <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
                 {ticket.status === 'Completed' ? (
-                  <Typography>{t('my_page.messages.files_published')}</Typography>
+                  <Typography>{t('my_page.messages.files_published_unknown')}</Typography>
                 ) : (
                   ticket.status === 'Closed' && <Typography>{t('my_page.messages.files_rejected')}</Typography>
                 )}
@@ -63,13 +65,13 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
 export const CompletedPublishingRequestStatusBox = ({ ticket }: { ticket: PublishingTicket }) => {
   const { t } = useTranslation();
 
-  if (ticket.status !== 'Completed') {
+  if (ticket.status !== 'Completed' || !ticket.approvedFiles || ticket.approvedFiles.length === 0) {
     return null;
   }
 
   return (
     <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-      <Typography>{t('my_page.messages.x_files_publised', { count: ticket.approvedFiles.length })}</Typography>
+      <Typography>{t('my_page.messages.files_published', { count: ticket.approvedFiles.length })}</Typography>
       <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>
     </StyledStatusMessageBox>
   );
