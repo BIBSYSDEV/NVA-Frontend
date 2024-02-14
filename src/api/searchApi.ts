@@ -143,7 +143,7 @@ export enum ResultParam {
   CategoryShould = 'categoryShould',
   Contributor = 'contributor',
   ContributorName = 'contributorName',
-  CourseCode = 'courseCode',
+  Course = 'course',
   CristinId = 'cristinId',
   Doi = 'doi',
   From = 'from',
@@ -176,7 +176,7 @@ export interface FetchResultsParams {
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
-  [ResultParam.CourseCode]?: string | null;
+  [ResultParam.Course]?: string | null;
   [ResultParam.CristinId]?: string | null;
   [ResultParam.Doi]?: string | null;
   [ResultParam.From]?: number | null;
@@ -227,8 +227,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.contributorName) {
     searchParams.set(ResultParam.ContributorName, params.contributorName);
   }
-  if (params.courseCode) {
-    searchParams.set(ResultParam.CourseCode, params.courseCode);
+  if (params.course) {
+    searchParams.set(ResultParam.Course, params.course);
   }
   if (params.cristinId) {
     searchParams.set(ResultParam.CristinId, params.cristinId);

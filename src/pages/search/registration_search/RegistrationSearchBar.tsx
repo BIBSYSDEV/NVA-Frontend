@@ -27,7 +27,7 @@ import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
-  ResultParam.CourseCode,
+  ResultParam.Course,
   ResultParam.CristinId,
   ResultParam.Doi,
   ResultParam.GrantId,
@@ -105,7 +105,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         processSearchParamProperties(values, ResultParam.Doi);
         processSearchParamProperties(values, ResultParam.Handle);
         processSearchParamProperties(values, ResultParam.GrantId);
-        processSearchParamProperties(values, ResultParam.CourseCode);
+        processSearchParamProperties(values, ResultParam.Course);
         processSearchParamProperties(values, ResultParam.CristinId);
 
         history.push({ search: searchParams.toString() });

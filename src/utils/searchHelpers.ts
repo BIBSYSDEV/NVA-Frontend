@@ -27,7 +27,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const doiParams = params.get(ResultParam.Doi)?.split(',') ?? [];
   const handleParams = params.get(ResultParam.Handle)?.split(',') ?? [];
   const grantIdParams = params.get(ResultParam.GrantId)?.split(',') ?? [];
-  const courseCodeParams = params.get(ResultParam.CourseCode)?.split(',') ?? [];
+  const courseParams = params.get(ResultParam.Course)?.split(',') ?? [];
   const cristinIdParams = params.get(ResultParam.CristinId)?.split(',') ?? [];
 
   const titleFilters = titleParams.map((title) => ({
@@ -75,9 +75,9 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     value: grantId,
   }));
 
-  const courseCodeFilters = courseCodeParams.map((courseCode) => ({
-    fieldName: ResultParam.CourseCode,
-    value: courseCode,
+  const courseFilters = courseParams.map((course) => ({
+    fieldName: ResultParam.Course,
+    value: course,
   }));
 
   const cristinIdFilters = cristinIdParams.map((cristinId) => ({
@@ -95,7 +95,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     ...doiFilters,
     ...handleFilters,
     ...grantIdFilters,
-    ...courseCodeFilters,
+    ...courseFilters,
     ...cristinIdFilters,
   ];
 

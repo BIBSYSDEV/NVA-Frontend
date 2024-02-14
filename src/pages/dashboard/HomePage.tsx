@@ -62,7 +62,7 @@ const HomePage = () => {
     category: params.get(ResultParam.Category) as PublicationInstanceType | null,
     contributor: params.get(ResultParam.Contributor),
     contributorName: params.get(ResultParam.ContributorName),
-    courseCode: params.get(ResultParam.CourseCode),
+    course: params.get(ResultParam.Course),
     cristinId: params.get(ResultParam.CristinId),
     doi: params.get(ResultParam.Doi),
     from: Number(params.get(ResultParam.From) ?? 0),
