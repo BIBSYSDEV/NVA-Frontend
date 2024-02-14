@@ -50,18 +50,3 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
     </StyledMessagesContainer>
   );
 };
-
-export const CompletedPublishingRequestStatusBox = ({ ticket }: { ticket: PublishingTicket }) => {
-  const { t } = useTranslation();
-
-  if (ticket.status !== 'Completed' || ticket.approvedFiles.length === 0) {
-    return null;
-  }
-
-  return (
-    <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-      <Typography>{t('my_page.messages.files_published', { count: ticket.approvedFiles.length })}</Typography>
-      <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>
-    </StyledStatusMessageBox>
-  );
-};

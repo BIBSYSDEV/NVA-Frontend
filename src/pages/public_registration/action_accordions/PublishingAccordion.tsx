@@ -33,11 +33,9 @@ import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import {
-  CompletedPublishingRequestStatusBox,
-  StyledStatusMessageBox,
-} from '../../messages/components/PublishingRequestMessagesColumn';
+import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
+import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
