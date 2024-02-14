@@ -19,7 +19,7 @@ const registrationFilters: FilterItem[] = [
   { field: ResultParam.Issn, i18nKey: 'registration.resource_type.issn' },
   { field: ResultParam.Doi, i18nKey: 'common.doi' },
   { field: ResultParam.Handle, i18nKey: 'registration.public_page.handle' },
-  // { field: ResultParam.GrantId, i18nKey: 'project.grant_id' }, // TODO: Uncomment when implemented in api-search
+  { field: ResultParam.FundingSource, i18nKey: 'project.grant_id' },
   { field: ResultParam.Course, i18nKey: 'registration.resource_type.course_code' },
   // { field: ResultParam.CristinId, i18nKey: 'registration.public_page.cristin_id' }, // TODO: Uncomment when implemented in api-search
 ];

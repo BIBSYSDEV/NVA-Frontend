@@ -68,7 +68,6 @@ const HomePage = () => {
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingSource: params.get(ResultParam.FundingSource),
     handle: params.get(ResultParam.Handle),
-    grantId: params.get(ResultParam.GrantId),
     isbn: params.get(ResultParam.Isbn),
     issn: params.get(ResultParam.Issn),
     order: params.get(ResultParam.Order),
