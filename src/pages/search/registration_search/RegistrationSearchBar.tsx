@@ -9,13 +9,11 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
-import { SortSelector } from '../../../components/SortSelector';
-import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
-  PropertySearch,
   createSearchConfigFromSearchParams,
+  PropertySearch,
   removeSearchParamValue,
 } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -24,17 +22,33 @@ import { ExportResultsButton } from '../ExportResultsButton';
 import { SearchPageProps } from '../SearchPage';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
-import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
+import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 
 const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
+  ResultParam.CourseCode,
+  ResultParam.CristinId,
+  ResultParam.Doi,
+  ResultParam.GrantId,
+  ResultParam.Handle,
+  ResultParam.Isbn,
+  ResultParam.Issn,
   ResultParam.TopLevelOrganization,
   ResultParam.FundingSource,
 ];
 
 interface SelectedFacet {
   param: string;
+  value: string;
+}
+interface SearchTermProperties {
+  searchTerm: string;
+  properties: SearchTermProperty[];
+}
+
+interface SearchTermProperty {
+  fieldName: ResultParam;
   value: string;
 }
 
@@ -53,7 +67,19 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
     }
   });
 
-  const initialSearchParams = createSearchConfigFromSearchParams(searchParams);
+  const initialSearchParams: SearchTermProperties = createSearchConfigFromSearchParams(searchParams);
+
+  function processSearchParamProperties(values: SearchTermProperties, searchParam: ResultParam) {
+    const paramValues =
+      values.properties
+        ?.filter((property) => property.fieldName === searchParam && property.value)
+        .map((property) => property.value) ?? [];
+    if (paramValues.length > 0) {
+      searchParams.set(searchParam, paramValues.join(','));
+    } else {
+      searchParams.delete(searchParam);
+    }
+  }
 
   return (
     <Formik
@@ -70,45 +96,17 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           searchParams.delete(ResultParam.Query);
         }
 
-        const contributorNames =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.ContributorName && property.value)
-            .map((property) => property.value) ?? [];
-        if (contributorNames.length > 0) {
-          searchParams.set(ResultParam.ContributorName, contributorNames.join(','));
-        } else {
-          searchParams.delete(ResultParam.ContributorName);
-        }
-
-        const title =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Title && property.value)
-            .map((property) => property.value) ?? [];
-        if (title.length > 0) {
-          searchParams.set(ResultParam.Title, title.join(','));
-        } else {
-          searchParams.delete(ResultParam.Title);
-        }
-
-        const abstracts =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Abstract && property.value)
-            .map((property) => property.value) ?? [];
-        if (abstracts.length > 0) {
-          searchParams.set(ResultParam.Abstract, abstracts.join(','));
-        } else {
-          searchParams.delete(ResultParam.Abstract);
-        }
-
-        const tags =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Tags && property.value)
-            .map((property) => property.value) ?? [];
-        if (tags.length > 0) {
-          searchParams.set(ResultParam.Tags, tags.join(','));
-        } else {
-          searchParams.delete(ResultParam.Tags);
-        }
+        processSearchParamProperties(values, ResultParam.ContributorName);
+        processSearchParamProperties(values, ResultParam.Title);
+        processSearchParamProperties(values, ResultParam.Abstract);
+        processSearchParamProperties(values, ResultParam.Tags);
+        processSearchParamProperties(values, ResultParam.Isbn);
+        processSearchParamProperties(values, ResultParam.Issn);
+        processSearchParamProperties(values, ResultParam.Doi);
+        processSearchParamProperties(values, ResultParam.Handle);
+        processSearchParamProperties(values, ResultParam.GrantId);
+        processSearchParamProperties(values, ResultParam.CourseCode);
+        processSearchParamProperties(values, ResultParam.CristinId);
 
         history.push({ search: searchParams.toString() });
       }}>
@@ -141,28 +139,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                 />
               )}
             </Field>
-
-            <SortSelector
-              sortKey="sort"
-              orderKey="order"
-              options={[
-                {
-                  orderBy: RegistrationFieldName.ModifiedDate,
-                  sortOrder: 'desc',
-                  label: t('search.sort_by_modified_date'),
-                },
-                {
-                  orderBy: RegistrationFieldName.PublishedDate,
-                  sortOrder: 'desc',
-                  label: t('search.sort_by_published_date_desc'),
-                },
-                {
-                  orderBy: RegistrationFieldName.PublishedDate,
-                  sortOrder: 'asc',
-                  label: t('search.sort_by_published_date_asc'),
-                },
-              ]}
-            />
 
             <ExportResultsButton searchParams={searchParams} />
           </Box>

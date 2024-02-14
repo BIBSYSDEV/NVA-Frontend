@@ -1,19 +1,24 @@
-import { Box } from '@mui/material';
-import { ListPaginationCounter } from './ListPaginationCounter';
+import { Box, Typography } from '@mui/material';
+import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ListPaginationTopProps {
-  count: number;
-  rowsPerPage: number;
-  page: number;
+  pageCounterComponent: ReactNode;
+  sortingComponent?: ReactNode;
 }
 
-export const ListPaginationTop = ({ count, rowsPerPage, page }: ListPaginationTopProps) => {
-  const itemsStart = count > 0 ? (page - 1) * rowsPerPage + 1 : 0;
-  const itemsEnd = Math.min(page * rowsPerPage, count);
+export const ListPaginationTop = ({ pageCounterComponent, sortingComponent }: ListPaginationTopProps) => {
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'end', mx: { xs: '0.5rem', md: 0 } }}>
-      <ListPaginationCounter start={itemsStart} end={itemsEnd} total={count} />
+      {pageCounterComponent}
+      {sortingComponent && (
+        <Box sx={{ display: 'flex' }}>
+          <Typography>&nbsp;{t('search.sorted_by').toLowerCase()}&nbsp;</Typography>
+          {sortingComponent}
+        </Box>
+      )}
     </Box>
   );
 };

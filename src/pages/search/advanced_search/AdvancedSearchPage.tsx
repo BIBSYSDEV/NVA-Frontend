@@ -6,8 +6,6 @@ import { useLocation } from 'react-router-dom';
 import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
-import { SortSelector } from '../../../components/SortSelector';
-import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { ExportResultsButton } from '../ExportResultsButton';
@@ -41,6 +39,7 @@ export const AdvancedSearchPage = () => {
     results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
+    contributorName: params.get(ResultParam.ContributorName),
   };
 
   const resultSearchQuery = useQuery({
@@ -66,27 +65,6 @@ export const AdvancedSearchPage = () => {
             paramName={ResultParam.Title}
             placeholder={t('search.search_for_title')}
           />
-          <SortSelector
-            options={[
-              {
-                orderBy: RegistrationFieldName.ModifiedDate,
-                sortOrder: 'desc',
-                label: t('search.sort_by_modified_date'),
-              },
-              {
-                orderBy: RegistrationFieldName.PublishedDate,
-                sortOrder: 'desc',
-                label: t('search.sort_by_published_date_desc'),
-              },
-              {
-                orderBy: RegistrationFieldName.PublishedDate,
-                sortOrder: 'asc',
-                label: t('search.sort_by_published_date_asc'),
-              },
-            ]}
-            sortKey="sort"
-            orderKey="order"
-          />
           <ExportResultsButton searchParams={params} />
         </Box>
 
@@ -96,6 +74,10 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 

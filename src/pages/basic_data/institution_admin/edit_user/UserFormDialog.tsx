@@ -21,14 +21,14 @@ import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
-import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
+import { CristinPerson, Employment, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getValueByKey } from '../../../../utils/user-helpers';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
-import { TasksFormSection } from './TasksFormSection';
+import { TasksFormSection, rolesWithAreaOfResponsibility } from './TasksFormSection';
 
 export enum UserFormFieldName {
   Employments = 'person.employments',
@@ -68,9 +68,23 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     meta: { errorMessage: t('feedback.error.get_person') },
     initialData: existingPersonObject,
   });
+  const personEmployments = personQuery.data?.employments ?? [];
+
+  const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
+  const internalEmployments: Employment[] = [];
+  const externalEmployments: Employment[] = [];
+  const targetOrganizationIdStart = `${topOrgCristinIdentifier.split('.')[0]}.`;
+
+  personEmployments.forEach((employment) => {
+    const organizationIdentifier = employment.organization.split('/').pop();
+    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
+      internalEmployments.push(employment);
+    } else {
+      externalEmployments.push(employment);
+    }
+  });
 
   const personCristinIdentifier = getValueByKey('CristinIdentifier', personQuery.data?.identifiers);
-  const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
   const username =
     personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
 
@@ -119,7 +133,12 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   });
 
   const initialValues: UserFormData = {
-    person: personQuery.data,
+    person: personQuery.data
+      ? {
+          ...personQuery.data,
+          employments: internalEmployments,
+        }
+      : personQuery.data,
     user: institutionUserQuery.isError
       ? {
           institution: customerId,
@@ -151,7 +170,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
           }
         }}
         validationSchema={validationSchema}>
-        {({ isSubmitting, values }: FormikProps<UserFormData>) => (
+        {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => (
           <Form noValidate>
             <DialogContent sx={{ minHeight: '30vh' }}>
               {(!values.person && personQuery.isLoading) || (!values.user && institutionUserQuery.isLoading) ? (
@@ -165,13 +184,43 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                     gridTemplateColumns: { xs: '1fr', lg: '1fr auto 1fr auto 1fr auto 1fr' },
                     gap: '1rem',
                   }}>
-                  <PersonFormSection />
+                  <PersonFormSection externalEmployments={externalEmployments} />
                   <Divider orientation="vertical" />
                   <AffiliationFormSection />
                   <Divider orientation="vertical" />
-                  <RolesFormSection />
+                  <RolesFormSection
+                    personHasNin={!!values.person?.verified}
+                    roles={values.user?.roles.map((role) => role.rolename) ?? []}
+                    updateRoles={(newRoles) => {
+                      if (!newRoles.includes(RoleName.PublishingCurator)) {
+                        newRoles = newRoles.filter(
+                          (role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo
+                        );
+                      }
+
+                      const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
+
+                      setFieldValue(UserFormFieldName.Roles, newUserRoles);
+                      const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
+                      if (hasCuratorRole && !values.user?.viewingScope?.includedUnits.length && topOrgCristinId) {
+                        setFieldValue(UserFormFieldName.ViewingScope, [topOrgCristinId]);
+                      } else if (!hasCuratorRole) {
+                        setFieldValue(UserFormFieldName.ViewingScope, []);
+                      }
+                    }}
+                  />
                   <Divider orientation="vertical" />
-                  <TasksFormSection />
+                  <TasksFormSection
+                    roles={values.user?.roles.map((role) => role.rolename)}
+                    viewingScopes={values.user?.viewingScope?.includedUnits ?? []}
+                    updateViewingScopes={(newViewingScopes) =>
+                      setFieldValue(UserFormFieldName.ViewingScope, newViewingScopes)
+                    }
+                    updateRoles={(newRoles) => {
+                      const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
+                      setFieldValue(UserFormFieldName.Roles, newUserRoles);
+                    }}
+                  />
                 </Box>
               )}
             </DialogContent>

@@ -121,24 +121,28 @@ export const fetchPerson = async (personId: string) => {
 
 export interface PersonSearchParams {
   name?: string | null;
+  orderBy?: string | null;
   organization?: string | null;
   sector?: string | null;
+  sort?: string | null;
 }
 
 export enum PersonSearchParameter {
   Name = 'name',
+  OrderBy = 'orderBy',
   Organization = 'organizationFacet',
   Page = 'page',
   Results = 'results',
   Sector = 'sectorFacet',
+  Sort = 'sort',
 }
 
 export const searchForPerson = async (
   results: number,
   page: number,
-  { name, organization, sector }: PersonSearchParams
+  { name, orderBy, organization, sector, sort }: PersonSearchParams
 ) => {
-  const searchParams = new URLSearchParams({ sort: 'name' });
+  const searchParams = new URLSearchParams();
   if (results) {
     searchParams.set(PersonSearchParameter.Results, results.toString());
   }
@@ -153,6 +157,12 @@ export const searchForPerson = async (
   }
   if (sector) {
     searchParams.set(PersonSearchParameter.Sector, sector);
+  }
+
+  if (orderBy === 'name' && sort === 'desc') {
+    searchParams.set(PersonSearchParameter.Sort, 'name desc');
+  } else {
+    searchParams.set(PersonSearchParameter.Sort, 'name');
   }
 
   const queryContent = searchParams.toString();
@@ -170,13 +180,15 @@ export interface ProjectsSearchParams {
   coordinatingFacet?: string | null;
   creator?: string | null;
   fundingSourceFacet?: string | null;
-  status?: string | null;
   healthProjectFacet?: string | null;
+  orderBy?: string | null;
   participant?: string | null;
   participantFacet?: string | null;
   participantOrgFacet?: string | null;
   responsibleFacet?: string | null;
   sectorFacet?: string | null;
+  sort?: string | null;
+  status?: string | null;
   query?: string | null;
 }
 
@@ -186,6 +198,7 @@ export enum ProjectSearchParameter {
   Creator = 'creator',
   FundingSourceFacet = 'fundingSourceFacet',
   HealthProjectFacet = 'healthProjectFacet',
+  OrderBy = 'orderBy',
   Page = 'page',
   Participant = 'participant',
   ParticipantFacet = 'participantFacet',
@@ -193,6 +206,7 @@ export enum ProjectSearchParameter {
   ResponsibleFacet = 'responsibleFacet',
   Results = 'results',
   SectorFacet = 'sectorFacet',
+  Sort = 'sort',
   Status = 'status',
   Query = 'multiple',
 }
@@ -237,6 +251,11 @@ export const searchForProjects = async (results: number, page: number, params?: 
   }
   if (params?.sectorFacet) {
     searchParams.set(ProjectSearchParameter.SectorFacet, params.sectorFacet);
+  }
+  if (params?.orderBy === 'name' && params?.sort === 'desc') {
+    searchParams.set(ProjectSearchParameter.Sort, 'name desc');
+  } else {
+    searchParams.set(ProjectSearchParameter.Sort, 'name');
   }
   if (params?.query) {
     searchParams.set(ProjectSearchParameter.Query, params.query);

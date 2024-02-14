@@ -22,6 +22,13 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const contributorNameParams = params.get(ResultParam.ContributorName)?.split(',') ?? [];
   const abstractParams = params.get(ResultParam.Abstract)?.split(',') ?? [];
   const tagParams = params.get(ResultParam.Tags)?.split(',') ?? [];
+  const isbnParams = params.get(ResultParam.Isbn)?.split(',') ?? [];
+  const issnParams = params.get(ResultParam.Issn)?.split(',') ?? [];
+  const doiParams = params.get(ResultParam.Doi)?.split(',') ?? [];
+  const handleParams = params.get(ResultParam.Handle)?.split(',') ?? [];
+  const grantIdParams = params.get(ResultParam.GrantId)?.split(',') ?? [];
+  const courseCodeParams = params.get(ResultParam.CourseCode)?.split(',') ?? [];
+  const cristinIdParams = params.get(ResultParam.CristinId)?.split(',') ?? [];
 
   const titleFilters = titleParams.map((title) => ({
     fieldName: ResultParam.Title,
@@ -43,7 +50,54 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     value: tag,
   }));
 
-  const properties = [...titleFilters, ...contributorNameFilters, ...abstractFilters, ...tagFilters];
+  const isbnFilters = isbnParams.map((isbn) => ({
+    fieldName: ResultParam.Isbn,
+    value: isbn,
+  }));
+
+  const issnFilters = issnParams.map((issn) => ({
+    fieldName: ResultParam.Issn,
+    value: issn,
+  }));
+
+  const doiFilters = doiParams.map((doi) => ({
+    fieldName: ResultParam.Doi,
+    value: doi,
+  }));
+
+  const handleFilters = handleParams.map((handle) => ({
+    fieldName: ResultParam.Handle,
+    value: handle,
+  }));
+
+  const grantIdFilters = grantIdParams.map((grantId) => ({
+    fieldName: ResultParam.GrantId,
+    value: grantId,
+  }));
+
+  const courseCodeFilters = courseCodeParams.map((courseCode) => ({
+    fieldName: ResultParam.CourseCode,
+    value: courseCode,
+  }));
+
+  const cristinIdFilters = cristinIdParams.map((cristinId) => ({
+    fieldName: ResultParam.CristinId,
+    value: cristinId,
+  }));
+
+  const properties = [
+    ...titleFilters,
+    ...contributorNameFilters,
+    ...abstractFilters,
+    ...tagFilters,
+    ...isbnFilters,
+    ...issnFilters,
+    ...doiFilters,
+    ...handleFilters,
+    ...grantIdFilters,
+    ...courseCodeFilters,
+    ...cristinIdFilters,
+  ];
 
   return { searchTerm, properties };
 };

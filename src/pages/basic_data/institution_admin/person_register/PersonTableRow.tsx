@@ -22,11 +22,10 @@ export interface PersonData {
 
 interface PersonTableRowProps {
   cristinPerson: CristinPerson;
-  topOrgCristinIdentifier: string;
   refetchEmployees: () => void;
 }
 
-export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, refetchEmployees }: PersonTableRowProps) => {
+export const PersonTableRow = ({ cristinPerson, refetchEmployees }: PersonTableRowProps) => {
   const { t } = useTranslation();
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -41,20 +40,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, refetch
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 
   const fullName = getFullCristinName(cristinPerson.names);
-
   const activeEmployments = employments.filter(isActiveEmployment);
-  const employmentsInThisInstitution: Employment[] = [];
-  const employmentsInOtherInstitutions: Employment[] = [];
-  const targetOrganizationIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
-
-  employments.forEach((employment) => {
-    const organizationIdentifier = employment.organization.split('/').pop();
-    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
-      employmentsInThisInstitution.push(employment);
-    } else {
-      employmentsInOtherInstitutions.push(employment);
-    }
-  });
 
   return (
     <>
