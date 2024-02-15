@@ -51,20 +51,17 @@ export const FindRegistration = ({
     (possibleDuplicate) => possibleDuplicate.identifier !== filteredRegistrationIdentifier
   );
 
-  const defaultProps = {
-    options: searchResultNotContainingToBeDeleted,
-    getOptionLabel: (option: Registration | string) => {
-      if (typeof option === 'string') {
-        return option;
-      }
-      return option.entityDescription?.mainTitle ?? '';
-    },
-  };
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Typography variant="h3">{t('unpublish_actions.search_for_duplicate')}</Typography>
       <Autocomplete
-        {...defaultProps}
+        options={searchResultNotContainingToBeDeleted}
+        getOptionLabel={(option: Registration | string) => {
+          if (typeof option === 'string') {
+            return option;
+          }
+          return option.entityDescription?.mainTitle ?? '';
+        }}
         freeSolo
         id="search-duplicate-autocomplete"
         loading={duplicateRegistrationSearch.isLoading && debouncedSearch.length > 0}
