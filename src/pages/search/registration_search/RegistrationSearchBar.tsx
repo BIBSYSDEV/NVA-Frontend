@@ -230,7 +230,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     break;
                   }
                   case ResultParam.FundingSource: {
-                    fieldName = t('common.funding');
+                    fieldName = t('common.financier');
                     const fundingLabels = registrationQuery.data?.aggregations?.fundingSource?.find(
                       (bucket) => bucket.key === value
                     )?.labels;
