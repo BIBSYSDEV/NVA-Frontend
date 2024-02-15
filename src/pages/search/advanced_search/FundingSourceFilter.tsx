@@ -13,7 +13,6 @@ export const FundingSourceFilter = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
   const currentSearchTerm = searchParams.get(ResultParam.FundingSource);
-  const currentFundingSourceId = `https://api.dev.nva.aws.unit.no/cristin/funding-sources/${currentSearchTerm}`;
 
   const fundingSourcesQuery = useQuery({
     queryKey: ['fundingSources'],
@@ -38,7 +37,7 @@ export const FundingSourceFilter = () => {
     <Autocomplete
       sx={{ minWidth: '15rem' }}
       disabled={!fundingSourcesQuery.data}
-      value={fundingSourcesList.find((source) => source.id === currentFundingSourceId) || null}
+      value={fundingSourcesList.find((source) => source.identifier === currentSearchTerm) || null}
       onChange={(_, newValue) => {
         handleChange(newValue);
       }}
