@@ -13,6 +13,7 @@ import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter'
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
+import { LanguageFilter } from './LanguageFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 
 export const AdvancedSearchPage = () => {
@@ -84,6 +85,10 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <FundingSourceFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <LanguageFilter />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
