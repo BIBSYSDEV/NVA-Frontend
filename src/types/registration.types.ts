@@ -83,7 +83,7 @@ interface AdditionalIdentifier {
   value: string;
 }
 
-type RegistrationOperation = 'delete' | 'update' | 'unpublish' | 'publish';
+type RegistrationOperation = 'update' | 'delete' | 'unpublish';
 
 export interface BaseRegistration {
   readonly type: 'Publication' | 'ImportCandidate';
