@@ -66,11 +66,10 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-        <Divider />
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem', alignItems: 'center' }}>
+        <Divider flexItem />
         {!showDeleteButton && (
           <IconButton
-            sx={{ alignSelf: 'center' }}
             title={t('common.show_more_options')}
             onClick={() => setShowDeleteButton(true)}>
             <MoreHorizIcon />
@@ -78,7 +77,6 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
         )}
         {showDeleteButton && (
           <Button
-            sx={{ alignSelf: 'center' }}
             data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
             variant="outlined"
             onClick={() => setShowDeleteModal(true)}>
