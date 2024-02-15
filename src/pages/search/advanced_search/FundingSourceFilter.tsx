@@ -37,7 +37,7 @@ export const FundingSourceFilter = () => {
     <Autocomplete
       sx={{ minWidth: '15rem' }}
       disabled={!fundingSourcesQuery.data}
-      value={fundingSourcesList.find((source) => source.identifier === fundingSourceParam) || null}
+      value={fundingSourcesList.find((source) => source.identifier === fundingSourceParam) ?? null}
       onChange={(_, newValue) => {
         handleChange(newValue);
       }}
