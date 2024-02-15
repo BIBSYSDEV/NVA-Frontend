@@ -83,7 +83,6 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
         )}
       </Box>
       <Modal
-        dataTestId="delete-registration-modal"
         headingText={t('registration.delete_registration')}
         open={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}>
