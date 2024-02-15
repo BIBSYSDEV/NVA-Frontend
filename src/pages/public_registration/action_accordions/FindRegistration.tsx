@@ -63,10 +63,9 @@ export const FindRegistration = ({
           return option.entityDescription?.mainTitle ?? '';
         }}
         freeSolo
-        id="search-duplicate-autocomplete"
         loading={duplicateRegistrationSearch.isLoading && debouncedSearch.length > 0}
         value={selectedRegistration}
-        onChange={(_event, newValue, _reason) => {
+        onChange={(_, newValue) => {
           if (typeof newValue === 'string') {
             setSelectedRegistration(null);
           } else {
@@ -78,13 +77,12 @@ export const FindRegistration = ({
             {...params}
             placeholder={t('unpublish_actions.search_duplicate_facets')}
             variant="filled"
-            onChange={(event) => handleSearchAutoCompleteChange(event)}
+            onChange={(event) => setSearchBeforeDebounce(event.target.value)}
             InputProps={{
               ...params.InputProps,
               type: 'search',
               startAdornment: (
                 <IconButton
-                  type="button"
                   data-testid={dataTestId.startPage.searchButton}
                   title={t('common.search')}
                   size="large">
@@ -96,14 +94,14 @@ export const FindRegistration = ({
         )}
       />
       {!!selectedRegistration && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
+        <>
           <Typography>{t('common.result')}</Typography>
           <ErrorBoundary>
             <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
               <RegistrationListItemContent target="_blank" registration={selectedRegistration} />
             </SearchListItem>
           </ErrorBoundary>
-        </Box>
+        </>
       )}
     </Box>
   );
