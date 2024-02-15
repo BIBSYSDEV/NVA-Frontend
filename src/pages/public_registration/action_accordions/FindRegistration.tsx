@@ -68,7 +68,7 @@ export const FindRegistration = ({
         freeSolo
         loading={duplicateRegistrationSearch.isLoading && debouncedSearch.length > 0}
         value={selectedRegistration}
-        onChange={(_event, newValue, _reason) => {
+        onChange={(_, newValue) => {
           if (typeof newValue === 'string') {
             setSelectedRegistration(null);
           } else {
