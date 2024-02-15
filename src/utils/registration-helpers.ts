@@ -50,7 +50,6 @@ import {
   PublicationInstanceType,
   Publisher,
   Registration,
-  RegistrationStatus,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -641,30 +640,8 @@ export const getOutputName = (item: OutputItem): string => {
   }
 };
 
-const userIsContributorOnPublishedRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCreator &&
-  !!user.cristinId &&
-  (registration.status === RegistrationStatus.Published ||
-    registration.status === RegistrationStatus.PublishedMetadata) &&
-  !!registration.entityDescription?.contributors.some((contributor) => contributor.identity.id === user.cristinId);
-
-export const userCanEditRegistration = (user: User | null, registration: Registration) => {
-  if (!user) {
-    return false;
-  }
-
-  const isValidCurator = userIsRegistrationCurator(user, registration);
-  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance?.type)) {
-    return isValidCurator && user.isThesisCurator;
-  }
-
-  return (
-    isValidCurator ||
-    userIsRegistrationOwner(user, registration) ||
-    userIsContributorOnPublishedRegistration(user, registration) ||
-    user.isEditor
-  );
-};
+export const userCanEditRegistration = (user: User | null, registration: Registration) =>
+  registration.allowedOperations.includes('update');
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
