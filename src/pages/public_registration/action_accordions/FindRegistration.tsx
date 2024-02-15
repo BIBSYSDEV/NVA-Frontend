@@ -37,7 +37,7 @@ export const FindRegistration = ({
   const [searchBeforeDebounce, setSearchBeforeDebounce] = useState('');
   const debouncedSearch = useDebounce(searchBeforeDebounce);
 
-  const fetchQuery = {
+  const fetchQuery: FetchResultsParams = {
     title: isTitle(debouncedSearch) ? debouncedSearch : null,
     doi: isDoi(debouncedSearch) ? debouncedSearch : null,
     query: isHandle(debouncedSearch) ? debouncedSearch : null,
