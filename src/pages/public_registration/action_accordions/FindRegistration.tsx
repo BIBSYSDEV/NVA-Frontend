@@ -66,7 +66,6 @@ export const FindRegistration = ({
       <Autocomplete
         {...defaultProps}
         freeSolo
-        id="search-duplicate-autocomplete"
         loading={duplicateRegistrationSearch.isLoading && debouncedSearch.length > 0}
         value={selectedRegistration}
         onChange={(_event, newValue, _reason) => {
