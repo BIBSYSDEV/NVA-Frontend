@@ -38,9 +38,8 @@ export const FindRegistration = ({
   const debouncedSearch = useDebounce(searchBeforeDebounce);
 
   const fetchQuery: FetchResultsParams = {
-    title: isTitle(debouncedSearch) ? debouncedSearch : null,
     doi: isDoi(debouncedSearch) ? debouncedSearch : null,
-    query: isHandle(debouncedSearch) ? debouncedSearch : null,
+    query: !isDoi(debouncedSearch) ? debouncedSearch : null,
   };
 
   const duplicateRegistrationSearch = useQuery({
