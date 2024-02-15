@@ -80,7 +80,7 @@ export const FindRegistration = ({
             {...params}
             placeholder={t('unpublish_actions.search_duplicate_facets')}
             variant="filled"
-            onChange={(event) => handleSearchAutoCompleteChange(event)}
+            onChange={(event) => setSearchBeforeDebounce(event.target.value)}
             InputProps={{
               ...params.InputProps,
               type: 'search',
