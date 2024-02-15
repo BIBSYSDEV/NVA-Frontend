@@ -77,15 +77,13 @@ export const FindRegistration = ({
             {...params}
             placeholder={t('unpublish_actions.search_duplicate_facets')}
             variant="filled"
+            label={t('unpublish_actions.duplicate')}
             onChange={(event) => setSearchBeforeDebounce(event.target.value)}
             InputProps={{
               ...params.InputProps,
               type: 'search',
               startAdornment: (
-                <IconButton
-                  data-testid={dataTestId.startPage.searchButton}
-                  title={t('common.search')}
-                  size="large">
+                <IconButton data-testid={dataTestId.startPage.searchButton} title={t('common.search')} size="large">
                   <SearchIcon />
                 </IconButton>
               ),

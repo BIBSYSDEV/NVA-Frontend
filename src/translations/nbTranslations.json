@@ -1785,6 +1785,7 @@
     "user_dialog": "Brukerdialog"
   },
   "unpublish_actions": {
+    "duplicate": "Duplikat",
     "unpublish_registration": "Avpubliser forskningsresultat",
     "unpublish_registration_detail_1": "Ved avpublisering vil ikke forskningsresultatet være søkbare i NVA, men vil fortsatt være tilgjengelige ved oppslag av referanse.",
     "unpublish_registration_detail_2": "Eventuelle filer vil fjernes fra forskningsresultatet av avpublisering, men blir ikke permanent slettet.",
