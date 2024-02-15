@@ -643,6 +643,9 @@ export const getOutputName = (item: OutputItem): string => {
 export const userCanEditRegistration = (user: User | null, registration: Registration) =>
   registration.allowedOperations.includes('update');
 
+export const userCanDeleteRegistration = (registration: Registration) =>
+  registration.allowedOperations.includes('delete');
+
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
 

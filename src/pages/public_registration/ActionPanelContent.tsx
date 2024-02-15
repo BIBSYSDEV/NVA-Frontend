@@ -11,7 +11,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getTitleString, userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { getTitleString, userCanDeleteRegistration, userIsRegistrationCurator } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
@@ -60,8 +60,7 @@ export const ActionPanelContent = ({
 
   const isInRegistrationWizard =
     window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
-  const canDeleteRegistration =
-    (registration.status === 'DRAFT' || registration.status === 'NEW') && isInRegistrationWizard;
+  const canDeleteRegistration = userCanDeleteRegistration(registration) && isInRegistrationWizard;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
