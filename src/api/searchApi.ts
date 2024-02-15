@@ -147,6 +147,7 @@ export enum ResultParam {
   CristinId = 'cristinId',
   Doi = 'doi',
   From = 'from',
+  FundingIdentifier = 'fundingIdentifier',
   FundingSource = 'fundingSource',
   Handle = 'handle',
   Identifier = 'id',
@@ -179,6 +180,7 @@ export interface FetchResultsParams {
   [ResultParam.CristinId]?: string | null;
   [ResultParam.Doi]?: string | null;
   [ResultParam.From]?: number | null;
+  [ResultParam.FundingIdentifier]?: string | null;
   [ResultParam.FundingSource]?: string | null;
   [ResultParam.Handle]?: string | null;
   [ResultParam.Identifier]?: string | null;
@@ -234,6 +236,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.doi) {
     searchParams.set(ResultParam.Doi, params.doi);
   }
+  if (params.fundingIdentifier) {
+    searchParams.set(ResultParam.FundingIdentifier, params.fundingIdentifier);
+  }
   if (params.fundingSource) {
     searchParams.set(ResultParam.FundingSource, params.fundingSource);
   }
@@ -250,7 +255,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.Isbn, params.isbn.replace(/-/g, ''));
   }
   if (params.issn) {
-    searchParams.set(ResultParam.Issn, params.issn.replace(/-/g, ''));
+    searchParams.set(ResultParam.Issn, params.issn);
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);

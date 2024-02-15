@@ -66,6 +66,7 @@ const HomePage = () => {
     cristinId: params.get(ResultParam.CristinId),
     doi: params.get(ResultParam.Doi),
     from: Number(params.get(ResultParam.From) ?? 0),
+    fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
     handle: params.get(ResultParam.Handle),
     isbn: params.get(ResultParam.Isbn),

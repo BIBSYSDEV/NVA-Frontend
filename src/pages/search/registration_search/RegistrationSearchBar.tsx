@@ -103,6 +103,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         processSearchParamProperties(values, ResultParam.Issn);
         processSearchParamProperties(values, ResultParam.Doi);
         processSearchParamProperties(values, ResultParam.Handle);
+        processSearchParamProperties(values, ResultParam.FundingIdentifier);
         processSearchParamProperties(values, ResultParam.FundingSource);
         processSearchParamProperties(values, ResultParam.Course);
         processSearchParamProperties(values, ResultParam.CristinId);

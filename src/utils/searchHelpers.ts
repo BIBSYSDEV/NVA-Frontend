@@ -26,6 +26,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const issnParams = params.get(ResultParam.Issn)?.split(',') ?? [];
   const doiParams = params.get(ResultParam.Doi)?.split(',') ?? [];
   const handleParams = params.get(ResultParam.Handle)?.split(',') ?? [];
+  const fundingIdentifierParams = params.get(ResultParam.FundingIdentifier)?.split(',') ?? [];
   const fundingSourceParams = params.get(ResultParam.FundingSource)?.split(',') ?? [];
   const courseParams = params.get(ResultParam.Course)?.split(',') ?? [];
   const cristinIdParams = params.get(ResultParam.CristinId)?.split(',') ?? [];
@@ -70,6 +71,11 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     value: handle,
   }));
 
+  const fundingIdentifierFilters = fundingIdentifierParams.map((fundingIdentifier) => ({
+    fieldName: ResultParam.FundingIdentifier,
+    value: fundingIdentifier,
+  }));
+
   const fundingSourceFilters = fundingSourceParams.map((fundingSource) => ({
     fieldName: ResultParam.FundingSource,
     value: fundingSource,
@@ -94,6 +100,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     ...issnFilters,
     ...doiFilters,
     ...handleFilters,
+    ...fundingIdentifierFilters,
     ...fundingSourceFilters,
     ...courseFilters,
     ...cristinIdFilters,
