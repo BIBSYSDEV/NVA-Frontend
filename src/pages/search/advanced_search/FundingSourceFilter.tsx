@@ -12,7 +12,7 @@ export const FundingSourceFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const currentSearchTerm = searchParams.get(ResultParam.FundingSource);
+  const fundingSourceParam = searchParams.get(ResultParam.FundingSource);
 
   const fundingSourcesQuery = useQuery({
     queryKey: ['fundingSources'],
@@ -37,7 +37,7 @@ export const FundingSourceFilter = () => {
     <Autocomplete
       sx={{ minWidth: '15rem' }}
       disabled={!fundingSourcesQuery.data}
-      value={fundingSourcesList.find((source) => source.identifier === currentSearchTerm)}
+      value={fundingSourcesList.find((source) => source.identifier === fundingSourceParam) || null}
       onChange={(_, newValue) => {
         handleChange(newValue);
       }}
@@ -54,7 +54,7 @@ export const FundingSourceFilter = () => {
           {...params}
           variant="outlined"
           placeholder={t('search.search_for_funder')}
-          showSearchIcon={!currentSearchTerm}
+          showSearchIcon={!fundingSourceParam}
           multiline
         />
       )}
