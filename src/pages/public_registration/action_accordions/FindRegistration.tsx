@@ -97,14 +97,14 @@ export const FindRegistration = ({
         )}
       />
       {!!selectedRegistration && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
+        <>
           <Typography>{t('common.result')}</Typography>
           <ErrorBoundary>
             <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
               <RegistrationListItemContent target="_blank" registration={selectedRegistration} />
             </SearchListItem>
           </ErrorBoundary>
-        </Box>
+        </>
       )}
     </Box>
   );
