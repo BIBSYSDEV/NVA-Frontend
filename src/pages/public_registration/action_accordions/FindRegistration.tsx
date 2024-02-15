@@ -86,7 +86,6 @@ export const FindRegistration = ({
               type: 'search',
               startAdornment: (
                 <IconButton
-                  type="button"
                   data-testid={dataTestId.startPage.searchButton}
                   title={t('common.search')}
                   size="large">
