@@ -1,23 +1,23 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { RootState } from '../../redux/store';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
 import { getRegistrationWizardPath } from '../../utils/urlPaths';
+import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { PublicFundingsContent } from './PublicFundingsContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
@@ -30,8 +30,6 @@ import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
 import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
 import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
-import { DeletedPublicationInformation } from './DeletedPublicationInformation';
-import { visuallyHidden } from '@mui/utils';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -39,7 +37,6 @@ export interface PublicRegistrationContentProps {
 
 export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
 
   const { identifier, entityDescription, projects, subjects, fundings } = registration;
   const contributors = entityDescription?.contributors ?? [];
@@ -76,7 +73,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
           {mainTitle}
         </TruncatableTypography>
-        {userCanEditRegistration(user, registration) && (
+        {userCanEditRegistration(registration) && (
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
               data-testid={dataTestId.registrationLandingPage.editButton}
