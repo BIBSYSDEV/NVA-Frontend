@@ -21,8 +21,8 @@ import { ChapterEntityDescription } from './publication_types/chapterRegistratio
 import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
 import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
 import {
-  emptyRegistrationEntityDescription,
   JournalEntityDescription,
+  emptyRegistrationEntityDescription,
 } from './publication_types/journalRegistration.types';
 import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration.types';
 import { MapEntityDescription } from './publication_types/otherRegistration.types';
@@ -83,6 +83,8 @@ interface AdditionalIdentifier {
   value: string;
 }
 
+type RegistrationOperation = 'delete' | 'update' | 'unpublish' | 'publish';
+
 export interface BaseRegistration {
   readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
@@ -100,6 +102,7 @@ export interface BaseRegistration {
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
+  readonly allowedOperations: RegistrationOperation[];
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
@@ -244,6 +247,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
+  allowedOperations: ['update', 'delete', 'unpublish'],
 };
 
 export interface ContextSeries {

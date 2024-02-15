@@ -1,3 +1,4 @@
+import { Auth } from '@aws-amplify/auth';
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
@@ -72,9 +73,25 @@ export const createDraftDoi = async (registrationId: string) =>
   });
 
 export const fetchRegistration = async (registrationIdentifier: string) => {
-  const fetchRegistrationResponse = await apiRequest2<Registration>({
-    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
-  });
+  let isAuthenticated = false;
+  try {
+    const cognitoUser = await Auth.currentAuthenticatedUser();
+    if (cognitoUser) {
+      isAuthenticated = true;
+    } else {
+      isAuthenticated = false;
+    }
+  } catch {
+    isAuthenticated = false;
+  }
+
+  const fetchRegistrationResponse = isAuthenticated
+    ? await authenticatedApiRequest2<Registration>({
+        url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
+      })
+    : await apiRequest2<Registration>({
+        url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
+      });
   return fetchRegistrationResponse.data;
 };
 
