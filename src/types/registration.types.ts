@@ -2,19 +2,6 @@ import { AssociatedArtifact } from './associatedArtifact.types';
 import { AggregationValue, LanguageString } from './common.types';
 import { Contributor } from './contributor.types';
 import { ResearchProject } from './project.types';
-import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  ReportType,
-  ResearchDataType,
-} from './publicationFieldNames';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
 import { BookEntityDescription } from './publication_types/bookRegistration.types';
 import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
@@ -29,6 +16,19 @@ import { MapEntityDescription } from './publication_types/otherRegistration.type
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ReportEntityDescription } from './publication_types/reportRegistration.types';
 import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
+import {
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  ReportType,
+  ResearchDataType,
+} from './publicationFieldNames';
 
 export enum RegistrationStatus {
   DraftForDeletion = 'DRAFT_FOR_DELETION',
@@ -83,6 +83,11 @@ interface AdditionalIdentifier {
   value: string;
 }
 
+interface PublicationNote {
+  readonly type: 'UnpublishingNote' | 'PublicationNote';
+  readonly note: string;
+}
+
 export interface BaseRegistration {
   readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
@@ -100,6 +105,7 @@ export interface BaseRegistration {
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
+  readonly publicationNotes?: PublicationNote[];
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
