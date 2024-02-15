@@ -1,22 +1,22 @@
-import { Registration } from '../../../types/registration.types';
-import { Box, Button, DialogActions, Divider, IconButton, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
-import { Modal } from '../../../components/Modal';
-import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { useTranslation } from 'react-i18next';
-import { FindRegistration } from './FindRegistration';
-import { unpublishRegistration } from '../../../api/registrationApi';
-import { setNotification } from '../../../redux/notificationSlice';
-import { useDispatch } from 'react-redux';
-import { LoadingButton } from '@mui/lab';
-import { RequiredDescription } from '../../../components/RequiredDescription';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { useHistory } from 'react-router-dom';
-import i18n from '../../../translations/i18n';
-import { useMutation } from '@tanstack/react-query';
-import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { LoadingButton } from '@mui/lab';
+import { Box, Button, DialogActions, Divider, IconButton, TextField, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+import { unpublishRegistration } from '../../../api/registrationApi';
+import { Modal } from '../../../components/Modal';
+import { RequiredDescription } from '../../../components/RequiredDescription';
+import { setNotification } from '../../../redux/notificationSlice';
+import i18n from '../../../translations/i18n';
+import { Registration } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
+import { FindRegistration } from './FindRegistration';
 
 interface DeleteForm {
   deleteMessage: string;
@@ -69,9 +69,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem', alignItems: 'center' }}>
         <Divider flexItem />
         {!showDeleteButton && (
-          <IconButton
-            title={t('common.show_more_options')}
-            onClick={() => setShowDeleteButton(true)}>
+          <IconButton title={t('common.show_more_options')} onClick={() => setShowDeleteButton(true)}>
             <MoreHorizIcon />
           </IconButton>
         )}

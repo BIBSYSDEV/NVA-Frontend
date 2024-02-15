@@ -1,26 +1,18 @@
-import { Registration } from '../../../types/registration.types';
-import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material';
-import { dataTestId } from '../../../utils/dataTestIds';
 import SearchIcon from '@mui/icons-material/Search';
+import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { fetchResults } from '../../../api/searchApi';
 import { useState } from 'react';
-import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useTranslation } from 'react-i18next';
+import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
-
-function isTitle(query: string) {
-  return !isDoi(query) && !isHandle(query);
-}
+import { SearchListItem } from '../../../components/styled/Wrappers';
+import { Registration } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
 
 function isDoi(query: string) {
   return query.includes('https://doi.org/');
-}
-
-function isHandle(query: string) {
-  return query.includes('https://hdl.handle.net/');
 }
 
 interface FindRegistrationProps {
