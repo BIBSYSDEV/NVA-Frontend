@@ -9,10 +9,10 @@ import { getUnitTopLevelCode } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface CustomerInstitutionInformationFromCristinProps {
-  cristinId: string | undefined;
+  cristinId?: string;
   customerData: Organization | null;
   setName: (string: string) => void;
-  displayName: string | undefined;
+  displayName?: string;
 }
 
 export const CustomerInstitutionInformationFromCristin = ({
