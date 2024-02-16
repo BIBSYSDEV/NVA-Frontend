@@ -28,12 +28,12 @@ const languageOptions = [
 export const LanguageFilter = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const languageParam = searchParams.get(ResultParam.Query);
+  const languageParam = searchParams.get(ResultParam.PublicationLanguage);
 
   const handleChange = (selectedUri: string | Language | null) => {
     const selectedValue = languageOptions.find((value) => value.uri === selectedUri);
     if (selectedValue) {
-      searchParams.set(ResultParam.Query, selectedValue.uri);
+      searchParams.set(ResultParam.PublicationLanguage, selectedValue.uri);
     } else {
       searchParams.delete(ResultParam.Query);
     }

@@ -156,6 +156,7 @@ export enum ResultParam {
   Issn = 'issn',
   Order = 'order',
   Project = 'project',
+  PublicationLanguage = 'publicationLanguage',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
   PublicationYearShould = 'publicationYearShould',
@@ -189,6 +190,7 @@ export interface FetchResultsParams {
   [ResultParam.Issn]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
+  [ResultParam.PublicationLanguage]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.PublicationYearSince]?: string | null;
   [ResultParam.PublicationYearShould]?: string | null;
@@ -259,6 +261,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
+  }
+  if (params.publicationLanguage) {
+    searchParams.set(ResultParam.PublicationLanguage, params.publicationLanguage);
   }
   if (params.publicationYearBefore) {
     const beforeYearNumber = +params.publicationYearBefore;
