@@ -55,7 +55,12 @@ export const CustomerInstitutionMetadataForm = ({
         dispatch(setNotification({ message: t('feedback.error.create_customer'), variant: 'error' }));
       } else if (isSuccessStatus(createCustomerResponse.status)) {
         history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
-        dispatch(setNotification({ message: t('feedback.success.created_customer'), variant: 'success' }));
+        dispatch(
+          setNotification({
+            message: t('feedback.success.created_customer'),
+            variant: 'success',
+          })
+        );
       }
     } else {
       const updateCustomerResponse = await updateCustomerInstitution(customer);
@@ -69,12 +74,27 @@ export const CustomerInstitutionMetadataForm = ({
           }
           const updateDoiAgentResponse = await updateDoiAgent(doiAgent);
           if (isErrorStatus(updateDoiAgentResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
+            dispatch(
+              setNotification({
+                message: t('feedback.error.update_doi_agent'),
+                variant: 'error',
+              })
+            );
           } else if (isSuccessStatus(updateDoiAgentResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
+            dispatch(
+              setNotification({
+                message: t('feedback.success.update_customer'),
+                variant: 'success',
+              })
+            );
           }
         } else {
-          dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
+          dispatch(
+            setNotification({
+              message: t('feedback.error.update_doi_agent'),
+              variant: 'error',
+            })
+          );
         }
       }
     }
@@ -116,7 +136,7 @@ export const CustomerInstitutionMetadataForm = ({
                         },
                         doiAgent: emptyProtectedDoiAgent,
                       });
-                      setCustomerData(selectedInstitution);
+                      setOrganizationData(selectedInstitution);
                     }}
                     errorMessage={touched && !!error ? error : undefined}
                     fieldInputProps={field}
@@ -126,7 +146,7 @@ export const CustomerInstitutionMetadataForm = ({
             )}
 
             <CustomerInstitutionInformationFromCristin
-              customerData={customerData}
+              organizationData={organizationData}
               cristinId={values.customer.cristinId}
               setName={(newName) => {
                 setFieldValue(CustomerInstitutionFieldNames.DisplayName, newName);

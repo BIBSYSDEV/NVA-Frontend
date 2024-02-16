@@ -1,6 +1,5 @@
 import { Grid, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { PageSpinner } from '../../../components/PageSpinner';
@@ -10,35 +9,30 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface CustomerInstitutionInformationFromCristinProps {
   cristinId?: string;
-  customerData: Organization | null;
+  organizationData: Organization | null;
   setName: (string: string) => void;
   displayName?: string;
 }
 
 export const CustomerInstitutionInformationFromCristin = ({
   cristinId,
-  customerData,
+  organizationData,
   setName,
   displayName,
 }: CustomerInstitutionInformationFromCristinProps) => {
   const { t } = useTranslation();
-  const [topLevelCristinCode, setTopLevelCristinCode] = useState<string | null>();
   const customerInformationFromCristinQuery = useQuery({
-    queryKey: ['organization', cristinId, customerData],
-    enabled: !!cristinId && !customerData,
+    queryKey: ['organization', cristinId, organizationData],
+    enabled: !!cristinId && !organizationData,
     queryFn: () => {
-      if (cristinId && !customerData) {
+      if (cristinId && !organizationData) {
         return fetchOrganization(cristinId);
       }
     },
   });
 
-  useEffect(() => {
-    setTopLevelCristinCode(getUnitTopLevelCode(cristinId));
-  }, [cristinId]);
-
-  const customerInformation = customerData ?? customerInformationFromCristinQuery.data;
-  const displayNameFromCristin = getLanguageString(customerData?.labels, 'nb');
+  const customerInformation = organizationData ?? customerInformationFromCristinQuery.data;
+  const displayNameFromCristin = getLanguageString(organizationData?.labels, 'nb');
   if (displayName !== displayNameFromCristin && displayNameFromCristin.length > 0) {
     setName(displayNameFromCristin);
   }
