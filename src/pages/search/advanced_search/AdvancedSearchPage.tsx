@@ -12,6 +12,7 @@ import { ExportResultsButton } from '../ExportResultsButton';
 import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
+import { FundingSourceFilter } from './FundingSourceFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 
 export const AdvancedSearchPage = () => {
@@ -40,6 +41,8 @@ export const AdvancedSearchPage = () => {
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     contributorName: params.get(ResultParam.ContributorName),
+    fundingSource: params.get(ResultParam.FundingSource),
+    fundingIdentifier: params.get(ResultParam.FundingIdentifier),
   };
 
   const resultSearchQuery = useQuery({
@@ -78,6 +81,17 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <FundingSourceFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <SearchForm
+            paramName={ResultParam.FundingIdentifier}
+            placeholder={t('search.search_for_funding_identifier')}
+          />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 

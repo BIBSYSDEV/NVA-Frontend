@@ -124,7 +124,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       {fundingFacet && fundingFacet.length > 0 && (
-        <FacetItem title={t('common.funding')} dataTestId={dataTestId.startPage.institutionFacets}>
+        <FacetItem title={t('common.financier')} dataTestId={dataTestId.startPage.institutionFacets}>
           {fundingFacet.map((facet) => {
             const isSelected = !!selectedFunding?.includes(facet.key);
 
