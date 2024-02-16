@@ -27,9 +27,8 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const doiParams = params.get(ResultParam.Doi)?.split(',') ?? [];
   const handleParams = params.get(ResultParam.Handle)?.split(',') ?? [];
   const fundingIdentifierParams = params.get(ResultParam.FundingIdentifier)?.split(',') ?? [];
-  const fundingSourceParams = params.get(ResultParam.FundingSource)?.split(',') ?? [];
   const courseParams = params.get(ResultParam.Course)?.split(',') ?? [];
-  const cristinIdParams = params.get(ResultParam.CristinId)?.split(',') ?? [];
+  const cristinIdentifierParams = params.get(ResultParam.CristinIdentifier)?.split(',') ?? [];
 
   const titleFilters = titleParams.map((title) => ({
     fieldName: ResultParam.Title,
@@ -76,19 +75,14 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     value: fundingIdentifier,
   }));
 
-  const fundingSourceFilters = fundingSourceParams.map((fundingSource) => ({
-    fieldName: ResultParam.FundingSource,
-    value: fundingSource,
-  }));
-
   const courseFilters = courseParams.map((course) => ({
     fieldName: ResultParam.Course,
     value: course,
   }));
 
-  const cristinIdFilters = cristinIdParams.map((cristinId) => ({
-    fieldName: ResultParam.CristinId,
-    value: cristinId,
+  const cristinIdentifierFilters = cristinIdentifierParams.map((cristinIdentifier) => ({
+    fieldName: ResultParam.CristinIdentifier,
+    value: cristinIdentifier,
   }));
 
   const properties = [
@@ -101,9 +95,8 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     ...doiFilters,
     ...handleFilters,
     ...fundingIdentifierFilters,
-    ...fundingSourceFilters,
     ...courseFilters,
-    ...cristinIdFilters,
+    ...cristinIdentifierFilters,
   ];
 
   return { searchTerm, properties };

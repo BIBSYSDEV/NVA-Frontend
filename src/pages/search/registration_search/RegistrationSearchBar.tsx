@@ -28,7 +28,7 @@ const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
   ResultParam.Course,
-  ResultParam.CristinId,
+  ResultParam.CristinIdentifier,
   ResultParam.Doi,
   ResultParam.FundingSource,
   ResultParam.Handle,
@@ -106,7 +106,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         processSearchParamProperties(values, ResultParam.FundingIdentifier);
         processSearchParamProperties(values, ResultParam.FundingSource);
         processSearchParamProperties(values, ResultParam.Course);
-        processSearchParamProperties(values, ResultParam.CristinId);
+        processSearchParamProperties(values, ResultParam.CristinIdentifier);
 
         history.push({ search: searchParams.toString() });
       }}>

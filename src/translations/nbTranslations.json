@@ -183,6 +183,7 @@
     "id": "ID",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
+    "justification": "Begrunnelse",
     "last_name": "Etternavn",
     "link": "Lenke",
     "menu": "Meny",
@@ -244,6 +245,7 @@
     "show_details": "Vis detaljer",
     "show_fewer": "Vis færre",
     "show_more": "Vis flere",
+    "show_more_options": "Vis flere valg",
     "skip_to_main_content": "Hopp til hovedinnhold",
     "skip_to_schema": "Hopp til skjema",
     "sort_newest_first": "Nyeste først",
@@ -1035,7 +1037,7 @@
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt."
     },
-    "grant_id": "TilskuddsID",
+    "grant_id": "Tilskudds-ID",
     "keywords": "Nøkkelord",
     "no_participants": "Ingen registrerte deltakere.",
     "no_related_projects": "Ingen relaterte prosjekt.",
@@ -1164,6 +1166,7 @@
       "verify_person": "Verifiser person"
     },
     "curator_support_info": "Her kan du spørre din kurator om hjelp med alt som har med registrering og publisering av forskningsresultat. Du finner svar på dine spørsmål på \"Min side\" og på registreringens presentasjonsside.",
+    "delete_registration": "Slette resultat",
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1177,7 +1180,7 @@
       "funding": {
         "funder": "Finansiør",
         "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",
-        "funding_id": "Tilskudds ID",
+        "funding_id": "Tilskudds-ID",
         "funding_name": "Tilskuddsnavn",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
@@ -1247,6 +1250,7 @@
       "files_and_license": "Fil, lisens og lenke",
       "resource_type": "Kategori"
     },
+    "is_registration_error_question": "Er dette en feilregistrering?",
     "is_revision": "Arbeidet er en revisjon",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
@@ -1262,7 +1266,7 @@
     "public_page": {
       "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
-      "cristin_id": "Cristin ID",
+      "cristin_id": "Cristin-ID",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
@@ -1735,7 +1739,7 @@
     "result": "Resultat",
     "search_for_contributor": "Søk etter bidragsyter",
     "search_for_funder": "Søk etter finansiør",
-    "search_for_funding_identifier": "Søk på Tilskudds ID",
+    "search_for_funding_identifier": "Søk på Tilskudds-ID",
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
@@ -1792,5 +1796,16 @@
     "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"
+  },
+  "unpublish_actions": {
+    "duplicate": "Duplikat",
+    "unpublish_registration": "Avpubliser forskningsresultat",
+    "unpublish_registration_detail_1": "Ved avpublisering vil ikke forskningsresultatet være søkbare i NVA, men vil fortsatt være tilgjengelige ved oppslag av referanse.",
+    "unpublish_registration_detail_2": "Eventuelle filer vil fjernes fra forskningsresultatet av avpublisering, men blir ikke permanent slettet.",
+    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.",
+    "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
+    "unpublish_registration_duplicate_citation_information": "For at alle siteringer skal bli videreført, må du søke opp den andre registreringen. Da vil alle siteringer fortsatt føre til den andre versjonen",
+    "search_for_duplicate": "Søk etter registrert resultat",
+    "search_duplicate_facets": "Søk med DOI, handle eller tittel"
   }
 }

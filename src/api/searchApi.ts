@@ -144,7 +144,7 @@ export enum ResultParam {
   Contributor = 'contributor',
   ContributorName = 'contributorName',
   Course = 'course',
-  CristinId = 'cristinId',
+  CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
   From = 'from',
   FundingIdentifier = 'fundingIdentifier',
@@ -177,7 +177,7 @@ export interface FetchResultsParams {
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
   [ResultParam.Course]?: string | null;
-  [ResultParam.CristinId]?: string | null;
+  [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
   [ResultParam.From]?: number | null;
   [ResultParam.FundingIdentifier]?: string | null;
@@ -230,8 +230,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.course) {
     searchParams.set(ResultParam.Course, params.course);
   }
-  if (params.cristinId) {
-    searchParams.set(ResultParam.CristinId, params.cristinId);
+  if (params.cristinIdentifier) {
+    searchParams.set(ResultParam.CristinIdentifier, params.cristinIdentifier);
   }
   if (params.doi) {
     searchParams.set(ResultParam.Doi, params.doi);
