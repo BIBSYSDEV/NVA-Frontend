@@ -183,7 +183,6 @@ export interface FetchResultsParams {
   [ResultParam.From]?: number | null;
   [ResultParam.FundingIdentifier]?: string | null;
   [ResultParam.FundingSource]?: string | null;
-  [ResultParam.FundingIdentifier]?: string | null;
   [ResultParam.GrantId]?: string | null;
   [ResultParam.Handle]?: string | null;
   [ResultParam.Identifier]?: string | null;
