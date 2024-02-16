@@ -1167,7 +1167,6 @@
       "funding": {
         "funder": "Finansiør",
         "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",
-        "funding_identifier": "TilskuddsID",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
