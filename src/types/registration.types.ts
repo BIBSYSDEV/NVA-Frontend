@@ -84,7 +84,7 @@ interface AdditionalIdentifier {
 }
 
 interface PublicationNote {
-  type: 'UnpublishingNote' | 'publicationNote';
+  type: 'UnpublishingNote' | 'PublicationNote';
   note?: string;
   publicationNoteMessage?: string;
 }
