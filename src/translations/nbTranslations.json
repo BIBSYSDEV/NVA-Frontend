@@ -104,7 +104,7 @@
       "institution_toplevel_code": "Kode",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
-      "loading_institution_information": "Laster institusjons data",
+      "loading_institution_information": "Laster institusjonsdata",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
