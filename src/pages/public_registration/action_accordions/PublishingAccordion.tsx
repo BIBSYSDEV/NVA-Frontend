@@ -35,8 +35,8 @@ import { registrationValidationSchema } from '../../../utils/validation/registra
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { PublishingRequestMessagesColumn } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
-import { TicketAssignee } from './TicketAssignee';
 import { DeletePublication } from './DeletePublication';
+import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
   registration: Registration;
