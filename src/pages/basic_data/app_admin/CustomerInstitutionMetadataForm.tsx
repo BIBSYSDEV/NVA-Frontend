@@ -154,16 +154,13 @@ export const CustomerInstitutionMetadataForm = ({
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem' }}>
               <Field name={CustomerInstitutionFieldNames.Sector}>
                 {({ field }: FieldProps) => (
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label"> {t('basic_data.institutions.sector')}</InputLabel>
-                    <Select
-                      fullWidth
-                      required
-                      variant="filled"
-                      labelId="sector-select-label"
-                      id="sector-select"
-                      value={field.value}
-                      onChange={(sector) => setFieldValue(field.name, sector.target.value)}>
+                  <TextField
+                    {...field}
+                    select
+                    fullWidth
+                    required
+                    label={t('basic_data.institutions.sector')}
+                    variant="filled">
                       {Object.values(Sector).map((sector) => (
                         <MenuItem
                           key={sector}
