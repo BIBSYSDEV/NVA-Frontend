@@ -1,6 +1,6 @@
 import { MenuItem, Select } from '@mui/material';
 import { t } from 'i18next';
-import { getLanguageByIso6393Code } from 'nva-language';
+import { Language, getLanguageByIso6393Code } from 'nva-language';
 import { useHistory } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import i18n from '../../../translations/i18n';
@@ -30,16 +30,31 @@ export const LanguageFilter = () => {
   const searchParams = new URLSearchParams(history.location.search);
   const languageParam = searchParams.get(ResultParam.Query);
 
+  const handleChange = (selectedUri: string | Language | null) => {
+    const selectedValue = languageOptions.find((value) => value.uri === selectedUri);
+    if (selectedValue) {
+      searchParams.set(ResultParam.Query, selectedValue.uri);
+    } else {
+      searchParams.delete(ResultParam.Query);
+    }
+
+    history.push({ search: searchParams.toString() });
+  };
+
   return (
     <Select
       sx={{ maxWidth: '15rem' }}
-      value={languageOptions.find((value) => value.uri === languageParam) ?? null}
+      value={languageParam ?? ''}
       data-testid={dataTestId.registrationWizard.description.languageField}
       fullWidth
       size="small"
       label={t('registration.description.primary_language')}
       placeholder={t('registration.description.primary_language')}
+      onChange={(event) => {
+        handleChange(event.target.value);
+      }}
       variant="filled">
+      <MenuItem value={''}>{t('registration.description.primary_language')}</MenuItem>
       {languageOptions.map(({ uri, nob, eng }) => (
         <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
           {i18n.language === 'nob' ? nob : eng}
