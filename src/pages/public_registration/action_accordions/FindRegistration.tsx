@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,6 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { Registration } from '../../../types/registration.types';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
 function isDoi(query: string) {
@@ -78,9 +77,7 @@ export const FindRegistration = ({
             InputProps={{
               ...params.InputProps,
               type: 'search',
-              startAdornment: (
-                <SearchIcon />
-              ),
+              startAdornment: <SearchIcon />,
             }}
           />
         )}

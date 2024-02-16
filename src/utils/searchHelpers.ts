@@ -26,8 +26,9 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const issnParams = params.get(ResultParam.Issn)?.split(',') ?? [];
   const doiParams = params.get(ResultParam.Doi)?.split(',') ?? [];
   const handleParams = params.get(ResultParam.Handle)?.split(',') ?? [];
-  const grantIdParams = params.get(ResultParam.GrantId)?.split(',') ?? [];
-  const courseCodeParams = params.get(ResultParam.CourseCode)?.split(',') ?? [];
+  const fundingIdentifierParams = params.get(ResultParam.FundingIdentifier)?.split(',') ?? [];
+  const fundingSourceParams = params.get(ResultParam.FundingSource)?.split(',') ?? [];
+  const courseParams = params.get(ResultParam.Course)?.split(',') ?? [];
   const cristinIdParams = params.get(ResultParam.CristinId)?.split(',') ?? [];
 
   const titleFilters = titleParams.map((title) => ({
@@ -70,14 +71,19 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     value: handle,
   }));
 
-  const grantIdFilters = grantIdParams.map((grantId) => ({
-    fieldName: ResultParam.GrantId,
-    value: grantId,
+  const fundingIdentifierFilters = fundingIdentifierParams.map((fundingIdentifier) => ({
+    fieldName: ResultParam.FundingIdentifier,
+    value: fundingIdentifier,
   }));
 
-  const courseCodeFilters = courseCodeParams.map((courseCode) => ({
-    fieldName: ResultParam.CourseCode,
-    value: courseCode,
+  const fundingSourceFilters = fundingSourceParams.map((fundingSource) => ({
+    fieldName: ResultParam.FundingSource,
+    value: fundingSource,
+  }));
+
+  const courseFilters = courseParams.map((course) => ({
+    fieldName: ResultParam.Course,
+    value: course,
   }));
 
   const cristinIdFilters = cristinIdParams.map((cristinId) => ({
@@ -94,8 +100,9 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     ...issnFilters,
     ...doiFilters,
     ...handleFilters,
-    ...grantIdFilters,
-    ...courseCodeFilters,
+    ...fundingIdentifierFilters,
+    ...fundingSourceFilters,
+    ...courseFilters,
     ...cristinIdFilters,
   ];
 

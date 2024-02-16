@@ -27,15 +27,14 @@ import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
-  ResultParam.CourseCode,
+  ResultParam.Course,
   ResultParam.CristinId,
   ResultParam.Doi,
-  ResultParam.GrantId,
+  ResultParam.FundingSource,
   ResultParam.Handle,
   ResultParam.Isbn,
   ResultParam.Issn,
   ResultParam.TopLevelOrganization,
-  ResultParam.FundingSource,
 ];
 
 interface SelectedFacet {
@@ -104,8 +103,9 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         processSearchParamProperties(values, ResultParam.Issn);
         processSearchParamProperties(values, ResultParam.Doi);
         processSearchParamProperties(values, ResultParam.Handle);
-        processSearchParamProperties(values, ResultParam.GrantId);
-        processSearchParamProperties(values, ResultParam.CourseCode);
+        processSearchParamProperties(values, ResultParam.FundingIdentifier);
+        processSearchParamProperties(values, ResultParam.FundingSource);
+        processSearchParamProperties(values, ResultParam.Course);
         processSearchParamProperties(values, ResultParam.CristinId);
 
         history.push({ search: searchParams.toString() });
@@ -230,7 +230,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     break;
                   }
                   case ResultParam.FundingSource: {
-                    fieldName = t('common.funding');
+                    fieldName = t('common.financier');
                     const fundingLabels = registrationQuery.data?.aggregations?.fundingSource?.find(
                       (bucket) => bucket.key === value
                     )?.labels;
