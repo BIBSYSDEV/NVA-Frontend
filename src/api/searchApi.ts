@@ -143,13 +143,12 @@ export enum ResultParam {
   CategoryShould = 'categoryShould',
   Contributor = 'contributor',
   ContributorName = 'contributorName',
-  CourseCode = 'courseCode',
+  Course = 'course',
   CristinId = 'cristinId',
   Doi = 'doi',
   From = 'from',
   FundingIdentifier = 'fundingIdentifier',
   FundingSource = 'fundingSource',
-  GrantId = 'grantId',
   Handle = 'handle',
   Identifier = 'id',
   IdentifierNot = 'idNot',
@@ -177,13 +176,12 @@ export interface FetchResultsParams {
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
-  [ResultParam.CourseCode]?: string | null;
+  [ResultParam.Course]?: string | null;
   [ResultParam.CristinId]?: string | null;
   [ResultParam.Doi]?: string | null;
   [ResultParam.From]?: number | null;
   [ResultParam.FundingIdentifier]?: string | null;
   [ResultParam.FundingSource]?: string | null;
-  [ResultParam.GrantId]?: string | null;
   [ResultParam.Handle]?: string | null;
   [ResultParam.Identifier]?: string | null;
   [ResultParam.IdentifierNot]?: string | null;
@@ -229,8 +227,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.contributorName) {
     searchParams.set(ResultParam.ContributorName, params.contributorName);
   }
-  if (params.courseCode) {
-    searchParams.set(ResultParam.CourseCode, params.courseCode);
+  if (params.course) {
+    searchParams.set(ResultParam.Course, params.course);
   }
   if (params.cristinId) {
     searchParams.set(ResultParam.CristinId, params.cristinId);
@@ -243,9 +241,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.fundingSource) {
     searchParams.set(ResultParam.FundingSource, params.fundingSource);
-  }
-  if (params.grantId) {
-    searchParams.set(ResultParam.GrantId, params.grantId);
   }
   if (params.handle) {
     searchParams.set(ResultParam.Handle, params.handle);
@@ -260,7 +255,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.Isbn, params.isbn.replace(/-/g, ''));
   }
   if (params.issn) {
-    searchParams.set(ResultParam.Issn, params.issn.replace(/-/g, ''));
+    searchParams.set(ResultParam.Issn, params.issn);
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
