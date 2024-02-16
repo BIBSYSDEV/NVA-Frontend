@@ -7,7 +7,7 @@ const fundingErrorMessage = {
     field: i18n.t('registration.description.funding.funder'),
   }),
   fundingProjectRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.description.funding.project'),
+    field: i18n.t('registration.description.funding.funding_name'),
   }),
   fundingNfrProjectRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.description.funding.nfr_project'),
