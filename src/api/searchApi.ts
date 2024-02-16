@@ -147,6 +147,7 @@ export enum ResultParam {
   CristinId = 'cristinId',
   Doi = 'doi',
   From = 'from',
+  FundingIdentifier = 'fundingIdentifier',
   FundingSource = 'fundingSource',
   GrantId = 'grantId',
   Handle = 'handle',
@@ -180,6 +181,7 @@ export interface FetchResultsParams {
   [ResultParam.CristinId]?: string | null;
   [ResultParam.Doi]?: string | null;
   [ResultParam.From]?: number | null;
+  [ResultParam.FundingIdentifier]?: string | null;
   [ResultParam.FundingSource]?: string | null;
   [ResultParam.GrantId]?: string | null;
   [ResultParam.Handle]?: string | null;
@@ -235,6 +237,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.doi) {
     searchParams.set(ResultParam.Doi, params.doi);
+  }
+  if (params.fundingIdentifier) {
+    searchParams.set(ResultParam.FundingIdentifier, params.fundingIdentifier);
   }
   if (params.fundingSource) {
     searchParams.set(ResultParam.FundingSource, params.fundingSource);
