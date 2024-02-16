@@ -1030,7 +1030,7 @@
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt."
     },
-    "grant_id": "TilskuddsID",
+    "grant_id": "Tilskudds-ID",
     "keywords": "Nøkkelord",
     "no_participants": "Ingen registrerte deltakere.",
     "no_related_projects": "Ingen relaterte prosjekt.",
@@ -1172,7 +1172,7 @@
       "funding": {
         "funder": "Finansiør",
         "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",
-        "funding_id": "Tilskudds ID",
+        "funding_id": "Tilskudds-ID",
         "funding_name": "Tilskuddsnavn",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
@@ -1257,7 +1257,7 @@
     "public_page": {
       "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
-      "cristin_id": "Cristin ID",
+      "cristin_id": "Cristin-ID",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
@@ -1730,7 +1730,7 @@
     "result": "Resultat",
     "search_for_contributor": "Søk etter bidragsyter",
     "search_for_funder": "Søk etter finansiør",
-    "search_for_funding_identifier": "Søk på Tilskudds ID",
+    "search_for_funding_identifier": "Søk på Tilskudds-ID",
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
