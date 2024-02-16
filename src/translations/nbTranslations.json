@@ -171,9 +171,9 @@
     "error_occurred": "En uventet feil har oppstått",
     "file": "Fil",
     "filter": "Filter",
+    "financier": "Finansiør",
     "first_name": "Fornavn",
     "funding": "Finansiering",
-    "financier": "Finansiør",
     "help": "Hjelp",
     "id": "ID",
     "institution": "Institusjon",
@@ -270,6 +270,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -355,11 +359,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -503,12 +503,12 @@
       "add_employment": "Ansettelse lagt til",
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
-      "create_journal": "Tidsskriften ble opprettet",
+      "create_journal": "Tidsskriftet ble opprettet",
       "create_note": "Merknaden ble lagret",
       "create_nvi_period": "NVI-periode ble opprettet",
       "create_person": "Person ble opprettet",
       "create_project": "Prosjekt er opprettet",
-      "create_publisher": "Utigveren ble opprettet",
+      "create_publisher": "Utgiveren ble opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_registration": "Publikasjon er opprettet",
       "create_series": "Serien ble opprettet",
@@ -704,7 +704,7 @@
     "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
       "delete_all_draft_registrations": "Slett alle kladder",
-      "delete_all_draft_registrations_message": "Slett alle upubliserte registreringer?",
+      "delete_all_draft_registrations_message": "Slett alle kladder?",
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
       "published": "Publisert",
@@ -1172,11 +1172,11 @@
       "funding": {
         "funder": "Finansiør",
         "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",
-        "funding_sum": "Sum",
         "funding_id": "Tilskudds ID",
+        "funding_name": "Tilskuddsnavn",
+        "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
-        "funding_name": "Tilskuddsnavn",
         "remove_funding": "Fjern finansiering"
       },
       "hrcs_activities": "HRCS-aktiviteter",
@@ -1586,7 +1586,7 @@
         "edit_mention_in_publication": "Endre til publisering/omtale",
         "institution_name": "Arrangørens navn",
         "more_info_about_elementet": "Mer om elementet",
-        "place": "Visningsted",
+        "place": "Visningssted",
         "presentation_type": "Type formidlingsform",
         "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
         "subtype": {
