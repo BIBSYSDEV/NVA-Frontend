@@ -41,10 +41,6 @@ export const FindRegistration = ({
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
-  const handleSearchAutoCompleteChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setSearchBeforeDebounce(event.target.value);
-  };
-
   const searchResults = duplicateRegistrationSearch.data?.hits ?? [];
 
   const searchResultNotContainingToBeDeleted = searchResults.filter(
