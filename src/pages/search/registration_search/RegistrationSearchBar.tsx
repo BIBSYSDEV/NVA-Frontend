@@ -27,15 +27,14 @@ import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
-  ResultParam.CourseCode,
-  ResultParam.CristinId,
+  ResultParam.Course,
+  ResultParam.CristinIdentifier,
   ResultParam.Doi,
-  ResultParam.GrantId,
+  ResultParam.FundingSource,
   ResultParam.Handle,
   ResultParam.Isbn,
   ResultParam.Issn,
   ResultParam.TopLevelOrganization,
-  ResultParam.FundingSource,
 ];
 
 interface SelectedFacet {
@@ -104,9 +103,10 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         processSearchParamProperties(values, ResultParam.Issn);
         processSearchParamProperties(values, ResultParam.Doi);
         processSearchParamProperties(values, ResultParam.Handle);
-        processSearchParamProperties(values, ResultParam.GrantId);
-        processSearchParamProperties(values, ResultParam.CourseCode);
-        processSearchParamProperties(values, ResultParam.CristinId);
+        processSearchParamProperties(values, ResultParam.FundingIdentifier);
+        processSearchParamProperties(values, ResultParam.FundingSource);
+        processSearchParamProperties(values, ResultParam.Course);
+        processSearchParamProperties(values, ResultParam.CristinIdentifier);
 
         history.push({ search: searchParams.toString() });
       }}>

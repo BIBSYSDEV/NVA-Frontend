@@ -37,6 +37,7 @@ import { StyledStatusMessageBox } from '../../messages/components/PublishingRequ
 import { ErrorList } from '../../registration/ErrorList';
 import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
+import { DeletePublication } from './DeletePublication';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -323,6 +324,7 @@ export const PublishingAccordion = ({
             <MessageForm confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)} />
           </Box>
         )}
+        {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
         {(registration.status === RegistrationStatus.Unpublished ||
           registration.status === RegistrationStatus.Deleted) && (
           <DeletedRegistrationInformation registration={registration} />

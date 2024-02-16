@@ -84,8 +84,9 @@ interface AdditionalIdentifier {
 }
 
 interface PublicationNote {
-  readonly type: 'UnpublishingNote' | 'PublicationNote';
-  readonly note: string;
+  type: 'UnpublishingNote' | 'PublicationNote';
+  note?: string;
+  publicationNoteMessage?: string;
 }
 
 export interface BaseRegistration {
@@ -287,3 +288,9 @@ export interface UnconfirmedDocument {
 }
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
+
+export interface UnpublishPublicationRequest {
+  type: 'UnpublishPublicationRequest';
+  duplicateOf?: string;
+  comment: string;
+}
