@@ -1697,9 +1697,11 @@
     "status": {
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
+      "DELETED": "Slettet",
       "NEW": "Ny",
       "PUBLISHED": "Publisert",
-      "PUBLISHED_METADATA": "Metadata publisert"
+      "PUBLISHED_METADATA": "Metadata publisert",
+      "UNPUBLISHED": "Avpublisert"
     },
     "year_published": "Publiseringsår"
   },

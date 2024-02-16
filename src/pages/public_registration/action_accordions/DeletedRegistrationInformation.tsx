@@ -38,16 +38,18 @@ export const DeletedRegistrationInformation = ({ registration }: DeletedRegistra
           padding: '0.2rem 1rem',
           borderRadius: '4px',
         }}>
-        {registration.status === RegistrationStatus.Unpublished && (
+        {(registration.status === RegistrationStatus.Unpublished ||
+          registration.status === RegistrationStatus.Deleted) && (
           <Typography variant="h4" component="span" sx={{ textTransform: 'uppercase' }}>
-            {registration.status === RegistrationStatus.Unpublished ? 'Avpuplisert' : 'Slettet'}
+            {t(`registration.status.${registration.status}`)}
           </Typography>
         )}
 
         {unpublishingNote?.note && <Typography>{unpublishingNote.note}</Typography>}
         {registration.duplicateOf && (
           <Typography>
-            Siteringer vil vise til <Link href={registration.duplicateOf}>{duplicateRegistrationTitle}</Link>
+            {t('registration.citation_points_to')}{' '}
+            <Link href={registration.duplicateOf}>{duplicateRegistrationTitle}</Link>
           </Typography>
         )}
       </Box>
