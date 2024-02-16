@@ -83,9 +83,7 @@ export const FindRegistration = ({
               ...params.InputProps,
               type: 'search',
               startAdornment: (
-                <IconButton data-testid={dataTestId.startPage.searchButton} title={t('common.search')} size="large">
-                  <SearchIcon />
-                </IconButton>
+                <SearchIcon />
               ),
             }}
           />
