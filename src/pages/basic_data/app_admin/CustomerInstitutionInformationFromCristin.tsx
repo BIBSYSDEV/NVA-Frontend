@@ -82,7 +82,7 @@ export const CustomerInstitutionInformationFromCristin = ({
             <TextField
               disabled
               fullWidth
-              value={topLevelCristinCode ?? ''}
+              value={getUnitTopLevelCode(cristinId) ?? ''}
               variant="filled"
               label={t('basic_data.institutions.institution_toplevel_code')}
             />
