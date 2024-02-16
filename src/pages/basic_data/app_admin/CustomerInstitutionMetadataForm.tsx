@@ -1,6 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Checkbox, Chip, Divider, FormControlLabel, FormLabel, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -20,12 +21,14 @@ import {
   emptyProtectedDoiAgent,
   Sector,
 } from '../../../types/customerInstitution.types';
+import { Organization } from '../../../types/organization.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 import { customerInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
 import { CustomerDoiPasswordField } from './CustomerDoiPasswordField';
+import { CustomerInstitutionInformationFromCristin } from './CustomerInstitutionInformationFromCristin';
 import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
 import { OrganizationSearchField } from './OrganizationSearchField';
 
@@ -43,6 +46,7 @@ export const CustomerInstitutionMetadataForm = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [customerData, setCustomerData] = useState<Organization | null>(null);
 
   const handleSubmit = async ({ customer, doiAgent, canAssignDoi }: CustomerInstitutionFormData) => {
     if (!editMode) {
@@ -96,9 +100,9 @@ export const CustomerInstitutionMetadataForm = ({
       {({ values, isSubmitting, setValues, setFieldValue }: FormikProps<CustomerInstitutionFormData>) => (
         <Form noValidate>
           <InputContainerBox>
-            <Field name={CustomerInstitutionFieldNames.Name}>
-              {({ field, meta: { touched, error } }: FieldProps<string>) =>
-                !editMode ? (
+            {!editMode && (
+              <Field name={CustomerInstitutionFieldNames.Name}>
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <OrganizationSearchField
                     onChange={(selectedInstitution) => {
                       const name = selectedInstitution?.labels ? getLanguageString(selectedInstitution.labels) : '';
@@ -112,32 +116,23 @@ export const CustomerInstitutionMetadataForm = ({
                         },
                         doiAgent: emptyProtectedDoiAgent,
                       });
+                      setCustomerData(selectedInstitution);
                     }}
                     errorMessage={touched && !!error ? error : undefined}
                     fieldInputProps={field}
                   />
-                ) : (
-                  <TextField
-                    variant="filled"
-                    label={t('common.institution')}
-                    data-testid={dataTestId.organization.searchField}
-                    required
-                    disabled
-                    {...field}
-                  />
-                )
-              }
-            </Field>
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.DisplayName}
-              label={t('basic_data.institutions.display_name')}
-              required
-              dataTestId={dataTestId.basicData.institutionAdmin.displayNameField}
-            />
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.ArchiveName}
-              label={t('basic_data.institutions.archive_name')}
-              dataTestId={dataTestId.basicData.institutionAdmin.archiveNameField}
+                )}
+              </Field>
+            )}
+
+            <CustomerInstitutionInformationFromCristin
+              customerData={customerData}
+              cristinId={values.customer.cristinId}
+              setName={(newName) => {
+                setFieldValue(CustomerInstitutionFieldNames.DisplayName, newName);
+                setFieldValue(CustomerInstitutionFieldNames.Name, newName);
+              }}
+              displayName={values.customer.displayName}
             />
             <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
