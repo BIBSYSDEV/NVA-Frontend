@@ -1,6 +1,6 @@
 import { MenuItem, Select } from '@mui/material';
 import { t } from 'i18next';
-import { Language, getLanguageByIso6393Code } from 'nva-language';
+import { getLanguageByIso6393Code } from 'nva-language';
 import { useHistory } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import i18n from '../../../translations/i18n';
@@ -28,14 +28,24 @@ const languageOptions = [
 export const LanguageFilter = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const languageParam = searchParams.get(ResultParam.PublicationLanguage);
+  const languageParam = searchParams.getAll(ResultParam.PublicationLanguage);
 
-  const handleChange = (selectedUri: string | Language | null) => {
-    const selectedValue = languageOptions.find((value) => value.uri === selectedUri);
-    if (selectedValue) {
-      searchParams.set(ResultParam.PublicationLanguage, selectedValue.uri);
+  const handleChange = (selectedUris: string[] | null) => {
+    if (selectedUris) {
+      const selectedLanguages = selectedUris
+        .map((uri) => {
+          const selectedLanguage = languageOptions.find((language) => language.uri === uri);
+          return selectedLanguage ? selectedLanguage.uri : null;
+        })
+        .filter(Boolean);
+
+      if (selectedLanguages.length > 0) {
+        searchParams.set(ResultParam.PublicationLanguage, selectedLanguages.join('+'));
+      } else {
+        searchParams.delete(ResultParam.PublicationLanguage);
+      }
     } else {
-      searchParams.delete(ResultParam.Query);
+      searchParams.delete(ResultParam.PublicationLanguage);
     }
 
     history.push({ search: searchParams.toString() });
@@ -43,18 +53,17 @@ export const LanguageFilter = () => {
 
   return (
     <Select
+      multiple
       sx={{ maxWidth: '15rem' }}
-      value={languageParam ?? ''}
+      value={languageParam.length ? languageParam : ['default']}
       data-testid={dataTestId.registrationWizard.description.languageField}
       fullWidth
-      size="small"
       label={t('registration.description.primary_language')}
-      placeholder={t('registration.description.primary_language')}
       onChange={(event) => {
-        handleChange(event.target.value);
+        handleChange(event.target.value as string[]);
       }}
-      variant="filled">
-      <MenuItem value={''}>{t('registration.description.primary_language')}</MenuItem>
+      variant="outlined">
+      <MenuItem value={'default'}>{t('registration.description.primary_language')}</MenuItem>
       {languageOptions.map(({ uri, nob, eng }) => (
         <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
           {i18n.language === 'nob' ? nob : eng}
