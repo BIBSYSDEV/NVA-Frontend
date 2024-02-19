@@ -278,6 +278,7 @@ export interface RegistrationAggregations {
   publisher?: AggregationValue[];
   series?: AggregationValue[];
   journal?: AggregationValue[];
+  hasFile?: AggregationValue[];
 }
 
 export interface ConfirmedDocument {

@@ -150,6 +150,7 @@ export enum ResultParam {
   FundingIdentifier = 'fundingIdentifier',
   FundingSource = 'fundingSource',
   Handle = 'handle',
+  HasFile = 'hasFile',
   Identifier = 'id',
   IdentifierNot = 'idNot',
   Isbn = 'isbn',
@@ -186,6 +187,7 @@ export interface FetchResultsParams {
   [ResultParam.FundingIdentifier]?: string | null;
   [ResultParam.FundingSource]?: string | null;
   [ResultParam.Handle]?: string | null;
+  [ResultParam.HasFile]?: string | null;
   [ResultParam.Identifier]?: string | null;
   [ResultParam.IdentifierNot]?: string | null;
   [ResultParam.Isbn]?: string | null;
@@ -250,6 +252,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.handle) {
     searchParams.set(ResultParam.Handle, params.handle);
+  }
+  if (params.hasFile) {
+    searchParams.set(ResultParam.HasFile, params.hasFile);
   }
   if (params.id) {
     searchParams.set(ResultParam.Identifier, params.id);

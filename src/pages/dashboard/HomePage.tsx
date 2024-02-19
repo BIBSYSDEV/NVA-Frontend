@@ -69,6 +69,7 @@ const HomePage = () => {
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
     handle: params.get(ResultParam.Handle),
+    hasFile: params.get(ResultParam.HasFile),
     id: params.get(ResultParam.Identifier),
     isbn: params.get(ResultParam.Isbn),
     issn: params.get(ResultParam.Issn),
