@@ -75,6 +75,7 @@ const HomePage = () => {
     order: params.get(ResultParam.Order),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
+    publisher: params.get(ResultParam.Publisher),
     query: registrationSearchTerm,
     results: rowsPerPage,
     sort: params.get(ResultParam.Sort) as SortOrder | null,
