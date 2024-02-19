@@ -39,8 +39,9 @@ export const ActionPanelContent = ({
   const userIsCurator = userIsRegistrationCurator(user, registration);
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
-  const publishingRequestTickets = tickets.filter((ticket) => ticket.type === 'PublishingRequest');
-  const currentPublishingRequestTicket = (publishingRequestTickets.pop() as PublishingTicket | undefined) ?? null;
+  const publishingRequestTickets = tickets.filter(
+    (ticket) => ticket.type === 'PublishingRequest'
+  ) as PublishingTicket[];
   const supportTickets = tickets.filter((ticket) => ticket.type === 'GeneralSupportCase');
   const currentSupportTicket = supportTickets.pop() ?? null;
 
@@ -94,13 +95,13 @@ export const ActionPanelContent = ({
     <>
       {!isInRegistrationWizard && (
         <>
-          {(canCreateTickets || currentPublishingRequestTicket) && (
+          {(canCreateTickets || publishingRequestTickets.length > 0) && (
             <ErrorBoundary>
               <PublishingAccordion
                 refetchData={refetchData}
                 isLoadingData={isLoadingData}
                 registration={registration}
-                publishingRequestTicket={currentPublishingRequestTicket}
+                publishingRequestTickets={publishingRequestTickets}
                 userIsCurator={userIsCurator}
                 addMessage={addMessage}
               />

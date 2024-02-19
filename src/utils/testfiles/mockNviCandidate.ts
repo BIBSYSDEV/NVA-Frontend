@@ -5,7 +5,7 @@ export const mockNviCandidate: NviCandidate = {
   publicationId: '12345679',
   approvals: [],
   notes: [],
-  periodStatus: {
+  period: {
     status: 'OpenPeriod',
   },
 };

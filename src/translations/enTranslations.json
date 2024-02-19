@@ -14,7 +14,7 @@
       "paragraph5": "Although NVA has been established and in use by several institutions, the service will be in continuous development throughout its lifetime. Institutions that do not have a research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
     },
     "footer_text": "The service is delivered by Sikt - Norwegian Agency for Shared Services in Education and Research",
-    "short_description": "The national research archive (NVA) collects information about Norwegian research and makes research results- and information openly available."
+    "short_description": "The National Research Archive (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
   },
   "authorization": {
     "accept_terms_to_create_user": "I agree to be created as a user in NVA",
@@ -33,15 +33,18 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Add employee",
-      "confirmed_identity": "The institution confirms the identity of this person. This only applies to persons without a national identity number.",
       "create_person": "Create person",
+      "missing_nin_description": "<0>We need you to confirm the identity of the person without a national identity number such as a birth number or D-number.</0><0>To distinguish the person from others with similar names, at least one research result associated with this person must be registered.</0><0>Note that you are not only confirming the person for your institution, but also for other institutions in the system.</0><0>Whoever confirms the exception will therefore be visible in the system as documentation.</0><0>Do you confirm that this person exists and has contributed to at least one research result at your institution?</0>",
+      "missing_nin_title": "Confirm identity for person without national identity number",
       "name_or_nin": "Name or national identity number",
       "new_search": "New search",
       "no_matching_persons_found": "No matching persons found in the Person Registry",
+      "only_confirmed_user_qualify_for_nvi": "Only persons with confirmed identity can be included in the NVI report.",
       "position": "Position",
       "position_percent": "Percentage employment (FTE percentage)",
       "search_for_person": "Search for person",
-      "update_person_registry": "Update person registry"
+      "update_person_registry": "Update person registry",
+      "without_nin": "Without a national identity number"
     },
     "basic_data": "Basic data",
     "central_import": {
@@ -93,6 +96,7 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "The institution's domain in Feide",
+      "institution_is_inactive": "Set to inactive",
       "institution_is_nvi_applicable": "Institution reports publication points to NVI",
       "institution_receives_funding_via_rbo": "Receives funding via Results-based redistribution (RBO)",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
@@ -107,7 +111,7 @@
         "ABM": "Archives, Libraries and Museums",
         "HEALTH": "Health sector",
         "INSTITUTE": "Institute sector",
-        "OTHER": "Other",
+        "OTHER": "Others",
         "UHI": "University and college"
       }
     },
@@ -118,11 +122,16 @@
     },
     "person_register": {
       "current_employments": "Current employments",
+      "degree_roles": {
+        "degree": "Student assignment",
+        "degree_tasks": "Specific tasks",
+        "embargo": "Embargo"
+      },
       "edit_person": "Edit person",
       "employee_table_caption": "List of all employees",
       "employment_x_of_y": "Employment {{selected}} of {{total}}",
       "hide_full_nin": "Hide national identity number",
-      "national_identity_number": "National identity number",
+      "must_be_curator_to_have_area_of_responsibility": "Must be a curator to have an area of responsibility",
       "no_eligable_roles": "Persons without a national identity number can not have any roles",
       "no_employees_found": "No employees found",
       "other_employments": "Other active employments",
@@ -132,6 +141,7 @@
       "remove_employment": "Remove employment",
       "remove_employment_text": "Are you sure you want to remove this employment?",
       "remove_employment_title": "Remove employment?",
+      "select_unit": "Select unit",
       "show_full_nin": "Show national identity number"
     }
   },
@@ -154,11 +164,14 @@
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Edit",
+    "email": "Email",
+    "employment": "Employment",
     "employments": "Employments",
     "end_date": "End date",
     "error_occurred": "An unexpected error has occurred",
     "file": "File",
     "filter": "Filter",
+    "financier": "Funder",
     "first_name": "First name",
     "funding": "Funding",
     "help": "Help",
@@ -172,6 +185,7 @@
     "move_down": "Move down",
     "move_up": "Move up",
     "name": "Name",
+    "national_id_number": "National identity number",
     "next": "Next",
     "no": "No",
     "no_hits": "No hits",
@@ -189,10 +203,12 @@
     "page_title": "Nasjonalt Vitenarkiv",
     "pagination_rows_per_page": "Number of rows per page:",
     "pagination_showing_interval": "Showing {{start}}-{{end}} of {{total}}",
+    "person": "Person",
     "place": "Place",
     "previous": "Previous",
+    "project_status": "Project status",
     "publisher": "Publisher",
-    "publishing_year": "",
+    "publishing_year": "Publication year",
     "rbo": "Results-based redistribution (RBO)",
     "read": "Read",
     "read_less": "Read less",
@@ -225,8 +241,8 @@
     "show_more": "Show more",
     "skip_to_main_content": "Jump to main content",
     "skip_to_schema": "Jump to form",
-    "sort_newest_first": "",
-    "sort_oldest_first": "",
+    "sort_newest_first": "Newest first",
+    "sort_oldest_first": "Oldest first",
     "start": "Start",
     "start_date": "Start date",
     "start_page": "Start page",
@@ -346,15 +362,11 @@
     "1144": "Nutrition"
   },
   "editor": {
-    "categories_with_files": "",
-    "categories_with_files_description": "",
+    "categories_with_files": "Categories with File Upload",
+    "categories_with_files_description": "Specify the categories where your institution allows file upload",
     "curators": {
       "area_of_responsibility": "Area of responsibility",
-      "area_of_responsibility_placeholder": "No limitations",
       "areas_of_responsibility": "Areas of responsibility",
-      "curator_has_extended_privileges": "Curator has the rights to edit:",
-      "edit_extended_responsibility": "Edit extended area of responsibility",
-      "extended_area_of_resposibility": "Extended area of responsibility",
       "no_users_found": "No users found"
     },
     "doi": {
@@ -433,7 +445,7 @@
       "get_customers": "Failed to retrieve customer institutions",
       "get_doi": "Failed to retrieve link data",
       "get_doi_agent": "Could not retrieve DOI configuration",
-      "get_funding_source": "Could not retrieve funding source.",
+      "get_funding_source": "Could not retrieve funding source",
       "get_funding_sources": "",
       "get_import_candidate": "Failed to retrieve import candidate",
       "get_import_candidates": "Failed to retrieve import candidates",
@@ -538,6 +550,7 @@
       "editor_required": "You need to register at least one editor on this registration",
       "employments_missing_data": "Every employment must have position, job percentage and start date",
       "has_invalid_format": "{{field}} has invalid format",
+      "invalid_email": "Invalid email",
       "invalid_number_of_digits": "{{field}} must have {{digits}} digits",
       "invalid_symbol_in_name": "{{field}} must not include numbers or special characters",
       "is_required": "{{-field}} is required",
@@ -554,7 +567,7 @@
   },
   "footer": {
     "about_nva": "About the national research archive (NVA)",
-    "about_nva_text": "The national research archive (NVA) collects publications and other research results and makes them openly available in a joint national solution. This makes results from Norwegian research available in a single service.",
+    "about_nva_text": "The national research archive (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
     "about_sikt": "About Sikt",
     "about_sikt_text": "Sikt enters an agreement with each individual institution regarding use of the service. Customers are typically universities, university colleges, research institutes and organizations in the health sector.",
     "become_customer": "How to become a customer?",
@@ -603,8 +616,9 @@
       "doi_closed": "DOI rejected",
       "doi_completed": "DOI allocated",
       "doi_pending": "Pending DOI allocation",
-      "doi_requested": "DOI requested",
-      "files_published": "File(s) published",
+      "files_published_one": "{{count}} file published",
+      "files_published_other": "{{count}} files published",
+      "files_published_unknown": "File(s) published",
       "files_rejected": "File(s) rejected",
       "general_support_pending": "Pending follow-up",
       "mark_as_completed": "Mark as completed",
@@ -624,7 +638,9 @@
     "my_page": "My page",
     "my_profile": {
       "background": "Background",
+      "contact_information": "Contact information",
       "edit_promoted_publication": "Add/remove favorite",
+      "edit_research_profile": "Edit researcher profile",
       "field_and_background": {
         "background_placeholder": "Fill in",
         "english": "English",
@@ -640,10 +656,8 @@
         "roles": "Roles"
       },
       "identity": {
-        "cristin_id": "Cristin ID",
-        "full_name": "Full name",
         "identity": "Identity",
-        "not_shown_publicly": "Not displayed publicly",
+        "identity_numbers": "Identity numbers",
         "upload_profile_photo": "Upload profile picture",
         "upload_profile_photo_info": "Maximum size: 1 MB. Supported file types: .jpg or .jpeg"
       },
@@ -661,21 +675,24 @@
         "remove_connection": "Unlink ORCID",
         "remove_connection_info": "Are you sure you want to unlink ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, please go to your ORCID profile."
       },
+      "overview_and_settings": "Overview and settings",
+      "person_name": "Person name",
+      "personal_web_page": "Personal website",
       "preferred_first_name": "Preferred first name",
       "preferred_last_name": "Preferred last name",
+      "preferred_name": "Author name",
       "profile_picture": "Profile picture",
       "projects": "Projects",
       "remove_profile_picture": "Remove profile picture",
       "remove_profile_picture_info": "Are you sure you want to remove profile picture?",
-      "research_profile_summary": {
-        "affiliations": "Affiliations",
-        "preview": "Preview",
-        "research_profile": "Research profile"
-      },
       "results": "Results",
       "telephone": "Telephone",
       "user_profile": "User profile",
-      "user_profile_description": "Here you can fill in and mark what you wish to display on your public researcher profile."
+      "user_role_and_help": {
+        "application_help_helper_text": "If you need guidance for registering, this may be helpful.",
+        "application_help_text": "Guidance for registering a result",
+        "user_role_and_help": "User role and help"
+      }
     },
     "no_employments": "No employments",
     "project_registration_status": {
@@ -684,6 +701,7 @@
       "ongoing": "Ongoing"
     },
     "project_registrations": "Project registrations",
+    "public_research_profile": "Public researcher profile",
     "registrations": {
       "delete_all_draft_registrations": "Delete all drafts",
       "delete_all_draft_registrations_message": "Delete all drafts?",
@@ -699,24 +717,24 @@
       "creator": "Registrar",
       "creator_description": "Can register publications and other resources.",
       "curator": "Curator",
-      "doi_curator": "",
-      "doi_curator_description": "",
+      "doi_curator": "DOI curator",
+      "doi_curator_description": "Can view and handle DOI requests.",
       "editor": "Editor",
       "editor_description": "Determines access to controlled vocabularies and publication strategy for the institution.",
       "institution_admin": "Administrator",
       "institution_admin_description": "Maintains the institution's information in the person registry and assigns roles in the service.",
       "institution_admins": "Administrators",
       "internal_importer": "Internal importer",
-      "internal_importer_description": "Can process import candidates",
+      "internal_importer_description": "Can process import candidates.",
       "no_active_employments": "You do not have any roles because you have no active employments and do not have access to register.",
       "no_roles": "You do not have any roles because your administrator has not assigned any roles to you",
       "not_customer": "You do not have any roles because your institution is unknown to the application",
       "nvi_curator": "NVI curator",
       "nvi_curator_description": "View and process NVI candidates.",
-      "publishing_curator": "",
-      "publishing_curator_description": "",
-      "support_curator": "",
-      "support_curator_description": ""
+      "publishing_curator": "Publishing curator",
+      "publishing_curator_description": "Can view and handle publishing requests.",
+      "support_curator": "User support curator",
+      "support_curator_description": "Can view and handle user support requests."
     }
   },
   "privacy": {
@@ -1000,7 +1018,7 @@
     "close_view": "Close view",
     "close_view_description": "Unsaved data you have entered will be lost if you close this view. Do you still want to close it?",
     "coordinating_institution": "Coordinating institution",
-    "create_project": "Create project",
+    "create_project": "New project",
     "edit_project": "Edit project",
     "form": {
       "empty_registration": "Empty registration",
@@ -1043,6 +1061,7 @@
     "summary": "Summary"
   },
   "registration": {
+    "citation_points_to": "The citation refers to",
     "contributors": {
       "add_affiliation": "Add affiliation",
       "add_contributor": "Add contributor",
@@ -1147,16 +1166,17 @@
       "alternative_title": "Alternative title",
       "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
-      "create_project_helper_text": "",
+      "create_project_helper_text": "<0>The researcher defines their own projects.</0> <0>A project must have a title, a project leader, a coordinating institution, a start and end date. A project can have project participants, funders, approvals or research results.</0> <0>If you have an RCN grant, you can establish a project with that as a starting point. You start by looking up your RCN funding, it is added to the project and all mandatory fields are pre-filled, except for the project leader who must be looked up and confirmed.</0> <0>(Similar functionality is planned based on an REC approval. All projects that are to be part of the KBS reporting must have a REC approval that identifies the project as a clinical treatment study.)</0>",
       "date_published": "Date published",
       "description_of_content": "Description of content, if relevant",
       "funding": {
         "funder": "Funder",
-        "funding_helper_text": "",
+        "funding_helper_text": "<0>You can register funding directly on the result. This is particularly relevant if you do not know which project the result is part of, or if the result has other funders than the project it may belong to.</0> <0>If the result is linked to a project, it will inherit all project funding. It is not necessary to enter the same funding twice.</0>",
+        "funding_id": "Grant ID",
+        "funding_name": "Grant name",
         "funding_sum": "Sum",
         "nfr_project": "NFR project",
         "nfr_project_search": "Search by project name or project leader",
-        "project": "Project",
         "remove_funding": "Remove funding"
       },
       "hrcs_activities": "HRCS activities",
@@ -1166,7 +1186,7 @@
       "npi_disciplines": "Scientific field in Norwegian publication indicator",
       "primary_language": "Primary language for content",
       "project_association": "Project association",
-      "project_helper_text": "",
+      "project_helper_text": "<0>If you register a funding source on a project, the results you link to that project will \"inherit\" information about funding. This means you don't have to register all funding sources on all the results of the project. If you search for the funding source in NVA, you will get hits on both the project and the results, and reporting to the Research Council or others will include all results.</0> <0>A result can be linked to several projects.</0>",
       "remove_vocabulary": "Remove vocabulary",
       "search_for_npi_discipline": "Search for scientific field",
       "year_only": "Year only"
@@ -1180,6 +1200,7 @@
       "administrative_contract": "Internal file that should never be published. E.g. author agreement or other documentation for the registered result",
       "conditions_for_using_file": "Terms of use",
       "embargo": "Embargo",
+      "file_and_license_info": "Every file in NVA must have a license, so that the reader is informed about what they are allowed to do with the content.",
       "file_publish_date_helper_text": "File is locked until the specified date",
       "files": "Files",
       "files_are_not_published": "Files are not published",
@@ -1191,7 +1212,7 @@
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
       "find_series_in_channel_register": "See information about the series in the Norwegian Register",
       "info_from_channel_register": "More information about the selected publication channel",
-      "legal_note": "",
+      "legal_note": "Note for legal clarification",
       "license": "License",
       "licenses": "Licenses",
       "link_to_resource": "Link to resource",
@@ -1209,10 +1230,10 @@
       "version_accepted_helper_text_metadata_only": "<0>Accepted version</0>: The version of a research paper accepted by a journal after peer review. This version does not normally include any changes made after acceptance such as copy editing, or typesetting. This version should be shared in NVA, preferable in PDF format and under a CC-BY license.",
       "version_embargo_helper_text": "<0>Embargo/delayed date of publication</0>: most publishers will not allow the author to make the published version of the article openly available until a certain time has passed. The date is usually specified in the publishing agreement. In some cases, even the accepted version may have similar restrictions.",
       "version_helper_text": "<0>Upload the accepted and/or published versions of the article. If the published version of the article is openly available, you don’t have to upload the accepted version.</0> <1>Include any publishing agreements, like formal contracts or other communication with the editor. The documents should specify conditions for embargo and licenses. <0>Remember to mark for “not publish”, to hide the documents from public view.</0></1>",
-      "version_helper_text_metadata_only": "Upload the accepted and/or published versions of the article and any publishing agreements - formal contracts or other communication with the editor. A curator will check the details and ensure that only files legal to share is shared, and with correct licenses.",
-      "version_published_helper_text": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The licence is normally decided by the publisher, so the safe option for a license is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY license.",
-      "version_published_helper_text_metadata_only": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The licence is normally decided by the publisher, so the safe option for a license is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY license.",
-      "version_publishing_agreement_helper_text": "<0>Publishing Agreement</0> is a contract between a publisher and the artist or author. It sets out things like intellectual property ownership, where and when the work can be published, payment terms, liability protections, confidentiality, and royalties. This document is of much help for the curators when questions about license and publications dates needs to be decided on, please deposit it. Such agreements will not be publicly displayed.",
+      "version_helper_text_metadata_only": "Upload the accepted and/or published version of the article and publishing agreements, such as formal contracts or other communication with the editor. A curator at your institution will review the files and ensure that only the files you are allowed to share are shared, and that they have been assigned the correct licenses.",
+      "version_published_helper_text": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The license is normally decided by the publisher, so the safe option for a license is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY license.",
+      "version_published_helper_text_metadata_only": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The license is normally decided by the publisher, so the safe option for a license is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY license.",
+      "version_publishing_agreement_helper_text": "<0>The Author Agreement</0> is a contract between a publisher and an artist or author. It specifies matters such as intellectual ownership, where and how the work can be published, payments, liability protection, confidentiality and royalty. This document is of great help to curators when making assessments about license and publication date (embargo). Such documents will not be visible to others.",
       "version_publishing_agreement_helper_text_metadata_only": "<0>Publishing Agreement</0> is a contract between a publisher and the artist or author. It sets out things like intellectual property ownership, where and when the work can be published, payment terms, liability protections, confidentiality, and royalties. This document is of much help for the curators when questions about license and publications dates needs to be decided on, please deposit it. Such agreements will not be publicly displayed."
     },
     "heading": {
@@ -1221,7 +1242,7 @@
       "files_and_license": "Files and License",
       "resource_type": "Resource type"
     },
-    "is_revision": "",
+    "is_revision": "The work is a revision",
     "missing_title": "Missing title",
     "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
     "modal_unsaved_changes_heading": "Leave without saving?",
@@ -1231,7 +1252,7 @@
       "confirm_saving_registration": "Do you want to save your changes?",
       "continue_editing_registration": "Do you still want to edit the publication?",
       "registration_is_included_in_nvi": "The publication is a part of the Norwegian Science Index (NVI)",
-      "reset_nvi_warning": "You may change the year, contributor's affiliation(-s) to institution(-s) or publishing channel, but the curator at all contributing institutions must re-approve the publication in the Norwegian Science Index (NVI)"
+      "reset_nvi_warning": "You may change the year, contributor's affiliation(-s) to institution(-s) or publishing channel, but curators at all contributing institutions must re-approve the publication in the Norwegian Science Index (NVI)"
     },
     "public_page": {
       "about_registration": "About this registration",
@@ -1273,6 +1294,7 @@
         "publish_metadata": "Publish metadata",
         "publish_metadata_and_files": "Publish metadata and file(s)",
         "registration_is_published": "The registration has been published. Metadata and any files are publicly available.",
+        "registration_is_published_with_files": "The registration is published. Metadata and file(s) are publicly available.",
         "registration_will_soon_be_published": "The registration will be published soon. Reload page to see updated status.",
         "reload": "Reload",
         "review_preview_before_publishing": "Review content before publishing.",
@@ -1357,7 +1379,7 @@
     },
     "registration": {
       "link_to_resource": "Link to original version",
-      "registration_doi_validation_message": "This result is already published in NVA. If it has errors or omissions, this result must be updated.",
+      "registration_doi_validation_message": "This result is already published in NVA. If it has errors or omissions, the result must be corrected.",
       "start_registration": "Start registration",
       "start_with_empty_registration_description": "Enter information afterwards",
       "start_with_empty_registration_title": "Start in empty registration form",
@@ -1622,10 +1644,10 @@
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
       "protected_degree_type": "You do not have access. Contact the institution that awarded you the degree to have it published. If it is foreign, ask for curatorial support with the publication.",
-      "protected_file_type": "",
+      "protected_file_type": "Your institution has chosen not to support file upload for this category",
       "publisher_or_organizer": "Publisher/organizer etc.",
-      "related_result": "",
-      "related_results": "",
+      "related_result": "Related result",
+      "related_results": "Related results",
       "remove_doi": "Remove DOI",
       "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you want to remove the link to the original DOI?",
       "research_data": {
@@ -1671,6 +1693,7 @@
       "type_work_specified": "Custom work type",
       "volume": "Volume"
     },
+    "result_is_deleted": "The result is deleted",
     "status": {
       "DRAFT": "Draft",
       "DRAFT_FOR_DELETION": "Deleted",
@@ -1685,7 +1708,7 @@
     "additional_participants_one": "+{{count}} participant",
     "additional_participants_other": "+{{count}} participants",
     "advanced_search": "Advanced search",
-    "advanced_search_description": "Search among all published results.",
+    "advanced_search_description": "Search among all published results",
     "export": "Export",
     "field_label": "Field",
     "health_project_type": "",
@@ -1705,19 +1728,24 @@
     "reset_selection": "Clear selection",
     "responsible_institution": "Owning institution",
     "result": "Result",
+    "search_for_contributor": "Search for contributor",
+    "search_for_funder": "",
     "search_for_sub_unit": "Search for subunit",
     "search_for_title": "Search for title",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
-    "search_project_placeholder": "",
+    "search_project_placeholder": "Search for title, project ID, grant ID or participant",
     "search_term_label": "Value",
     "sector": "Sector",
     "select_one_or_more_categories": "Select one or more categories",
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
+    "sort_by_name_asc": "Name A-Å",
+    "sort_by_name_desc": "Name Å-A",
     "sort_by_published_date_asc": "Publication date (oldest first)",
     "sort_by_published_date_desc": "Publication date (newest first)",
-    "year_from": "",
-    "year_to": ""
+    "sorted_by": "Sorted by",
+    "year_from": "From year",
+    "year_to": "To year"
   },
   "tasks": {
     "all_nvi_results": "All NVI results",

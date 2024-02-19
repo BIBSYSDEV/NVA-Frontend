@@ -18,10 +18,11 @@ export const NationalIdNumberField = ({ nationalId }: NationIdNumberFieldProps) 
   return (
     <TextField
       data-testid={dataTestId.basicData.nationalIdentityNumberField}
+      size="small"
       variant="filled"
       disabled
       value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}
-      label={t('basic_data.person_register.national_identity_number')}
+      label={t('common.national_id_number')}
       InputProps={{
         endAdornment: (
           <Tooltip

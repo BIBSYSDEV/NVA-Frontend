@@ -57,24 +57,22 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
   return isLoading ? (
     <CircularProgress aria-label={t('project.form.related_projects')} />
   ) : projects.length > 0 ? (
-    <>
+    <ListPagination
+      rowsPerPageOptions={itemsPerRowOptions}
+      count={projectIds.length}
+      rowsPerPage={rowsPerPage}
+      page={page}
+      onPageChange={(newPage) => setPage(newPage)}
+      onRowsPerPageChange={(newRowsPerPage) => {
+        setRowsPerPage(newRowsPerPage);
+        setPage(1);
+      }}>
       <List>
         {projects.map((project) => (
           <ProjectListItem key={project.id} project={project} />
         ))}
       </List>
-      <ListPagination
-        rowsPerPageOptions={itemsPerRowOptions}
-        count={projectIds.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={(newPage) => setPage(newPage)}
-        onRowsPerPageChange={(newRowsPerPage) => {
-          setRowsPerPage(newRowsPerPage);
-          setPage(1);
-        }}
-      />
-    </>
+    </ListPagination>
   ) : (
     <Typography>{t('project.no_related_projects')}</Typography>
   );
