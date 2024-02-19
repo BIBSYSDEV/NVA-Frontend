@@ -20,11 +20,15 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const selectedOrganization = searchParams.get(ResultParam.TopLevelOrganization);
   const selectedFunding = searchParams.get(ResultParam.FundingSource);
   const selectedContributor = searchParams.get(ResultParam.Contributor);
+  const selectedPublisher = searchParams.get(ResultParam.Publisher);
+  const selectedSeries = searchParams.get(ResultParam.Series);
 
-  const typeFacet = registrationQuery.data?.aggregations?.type;
-  const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
-  const contributorFacet = registrationQuery.data?.aggregations?.contributor;
-  const fundingFacet = registrationQuery.data?.aggregations?.fundingSource;
+  const typeFacet = registrationQuery.data?.aggregations?.type ?? [];
+  const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization ?? [];
+  const contributorFacet = registrationQuery.data?.aggregations?.contributor ?? [];
+  const fundingFacet = registrationQuery.data?.aggregations?.fundingSource ?? [];
+  const publisherFacet = registrationQuery.data?.aggregations?.publisher ?? [];
+  const seriesFacet = registrationQuery.data?.aggregations?.series ?? [];
 
   const addFacetFilter = (param: string, key: string) => {
     const currentValues = searchParams.get(param)?.split(',') ?? [];
@@ -45,7 +49,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
 
   return (
     <>
-      {typeFacet && typeFacet.length > 0 && (
+      {typeFacet.length > 0 && (
         <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
           {typeFacet.map((facet) => {
             const registrationType = facet.key as PublicationInstanceType;
@@ -71,7 +75,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {topLevelOrganizationFacet && topLevelOrganizationFacet.length > 0 && (
+      {topLevelOrganizationFacet.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
           {topLevelOrganizationFacet.map((facet) => {
             const isSelected = !!selectedOrganization?.includes(facet.key);
@@ -96,7 +100,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {contributorFacet && contributorFacet.length > 0 && (
+      {contributorFacet.length > 0 && (
         <FacetItem
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.startPage.contributorFacets}>
@@ -123,8 +127,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {fundingFacet && fundingFacet.length > 0 && (
-        <FacetItem title={t('common.financier')} dataTestId={dataTestId.startPage.institutionFacets}>
+      {fundingFacet.length > 0 && (
+        <FacetItem title={t('common.financier')} dataTestId={dataTestId.startPage.fundingFacets}>
           {fundingFacet.map((facet) => {
             const isSelected = !!selectedFunding?.includes(facet.key);
 
@@ -141,6 +145,56 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   isSelected
                     ? removeFacetFilter(ResultParam.FundingSource, facet.key)
                     : addFacetFilter(ResultParam.FundingSource, facet.key)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
+
+      {publisherFacet.length > 0 && (
+        <FacetItem title={t('common.publisher')} dataTestId={dataTestId.startPage.publisherFacets}>
+          {publisherFacet.map((facet) => {
+            const isSelected = !!selectedPublisher?.includes(facet.key);
+
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={registrationQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(ResultParam.Publisher, facet.key)
+                    : addFacetFilter(ResultParam.Publisher, facet.key)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
+
+      {seriesFacet.length > 0 && (
+        <FacetItem title={t('registration.resource_type.series')} dataTestId={dataTestId.startPage.seriesFacets}>
+          {seriesFacet.map((facet) => {
+            const isSelected = !!selectedSeries?.includes(facet.key);
+
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={registrationQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(ResultParam.Series, facet.key)
+                    : addFacetFilter(ResultParam.Series, facet.key)
                 }
               />
             );
