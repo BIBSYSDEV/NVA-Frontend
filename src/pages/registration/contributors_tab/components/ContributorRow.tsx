@@ -4,10 +4,11 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
+  Button,
   Checkbox,
   IconButton,
-  Link,
   MenuItem,
+  Link as MuiLink,
   TableCell,
   TableRow,
   TextField,
@@ -17,12 +18,14 @@ import {
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { getResearchProfilePath } from '../../../../utils/urlPaths';
 import { AddContributorModal } from '../AddContributorModal';
 import { ContributorIndicator } from '../ContributorIndicator';
 import { AffiliationsCell } from './AffiliationsCell';
@@ -147,19 +150,11 @@ export const ContributorRow = ({
       <TableCell>
         <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
           {contributor.identity.id ? (
-            <Typography>{contributor.identity.name}</Typography>
+            <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+              {contributor.identity.name}
+            </MuiLink>
           ) : (
-            <Tooltip title={t('registration.contributors.verify_person')}>
-              <Typography
-                data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-                  contributor.identity.name
-                )}
-                component={Link}
-                onClick={() => setOpenVerifyContributor(true)}
-                sx={{ cursor: 'pointer' }}>
-                {contributor.identity.name}
-              </Typography>
-            </Tooltip>
+            <Typography>{contributor.identity.name}</Typography>
           )}
           {contributor.identity.orcId && (
             <Tooltip title={t('common.orcid_profile')}>
@@ -167,6 +162,17 @@ export const ContributorRow = ({
                 <img src={OrcidLogo} height="20" alt="orcid" />
               </IconButton>
             </Tooltip>
+          )}
+          {!contributor.identity.id && (
+            <Button
+              variant="outlined"
+              size="small"
+              data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
+                contributor.identity.name
+              )}
+              onClick={() => setOpenVerifyContributor(true)}>
+              {t('registration.contributors.verify_person')}
+            </Button>
           )}
         </Box>
       </TableCell>
