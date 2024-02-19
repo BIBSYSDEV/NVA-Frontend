@@ -275,6 +275,7 @@ export interface RegistrationAggregations {
   type?: AggregationValue[];
   fundingSource?: AggregationValue[];
   contributor?: AggregationValue[];
+  publisher?: AggregationValue[];
 }
 
 export interface ConfirmedDocument {
