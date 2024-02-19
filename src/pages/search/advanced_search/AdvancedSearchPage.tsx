@@ -14,7 +14,7 @@ import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { OrganizationFilters } from './OrganizationFilters';
-import { PublisherFilters } from './PublisherFilters';
+import { PublisherFilter } from './PublisherFilters';
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
@@ -97,7 +97,7 @@ export const AdvancedSearchPage = () => {
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
-          <PublisherFilters />
+          <PublisherFilter />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 

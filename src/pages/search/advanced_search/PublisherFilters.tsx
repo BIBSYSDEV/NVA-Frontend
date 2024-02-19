@@ -1,7 +1,7 @@
 import { Autocomplete, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { t } from 'i18next';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { searchForPublishers } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
@@ -13,7 +13,8 @@ const getPublisherIdentifier = (id: string) => {
   return id ? id.split('publisher/')[1].split('/')[0] : '';
 };
 
-export const PublisherFilters = () => {
+export const PublisherFilter = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const [publisherQuery, setPublisherQuery] = useState('');
   const debouncedQuery = useDebounce(publisherQuery);
@@ -66,7 +67,7 @@ export const PublisherFilters = () => {
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
-          label={t('common.publisher')}
+          variant="outlined"
           isLoading={publisherOptionsQuery.isFetching}
           placeholder={t('registration.resource_type.search_for_publisher')}
           showSearchIcon={!publisherParam}
