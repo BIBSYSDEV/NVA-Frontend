@@ -1,4 +1,4 @@
-import { MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { t } from 'i18next';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { useHistory } from 'react-router';
@@ -52,23 +52,25 @@ export const LanguageFilter = () => {
   };
 
   return (
-    <Select
-      multiple
-      sx={{ maxWidth: '15rem' }}
-      value={languageParam.length ? languageParam : ['default']}
-      data-testid={dataTestId.registrationWizard.description.languageField}
-      fullWidth
-      label={t('registration.description.primary_language')}
-      onChange={(event) => {
-        handleChange(event.target.value as string[]);
-      }}
-      variant="outlined">
-      <MenuItem value={'default'}>{t('registration.description.primary_language')}</MenuItem>
-      {languageOptions.map(({ uri, nob, eng }) => (
-        <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
-          {i18n.language === 'nob' ? nob : eng}
-        </MenuItem>
-      ))}
-    </Select>
+    <FormControl sx={{ minWidth: '15rem' }}>
+      <InputLabel>{t('registration.description.primary_language')}</InputLabel>
+      <Select
+        multiple
+        sx={{ maxWidth: '15rem' }}
+        value={languageParam}
+        data-testid={dataTestId.registrationWizard.description.languageField}
+        fullWidth
+        label={t('registration.description.primary_language')}
+        onChange={(event) => {
+          handleChange(event.target.value as string[]);
+        }}
+        variant="outlined">
+        {languageOptions.map(({ uri, nob, eng }) => (
+          <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
+            {i18n.language === 'nob' ? nob : eng}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 };
