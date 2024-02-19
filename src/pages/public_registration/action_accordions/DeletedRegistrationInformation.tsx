@@ -34,6 +34,7 @@ export const DeletedRegistrationInformation = ({ registration }: DeletedRegistra
           bgcolor: 'publishingRequest.main',
           display: 'grid',
           gridTemplateColumns: '1fr auto',
+          alignItems: 'center'
           gap: '0.5rem 1rem',
           padding: '0.2rem 1rem',
           borderRadius: '4px',
