@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Link, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchRegistration } from '../../../api/registrationApi';
@@ -17,8 +17,7 @@ export const DeletedRegistrationInformation = ({ registration }: DeletedRegistra
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const duplicateRegistrationTitle =
-    duplicateRegistrationQuery.data?.entityDescription?.mainTitle ?? registration.duplicateOf;
+  const duplicateRegistrationTitle = duplicateRegistrationQuery.data?.entityDescription?.mainTitle;
   const unpublishingNote = registration.publicationNotes?.find((note) => note.type === 'UnpublishingNote');
 
   return (
@@ -34,7 +33,7 @@ export const DeletedRegistrationInformation = ({ registration }: DeletedRegistra
           bgcolor: 'publishingRequest.main',
           display: 'grid',
           gridTemplateColumns: '1fr auto',
-          alignItems: 'center'
+          alignItems: 'center',
           gap: '0.5rem 1rem',
           padding: '0.2rem 1rem',
           borderRadius: '4px',
@@ -48,9 +47,15 @@ export const DeletedRegistrationInformation = ({ registration }: DeletedRegistra
 
         {unpublishingNote?.note && <Typography>{unpublishingNote.note}</Typography>}
         {registration.duplicateOf && (
-          <Typography>
-            {t('registration.citation_points_to')}{' '}
-            <Link href={registration.duplicateOf}>{duplicateRegistrationTitle}</Link>
+          <Typography aria-busy={duplicateRegistrationQuery.isFetching} aria-live="polite">
+            {duplicateRegistrationQuery.isFetching ? (
+              <Skeleton />
+            ) : (
+              <>
+                {t('registration.citation_points_to')}{' '}
+                <Link href={registration.duplicateOf}>{duplicateRegistrationTitle}</Link>
+              </>
+            )}
           </Typography>
         )}
       </Box>
