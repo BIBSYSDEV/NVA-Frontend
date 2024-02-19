@@ -169,6 +169,7 @@ export const dataTestId = {
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
     sectorFacets: 'sector-facets',
+    seriesFacets: 'series-facets',
     typeFacets: 'type-facets',
     institutionFacets: 'institution-facets',
   },
