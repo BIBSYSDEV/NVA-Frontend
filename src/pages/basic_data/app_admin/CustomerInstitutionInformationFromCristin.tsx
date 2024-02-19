@@ -21,25 +21,23 @@ export const CustomerInstitutionInformationFromCristin = ({
   displayName,
 }: CustomerInstitutionInformationFromCristinProps) => {
   const { t } = useTranslation();
-  const customerInformationFromCristinQuery = useQuery({
-    queryKey: ['organization', cristinId, organizationData],
-    enabled: !!cristinId && !organizationData,
-    queryFn: () => {
-      if (cristinId && !organizationData) {
-        return fetchOrganization(cristinId);
-      }
-    },
+  const organizationQuery = useQuery({
+    queryKey: [cristinId],
+    queryFn: cristinId ? () => fetchOrganization(cristinId) : undefined,
+    meta: { errorMessage: t('feedback.error.get_institution') },
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
   });
 
-  const customerInformation = organizationData ?? customerInformationFromCristinQuery.data;
+  const customerInformation = organizationData ?? organizationQuery.data;
   const displayNameFromCristin = getLanguageString(organizationData?.labels, 'nb');
   if (displayName !== displayNameFromCristin && displayNameFromCristin.length > 0) {
     setName(displayNameFromCristin);
   }
 
   return (
-    <Grid aria-live="polite" aria-busy={customerInformationFromCristinQuery.isFetching} container spacing={2}>
-      {!customerInformation && customerInformationFromCristinQuery.isFetching ? (
+    <Grid aria-live="polite" aria-busy={organizationQuery.isFetching} container spacing={2}>
+      {!customerInformation && organizationQuery.isFetching ? (
         <Grid item xs={12}>
           <PageSpinner aria-label={t('basic_data.institutions.loading_institution_information')} />
         </Grid>
