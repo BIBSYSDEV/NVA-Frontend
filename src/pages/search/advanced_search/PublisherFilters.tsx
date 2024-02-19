@@ -1,4 +1,4 @@
-import { Autocomplete, Chip, Typography } from '@mui/material';
+import { Autocomplete, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { t } from 'i18next';
 import { useState } from 'react';
@@ -7,9 +7,7 @@ import { searchForPublishers } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Publisher } from '../../../types/registration.types';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { PublicationChannelChipLabel } from '../../registration/resource_type_tab/components/PublicationChannelChipLabel';
 
 export const PublisherFilters = () => {
   const history = useHistory();
@@ -20,7 +18,8 @@ export const PublisherFilters = () => {
 
   const handleChange = (selectedValue: Publisher | null) => {
     if (selectedValue) {
-      searchParams.set(ResultParam.Publisher, selectedValue.name);
+      const publisherIdentifier = selectedValue.id.split('publisher/')[1].split('/')[0];
+      searchParams.set(ResultParam.Publisher, publisherIdentifier);
     } else {
       searchParams.delete(ResultParam.Publisher);
     }
@@ -40,11 +39,11 @@ export const PublisherFilters = () => {
   return (
     <Autocomplete
       sx={{ minWidth: '15rem' }}
-      value={publisherList.find((publisher) => publisher.name === publisherParam) ?? null}
+      value={
+        publisherList.find((publisher) => publisher.id.split('publisher/')[1].split('/')[0] === publisherParam) ?? null
+      }
       options={
-        debouncedQuery && publisherQuery === debouncedQuery && !publisherOptionsQuery.isLoading
-          ? publisherOptionsQuery.data?.hits ?? []
-          : []
+        debouncedQuery && publisherQuery === debouncedQuery && !publisherOptionsQuery.isLoading ? publisherList : []
       }
       filterOptions={(options) => options}
       inputValue={publisherQuery}
@@ -63,22 +62,14 @@ export const PublisherFilters = () => {
           <Typography>{option.name}</Typography>
         </li>
       )}
-      renderTags={(value, getTagProps) =>
-        value.map((option, index) => (
-          <Chip
-            {...getTagProps({ index })}
-            data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
-            label={<PublicationChannelChipLabel value={option} />}
-          />
-        ))
-      }
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
           label={t('common.publisher')}
           isLoading={publisherOptionsQuery.isFetching}
           placeholder={t('registration.resource_type.search_for_publisher')}
-          showSearchIcon
+          showSearchIcon={!publisherParam}
+          multiline
         />
       )}
     />
