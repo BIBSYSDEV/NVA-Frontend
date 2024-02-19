@@ -162,6 +162,7 @@ export enum ResultParam {
   Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
+  Series = 'series',
   Sort = 'sort',
   Tags = 'tags',
   Title = 'title',
@@ -196,6 +197,7 @@ export interface FetchResultsParams {
   [ResultParam.Publisher]?: string | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
+  [ResultParam.Series]?: string | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
@@ -282,6 +284,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
+  }
+  if (params.series) {
+    searchParams.set(ResultParam.Series, params.series);
   }
   if (params.tags) {
     searchParams.set(ResultParam.Tags, encodeURIComponent(params.tags));
