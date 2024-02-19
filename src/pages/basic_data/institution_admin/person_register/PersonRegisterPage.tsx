@@ -99,7 +99,7 @@ export const PersonRegisterPage = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell>{t('basic_data.person_register.person_id')}</TableCell>
-                    <TableCell>{t('basic_data.person_register.national_identity_number')}</TableCell>
+                    <TableCell>{t('common.national_id_number')}</TableCell>
                     <TableCell>{t('common.name')}</TableCell>
                     <TableCell>{t('common.employments')}</TableCell>
                     <TableCell />
@@ -126,13 +126,7 @@ export const PersonRegisterPage = () => {
                       ))
                     : employees.map((person) => (
                         <ErrorBoundary key={person.id}>
-                          <PersonTableRow
-                            cristinPerson={person}
-                            topOrgCristinIdentifier={
-                              user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''
-                            }
-                            refetchEmployees={employeeSearchQuery.refetch}
-                          />
+                          <PersonTableRow cristinPerson={person} refetchEmployees={employeeSearchQuery.refetch} />
                         </ErrorBoundary>
                       ))}
                 </TableBody>

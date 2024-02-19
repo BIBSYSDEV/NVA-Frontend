@@ -3,7 +3,7 @@ import { Query, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { fetchRegistration, fetchRegistrationTickets } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -19,14 +19,16 @@ import { ActionPanel } from './ActionPanel';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 
 export const RegistrationLandingPage = () => {
+  const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { identifier } = useParams<IdentifierParams>();
+  const shouldNotRedirect = new URLSearchParams(history.location.search).has('shouldNotRedirect');
   const user = useSelector((store: RootState) => store.user);
 
   const registrationQuery = useQuery({
-    queryKey: ['registration', identifier],
-    queryFn: () => fetchRegistration(identifier),
+    queryKey: ['registration', identifier, shouldNotRedirect],
+    queryFn: () => fetchRegistration(identifier, shouldNotRedirect),
     meta: {
       handleError: (
         error: AxiosError<DeletedRegistrationProblem>,

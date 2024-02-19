@@ -143,12 +143,16 @@ export enum ResultParam {
   CategoryShould = 'categoryShould',
   Contributor = 'contributor',
   ContributorName = 'contributorName',
-  From = 'from',
-  Sort = 'sort',
-  FundingSource = 'fundingSource',
+  Course = 'course',
+  CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  From = 'from',
+  FundingIdentifier = 'fundingIdentifier',
+  FundingSource = 'fundingSource',
+  Handle = 'handle',
   Identifier = 'id',
   IdentifierNot = 'idNot',
+  Isbn = 'isbn',
   Issn = 'issn',
   Order = 'order',
   Project = 'project',
@@ -157,6 +161,7 @@ export enum ResultParam {
   PublicationYearShould = 'publicationYearShould',
   Query = 'query',
   Results = 'results',
+  Sort = 'sort',
   Tags = 'tags',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
@@ -171,12 +176,16 @@ export interface FetchResultsParams {
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
-  [ResultParam.From]?: number | null;
-  [ResultParam.Sort]?: SortOrder | null;
-  [ResultParam.FundingSource]?: string | null;
+  [ResultParam.Course]?: string | null;
+  [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.From]?: number | null;
+  [ResultParam.FundingIdentifier]?: string | null;
+  [ResultParam.FundingSource]?: string | null;
+  [ResultParam.Handle]?: string | null;
   [ResultParam.Identifier]?: string | null;
   [ResultParam.IdentifierNot]?: string | null;
+  [ResultParam.Isbn]?: string | null;
   [ResultParam.Issn]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
@@ -185,6 +194,7 @@ export interface FetchResultsParams {
   [ResultParam.PublicationYearShould]?: string | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
+  [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
@@ -217,17 +227,32 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.contributorName) {
     searchParams.set(ResultParam.ContributorName, params.contributorName);
   }
-  if (params.fundingSource) {
-    searchParams.set(ResultParam.FundingSource, params.fundingSource);
+  if (params.course) {
+    searchParams.set(ResultParam.Course, params.course);
+  }
+  if (params.cristinIdentifier) {
+    searchParams.set(ResultParam.CristinIdentifier, params.cristinIdentifier);
   }
   if (params.doi) {
     searchParams.set(ResultParam.Doi, params.doi);
+  }
+  if (params.fundingIdentifier) {
+    searchParams.set(ResultParam.FundingIdentifier, params.fundingIdentifier);
+  }
+  if (params.fundingSource) {
+    searchParams.set(ResultParam.FundingSource, params.fundingSource);
+  }
+  if (params.handle) {
+    searchParams.set(ResultParam.Handle, params.handle);
   }
   if (params.id) {
     searchParams.set(ResultParam.Identifier, params.id);
   }
   if (params.idNot) {
     searchParams.set(ResultParam.IdentifierNot, params.idNot);
+  }
+  if (params.isbn) {
+    searchParams.set(ResultParam.Isbn, params.isbn.replace(/-/g, ''));
   }
   if (params.issn) {
     searchParams.set(ResultParam.Issn, params.issn);

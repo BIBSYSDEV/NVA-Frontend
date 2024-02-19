@@ -15,6 +15,13 @@ const registrationFilters: FilterItem[] = [
   { field: ResultParam.ContributorName, i18nKey: 'registration.contributors.contributor' },
   { field: ResultParam.Abstract, i18nKey: 'registration.description.abstract' },
   { field: ResultParam.Tags, i18nKey: 'registration.description.keywords' },
+  { field: ResultParam.Isbn, i18nKey: 'registration.resource_type.isbn' },
+  { field: ResultParam.Issn, i18nKey: 'registration.resource_type.issn' },
+  { field: ResultParam.Doi, i18nKey: 'common.doi' },
+  { field: ResultParam.Handle, i18nKey: 'registration.public_page.handle' },
+  { field: ResultParam.FundingIdentifier, i18nKey: 'registration.description.funding.funding_id' },
+  { field: ResultParam.Course, i18nKey: 'registration.resource_type.course_code' },
+  { field: ResultParam.CristinIdentifier, i18nKey: 'registration.public_page.cristin_id' },
 ];
 
 interface AdvancedSearchRowProps {
