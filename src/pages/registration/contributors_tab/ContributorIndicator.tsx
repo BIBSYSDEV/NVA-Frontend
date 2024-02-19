@@ -12,6 +12,9 @@ export const StyledBaseContributorIndicator = styled('div')({
   alignItems: 'center',
   justifyContent: 'space-around',
 });
+StyledBaseContributorIndicator.defaultProps = {
+  role: 'img',
+};
 
 export const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -58,7 +61,8 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
     </Tooltip>
   ) : (
     <Tooltip title={t('registration.contributors.identity_status.unknown_identity')}>
-      <StyledUnknownContributor data-testid={dataTestId.registrationWizard.contributors.unverifiedAuthor(initials)} />
+      <StyledUnknownContributor
+        data-testid={dataTestId.registrationWizard.contributors.unverifiedAuthor(initials)}></StyledUnknownContributor>
     </Tooltip>
   );
 };
