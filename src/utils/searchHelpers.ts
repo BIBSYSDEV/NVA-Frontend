@@ -22,6 +22,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const contributorNameParams = params.get(ResultParam.ContributorName)?.split(',') ?? [];
   const abstractParams = params.get(ResultParam.Abstract)?.split(',') ?? [];
   const tagParams = params.get(ResultParam.Tags)?.split(',') ?? [];
+  const identifierParams = params.get(ResultParam.Identifier)?.split(',') ?? [];
   const isbnParams = params.get(ResultParam.Isbn)?.split(',') ?? [];
   const issnParams = params.get(ResultParam.Issn)?.split(',') ?? [];
   const doiParams = params.get(ResultParam.Doi)?.split(',') ?? [];
@@ -48,6 +49,11 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const tagFilters = tagParams.map((tag) => ({
     fieldName: ResultParam.Tags,
     value: tag,
+  }));
+
+  const identifierFilters = identifierParams.map((identifier) => ({
+    fieldName: ResultParam.Identifier,
+    value: identifier,
   }));
 
   const isbnFilters = isbnParams.map((isbn) => ({
@@ -90,6 +96,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     ...contributorNameFilters,
     ...abstractFilters,
     ...tagFilters,
+    ...identifierFilters,
     ...isbnFilters,
     ...issnFilters,
     ...doiFilters,
