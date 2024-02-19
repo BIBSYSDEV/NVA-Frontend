@@ -9,6 +9,10 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { Publisher } from '../../../types/registration.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
+const getPublisherIdentifier = (id: string) => {
+  return id ? id.split('publisher/')[1].split('/')[0] : '';
+};
+
 export const PublisherFilters = () => {
   const history = useHistory();
   const [publisherQuery, setPublisherQuery] = useState('');
@@ -18,8 +22,7 @@ export const PublisherFilters = () => {
 
   const handleChange = (selectedValue: Publisher | null) => {
     if (selectedValue) {
-      const publisherIdentifier = selectedValue.id.split('publisher/')[1].split('/')[0];
-      searchParams.set(ResultParam.Publisher, publisherIdentifier);
+      searchParams.set(ResultParam.Publisher, getPublisherIdentifier(selectedValue.id));
     } else {
       searchParams.delete(ResultParam.Publisher);
     }
@@ -39,9 +42,7 @@ export const PublisherFilters = () => {
   return (
     <Autocomplete
       sx={{ minWidth: '15rem' }}
-      value={
-        publisherList.find((publisher) => publisher.id.split('publisher/')[1].split('/')[0] === publisherParam) ?? null
-      }
+      value={publisherList.find((publisher) => getPublisherIdentifier(publisher.id) === publisherParam) ?? null}
       options={
         debouncedQuery && publisherQuery === debouncedQuery && !publisherOptionsQuery.isLoading ? publisherList : []
       }
