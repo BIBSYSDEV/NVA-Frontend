@@ -28,7 +28,7 @@ const languageOptions = [
 export const LanguageFilter = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const languageParam = searchParams.getAll(ResultParam.PublicationLanguage);
+  const languageParam = searchParams.get(ResultParam.PublicationLanguage)?.split(',') || [];
 
   const handleChange = (selectedUris: string[] | null) => {
     if (selectedUris) {
@@ -40,7 +40,7 @@ export const LanguageFilter = () => {
         .filter(Boolean);
 
       if (selectedLanguages.length > 0) {
-        searchParams.set(ResultParam.PublicationLanguage, selectedLanguages.join('+'));
+        searchParams.set(ResultParam.PublicationLanguage, selectedLanguages.join(','));
       } else {
         searchParams.delete(ResultParam.PublicationLanguage);
       }
