@@ -25,8 +25,7 @@ const StyledVerifiedContributorWithoutAffiliation = styled(StyledBaseContributor
 }));
 
 const StyledUnknownContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
-  background: theme.palette.grey[400],
-  color: theme.palette.grey[500],
+  background: '#d59977',
 }));
 
 interface ContributorIndicatorProps {
@@ -59,9 +58,7 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
     </Tooltip>
   ) : (
     <Tooltip title={t('registration.contributors.identity_status.unknown_identity')}>
-      <StyledUnknownContributor data-testid={dataTestId.registrationWizard.contributors.unverifiedAuthor(initials)}>
-        {initials}
-      </StyledUnknownContributor>
+      <StyledUnknownContributor data-testid={dataTestId.registrationWizard.contributors.unverifiedAuthor(initials)} />
     </Tooltip>
   );
 };

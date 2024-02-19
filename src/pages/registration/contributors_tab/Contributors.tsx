@@ -220,7 +220,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
                   <TableCell>{t('registration.contributors.identification')}</TableCell>
                   <TableCell>{t('common.name')}</TableCell>
                   <TableCell>{t('common.institution')}</TableCell>
-                  <TableCell>{t('common.remove')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

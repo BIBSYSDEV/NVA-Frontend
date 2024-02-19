@@ -85,6 +85,7 @@ export const ContributorRow = ({
           {!isLastElement && (
             <Tooltip title={t('common.move_down')}>
               <IconButton
+                size="small"
                 sx={{ minWidth: 'auto' }}
                 onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
                 <ArrowDownwardIcon color="primary" />
@@ -94,6 +95,7 @@ export const ContributorRow = ({
           {contributor.sequence !== 1 && (
             <Tooltip title={t('common.move_up')}>
               <IconButton
+                size="small"
                 sx={{ minWidth: 'auto' }}
                 onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
                 <ArrowUpwardIcon color="primary" />
@@ -148,32 +150,54 @@ export const ContributorRow = ({
         </Box>
       </TableCell>
       <TableCell>
-        <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
-          {contributor.identity.id ? (
-            <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-              {contributor.identity.name}
-            </MuiLink>
-          ) : (
-            <Typography>{contributor.identity.name}</Typography>
-          )}
-          {contributor.identity.orcId && (
-            <Tooltip title={t('common.orcid_profile')}>
-              <IconButton size="small" href={contributor.identity.orcId} target="_blank">
-                <img src={OrcidLogo} height="20" alt="orcid" />
-              </IconButton>
-            </Tooltip>
-          )}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.25rem',
+            alignItems: 'start',
+          }}>
+          <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
+            {contributor.identity.id ? (
+              <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                {contributor.identity.name}
+              </MuiLink>
+            ) : (
+              <Typography>{contributor.identity.name}</Typography>
+            )}
+            {contributor.identity.orcId && (
+              <Tooltip title={t('common.orcid_profile')}>
+                <IconButton size="small" href={contributor.identity.orcId} target="_blank">
+                  <img src={OrcidLogo} height="20" alt="orcid" />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Box>
           {!contributor.identity.id && (
             <Button
+              title={t('registration.contributors.verify_person')}
               variant="outlined"
               size="small"
+              sx={{
+                textTransform: 'none',
+                bgcolor: '#d59977',
+                ':hover': { bgcolor: '#ddad92' },
+              }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
                 contributor.identity.name
               )}
               onClick={() => setOpenVerifyContributor(true)}>
-              {t('registration.contributors.verify_person')}
+              {t('registration.contributors.unidentified_contributor')}
             </Button>
           )}
+
+          <Button
+            size="small"
+            data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
+            onClick={() => setOpenRemoveContributor(true)}
+            startIcon={<CancelIcon color="primary" />}>
+            {t('registration.contributors.remove_contributor')}
+          </Button>
         </Box>
       </TableCell>
       <TableCell sx={{ maxWidth: '25rem' }}>
@@ -184,15 +208,6 @@ export const ContributorRow = ({
             baseFieldName={baseFieldName}
           />
         )}
-      </TableCell>
-      <TableCell width="1">
-        <Tooltip title={t('registration.contributors.remove_contributor')}>
-          <IconButton
-            data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
-            onClick={() => setOpenRemoveContributor(true)}>
-            <CancelIcon color="primary" />
-          </IconButton>
-        </Tooltip>
       </TableCell>
 
       {/* Verify contributor */}
