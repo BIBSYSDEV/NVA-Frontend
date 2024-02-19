@@ -149,6 +149,7 @@ export const dataTestId = {
     fundingFacets: 'funding-facets',
     fundingSourceFacets: 'funding-source-facets',
     healthProjectFacets: 'health-project-facets',
+    journalFacets: 'journal-facets',
     orderBySelect: 'order-by-select',
     participantFacets: 'participant-facets',
     participantOrgFacets: 'participant-org-facets',
