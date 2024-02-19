@@ -52,14 +52,12 @@ export const LanguageFilter = () => {
   };
 
   return (
-    <FormControl sx={{ minWidth: '15rem' }}>
+    <FormControl fullWidth sx={{ maxWidth: '15rem' }}>
       <InputLabel>{t('registration.description.primary_language')}</InputLabel>
       <Select
         multiple
-        sx={{ maxWidth: '15rem' }}
         value={languageParam}
         data-testid={dataTestId.registrationWizard.description.languageField}
-        fullWidth
         label={t('registration.description.primary_language')}
         onChange={(event) => {
           handleChange(event.target.value as string[]);
