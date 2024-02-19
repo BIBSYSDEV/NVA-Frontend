@@ -103,7 +103,7 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
               <TextField
                 variant="filled"
                 disabled
-                label={t('basic_data.person_register.national_identity_number')}
+                label={t('common.national_id_number')}
                 required
                 value={user.nationalIdNumber}
               />

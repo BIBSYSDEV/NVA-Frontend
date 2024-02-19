@@ -24,6 +24,7 @@ interface UpsertNviPeriodDialogProps {
 }
 
 const emptyNviPeriod: NviPeriod = {
+  type: 'NviPeriod',
   publishingYear: '',
   startDate: '',
   reportingDate: '',

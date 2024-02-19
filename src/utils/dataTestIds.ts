@@ -156,6 +156,7 @@ export const dataTestId = {
     projectSearchButton: 'project-search-button',
     projectStatusFilter: 'project-status-filter',
     publicationDateFilter: 'publication-date-filter',
+    publisherFacets: 'publisher-facets',
     reportsClinicalTreatmentStudiesButton: 'reports-clinical-treatment-studies-button',
     reportsInternationalWorkButton: 'reports-international-work-button',
     reportsNviButton: 'reports-nvi-button',
@@ -495,6 +496,7 @@ export const dataTestId = {
       cristinIdField: 'cristin-id-field',
       deleteProfilePictureButton: 'delete-profile-picture-button',
       editPreferredNameButton: 'edit-preferred-name-button',
+      emailField: 'email-field',
       fullNameField: 'full-name-field',
       noActiveEmploymentsText: 'no-active-employments-text',
       preferredFirstNameField: 'preferred-first-name-field',
@@ -505,6 +507,7 @@ export const dataTestId = {
       updateProfilePictureButton: 'update-profile-picture-button',
       uploadProfilePictureButton: 'update-profile-picture-button',
       removeProfilePictureDialog: 'confirm-remove-profile-picture-dialog',
+      webPageField: 'web-page-field',
     },
     myFieldAndBackgroundLink: 'my-field-and-background-link',
     myProfileAccordion: 'my-profile-accordion',
@@ -522,6 +525,11 @@ export const dataTestId = {
     registrationsAccordion: 'registrations-accordion',
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
+    userRolesAndHelp: {
+      institutionHelpPage: 'institution-help-page',
+      applicationHelpPage: 'application-help-page',
+    },
+    userRolesAndHelpLink: 'user-roles-and-help-link',
   },
   tasksPage: {
     correctionList: {
@@ -570,5 +578,10 @@ export const dataTestId = {
       supportButton: 'support-button',
     },
     unreadSearchCheckbox: 'unread-search-checkbox',
+  },
+  unpublishActions: {
+    openUnpublishModalButton: 'open-unpublish-modal-button',
+    unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
+    submitButton: 'submit-unpublish-request-button',
   },
 };

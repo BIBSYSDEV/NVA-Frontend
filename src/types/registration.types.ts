@@ -2,6 +2,20 @@ import { AssociatedArtifact } from './associatedArtifact.types';
 import { AggregationValue, LanguageString } from './common.types';
 import { Contributor } from './contributor.types';
 import { ResearchProject } from './project.types';
+import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
+import { BookEntityDescription } from './publication_types/bookRegistration.types';
+import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
+import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
+import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
+import {
+  emptyRegistrationEntityDescription,
+  JournalEntityDescription,
+} from './publication_types/journalRegistration.types';
+import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration.types';
+import { MapEntityDescription } from './publication_types/otherRegistration.types';
+import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
+import { ReportEntityDescription } from './publication_types/reportRegistration.types';
+import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 import {
   ArtisticType,
   BookType,
@@ -15,20 +29,6 @@ import {
   ReportType,
   ResearchDataType,
 } from './publicationFieldNames';
-import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
-import { BookEntityDescription } from './publication_types/bookRegistration.types';
-import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
-import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
-import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
-import {
-  JournalEntityDescription,
-  emptyRegistrationEntityDescription,
-} from './publication_types/journalRegistration.types';
-import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration.types';
-import { MapEntityDescription } from './publication_types/otherRegistration.types';
-import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
-import { ReportEntityDescription } from './publication_types/reportRegistration.types';
-import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 
 export enum RegistrationStatus {
   DraftForDeletion = 'DRAFT_FOR_DELETION',
@@ -83,6 +83,12 @@ interface AdditionalIdentifier {
   value: string;
 }
 
+interface PublicationNote {
+  type: 'UnpublishingNote' | 'PublicationNote';
+  note?: string;
+  publicationNoteMessage?: string;
+}
+
 export interface BaseRegistration {
   readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
@@ -99,10 +105,12 @@ export interface BaseRegistration {
   readonly publisher: RegistrationPublisher;
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
+  readonly duplicateOf?: string;
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
   fundings: Funding[];
+  publicationNotes?: PublicationNote[];
 }
 
 export interface Funding {
@@ -267,6 +275,7 @@ export interface RegistrationAggregations {
   type?: AggregationValue[];
   fundingSource?: AggregationValue[];
   contributor?: AggregationValue[];
+  publisher?: AggregationValue[];
 }
 
 export interface ConfirmedDocument {
@@ -280,3 +289,9 @@ export interface UnconfirmedDocument {
 }
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
+
+export interface UnpublishPublicationRequest {
+  type: 'UnpublishPublicationRequest';
+  duplicateOf?: string;
+  comment: string;
+}

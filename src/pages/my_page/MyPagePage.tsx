@@ -42,6 +42,7 @@ import { MyProfile } from './user_profile/MyProfile';
 import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
+import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
@@ -191,11 +192,19 @@ const MyPagePage = () => {
               to={UrlPathTemplate.MyPageResults}>
               {t('my_page.my_profile.results')}
             </LinkButton>
+
             <LinkButton
               data-testid={dataTestId.myPage.myProjectsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
               to={UrlPathTemplate.MyPageMyProjects}>
               {t('my_page.my_profile.projects')}
+            </LinkButton>
+            <Typography>{t('my_page.my_profile.overview_and_settings')}</Typography>
+            <LinkButton
+              data-testid={dataTestId.myPage.userRolesAndHelpLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageUserRoleAndHelp}
+              to={UrlPathTemplate.MyPageUserRoleAndHelp}>
+              {t('my_page.my_profile.user_role_and_help.user_role_and_help')}
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
@@ -505,6 +514,12 @@ const MyPagePage = () => {
               selectedConcluded={selectedProjectStatus.concluded}
             />
           </PrivateRoute>
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageUserRoleAndHelp}
+            component={UserRoleAndHelp}
+            isAuthorized={isAuthenticated}
+          />
           <PrivateRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isAuthenticated} />
         </Switch>
       </ErrorBoundary>
