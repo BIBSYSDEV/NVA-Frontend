@@ -44,6 +44,7 @@ export const AdvancedSearchPage = () => {
     contributorName: params.get(ResultParam.ContributorName),
     fundingSource: params.get(ResultParam.FundingSource),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
+    publisher: params.get(ResultParam.Publisher),
   };
 
   const resultSearchQuery = useQuery({
