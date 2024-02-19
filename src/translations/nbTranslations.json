@@ -1072,7 +1072,7 @@
       "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
       "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
-      "confirmed": "Bekreftet",
+      "identification": "Identifisering",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "contributor_not_found": "Finner ikke person",
