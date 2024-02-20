@@ -82,42 +82,21 @@ export const createDraftDoi = async (registrationId: string) =>
     method: 'POST',
   });
 
-export const fetchRegistrationxx = async (registrationIdentifier: string) => {
-  let isAuthenticated = false;
+const userIsAuthenticated = async () => {
   try {
     const cognitoUser = await Auth.currentAuthenticatedUser();
     if (cognitoUser) {
-      isAuthenticated = true;
+      return true;
     } else {
-      isAuthenticated = false;
+      return false;
     }
   } catch {
-    isAuthenticated = false;
+    return false;
   }
-
-  const fetchRegistrationResponse = isAuthenticated
-    ? await authenticatedApiRequest2<Registration>({
-        url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
-      })
-    : await apiRequest2<Registration>({
-        url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
-      });
-
-  return fetchRegistrationResponse.data;
 };
 
 export const fetchRegistration = async (registrationIdentifier: string, shouldNotRedirect?: boolean) => {
-  let isAuthenticated = false;
-  try {
-    const cognitoUser = await Auth.currentAuthenticatedUser();
-    if (cognitoUser) {
-      isAuthenticated = true;
-    } else {
-      isAuthenticated = false;
-    }
-  } catch {
-    isAuthenticated = false;
-  }
+  const isAuthenticated = await userIsAuthenticated();
 
   const url = shouldNotRedirect
     ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?doNotRedirect=true`
