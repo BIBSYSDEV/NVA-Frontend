@@ -1,8 +1,9 @@
-import { Box, Link, Skeleton, Typography } from '@mui/material';
+import { Link, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchRegistration } from '../../../api/registrationApi';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 
 interface DeletedRegistrationInformationProps {
   registration: Registration;
@@ -21,44 +22,30 @@ export const DeletedRegistrationInformation = ({ registration }: DeletedRegistra
   const unpublishingNote = registration.publicationNotes?.find((note) => note.type === 'UnpublishingNote');
 
   return (
-    <Box
+    <StyledStatusMessageBox
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.1rem',
-        marginTop: '1rem',
+        bgcolor: 'publishingRequest.main',
       }}>
-      <Box
-        sx={{
-          bgcolor: 'publishingRequest.main',
-          display: 'grid',
-          gridTemplateColumns: '1fr auto',
-          alignItems: 'center',
-          gap: '0.5rem 1rem',
-          padding: '0.2rem 1rem',
-          borderRadius: '4px',
-        }}>
-        {(registration.status === RegistrationStatus.Unpublished ||
-          registration.status === RegistrationStatus.Deleted) && (
-          <Typography variant="h4" component="span" sx={{ textTransform: 'uppercase' }}>
-            {t(`registration.status.${registration.status}`)}
-          </Typography>
-        )}
+      {(registration.status === RegistrationStatus.Unpublished ||
+        registration.status === RegistrationStatus.Deleted) && (
+        <Typography variant="h4" component="span" sx={{ textTransform: 'uppercase' }}>
+          {t(`registration.status.${registration.status}`)}
+        </Typography>
+      )}
 
-        {unpublishingNote?.note && <Typography>{unpublishingNote.note}</Typography>}
-        {registration.duplicateOf && (
-          <Typography aria-busy={duplicateRegistrationQuery.isFetching} aria-live="polite">
-            {duplicateRegistrationQuery.isFetching ? (
-              <Skeleton />
-            ) : (
-              <>
-                {t('registration.citation_points_to')}{' '}
-                <Link href={registration.duplicateOf}>{duplicateRegistrationTitle}</Link>
-              </>
-            )}
-          </Typography>
-        )}
-      </Box>
-    </Box>
+      {unpublishingNote?.note && <Typography>{unpublishingNote.note}</Typography>}
+      {registration.duplicateOf && (
+        <Typography aria-busy={duplicateRegistrationQuery.isFetching} aria-live="polite">
+          {duplicateRegistrationQuery.isFetching ? (
+            <Skeleton />
+          ) : (
+            <>
+              {t('registration.citation_points_to')}{' '}
+              <Link href={registration.duplicateOf}>{duplicateRegistrationTitle}</Link>
+            </>
+          )}
+        </Typography>
+      )}
+    </StyledStatusMessageBox>
   );
 };
