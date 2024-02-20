@@ -13,6 +13,7 @@ import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter'
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
+import { JournalFilter } from './JournalFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 
@@ -36,6 +37,7 @@ export const AdvancedSearchPage = () => {
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
+    journal: params.get(ResultParam.Journal),
     order: params.get(ResultParam.Order),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
@@ -98,6 +100,10 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <PublisherFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <JournalFilter />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
