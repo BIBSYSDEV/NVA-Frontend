@@ -46,7 +46,6 @@ export const CustomerInstitutionMetadataForm = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [organizationData, setOrganizationData] = useState<Organization | null>(null);
 
   const handleSubmit = async ({ customer, doiAgent, canAssignDoi }: CustomerInstitutionFormData) => {
     if (!editMode) {
