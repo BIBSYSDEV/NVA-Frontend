@@ -640,6 +640,9 @@ export const getOutputName = (item: OutputItem): string => {
 export const userCanEditRegistration = (registration: Registration) =>
   registration.allowedOperations.includes('update');
 
+export const userCanUnpublishRegistration = (registration: Registration) =>
+  registration.allowedOperations.includes('unpublish');
+
 export const userCanDeleteRegistration = (registration: Registration) =>
   registration.allowedOperations.includes('delete');
 
