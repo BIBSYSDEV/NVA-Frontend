@@ -99,22 +99,18 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.public_page.about_registration')}
         </Typography>
-
         <Typography>{displayDate(entityDescription?.publicationDate)}</Typography>
-
         {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
             {i18n.language === 'nob' ? language.nob : language.eng}
           </Typography>
         )}
-
         {entityDescription?.npiSubjectHeading && (
           <Typography data-testid={dataTestId.registrationLandingPage.npi}>
             {t('registration.description.npi_disciplines')}:{' '}
             {t(`disciplines.${entityDescription.npiSubjectHeading}` as any)}
           </Typography>
         )}
-
         {publicationInstance &&
           ((isJournal(publicationInstance.type) || isPeriodicalMediaContribution(publicationInstance.type)) &&
           journalPublicationInstance ? (
@@ -167,9 +163,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               publicationInstance={publicationInstance as ExhibitionPublicationInstance}
             />
           ) : null)}
-
         <PublicDoi registration={registration} />
-
         {registration.handle && (
           <>
             <Typography variant="overline">{t('registration.public_page.handle')}</Typography>
@@ -184,7 +178,6 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             </Typography>
           </>
         )}
-
         {(cristinIdentifier || scopusIdentifier) && (
           <Box sx={{ display: 'flex', columnGap: '2rem', flexWrap: 'wrap' }}>
             {cristinIdentifier && (
@@ -209,6 +202,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             )}
           </Box>
         )}
+        <Typography variant="overline">{t('registration.registration_id')}</Typography>
+        <Typography>{registration.identifier}</Typography>
       </div>
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>

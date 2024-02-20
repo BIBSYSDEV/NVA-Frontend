@@ -154,13 +154,16 @@ export enum ResultParam {
   IdentifierNot = 'idNot',
   Isbn = 'isbn',
   Issn = 'issn',
+  Journal = 'journal',
   Order = 'order',
   Project = 'project',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
   PublicationYearShould = 'publicationYearShould',
+  Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
+  Series = 'series',
   Sort = 'sort',
   Tags = 'tags',
   Title = 'title',
@@ -187,13 +190,16 @@ export interface FetchResultsParams {
   [ResultParam.IdentifierNot]?: string | null;
   [ResultParam.Isbn]?: string | null;
   [ResultParam.Issn]?: string | null;
+  [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.PublicationYearSince]?: string | null;
   [ResultParam.PublicationYearShould]?: string | null;
+  [ResultParam.Publisher]?: string | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
+  [ResultParam.Series]?: string | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
@@ -257,6 +263,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.issn) {
     searchParams.set(ResultParam.Issn, params.issn);
   }
+  if (params.journal) {
+    searchParams.set(ResultParam.Journal, params.journal);
+  }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
   }
@@ -275,8 +284,14 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.publicationYearShould) {
     searchParams.set(ResultParam.PublicationYearShould, params.publicationYearShould);
   }
+  if (params.publisher) {
+    searchParams.set(ResultParam.Publisher, params.publisher);
+  }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
+  }
+  if (params.series) {
+    searchParams.set(ResultParam.Series, params.series);
   }
   if (params.tags) {
     searchParams.set(ResultParam.Tags, encodeURIComponent(params.tags));
