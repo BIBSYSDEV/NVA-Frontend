@@ -8,6 +8,7 @@ export const mockJournalsSearch: SearchResponse<Journal> = {
     {
       type: 'Journal',
       id: 'https://api.dev.nva.aws.unit.no/publication-channels/journal/1/2020',
+      identifier: 'J0UR-N4L-NUMB3R-1',
       name: 'Journal number 1',
       sameAs: 'http://www.journal4.com/',
       scientificValue: 'LevelOne',
@@ -17,6 +18,7 @@ export const mockJournalsSearch: SearchResponse<Journal> = {
     {
       type: 'Journal',
       id: 'https://api.dev.nva.aws.unit.no/publication-channels/journal/2/2020',
+      identifier: 'J0UR-N4L-NUMB3R-2',
       name: 'Journal number 2',
       sameAs: 'http://www.journal2.com/',
       scientificValue: 'LevelOne',
@@ -25,6 +27,7 @@ export const mockJournalsSearch: SearchResponse<Journal> = {
     {
       type: 'Journal',
       id: 'https://api.dev.nva.aws.unit.no/publication-channels/journal/3/2020',
+      identifier: 'J0UR-N4L-NUMB3R-3',
       name: 'Journal number 3',
       sameAs: 'http://www.journal3.com/',
       scientificValue: 'LevelOne',
