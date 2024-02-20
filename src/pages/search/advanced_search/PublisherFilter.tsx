@@ -1,6 +1,6 @@
 import { Autocomplete, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { searchForPublishers } from '../../../api/publicationChannelApi';
@@ -33,12 +33,6 @@ export const PublisherFilter = () => {
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
-
-  useEffect(() => {
-    if (selectedPublisherQuery.data) {
-      setPublisherQuery(selectedPublisherQuery.data.hits[0].name);
-    }
-  }, [selectedPublisherQuery.data]);
 
   const handleChange = (selectedValue: Publisher | null) => {
     if (selectedValue) {
