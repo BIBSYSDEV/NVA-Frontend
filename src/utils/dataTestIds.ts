@@ -148,7 +148,7 @@ export const dataTestId = {
     filterAccordion: 'filter-accordion',
     fundingFacets: 'funding-facets',
     fundingSourceFacets: 'funding-source-facets',
-    hasFilesFacets: 'has-files-facets',
+    hasPublicFilesFacets: 'has-public-files-facets',
     healthProjectFacets: 'health-project-facets',
     journalFacets: 'journal-facets',
     orderBySelect: 'order-by-select',

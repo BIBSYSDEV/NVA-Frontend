@@ -23,7 +23,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const selectedPublisher = searchParams.get(ResultParam.Publisher);
   const selectedSeries = searchParams.get(ResultParam.Series);
   const selectedJournal = searchParams.get(ResultParam.Journal);
-  const selectedHasFile = searchParams.get(ResultParam.HasFile);
+  const selectedHasPublicFile = searchParams.get(ResultParam.HasPublicFile);
 
   const typeFacet = registrationQuery.data?.aggregations?.type ?? [];
   const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization ?? [];
@@ -32,7 +32,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const publisherFacet = registrationQuery.data?.aggregations?.publisher ?? [];
   const seriesFacet = registrationQuery.data?.aggregations?.series ?? [];
   const journalFacet = registrationQuery.data?.aggregations?.journal ?? [];
-  const hasFileFacet = registrationQuery.data?.aggregations?.hasFile ?? [];
+  const hasPublicFileFacet = registrationQuery.data?.aggregations?.hasPublicFile ?? [];
 
   const addFacetFilter = (param: string, key: string) => {
     const currentValues = searchParams.get(param)?.split(',') ?? [];
@@ -231,10 +231,12 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {hasFileFacet.length > 0 && (
-        <FacetItem title={t('registration.files_and_license.files')} dataTestId={dataTestId.startPage.hasFilesFacets}>
-          {hasFileFacet.map((facet) => {
-            const isSelected = !!selectedHasFile?.includes(facet.key);
+      {hasPublicFileFacet.length > 0 && (
+        <FacetItem
+          title={t('registration.files_and_license.files')}
+          dataTestId={dataTestId.startPage.hasPublicFilesFacets}>
+          {hasPublicFileFacet.map((facet) => {
+            const isSelected = !!selectedHasPublicFile?.includes(facet.key);
 
             return (
               <FacetListItem
@@ -251,8 +253,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
-                    ? removeFacetFilter(ResultParam.HasFile, facet.key)
-                    : addFacetFilter(ResultParam.HasFile, facet.key)
+                    ? removeFacetFilter(ResultParam.HasPublicFile, facet.key)
+                    : addFacetFilter(ResultParam.HasPublicFile, facet.key)
                 }
               />
             );

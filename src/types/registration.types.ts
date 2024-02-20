@@ -278,7 +278,7 @@ export interface RegistrationAggregations {
   publisher?: AggregationValue[];
   series?: AggregationValue[];
   journal?: AggregationValue[];
-  hasFile?: AggregationValue[];
+  hasPublicFile?: AggregationValue[];
 }
 
 export interface ConfirmedDocument {
