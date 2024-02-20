@@ -1,7 +1,7 @@
 import { Auth } from '@aws-amplify/auth';
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
-import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
+import { Doi, MyRegistrationsResponse, Registration, UnpublishPublicationRequest } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
@@ -17,6 +17,16 @@ export const updateRegistration = async (registration: Registration) =>
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     data: registration,
+  });
+
+export const unpublishRegistration = async (
+  registrationIdentifier: string,
+  unpublishingRequest: UnpublishPublicationRequest
+) =>
+  await authenticatedApiRequest2<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
+    method: 'PUT',
+    data: unpublishingRequest,
   });
 
 export const getRegistrationByDoi = async (doiUrl: string) => {
@@ -72,7 +82,7 @@ export const createDraftDoi = async (registrationId: string) =>
     method: 'POST',
   });
 
-export const fetchRegistration = async (registrationIdentifier: string) => {
+export const fetchRegistrationxx = async (registrationIdentifier: string) => {
   let isAuthenticated = false;
   try {
     const cognitoUser = await Auth.currentAuthenticatedUser();
@@ -92,6 +102,31 @@ export const fetchRegistration = async (registrationIdentifier: string) => {
     : await apiRequest2<Registration>({
         url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
       });
+
+  return fetchRegistrationResponse.data;
+};
+
+export const fetchRegistration = async (registrationIdentifier: string, shouldNotRedirect?: boolean) => {
+  let isAuthenticated = false;
+  try {
+    const cognitoUser = await Auth.currentAuthenticatedUser();
+    if (cognitoUser) {
+      isAuthenticated = true;
+    } else {
+      isAuthenticated = false;
+    }
+  } catch {
+    isAuthenticated = false;
+  }
+
+  const url = shouldNotRedirect
+    ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?doNotRedirect=true`
+    : `${PublicationsApiPath.Registration}/${registrationIdentifier}`;
+
+  const fetchRegistrationResponse = isAuthenticated
+    ? await authenticatedApiRequest2<Registration>({ url })
+    : await apiRequest2<Registration>({ url });
+
   return fetchRegistrationResponse.data;
 };
 

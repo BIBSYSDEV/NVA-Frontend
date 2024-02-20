@@ -87,11 +87,8 @@ export const isBook = (instanceType: any) => Object.values(BookType).includes(in
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
 
-export const isDegreeWithProtectedFiles = (instanceType: any) =>
-  instanceType === DegreeType.Bachelor ||
-  instanceType === DegreeType.Master ||
-  instanceType === DegreeType.Phd ||
-  instanceType === DegreeType.Other;
+const protectedDegreeTypes = [DegreeType.Bachelor, DegreeType.Master, DegreeType.Phd, DegreeType.Other];
+export const isDegreeWithProtectedFiles = (instanceType: any) => protectedDegreeTypes.includes(instanceType);
 
 export const isReport = (instanceType: any) => Object.values(ReportType).includes(instanceType);
 
@@ -704,12 +701,9 @@ export const getDisabledCategories = (
   const disabledCategories: DisabledCategory[] = [];
 
   if (!user?.isThesisCurator) {
-    disabledCategories.push(
-      { type: DegreeType.Bachelor, text: t('registration.resource_type.protected_degree_type') },
-      { type: DegreeType.Master, text: t('registration.resource_type.protected_degree_type') },
-      { type: DegreeType.Phd, text: t('registration.resource_type.protected_degree_type') },
-      { type: DegreeType.Other, text: t('registration.resource_type.protected_degree_type') }
-    );
+    protectedDegreeTypes.forEach((type) => {
+      disabledCategories.push({ type, text: t('registration.resource_type.protected_degree_type') });
+    });
   }
 
   const hasFiles = getAssociatedFiles(registration.associatedArtifacts).length > 0;
