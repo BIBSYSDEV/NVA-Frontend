@@ -50,7 +50,7 @@ export const PublisherFilter = () => {
     history.push({ search: searchParams.toString() });
   };
 
-  const isLoading = publisherParam ? selectedPublisherQuery.isLoading : publisherOptionsQuery.isLoading;
+  const isFetching = publisherParam ? selectedPublisherQuery.isFetching : publisherOptionsQuery.isFetching;
 
   return (
     <Autocomplete
@@ -70,7 +70,7 @@ export const PublisherFilter = () => {
       }}
       blurOnSelect
       disableClearable={!publisherQuery}
-      loading={isLoading}
+      loading={isFetching}
       getOptionLabel={(option) => option.name}
       renderOption={(props, option) => (
         <li {...props} key={option.id}>
@@ -81,7 +81,7 @@ export const PublisherFilter = () => {
         <AutocompleteTextField
           {...params}
           variant="outlined"
-          isLoading={isLoading}
+          isLoading={isFetching}
           placeholder={t('registration.resource_type.search_for_publisher')}
           showSearchIcon={!publisherParam}
           multiline
