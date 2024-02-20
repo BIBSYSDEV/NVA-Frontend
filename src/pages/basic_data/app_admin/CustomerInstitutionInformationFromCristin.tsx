@@ -17,6 +17,7 @@ export const CustomerInstitutionInformationFromCristin = ({
   const { t } = useTranslation();
   const organizationQuery = useQuery({
     queryKey: [cristinId],
+    enabled: !!cristinId,
     queryFn: cristinId ? () => fetchOrganization(cristinId) : undefined,
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
