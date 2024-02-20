@@ -258,7 +258,6 @@
     "update": "Oppdater",
     "url": "URL",
     "use": "Bruk",
-    "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
     "x_days_one": "{{count}} dag",
@@ -504,7 +503,6 @@
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
-      "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
       "create_journal": "Tidsskriftet ble opprettet",
       "create_note": "Merknaden ble lagret",
@@ -726,7 +724,6 @@
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
-      "institution_admins": "Administratorer",
       "internal_importer": "Intern importør",
       "internal_importer_description": "Kan behandle importkandidater.",
       "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
