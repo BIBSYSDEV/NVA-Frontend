@@ -97,10 +97,7 @@
       "feide_organization_domain": "Institusjonens domene i Feide",
       "institution_is_inactive": "Sett til inaktiv",
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
-      "institution_english_name": "Engelsk navn",
-      "institution_norwegian_name": "Norsk navn",
       "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
-      "institution_toplevel_code": "Kode",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "loading_institution_information": "Laster institusjonsdata",
@@ -116,8 +113,7 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
         "UHI": "Universitet og høyskoler (UH)"
-      },
-      "short_name": "Kortnavn"
+      }
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
