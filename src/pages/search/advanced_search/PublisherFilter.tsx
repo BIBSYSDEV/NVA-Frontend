@@ -50,6 +50,8 @@ export const PublisherFilter = () => {
     history.push({ search: searchParams.toString() });
   };
 
+  const isLoading = publisherParam ? selectedPublisherQuery.isLoading : publisherOptionsQuery.isLoading;
+
   return (
     <Autocomplete
       sx={{ minWidth: '15rem' }}
@@ -79,7 +81,7 @@ export const PublisherFilter = () => {
         <AutocompleteTextField
           {...params}
           variant="outlined"
-          isLoading={publisherOptionsQuery.isFetching}
+          isLoading={isLoading}
           placeholder={t('registration.resource_type.search_for_publisher')}
           showSearchIcon={!publisherParam}
           multiline
