@@ -85,3 +85,10 @@ export const searchForJournals = async (query: string, year: string) => {
 
   return searchForJournalsResponse.data;
 };
+
+export const fetchPublisher = async (identifier: string) => {
+  const fetchPublisherResponse = await authenticatedApiRequest2<Publisher>({
+    url: `${PublicationChannelApiPath.Publisher}/${identifier}/2023`,
+  });
+  return fetchPublisherResponse.data;
+};

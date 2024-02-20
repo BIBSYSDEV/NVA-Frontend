@@ -51,11 +51,12 @@ export type ScientificValue = 'Unassigned' | 'LevelZero' | 'LevelOne' | 'LevelTw
 
 interface PublicationChannel {
   id: string;
+  identifier: string;
   name: string;
-  scientificValue: ScientificValue;
-  sameAs: string;
-  printIssn?: string;
   onlineIssn?: string;
+  printIssn?: string;
+  sameAs: string;
+  scientificValue: ScientificValue;
 }
 
 export interface Journal extends PublicationChannel {

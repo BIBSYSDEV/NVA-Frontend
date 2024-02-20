@@ -1,6 +1,6 @@
 import { Autocomplete, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { searchForPublishers } from '../../../api/publicationChannelApi';
@@ -9,27 +9,37 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { Publisher } from '../../../types/registration.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
-const getPublisherIdentifier = (id: string) => {
-  return id ? id.split('publisher/')[1].split('/')[0] : '';
-};
-
 export const PublisherFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const [publisherQuery, setPublisherQuery] = useState('');
-  const debouncedQuery = useDebounce(publisherQuery);
   const searchParams = new URLSearchParams(history.location.search);
   const publisherParam = searchParams.get(ResultParam.Publisher);
 
   const handleChange = (selectedValue: Publisher | null) => {
     if (selectedValue) {
-      searchParams.set(ResultParam.Publisher, getPublisherIdentifier(selectedValue.id));
+      searchParams.set(ResultParam.Publisher, selectedValue.identifier);
     } else {
       searchParams.delete(ResultParam.Publisher);
     }
 
     history.push({ search: searchParams.toString() });
   };
+
+  const selectedPublisherQuery = useQuery({
+    enabled: !!publisherParam,
+    queryKey: ['selectedPublisher', publisherParam],
+    queryFn: () => searchForPublishers(publisherParam ?? '', '2023'),
+    meta: { errorMessage: t('feedback.error.get_publisher') },
+  });
+
+  const [publisherQuery, setPublisherQuery] = useState('');
+  const debouncedQuery = useDebounce(publisherQuery);
+
+  useEffect(() => {
+    if (selectedPublisherQuery.data) {
+      setPublisherQuery(selectedPublisherQuery.data.hits[0].name);
+    }
+  }, [selectedPublisherQuery.data]);
 
   const publisherOptionsQuery = useQuery({
     queryKey: ['publisherSearch', debouncedQuery],
@@ -43,7 +53,7 @@ export const PublisherFilter = () => {
   return (
     <Autocomplete
       sx={{ minWidth: '15rem' }}
-      value={publisherList.find((publisher) => getPublisherIdentifier(publisher.id) === publisherParam) ?? null}
+      value={publisherList.find((publisher) => publisher.identifier === publisherParam) ?? null}
       options={
         debouncedQuery && publisherQuery === debouncedQuery && !publisherOptionsQuery.isLoading ? publisherList : []
       }

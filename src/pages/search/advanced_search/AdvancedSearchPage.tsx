@@ -14,7 +14,7 @@ import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { OrganizationFilters } from './OrganizationFilters';
-import { PublisherFilter } from './PublisherFilters';
+import { PublisherFilter } from './PublisherFilter';
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
