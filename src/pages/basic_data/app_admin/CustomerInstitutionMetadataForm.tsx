@@ -1,17 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Checkbox, Divider, FormControlLabel, FormLabel, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -34,16 +22,14 @@ import {
 } from '../../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 import { customerInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
 import { CustomerDoiPasswordField } from './CustomerDoiPasswordField';
+import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
+import { CustomerInstitutionInformationFromCristin } from './CustomerInstitutionInformationFromCristin';
 import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
 import { OrganizationSearchField } from './OrganizationSearchField';
-import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
-import { getLanguageString } from '../../../utils/translation-helpers';
-import { CustomerInstitutionInformationFromCristin } from './CustomerInstitutionInformationFromCristin';
-import { useState } from 'react';
-import { Organization } from '../../../types/organization.types';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution?: CustomerInstitution;
@@ -59,7 +45,6 @@ export const CustomerInstitutionMetadataForm = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const [customerData, setCustomerData] = useState<Organization | null>(null);
 
   const handleSubmit = async ({ customer, doiAgent, canAssignDoi }: CustomerInstitutionFormData) => {
     if (!editMode) {
@@ -68,7 +53,12 @@ export const CustomerInstitutionMetadataForm = ({
         dispatch(setNotification({ message: t('feedback.error.create_customer'), variant: 'error' }));
       } else if (isSuccessStatus(createCustomerResponse.status)) {
         history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
-        dispatch(setNotification({ message: t('feedback.success.created_customer'), variant: 'success' }));
+        dispatch(
+          setNotification({
+            message: t('feedback.success.created_customer'),
+            variant: 'success',
+          })
+        );
       }
     } else {
       const updateCustomerResponse = await updateCustomerInstitution(customer);
@@ -82,12 +72,27 @@ export const CustomerInstitutionMetadataForm = ({
           }
           const updateDoiAgentResponse = await updateDoiAgent(doiAgent);
           if (isErrorStatus(updateDoiAgentResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
+            dispatch(
+              setNotification({
+                message: t('feedback.error.update_doi_agent'),
+                variant: 'error',
+              })
+            );
           } else if (isSuccessStatus(updateDoiAgentResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
+            dispatch(
+              setNotification({
+                message: t('feedback.success.update_customer'),
+                variant: 'success',
+              })
+            );
           }
         } else {
-          dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
+          dispatch(
+            setNotification({
+              message: t('feedback.error.update_doi_agent'),
+              variant: 'error',
+            })
+          );
         }
       }
     }
@@ -116,77 +121,59 @@ export const CustomerInstitutionMetadataForm = ({
             {!editMode && (
               <Field name={CustomerInstitutionFieldNames.Name}>
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <Box sx={{ width: '100%' }}>
-                    <OrganizationSearchField
-                      onChange={(selectedInstitution) => {
-                        const name = getLanguageString(selectedInstitution?.labels, 'nb');
-                        setValues({
-                          canAssignDoi: false,
-                          customer: {
-                            ...emptyCustomerInstitution,
-                            name,
-                            displayName: name,
-                            cristinId: selectedInstitution?.id ?? '',
-                          },
-                          doiAgent: emptyProtectedDoiAgent,
-                        });
-                        setCustomerData(selectedInstitution);
-                      }}
-                      errorMessage={touched && !!error ? error : undefined}
-                      fieldInputProps={field}
-                    />
-                  </Box>
+                  <OrganizationSearchField
+                    onChange={(selectedInstitution) => {
+                      const name = selectedInstitution?.labels ? getLanguageString(selectedInstitution.labels) : '';
+                      setValues({
+                        canAssignDoi: false,
+                        customer: {
+                          ...emptyCustomerInstitution,
+                          name,
+                          displayName: name,
+                          cristinId: selectedInstitution?.id ?? '',
+                        },
+                        doiAgent: emptyProtectedDoiAgent,
+                      });
+                    }}
+                    errorMessage={touched && !!error ? error : undefined}
+                    fieldInputProps={field}
+                  />
                 )}
               </Field>
             )}
-            <CustomerInstitutionInformationFromCristin
-              customerData={customerData}
-              cristinId={values.customer.cristinId}
-              setName={(newName) => {
-                setFieldValue(CustomerInstitutionFieldNames.DisplayName, newName);
-                setFieldValue(CustomerInstitutionFieldNames.Name, newName);
-              }}
-              displayName={values.customer.displayName}
+
+            <CustomerInstitutionInformationFromCristin cristinId={values.customer.cristinId} />
+            <CustomerInstitutionTextField
+              name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
+              label={t('basic_data.institutions.feide_organization_domain')}
+              dataTestId={dataTestId.basicData.institutionAdmin.feideField}
+            />
+            <CustomerInstitutionTextField
+              name={CustomerInstitutionFieldNames.RorId}
+              label={t('basic_data.institutions.ror')}
+              dataTestId={dataTestId.basicData.institutionAdmin.rorField}
             />
 
-            <Divider />
-
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem' }}>
-              <Field name={CustomerInstitutionFieldNames.Sector}>
-                {({ field }: FieldProps) => (
-                  <TextField
-                    {...field}
-                    select
-                    fullWidth
-                    required
-                    label={t('basic_data.institutions.sector')}
-                    variant="filled">
-                      {Object.values(Sector).map((sector) => (
-                        <MenuItem
-                          key={sector}
-                          value={sector}
-                          data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}>
-                          {t(`basic_data.institutions.sector_values.${sector}`)}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                )}
-              </Field>
-
-              <CustomerInstitutionTextField
-                name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
-                label={t('basic_data.institutions.feide_organization_domain')}
-                dataTestId={dataTestId.basicData.institutionAdmin.feideField}
-              />
-
-              <CustomerInstitutionTextField
-                name={CustomerInstitutionFieldNames.RorId}
-                label={t('basic_data.institutions.ror')}
-                dataTestId={dataTestId.basicData.institutionAdmin.rorField}
-              />
-            </Box>
-            <Divider />
+            <Field name={CustomerInstitutionFieldNames.Sector}>
+              {({ field }: FieldProps) => (
+                <TextField
+                  {...field}
+                  select
+                  fullWidth
+                  required
+                  label={t('basic_data.institutions.sector')}
+                  variant="filled">
+                  {Object.values(Sector).map((sector) => (
+                    <MenuItem
+                      key={sector}
+                      value={sector}
+                      data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}>
+                      {t(`basic_data.institutions.sector_values.${sector}`)}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            </Field>
 
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem' }}>
               <Field name={CustomerInstitutionFieldNames.NviInstitution}>

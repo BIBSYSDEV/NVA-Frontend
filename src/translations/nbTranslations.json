@@ -33,15 +33,18 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Legg til ansatt",
-      "confirmed_identity": "Institusjonen bekrefter personens identitet. Gjelder personer uten fødselsnummer.",
       "create_person": "Opprett person",
-      "name_or_nin": "Navn eller fødselsnummer",
+      "missing_nin_description": "<0>Vi trenger at du bekrefter identiteten på personen uten nasjonalt identitetsnummer som fødselsnummer eller D-nummer.</0><0>For å skille personen fra andre med liknende navn så må det registreres minst ett forskningsresultat tilknyttet denne personen.</0><0>Merk at du ikke bare bekrefter personen for din institusjon, men også for andre institusjoner i systemet.</0><0>Hvem som gir bekreftelse på unntak, vil derfor være synlig i systemet som dokumentasjon.</0><0>Bekrefter du at denne personen eksisterer og har bidratt på minst ett forskningsresultat ved din institusjon?</0>",
+      "missing_nin_title": "Bekrefte identitet for person uten nasjonalt identitetsnummer",
+      "name_or_nin": "Navn eller nasjonalt identitetsnummer",
       "new_search": "Nytt søk",
       "no_matching_persons_found": "Hvis du ikke finner riktig person i Personregisteret kan du opprette ny person.",
+      "only_confirmed_user_qualify_for_nvi": "Det er kun personer med bekreftet identitet som kan gi NVI-uttelling.",
       "position": "Stilling",
       "position_percent": "Stillingsprosent",
       "search_for_person": "Søk etter person",
-      "update_person_registry": "Oppdater personregister"
+      "update_person_registry": "Oppdater personregister",
+      "without_nin": "Uten nasjonalt identitetsnummer"
     },
     "basic_data": "Grunndata",
     "central_import": {
@@ -79,14 +82,13 @@
         "NOT_APPLICABLE": "Mangelfull",
         "NOT_IMPORTED": "Til import"
       },
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} identifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
       "admin_institutions": "Administrer institusjoner",
-      "administrators": "Institusjonens administratorer",
+      "administrators": "Administratorer",
       "administators_list_explanation": "Genereres fra Personregisteret og rolletildeling",
-      "archive_name": "Arkivnavn",
       "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
       "display_name": "Visningsnavn på institusjonen",
       "doi_password": "Passord",
@@ -94,15 +96,12 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Institusjonens domene i Feide",
-      "institution_english_name": "Engelsk navn",
-      "institution_norwegian_name": "Norsk navn",
       "institution_is_inactive": "Sett til inaktiv",
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
-      "institution_toplevel_code": "Kode",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
-      "loading_institution_information": "Laster institusjons data",
+      "loading_institution_information": "Laster institusjonsdata",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
@@ -115,8 +114,7 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
         "UHI": "Universitet og høyskoler (UH)"
-      },
-      "short_name": "Kortnavn"
+      }
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
@@ -135,8 +133,7 @@
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
       "hide_full_nin": "Skjul personnummer",
       "must_be_curator_to_have_area_of_responsibility": "Må være kurator for å ha ansvarsområde",
-      "national_identity_number": "Fødselsnummer",
-      "no_eligable_roles": "Personer uten fødselsnummer kan ikke ha roller",
+      "no_eligable_roles": "Personer uten nasjonalt identitetsnummer kan ikke ha roller",
       "no_employees_found": "Ingen ansatte funnet",
       "other_employments": "Andre aktive ansettelser",
       "person_id": "PersonID",
@@ -175,12 +172,14 @@
     "error_occurred": "En uventet feil har oppstått",
     "file": "Fil",
     "filter": "Filter",
+    "financier": "Finansiør",
     "first_name": "Fornavn",
     "funding": "Finansiering",
     "help": "Hjelp",
     "id": "ID",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
+    "justification": "Begrunnelse",
     "last_name": "Etternavn",
     "link": "Lenke",
     "menu": "Meny",
@@ -188,6 +187,7 @@
     "move_down": "Flytt ned",
     "move_up": "Flytt opp",
     "name": "Navn",
+    "national_id_number": "Nasjonalt identitetsnummer",
     "next": "Neste",
     "no": "Nei",
     "no_hits": "Ingen treff",
@@ -241,6 +241,7 @@
     "show_details": "Vis detaljer",
     "show_fewer": "Vis færre",
     "show_more": "Vis flere",
+    "show_more_options": "Vis flere valg",
     "skip_to_main_content": "Hopp til hovedinnhold",
     "skip_to_schema": "Hopp til skjema",
     "sort_newest_first": "Nyeste først",
@@ -380,14 +381,14 @@
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
-      "institution_code": "Institusjonens kode",
+      "institution_code": "Kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
       "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
       "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitenskapsindeks",
       "institution_name": "Institusjonsnavn",
-      "institution_name_english": "Institusjonens engelske navn",
-      "institution_name_norwegian": "Institusjonens norske navn",
-      "institution_short_name": "Institusjonens kortnavn",
+      "institution_name_english": "Engelsk navn",
+      "institution_name_norwegian": "Norsk navn",
+      "institution_short_name": "Kortnavn",
       "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
       "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
     },
@@ -505,12 +506,12 @@
       "add_employment": "Ansettelse lagt til",
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
-      "create_journal": "Tidsskriften ble opprettet",
+      "create_journal": "Tidsskriftet ble opprettet",
       "create_note": "Merknaden ble lagret",
       "create_nvi_period": "NVI-periode ble opprettet",
       "create_person": "Person ble opprettet",
       "create_project": "Prosjekt er opprettet",
-      "create_publisher": "Utigveren ble opprettet",
+      "create_publisher": "Utgiveren ble opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_registration": "Publikasjon er opprettet",
       "create_series": "Serien ble opprettet",
@@ -550,7 +551,7 @@
       "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
       "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
-      "employments_missing_data": "Alle ansettelser må ha stilling, stillingsprosent og startdato",
+      "employments_missing_data": "Alle ansettelser må ha stilling og startdato",
       "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_email": "Ugyldig epost",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
@@ -618,8 +619,9 @@
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
-      "doi_requested": "Bedt om DOI",
-      "files_published": "Fil(er) publisert",
+      "files_published_one": "{{count}} fil publisert",
+      "files_published_other": "{{count}} filer publisert",
+      "files_published_unknown": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
       "mark_as_completed": "Sett til ferdig",
@@ -705,7 +707,7 @@
     "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
       "delete_all_draft_registrations": "Slett alle kladder",
-      "delete_all_draft_registrations_message": "Slett alle upubliserte registreringer?",
+      "delete_all_draft_registrations_message": "Slett alle kladder?",
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
       "published": "Publisert",
@@ -1005,7 +1007,7 @@
         "paragraph2": {
           "bullet_point0": "Dersom du har et særskilt behov for å få stanset behandlingen ber vi deg om å ta kontakt med behandlingsansvarlig - eksempelvis hvis du har et beskyttelsesbehov, fortrolig adresse, eller lignende.",
           "bullet_point1": "Når det er gitt samtykke for behandling av personopplysninger, har du rett til å trekke samtykket.",
-          "intro": "Vær imidlertid oppmerksom på følgende;"
+          "intro": "Vær imidlertid oppmerksom på følgende:"
         }
       },
       "section5": {
@@ -1031,7 +1033,7 @@
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt."
     },
-    "grant_id": "GrantID",
+    "grant_id": "Tilskudds-ID",
     "keywords": "Nøkkelord",
     "no_participants": "Ingen registrerte deltakere.",
     "no_related_projects": "Ingen relaterte prosjekt.",
@@ -1068,10 +1070,10 @@
       "add_contributor": "Legg til bidragsyter",
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
       "add_self_as_contributor": "Legg meg til som bidragsyter",
-      "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
+      "add_unverified_contributor": "Legg til en uidentifisert bidragsyter.",
       "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
-      "confirmed": "Bekreftet",
+      "identification": "Identifisering",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "contributor_not_found": "Finner ikke person",
@@ -1080,7 +1082,7 @@
       "identity_status": {
         "confirmed_identity": "Bekreftet identitet",
         "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
-        "unknown_identity": "Ukjent identitet"
+        "unknown_identity": "Uidentifisert"
       },
       "invalid_role": "Bidragsyter må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
       "must_select_type_first": "Du må velge kategori før du kan legge til bidragsyter.",
@@ -1156,10 +1158,12 @@
         "VideoEditor": "Klipper",
         "Writer": "Tekstforfatter"
       },
+      "unidentified_contributor": "Bidragsyter er uidentifisert",
       "verify_affiliation": "Bekreft tilknytning",
-      "verify_person": "Verifiser person"
+      "verify_person": "Identifiser person"
     },
     "curator_support_info": "Her kan du spørre din kurator om hjelp med alt som har med registrering og publisering av forskningsresultat. Du finner svar på dine spørsmål på \"Min side\" og på registreringens presentasjonsside.",
+    "delete_registration": "Slette resultat",
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1173,10 +1177,11 @@
       "funding": {
         "funder": "Finansiør",
         "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",
+        "funding_id": "Tilskudds-ID",
+        "funding_name": "Tilskuddsnavn",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
-        "project": "Prosjekt",
         "remove_funding": "Fjern finansiering"
       },
       "hrcs_activities": "HRCS-aktiviteter",
@@ -1242,6 +1247,7 @@
       "files_and_license": "Fil, lisens og lenke",
       "resource_type": "Kategori"
     },
+    "is_registration_error_question": "Er dette en feilregistrering?",
     "is_revision": "Arbeidet er en revisjon",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
@@ -1257,7 +1263,7 @@
     "public_page": {
       "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
-      "cristin_id": "Cristin ID",
+      "cristin_id": "Cristin-ID",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
@@ -1388,6 +1394,7 @@
       "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett",
       "start_with_uploading_file_title": "Start med å laste opp fil"
     },
+    "registration_id": "Resultat-ID",
     "resource_type": {
       "article_number": "Artikkelnummer",
       "artistic": {
@@ -1586,7 +1593,7 @@
         "edit_mention_in_publication": "Endre til publisering/omtale",
         "institution_name": "Arrangørens navn",
         "more_info_about_elementet": "Mer om elementet",
-        "place": "Visningsted",
+        "place": "Visningssted",
         "presentation_type": "Type formidlingsform",
         "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
         "subtype": {
@@ -1729,6 +1736,8 @@
     "responsible_institution": "Forskningsansvarlig institusjon",
     "result": "Resultat",
     "search_for_contributor": "Søk etter bidragsyter",
+    "search_for_funder": "Søk etter finansiør",
+    "search_for_funding_identifier": "Søk på Tilskudds-ID",
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
@@ -1785,5 +1794,16 @@
     "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"
+  },
+  "unpublish_actions": {
+    "duplicate": "Duplikat",
+    "unpublish_registration": "Avpubliser forskningsresultat",
+    "unpublish_registration_detail_1": "Ved avpublisering vil ikke forskningsresultatet være søkbare i NVA, men vil fortsatt være tilgjengelige ved oppslag av referanse.",
+    "unpublish_registration_detail_2": "Eventuelle filer vil fjernes fra forskningsresultatet av avpublisering, men blir ikke permanent slettet.",
+    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.",
+    "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
+    "unpublish_registration_duplicate_citation_information": "For at alle siteringer skal bli videreført, må du søke opp den andre registreringen. Da vil alle siteringer fortsatt føre til den andre versjonen",
+    "search_for_duplicate": "Søk etter registrert resultat",
+    "search_duplicate_facets": "Søk med DOI, handle eller tittel"
   }
 }

@@ -22,17 +22,33 @@ import { ExportResultsButton } from '../ExportResultsButton';
 import { SearchPageProps } from '../SearchPage';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
-import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
+import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 
 const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
-  ResultParam.TopLevelOrganization,
+  ResultParam.Course,
+  ResultParam.CristinIdentifier,
+  ResultParam.Doi,
   ResultParam.FundingSource,
+  ResultParam.Handle,
+  ResultParam.Identifier,
+  ResultParam.Isbn,
+  ResultParam.Issn,
+  ResultParam.TopLevelOrganization,
 ];
 
 interface SelectedFacet {
   param: string;
+  value: string;
+}
+interface SearchTermProperties {
+  searchTerm: string;
+  properties: SearchTermProperty[];
+}
+
+interface SearchTermProperty {
+  fieldName: ResultParam;
   value: string;
 }
 
@@ -51,7 +67,19 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
     }
   });
 
-  const initialSearchParams = createSearchConfigFromSearchParams(searchParams);
+  const initialSearchParams: SearchTermProperties = createSearchConfigFromSearchParams(searchParams);
+
+  function processSearchParamProperties(values: SearchTermProperties, searchParam: ResultParam) {
+    const paramValues =
+      values.properties
+        ?.filter((property) => property.fieldName === searchParam && property.value)
+        .map((property) => property.value) ?? [];
+    if (paramValues.length > 0) {
+      searchParams.set(searchParam, paramValues.join(','));
+    } else {
+      searchParams.delete(searchParam);
+    }
+  }
 
   return (
     <Formik
@@ -68,45 +96,19 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           searchParams.delete(ResultParam.Query);
         }
 
-        const contributorNames =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.ContributorName && property.value)
-            .map((property) => property.value) ?? [];
-        if (contributorNames.length > 0) {
-          searchParams.set(ResultParam.ContributorName, contributorNames.join(','));
-        } else {
-          searchParams.delete(ResultParam.ContributorName);
-        }
-
-        const title =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Title && property.value)
-            .map((property) => property.value) ?? [];
-        if (title.length > 0) {
-          searchParams.set(ResultParam.Title, title.join(','));
-        } else {
-          searchParams.delete(ResultParam.Title);
-        }
-
-        const abstracts =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Abstract && property.value)
-            .map((property) => property.value) ?? [];
-        if (abstracts.length > 0) {
-          searchParams.set(ResultParam.Abstract, abstracts.join(','));
-        } else {
-          searchParams.delete(ResultParam.Abstract);
-        }
-
-        const tags =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Tags && property.value)
-            .map((property) => property.value) ?? [];
-        if (tags.length > 0) {
-          searchParams.set(ResultParam.Tags, tags.join(','));
-        } else {
-          searchParams.delete(ResultParam.Tags);
-        }
+        processSearchParamProperties(values, ResultParam.ContributorName);
+        processSearchParamProperties(values, ResultParam.Title);
+        processSearchParamProperties(values, ResultParam.Abstract);
+        processSearchParamProperties(values, ResultParam.Tags);
+        processSearchParamProperties(values, ResultParam.Identifier);
+        processSearchParamProperties(values, ResultParam.Isbn);
+        processSearchParamProperties(values, ResultParam.Issn);
+        processSearchParamProperties(values, ResultParam.Doi);
+        processSearchParamProperties(values, ResultParam.Handle);
+        processSearchParamProperties(values, ResultParam.FundingIdentifier);
+        processSearchParamProperties(values, ResultParam.FundingSource);
+        processSearchParamProperties(values, ResultParam.Course);
+        processSearchParamProperties(values, ResultParam.CristinIdentifier);
 
         history.push({ search: searchParams.toString() });
       }}>
@@ -230,7 +232,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     break;
                   }
                   case ResultParam.FundingSource: {
-                    fieldName = t('common.funding');
+                    fieldName = t('common.financier');
                     const fundingLabels = registrationQuery.data?.aggregations?.fundingSource?.find(
                       (bucket) => bucket.key === value
                     )?.labels;
