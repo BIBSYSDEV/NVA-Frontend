@@ -14,6 +14,31 @@ export const PublisherFilter = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
   const publisherParam = searchParams.get(ResultParam.Publisher);
+  const [publisherQuery, setPublisherQuery] = useState('');
+  const debouncedQuery = useDebounce(publisherQuery);
+
+  const publisherOptionsQuery = useQuery({
+    queryKey: ['publisherSearch', debouncedQuery],
+    enabled: debouncedQuery.length > 3 && debouncedQuery === publisherQuery,
+    queryFn: () => searchForPublishers(debouncedQuery, '2023'),
+    meta: { errorMessage: t('feedback.error.get_publishers') },
+  });
+
+  const publisherList = publisherOptionsQuery.data?.hits ?? [];
+
+  const selectedPublisherQuery = useQuery({
+    enabled: !!publisherParam,
+    queryKey: [publisherParam],
+    queryFn: () => searchForPublishers(publisherParam ?? '', '2023'),
+    meta: { errorMessage: t('feedback.error.get_publisher') },
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (selectedPublisherQuery.data) {
+      setPublisherQuery(selectedPublisherQuery.data.hits[0].name);
+    }
+  }, [selectedPublisherQuery.data]);
 
   const handleChange = (selectedValue: Publisher | null) => {
     if (selectedValue) {
@@ -25,35 +50,11 @@ export const PublisherFilter = () => {
     history.push({ search: searchParams.toString() });
   };
 
-  const selectedPublisherQuery = useQuery({
-    enabled: !!publisherParam,
-    queryKey: ['selectedPublisher', publisherParam],
-    queryFn: () => searchForPublishers(publisherParam ?? '', '2023'),
-    meta: { errorMessage: t('feedback.error.get_publisher') },
-  });
-
-  const [publisherQuery, setPublisherQuery] = useState('');
-  const debouncedQuery = useDebounce(publisherQuery);
-
-  useEffect(() => {
-    if (selectedPublisherQuery.data) {
-      setPublisherQuery(selectedPublisherQuery.data.hits[0].name);
-    }
-  }, [selectedPublisherQuery.data]);
-
-  const publisherOptionsQuery = useQuery({
-    queryKey: ['publisherSearch', debouncedQuery],
-    enabled: debouncedQuery.length > 3 && debouncedQuery === publisherQuery,
-    queryFn: () => searchForPublishers(debouncedQuery, '2023'),
-    meta: { errorMessage: t('feedback.error.get_publishers') },
-  });
-
-  const publisherList = publisherOptionsQuery.data?.hits ?? [];
-
   return (
     <Autocomplete
       sx={{ minWidth: '15rem' }}
-      value={publisherList.find((publisher) => publisher.identifier === publisherParam) ?? null}
+      value={publisherParam && selectedPublisherQuery.data?.hits[0] ? selectedPublisherQuery.data.hits[0] : null}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       options={
         debouncedQuery && publisherQuery === debouncedQuery && !publisherOptionsQuery.isLoading ? publisherList : []
       }
