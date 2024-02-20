@@ -22,6 +22,7 @@ const registrationFilters: FilterItem[] = [
   { field: ResultParam.FundingIdentifier, i18nKey: 'registration.description.funding.funding_id' },
   { field: ResultParam.Course, i18nKey: 'registration.resource_type.course_code' },
   { field: ResultParam.CristinIdentifier, i18nKey: 'registration.public_page.cristin_id' },
+  { field: ResultParam.Identifier, i18nKey: 'registration.registration_id' },
 ];
 
 interface AdvancedSearchRowProps {
