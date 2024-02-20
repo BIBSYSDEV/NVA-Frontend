@@ -32,10 +32,10 @@ export const AdvancedSearchPage = () => {
 
   const resultSearchQueryConfig: FetchResultsParams = {
     categoryShould,
+    contributorName: params.get(ResultParam.ContributorName),
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
-    contributorName: params.get(ResultParam.ContributorName),
     order: params.get(ResultParam.Order),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
