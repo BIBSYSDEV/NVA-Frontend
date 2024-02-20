@@ -16,6 +16,7 @@ import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
+import { SeriesFilter } from './SeriesFilter';
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
@@ -43,6 +44,7 @@ export const AdvancedSearchPage = () => {
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publisher: params.get(ResultParam.Publisher),
     results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    series: params.get(ResultParam.Series),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
     topLevelOrganization: topLevelOrganizationId,
@@ -104,6 +106,10 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <JournalFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <SeriesFilter />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
