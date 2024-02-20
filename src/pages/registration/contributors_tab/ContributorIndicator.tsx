@@ -28,7 +28,7 @@ const StyledVerifiedContributorWithoutAffiliation = styled(StyledBaseContributor
 }));
 
 const StyledUnknownContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
-  background: '#d59977',
+  background: theme.palette.secondary.dark,
 }));
 
 interface ContributorIndicatorProps {

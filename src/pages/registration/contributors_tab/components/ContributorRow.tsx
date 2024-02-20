@@ -177,15 +177,11 @@ export const ContributorRow = ({
             <Button
               title={t('registration.contributors.verify_person')}
               variant="outlined"
-              size="small"
-              sx={{
-                textTransform: 'none',
-                bgcolor: '#d59977',
-                ':hover': { bgcolor: '#ddad92' },
-              }}
+              sx={{ textTransform: 'none' }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
                 contributor.identity.name
               )}
+              startIcon={<WarningIcon color="warning" />}
               onClick={() => setOpenVerifyContributor(true)}>
               {t('registration.contributors.unidentified_contributor')}
             </Button>
