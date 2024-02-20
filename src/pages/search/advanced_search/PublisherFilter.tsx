@@ -70,7 +70,7 @@ export const PublisherFilter = () => {
       }}
       blurOnSelect
       disableClearable={!publisherQuery}
-      loading={publisherOptionsQuery.isFetching}
+      loading={isLoading}
       getOptionLabel={(option) => option.name}
       renderOption={(props, option) => (
         <li {...props} key={option.id}>
