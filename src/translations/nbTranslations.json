@@ -1069,7 +1069,7 @@
       "add_contributor": "Legg til bidragsyter",
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
       "add_self_as_contributor": "Legg meg til som bidragsyter",
-      "add_unverified_contributor": "Legg til en ikke-identifisert bidragsyter.",
+      "add_unverified_contributor": "Legg til en uidentifisert bidragsyter.",
       "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "identification": "Identifisering",

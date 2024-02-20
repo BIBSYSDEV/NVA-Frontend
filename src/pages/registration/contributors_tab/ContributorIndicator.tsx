@@ -61,8 +61,7 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
     </Tooltip>
   ) : (
     <Tooltip title={t('registration.contributors.identity_status.unknown_identity')}>
-      <StyledUnknownContributor
-        data-testid={dataTestId.registrationWizard.contributors.unverifiedAuthor(initials)}></StyledUnknownContributor>
+      <StyledUnknownContributor data-testid={dataTestId.registrationWizard.contributors.unverifiedAuthor(initials)} />
     </Tooltip>
   );
 };
