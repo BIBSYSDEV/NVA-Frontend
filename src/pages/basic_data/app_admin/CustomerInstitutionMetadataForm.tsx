@@ -148,11 +148,6 @@ export const CustomerInstitutionMetadataForm = ({
             <CustomerInstitutionInformationFromCristin
               organizationData={organizationData}
               cristinId={values.customer.cristinId}
-              setName={(newName) => {
-                setFieldValue(CustomerInstitutionFieldNames.DisplayName, newName);
-                setFieldValue(CustomerInstitutionFieldNames.Name, newName);
-              }}
-              displayName={values.customer.displayName}
             />
             <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.FeideOrganizationDomain}

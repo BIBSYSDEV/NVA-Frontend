@@ -1,24 +1,18 @@
-import { Grid, TextField } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { Organization } from '../../../types/organization.types';
-import { getUnitTopLevelCode } from '../../../utils/institutions-helpers';
-import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface CustomerInstitutionInformationFromCristinProps {
   cristinId?: string;
   organizationData: Organization | null;
-  setName: (string: string) => void;
-  displayName?: string;
 }
 
 export const CustomerInstitutionInformationFromCristin = ({
   cristinId,
   organizationData,
-  setName,
-  displayName,
 }: CustomerInstitutionInformationFromCristinProps) => {
   const { t } = useTranslation();
   const organizationQuery = useQuery({
@@ -30,10 +24,6 @@ export const CustomerInstitutionInformationFromCristin = ({
   });
 
   const customerInformation = organizationData ?? organizationQuery.data;
-  const displayNameFromCristin = getLanguageString(organizationData?.labels, 'nb');
-  if (displayName !== displayNameFromCristin && displayNameFromCristin.length > 0) {
-    setName(displayNameFromCristin);
-  }
 
   return (
     <Grid aria-live="polite" aria-busy={organizationQuery.isFetching} container spacing={2}>
@@ -44,40 +34,28 @@ export const CustomerInstitutionInformationFromCristin = ({
       ) : (
         <>
           <Grid item xs={12} md={3}>
-            <TextField
-              label={t('basic_data.institutions.institution_norwegian_name')}
-              fullWidth
-              disabled
-              value={displayName ?? ''}
-              variant="filled"
-            />
+            <Typography variant="h3" component="h2">
+              {t('editor.institution.institution_name_norwegian')}
+            </Typography>
+            <Typography>{customerInformation?.labels.nb ?? '-'}</Typography>
           </Grid>
           <Grid item xs={12} md={3}>
-            <TextField
-              label={t('basic_data.institutions.institution_english_name')}
-              fullWidth
-              disabled
-              value={customerInformation?.labels?.en ?? ''}
-              variant="filled"
-            />
+            <Typography variant="h3" component="h2">
+              {t('editor.institution.institution_name_english')}
+            </Typography>
+            <Typography>{customerInformation?.labels.en ?? '-'}</Typography>
           </Grid>
           <Grid item xs={12} md={3}>
-            <TextField
-              disabled
-              fullWidth
-              value={customerInformation?.acronym ?? ''}
-              variant="filled"
-              label={t('basic_data.institutions.short_name')}
-            />
+            <Typography variant="h3" component="h2">
+              {t('editor.institution.institution_short_name')}
+            </Typography>
+            <Typography>{customerInformation?.acronym ?? '-'}</Typography>
           </Grid>
           <Grid item xs={12} md={3}>
-            <TextField
-              disabled
-              fullWidth
-              value={getUnitTopLevelCode(cristinId) ?? ''}
-              variant="filled"
-              label={t('basic_data.institutions.institution_toplevel_code')}
-            />
+            <Typography variant="h3" component="h2">
+              {t('editor.institution.institution_code')}
+            </Typography>
+            <Typography>{customerInformation?.id.split('/').pop() ?? '-'}</Typography>
           </Grid>
         </>
       )}
