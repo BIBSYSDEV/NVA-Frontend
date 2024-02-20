@@ -50,7 +50,7 @@ export const PublisherFilter = () => {
     history.push({ search: searchParams.toString() });
   };
 
-  const isFetching = publisherParam ? selectedPublisherQuery.isFetching : publisherOptionsQuery.isFetching;
+  const isFetching = publisherParam ? selectedPublisherQuery.isLoading : publisherOptionsQuery.isFetching;
 
   return (
     <Autocomplete
