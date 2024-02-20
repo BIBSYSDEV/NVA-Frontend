@@ -31,20 +31,20 @@ export const AdvancedSearchPage = () => {
   const unitId = params.get(ResultParam.Unit);
 
   const resultSearchQueryConfig: FetchResultsParams = {
+    categoryShould,
+    from: Number(params.get(ResultParam.From) ?? 0),
+    fundingIdentifier: params.get(ResultParam.FundingIdentifier),
+    fundingSource: params.get(ResultParam.FundingSource),
+    contributorName: params.get(ResultParam.ContributorName),
+    order: params.get(ResultParam.Order),
+    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
+    publicationYearSince: params.get(ResultParam.PublicationYearSince),
+    publisher: params.get(ResultParam.Publisher),
+    results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
     topLevelOrganization: topLevelOrganizationId,
     unit: unitId,
-    categoryShould,
-    sort: params.get(ResultParam.Sort) as SortOrder | null,
-    order: params.get(ResultParam.Order),
-    from: Number(params.get(ResultParam.From) ?? 0),
-    results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
-    publicationYearSince: params.get(ResultParam.PublicationYearSince),
-    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
-    contributorName: params.get(ResultParam.ContributorName),
-    fundingSource: params.get(ResultParam.FundingSource),
-    fundingIdentifier: params.get(ResultParam.FundingIdentifier),
-    publisher: params.get(ResultParam.Publisher),
   };
 
   const resultSearchQuery = useQuery({
