@@ -101,7 +101,6 @@ export const ActionPanelContent = ({
                 isLoadingData={isLoadingData}
                 registration={registration}
                 publishingRequestTickets={publishingRequestTickets}
-                userIsCurator={userIsCurator}
                 addMessage={addMessage}
               />
             </ErrorBoundary>

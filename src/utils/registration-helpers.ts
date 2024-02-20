@@ -643,6 +643,9 @@ export const userCanEditRegistration = (registration: Registration) =>
 export const userCanUnpublishRegistration = (registration: Registration) =>
   registration.allowedOperations.includes('unpublish');
 
+export const userCanPublishRegistration = (registration: Registration) =>
+  registration.allowedOperations.includes('ticket/publish');
+
 export const userCanDeleteRegistration = (registration: Registration) =>
   registration.allowedOperations.includes('delete');
 

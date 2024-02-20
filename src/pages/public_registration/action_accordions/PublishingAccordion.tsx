@@ -30,7 +30,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
-import { userCanUnpublishRegistration } from '../../../utils/registration-helpers';
+import { userCanPublishRegistration, userCanUnpublishRegistration } from '../../../utils/registration-helpers';
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
@@ -44,7 +44,6 @@ interface PublishingAccordionProps {
   registration: Registration;
   refetchData: () => void;
   publishingRequestTickets: PublishingTicket[];
-  userIsCurator: boolean;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
@@ -60,7 +59,6 @@ export const PublishingAccordion = ({
   publishingRequestTickets,
   registration,
   refetchData,
-  userIsCurator,
   isLoadingData,
   addMessage,
 }: PublishingAccordionProps) => {
@@ -72,6 +70,7 @@ export const PublishingAccordion = ({
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
   const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
+  const userCanPublish = userCanPublishRegistration(registration);
 
   const lastPublishingRequest = publishingRequestTickets.at(-1);
 
@@ -124,7 +123,7 @@ export const PublishingAccordion = ({
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      userIsCurator
+      userCanPublish
         ? dispatch(
             setNotification({
               message: t('feedback.success.publish_as_curator'),
@@ -149,7 +148,7 @@ export const PublishingAccordion = ({
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
   const hasCompletedTicket = lastPublishingRequest?.status === 'Completed';
 
-  const canHandlePublishingRequest = userIsCurator && !registratorPublishesMetadataAndFiles && hasPendingTicket;
+  const canHandlePublishingRequest = userCanPublish && !registratorPublishesMetadataAndFiles && hasPendingTicket;
 
   const mismatchingPublishedStatusWorkflow1 =
     registratorPublishesMetadataAndFiles && !!lastPublishingRequest && isDraftRegistration;
