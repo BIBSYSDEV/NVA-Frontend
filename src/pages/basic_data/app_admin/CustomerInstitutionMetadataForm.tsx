@@ -1,7 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Checkbox, Chip, Divider, FormControlLabel, FormLabel, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -21,7 +20,6 @@ import {
   emptyProtectedDoiAgent,
   Sector,
 } from '../../../types/customerInstitution.types';
-import { Organization } from '../../../types/organization.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -135,7 +133,6 @@ export const CustomerInstitutionMetadataForm = ({
                         },
                         doiAgent: emptyProtectedDoiAgent,
                       });
-                      setOrganizationData(selectedInstitution);
                     }}
                     errorMessage={touched && !!error ? error : undefined}
                     fieldInputProps={field}
@@ -144,10 +141,7 @@ export const CustomerInstitutionMetadataForm = ({
               </Field>
             )}
 
-            <CustomerInstitutionInformationFromCristin
-              organizationData={organizationData}
-              cristinId={values.customer.cristinId}
-            />
+            <CustomerInstitutionInformationFromCristin cristinId={values.customer.cristinId} />
             <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
               label={t('basic_data.institutions.feide_organization_domain')}

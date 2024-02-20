@@ -3,16 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { Organization } from '../../../types/organization.types';
 
 interface CustomerInstitutionInformationFromCristinProps {
   cristinId?: string;
-  organizationData: Organization | null;
 }
 
 export const CustomerInstitutionInformationFromCristin = ({
   cristinId,
-  organizationData,
 }: CustomerInstitutionInformationFromCristinProps) => {
   const { t } = useTranslation();
   const organizationQuery = useQuery({
@@ -24,7 +21,7 @@ export const CustomerInstitutionInformationFromCristin = ({
     cacheTime: 1_800_000, // 30 minutes
   });
 
-  const customerInformation = organizationData ?? organizationQuery.data;
+  const customerInformation = organizationQuery.data;
 
   return (
     <Grid aria-live="polite" aria-busy={organizationQuery.isFetching} container spacing={2}>
