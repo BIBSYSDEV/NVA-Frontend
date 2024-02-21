@@ -28,14 +28,12 @@ export const DeletedRegistrationInformation = ({ registration }: DeletedRegistra
       }}>
       {(registration.status === RegistrationStatus.Unpublished ||
         registration.status === RegistrationStatus.Deleted) && (
-        <Typography variant="h4" component="span" sx={{ textTransform: 'uppercase' }}>
-          {t(`registration.status.${registration.status}`)}
-        </Typography>
+        <Typography>{t(`registration.status.${registration.status}`)}</Typography>
       )}
 
-      {unpublishingNote?.note && <Typography>{unpublishingNote.note}</Typography>}
+      {unpublishingNote?.note && <Typography sx={{ gridColumn: '1/3' }}>{unpublishingNote.note}</Typography>}
       {registration.duplicateOf && (
-        <Typography aria-busy={duplicateRegistrationQuery.isFetching} aria-live="polite">
+        <Typography sx={{ gridColumn: '1/3' }} aria-busy={duplicateRegistrationQuery.isFetching} aria-live="polite">
           {duplicateRegistrationQuery.isFetching ? (
             <Skeleton />
           ) : (
