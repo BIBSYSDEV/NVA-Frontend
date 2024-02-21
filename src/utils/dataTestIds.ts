@@ -136,6 +136,7 @@ export const dataTestId = {
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
+      publicationLanguageField: 'publication-language-field',
       removeFacetButton: 'remove-facet-button',
       removeFilterButton: 'remove-filter-button',
       searchButton: 'search-button',
