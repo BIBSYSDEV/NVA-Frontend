@@ -1,6 +1,7 @@
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 import {
+  IconButton,
   Paper,
-  Radio,
   Table,
   TableBody,
   TableCell,
@@ -18,12 +19,10 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 import { LastRegistrationTableCellContent } from './LastRegistrationTableCellContent';
 
-const radioHeadingId = 'selected-heading';
-
 interface CristinPersonListProps {
   personSearch: SearchResponse<CristinPerson, unknown>;
   searchTerm?: string;
-  onSelectContributor?: (selectedContributor: CristinPerson) => void;
+  onSelectContributor: (selectedContributor: CristinPerson) => void;
   userId?: string;
 }
 
@@ -48,10 +47,8 @@ export const CristinPersonList = ({
           <caption style={visuallyHidden}>{t('registration.contributors.authors')}</caption>
           <TableHead>
             <TableRow>
-              <TableCell id={radioHeadingId} padding="checkbox">
-                {t('common.selected')}
-              </TableCell>
               <TableCell>{t('common.name')}</TableCell>
+              <TableCell>{t('registration.contributors.select_all')}</TableCell>
               <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
               <TableCell>{t('common.result_registrations')}</TableCell>
             </TableRow>
@@ -62,17 +59,22 @@ export const CristinPersonList = ({
               const isSelected = cristinPerson.id === userId;
               return (
                 <TableRow
-                  sx={{ cursor: 'pointer' }}
                   data-testid={dataTestId.registrationWizard.contributors.authorRadioButton}
                   key={cristinPerson.id}
-                  hover
-                  onClick={() => onSelectContributor?.(cristinPerson)}
                   selected={isSelected}>
-                  <TableCell padding="checkbox">
-                    <Radio inputProps={{ 'aria-labelledby': radioHeadingId }} checked={isSelected} />
-                  </TableCell>
                   <TableCell>
                     <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <IconButton
+                      onClick={() => onSelectContributor(cristinPerson)}
+                      color="primary"
+                      size="small"
+                      disabled={isSelected}
+                      sx={{ bgcolor: 'white' }}
+                      title={t('registration.contributors.select_all')}>
+                      <KeyboardDoubleArrowUpIcon fontSize="small" />
+                    </IconButton>
                   </TableCell>
                   <TableCell>
                     {activeAffiliations.length > 0 ? (

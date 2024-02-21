@@ -232,7 +232,6 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
     "select_institution": "Velg institusjon",
-    "selected": "Valgt",
     "send": "Send",
     "settings": "Innstillinger",
     "show": "Vis",
@@ -1095,6 +1094,7 @@
       "remove_contributor": "Fjern bidragsyter",
       "search_for_institution": "Søk etter institusjon",
       "select_contributor_type": "Velg type bidragsyter",
+      "select_all": "Velg alt",
       "suggested_affiliations": "Foreslåtte tilknytninger",
       "type": "Bidragstype",
       "types": {
