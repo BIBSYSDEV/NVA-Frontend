@@ -213,7 +213,10 @@ export const PublishingAccordion = ({
             {completedTickets.map((ticket) => (
               <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket} />
             ))}
-            <DeletedRegistrationInformation registration={registration} />
+            {(registration.status === RegistrationStatus.Deleted ||
+              registration.status === RegistrationStatus.Unpublished) && (
+              <DeletedRegistrationInformation registration={registration} />
+            )}
           </Box>
         )}
 
