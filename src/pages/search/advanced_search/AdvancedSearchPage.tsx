@@ -42,6 +42,7 @@ export const AdvancedSearchPage = () => {
     journal: params.get(ResultParam.Journal),
     order: params.get(ResultParam.Order),
     publicationLanguage: params.get(ResultParam.PublicationLanguage),
+    publicationLanguageShould: params.get(ResultParam.PublicationLanguageShould),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publisher: params.get(ResultParam.Publisher),

@@ -25,27 +25,33 @@ const languageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
+const getLanguageCodeFromUri = (uri: string) => {
+  return uri.split('/').pop();
+};
+
 export const LanguageFilter = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const languageParam = searchParams.get(ResultParam.PublicationLanguage)?.split(',') || [];
+  const languageParam = searchParams.get(ResultParam.PublicationLanguageShould)?.split(',') || [];
 
   const handleChange = (selectedUris: string[] | null) => {
     if (selectedUris) {
       const selectedLanguages = selectedUris
         .map((uri) => {
-          const selectedLanguage = languageOptions.find((language) => language.uri === uri);
-          return selectedLanguage ? selectedLanguage.uri : null;
+          const selectedLanguage = languageOptions.find(
+            (language) => getLanguageCodeFromUri(language.uri) === getLanguageCodeFromUri(uri)
+          );
+          return selectedLanguage ? getLanguageCodeFromUri(selectedLanguage.uri) : null;
         })
         .filter(Boolean);
 
       if (selectedLanguages.length > 0) {
-        searchParams.set(ResultParam.PublicationLanguage, selectedLanguages.join(','));
+        searchParams.set(ResultParam.PublicationLanguageShould, selectedLanguages.join(','));
       } else {
-        searchParams.delete(ResultParam.PublicationLanguage);
+        searchParams.delete(ResultParam.PublicationLanguageShould);
       }
     } else {
-      searchParams.delete(ResultParam.PublicationLanguage);
+      searchParams.delete(ResultParam.PublicationLanguageShould);
     }
 
     history.push({ search: searchParams.toString() });
