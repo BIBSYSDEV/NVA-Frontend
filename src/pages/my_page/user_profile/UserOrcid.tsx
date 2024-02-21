@@ -1,5 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Button, CircularProgress, IconButton, Link as MuiLink, Skeleton, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, IconButton, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,15 +10,13 @@ import { fetchPerson } from '../../../api/cristinApi';
 import { getOrcidInfo } from '../../../api/external/orcidApi';
 import { postOrcidCredentials } from '../../../api/orcidApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { OrcidCredentials } from '../../../types/orcid.types';
 import { User } from '../../../types/user.types';
-import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../utils/constants';
+import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL, USE_MOCK_DATA } from '../../../utils/constants';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getValueByKey } from '../../../utils/user-helpers';
-import { OrcidModalContent } from './OrcidModalContent';
 import { UserOrcidHelperModal } from './UserOrcidHelperModal';
 
 interface UserOrcidProps {
@@ -58,7 +56,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+
   const [isAddingOrcid, setIsAddingOrcid] = useState(false);
   const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
   const userCristinId = user.cristinId ?? '';
@@ -75,7 +73,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const currentOrcid = getValueByKey('ORCID', cristinPerson?.identifiers);
   const orcidUrl = `${ORCID_BASE_URL}/${currentOrcid}`;
 
-  const toggleModal = () => setOpenModal(!openModal);
   const toggleConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   useEffect(() => {
@@ -143,6 +140,16 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     toggleConfirmDialog();
   };
 
+  const openORCID = () => {
+    if (USE_MOCK_DATA) {
+      history.push(`${UrlPathTemplate.MyPageProfile}?access_token=123`);
+    } else {
+      window.location.assign(
+        `${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`
+      );
+    }
+  };
+
   return (
     <div>
       {cristinPersonQuery.isLoading ? (
@@ -194,22 +201,23 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           </ConfirmDialog>
         </Box>
       ) : (
-        <>
-          <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
-            {t('my_page.my_profile.orcid.connect_orcid')}
-          </Button>
-          <Typography paragraph>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
-          <UserOrcidHelperModal />
-
-          <Modal
-            headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
-            headingText={t('my_page.my_profile.orcid.dialog.heading')}
-            onClose={toggleModal}
-            open={openModal}
-            dataTestId="orcid-modal">
-            <OrcidModalContent cancelFunction={toggleModal} />
-          </Modal>
-        </>
+        <Grid
+          sx={{ marginTop: '1rem', backgroundColor: 'registration.main', borderRadius: '4px' }}
+          alignItems="center"
+          container
+          spacing={1}>
+          <Grid item>
+            <Button data-testid="button-create-connect-orcid" onClick={openORCID} variant="contained" size="small">
+              {t('my_page.my_profile.orcid.connect_orcid')}
+            </Button>
+          </Grid>
+          <Grid item>
+            <UserOrcidHelperModal />
+          </Grid>
+          <Grid item>
+            <Typography>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
+          </Grid>
+        </Grid>
       )}
     </div>
   );
