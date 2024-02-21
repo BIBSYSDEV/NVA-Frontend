@@ -13,8 +13,11 @@ import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter'
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
+import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
 import { OrganizationFilters } from './OrganizationFilters';
+import { PublisherFilter } from './PublisherFilter';
+import { SeriesFilter } from './SeriesFilter';
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
@@ -31,18 +34,22 @@ export const AdvancedSearchPage = () => {
   const unitId = params.get(ResultParam.Unit);
 
   const resultSearchQueryConfig: FetchResultsParams = {
+    categoryShould,
+    contributorName: params.get(ResultParam.ContributorName),
+    from: Number(params.get(ResultParam.From) ?? 0),
+    fundingIdentifier: params.get(ResultParam.FundingIdentifier),
+    fundingSource: params.get(ResultParam.FundingSource),
+    journal: params.get(ResultParam.Journal),
+    order: params.get(ResultParam.Order),
+    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
+    publicationYearSince: params.get(ResultParam.PublicationYearSince),
+    publisher: params.get(ResultParam.Publisher),
+    results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    series: params.get(ResultParam.Series),
+    sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
     topLevelOrganization: topLevelOrganizationId,
     unit: unitId,
-    categoryShould,
-    sort: params.get(ResultParam.Sort) as SortOrder | null,
-    order: params.get(ResultParam.Order),
-    from: Number(params.get(ResultParam.From) ?? 0),
-    results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
-    publicationYearSince: params.get(ResultParam.PublicationYearSince),
-    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
-    contributorName: params.get(ResultParam.ContributorName),
-    fundingSource: params.get(ResultParam.FundingSource),
     publicationLanguage: params.get(ResultParam.PublicationLanguage),
   };
 
@@ -86,6 +93,25 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <FundingSourceFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <SearchForm
+            paramName={ResultParam.FundingIdentifier}
+            placeholder={t('search.search_for_funding_identifier')}
+          />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <PublisherFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <JournalFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <SeriesFilter />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
