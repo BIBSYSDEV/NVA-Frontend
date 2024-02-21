@@ -157,7 +157,6 @@ export enum ResultParam {
   Journal = 'journal',
   Order = 'order',
   Project = 'project',
-  PublicationLanguage = 'publicationLanguage',
   PublicationLanguageShould = 'publicationLanguageShould',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
@@ -195,7 +194,6 @@ export interface FetchResultsParams {
   [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
-  [ResultParam.PublicationLanguage]?: string | null;
   [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.PublicationYearSince]?: string | null;
@@ -272,9 +270,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
-  }
-  if (params.publicationLanguage) {
-    searchParams.set(ResultParam.PublicationLanguage, params.publicationLanguage);
   }
   if (params.publicationLanguageShould) {
     searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
