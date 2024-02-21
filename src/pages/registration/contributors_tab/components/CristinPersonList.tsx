@@ -1,3 +1,4 @@
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 import {
   IconButton,
@@ -48,6 +49,7 @@ export const CristinPersonList = ({
           <TableHead>
             <TableRow>
               <TableCell>{t('common.name')}</TableCell>
+              <TableCell>{t('registration.contributors.select_person')}</TableCell>
               <TableCell>{t('registration.contributors.select_all')}</TableCell>
               <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
               <TableCell>{t('common.result_registrations')}</TableCell>
@@ -64,6 +66,20 @@ export const CristinPersonList = ({
                   selected={isSelected}>
                   <TableCell>
                     <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <IconButton
+                      onClick={() => {
+                        const personToAdd: CristinPerson = { ...cristinPerson, employments: [], affiliations: [] };
+                        onSelectContributor(personToAdd);
+                      }}
+                      color="primary"
+                      size="small"
+                      disabled={isSelected}
+                      sx={{ bgcolor: 'white' }}
+                      title={t('registration.contributors.select_person')}>
+                      <KeyboardArrowUpIcon fontSize="small" />
+                    </IconButton>
                   </TableCell>
                   <TableCell>
                     <IconButton
