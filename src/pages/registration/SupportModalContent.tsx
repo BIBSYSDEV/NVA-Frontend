@@ -13,7 +13,7 @@ interface SupportModalContentProps {
   registration: Registration;
 }
 
-export const SupportModalContent = ({ registration }: SupportModalContentProps) => {
+export const SupportModalContent = ({ closeModal, registration }: SupportModalContentProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -28,7 +28,7 @@ export const SupportModalContent = ({ registration }: SupportModalContentProps) 
     onError: () => dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' })),
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
-      ticketsQuery.refetch();
+      closeModal();
     },
   });
 
