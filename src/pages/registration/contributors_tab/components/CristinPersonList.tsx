@@ -23,14 +23,14 @@ interface CristinPersonListProps {
   personSearch: SearchResponse<CristinPerson, unknown>;
   searchTerm?: string;
   onSelectContributor: (selectedContributor: CristinPerson) => void;
-  userId?: string;
+  selectedPerson?: CristinPerson;
 }
 
 export const CristinPersonList = ({
   personSearch,
   searchTerm,
   onSelectContributor,
-  userId,
+  selectedPerson,
 }: CristinPersonListProps) => {
   const { t } = useTranslation();
 
@@ -58,7 +58,7 @@ export const CristinPersonList = ({
           <TableBody>
             {personSearch.hits.map((cristinPerson) => {
               const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
-              const isSelected = cristinPerson.id === userId;
+              const isSelected = cristinPerson.id === selectedPerson?.id;
               return (
                 <TableRow
                   data-testid={dataTestId.registrationWizard.contributors.authorRadioButton}
@@ -80,7 +80,11 @@ export const CristinPersonList = ({
                   <TableCell>
                     <IconButton
                       onClick={() => {
-                        const personToAdd: CristinPerson = { ...cristinPerson, employments: [], affiliations: [] };
+                        const personToAdd: CristinPerson = {
+                          ...cristinPerson,
+                          employments: selectedPerson?.employments ?? [],
+                          affiliations: selectedPerson?.affiliations ?? [],
+                        };
                         onSelectContributor(personToAdd);
                       }}
                       color="primary"

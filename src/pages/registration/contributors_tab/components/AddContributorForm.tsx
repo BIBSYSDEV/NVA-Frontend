@@ -41,7 +41,7 @@ export const AddContributorForm = ({
   const user = useSelector((store: RootState) => store.user);
 
   const [isAddingSelf, setIsAddingSelf] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<CristinPerson>();
+  const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [page, setPage] = useState(1);
@@ -118,8 +118,8 @@ export const AddContributorForm = ({
           }}>
           <CristinPersonList
             personSearch={personQuery.data}
-            userId={selectedUser?.id}
-            onSelectContributor={setSelectedUser}
+            selectedPerson={selectedPerson}
+            onSelectContributor={setSelectedPerson}
             searchTerm={debouncedSearchTerm}
           />
         </ListPagination>
@@ -152,8 +152,8 @@ export const AddContributorForm = ({
         )}
         <Button
           data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
-          disabled={!selectedUser}
-          onClick={() => selectedUser && addContributor(selectedUser)}
+          disabled={!selectedPerson}
+          onClick={() => selectedPerson && addContributor(selectedPerson)}
           size="large"
           variant="contained">
           {initialSearchTerm
