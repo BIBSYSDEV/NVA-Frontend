@@ -1,0 +1,55 @@
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LaunchIcon from '@mui/icons-material/Launch';
+import { Box, Button, Collapse, Link, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { HelperTextModal } from '../../registration/HelperTextModal';
+
+export const UserOrcidHelperModal = () => {
+  const { t } = useTranslation();
+  const [showMore, setShowMore] = useState(false);
+  return (
+    <>
+      <HelperTextModal
+        modalTitle={t('my_page.my_profile.orcid.helper_text_modal.modal_title')}
+        children={
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <Typography>{t('my_page.my_profile.orcid.helper_text_modal.introduction')}</Typography>
+
+            <Button
+              sx={{ alignSelf: 'center' }}
+              endIcon={showMore ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              onClick={() => setShowMore(!showMore)}>
+              {showMore ? t('common.read_less') : t('common.read_more')}
+            </Button>
+
+            <Collapse in={showMore}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '0.5rem' }}>
+                <Typography paragraph>
+                  {t('my_page.my_profile.orcid.helper_text_modal.detailed_paragraph_1')}
+                </Typography>
+                <Typography paragraph>
+                  {t('my_page.my_profile.orcid.helper_text_modal.detailed_paragraph_2')}
+                </Typography>
+
+                <Link
+                  sx={{
+                    display: 'flex',
+                    gap: '0.5rem',
+                    textDecoration: 'none',
+                    fontStyle: 'italic',
+                  }}
+                  rel="noopener noreferrer"
+                  href="https://orcid.org">
+                  {t('my_page.my_profile.orcid.helper_text_modal.link')}
+                  <LaunchIcon fontSize="small" />
+                </Link>
+              </Box>
+            </Collapse>
+          </Box>
+        }
+      />
+    </>
+  );
+};

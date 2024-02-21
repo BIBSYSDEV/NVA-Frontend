@@ -15,10 +15,11 @@ import { setNotification } from '../../../redux/notificationSlice';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { OrcidCredentials } from '../../../types/orcid.types';
 import { User } from '../../../types/user.types';
-import { ORCID_BASE_URL, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../utils/constants';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { OrcidModalContent } from './OrcidModalContent';
+import { UserOrcidHelperModal } from './UserOrcidHelperModal';
 
 interface UserOrcidProps {
   user: User;
@@ -194,10 +195,12 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         </Box>
       ) : (
         <>
-          <Typography paragraph>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
           <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
             {t('my_page.my_profile.orcid.connect_orcid')}
           </Button>
+          <Typography paragraph>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
+          <UserOrcidHelperModal />
+
           <Modal
             headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
             headingText={t('my_page.my_profile.orcid.dialog.heading')}

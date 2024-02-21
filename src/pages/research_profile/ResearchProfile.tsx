@@ -8,10 +8,10 @@ import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
-import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
@@ -22,6 +22,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
+import { UserOrcid } from '../my_page/user_profile/UserOrcid';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 
@@ -34,7 +35,10 @@ const ResearchProfile = () => {
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
+
+  const currentCristinId = user?.cristinId ?? '';
   const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
   const personId = isPublicPage
     ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
@@ -162,7 +166,7 @@ const ResearchProfile = () => {
         ) : (
           <Typography sx={{ mt: '1.5rem' }}>{t('my_page.no_employments')}</Typography>
         )}
-        {orcidUri && (
+        {orcidUri ? (
           <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem', alignItems: 'center' }}>
             <IconButton size="small" href={orcidUri} target="_blank">
               <img src={orcidIcon} height="20" alt="orcid" />
@@ -170,6 +174,10 @@ const ResearchProfile = () => {
             <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
               {orcidUri}
             </Typography>
+          </Box>
+        ) : (
+          <Box>
+            <UserOrcid user={user} />
           </Box>
         )}
         {(!!personBackground || personKeywords.length > 0) && (
