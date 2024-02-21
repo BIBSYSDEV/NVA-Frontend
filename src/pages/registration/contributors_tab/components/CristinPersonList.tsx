@@ -1,5 +1,4 @@
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import {
   IconButton,
   Paper,
@@ -48,10 +47,11 @@ export const CristinPersonList = ({
           <caption style={visuallyHidden}>{t('registration.contributors.authors')}</caption>
           <TableHead>
             <TableRow>
+              <TableCell>{t('registration.contributors.select_all')}</TableCell>
               <TableCell>{t('common.name')}</TableCell>
               <TableCell>{t('registration.contributors.select_person')}</TableCell>
-              <TableCell>{t('registration.contributors.select_all')}</TableCell>
               <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
+              {/* <TableCell>{t('registration.contributors.select_affiliation')}</TableCell> */}
               <TableCell>{t('common.result_registrations')}</TableCell>
             </TableRow>
           </TableHead>
@@ -64,6 +64,16 @@ export const CristinPersonList = ({
                   data-testid={dataTestId.registrationWizard.contributors.authorRadioButton}
                   key={cristinPerson.id}
                   selected={isSelected}>
+                  <TableCell>
+                    <IconButton
+                      onClick={() => onSelectContributor(cristinPerson)}
+                      color="primary"
+                      disabled={isSelected}
+                      sx={{ bgcolor: 'white' }}
+                      title={t('registration.contributors.select_all')}>
+                      <ControlPointIcon />
+                    </IconButton>
+                  </TableCell>
                   <TableCell>
                     <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
                   </TableCell>
@@ -78,18 +88,7 @@ export const CristinPersonList = ({
                       disabled={isSelected}
                       sx={{ bgcolor: 'white' }}
                       title={t('registration.contributors.select_person')}>
-                      <KeyboardArrowUpIcon fontSize="small" />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell>
-                    <IconButton
-                      onClick={() => onSelectContributor(cristinPerson)}
-                      color="primary"
-                      size="small"
-                      disabled={isSelected}
-                      sx={{ bgcolor: 'white' }}
-                      title={t('registration.contributors.select_all')}>
-                      <KeyboardDoubleArrowUpIcon fontSize="small" />
+                      <ControlPointIcon fontSize="small" />
                     </IconButton>
                   </TableCell>
                   <TableCell>
