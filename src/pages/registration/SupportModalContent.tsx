@@ -49,79 +49,66 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
   );
   const isLoading = ticketsQuery.isLoading || addMessageMutation.isLoading || createSupportTicketMutation.isLoading;
 
-  let tickets = ticketsQuery.data?.tickets ?? [];
-  tickets = tickets.filter((ticket) => ticket.type === 'GeneralSupportCase');
-  const currentSupportTicket = tickets.length > 0 ? tickets.at(tickets.length - 1) : null;
-
-  const renderActiveTicketPresent = () => {
-    return <Typography>{t('registration.support.curator_help.already_in_progress')}</Typography>;
-  };
-
-  const renderLoadingTickets = () => {
-    return <Skeleton variant="text" sx={{ fontSize: '10rem' }} />;
-  };
-
-  const renderCreateTicket = () => {
-    return (
-      <>
-        <Typography variant={'h3'} marginBottom={2} gutterBottom>
-          {t('registration.support.curator_help.header')}
-        </Typography>
-        <Trans t={t} i18nKey="registration.support.curator_help.description" components={[<Typography paragraph />]} />
-        <MessageForm
-          confirmAction={async (message) => {
-            if (message) {
-              createSupportTicketMutation.mutate(message);
-            }
-          }}
-        />
-      </>
-    );
-  };
+  const currentSupportTicket = ticketsQuery.data?.tickets
+    .filter((ticket) => ticket.type === 'GeneralSupportCase')
+    .at(-1);
 
   return (
     <>
-      <Box>
-        <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
-            <Typography variant={'h3'} marginBottom={2} gutterBottom>
-              {t('registration.support.self_help.header')}
-            </Typography>
-            <MuiLink
-              sx={{
-                fontWeight: 'bold',
-                color: 'primary.main',
-                display: 'flex',
-                gap: '0.5rem',
-                mb: '1rem',
-              }}
-              target="_blank"
-              rel="noopener noreferrer"
-              href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva'}>
-              <Box bgcolor={'white'} padding={1} marginBottom={2} width={'100%'} sx={{ borderRadius: 2 }}>
-                <Grid container>
-                  <Grid item xs={11}>
-                    <Typography variant={'body1'}>{t('footer.help_page')}</Typography>
-                  </Grid>
-                  <Grid item xs={1}>
-                    <OpenInNew fontSize="small" />
-                  </Grid>
-                </Grid>
-              </Box>
-            </MuiLink>
-            <Typography fontStyle={'italic'} marginBottom={2} gutterBottom>
-              {t('registration.support.self_help.description')}
-            </Typography>
-          </Grid>
-          <Grid item md={6} sm={12}></Grid>
+      <Grid container spacing={3}>
+        <Grid item md={6} sm={12}>
+          <Typography variant={'h3'} marginBottom={2} gutterBottom>
+            {t('registration.support.self_help.header')}
+          </Typography>
+          <MuiLink
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              gap: '0.5rem',
+              mb: '1rem',
+              bgcolor: 'white',
+              padding: '0.5rem',
+              width: '100%',
+              borderRadius: '0.5rem',
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva'}>
+            <Typography>{t('footer.help_page')}</Typography>
+            <OpenInNew />
+          </MuiLink>
+          <Typography fontStyle={'italic'} marginBottom={2} gutterBottom>
+            {t('registration.support.self_help.description')}
+          </Typography>
         </Grid>
-      </Box>
+        <Grid item md={6} sm={12}></Grid>
+      </Grid>
       <Divider orientation={'horizontal'} sx={{ marginBottom: '2rem' }}>
         <Typography sx={{ textTransform: 'uppercase' }}>{t('common.or')}</Typography>
       </Divider>
-      <Box>
-        {isLoading ? renderLoadingTickets() : currentSupportTicket ? renderActiveTicketPresent() : renderCreateTicket()}
-      </Box>
+      {isLoading ? (
+        <Skeleton variant="text" sx={{ fontSize: '10rem' }} />
+      ) : currentSupportTicket ? (
+        <Typography>{t('registration.support.curator_help.already_in_progress')}</Typography>
+      ) : (
+        <>
+          <Typography variant={'h3'} marginBottom={2} gutterBottom>
+            {t('registration.support.curator_help.header')}
+          </Typography>
+          <Trans
+            t={t}
+            i18nKey="registration.support.curator_help.description"
+            components={[<Typography paragraph />]}
+          />
+          <MessageForm
+            confirmAction={async (message) => {
+              if (message) {
+                createSupportTicketMutation.mutate(message);
+              }
+            }}
+          />
+        </>
+      )}
     </>
   );
 };
