@@ -17,7 +17,7 @@ import { FlatCristinPerson } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { getValueByKey } from '../../../utils/user-helpers';
+import { getOrcidUri, getValueByKey } from '../../../utils/user-helpers';
 import { personaliaValidationSchema } from '../../../utils/validation/personaliaValidation';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { UserOrcid } from './UserOrcid';
@@ -70,6 +70,8 @@ export const MyProfile = () => {
       webPage: person?.contactDetails?.webPage ?? '',
     },
   };
+
+  const orcidUri = getOrcidUri(person?.identifiers);
 
   const updatePerson = async (values: CristinPersonFormData) => {
     if (user.cristinId) {
@@ -216,9 +218,15 @@ export const MyProfile = () => {
                         </Box>
                       </Grid>
                       <Grid item xs={12} md={13}>
-                        <Box sx={{ display: 'flex', direction: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            direction: 'column',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                          }}>
                           <UserOrcid user={user} />
-                          <Typography>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
+                          {!orcidUri && <Typography>{t('my_page.my_profile.orcid.orcid_description')}</Typography>}
                         </Box>
                       </Grid>
                     </Grid>

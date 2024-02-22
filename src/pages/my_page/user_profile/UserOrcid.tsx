@@ -107,7 +107,9 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         }
       }
       setIsAddingOrcid(false);
-      history.replace(UrlPathTemplate.MyPagePersonalia);
+      history.replace({
+        search: '',
+      });
     };
 
     const searchParams = new URLSearchParams(history.location.search);
@@ -155,7 +157,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       {cristinPersonQuery.isLoading ? (
         <CircularProgress aria-labelledby="orcid-label" />
       ) : isAddingOrcid ? (
-        <Skeleton width="50%" />
+        <Skeleton width="20rem" />
       ) : currentOrcid ? (
         <Box
           data-testid="orcid-line"
@@ -174,7 +176,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               href={orcidUrl}
               target="_blank"
               rel="noopener noreferrer">
-              {currentOrcid}
+              {orcidUrl}
             </Typography>
             <IconButton
               color="primary"
