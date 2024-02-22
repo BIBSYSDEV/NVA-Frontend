@@ -1,4 +1,14 @@
-import { Box, Chip, CircularProgress, Divider, IconButton, Link as MuiLink, List, Typography } from '@mui/material';
+import {
+  Box,
+  Chip,
+  CircularProgress,
+  Divider,
+  Grid,
+  IconButton,
+  Link as MuiLink,
+  List,
+  Typography,
+} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -23,6 +33,7 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { UserOrcid } from '../my_page/user_profile/UserOrcid';
+import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperModal';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 
@@ -176,9 +187,26 @@ const ResearchProfile = () => {
             </Typography>
           </Box>
         ) : (
-          <Box>
-            <UserOrcid user={user} />
-          </Box>
+          <Grid
+            sx={{
+              backgroundColor: 'secondary.dark',
+              my: '1rem',
+              borderRadius: '4px',
+              alignItems: 'center',
+              paddingBottom: '4px',
+            }}
+            container
+            spacing={1}>
+            <Grid item>
+              <UserOrcid user={user} />
+            </Grid>
+            <Grid item>
+              <UserOrcidHelperModal />
+            </Grid>
+            <Grid item>
+              <Typography>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
+            </Grid>
+          </Grid>
         )}
         {(!!personBackground || personKeywords.length > 0) && (
           <Box sx={{ width: '80%', mt: '1rem' }}>

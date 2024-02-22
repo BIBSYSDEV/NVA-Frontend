@@ -1,5 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Button, CircularProgress, Grid, IconButton, Link as MuiLink, Skeleton, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import { fetchPerson } from '../../../api/cristinApi';
 import { getOrcidInfo } from '../../../api/external/orcidApi';
 import { postOrcidCredentials } from '../../../api/orcidApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { LinkButton } from '../../../components/PageWithSideMenu';
 import { setNotification } from '../../../redux/notificationSlice';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { OrcidCredentials } from '../../../types/orcid.types';
@@ -17,7 +18,6 @@ import { User } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL, USE_MOCK_DATA } from '../../../utils/constants';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getValueByKey } from '../../../utils/user-helpers';
-import { UserOrcidHelperModal } from './UserOrcidHelperModal';
 
 interface UserOrcidProps {
   user: User;
@@ -201,23 +201,13 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           </ConfirmDialog>
         </Box>
       ) : (
-        <Grid
-          sx={{ marginTop: '1rem', backgroundColor: 'registration.main', borderRadius: '4px' }}
-          alignItems="center"
-          container
-          spacing={1}>
-          <Grid item>
-            <Button data-testid="button-create-connect-orcid" onClick={openORCID} variant="contained" size="small">
-              {t('my_page.my_profile.orcid.connect_orcid')}
-            </Button>
-          </Grid>
-          <Grid item>
-            <UserOrcidHelperModal />
-          </Grid>
-          <Grid item>
-            <Typography>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
-          </Grid>
-        </Grid>
+        <LinkButton
+          endIcon={<img src={orcidIcon} height="20" alt="" />}
+          data-testid="button-create-connect-orcid"
+          onClick={openORCID}
+          size="small">
+          {t('my_page.my_profile.orcid.connect_orcid')}
+        </LinkButton>
       )}
     </div>
   );
