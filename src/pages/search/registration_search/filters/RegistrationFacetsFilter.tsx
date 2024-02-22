@@ -166,7 +166,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 dataTestId={dataTestId.startPage.facetItem(facet.key)}
                 isLoading={registrationQuery.isLoading}
                 isSelected={isSelected}
-                label={getLanguageString(facet.labels)}
+                label={getLanguageString(facet.labels) || t('registration.missing_name')}
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
@@ -191,7 +191,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 dataTestId={dataTestId.startPage.facetItem(facet.key)}
                 isLoading={registrationQuery.isLoading}
                 isSelected={isSelected}
-                label={getLanguageString(facet.labels)}
+                label={getLanguageString(facet.labels) || t('registration.missing_name')}
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
@@ -216,7 +216,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 dataTestId={dataTestId.startPage.facetItem(facet.key)}
                 isLoading={registrationQuery.isLoading}
                 isSelected={isSelected}
-                label={getLanguageString(facet.labels)}
+                label={getLanguageString(facet.labels) || t('registration.missing_name')}
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
