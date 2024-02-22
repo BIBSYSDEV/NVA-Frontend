@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { addTicketMessage, createTicket, fetchRegistrationTickets } from '../../api/registrationApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { Registration } from '../../types/registration.types';
-import { Box, Divider, Grid, Link as MuiLink, Skeleton, Typography } from '@mui/material';
+import { Divider, Grid, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { MessageForm } from '../../components/MessageForm';
 import { OpenInNew } from '@mui/icons-material';
 
