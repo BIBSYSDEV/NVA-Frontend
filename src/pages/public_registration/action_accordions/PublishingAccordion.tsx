@@ -30,7 +30,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
-import { userCanPublishRegistration } from '../../../utils/registration-helpers';
+import { userCanPublishRegistration, userCanUnpublishRegistration } from '../../../utils/registration-helpers';
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
@@ -72,6 +72,7 @@ export const PublishingAccordion = ({
   const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
   const userCanPublish = userCanPublishRegistration(registration);
+  const userCanUnpublish = userCanUnpublishRegistration(registration);
 
   const lastPublishingRequest = publishingRequestTickets.at(-1);
 
@@ -330,7 +331,7 @@ export const PublishingAccordion = ({
             <MessageForm confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)} />
           </Box>
         )}
-        {userCanPublish && registration.status === RegistrationStatus.Published && (
+        {userCanUnpublish && registration.status === RegistrationStatus.Published && (
           <DeletePublication registration={registration} />
         )}
       </AccordionDetails>
