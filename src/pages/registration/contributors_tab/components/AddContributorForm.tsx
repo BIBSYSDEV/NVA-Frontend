@@ -42,6 +42,7 @@ export const AddContributorForm = ({
 
   const [isAddingSelf, setIsAddingSelf] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
+  const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>([]);
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [page, setPage] = useState(1);
@@ -115,12 +116,14 @@ export const AddContributorForm = ({
           onRowsPerPageChange={(newRowsPerPage) => {
             setRowsPerPage(newRowsPerPage);
             setPage(1);
-          }}>
+          }}
+          showPaginationTop>
           <CristinPersonList
-            personSearch={personQuery.data}
+            personSearchHits={personQuery.data.hits}
             selectedPerson={selectedPerson}
-            onSelectContributor={setSelectedPerson}
-            searchTerm={debouncedSearchTerm}
+            setSelectedPerson={setSelectedPerson}
+            selectedAffiliations={selectedAffiliations}
+            setSelectedAffiliations={setSelectedAffiliations}
           />
         </ListPagination>
       ) : (
