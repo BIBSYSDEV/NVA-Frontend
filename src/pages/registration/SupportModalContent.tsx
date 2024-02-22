@@ -13,6 +13,11 @@ interface SupportModalContentProps {
   registration: Registration;
 }
 
+interface AddTicketMessageData {
+  ticketId: string;
+  message: string;
+}
+
 export const SupportModalContent = ({ closeModal, registration }: SupportModalContentProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -20,22 +25,25 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
   const ticketsQuery = useQuery({
     enabled: !!registration,
     queryKey: ['registrationTickets', registration.id],
-    queryFn: async () => await fetchRegistrationTickets(registration.id),
+    queryFn: () => fetchRegistrationTickets(registration.id),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
   });
 
-  const addMessageMutation = useMutation(async (data: any) => await addTicketMessage(data.ticketId, data.message), {
-    onError: () => dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' })),
-    onSuccess: () => {
-      dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
-      closeModal();
-    },
-  });
+  const addMessageMutation = useMutation(
+    async (data: AddTicketMessageData) => await addTicketMessage(data.ticketId, data.message),
+    {
+      onError: () => dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' })),
+      onSuccess: () => {
+        dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
+        closeModal();
+      },
+    }
+  );
 
   const createSupportTicketMutation = useMutation(
     async (message: string) => await createTicket(registration.id, 'GeneralSupportCase', true),
     {
-      onSuccess: (data, message) => addMessageMutation.mutate({ ticketId: data.data?.id, message: message }),
+      onSuccess: (data, message) => addMessageMutation.mutate({ ticketId: data.data?.id || '', message: message }),
       onError: () => dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' })),
     }
   );
@@ -109,9 +117,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
         </Grid>
       </Box>
       <Divider orientation={'horizontal'} sx={{ marginBottom: '2rem' }}>
-        <Typography color={'blue'} sx={{ textTransform: 'uppercase' }}>
-          {t('common.or')}
-        </Typography>
+        <Typography sx={{ textTransform: 'uppercase' }}>{t('common.or')}</Typography>
       </Divider>
       <Box>
         {isLoading ? renderLoadingTickets() : currentSupportTicket ? renderActiveTicketPresent() : renderCreateTicket()}
