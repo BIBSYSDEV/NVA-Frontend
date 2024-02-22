@@ -72,6 +72,7 @@ const HomePage = () => {
     id: params.get(ResultParam.Identifier),
     isbn: params.get(ResultParam.Isbn),
     issn: params.get(ResultParam.Issn),
+    journal: params.get(ResultParam.Journal),
     order: params.get(ResultParam.Order),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),

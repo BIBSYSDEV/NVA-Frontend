@@ -51,11 +51,12 @@ export type ScientificValue = 'Unassigned' | 'LevelZero' | 'LevelOne' | 'LevelTw
 
 interface PublicationChannel {
   id: string;
+  identifier: string;
   name: string;
-  scientificValue: ScientificValue;
-  sameAs: string;
-  printIssn?: string;
   onlineIssn?: string;
+  printIssn?: string;
+  sameAs: string;
+  scientificValue: ScientificValue;
 }
 
 export interface Journal extends PublicationChannel {
@@ -109,11 +110,11 @@ export interface BaseRegistration {
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
   readonly allowedOperations: RegistrationOperation[];
+  readonly publicationNotes?: PublicationNote[];
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
   fundings: Funding[];
-  publicationNotes?: PublicationNote[];
 }
 
 export interface Funding {
@@ -281,6 +282,7 @@ export interface RegistrationAggregations {
   contributor?: AggregationValue[];
   publisher?: AggregationValue[];
   series?: AggregationValue[];
+  journal?: AggregationValue[];
 }
 
 export interface ConfirmedDocument {

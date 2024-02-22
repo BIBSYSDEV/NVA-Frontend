@@ -154,6 +154,7 @@ export enum ResultParam {
   IdentifierNot = 'idNot',
   Isbn = 'isbn',
   Issn = 'issn',
+  Journal = 'journal',
   Order = 'order',
   Project = 'project',
   PublicationYearBefore = 'publicationYearBefore',
@@ -189,6 +190,7 @@ export interface FetchResultsParams {
   [ResultParam.IdentifierNot]?: string | null;
   [ResultParam.Isbn]?: string | null;
   [ResultParam.Issn]?: string | null;
+  [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
@@ -260,6 +262,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.issn) {
     searchParams.set(ResultParam.Issn, params.issn);
+  }
+  if (params.journal) {
+    searchParams.set(ResultParam.Journal, params.journal);
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);

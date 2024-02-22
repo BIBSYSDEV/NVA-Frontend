@@ -16,11 +16,11 @@ export const getPreferredLanguageCode = (language?: string) => {
 };
 
 // Get label based on selected language
-export const getLanguageString = (labels?: LanguageString) => {
+export const getLanguageString = (labels?: LanguageString, preferredLanguageCode?: 'nb' | 'nn' | 'no' | 'en') => {
   if (!labels || Object.keys(labels).length === 0) {
     return '';
   }
-  const preferredLanguageCode = getPreferredLanguageCode();
+  preferredLanguageCode = preferredLanguageCode ?? getPreferredLanguageCode();
 
   let translatedString = '';
 
