@@ -272,6 +272,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -357,11 +361,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1072,12 +1072,12 @@
       "add_unverified_contributor": "Legg til en uidentifisert bidragsyter.",
       "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
-      "identification": "Identifisering",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "contributor_not_found": "Finner ikke person",
       "corresponding": "Korresponderende",
       "department": "Enhet",
+      "identification": "Identifisering",
       "identity_status": {
         "confirmed_identity": "Bekreftet identitet",
         "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
@@ -1700,9 +1700,9 @@
     },
     "result_is_deleted": "Resultatet er slettet",
     "status": {
+      "DELETED": "Slettet",
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
-      "DELETED": "Slettet",
       "NEW": "Ny",
       "PUBLISHED": "Publisert",
       "PUBLISHED_METADATA": "Metadata publisert",
@@ -1797,14 +1797,14 @@
   },
   "unpublish_actions": {
     "duplicate": "Duplikat",
+    "search_duplicate_facets": "Søk med DOI, handle eller tittel",
+    "search_for_duplicate": "Søk etter forskningsresultat",
     "unpublish": "Avpubliser",
     "unpublish_registration": "Avpubliser forskningsresultat",
     "unpublish_registration_detail_1": "Etter å ha avpublisert restultatet kan du ikke lengre søke det opp, men det er fortsatt tilgjengelig via direkte oppslag (fra siteringer).",
     "unpublish_registration_detail_2": "Kun metadata (ingen filer) vil være synlig ved direkte oppslag.",
-    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.",
-    "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_duplicate_citation_information": "Da kan du legge inn en lenke til det andre forskningsresultatet. Alle oppslag på det avpubliserte forskningsresultatet vil da føre til det andre, publiserte forskningsresultatet.",
-    "search_for_duplicate": "Søk etter forskningsresultat",
-    "search_duplicate_facets": "Søk med DOI, handle eller tittel"
+    "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
+    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   }
 }
