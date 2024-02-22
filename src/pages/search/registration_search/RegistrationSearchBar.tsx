@@ -168,6 +168,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                       <Button
                         sx={{ mr: '0.5rem', minWidth: '36px' }}
                         variant="text"
+                        title={t('common.add')}
                         data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
                         onClick={() => {
                           const newPropertyFilter: PropertySearch = {
