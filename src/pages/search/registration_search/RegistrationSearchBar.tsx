@@ -13,7 +13,7 @@ import { PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   createSearchConfigFromSearchParams,
-  isIsbn,
+  isValidIsbn,
   PropertySearch,
   removeSearchParamValue,
 } from '../../../utils/searchHelpers';
@@ -92,7 +92,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         searchParams.set(ResultParam.From, '0');
 
         if (values.searchTerm) {
-          if (isIsbn(values.searchTerm)) {
+          if (isValidIsbn(values.searchTerm)) {
             searchParams.delete(ResultParam.Query);
             values.properties.push({ fieldName: ResultParam.Isbn, value: values.searchTerm });
             values.searchTerm = '';
