@@ -13,11 +13,6 @@ interface SupportModalContentProps {
   registration: Registration;
 }
 
-interface AddTicketMessageData {
-  ticketId: string;
-  message: string;
-}
-
 export const SupportModalContent = ({ closeModal, registration }: SupportModalContentProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -29,25 +24,22 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
   });
 
-  const addMessageMutation = useMutation(
-    async (data: AddTicketMessageData) => await addTicketMessage(data.ticketId, data.message),
+  const createSupportTicketMutation = useMutation(
+    async (message: string) => {
+      const newTicket = (await createTicket(registration.id, 'GeneralSupportCase', true)).data;
+      if (newTicket) {
+        await addTicketMessage(newTicket.id, message);
+      }
+    },
     {
-      onError: () => dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' })),
       onSuccess: () => {
         dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
         closeModal();
       },
-    }
-  );
-
-  const createSupportTicketMutation = useMutation(
-    async (message: string) => await createTicket(registration.id, 'GeneralSupportCase', true),
-    {
-      onSuccess: (data, message) => addMessageMutation.mutate({ ticketId: data.data?.id || '', message: message }),
       onError: () => dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' })),
     }
   );
-  const isLoading = ticketsQuery.isLoading || addMessageMutation.isLoading || createSupportTicketMutation.isLoading;
+  const isLoading = ticketsQuery.isLoading || createSupportTicketMutation.isLoading;
 
   const currentSupportTicket = ticketsQuery.data?.tickets
     .filter((ticket) => ticket.type === 'GeneralSupportCase')
