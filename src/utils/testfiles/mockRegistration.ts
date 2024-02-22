@@ -107,6 +107,7 @@ export const mockRegistration: JournalRegistration = {
       },
     },
   },
+  allowedOperations: ['update', 'delete', 'unpublish'],
 };
 
 export const mockMathJaxRegistration: JournalRegistration = {
