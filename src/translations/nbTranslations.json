@@ -82,13 +82,12 @@
         "NOT_APPLICABLE": "Mangelfull",
         "NOT_IMPORTED": "Til import"
       },
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} identifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
       "admin_institutions": "Administrer institusjoner",
       "administrators": "Administratorer",
-      "archive_name": "Arkivnavn",
       "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
       "display_name": "Visningsnavn på institusjonen",
       "doi_password": "Passord",
@@ -101,6 +100,7 @@
       "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+      "loading_institution_information": "Laster institusjonsdata",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
@@ -380,14 +380,14 @@
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
-      "institution_code": "Institusjonens kode",
+      "institution_code": "Kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
       "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
       "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitenskapsindeks",
       "institution_name": "Institusjonsnavn",
-      "institution_name_english": "Institusjonens engelske navn",
-      "institution_name_norwegian": "Institusjonens norske navn",
-      "institution_short_name": "Institusjonens kortnavn",
+      "institution_name_english": "Engelsk navn",
+      "institution_name_norwegian": "Norsk navn",
+      "institution_short_name": "Kortnavn",
       "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
       "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
     },
@@ -550,7 +550,7 @@
       "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
       "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
-      "employments_missing_data": "Alle ansettelser må ha stilling, stillingsprosent og startdato",
+      "employments_missing_data": "Alle ansettelser må ha stilling og startdato",
       "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_email": "Ugyldig epost",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
@@ -1006,7 +1006,7 @@
         "paragraph2": {
           "bullet_point0": "Dersom du har et særskilt behov for å få stanset behandlingen ber vi deg om å ta kontakt med behandlingsansvarlig - eksempelvis hvis du har et beskyttelsesbehov, fortrolig adresse, eller lignende.",
           "bullet_point1": "Når det er gitt samtykke for behandling av personopplysninger, har du rett til å trekke samtykket.",
-          "intro": "Vær imidlertid oppmerksom på følgende;"
+          "intro": "Vær imidlertid oppmerksom på følgende:"
         }
       },
       "section5": {
@@ -1069,19 +1069,19 @@
       "add_contributor": "Legg til bidragsyter",
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
       "add_self_as_contributor": "Legg meg til som bidragsyter",
-      "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
+      "add_unverified_contributor": "Legg til en uidentifisert bidragsyter.",
       "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
-      "confirmed": "Bekreftet",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "contributor_not_found": "Finner ikke person",
       "corresponding": "Korresponderende",
       "department": "Enhet",
+      "identification": "Identifisering",
       "identity_status": {
         "confirmed_identity": "Bekreftet identitet",
         "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
-        "unknown_identity": "Ukjent identitet"
+        "unknown_identity": "Uidentifisert"
       },
       "invalid_role": "Bidragsyter må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
       "must_select_type_first": "Du må velge kategori før du kan legge til bidragsyter.",
@@ -1157,11 +1157,12 @@
         "VideoEditor": "Klipper",
         "Writer": "Tekstforfatter"
       },
+      "unidentified_contributor": "Bidragsyter er uidentifisert",
       "verify_affiliation": "Bekreft tilknytning",
-      "verify_person": "Verifiser person"
+      "verify_person": "Identifiser person"
     },
     "curator_support_info": "Her kan du spørre din kurator om hjelp med alt som har med registrering og publisering av forskningsresultat. Du finner svar på dine spørsmål på \"Min side\" og på registreringens presentasjonsside.",
-    "delete_registration": "Slette resultat",
+    "delete_registration": "Avpubliser forskningsresultat",
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1245,7 +1246,6 @@
       "files_and_license": "Fil, lisens og lenke",
       "resource_type": "Kategori"
     },
-    "is_registration_error_question": "Er dette en feilregistrering?",
     "is_revision": "Arbeidet er en revisjon",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
@@ -1392,6 +1392,7 @@
       "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett",
       "start_with_uploading_file_title": "Start med å laste opp fil"
     },
+    "registration_id": "Resultat-ID",
     "resource_type": {
       "article_number": "Artikkelnummer",
       "artistic": {
@@ -1699,11 +1700,13 @@
     },
     "result_is_deleted": "Resultatet er slettet",
     "status": {
+      "DELETED": "Slettet",
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
       "NEW": "Ny",
       "PUBLISHED": "Publisert",
-      "PUBLISHED_METADATA": "Metadata publisert"
+      "PUBLISHED_METADATA": "Metadata publisert",
+      "UNPUBLISHED": "Avpublisert"
     },
     "year_published": "Publiseringsår"
   },
@@ -1794,13 +1797,14 @@
   },
   "unpublish_actions": {
     "duplicate": "Duplikat",
+    "search_duplicate_facets": "Søk med DOI, handle eller tittel",
+    "search_for_duplicate": "Søk etter forskningsresultat",
+    "unpublish": "Avpubliser",
     "unpublish_registration": "Avpubliser forskningsresultat",
-    "unpublish_registration_detail_1": "Ved avpublisering vil ikke forskningsresultatet være søkbare i NVA, men vil fortsatt være tilgjengelige ved oppslag av referanse.",
-    "unpublish_registration_detail_2": "Eventuelle filer vil fjernes fra forskningsresultatet av avpublisering, men blir ikke permanent slettet.",
-    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.",
+    "unpublish_registration_detail_1": "Etter å ha avpublisert restultatet kan du ikke lengre søke det opp, men det er fortsatt tilgjengelig via direkte oppslag (fra siteringer).",
+    "unpublish_registration_detail_2": "Kun metadata (ingen filer) vil være synlig ved direkte oppslag.",
+    "unpublish_registration_duplicate_citation_information": "Da kan du legge inn en lenke til det andre forskningsresultatet. Alle oppslag på det avpubliserte forskningsresultatet vil da føre til det andre, publiserte forskningsresultatet.",
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
-    "unpublish_registration_duplicate_citation_information": "For at alle siteringer skal bli videreført, må du søke opp den andre registreringen. Da vil alle siteringer fortsatt føre til den andre versjonen",
-    "search_for_duplicate": "Søk etter registrert resultat",
-    "search_duplicate_facets": "Søk med DOI, handle eller tittel"
+    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   }
 }

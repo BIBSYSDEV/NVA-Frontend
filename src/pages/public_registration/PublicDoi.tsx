@@ -1,8 +1,6 @@
 import { Box, Link, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getAssociatedLinks, userCanEditRegistration } from '../../utils/registration-helpers';
@@ -10,7 +8,6 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
 
   const nvaDoi = registration.doi;
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
@@ -38,7 +35,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
     lookupNvaDoi();
   }, [nvaDoi, registration.status]);
 
-  const canSeeDraftDoi = userCanEditRegistration(user, registration);
+  const canSeeDraftDoi = userCanEditRegistration(registration);
   const canSeeNvaDoi = nvaDoi && (nvaDoiIsFindable || canSeeDraftDoi);
 
   return (

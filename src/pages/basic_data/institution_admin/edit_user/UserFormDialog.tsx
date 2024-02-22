@@ -204,8 +204,6 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                       const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
                       if (hasCuratorRole && !values.user?.viewingScope?.includedUnits.length && topOrgCristinId) {
                         setFieldValue(UserFormFieldName.ViewingScope, [topOrgCristinId]);
-                      } else if (!hasCuratorRole) {
-                        setFieldValue(UserFormFieldName.ViewingScope, []);
                       }
                     }}
                   />

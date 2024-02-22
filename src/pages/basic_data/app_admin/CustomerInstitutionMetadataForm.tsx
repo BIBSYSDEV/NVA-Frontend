@@ -26,6 +26,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 import { customerInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
 import { CustomerDoiPasswordField } from './CustomerDoiPasswordField';
+import { CustomerInstitutionInformationFromCristin } from './CustomerInstitutionInformationFromCristin';
 import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
 import { OrganizationSearchField } from './OrganizationSearchField';
 
@@ -51,7 +52,12 @@ export const CustomerInstitutionMetadataForm = ({
         dispatch(setNotification({ message: t('feedback.error.create_customer'), variant: 'error' }));
       } else if (isSuccessStatus(createCustomerResponse.status)) {
         history.push(getAdminInstitutionPath(createCustomerResponse.data.id));
-        dispatch(setNotification({ message: t('feedback.success.created_customer'), variant: 'success' }));
+        dispatch(
+          setNotification({
+            message: t('feedback.success.created_customer'),
+            variant: 'success',
+          })
+        );
       }
     } else {
       const updateCustomerResponse = await updateCustomerInstitution(customer);
@@ -65,12 +71,27 @@ export const CustomerInstitutionMetadataForm = ({
           }
           const updateDoiAgentResponse = await updateDoiAgent(doiAgent);
           if (isErrorStatus(updateDoiAgentResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
+            dispatch(
+              setNotification({
+                message: t('feedback.error.update_doi_agent'),
+                variant: 'error',
+              })
+            );
           } else if (isSuccessStatus(updateDoiAgentResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
+            dispatch(
+              setNotification({
+                message: t('feedback.success.update_customer'),
+                variant: 'success',
+              })
+            );
           }
         } else {
-          dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
+          dispatch(
+            setNotification({
+              message: t('feedback.error.update_doi_agent'),
+              variant: 'error',
+            })
+          );
         }
       }
     }
@@ -96,9 +117,9 @@ export const CustomerInstitutionMetadataForm = ({
       {({ values, isSubmitting, setValues, setFieldValue }: FormikProps<CustomerInstitutionFormData>) => (
         <Form noValidate>
           <InputContainerBox>
-            <Field name={CustomerInstitutionFieldNames.Name}>
-              {({ field, meta: { touched, error } }: FieldProps<string>) =>
-                !editMode ? (
+            {!editMode && (
+              <Field name={CustomerInstitutionFieldNames.Name}>
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <OrganizationSearchField
                     onChange={(selectedInstitution) => {
                       const name = selectedInstitution?.labels ? getLanguageString(selectedInstitution.labels) : '';
@@ -116,29 +137,11 @@ export const CustomerInstitutionMetadataForm = ({
                     errorMessage={touched && !!error ? error : undefined}
                     fieldInputProps={field}
                   />
-                ) : (
-                  <TextField
-                    variant="filled"
-                    label={t('common.institution')}
-                    data-testid={dataTestId.organization.searchField}
-                    required
-                    disabled
-                    {...field}
-                  />
-                )
-              }
-            </Field>
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.DisplayName}
-              label={t('basic_data.institutions.display_name')}
-              required
-              dataTestId={dataTestId.basicData.institutionAdmin.displayNameField}
-            />
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.ArchiveName}
-              label={t('basic_data.institutions.archive_name')}
-              dataTestId={dataTestId.basicData.institutionAdmin.archiveNameField}
-            />
+                )}
+              </Field>
+            )}
+
+            <CustomerInstitutionInformationFromCristin cristinId={values.customer.cristinId} />
             <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
               label={t('basic_data.institutions.feide_organization_domain')}

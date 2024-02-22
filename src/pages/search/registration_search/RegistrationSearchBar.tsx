@@ -32,6 +32,7 @@ const facetParams: string[] = [
   ResultParam.Doi,
   ResultParam.FundingSource,
   ResultParam.Handle,
+  ResultParam.Identifier,
   ResultParam.Isbn,
   ResultParam.Issn,
   ResultParam.TopLevelOrganization,
@@ -99,6 +100,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         processSearchParamProperties(values, ResultParam.Title);
         processSearchParamProperties(values, ResultParam.Abstract);
         processSearchParamProperties(values, ResultParam.Tags);
+        processSearchParamProperties(values, ResultParam.Identifier);
         processSearchParamProperties(values, ResultParam.Isbn);
         processSearchParamProperties(values, ResultParam.Issn);
         processSearchParamProperties(values, ResultParam.Doi);

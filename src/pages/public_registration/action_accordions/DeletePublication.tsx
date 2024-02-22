@@ -88,7 +88,6 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
         onClose={() => setShowDeleteModal(false)}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <RequiredDescription />
-          <Typography variant="h3">{t('unpublish_actions.unpublish_registration')}</Typography>
           <Typography>{t('unpublish_actions.unpublish_registration_detail_1')}</Typography>
           <Typography>{t('unpublish_actions.unpublish_registration_detail_2')}</Typography>
 
@@ -100,7 +99,6 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
             onSubmit={(values) => unpublishRegistrationMutation.mutate(values)}>
             <Form noValidate>
               <Box sx={{ my: '1rem' }}>
-                <Typography variant="h3">{t('registration.is_registration_error_question')}</Typography>
                 <Typography gutterBottom>{t('unpublish_actions.unpublish_registration_reason')}</Typography>
                 <Field name="deleteMessage">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -137,7 +135,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
                   type="submit"
                   data-testid={dataTestId.unpublishActions.submitButton}
                   variant="outlined">
-                  {t('common.save')}
+                  {t('unpublish_actions.unpublish')}
                 </LoadingButton>
               </DialogActions>
             </Form>

@@ -51,11 +51,12 @@ export type ScientificValue = 'Unassigned' | 'LevelZero' | 'LevelOne' | 'LevelTw
 
 interface PublicationChannel {
   id: string;
+  identifier: string;
   name: string;
-  scientificValue: ScientificValue;
-  sameAs: string;
-  printIssn?: string;
   onlineIssn?: string;
+  printIssn?: string;
+  sameAs: string;
+  scientificValue: ScientificValue;
 }
 
 export interface Journal extends PublicationChannel {
@@ -83,6 +84,8 @@ interface AdditionalIdentifier {
   value: string;
 }
 
+type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
+
 interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
   note?: string;
@@ -106,11 +109,12 @@ export interface BaseRegistration {
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
+  readonly allowedOperations: RegistrationOperation[];
+  readonly publicationNotes?: PublicationNote[];
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
   fundings: Funding[];
-  publicationNotes?: PublicationNote[];
 }
 
 export interface Funding {
@@ -251,6 +255,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
+  allowedOperations: ['update', 'delete', 'unpublish'],
 };
 
 export interface ContextSeries {
@@ -275,6 +280,9 @@ export interface RegistrationAggregations {
   type?: AggregationValue[];
   fundingSource?: AggregationValue[];
   contributor?: AggregationValue[];
+  publisher?: AggregationValue[];
+  series?: AggregationValue[];
+  journal?: AggregationValue[];
 }
 
 export interface ConfirmedDocument {
