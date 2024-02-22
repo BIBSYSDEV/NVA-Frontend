@@ -30,18 +30,21 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
+import { userCanPublishRegistration, userCanUnpublishRegistration } from '../../../utils/registration-helpers';
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { PublishingRequestMessagesColumn } from '../../messages/components/PublishingRequestMessagesColumn';
+import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
+import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
+import { DeletePublication } from './DeletePublication';
+import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
   registration: Registration;
   refetchData: () => void;
-  publishingRequestTicket: PublishingTicket | null;
-  userIsCurator: boolean;
+  publishingRequestTickets: PublishingTicket[];
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
@@ -54,10 +57,9 @@ enum LoadingState {
 }
 
 export const PublishingAccordion = ({
-  publishingRequestTicket,
+  publishingRequestTickets,
   registration,
   refetchData,
-  userIsCurator,
   isLoadingData,
   addMessage,
 }: PublishingAccordionProps) => {
@@ -67,18 +69,22 @@ export const PublishingAccordion = ({
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
-
   const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
+  const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
+  const userCanPublish = userCanPublishRegistration(registration);
+  const userCanUnpublish = userCanUnpublishRegistration(registration);
+
+  const lastPublishingRequest = publishingRequestTickets.at(-1);
 
   const ticketMutation = useMutation({
-    mutationFn: publishingRequestTicket
+    mutationFn: lastPublishingRequest
       ? (newTicketData: UpdateTicketData) => {
           if (newTicketData.status === 'Completed') {
             setIsLoading(LoadingState.ApprovePulishingRequest);
           } else if (newTicketData.status === 'Closed') {
             setIsLoading(LoadingState.RejectPublishingRequest);
           }
-          return updateTicket(publishingRequestTicket.id, newTicketData);
+          return updateTicket(lastPublishingRequest.id, newTicketData);
         }
       : undefined,
     onSettled: () => setIsLoading(LoadingState.None),
@@ -119,7 +125,7 @@ export const PublishingAccordion = ({
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      userIsCurator
+      userCanPublish
         ? dispatch(
             setNotification({
               message: t('feedback.success.publish_as_curator'),
@@ -133,29 +139,29 @@ export const PublishingAccordion = ({
   };
 
   const registratorPublishesMetadataAndFiles =
-    publishingRequestTicket?.workflow === 'RegistratorPublishesMetadataAndFiles';
-  const registratorPublishesMetadataOnly = publishingRequestTicket?.workflow === 'RegistratorPublishesMetadataOnly';
+    lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataAndFiles';
+  const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const hasUnpublishedFiles = registration.associatedArtifacts.some((artifact) => artifact.type === 'UnpublishedFile');
 
-  const hasClosedTicket = publishingRequestTicket?.status === 'Closed';
-  const hasPendingTicket = publishingRequestTicket?.status === 'Pending' || publishingRequestTicket?.status === 'New';
-  const hasCompletedTicket = publishingRequestTicket?.status === 'Completed';
+  const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
+  const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
+  const hasCompletedTicket = lastPublishingRequest?.status === 'Completed';
 
-  const canHandlePublishingRequest = userIsCurator && !registratorPublishesMetadataAndFiles && hasPendingTicket;
+  const canHandlePublishingRequest = userCanPublish && !registratorPublishesMetadataAndFiles && hasPendingTicket;
 
   const mismatchingPublishedStatusWorkflow1 =
-    registratorPublishesMetadataAndFiles && !!publishingRequestTicket && isDraftRegistration;
+    registratorPublishesMetadataAndFiles && !!lastPublishingRequest && isDraftRegistration;
   const mismatchingPublishedStatusWorkflow2 =
     registratorPublishesMetadataOnly &&
-    !!publishingRequestTicket &&
+    !!lastPublishingRequest &&
     (isDraftRegistration || (hasCompletedTicket && hasUnpublishedFiles));
 
   const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
 
-  const ticketMessages = publishingRequestTicket?.messages ?? [];
+  const ticketMessages = lastPublishingRequest?.messages ?? [];
 
   const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
@@ -167,7 +173,7 @@ export const PublishingAccordion = ({
       defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('registration.public_page.publication')}
-        {publishingRequestTicket && ` - ${t(`my_page.messages.ticket_types.${publishingRequestTicket.status}`)}`}
+        {lastPublishingRequest && ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         {!registrationIsValid && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
             <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
@@ -175,7 +181,7 @@ export const PublishingAccordion = ({
         )}
       </AccordionSummary>
       <AccordionDetails>
-        {publishingRequestTicket && <TicketAssignee ticket={publishingRequestTicket} refetchTickets={refetchData} />}
+        {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
         {tabErrors && (
           <>
@@ -185,7 +191,7 @@ export const PublishingAccordion = ({
               variant="outlined"
               component={RouterLink}
               size="small"
-              sx={{ mb: publishingRequestTicket ? '1rem' : undefined }}
+              sx={{ mb: lastPublishingRequest ? '1rem' : undefined }}
               to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
               endIcon={<EditIcon />}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
@@ -194,7 +200,26 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {publishingRequestTicket && <PublishingRequestMessagesColumn ticket={publishingRequestTicket} />}
+        {/* Show approval history */}
+        {(registration.status === RegistrationStatus.Published ||
+          registration.status === RegistrationStatus.Deleted ||
+          registration.status === RegistrationStatus.Unpublished) && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+              <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
+              {registration.publishedDate && (
+                <Typography>{new Date(registration.publishedDate).toLocaleDateString()}</Typography>
+              )}
+            </StyledStatusMessageBox>
+            {completedTickets.map((ticket) => (
+              <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket} />
+            ))}
+            {(registration.status === RegistrationStatus.Deleted ||
+              registration.status === RegistrationStatus.Unpublished) && (
+              <DeletedRegistrationInformation registration={registration} />
+            )}
+          </Box>
+        )}
 
         {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
@@ -218,7 +243,7 @@ export const PublishingAccordion = ({
         )}
 
         {/* Show current status info */}
-        {!!publishingRequestTicket &&
+        {!!lastPublishingRequest &&
           !hasMismatchingPublishedStatus &&
           (isDraftRegistration || hasUnpublishedFiles) &&
           (registratorPublishesMetadataOnly ? (
@@ -230,7 +255,7 @@ export const PublishingAccordion = ({
           ) : null)}
 
         {/* Tell user what they can publish */}
-        {!publishingRequestTicket && isDraftRegistration && registrationIsValid && (
+        {!lastPublishingRequest && isDraftRegistration && registrationIsValid && (
           <>
             {registratorPublishesMetadataAndFiles ? (
               <Typography>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
@@ -241,7 +266,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {isDraftRegistration && !publishingRequestTicket && (
+        {isDraftRegistration && !lastPublishingRequest && (
           <LoadingButton
             disabled={isLoading !== LoadingState.None || !registrationIsValid}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
@@ -299,12 +324,15 @@ export const PublishingAccordion = ({
         {hasPendingTicket && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {ticketMessages.length > 0 ? (
-              <TicketMessageList ticket={publishingRequestTicket} />
+              <TicketMessageList ticket={lastPublishingRequest} />
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}
-            <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
+            <MessageForm confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)} />
           </Box>
+        )}
+        {userCanUnpublish && registration.status === RegistrationStatus.Published && (
+          <DeletePublication registration={registration} />
         )}
       </AccordionDetails>
     </Accordion>
