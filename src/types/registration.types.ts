@@ -84,10 +84,11 @@ interface AdditionalIdentifier {
   value: string;
 }
 
-interface PublicationNote {
+export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
   note?: string;
-  publicationNoteMessage?: string;
+  createdBy?: string;
+  createdDate?: string;
 }
 
 export interface BaseRegistration {

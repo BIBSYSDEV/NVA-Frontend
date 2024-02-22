@@ -1,35 +1,79 @@
-import { Link, Skeleton, Typography } from '@mui/material';
+import { Box, Link, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { fetchPerson } from '../../../api/cristinApi';
 import { fetchRegistration } from '../../../api/registrationApi';
-import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { ProfilePicture } from '../../../components/ProfilePicture';
+import { PublicationNote, Registration, RegistrationStatus } from '../../../types/registration.types';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { getFullCristinName } from '../../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 
 interface DeletedRegistrationInformationProps {
   registration: Registration;
+  unpublishingNote: PublicationNote;
 }
 
-export const DeletedRegistrationInformation = ({ registration }: DeletedRegistrationInformationProps) => {
+function extractId(createdBy: string) {
+  return '/cristin/person/' + createdBy.split('@')[0];
+}
+
+export const DeletedRegistrationInformation = ({
+  registration,
+  unpublishingNote,
+}: DeletedRegistrationInformationProps) => {
   const { t } = useTranslation();
+
+  const duplicateRegistrationIdentifier = getIdentifierFromId(registration.duplicateOf ?? '');
+
   const duplicateRegistrationQuery = useQuery({
-    enabled: !!registration.duplicateOf,
-    queryKey: ['registration', registration.duplicateOf],
-    queryFn: () => fetchRegistration(registration.duplicateOf ?? ''),
+    enabled: !!duplicateRegistrationIdentifier,
+    queryKey: ['registration', duplicateRegistrationIdentifier],
+    queryFn: () => fetchRegistration(duplicateRegistrationIdentifier),
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
+  const cristinIdentifier = unpublishingNote.createdBy ? extractId(unpublishingNote.createdBy) : null;
+  const personQuery = useQuery({
+    queryKey: ['cristinPerson', cristinIdentifier],
+    queryFn: () => fetchPerson(cristinIdentifier ?? ''),
+    enabled: !!cristinIdentifier,
+    meta: { errorMessage: t('feedback.error.get_registration') },
+  });
+
+  const person = personQuery.data;
+
   const duplicateRegistrationTitle = duplicateRegistrationQuery.data?.entityDescription?.mainTitle;
-  const unpublishingNote = registration.publicationNotes?.find((note) => note.type === 'UnpublishingNote');
 
   return (
     <StyledStatusMessageBox
       sx={{
         bgcolor: 'publishingRequest.main',
       }}>
-      {(registration.status === RegistrationStatus.Unpublished ||
-        registration.status === RegistrationStatus.Deleted) && (
+      {registration.status === RegistrationStatus.Deleted ? (
         <Typography>{t(`registration.status.${registration.status}`)}</Typography>
+      ) : (
+        <Typography>{t(`registration.status.UNPUBLISHED`)}</Typography>
       )}
+      <Box sx={{ display: 'flex', flexDirection: 'row', minWidth: '6rem', gap: '0.5rem', alignItems: 'center' }}>
+        {personQuery.isFetching ? (
+          <Skeleton variant="circular" />
+        ) : (
+          <>
+            {person && (
+              <ProfilePicture
+                sx={{ width: '1.5rem', height: '1.5rem' }}
+                fullName={getFullCristinName(person?.names)}
+                personId={person?.id ?? ''}
+              />
+            )}
+          </>
+        )}
+
+        {unpublishingNote.createdDate && (
+          <Typography>{new Date(unpublishingNote.createdDate).toLocaleDateString()}</Typography>
+        )}
+      </Box>
 
       {unpublishingNote?.note && <Typography sx={{ gridColumn: '1/3' }}>{unpublishingNote.note}</Typography>}
       {registration.duplicateOf && (
