@@ -84,7 +84,7 @@ interface AdditionalIdentifier {
   value: string;
 }
 
-export type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
+type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
 
 interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';

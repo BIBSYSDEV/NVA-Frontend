@@ -30,15 +30,15 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
-import { userCanPublishRegistration, userCanUnpublishRegistration } from '../../../utils/registration-helpers';
+import { userCanPublishRegistration } from '../../../utils/registration-helpers';
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
-import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { DeletePublication } from './DeletePublication';
+import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -330,7 +330,7 @@ export const PublishingAccordion = ({
             <MessageForm confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)} />
           </Box>
         )}
-        {userCanUnpublishRegistration(registration) && registration.status === RegistrationStatus.Published && (
+        {userCanPublish && registration.status === RegistrationStatus.Published && (
           <DeletePublication registration={registration} />
         )}
       </AccordionDetails>

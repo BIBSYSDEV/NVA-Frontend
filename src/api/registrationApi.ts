@@ -1,9 +1,9 @@
-import { Auth } from '@aws-amplify/auth';
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { Doi, MyRegistrationsResponse, Registration, UnpublishPublicationRequest } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { userIsAuthenticated } from './authApi';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
@@ -81,19 +81,6 @@ export const createDraftDoi = async (registrationId: string) =>
     url: `${registrationId}/doi`,
     method: 'POST',
   });
-
-const userIsAuthenticated = async () => {
-  try {
-    const cognitoUser = await Auth.currentAuthenticatedUser();
-    if (cognitoUser) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch {
-    return false;
-  }
-};
 
 export const fetchRegistration = async (registrationIdentifier: string, shouldNotRedirect?: boolean) => {
   const isAuthenticated = await userIsAuthenticated();
