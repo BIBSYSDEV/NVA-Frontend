@@ -36,6 +36,7 @@ import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
+import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { DeletePublication } from './DeletePublication';
 import { TicketAssignee } from './TicketAssignee';
 
@@ -199,7 +200,9 @@ export const PublishingAccordion = ({
         )}
 
         {/* Show approval history */}
-        {registration.status === RegistrationStatus.Published && (
+        {(registration.status === RegistrationStatus.Published ||
+          registration.status === RegistrationStatus.Deleted ||
+          registration.status === RegistrationStatus.Unpublished) && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
             <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
               <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
@@ -210,6 +213,10 @@ export const PublishingAccordion = ({
             {completedTickets.map((ticket) => (
               <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket} />
             ))}
+            {(registration.status === RegistrationStatus.Deleted ||
+              registration.status === RegistrationStatus.Unpublished) && (
+              <DeletedRegistrationInformation registration={registration} />
+            )}
           </Box>
         )}
 
