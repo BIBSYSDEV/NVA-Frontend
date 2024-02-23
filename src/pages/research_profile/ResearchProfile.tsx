@@ -46,8 +46,7 @@ const ResearchProfile = () => {
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
+  const user = useSelector((store: RootState) => store.user);
 
   const currentCristinId = user?.cristinId ?? '';
   const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
