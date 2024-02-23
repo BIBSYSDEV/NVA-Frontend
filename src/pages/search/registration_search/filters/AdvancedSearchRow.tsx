@@ -1,4 +1,5 @@
-import { Box, Button, MenuItem, TextField } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Box, IconButton, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { TFuncKey } from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -34,15 +35,15 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+    <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            select
-            variant="outlined"
             sx={{ minWidth: '8rem' }}
-            inputProps={{ sx: { py: '0.75rem' } }}
+            select
+            variant="standard"
+            size="small"
             label={t('search.field_label')}
             data-testid={dataTestId.startPage.advancedSearch.advancedFieldSelect}>
             {registrationFilters.map((filter) => (
@@ -58,18 +59,23 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            fullWidth
-            sx={{ maxWidth: '30rem' }}
-            variant="outlined"
-            inputProps={{ sx: { py: '0.75rem' } }}
-            data-testid={dataTestId.startPage.advancedSearch.advancedValueField}
+            variant="standard"
+            size="small"
             label={t('search.search_term_label')}
+            data-testid={dataTestId.startPage.advancedSearch.advancedValueField}
+            fullWidth
           />
         )}
       </Field>
-      <Button onClick={removeFilter} size="small" data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
-        {t('search.remove_filter')}
-      </Button>
+      <IconButton
+        sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
+        size="small"
+        color="primary"
+        onClick={removeFilter}
+        title={t('common.remove')}
+        data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
+        <ClearIcon />
+      </IconButton>
     </Box>
   );
 };

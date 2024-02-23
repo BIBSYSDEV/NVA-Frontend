@@ -157,12 +157,16 @@ export enum ResultParam {
   Journal = 'journal',
   Order = 'order',
   Project = 'project',
+  PublicationLanguageShould = 'publicationLanguageShould',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
   PublicationYearShould = 'publicationYearShould',
   Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
+  ScientificIndex = 'scientificIndex',
+  ScientificReportPeriodBeforeParam = 'scientificReportPeriodBefore',
+  ScientificReportPeriodSinceParam = 'scientificReportPeriodSince',
   Series = 'series',
   Sort = 'sort',
   Tags = 'tags',
@@ -193,6 +197,7 @@ export interface FetchResultsParams {
   [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
+  [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.PublicationYearSince]?: string | null;
   [ResultParam.PublicationYearShould]?: string | null;
@@ -200,6 +205,9 @@ export interface FetchResultsParams {
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
   [ResultParam.Series]?: string | null;
+  [ResultParam.ScientificIndex]?: string | null;
+  [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
+  [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
@@ -269,6 +277,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
   }
+  if (params.publicationLanguageShould) {
+    searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
+  }
   if (params.publicationYearBefore) {
     const beforeYearNumber = +params.publicationYearBefore;
     if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
@@ -289,6 +300,10 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
+  }
+  if (params.scientificIndex) {
+    searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
+    searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificIndex);
   }
   if (params.series) {
     searchParams.set(ResultParam.Series, params.series);

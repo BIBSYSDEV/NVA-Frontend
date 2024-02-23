@@ -7,8 +7,8 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { AppRoutes } from './AppRoutes';
 import { getCurrentUserAttributes } from './api/authApi';
+import { AppRoutes } from './AppRoutes';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 import { EnvironmentBanner } from './components/EnvironmentBanner';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -16,8 +16,8 @@ import { PageSpinner } from './components/PageSpinner';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
 import { SkipLink } from './components/SkipLink';
 import { Footer } from './layout/Footer';
-import { Notifier } from './layout/Notifier';
 import { Header } from './layout/header/Header';
+import { Notifier } from './layout/Notifier';
 import { setNotification } from './redux/notificationSlice';
 import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
@@ -35,7 +35,8 @@ const getLanguageTagValue = (language: string) => {
 };
 
 if (
-  window.location.pathname === UrlPathTemplate.MyPagePersonalia &&
+  (window.location.pathname === UrlPathTemplate.MyPagePersonalia ||
+    window.location.pathname === UrlPathTemplate.MyPageResearchProfile) &&
   window.location.hash.startsWith('#access_token=')
 ) {
   // Workaround to allow adding orcid for aws-amplify > 4.2.2

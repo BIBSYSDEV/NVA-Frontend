@@ -196,6 +196,7 @@
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
     "nvi": "Norwegian Science Index (NVI)",
     "open": "Open",
+    "or": "",
     "orcid": "ORCID",
     "orcid_profile": "ORCID profile",
     "order": "Order",
@@ -672,6 +673,14 @@
           "heading": "Connect or create ORCID iD",
           "paragraph0": "Sign into ORCID or register to create an account.",
           "paragraph1": "ORCID provides a persistent digital identifier that you own and control, and distinguishes you from other researchers. Your ORCID iD can be used in many contexts. By connecting your ORCID iD it is easier to identify you as an author, and to retrieve and share your publications."
+        },
+        "helper_text_modal": {
+          "detailed_inforamtion": "",
+          "detailed_paragraph_1": "",
+          "detailed_paragraph_2": "",
+          "introduction": "",
+          "link": "",
+          "modal_title": ""
         },
         "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. This makes it easier to identify you",
         "remove_connection": "Unlink ORCID",
@@ -1172,7 +1181,7 @@
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
       "create_project_helper_text": "<0>The researcher defines their own projects.</0> <0>A project must have a title, a project leader, a coordinating institution, a start and end date. A project can have project participants, funders, approvals or research results.</0> <0>If you have an RCN grant, you can establish a project with that as a starting point. You start by looking up your RCN funding, it is added to the project and all mandatory fields are pre-filled, except for the project leader who must be looked up and confirmed.</0> <0>(Similar functionality is planned based on an REC approval. All projects that are to be part of the KBS reporting must have a REC approval that identifies the project as a clinical treatment study.)</0>",
       "date_published": "Date published",
-      "description_of_content": "Description of content, if relevant",
+      "description_of_content": "Description of content, particularly relevant when registering, for example, artistic development work",
       "funding": {
         "funder": "Funder",
         "funding_helper_text": "<0>You can register funding directly on the result. This is particularly relevant if you do not know which project the result is part of, or if the result has other funders than the project it may belong to.</0> <0>If the result is linked to a project, it will inherit all project funding. It is not necessary to enter the same funding twice.</0>",
@@ -1247,6 +1256,7 @@
       "resource_type": "Resource type"
     },
     "is_revision": "The work is a revision",
+    "missing_name": "Name missing",
     "missing_title": "Missing title",
     "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
     "modal_unsaved_changes_heading": "Leave without saving?",
@@ -1700,13 +1710,25 @@
     },
     "result_is_deleted": "The result is deleted",
     "status": {
-      "DELETED": "",
+      "DELETED": "Deleted",
       "DRAFT": "Draft",
       "DRAFT_FOR_DELETION": "Deleted",
       "NEW": "New",
       "PUBLISHED": "Published",
       "PUBLISHED_METADATA": "Published metadata",
-      "UNPUBLISHED": ""
+      "UNPUBLISHED": "Unpublished"
+    },
+    "support": {
+      "curator_help": {
+        "already_in_progress": "",
+        "description": "",
+        "header": ""
+      },
+      "need_help": "",
+      "self_help": {
+        "description": "",
+        "header": ""
+      }
     },
     "year_published": "Publication year"
   },
@@ -1716,6 +1738,7 @@
     "additional_participants_other": "+{{count}} participants",
     "advanced_search": "Advanced search",
     "advanced_search_description": "Search among all published results",
+    "choose_one_or_more": "",
     "export": "Export",
     "field_label": "Field",
     "health_project_type": "Health project type",
@@ -1799,7 +1822,7 @@
     "duplicate": "Duplicate",
     "search_duplicate_facets": "Search with DOI, handle or title",
     "search_for_duplicate": "Search for registered result",
-    "unpublish": "",
+    "unpublish": "Unpublish",
     "unpublish_registration": "Unpublish research result",
     "unpublish_registration_detail_1": "Upon unpublishing, the research result will not be searchable in NVA, but will still be available when looking up the reference.",
     "unpublish_registration_detail_2": "Any files will be removed from the research result by unpublishing, but will not be permanently deleted.",

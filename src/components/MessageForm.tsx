@@ -43,6 +43,7 @@ export const MessageForm = ({ confirmAction, cancelAction, fieldLabel, buttonTit
                 disabled={isSubmitting}
                 variant="filled"
                 multiline
+                minRows={3}
                 maxRows={Infinity}
                 fullWidth
                 required
