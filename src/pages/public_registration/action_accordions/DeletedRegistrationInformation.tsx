@@ -15,7 +15,7 @@ interface DeletedRegistrationInformationProps {
 }
 
 function extractId(createdBy: string) {
-  return '/cristin/person/' + createdBy.split('@')[0];
+  return CristinApiPath.Person + createdBy.split('@')[0];
 }
 
 export const DeletedRegistrationInformation = ({
