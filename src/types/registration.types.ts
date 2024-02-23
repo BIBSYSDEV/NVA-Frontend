@@ -88,7 +88,7 @@ type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish
 
 export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
-  note?: string;
+  note: string;
   createdBy?: string;
   createdDate?: string;
 }
