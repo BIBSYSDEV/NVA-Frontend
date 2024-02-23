@@ -1,5 +1,5 @@
 import ClearIcon from '@mui/icons-material/Clear';
-import { Box, Button, MenuItem, TextField } from '@mui/material';
+import { Box, IconButton, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { TFuncKey } from 'i18next';
 import { useTranslation } from 'react-i18next';
@@ -67,15 +67,14 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
           />
         )}
       </Field>
-      <Button
-        sx={{ minHeight: '36px', minWidth: '36px' }}
+      <IconButton
+        sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
         size="small"
-        variant="text"
         onClick={removeFilter}
-        title={t('common.delete')}
+        title={t('common.remove')}
         data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
         <ClearIcon />
-      </Button>
+      </IconButton>
     </Box>
   );
 };

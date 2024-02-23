@@ -1,6 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
-import { Box, Button, Skeleton } from '@mui/material';
+import { Box, Button, IconButton, Skeleton } from '@mui/material';
 import { ClearIcon } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
@@ -165,9 +165,9 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                 <Box gridArea="buttonRowBottom" sx={{ display: 'flex', alignItems: 'flex-end' }}>
                   {values.properties && values.properties.length > 0 && (
                     <>
-                      <Button
-                        sx={{ mr: '0.5rem', minWidth: '36px' }}
-                        variant="text"
+                      <IconButton
+                        sx={{ mr: '0.5rem', borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
+                        size="small"
                         title={t('common.add')}
                         data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
                         onClick={() => {
@@ -178,7 +178,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                           push(newPropertyFilter);
                         }}>
                         <AddIcon />
-                      </Button>
+                      </IconButton>
 
                       <Button
                         variant="contained"
