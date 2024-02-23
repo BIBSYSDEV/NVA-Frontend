@@ -235,26 +235,28 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         <FacetItem
           title={t('basic_data.nvi.nvi_publication_year')}
           dataTestId={dataTestId.startPage.scientificIndexFacet}>
-          {scientificIndexFacet.map((facet) => {
-            const isSelected = !!selectedScientificIndex?.includes(facet.key);
+          {scientificIndexFacet
+            .sort((a, b) => +b.key - +a.key)
+            .map((facet) => {
+              const isSelected = !!selectedScientificIndex?.includes(facet.key);
 
-            return (
-              <FacetListItem
-                key={facet.key}
-                identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
-                isLoading={registrationQuery.isLoading}
-                isSelected={isSelected}
-                label={facet.key}
-                count={facet.count}
-                onClickFacet={() =>
-                  isSelected
-                    ? removeFacetFilter(ResultParam.ScientificIndex, facet.key)
-                    : addFacetFilter(ResultParam.ScientificIndex, facet.key)
-                }
-              />
-            );
-          })}
+              return (
+                <FacetListItem
+                  key={facet.key}
+                  identifier={facet.key}
+                  dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                  isLoading={registrationQuery.isLoading}
+                  isSelected={isSelected}
+                  label={facet.key}
+                  count={facet.count}
+                  onClickFacet={() =>
+                    isSelected
+                      ? removeFacetFilter(ResultParam.ScientificIndex, facet.key)
+                      : addFacetFilter(ResultParam.ScientificIndex, facet.key)
+                  }
+                />
+              );
+            })}
         </FacetItem>
       )}
 
