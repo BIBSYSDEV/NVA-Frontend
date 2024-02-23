@@ -1,12 +1,12 @@
+import { OpenInNew } from '@mui/icons-material';
+import { Divider, Grid, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { addTicketMessage, createTicket, fetchRegistrationTickets } from '../../api/registrationApi';
+import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/notificationSlice';
 import { Registration } from '../../types/registration.types';
-import { Divider, Grid, Link as MuiLink, Skeleton, Typography } from '@mui/material';
-import { MessageForm } from '../../components/MessageForm';
-import { OpenInNew } from '@mui/icons-material';
 
 interface SupportModalContentProps {
   closeModal: () => void;
@@ -21,7 +21,13 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
     enabled: !!registration,
     queryKey: ['registrationTickets', registration.id],
     queryFn: () => fetchRegistrationTickets(registration.id),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
+    onError: () =>
+      dispatch(
+        setNotification({
+          message: t('feedback.error.get_tickets'),
+          variant: 'error',
+        })
+      ),
   });
 
   const createSupportTicketMutation = useMutation(
@@ -33,10 +39,21 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
     },
     {
       onSuccess: () => {
-        dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
+        dispatch(
+          setNotification({
+            message: t('feedback.success.send_message'),
+            variant: 'success',
+          })
+        );
         closeModal();
       },
-      onError: () => dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' })),
+      onError: () =>
+        dispatch(
+          setNotification({
+            message: t('feedback.error.send_message'),
+            variant: 'error',
+          })
+        ),
     }
   );
   const isLoading = ticketsQuery.isLoading || createSupportTicketMutation.isLoading;
@@ -73,7 +90,6 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
             {t('registration.support.self_help.description')}
           </Typography>
         </Grid>
-        <Grid item md={6} sm={12}></Grid>
       </Grid>
       <Divider orientation={'horizontal'} sx={{ marginBottom: '2rem' }}>
         <Typography sx={{ textTransform: 'uppercase' }}>{t('common.or')}</Typography>
