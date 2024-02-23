@@ -1,4 +1,5 @@
-import { Box, Chip, Divider, Theme, useMediaQuery } from '@mui/material';
+import { Box, Chip, Divider, Grid, Theme, Typography, useMediaQuery } from '@mui/material';
+import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +18,15 @@ import { JournalFilter } from './JournalFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 import { SeriesFilter } from './SeriesFilter';
+
+const StyledDivider = styled(Divider)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+}));
+
+const StyledFilterContainer = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+}));
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
@@ -59,96 +69,123 @@ export const AdvancedSearchPage = () => {
   });
 
   return (
-    <section>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.75rem',
-          mx: { xs: '0.5rem', md: 0 },
-          mb: '0.75rem',
-        }}>
-        <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <SearchForm
-            sx={{ flex: '1 0 15rem' }}
-            paramName={ResultParam.Title}
-            placeholder={t('search.search_for_title')}
-          />
-          <ExportResultsButton searchParams={params} />
-        </Box>
+    <Box sx={{ bgcolor: 'secondary.main' }}>
+      <Grid container>
+        <Grid
+          item
+          container
+          rowGap={1}
+          sx={{
+            mx: { xs: '0.5rem', md: 0 },
+            mb: '0.75rem',
+            p: '1rem',
+          }}>
+          <Typography variant="h3">{t('search.advanced_search')}</Typography>
+          <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <StyledFilterContainer>
+              <Typography>Tittelsøk</Typography>
+              <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <SearchForm
+                  sx={{ flex: '1 0 15rem' }}
+                  paramName={ResultParam.Title}
+                  placeholder={t('search.search_for_title')}
+                />
+                <ExportResultsButton searchParams={params} />
+              </Box>
+            </StyledFilterContainer>
+            <StyledDivider />
+          </Grid>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          <PublicationDateIntervalFilter />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <StyledFilterContainer>
+                  <Typography>Publiseringsperiode</Typography>
+                  <PublicationDateIntervalFilter />
+                </StyledFilterContainer>
 
-          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+                {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-          <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+                <StyledFilterContainer>
+                  <Typography>Kategori</Typography>
+                  <section>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+                      {categoryShould.slice(0, 3).map((category) => (
+                        <CategoryChip
+                          key={category}
+                          category={{
+                            value: category,
+                            text: t(`registration.publication_types.${category}`),
+                            selected: true,
+                          }}
+                          onClickChip={toggleCategoryFilter}
+                        />
+                      ))}
+                      {categoryShould.length > 3 ? (
+                        <Chip
+                          label={t('common.x_others', { count: categoryShould.length - 3 })}
+                          variant="filled"
+                          color="primary"
+                          onClick={toggleCategoryFilter}
+                        />
+                      ) : (
+                        <Chip
+                          label={t('registration.resource_type.select_resource_type')}
+                          color="primary"
+                          onClick={toggleCategoryFilter}
+                        />
+                      )}
+                    </Box>
+                    <CategoryFilterDialog
+                      open={openCategoryFilter}
+                      currentCategories={categoryShould}
+                      closeDialog={toggleCategoryFilter}
+                    />
+                  </section>
+                </StyledFilterContainer>
+              </Box>
+              <StyledDivider />
+            </Grid>
 
-          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+            <StyledDivider />
 
-          <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
+            <Grid item md={12} sx={{ display: 'flex', gap: '1rem' }}>
+              <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
 
-          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+              {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-          <FundingSourceFilter />
+              <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+            </Grid>
 
-          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+            <Grid item md={12} sx={{ display: 'flex', gap: '1rem' }}>
+              <PublisherFilter />
 
-          <SearchForm
-            paramName={ResultParam.FundingIdentifier}
-            placeholder={t('search.search_for_funding_identifier')}
-          />
+              {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+              <JournalFilter />
 
-          <PublisherFilter />
+              {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+              <SeriesFilter />
+            </Grid>
 
-          <JournalFilter />
+            {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+            <FundingSourceFilter />
 
-          <SeriesFilter />
+            {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-          {showFilterDivider && <Divider orientation="vertical" flexItem />}
-
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-            {categoryShould.slice(0, 3).map((category) => (
-              <CategoryChip
-                key={category}
-                category={{
-                  value: category,
-                  text: t(`registration.publication_types.${category}`),
-                  selected: true,
-                }}
-                onClickChip={toggleCategoryFilter}
-              />
-            ))}
-            {categoryShould.length > 3 ? (
-              <Chip
-                label={t('common.x_others', { count: categoryShould.length - 3 })}
-                variant="filled"
-                color="primary"
-                onClick={toggleCategoryFilter}
-              />
-            ) : (
-              <Chip
-                label={t('registration.resource_type.select_resource_type')}
-                color="primary"
-                onClick={toggleCategoryFilter}
-              />
-            )}
+            <SearchForm
+              paramName={ResultParam.FundingIdentifier}
+              placeholder={t('search.search_for_funding_identifier')}
+            />
           </Box>
-          <CategoryFilterDialog
-            open={openCategoryFilter}
-            currentCategories={categoryShould}
-            closeDialog={toggleCategoryFilter}
-          />
-        </Box>
-      </Box>
+        </Grid>
 
-      <RegistrationSearch registrationQuery={resultSearchQuery} />
-    </section>
+        <Grid item md={12}>
+          <RegistrationSearch registrationQuery={resultSearchQuery} />
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
