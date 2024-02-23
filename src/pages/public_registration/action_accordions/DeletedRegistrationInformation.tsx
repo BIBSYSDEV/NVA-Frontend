@@ -35,7 +35,7 @@ export const DeletedRegistrationInformation = ({
 
   const cristinIdentifier = unpublishingNote.createdBy ? extractId(unpublishingNote.createdBy) : null;
   const personQuery = useQuery({
-    queryKey: ['cristinPerson', cristinIdentifier],
+    queryKey: [cristinIdentifier],
     queryFn: () => fetchPerson(cristinIdentifier ?? ''),
     enabled: !!cristinIdentifier,
     meta: { errorMessage: t('feedback.error.get_registration') },
