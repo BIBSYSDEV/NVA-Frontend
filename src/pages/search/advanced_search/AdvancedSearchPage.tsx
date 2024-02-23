@@ -14,6 +14,7 @@ import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
+import { LanguageFilter } from './LanguageFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 import { SeriesFilter } from './SeriesFilter';
@@ -40,6 +41,7 @@ export const AdvancedSearchPage = () => {
     fundingSource: params.get(ResultParam.FundingSource),
     journal: params.get(ResultParam.Journal),
     order: params.get(ResultParam.Order),
+    publicationLanguageShould: params.get(ResultParam.PublicationLanguageShould),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publisher: params.get(ResultParam.Publisher),
@@ -110,6 +112,10 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <SeriesFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <LanguageFilter />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 

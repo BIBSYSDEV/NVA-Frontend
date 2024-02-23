@@ -165,6 +165,9 @@ export const PublishingAccordion = ({
 
   const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
+  const unpublishedOrDeleted =
+    registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
@@ -174,7 +177,7 @@ export const PublishingAccordion = ({
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('registration.public_page.publication')}
         {lastPublishingRequest && ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
-        {!registrationIsValid && (
+        {!registrationIsValid && !unpublishedOrDeleted && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
             <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
           </Tooltip>
@@ -183,7 +186,7 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {tabErrors && (
+        {tabErrors && !unpublishedOrDeleted && (
           <>
             <Typography>{t('registration.public_page.error_description')}</Typography>
             <ErrorList tabErrors={tabErrors} />
@@ -214,10 +217,15 @@ export const PublishingAccordion = ({
             {completedTickets.map((ticket) => (
               <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket} />
             ))}
-            {(registration.status === RegistrationStatus.Deleted ||
-              registration.status === RegistrationStatus.Unpublished) && (
-              <DeletedRegistrationInformation registration={registration} />
-            )}
+            {registration.publicationNotes
+              ?.filter((note) => note.type === 'UnpublishingNote')
+              .map((note, index) => (
+                <DeletedRegistrationInformation
+                  key={note.createdDate ?? index}
+                  registration={registration}
+                  unpublishingNote={note}
+                />
+              ))}
           </Box>
         )}
 

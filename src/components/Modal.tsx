@@ -24,6 +24,7 @@ export const Modal = ({
   headingDataTestId,
   onClose,
   open,
+  PaperProps,
   ...props
 }: ModalProps) => {
   const { t } = useTranslation();
@@ -42,7 +43,7 @@ export const Modal = ({
       BackdropProps={{
         timeout: 500,
       }}
-      PaperProps={{ 'aria-labelledby': 'titleId' }}>
+      PaperProps={{ 'aria-labelledby': 'titleId', ...PaperProps }}>
       <Box sx={{ display: 'grid', pt: '1rem', gridTemplateAreas: "'text cross'", gridTemplateColumns: 'auto 1fr' }}>
         <DialogTitle sx={{ gridArea: 'text', padding: 0 }}>
           {headingIcon ? (

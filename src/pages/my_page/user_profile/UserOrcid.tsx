@@ -1,5 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Button, CircularProgress, IconButton, Link as MuiLink, Skeleton, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,15 +10,13 @@ import { fetchPerson } from '../../../api/cristinApi';
 import { getOrcidInfo } from '../../../api/external/orcidApi';
 import { postOrcidCredentials } from '../../../api/orcidApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { Modal } from '../../../components/Modal';
+import { LinkButton } from '../../../components/PageWithSideMenu';
 import { setNotification } from '../../../redux/notificationSlice';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { OrcidCredentials } from '../../../types/orcid.types';
 import { User } from '../../../types/user.types';
 import { ORCID_BASE_URL, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getValueByKey } from '../../../utils/user-helpers';
-import { OrcidModalContent } from './OrcidModalContent';
 
 interface UserOrcidProps {
   user: User;
@@ -57,7 +55,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+
   const [isAddingOrcid, setIsAddingOrcid] = useState(false);
   const [isRemovingOrcid, setIsRemovingOrcid] = useState(false);
   const userCristinId = user.cristinId ?? '';
@@ -74,7 +72,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const currentOrcid = getValueByKey('ORCID', cristinPerson?.identifiers);
   const orcidUrl = `${ORCID_BASE_URL}/${currentOrcid}`;
 
-  const toggleModal = () => setOpenModal(!openModal);
   const toggleConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   useEffect(() => {
@@ -109,7 +106,9 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         }
       }
       setIsAddingOrcid(false);
-      history.replace(UrlPathTemplate.MyPagePersonalia);
+      history.replace({
+        search: '',
+      });
     };
 
     const searchParams = new URLSearchParams(history.location.search);
@@ -147,7 +146,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       {cristinPersonQuery.isLoading ? (
         <CircularProgress aria-labelledby="orcid-label" />
       ) : isAddingOrcid ? (
-        <Skeleton width="50%" />
+        <Skeleton width="20rem" />
       ) : currentOrcid ? (
         <Box
           data-testid="orcid-line"
@@ -166,7 +165,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               href={orcidUrl}
               target="_blank"
               rel="noopener noreferrer">
-              {currentOrcid}
+              {orcidUrl}
             </Typography>
             <IconButton
               color="primary"
@@ -193,20 +192,13 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           </ConfirmDialog>
         </Box>
       ) : (
-        <>
-          <Typography paragraph>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
-          <Button data-testid="button-create-connect-orcid" onClick={toggleModal} variant="contained" size="small">
-            {t('my_page.my_profile.orcid.connect_orcid')}
-          </Button>
-          <Modal
-            headingIcon={{ src: orcidIcon, alt: 'ORCID iD icon' }}
-            headingText={t('my_page.my_profile.orcid.dialog.heading')}
-            onClose={toggleModal}
-            open={openModal}
-            dataTestId="orcid-modal">
-            <OrcidModalContent cancelFunction={toggleModal} />
-          </Modal>
-        </>
+        <LinkButton
+          endIcon={<img src={orcidIcon} height="20" alt="" />}
+          data-testid="button-create-connect-orcid"
+          href={`${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`}
+          size="small">
+          {t('my_page.my_profile.orcid.connect_orcid')}
+        </LinkButton>
       )}
     </div>
   );

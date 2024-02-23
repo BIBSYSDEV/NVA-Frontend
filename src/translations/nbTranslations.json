@@ -117,6 +117,7 @@
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
+      "nvi_publication_year": "NVI publiseringsår",
       "period_year": "Publiseringsår",
       "update_reporting_period": "Oppdater rapporteringsperiode"
     },
@@ -196,6 +197,7 @@
     "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
+    "or": "Eller",
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
     "order": "Rekkefølge",
@@ -668,12 +670,14 @@
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
         "delete_orcid": "Fjern ORCID-kobling",
-        "dialog": {
-          "heading": "Koble eller opprette ORCID iD",
-          "paragraph0": "Logg inn på din ORCID-konto eller registrer deg hvis du ikke har en konto.",
-          "paragraph1": "ORCID gir deg en varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den kan brukes den i mange sammenhenger. Ved å koble din ORCID iD er det enklere å identifisere deg som forfatter, og å hente og dele dine publikasjoner."
+        "helper_text_modal": {
+          "detailed_paragraph_1": "Om du har en ORCID, så oppfordres du til å kople den til din forskerprofil. Om du ikke har en ORCID, så kan du opprette den samtidig som du kopler den til forskerprofilen din.",
+          "detailed_paragraph_2": "Enkelte forleggere og finansiører krever at du har en ORCID, for å kunne levere inn henholdsvis manuskript og søknader om finansiering. Om de ikke krever det, så bør du som forsker kreve det. Da blir dine forskningsresultat enklere for alle å sitere korrekt og det blir mindre arbeid i etterkant. Kopling av ORCID til din forskerprofil er et tilbud, ikke et krav. Du kan trekke din kobling når du ønsker under MIN SIDE | Personalia.",
+          "introduction": "ORCID gir deg varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den viktigste gevinsten du får i dag ved å kople din ORCID til din forskerprofil, er raskere, mer korrekt og import av flere av dine publikasjoner.",
+          "link": "For ytterligere informasjon gå til ORCID",
+          "modal_title": "Open Researcher Contributor IDentity (ORCID)"
         },
-        "orcid_description": "Koble din ORCID iD ved å logge på ORCID. Eller registrer deg for å få en ORCID iD og koble denne. Da blir det enklere å identifisere deg",
+        "orcid_description": "Om du kobler din ORCID blir det lettere å identifisere deg",
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
@@ -1247,6 +1251,7 @@
       "resource_type": "Kategori"
     },
     "is_revision": "Arbeidet er en revisjon",
+    "missing_name": "Mangler navn",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
@@ -1708,14 +1713,26 @@
       "PUBLISHED_METADATA": "Metadata publisert",
       "UNPUBLISHED": "Avpublisert"
     },
+    "support": {
+      "curator_help": {
+        "already_in_progress": "Du har allerede en dialog med kurator. Lagre og gå til resultatet via MIN SIDE for å fortsette dialogen der.",
+        "description": "<0>Her kan du sende en melding direkte til kurator ved din institusjon.</0><0>Kurator kan hjelpe deg med å registrere og endre på publiserte og upubliserte forskningsresultat.</0><0>Du vil få svar på MIN SIDE, der ser du hvem som er din(e) kuratorer. Kuratorstøtte kan besvares av ulike kuratorer på din institusjon.</0>",
+        "header": "Trenger du hjelp av kurator?"
+      },
+      "need_help": "Trenger du hjelp?",
+      "self_help": {
+        "description": "Trenger du hjelp? Se om du kan løse problemet selv ved å se på brukerveiledningene.",
+        "header": "Veiledning for å registrere et forskningsresultat"
+      }
+    },
     "year_published": "Publiseringsår"
   },
   "search": {
-    "add_filter": "Legg til filter",
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
     "advanced_search": "Avansert søk",
     "advanced_search_description": "Søk blant alle publiserte resultater",
+    "choose_one_or_more": "Velg ett eller flere",
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",

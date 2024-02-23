@@ -86,10 +86,11 @@ interface AdditionalIdentifier {
 
 type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
 
-interface PublicationNote {
+export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
-  note?: string;
-  publicationNoteMessage?: string;
+  note: string;
+  createdBy?: string;
+  createdDate?: string;
 }
 
 export interface BaseRegistration {
@@ -283,6 +284,7 @@ export interface RegistrationAggregations {
   publisher?: AggregationValue[];
   series?: AggregationValue[];
   journal?: AggregationValue[];
+  scientificIndex?: AggregationValue[];
 }
 
 export interface ConfirmedDocument {
