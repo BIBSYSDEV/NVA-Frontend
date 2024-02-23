@@ -36,6 +36,7 @@ export const mockCristinPersonSearch: SearchResponse<CristinPerson> = {
           type: 'CristinIdentifier',
           value: '2',
         },
+        { type: 'NationalIdentificationNumber', value: '12345678910' },
       ],
       names: [
         {

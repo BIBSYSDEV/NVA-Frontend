@@ -15,7 +15,8 @@ import { setNotification } from '../../redux/notificationSlice';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getFormattedRegistration, willResetNviStatuses } from '../../utils/registration-helpers';
+import { willResetNviStatuses } from '../../utils/nviHelpers';
+import { getFormattedRegistration } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 
@@ -76,7 +77,7 @@ export const RegistrationFormActions = ({
   };
 
   const handleSaveClick = async () => {
-    if (isNviCandidate && willResetNviStatuses(persistedRegistration, values)) {
+    if (isNviCandidate && (await willResetNviStatuses(persistedRegistration, values))) {
       setOpenNviApprovalResetDialog(true);
     } else {
       await saveRegistration(values);
@@ -177,8 +178,9 @@ export const RegistrationFormActions = ({
         fullWidth
         open={openSupportModal}
         onClose={toggleSupportModal}
-        headingText={t('my_page.messages.types.GeneralSupportCase')}
-        dataTestId={dataTestId.registrationWizard.formActions.supportModal}>
+        headingText={t('registration.support.need_help')}
+        dataTestId={dataTestId.registrationWizard.formActions.supportModal}
+        PaperProps={{ sx: { bgcolor: 'generalSupportCase.light', padding: '1rem' } }}>
         <SupportModalContent closeModal={toggleSupportModal} registration={values} />
       </Modal>
 

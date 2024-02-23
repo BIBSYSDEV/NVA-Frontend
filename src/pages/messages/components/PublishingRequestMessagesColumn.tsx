@@ -1,11 +1,11 @@
-import { Box, Typography, styled } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
 
 export const StyledMessagesContainer = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.1rem',
+  gap: '0.25rem',
 });
 
 export const StyledStatusMessageBox = styled(Box)({
@@ -25,32 +25,28 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
 
   return (
     <StyledMessagesContainer>
-      {ticket.workflow === 'RegistratorPublishesMetadataOnly' ? (
-        <>
-          <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-            <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
-            {ticket.publication?.publishedDate ? (
-              <Typography>{new Date(ticket.publication.publishedDate).toLocaleDateString()}</Typography>
-            ) : (
-              <Typography>{new Date(ticket.createdDate).toLocaleDateString()}</Typography>
-            )}
-          </StyledStatusMessageBox>
-          {ticket.status === 'Pending' || ticket.status === 'New' ? (
-            <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-              <Typography>{t('registration.files_and_license.files_awaits_approval_unknown')}</Typography>
-            </StyledStatusMessageBox>
+      {ticket.status === 'Pending' || ticket.status === 'New' ? (
+        <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+          <Typography>
+            {ticket.filesForApproval.length
+              ? t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })
+              : t('registration.files_and_license.files_awaits_approval_unknown')}
+          </Typography>
+        </StyledStatusMessageBox>
+      ) : (
+        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+          {ticket.status === 'Completed' ? (
+            <Typography>
+              {ticket.approvedFiles.length
+                ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
+                : t('my_page.messages.files_published_unknown')}
+            </Typography>
           ) : (
-            <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-              {ticket.status === 'Completed' ? (
-                <Typography>{t('my_page.messages.files_published')}</Typography>
-              ) : ticket.status === 'Closed' ? (
-                <Typography>{t('my_page.messages.files_rejected')}</Typography>
-              ) : null}
-              {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
-            </StyledStatusMessageBox>
+            ticket.status === 'Closed' && <Typography>{t('my_page.messages.files_rejected')}</Typography>
           )}
-        </>
-      ) : null}
+          {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
+        </StyledStatusMessageBox>
+      )}
     </StyledMessagesContainer>
   );
 };

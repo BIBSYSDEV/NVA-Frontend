@@ -10,15 +10,14 @@ import { Modal } from '../../../../components/Modal';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { Institution } from '../../../../types/contributor.types';
+import { Affiliation } from '../../../../types/contributor.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDistinctContributorUnits } from '../../../../utils/institutions-helpers';
-import { getLanguageString } from '../../../../utils/translation-helpers';
 
 interface AffiliationsCellProps {
-  affiliations?: Institution[];
+  affiliations?: Affiliation[];
   authorName: string;
   baseFieldName: string;
 }
@@ -42,12 +41,14 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
     }
 
     // Avoid adding same unit twice
-    if (affiliations.some((affiliation) => affiliation.id === newAffiliationId)) {
+    if (
+      affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === newAffiliationId)
+    ) {
       disptach(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 
-    const addedAffiliation: Institution = {
+    const addedAffiliation: Affiliation = {
       type: 'Organization',
       id: newAffiliationId,
     };
@@ -56,7 +57,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
     if (affiliationToVerify) {
       // Verify affiliation
       const affiliationIndex = updatedAffiliations.findIndex(
-        (affiliation) => affiliation.labels && getLanguageString(affiliation.labels) === affiliationToVerify
+        (affiliation) => affiliation.type === 'UnconfirmedOrganization' && affiliation.name === affiliationToVerify
       );
       updatedAffiliations[affiliationIndex] = addedAffiliation;
     } else {
@@ -82,30 +83,27 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
       }}>
       {affiliations.map((affiliation, index) => (
         <Box
-          key={affiliation.id ?? index}
+          key={affiliation.type === 'Organization' ? affiliation.id : `org-${index}`}
           sx={{
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
+            justifyContent: 'space-between',
           }}>
-          {affiliation.id ? (
-            <AffiliationHierarchy unitUri={affiliation.id} />
-          ) : (
-            affiliation.labels && (
-              <>
-                <Typography>"{getLanguageString(affiliation.labels)}"</Typography>
-                <Tooltip title={t('registration.contributors.verify_affiliation')}>
-                  <IconButton
-                    data-testid={dataTestId.registrationWizard.contributors.verifyAffiliationButton}
-                    onClick={() =>
-                      affiliation.labels && verifyAffiliationOnClick(getLanguageString(affiliation.labels))
-                    }>
-                    <WarningIcon color="warning" />
-                  </IconButton>
-                </Tooltip>
-              </>
-            )
+          {affiliation.type === 'Organization' && <AffiliationHierarchy unitUri={affiliation.id} />}
+          {affiliation.type === 'UnconfirmedOrganization' && (
+            <>
+              <Typography>"{affiliation.name}"</Typography>
+              <Tooltip title={t('registration.contributors.verify_affiliation')}>
+                <IconButton
+                  data-testid={dataTestId.registrationWizard.contributors.verifyAffiliationButton}
+                  onClick={() => affiliation.name && verifyAffiliationOnClick(affiliation.name)}>
+                  <WarningIcon color="warning" />
+                </IconButton>
+              </Tooltip>
+            </>
           )}
+
           <Tooltip title={t('registration.contributors.remove_affiliation')}>
             <IconButton
               color="primary"
@@ -158,7 +156,10 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
             onSubmit={addAffiliation}
             onClose={toggleAffiliationModal}
             suggestedInstitutions={getDistinctContributorUnits(values.entityDescription?.contributors ?? []).filter(
-              (suggestion) => !affiliations.some((affiliation) => affiliation.id === suggestion)
+              (suggestion) =>
+                !affiliations.some(
+                  (affiliation) => affiliation.type === 'Organization' && affiliation.id === suggestion
+                )
             )}
           />
         </>

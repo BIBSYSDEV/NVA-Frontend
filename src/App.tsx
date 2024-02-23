@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { Amplify } from 'aws-amplify';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -34,7 +34,8 @@ const getLanguageTagValue = (language: string) => {
 };
 
 if (
-  window.location.pathname === UrlPathTemplate.MyPageMyPersonalia &&
+  (window.location.pathname === UrlPathTemplate.MyPagePersonalia ||
+    window.location.pathname === UrlPathTemplate.MyPageResearchProfile) &&
   window.location.hash.startsWith('#access_token=')
 ) {
   // Workaround to allow adding orcid for aws-amplify > 4.2.2
@@ -103,6 +104,7 @@ export const App = () => {
                 width: '100%',
                 alignItems: 'center',
                 flexGrow: 1,
+                mb: '0.5rem',
               }}>
               <ErrorBoundary>
                 <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={getDateFnsLocale(i18n.language)}>

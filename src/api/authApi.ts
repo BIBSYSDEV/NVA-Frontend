@@ -33,3 +33,16 @@ export const getAccessToken = async () => {
     return null;
   }
 };
+
+export const userIsAuthenticated = async () => {
+  try {
+    const cognitoUser = await fetchAuthSession();
+    if (cognitoUser) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch {
+    return false;
+  }
+};

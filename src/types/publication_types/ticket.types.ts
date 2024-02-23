@@ -1,3 +1,4 @@
+import { AssociatedFile } from '../associatedArtifact.types';
 import { SearchResponse } from '../common.types';
 import { PublishStrategy } from '../customerInstitution.types';
 import { BaseEntityDescription, PublicationInstanceType, Registration } from '../registration.types';
@@ -57,10 +58,14 @@ type TicketPublication = Pick<
   };
 
 export interface PublishingTicket extends Ticket {
+  approvedFiles: AssociatedFile[];
+  filesForApproval: AssociatedFile[];
   workflow: PublishStrategy;
 }
 
 export interface ExpandedPublishingTicket extends ExpandedTicket {
+  approvedFiles: AssociatedFile[];
+  filesForApproval: AssociatedFile[];
   workflow: PublishStrategy;
 }
 

@@ -12,6 +12,9 @@ export const StyledBaseContributorIndicator = styled('div')({
   alignItems: 'center',
   justifyContent: 'space-around',
 });
+StyledBaseContributorIndicator.defaultProps = {
+  role: 'img',
+};
 
 export const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
   background: theme.palette.primary.main,
@@ -25,8 +28,7 @@ const StyledVerifiedContributorWithoutAffiliation = styled(StyledBaseContributor
 }));
 
 const StyledUnknownContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
-  background: theme.palette.grey[400],
-  color: theme.palette.grey[500],
+  background: theme.palette.secondary.dark,
 }));
 
 interface ContributorIndicatorProps {
@@ -39,7 +41,7 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
 
   const hasId = !!contributor.identity.id;
   const hasVerifiedAffiliation =
-    !!contributor.affiliations && contributor.affiliations.some((affiliation) => affiliation.id);
+    !!contributor.affiliations && contributor.affiliations.some((affiliation) => affiliation.type === 'Organization');
 
   const verifiedContributor = hasId && hasVerifiedAffiliation;
   const verifiedContributorWithoutAffiliation = hasId && !hasVerifiedAffiliation;
@@ -59,9 +61,7 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
     </Tooltip>
   ) : (
     <Tooltip title={t('registration.contributors.identity_status.unknown_identity')}>
-      <StyledUnknownContributor data-testid={dataTestId.registrationWizard.contributors.unverifiedAuthor(initials)}>
-        {initials}
-      </StyledUnknownContributor>
+      <StyledUnknownContributor data-testid={dataTestId.registrationWizard.contributors.unverifiedAuthor(initials)} />
     </Tooltip>
   );
 };

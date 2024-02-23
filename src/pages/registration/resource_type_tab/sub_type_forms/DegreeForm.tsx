@@ -7,6 +7,7 @@ import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
 import { TotalPagesField } from '../components/isbn_and_pages/TotalPagesField';
+import { PhdForm } from './degree_types/PhdForm';
 
 interface DegreeFormProps {
   subType: string;
@@ -14,6 +15,10 @@ interface DegreeFormProps {
 
 export const DegreeForm = ({ subType }: DegreeFormProps) => {
   const { t } = useTranslation();
+
+  if (subType === DegreeType.Phd) {
+    return <PhdForm />;
+  }
 
   return (
     <>
@@ -36,7 +41,7 @@ export const DegreeForm = ({ subType }: DegreeFormProps) => {
       )}
 
       {subType === DegreeType.Bachelor || subType === DegreeType.Master ? <TotalPagesField /> : <IsbnAndPages />}
-      {(subType === DegreeType.Phd || subType === DegreeType.Licentiate) && <SeriesFields />}
+      {subType === DegreeType.Licentiate && <SeriesFields />}
     </>
   );
 };

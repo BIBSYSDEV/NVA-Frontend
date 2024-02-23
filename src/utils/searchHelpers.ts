@@ -20,6 +20,16 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const searchTerm = params.get(ResultParam.Query) ?? '';
   const titleParams = params.get(ResultParam.Title)?.split(',') ?? [];
   const contributorNameParams = params.get(ResultParam.ContributorName)?.split(',') ?? [];
+  const abstractParams = params.get(ResultParam.Abstract)?.split(',') ?? [];
+  const tagParams = params.get(ResultParam.Tags)?.split(',') ?? [];
+  const identifierParams = params.get(ResultParam.Identifier)?.split(',') ?? [];
+  const isbnParams = params.get(ResultParam.Isbn)?.split(',') ?? [];
+  const issnParams = params.get(ResultParam.Issn)?.split(',') ?? [];
+  const doiParams = params.get(ResultParam.Doi)?.split(',') ?? [];
+  const handleParams = params.get(ResultParam.Handle)?.split(',') ?? [];
+  const fundingIdentifierParams = params.get(ResultParam.FundingIdentifier)?.split(',') ?? [];
+  const courseParams = params.get(ResultParam.Course)?.split(',') ?? [];
+  const cristinIdentifierParams = params.get(ResultParam.CristinIdentifier)?.split(',') ?? [];
 
   const titleFilters = titleParams.map((title) => ({
     fieldName: ResultParam.Title,
@@ -30,7 +40,71 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
     fieldName: ResultParam.ContributorName,
     value: contributorName,
   }));
-  const properties = [...titleFilters, ...contributorNameFilters];
+
+  const abstractFilters = abstractParams.map((abstract) => ({
+    fieldName: ResultParam.Abstract,
+    value: abstract,
+  }));
+
+  const tagFilters = tagParams.map((tag) => ({
+    fieldName: ResultParam.Tags,
+    value: tag,
+  }));
+
+  const identifierFilters = identifierParams.map((identifier) => ({
+    fieldName: ResultParam.Identifier,
+    value: identifier,
+  }));
+
+  const isbnFilters = isbnParams.map((isbn) => ({
+    fieldName: ResultParam.Isbn,
+    value: isbn,
+  }));
+
+  const issnFilters = issnParams.map((issn) => ({
+    fieldName: ResultParam.Issn,
+    value: issn,
+  }));
+
+  const doiFilters = doiParams.map((doi) => ({
+    fieldName: ResultParam.Doi,
+    value: doi,
+  }));
+
+  const handleFilters = handleParams.map((handle) => ({
+    fieldName: ResultParam.Handle,
+    value: handle,
+  }));
+
+  const fundingIdentifierFilters = fundingIdentifierParams.map((fundingIdentifier) => ({
+    fieldName: ResultParam.FundingIdentifier,
+    value: fundingIdentifier,
+  }));
+
+  const courseFilters = courseParams.map((course) => ({
+    fieldName: ResultParam.Course,
+    value: course,
+  }));
+
+  const cristinIdentifierFilters = cristinIdentifierParams.map((cristinIdentifier) => ({
+    fieldName: ResultParam.CristinIdentifier,
+    value: cristinIdentifier,
+  }));
+
+  const properties = [
+    ...titleFilters,
+    ...contributorNameFilters,
+    ...abstractFilters,
+    ...tagFilters,
+    ...identifierFilters,
+    ...isbnFilters,
+    ...issnFilters,
+    ...doiFilters,
+    ...handleFilters,
+    ...fundingIdentifierFilters,
+    ...courseFilters,
+    ...cristinIdentifierFilters,
+  ];
 
   return { searchTerm, properties };
 };
@@ -44,4 +118,8 @@ export const removeSearchParamValue = (params: URLSearchParams, key: string, val
     params.set(key, newValues.join(','));
   }
   return params;
+};
+
+export const isValidIsbn = (value: string): boolean => {
+  return value.startsWith('978-') && value.replaceAll('-', '').length === 13;
 };

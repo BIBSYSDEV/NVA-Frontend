@@ -5,6 +5,7 @@ import {
   BaseRegistration,
   ContextPublisher,
   ContextSeries,
+  RelatedDocument,
 } from '../registration.types';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 
@@ -15,11 +16,13 @@ export interface DegreeRegistration extends BaseRegistration {
 export interface DegreePublicationInstance {
   type: DegreeType | '';
   pages: PagesMonograph | null;
+  related?: RelatedDocument[];
 }
 
 export const emptyDegreePublicationInstance: DegreePublicationInstance = {
   type: '',
   pages: emptyPagesMonograph,
+  related: [],
 };
 
 export interface DegreePublicationContext {

@@ -1,25 +1,15 @@
 import CloseIcon from '@mui/icons-material/Close';
 import FilterVintageIcon from '@mui/icons-material/FilterVintage';
-import SearchIcon from '@mui/icons-material/Search';
-import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, TextField, Typography } from '@mui/material';
+import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, Typography } from '@mui/material';
 import { ErrorMessage, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { CategorySelector } from '../../../components/CategorySelector';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { RootState } from '../../../redux/store';
 import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
   PublicationType,
-  ReportType,
   ResearchDataType,
   ResourceFieldNames,
   contextTypeBaseFieldName,
@@ -56,28 +46,24 @@ import {
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
+  getDisabledCategories,
   getMainRegistrationType,
-  isDegreeWithProtectedFiles,
   isPeriodicalMediaContribution,
   nviApplicableTypes,
 } from '../../../utils/registration-helpers';
-import { RegistrationTypeElement, RegistrationTypesRow } from './components/RegistrationTypesRow';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
 
-  const [searchValue, setSearchValue] = useState('');
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
   const [confirmNewType, setConfirmNewType] = useState<PublicationInstanceType | ''>('');
   const [showDatasetConditions, setShowDatasetConditions] = useState(false);
 
-  const closeSelectType = () => {
-    setOpenSelectType(false);
-    setSearchValue('');
-  };
+  const closeSelectType = () => setOpenSelectType(false);
 
   const updateRegistrationData = (newInstanceType: PublicationInstanceType) => {
     if (newInstanceType !== currentInstanceType) {
@@ -227,12 +213,7 @@ export const SelectRegistrationTypeField = () => {
     }
   };
 
-  const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
-    const lowerCaseSearchValue = searchValue.toLowerCase();
-    return registrationTypes.filter((registrationType) =>
-      registrationType.text.toLowerCase().includes(lowerCaseSearchValue)
-    );
-  };
+  const disabledCategories = getDisabledCategories(user, customer, values, t);
 
   return openSelectType || !currentInstanceType ? (
     <>
@@ -248,170 +229,13 @@ export const SelectRegistrationTypeField = () => {
             </IconButton>
           )}
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '0.5rem',
-            my: '1rem',
-          }}>
-          <TextField
-            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeSearchField}
-            sx={{ maxWidth: '17rem' }}
-            type="search"
-            variant="filled"
-            label={t('common.search')}
-            InputProps={{
-              endAdornment: <SearchIcon />,
-            }}
-            onChange={(event) => setSearchValue(event.target.value)}
-          />
-          <Box
-            sx={{
-              display: 'flex',
-              gap: '0.5rem',
-              alignItems: 'center',
-            }}>
-            <FilterVintageIcon
-              color="primary"
-              titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-              fontSize="small"
-            />
-            <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
-          </Box>
-        </Box>
 
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
-            gap: '1rem',
-            alignItems: 'center',
-          }}>
-          <RegistrationTypesRow
-            mainType={PublicationType.PublicationInJournal}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(JournalType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.Book}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(BookType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.Report}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(ReportType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.Degree}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(DegreeType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-                disabled: isDegreeWithProtectedFiles(registrationType) && !user?.isThesisCurator,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.Anthology}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(ChapterType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.Presentation}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(PresentationType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.Artistic}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(ArtisticType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.MediaContribution}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(MediaType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.ResearchData}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(ResearchDataType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.ExhibitionContent}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(ExhibitionContentType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-          <RegistrationTypesRow
-            mainType={PublicationType.GeographicalContent}
-            registrationTypes={filterRegistrationTypes(
-              Object.values(OtherRegistrationType).map((registrationType) => ({
-                value: registrationType,
-                text: t(`registration.publication_types.${registrationType}`),
-                selected: registrationType === currentInstanceType,
-              }))
-            )}
-            onChangeType={onChangeType}
-          />
-        </Box>
+        <CategorySelector
+          selectedCategories={currentInstanceType ? [currentInstanceType] : []}
+          onCategoryClick={onChangeType}
+          disabledCategories={disabledCategories}
+        />
+
         {!currentInstanceType && (
           <FormHelperText error sx={{ mt: '1rem' }}>
             <ErrorMessage name={ResourceFieldNames.RegistrationType} />

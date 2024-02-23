@@ -13,8 +13,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../api/searchApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { fetchResults, FetchResultsParams, ResultParam, SortOrder } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -29,7 +28,7 @@ import { InternationalCooperationReports } from '../reports/InternationalCoopera
 import { NviReports } from '../reports/NviReports';
 import ReportsPage from '../reports/ReportsPage';
 import { SearchPage } from '../search/SearchPage';
-import { AdvancedSearchPage } from '../search/advanced_search/AdvancesSearchPage';
+import { AdvancedSearchPage } from '../search/advanced_search/AdvancedSearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
@@ -58,19 +57,36 @@ const HomePage = () => {
 
   const registrationSearchTerm = params.get(ResultParam.Query);
   const registrationsQueryConfig: FetchResultsParams = {
-    query: registrationSearchTerm,
+    abstract: params.get(ResultParam.Abstract),
+    aggregation: 'all',
     category: params.get(ResultParam.Category) as PublicationInstanceType | null,
-    topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
-    fundingSource: params.get(ResultParam.FundingSource),
     contributor: params.get(ResultParam.Contributor),
     contributorName: params.get(ResultParam.ContributorName),
-    title: params.get(ResultParam.Title),
-    sort: params.get(ResultParam.Sort) as SortOrder | null,
+    course: params.get(ResultParam.Course),
+    cristinIdentifier: params.get(ResultParam.CristinIdentifier),
+    doi: params.get(ResultParam.Doi),
+    from: Number(params.get(ResultParam.From) ?? 0),
+    fundingIdentifier: params.get(ResultParam.FundingIdentifier),
+    fundingSource: params.get(ResultParam.FundingSource),
+    handle: params.get(ResultParam.Handle),
+    id: params.get(ResultParam.Identifier),
+    isbn: params.get(ResultParam.Isbn),
+    issn: params.get(ResultParam.Issn),
+    journal: params.get(ResultParam.Journal),
     order: params.get(ResultParam.Order),
-    from: Number(params.get(SearchParam.From) ?? 0),
+    publicationYearSince: params.get(ResultParam.PublicationYearSince),
+    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
+    publisher: params.get(ResultParam.Publisher),
+    query: registrationSearchTerm,
     results: rowsPerPage,
+    series: params.get(ResultParam.Series),
+    sort: params.get(ResultParam.Sort) as SortOrder | null,
+    tags: params.get(ResultParam.Tags),
+    title: params.get(ResultParam.Title),
+    topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
   };
   const registrationQuery = useQuery({
+    enabled: resultIsSelected,
     queryKey: ['registrations', registrationsQueryConfig],
     queryFn: () => fetchResults(registrationsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
@@ -80,8 +96,10 @@ const HomePage = () => {
   const personSearchTerm = params.get(PersonSearchParameter.Name) ?? '.';
   const personQueryParams: PersonSearchParams = {
     name: personSearchTerm,
+    orderBy: params.get(PersonSearchParameter.OrderBy),
     organization: params.get(PersonSearchParameter.Organization),
     sector: params.get(PersonSearchParameter.Sector),
+    sort: params.get(PersonSearchParameter.Sort),
   };
   const personQuery = useQuery({
     enabled: personIsSeleced,
@@ -91,17 +109,20 @@ const HomePage = () => {
     keepPreviousData: true,
   });
 
-  const projectSearchTerm = params.get(ProjectSearchParameter.Title);
+  const projectSearchTerm = params.get(ProjectSearchParameter.Query);
   const projectQueryParams: ProjectsSearchParams = {
     coordinatingFacet: params.get(ProjectSearchParameter.CoordinatingFacet),
     categoryFacet: params.get(ProjectSearchParameter.CategoryFacet),
     fundingSourceFacet: params.get(ProjectSearchParameter.FundingSourceFacet),
     healthProjectFacet: params.get(ProjectSearchParameter.HealthProjectFacet),
+    orderBy: params.get(ProjectSearchParameter.OrderBy),
     participantFacet: params.get(ProjectSearchParameter.ParticipantFacet),
     participantOrgFacet: params.get(ProjectSearchParameter.ParticipantOrgFacet),
     responsibleFacet: params.get(ProjectSearchParameter.ResponsibleFacet),
     sectorFacet: params.get(ProjectSearchParameter.SectorFacet),
-    title: projectSearchTerm,
+    sort: params.get(ProjectSearchParameter.Sort),
+    status: params.get(ProjectSearchParameter.Status),
+    query: projectSearchTerm,
   };
   const projectQuery = useQuery({
     enabled: projectIsSelected,
@@ -123,9 +144,7 @@ const HomePage = () => {
           dataTestId={dataTestId.startPage.filterAccordion}>
           <Box sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {resultIsSelected ? (
-              registrationQuery.data?.aggregations ? (
-                <RegistrationFacetsFilter registrationQuery={registrationQuery} />
-              ) : null
+              <RegistrationFacetsFilter registrationQuery={registrationQuery} />
             ) : personIsSeleced ? (
               personQuery.data?.aggregations ? (
                 <PersonFacetsFilter personQuery={personQuery} />
@@ -138,15 +157,13 @@ const HomePage = () => {
           </Box>
         </NavigationListAccordion>
 
-        <BetaFunctionality>
-          <NavigationListAccordion
-            title={t('search.advanced_search')}
-            startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
-            accordionPath={UrlPathTemplate.Search}
-            dataTestId={dataTestId.startPage.advancedSearchAccordion}>
-            <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>{t('search.advanced_search_description')}</Typography>
-          </NavigationListAccordion>
-        </BetaFunctionality>
+        <NavigationListAccordion
+          title={t('search.advanced_search')}
+          startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
+          accordionPath={UrlPathTemplate.Search}
+          dataTestId={dataTestId.startPage.advancedSearchAccordion}>
+          <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>{t('search.advanced_search_description')}</Typography>
+        </NavigationListAccordion>
 
         <NavigationListAccordion
           title={t('search.reports.reports')}

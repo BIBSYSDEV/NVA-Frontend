@@ -17,6 +17,7 @@ import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
@@ -30,6 +31,7 @@ export const Header = () => {
   const institutionId = user?.topOrgCristinId ?? '';
 
   const organizationQuery = useQuery({
+    enabled: !!institutionId,
     queryKey: [institutionId],
     queryFn: () => getById<Organization>(institutionId),
     staleTime: Infinity,
@@ -152,7 +154,7 @@ export const Header = () => {
                   {t('basic_data.basic_data')}
                 </MenuButton>
               )}
-              {(user?.isCurator || user?.isNviCurator) && (
+              {(hasCuratorRole(user) || user?.isNviCurator) && (
                 <MenuButton
                   color="inherit"
                   data-testid={dataTestId.header.tasksLink}

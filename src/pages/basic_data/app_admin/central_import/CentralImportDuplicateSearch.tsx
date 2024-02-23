@@ -2,7 +2,7 @@ import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } fro
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../../api/searchApi';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
@@ -29,7 +29,7 @@ export const CentralImportDuplicateSearch = ({
     doi: duplicateSearchFilters.doi,
     contributorName: duplicateSearchFilters.author,
     issn: duplicateSearchFilters.issn,
-    publicationYear: duplicateSearchFilters.yearPublished,
+    publicationYearShould: duplicateSearchFilters.yearPublished,
     title: duplicateSearchFilters.title,
     from: rowsPerPage * (page - 1),
     results: rowsPerPage,
@@ -54,8 +54,16 @@ export const CentralImportDuplicateSearch = ({
               : t('basic_data.central_import.duplicate_search_hits')}
           </Typography>
           {duplicateCandidatesSize > 0 && (
-            <>
-              <FormControl sx={{ width: '100%' }}>
+            <ListPagination
+              count={duplicateCandidatesSize}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(newPage) => setPage(newPage)}
+              onRowsPerPageChange={(newRowsPerPage) => {
+                setRowsPerPage(newRowsPerPage);
+                setPage(1);
+              }}>
+              <FormControl sx={{ width: '100%', mb: '0.5rem' }}>
                 <RadioGroup
                   value={registrationIdentifier}
                   onChange={(event) => setRegistrationIdentifier(event.target.value)}>
@@ -74,18 +82,7 @@ export const CentralImportDuplicateSearch = ({
                   ))}
                 </RadioGroup>
               </FormControl>
-              <ListPagination
-                sx={{ mt: '0.5rem' }}
-                count={duplicateCandidatesSize}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(newPage) => setPage(newPage)}
-                onRowsPerPageChange={(newRowsPerPage) => {
-                  setRowsPerPage(newRowsPerPage);
-                  setPage(1);
-                }}
-              />
-            </>
+            </ListPagination>
           )}
         </>
       )}

@@ -1,7 +1,10 @@
+import { TFunction } from 'i18next';
+import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
+import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
   ArtisticType,
   BookType,
@@ -15,6 +18,7 @@ import {
   PublicationType,
   ReportType,
   ResearchDataType,
+  allPublicationInstanceTypes,
 } from '../types/publicationFieldNames';
 import {
   AudioVisualPublication,
@@ -34,8 +38,6 @@ import {
   OtherRelease,
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
-import { BookRegistration } from '../types/publication_types/bookRegistration.types';
-import { ChapterRegistration } from '../types/publication_types/chapterRegistration.types';
 import {
   ExhibitionBasic,
   ExhibitionMentionInPublication,
@@ -43,16 +45,16 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import { RelatedDocument } from '../types/publication_types/researchDataRegistration.types';
 import {
   Journal,
   PublicationInstanceType,
   Publisher,
   Registration,
-  RegistrationStatus,
+  RelatedDocument,
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -85,11 +87,8 @@ export const isBook = (instanceType: any) => Object.values(BookType).includes(in
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
 
-export const isDegreeWithProtectedFiles = (instanceType: any) =>
-  instanceType === DegreeType.Bachelor ||
-  instanceType === DegreeType.Master ||
-  instanceType === DegreeType.Phd ||
-  instanceType === DegreeType.Other;
+const protectedDegreeTypes = [DegreeType.Bachelor, DegreeType.Master, DegreeType.Phd, DegreeType.Other];
+export const isDegreeWithProtectedFiles = (instanceType: any) => protectedDegreeTypes.includes(instanceType);
 
 export const isReport = (instanceType: any) => Object.values(ReportType).includes(instanceType);
 
@@ -121,7 +120,11 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
   !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
+  !!user &&
+  !!registration &&
+  hasCuratorRole(user) &&
+  !!user.customerId &&
+  user.customerId === registration.publisher.id;
 
 export const userIsValidImporter = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
@@ -634,30 +637,17 @@ export const getOutputName = (item: OutputItem): string => {
   }
 };
 
-const userIsContributorOnPublishedRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCreator &&
-  !!user.cristinId &&
-  (registration.status === RegistrationStatus.Published ||
-    registration.status === RegistrationStatus.PublishedMetadata) &&
-  !!registration.entityDescription?.contributors.some((contributor) => contributor.identity.id === user.cristinId);
+export const userCanEditRegistration = (registration: Registration) =>
+  registration.allowedOperations.includes('update');
 
-export const userCanEditRegistration = (user: User | null, registration: Registration) => {
-  if (!user) {
-    return false;
-  }
+export const userCanUnpublishRegistration = (registration: Registration) =>
+  registration.allowedOperations.includes('unpublish');
 
-  const isValidCurator = userIsRegistrationCurator(user, registration);
-  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance?.type)) {
-    return isValidCurator && user.isThesisCurator;
-  }
+export const userCanPublishRegistration = (registration: Registration) =>
+  registration.allowedOperations.includes('ticket/publish');
 
-  return (
-    isValidCurator ||
-    userIsRegistrationOwner(user, registration) ||
-    userIsContributorOnPublishedRegistration(user, registration) ||
-    user.isEditor
-  );
-};
+export const userCanDeleteRegistration = (registration: Registration) =>
+  registration.allowedOperations.includes('delete');
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
@@ -708,70 +698,29 @@ export const openFileInNewTab = (fileUri: string) => {
 export const findRelatedDocumentIndex = (related: RelatedDocument[], uri: string) =>
   related.findIndex((document) => document.type === 'ConfirmedDocument' && document.identifier === uri);
 
-const hasChangedContributors = (persistedContributors: Contributor[], updatedContributors: Contributor[]) => {
-  if (persistedContributors.length !== updatedContributors.length) {
-    return true;
+export const getDisabledCategories = (
+  user: User | null,
+  customer: CustomerInstitution | null,
+  registration: Registration,
+  t: TFunction
+) => {
+  const disabledCategories: DisabledCategory[] = [];
+
+  if (!user?.isThesisCurator) {
+    protectedDegreeTypes.forEach((type) => {
+      disabledCategories.push({ type, text: t('registration.resource_type.protected_degree_type') });
+    });
   }
 
-  const sortedPersistedContributorIds = persistedContributors.map((contributor) => contributor.identity.id).sort();
-  const sortedUpdatedContributorIds = updatedContributors.map((contributor) => contributor.identity.id).sort();
+  const hasFiles = getAssociatedFiles(registration.associatedArtifacts).length > 0;
 
-  return sortedPersistedContributorIds.some((id, index) => id !== sortedUpdatedContributorIds[index]);
-};
+  if (hasFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
+    const categoriesWithoutFileSupport = allPublicationInstanceTypes
+      .filter((type) => !customer.allowFileUploadForTypes.includes(type))
+      .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
 
-export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
-  const canBeNviCandidate = nviApplicableTypes.includes(
-    persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
-  );
-  if (!canBeNviCandidate) {
-    return false;
+    disabledCategories.push(...categoriesWithoutFileSupport);
   }
 
-  const hasChangedYear =
-    persistedRegistration.entityDescription?.publicationDate?.year !==
-    updatedRegistration.entityDescription?.publicationDate?.year;
-  if (hasChangedYear) {
-    return true;
-  }
-
-  const hasChangedCategory =
-    persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
-    updatedRegistration.entityDescription?.reference?.publicationInstance.type;
-  if (hasChangedCategory) {
-    return true;
-  }
-
-  const persistedRegistrationWithContextId = persistedRegistration as JournalRegistration | ChapterRegistration;
-  const updatedRegistrationWithContextId = updatedRegistration as JournalRegistration | ChapterRegistration;
-  const hasChangedContextId =
-    persistedRegistrationWithContextId.entityDescription?.reference?.publicationContext?.id !==
-    updatedRegistrationWithContextId.entityDescription?.reference?.publicationContext?.id;
-  if (hasChangedContextId) {
-    return true;
-  }
-
-  const persistedRegistrationWithPublisher = persistedRegistration as BookRegistration;
-  const updatedRegistrationWithPublisher = updatedRegistration as BookRegistration;
-  const hasChangedPublisher =
-    updatedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.publisher?.id !==
-    persistedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.publisher?.id;
-  if (hasChangedPublisher) {
-    return true;
-  }
-
-  const hasChangedSeries =
-    updatedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.series?.id !==
-    persistedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.series?.id;
-  if (hasChangedSeries) {
-    return true;
-  }
-
-  if (
-    hasChangedContributors(
-      persistedRegistration.entityDescription?.contributors ?? [],
-      updatedRegistration.entityDescription?.contributors ?? []
-    )
-  ) {
-    return true;
-  }
+  return disabledCategories;
 };

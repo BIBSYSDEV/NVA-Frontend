@@ -3,14 +3,16 @@ import { Keywords } from './keywords.types';
 
 export enum RoleName {
   AppAdmin = 'App-admin',
-  Curator = 'Curator',
+  DoiCurator = 'Doi-Curator',
+  SupportCurator = 'Support-Curator',
+  PublishingCurator = 'Publishing-Curator',
   CuratorThesis = 'Curator-thesis',
   CuratorThesisEmbargo = 'Curator-thesis-embargo',
   Creator = 'Creator',
   Editor = 'Editor',
   InstitutionAdmin = 'Institution-admin',
   InternalImporter = 'Internal-importer',
-  NviCurator = 'Nvi-curator',
+  NviCurator = 'Nvi-Curator',
 }
 
 export interface User {
@@ -24,7 +26,9 @@ export interface User {
   feideId: string;
   isAppAdmin: boolean;
   isInternalImporter: boolean;
-  isCurator: boolean;
+  isDoiCurator: boolean;
+  isPublishingCurator: boolean;
+  isSupportCurator: boolean;
   isThesisCurator: boolean;
   isEmbargoThesisCurator: boolean;
   isInstitutionAdmin: boolean;
@@ -48,6 +52,7 @@ export interface InstitutionUser {
   institution: string;
   roles: UserRole[];
   username: string;
+  cristinId?: string;
   viewingScope?: {
     type: 'ViewingScope';
     includedUnits: string[];
@@ -99,7 +104,9 @@ interface CristinPersonName extends CristinArrayValue {
 }
 
 interface CristinPersonContactDetails {
-  telephone: string;
+  telephone?: string | null;
+  email?: string | null;
+  webPage?: string | null;
 }
 
 export interface CreateCristinPerson {
@@ -145,6 +152,7 @@ export interface FlatCristinPerson {
   };
   keywords?: Keywords[];
   nvi?: NviVerification;
+  contactDetails?: CristinPersonContactDetails;
 }
 
 interface Position {

@@ -11,7 +11,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getTitleString, userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { getTitleString, userCanDeleteRegistration, userIsRegistrationCurator } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
@@ -39,8 +39,9 @@ export const ActionPanelContent = ({
   const userIsCurator = userIsRegistrationCurator(user, registration);
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
-  const publishingRequestTickets = tickets.filter((ticket) => ticket.type === 'PublishingRequest');
-  const currentPublishingRequestTicket = (publishingRequestTickets.pop() as PublishingTicket | undefined) ?? null;
+  const publishingRequestTickets = tickets.filter(
+    (ticket) => ticket.type === 'PublishingRequest'
+  ) as PublishingTicket[];
   const supportTickets = tickets.filter((ticket) => ticket.type === 'GeneralSupportCase');
   const currentSupportTicket = supportTickets.pop() ?? null;
 
@@ -59,6 +60,7 @@ export const ActionPanelContent = ({
 
   const isInRegistrationWizard =
     window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
+  const canDeleteRegistration = userCanDeleteRegistration(registration) && isInRegistrationWizard;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -92,14 +94,13 @@ export const ActionPanelContent = ({
     <>
       {!isInRegistrationWizard && (
         <>
-          {(canCreateTickets || currentPublishingRequestTicket) && (
+          {(canCreateTickets || publishingRequestTickets.length > 0) && (
             <ErrorBoundary>
               <PublishingAccordion
                 refetchData={refetchData}
                 isLoadingData={isLoadingData}
                 registration={registration}
-                publishingRequestTicket={currentPublishingRequestTicket}
-                userIsCurator={userIsCurator}
+                publishingRequestTickets={publishingRequestTickets}
                 addMessage={addMessage}
               />
             </ErrorBoundary>
@@ -133,26 +134,27 @@ export const ActionPanelContent = ({
           />
         </ErrorBoundary>
       )}
-      {(registration.status === 'DRAFT' || registration.status === 'NEW') && (
+
+      {canDeleteRegistration && (
         <Box sx={{ m: '0.5rem', mt: '1rem' }}>
           <Button sx={{ bgcolor: 'white' }} fullWidth variant="outlined" onClick={() => setShowDeleteModal(true)}>
             {t('common.delete')}
           </Button>
+
+          <ConfirmDialog
+            open={!!showDeleteModal}
+            title={t('my_page.registrations.delete_registration')}
+            onAccept={draftRegistrationMutation.mutate}
+            onCancel={() => setShowDeleteModal(false)}
+            isLoading={draftRegistrationMutation.isLoading}>
+            <Typography>
+              {t('my_page.registrations.delete_registration_message', {
+                title: getTitleString(registration?.entityDescription?.mainTitle),
+              })}
+            </Typography>
+          </ConfirmDialog>
         </Box>
       )}
-
-      <ConfirmDialog
-        open={!!showDeleteModal}
-        title={t('my_page.registrations.delete_registration')}
-        onAccept={draftRegistrationMutation.mutate}
-        onCancel={() => setShowDeleteModal(false)}
-        isLoading={draftRegistrationMutation.isLoading}>
-        <Typography>
-          {t('my_page.registrations.delete_registration_message', {
-            title: getTitleString(registration?.entityDescription?.mainTitle),
-          })}
-        </Typography>
-      </ConfirmDialog>
     </>
   );
 };

@@ -9,6 +9,7 @@ import {
   CristinPersonNameType,
   Employment,
   FlatCristinPerson,
+  User,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 
@@ -80,3 +81,12 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
 });
 
 export const getFullName = (firstName?: string, lastName?: string) => [firstName, lastName].filter(Boolean).join(' ');
+
+export const hasCuratorRole = (user: User | null) =>
+  !!user &&
+  !!user.customerId &&
+  (user.isDoiCurator ||
+    user.isPublishingCurator ||
+    user.isSupportCurator ||
+    user.isThesisCurator ||
+    user.isEmbargoThesisCurator);

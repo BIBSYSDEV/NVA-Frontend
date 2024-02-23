@@ -6,10 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
 import { ResearchDataType, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
-import {
-  ConfirmedDocument,
-  ResearchDataRegistration,
-} from '../../../../../types/publication_types/researchDataRegistration.types';
+import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
+import { ConfirmedDocument } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
 import { findRelatedDocumentIndex, getTitleString } from '../../../../../utils/registration-helpers';
@@ -37,7 +35,7 @@ export const DatasetForm = () => {
   };
   const relatedRegistrationsOptionsQuery = useQuery({
     queryKey: ['registrations', relatedRegistrationsOptionsQueryConfig],
-    queryFn: () => fetchResults(relatedRegistrationsOptionsQueryConfig),
+    queryFn: ({ signal }) => fetchResults(relatedRegistrationsOptionsQueryConfig, signal),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
@@ -51,7 +49,7 @@ export const DatasetForm = () => {
   };
   const relatedDmpOptionsQuery = useQuery({
     queryKey: ['registrations', relatedDmpOptionsQueryConfig],
-    queryFn: () => fetchResults(relatedDmpOptionsQueryConfig),
+    queryFn: ({ signal }) => fetchResults(relatedDmpOptionsQueryConfig, signal),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

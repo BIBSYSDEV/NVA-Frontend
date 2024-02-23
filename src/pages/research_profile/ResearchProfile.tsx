@@ -1,4 +1,14 @@
-import { Box, Chip, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
+import {
+  Box,
+  Chip,
+  CircularProgress,
+  Divider,
+  Grid,
+  IconButton,
+  Link as MuiLink,
+  List,
+  Typography,
+} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -7,11 +17,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { FetchResultsParams, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
-import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
@@ -22,6 +32,8 @@ import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
+import { UserOrcid } from '../my_page/user_profile/UserOrcid';
+import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperModal';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 
@@ -34,7 +46,9 @@ const ResearchProfile = () => {
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
+  const user = useSelector((store: RootState) => store.user);
+
+  const currentCristinId = user?.cristinId ?? '';
   const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
   const personId = isPublicPage
     ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
@@ -172,6 +186,32 @@ const ResearchProfile = () => {
             </Typography>
           </Box>
         )}
+
+        {!orcidUri && history.location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
+          <Grid
+            sx={{
+              backgroundColor: 'secondary.dark',
+              my: '1rem',
+              borderRadius: '4px',
+              alignItems: 'center',
+              paddingBottom: '4px',
+            }}
+            container
+            spacing={1}>
+            {user && (
+              <Grid item>
+                <UserOrcid user={user} />
+              </Grid>
+            )}
+
+            <Grid item>
+              <UserOrcidHelperModal />
+            </Grid>
+            <Grid item>
+              <Typography>{t('my_page.my_profile.orcid.orcid_description')}</Typography>
+            </Grid>
+          </Grid>
+        )}
         {(!!personBackground || personKeywords.length > 0) && (
           <Box sx={{ width: '80%', mt: '1rem' }}>
             <Typography variant="h3" gutterBottom>
@@ -193,22 +233,20 @@ const ResearchProfile = () => {
         {registrationsQuery.isLoading || promotedPublicationsQuery.isLoading ? (
           <CircularProgress aria-labelledby="registration-label" />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
-          <>
+          <ListPagination
+            count={registrationsQuery.data.totalHits}
+            rowsPerPage={registrationRowsPerPage}
+            page={registrationsPage}
+            onPageChange={(newPage) => setRegistrationsPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRegistrationRowsPerPage(newRowsPerPage);
+              setRegistrationsPage(1);
+            }}>
             <RegistrationSearchResults
               searchResult={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
             />
-            <ListPagination
-              count={registrationsQuery.data.totalHits}
-              rowsPerPage={registrationRowsPerPage}
-              page={registrationsPage}
-              onPageChange={(newPage) => setRegistrationsPage(newPage)}
-              onRowsPerPageChange={(newRowsPerPage) => {
-                setRegistrationRowsPerPage(newRowsPerPage);
-                setRegistrationsPage(1);
-              }}
-            />
-          </>
+          </ListPagination>
         ) : (
           <Typography>{t('common.no_hits')}</Typography>
         )}
@@ -221,23 +259,21 @@ const ResearchProfile = () => {
         {projectsQuery.isLoading ? (
           <CircularProgress aria-labelledby="project-label" />
         ) : projects.length > 0 ? (
-          <>
+          <ListPagination
+            count={projectsQuery.data?.size ?? 0}
+            rowsPerPage={projectRowsPerPage}
+            page={projectsPage}
+            onPageChange={(newPage) => setProjectsPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setProjectRowsPerPage(newRowsPerPage);
+              setProjectsPage(1);
+            }}>
             <List>
               {projects.map((project) => (
                 <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
               ))}
             </List>
-            <ListPagination
-              count={projectsQuery.data?.size ?? 0}
-              rowsPerPage={projectRowsPerPage}
-              page={projectsPage}
-              onPageChange={(newPage) => setProjectsPage(newPage)}
-              onRowsPerPageChange={(newRowsPerPage) => {
-                setProjectRowsPerPage(newRowsPerPage);
-                setProjectsPage(1);
-              }}
-            />
-          </>
+          </ListPagination>
         ) : (
           <Typography>{t('common.no_hits')}</Typography>
         )}

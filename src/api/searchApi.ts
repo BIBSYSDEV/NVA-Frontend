@@ -7,14 +7,50 @@ import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
-export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
-  const paginationQuery = `results=${results}&from=${from}`;
-  const roleQuery = onlyCreator ? 'role=creator' : '';
-  const searchQuery = query ? `query=${query}` : '';
-  const fullQuery = [paginationQuery, roleQuery, searchQuery].filter(Boolean).join('&');
+export enum TicketSearchParam {
+  Query = 'query',
+  Role = 'role',
+  Results = 'results',
+  From = 'from',
+  OrderBy = 'orderBy',
+  SortOrder = 'sortOrder',
+  ViewingScope = 'viewingScope',
+  ExcludeSubUnits = 'excludeSubUnits',
+}
+
+export interface FetchTicketsParams {
+  [TicketSearchParam.Query]?: string | null;
+  [TicketSearchParam.Role]?: 'creator';
+  [TicketSearchParam.Results]?: number | null;
+  [TicketSearchParam.From]?: number | null;
+  [TicketSearchParam.OrderBy]?: 'createdDate' | null;
+  [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
+  [TicketSearchParam.ViewingScope]?: string | null;
+  [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
+}
+
+export const fetchTickets = async (params: FetchTicketsParams) => {
+  const searchParams = new URLSearchParams();
+  if (params.query) {
+    searchParams.set(TicketSearchParam.Query, params.query);
+  }
+  if (params.role) {
+    searchParams.set(TicketSearchParam.Role, params.role);
+  }
+  if (params.viewingScope) {
+    searchParams.set(TicketSearchParam.ViewingScope, params.viewingScope);
+  }
+  if (params.excludeSubUnits) {
+    searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
+  }
+
+  searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
+  searchParams.set(TicketSearchParam.Results, (params.results ?? 10).toString());
+  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'createdDate');
+  searchParams.set(TicketSearchParam.SortOrder, params.sortOrder || 'desc');
 
   const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
-    url: `${SearchApiPath.Tickets}?${fullQuery}`,
+    url: `${SearchApiPath.Tickets}?${searchParams.toString()}`,
   });
 
   return getTickets.data;
@@ -67,8 +103,9 @@ export const fetchEmployees = async (
   if (!organizationId) {
     return;
   }
+  const sortQueryParam = 'sort=name';
   const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
-  const url = `${organizationId}/persons?page=${page}&results=${results}${nameQueryParam}`;
+  const url = `${organizationId}/persons?page=${page}&${sortQueryParam}&results=${results}${nameQueryParam}`;
 
   const getEmployees = await authenticatedApiRequest2<SearchResponse<CristinPerson>>({ url, signal });
 
@@ -99,54 +136,90 @@ export const fetchNviCandidate = async (identifier: string) => {
 };
 
 export enum ResultParam {
+  Abstract = 'abstract',
+  Aggregation = 'aggregation',
   Category = 'category',
   CategoryNot = 'categoryNot',
   CategoryShould = 'categoryShould',
   Contributor = 'contributor',
   ContributorName = 'contributorName',
-  From = 'from',
-  Sort = 'sort',
-  FundingSource = 'fundingSource',
+  Course = 'course',
+  CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  From = 'from',
+  FundingIdentifier = 'fundingIdentifier',
+  FundingSource = 'fundingSource',
+  Handle = 'handle',
   Identifier = 'id',
   IdentifierNot = 'idNot',
+  Isbn = 'isbn',
   Issn = 'issn',
+  Journal = 'journal',
   Order = 'order',
   Project = 'project',
-  PublicationYear = 'publicationYear',
-  Results = 'results',
+  PublicationLanguageShould = 'publicationLanguageShould',
+  PublicationYearBefore = 'publicationYearBefore',
+  PublicationYearSince = 'publicationYearSince',
+  PublicationYearShould = 'publicationYearShould',
+  Publisher = 'publisher',
   Query = 'query',
+  Results = 'results',
+  Series = 'series',
+  Sort = 'sort',
+  Tags = 'tags',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
   Unit = 'unit',
 }
 
 export interface FetchResultsParams {
+  [ResultParam.Abstract]?: string | null;
+  [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | null;
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
-  [ResultParam.From]?: number | null;
-  [ResultParam.Sort]?: SortOrder | null;
-  [ResultParam.FundingSource]?: string | null;
+  [ResultParam.Course]?: string | null;
+  [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.From]?: number | null;
+  [ResultParam.FundingIdentifier]?: string | null;
+  [ResultParam.FundingSource]?: string | null;
+  [ResultParam.Handle]?: string | null;
   [ResultParam.Identifier]?: string | null;
   [ResultParam.IdentifierNot]?: string | null;
+  [ResultParam.Isbn]?: string | null;
   [ResultParam.Issn]?: string | null;
+  [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
-  [ResultParam.PublicationYear]?: string | null;
-  [ResultParam.Results]?: number | null;
+  [ResultParam.PublicationLanguageShould]?: string | null;
+  [ResultParam.PublicationYearBefore]?: string | null;
+  [ResultParam.PublicationYearSince]?: string | null;
+  [ResultParam.PublicationYearShould]?: string | null;
+  [ResultParam.Publisher]?: string | null;
   [ResultParam.Query]?: string | null;
+  [ResultParam.Results]?: number | null;
+  [ResultParam.Series]?: string | null;
+  [ResultParam.Sort]?: SortOrder | null;
+  [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
   [ResultParam.Unit]?: string | null;
 }
 
-export const fetchResults = async (params: FetchResultsParams) => {
+export const fetchResults = async (params: FetchResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
 
+  if (params.abstract) {
+    searchParams.set(ResultParam.Abstract, encodeURIComponent(params.abstract));
+  }
+  if (params.aggregation) {
+    searchParams.set(ResultParam.Aggregation, params.aggregation);
+  } else {
+    searchParams.set(ResultParam.Aggregation, 'none');
+  }
   if (params.category) {
     searchParams.set(ResultParam.Category, params.category);
   }
@@ -162,11 +235,23 @@ export const fetchResults = async (params: FetchResultsParams) => {
   if (params.contributorName) {
     searchParams.set(ResultParam.ContributorName, params.contributorName);
   }
-  if (params.fundingSource) {
-    searchParams.set(ResultParam.FundingSource, params.fundingSource);
+  if (params.course) {
+    searchParams.set(ResultParam.Course, params.course);
+  }
+  if (params.cristinIdentifier) {
+    searchParams.set(ResultParam.CristinIdentifier, params.cristinIdentifier);
   }
   if (params.doi) {
     searchParams.set(ResultParam.Doi, params.doi);
+  }
+  if (params.fundingIdentifier) {
+    searchParams.set(ResultParam.FundingIdentifier, params.fundingIdentifier);
+  }
+  if (params.fundingSource) {
+    searchParams.set(ResultParam.FundingSource, params.fundingSource);
+  }
+  if (params.handle) {
+    searchParams.set(ResultParam.Handle, params.handle);
   }
   if (params.id) {
     searchParams.set(ResultParam.Identifier, params.id);
@@ -174,17 +259,47 @@ export const fetchResults = async (params: FetchResultsParams) => {
   if (params.idNot) {
     searchParams.set(ResultParam.IdentifierNot, params.idNot);
   }
+  if (params.isbn) {
+    searchParams.set(ResultParam.Isbn, params.isbn.replace(/-/g, ''));
+  }
   if (params.issn) {
     searchParams.set(ResultParam.Issn, params.issn);
+  }
+  if (params.journal) {
+    searchParams.set(ResultParam.Journal, params.journal);
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
   }
-  if (params.publicationYear) {
-    searchParams.set(ResultParam.PublicationYear, params.publicationYear);
+  if (params.publicationLanguageShould) {
+    searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
+  }
+  if (params.publicationYearBefore) {
+    const beforeYearNumber = +params.publicationYearBefore;
+    if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
+      // Add one year, to include the "before" year as well
+      searchParams.set(ResultParam.PublicationYearBefore, (beforeYearNumber + 1).toString());
+    }
+  }
+  if (params.publicationYearSince) {
+    if (!params.publicationYearBefore || +params.publicationYearSince <= +params.publicationYearBefore) {
+      searchParams.set(ResultParam.PublicationYearSince, params.publicationYearSince);
+    }
+  }
+  if (params.publicationYearShould) {
+    searchParams.set(ResultParam.PublicationYearShould, params.publicationYearShould);
+  }
+  if (params.publisher) {
+    searchParams.set(ResultParam.Publisher, params.publisher);
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
+  }
+  if (params.series) {
+    searchParams.set(ResultParam.Series, params.series);
+  }
+  if (params.tags) {
+    searchParams.set(ResultParam.Tags, encodeURIComponent(params.tags));
   }
   if (params.title) {
     searchParams.set(ResultParam.Title, params.title);
@@ -203,6 +318,7 @@ export const fetchResults = async (params: FetchResultsParams) => {
 
   const getResults = await apiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
+    signal,
   });
 
   return getResults.data;
