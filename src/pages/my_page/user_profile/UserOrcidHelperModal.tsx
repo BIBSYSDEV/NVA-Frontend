@@ -39,6 +39,7 @@ export const UserOrcidHelperModal = () => {
                     gap: '0.5rem',
                     textDecoration: 'none',
                     fontStyle: 'italic',
+                    width: 'fit-content'
                   }}
                   rel="noopener noreferrer"
                   href="https://orcid.org">
