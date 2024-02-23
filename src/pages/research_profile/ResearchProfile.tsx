@@ -176,7 +176,7 @@ const ResearchProfile = () => {
         ) : (
           <Typography sx={{ mt: '1.5rem' }}>{t('my_page.no_employments')}</Typography>
         )}
-        {orcidUri ? (
+        {orcidUri && (
           <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem', alignItems: 'center' }}>
             <IconButton size="small" href={orcidUri} target="_blank">
               <img src={orcidIcon} height="20" alt="orcid" />
@@ -185,7 +185,9 @@ const ResearchProfile = () => {
               {orcidUri}
             </Typography>
           </Box>
-        ) : (
+        )}
+
+        {!orcidUri && history.location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
           <Grid
             sx={{
               backgroundColor: 'secondary.dark',
@@ -196,9 +198,12 @@ const ResearchProfile = () => {
             }}
             container
             spacing={1}>
-            <Grid item>
-              <UserOrcid user={user} />
-            </Grid>
+            {user && (
+              <Grid item>
+                <UserOrcid user={user} />
+              </Grid>
+            )}
+
             <Grid item>
               <UserOrcidHelperModal />
             </Grid>
