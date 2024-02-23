@@ -16,7 +16,7 @@ interface DeletedRegistrationInformationProps {
 }
 
 function extractId(createdBy: string) {
-  return CristinApiPath.Person + createdBy.split('@')[0];
+  return CristinApiPath.Person + '/' + createdBy.split('@')[0];
 }
 
 export const DeletedRegistrationInformation = ({
@@ -52,7 +52,7 @@ export const DeletedRegistrationInformation = ({
         bgcolor: 'publishingRequest.main',
       }}>
       <Typography>{t(`registration.status.${registration.status}`)}</Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'row', minWidth: '6rem', gap: '0.5rem', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', minWidth: '6rem', gap: '0.5rem', alignItems: 'center' }}>
         {personQuery.isFetching ? (
           <Skeleton variant="circular" />
         ) : (
