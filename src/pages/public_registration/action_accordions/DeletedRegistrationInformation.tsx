@@ -1,22 +1,17 @@
 import { Box, Link, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { CristinApiPath } from '../../../api/apiPaths';
-import { fetchPerson } from '../../../api/cristinApi';
 import { fetchRegistration } from '../../../api/registrationApi';
+import { fetchUser } from '../../../api/roleApi';
 import { ProfilePicture } from '../../../components/ProfilePicture';
 import { PublicationNote, Registration } from '../../../types/registration.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { getFullCristinName } from '../../../utils/user-helpers';
+import { getFullName } from '../../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 
 interface DeletedRegistrationInformationProps {
   registration: Registration;
   unpublishingNote: PublicationNote;
-}
-
-function extractId(createdBy: string) {
-  return CristinApiPath.Person + '/' + createdBy.split('@')[0];
 }
 
 export const DeletedRegistrationInformation = ({
@@ -34,15 +29,15 @@ export const DeletedRegistrationInformation = ({
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const cristinIdentifier = unpublishingNote.createdBy ? extractId(unpublishingNote.createdBy) : null;
-  const personQuery = useQuery({
-    queryKey: [cristinIdentifier],
-    queryFn: () => fetchPerson(cristinIdentifier ?? ''),
-    enabled: !!cristinIdentifier,
-    meta: { errorMessage: t('feedback.error.get_registration') },
+  const senderQuery = useQuery({
+    enabled: !!unpublishingNote.createdBy,
+    queryKey: [unpublishingNote.createdBy],
+    queryFn: () => fetchUser(unpublishingNote.createdBy ?? ''),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 
-  const person = personQuery.data;
+  const person = senderQuery.data;
+  const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   const duplicateRegistrationTitle = duplicateRegistrationQuery.data?.entityDescription?.mainTitle;
 
@@ -56,14 +51,14 @@ export const DeletedRegistrationInformation = ({
         {unpublishingNote.createdDate && (
           <Typography>{new Date(unpublishingNote.createdDate).toLocaleDateString()}</Typography>
         )}
-        {personQuery.isFetching ? (
+        {senderQuery.isFetching ? (
           <Skeleton variant="circular" sx={{ width: '1.5rem', height: '1.5rem' }} />
         ) : (
           person && (
             <ProfilePicture
               sx={{ width: '1.5rem', height: '1.5rem' }}
-              fullName={getFullCristinName(person.names)}
-              personId={person.id}
+              fullName={senderName}
+              personId={person.cristinId ?? ''}
             />
           )
         )}
