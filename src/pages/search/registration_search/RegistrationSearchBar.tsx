@@ -1,21 +1,20 @@
+import AddIcon from '@mui/icons-material/Add';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
-import SearchIcon from '@mui/icons-material/Search';
-import { Box, Button, Skeleton } from '@mui/material';
+import { Box, Button, IconButton, Skeleton } from '@mui/material';
 import { ClearIcon } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik } from 'formik';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
-import { SortSelector } from '../../../components/SortSelector';
-import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
-  PropertySearch,
   createSearchConfigFromSearchParams,
+  isValidIsbn,
+  PropertySearch,
   removeSearchParamValue,
 } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -24,17 +23,33 @@ import { ExportResultsButton } from '../ExportResultsButton';
 import { SearchPageProps } from '../SearchPage';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
-import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
+import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 
 const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
-  ResultParam.TopLevelOrganization,
+  ResultParam.Course,
+  ResultParam.CristinIdentifier,
+  ResultParam.Doi,
   ResultParam.FundingSource,
+  ResultParam.Handle,
+  ResultParam.Identifier,
+  ResultParam.Isbn,
+  ResultParam.Issn,
+  ResultParam.TopLevelOrganization,
 ];
 
 interface SelectedFacet {
   param: string;
+  value: string;
+}
+interface SearchTermProperties {
+  searchTerm: string;
+  properties: SearchTermProperty[];
+}
+
+interface SearchTermProperty {
+  fieldName: ResultParam | '';
   value: string;
 }
 
@@ -53,7 +68,19 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
     }
   });
 
-  const initialSearchParams = createSearchConfigFromSearchParams(searchParams);
+  const initialSearchParams: SearchTermProperties = createSearchConfigFromSearchParams(searchParams);
+
+  function processSearchParamProperties(values: SearchTermProperties, searchParam: ResultParam) {
+    const paramValues =
+      values.properties
+        ?.filter((property) => property.fieldName === searchParam && property.value)
+        .map((property) => property.value) ?? [];
+    if (paramValues.length > 0) {
+      searchParams.set(searchParam, paramValues.join(','));
+    } else {
+      searchParams.delete(searchParam);
+    }
+  }
 
   return (
     <Formik
@@ -61,54 +88,34 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
       initialValues={initialSearchParams}
       validateOnChange={false}
       validateOnBlur={false}
-      onSubmit={(values) => {
+      onSubmit={(values: SearchTermProperties) => {
         searchParams.set(ResultParam.From, '0');
 
         if (values.searchTerm) {
-          searchParams.set(ResultParam.Query, values.searchTerm);
+          if (isValidIsbn(values.searchTerm)) {
+            searchParams.delete(ResultParam.Query);
+            values.properties.push({ fieldName: ResultParam.Isbn, value: values.searchTerm });
+            values.searchTerm = '';
+          } else {
+            searchParams.set(ResultParam.Query, values.searchTerm);
+          }
         } else {
           searchParams.delete(ResultParam.Query);
         }
 
-        const contributorNames =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.ContributorName && property.value)
-            .map((property) => property.value) ?? [];
-        if (contributorNames.length > 0) {
-          searchParams.set(ResultParam.ContributorName, contributorNames.join(','));
-        } else {
-          searchParams.delete(ResultParam.ContributorName);
-        }
-
-        const title =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Title && property.value)
-            .map((property) => property.value) ?? [];
-        if (title.length > 0) {
-          searchParams.set(ResultParam.Title, title.join(','));
-        } else {
-          searchParams.delete(ResultParam.Title);
-        }
-
-        const abstracts =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Abstract && property.value)
-            .map((property) => property.value) ?? [];
-        if (abstracts.length > 0) {
-          searchParams.set(ResultParam.Abstract, abstracts.join(','));
-        } else {
-          searchParams.delete(ResultParam.Abstract);
-        }
-
-        const tags =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Tags && property.value)
-            .map((property) => property.value) ?? [];
-        if (tags.length > 0) {
-          searchParams.set(ResultParam.Tags, tags.join(','));
-        } else {
-          searchParams.delete(ResultParam.Tags);
-        }
+        processSearchParamProperties(values, ResultParam.ContributorName);
+        processSearchParamProperties(values, ResultParam.Title);
+        processSearchParamProperties(values, ResultParam.Abstract);
+        processSearchParamProperties(values, ResultParam.Tags);
+        processSearchParamProperties(values, ResultParam.Identifier);
+        processSearchParamProperties(values, ResultParam.Isbn);
+        processSearchParamProperties(values, ResultParam.Issn);
+        processSearchParamProperties(values, ResultParam.Doi);
+        processSearchParamProperties(values, ResultParam.Handle);
+        processSearchParamProperties(values, ResultParam.FundingIdentifier);
+        processSearchParamProperties(values, ResultParam.FundingSource);
+        processSearchParamProperties(values, ResultParam.Course);
+        processSearchParamProperties(values, ResultParam.CristinIdentifier);
 
         history.push({ search: searchParams.toString() });
       }}>
@@ -117,98 +124,80 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           component={Form}
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
+            gridTemplateColumns: { xs: '1fr', md: 'auto 1fr auto' },
             gridTemplateAreas: {
-              xs: "'typeSearch' 'searchbar' 'advanced' 'facets'",
-              md: "'typeSearch searchbar' 'advanced advanced' 'facets facets'",
+              xs: "'typeSearch' 'searchbar' 'buttonRowTop' 'filter' 'buttonRowBottom' 'facets'",
+              md: "'typeSearch searchbar buttonRowTop' 'filter filter buttonRowBottom' 'facets facets facets'",
             },
             gap: '0.75rem 0.5rem',
             mx: { xs: '0.5rem', md: 0 },
           }}>
           <SearchTypeField sx={{ gridArea: 'typeSearch' }} />
+          <Field name="searchTerm" gridArea="searchbar">
+            {({ field }: FieldProps<string>) => (
+              <SearchTextField
+                {...field}
+                placeholder={t('search.search_placeholder')}
+                clearValue={() => {
+                  field.onChange({ target: { value: '', id: field.name } });
+                  submitForm();
+                }}
+              />
+            )}
+          </Field>
 
-          <Box sx={{ gridArea: 'searchbar', display: 'flex', gap: '0.75rem 0.5rem', flexWrap: 'wrap' }}>
-            <Field name="searchTerm">
-              {({ field }: FieldProps<string>) => (
-                <SearchTextField
-                  {...field}
-                  sx={{ flex: '1 0 15rem' }}
-                  placeholder={t('search.search_placeholder')}
-                  clearValue={() => {
-                    field.onChange({ target: { value: '', id: field.name } });
-                    submitForm();
-                  }}
-                />
-              )}
-            </Field>
-
-            <SortSelector
-              sortKey="sort"
-              orderKey="order"
-              options={[
-                {
-                  orderBy: RegistrationFieldName.ModifiedDate,
-                  sortOrder: 'desc',
-                  label: t('search.sort_by_modified_date'),
-                },
-                {
-                  orderBy: RegistrationFieldName.PublishedDate,
-                  sortOrder: 'desc',
-                  label: t('search.sort_by_published_date_desc'),
-                },
-                {
-                  orderBy: RegistrationFieldName.PublishedDate,
-                  sortOrder: 'asc',
-                  label: t('search.sort_by_published_date_asc'),
-                },
-              ]}
-            />
-
+          <Box gridArea="buttonRowTop">
+            <FilterButton />
             <ExportResultsButton searchParams={searchParams} />
           </Box>
 
           <FieldArray name="properties">
             {({ push, remove }: FieldArrayRenderProps) => (
-              <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {values.properties.map((property, index) => (
-                  <AdvancedSearchRow
-                    key={index}
-                    removeFilter={() => {
-                      remove(index);
-                      const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
-                      const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
-                      newParams.set(ResultParam.From, '0');
-                      history.push({ search: newParams.toString() });
-                    }}
-                    baseFieldName={`properties[${index}]`}
-                  />
-                ))}
-
-                <Box sx={{ display: 'flex', gap: '1rem' }}>
-                  <Button
-                    data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
-                    variant="outlined"
-                    onClick={() => {
-                      const newPropertyFilter: PropertySearch = {
-                        fieldName: '',
-                        value: '',
-                      };
-                      push(newPropertyFilter);
-                    }}
-                    startIcon={<FilterAltIcon />}>
-                    {t('search.add_filter')}
-                  </Button>
+              <>
+                <Box gridArea="filter" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {values.properties.map((property, index) => (
+                    <AdvancedSearchRow
+                      key={index}
+                      removeFilter={() => {
+                        remove(index);
+                        const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
+                        const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
+                        newParams.set(ResultParam.From, '0');
+                        history.push({ search: newParams.toString() });
+                      }}
+                      baseFieldName={`properties[${index}]`}
+                    />
+                  ))}
+                </Box>
+                <Box gridArea="buttonRowBottom" sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
                   {values.properties && values.properties.length > 0 && (
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      startIcon={<SearchIcon />}
-                      data-testid={dataTestId.startPage.advancedSearch.searchButton}>
-                      {t('common.search')}
-                    </Button>
+                    <>
+                      <IconButton
+                        sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
+                        size="small"
+                        color="primary"
+                        title={t('common.add')}
+                        data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
+                        onClick={() => {
+                          const newPropertyFilter: PropertySearch = {
+                            fieldName: '',
+                            value: '',
+                          };
+                          push(newPropertyFilter);
+                        }}>
+                        <AddIcon />
+                      </IconButton>
+
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        data-testid={dataTestId.startPage.advancedSearch.searchButton}>
+                        {t('common.search')}
+                      </Button>
+                    </>
                   )}
                 </Box>
-              </Box>
+              </>
             )}
           </FieldArray>
 
@@ -254,7 +243,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     break;
                   }
                   case ResultParam.FundingSource: {
-                    fieldName = t('common.funding');
+                    fieldName = t('common.financier');
                     const fundingLabels = registrationQuery.data?.aggregations?.fundingSource?.find(
                       (bucket) => bucket.key === value
                     )?.labels;
@@ -358,4 +347,28 @@ const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetB
   const fundingName = getLanguageString(fundingSourcesQuery.data?.name) || t('common.unknown');
 
   return <>{fundingSourcesQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
+};
+
+const FilterButton = () => {
+  const { t } = useTranslation();
+  const { values, setFieldValue, submitForm } = useFormikContext<SearchTermProperties>();
+
+  return (
+    <Button
+      sx={{ mr: '0.5rem' }}
+      data-testid={dataTestId.startPage.advancedSearch.activateFilterButton}
+      startIcon={<FilterAltIcon />}
+      onClick={() => {
+        const newProp: SearchTermProperty = { fieldName: '', value: '' };
+        if (values.properties.length === 0) {
+          setFieldValue('properties', [newProp]);
+        } else {
+          setFieldValue('properties', []);
+          submitForm();
+        }
+      }}
+      variant={values.properties.length ? 'contained' : 'outlined'}>
+      {t('common.filter')}
+    </Button>
+  );
 };

@@ -22,7 +22,7 @@ import { ListPagination } from '../../../components/ListPagination';
 import { setNotification } from '../../../redux/notificationSlice';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
-import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 
 interface UserListProps {
   userList: InstitutionUser[];
@@ -100,59 +100,6 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
         </Typography>
       ) : (
         <>
-          <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
-            <Table size="small" sx={alternatingTableRowColor}>
-              <caption style={visuallyHidden}>{tableCaption}</caption>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{t('common.username')}</TableCell>
-                  <TableCell>{t('common.name')}</TableCell>
-                  <TableCell width="150">{t('common.actions')}</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {adminsOnPage.map((user) => {
-                  const isLoading = updatedRoleForUsers.includes(user.username);
-                  const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
-                  return (
-                    <TableRow key={user.username}>
-                      <TableCell>{user.username}</TableCell>
-                      <TableCell>
-                        {user.givenName} {user.familyName}
-                      </TableCell>
-                      <TableCell>
-                        {roleToRemove && (
-                          <Button
-                            color="error"
-                            variant="outlined"
-                            startIcon={<CancelIcon />}
-                            disabled={isLastInstitutionAdmin}
-                            data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
-                            onClick={() => setRemoveRoleForUser(user.username)}>
-                            {t('common.remove')}
-                          </Button>
-                        )}
-                        {roleToAdd && (
-                          <LoadingButton
-                            variant="contained"
-                            size="small"
-                            startIcon={<AddIcon />}
-                            loadingPosition="start"
-                            disabled={disableAddButton}
-                            loading={!disableAddButton && isLoading}
-                            data-testid={`button-add-role-${roleToAdd}-${user.username}`}
-                            onClick={() => handleAddRoleToUser(user)}>
-                            {t('common.add')}
-                          </LoadingButton>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
           <ListPagination
             count={sortedList.length}
             rowsPerPage={rowsPerPage}
@@ -161,8 +108,60 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
             onRowsPerPageChange={(newRowsPerPage) => {
               setRowsPerPage(newRowsPerPage);
               setPage(1);
-            }}
-          />
+            }}>
+            <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
+              <Table size="small" sx={alternatingTableRowColor}>
+                <caption style={visuallyHidden}>{tableCaption}</caption>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{t('common.username')}</TableCell>
+                    <TableCell>{t('common.name')}</TableCell>
+                    <TableCell width="150">{t('common.actions')}</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {adminsOnPage.map((user) => {
+                    const isLoading = updatedRoleForUsers.includes(user.username);
+                    const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
+                    return (
+                      <TableRow key={user.username}>
+                        <TableCell>{user.username}</TableCell>
+                        <TableCell>
+                          {user.givenName} {user.familyName}
+                        </TableCell>
+                        <TableCell>
+                          {roleToRemove && (
+                            <Button
+                              color="error"
+                              variant="outlined"
+                              startIcon={<CancelIcon />}
+                              disabled={isLastInstitutionAdmin}
+                              data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
+                              onClick={() => setRemoveRoleForUser(user.username)}>
+                              {t('common.remove')}
+                            </Button>
+                          )}
+                          {roleToAdd && (
+                            <LoadingButton
+                              variant="contained"
+                              size="small"
+                              startIcon={<AddIcon />}
+                              loadingPosition="start"
+                              disabled={disableAddButton}
+                              loading={!disableAddButton && isLoading}
+                              data-testid={`button-add-role-${roleToAdd}-${user.username}`}
+                              onClick={() => handleAddRoleToUser(user)}>
+                              {t('common.add')}
+                            </LoadingButton>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </ListPagination>
 
           {roleToRemove && (
             <ConfirmDialog

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
 import { authenticatedApiRequest } from '../api/apiRequest';
-import { getCurrentUserAttributes } from '../api/authApi';
+import { getUserAttributes } from '../api/authApi';
 import { setNotification } from '../redux/notificationSlice';
 import { setUser } from '../redux/userSlice';
 import { CustomerInstitution } from '../types/customerInstitution.types';
@@ -57,8 +57,10 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
           data: { customerId },
         });
         if (isSuccessStatus(response.status)) {
-          const newUserInfo = await getCurrentUserAttributes();
-          dispatch(setUser(newUserInfo));
+          const newUserInfo = await getUserAttributes();
+          if (newUserInfo) {
+            dispatch(setUser(newUserInfo));
+          }
           setOpenDialog(false);
         }
       } catch {

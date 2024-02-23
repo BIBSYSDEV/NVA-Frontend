@@ -103,8 +103,9 @@ export const fetchEmployees = async (
   if (!organizationId) {
     return;
   }
+  const sortQueryParam = 'sort=name';
   const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
-  const url = `${organizationId}/persons?page=${page}&results=${results}${nameQueryParam}`;
+  const url = `${organizationId}/persons?page=${page}&${sortQueryParam}&results=${results}${nameQueryParam}`;
 
   const getEmployees = await authenticatedApiRequest2<SearchResponse<CristinPerson>>({ url, signal });
 
@@ -142,20 +143,32 @@ export enum ResultParam {
   CategoryShould = 'categoryShould',
   Contributor = 'contributor',
   ContributorName = 'contributorName',
-  From = 'from',
-  Sort = 'sort',
-  FundingSource = 'fundingSource',
+  Course = 'course',
+  CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  From = 'from',
+  FundingIdentifier = 'fundingIdentifier',
+  FundingSource = 'fundingSource',
+  Handle = 'handle',
   Identifier = 'id',
   IdentifierNot = 'idNot',
+  Isbn = 'isbn',
   Issn = 'issn',
+  Journal = 'journal',
   Order = 'order',
   Project = 'project',
+  PublicationLanguageShould = 'publicationLanguageShould',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
   PublicationYearShould = 'publicationYearShould',
+  Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
+  ScientificIndex = 'scientificIndex',
+  ScientificReportPeriodBeforeParam = 'scientificReportPeriodBefore',
+  ScientificReportPeriodSinceParam = 'scientificReportPeriodSince',
+  Series = 'series',
+  Sort = 'sort',
   Tags = 'tags',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
@@ -170,20 +183,32 @@ export interface FetchResultsParams {
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
-  [ResultParam.From]?: number | null;
-  [ResultParam.Sort]?: SortOrder | null;
-  [ResultParam.FundingSource]?: string | null;
+  [ResultParam.Course]?: string | null;
+  [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.From]?: number | null;
+  [ResultParam.FundingIdentifier]?: string | null;
+  [ResultParam.FundingSource]?: string | null;
+  [ResultParam.Handle]?: string | null;
   [ResultParam.Identifier]?: string | null;
   [ResultParam.IdentifierNot]?: string | null;
+  [ResultParam.Isbn]?: string | null;
   [ResultParam.Issn]?: string | null;
+  [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
+  [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.PublicationYearSince]?: string | null;
   [ResultParam.PublicationYearShould]?: string | null;
+  [ResultParam.Publisher]?: string | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
+  [ResultParam.Series]?: string | null;
+  [ResultParam.ScientificIndex]?: string | null;
+  [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
+  [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
+  [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
@@ -216,11 +241,23 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.contributorName) {
     searchParams.set(ResultParam.ContributorName, params.contributorName);
   }
-  if (params.fundingSource) {
-    searchParams.set(ResultParam.FundingSource, params.fundingSource);
+  if (params.course) {
+    searchParams.set(ResultParam.Course, params.course);
+  }
+  if (params.cristinIdentifier) {
+    searchParams.set(ResultParam.CristinIdentifier, params.cristinIdentifier);
   }
   if (params.doi) {
     searchParams.set(ResultParam.Doi, params.doi);
+  }
+  if (params.fundingIdentifier) {
+    searchParams.set(ResultParam.FundingIdentifier, params.fundingIdentifier);
+  }
+  if (params.fundingSource) {
+    searchParams.set(ResultParam.FundingSource, params.fundingSource);
+  }
+  if (params.handle) {
+    searchParams.set(ResultParam.Handle, params.handle);
   }
   if (params.id) {
     searchParams.set(ResultParam.Identifier, params.id);
@@ -228,11 +265,20 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.idNot) {
     searchParams.set(ResultParam.IdentifierNot, params.idNot);
   }
+  if (params.isbn) {
+    searchParams.set(ResultParam.Isbn, params.isbn.replace(/-/g, ''));
+  }
   if (params.issn) {
     searchParams.set(ResultParam.Issn, params.issn);
   }
+  if (params.journal) {
+    searchParams.set(ResultParam.Journal, params.journal);
+  }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
+  }
+  if (params.publicationLanguageShould) {
+    searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
   }
   if (params.publicationYearBefore) {
     const beforeYearNumber = +params.publicationYearBefore;
@@ -249,8 +295,18 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.publicationYearShould) {
     searchParams.set(ResultParam.PublicationYearShould, params.publicationYearShould);
   }
+  if (params.publisher) {
+    searchParams.set(ResultParam.Publisher, params.publisher);
+  }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
+  }
+  if (params.scientificIndex) {
+    searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
+    searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificIndex);
+  }
+  if (params.series) {
+    searchParams.set(ResultParam.Series, params.series);
   }
   if (params.tags) {
     searchParams.set(ResultParam.Tags, encodeURIComponent(params.tags));

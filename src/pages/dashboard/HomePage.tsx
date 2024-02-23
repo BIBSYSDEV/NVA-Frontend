@@ -13,7 +13,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam, SortOrder } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -57,22 +57,34 @@ const HomePage = () => {
 
   const registrationSearchTerm = params.get(ResultParam.Query);
   const registrationsQueryConfig: FetchResultsParams = {
-    aggregation: 'all',
-    query: registrationSearchTerm,
     abstract: params.get(ResultParam.Abstract),
+    aggregation: 'all',
     category: params.get(ResultParam.Category) as PublicationInstanceType | null,
-    topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
-    fundingSource: params.get(ResultParam.FundingSource),
     contributor: params.get(ResultParam.Contributor),
     contributorName: params.get(ResultParam.ContributorName),
-    tags: params.get(ResultParam.Tags),
-    title: params.get(ResultParam.Title),
-    sort: params.get(ResultParam.Sort) as SortOrder | null,
-    order: params.get(ResultParam.Order),
+    course: params.get(ResultParam.Course),
+    cristinIdentifier: params.get(ResultParam.CristinIdentifier),
+    doi: params.get(ResultParam.Doi),
     from: Number(params.get(ResultParam.From) ?? 0),
-    results: rowsPerPage,
+    fundingIdentifier: params.get(ResultParam.FundingIdentifier),
+    fundingSource: params.get(ResultParam.FundingSource),
+    handle: params.get(ResultParam.Handle),
+    id: params.get(ResultParam.Identifier),
+    isbn: params.get(ResultParam.Isbn),
+    issn: params.get(ResultParam.Issn),
+    journal: params.get(ResultParam.Journal),
+    order: params.get(ResultParam.Order),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
+    publisher: params.get(ResultParam.Publisher),
+    query: registrationSearchTerm,
+    results: rowsPerPage,
+    scientificIndex: params.get(ResultParam.ScientificIndex),
+    series: params.get(ResultParam.Series),
+    sort: params.get(ResultParam.Sort) as SortOrder | null,
+    tags: params.get(ResultParam.Tags),
+    title: params.get(ResultParam.Title),
+    topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
   };
   const registrationQuery = useQuery({
     enabled: resultIsSelected,
@@ -85,8 +97,10 @@ const HomePage = () => {
   const personSearchTerm = params.get(PersonSearchParameter.Name) ?? '.';
   const personQueryParams: PersonSearchParams = {
     name: personSearchTerm,
+    orderBy: params.get(PersonSearchParameter.OrderBy),
     organization: params.get(PersonSearchParameter.Organization),
     sector: params.get(PersonSearchParameter.Sector),
+    sort: params.get(PersonSearchParameter.Sort),
   };
   const personQuery = useQuery({
     enabled: personIsSeleced,
@@ -102,10 +116,13 @@ const HomePage = () => {
     categoryFacet: params.get(ProjectSearchParameter.CategoryFacet),
     fundingSourceFacet: params.get(ProjectSearchParameter.FundingSourceFacet),
     healthProjectFacet: params.get(ProjectSearchParameter.HealthProjectFacet),
+    orderBy: params.get(ProjectSearchParameter.OrderBy),
     participantFacet: params.get(ProjectSearchParameter.ParticipantFacet),
     participantOrgFacet: params.get(ProjectSearchParameter.ParticipantOrgFacet),
     responsibleFacet: params.get(ProjectSearchParameter.ResponsibleFacet),
     sectorFacet: params.get(ProjectSearchParameter.SectorFacet),
+    sort: params.get(ProjectSearchParameter.Sort),
+    status: params.get(ProjectSearchParameter.Status),
     query: projectSearchTerm,
   };
   const projectQuery = useQuery({

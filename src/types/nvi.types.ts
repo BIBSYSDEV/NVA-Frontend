@@ -74,7 +74,7 @@ export interface NviCandidate {
   publicationId: string;
   approvals: (Approval | FinalizedApproval | RejectedApproval)[];
   notes: Note[];
-  periodStatus: {
+  period: {
     status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
   };
 }
@@ -87,6 +87,7 @@ export interface Note {
 }
 
 export interface NviPeriod {
+  type: 'NviPeriod';
   publishingYear: string;
   reportingDate: string;
   startDate: string;

@@ -1,10 +1,10 @@
 import { ContributorRole } from '../../types/contributor.types';
-import { JournalType } from '../../types/publicationFieldNames';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { TicketCollection } from '../../types/publication_types/ticket.types';
+import { JournalType } from '../../types/publicationFieldNames';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
-import { mockCustomerInstitution } from './mockCustomerInstitutions';
 import { mockUser } from './mock_feide_user';
+import { mockCustomerInstitution } from './mockCustomerInstitutions';
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',
@@ -107,6 +107,7 @@ export const mockRegistration: JournalRegistration = {
       },
     },
   },
+  allowedOperations: ['update', 'delete', 'unpublish'],
 };
 
 export const mockMathJaxRegistration: JournalRegistration = {
@@ -173,4 +174,22 @@ export const mockPublishedRegistration = {
   ...mockRegistration,
   identifier: '123',
   status: RegistrationStatus.Published,
+};
+
+export const mockDeletedRegistration = {
+  ...mockRegistration,
+  identifier: 'dasdfasdf',
+  status: RegistrationStatus.Unpublished,
+  associatedArtifacts: [],
+  publicationNotes: [
+    { type: 'UnpublishingRequest', note: 'This should never have been published in the first place :(' },
+  ],
+  duplicateOf: 'https://api.dev.nva.aws.unit.no/publication/018d550eb538-395a6118-afb9-4b24-aa07-04b434457eb3',
+};
+
+export const mockDeletedRegistrationProblem = {
+  title: 'Gone',
+  status: 410,
+  requestId: 'dfadfkjasdf',
+  resource: mockDeletedRegistration,
 };

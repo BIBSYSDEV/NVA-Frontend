@@ -2,7 +2,7 @@ import { authenticatedApiRequest2 } from './apiRequest';
 
 export const getById = async <T>(id: string) => {
   if (!id) {
-    return null;
+    return;
   }
 
   const getByIdResponse = await authenticatedApiRequest2<T>({

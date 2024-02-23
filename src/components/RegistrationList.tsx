@@ -2,7 +2,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,19 +14,19 @@ import { RootState } from '../redux/store';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
-import { getTitleString } from '../utils/registration-helpers';
+import { getTitleString, userCanDeleteRegistration } from '../utils/registration-helpers';
 import {
-  UrlPathTemplate,
   getRegistrationLandingPagePath,
   getRegistrationWizardPath,
   getResearchProfilePath,
+  UrlPathTemplate,
 } from '../utils/urlPaths';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TruncatableTypography } from './TruncatableTypography';
 import { SearchListItem } from './styled/Wrappers';
 
-interface RegistrationListProps {
+interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   registrations: Registration[];
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
@@ -56,6 +56,7 @@ export const RegistrationListItemContent = ({
   canEditRegistration,
   onDeleteDraftRegistration,
   promotedPublications = [],
+  target,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription, id } = registration;
@@ -123,6 +124,7 @@ export const RegistrationListItemContent = ({
             getTitleString(entityDescription?.mainTitle)
           ) : (
             <MuiLink
+              target={target}
               component={Link}
               to={{
                 pathname: getRegistrationLandingPagePath(identifier),
@@ -146,7 +148,7 @@ export const RegistrationListItemContent = ({
                 sx={{ display: 'flex', alignItems: 'center', '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 <Typography variant="body2">
                   {contributor.identity.id && !ticketView ? (
-                    <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                    <MuiLink target={target} component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                       {contributor.identity.name}
                     </MuiLink>
                   ) : (
@@ -175,7 +177,7 @@ export const RegistrationListItemContent = ({
 
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
-          {location.pathname === UrlPathTemplate.MyPageMyResults && (
+          {location.pathname === UrlPathTemplate.MyPageResults && (
             <IconButton
               title={t('my_page.my_profile.edit_promoted_publication')}
               data-testid={dataTestId.myPage.addPromotedPublicationButton}
@@ -198,13 +200,14 @@ export const RegistrationListItemContent = ({
             <IconButton
               data-testid={`edit-registration-${identifier}`}
               component={Link}
+              target={target}
               to={getRegistrationWizardPath(identifier)}
               size="small"
               sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
-          {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
+          {registration.status === 'DRAFT' && onDeleteDraftRegistration && userCanDeleteRegistration(registration) && (
             <Tooltip title={t('common.delete')}>
               <IconButton
                 data-testid={`delete-registration-${identifier}`}

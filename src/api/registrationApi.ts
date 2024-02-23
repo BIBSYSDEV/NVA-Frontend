@@ -1,8 +1,9 @@
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
-import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
+import { Doi, MyRegistrationsResponse, Registration, UnpublishPublicationRequest } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { userIsAuthenticated } from './authApi';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
@@ -16,6 +17,16 @@ export const updateRegistration = async (registration: Registration) =>
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     data: registration,
+  });
+
+export const unpublishRegistration = async (
+  registrationIdentifier: string,
+  unpublishingRequest: UnpublishPublicationRequest
+) =>
+  await authenticatedApiRequest2<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
+    method: 'PUT',
+    data: unpublishingRequest,
   });
 
 export const getRegistrationByDoi = async (doiUrl: string) => {
@@ -71,10 +82,17 @@ export const createDraftDoi = async (registrationId: string) =>
     method: 'POST',
   });
 
-export const fetchRegistration = async (registrationIdentifier: string) => {
-  const fetchRegistrationResponse = await apiRequest2<Registration>({
-    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
-  });
+export const fetchRegistration = async (registrationIdentifier: string, shouldNotRedirect?: boolean) => {
+  const isAuthenticated = await userIsAuthenticated();
+
+  const url = shouldNotRedirect
+    ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?doNotRedirect=true`
+    : `${PublicationsApiPath.Registration}/${registrationIdentifier}`;
+
+  const fetchRegistrationResponse = isAuthenticated
+    ? await authenticatedApiRequest2<Registration>({ url })
+    : await apiRequest2<Registration>({ url });
+
   return fetchRegistrationResponse.data;
 };
 

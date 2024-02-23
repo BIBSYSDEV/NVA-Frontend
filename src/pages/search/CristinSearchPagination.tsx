@@ -1,19 +1,21 @@
+import { ReactNode } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ListPagination } from '../../components/ListPagination';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { SortSelector } from '../../components/SortSelector';
 import { SearchParam } from '../../utils/searchHelpers';
 
 interface CristinSearchPaginationProps {
+  children: ReactNode;
   totalCount: number;
+  page: number;
+  rowsPerPage: number;
 }
 
-export const CristinSearchPagination = ({ totalCount }: CristinSearchPaginationProps) => {
+export const CristinSearchPagination = ({ children, totalCount, page, rowsPerPage }: CristinSearchPaginationProps) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
-  const resultsParam = params.get(SearchParam.Results);
-  const pageParam = params.get(SearchParam.Page);
-
-  const rowsPerPage = resultsParam ? +resultsParam : ROWS_PER_PAGE_OPTIONS[0];
 
   const updatePath = (page: string, results: string) => {
     params.set(SearchParam.Page, page);
@@ -21,13 +23,38 @@ export const CristinSearchPagination = ({ totalCount }: CristinSearchPaginationP
     history.push({ search: params.toString() });
   };
 
+  const sortingComponent = (
+    <SortSelector
+      orderKey="orderBy"
+      sortKey="sort"
+      aria-label={t('search.sort_by')}
+      size="small"
+      variant="standard"
+      options={[
+        {
+          orderBy: 'name',
+          sortOrder: 'asc',
+          label: t('search.sort_by_name_asc'),
+        },
+        {
+          orderBy: 'name',
+          sortOrder: 'desc',
+          label: t('search.sort_by_name_desc'),
+        },
+      ]}
+    />
+  );
+
   return (
     <ListPagination
       count={totalCount}
-      page={pageParam ? +pageParam : 1}
+      page={page}
       onPageChange={(newPage) => updatePath(newPage.toString(), rowsPerPage.toString())}
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={(newRowsPerPage) => updatePath('1', newRowsPerPage.toString())}
-    />
+      showPaginationTop
+      sortingComponent={sortingComponent}>
+      {children}
+    </ListPagination>
   );
 };

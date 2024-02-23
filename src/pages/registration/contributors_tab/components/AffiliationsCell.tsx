@@ -88,6 +88,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
+            justifyContent: 'space-between',
           }}>
           {affiliation.type === 'Organization' && <AffiliationHierarchy unitUri={affiliation.id} />}
           {affiliation.type === 'UnconfirmedOrganization' && (

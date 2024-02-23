@@ -1,4 +1,4 @@
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { LoadingButton } from '@mui/lab';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,9 +19,9 @@ export const ExportResultsButton = ({ searchParams }: ExportResultsButtonProps) 
   return (
     <LoadingButton
       variant="outlined"
-      startIcon={<FileDownloadIcon />}
-      loadingPosition="start"
+      loadingPosition="center"
       loading={isLoadingExport}
+      title={t('search.export')}
       onClick={async () => {
         setIsLoadingExport(true);
         try {
@@ -39,7 +39,7 @@ export const ExportResultsButton = ({ searchParams }: ExportResultsButtonProps) 
           setIsLoadingExport(false);
         }
       }}>
-      {t('search.export')}
+      <FileDownloadOutlinedIcon />
     </LoadingButton>
   );
 };

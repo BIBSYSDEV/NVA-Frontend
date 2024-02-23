@@ -197,47 +197,56 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       )}
 
       {contributorsToShow.length > 0 && (
-        <TableContainer component={Paper}>
-          <Table size="small" sx={alternatingTableRowColor}>
-            <TableHead>
-              <TableRow>
-                <TableCell>{t('common.order')}</TableCell>
-                <TableCell>{t('registration.contributors.confirmed')}</TableCell>
-                <TableCell>{t('common.role')}</TableCell>
-                <TableCell align="center">
-                  <Tooltip title={t('registration.contributors.corresponding')}>
-                    <MailOutlineIcon />
-                  </Tooltip>
-                </TableCell>
-                <TableCell>{t('common.name')}</TableCell>
-                <TableCell>{t('common.institution')}</TableCell>
-                <TableCell>{t('common.remove')}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {contributorsToShow.map((contributor, index) => {
-                const contributorIndex = contributors.findIndex(
-                  (c) =>
-                    c.identity.id === contributor.identity.id &&
-                    c.identity.name === contributor.identity.name &&
-                    c.role === contributor.role
-                );
-                return (
-                  <ContributorRow
-                    key={`${contributor.identity.name}${index}`}
-                    contributor={contributor}
-                    onMoveContributor={handleMoveContributor}
-                    onRemoveContributor={handleOnRemove}
-                    onVerifyContributor={onContributorSelected}
-                    isLastElement={contributors.length === contributor.sequence}
-                    contributorRoles={contributorRoles}
-                    contributorIndex={contributorIndex}
-                  />
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <ListPagination
+          count={filteredContributors.length}
+          rowsPerPage={rowsPerPage}
+          page={currentPage}
+          onPageChange={(newPage) => setCurrentPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setCurrentPage(1);
+          }}>
+          <TableContainer sx={{ mb: '0.5rem' }} component={Paper}>
+            <Table size="small" sx={alternatingTableRowColor}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('common.order')}</TableCell>
+                  <TableCell>{t('common.role')}</TableCell>
+                  <TableCell align="center">
+                    <Tooltip title={t('registration.contributors.corresponding')}>
+                      <MailOutlineIcon />
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell>{t('registration.contributors.identification')}</TableCell>
+                  <TableCell>{t('common.name')}</TableCell>
+                  <TableCell>{t('common.institution')}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {contributorsToShow.map((contributor, index) => {
+                  const contributorIndex = contributors.findIndex(
+                    (c) =>
+                      c.identity.id === contributor.identity.id &&
+                      c.identity.name === contributor.identity.name &&
+                      c.role === contributor.role
+                  );
+                  return (
+                    <ContributorRow
+                      key={`${contributor.identity.name}${index}`}
+                      contributor={contributor}
+                      onMoveContributor={handleMoveContributor}
+                      onRemoveContributor={handleOnRemove}
+                      onVerifyContributor={onContributorSelected}
+                      isLastElement={contributors.length === contributor.sequence}
+                      contributorRoles={contributorRoles}
+                      contributorIndex={contributorIndex}
+                    />
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </ListPagination>
       )}
 
       <AddContributorModal
@@ -251,19 +260,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           goToLastPage();
         }}
       />
-      {contributorsToShow.length > 0 && (
-        <ListPagination
-          sx={{ my: '0.5rem' }}
-          count={filteredContributors.length}
-          rowsPerPage={rowsPerPage}
-          page={currentPage}
-          onPageChange={(newPage) => setCurrentPage(newPage)}
-          onRowsPerPageChange={(newRowsPerPage) => {
-            setRowsPerPage(newRowsPerPage);
-            setCurrentPage(1);
-          }}
-        />
-      )}
+
       <Button
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
