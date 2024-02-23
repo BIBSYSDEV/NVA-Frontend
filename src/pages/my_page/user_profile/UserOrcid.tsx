@@ -142,16 +142,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     toggleConfirmDialog();
   };
 
-  const openORCID = () => {
-    if (USE_MOCK_DATA) {
-      history.push(`${UrlPathTemplate.MyPageProfile}?access_token=123`);
-    } else {
-      window.location.assign(
-        `${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`
-      );
-    }
-  };
-
   return (
     <div>
       {cristinPersonQuery.isLoading ? (
