@@ -196,6 +196,7 @@
     "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
+    "or": "Eller",
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
     "order": "Rekkefølge",
@@ -1171,6 +1172,18 @@
     },
     "curator_support_info": "Her kan du spørre din kurator om hjelp med alt som har med registrering og publisering av forskningsresultat. Du finner svar på dine spørsmål på \"Min side\" og på registreringens presentasjonsside.",
     "delete_registration": "Avpubliser forskningsresultat",
+    "support": {
+      "need_help": "Trenger du hjelp?",
+      "self_help": {
+        "header": "Veiledning for å registere et forskningsresultat",
+        "description": "Trenger du hjelp? Se om du kan løse problemet selv ved å se på brukerveiledningene."
+      },
+      "curator_help": {
+        "header": "Trenger du hjelp av kurator?",
+        "description": "<0>Her kan du sende en melding direkte til kurator ved din institusjon.</0><0>Kurator kan hjelpe deg med å registrere og endre på publiserte og upubliserte forskningsresultat.</0><0>Du vil få svar på MIN SIDE, der ser du hvem som er din(e) kuratorer. Kuratorstøtte kan besvares av ulike kuratorer på din institusjon.</0>",
+        "already_in_progress": "Du har allerede en dialog med kurator. Lagre og gå til resultatet via MIN SIDE for å fortsette dialogen der."
+      }
+    },
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
