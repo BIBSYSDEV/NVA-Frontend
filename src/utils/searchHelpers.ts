@@ -119,3 +119,7 @@ export const removeSearchParamValue = (params: URLSearchParams, key: string, val
   }
   return params;
 };
+
+export const isValidIsbn = (value: string): boolean => {
+  return value.startsWith('978-') && value.replaceAll('-', '').length === 13;
+};
