@@ -162,12 +162,13 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     />
                   ))}
                 </Box>
-                <Box gridArea="buttonRowBottom" sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <Box gridArea="buttonRowBottom" sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
                   {values.properties && values.properties.length > 0 && (
                     <>
                       <IconButton
-                        sx={{ mr: '0.5rem', borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
+                        sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
                         size="small"
+                        color="primary"
                         title={t('common.add')}
                         data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
                         onClick={() => {
