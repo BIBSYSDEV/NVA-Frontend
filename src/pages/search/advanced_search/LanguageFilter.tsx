@@ -19,13 +19,10 @@ export const LanguageFilter = () => {
     setOpen(!open);
   };
 
-  const updateSelectedLanguages = (selectedUris: string[] | null) => {
+  const updateSelectedLanguages = (selectedUris: string[]) => {
     if (selectedUris && selectedUris.length > 0) {
       const languages = selectedUris
-        .map((iso6393Code) => {
-          const selectedLanguage = languageOptions.find((language) => language.iso6393Code === iso6393Code);
-          return selectedLanguage ? selectedLanguage.iso6393Code : null;
-        })
+        .map((iso6393Code) => languageOptions.find((language) => language.iso6393Code === iso6393Code)?.iso6393Code)
         .filter(Boolean);
 
       if (languages.length > 0) {
@@ -69,17 +66,15 @@ export const LanguageFilter = () => {
           ))}
         </Select>
       </FormControl>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-        {selectedLanguages.map((language, index) => (
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+        {selectedLanguages.map((language) => (
           <Chip
             sx={{ mb: '0.25rem' }}
             key={language.uri}
             label={i18n.language === 'nob' ? language?.nob : language?.eng}
-            onDelete={() => {
-              selectedLanguages.length > 1
-                ? updateSelectedLanguages(languageParam.filter((iso6393Code) => iso6393Code !== language?.iso6393Code))
-                : updateSelectedLanguages([]);
-            }}
+            onDelete={() =>
+              updateSelectedLanguages(languageParam.filter((iso6393Code) => iso6393Code !== language?.iso6393Code))
+            }
           />
         ))}
       </Box>
