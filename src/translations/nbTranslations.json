@@ -669,13 +669,7 @@
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
         "delete_orcid": "Fjern ORCID-kobling",
-        "dialog": {
-          "heading": "Koble eller opprette ORCID iD",
-          "paragraph0": "Logg inn på din ORCID-konto eller registrer deg hvis du ikke har en konto.",
-          "paragraph1": "ORCID gir deg en varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den kan brukes den i mange sammenhenger. Ved å koble din ORCID iD er det enklere å identifisere deg som forfatter, og å hente og dele dine publikasjoner."
-        },
         "helper_text_modal": {
-          "detailed_inforamtion": "",
           "detailed_paragraph_1": "Om du har en ORCID, så oppfordres du til å kople den til din forskerprofil. Om du ikke har en ORCID, så kan du opprette den samtidig som du kopler den til forskerprofilen din.",
           "detailed_paragraph_2": "Enkelte forleggere og finansiører krever at du har en ORCID, for å kunne levere inn henholdsvis manuskript og søknader om finansiering. Om de ikke krever det, så bør du som forsker kreve det. Da blir dine forskningsresultat enklere for alle å sitere korrekt og det blir mindre arbeid i etterkant. Kopling av ORCID til din forskerprofil er et tilbud, ikke et krav. Du kan trekke din kobling når du ønsker under MIN SIDE | Personalia.",
           "introduction": "ORCID gir deg varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den viktigste gevinsten du får i dag ved å kople din ORCID til din forskerprofil, er raskere, mer korrekt og import av flere av dine publikasjoner.",
@@ -1733,7 +1727,6 @@
     "year_published": "Publiseringsår"
   },
   "search": {
-    "add_filter": "Legg til filter",
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
     "advanced_search": "Avansert søk",
