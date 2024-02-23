@@ -283,6 +283,7 @@ export interface RegistrationAggregations {
   publisher?: AggregationValue[];
   series?: AggregationValue[];
   journal?: AggregationValue[];
+  scientificIndex?: AggregationValue[];
 }
 
 export interface ConfirmedDocument {
