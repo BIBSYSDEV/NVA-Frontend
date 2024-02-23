@@ -1,9 +1,9 @@
+import AddIcon from '@mui/icons-material/Add';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
-import SearchIcon from '@mui/icons-material/Search';
-import { Box, Button, Skeleton } from '@mui/material';
+import { Box, Button, IconButton, Skeleton } from '@mui/material';
 import { ClearIcon } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik } from 'formik';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -49,7 +49,7 @@ interface SearchTermProperties {
 }
 
 interface SearchTermProperty {
-  fieldName: ResultParam;
+  fieldName: ResultParam | '';
   value: string;
 }
 
@@ -124,76 +124,80 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           component={Form}
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
+            gridTemplateColumns: { xs: '1fr', md: 'auto 1fr auto' },
             gridTemplateAreas: {
-              xs: "'typeSearch' 'searchbar' 'advanced' 'facets'",
-              md: "'typeSearch searchbar' 'advanced advanced' 'facets facets'",
+              xs: "'typeSearch' 'searchbar' 'buttonRowTop' 'filter' 'buttonRowBottom' 'facets'",
+              md: "'typeSearch searchbar buttonRowTop' 'filter filter buttonRowBottom' 'facets facets facets'",
             },
             gap: '0.75rem 0.5rem',
             mx: { xs: '0.5rem', md: 0 },
           }}>
           <SearchTypeField sx={{ gridArea: 'typeSearch' }} />
+          <Field name="searchTerm" gridArea="searchbar">
+            {({ field }: FieldProps<string>) => (
+              <SearchTextField
+                {...field}
+                placeholder={t('search.search_placeholder')}
+                clearValue={() => {
+                  field.onChange({ target: { value: '', id: field.name } });
+                  submitForm();
+                }}
+              />
+            )}
+          </Field>
 
-          <Box sx={{ gridArea: 'searchbar', display: 'flex', gap: '0.75rem 0.5rem', flexWrap: 'wrap' }}>
-            <Field name="searchTerm">
-              {({ field }: FieldProps<string>) => (
-                <SearchTextField
-                  {...field}
-                  sx={{ flex: '1 0 15rem' }}
-                  placeholder={t('search.search_placeholder')}
-                  clearValue={() => {
-                    field.onChange({ target: { value: '', id: field.name } });
-                    submitForm();
-                  }}
-                />
-              )}
-            </Field>
-
+          <Box gridArea="buttonRowTop">
+            <FilterButton />
             <ExportResultsButton searchParams={searchParams} />
           </Box>
 
           <FieldArray name="properties">
             {({ push, remove }: FieldArrayRenderProps) => (
-              <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {values.properties.map((property, index) => (
-                  <AdvancedSearchRow
-                    key={index}
-                    removeFilter={() => {
-                      remove(index);
-                      const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
-                      const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
-                      newParams.set(ResultParam.From, '0');
-                      history.push({ search: newParams.toString() });
-                    }}
-                    baseFieldName={`properties[${index}]`}
-                  />
-                ))}
-
-                <Box sx={{ display: 'flex', gap: '1rem' }}>
-                  <Button
-                    data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
-                    variant="outlined"
-                    onClick={() => {
-                      const newPropertyFilter: PropertySearch = {
-                        fieldName: '',
-                        value: '',
-                      };
-                      push(newPropertyFilter);
-                    }}
-                    startIcon={<FilterAltIcon />}>
-                    {t('search.add_filter')}
-                  </Button>
+              <>
+                <Box gridArea="filter" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {values.properties.map((property, index) => (
+                    <AdvancedSearchRow
+                      key={index}
+                      removeFilter={() => {
+                        remove(index);
+                        const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
+                        const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
+                        newParams.set(ResultParam.From, '0');
+                        history.push({ search: newParams.toString() });
+                      }}
+                      baseFieldName={`properties[${index}]`}
+                    />
+                  ))}
+                </Box>
+                <Box gridArea="buttonRowBottom" sx={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem' }}>
                   {values.properties && values.properties.length > 0 && (
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      startIcon={<SearchIcon />}
-                      data-testid={dataTestId.startPage.advancedSearch.searchButton}>
-                      {t('common.search')}
-                    </Button>
+                    <>
+                      <IconButton
+                        sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
+                        size="small"
+                        color="primary"
+                        title={t('common.add')}
+                        data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
+                        onClick={() => {
+                          const newPropertyFilter: PropertySearch = {
+                            fieldName: '',
+                            value: '',
+                          };
+                          push(newPropertyFilter);
+                        }}>
+                        <AddIcon />
+                      </IconButton>
+
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        data-testid={dataTestId.startPage.advancedSearch.searchButton}>
+                        {t('common.search')}
+                      </Button>
+                    </>
                   )}
                 </Box>
-              </Box>
+              </>
             )}
           </FieldArray>
 
@@ -343,4 +347,28 @@ const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetB
   const fundingName = getLanguageString(fundingSourcesQuery.data?.name) || t('common.unknown');
 
   return <>{fundingSourcesQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
+};
+
+const FilterButton = () => {
+  const { t } = useTranslation();
+  const { values, setFieldValue, submitForm } = useFormikContext<SearchTermProperties>();
+
+  return (
+    <Button
+      sx={{ mr: '0.5rem' }}
+      data-testid={dataTestId.startPage.advancedSearch.activateFilterButton}
+      startIcon={<FilterAltIcon />}
+      onClick={() => {
+        const newProp: SearchTermProperty = { fieldName: '', value: '' };
+        if (values.properties.length === 0) {
+          setFieldValue('properties', [newProp]);
+        } else {
+          setFieldValue('properties', []);
+          submitForm();
+        }
+      }}
+      variant={values.properties.length ? 'contained' : 'outlined'}>
+      {t('common.filter')}
+    </Button>
+  );
 };

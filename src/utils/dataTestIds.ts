@@ -133,6 +133,7 @@ export const dataTestId = {
   },
   startPage: {
     advancedSearch: {
+      activateFilterButton: 'activate-filter-button',
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
