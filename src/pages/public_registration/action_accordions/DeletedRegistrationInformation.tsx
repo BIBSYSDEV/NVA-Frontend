@@ -50,11 +50,7 @@ export const DeletedRegistrationInformation = ({
       sx={{
         bgcolor: 'publishingRequest.main',
       }}>
-      {registration.status === RegistrationStatus.Deleted ? (
-        <Typography>{t(`registration.status.${registration.status}`)}</Typography>
-      ) : (
-        <Typography>{t(`registration.status.UNPUBLISHED`)}</Typography>
-      )}
+      <Typography>{t(`registration.status.${registration.status}`)}</Typography>
       <Box sx={{ display: 'flex', flexDirection: 'row', minWidth: '6rem', gap: '0.5rem', alignItems: 'center' }}>
         {personQuery.isFetching ? (
           <Skeleton variant="circular" />
