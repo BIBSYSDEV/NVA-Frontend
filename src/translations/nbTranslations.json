@@ -117,6 +117,7 @@
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
+      "nvi_publication_year": "NVI publiseringsår",
       "period_year": "Publiseringsår",
       "update_reporting_period": "Oppdater rapporteringsperiode"
     },
