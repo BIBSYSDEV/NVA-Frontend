@@ -1,10 +1,11 @@
 import { Box, Link, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { CristinApiPath } from '../../../api/apiPaths';
 import { fetchPerson } from '../../../api/cristinApi';
 import { fetchRegistration } from '../../../api/registrationApi';
 import { ProfilePicture } from '../../../components/ProfilePicture';
-import { PublicationNote, Registration, RegistrationStatus } from '../../../types/registration.types';
+import { PublicationNote, Registration } from '../../../types/registration.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getFullCristinName } from '../../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
@@ -55,7 +56,7 @@ export const DeletedRegistrationInformation = ({
         {personQuery.isFetching ? (
           <Skeleton variant="circular" />
         ) : (
-           person && (
+          person && (
             <ProfilePicture
               sx={{ width: '1.5rem', height: '1.5rem' }}
               fullName={getFullCristinName(person.names)}
