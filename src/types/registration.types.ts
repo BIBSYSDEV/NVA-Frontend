@@ -86,10 +86,11 @@ interface AdditionalIdentifier {
 
 type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
 
-interface PublicationNote {
+export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
-  note?: string;
-  publicationNoteMessage?: string;
+  note: string;
+  createdBy?: string;
+  createdDate?: string;
 }
 
 export interface BaseRegistration {
