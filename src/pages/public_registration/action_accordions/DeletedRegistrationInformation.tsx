@@ -55,15 +55,13 @@ export const DeletedRegistrationInformation = ({
         {personQuery.isFetching ? (
           <Skeleton variant="circular" />
         ) : (
-          <>
-            {person && (
-              <ProfilePicture
-                sx={{ width: '1.5rem', height: '1.5rem' }}
-                fullName={getFullCristinName(person?.names)}
-                personId={person?.id ?? ''}
-              />
-            )}
-          </>
+           person && (
+            <ProfilePicture
+              sx={{ width: '1.5rem', height: '1.5rem' }}
+              fullName={getFullCristinName(person.names)}
+              personId={person.id}
+            />
+          )
         )}
 
         {unpublishingNote.createdDate && (
