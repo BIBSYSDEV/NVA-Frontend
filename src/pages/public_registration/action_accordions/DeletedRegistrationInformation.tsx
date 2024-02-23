@@ -53,8 +53,11 @@ export const DeletedRegistrationInformation = ({
       }}>
       <Typography>{t(`registration.status.${registration.status}`)}</Typography>
       <Box sx={{ display: 'flex', minWidth: '6rem', gap: '0.5rem', alignItems: 'center' }}>
+        {unpublishingNote.createdDate && (
+          <Typography>{new Date(unpublishingNote.createdDate).toLocaleDateString()}</Typography>
+        )}
         {personQuery.isFetching ? (
-          <Skeleton variant="circular" />
+          <Skeleton variant="circular" sx={{ width: '1.5rem', height: '1.5rem' }} />
         ) : (
           person && (
             <ProfilePicture
@@ -63,10 +66,6 @@ export const DeletedRegistrationInformation = ({
               personId={person.id}
             />
           )
-        )}
-
-        {unpublishingNote.createdDate && (
-          <Typography>{new Date(unpublishingNote.createdDate).toLocaleDateString()}</Typography>
         )}
       </Box>
 
