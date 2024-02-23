@@ -1248,6 +1248,7 @@
     },
     "is_revision": "Arbeidet er en revisjon",
     "missing_title": "Mangler tittel",
+    "missing_name": "Mangler navn",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
     "new_registration": "Nytt resultat",
