@@ -15,8 +15,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { OrcidCredentials } from '../../../types/orcid.types';
 import { User } from '../../../types/user.types';
-import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL, USE_MOCK_DATA } from '../../../utils/constants';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { ORCID_BASE_URL, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { getValueByKey } from '../../../utils/user-helpers';
 
 interface UserOrcidProps {
