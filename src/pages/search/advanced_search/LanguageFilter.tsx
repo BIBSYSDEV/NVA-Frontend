@@ -50,7 +50,7 @@ export const LanguageFilter = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '15rem' }}>
       <FormControl fullWidth>
-        <InputLabel>{t('search.advanced_search.choose_one_or_more')}</InputLabel>
+        <InputLabel sx={{ justifySelf: 'top' }}>{t('search.advanced_search.choose_one_or_more')}</InputLabel>
         <Select
           multiple
           size="small"
