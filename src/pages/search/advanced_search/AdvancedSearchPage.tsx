@@ -149,40 +149,48 @@ export const AdvancedSearchPage = () => {
 
             <StyledDivider />
 
-            <Grid item md={12} sx={{ display: 'flex', gap: '1rem' }}>
-              <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
+            <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
 
-              {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+                {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-              <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+                <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+              </Box>
+              <StyledDivider />
             </Grid>
 
-            <Grid item md={12} sx={{ display: 'flex', gap: '1rem' }}>
-              <PublisherFilter />
+            <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <PublisherFilter />
 
-              {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+                {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-              <JournalFilter />
+                <JournalFilter />
 
-              {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+                {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-              <SeriesFilter />
+                <SeriesFilter />
+              </Box>
+              <StyledDivider />
             </Grid>
 
-            {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+            <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <FundingSourceFilter />
 
-            <FundingSourceFilter />
+                {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-            {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
-
-            <SearchForm
-              paramName={ResultParam.FundingIdentifier}
-              placeholder={t('search.search_for_funding_identifier')}
-            />
+                <SearchForm
+                  paramName={ResultParam.FundingIdentifier}
+                  placeholder={t('search.search_for_funding_identifier')}
+                />
+              </Box>
+            </Grid>
           </Box>
         </Grid>
 
-        <Grid item md={12}>
+        <Grid item md={12} sx={{ m: '0.5rem' }}>
           <RegistrationSearch registrationQuery={resultSearchQuery} />
         </Grid>
       </Grid>
