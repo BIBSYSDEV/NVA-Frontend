@@ -1,4 +1,4 @@
-import { Box, Chip, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, Chip, FormControl, InputLabel, MenuItem, Select, styled } from '@mui/material';
 import { Language } from 'nva-language';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,12 @@ import { ResultParam } from '../../../api/searchApi';
 import i18n from '../../../translations/i18n';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { languageOptions } from '../../registration/DescriptionPanel';
+
+const StyledChip = styled(Chip)(({ theme }) => ({
+  '& .MuiChip-deleteIcon': {
+    color: theme.palette.primary.main,
+  },
+}));
 
 export const LanguageFilter = () => {
   const { t } = useTranslation();
@@ -69,8 +75,8 @@ export const LanguageFilter = () => {
       </FormControl>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
         {selectedLanguages.map((language) => (
-          <Chip
-            sx={{ mb: '0.25rem' }}
+          <StyledChip
+            sx={{ mb: '0.25rem', borderColor: 'primary.main' }}
             key={language.uri}
             label={i18n.language === 'nob' ? language?.nob : language?.eng}
             onDelete={() =>
