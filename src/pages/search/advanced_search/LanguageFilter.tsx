@@ -50,7 +50,7 @@ export const LanguageFilter = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '15rem' }}>
       <FormControl fullWidth>
-        <InputLabel>{t('registration.description.primary_language')}</InputLabel>
+        <InputLabel>{t('search.advanced_search.choose_one_or_more')}</InputLabel>
         <Select
           multiple
           size="small"
@@ -64,7 +64,7 @@ export const LanguageFilter = () => {
             updateSelectedLanguages(event.target.value as string[]);
             toggleOpenOptions();
           }}
-          renderValue={() => t('search.choose_one_or_more')}
+          renderValue={() => t('search.advanced_search.choose_one_or_more')}
           variant="outlined">
           {languageOptions.map(({ uri, iso6393Code, nob, eng }) => (
             <MenuItem value={iso6393Code} key={uri} data-testid={`publication-language-${uri}`}>
