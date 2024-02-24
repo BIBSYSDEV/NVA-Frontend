@@ -48,6 +48,7 @@ export const JournalFilter = () => {
 
   return (
     <Autocomplete
+      size="small"
       sx={{ minWidth: '15rem' }}
       value={journalParam && selectedJournalQuery.data?.hits[0] ? selectedJournalQuery.data.hits[0] : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}

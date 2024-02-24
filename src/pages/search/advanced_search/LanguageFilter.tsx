@@ -47,6 +47,7 @@ export const LanguageFilter = () => {
         <InputLabel>{t('registration.description.primary_language')}</InputLabel>
         <Select
           multiple
+          size="small"
           open={open}
           onOpen={toggleOpenOptions}
           onClose={toggleOpenOptions}
