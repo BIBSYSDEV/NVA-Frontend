@@ -13,7 +13,7 @@ import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 
-const languageOptions = [
+export const languageOptions = [
   getLanguageByIso6393Code('eng'),
   getLanguageByIso6393Code('nob'),
   getLanguageByIso6393Code('nno'),

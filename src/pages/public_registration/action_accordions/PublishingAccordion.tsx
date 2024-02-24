@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
+import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -29,22 +29,22 @@ import { PublishingTicket } from '../../../types/publication_types/ticket.types'
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
-import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
+import { userCanPublishRegistration, userCanUnpublishRegistration } from '../../../utils/registration-helpers';
+import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
-import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { DeletePublication } from './DeletePublication';
+import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
   registration: Registration;
   refetchData: () => void;
   publishingRequestTickets: PublishingTicket[];
-  userIsCurator: boolean;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
@@ -60,7 +60,6 @@ export const PublishingAccordion = ({
   publishingRequestTickets,
   registration,
   refetchData,
-  userIsCurator,
   isLoadingData,
   addMessage,
 }: PublishingAccordionProps) => {
@@ -72,6 +71,8 @@ export const PublishingAccordion = ({
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
   const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
+  const userCanPublish = userCanPublishRegistration(registration);
+  const userCanUnpublish = userCanUnpublishRegistration(registration);
 
   const lastPublishingRequest = publishingRequestTickets.at(-1);
 
@@ -124,7 +125,7 @@ export const PublishingAccordion = ({
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      userIsCurator
+      userCanPublish
         ? dispatch(
             setNotification({
               message: t('feedback.success.publish_as_curator'),
@@ -149,7 +150,7 @@ export const PublishingAccordion = ({
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
   const hasCompletedTicket = lastPublishingRequest?.status === 'Completed';
 
-  const canHandlePublishingRequest = userIsCurator && !registratorPublishesMetadataAndFiles && hasPendingTicket;
+  const canHandlePublishingRequest = userCanPublish && !registratorPublishesMetadataAndFiles && hasPendingTicket;
 
   const mismatchingPublishedStatusWorkflow1 =
     registratorPublishesMetadataAndFiles && !!lastPublishingRequest && isDraftRegistration;
@@ -164,6 +165,9 @@ export const PublishingAccordion = ({
 
   const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
+  const unpublishedOrDeleted =
+    registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
@@ -173,7 +177,7 @@ export const PublishingAccordion = ({
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('registration.public_page.publication')}
         {lastPublishingRequest && ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
-        {!registrationIsValid && (
+        {!registrationIsValid && !unpublishedOrDeleted && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
             <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
           </Tooltip>
@@ -182,7 +186,7 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {tabErrors && (
+        {tabErrors && !unpublishedOrDeleted && (
           <>
             <Typography>{t('registration.public_page.error_description')}</Typography>
             <ErrorList tabErrors={tabErrors} />
@@ -213,10 +217,15 @@ export const PublishingAccordion = ({
             {completedTickets.map((ticket) => (
               <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket} />
             ))}
-            {(registration.status === RegistrationStatus.Deleted ||
-              registration.status === RegistrationStatus.Unpublished) && (
-              <DeletedRegistrationInformation registration={registration} />
-            )}
+            {registration.publicationNotes
+              ?.filter((note) => note.type === 'UnpublishingNote')
+              .map((note, index) => (
+                <DeletedRegistrationInformation
+                  key={note.createdDate ?? index}
+                  registration={registration}
+                  unpublishingNote={note}
+                />
+              ))}
           </Box>
         )}
 
@@ -330,7 +339,9 @@ export const PublishingAccordion = ({
             <MessageForm confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)} />
           </Box>
         )}
-        {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
+        {userCanUnpublish && registration.status === RegistrationStatus.Published && (
+          <DeletePublication registration={registration} />
+        )}
       </AccordionDetails>
     </Accordion>
   );
