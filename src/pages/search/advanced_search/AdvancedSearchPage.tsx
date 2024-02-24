@@ -15,6 +15,7 @@ import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
+import { LanguageFilter } from './LanguageFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 import { SeriesFilter } from './SeriesFilter';
@@ -144,6 +145,12 @@ export const AdvancedSearchPage = () => {
                     />
                   </section>
                 </StyledFilterContainer>
+
+                {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+
+                <StyledFilterContainer>
+                  <LanguageFilter />
+                </StyledFilterContainer>
               </Box>
               <StyledDivider />
             </Grid>
@@ -165,11 +172,7 @@ export const AdvancedSearchPage = () => {
               <Box sx={{ display: 'flex', gap: '1rem' }}>
                 <PublisherFilter />
 
-                {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
-
                 <JournalFilter />
-
-                {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
                 <SeriesFilter />
               </Box>
@@ -179,8 +182,6 @@ export const AdvancedSearchPage = () => {
             <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Box sx={{ display: 'flex', gap: '1rem' }}>
                 <FundingSourceFilter />
-
-                {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
                 <SearchForm
                   paramName={ResultParam.FundingIdentifier}
