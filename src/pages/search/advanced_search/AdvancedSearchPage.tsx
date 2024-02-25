@@ -90,7 +90,7 @@ export const AdvancedSearchPage = () => {
           p: '1rem',
         }}>
         <Typography variant="h3">{t('search.advanced_search.advanced_search')}</Typography>
-        <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <StyledFilterContainer>
             <Typography fontWeight="bold">{t('search.advanced_search.title_search')}</Typography>
             <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -105,10 +105,10 @@ export const AdvancedSearchPage = () => {
           <StyledDivider />
         </Grid>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '1rem' }}>
-              <StyledFilterContainer>
+        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: '1rem' }}>
+              <StyledFilterContainer sx={{ width: 'fit-content' }}>
                 <Typography fontWeight="bold">{t('search.advanced_search.publishing_period')}</Typography>
                 <PublicationDateIntervalFilter />
               </StyledFilterContainer>
@@ -166,7 +166,7 @@ export const AdvancedSearchPage = () => {
           <StyledDivider />
 
           <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '1rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: '1rem' }}>
               <StyledFilterContainer>
                 <Typography fontWeight="bold">{t('registration.contributors.contributor')}</Typography>
                 <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
@@ -181,8 +181,8 @@ export const AdvancedSearchPage = () => {
             <StyledDivider />
           </Grid>
 
-          <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '1rem' }}>
+          <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: '1rem' }}>
               <StyledFilterContainer>
                 <Typography fontWeight="bold">{t('common.publisher')}</Typography>
                 <PublisherFilter />
@@ -201,8 +201,8 @@ export const AdvancedSearchPage = () => {
             <StyledDivider />
           </Grid>
 
-          <Grid item md={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: '1rem' }}>
+          <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: '1rem' }}>
               <StyledFilterContainer>
                 <Typography fontWeight="bold">{t('common.financier')}</Typography>
                 <FundingSourceFilter />
