@@ -1,9 +1,9 @@
-import { Box, Chip, Divider, Grid, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Chip, Divider, Grid, Theme, Typography, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
@@ -34,6 +34,7 @@ export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const showFilterDivider = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
+  const history = useHistory();
 
   const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
   const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
@@ -70,6 +71,12 @@ export const AdvancedSearchPage = () => {
     meta: { errorMessage: t('feedback.error.search') },
     keepPreviousData: true,
   });
+
+  const clearSearchParams = () => {
+    history.push({
+      pathname: location.pathname,
+    });
+  };
 
   return (
     <Box sx={{ bgcolor: 'secondary.main' }}>
@@ -215,6 +222,12 @@ export const AdvancedSearchPage = () => {
               </Box>
             </Grid>
           </Box>
+        </Grid>
+
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end' }}>
+          <Button variant="outlined" onClick={clearSearchParams}>
+            NULLSTILL SØK
+          </Button>
         </Grid>
 
         <Grid item md={12} sx={{ m: '0.5rem' }}>
