@@ -147,6 +147,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   <RadioGroup
                     {...field}
                     row
+                    sx={{ flexWrap: 'nowrap' }}
                     onChange={(event) => {
                       setFieldValue(field.name, JSON.parse(event.target.value));
                       if (isFunderRrs) {
@@ -228,9 +229,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             <Box
               sx={{
                 m: '1rem 1rem 0 1rem',
-                display: 'flex',
+                display: 'grid',
+                gridTemplateColumns: '1fr auto',
                 gap: '1rem',
-                justifyContent: 'space-evenly',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {!file.publisherAuthority && customer && (
