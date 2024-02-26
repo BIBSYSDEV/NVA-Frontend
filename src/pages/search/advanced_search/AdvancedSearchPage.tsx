@@ -215,7 +215,7 @@ export const AdvancedSearchPage = () => {
         </Button>
       </Grid>
 
-      <Grid item md={12} sx={{ m: '0.5rem' }}>
+      <Grid item xs={12} sx={{ m: '0.5rem' }}>
         <RegistrationSearch registrationQuery={resultSearchQuery} />
       </Grid>
     </Grid>
