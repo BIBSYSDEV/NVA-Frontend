@@ -1,9 +1,9 @@
-import { Box, Button, Chip, Divider, Grid, SxProps, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Chip, Divider, Grid, SxProps, Theme, Typography, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
@@ -36,7 +36,6 @@ export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const showFilterDivider = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
-  const history = useHistory();
 
   const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
   const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
@@ -207,12 +206,6 @@ export const AdvancedSearchPage = () => {
             </StyledFilterContainer>
           </Grid>
         </Box>
-      </Grid>
-
-      <Grid item xs={12} sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'end' } }}>
-        <Button variant="outlined" onClick={() => history.push({ pathname: location.pathname })} sx={{ mr: '0.5rem' }}>
-          {t('search.advanced_search.clear_search')}
-        </Button>
       </Grid>
 
       <Grid item xs={12} sx={{ m: '0.5rem' }}>
