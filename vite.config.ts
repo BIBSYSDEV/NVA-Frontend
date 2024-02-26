@@ -13,9 +13,4 @@ export default defineConfig({
   build: {
     outDir: 'build',
   },
-  resolve: {
-    alias: {
-      './runtimeConfig': './runtimeConfig.browser', // Allow building with aws-amplify: https://stackoverflow.com/a/70939057
-    },
-  },
 });
