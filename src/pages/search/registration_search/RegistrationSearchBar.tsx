@@ -28,14 +28,11 @@ import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
-  ResultParam.Course,
-  ResultParam.CristinIdentifier,
-  ResultParam.Doi,
+  ResultParam.Journal,
+  ResultParam.Publisher,
   ResultParam.FundingSource,
-  ResultParam.Handle,
-  ResultParam.Identifier,
-  ResultParam.Isbn,
-  ResultParam.Issn,
+  ResultParam.ScientificIndex,
+  ResultParam.Series,
   ResultParam.TopLevelOrganization,
 ];
 
@@ -255,6 +252,40 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         <SelectedFundingFacetButton fundingIdentifier={typeof value === 'string' ? value : value[0]} />
                       );
                     }
+                    break;
+                  }
+                  case ResultParam.Publisher: {
+                    fieldName = t('common.publisher');
+                    const publisherLabels = registrationQuery.data?.aggregations?.publisher?.find(
+                      (bucket) => bucket.key === value
+                    )?.labels;
+
+                    fieldValueText = getLanguageString(publisherLabels) || t('registration.missing_name');
+                    break;
+                  }
+                  case ResultParam.Series: {
+                    fieldName = t('registration.resource_type.series');
+                    const seriesLabels = registrationQuery.data?.aggregations?.series?.find(
+                      (bucket) => bucket.key === value
+                    )?.labels;
+
+                    fieldValueText = getLanguageString(seriesLabels) || t('registration.missing_name');
+                    break;
+                  }
+                  case ResultParam.Journal: {
+                    fieldName = t('registration.resource_type.journal');
+                    const journalLabels = registrationQuery.data?.aggregations?.journal?.find(
+                      (bucket) => bucket.key === value
+                    )?.labels;
+
+                    fieldValueText = getLanguageString(journalLabels) || t('registration.missing_name');
+                    break;
+                  }
+                  case ResultParam.ScientificIndex: {
+                    fieldName = t('basic_data.nvi.nvi_publication_year');
+                    fieldValueText = registrationQuery.data?.aggregations?.scientificIndex?.find(
+                      (bucket) => bucket.key === value
+                    )?.key;
                     break;
                   }
                   default:
