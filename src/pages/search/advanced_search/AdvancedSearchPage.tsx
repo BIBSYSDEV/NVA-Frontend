@@ -215,7 +215,7 @@ export const AdvancedSearchPage = () => {
         </Box>
       </Grid>
 
-      <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end' }}>
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'end' } }}>
         <Button variant="outlined" onClick={clearSearchParams} sx={{ mr: '0.5rem' }}>
           {t('search.advanced_search.clear_search')}
         </Button>
