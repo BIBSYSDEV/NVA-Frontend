@@ -33,6 +33,7 @@ import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, AssociatedFileType, RightsRetentionStrategy } from '../../../types/associatedArtifact.types';
+import { RightsRetentionStrategyTypes } from '../../../types/customerInstitution.types';
 import { LicenseUri, licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
@@ -65,7 +66,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
-  const isFunderRrs = file.rightsRetentionStrategy?.type === 'FunderRightsRetentionStrategy';
+  const fileHasFunderRrs = file.rightsRetentionStrategy?.type === 'FunderRightsRetentionStrategy';
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
@@ -150,7 +151,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     sx={{ flexWrap: 'nowrap' }}
                     onChange={(event) => {
                       setFieldValue(field.name, JSON.parse(event.target.value));
-                      if (isFunderRrs) {
+                      if (fileHasFunderRrs) {
                         setFieldValue(licenseFieldName, null);
                         setFieldValue(rrsFieldName, undefined);
                       }
@@ -181,7 +182,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 data-testid={dataTestId.registrationWizard.files.selectLicenseField}
                 sx={{ minWidth: '15rem' }}
                 select
-                disabled={disabled || isFunderRrs}
+                disabled={disabled || fileHasFunderRrs}
                 SelectProps={{
                   renderValue: (option) => {
                     const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
@@ -234,29 +235,31 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 gap: '1rem',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {!file.publisherAuthority && customer && (
-                  <FormControlLabel
-                    label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
-                    control={
-                      <Checkbox
-                        checked={isFunderRrs}
-                        onChange={() => {
-                          if (isFunderRrs) {
-                            setFieldValue(rrsFieldName, undefined);
-                            setFieldValue(licenseFieldName, null);
-                          } else {
-                            const newRrsValu: RightsRetentionStrategy = {
-                              type: 'FunderRightsRetentionStrategy',
-                              configuredType: customer.rightsRetentionStrategy.type,
-                            };
-                            setFieldValue(rrsFieldName, newRrsValu);
-                            setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                          }
-                        }}
-                      />
-                    }
-                  />
-                )}
+                {!file.publisherAuthority &&
+                  customer?.rightsRetentionStrategy.type ===
+                    RightsRetentionStrategyTypes.NullRightsRetentionStrategy && (
+                    <FormControlLabel
+                      label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
+                      control={
+                        <Checkbox
+                          checked={fileHasFunderRrs}
+                          onChange={() => {
+                            if (fileHasFunderRrs) {
+                              setFieldValue(rrsFieldName, undefined);
+                              setFieldValue(licenseFieldName, null);
+                            } else {
+                              const newRrsValue: RightsRetentionStrategy = {
+                                type: 'FunderRightsRetentionStrategy',
+                                configuredType: customer.rightsRetentionStrategy.type,
+                              };
+                              setFieldValue(rrsFieldName, newRrsValue);
+                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                            }
+                          }}
+                        />
+                      }
+                    />
+                  )}
 
                 {user?.isPublishingCurator && (
                   <Field name={legalNoteFieldName}>
