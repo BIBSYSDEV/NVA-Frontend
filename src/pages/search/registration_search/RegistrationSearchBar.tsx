@@ -8,6 +8,7 @@ import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
+import { fetchJournal, fetchPublisher, fetchSeries } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -24,7 +25,6 @@ import { SearchPageProps } from '../SearchPage';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
 import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
-import { fetchJournal, fetchPublisher, fetchSeries } from '../../../api/publicationChannelApi';
 
 const facetParams: string[] = [
   ResultParam.Category,
