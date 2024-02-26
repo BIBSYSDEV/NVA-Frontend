@@ -1223,6 +1223,7 @@
       "license": "Lisens",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
+      "mark_if_funder_requires_rrs": "Om denne publikasjonen er finansiert av en aktør som pålegger deg å følge RRS (ref. PlanS), så markerer du det her.",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "open_file": "Åpne fil",
       "published": "Publisert",
