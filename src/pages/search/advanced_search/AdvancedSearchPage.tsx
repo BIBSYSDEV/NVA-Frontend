@@ -74,12 +74,6 @@ export const AdvancedSearchPage = () => {
     keepPreviousData: true,
   });
 
-  const clearSearchParams = () => {
-    history.push({
-      pathname: location.pathname,
-    });
-  };
-
   return (
     <Grid container sx={{ bgcolor: 'secondary.main' }}>
       <Grid
@@ -216,7 +210,7 @@ export const AdvancedSearchPage = () => {
       </Grid>
 
       <Grid item xs={12} sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'end' } }}>
-        <Button variant="outlined" onClick={clearSearchParams} sx={{ mr: '0.5rem' }}>
+        <Button variant="outlined" onClick={() => history.push({ pathname: location.pathname })} sx={{ mr: '0.5rem' }}>
           {t('search.advanced_search.clear_search')}
         </Button>
       </Grid>
