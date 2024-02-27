@@ -84,7 +84,7 @@ export const AdvancedSearchPage = () => {
       <Grid
         item
         container
-        rowGap={'1rem'}
+        rowGap={2}
         sx={{
           mx: { xs: '0.5rem', md: 0 },
           mb: '0.75rem',
