@@ -42,11 +42,12 @@ export const LanguageFilter = () => {
     .filter(Boolean) as Language[];
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '15rem' }}>
-      <FormControl fullWidth>
-        <InputLabel>{t('registration.description.primary_language')}</InputLabel>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', minWidth: '15rem' }}>
+      <FormControl>
+        <InputLabel sx={{ lineHeight: '0.75' }}>{t('registration.description.primary_language')}</InputLabel>
         <Select
           multiple
+          size="small"
           open={open}
           onOpen={toggleOpenOptions}
           onClose={toggleOpenOptions}
@@ -57,7 +58,7 @@ export const LanguageFilter = () => {
             updateSelectedLanguages(event.target.value as string[]);
             toggleOpenOptions();
           }}
-          renderValue={() => t('search.choose_one_or_more')}
+          renderValue={() => t('search.advanced_search.choose_one_or_more')}
           variant="outlined">
           {languageOptions.map(({ uri, iso6393Code, nob, eng }) => (
             <MenuItem value={iso6393Code} key={uri} data-testid={`publication-language-${uri}`}>
@@ -66,9 +67,10 @@ export const LanguageFilter = () => {
           ))}
         </Select>
       </FormControl>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', maxWidth: { lg: '25rem' } }}>
         {selectedLanguages.map((language) => (
           <Chip
+            color="primary"
             sx={{ mb: '0.25rem' }}
             key={language.uri}
             label={i18n.language === 'nob' ? language?.nob : language?.eng}
