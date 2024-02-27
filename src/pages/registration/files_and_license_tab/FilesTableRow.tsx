@@ -158,22 +158,18 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     row
                     sx={{ flexWrap: 'nowrap' }}
                     onChange={(event) => {
-                      const newVersionValue = JSON.parse(event.target.value);
-                      setFieldValue(field.name, newVersionValue);
+                      const isPublishedFile = JSON.parse(event.target.value);
+                      setFieldValue(field.name, isPublishedFile);
 
-                      if (fileHasFunderRrs) {
+                      if (isPublishedFile) {
                         setFieldValue(licenseFieldName, null);
                         setFieldValue(rrsFieldName, undefined);
-                      }
-                      if (
-                        newVersionValue !== false &&
-                        rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy
-                      ) {
-                        const newRrsValue: RightsRetentionStrategy = {
+                      } else if (rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy) {
+                        const customerRrsValue: RightsRetentionStrategy = {
                           type: 'CustomerRightsRetentionStrategy',
                           configuredType: RightsRetentionStrategyTypes.RightsRetentionStrategy,
                         };
-                        setFieldValue(rrsFieldName, newRrsValue);
+                        setFieldValue(rrsFieldName, customerRrsValue);
                         setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
                       }
                     }}>
@@ -243,7 +239,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               </TextField>
             )}
           </Field>
-          {rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && isAcceptedFile && (
+          {fileHasCustomerRrs && (
             <Typography>
               <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
                 {customer?.rightsRetentionStrategy.id && (
@@ -289,7 +285,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   />
                 )}
 
-                {isAcceptedFile && rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && (
+                {fileHasCustomerRrs && (
                   <Typography>
                     {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
                   </Typography>
