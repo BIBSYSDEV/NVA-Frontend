@@ -199,7 +199,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 data-testid={dataTestId.registrationWizard.files.selectLicenseField}
                 sx={{ minWidth: '15rem' }}
                 select
-                disabled={disabled || fileHasFunderRrs || fileHasCustomerRrs}
+                disabled={disabled}
                 SelectProps={{
                   renderValue: (option) => {
                     const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
