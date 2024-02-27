@@ -273,10 +273,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -362,7 +358,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1219,6 +1219,8 @@
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
       "find_series_in_channel_register": "Se informasjon om serien i Kanalregisteret",
       "info_from_channel_register": "Mer informasjon om valgt publiseringskanal",
+      "institution_prefers_cc_by": "Din institusjon har en <0>rettighetspolitikk</0> som anbefaler CC-BY.",
+      "institution_rights_policy_opt_out_instructions": "Om du ønsker å reservere deg fra institusjonens rettighetspolitikk, så må du sjekke om dette kan gjøres ved din institusjon. Kontakt kuratorstøtte.",
       "legal_note": "Note for juridisk avklaring",
       "license": "Lisens",
       "licenses": "Lisenser",

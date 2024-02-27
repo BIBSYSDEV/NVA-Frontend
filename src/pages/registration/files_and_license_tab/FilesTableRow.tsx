@@ -13,6 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  Link as MuiLink,
   Paper,
   Popover,
   Radio,
@@ -27,7 +28,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
@@ -154,10 +155,20 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     row
                     sx={{ flexWrap: 'nowrap' }}
                     onChange={(event) => {
-                      setFieldValue(field.name, JSON.parse(event.target.value));
+                      const newVersionValue = JSON.parse(event.target.value);
+                      setFieldValue(field.name, newVersionValue);
+
                       if (fileHasFunderRrs) {
                         setFieldValue(licenseFieldName, null);
                         setFieldValue(rrsFieldName, undefined);
+                      }
+                      if (!newVersionValue && rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy) {
+                        const newRrsValue: RightsRetentionStrategy = {
+                          type: 'CustomerRightsRetentionStrategy',
+                          configuredType: RightsRetentionStrategyTypes.RightsRetentionStrategy,
+                        };
+                        setFieldValue(rrsFieldName, newRrsValue);
+                        setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
                       }
                     }}>
                     <FormControlLabel
@@ -226,6 +237,13 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               </TextField>
             )}
           </Field>
+          <Typography>
+            <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
+              {customer?.rightsRetentionStrategy.id && (
+                <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
+              )}
+            </Trans>
+          </Typography>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -262,6 +280,13 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                         />
                       }
                     />
+                  )}
+
+                {file.publisherAuthority === false &&
+                  rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && (
+                    <Typography>
+                      {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
+                    </Typography>
                   )}
 
                 {user?.isPublishingCurator && (
