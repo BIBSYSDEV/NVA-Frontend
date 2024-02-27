@@ -67,11 +67,14 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
+  const isAcceptedFile = file.publisherAuthority === false;
+
   const rrsStrategy = file.rightsRetentionStrategy?.configuredType
     ? file.rightsRetentionStrategy.configuredType
     : customer?.rightsRetentionStrategy.type;
 
   const fileHasFunderRrs = file.rightsRetentionStrategy?.type === 'FunderRightsRetentionStrategy';
+  const fileHasCustomerRrs = file.rightsRetentionStrategy?.type === 'CustomerRightsRetentionStrategy';
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
@@ -162,7 +165,10 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                         setFieldValue(licenseFieldName, null);
                         setFieldValue(rrsFieldName, undefined);
                       }
-                      if (!newVersionValue && rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy) {
+                      if (
+                        newVersionValue !== false &&
+                        rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy
+                      ) {
                         const newRrsValue: RightsRetentionStrategy = {
                           type: 'CustomerRightsRetentionStrategy',
                           configuredType: RightsRetentionStrategyTypes.RightsRetentionStrategy,
@@ -197,7 +203,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 data-testid={dataTestId.registrationWizard.files.selectLicenseField}
                 sx={{ minWidth: '15rem' }}
                 select
-                disabled={disabled || fileHasFunderRrs}
+                disabled={disabled || fileHasFunderRrs || fileHasCustomerRrs}
                 SelectProps={{
                   renderValue: (option) => {
                     const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
@@ -237,13 +243,15 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               </TextField>
             )}
           </Field>
-          <Typography>
-            <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
-              {customer?.rightsRetentionStrategy.id && (
-                <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
-              )}
-            </Trans>
-          </Typography>
+          {rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && isAcceptedFile && (
+            <Typography>
+              <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
+                {customer?.rightsRetentionStrategy.id && (
+                  <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
+                )}
+              </Trans>
+            </Typography>
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -257,37 +265,36 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 gap: '1rem',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {file.publisherAuthority === false &&
-                  rrsStrategy === RightsRetentionStrategyTypes.NullRightsRetentionStrategy && (
-                    <FormControlLabel
-                      label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
-                      control={
-                        <Checkbox
-                          checked={fileHasFunderRrs}
-                          onChange={() => {
-                            if (fileHasFunderRrs) {
-                              setFieldValue(rrsFieldName, undefined);
-                              setFieldValue(licenseFieldName, null);
-                            } else {
-                              const newRrsValue: RightsRetentionStrategy = {
-                                type: 'FunderRightsRetentionStrategy',
-                                configuredType: RightsRetentionStrategyTypes.NullRightsRetentionStrategy,
-                              };
-                              setFieldValue(rrsFieldName, newRrsValue);
-                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                            }
-                          }}
-                        />
-                      }
-                    />
-                  )}
+                {isAcceptedFile && rrsStrategy === RightsRetentionStrategyTypes.NullRightsRetentionStrategy && (
+                  <FormControlLabel
+                    label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
+                    control={
+                      <Checkbox
+                        checked={fileHasFunderRrs}
+                        onChange={() => {
+                          if (fileHasFunderRrs) {
+                            setFieldValue(rrsFieldName, undefined);
+                            setFieldValue(licenseFieldName, null);
+                          } else {
+                            const newRrsValue: RightsRetentionStrategy = {
+                              type: 'FunderRightsRetentionStrategy',
+                              configuredType: RightsRetentionStrategyTypes.NullRightsRetentionStrategy,
+                            };
+                            setFieldValue(rrsFieldName, newRrsValue);
+                            setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                          }
+                        }}
+                      />
+                    }
+                  />
+                )}
 
-                {file.publisherAuthority === false &&
-                  rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && (
-                    <Typography>
-                      {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
-                    </Typography>
-                  )}
+                {isAcceptedFile && rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && (
+                  <Typography>
+                    {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
+                  </Typography>
+                  // TODO: Show override checkbox for curator
+                )}
 
                 {user?.isPublishingCurator && (
                   <Field name={legalNoteFieldName}>
