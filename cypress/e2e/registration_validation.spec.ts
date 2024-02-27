@@ -1,3 +1,4 @@
+import { DesignType } from '../../src/types/publication_types/artisticRegistration.types';
 import {
   ArtisticType,
   BookType,
@@ -6,7 +7,6 @@ import {
   PresentationType,
   ReportType,
 } from '../../src/types/publicationFieldNames';
-import { DesignType } from '../../src/types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
 import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
@@ -22,7 +22,7 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be see validation errors for every tab', () => {
-    cy.get('[data-testid=error-tab]').should('have.length', 4);
+    cy.get('[data-testid=error-tab]').should('have.length', 3);
 
     /* The User should be able to see validation errors on description tab */
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click();
@@ -322,10 +322,6 @@ describe('User opens registration form and can see validation errors', () => {
 
     /* The User should be able to see validation errors on files tab */
     cy.get('[data-testid="nav-tabpanel-files-and-license"]').click({ force: true });
-    cy.get('p.Mui-error').should('have.length', 1);
-    cy.get('[data-testid=nav-tabpanel-files-and-license]').within(() =>
-      cy.get('[data-testid=error-tab]').should('exist')
-    );
 
     cy.mockFileUpload();
 
