@@ -37,6 +37,7 @@ const StyledGridItem = styled(Grid)(({ theme }) => ({
     flexDirection: 'column',
   },
 }));
+StyledGridItem.defaultProps = { item: true, xs: 12 };
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
@@ -107,7 +108,7 @@ export const AdvancedSearchPage = () => {
         </Grid>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
-          <StyledGridItem item xs={12}>
+          <StyledGridItem>
             <StyledFilterContainer sx={{ width: 'fit-content' }}>
               <Typography fontWeight="bold">{t('search.advanced_search.publishing_period')}</Typography>
               <PublicationDateIntervalFilter />
@@ -163,7 +164,7 @@ export const AdvancedSearchPage = () => {
 
           <StyledDivider />
 
-          <StyledGridItem item xs={12}>
+          <StyledGridItem>
             <StyledFilterContainer>
               <Typography fontWeight="bold">{t('registration.contributors.contributor')}</Typography>
               <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
@@ -178,7 +179,7 @@ export const AdvancedSearchPage = () => {
 
           <StyledDivider />
 
-          <StyledGridItem item xs={12}>
+          <StyledGridItem>
             <StyledFilterContainer>
               <Typography fontWeight="bold">{t('common.publisher')}</Typography>
               <PublisherFilter />
@@ -197,7 +198,7 @@ export const AdvancedSearchPage = () => {
 
           <StyledDivider />
 
-          <StyledGridItem item xs={12}>
+          <StyledGridItem>
             <StyledFilterContainer>
               <Typography fontWeight="bold">{t('common.financier')}</Typography>
               <FundingSourceFilter />
