@@ -33,6 +33,20 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
     }
   }, [tickets]);
 
+  const sortingComponent = (
+    <SortSelector
+      orderKey={TicketSearchParam.OrderBy}
+      sortKey={TicketSearchParam.SortOrder}
+      aria-label={t('search.sort_by')}
+      size="small"
+      variant="standard"
+      options={[
+        { label: t('common.sort_newest_first'), orderBy: 'createdDate', sortOrder: 'desc' },
+        { label: t('common.sort_oldest_first'), orderBy: 'createdDate', sortOrder: 'asc' },
+      ]}
+    />
+  );
+
   return (
     <section>
       <Helmet>
@@ -45,16 +59,6 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
 
       <Box sx={{ mb: '1rem', display: 'flex', gap: '0.5rem' }}>
         <SearchForm sx={{ flex: '1 0 15rem' }} placeholder={t('tasks.search_placeholder')} />
-        <SortSelector
-          sx={{ minWidth: '16rem' }}
-          orderKey={TicketSearchParam.OrderBy}
-          sortKey={TicketSearchParam.SortOrder}
-          label={t('search.sort_by')}
-          options={[
-            { label: t('common.sort_newest_first'), orderBy: 'createdDate', sortOrder: 'desc' },
-            { label: t('common.sort_oldest_first'), orderBy: 'createdDate', sortOrder: 'asc' },
-          ]}
-        />
       </Box>
 
       {ticketsQuery.isLoading ? (
@@ -73,8 +77,10 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
                 setRowsPerPage(newRowsPerPage);
                 setPage(1);
               }}
+              showPaginationTop
+              sortingComponent={sortingComponent}
               maxHits={10_000}>
-              <List disablePadding sx={{ mb: '0.5rem' }}>
+              <List disablePadding sx={{ my: '0.5rem' }}>
                 {tickets.map((ticket) => (
                   <ErrorBoundary key={ticket.id}>
                     <TicketListItem key={ticket.id} ticket={ticket} />
