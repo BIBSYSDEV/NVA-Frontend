@@ -232,7 +232,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 m: '1rem 1rem 0 1rem',
                 display: 'grid',
                 gridTemplateColumns: '1fr auto',
-                alignItems: 'end',
                 gap: '1rem',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -274,13 +273,14 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                         label={t('registration.files_and_license.legal_note')}
                         multiline
                         disabled={disabled}
+                        helperText={<ErrorMessage name={field.name} />}
                       />
                     )}
                   </Field>
                 )}
               </Box>
 
-              <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'end' }}>
                 <Field name={embargoFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps) => (
                     <DatePicker
