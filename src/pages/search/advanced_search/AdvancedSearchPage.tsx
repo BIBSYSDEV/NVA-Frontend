@@ -24,6 +24,10 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
 }));
 
+const StyledTypography = styled(Typography)({
+  marginBottom: '0.5rem',
+});
+
 const GridRowDivider = () => {
   return (
     <Grid item xs={12}>
@@ -84,7 +88,7 @@ export const AdvancedSearchPage = () => {
       }}>
       <Typography variant="h3">{t('search.advanced_search.advanced_search')}</Typography>
       <Grid item xs={12}>
-        <Typography fontWeight="bold">{t('search.advanced_search.title_search')}</Typography>
+        <StyledTypography fontWeight="bold">{t('search.advanced_search.title_search')}</StyledTypography>
         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
           <SearchForm
             sx={{ flex: '1 0 15rem' }}
@@ -98,14 +102,14 @@ export const AdvancedSearchPage = () => {
 
       <Grid item container direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
         <Grid item sx={{ width: 'fit-content' }}>
-          <Typography fontWeight="bold">{t('search.advanced_search.publishing_period')}</Typography>
+          <StyledTypography fontWeight="bold">{t('search.advanced_search.publishing_period')}</StyledTypography>
           <PublicationDateIntervalFilter />
         </Grid>
 
         {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
         <Grid item>
-          <Typography fontWeight="bold">{t('common.category')}</Typography>
+          <StyledTypography fontWeight="bold">{t('common.category')}</StyledTypography>
           <section>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
               {categoryShould.slice(0, 3).map((category) => (
@@ -145,7 +149,7 @@ export const AdvancedSearchPage = () => {
         {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
         <Grid item>
-          <Typography fontWeight="bold">{t('common.language')}</Typography>
+          <StyledTypography fontWeight="bold">{t('common.language')}</StyledTypography>
           <LanguageFilter />
         </Grid>
       </Grid>
@@ -154,14 +158,14 @@ export const AdvancedSearchPage = () => {
 
       <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
         <Grid item>
-          <Typography fontWeight="bold">{t('registration.contributors.contributor')}</Typography>
+          <StyledTypography fontWeight="bold">{t('registration.contributors.contributor')}</StyledTypography>
           <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
         </Grid>
 
         {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
         <Grid item>
-          <Typography fontWeight="bold">{t('common.institution')}</Typography>
+          <StyledTypography fontWeight="bold">{t('common.institution')}</StyledTypography>
           <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
         </Grid>
       </Grid>
@@ -170,17 +174,17 @@ export const AdvancedSearchPage = () => {
 
       <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
         <Grid item>
-          <Typography fontWeight="bold">{t('common.publisher')}</Typography>
+          <StyledTypography fontWeight="bold">{t('common.publisher')}</StyledTypography>
           <PublisherFilter />
         </Grid>
 
         <Grid item>
-          <Typography fontWeight="bold">{t('registration.resource_type.journal')}</Typography>
+          <StyledTypography fontWeight="bold">{t('registration.resource_type.journal')}</StyledTypography>
           <JournalFilter />
         </Grid>
 
         <Grid item>
-          <Typography fontWeight="bold">{t('registration.resource_type.series')}</Typography>
+          <StyledTypography fontWeight="bold">{t('registration.resource_type.series')}</StyledTypography>
           <SeriesFilter />
         </Grid>
       </Grid>
@@ -189,12 +193,12 @@ export const AdvancedSearchPage = () => {
 
       <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
         <Grid item>
-          <Typography fontWeight="bold">{t('common.financier')}</Typography>
+          <StyledTypography fontWeight="bold">{t('common.financier')}</StyledTypography>
           <FundingSourceFilter />
         </Grid>
 
         <Grid item>
-          <Typography fontWeight="bold">{t('project.grant_id')}</Typography>
+          <StyledTypography fontWeight="bold">{t('project.grant_id')}</StyledTypography>
           <SearchForm
             paramName={ResultParam.FundingIdentifier}
             placeholder={t('search.search_for_funding_identifier')}
