@@ -133,6 +133,7 @@ export const dataTestId = {
   },
   startPage: {
     advancedSearch: {
+      activateFilterButton: 'activate-filter-button',
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
@@ -167,6 +168,7 @@ export const dataTestId = {
     responsibleFacets: 'responsible-facets',
     resultSearchButton: 'result-search-button',
     readMoreButton: 'button-read-more',
+    scientificIndexFacet: 'scientific-index-facet',
     searchButton: 'search-button',
     searchField: 'search-field',
     searchResultItem: 'result-list-item',

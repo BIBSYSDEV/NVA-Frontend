@@ -23,6 +23,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const selectedPublisher = searchParams.get(ResultParam.Publisher);
   const selectedSeries = searchParams.get(ResultParam.Series);
   const selectedJournal = searchParams.get(ResultParam.Journal);
+  const selectedScientificIndex = searchParams.get(ResultParam.ScientificIndex);
 
   const typeFacet = registrationQuery.data?.aggregations?.type ?? [];
   const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization ?? [];
@@ -31,6 +32,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const publisherFacet = registrationQuery.data?.aggregations?.publisher ?? [];
   const seriesFacet = registrationQuery.data?.aggregations?.series ?? [];
   const journalFacet = registrationQuery.data?.aggregations?.journal ?? [];
+  const scientificIndexFacet = registrationQuery.data?.aggregations?.scientificIndex ?? [];
 
   const addFacetFilter = (param: string, key: string) => {
     const currentValues = searchParams.get(param)?.split(',') ?? [];
@@ -226,6 +228,35 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               />
             );
           })}
+        </FacetItem>
+      )}
+
+      {scientificIndexFacet.length > 0 && (
+        <FacetItem
+          title={t('basic_data.nvi.nvi_publication_year')}
+          dataTestId={dataTestId.startPage.scientificIndexFacet}>
+          {scientificIndexFacet
+            .sort((a, b) => +b.key - +a.key)
+            .map((facet) => {
+              const isSelected = !!selectedScientificIndex?.includes(facet.key);
+
+              return (
+                <FacetListItem
+                  key={facet.key}
+                  identifier={facet.key}
+                  dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                  isLoading={registrationQuery.isLoading}
+                  isSelected={isSelected}
+                  label={facet.key}
+                  count={facet.count}
+                  onClickFacet={() =>
+                    isSelected
+                      ? removeFacetFilter(ResultParam.ScientificIndex, facet.key)
+                      : addFacetFilter(ResultParam.ScientificIndex, facet.key)
+                  }
+                />
+              );
+            })}
         </FacetItem>
       )}
 

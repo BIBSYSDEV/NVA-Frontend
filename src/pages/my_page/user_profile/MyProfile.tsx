@@ -1,6 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography, styled } from '@mui/material';
+import { Box, Button, Grid, IconButton, styled, TextField, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
@@ -12,14 +12,16 @@ import { NationalIdNumberField } from '../../../components/NationalIdNumberField
 import { PageSpinner } from '../../../components/PageSpinner';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
+import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { getValueByKey } from '../../../utils/user-helpers';
+import { getOrcidUri, getValueByKey } from '../../../utils/user-helpers';
 import { personaliaValidationSchema } from '../../../utils/validation/personaliaValidation';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { UserOrcid } from './UserOrcid';
+import { UserOrcidHelperModal } from './UserOrcidHelperModal';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName' | 'contactDetails'>;
 
@@ -68,6 +70,8 @@ export const MyProfile = () => {
       webPage: person?.contactDetails?.webPage ?? '',
     },
   };
+
+  const orcidUri = getOrcidUri(person?.identifiers);
 
   const updatePerson = async (values: CristinPersonFormData) => {
     if (user.cristinId) {
@@ -204,17 +208,28 @@ export const MyProfile = () => {
                       />
                     </StyledGridBox>
                   </Grid>
-                  <Grid item md={13}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'start',
-                        my: '0.5rem',
-                      }}>
-                      <Typography fontWeight="bold">{t('common.orcid')}</Typography>
-                      <UserOrcid user={user} />
-                    </Box>
+                  <Grid item md={16}>
+                    <Grid alignItems="center" container columns={16} spacing={1}>
+                      <Grid item xs={16} md={3}>
+                        <Box sx={{ display: 'flex', direction: 'column', alignItems: 'center' }}>
+                          <Typography fontWeight="bold">{t('common.orcid')}</Typography>
+                          <img src={orcidIcon} height="20" alt="" />
+                          <UserOrcidHelperModal />
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12} md={13}>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            direction: 'column',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                          }}>
+                          <UserOrcid user={user} />
+                          {!orcidUri && <Typography>{t('my_page.my_profile.orcid.orcid_description')}</Typography>}
+                        </Box>
+                      </Grid>
+                    </Grid>
                   </Grid>
                   <Grid item xs={16}>
                     <Typography fontWeight="bold">{t('my_page.my_profile.contact_information')}</Typography>

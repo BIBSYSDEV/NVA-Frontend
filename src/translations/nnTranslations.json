@@ -196,6 +196,7 @@
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
     "nvi": "Norsk vitskapsindeks (NVI)",
     "open": "Opne",
+    "or": "",
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
     "order": "Rekkefølgje",
@@ -672,6 +673,14 @@
           "heading": "Kople eller opprette ORCID iD",
           "paragraph0": "Logg inn på din ORCID-konto eller registrer deg viss du ikkje har ein konto.",
           "paragraph1": "ORCID gjev deg ein varig digital identifikator som du sjølv eig og kontrollerer, og som skil deg frå andre froskarar. Den kan brukast i fleire samanhengar. Ved å kople din ORCID iD er det enklare å identifisere deg som forfattar, og å hente og dele dine publikasjonar."
+        },
+        "helper_text_modal": {
+          "detailed_inforamtion": "",
+          "detailed_paragraph_1": "",
+          "detailed_paragraph_2": "",
+          "introduction": "",
+          "link": "",
+          "modal_title": ""
         },
         "orcid_description": "Kople din ORCID iD ved å logge på ORCID. Eller registrer deg for å få ein ORCID iD og kople denne. Då blir det enklare å identifisere deg",
         "remove_connection": "Fjern kopling til ORCID",
@@ -1247,6 +1256,7 @@
       "resource_type": "Kategori"
     },
     "is_revision": "Arbeidet er ein revisjon",
+    "missing_name": "Manglar namn",
     "missing_title": "Manglar tittel",
     "modal_unsaved_changes_description": "Du har gjort endringar som ikkje er lagra. Er du sikker på at du vil forlate denne sida?",
     "modal_unsaved_changes_heading": "Forlate sida utan å ha lagra?",
@@ -1700,13 +1710,25 @@
     },
     "result_is_deleted": "Resultatet er sletta",
     "status": {
-      "DELETED": "",
+      "DELETED": "Sletta",
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Sletta",
       "NEW": "Ny",
       "PUBLISHED": "Publisert",
       "PUBLISHED_METADATA": "Metadata publisert",
-      "UNPUBLISHED": ""
+      "UNPUBLISHED": "Avpublisert"
+    },
+    "support": {
+      "curator_help": {
+        "already_in_progress": "",
+        "description": "",
+        "header": ""
+      },
+      "need_help": "",
+      "self_help": {
+        "description": "",
+        "header": ""
+      }
     },
     "year_published": "Publiseringsår"
   },
@@ -1716,6 +1738,7 @@
     "additional_participants_other": "+{{count}} deltakarar",
     "advanced_search": "Avansert søk",
     "advanced_search_description": "Søk blant alle publiserte resultat",
+    "choose_one_or_more": "",
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
@@ -1799,7 +1822,7 @@
     "duplicate": "Duplikat",
     "search_duplicate_facets": "Søk med DOI, handle eller tittel",
     "search_for_duplicate": "Søk etter registrert resultat",
-    "unpublish": "",
+    "unpublish": "Avpubliser",
     "unpublish_registration": "Avpubliser forskingsresultat",
     "unpublish_registration_detail_1": "Ved avpublisering vil ikkje forskingsresultatet vere søkbare i NVA, men vil framleis vere tilgjengelege ved oppslag av referanse.",
     "unpublish_registration_detail_2": "Eventuelle filer vil bli fjerna frå forskingsresultatet ved avpublisering, men blir ikkje permanent sletta.",

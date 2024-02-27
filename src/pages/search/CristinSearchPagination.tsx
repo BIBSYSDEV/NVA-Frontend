@@ -1,8 +1,6 @@
 import { ReactNode } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { ListPagination } from '../../components/ListPagination';
-import { SortSelector } from '../../components/SortSelector';
 import { SearchParam } from '../../utils/searchHelpers';
 
 interface CristinSearchPaginationProps {
@@ -10,10 +8,16 @@ interface CristinSearchPaginationProps {
   totalCount: number;
   page: number;
   rowsPerPage: number;
+  sortingComponent?: ReactNode;
 }
 
-export const CristinSearchPagination = ({ children, totalCount, page, rowsPerPage }: CristinSearchPaginationProps) => {
-  const { t } = useTranslation();
+export const CristinSearchPagination = ({
+  children,
+  totalCount,
+  page,
+  rowsPerPage,
+  sortingComponent,
+}: CristinSearchPaginationProps) => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
@@ -22,28 +26,6 @@ export const CristinSearchPagination = ({ children, totalCount, page, rowsPerPag
     params.set(SearchParam.Results, results);
     history.push({ search: params.toString() });
   };
-
-  const sortingComponent = (
-    <SortSelector
-      orderKey="orderBy"
-      sortKey="sort"
-      aria-label={t('search.sort_by')}
-      size="small"
-      variant="standard"
-      options={[
-        {
-          orderBy: 'name',
-          sortOrder: 'asc',
-          label: t('search.sort_by_name_asc'),
-        },
-        {
-          orderBy: 'name',
-          sortOrder: 'desc',
-          label: t('search.sort_by_name_desc'),
-        },
-      ]}
-    />
-  );
 
   return (
     <ListPagination

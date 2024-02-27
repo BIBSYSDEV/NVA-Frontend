@@ -79,6 +79,7 @@ const HomePage = () => {
     publisher: params.get(ResultParam.Publisher),
     query: registrationSearchTerm,
     results: rowsPerPage,
+    scientificIndex: params.get(ResultParam.ScientificIndex),
     series: params.get(ResultParam.Series),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     tags: params.get(ResultParam.Tags),
