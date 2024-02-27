@@ -83,7 +83,7 @@ export const AdvancedSearchPage = () => {
         p: '1rem',
       }}>
       <Typography variant="h3">{t('search.advanced_search.advanced_search')}</Typography>
-      <Grid item xs={12} direction="column">
+      <Grid item xs={12}>
         <Typography fontWeight="bold">{t('search.advanced_search.title_search')}</Typography>
         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
           <SearchForm
@@ -104,7 +104,7 @@ export const AdvancedSearchPage = () => {
 
         {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-        <Grid item direction="column">
+        <Grid item>
           <Typography fontWeight="bold">{t('common.category')}</Typography>
           <section>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
@@ -144,7 +144,7 @@ export const AdvancedSearchPage = () => {
 
         {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-        <Grid item direction="column">
+        <Grid item>
           <Typography fontWeight="bold">{t('common.language')}</Typography>
           <LanguageFilter />
         </Grid>
@@ -153,14 +153,14 @@ export const AdvancedSearchPage = () => {
       <GridRowDivider />
 
       <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-        <Grid item direction="column">
+        <Grid item>
           <Typography fontWeight="bold">{t('registration.contributors.contributor')}</Typography>
           <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
         </Grid>
 
         {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-        <Grid item direction="column">
+        <Grid item>
           <Typography fontWeight="bold">{t('common.institution')}</Typography>
           <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
         </Grid>
@@ -169,17 +169,17 @@ export const AdvancedSearchPage = () => {
       <GridRowDivider />
 
       <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-        <Grid item direction="column">
+        <Grid item>
           <Typography fontWeight="bold">{t('common.publisher')}</Typography>
           <PublisherFilter />
         </Grid>
 
-        <Grid item direction="column">
+        <Grid item>
           <Typography fontWeight="bold">{t('registration.resource_type.journal')}</Typography>
           <JournalFilter />
         </Grid>
 
-        <Grid item direction="column">
+        <Grid item>
           <Typography fontWeight="bold">{t('registration.resource_type.series')}</Typography>
           <SeriesFilter />
         </Grid>
@@ -188,12 +188,12 @@ export const AdvancedSearchPage = () => {
       <GridRowDivider />
 
       <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-        <Grid item direction="column">
+        <Grid item>
           <Typography fontWeight="bold">{t('common.financier')}</Typography>
           <FundingSourceFilter />
         </Grid>
 
-        <Grid item direction="column">
+        <Grid item>
           <Typography fontWeight="bold">{t('project.grant_id')}</Typography>
           <SearchForm
             paramName={ResultParam.FundingIdentifier}
