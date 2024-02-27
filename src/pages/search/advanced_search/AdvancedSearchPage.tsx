@@ -24,11 +24,11 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
 }));
 
-const StyledFilterContainer = styled(Box)(() => ({
+const filterContainerStyles: SxProps = {
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.25rem',
-}));
+  gap: '0.5rem',
+};
 
 const gridItemStyles: SxProps = { display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: '1rem' };
 
@@ -78,15 +78,15 @@ export const AdvancedSearchPage = () => {
       <Grid
         item
         container
-        rowGap={1}
+        rowGap={'1rem'}
         sx={{
           mx: { xs: '0.5rem', md: 0 },
           mb: '0.75rem',
           p: '1rem',
         }}>
         <Typography variant="h3">{t('search.advanced_search.advanced_search')}</Typography>
-        <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <StyledFilterContainer>
+        <Grid item xs={12} direction="column">
+          <Box sx={filterContainerStyles}>
             <Typography fontWeight="bold">{t('search.advanced_search.title_search')}</Typography>
             <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
               <SearchForm
@@ -96,20 +96,20 @@ export const AdvancedSearchPage = () => {
               />
               <ExportResultsButton searchParams={params} />
             </Box>
-          </StyledFilterContainer>
-          <StyledDivider sx={{ mb: '0.5rem' }} />
+          </Box>
+          <StyledDivider sx={{ mt: '1rem' }} />
         </Grid>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
           <Grid item xs={12} sx={gridItemStyles}>
-            <StyledFilterContainer sx={{ width: 'fit-content' }}>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('search.advanced_search.publishing_period')}</Typography>
               <PublicationDateIntervalFilter />
-            </StyledFilterContainer>
+            </Box>
 
             {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-            <StyledFilterContainer>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('common.category')}</Typography>
               <section>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
@@ -145,65 +145,65 @@ export const AdvancedSearchPage = () => {
                   closeDialog={toggleCategoryFilter}
                 />
               </section>
-            </StyledFilterContainer>
+            </Box>
 
             {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-            <StyledFilterContainer>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('common.language')}</Typography>
               <LanguageFilter />
-            </StyledFilterContainer>
+            </Box>
           </Grid>
 
           <StyledDivider />
 
           <Grid item xs={12} sx={gridItemStyles}>
-            <StyledFilterContainer>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('registration.contributors.contributor')}</Typography>
               <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
-            </StyledFilterContainer>
+            </Box>
 
             {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
-            <StyledFilterContainer>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('common.institution')}</Typography>
               <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
-            </StyledFilterContainer>
+            </Box>
           </Grid>
 
           <StyledDivider />
 
           <Grid item xs={12} sx={gridItemStyles}>
-            <StyledFilterContainer>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('common.publisher')}</Typography>
               <PublisherFilter />
-            </StyledFilterContainer>
+            </Box>
 
-            <StyledFilterContainer>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('registration.resource_type.journal')}</Typography>
               <JournalFilter />
-            </StyledFilterContainer>
+            </Box>
 
-            <StyledFilterContainer>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('registration.resource_type.series')}</Typography>
               <SeriesFilter />
-            </StyledFilterContainer>
+            </Box>
           </Grid>
 
           <StyledDivider />
 
           <Grid item xs={12} sx={gridItemStyles}>
-            <StyledFilterContainer>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('common.financier')}</Typography>
               <FundingSourceFilter />
-            </StyledFilterContainer>
+            </Box>
 
-            <StyledFilterContainer>
+            <Box sx={filterContainerStyles}>
               <Typography fontWeight="bold">{t('project.grant_id')}</Typography>
               <SearchForm
                 paramName={ResultParam.FundingIdentifier}
                 placeholder={t('search.search_for_funding_identifier')}
               />
-            </StyledFilterContainer>
+            </Box>
           </Grid>
         </Box>
       </Grid>

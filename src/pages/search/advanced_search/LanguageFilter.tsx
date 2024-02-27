@@ -1,4 +1,4 @@
-import { Box, Chip, FormControl, InputLabel, MenuItem, Select, styled } from '@mui/material';
+import { Box, Chip, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { Language } from 'nva-language';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,12 +7,6 @@ import { ResultParam } from '../../../api/searchApi';
 import i18n from '../../../translations/i18n';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { languageOptions } from '../../registration/DescriptionPanel';
-
-const StyledChip = styled(Chip)(({ theme }) => ({
-  '& .MuiChip-deleteIcon': {
-    color: theme.palette.primary.main,
-  },
-}));
 
 export const LanguageFilter = () => {
   const { t } = useTranslation();
@@ -50,7 +44,7 @@ export const LanguageFilter = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', minWidth: '15rem' }}>
       <FormControl>
-        <InputLabel sx={{ lineHeight: '0.75' }}>{t('search.advanced_search.choose_one_or_more')}</InputLabel>
+        <InputLabel sx={{ lineHeight: '0.75' }}>{t('registration.description.primary_language')}</InputLabel>
         <Select
           multiple
           size="small"
@@ -73,10 +67,11 @@ export const LanguageFilter = () => {
           ))}
         </Select>
       </FormControl>
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', maxWidth: { lg: '25rem' } }}>
         {selectedLanguages.map((language) => (
-          <StyledChip
-            sx={{ mb: '0.25rem', borderColor: 'primary.main' }}
+          <Chip
+            color="primary"
+            sx={{ mb: '0.25rem' }}
             key={language.uri}
             label={i18n.language === 'nob' ? language?.nob : language?.eng}
             onDelete={() =>
