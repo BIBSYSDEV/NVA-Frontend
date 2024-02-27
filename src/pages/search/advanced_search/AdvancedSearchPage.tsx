@@ -24,25 +24,19 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
 }));
 
-const StyledFilterContainer = styled(Box)({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.5rem',
-});
-
-const StyledGridItem = styled(Grid)(({ theme }) => ({
-  gap: '1rem',
-  display: 'flex',
-  [theme.breakpoints.down('lg')]: {
-    flexDirection: 'column',
-  },
-}));
-StyledGridItem.defaultProps = { item: true, xs: 12 };
+const GridRowDivider = () => {
+  return (
+    <Grid item xs={12}>
+      <StyledDivider />
+    </Grid>
+  );
+};
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const showFilterDivider = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
+  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
   const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
@@ -81,138 +75,131 @@ export const AdvancedSearchPage = () => {
   });
 
   return (
-    <Grid container sx={{ bgcolor: 'secondary.main' }}>
-      <Grid
-        item
-        container
-        rowGap={2}
-        sx={{
-          mx: { xs: '0.5rem', md: 0 },
-          mb: '0.75rem',
-          p: '1rem',
-        }}>
-        <Typography variant="h3">{t('search.advanced_search.advanced_search')}</Typography>
-        <Grid item xs={12} direction="column">
-          <StyledFilterContainer>
-            <Typography fontWeight="bold">{t('search.advanced_search.title_search')}</Typography>
-            <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              <SearchForm
-                sx={{ flex: '1 0 15rem' }}
-                paramName={ResultParam.Title}
-                placeholder={t('search.search_for_title')}
-              />
-              <ExportResultsButton searchParams={params} />
-            </Box>
-          </StyledFilterContainer>
-          <StyledDivider sx={{ mt: '1rem' }} />
+    <Grid
+      container
+      rowGap={2}
+      sx={{
+        bgcolor: 'secondary.main',
+        p: '1rem',
+      }}>
+      <Typography variant="h3">{t('search.advanced_search.advanced_search')}</Typography>
+      <Grid item xs={12} direction="column">
+        <Typography fontWeight="bold">{t('search.advanced_search.title_search')}</Typography>
+        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+          <SearchForm
+            sx={{ flex: '1 0 15rem' }}
+            paramName={ResultParam.Title}
+            placeholder={t('search.search_for_title')}
+          />
+          <ExportResultsButton searchParams={params} />
+        </Box>
+        <StyledDivider sx={{ mt: '1rem' }} />
+      </Grid>
+
+      <Grid item container direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
+        <Grid item direction="column" sx={{ width: 'fit-content' }}>
+          <Typography fontWeight="bold">{t('search.advanced_search.publishing_period')}</Typography>
+          <PublicationDateIntervalFilter />
         </Grid>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
-          <StyledGridItem>
-            <StyledFilterContainer sx={{ width: 'fit-content' }}>
-              <Typography fontWeight="bold">{t('search.advanced_search.publishing_period')}</Typography>
-              <PublicationDateIntervalFilter />
-            </StyledFilterContainer>
+        {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-            {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
-
-            <StyledFilterContainer>
-              <Typography fontWeight="bold">{t('common.category')}</Typography>
-              <section>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-                  {categoryShould.slice(0, 3).map((category) => (
-                    <CategoryChip
-                      key={category}
-                      category={{
-                        value: category,
-                        text: t(`registration.publication_types.${category}`),
-                        selected: true,
-                      }}
-                      onClickChip={toggleCategoryFilter}
-                    />
-                  ))}
-                  {categoryShould.length > 3 ? (
-                    <Chip
-                      label={t('common.x_others', { count: categoryShould.length - 3 })}
-                      variant="filled"
-                      color="primary"
-                      onClick={toggleCategoryFilter}
-                    />
-                  ) : (
-                    <Chip
-                      label={t('registration.resource_type.select_resource_type')}
-                      color="primary"
-                      onClick={toggleCategoryFilter}
-                    />
-                  )}
-                </Box>
-                <CategoryFilterDialog
-                  open={openCategoryFilter}
-                  currentCategories={categoryShould}
-                  closeDialog={toggleCategoryFilter}
+        <Grid item direction="column">
+          <Typography fontWeight="bold">{t('common.category')}</Typography>
+          <section>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+              {categoryShould.slice(0, 3).map((category) => (
+                <CategoryChip
+                  key={category}
+                  category={{
+                    value: category,
+                    text: t(`registration.publication_types.${category}`),
+                    selected: true,
+                  }}
+                  onClickChip={toggleCategoryFilter}
                 />
-              </section>
-            </StyledFilterContainer>
+              ))}
+              {categoryShould.length > 3 ? (
+                <Chip
+                  label={t('common.x_others', { count: categoryShould.length - 3 })}
+                  variant="filled"
+                  color="primary"
+                  onClick={toggleCategoryFilter}
+                />
+              ) : (
+                <Chip
+                  label={t('registration.resource_type.select_resource_type')}
+                  color="primary"
+                  onClick={toggleCategoryFilter}
+                />
+              )}
+            </Box>
+            <CategoryFilterDialog
+              open={openCategoryFilter}
+              currentCategories={categoryShould}
+              closeDialog={toggleCategoryFilter}
+            />
+          </section>
+        </Grid>
 
-            {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+        {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-            <StyledFilterContainer>
-              <Typography fontWeight="bold">{t('common.language')}</Typography>
-              <LanguageFilter />
-            </StyledFilterContainer>
-          </StyledGridItem>
+        <Grid item direction="column">
+          <Typography fontWeight="bold">{t('common.language')}</Typography>
+          <LanguageFilter />
+        </Grid>
+      </Grid>
 
-          <StyledDivider />
+      <GridRowDivider />
 
-          <StyledGridItem>
-            <StyledFilterContainer>
-              <Typography fontWeight="bold">{t('registration.contributors.contributor')}</Typography>
-              <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
-            </StyledFilterContainer>
+      <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
+        <Grid item direction="column">
+          <Typography fontWeight="bold">{t('registration.contributors.contributor')}</Typography>
+          <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
+        </Grid>
 
-            {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
-            <StyledFilterContainer>
-              <Typography fontWeight="bold">{t('common.institution')}</Typography>
-              <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
-            </StyledFilterContainer>
-          </StyledGridItem>
+        {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
-          <StyledDivider />
+        <Grid item direction="column">
+          <Typography fontWeight="bold">{t('common.institution')}</Typography>
+          <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+        </Grid>
+      </Grid>
 
-          <StyledGridItem>
-            <StyledFilterContainer>
-              <Typography fontWeight="bold">{t('common.publisher')}</Typography>
-              <PublisherFilter />
-            </StyledFilterContainer>
+      <GridRowDivider />
 
-            <StyledFilterContainer>
-              <Typography fontWeight="bold">{t('registration.resource_type.journal')}</Typography>
-              <JournalFilter />
-            </StyledFilterContainer>
+      <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
+        <Grid item direction="column">
+          <Typography fontWeight="bold">{t('common.publisher')}</Typography>
+          <PublisherFilter />
+        </Grid>
 
-            <StyledFilterContainer>
-              <Typography fontWeight="bold">{t('registration.resource_type.series')}</Typography>
-              <SeriesFilter />
-            </StyledFilterContainer>
-          </StyledGridItem>
+        <Grid item direction="column">
+          <Typography fontWeight="bold">{t('registration.resource_type.journal')}</Typography>
+          <JournalFilter />
+        </Grid>
 
-          <StyledDivider />
+        <Grid item direction="column">
+          <Typography fontWeight="bold">{t('registration.resource_type.series')}</Typography>
+          <SeriesFilter />
+        </Grid>
+      </Grid>
 
-          <StyledGridItem>
-            <StyledFilterContainer>
-              <Typography fontWeight="bold">{t('common.financier')}</Typography>
-              <FundingSourceFilter />
-            </StyledFilterContainer>
+      <GridRowDivider />
 
-            <StyledFilterContainer>
-              <Typography fontWeight="bold">{t('project.grant_id')}</Typography>
-              <SearchForm
-                paramName={ResultParam.FundingIdentifier}
-                placeholder={t('search.search_for_funding_identifier')}
-              />
-            </StyledFilterContainer>
-          </StyledGridItem>
-        </Box>
+      <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
+        <Grid item direction="column">
+          <Typography fontWeight="bold">{t('common.financier')}</Typography>
+          <FundingSourceFilter />
+        </Grid>
+
+        <Grid item direction="column">
+          <Typography fontWeight="bold">{t('project.grant_id')}</Typography>
+          <SearchForm
+            paramName={ResultParam.FundingIdentifier}
+            placeholder={t('search.search_for_funding_identifier')}
+          />
+        </Grid>
       </Grid>
 
       <Grid item xs={12} sx={{ m: '0.5rem' }}>
