@@ -66,6 +66,10 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
+  const rrsStrategy = file.rightsRetentionStrategy?.configuredType
+    ? file.rightsRetentionStrategy.configuredType
+    : customer?.rightsRetentionStrategy.type;
+
   const fileHasFunderRrs = file.rightsRetentionStrategy?.type === 'FunderRightsRetentionStrategy';
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
@@ -235,9 +239,8 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 gap: '1rem',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {!file.publisherAuthority &&
-                  customer?.rightsRetentionStrategy.type ===
-                    RightsRetentionStrategyTypes.NullRightsRetentionStrategy && (
+                {file.publisherAuthority === false &&
+                  rrsStrategy === RightsRetentionStrategyTypes.NullRightsRetentionStrategy && (
                     <FormControlLabel
                       label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
                       control={
@@ -250,7 +253,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                             } else {
                               const newRrsValue: RightsRetentionStrategy = {
                                 type: 'FunderRightsRetentionStrategy',
-                                configuredType: customer.rightsRetentionStrategy.type,
+                                configuredType: RightsRetentionStrategyTypes.NullRightsRetentionStrategy,
                               };
                               setFieldValue(rrsFieldName, newRrsValue);
                               setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
