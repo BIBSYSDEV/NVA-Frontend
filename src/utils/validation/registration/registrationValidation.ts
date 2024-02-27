@@ -4,7 +4,6 @@ import { PublicationType } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { getMainRegistrationType, isBook } from '../../registration-helpers';
 import { YupShape } from '../validationHelpers';
-import { associatedFileValidationSchema } from './associatedArtifactValidation';
 import { contributorsValidationSchema } from './contributorValidation';
 import { fundingValidationSchema } from './fundingValidation';
 import {
@@ -87,14 +86,6 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
       }
     }),
   }),
-  associatedArtifacts: Yup.array()
-    .of(associatedFileValidationSchema)
-    .when('entityDescription', ([entityDescription]: EntityDescription[], schema) =>
-      entityDescription.reference?.doi
-        ? schema.min(0)
-        : schema.min(1, registrationErrorMessage.associatedArtifactRequired)
-    )
-    .required(registrationErrorMessage.associatedArtifactRequired),
   projects: Yup.array().of(Yup.object()),
   fundings: Yup.array().of(fundingValidationSchema),
 });
