@@ -97,7 +97,7 @@ export const AdvancedSearchPage = () => {
       </Grid>
 
       <Grid item container direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-        <Grid item direction="column" sx={{ width: 'fit-content' }}>
+        <Grid item sx={{ width: 'fit-content' }}>
           <Typography fontWeight="bold">{t('search.advanced_search.publishing_period')}</Typography>
           <PublicationDateIntervalFilter />
         </Grid>
