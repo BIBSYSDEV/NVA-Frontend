@@ -4,6 +4,9 @@ import { getYearQuery } from '../utils/registration-helpers';
 import { PublicationChannelApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
+// Until the endpoint supports search without year
+const publicationChannelYearWorkaround = '2023';
+
 export interface CreateJournalPayload {
   name: string;
   homepage: string;
@@ -45,6 +48,27 @@ export const createPublisher = async (newPublisher: CreatePublisherPayload) => {
   });
 
   return createPublisherResponse.data;
+};
+
+export const fetchJournal = async (identifier: string) => {
+  const fetchJournalResponse = await apiRequest2<Journal>({
+    url: `${PublicationChannelApiPath.Journal}/${identifier}/${publicationChannelYearWorkaround}`,
+  });
+  return fetchJournalResponse.data;
+};
+
+export const fetchPublisher = async (identifier: string) => {
+  const fetchPublisherResponse = await apiRequest2<Publisher>({
+    url: `${PublicationChannelApiPath.Publisher}/${identifier}/${publicationChannelYearWorkaround}`,
+  });
+  return fetchPublisherResponse.data;
+};
+
+export const fetchSeries = async (identifier: string) => {
+  const fetchSeriesResponse = await apiRequest2<Series>({
+    url: `${PublicationChannelApiPath.Series}/${identifier}/${publicationChannelYearWorkaround}`,
+  });
+  return fetchSeriesResponse.data;
 };
 
 export const searchForSeries = async (query: string, year: string) => {

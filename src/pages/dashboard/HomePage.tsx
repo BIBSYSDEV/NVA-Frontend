@@ -13,7 +13,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { fetchResults, FetchResultsParams, ResultParam, SortOrder } from '../../api/searchApi';
+import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -159,11 +159,13 @@ const HomePage = () => {
         </NavigationListAccordion>
 
         <NavigationListAccordion
-          title={t('search.advanced_search')}
+          title={t('search.advanced_search.advanced_search')}
           startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
           accordionPath={UrlPathTemplate.Search}
           dataTestId={dataTestId.startPage.advancedSearchAccordion}>
-          <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>{t('search.advanced_search_description')}</Typography>
+          <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>
+            {t('search.advanced_search.advanced_search_description')}
+          </Typography>
         </NavigationListAccordion>
 
         <NavigationListAccordion
