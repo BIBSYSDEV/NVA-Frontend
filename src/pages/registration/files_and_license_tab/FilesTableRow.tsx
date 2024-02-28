@@ -274,7 +274,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 m: '1rem 1rem 0 1rem',
                 display: 'grid',
                 gridTemplateColumns: '1fr auto',
-                gap: '1rem',
+                gap: '2rem',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {isAcceptedFile && isNullRrs && (
