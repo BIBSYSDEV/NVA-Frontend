@@ -16,7 +16,7 @@ export const SearchForm = ({ sx, label, placeholder, paramName = 'query' }: Sear
 
   const [inputValue, setInputValue] = useState(currentSearchTerm);
 
-  // Update inputValue based on URL param. Used to set value from parent component
+  // Update inputValue based on URL param. Used to clear value from parent component
   useEffect(() => {
     setInputValue(currentSearchTerm);
   }, [currentSearchTerm]);
