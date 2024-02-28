@@ -323,6 +323,11 @@ describe('User opens registration form and can see validation errors', () => {
     /* The User should be able to see validation errors on files tab */
     cy.get('[data-testid="nav-tabpanel-files-and-license"]').click({ force: true });
 
+    cy.get('p.Mui-error').should('have.length', 0);
+    cy.get('[data-testid=nav-tabpanel-files-and-license]').within(() =>
+      cy.get('[data-testid=error-tab]').should('not.exist')
+    );
+
     cy.mockFileUpload();
 
     cy.fixture('img.jpg').as('file');
