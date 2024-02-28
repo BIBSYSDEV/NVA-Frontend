@@ -1,43 +1,38 @@
-import { Checkbox, ListItemText, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { useState } from 'react';
+import { Checkbox, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 
-type SelectedStatusState = {
-  [key in TicketStatus]: boolean;
-};
+const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];
 
 export const TicketStatusFilter = () => {
-  const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
-    New: true,
-    Pending: true,
-    Completed: true,
-    Closed: true,
-  });
+  const { t } = useTranslation();
+  const history = useHistory();
+  const searchParams = new URLSearchParams(history.location.search);
+  const selectedStatuses = searchParams.get('ticketStatus')?.split(',') || ticketStatusValues;
 
-  const selectedStatusesArray = Object.entries(selectedStatuses)
-    .filter(([_, selected]) => selected)
-    .map(([key]) => key);
-
-  const handleChange = (event: SelectChangeEvent<typeof selectedStatusesArray>) => {
-    setSelectedStatuses(
-      Object.fromEntries(
-        Object.entries(selectedStatuses).map(([status]) => [status, event.target.value.includes(status)])
-      ) as SelectedStatusState
-    );
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
+    const newSelectedStatuses = event.target.value as TicketStatus[];
+    if (newSelectedStatuses.length > 0) {
+      searchParams.set('ticketStatus', newSelectedStatuses.join(','));
+    } else {
+      searchParams.delete('ticketStatus');
+    }
+    history.push({ search: searchParams.toString() });
   };
 
   return (
     <Select
       size="small"
+      sx={{ minWidth: '20rem' }}
       multiple
-      value={selectedStatusesArray}
-      defaultValue={selectedStatusesArray}
+      value={selectedStatuses}
       onChange={handleChange}
       renderValue={(selected) => selected.join(', ')}>
-      {Object.entries(selectedStatuses).map(([status, selected]) => (
-        <MenuItem key={status} value={status}>
-          <Checkbox checked={selected} />
-          <ListItemText primary={status} />
+      {ticketStatusValues.map((status) => (
+        <MenuItem sx={{ height: 'fit-content' }} key={status} value={status}>
+          <Checkbox checked={selectedStatuses.includes(status)} />
+          <Typography>{t(`my_page.messages.ticket_types.${status}`)}</Typography>
         </MenuItem>
       ))}
     </Select>
