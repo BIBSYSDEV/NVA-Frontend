@@ -5,7 +5,7 @@ export type AssociatedFileType = 'PublishedFile' | 'UnpublishedFile' | 'Unpublis
 
 export interface RightsRetentionStrategy {
   type: 'FunderRightsRetentionStrategy' | 'CustomerRightsRetentionStrategy' | 'OverriddenRightsRetentionStrategy';
-  configuredType: RightsRetentionStrategyTypes;
+  configuredType?: RightsRetentionStrategyTypes;
 }
 
 export interface AssociatedFile {

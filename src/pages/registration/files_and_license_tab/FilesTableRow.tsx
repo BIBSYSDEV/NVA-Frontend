@@ -73,14 +73,15 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
     ? file.rightsRetentionStrategy.configuredType
     : customer?.rightsRetentionStrategy.type;
 
+  const isNullRrs = rrsStrategy === RightsRetentionStrategyTypes.NullRightsRetentionStrategy;
+  const isCustomerRrs = rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy;
+  const isOverridableRrs = rrsStrategy === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy;
+
   const fileHasFunderRrs = file.rightsRetentionStrategy?.type === 'FunderRightsRetentionStrategy';
   const fileHasCustomerRrs = file.rightsRetentionStrategy?.type === 'CustomerRightsRetentionStrategy';
   const fileHasOverriddenRrs = file.rightsRetentionStrategy?.type === 'OverriddenRightsRetentionStrategy';
 
-  const canOverrideRrs =
-    isAcceptedFile &&
-    (rrsStrategy === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy ||
-      (rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && user?.isPublishingCurator));
+  const canOverrideRrs = isAcceptedFile && (isOverridableRrs || (isCustomerRrs && user?.isPublishingCurator));
 
   const rrsPolicyLink = customer?.rightsRetentionStrategy.id ? (
     <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
@@ -174,17 +175,10 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       if (isPublishedFile) {
                         setFieldValue(licenseFieldName, null);
                         setFieldValue(rrsFieldName, undefined);
-                      } else if (rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy) {
+                      } else if (isCustomerRrs || isOverridableRrs) {
                         const customerRrsValue: RightsRetentionStrategy = {
                           type: 'CustomerRightsRetentionStrategy',
-                          configuredType: RightsRetentionStrategyTypes.RightsRetentionStrategy,
-                        };
-                        setFieldValue(rrsFieldName, customerRrsValue);
-                        setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                      } else if (rrsStrategy === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy) {
-                        const customerRrsValue: RightsRetentionStrategy = {
-                          type: 'CustomerRightsRetentionStrategy',
-                          configuredType: RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy,
+                          configuredType: rrsStrategy,
                         };
                         setFieldValue(rrsFieldName, customerRrsValue);
                         setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
@@ -283,7 +277,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 gap: '1rem',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {isAcceptedFile && rrsStrategy === RightsRetentionStrategyTypes.NullRightsRetentionStrategy && (
+                {isAcceptedFile && isNullRrs && (
                   <FormControlLabel
                     label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
                     control={
@@ -296,7 +290,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                           } else {
                             const newRrsValue: RightsRetentionStrategy = {
                               type: 'FunderRightsRetentionStrategy',
-                              configuredType: RightsRetentionStrategyTypes.NullRightsRetentionStrategy,
+                              configuredType: rrsStrategy,
                             };
                             setFieldValue(rrsFieldName, newRrsValue);
                             setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
@@ -307,7 +301,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   />
                 )}
 
-                {fileHasCustomerRrs && rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && (
+                {fileHasCustomerRrs && isCustomerRrs && (
                   <Typography>
                     {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
                   </Typography>
