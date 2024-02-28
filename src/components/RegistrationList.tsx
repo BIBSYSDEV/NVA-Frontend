@@ -14,7 +14,7 @@ import { RootState } from '../redux/store';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
-import { getTitleString } from '../utils/registration-helpers';
+import { getTitleString, userCanDeleteRegistration } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
   getRegistrationWizardPath,
@@ -207,7 +207,7 @@ export const RegistrationListItemContent = ({
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
-          {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
+          {registration.status === 'DRAFT' && onDeleteDraftRegistration && userCanDeleteRegistration(registration) && (
             <Tooltip title={t('common.delete')}>
               <IconButton
                 data-testid={`delete-registration-${identifier}`}

@@ -84,10 +84,13 @@ interface AdditionalIdentifier {
   value: string;
 }
 
-interface PublicationNote {
+type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
+
+export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
-  note?: string;
-  publicationNoteMessage?: string;
+  note: string;
+  createdBy?: string;
+  createdDate?: string;
 }
 
 export interface BaseRegistration {
@@ -107,11 +110,12 @@ export interface BaseRegistration {
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
+  readonly allowedOperations: RegistrationOperation[];
+  readonly publicationNotes?: PublicationNote[];
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
   fundings: Funding[];
-  publicationNotes?: PublicationNote[];
 }
 
 export interface Funding {
@@ -252,6 +256,7 @@ export const emptyRegistration: Registration = {
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
+  allowedOperations: ['update', 'delete', 'unpublish'],
 };
 
 export interface ContextSeries {
@@ -278,6 +283,8 @@ export interface RegistrationAggregations {
   contributor?: AggregationValue[];
   publisher?: AggregationValue[];
   series?: AggregationValue[];
+  journal?: AggregationValue[];
+  scientificIndex?: AggregationValue[];
 }
 
 export interface ConfirmedDocument {

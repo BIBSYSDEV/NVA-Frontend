@@ -48,6 +48,7 @@ export const SeriesFilter = () => {
 
   return (
     <Autocomplete
+      size="small"
       sx={{ minWidth: '15rem' }}
       value={seriesParam && selectedSeriesQuery.data?.hits[0] ? selectedSeriesQuery.data.hits[0] : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
