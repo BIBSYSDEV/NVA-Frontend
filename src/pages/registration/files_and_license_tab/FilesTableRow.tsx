@@ -82,6 +82,10 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
     (rrsStrategy === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy ||
       (rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && user?.isPublishingCurator));
 
+  const rrsPolicyLink = customer?.rightsRetentionStrategy.id ? (
+    <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
+  ) : null;
+
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
@@ -255,18 +259,14 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           {fileHasCustomerRrs && (
             <Typography>
               <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
-                {customer?.rightsRetentionStrategy.id && (
-                  <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
-                )}
+                {rrsPolicyLink}
               </Trans>
             </Typography>
           )}
           {fileHasOverriddenRrs && (
             <Typography>
               <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
-                {customer?.rightsRetentionStrategy.id && (
-                  <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
-                )}
+                {rrsPolicyLink}
               </Trans>
             </Typography>
           )}
@@ -317,13 +317,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   <FormControlLabel
                     label={
                       <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
-                        {customer?.rightsRetentionStrategy.id && (
-                          <MuiLink
-                            href={customer.rightsRetentionStrategy.id}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          />
-                        )}
+                        {rrsPolicyLink}
                       </Trans>
                     }
                     control={
@@ -343,6 +337,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                               configuredType: rrsStrategy,
                             };
                             setFieldValue(rrsFieldName, customerRrsValue);
+                            setFieldValue(licenseFieldName, null);
                           }
                         }}
                       />
