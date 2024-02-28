@@ -339,7 +339,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   />
                 )}
 
-                {user?.isPublishingCurator && (
+                {(user?.isPublishingCurator || (isOverridableRrs && fileHasOverriddenRrs)) && (
                   <Field name={legalNoteFieldName}>
                     {({ field }: FieldProps<string>) => (
                       <TextField
