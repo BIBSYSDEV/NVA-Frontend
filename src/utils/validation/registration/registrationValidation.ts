@@ -34,7 +34,6 @@ const registrationErrorMessage = {
   publishedDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.description.date_published'),
   }),
-  associatedArtifactRequired: i18n.t('feedback.validation.must_have_associated_artifact'),
 };
 
 export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
