@@ -35,6 +35,7 @@ export const FundingSourceFilter = () => {
 
   return (
     <Autocomplete
+      size="small"
       sx={{ minWidth: '15rem' }}
       disabled={!fundingSourcesQuery.data}
       value={fundingSourcesList.find((source) => source.identifier === fundingSourceParam) ?? null}

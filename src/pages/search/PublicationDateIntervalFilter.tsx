@@ -7,7 +7,7 @@ import { ResultParam } from '../../api/searchApi';
 const commonDatepickerProps: Partial<DatePickerProps<Date | null>> = {
   views: ['year'],
   disableHighlightToday: true,
-  slotProps: { textField: { sx: { maxWidth: '10rem' } } },
+  slotProps: { textField: { sx: { maxWidth: '10rem' }, size: 'small' } },
 };
 
 interface PublicationDateIntervalFilterProps {

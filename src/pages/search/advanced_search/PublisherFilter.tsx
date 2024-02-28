@@ -48,6 +48,7 @@ export const PublisherFilter = () => {
 
   return (
     <Autocomplete
+      size="small"
       sx={{ minWidth: '15rem' }}
       value={publisherParam && selectedPublisherQuery.data?.hits[0] ? selectedPublisherQuery.data.hits[0] : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}

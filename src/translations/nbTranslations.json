@@ -179,6 +179,7 @@
     "institution": "Institusjon",
     "institutions": "Institusjoner",
     "justification": "Begrunnelse",
+    "language": "Språk",
     "last_name": "Etternavn",
     "link": "Lenke",
     "menu": "Meny",
@@ -1728,9 +1729,13 @@
   "search": {
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
-    "advanced_search": "Avansert søk",
-    "advanced_search_description": "Søk blant alle publiserte resultater",
-    "choose_one_or_more": "Velg ett eller flere",
+    "advanced_search": {
+      "advanced_search": "Avansert søk",
+      "advanced_search_description": "Søk blant alle publiserte resultater",
+      "choose_one_or_more": "Velg ett eller flere",
+      "publishing_period": "Publiseringsperiode",
+      "title_search": "Tittelsøk"
+    },
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
