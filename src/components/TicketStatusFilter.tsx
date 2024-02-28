@@ -13,24 +13,32 @@ export const TicketStatusFilter = () => {
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const newSelectedStatuses = event.target.value as TicketStatus[];
+
     if (newSelectedStatuses.length > 0) {
       searchParams.set('ticketStatus', newSelectedStatuses.join(','));
     } else {
       searchParams.delete('ticketStatus');
     }
+
     history.push({ search: searchParams.toString() });
   };
 
   return (
     <Select
       size="small"
-      sx={{ minWidth: '20rem' }}
+      sx={{ minWidth: '15rem' }}
       multiple
       value={selectedStatuses}
       onChange={handleChange}
-      renderValue={(selected) => selected.join(', ')}>
+      renderValue={(selected) => {
+        if (selected.length === ticketStatusValues.length) {
+          return [t('my_page.messages.all_ticket_types')];
+        } else {
+          return selected.map((value) => t(`my_page.messages.ticket_types.${value as TicketStatus}`)).join(', ');
+        }
+      }}>
       {ticketStatusValues.map((status) => (
-        <MenuItem sx={{ height: 'fit-content' }} key={status} value={status}>
+        <MenuItem sx={{ height: '2.5rem' }} key={status} value={status}>
           <Checkbox checked={selectedStatuses.includes(status)} />
           <Typography>{t(`my_page.messages.ticket_types.${status}`)}</Typography>
         </MenuItem>
