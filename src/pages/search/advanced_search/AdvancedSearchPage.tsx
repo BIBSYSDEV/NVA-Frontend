@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
@@ -38,7 +38,6 @@ const GridRowDivider = () => {
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
-  const location = useLocation();
   const history = useHistory();
   const showFilterDivider = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
@@ -46,7 +45,7 @@ export const AdvancedSearchPage = () => {
   const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
   const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
 
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(history.location.search);
 
   const categoryShould = (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
   const topLevelOrganizationId = params.get(ResultParam.TopLevelOrganization);
@@ -206,8 +205,8 @@ export const AdvancedSearchPage = () => {
           />
         </Grid>
       </Grid>
-      <Grid item xs={12} sx={{ display: 'flex', justifyContent: isLargeScreen ? 'end' : 'center' }}>
-        <Button variant="outlined" onClick={() => history.push(location.pathname)}>
+      <Grid container item xs={12} sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }}>
+        <Button variant="outlined" onClick={() => history.push(history.location.pathname)}>
           {t('search.reset_selection')}
         </Button>
       </Grid>
