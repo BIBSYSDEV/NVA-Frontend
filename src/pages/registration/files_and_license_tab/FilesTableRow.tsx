@@ -75,6 +75,12 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
   const fileHasFunderRrs = file.rightsRetentionStrategy?.type === 'FunderRightsRetentionStrategy';
   const fileHasCustomerRrs = file.rightsRetentionStrategy?.type === 'CustomerRightsRetentionStrategy';
+  const fileHasOverriddenRrs = file.rightsRetentionStrategy?.type === 'OverriddenRightsRetentionStrategy';
+
+  const canOverrideRrs =
+    isAcceptedFile &&
+    (rrsStrategy === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy ||
+      (rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && user?.isPublishingCurator));
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
@@ -171,6 +177,13 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                         };
                         setFieldValue(rrsFieldName, customerRrsValue);
                         setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                      } else if (rrsStrategy === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy) {
+                        const customerRrsValue: RightsRetentionStrategy = {
+                          type: 'CustomerRightsRetentionStrategy',
+                          configuredType: RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy,
+                        };
+                        setFieldValue(rrsFieldName, customerRrsValue);
+                        setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
                       }
                     }}>
                     <FormControlLabel
@@ -248,6 +261,15 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               </Trans>
             </Typography>
           )}
+          {fileHasOverriddenRrs && (
+            <Typography>
+              <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
+                {customer?.rightsRetentionStrategy.id && (
+                  <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
+                )}
+              </Trans>
+            </Typography>
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -285,33 +307,43 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   />
                 )}
 
-                {fileHasCustomerRrs && (
+                {fileHasCustomerRrs && rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy && (
                   <Typography>
                     {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
                   </Typography>
                 )}
 
-                {/* TODO */}
-                {((fileHasCustomerRrs && user?.isPublishingCurator) ||
-                  rrsStrategy === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy) && (
+                {canOverrideRrs && (
                   <FormControlLabel
-                    label={'Jeg ønsker å følge rettighetspolitikken til institusjonen min.'}
+                    label={
+                      <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
+                        {customer?.rightsRetentionStrategy.id && (
+                          <MuiLink
+                            href={customer.rightsRetentionStrategy.id}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          />
+                        )}
+                      </Trans>
+                    }
                     control={
                       <Checkbox
-                        checked={fileHasFunderRrs}
+                        checked={!fileHasOverriddenRrs}
                         onChange={() => {
-                          //   if (fileHasFunderRrs) {
-                          //     setFieldValue(rrsFieldName, undefined);
-                          //     setFieldValue(licenseFieldName, null);
-                          //   } else {
-                          //     const newRrsValue: RightsRetentionStrategy = {
-                          //       type: 'FunderRightsRetentionStrategy',
-                          //       configuredType: RightsRetentionStrategyTypes.NullRightsRetentionStrategy,
-                          //     };
-                          //     setFieldValue(rrsFieldName, newRrsValue);
-                          //     setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                          //   }
-                          //
+                          if (fileHasOverriddenRrs) {
+                            const customerRrsValue: RightsRetentionStrategy = {
+                              type: 'CustomerRightsRetentionStrategy',
+                              configuredType: rrsStrategy,
+                            };
+                            setFieldValue(rrsFieldName, customerRrsValue);
+                            setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                          } else {
+                            const customerRrsValue: RightsRetentionStrategy = {
+                              type: 'OverriddenRightsRetentionStrategy',
+                              configuredType: rrsStrategy,
+                            };
+                            setFieldValue(rrsFieldName, customerRrsValue);
+                          }
                         }}
                       />
                     }
