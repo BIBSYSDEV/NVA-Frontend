@@ -330,8 +330,6 @@ export const dataTestId = {
       embargoDateField: 'embargo-date-field',
       expandFileRowButton: 'expand-file-row-button',
       fileRow: 'uploaded-file-row',
-      noFilesOrLinksButton: 'no-files-or-links-button',
-      noFilesOrLinksWarning: 'no-files-or-links-warning',
       legalNoteField: 'legal-note-field',
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
