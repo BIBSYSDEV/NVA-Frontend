@@ -289,7 +289,33 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   <Typography>
                     {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
                   </Typography>
-                  // TODO: Show override checkbox for curator
+                )}
+
+                {/* TODO */}
+                {((fileHasCustomerRrs && user?.isPublishingCurator) ||
+                  rrsStrategy === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy) && (
+                  <FormControlLabel
+                    label={'Jeg ønsker å følge rettighetspolitikken til institusjonen min.'}
+                    control={
+                      <Checkbox
+                        checked={fileHasFunderRrs}
+                        onChange={() => {
+                          //   if (fileHasFunderRrs) {
+                          //     setFieldValue(rrsFieldName, undefined);
+                          //     setFieldValue(licenseFieldName, null);
+                          //   } else {
+                          //     const newRrsValue: RightsRetentionStrategy = {
+                          //       type: 'FunderRightsRetentionStrategy',
+                          //       configuredType: RightsRetentionStrategyTypes.NullRightsRetentionStrategy,
+                          //     };
+                          //     setFieldValue(rrsFieldName, newRrsValue);
+                          //     setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                          //   }
+                          //
+                        }}
+                      />
+                    }
+                  />
                 )}
 
                 {user?.isPublishingCurator && (
