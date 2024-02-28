@@ -1,6 +1,6 @@
-import { Box, List, Typography } from '@mui/material';
+import { Box, Checkbox, List, ListItemText, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { TicketSearchParam } from '../../../api/searchApi';
@@ -9,7 +9,7 @@ import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
-import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
+import { TicketSearchResponse, TicketStatus } from '../../../types/publication_types/ticket.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { TicketListItem } from './TicketListItem';
 
@@ -21,6 +21,10 @@ interface TicketListProps {
   page: number;
   title: string;
 }
+
+type SelectedStatusState = {
+  [key in TicketStatus]: boolean;
+};
 
 export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
@@ -47,6 +51,25 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
     />
   );
 
+  const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
+    New: true,
+    Pending: true,
+    Completed: true,
+    Closed: true,
+  });
+
+  const selectedStatusesArray = Object.entries(selectedStatuses)
+    .filter(([_, selected]) => selected)
+    .map(([key]) => key);
+
+  const handleChange = (event: SelectChangeEvent<typeof selectedStatusesArray>) => {
+    setSelectedStatuses(
+      Object.fromEntries(
+        Object.entries(selectedStatuses).map(([status]) => [status, event.target.value.includes(status)])
+      ) as SelectedStatusState
+    );
+  };
+
   return (
     <section>
       <Helmet>
@@ -58,6 +81,21 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       </Typography>
 
       <Box sx={{ mb: '1rem', display: 'flex', gap: '0.5rem' }}>
+        <Select
+          size="small"
+          multiple
+          value={selectedStatusesArray}
+          defaultValue={selectedStatusesArray}
+          onChange={handleChange}
+          renderValue={(selected) => selected.join(', ')}>
+          {Object.entries(selectedStatuses).map(([status, selected]) => (
+            <MenuItem key={status} value={status}>
+              <Checkbox checked={selected} />
+              <ListItemText primary={status} />
+            </MenuItem>
+          ))}
+        </Select>
+
         <SearchForm sx={{ flex: '1 0 15rem' }} placeholder={t('tasks.search_placeholder')} />
       </Box>
 
