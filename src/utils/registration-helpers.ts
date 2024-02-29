@@ -55,7 +55,6 @@ import {
 } from '../types/registration.types';
 import { User } from '../types/user.types';
 import { hasCuratorRole } from './user-helpers';
-import { getInitials } from './general-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -667,10 +666,6 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
-
-export const getContributorInitials = (name: string) => {
-  return getInitials(name);
-};
 
 export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
