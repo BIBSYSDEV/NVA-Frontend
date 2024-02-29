@@ -1777,10 +1777,8 @@
   },
   "tasks": {
     "all_nvi_results": "Alle NVI-resultater",
-    "all_user_dialogs": "Alle brukerdialoger",
     "correction_list": "Retteliste",
     "my_nvi_results": "Mine NVI-resultater",
-    "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
       "approve_nvi_candidate_description": "Godkjenning av resultatet.",
