@@ -2,14 +2,14 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { LoadingButton } from '@mui/lab';
 import { Button, DialogActions, DialogContent, IconButton, TextField, Tooltip } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CustomerInstitutionFieldNames, CustomerInstitutionFormData } from '../../../types/customerInstitution.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { useQuery } from '@tanstack/react-query';
 import { fetchDoiAgent } from '../../../api/customerInstitutionsApi';
 import { Modal } from '../../../components/Modal';
+import { CustomerInstitutionFieldNames, CustomerInstitutionFormData } from '../../../types/customerInstitution.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface CustomerDoiPasswordFieldProps {
   doiAgentId: string;
@@ -54,7 +54,10 @@ export const CustomerDoiPasswordField = ({ doiAgentId, disabled }: CustomerDoiPa
         {t('basic_data.institutions.doi_password')}
       </LoadingButton>
 
-      <Modal title={'Passord'} open={showPasswordInputModal} onClose={cancelPasswordChange}>
+      <Modal
+        title={t('basic_data.institutions.doi_password')}
+        open={showPasswordInputModal}
+        onClose={cancelPasswordChange}>
         <DialogContent>
           <Field
             name={CustomerInstitutionFieldNames.DoiPassword}
@@ -97,11 +100,11 @@ export const CustomerDoiPasswordField = ({ doiAgentId, disabled }: CustomerDoiPa
           </Field>
         </DialogContent>
         <DialogActions>
-          <Button data-testid="cancel-update-doi-password" onClick={cancelPasswordChange}>
+          <Button data-testid={dataTestId.common.cancel} onClick={cancelPasswordChange}>
             {t('common.cancel')}
           </Button>
           <Button
-            data-testid="save-update-doi-password"
+            data-testid={dataTestId.common.save}
             onClick={() => setShowPasswordInputModal(false)}
             variant="outlined">
             {t('common.save')}

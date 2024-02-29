@@ -77,7 +77,7 @@ export const dataTestId = {
     personRegisterLink: 'person-register-link',
     personRegisterSearchBar: 'person-register-search-bar',
   },
-  common: { pagination: 'pagination' },
+  common: { pagination: 'pagination', save: 'save', cancel: 'cancel' },
   confirmDialog: {
     acceptButton: 'accept-button',
     cancelButton: 'cancel-button',
