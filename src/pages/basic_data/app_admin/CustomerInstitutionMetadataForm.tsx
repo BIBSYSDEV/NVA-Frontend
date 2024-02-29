@@ -178,7 +178,7 @@ export const CustomerInstitutionMetadataForm = ({
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem' }}>
               <Field name={CustomerInstitutionFieldNames.NviInstitution}>
                 {({ field }: FieldProps<boolean>) => (
-                  <Box>
+                  <div>
                     <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                       {t('common.nvi')}
                     </FormLabel>
@@ -198,7 +198,7 @@ export const CustomerInstitutionMetadataForm = ({
                         />
                       }
                     />
-                  </Box>
+                  </div>
                 )}
               </Field>
 
