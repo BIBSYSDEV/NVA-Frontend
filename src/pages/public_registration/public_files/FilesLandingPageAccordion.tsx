@@ -62,33 +62,31 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
         </Box>
       }>
       {registration.associatedArtifacts.length === 0 && (
-        <>
-          <Box
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '1rem',
+          }}>
+          <Typography
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '1rem',
-            }}>
-            <Typography
-              sx={{
-                py: '0.3rem',
-                px: { xs: '2rem', sm: '3rem' },
-                bgcolor: 'primary.light',
-                color: 'primary.contrastText',
-                flex: 'none',
-              }}
-              data-testid={dataTestId.registrationLandingPage.noLinkOrFilesWarning}>
-              {t('registration.files_and_license.no_files_or_links_present_in_this_registration')}
-            </Typography>
-            <LinkButton
-              data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
-              startIcon={<FileUploadIcon />}
-              href={`${getRegistrationWizardPath(registration.identifier)}?tab=3`}>
-              {t('registration.files_and_license.add_files_or_links')}
-            </LinkButton>
-          </Box>
-        </>
+              py: '0.3rem',
+              px: { xs: '2rem', sm: '3rem' },
+              bgcolor: 'primary.light',
+              color: 'primary.contrastText',
+              flex: 'none',
+            }}
+            data-testid={dataTestId.registrationLandingPage.noLinkOrFilesWarning}>
+            {t('registration.files_and_license.no_files_or_links_present_in_this_registration')}
+          </Typography>
+          <LinkButton
+            data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
+            startIcon={<FileUploadIcon />}
+            href={`${getRegistrationWizardPath(registration.identifier)}?tab=3`}>
+            {t('registration.files_and_license.add_files_or_links')}
+          </LinkButton>
+        </Box>
       )}
       {filesToShow.map((file, index) => (
         <FileRow
