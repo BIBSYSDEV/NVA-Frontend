@@ -8,7 +8,7 @@ import { removeSearchParamValue } from '../../../../utils/searchHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
-import { PublicationDateIntervalFilter } from '../../PublicationDateIntervalFilter';
+import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
@@ -261,7 +261,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       <FacetItem dataTestId={dataTestId.startPage.publicationDateFilter} title={t('common.publishing_year')}>
-        <PublicationDateIntervalFilter
+        <PublicationYearIntervalFilter
           datePickerProps={{ slotProps: { textField: { size: 'small' } } }}
           boxProps={{ sx: { m: '0.5rem 1rem 1rem 1rem' } }}
         />
