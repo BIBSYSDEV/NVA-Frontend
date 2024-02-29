@@ -69,13 +69,6 @@ export const AssigneeSelector = ({
         </li>
       )}
       disabled={isLoading}
-      filterOptions={(options, state) => {
-        const filter = state.inputValue.toLocaleLowerCase();
-        return options.filter((option) => {
-          const name = getFullName(option.givenName, option.familyName).toLocaleLowerCase();
-          return name.includes(filter);
-        });
-      }}
       onChange={async (_, value) => {
         try {
           await onSelectAssignee(value?.username ?? '');

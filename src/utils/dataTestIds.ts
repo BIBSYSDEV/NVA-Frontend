@@ -577,6 +577,9 @@ export const dataTestId = {
       newCheckbox: 'new-status-checkbox',
       pendingCheckbox: 'pending-status-checkbox',
     },
+    ticketList: {
+      curatorSelector: 'curator-selector',
+    },
     typeSearch: {
       doiButton: 'doi-button',
       publishingButton: 'publishing-request-button',

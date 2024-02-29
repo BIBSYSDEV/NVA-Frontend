@@ -6,6 +6,7 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/ass
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
+  allPublicationInstanceTypes,
   ArtisticType,
   BookType,
   ChapterType,
@@ -18,7 +19,6 @@ import {
   PublicationType,
   ReportType,
   ResearchDataType,
-  allPublicationInstanceTypes,
 } from '../types/publicationFieldNames';
 import {
   AudioVisualPublication,
@@ -55,6 +55,7 @@ import {
 } from '../types/registration.types';
 import { User } from '../types/user.types';
 import { hasCuratorRole } from './user-helpers';
+import { getInitials } from './general-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -668,13 +669,7 @@ export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
 export const getContributorInitials = (name: string) => {
-  if (!name) return '';
-
-  const splittedNames = name.split(' ');
-  const firstNameInitial = splittedNames[0][0];
-  const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
-  const initials = `${firstNameInitial}${lastNameInitial}`.toUpperCase();
-  return initials;
+  return getInitials(name);
 };
 
 export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>

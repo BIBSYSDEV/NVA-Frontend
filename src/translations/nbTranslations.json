@@ -444,6 +444,7 @@
       "download_file": "Kunne ikke laste ned fil",
       "fetch": "Kunne ikke hente {{resource}}",
       "get_affiliation_name": "Kunne ikke hente navn på tilknytning for {{unitUri}}",
+      "get_curators_for_institution": "Kunne ikke hente kuratorer",
       "get_customer": "Kunne ikke hente kundeinstitusjon",
       "get_customers": "Kunne ikke hente kundeinstitusjoner",
       "get_doi": "Kunne ikke hente lenkedata",

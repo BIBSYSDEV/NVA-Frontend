@@ -8,6 +8,7 @@ import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
 export enum TicketSearchParam {
+  Assignee = 'assignee',
   Query = 'query',
   Role = 'role',
   Results = 'results',
@@ -19,6 +20,7 @@ export enum TicketSearchParam {
 }
 
 export interface FetchTicketsParams {
+  [TicketSearchParam.Assignee]?: string | null;
   [TicketSearchParam.Query]?: string | null;
   [TicketSearchParam.Role]?: 'creator';
   [TicketSearchParam.Results]?: number | null;

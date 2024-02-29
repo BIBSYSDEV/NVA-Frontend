@@ -13,8 +13,8 @@ import {
   MenuItem,
   Radio,
   Select,
-  Typography,
   styled,
+  Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { FetchTicketsParams, TicketSearchParam, fetchNviCandidates, fetchTickets } from '../../api/searchApi';
+import { fetchNviCandidates, fetchTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -138,7 +138,8 @@ const TasksPage = () => {
       ? `(${selectedTicketStatuses.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const ticketAssigneeQuery = showOnlyMyTasks && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
+  const assignee = searchParams.get(TicketSearchParam.Assignee);
+  const ticketAssigneeQuery = assignee ? `(assignee.username:"${assignee}")` : '';
 
   const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
@@ -306,28 +307,6 @@ const TasksPage = () => {
                     : t('my_page.messages.types.GeneralSupportCase')}
                 </SelectableButton>
               )}
-            </StyledTicketSearchFormGroup>
-
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
-              <StyledSearchModeButton
-                data-testid={dataTestId.tasksPage.searchMode.myTasksButton}
-                isSelected={showOnlyMyTasks}
-                startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                onClick={() => {
-                  if (ticketStatusFilter.New) {
-                    setTicketStatusFilter({ ...ticketStatusFilter, New: false });
-                  }
-                  setShowOnlyMyTasks(true);
-                }}>
-                {t('tasks.my_user_dialogs')}
-              </StyledSearchModeButton>
-              <StyledSearchModeButton
-                data-testid={dataTestId.tasksPage.searchMode.allTasksButton}
-                isSelected={!showOnlyMyTasks}
-                startIcon={!showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                onClick={() => setShowOnlyMyTasks(false)}>
-                {t('tasks.all_user_dialogs')}
-              </StyledSearchModeButton>
             </StyledTicketSearchFormGroup>
 
             <StyledTicketSearchFormGroup>
