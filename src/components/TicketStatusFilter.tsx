@@ -9,7 +9,8 @@ export const TicketStatusFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const selectedStatuses = searchParams.get(TicketSearchParam.Status)?.split(',') || ticketStatusValues;
+  const selectedStatuses = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
+    ticketStatusValues) as TicketStatus[];
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const newSelectedStatuses = event.target.value as TicketStatus[];
@@ -32,11 +33,11 @@ export const TicketStatusFilter = () => {
         multiple
         value={selectedStatuses}
         onChange={handleChange}
-        renderValue={(selected) => {
+        renderValue={(selected: TicketStatus[]) => {
           if (selected.length === ticketStatusValues.length) {
             return t('my_page.messages.all_ticket_types');
           } else {
-            return selected.map((value) => t(`my_page.messages.ticket_types.${value as TicketStatus}`)).join(', ');
+            return selected.map((value) => t(`my_page.messages.ticket_types.${value}`)).join(', ');
           }
         }}
         label={t('tasks.status')}>

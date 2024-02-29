@@ -86,8 +86,8 @@ const MyPagePage = () => {
   const typeQuery =
     selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const selectedStatusesArray =
-    searchParams.get(TicketSearchParam.Status)?.split(',') ?? (ticketStatusValues as TicketStatus[]);
+  const selectedStatusesArray = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
+    ticketStatusValues) as TicketStatus[];
 
   const statusQuery =
     selectedStatusesArray.length > 0

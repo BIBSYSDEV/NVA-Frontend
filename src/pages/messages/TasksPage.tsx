@@ -129,8 +129,8 @@ const TasksPage = () => {
   const ticketTypeQuery =
     selectedTicketTypes.length > 0 ? `(${selectedTicketTypes.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const selectedStatusesArray =
-    searchParams.get(TicketSearchParam.Status)?.split(',') ?? (ticketStatusValues as TicketStatus[]);
+  const selectedStatusesArray = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
+    ticketStatusValues) as TicketStatus[];
 
   const ticketStatusQuery =
     selectedStatusesArray.length > 0
