@@ -41,7 +41,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     (userIsRegistrationAdmin && registration.associatedArtifacts.length === 0) ? (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
-      defaultExpanded={true}
+      defaultExpanded
       heading={
         <Box
           sx={{
