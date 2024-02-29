@@ -496,6 +496,9 @@ export const dataTestId = {
     createProjectButton: 'create-project-button',
     addPromotedPublicationButton: 'edit-promoted-publication-button',
     messagesAccordion: 'messages-accordion',
+    myMessages: {
+      ticketStatusField: 'ticket-status-field',
+    },
     myProfileLink: 'my-profile-link',
     myProfile: {
       cristinIdField: 'cristin-id-field',
