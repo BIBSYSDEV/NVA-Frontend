@@ -187,6 +187,7 @@ export const dataTestId = {
   },
   registrationLandingPage: {
     abstractAccordion: 'abstract-accordion',
+    addLinkOrFilesButton: 'add-link-or-files-button',
     authorLink: (id: string) => `presentation-author-link-${id}`,
     contributors: 'public-registration-contributors',
     cristinLink: 'cristin-link',
@@ -213,6 +214,7 @@ export const dataTestId = {
     keywords: 'public-registration-keywords',
     license: 'public-registration-license',
     linkedInButton: 'linkedin-button',
+    noLinkOrFilesWarning: 'no-link-or-files-warning-typhography',
     npi: 'public-registration-npi',
     openFileButton: 'open-file-button',
     primaryLanguage: 'public-registration-primary-language',
