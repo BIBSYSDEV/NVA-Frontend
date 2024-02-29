@@ -76,7 +76,6 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
                 px: { xs: '2rem', sm: '3rem' },
                 bgcolor: 'primary.light',
                 color: 'primary.contrastText',
-                flex: 'none',
               }}
               data-testid={dataTestId.registrationLandingPage.noLinkOrFilesWarning}>
               {t('registration.files_and_license.no_files_or_links_present_in_this_registration')}
