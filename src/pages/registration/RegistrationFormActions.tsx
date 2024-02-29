@@ -178,8 +178,9 @@ export const RegistrationFormActions = ({
         fullWidth
         open={openSupportModal}
         onClose={toggleSupportModal}
-        headingText={t('my_page.messages.types.GeneralSupportCase')}
-        dataTestId={dataTestId.registrationWizard.formActions.supportModal}>
+        headingText={t('registration.support.need_help')}
+        dataTestId={dataTestId.registrationWizard.formActions.supportModal}
+        PaperProps={{ sx: { bgcolor: 'generalSupportCase.light', padding: '1rem' } }}>
         <SupportModalContent closeModal={toggleSupportModal} registration={values} />
       </Modal>
 

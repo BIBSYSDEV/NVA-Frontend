@@ -22,7 +22,6 @@
     "cancel_create_user_text": "Du må opprette bruker for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
     "cancel_create_user_title": "Ønsker du å avbryte?",
     "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller bidragsyter på resultater.",
-    "expired_token_info": "Sesjonen din har utløpt. Vennligst logg inn på nytt.",
     "forbidden": "Forbudt",
     "forbidden_description": "Du er ikke autorisert til å se innholdet på denne siden. Kontakt administrator om dette ikke stemmer.",
     "login": "Logg inn",
@@ -118,6 +117,7 @@
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
+      "nvi_publication_year": "NVI publiseringsår",
       "period_year": "Publiseringsår",
       "update_reporting_period": "Oppdater rapporteringsperiode"
     },
@@ -180,6 +180,7 @@
     "institution": "Institusjon",
     "institutions": "Institusjoner",
     "justification": "Begrunnelse",
+    "language": "Språk",
     "last_name": "Etternavn",
     "link": "Lenke",
     "menu": "Meny",
@@ -197,6 +198,7 @@
     "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
+    "or": "Eller",
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
     "order": "Rekkefølge",
@@ -272,6 +274,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -357,11 +363,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -561,7 +563,6 @@
       "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_correct_errors": "Du må rette opp feil",
-      "must_have_associated_artifact": "Du må laste opp minst en fil eller en lenke for denne registreringen",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
       "not_selected": "{{field}} er ikke valgt"
     }
@@ -667,12 +668,14 @@
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
         "delete_orcid": "Fjern ORCID-kobling",
-        "dialog": {
-          "heading": "Koble eller opprette ORCID iD",
-          "paragraph0": "Logg inn på din ORCID-konto eller registrer deg hvis du ikke har en konto.",
-          "paragraph1": "ORCID gir deg en varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den kan brukes den i mange sammenhenger. Ved å koble din ORCID iD er det enklere å identifisere deg som forfatter, og å hente og dele dine publikasjoner."
+        "helper_text_modal": {
+          "detailed_paragraph_1": "Om du har en ORCID, så oppfordres du til å kople den til din forskerprofil. Om du ikke har en ORCID, så kan du opprette den samtidig som du kopler den til forskerprofilen din.",
+          "detailed_paragraph_2": "Enkelte forleggere og finansiører krever at du har en ORCID, for å kunne levere inn henholdsvis manuskript og søknader om finansiering. Om de ikke krever det, så bør du som forsker kreve det. Da blir dine forskningsresultat enklere for alle å sitere korrekt og det blir mindre arbeid i etterkant. Kopling av ORCID til din forskerprofil er et tilbud, ikke et krav. Du kan trekke din kobling når du ønsker under MIN SIDE | Personalia.",
+          "introduction": "ORCID gir deg varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den viktigste gevinsten du får i dag ved å kople din ORCID til din forskerprofil, er raskere, mer korrekt og import av flere av dine publikasjoner.",
+          "link": "For ytterligere informasjon gå til ORCID",
+          "modal_title": "Open Researcher Contributor IDentity (ORCID)"
         },
-        "orcid_description": "Koble din ORCID iD ved å logge på ORCID. Eller registrer deg for å få en ORCID iD og koble denne. Da blir det enklere å identifisere deg",
+        "orcid_description": "Om du kobler din ORCID blir det lettere å identifisere deg",
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
@@ -1070,12 +1073,12 @@
       "add_unverified_contributor": "Legg til en uidentifisert bidragsyter.",
       "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
-      "identification": "Identifisering",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "contributor_not_found": "Finner ikke person",
       "corresponding": "Korresponderende",
       "department": "Enhet",
+      "identification": "Identifisering",
       "identity_status": {
         "confirmed_identity": "Bekreftet identitet",
         "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
@@ -1160,7 +1163,7 @@
       "verify_person": "Identifiser person"
     },
     "curator_support_info": "Her kan du spørre din kurator om hjelp med alt som har med registrering og publisering av forskningsresultat. Du finner svar på dine spørsmål på \"Min side\" og på registreringens presentasjonsside.",
-    "delete_registration": "Slette resultat",
+    "delete_registration": "Avpubliser forskningsresultat",
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1197,7 +1200,6 @@
     "files_and_license": {
       "accepted": "Akseptert",
       "accepted_version": "Akseptert versjon",
-      "add_files_or_link": "Legg til filer eller lenke",
       "administrative_agreement": "Administrativ avtale",
       "administrative_contract": "Intern fil som aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
@@ -1218,15 +1220,15 @@
       "license": "Lisens",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
+      "mark_if_funder_requires_rrs": "Om denne publikasjonen er finansiert av en aktør som pålegger deg å følge RRS (ref. PlanS), så markerer du det her.",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "open_file": "Åpne fil",
       "published": "Publisert",
       "published_version": "Publisert versjon",
       "remove_file": "Fjern fil",
       "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
+      "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
-      "resource_has_no_files_or_links_paragraph0": "Uten filer eller lenker er den publiserte ressursen vanskeligere å gjenbruke og kan gi mindre verdi for andre. Om ikke data kan deles, så bør informasjon om data og hvordan tilgang kan oppnås, deles.",
-      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er et sett med prinsipper for å støtte gjenbruk av digitale ressurser. NFR og EC stiller klare krav til at data skal være tilgjengelig og deponert sammen med metadata som avklarer eventuelle betingelser for tilgang.",
       "size": "Størrelse",
       "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
       "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
@@ -1244,8 +1246,8 @@
       "files_and_license": "Fil, lisens og lenke",
       "resource_type": "Kategori"
     },
-    "is_registration_error_question": "Er dette en feilregistrering?",
     "is_revision": "Arbeidet er en revisjon",
+    "missing_name": "Mangler navn",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
@@ -1699,20 +1701,38 @@
     },
     "result_is_deleted": "Resultatet er slettet",
     "status": {
+      "DELETED": "Slettet",
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
       "NEW": "Ny",
       "PUBLISHED": "Publisert",
-      "PUBLISHED_METADATA": "Metadata publisert"
+      "PUBLISHED_METADATA": "Metadata publisert",
+      "UNPUBLISHED": "Avpublisert"
+    },
+    "support": {
+      "curator_help": {
+        "already_in_progress": "Du har allerede en dialog med kurator. Lagre og gå til resultatet via MIN SIDE for å fortsette dialogen der.",
+        "description": "<0>Her kan du sende en melding direkte til kurator ved din institusjon.</0><0>Kurator kan hjelpe deg med å registrere og endre på publiserte og upubliserte forskningsresultat.</0><0>Du vil få svar på MIN SIDE, der ser du hvem som er din(e) kuratorer. Kuratorstøtte kan besvares av ulike kuratorer på din institusjon.</0>",
+        "header": "Trenger du hjelp av kurator?"
+      },
+      "need_help": "Trenger du hjelp?",
+      "self_help": {
+        "description": "Trenger du hjelp? Se om du kan løse problemet selv ved å se på brukerveiledningene.",
+        "header": "Veiledning for å registrere et forskningsresultat"
+      }
     },
     "year_published": "Publiseringsår"
   },
   "search": {
-    "add_filter": "Legg til filter",
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
-    "advanced_search": "Avansert søk",
-    "advanced_search_description": "Søk blant alle publiserte resultater",
+    "advanced_search": {
+      "advanced_search": "Avansert søk",
+      "advanced_search_description": "Søk blant alle publiserte resultater",
+      "choose_one_or_more": "Velg ett eller flere",
+      "publishing_period": "Publiseringsperiode",
+      "title_search": "Tittelsøk"
+    },
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
@@ -1744,6 +1764,8 @@
     "select_one_or_more_categories": "Velg en eller flere kategorier",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
+    "sort_by_last_name_asc": "Etternavn A-Å",
+    "sort_by_last_name_desc": "Etternavn Å-A",
     "sort_by_name_asc": "Navn A-Å",
     "sort_by_name_desc": "Navn Å-A",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
@@ -1794,13 +1816,14 @@
   },
   "unpublish_actions": {
     "duplicate": "Duplikat",
+    "search_duplicate_facets": "Søk med DOI, handle eller tittel",
+    "search_for_duplicate": "Søk etter forskningsresultat",
+    "unpublish": "Avpubliser",
     "unpublish_registration": "Avpubliser forskningsresultat",
-    "unpublish_registration_detail_1": "Ved avpublisering vil ikke forskningsresultatet være søkbare i NVA, men vil fortsatt være tilgjengelige ved oppslag av referanse.",
-    "unpublish_registration_detail_2": "Eventuelle filer vil fjernes fra forskningsresultatet av avpublisering, men blir ikke permanent slettet.",
-    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.",
+    "unpublish_registration_detail_1": "Etter å ha avpublisert restultatet kan du ikke lengre søke det opp, men det er fortsatt tilgjengelig via direkte oppslag (fra siteringer).",
+    "unpublish_registration_detail_2": "Kun metadata (ingen filer) vil være synlig ved direkte oppslag.",
+    "unpublish_registration_duplicate_citation_information": "Da kan du legge inn en lenke til det andre forskningsresultatet. Alle oppslag på det avpubliserte forskningsresultatet vil da føre til det andre, publiserte forskningsresultatet.",
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
-    "unpublish_registration_duplicate_citation_information": "For at alle siteringer skal bli videreført, må du søke opp den andre registreringen. Da vil alle siteringer fortsatt føre til den andre versjonen",
-    "search_for_duplicate": "Søk etter registrert resultat",
-    "search_duplicate_facets": "Søk med DOI, handle eller tittel"
+    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   }
 }

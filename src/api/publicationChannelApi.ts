@@ -2,7 +2,10 @@ import { SearchResponse } from '../types/common.types';
 import { Journal, Publisher, Series } from '../types/registration.types';
 import { getYearQuery } from '../utils/registration-helpers';
 import { PublicationChannelApiPath } from './apiPaths';
-import { authenticatedApiRequest2 } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
+
+// Until the endpoint supports search without year
+const publicationChannelYearWorkaround = '2023';
 
 export interface CreateJournalPayload {
   name: string;
@@ -47,8 +50,29 @@ export const createPublisher = async (newPublisher: CreatePublisherPayload) => {
   return createPublisherResponse.data;
 };
 
+export const fetchJournal = async (identifier: string) => {
+  const fetchJournalResponse = await apiRequest2<Journal>({
+    url: `${PublicationChannelApiPath.Journal}/${identifier}/${publicationChannelYearWorkaround}`,
+  });
+  return fetchJournalResponse.data;
+};
+
+export const fetchPublisher = async (identifier: string) => {
+  const fetchPublisherResponse = await apiRequest2<Publisher>({
+    url: `${PublicationChannelApiPath.Publisher}/${identifier}/${publicationChannelYearWorkaround}`,
+  });
+  return fetchPublisherResponse.data;
+};
+
+export const fetchSeries = async (identifier: string) => {
+  const fetchSeriesResponse = await apiRequest2<Series>({
+    url: `${PublicationChannelApiPath.Series}/${identifier}/${publicationChannelYearWorkaround}`,
+  });
+  return fetchSeriesResponse.data;
+};
+
 export const searchForSeries = async (query: string, year: string) => {
-  const searchForSeriesResponse = await authenticatedApiRequest2<SearchResponse<Series>>({
+  const searchForSeriesResponse = await apiRequest2<SearchResponse<Series>>({
     url: PublicationChannelApiPath.Series,
     method: 'GET',
     params: {
@@ -61,7 +85,7 @@ export const searchForSeries = async (query: string, year: string) => {
 };
 
 export const searchForPublishers = async (query: string, year: string) => {
-  const searchForPublishersResponse = await authenticatedApiRequest2<SearchResponse<Publisher>>({
+  const searchForPublishersResponse = await apiRequest2<SearchResponse<Publisher>>({
     url: PublicationChannelApiPath.Publisher,
     method: 'GET',
     params: {
@@ -74,7 +98,7 @@ export const searchForPublishers = async (query: string, year: string) => {
 };
 
 export const searchForJournals = async (query: string, year: string) => {
-  const searchForJournalsResponse = await authenticatedApiRequest2<SearchResponse<Journal>>({
+  const searchForJournalsResponse = await apiRequest2<SearchResponse<Journal>>({
     url: PublicationChannelApiPath.Journal,
     method: 'GET',
     params: {

@@ -1,8 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
-import { RootState } from '../../../redux/store';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
@@ -17,9 +15,8 @@ const maxFileSizeForPreview = 10_000_000; //10 MB
 
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
 
-  const userIsRegistrationAdmin = userCanEditRegistration(user, registration);
+  const userIsRegistrationAdmin = userCanEditRegistration(registration);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
   const publishedFiles = associatedFiles.filter((file) => file.type === 'PublishedFile');

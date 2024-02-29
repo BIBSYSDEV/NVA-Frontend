@@ -133,12 +133,18 @@ export const dataTestId = {
   },
   startPage: {
     advancedSearch: {
+      activateFilterButton: 'activate-filter-button',
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
+      fundingSourceField: 'funding-source-field',
+      journalField: 'journal-field',
+      publicationLanguageField: 'publication-language-field',
+      publisherField: 'publisher-field',
       removeFacetButton: 'remove-facet-button',
       removeFilterButton: 'remove-filter-button',
       searchButton: 'search-button',
+      seriesField: 'series-field',
     },
     advancedSearchAccordion: 'advanced-search-accordion',
     categoryFacets: 'category-facets',
@@ -166,6 +172,7 @@ export const dataTestId = {
     responsibleFacets: 'responsible-facets',
     resultSearchButton: 'result-search-button',
     readMoreButton: 'button-read-more',
+    scientificIndexFacet: 'scientific-index-facet',
     searchButton: 'search-button',
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
@@ -327,8 +334,6 @@ export const dataTestId = {
       embargoDateField: 'embargo-date-field',
       expandFileRowButton: 'expand-file-row-button',
       fileRow: 'uploaded-file-row',
-      noFilesOrLinksButton: 'no-files-or-links-button',
-      noFilesOrLinksWarning: 'no-files-or-links-warning',
       legalNoteField: 'legal-note-field',
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
@@ -584,6 +589,7 @@ export const dataTestId = {
   unpublishActions: {
     openUnpublishModalButton: 'open-unpublish-modal-button',
     unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
+    showUnpublishButtonButton: 'show-unpublish-button-button',
     submitButton: 'submit-unpublish-request-button',
   },
 };

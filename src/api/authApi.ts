@@ -1,32 +1,21 @@
-import { Auth, CognitoUser } from '@aws-amplify/auth';
+import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
+import { FeideUser } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
-export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
+export const getUserAttributes = async (retryNumber = 0): Promise<FeideUser | null> => {
   try {
-    const currentSession = await Auth.currentSession();
-
-    if (!currentSession.isValid()) {
-      const cognitoUser: CognitoUser = await Auth.currentAuthenticatedUser();
-      // Refresh session
-      await new Promise((resolve) => {
-        cognitoUser.refreshSession(currentSession.getRefreshToken(), (error, session) => {
-          resolve(session);
-        });
-      });
+    const userAttributes = (await fetchUserAttributes()) as FeideUser;
+    return userAttributes;
+  } catch (error) {
+    if (localStorage.getItem(LocalStorageKey.AmplifyRedirect) && retryNumber < 3) {
+      // Retry when user has signed in, as the user attributes are not always available immediately for some reason
+      await new Promise((resolve) => setTimeout(resolve, 1000 * (retryNumber + 1)));
+      return await getUserAttributes(retryNumber + 1);
     }
-    const userInfo = await Auth.currentUserInfo();
-    return userInfo.attributes;
-  } catch {
-    // Don't do anything if user is not supposed to be logged in
-    if (localStorage.getItem(LocalStorageKey.AmplifyRedirect)) {
-      if (retryNumber < 3) {
-        return await getCurrentUserAttributes(retryNumber + 1);
-      } else {
-        window.location.search = ''; // Avoid infinite error loop if code parameter gets stuck in URL
-        return null;
-      }
-    }
+    return null;
+  } finally {
+    localStorage.removeItem(LocalStorageKey.AmplifyRedirect);
   }
 };
 
@@ -35,14 +24,25 @@ export const getAccessToken = async () => {
     return '';
   }
   try {
-    const cognitoUser = await Auth.currentAuthenticatedUser();
-    return cognitoUser?.signInUserSession?.accessToken?.jwtToken ?? null;
+    const currentSession = await fetchAuthSession();
+    return currentSession.tokens?.accessToken.toString() ?? null;
   } catch (error) {
     if (error === 'The user is not authenticated') {
-      // Expired session token. Set state in localStorage that App.tsx can act upon
-      localStorage.setItem(LocalStorageKey.ExpiredToken, 'true');
       window.location.href = UrlPathTemplate.Home;
     }
     return null;
+  }
+};
+
+export const userIsAuthenticated = async () => {
+  try {
+    const cognitoUser = await fetchAuthSession();
+    if (cognitoUser) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch {
+    return false;
   }
 };

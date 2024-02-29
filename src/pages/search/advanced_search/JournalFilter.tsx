@@ -7,6 +7,7 @@ import { searchForJournals } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Journal } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
 export const JournalFilter = () => {
@@ -48,6 +49,7 @@ export const JournalFilter = () => {
 
   return (
     <Autocomplete
+      size="small"
       sx={{ minWidth: '15rem' }}
       value={journalParam && selectedJournalQuery.data?.hits[0] ? selectedJournalQuery.data.hits[0] : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -69,6 +71,7 @@ export const JournalFilter = () => {
           <Typography>{option.name}</Typography>
         </li>
       )}
+      data-testid={dataTestId.startPage.advancedSearch.journalField}
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}

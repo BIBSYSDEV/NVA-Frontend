@@ -34,7 +34,6 @@ const registrationErrorMessage = {
   publishedDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.description.date_published'),
   }),
-  associatedArtifactRequired: i18n.t('feedback.validation.must_have_associated_artifact'),
 };
 
 export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
@@ -87,14 +86,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
       }
     }),
   }),
-  associatedArtifacts: Yup.array()
-    .of(associatedFileValidationSchema)
-    .when('entityDescription', ([entityDescription]: EntityDescription[], schema) =>
-      entityDescription.reference?.doi
-        ? schema.min(0)
-        : schema.min(1, registrationErrorMessage.associatedArtifactRequired)
-    )
-    .required(registrationErrorMessage.associatedArtifactRequired),
   projects: Yup.array().of(Yup.object()),
+  associatedArtifacts: Yup.array().of(associatedFileValidationSchema),
   fundings: Yup.array().of(fundingValidationSchema),
 });

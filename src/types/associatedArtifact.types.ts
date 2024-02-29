@@ -1,6 +1,12 @@
 import { Uppy as UppyType } from '@uppy/core';
+import { RightsRetentionStrategyTypes } from './customerInstitution.types';
 
 export type AssociatedFileType = 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
+
+export interface RightsRetentionStrategy {
+  type: 'FunderRightsRetentionStrategy' | 'CustomerRightsRetentionStrategy' | 'OverriddenRightsRetentionStrategy';
+  configuredType: RightsRetentionStrategyTypes;
+}
 
 export interface AssociatedFile {
   type: AssociatedFileType;
@@ -13,6 +19,7 @@ export interface AssociatedFile {
   embargoDate: Date | null;
   license: string | null;
   legalNote?: string;
+  rightsRetentionStrategy?: RightsRetentionStrategy;
 }
 
 export const emptyFile: AssociatedFile = {
