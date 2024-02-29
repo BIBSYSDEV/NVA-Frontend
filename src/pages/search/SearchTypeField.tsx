@@ -26,6 +26,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
     <TextField
       select
       value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
+      size="small"
       sx={{
         minWidth: '9rem',
         '.MuiSelect-select': {

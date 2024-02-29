@@ -4,7 +4,6 @@ import { useUppy } from '@uppy/react';
 import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { fetchRegistration } from '../../api/registrationApi';
 import { fetchNviCandidateForRegistration } from '../../api/scientificIndexApi';
@@ -16,7 +15,6 @@ import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { RootState } from '../../redux/store';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
@@ -42,7 +40,6 @@ interface RegistrationFormProps {
 }
 
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
-  const user = useSelector((store: RootState) => store.user);
   const { t, i18n } = useTranslation();
   const history = useHistory();
   const uppy = useUppy(createUppy(i18n.language));
@@ -91,7 +88,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     return {};
   };
 
-  const canEditRegistration = registration && userCanEditRegistration(user, registration);
+  const canEditRegistration = registration && userCanEditRegistration(registration);
 
   return registrationQuery.isLoading || (canHaveNviCandidate && nviCandidateQuery.isLoading) ? (
     <PageSpinner aria-label={t('common.result')} />

@@ -32,8 +32,9 @@ import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
-import { licenses } from '../../../types/license.types';
+import { AssociatedFile, AssociatedFileType, RightsRetentionStrategy } from '../../../types/associatedArtifact.types';
+import { RightsRetentionStrategyTypes } from '../../../types/customerInstitution.types';
+import { LicenseUri, licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -52,6 +53,7 @@ interface FilesTableRowProps {
 export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion, disabled }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
+  const customer = useSelector((state: RootState) => state.customer);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
@@ -62,6 +64,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
+  const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
+
+  const fileHasFunderRrs = file.rightsRetentionStrategy?.type === 'FunderRightsRetentionStrategy';
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
@@ -143,7 +148,14 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   <RadioGroup
                     {...field}
                     row
-                    onChange={(event) => setFieldValue(field.name, JSON.parse(event.target.value))}>
+                    sx={{ flexWrap: 'nowrap' }}
+                    onChange={(event) => {
+                      setFieldValue(field.name, JSON.parse(event.target.value));
+                      if (fileHasFunderRrs) {
+                        setFieldValue(licenseFieldName, null);
+                        setFieldValue(rrsFieldName, undefined);
+                      }
+                    }}>
                     <FormControlLabel
                       value={false}
                       control={<Radio />}
@@ -170,7 +182,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 data-testid={dataTestId.registrationWizard.files.selectLicenseField}
                 sx={{ minWidth: '15rem' }}
                 select
-                disabled={disabled}
+                disabled={disabled || fileHasFunderRrs}
                 SelectProps={{
                   renderValue: (option) => {
                     const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
@@ -218,29 +230,57 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             <Box
               sx={{
                 m: '1rem 1rem 0 1rem',
-                display: 'flex',
+                display: 'grid',
+                gridTemplateColumns: '1fr auto',
                 gap: '1rem',
-                alignItems: 'start',
-                justifyContent: 'space-evenly',
               }}>
-              {user?.isPublishingCurator && (
-                <Field name={legalNoteFieldName}>
-                  {({ field }: FieldProps<string>) => (
-                    <TextField
-                      {...field}
-                      value={field.value ?? ''}
-                      data-testid={dataTestId.registrationWizard.files.legalNoteField}
-                      variant="filled"
-                      fullWidth
-                      label={t('registration.files_and_license.legal_note')}
-                      multiline
-                      disabled={disabled}
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {!file.publisherAuthority &&
+                  customer?.rightsRetentionStrategy.type ===
+                    RightsRetentionStrategyTypes.NullRightsRetentionStrategy && (
+                    <FormControlLabel
+                      label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
+                      control={
+                        <Checkbox
+                          checked={fileHasFunderRrs}
+                          onChange={() => {
+                            if (fileHasFunderRrs) {
+                              setFieldValue(rrsFieldName, undefined);
+                              setFieldValue(licenseFieldName, null);
+                            } else {
+                              const newRrsValue: RightsRetentionStrategy = {
+                                type: 'FunderRightsRetentionStrategy',
+                                configuredType: customer.rightsRetentionStrategy.type,
+                              };
+                              setFieldValue(rrsFieldName, newRrsValue);
+                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                            }
+                          }}
+                        />
+                      }
                     />
                   )}
-                </Field>
-              )}
 
-              <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                {user?.isPublishingCurator && (
+                  <Field name={legalNoteFieldName}>
+                    {({ field }: FieldProps<string>) => (
+                      <TextField
+                        {...field}
+                        value={field.value ?? ''}
+                        data-testid={dataTestId.registrationWizard.files.legalNoteField}
+                        variant="filled"
+                        fullWidth
+                        label={t('registration.files_and_license.legal_note')}
+                        multiline
+                        disabled={disabled}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  </Field>
+                )}
+              </Box>
+
+              <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'end' }}>
                 <Field name={embargoFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps) => (
                     <DatePicker

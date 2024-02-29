@@ -154,14 +154,20 @@ export enum ResultParam {
   IdentifierNot = 'idNot',
   Isbn = 'isbn',
   Issn = 'issn',
+  Journal = 'journal',
   Order = 'order',
   Project = 'project',
+  PublicationLanguageShould = 'publicationLanguageShould',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
   PublicationYearShould = 'publicationYearShould',
   Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
+  ScientificIndex = 'scientificIndex',
+  ScientificReportPeriodBeforeParam = 'scientificReportPeriodBefore',
+  ScientificReportPeriodSinceParam = 'scientificReportPeriodSince',
+  Series = 'series',
   Sort = 'sort',
   Tags = 'tags',
   Title = 'title',
@@ -188,14 +194,20 @@ export interface FetchResultsParams {
   [ResultParam.IdentifierNot]?: string | null;
   [ResultParam.Isbn]?: string | null;
   [ResultParam.Issn]?: string | null;
+  [ResultParam.Journal]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
+  [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.PublicationYearSince]?: string | null;
   [ResultParam.PublicationYearShould]?: string | null;
   [ResultParam.Publisher]?: string | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
+  [ResultParam.Series]?: string | null;
+  [ResultParam.ScientificIndex]?: string | null;
+  [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
+  [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
@@ -259,8 +271,14 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.issn) {
     searchParams.set(ResultParam.Issn, params.issn);
   }
+  if (params.journal) {
+    searchParams.set(ResultParam.Journal, params.journal);
+  }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
+  }
+  if (params.publicationLanguageShould) {
+    searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
   }
   if (params.publicationYearBefore) {
     const beforeYearNumber = +params.publicationYearBefore;
@@ -282,6 +300,13 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
+  }
+  if (params.scientificIndex) {
+    searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
+    searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificIndex);
+  }
+  if (params.series) {
+    searchParams.set(ResultParam.Series, params.series);
   }
   if (params.tags) {
     searchParams.set(ResultParam.Tags, encodeURIComponent(params.tags));

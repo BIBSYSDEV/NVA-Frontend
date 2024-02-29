@@ -51,6 +51,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem 1rem', flexWrap: 'wrap' }}>
       <Autocomplete
+        size="small"
         options={options}
         inputMode="search"
         sx={{ width: '20rem' }}
@@ -93,6 +94,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
       />
 
       <Autocomplete
+        size="small"
         options={subUnits}
         value={selectedSubUnit}
         inputMode="search"

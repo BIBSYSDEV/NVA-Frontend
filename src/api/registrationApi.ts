@@ -3,6 +3,7 @@ import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/pub
 import { Doi, MyRegistrationsResponse, Registration, UnpublishPublicationRequest } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { userIsAuthenticated } from './authApi';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
@@ -82,11 +83,16 @@ export const createDraftDoi = async (registrationId: string) =>
   });
 
 export const fetchRegistration = async (registrationIdentifier: string, shouldNotRedirect?: boolean) => {
-  const fetchRegistrationResponse = await apiRequest2<Registration>({
-    url: shouldNotRedirect
-      ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?doNotRedirect=true`
-      : `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
-  });
+  const isAuthenticated = await userIsAuthenticated();
+
+  const url = shouldNotRedirect
+    ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?doNotRedirect=true`
+    : `${PublicationsApiPath.Registration}/${registrationIdentifier}`;
+
+  const fetchRegistrationResponse = isAuthenticated
+    ? await authenticatedApiRequest2<Registration>({ url })
+    : await apiRequest2<Registration>({ url });
+
   return fetchRegistrationResponse.data;
 };
 

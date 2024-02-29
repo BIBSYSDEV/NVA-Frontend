@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
 
