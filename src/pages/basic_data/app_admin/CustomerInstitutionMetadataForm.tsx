@@ -175,7 +175,7 @@ export const CustomerInstitutionMetadataForm = ({
               )}
             </Field>
 
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem' }}>
+            <Box sx={{ display: 'flex', gap: '1.5rem' }}>
               <Field name={CustomerInstitutionFieldNames.NviInstitution}>
                 {({ field }: FieldProps<boolean>) => (
                   <div>
