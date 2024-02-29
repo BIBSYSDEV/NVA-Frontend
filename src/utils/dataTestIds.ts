@@ -541,6 +541,7 @@ export const dataTestId = {
       correctionListAccordion: 'correction-list-accordion',
       correctionListRadioButton: 'correction-list-radio-button',
     },
+    curatorSelector: 'curator-selector',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {
@@ -576,9 +577,6 @@ export const dataTestId = {
       completedCheckbox: 'completed-status-checkbox',
       newCheckbox: 'new-status-checkbox',
       pendingCheckbox: 'pending-status-checkbox',
-    },
-    ticketList: {
-      curatorSelector: 'curator-selector',
     },
     typeSearch: {
       doiButton: 'doi-button',

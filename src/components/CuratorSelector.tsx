@@ -75,7 +75,7 @@ export const CuratorSelector = ({ roleFilter }: CuratorSelectorProps) => {
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
-          data-testid={dataTestId.tasksPage.ticketList.curatorSelector}
+          data-testid={dataTestId.tasksPage.curatorSelector}
           variant="outlined"
           size="small"
           label={t('my_page.roles.curator')}
