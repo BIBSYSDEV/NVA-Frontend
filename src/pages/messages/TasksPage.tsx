@@ -31,7 +31,7 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
-import { TicketStatus } from '../../types/publication_types/ticket.types';
+import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
@@ -129,8 +129,8 @@ const TasksPage = () => {
   const ticketTypeQuery =
     selectedTicketTypes.length > 0 ? `(${selectedTicketTypes.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];
-  const selectedStatusesArray = searchParams.get(TicketSearchParam.Status)?.split(',') || ticketStatusValues;
+  const selectedStatusesArray =
+    searchParams.get(TicketSearchParam.Status)?.split(',') ?? (ticketStatusValues as TicketStatus[]);
 
   const ticketStatusQuery =
     selectedStatusesArray.length > 0

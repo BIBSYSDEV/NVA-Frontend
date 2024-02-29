@@ -25,7 +25,7 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { TicketStatus } from '../../types/publication_types/ticket.types';
+import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -86,8 +86,8 @@ const MyPagePage = () => {
   const typeQuery =
     selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];
-  const selectedStatusesArray = searchParams.get(TicketSearchParam.Status)?.split(',') || ticketStatusValues;
+  const selectedStatusesArray =
+    searchParams.get(TicketSearchParam.Status)?.split(',') ?? (ticketStatusValues as TicketStatus[]);
 
   const statusQuery =
     selectedStatusesArray.length > 0

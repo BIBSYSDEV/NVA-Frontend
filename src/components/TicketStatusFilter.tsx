@@ -2,10 +2,8 @@ import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent,
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../api/searchApi';
-import { TicketStatus } from '../types/publication_types/ticket.types';
+import { TicketStatus, ticketStatusValues } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
-
-const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];
 
 export const TicketStatusFilter = () => {
   const { t } = useTranslation();
@@ -27,15 +25,16 @@ export const TicketStatusFilter = () => {
 
   return (
     <FormControl variant="outlined" size="small" sx={{ minWidth: '15rem' }}>
-      <InputLabel>{t('tasks.status')}</InputLabel>
+      <InputLabel id={'status-filter-select'}>{t('tasks.status')}</InputLabel>
       <Select
+        labelId={'status-filter-select'}
         data-testid={dataTestId.myPage.myMessages.ticketStatusField}
         multiple
         value={selectedStatuses}
         onChange={handleChange}
         renderValue={(selected) => {
           if (selected.length === ticketStatusValues.length) {
-            return [t('my_page.messages.all_ticket_types')];
+            return t('my_page.messages.all_ticket_types');
           } else {
             return selected.map((value) => t(`my_page.messages.ticket_types.${value as TicketStatus}`)).join(', ');
           }
