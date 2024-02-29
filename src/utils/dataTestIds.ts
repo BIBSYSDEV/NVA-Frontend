@@ -137,10 +137,14 @@ export const dataTestId = {
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
+      fundingSourceField: 'funding-source-field',
+      journalField: 'journal-field',
       publicationLanguageField: 'publication-language-field',
+      publisherField: 'publisher-field',
       removeFacetButton: 'remove-facet-button',
       removeFilterButton: 'remove-filter-button',
       searchButton: 'search-button',
+      seriesField: 'series-field',
     },
     advancedSearchAccordion: 'advanced-search-accordion',
     categoryFacets: 'category-facets',
@@ -585,6 +589,7 @@ export const dataTestId = {
   unpublishActions: {
     openUnpublishModalButton: 'open-unpublish-modal-button',
     unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
+    showUnpublishButtonButton: 'show-unpublish-button-button',
     submitButton: 'submit-unpublish-request-button',
   },
 };
