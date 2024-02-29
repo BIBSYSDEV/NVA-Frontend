@@ -7,6 +7,7 @@ import { searchForPublishers } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Publisher } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
 export const PublisherFilter = () => {
@@ -72,6 +73,7 @@ export const PublisherFilter = () => {
           <Typography>{option.name}</Typography>
         </li>
       )}
+      data-testid={dataTestId.startPage.advancedSearch.publisherField}
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
