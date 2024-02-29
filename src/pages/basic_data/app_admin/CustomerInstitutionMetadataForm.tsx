@@ -204,7 +204,7 @@ export const CustomerInstitutionMetadataForm = ({
 
               <Field name={CustomerInstitutionFieldNames.RboInstitution}>
                 {({ field }: FieldProps<boolean>) => (
-                  <Box>
+                  <div>
                     <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                       {t('common.rbo')}
                     </FormLabel>
@@ -219,7 +219,7 @@ export const CustomerInstitutionMetadataForm = ({
                         />
                       }
                     />
-                  </Box>
+                  </div>
                 )}
               </Field>
             </Box>
@@ -248,8 +248,8 @@ export const CustomerInstitutionMetadataForm = ({
             {editMode && (
               <>
                 <Divider />
-                <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem', alignItems: 'flex-start' }}>
-                  <Box>
+                <Box sx={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+                  <div>
                     <FormLabel component="legend" sx={{ fontWeight: 'bold', minWidth: '18rem' }}>
                       {t('common.doi_long')}
                     </FormLabel>
@@ -275,7 +275,7 @@ export const CustomerInstitutionMetadataForm = ({
                         />
                       )}
                     </Field>
-                  </Box>
+                  </div>
 
                   <Field name={CustomerInstitutionFieldNames.DoiUsername}>
                     {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
