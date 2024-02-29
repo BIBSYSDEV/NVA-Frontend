@@ -89,7 +89,6 @@
       "administrators": "Administratorer",
       "administators_list_explanation": "Genereres fra Personregisteret og rolletildeling",
       "can_assign_doi": "Institusjonen kan tildele DOI",
-      "display_name": "Visningsnavn på institusjonen",
       "doi_password": "Passord",
       "doi_prefix": "DOI prefiks",
       "doi_repo_id": "Data Cite Repository ID",
