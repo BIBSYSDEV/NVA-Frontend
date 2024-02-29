@@ -48,6 +48,7 @@ const MyPagePage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
   const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
@@ -85,9 +86,8 @@ const MyPagePage = () => {
   const typeQuery =
     selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const searchParams = new URLSearchParams(location.search);
   const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];
-  const selectedStatusesArray = searchParams.get('ticketStatus')?.split(',') || ticketStatusValues;
+  const selectedStatusesArray = searchParams.get(TicketSearchParam.Status)?.split(',') || ticketStatusValues;
 
   const statusQuery =
     selectedStatusesArray.length > 0

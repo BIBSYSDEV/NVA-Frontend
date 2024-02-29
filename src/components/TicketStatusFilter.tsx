@@ -1,6 +1,7 @@
 import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
 
@@ -10,15 +11,15 @@ export const TicketStatusFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const selectedStatuses = searchParams.get('ticketStatus')?.split(',') || ticketStatusValues;
+  const selectedStatuses = searchParams.get(TicketSearchParam.Status)?.split(',') || ticketStatusValues;
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const newSelectedStatuses = event.target.value as TicketStatus[];
 
     if (newSelectedStatuses.length > 0) {
-      searchParams.set('ticketStatus', newSelectedStatuses.join(','));
+      searchParams.set(TicketSearchParam.Status, newSelectedStatuses.join(','));
     } else {
-      searchParams.delete('ticketStatus');
+      searchParams.delete(TicketSearchParam.Status);
     }
 
     history.push({ search: searchParams.toString() });
@@ -26,7 +27,7 @@ export const TicketStatusFilter = () => {
 
   return (
     <FormControl variant="outlined" size="small" sx={{ minWidth: '15rem' }}>
-      <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel>
+      <InputLabel>{t('tasks.status')}</InputLabel>
       <Select
         data-testid={dataTestId.myPage.myMessages.ticketStatusField}
         multiple
@@ -39,7 +40,7 @@ export const TicketStatusFilter = () => {
             return selected.map((value) => t(`my_page.messages.ticket_types.${value as TicketStatus}`)).join(', ');
           }
         }}
-        label="Status">
+        label={t('tasks.status')}>
         {ticketStatusValues.map((status) => (
           <MenuItem sx={{ height: '2.5rem' }} key={status} value={status}>
             <Checkbox checked={selectedStatuses.includes(status)} />
