@@ -1,6 +1,19 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -18,7 +31,7 @@ import { CristinPerson } from '../../../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { CristinPersonList } from './CristinPersonList';
+import { CristinPersonTableRow } from './AddContributorTableRow';
 
 interface AddContributorFormProps {
   addContributor: (selectedUser: CristinPerson) => void;
@@ -117,11 +130,29 @@ export const AddContributorForm = ({
             setPage(1);
           }}
           showPaginationTop>
-          <CristinPersonList
-            personSearchHits={personQuery.data.hits}
-            selectedPerson={selectedPerson}
-            setSelectedPerson={setSelectedPerson}
-          />
+          <TableContainer component={Paper} sx={{ my: '0.5rem' }}>
+            <Table size="medium">
+              <caption style={visuallyHidden}>{t('search.persons')}</caption>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('registration.contributors.select_all')}</TableCell>
+                  <TableCell>{t('common.name')}</TableCell>
+                  <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
+                  <TableCell>{t('common.result_registrations')}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {personQuery.data.hits.map((cristinPerson) => (
+                  <CristinPersonTableRow
+                    key={cristinPerson.id}
+                    cristinPerson={cristinPerson}
+                    setSelectedPerson={setSelectedPerson}
+                    selectedPerson={selectedPerson}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </ListPagination>
       ) : (
         debouncedSearchTerm && <Typography>{t('common.no_hits')}</Typography>

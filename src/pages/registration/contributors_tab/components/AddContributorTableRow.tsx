@@ -3,19 +3,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlined from '@mui/icons-material/CheckCircleOutlined';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
-import {
-  Box,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
-import { visuallyHidden } from '@mui/utils';
+import { Box, IconButton, TableCell, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { CristinPerson } from '../../../../types/user.types';
@@ -23,47 +11,17 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 import { LastRegistrationTableCellContent } from './LastRegistrationTableCellContent';
 
-interface CristinPersonListProps {
-  personSearchHits: CristinPerson[];
+interface CristinPersonTableRowProps {
+  cristinPerson: CristinPerson;
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson) => void;
 }
 
-export const CristinPersonList = ({ personSearchHits, setSelectedPerson, selectedPerson }: CristinPersonListProps) => {
-  const { t } = useTranslation();
-
-  return (
-    <TableContainer component={Paper} sx={{ my: '0.5rem' }}>
-      <Table size="medium">
-        <caption style={visuallyHidden}>{t('registration.contributors.authors')}</caption>
-        <TableHead>
-          <TableRow>
-            <TableCell>{t('registration.contributors.select_all')}</TableCell>
-            <TableCell>{t('common.name')}</TableCell>
-            <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
-            <TableCell>{t('common.result_registrations')}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {personSearchHits.map((cristinPerson) => (
-            <CristinPersonTableRow
-              key={cristinPerson.id}
-              cristinPerson={cristinPerson}
-              setSelectedPerson={setSelectedPerson}
-              selectedPerson={selectedPerson}
-            />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
-
-interface CristinPersonTableRowProps extends Omit<CristinPersonListProps, 'personSearchHits'> {
-  cristinPerson: CristinPerson;
-}
-
-const CristinPersonTableRow = ({ cristinPerson, setSelectedPerson, selectedPerson }: CristinPersonTableRowProps) => {
+export const CristinPersonTableRow = ({
+  cristinPerson,
+  setSelectedPerson,
+  selectedPerson,
+}: CristinPersonTableRowProps) => {
   const { t } = useTranslation();
   const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
   const personIsSelected = cristinPerson.id === selectedPerson?.id;
@@ -158,7 +116,7 @@ const CristinPersonTableRow = ({ cristinPerson, setSelectedPerson, selectedPerso
             })}
           </Box>
         ) : (
-          <i>{t('registration.contributors.no_affiliations_found')}</i>
+          <Typography fontStyle="italic">{t('registration.contributors.no_affiliations_found')}</Typography>
         )}
       </TableCell>
       <TableCell>
