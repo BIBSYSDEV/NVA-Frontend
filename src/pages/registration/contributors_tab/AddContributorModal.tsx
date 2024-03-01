@@ -38,7 +38,6 @@ export const AddContributorModal = ({
   const handleCloseModal = () => {
     toggleModal();
     setOpenAddUnverifiedContributor(false);
-    setSearchTerm('');
   };
 
   return (
