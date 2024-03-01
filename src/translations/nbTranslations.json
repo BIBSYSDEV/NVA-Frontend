@@ -87,8 +87,8 @@
       "add_institution": "Opprett institusjon",
       "admin_institutions": "Administrer institusjoner",
       "administrators": "Administratorer",
-      "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
-      "display_name": "Visningsnavn på institusjonen",
+      "administators_list_explanation": "Genereres fra Personregisteret og rolletildeling",
+      "can_assign_doi": "Institusjonen kan tildele DOI",
       "doi_password": "Passord",
       "doi_prefix": "DOI prefiks",
       "doi_repo_id": "Data Cite Repository ID",
@@ -179,6 +179,7 @@
     "institution": "Institusjon",
     "institutions": "Institusjoner",
     "justification": "Begrunnelse",
+    "language": "Språk",
     "last_name": "Etternavn",
     "link": "Lenke",
     "menu": "Meny",
@@ -258,7 +259,6 @@
     "update": "Oppdater",
     "url": "URL",
     "use": "Bruk",
-    "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
     "x_days_one": "{{count}} dag",
@@ -444,6 +444,7 @@
       "download_file": "Kunne ikke laste ned fil",
       "fetch": "Kunne ikke hente {{resource}}",
       "get_affiliation_name": "Kunne ikke hente navn på tilknytning for {{unitUri}}",
+      "get_curators_for_institution": "Kunne ikke hente kuratorer",
       "get_customer": "Kunne ikke hente kundeinstitusjon",
       "get_customers": "Kunne ikke hente kundeinstitusjoner",
       "get_doi": "Kunne ikke hente lenkedata",
@@ -504,7 +505,6 @@
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
-      "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
       "create_journal": "Tidsskriftet ble opprettet",
       "create_note": "Merknaden ble lagret",
@@ -563,7 +563,6 @@
       "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_correct_errors": "Du må rette opp feil",
-      "must_have_associated_artifact": "Du må laste opp minst en fil eller en lenke for denne registreringen",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
       "not_selected": "{{field}} er ikke valgt"
     }
@@ -616,6 +615,7 @@
   },
   "my_page": {
     "messages": {
+      "all_ticket_types": "Alle statuser",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -728,7 +728,6 @@
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
-      "institution_admins": "Administratorer",
       "internal_importer": "Intern importør",
       "internal_importer_description": "Kan behandle importkandidater.",
       "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
@@ -1202,7 +1201,7 @@
     "files_and_license": {
       "accepted": "Akseptert",
       "accepted_version": "Akseptert versjon",
-      "add_files_or_link": "Legg til filer eller lenke",
+      "add_files_or_links": "Legg til fil eller lenke",
       "administrative_agreement": "Administrativ avtale",
       "administrative_contract": "Intern fil som aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
@@ -1227,6 +1226,7 @@
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "mark_if_funder_requires_rrs": "Om denne publikasjonen er finansiert av en aktør som pålegger deg å følge RRS (ref. Plan S), så markerer du det her.",
+      "no_files_or_links_present_in_this_registration": "Det er ikke lagt til fil eller lenke for registreringen",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "open_file": "Åpne fil",
       "opted_out_of_rrs": "Du har valgt å ikke følge vedtatt <0>rettighetspolitikk</0>",
@@ -1234,9 +1234,8 @@
       "published_version": "Publisert versjon",
       "remove_file": "Fjern fil",
       "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
+      "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
-      "resource_has_no_files_or_links_paragraph0": "Uten filer eller lenker er den publiserte ressursen vanskeligere å gjenbruke og kan gi mindre verdi for andre. Om ikke data kan deles, så bør informasjon om data og hvordan tilgang kan oppnås, deles.",
-      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er et sett med prinsipper for å støtte gjenbruk av digitale ressurser. NFR og EC stiller klare krav til at data skal være tilgjengelig og deponert sammen med metadata som avklarer eventuelle betingelser for tilgang.",
       "size": "Størrelse",
       "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
       "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
@@ -1734,9 +1733,13 @@
   "search": {
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
-    "advanced_search": "Avansert søk",
-    "advanced_search_description": "Søk blant alle publiserte resultater",
-    "choose_one_or_more": "Velg ett eller flere",
+    "advanced_search": {
+      "advanced_search": "Avansert søk",
+      "advanced_search_description": "Søk blant alle publiserte resultater",
+      "choose_one_or_more": "Velg ett eller flere",
+      "publishing_period": "Publiseringsperiode",
+      "title_search": "Tittelsøk"
+    },
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
@@ -1780,10 +1783,8 @@
   },
   "tasks": {
     "all_nvi_results": "Alle NVI-resultater",
-    "all_user_dialogs": "Alle brukerdialoger",
     "correction_list": "Retteliste",
     "my_nvi_results": "Mine NVI-resultater",
-    "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
       "approve_nvi_candidate_description": "Godkjenning av resultatet.",

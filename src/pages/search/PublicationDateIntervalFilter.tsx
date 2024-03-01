@@ -7,7 +7,7 @@ import { ResultParam } from '../../api/searchApi';
 const commonDatepickerProps: Partial<DatePickerProps<Date | null>> = {
   views: ['year'],
   disableHighlightToday: true,
-  slotProps: { textField: { sx: { maxWidth: '10rem' } } },
+  slotProps: { textField: { sx: { maxWidth: '10rem' }, size: 'small' } },
 };
 
 interface PublicationDateIntervalFilterProps {
@@ -50,7 +50,7 @@ export const PublicationDateIntervalFilter = ({ datePickerProps, boxProps }: Pub
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('search.year_from')}
-        defaultValue={selectedYearSinceDate}
+        value={selectedYearSinceDate}
         maxDate={
           selectedYearBeforeDate
             ? new Date(selectedYearBeforeDate.getFullYear(), 11, 31, 23, 59, 59, 999)
@@ -62,7 +62,7 @@ export const PublicationDateIntervalFilter = ({ datePickerProps, boxProps }: Pub
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('search.year_to')}
-        defaultValue={selectedYearBeforeDate}
+        value={selectedYearBeforeDate}
         minDate={selectedYearSinceDate}
         maxDate={defaultMaxDate}
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearBefore)}

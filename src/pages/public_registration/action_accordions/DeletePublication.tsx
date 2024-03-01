@@ -69,7 +69,10 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem', alignItems: 'center' }}>
         <Divider flexItem />
         {!showDeleteButton && (
-          <IconButton title={t('common.show_more_options')} onClick={() => setShowDeleteButton(true)}>
+          <IconButton
+            data-testid={dataTestId.unpublishActions.showUnpublishButtonButton}
+            title={t('common.show_more_options')}
+            onClick={() => setShowDeleteButton(true)}>
             <MoreHorizIcon />
           </IconButton>
         )}
