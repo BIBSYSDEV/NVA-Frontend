@@ -1,4 +1,8 @@
+import AddBusinessOutlinedIcon from '@mui/icons-material/AddBusinessOutlined';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleOutlined from '@mui/icons-material/CheckCircleOutlined';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import {
   Box,
   IconButton,
@@ -82,7 +86,7 @@ const CristinPersonTableRow = ({ cristinPerson, setSelectedPerson, selectedPerso
           disabled={hasSelectedAll}
           sx={{ bgcolor: 'white' }}
           title={t('registration.contributors.select_all')}>
-          <ControlPointIcon />
+          {hasSelectedAll ? <CheckCircleIcon color="info" /> : <ControlPointIcon />}
         </IconButton>
       </TableCell>
       <TableCell>
@@ -101,7 +105,11 @@ const CristinPersonTableRow = ({ cristinPerson, setSelectedPerson, selectedPerso
             disabled={personIsSelected}
             sx={{ bgcolor: 'white' }}
             title={t('registration.contributors.select_person')}>
-            <ControlPointIcon fontSize="small" />
+            {personIsSelected ? (
+              <CheckCircleOutlined fontSize="small" color="info" />
+            ) : (
+              <PersonAddOutlinedIcon fontSize="small" />
+            )}
           </IconButton>
         </Box>
       </TableCell>
@@ -109,39 +117,45 @@ const CristinPersonTableRow = ({ cristinPerson, setSelectedPerson, selectedPerso
       <TableCell>
         {activeAffiliations.length > 0 ? (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {activeAffiliations.map((affiliation, index) => (
-              <Box
-                key={affiliation.organization + index}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '0.25rem',
-                }}>
-                <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
-                <IconButton
-                  onClick={() => {
-                    if (!selectedPerson) {
-                      return;
-                    }
-                    const personWithAffiliation: CristinPerson = {
-                      ...selectedPerson,
-                      affiliations: [...selectedPerson.affiliations, affiliation],
-                    };
-                    setSelectedPerson(personWithAffiliation);
-                  }}
-                  color="primary"
-                  size="small"
-                  disabled={
-                    !personIsSelected ||
-                    selectedPerson?.affiliations.some((a) => a.organization === affiliation.organization)
-                  }
-                  sx={{ bgcolor: 'white' }}
-                  title={t('registration.contributors.select_affiliation')}>
-                  <ControlPointIcon fontSize="small" />
-                </IconButton>
-              </Box>
-            ))}
+            {activeAffiliations.map((affiliation, index) => {
+              const affiliationIsSelected = selectedPerson?.affiliations.some(
+                (a) => a.organization === affiliation.organization
+              );
+              return (
+                <Box
+                  key={affiliation.organization + index}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '0.25rem',
+                  }}>
+                  <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
+                  <IconButton
+                    onClick={() => {
+                      if (!selectedPerson) {
+                        return;
+                      }
+                      const personWithAffiliation: CristinPerson = {
+                        ...selectedPerson,
+                        affiliations: [...selectedPerson.affiliations, affiliation],
+                      };
+                      setSelectedPerson(personWithAffiliation);
+                    }}
+                    color="primary"
+                    size="small"
+                    disabled={!personIsSelected || affiliationIsSelected}
+                    sx={{ bgcolor: 'white' }}
+                    title={t('registration.contributors.select_affiliation')}>
+                    {affiliationIsSelected ? (
+                      <CheckCircleOutlined fontSize="small" color="info" />
+                    ) : (
+                      <AddBusinessOutlinedIcon fontSize="small" />
+                    )}
+                  </IconButton>
+                </Box>
+              );
+            })}
           </Box>
         ) : (
           <i>{t('registration.contributors.no_affiliations_found')}</i>
