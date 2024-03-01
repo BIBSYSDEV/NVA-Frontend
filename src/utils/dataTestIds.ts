@@ -548,6 +548,7 @@ export const dataTestId = {
       correctionListAccordion: 'correction-list-accordion',
       correctionListRadioButton: 'correction-list-radio-button',
     },
+    curatorSelector: 'curator-selector',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {

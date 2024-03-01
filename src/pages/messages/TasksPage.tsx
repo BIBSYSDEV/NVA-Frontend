@@ -137,7 +137,8 @@ const TasksPage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const ticketAssigneeQuery = showOnlyMyTasks && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
+  const assignee = searchParams.get(TicketSearchParam.Assignee);
+  const ticketAssigneeQuery = assignee ? `(assignee.username:"${assignee}")` : '';
 
   const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
@@ -299,28 +300,6 @@ const TasksPage = () => {
                     : t('my_page.messages.types.GeneralSupportCase')}
                 </SelectableButton>
               )}
-            </StyledTicketSearchFormGroup>
-
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
-              <StyledSearchModeButton
-                data-testid={dataTestId.tasksPage.searchMode.myTasksButton}
-                isSelected={showOnlyMyTasks}
-                startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                onClick={() => {
-                  if (ticketStatusFilter.New) {
-                    setTicketStatusFilter({ ...ticketStatusFilter, New: false });
-                  }
-                  setShowOnlyMyTasks(true);
-                }}>
-                {t('tasks.my_user_dialogs')}
-              </StyledSearchModeButton>
-              <StyledSearchModeButton
-                data-testid={dataTestId.tasksPage.searchMode.allTasksButton}
-                isSelected={!showOnlyMyTasks}
-                startIcon={!showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                onClick={() => setShowOnlyMyTasks(false)}>
-                {t('tasks.all_user_dialogs')}
-              </StyledSearchModeButton>
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>
         )}
