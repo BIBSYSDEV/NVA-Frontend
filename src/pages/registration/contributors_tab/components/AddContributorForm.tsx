@@ -130,7 +130,7 @@ export const AddContributorForm = ({
             setPage(1);
           }}
           showPaginationTop>
-          <TableContainer component={Paper} sx={{ my: '0.5rem' }}>
+          <TableContainer component={Paper} sx={{ my: '0.5rem' }} elevation={3}>
             <Table size="medium">
               <caption style={visuallyHidden}>{t('search.persons')}</caption>
               <TableHead>

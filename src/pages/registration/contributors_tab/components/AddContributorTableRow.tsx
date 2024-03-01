@@ -44,7 +44,7 @@ export const CristinPersonTableRow = ({
         </IconButton>
       </TableCell>
       <TableCell>
-        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'space-between' }}>
           <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
           <IconButton
             onClick={() => {
@@ -82,7 +82,7 @@ export const CristinPersonTableRow = ({
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    gap: '0.25rem',
+                    gap: '0.5rem',
                   }}>
                   <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                   <IconButton
