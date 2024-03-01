@@ -17,6 +17,8 @@ export enum TicketSearchParam {
   ViewingScope = 'viewingScope',
   ExcludeSubUnits = 'excludeSubUnits',
   Status = 'status',
+  FromDate = 'fromDate',
+  ToDate = 'toDate',
 }
 
 export interface FetchTicketsParams {
