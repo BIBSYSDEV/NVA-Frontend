@@ -6,7 +6,6 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/ass
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
-  allPublicationInstanceTypes,
   ArtisticType,
   BookType,
   ChapterType,
@@ -19,6 +18,7 @@ import {
   PublicationType,
   ReportType,
   ResearchDataType,
+  allPublicationInstanceTypes,
 } from '../types/publicationFieldNames';
 import {
   AudioVisualPublication,

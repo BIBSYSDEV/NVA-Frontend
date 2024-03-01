@@ -18,6 +18,7 @@ export const FileUploader = ({ addFile, uppy, disabled = false }: FileUploaderPr
           name: file?.name ?? '',
           mimeType: file?.type ?? '',
           size: file?.size ?? 0,
+          rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },
         };
         addFile(newFile);
       });

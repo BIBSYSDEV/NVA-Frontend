@@ -1,11 +1,17 @@
 import { Uppy as UppyType } from '@uppy/core';
-import { RightsRetentionStrategyTypes } from './customerInstitution.types';
+import { CustomerRrsType } from './customerInstitution.types';
 
 export type AssociatedFileType = 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
 
-export interface RightsRetentionStrategy {
-  type: 'FunderRightsRetentionStrategy' | 'CustomerRightsRetentionStrategy' | 'OverriddenRightsRetentionStrategy';
-  configuredType?: RightsRetentionStrategyTypes;
+type FileRrsType =
+  | 'NullRightsRetentionStrategy'
+  | 'FunderRightsRetentionStrategy'
+  | 'CustomerRightsRetentionStrategy'
+  | 'OverriddenRightsRetentionStrategy';
+
+export interface FileRrs {
+  type: FileRrsType;
+  configuredType?: CustomerRrsType;
 }
 
 export interface AssociatedFile {
@@ -19,7 +25,7 @@ export interface AssociatedFile {
   embargoDate: Date | null;
   license: string | null;
   legalNote?: string;
-  rightsRetentionStrategy?: RightsRetentionStrategy;
+  rightsRetentionStrategy: FileRrs;
 }
 
 export const emptyFile: AssociatedFile = {
@@ -32,6 +38,9 @@ export const emptyFile: AssociatedFile = {
   publisherAuthority: null,
   embargoDate: null,
   license: '',
+  rightsRetentionStrategy: {
+    type: 'NullRightsRetentionStrategy',
+  },
 };
 
 export interface AssociatedLink {

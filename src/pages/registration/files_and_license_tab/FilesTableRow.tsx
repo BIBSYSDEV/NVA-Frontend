@@ -33,8 +33,8 @@ import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, AssociatedFileType, RightsRetentionStrategy } from '../../../types/associatedArtifact.types';
-import { RightsRetentionStrategyTypes } from '../../../types/customerInstitution.types';
+import { AssociatedFile, AssociatedFileType, FileRrs } from '../../../types/associatedArtifact.types';
+import { CustomerRrsType } from '../../../types/customerInstitution.types';
 import { LicenseUri, licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
@@ -69,17 +69,17 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
   const isAcceptedFile = file.publisherAuthority === false;
 
-  const rrsStrategy = file.rightsRetentionStrategy?.configuredType
+  const rrsStrategy = file.rightsRetentionStrategy.configuredType
     ? file.rightsRetentionStrategy.configuredType
     : customer?.rightsRetentionStrategy.type;
 
-  const isNullRrs = rrsStrategy === RightsRetentionStrategyTypes.NullRightsRetentionStrategy;
-  const isCustomerRrs = rrsStrategy === RightsRetentionStrategyTypes.RightsRetentionStrategy;
-  const isOverridableRrs = rrsStrategy === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy;
+  const isNullRrs = rrsStrategy === CustomerRrsType.NullRightsRetentionStrategy;
+  const isCustomerRrs = rrsStrategy === CustomerRrsType.RightsRetentionStrategy;
+  const isOverridableRrs = rrsStrategy === CustomerRrsType.OverridableRightsRetentionStrategy;
 
-  const fileHasFunderRrs = file.rightsRetentionStrategy?.type === 'FunderRightsRetentionStrategy';
-  const fileHasCustomerRrs = file.rightsRetentionStrategy?.type === 'CustomerRightsRetentionStrategy';
-  const fileHasOverriddenRrs = file.rightsRetentionStrategy?.type === 'OverriddenRightsRetentionStrategy';
+  const fileHasFunderRrs = file.rightsRetentionStrategy.type === 'FunderRightsRetentionStrategy';
+  const fileHasCustomerRrs = file.rightsRetentionStrategy.type === 'CustomerRightsRetentionStrategy';
+  const fileHasOverriddenRrs = file.rightsRetentionStrategy.type === 'OverriddenRightsRetentionStrategy';
 
   const canOverrideRrs = isAcceptedFile && (isOverridableRrs || (isCustomerRrs && user?.isPublishingCurator));
 
@@ -173,10 +173,14 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       setFieldValue(field.name, isPublishedFile);
 
                       if (isPublishedFile) {
+                        const nullRrsValue: FileRrs = {
+                          type: 'NullRightsRetentionStrategy',
+                          configuredType: rrsStrategy,
+                        };
+                        setFieldValue(rrsFieldName, nullRrsValue);
                         setFieldValue(licenseFieldName, null);
-                        setFieldValue(rrsFieldName, undefined);
                       } else if (isCustomerRrs || isOverridableRrs) {
-                        const customerRrsValue: RightsRetentionStrategy = {
+                        const customerRrsValue: FileRrs = {
                           type: 'CustomerRightsRetentionStrategy',
                           configuredType: rrsStrategy,
                         };
@@ -285,10 +289,14 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                         checked={fileHasFunderRrs}
                         onChange={() => {
                           if (fileHasFunderRrs) {
-                            setFieldValue(rrsFieldName, undefined);
+                            const nullRrsValue: FileRrs = {
+                              type: 'NullRightsRetentionStrategy',
+                              configuredType: rrsStrategy,
+                            };
+                            setFieldValue(rrsFieldName, nullRrsValue);
                             setFieldValue(licenseFieldName, null);
                           } else {
-                            const newRrsValue: RightsRetentionStrategy = {
+                            const newRrsValue: FileRrs = {
                               type: 'FunderRightsRetentionStrategy',
                               configuredType: rrsStrategy,
                             };
@@ -319,18 +327,18 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                         checked={!fileHasOverriddenRrs}
                         onChange={() => {
                           if (fileHasOverriddenRrs) {
-                            const customerRrsValue: RightsRetentionStrategy = {
+                            const customerRrsValue: FileRrs = {
                               type: 'CustomerRightsRetentionStrategy',
                               configuredType: rrsStrategy,
                             };
                             setFieldValue(rrsFieldName, customerRrsValue);
                             setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
                           } else {
-                            const customerRrsValue: RightsRetentionStrategy = {
+                            const overriddenRrsValue: FileRrs = {
                               type: 'OverriddenRightsRetentionStrategy',
                               configuredType: rrsStrategy,
                             };
-                            setFieldValue(rrsFieldName, customerRrsValue);
+                            setFieldValue(rrsFieldName, overriddenRrsValue);
                             setFieldValue(licenseFieldName, null);
                           }
                         }}

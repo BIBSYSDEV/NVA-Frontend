@@ -32,6 +32,7 @@ export const mockRegistration: JournalRegistration = {
       publisherAuthority: false,
       embargoDate: null,
       license: null,
+      rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },
     },
   ],
   fundings: [],
