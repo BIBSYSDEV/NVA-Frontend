@@ -77,7 +77,7 @@ export const CristinPersonTableRow = ({
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {activeAffiliations.map((affiliation, index) => {
               const affiliationIsSelected = selectedPerson?.affiliations.some(
-                (a) => a.organization === affiliation.organization
+                (a) => a.organization === affiliation.organization && personIsSelected
               );
               return (
                 <Box
