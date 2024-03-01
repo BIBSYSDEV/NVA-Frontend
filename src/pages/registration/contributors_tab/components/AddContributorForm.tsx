@@ -42,7 +42,6 @@ export const AddContributorForm = ({
 
   const [isAddingSelf, setIsAddingSelf] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
-  const [selectedAffiliations, setSelectedAffiliations] = useState<string[]>([]);
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [page, setPage] = useState(1);
@@ -122,8 +121,6 @@ export const AddContributorForm = ({
             personSearchHits={personQuery.data.hits}
             selectedPerson={selectedPerson}
             setSelectedPerson={setSelectedPerson}
-            selectedAffiliations={selectedAffiliations}
-            setSelectedAffiliations={setSelectedAffiliations}
           />
         </ListPagination>
       ) : (

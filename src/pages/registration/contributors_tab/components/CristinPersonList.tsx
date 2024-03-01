@@ -12,7 +12,6 @@ import {
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { CristinPerson } from '../../../../types/user.types';
@@ -24,17 +23,9 @@ interface CristinPersonListProps {
   personSearchHits: CristinPerson[];
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson) => void;
-  selectedAffiliations: string[];
-  setSelectedAffiliations: Dispatch<SetStateAction<string[]>>;
 }
 
-export const CristinPersonList = ({
-  personSearchHits,
-  setSelectedPerson,
-  selectedPerson,
-  selectedAffiliations,
-  setSelectedAffiliations,
-}: CristinPersonListProps) => {
+export const CristinPersonList = ({ personSearchHits, setSelectedPerson, selectedPerson }: CristinPersonListProps) => {
   const { t } = useTranslation();
 
   return (
@@ -45,7 +36,6 @@ export const CristinPersonList = ({
           <TableRow>
             <TableCell>{t('registration.contributors.select_all')}</TableCell>
             <TableCell>{t('common.name')}</TableCell>
-            <TableCell>{t('registration.contributors.select_person')}</TableCell>
             <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
             <TableCell>{t('common.result_registrations')}</TableCell>
           </TableRow>
@@ -53,11 +43,10 @@ export const CristinPersonList = ({
         <TableBody>
           {personSearchHits.map((cristinPerson) => (
             <CristinPersonTableRow
+              key={cristinPerson.id}
               cristinPerson={cristinPerson}
               setSelectedPerson={setSelectedPerson}
               selectedPerson={selectedPerson}
-              selectedAffiliations={selectedAffiliations}
-              setSelectedAffiliations={setSelectedAffiliations}
             />
           ))}
         </TableBody>
@@ -70,25 +59,16 @@ interface CristinPersonTableRowProps extends Omit<CristinPersonListProps, 'perso
   cristinPerson: CristinPerson;
 }
 
-const CristinPersonTableRow = ({
-  cristinPerson,
-  setSelectedPerson,
-  selectedPerson,
-  setSelectedAffiliations,
-  selectedAffiliations,
-}: CristinPersonTableRowProps) => {
+const CristinPersonTableRow = ({ cristinPerson, setSelectedPerson, selectedPerson }: CristinPersonTableRowProps) => {
   const { t } = useTranslation();
   const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
   const personIsSelected = cristinPerson.id === selectedPerson?.id;
 
-  const selectedAffiliationsCoversAll = !activeAffiliations.some(
-    (affiliation) => !selectedAffiliations.includes(affiliation.organization)
-  );
   const selectedPersonAffiliationsCoversAll = !activeAffiliations.some(
     (affiliation) => !selectedPerson?.affiliations.some((a) => a.organization === affiliation.organization)
   );
 
-  const hasSelectedAll = personIsSelected && (selectedAffiliationsCoversAll || selectedPersonAffiliationsCoversAll);
+  const hasSelectedAll = personIsSelected && selectedPersonAffiliationsCoversAll;
 
   return (
     <TableRow
@@ -106,46 +86,55 @@ const CristinPersonTableRow = ({
         </IconButton>
       </TableCell>
       <TableCell>
-        <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
+        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
+          <IconButton
+            onClick={() => {
+              const personToAdd: CristinPerson = {
+                ...cristinPerson,
+                affiliations: [],
+              };
+              setSelectedPerson(personToAdd);
+            }}
+            color="primary"
+            size="small"
+            disabled={personIsSelected}
+            sx={{ bgcolor: 'white' }}
+            title={t('registration.contributors.select_person')}>
+            <ControlPointIcon fontSize="small" />
+          </IconButton>
+        </Box>
       </TableCell>
-      <TableCell>
-        <IconButton
-          onClick={() => {
-            const personToAdd: CristinPerson = {
-              ...cristinPerson,
-              affiliations: selectedPerson?.affiliations ?? [],
-            };
-            setSelectedPerson(personToAdd);
-          }}
-          color="primary"
-          size="small"
-          disabled={personIsSelected}
-          sx={{ bgcolor: 'white' }}
-          title={t('registration.contributors.select_person')}>
-          <ControlPointIcon fontSize="small" />
-        </IconButton>
-      </TableCell>
+
       <TableCell>
         {activeAffiliations.length > 0 ? (
           <>
-            {activeAffiliations.map(({ organization }) => (
+            {activeAffiliations.map((affiliation, index) => (
               <Box
+                key={affiliation.organization + index}
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   gap: '0.5rem',
                 }}>
-                <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
+                <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                 <IconButton
                   onClick={() => {
-                    setSelectedAffiliations((state) => [...state, organization]);
+                    if (!selectedPerson) {
+                      return;
+                    }
+                    const personWithAffiliation: CristinPerson = {
+                      ...selectedPerson,
+                      affiliations: [...selectedPerson.affiliations, affiliation],
+                    };
+                    setSelectedPerson(personWithAffiliation);
                   }}
                   color="primary"
                   size="small"
                   disabled={
-                    selectedAffiliations.includes(organization) ||
-                    selectedPerson?.affiliations.some((affiliation) => affiliation.organization === organization)
+                    !personIsSelected ||
+                    selectedPerson?.affiliations.some((a) => a.organization === affiliation.organization)
                   }
                   sx={{ bgcolor: 'white' }}
                   title={t('registration.contributors.select_affiliation')}>

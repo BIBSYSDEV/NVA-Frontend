@@ -53,7 +53,7 @@ export const AddContributorModal = ({
       fullWidth
       maxWidth="md"
       dataTestId="contributor-modal">
-      {contributorRoles.length > 1 && (
+      {contributorRoles.length > 1 && !initialSearchTerm && (
         <TextField
           data-testid={dataTestId.registrationWizard.contributors.selectContributorType}
           sx={{ maxWidth: '15rem' }}
