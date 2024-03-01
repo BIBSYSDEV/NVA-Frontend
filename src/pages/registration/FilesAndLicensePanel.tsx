@@ -1,8 +1,7 @@
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import {
   Box,
-  Button,
-  FormHelperText,
+  Checkbox,
+  FormControlLabel,
   Link,
   Paper,
   Table,
@@ -15,7 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import { UppyFile } from '@uppy/core';
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
+import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -43,10 +42,10 @@ import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
-import { HelperTextModal } from './HelperTextModal';
-import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { FileUploader } from './files_and_license_tab/FileUploader';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
+import { HelperTextModal } from './HelperTextModal';
 import { DoiField } from './resource_type_tab/components/DoiField';
 
 export const administrativeAgreementId = 'administrative-agreement';
@@ -121,370 +120,374 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <Paper elevation={5}>
-          <BackgroundDiv>
-            <Typography variant="h6" component="h2" gutterBottom>
-              {t('registration.files_and_license.info_from_channel_register')}
-            </Typography>
-            {journalIdentifier && (
-              <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
-                <Typography paragraph>
-                  {t('registration.files_and_license.find_journal_in_channel_register')}
-                </Typography>
-              </Link>
-            )}
-            {publisherIdentifier && (
-              <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
-                <Typography gutterBottom>
-                  {t('registration.files_and_license.find_publisher_in_channel_register')}
-                </Typography>
-              </Link>
-            )}
+        <Paper elevation={5} component={BackgroundDiv}>
+          <Typography variant="h6" component="h2" gutterBottom>
+            {t('registration.files_and_license.info_from_channel_register')}
+          </Typography>
+          {journalIdentifier && (
+            <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
+              <Typography paragraph>{t('registration.files_and_license.find_journal_in_channel_register')}</Typography>
+            </Link>
+          )}
+          {publisherIdentifier && (
+            <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
+              <Typography gutterBottom>
+                {t('registration.files_and_license.find_publisher_in_channel_register')}
+              </Typography>
+            </Link>
+          )}
 
-            {seriesIdentifier && (
-              <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
-                <Typography paragraph>{t('registration.files_and_license.find_series_in_channel_register')}</Typography>
-              </Link>
-            )}
-          </BackgroundDiv>
+          {seriesIdentifier && (
+            <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
+              <Typography paragraph>{t('registration.files_and_license.find_series_in_channel_register')}</Typography>
+            </Link>
+          )}
         </Paper>
       )}
 
       <FieldArray name={FileFieldNames.AssociatedArtifacts}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
-            {isNullAssociatedArtifact ? (
-              <Box sx={{ my: '1rem' }} data-testid={dataTestId.registrationWizard.files.noFilesOrLinksWarning}>
-                <Typography paragraph fontWeight={600}>
-                  {t('registration.files_and_license.resource_has_no_files_or_links')}
-                </Typography>
-                <Typography paragraph>
-                  {t('registration.files_and_license.resource_has_no_files_or_links_paragraph0')}
-                </Typography>
-                <Typography paragraph>
-                  {t('registration.files_and_license.resource_has_no_files_or_links_paragraph1')}
-                </Typography>
-                <Button
-                  sx={{ width: 'fit-content' }}
-                  variant="outlined"
-                  startIcon={<AttachFileIcon />}
-                  data-testid={dataTestId.registrationWizard.files.addFilesOrLinksButton}
-                  onClick={() => remove(0)}>
-                  {t('registration.files_and_license.add_files_or_link')}
-                </Button>
-              </Box>
-            ) : (
-              <>
-                <Paper elevation={5}>
-                  <BackgroundDiv>
-                    <Typography variant="h2" gutterBottom>
-                      {t('registration.files_and_license.files')}
-                    </Typography>
+            <Paper elevation={5} component={BackgroundDiv}>
+              <Typography variant="h2" gutterBottom>
+                {t('registration.files_and_license.files')}
+              </Typography>
 
-                    {files.length > 0 && (
-                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                        <TableContainer component={Paper} elevation={3}>
-                          <Table>
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>{t('common.name')}</TableCell>
-                                <TableCell>{t('common.file')}</TableCell>
-                                <TableCell>{t('registration.files_and_license.size')}</TableCell>
-                                <TableCell id={administrativeAgreementId}>
-                                  {t('registration.files_and_license.administrative_agreement')}
-                                </TableCell>
-                                {showFileVersion && (
-                                  <TableCell>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                      <Box sx={{ display: 'flex' }}>
-                                        {t('common.version')}
-                                        <Typography color="error">*</Typography>
-                                      </Box>
-                                      <HelperTextModal
-                                        modalTitle={t('common.version')}
-                                        modalDataTestId={dataTestId.registrationWizard.files.versionModal}
-                                        buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
-                                        {registratorPublishesMetadataOnly ? (
-                                          <>
-                                            <Typography paragraph>
-                                              {t('registration.files_and_license.version_helper_text_metadata_only')}
-                                            </Typography>
-                                            <Typography paragraph>
-                                              <Trans
-                                                i18nKey="registration.files_and_license.version_accepted_helper_text_metadata_only"
-                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
-                                              />
-                                            </Typography>
-                                            <Typography paragraph>
-                                              <Trans
-                                                i18nKey="registration.files_and_license.version_published_helper_text_metadata_only"
-                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
-                                              />
-                                            </Typography>
-                                            <Typography paragraph>
-                                              <Trans
-                                                i18nKey="registration.files_and_license.version_publishing_agreement_helper_text_metadata_only"
-                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
-                                              />
-                                            </Typography>
-                                          </>
-                                        ) : (
-                                          <>
-                                            <Trans
-                                              i18nKey="registration.files_and_license.version_helper_text"
-                                              components={[
-                                                <Typography paragraph />,
-                                                <Typography paragraph>
-                                                  <Box component="span" sx={{ textDecoration: 'underline' }} />
-                                                </Typography>,
-                                              ]}
-                                            />
+              {files.length > 0 && (
+                <TableContainer component={Paper} elevation={3} sx={{ mb: '2rem' }}>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>{t('common.name')}</TableCell>
+                        <TableCell>{t('common.file')}</TableCell>
+                        <TableCell>{t('registration.files_and_license.size')}</TableCell>
+                        <TableCell id={administrativeAgreementId}>
+                          {t('registration.files_and_license.administrative_agreement')}
+                        </TableCell>
+                        {showFileVersion && (
+                          <TableCell>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                              }}>
+                              <Box sx={{ display: 'flex' }}>
+                                {t('common.version')}
+                                <Typography color="error">*</Typography>
+                              </Box>
+                              <HelperTextModal
+                                modalTitle={t('common.version')}
+                                modalDataTestId={dataTestId.registrationWizard.files.versionModal}
+                                buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
+                                {registratorPublishesMetadataOnly ? (
+                                  <>
+                                    <Typography paragraph>
+                                      {t('registration.files_and_license.version_helper_text_metadata_only')}
+                                    </Typography>
+                                    <Typography paragraph>
+                                      <Trans
+                                        i18nKey="registration.files_and_license.version_accepted_helper_text_metadata_only"
+                                        components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                      />
+                                    </Typography>
+                                    <Typography paragraph>
+                                      <Trans
+                                        i18nKey="registration.files_and_license.version_published_helper_text_metadata_only"
+                                        components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                      />
+                                    </Typography>
+                                    <Typography paragraph>
+                                      <Trans
+                                        i18nKey="registration.files_and_license.version_publishing_agreement_helper_text_metadata_only"
+                                        components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                      />
+                                    </Typography>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Trans
+                                      i18nKey="registration.files_and_license.version_helper_text"
+                                      components={[
+                                        <Typography paragraph />,
+                                        <Typography paragraph>
+                                          <Box component="span" sx={{ textDecoration: 'underline' }} />
+                                        </Typography>,
+                                      ]}
+                                    />
 
-                                            <Typography paragraph>
-                                              <Trans
-                                                i18nKey="registration.files_and_license.version_accepted_helper_text"
-                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
-                                              />
-                                            </Typography>
-                                            <Typography paragraph>
-                                              <Trans
-                                                i18nKey="registration.files_and_license.version_published_helper_text"
-                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
-                                              />
-                                            </Typography>
-                                            <Typography paragraph>
-                                              <Trans
-                                                i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
-                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
-                                              />
-                                            </Typography>
-                                            <Typography paragraph>
-                                              <Trans
-                                                i18nKey="registration.files_and_license.version_embargo_helper_text"
-                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
-                                              />
-                                            </Typography>
-                                          </>
-                                        )}
-                                      </HelperTextModal>
-                                    </Box>
-                                  </TableCell>
+                                    <Typography paragraph>
+                                      <Trans
+                                        i18nKey="registration.files_and_license.version_accepted_helper_text"
+                                        components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                      />
+                                    </Typography>
+                                    <Typography paragraph>
+                                      <Trans
+                                        i18nKey="registration.files_and_license.version_published_helper_text"
+                                        components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                      />
+                                    </Typography>
+                                    <Typography paragraph>
+                                      <Trans
+                                        i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
+                                        components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                      />
+                                    </Typography>
+                                    <Typography paragraph>
+                                      <Trans
+                                        i18nKey="registration.files_and_license.version_embargo_helper_text"
+                                        components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                      />
+                                    </Typography>
+                                  </>
                                 )}
-                                <TableCell>
-                                  <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                    {t('registration.files_and_license.license')}
-                                    <HelperTextModal
-                                      modalTitle={t('registration.files_and_license.licenses')}
-                                      modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
-                                      buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
-                                      <Typography paragraph>
-                                        {t('registration.files_and_license.file_and_license_info')}
-                                      </Typography>
-                                      {licenses
-                                        .filter(
-                                          (license) =>
-                                            license.version === 4 ||
-                                            license.id === LicenseUri.CC0 ||
-                                            license.id === LicenseUri.RightsReserved
-                                        )
-                                        .map((license) => (
-                                          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-                                            <Typography variant="h3" gutterBottom>
-                                              {license.name}
-                                            </Typography>
-                                            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-                                            <Typography paragraph>{license.description}</Typography>
-                                            {license.link && (
-                                              <Link href={license.link} target="blank">
-                                                {license.link}
-                                              </Link>
-                                            )}
-                                          </Box>
-                                        ))}
-                                    </HelperTextModal>
+                              </HelperTextModal>
+                            </Box>
+                          </TableCell>
+                        )}
+                        <TableCell>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              gap: '0.5rem',
+                              alignItems: 'center',
+                            }}>
+                            {t('registration.files_and_license.license')}
+                            <HelperTextModal
+                              modalTitle={t('registration.files_and_license.licenses')}
+                              modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
+                              buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
+                              <Typography paragraph>
+                                {t('registration.files_and_license.file_and_license_info')}
+                              </Typography>
+                              {licenses
+                                .filter(
+                                  (license) =>
+                                    license.version === 4 ||
+                                    license.id === LicenseUri.CC0 ||
+                                    license.id === LicenseUri.RightsReserved
+                                )
+                                .map((license) => (
+                                  <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+                                    <Typography variant="h3" gutterBottom>
+                                      {license.name}
+                                    </Typography>
+                                    <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
+                                    <Typography paragraph>{license.description}</Typography>
+                                    {license.link && (
+                                      <Link href={license.link} target="blank">
+                                        {license.link}
+                                      </Link>
+                                    )}
                                   </Box>
-                                </TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              {filesToPublish.map((file) => {
-                                const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
-                                  if (associatedArtifactIsFile(artifact)) {
-                                    const associatedFile = artifact as AssociatedFile;
-                                    return associatedFile.identifier === file.identifier;
-                                  }
-                                  return false;
-                                });
-
-                                const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
-                                const canEditThisFile = isEmbargoedDegreeFile
-                                  ? canEditDegreeFiles && user.isEmbargoThesisCurator
-                                  : canEditFiles;
-
-                                return (
-                                  <FilesTableRow
-                                    key={file.identifier}
-                                    file={file}
-                                    disabled={!canEditThisFile}
-                                    removeFile={() => {
-                                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                                      const remainingFiles = uppy
-                                        .getFiles()
-                                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                                      uppy.setState({ files: remainingFiles });
-                                      remove(associatedFileIndex);
-
-                                      if (associatedArtifactsBeforeRemoval === 1) {
-                                        // Ensure field is set to touched even if it's empty
-                                        setFieldTouched(name);
-                                      }
-                                    }}
-                                    baseFieldName={`${name}[${associatedFileIndex}]`}
-                                    showFileVersion={showFileVersion}
-                                  />
-                                );
-                              })}
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                      </Box>
-                    )}
-
-                    {filesNotToPublish.length > 0 && (
-                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                        <Typography variant="h2">
-                          {t('registration.files_and_license.files_are_not_published')}
-                        </Typography>
-                        <TableContainer component={Paper}>
-                          <Table sx={alternatingTableRowColor}>
-                            <TableHead>
-                              <TableRow>
-                                <TableCell>{t('common.name')}</TableCell>
-                                <TableCell>{t('common.file')}</TableCell>
-                                <TableCell>{t('registration.files_and_license.size')}</TableCell>
-                                <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                              {filesNotToPublish.map((file) => {
-                                const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
-                                  if (associatedArtifactIsFile(artifact)) {
-                                    const associatedFile = artifact as AssociatedFile;
-                                    return associatedFile.identifier === file.identifier;
-                                  }
-                                  return false;
-                                });
-
-                                return (
-                                  <UnpublishableFileRow
-                                    key={file.identifier}
-                                    file={file}
-                                    disabled={!canEditFiles}
-                                    removeFile={() => {
-                                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                                      const remainingFiles = uppy
-                                        .getFiles()
-                                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                                      uppy.setState({ files: remainingFiles });
-                                      remove(associatedFileIndex);
-
-                                      if (associatedArtifactsBeforeRemoval === 1) {
-                                        // Ensure field is set to touched even if it's empty
-                                        setFieldTouched(name);
-                                      }
-                                    }}
-                                    baseFieldName={`${name}[${associatedFileIndex}]`}
-                                  />
-                                );
-                              })}
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                      </Box>
-                    )}
-
-                    {customer &&
-                    publicationInstanceType &&
-                    !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
-                      <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
-                    ) : (
-                      <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
-                    )}
-                  </BackgroundDiv>
-                </Paper>
-
-                <Paper elevation={5}>
-                  <BackgroundDiv>
-                    <Typography variant="h2" paragraph>
-                      {t('common.link')}
-                    </Typography>
-                    {originalDoi ? (
-                      <DoiField canEditDoi={canEditFiles} />
-                    ) : (
-                      <TextField
-                        fullWidth
-                        variant="filled"
-                        label={t('registration.files_and_license.link_to_resource')}
-                        disabled={!canEditFiles}
-                        value={
-                          associatedLinkIndex >= 0
-                            ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id
-                            : ''
-                        }
-                        error={associatedLinkHasError}
-                        helperText={
-                          associatedLinkHasError
-                            ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
-                            : null
-                        }
-                        data-testid={dataTestId.registrationWizard.files.linkToResourceField}
-                        onChange={(event) => {
-                          const inputValue = event.target.value;
-                          if (inputValue) {
-                            if (associatedLinkIndex < 0) {
-                              const newAssociatedLink: AssociatedLink = { type: 'AssociatedLink', id: inputValue };
-                              push(newAssociatedLink);
-                            } else {
-                              const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
-                              setFieldValue(fieldName, inputValue);
-                              setFieldTouched(fieldName);
-                            }
-                          } else {
-                            const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                            remove(associatedLinkIndex);
-                            if (associatedArtifactsBeforeRemoval === 1) {
-                              // Ensure field is set to touched even if it's empty
-                              setFieldTouched(name);
-                            }
+                                ))}
+                            </HelperTextModal>
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {filesToPublish.map((file) => {
+                        const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
+                          if (associatedArtifactIsFile(artifact)) {
+                            const associatedFile = artifact as AssociatedFile;
+                            return associatedFile.identifier === file.identifier;
                           }
-                        }}
-                      />
-                    )}
-                  </BackgroundDiv>
-                </Paper>
+                          return false;
+                        });
 
-                {associatedArtifacts.length === 0 &&
-                  typeof errors.associatedArtifacts === 'string' &&
-                  touched.associatedArtifacts && (
-                    <FormHelperText error>
-                      <ErrorMessage name={name} />
-                    </FormHelperText>
-                  )}
+                        const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
+                        const canEditThisFile = isEmbargoedDegreeFile
+                          ? canEditDegreeFiles && user.isEmbargoThesisCurator
+                          : canEditFiles;
 
-                {associatedArtifacts.length === 0 && !originalDoi && (
-                  <Button
-                    sx={{ width: 'fit-content', m: 'auto' }}
-                    variant="outlined"
-                    disabled={!canEditFiles}
-                    data-testid={dataTestId.registrationWizard.files.noFilesOrLinksButton}
-                    onClick={() => {
-                      const nullAssociatedArtifact: NullAssociatedArtifact = { type: 'NullAssociatedArtifact' };
-                      push(nullAssociatedArtifact);
-                    }}>
-                    {t('registration.files_and_license.resource_has_no_files_or_links')}
-                  </Button>
-                )}
-              </>
+                        return (
+                          <FilesTableRow
+                            key={file.identifier}
+                            file={file}
+                            disabled={!canEditThisFile}
+                            removeFile={() => {
+                              const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                              const remainingFiles = uppy
+                                .getFiles()
+                                .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                              uppy.setState({ files: remainingFiles });
+                              remove(associatedFileIndex);
+
+                              if (associatedArtifactsBeforeRemoval === 1) {
+                                // Ensure field is set to touched even if it's empty
+                                setFieldTouched(name);
+                              }
+                            }}
+                            baseFieldName={`${name}[${associatedFileIndex}]`}
+                            showFileVersion={showFileVersion}
+                          />
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              )}
+
+              {filesNotToPublish.length > 0 && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                    mb: '2rem',
+                  }}>
+                  <Typography variant="h2">{t('registration.files_and_license.files_are_not_published')}</Typography>
+                  <TableContainer component={Paper}>
+                    <Table sx={alternatingTableRowColor}>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>{t('common.name')}</TableCell>
+                          <TableCell>{t('common.file')}</TableCell>
+                          <TableCell>{t('registration.files_and_license.size')}</TableCell>
+                          <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {filesNotToPublish.map((file) => {
+                          const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
+                            if (associatedArtifactIsFile(artifact)) {
+                              const associatedFile = artifact as AssociatedFile;
+                              return associatedFile.identifier === file.identifier;
+                            }
+                            return false;
+                          });
+
+                          return (
+                            <UnpublishableFileRow
+                              key={file.identifier}
+                              file={file}
+                              disabled={!canEditFiles}
+                              removeFile={() => {
+                                const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                const remainingFiles = uppy
+                                  .getFiles()
+                                  .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                uppy.setState({ files: remainingFiles });
+                                remove(associatedFileIndex);
+
+                                if (associatedArtifactsBeforeRemoval === 1) {
+                                  // Ensure field is set to touched even if it's empty
+                                  setFieldTouched(name);
+                                }
+                              }}
+                              baseFieldName={`${name}[${associatedFileIndex}]`}
+                            />
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+              )}
+
+              {customer &&
+              publicationInstanceType &&
+              !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
+                <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
+              ) : (
+                <FileUploader
+                  uppy={uppy}
+                  addFile={(file) => {
+                    const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(associatedArtifactIsNullArtifact);
+                    if (nullAssociatedArtifactIndex > -1) {
+                      remove(nullAssociatedArtifactIndex);
+                    }
+                    push(file);
+                  }}
+                  disabled={!canEditFiles}
+                />
+              )}
+            </Paper>
+            <Paper elevation={5} component={BackgroundDiv}>
+              <Typography variant="h2" paragraph>
+                {t('common.link')}
+              </Typography>
+              {originalDoi ? (
+                <DoiField canEditDoi={canEditFiles} />
+              ) : (
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  label={t('registration.files_and_license.link_to_resource')}
+                  disabled={!canEditFiles}
+                  value={
+                    associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
+                  }
+                  error={associatedLinkHasError}
+                  helperText={
+                    associatedLinkHasError
+                      ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
+                      : null
+                  }
+                  data-testid={dataTestId.registrationWizard.files.linkToResourceField}
+                  onChange={(event) => {
+                    const inputValue = event.target.value;
+                    if (inputValue) {
+                      if (associatedLinkIndex < 0) {
+                        const newAssociatedLink: AssociatedLink = {
+                          type: 'AssociatedLink',
+                          id: inputValue,
+                        };
+                        push(newAssociatedLink);
+                        const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
+                          associatedArtifactIsNullArtifact
+                        );
+                        if (nullAssociatedArtifactIndex > -1) {
+                          remove(nullAssociatedArtifactIndex);
+                        }
+                      } else {
+                        const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
+                        setFieldValue(fieldName, inputValue);
+                        setFieldTouched(fieldName);
+                      }
+                    } else {
+                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                      remove(associatedLinkIndex);
+                      if (associatedArtifactsBeforeRemoval === 1) {
+                        // Ensure field is set to touched even if it's empty
+                        setFieldTouched(name);
+                      }
+                    }
+                  }}
+                />
+              )}
+            </Paper>
+
+            {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && (
+              <Paper elevation={5} component={BackgroundDiv}>
+                <Typography variant="h2" paragraph>
+                  {t('registration.files_and_license.resource_is_a_reference')}
+                </Typography>
+                <Box sx={{ backgroundColor: 'white', width: '100%', p: '0.25rem 1rem' }}>
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    checked={isNullAssociatedArtifact}
+                    onChange={(event, checked) => {
+                      if (!checked) {
+                        const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
+                          associatedArtifactIsNullArtifact
+                        );
+                        if (nullAssociatedArtifactIndex > -1) {
+                          remove(nullAssociatedArtifactIndex);
+                        }
+                      }
+
+                      if (associatedArtifacts.length === 0 && checked) {
+                        const nullAssociatedArtifact: NullAssociatedArtifact = { type: 'NullAssociatedArtifact' };
+                        push(nullAssociatedArtifact);
+                      }
+                    }}
+                    label={t('registration.files_and_license.resource_has_no_files_or_links')}
+                  />
+                </Box>
+              </Paper>
             )}
           </>
         )}

@@ -11,6 +11,7 @@ import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
+import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
@@ -60,7 +61,10 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       </Helmet>
 
       <Grid container columns={16} gap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
-        <Grid item xs={16}>
+        <Grid item xs={16} md={5} lg={4}>
+          <TicketStatusFilter />
+        </Grid>
+        <Grid item xs={16} md={11} lg={12}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
         <Grid item xs={16} md={5} lg={4}>

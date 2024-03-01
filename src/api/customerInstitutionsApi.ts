@@ -1,7 +1,7 @@
 import { CancelToken } from 'axios';
-import { CustomerInstitution, DoiAgent } from '../types/customerInstitution.types';
+import { CustomerInstitution, DoiAgent, ProtectedDoiAgent } from '../types/customerInstitution.types';
 import { CustomerInstitutionApiPath } from './apiPaths';
-import { authenticatedApiRequest } from './apiRequest';
+import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
 export const createCustomerInstitution = async (
   customer: Omit<CustomerInstitution, 'doiAgent'>,
@@ -23,6 +23,12 @@ export const updateCustomerInstitution = async (
     method: 'PUT',
     data: customer,
     cancelToken,
+  });
+
+export const fetchDoiAgent = async (doiAgentId: string) =>
+  await authenticatedApiRequest2<ProtectedDoiAgent>({
+    url: doiAgentId,
+    method: 'GET',
   });
 
 export const updateDoiAgent = async (doiAgent: DoiAgent, cancelToken?: CancelToken) =>

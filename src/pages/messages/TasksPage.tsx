@@ -13,8 +13,8 @@ import {
   MenuItem,
   Radio,
   Select,
-  styled,
   Typography,
+  styled,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -22,16 +22,16 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { fetchNviCandidates, fetchTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
-import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
-import { TicketStatus } from '../../types/publication_types/ticket.types';
+import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
@@ -129,13 +129,12 @@ const TasksPage = () => {
   const ticketTypeQuery =
     selectedTicketTypes.length > 0 ? `(${selectedTicketTypes.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const selectedTicketStatuses = Object.entries(ticketStatusFilter)
-    .filter(([_, selected]) => selected)
-    .map(([key]) => key);
+  const selectedStatusesArray = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
+    ticketStatusValues) as TicketStatus[];
 
   const ticketStatusQuery =
-    selectedTicketStatuses.length > 0
-      ? `(${selectedTicketStatuses.map((status) => 'status:' + status).join(' OR ')})`
+    selectedStatusesArray.length > 0
+      ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
   const assignee = searchParams.get(TicketSearchParam.Assignee);
@@ -168,12 +167,6 @@ const TasksPage = () => {
   const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
   const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
-
-  const ticketStatusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
-  const ticketNewCount = ticketStatusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
-  const ticketPendingCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
-  const ticketCompletedCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
-  const ticketClosedCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
   // NVI data
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
@@ -307,75 +300,6 @@ const TasksPage = () => {
                     : t('my_page.messages.types.GeneralSupportCase')}
                 </SelectableButton>
               )}
-            </StyledTicketSearchFormGroup>
-
-            <StyledTicketSearchFormGroup>
-              <FormLabel component="legend" sx={{ fontWeight: 700 }}>
-                {t('tasks.status')}
-              </FormLabel>
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
-                disabled={showOnlyMyTasks}
-                checked={ticketStatusFilter.New}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() => setTicketStatusFilter({ ...ticketStatusFilter, New: !ticketStatusFilter.New })}
-                  />
-                }
-                label={
-                  ticketStatusFilter.New && ticketNewCount
-                    ? `${t('my_page.messages.ticket_types.New')} (${ticketNewCount})`
-                    : t('my_page.messages.ticket_types.New')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
-                checked={ticketStatusFilter.Pending}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() =>
-                      setTicketStatusFilter({ ...ticketStatusFilter, Pending: !ticketStatusFilter.Pending })
-                    }
-                  />
-                }
-                label={
-                  ticketStatusFilter.Pending && ticketPendingCount
-                    ? `${t('my_page.messages.ticket_types.Pending')} (${ticketPendingCount})`
-                    : t('my_page.messages.ticket_types.Pending')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
-                checked={ticketStatusFilter.Completed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() =>
-                      setTicketStatusFilter({ ...ticketStatusFilter, Completed: !ticketStatusFilter.Completed })
-                    }
-                  />
-                }
-                label={
-                  ticketStatusFilter.Completed && ticketCompletedCount
-                    ? `${t('my_page.messages.ticket_types.Completed')} (${ticketCompletedCount})`
-                    : t('my_page.messages.ticket_types.Completed')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
-                checked={ticketStatusFilter.Closed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() =>
-                      setTicketStatusFilter({ ...ticketStatusFilter, Closed: !ticketStatusFilter.Closed })
-                    }
-                  />
-                }
-                label={
-                  ticketStatusFilter.Closed && ticketClosedCount
-                    ? `${t('my_page.messages.ticket_types.Closed')} (${ticketClosedCount})`
-                    : t('my_page.messages.ticket_types.Closed')
-                }
-              />
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>
         )}

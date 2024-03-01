@@ -17,6 +17,7 @@ export enum TicketSearchParam {
   SortOrder = 'sortOrder',
   ViewingScope = 'viewingScope',
   ExcludeSubUnits = 'excludeSubUnits',
+  Status = 'status',
 }
 
 export interface FetchTicketsParams {
