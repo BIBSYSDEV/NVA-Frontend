@@ -614,6 +614,7 @@
   },
   "my_page": {
     "messages": {
+      "all_ticket_types": "Alle statuser",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
