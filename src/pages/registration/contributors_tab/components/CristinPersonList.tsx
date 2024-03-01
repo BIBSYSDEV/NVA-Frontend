@@ -108,7 +108,7 @@ const CristinPersonTableRow = ({ cristinPerson, setSelectedPerson, selectedPerso
 
       <TableCell>
         {activeAffiliations.length > 0 ? (
-          <>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {activeAffiliations.map((affiliation, index) => (
               <Box
                 key={affiliation.organization + index}
@@ -116,7 +116,7 @@ const CristinPersonTableRow = ({ cristinPerson, setSelectedPerson, selectedPerso
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  gap: '0.5rem',
+                  gap: '0.25rem',
                 }}>
                 <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                 <IconButton
@@ -142,7 +142,7 @@ const CristinPersonTableRow = ({ cristinPerson, setSelectedPerson, selectedPerso
                 </IconButton>
               </Box>
             ))}
-          </>
+          </Box>
         ) : (
           <i>{t('registration.contributors.no_affiliations_found')}</i>
         )}
