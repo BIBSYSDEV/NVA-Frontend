@@ -276,6 +276,8 @@ export const emptyContextPublisher: ContextPublisher = {
   id: '',
 };
 
+export type AggregationFileKeyType = 'hasPublicFiles' | 'noFiles';
+
 export interface RegistrationAggregations {
   topLevelOrganization?: AggregationValue[];
   type?: AggregationValue[];
@@ -285,7 +287,7 @@ export interface RegistrationAggregations {
   series?: AggregationValue[];
   journal?: AggregationValue[];
   scientificIndex?: AggregationValue[];
-  files?: AggregationValue<'hasPublicFiles' | 'noFiles'>[];
+  files?: AggregationValue<AggregationFileKeyType>[];
 }
 
 export interface ConfirmedDocument {

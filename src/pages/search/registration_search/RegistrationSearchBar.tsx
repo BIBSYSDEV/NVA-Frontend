@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { fetchJournal, fetchPublisher, fetchSeries } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
-import { PublicationInstanceType } from '../../../types/registration.types';
+import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   createSearchConfigFromSearchParams,
@@ -311,7 +311,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                   }
                   case ResultParam.Files: {
                     fieldName = t('registration.files_and_license.files');
-                    fieldValueText = getFileFacetText(value, t);
+                    fieldValueText = getFileFacetText(value as AggregationFileKeyType, t);
                     break;
                   }
                   default:

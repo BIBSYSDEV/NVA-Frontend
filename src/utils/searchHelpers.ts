@@ -1,5 +1,6 @@
 import { ResultParam } from '../api/searchApi';
 import { TFunction } from 'i18next';
+import { AggregationFileKeyType } from '../types/registration.types';
 
 export enum SearchParam {
   From = 'from',
@@ -125,7 +126,7 @@ export const isValidIsbn = (value: string): boolean => {
   return value.startsWith('978-') && value.replaceAll('-', '').length === 13;
 };
 
-export const getFileFacetText = (key: string, t: TFunction<'translation'>) => {
+export const getFileFacetText = (key: AggregationFileKeyType, t: TFunction<'translation'>) => {
   return key === 'hasPublicFiles'
     ? t('registration.files_and_license.registration_with_file')
     : key === 'noFiles'
