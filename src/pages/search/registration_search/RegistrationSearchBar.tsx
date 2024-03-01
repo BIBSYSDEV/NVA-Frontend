@@ -31,6 +31,7 @@ const facetParams: string[] = [
   ResultParam.Contributor,
   ResultParam.Journal,
   ResultParam.Publisher,
+  ResultParam.Files,
   ResultParam.FundingSource,
   ResultParam.ScientificIndex,
   ResultParam.Series,
@@ -270,7 +271,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         />
                       );
                     }
-
                     break;
                   }
                   case ResultParam.Series: {
@@ -286,7 +286,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         <SelectedSeriesFacetButton seriesIdentifier={typeof value === 'string' ? value : value[0]} />
                       );
                     }
-
                     break;
                   }
                   case ResultParam.Journal: {
@@ -302,12 +301,21 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         <SelectedJournalFacetButton journalIdentifier={typeof value === 'string' ? value : value[0]} />
                       );
                     }
-
                     break;
                   }
                   case ResultParam.ScientificIndex: {
                     fieldName = t('basic_data.nvi.nvi_publication_year');
                     fieldValueText = value;
+                    break;
+                  }
+                  case ResultParam.Files: {
+                    fieldName = t('registration.files_and_license.files');
+                    fieldValueText =
+                      value === 'hasPublicFiles'
+                        ? t('registration.files_and_license.registration_with_file')
+                        : value === 'noFiles'
+                          ? t('registration.files_and_license.registration_without_file')
+                          : t('registration.missing_name');
                     break;
                   }
                   default:

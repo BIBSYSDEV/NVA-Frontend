@@ -13,7 +13,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam, SortOrder } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -64,6 +64,7 @@ const HomePage = () => {
     contributorName: params.get(ResultParam.ContributorName),
     course: params.get(ResultParam.Course),
     cristinIdentifier: params.get(ResultParam.CristinIdentifier),
+    files: params.get(ResultParam.Files),
     doi: params.get(ResultParam.Doi),
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),

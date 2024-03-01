@@ -24,6 +24,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const selectedSeries = searchParams.get(ResultParam.Series);
   const selectedJournal = searchParams.get(ResultParam.Journal);
   const selectedScientificIndex = searchParams.get(ResultParam.ScientificIndex);
+  const selectedFiles = searchParams.get(ResultParam.Files);
 
   const typeFacet = registrationQuery.data?.aggregations?.type ?? [];
   const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization ?? [];
@@ -33,6 +34,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const seriesFacet = registrationQuery.data?.aggregations?.series ?? [];
   const journalFacet = registrationQuery.data?.aggregations?.journal ?? [];
   const scientificIndexFacet = registrationQuery.data?.aggregations?.scientificIndex ?? [];
+  const filesFacet = registrationQuery.data?.aggregations?.files ?? [];
 
   const addFacetFilter = (param: string, key: string) => {
     const currentValues = searchParams.get(param)?.split(',') ?? [];
@@ -253,6 +255,39 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                     isSelected
                       ? removeFacetFilter(ResultParam.ScientificIndex, facet.key)
                       : addFacetFilter(ResultParam.ScientificIndex, facet.key)
+                  }
+                />
+              );
+            })}
+        </FacetItem>
+      )}
+
+      {filesFacet.length > 0 && (
+        <FacetItem title={t('registration.files_and_license.files')} dataTestId={dataTestId.startPage.filesFacets}>
+          {filesFacet
+            .sort((one) => (one.key === 'hasPublicFiles' ? -1 : 1))
+            .map((facet) => {
+              const isSelected = !!selectedFiles?.includes(facet.key);
+
+              return (
+                <FacetListItem
+                  key={facet.key}
+                  identifier={facet.key}
+                  dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                  isLoading={registrationQuery.isLoading}
+                  isSelected={isSelected}
+                  label={
+                    facet.key === 'hasPublicFiles'
+                      ? t('registration.files_and_license.registration_with_file')
+                      : facet.key === 'noFiles'
+                        ? t('registration.files_and_license.registration_without_file')
+                        : t('registration.missing_name')
+                  }
+                  count={facet.count}
+                  onClickFacet={() =>
+                    isSelected
+                      ? removeFacetFilter(ResultParam.Files, facet.key)
+                      : addFacetFilter(ResultParam.Files, facet.key)
                   }
                 />
               );

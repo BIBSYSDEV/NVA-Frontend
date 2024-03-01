@@ -285,6 +285,7 @@ export interface RegistrationAggregations {
   series?: AggregationValue[];
   journal?: AggregationValue[];
   scientificIndex?: AggregationValue[];
+  files?: AggregationValue<'hasPublicFiles' | 'noFiles'>[];
 }
 
 export interface ConfirmedDocument {
