@@ -60,7 +60,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <title>{title}</title>
       </Helmet>
 
-      <Grid container columns={16} gap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
+      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
         <Grid item xs={16} md={5} lg={4}>
           <TicketStatusFilter />
         </Grid>
