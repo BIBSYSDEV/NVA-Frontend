@@ -4,7 +4,7 @@ import { ResultParam } from '../../../../api/searchApi';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { removeSearchParamValue } from '../../../../utils/searchHelpers';
+import { getFileFacetText, removeSearchParamValue } from '../../../../utils/searchHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
@@ -276,13 +276,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   dataTestId={dataTestId.startPage.facetItem(facet.key)}
                   isLoading={registrationQuery.isLoading}
                   isSelected={isSelected}
-                  label={
-                    facet.key === 'hasPublicFiles'
-                      ? t('registration.files_and_license.registration_with_file')
-                      : facet.key === 'noFiles'
-                        ? t('registration.files_and_license.registration_without_file')
-                        : t('registration.missing_name')
-                  }
+                  label={getFileFacetText(facet.key, t)}
                   count={facet.count}
                   onClickFacet={() =>
                     isSelected

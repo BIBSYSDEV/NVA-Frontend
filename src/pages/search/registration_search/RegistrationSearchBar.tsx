@@ -14,6 +14,7 @@ import { PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   createSearchConfigFromSearchParams,
+  getFileFacetText,
   isValidIsbn,
   PropertySearch,
   removeSearchParamValue,
@@ -310,12 +311,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                   }
                   case ResultParam.Files: {
                     fieldName = t('registration.files_and_license.files');
-                    fieldValueText =
-                      value === 'hasPublicFiles'
-                        ? t('registration.files_and_license.registration_with_file')
-                        : value === 'noFiles'
-                          ? t('registration.files_and_license.registration_without_file')
-                          : t('registration.missing_name');
+                    fieldValueText = getFileFacetText(value, t);
                     break;
                   }
                   default:
