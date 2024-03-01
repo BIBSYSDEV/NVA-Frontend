@@ -1081,7 +1081,7 @@
       "identification": "Identifisering",
       "identity_status": {
         "confirmed_identity": "Identifisert",
-        "confirmed_identity_without_affiliation": "Identifisert uten tilhørighet",
+        "confirmed_identity_without_affiliation": "Identifisert uten tilknytning",
         "unknown_identity": "Uidentifisert"
       },
       "invalid_role": "Bidragsyter må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",

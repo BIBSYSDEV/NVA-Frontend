@@ -26,23 +26,19 @@ export const CristinPersonTableRow = ({
   const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
   const personIsSelected = cristinPerson.id === selectedPerson?.id;
 
-  const selectedPersonAffiliationsCoversAll = !activeAffiliations.some(
+  const selectedPersonHasAllAffiliations = !activeAffiliations.some(
     (affiliation) => !selectedPerson?.affiliations.some((a) => a.organization === affiliation.organization)
   );
 
-  const hasSelectedAll = personIsSelected && selectedPersonAffiliationsCoversAll;
+  const hasSelectedAll = personIsSelected && selectedPersonHasAllAffiliations;
 
   return (
-    <TableRow
-      data-testid={dataTestId.registrationWizard.contributors.authorRadioButton}
-      key={cristinPerson.id}
-      selected={personIsSelected}>
+    <TableRow data-testid={dataTestId.registrationWizard.contributors.authorRadioButton} selected={personIsSelected}>
       <TableCell>
         <IconButton
           onClick={() => setSelectedPerson({ ...cristinPerson, affiliations: activeAffiliations })}
           color="primary"
           disabled={hasSelectedAll}
-          sx={{ bgcolor: 'white' }}
           title={t('registration.contributors.select_all')}>
           {hasSelectedAll ? <CheckCircleIcon color="info" /> : <ControlPointIcon />}
         </IconButton>
@@ -61,7 +57,6 @@ export const CristinPersonTableRow = ({
             color="primary"
             size="small"
             disabled={personIsSelected}
-            sx={{ bgcolor: 'white' }}
             title={t('registration.contributors.select_person')}>
             {personIsSelected ? (
               <CheckCircleOutlined fontSize="small" color="info" />
@@ -76,9 +71,10 @@ export const CristinPersonTableRow = ({
         {activeAffiliations.length > 0 ? (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {activeAffiliations.map((affiliation, index) => {
-              const affiliationIsSelected = selectedPerson?.affiliations.some(
-                (a) => a.organization === affiliation.organization && personIsSelected
-              );
+              const affiliationIsSelected =
+                personIsSelected &&
+                selectedPerson.affiliations.some((a) => a.organization === affiliation.organization);
+
               return (
                 <Box
                   key={affiliation.organization + index}
@@ -103,7 +99,6 @@ export const CristinPersonTableRow = ({
                     color="primary"
                     size="small"
                     disabled={!personIsSelected || affiliationIsSelected}
-                    sx={{ bgcolor: 'white' }}
                     title={t('registration.contributors.select_affiliation')}>
                     {affiliationIsSelected ? (
                       <CheckCircleOutlined fontSize="small" color="info" />
