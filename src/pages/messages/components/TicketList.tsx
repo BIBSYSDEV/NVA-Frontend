@@ -9,6 +9,7 @@ import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
+import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
@@ -59,6 +60,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       </Typography>
 
       <Box sx={{ mb: '1rem', display: 'flex', gap: '0.5rem' }}>
+        <TicketStatusFilter />
         <SearchForm sx={{ flex: '1 0 15rem' }} placeholder={t('tasks.search_placeholder')} />
         <TicketDateIntervalFilter />
       </Box>

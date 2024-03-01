@@ -87,8 +87,8 @@
       "add_institution": "Opprett institusjon",
       "admin_institutions": "Administrer institusjoner",
       "administrators": "Administratorer",
-      "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
-      "display_name": "Visningsnavn på institusjonen",
+      "administators_list_explanation": "Genereres fra Personregisteret og rolletildeling",
+      "can_assign_doi": "Institusjonen kan tildele DOI",
       "doi_password": "Passord",
       "doi_prefix": "DOI prefiks",
       "doi_repo_id": "Data Cite Repository ID",
@@ -259,7 +259,6 @@
     "update": "Oppdater",
     "url": "URL",
     "use": "Bruk",
-    "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
     "x_days_one": "{{count}} dag",
@@ -505,7 +504,6 @@
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
-      "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
       "create_journal": "Tidsskriftet ble opprettet",
       "create_note": "Merknaden ble lagret",
@@ -616,6 +614,7 @@
   },
   "my_page": {
     "messages": {
+      "all_ticket_types": "Alle statuser",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -728,7 +727,6 @@
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
-      "institution_admins": "Administratorer",
       "internal_importer": "Intern importør",
       "internal_importer_description": "Kan behandle importkandidater.",
       "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
@@ -1202,6 +1200,7 @@
     "files_and_license": {
       "accepted": "Akseptert",
       "accepted_version": "Akseptert versjon",
+      "add_files_or_links": "Legg til fil eller lenke",
       "administrative_agreement": "Administrativ avtale",
       "administrative_contract": "Intern fil som aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
@@ -1223,6 +1222,7 @@
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "mark_if_funder_requires_rrs": "Om denne publikasjonen er finansiert av en aktør som pålegger deg å følge RRS (ref. PlanS), så markerer du det her.",
+      "no_files_or_links_present_in_this_registration": "Det er ikke lagt til fil eller lenke for registreringen",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "open_file": "Åpne fil",
       "published": "Publisert",

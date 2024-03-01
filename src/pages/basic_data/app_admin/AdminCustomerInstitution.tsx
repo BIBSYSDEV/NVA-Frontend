@@ -1,4 +1,3 @@
-import { Divider } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchUsers } from '../../../api/roleApi';
@@ -7,7 +6,6 @@ import { PageSpinner } from '../../../components/PageSpinner';
 import { CustomerInstitution } from '../../../types/customerInstitution.types';
 import { RoleName } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
-import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataForm';
 
 interface AdminCustomerInstitutionProps {
@@ -47,17 +45,6 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
             doiAgent={customerInstitution?.doiAgent}
             editMode={editMode}
           />
-
-          {editMode && customerInstitution && (
-            <>
-              <Divider sx={{ my: '1rem' }} />
-              <CustomerInstitutionAdminsForm
-                admins={adminsQuery.data ?? []}
-                refetchInstitutionUsers={adminsQuery.refetch}
-                cristinInstitutionId={customerInstitution.cristinId}
-              />
-            </>
-          )}
         </>
       )}
     </>
