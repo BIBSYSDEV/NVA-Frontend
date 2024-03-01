@@ -33,9 +33,10 @@ export const CristinPersonTableRow = ({
   const hasSelectedAll = personIsSelected && selectedPersonHasAllAffiliations;
 
   return (
-    <TableRow data-testid={dataTestId.registrationWizard.contributors.authorRadioButton} selected={personIsSelected}>
+    <TableRow selected={personIsSelected}>
       <TableCell>
         <IconButton
+          data-testid={dataTestId.registrationWizard.contributors.selectEverythingForContributor}
           onClick={() => setSelectedPerson({ ...cristinPerson, affiliations: activeAffiliations })}
           color="primary"
           disabled={hasSelectedAll}
@@ -47,6 +48,7 @@ export const CristinPersonTableRow = ({
         <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'space-between' }}>
           <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
           <IconButton
+            data-testid={dataTestId.registrationWizard.contributors.selectPersonForContributor}
             onClick={() => {
               const personToAdd: CristinPerson = {
                 ...cristinPerson,
@@ -86,6 +88,7 @@ export const CristinPersonTableRow = ({
                   }}>
                   <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                   <IconButton
+                    data-testid={dataTestId.registrationWizard.contributors.selectAffiliationForContributor}
                     onClick={() => {
                       if (!selectedPerson) {
                         return;
