@@ -3,7 +3,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Button, Divider, FormControlLabel, FormLabel, Typography } from '@mui/material';
+import { Button, Divider, FormControlLabel, Typography } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,7 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { TicketStatus } from '../../types/publication_types/ticket.types';
+import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -44,14 +44,11 @@ import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
 import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
-type SelectedStatusState = {
-  [key in TicketStatus]: boolean;
-};
-
 const MyPagePage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
   const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
@@ -80,13 +77,6 @@ const MyPagePage = () => {
     publishingRequest: true,
   });
 
-  const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
-    New: true,
-    Pending: true,
-    Completed: false,
-    Closed: false,
-  });
-
   const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
 
   const selectedTypesArray = Object.entries(selectedTypes)
@@ -96,16 +86,14 @@ const MyPagePage = () => {
   const typeQuery =
     selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const selectedStatusesArray = Object.entries(selectedStatuses)
-    .filter(([_, selected]) => selected)
-    .map(([key]) => key);
+  const selectedStatusesArray = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
+    ticketStatusValues) as TicketStatus[];
 
   const statusQuery =
     selectedStatusesArray.length > 0
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const searchParams = new URLSearchParams(location.search);
   const queryParam = searchParams.get(TicketSearchParam.Query);
 
   const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
@@ -132,12 +120,6 @@ const MyPagePage = () => {
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
-
-  const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
-  const newCount = statusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
-  const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
-  const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
-  const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
@@ -265,70 +247,6 @@ const MyPagePage = () => {
                   ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                   : t('my_page.messages.types.GeneralSupportCase')}
               </SelectableButton>
-            </StyledTicketSearchFormGroup>
-
-            <StyledTicketSearchFormGroup>
-              <FormLabel component="legend" sx={{ fontWeight: 700 }}>
-                {t('tasks.status')}
-              </FormLabel>
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
-                checked={selectedStatuses.New}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
-                  />
-                }
-                label={
-                  selectedStatuses.New && newCount
-                    ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
-                    : t('my_page.messages.ticket_types.New')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
-                checked={selectedStatuses.Pending}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
-                  />
-                }
-                label={
-                  selectedStatuses.Pending && pendingCount
-                    ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
-                    : t('my_page.messages.ticket_types.Pending')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
-                checked={selectedStatuses.Completed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() =>
-                      setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })
-                    }
-                  />
-                }
-                label={
-                  selectedStatuses.Completed && completedCount
-                    ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
-                    : t('my_page.messages.ticket_types.Completed')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
-                checked={selectedStatuses.Closed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
-                  />
-                }
-                label={
-                  selectedStatuses.Closed && closedCount
-                    ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
-                    : t('my_page.messages.ticket_types.Closed')
-                }
-              />
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>,
 
