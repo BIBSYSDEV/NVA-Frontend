@@ -1080,8 +1080,8 @@
       "department": "Enhet",
       "identification": "Identifisering",
       "identity_status": {
-        "confirmed_identity": "Bekreftet identitet",
-        "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
+        "confirmed_identity": "Identifisert",
+        "confirmed_identity_without_affiliation": "Identifisert uten tilhørighet",
         "unknown_identity": "Uidentifisert"
       },
       "invalid_role": "Bidragsyter må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
@@ -1162,7 +1162,7 @@
         "Writer": "Tekstforfatter"
       },
       "unidentified_contributor": "Bidragsyter er uidentifisert",
-      "verify_affiliation": "Bekreft tilknytning",
+      "verify_affiliation": "Identifiser tilknytning",
       "verify_person": "Identifiser person"
     },
     "curator_support_info": "Her kan du spørre din kurator om hjelp med alt som har med registrering og publisering av forskningsresultat. Du finner svar på dine spørsmål på \"Min side\" og på registreringens presentasjonsside.",
