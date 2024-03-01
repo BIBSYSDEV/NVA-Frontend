@@ -135,10 +135,10 @@ export const AddContributorForm = ({
               <caption style={visuallyHidden}>{t('search.persons')}</caption>
               <TableHead>
                 <TableRow>
-                  <TableCell>{t('registration.contributors.select_all')}</TableCell>
-                  <TableCell>{t('common.name')}</TableCell>
-                  <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
-                  <TableCell>{t('common.result_registrations')}</TableCell>
+                  <TableCell width="10%">{t('registration.contributors.select_all')}</TableCell>
+                  <TableCell width="20%">{t('common.name')}</TableCell>
+                  <TableCell width="45%">{t('my_page.my_profile.heading.affiliations')}</TableCell>
+                  <TableCell width="25%">{t('common.result_registrations')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
