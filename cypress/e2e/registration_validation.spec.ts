@@ -308,9 +308,6 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectEverythingForContributor}]`)
       .first()
       .click({ force: true });
-    // cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectEverythingForContributor}]`)
-    //   .first()
-    //   .click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
 
