@@ -1228,6 +1228,8 @@
       "open_file": "Åpne fil",
       "published": "Publisert",
       "published_version": "Publisert versjon",
+      "registration_with_file": "Resultat med fil",
+      "registration_without_file": "Resultat uten fil",
       "remove_file": "Fjern fil",
       "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
