@@ -12,7 +12,7 @@ import { LastRegistrationTableCellContent } from './LastRegistrationTableCellCon
 interface CristinPersonTableRowProps {
   cristinPerson: CristinPerson;
   selectedPerson?: CristinPerson;
-  setSelectedPerson: (selectedContributor: CristinPerson) => void;
+  setSelectedPerson: (selectedContributor: CristinPerson | undefined) => void;
 }
 
 export const CristinPersonTableRow = ({
@@ -30,14 +30,21 @@ export const CristinPersonTableRow = ({
 
   const hasSelectedAll = personIsSelected && selectedPersonHasAllAffiliations;
 
+  const resetPersonSelection = () => setSelectedPerson(undefined);
+
   return (
     <TableRow selected={personIsSelected}>
       <TableCell>
         <IconButton
           data-testid={dataTestId.registrationWizard.contributors.selectEverythingForContributor}
-          onClick={() => setSelectedPerson({ ...cristinPerson, affiliations: activeAffiliations })}
+          onClick={() => {
+            if (hasSelectedAll) {
+              resetPersonSelection();
+            } else {
+              setSelectedPerson({ ...cristinPerson, affiliations: activeAffiliations });
+            }
+          }}
           color="primary"
-          disabled={hasSelectedAll}
           title={t('registration.contributors.select_all')}>
           {hasSelectedAll ? <CheckCircle color="info" fontSize="large" /> : <ControlPointIcon fontSize="large" />}
         </IconButton>
@@ -47,15 +54,17 @@ export const CristinPersonTableRow = ({
           <IconButton
             data-testid={dataTestId.registrationWizard.contributors.selectPersonForContributor}
             onClick={() => {
-              const personToAdd: CristinPerson = {
-                ...cristinPerson,
-                affiliations: [],
-              };
-              setSelectedPerson(personToAdd);
+              if (personIsSelected) {
+                resetPersonSelection();
+              } else {
+                setSelectedPerson({
+                  ...cristinPerson,
+                  affiliations: [],
+                });
+              }
             }}
             color="primary"
             size="small"
-            disabled={personIsSelected}
             title={t('registration.contributors.select_person')}>
             {personIsSelected ? <CheckCircle fontSize="small" color="info" /> : <CircleOutlined fontSize="small" />}
           </IconButton>
@@ -85,15 +94,19 @@ export const CristinPersonTableRow = ({
                       if (!selectedPerson) {
                         return;
                       }
+                      const newAffiliations = affiliationIsSelected
+                        ? selectedPerson.affiliations.filter((a) => a.organization !== affiliation.organization)
+                        : [...selectedPerson.affiliations, affiliation];
+
                       const personWithAffiliation: CristinPerson = {
                         ...selectedPerson,
-                        affiliations: [...selectedPerson.affiliations, affiliation],
+                        affiliations: newAffiliations,
                       };
                       setSelectedPerson(personWithAffiliation);
                     }}
                     color="primary"
                     size="small"
-                    disabled={!personIsSelected || affiliationIsSelected}
+                    disabled={!personIsSelected}
                     title={t('registration.contributors.select_affiliation')}>
                     {affiliationIsSelected ? (
                       <CheckCircle fontSize="small" color="info" />
