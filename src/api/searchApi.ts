@@ -179,6 +179,11 @@ export enum ResultParam {
   Unit = 'unit',
 }
 
+export enum ResultSearchOrder {
+  ModifiedDate = 'modifiedDate',
+  PublicationDate = 'publicationDate',
+}
+
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
@@ -200,7 +205,7 @@ export interface FetchResultsParams {
   [ResultParam.Isbn]?: string | null;
   [ResultParam.Issn]?: string | null;
   [ResultParam.Journal]?: string | null;
-  [ResultParam.Order]?: string | null;
+  [ResultParam.Order]?: ResultSearchOrder | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;

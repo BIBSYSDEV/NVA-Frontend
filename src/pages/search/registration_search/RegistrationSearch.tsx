@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { ResultSearchOrder } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SortSelector } from '../../../components/SortSelector';
-import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { SearchPageProps } from '../SearchPage';
@@ -36,17 +36,17 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
       variant="standard"
       options={[
         {
-          orderBy: RegistrationFieldName.ModifiedDate,
+          orderBy: ResultSearchOrder.ModifiedDate,
           sortOrder: 'desc',
           label: t('search.sort_by_modified_date'),
         },
         {
-          orderBy: RegistrationFieldName.PublishedDate,
+          orderBy: ResultSearchOrder.PublicationDate,
           sortOrder: 'desc',
           label: t('search.sort_by_published_date_desc'),
         },
         {
-          orderBy: RegistrationFieldName.PublishedDate,
+          orderBy: ResultSearchOrder.PublicationDate,
           sortOrder: 'asc',
           label: t('search.sort_by_published_date_asc'),
         },
