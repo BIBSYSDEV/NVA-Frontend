@@ -1,7 +1,7 @@
-import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import AddIcon from '@mui/icons-material/AddCircle';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import WarningIcon from '@mui/icons-material/Warning';
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Tooltip, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -79,33 +79,36 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         gridArea: 'affiliation',
         display: 'flex',
         flexDirection: 'column',
-        gap: '0.5rem',
+        gap: '0.75rem',
       }}>
       {affiliations.map((affiliation, index) => (
         <Box
           key={affiliation.type === 'Organization' ? affiliation.id : `org-${index}`}
           sx={{
             display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            justifyContent: 'space-between',
+            flexDirection: 'column',
+            alignItems: 'start',
+            gap: '0.25rem',
           }}>
           {affiliation.type === 'Organization' && <AffiliationHierarchy unitUri={affiliation.id} />}
           {affiliation.type === 'UnconfirmedOrganization' && (
             <>
               <Typography>"{affiliation.name}"</Typography>
               <Tooltip title={t('registration.contributors.verify_affiliation')}>
-                <IconButton
+                <Button
+                  variant="outlined"
+                  sx={{ textTransform: 'none' }}
                   data-testid={dataTestId.registrationWizard.contributors.verifyAffiliationButton}
-                  onClick={() => affiliation.name && verifyAffiliationOnClick(affiliation.name)}>
-                  <WarningIcon color="warning" />
-                </IconButton>
+                  onClick={() => affiliation.name && verifyAffiliationOnClick(affiliation.name)}
+                  startIcon={<WarningIcon color="warning" />}>
+                  Tilknytningen er uidentifisert
+                </Button>
               </Tooltip>
             </>
           )}
 
           <Tooltip title={t('registration.contributors.remove_affiliation')}>
-            <IconButton
+            <Button
               color="primary"
               size="small"
               data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
@@ -114,14 +117,14 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
                   `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
                   affiliations.filter((_, thisIndex) => thisIndex !== index)
                 )
-              }>
-              <RemoveIcon />
-            </IconButton>
+              }
+              startIcon={<RemoveIcon />}>
+              Fjern tilknytning
+            </Button>
           </Tooltip>
         </Box>
       ))}
       <Button
-        size="small"
         data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
         startIcon={<AddIcon />}
         onClick={toggleAffiliationModal}
