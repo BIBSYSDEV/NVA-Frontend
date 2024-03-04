@@ -1,8 +1,8 @@
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { LinkButton } from '../../../components/PageWithSideMenu';
+import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
@@ -82,7 +82,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <LinkButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
-            href={`${getRegistrationWizardPath(registration.identifier)}?tab=3`}>
+            to={`${getRegistrationWizardPath(registration.identifier)}?tab=3`}>
             {t('registration.files_and_license.add_files_or_links')}
           </LinkButton>
         </Box>
