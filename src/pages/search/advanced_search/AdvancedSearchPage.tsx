@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
+import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
 import { PublicationInstanceType } from '../../../types/registration.types';
@@ -58,7 +58,7 @@ export const AdvancedSearchPage = () => {
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
     journal: params.get(ResultParam.Journal),
-    order: params.get(ResultParam.Order),
+    order: params.get(ResultParam.Order) as ResultSearchOrder | null,
     publicationLanguageShould: params.get(ResultParam.PublicationLanguageShould),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),

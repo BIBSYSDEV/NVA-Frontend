@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { ResultSearchOrder } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SortSelector } from '../../../components/SortSelector';
@@ -35,17 +36,17 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
       variant="standard"
       options={[
         {
-          orderBy: 'modifiedDate',
+          orderBy: ResultSearchOrder.ModifiedDate,
           sortOrder: 'desc',
           label: t('search.sort_by_modified_date'),
         },
         {
-          orderBy: 'publicationDate',
+          orderBy: ResultSearchOrder.PublicationDate,
           sortOrder: 'desc',
           label: t('search.sort_by_published_date_desc'),
         },
         {
-          orderBy: 'publicationDate',
+          orderBy: ResultSearchOrder.PublicationDate,
           sortOrder: 'asc',
           label: t('search.sort_by_published_date_asc'),
         },

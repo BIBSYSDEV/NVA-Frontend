@@ -13,7 +13,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { fetchResults, FetchResultsParams, ResultParam, SortOrder } from '../../api/searchApi';
+import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -74,7 +74,7 @@ const HomePage = () => {
     isbn: params.get(ResultParam.Isbn),
     issn: params.get(ResultParam.Issn),
     journal: params.get(ResultParam.Journal),
-    order: params.get(ResultParam.Order),
+    order: params.get(ResultParam.Order) as ResultSearchOrder | null,
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     publisher: params.get(ResultParam.Publisher),
