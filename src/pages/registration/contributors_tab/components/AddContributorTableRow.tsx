@@ -1,8 +1,6 @@
-import AddBusinessOutlinedIcon from '@mui/icons-material/AddBusinessOutlined';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CheckCircleOutlined from '@mui/icons-material/CheckCircleOutlined';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import CircleOutlined from '@mui/icons-material/CircleOutlined';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import { Box, IconButton, TableCell, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
@@ -41,12 +39,11 @@ export const CristinPersonTableRow = ({
           color="primary"
           disabled={hasSelectedAll}
           title={t('registration.contributors.select_all')}>
-          {hasSelectedAll ? <CheckCircleIcon color="info" /> : <ControlPointIcon />}
+          {hasSelectedAll ? <CheckCircle color="info" fontSize="large" /> : <ControlPointIcon fontSize="large" />}
         </IconButton>
       </TableCell>
       <TableCell>
-        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
+        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
           <IconButton
             data-testid={dataTestId.registrationWizard.contributors.selectPersonForContributor}
             onClick={() => {
@@ -60,12 +57,9 @@ export const CristinPersonTableRow = ({
             size="small"
             disabled={personIsSelected}
             title={t('registration.contributors.select_person')}>
-            {personIsSelected ? (
-              <CheckCircleOutlined fontSize="small" color="info" />
-            ) : (
-              <PersonAddOutlinedIcon fontSize="small" />
-            )}
+            {personIsSelected ? <CheckCircle fontSize="small" color="info" /> : <CircleOutlined fontSize="small" />}
           </IconButton>
+          <Typography>{getFullCristinName(cristinPerson.names)}</Typography>
         </Box>
       </TableCell>
 
@@ -83,10 +77,8 @@ export const CristinPersonTableRow = ({
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: '0.5rem',
+                    gap: '0.25rem',
                   }}>
-                  <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                   <IconButton
                     data-testid={dataTestId.registrationWizard.contributors.selectAffiliationForContributor}
                     onClick={() => {
@@ -104,11 +96,12 @@ export const CristinPersonTableRow = ({
                     disabled={!personIsSelected || affiliationIsSelected}
                     title={t('registration.contributors.select_affiliation')}>
                     {affiliationIsSelected ? (
-                      <CheckCircleOutlined fontSize="small" color="info" />
+                      <CheckCircle fontSize="small" color="info" />
                     ) : (
-                      <AddBusinessOutlinedIcon fontSize="small" />
+                      <CircleOutlined fontSize="small" />
                     )}
                   </IconButton>
+                  <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                 </Box>
               );
             })}

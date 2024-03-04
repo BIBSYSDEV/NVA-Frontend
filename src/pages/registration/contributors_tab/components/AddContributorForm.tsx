@@ -136,7 +136,7 @@ export const AddContributorForm = ({
               <TableHead>
                 <TableRow>
                   <TableCell width="10%">{t('registration.contributors.select_all')}</TableCell>
-                  <TableCell width="20%">{t('common.name')}</TableCell>
+                  <TableCell width="20%">{t('common.person')}</TableCell>
                   <TableCell width="45%">{t('my_page.my_profile.heading.affiliations')}</TableCell>
                   <TableCell width="25%">{t('common.result_registrations')}</TableCell>
                 </TableRow>
