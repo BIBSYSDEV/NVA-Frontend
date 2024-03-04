@@ -15,8 +15,25 @@ export const updateUser = async (username: string, newUser: InstitutionUser) =>
     data: newUser,
   });
 
-export const createUser = async (newUserPayload: CreateUserPayload) =>
-  await authenticatedApiRequest<InstitutionUser>({ url: RoleApiPath.Users, method: 'POST', data: newUserPayload });
+export const createUser = async (newUserPayload: CreateUserPayload) => {
+  const createUserResponse = await authenticatedApiRequest<InstitutionUser>({
+    url: RoleApiPath.Users,
+    method: 'POST',
+    data: newUserPayload,
+  });
+
+  if (createUserResponse.status === 200) {
+    // If the user already exists, the API will return 200 without persisting the data
+    const updateUserPayload: InstitutionUser = {
+      ...newUserPayload,
+      username: createUserResponse.data.username,
+      institution: createUserResponse.data.institution,
+    };
+    return await updateUser(updateUserPayload.username, updateUserPayload);
+  } else {
+    return createUserResponse;
+  }
+};
 
 export const fetchUser = async (username: string) => {
   const userResponse = await authenticatedApiRequest2<InstitutionUser>({ url: `${RoleApiPath.Users}/${username}` });
