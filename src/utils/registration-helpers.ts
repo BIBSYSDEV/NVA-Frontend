@@ -6,7 +6,6 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/ass
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
-  allPublicationInstanceTypes,
   ArtisticType,
   BookType,
   ChapterType,
@@ -19,6 +18,7 @@ import {
   PublicationType,
   ReportType,
   ResearchDataType,
+  allPublicationInstanceTypes,
 } from '../types/publicationFieldNames';
 import {
   AudioVisualPublication,
@@ -614,9 +614,12 @@ export const getOutputName = (item: OutputItem): string => {
       return (item as Concert).place.label;
     case 'OtherPerformance': {
       const otherMusicPerformance = item as OtherMusicPerformance;
-      return otherMusicPerformance.place.label
-        ? otherMusicPerformance.place.label
-        : otherMusicPerformance.performanceType;
+
+      return (
+        otherMusicPerformance.place?.label ||
+        otherMusicPerformance.performanceType ||
+        i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
+      );
     }
     case 'LiteraryArtsMonograph':
       return (item as LiteraryArtsMonograph).publisher.name;
