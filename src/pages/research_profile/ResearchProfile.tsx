@@ -1,3 +1,6 @@
+import LinkIcon from '@mui/icons-material/Link';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import {
   Box,
   Chip,
@@ -5,8 +8,8 @@ import {
   Divider,
   Grid,
   IconButton,
-  Link as MuiLink,
   List,
+  Link as MuiLink,
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -17,11 +20,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { fetchResults, FetchResultsParams } from '../../api/searchApi';
-import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
@@ -186,6 +189,22 @@ const ResearchProfile = () => {
             </Typography>
           </Box>
         )}
+
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
+          <Typography fontWeight="bold">Kontaktinformasjon</Typography>
+          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+            <MailOutlineIcon />
+            <Typography>isar.buzza@sikt.no</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+            <PhoneEnabledIcon />
+            <Typography>+47 12345678</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+            <LinkIcon />
+            <Typography>www.sikt.no</Typography>
+          </Box>
+        </Box>
 
         {!orcidUri && history.location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
           <Grid
