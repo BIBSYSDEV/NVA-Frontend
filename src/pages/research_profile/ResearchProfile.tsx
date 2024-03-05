@@ -8,7 +8,6 @@ import {
   Divider,
   Grid,
   IconButton,
-  Link,
   List,
   Link as MuiLink,
   Typography,
@@ -197,21 +196,21 @@ const ResearchProfile = () => {
             {person.contactDetails.email && (
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <MailOutlineIcon />
-                <Link href={`mailto:${person.contactDetails.email}`}>{person.contactDetails.email}</Link>
+                <MuiLink href={`mailto:${person.contactDetails.email}`}>{person.contactDetails.email}</MuiLink>
               </Box>
             )}
             {person.contactDetails.telephone && (
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <PhoneEnabledIcon />
-                <Link href={`tel:${person.contactDetails.telephone}`}>{person.contactDetails.telephone}</Link>
+                <MuiLink href={`tel:${person.contactDetails.telephone}`}>{person.contactDetails.telephone}</MuiLink>
               </Box>
             )}
             {person.contactDetails.webPage && (
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <LinkIcon />
-                <Link href={person.contactDetails.webPage} target="_blank" rel="noopener noreferrer">
+                <MuiLink href={person.contactDetails.webPage} target="_blank" rel="noopener noreferrer">
                   {person.contactDetails.webPage}
-                </Link>
+                </MuiLink>
               </Box>
             )}
           </Box>
