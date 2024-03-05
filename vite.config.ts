@@ -12,5 +12,20 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('@mui')) {
+              return '@mui';
+            } else if (id.includes('@uppy')) {
+              return '@uppy';
+            } else if (id.includes('react-dom')) {
+              return 'react-dom';
+            }
+          }
+        },
+      },
+    },
   },
 });
