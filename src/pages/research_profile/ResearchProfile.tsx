@@ -8,6 +8,7 @@ import {
   Divider,
   Grid,
   IconButton,
+  Link,
   List,
   Link as MuiLink,
   Typography,
@@ -190,21 +191,33 @@ const ResearchProfile = () => {
           </Box>
         )}
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
-          <Typography fontWeight="bold">Kontaktinformasjon</Typography>
-          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-            <MailOutlineIcon />
-            <Typography>isar.buzza@sikt.no</Typography>
+        {(person.contactDetails?.email || person.contactDetails?.telephone || person.contactDetails?.webPage) && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mt: '0.75rem' }}>
+            <Typography fontWeight="bold">{t('my_page.my_profile.contact_information')}</Typography>
+            {person.contactDetails?.email && (
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <MailOutlineIcon />
+                <Link href={`mailto:${person.contactDetails?.email}`}>
+                  <Typography>{person.contactDetails?.email}</Typography>
+                </Link>
+              </Box>
+            )}
+            {person.contactDetails?.telephone && (
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <PhoneEnabledIcon />
+                <Typography>{person.contactDetails?.telephone}</Typography>
+              </Box>
+            )}
+            {person.contactDetails?.webPage && (
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <LinkIcon />
+                <Link href={person.contactDetails?.webPage} target="_blank" rel="noopener noreferrer">
+                  <Typography>{person.contactDetails?.webPage}</Typography>
+                </Link>
+              </Box>
+            )}
           </Box>
-          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-            <PhoneEnabledIcon />
-            <Typography>+47 12345678</Typography>
-          </Box>
-          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-            <LinkIcon />
-            <Typography>www.sikt.no</Typography>
-          </Box>
-        </Box>
+        )}
 
         {!orcidUri && history.location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
           <Grid
