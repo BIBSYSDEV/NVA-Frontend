@@ -17,7 +17,12 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes('node_modules')) {
             if (id.includes('@mui')) {
-              return '@mui';
+              console.log(id);
+              if (id.includes('icon')) {
+                return '@mui-icons';
+              } else {
+                return '@mui';
+              }
             } else if (id.includes('@uppy')) {
               return '@uppy';
             } else if (id.includes('react-dom')) {
