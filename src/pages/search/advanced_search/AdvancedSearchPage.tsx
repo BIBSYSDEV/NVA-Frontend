@@ -1,4 +1,15 @@
-import { Box, Button, Chip, Divider, Grid, Theme, Typography, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Chip,
+  Divider,
+  FormControlLabel,
+  Grid,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -77,6 +88,15 @@ export const AdvancedSearchPage = () => {
     meta: { errorMessage: t('feedback.error.search') },
     keepPreviousData: true,
   });
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      params.set(ResultParam.ExcludeSubunits, 'true');
+    } else {
+      params.delete(ResultParam.ExcludeSubunits);
+    }
+    history.push({ search: params.toString() });
+  };
 
   return (
     <Grid
@@ -166,7 +186,20 @@ export const AdvancedSearchPage = () => {
 
         <Grid item>
           <StyledTypography fontWeight="bold">{t('common.institution')}</StyledTypography>
-          <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', lg: 'row' },
+              justifyContent: 'space-evenly',
+              gap: '0.5rem',
+              alignItems: 'start',
+            }}>
+            <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+            <FormControlLabel
+              control={<Checkbox disabled={!topLevelOrganizationId} onChange={handleCheckboxChange} />}
+              label={t('tasks.nvi.exclude_subunits')}
+            />
+          </Box>
         </Grid>
       </Grid>
 
