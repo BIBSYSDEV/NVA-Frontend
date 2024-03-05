@@ -119,12 +119,6 @@ export const allPublicationInstanceTypes = [
   ...Object.values(OtherRegistrationType),
 ];
 
-export enum RegistrationFieldName {
-  Identifier = 'identifier',
-  ModifiedDate = 'modifiedDate',
-  PublishedDate = 'publishedDate',
-}
-
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';

@@ -53,8 +53,8 @@ export interface SearchResponse2<HitType, AggregationType = undefined>
   totalHits: number;
 }
 
-export interface AggregationValue {
-  key: string;
+export interface AggregationValue<KeyType = string> {
+  key: KeyType;
   id: string;
   count: number;
   labels?: LanguageString;

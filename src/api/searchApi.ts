@@ -149,6 +149,7 @@ export enum ResultParam {
   Course = 'course',
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  Files = 'files',
   From = 'from',
   FundingIdentifier = 'fundingIdentifier',
   FundingSource = 'fundingSource',
@@ -178,6 +179,11 @@ export enum ResultParam {
   Unit = 'unit',
 }
 
+export enum ResultSearchOrder {
+  ModifiedDate = 'modifiedDate',
+  PublicationDate = 'publicationDate',
+}
+
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
@@ -189,6 +195,7 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.Files]?: string | null;
   [ResultParam.From]?: number | null;
   [ResultParam.FundingIdentifier]?: string | null;
   [ResultParam.FundingSource]?: string | null;
@@ -198,7 +205,7 @@ export interface FetchResultsParams {
   [ResultParam.Isbn]?: string | null;
   [ResultParam.Issn]?: string | null;
   [ResultParam.Journal]?: string | null;
-  [ResultParam.Order]?: string | null;
+  [ResultParam.Order]?: ResultSearchOrder | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationLanguageShould]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
@@ -252,6 +259,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.doi) {
     searchParams.set(ResultParam.Doi, params.doi);
+  }
+  if (params.files) {
+    searchParams.set(ResultParam.Files, params.files);
   }
   if (params.fundingIdentifier) {
     searchParams.set(ResultParam.FundingIdentifier, params.fundingIdentifier);

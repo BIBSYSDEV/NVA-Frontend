@@ -614,9 +614,12 @@ export const getOutputName = (item: OutputItem): string => {
       return (item as Concert).place.label;
     case 'OtherPerformance': {
       const otherMusicPerformance = item as OtherMusicPerformance;
-      return otherMusicPerformance.place.label
-        ? otherMusicPerformance.place.label
-        : otherMusicPerformance.performanceType;
+
+      return (
+        otherMusicPerformance.place?.label ||
+        otherMusicPerformance.performanceType ||
+        i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
+      );
     }
     case 'LiteraryArtsMonograph':
       return (item as LiteraryArtsMonograph).publisher.name;
