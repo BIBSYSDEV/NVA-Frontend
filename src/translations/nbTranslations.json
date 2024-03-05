@@ -234,7 +234,6 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
     "select_institution": "Velg institusjon",
-    "selected": "Valgt",
     "send": "Send",
     "settings": "Innstillinger",
     "show": "Vis",
@@ -1072,7 +1071,6 @@
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
       "add_self_as_contributor": "Legg meg til som bidragsyter",
       "add_unverified_contributor": "Legg til en uidentifisert bidragsyter.",
-      "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
@@ -1081,8 +1079,8 @@
       "department": "Enhet",
       "identification": "Identifisering",
       "identity_status": {
-        "confirmed_identity": "Bekreftet identitet",
-        "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
+        "confirmed_identity": "Identifisert",
+        "confirmed_identity_without_affiliation": "Identifisert uten tilknytning",
         "unknown_identity": "Uidentifisert"
       },
       "invalid_role": "Bidragsyter må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
@@ -1097,6 +1095,9 @@
       "remove_contributor": "Fjern bidragsyter",
       "search_for_institution": "Søk etter institusjon",
       "select_contributor_type": "Velg type bidragsyter",
+      "select_affiliation": "Velg tilknytning",
+      "select_all": "Velg alt",
+      "select_person": "Velg person",
       "suggested_affiliations": "Foreslåtte tilknytninger",
       "type": "Bidragstype",
       "types": {
@@ -1160,7 +1161,7 @@
         "Writer": "Tekstforfatter"
       },
       "unidentified_contributor": "Bidragsyter er uidentifisert",
-      "verify_affiliation": "Bekreft tilknytning",
+      "verify_affiliation": "Identifiser tilknytning",
       "verify_person": "Identifiser person"
     },
     "curator_support_info": "Her kan du spørre din kurator om hjelp med alt som har med registrering og publisering av forskningsresultat. Du finner svar på dine spørsmål på \"Min side\" og på registreringens presentasjonsside.",

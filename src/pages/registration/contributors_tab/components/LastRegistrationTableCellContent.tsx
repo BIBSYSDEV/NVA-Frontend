@@ -41,6 +41,6 @@ export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationT
       )}
     </>
   ) : (
-    <i>{t('registration.contributors.no_registrations_found')}</i>
+    <Typography fontStyle="italic">{t('registration.contributors.no_registrations_found')}</Typography>
   );
 };
