@@ -197,7 +197,7 @@ const ResearchProfile = () => {
             {person.contactDetails?.email && (
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <MailOutlineIcon />
-                <Link href={`mailto:${person.contactDetails?.email}`}>{person.contactDetails.email}</Link>
+                <Link href={`mailto:${person.contactDetails.email}`}>{person.contactDetails.email}</Link>
               </Box>
             )}
             {person.contactDetails?.telephone && (
@@ -206,10 +206,10 @@ const ResearchProfile = () => {
                 <Link href={`tel:${person.contactDetails.telephone}`}>{person.contactDetails.telephone}</Link>
               </Box>
             )}
-            {person.contactDetails?.webPage && (
+            {person.contactDetails.webPage && (
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <LinkIcon />
-                <Link href={person.contactDetails?.webPage} target="_blank" rel="noopener noreferrer">
+                <Link href={person.contactDetails.webPage} target="_blank" rel="noopener noreferrer">
                   {person.contactDetails.webPage}
                 </Link>
               </Box>
