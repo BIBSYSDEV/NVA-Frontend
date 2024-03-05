@@ -198,21 +198,21 @@ const ResearchProfile = () => {
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <MailOutlineIcon />
                 <Link href={`mailto:${person.contactDetails?.email}`}>
-                  <Typography>{person.contactDetails?.email}</Typography>
+                  <Typography>{person.contactDetails.email}</Typography>
                 </Link>
               </Box>
             )}
             {person.contactDetails?.telephone && (
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <PhoneEnabledIcon />
-                <Typography>{person.contactDetails?.telephone}</Typography>
+                <Typography>{person.contactDetails.telephone}</Typography>
               </Box>
             )}
             {person.contactDetails?.webPage && (
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <LinkIcon />
                 <Link href={person.contactDetails?.webPage} target="_blank" rel="noopener noreferrer">
-                  <Typography>{person.contactDetails?.webPage}</Typography>
+                  <Typography>{person.contactDetails.webPage}</Typography>
                 </Link>
               </Box>
             )}
