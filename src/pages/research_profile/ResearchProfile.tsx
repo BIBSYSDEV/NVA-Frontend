@@ -194,13 +194,13 @@ const ResearchProfile = () => {
         {(person.contactDetails?.email || person.contactDetails?.telephone || person.contactDetails?.webPage) && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mt: '0.75rem' }}>
             <Typography fontWeight="bold">{t('my_page.my_profile.contact_information')}</Typography>
-            {person.contactDetails?.email && (
+            {person.contactDetails.email && (
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <MailOutlineIcon />
                 <Link href={`mailto:${person.contactDetails.email}`}>{person.contactDetails.email}</Link>
               </Box>
             )}
-            {person.contactDetails?.telephone && (
+            {person.contactDetails.telephone && (
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <PhoneEnabledIcon />
                 <Link href={`tel:${person.contactDetails.telephone}`}>{person.contactDetails.telephone}</Link>
