@@ -1,13 +1,13 @@
-import { Box, List, Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
-  fetchImportCandidates,
   FetchImportCandidatesParams,
   ImportCandidateOrderBy,
   SortOrder,
+  fetchImportCandidates,
 } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
@@ -73,26 +73,8 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
 
   return (
     <section>
-      <Box
-        sx={{
-          mx: { xs: '0.5rem', sm: 0 },
-          display: 'grid',
-          gap: '1rem',
-          gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
-        }}>
-        <SearchForm placeholder={t('tasks.search_placeholder')} />
-        <SortSelector
-          sx={{ minWidth: '16rem' }}
-          sortKey={SearchParam.SortOrder}
-          orderKey={SearchParam.OrderBy}
-          label={t('search.sort_by')}
-          options={[
-            { orderBy: 'createdDate', sortOrder: 'desc', label: t('basic_data.central_import.sort_newest_first') },
-            { orderBy: 'createdDate', sortOrder: 'asc', label: t('basic_data.central_import.sort_oldest_first') },
-            { orderBy: 'importStatus.modifiedDate', sortOrder: 'desc', label: t('search.sort_by_modified_date') },
-          ]}
-        />
-      </Box>
+      <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
+
       {importCandidateQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : searchResults.length > 0 ? (
@@ -101,7 +83,22 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
           rowsPerPage={rowsPerPage}
           page={page + 1}
           onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
-          onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}>
+          onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
+          showPaginationTop
+          sortingComponent={
+            <SortSelector
+              sortKey={SearchParam.SortOrder}
+              orderKey={SearchParam.OrderBy}
+              aria-label={t('search.sort_by')}
+              size="small"
+              variant="standard"
+              options={[
+                { orderBy: 'createdDate', sortOrder: 'desc', label: t('basic_data.central_import.sort_newest_first') },
+                { orderBy: 'createdDate', sortOrder: 'asc', label: t('basic_data.central_import.sort_oldest_first') },
+                { orderBy: 'importStatus.modifiedDate', sortOrder: 'desc', label: t('search.sort_by_modified_date') },
+              ]}
+            />
+          }>
           <List>
             {searchResults.map((importCandidate) => (
               <ErrorBoundary key={importCandidate.id}>
