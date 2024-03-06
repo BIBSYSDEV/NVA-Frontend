@@ -49,7 +49,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const isLoading = topLevelOrganizationQuery.isFetching || organizationSearchQuery.isFetching;
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem 1rem' }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem 1rem', flexDirection: { xs: 'column', lg: 'row' }, width: '100%' }}>
       <Autocomplete
         fullWidth
         size="small"

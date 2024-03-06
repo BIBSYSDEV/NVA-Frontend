@@ -196,7 +196,6 @@ export const AdvancedSearchPage = () => {
             sx={{
               display: 'flex',
               flexDirection: { xs: 'column', lg: 'row' },
-              justifyContent: 'space-evenly',
               gap: '1rem',
               alignItems: 'start',
             }}>
