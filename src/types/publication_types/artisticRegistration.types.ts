@@ -201,7 +201,7 @@ export interface MusicalWork {
 export interface OtherMusicPerformance extends ArtisticOutputBase {
   type: 'OtherPerformance';
   performanceType: string;
-  place: Place;
+  place?: Place;
   extent: string;
   musicalWorks: MusicalWork[];
 }
