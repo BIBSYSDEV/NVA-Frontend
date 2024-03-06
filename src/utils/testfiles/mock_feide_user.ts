@@ -29,4 +29,8 @@ export const mockRoles: InstitutionUser = {
   ],
   username: 'tu@unit.no',
   institution: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
+  viewingScope: {
+    type: 'ViewingScope',
+    includedUnits: ['https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0'],
+  },
 };

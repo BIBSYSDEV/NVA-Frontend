@@ -23,8 +23,8 @@ export const createUser = async (newUserPayload: CreateUserPayload) => {
   });
 
   if (createUserResponse.status === 200) {
-    // If the user already exists, the API will return 200 without persisting the data.
-    // Then the current data must be merged with the new data before updating current user
+    // If the user already exists, the API will return 200 without persisting the sent data.
+    // The current data must then be merged with the new data before updating current user.
     const existingRoles = createUserResponse.data.roles.map((role) => role.rolename);
     const rolesToAdd = newUserPayload.roles.map((role) => role.rolename);
     const rolesSet = new Set([...existingRoles, ...rolesToAdd]);

@@ -123,6 +123,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
           customerId,
           roles: user.roles,
           nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', personQuery.data?.identifiers),
+          viewingScope: user.viewingScope,
         });
       }
     },
@@ -144,6 +145,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
           institution: customerId,
           roles: [{ type: 'Role', rolename: RoleName.Creator }],
           username: username,
+          viewingScope: { type: 'ViewingScope', includedUnits: [] },
         }
       : institutionUserQuery.data,
   };
