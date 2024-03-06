@@ -169,6 +169,7 @@ export enum ResultParam {
   Query = 'query',
   Results = 'results',
   ScientificIndex = 'scientificIndex',
+  ScientificValue = 'scientificValue',
   ScientificReportPeriodBeforeParam = 'scientificReportPeriodBefore',
   ScientificReportPeriodSinceParam = 'scientificReportPeriodSince',
   Series = 'series',
@@ -216,6 +217,7 @@ export interface FetchResultsParams {
   [ResultParam.Results]?: number | null;
   [ResultParam.Series]?: string | null;
   [ResultParam.ScientificIndex]?: string | null;
+  [ResultParam.ScientificValue]?: string | null;
   [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
   [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
   [ResultParam.Sort]?: SortOrder | null;
@@ -317,6 +319,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.scientificIndex) {
     searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
     searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificIndex);
+  }
+  if (params.scientificValue) {
+    searchParams.set(ResultParam.ScientificValue, params.scientificValue);
   }
   if (params.series) {
     searchParams.set(ResultParam.Series, params.series);

@@ -2,12 +2,13 @@ import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { ResultParam } from '../../../api/searchApi';
 
 export const ScientificValueFilter = () => {
   const [t] = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const scientificValueParam = searchParams.get('scientificValue') || '';
+  const scientificValueParam = searchParams.get(ResultParam.ScientificValue) || '';
 
   const [values, setValues] = useState({
     levelZero: scientificValueParam.includes('Unassigned,LevelZero'),
@@ -39,9 +40,9 @@ export const ScientificValueFilter = () => {
       .join(',');
 
     if (scientificValues.length > 0) {
-      searchParams.set('scientificValue', scientificValues);
+      searchParams.set(ResultParam.ScientificValue, scientificValues);
     } else {
-      searchParams.delete('scientificValue');
+      searchParams.delete(ResultParam.ScientificValue);
     }
     history.push({ search: searchParams.toString() });
   };

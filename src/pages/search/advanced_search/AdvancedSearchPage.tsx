@@ -65,6 +65,7 @@ export const AdvancedSearchPage = () => {
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publisher: params.get(ResultParam.Publisher),
     results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    scientificValue: params.get(ResultParam.ScientificValue),
     series: params.get(ResultParam.Series),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
