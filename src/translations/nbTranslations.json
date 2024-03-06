@@ -629,6 +629,7 @@
         "Closed": "Avvist",
         "Completed": "Ferdig",
         "New": "Innmeldt",
+        "Not Applicable": "Ikke relevant",
         "Pending": "Behandles"
       },
       "types": {

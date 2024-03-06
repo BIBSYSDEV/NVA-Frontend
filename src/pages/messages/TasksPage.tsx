@@ -13,8 +13,8 @@ import {
   MenuItem,
   Radio,
   Select,
-  Typography,
   styled,
+  Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { FetchTicketsParams, TicketSearchParam, fetchNviCandidates, fetchTickets } from '../../api/searchApi';
+import { fetchNviCandidates, fetchTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -120,6 +120,7 @@ const TasksPage = () => {
     Pending: false,
     Completed: false,
     Closed: false,
+    'Not Applicable': false,
   });
 
   const selectedTicketTypes = Object.entries(ticketTypes)

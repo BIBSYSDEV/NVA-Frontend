@@ -94,7 +94,11 @@ export const RegistrationLandingPage = () => {
               <ActionPanel
                 registration={registration}
                 refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                tickets={ticketsQuery.data?.tickets ?? []}
+                tickets={
+                  ticketsQuery.data?.tickets
+                    ? ticketsQuery.data.tickets.filter((ticket) => ticket.status !== 'Not Applicable')
+                    : []
+                }
                 isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
               />
             )}
