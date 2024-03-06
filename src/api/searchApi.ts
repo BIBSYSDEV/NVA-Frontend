@@ -196,7 +196,7 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
-  [ResultParam.ExcludeSubunits]?: 'true' | null;
+  [ResultParam.ExcludeSubunits]?: boolean | null;
   [ResultParam.Files]?: string | null;
   [ResultParam.From]?: number | null;
   [ResultParam.FundingIdentifier]?: string | null;
@@ -263,7 +263,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.Doi, params.doi);
   }
   if (params.excludeSubunits) {
-    searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits);
+    searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
   }
   if (params.files) {
     searchParams.set(ResultParam.Files, params.files);

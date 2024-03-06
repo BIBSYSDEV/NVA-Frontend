@@ -66,7 +66,7 @@ export const AdvancedSearchPage = () => {
   const resultSearchQueryConfig: FetchResultsParams = {
     categoryShould,
     contributorName: params.get(ResultParam.ContributorName),
-    excludeSubunits: excludeSubunits,
+    excludeSubunits: Boolean(excludeSubunits),
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
@@ -80,7 +80,7 @@ export const AdvancedSearchPage = () => {
     series: params.get(ResultParam.Series),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
-    topLevelOrganization: excludeSubunits === 'true' ? undefined : topLevelOrganizationId,
+    topLevelOrganization: excludeSubunits === 'true' && !!unitId ? undefined : topLevelOrganizationId,
     unit: unitId,
   };
 
@@ -197,7 +197,7 @@ export const AdvancedSearchPage = () => {
               display: 'flex',
               flexDirection: { xs: 'column', lg: 'row' },
               justifyContent: 'space-evenly',
-              gap: '0.5rem',
+              gap: '1rem',
               alignItems: 'start',
             }}>
             <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
