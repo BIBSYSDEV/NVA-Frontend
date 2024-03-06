@@ -300,9 +300,16 @@ export const PublishingAccordion = ({
             </Typography>
 
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
-              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
+              <Typography paragraph>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
-              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
+              <>
+                <Typography paragraph>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
+                {hasUnpublishedFiles && (
+                  <Typography paragraph>
+                    {t('registration.public_page.tasks_panel.you_can_publish_metadata_files_info')}
+                  </Typography>
+                )}
+              </>
             ) : null}
           </>
         )}
@@ -317,9 +324,7 @@ export const PublishingAccordion = ({
             fullWidth
             onClick={onClickPublish}
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
-            {customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly'
-              ? t('registration.public_page.tasks_panel.publish_metadata')
-              : t('registration.public_page.tasks_panel.publish_registration')}
+            {t('registration.public_page.tasks_panel.publish_registration')}
           </LoadingButton>
         )}
 
