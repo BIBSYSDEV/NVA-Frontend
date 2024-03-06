@@ -94,15 +94,15 @@ const TasksPage = () => {
   const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : '';
 
   const [organizationScope, setOrganizationScope] = useState(
-    institutionUserQuery.data?.viewingScope?.includedUnits ?? []
+    institutionUserQuery.data?.viewingScope.includedUnits ?? []
   );
 
   useEffect(() => {
     // Must populate the state after the request is done
-    if (institutionUserQuery.data?.viewingScope?.includedUnits) {
+    if (institutionUserQuery.data?.viewingScope.includedUnits) {
       setOrganizationScope(institutionUserQuery.data.viewingScope.includedUnits);
     }
-  }, [institutionUserQuery.data?.viewingScope?.includedUnits]);
+  }, [institutionUserQuery.data?.viewingScope.includedUnits]);
 
   const [showOnlyMyTasks, setShowOnlyMyTasks] = useState(false);
 

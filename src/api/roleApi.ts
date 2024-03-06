@@ -29,8 +29,8 @@ export const createUser = async (newUserPayload: CreateUserPayload) => {
     const rolesToAdd = newUserPayload.roles.map((role) => role.rolename);
     const rolesSet = new Set([...existingRoles, ...rolesToAdd]);
 
-    const existingViewingScope = createUserResponse.data.viewingScope?.includedUnits ?? [];
-    const viewingScopeToAdd = newUserPayload.viewingScope?.includedUnits ?? [];
+    const existingViewingScope = createUserResponse.data.viewingScope.includedUnits;
+    const viewingScopeToAdd = newUserPayload.viewingScope.includedUnits;
     const viewingScopeSet = new Set([...existingViewingScope, ...viewingScopeToAdd]);
 
     const updateUserPayload: InstitutionUser = {
