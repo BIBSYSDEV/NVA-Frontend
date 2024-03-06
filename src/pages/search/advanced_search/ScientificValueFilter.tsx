@@ -4,6 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 
+enum ScientificValueLevels {
+  LevelZero = 'Unassigned,LevelZero',
+  LevelOne = 'LevelOne',
+  LevelTwo = 'LevelTwo',
+}
+
 export const ScientificValueFilter = () => {
   const [t] = useTranslation();
   const history = useHistory();
@@ -11,17 +17,17 @@ export const ScientificValueFilter = () => {
   const scientificValueParam = searchParams.get(ResultParam.ScientificValue) || '';
 
   const [values, setValues] = useState({
-    levelZero: scientificValueParam.includes('Unassigned,LevelZero'),
-    levelOne: scientificValueParam.includes('LevelOne'),
-    levelTwo: scientificValueParam.includes('LevelTwo'),
+    levelZero: scientificValueParam.includes(ScientificValueLevels.LevelZero),
+    levelOne: scientificValueParam.includes(ScientificValueLevels.LevelOne),
+    levelTwo: scientificValueParam.includes(ScientificValueLevels.LevelTwo),
   });
 
   // Used to clear cvalue based on URL params
   useEffect(() => {
     setValues({
-      levelZero: scientificValueParam.includes('Unassigned,LevelZero'),
-      levelOne: scientificValueParam.includes('LevelOne'),
-      levelTwo: scientificValueParam.includes('LevelTwo'),
+      levelZero: scientificValueParam.includes(ScientificValueLevels.LevelZero),
+      levelOne: scientificValueParam.includes(ScientificValueLevels.LevelOne),
+      levelTwo: scientificValueParam.includes(ScientificValueLevels.LevelTwo),
     });
   }, [scientificValueParam]);
 
@@ -32,9 +38,9 @@ export const ScientificValueFilter = () => {
     setValues(newValues);
 
     const scientificValues = [
-      newValues.levelZero ? 'Unassigned,LevelZero' : '',
-      newValues.levelOne ? 'LevelOne' : '',
-      newValues.levelTwo ? 'LevelTwo' : '',
+      newValues.levelZero ? ScientificValueLevels.LevelZero : '',
+      newValues.levelOne ? ScientificValueLevels.LevelOne : '',
+      newValues.levelTwo ? ScientificValueLevels.LevelTwo : '',
     ]
       .filter(Boolean)
       .join(',');
