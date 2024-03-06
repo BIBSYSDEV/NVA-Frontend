@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
+import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
@@ -67,11 +68,16 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <Grid item xs={16} md={11} lg={12}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
-        <Grid item xs={16} md={5} lg={4}>
-          {isOnTasksPage && (
+        {isOnTasksPage && (
+          <Grid item xs={16} md={5} lg={4}>
             <CuratorSelector roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]} />
-          )}
-        </Grid>
+          </Grid>
+        )}
+        {isOnTasksPage && (
+          <Grid item xs={16} md={6} lg={5}>
+            <AreaOfResponsibilitySelector />
+          </Grid>
+        )}
       </Grid>
 
       {ticketsQuery.isLoading ? (

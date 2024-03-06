@@ -546,6 +546,7 @@ export const dataTestId = {
     userRolesAndHelpLink: 'user-roles-and-help-link',
   },
   tasksPage: {
+    areaOfResponsibilitySelector: 'area-of-responsibility-selector',
     correctionList: {
       correctionListAccordion: 'correction-list-accordion',
       correctionListRadioButton: 'correction-list-radio-button',
