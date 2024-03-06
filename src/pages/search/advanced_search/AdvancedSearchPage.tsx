@@ -61,10 +61,12 @@ export const AdvancedSearchPage = () => {
   const categoryShould = (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
   const topLevelOrganizationId = params.get(ResultParam.TopLevelOrganization);
   const unitId = params.get(ResultParam.Unit);
+  const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true' ? 'true' : null;
 
   const resultSearchQueryConfig: FetchResultsParams = {
     categoryShould,
     contributorName: params.get(ResultParam.ContributorName),
+    excludeSubunits: excludeSubunits,
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
@@ -78,7 +80,7 @@ export const AdvancedSearchPage = () => {
     series: params.get(ResultParam.Series),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
-    topLevelOrganization: topLevelOrganizationId,
+    topLevelOrganization: excludeSubunits === 'true' ? undefined : topLevelOrganizationId,
     unit: unitId,
   };
 
@@ -89,9 +91,13 @@ export const AdvancedSearchPage = () => {
     keepPreviousData: true,
   });
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      params.set(ResultParam.ExcludeSubunits, 'true');
+  const handleCheckedExcludeSubunits = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (topLevelOrganizationId) {
+      if (event.target.checked) {
+        params.set(ResultParam.ExcludeSubunits, 'true');
+      } else {
+        params.delete(ResultParam.ExcludeSubunits);
+      }
     } else {
       params.delete(ResultParam.ExcludeSubunits);
     }
@@ -196,7 +202,13 @@ export const AdvancedSearchPage = () => {
             }}>
             <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
             <FormControlLabel
-              control={<Checkbox disabled={!topLevelOrganizationId} onChange={handleCheckboxChange} />}
+              control={
+                <Checkbox
+                  disabled={!topLevelOrganizationId}
+                  onChange={handleCheckedExcludeSubunits}
+                  checked={!!topLevelOrganizationId && !!excludeSubunits}
+                />
+              }
               label={t('tasks.nvi.exclude_subunits')}
             />
           </Box>
