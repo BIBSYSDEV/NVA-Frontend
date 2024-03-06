@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
+import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -29,16 +29,16 @@ import { PublishingTicket } from '../../../types/publication_types/ticket.types'
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
+import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
 import { userCanPublishRegistration, userCanUnpublishRegistration } from '../../../utils/registration-helpers';
-import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
-import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { DeletePublication } from './DeletePublication';
+import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -295,12 +295,15 @@ export const PublishingAccordion = ({
         {/* Tell user what they can publish */}
         {!lastPublishingRequest && isDraftRegistration && registrationIsValid && (
           <>
-            {registratorPublishesMetadataAndFiles ? (
+            <Typography paragraph>
+              {t('registration.public_page.tasks_panel.review_preview_before_publishing')}
+            </Typography>
+
+            {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
               <Typography>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
-            ) : registratorPublishesMetadataOnly ? (
+            ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
               <Typography>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
             ) : null}
-            <Typography>{t('registration.public_page.tasks_panel.review_preview_before_publishing')}</Typography>
           </>
         )}
 
@@ -308,13 +311,15 @@ export const PublishingAccordion = ({
           <LoadingButton
             disabled={isLoading !== LoadingState.None || !registrationIsValid}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
-            sx={{ mt: '1rem', bgcolor: 'white' }}
-            variant="outlined"
+            sx={{ mt: '1rem' }}
+            variant="contained"
+            color="info"
+            fullWidth
             onClick={onClickPublish}
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly'
               ? t('registration.public_page.tasks_panel.publish_metadata')
-              : t('registration.public_page.tasks_panel.publish_metadata_and_files')}
+              : t('registration.public_page.tasks_panel.publish_registration')}
           </LoadingButton>
         )}
 
