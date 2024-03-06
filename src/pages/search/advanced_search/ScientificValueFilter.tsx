@@ -22,7 +22,7 @@ export const ScientificValueFilter = () => {
     levelTwo: scientificValueParam.includes(ScientificValueLevels.LevelTwo),
   });
 
-  // Used to clear cvalue based on URL params
+  // Used to clear value based on URL params
   useEffect(() => {
     setValues({
       levelZero: scientificValueParam.includes(ScientificValueLevels.LevelZero),
