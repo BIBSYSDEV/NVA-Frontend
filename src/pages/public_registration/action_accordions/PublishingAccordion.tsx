@@ -18,7 +18,7 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { useEffect, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
@@ -329,14 +329,12 @@ export const PublishingAccordion = ({
 
         {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
           <Box sx={{ mt: '0.5rem' }}>
-            <Trans
-              i18nKey={
-                registrationHasFile
-                  ? 'registration.public_page.tasks_panel.registration_is_published_with_files'
-                  : 'registration.public_page.tasks_panel.registration_is_published'
-              }
-              components={[<Typography paragraph />]}
-            />
+            <Typography paragraph>{t('registration.public_page.tasks_panel.published_registration')}</Typography>
+            <Typography paragraph>
+              {registrationHasFile
+                ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
+                : t('registration.public_page.tasks_panel.registration_is_published')}
+            </Typography>
           </Box>
         )}
 
