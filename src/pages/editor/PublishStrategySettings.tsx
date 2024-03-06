@@ -55,8 +55,8 @@ export const PublishStrategySettings = () => {
   const updateRightsRetentionStrategy = useMutation({
     mutationFn: (customer: CustomerInstitution) => updateCustomerInstitution(customer),
     onSuccess: (response) => {
-      dispatch(setNotification({ message: t('feedback.success.update_publish_strategy'), variant: 'success' }));
       dispatch(setCustomer(response.data));
+      dispatch(setNotification({ message: t('feedback.success.update_publish_strategy'), variant: 'success' }));
     },
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.update_publish_strategy'), variant: 'error' })),
