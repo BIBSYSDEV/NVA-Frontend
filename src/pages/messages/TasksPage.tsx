@@ -5,6 +5,7 @@ import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RuleIcon from '@mui/icons-material/Rule';
 import {
+  Badge,
   Box,
   Button,
   FormControlLabel,
@@ -22,7 +23,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { fetchNviCandidates, fetchTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
+import {
+  fetchCustomerTickets,
+  fetchNviCandidates,
+  fetchTickets,
+  FetchTicketsParams,
+  TicketSearchParam,
+} from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -163,6 +170,27 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
+  const notificationsParams: FetchTicketsParams = {
+    results: 0,
+    aggregation: 'all',
+  };
+  const notificationsQuery = useQuery({
+    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
+    queryKey: ['notifications', notificationsParams],
+    queryFn: () => fetchCustomerTickets(notificationsParams),
+    meta: { errorMessage: t('feedback.error.get_messages') },
+  });
+
+  const doiNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
+    (notification) => notification.key === 'DoiRequestNotification'
+  )?.count;
+  const publishingNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
+    (notification) => notification.key === 'PublishingRequestNotification'
+  )?.count;
+  const supportNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
+    (notification) => notification.key === 'GeneralSupportNotification'
+  )?.count;
+
   const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
   const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
   const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
@@ -265,6 +293,7 @@ const TasksPage = () => {
               {isPublishingCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
+                  endIcon={<Badge badgeContent={publishingNotificationsCount} color="info" />}
                   showCheckbox
                   isSelected={ticketTypes.publishingRequest}
                   color="publishingRequest"
@@ -278,6 +307,7 @@ const TasksPage = () => {
               {isDoiCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
+                  endIcon={<Badge badgeContent={doiNotificationsCount} color="info" />}
                   showCheckbox
                   isSelected={ticketTypes.doiRequest}
                   color="doiRequest"
@@ -291,6 +321,7 @@ const TasksPage = () => {
               {isSupportCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
+                  endIcon={<Badge badgeContent={supportNotificationsCount} color="info" />}
                   showCheckbox
                   isSelected={ticketTypes.generalSupportCase}
                   color="generalSupportCase"
