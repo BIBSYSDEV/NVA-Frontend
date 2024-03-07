@@ -14,8 +14,8 @@ import {
   MenuItem,
   Radio,
   Select,
-  Typography,
   styled,
+  Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -24,11 +24,11 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
 import {
-  FetchTicketsParams,
-  TicketSearchParam,
   fetchCustomerTickets,
   fetchNviCandidates,
   fetchTickets,
+  FetchTicketsParams,
+  TicketSearchParam,
 } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
@@ -159,7 +159,7 @@ const TasksPage = () => {
     from: (page - 1) * rowsPerPage,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
-    viewingScope: organizationScope.length > 0 ? organizationScope.join(',') : null,
+    viewingScope: searchParams.get(TicketSearchParam.ViewingScope),
     excludeSubUnits: excludeSubunits,
   };
 
@@ -253,13 +253,15 @@ const TasksPage = () => {
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
-        <OrganizationScope
-          organizationScope={organizationScope}
-          setOrganizationScope={setOrganizationScope}
-          excludeSubunits={excludeSubunits}
-          setExcludeSubunits={setExcludeSubunits}
-          hide={isOnCorrectionListPage}
-        />
+        {!isOnTicketsPage && (
+          <OrganizationScope
+            organizationScope={organizationScope}
+            setOrganizationScope={setOrganizationScope}
+            excludeSubunits={excludeSubunits}
+            setExcludeSubunits={setExcludeSubunits}
+            hide={isOnCorrectionListPage}
+          />
+        )}
 
         {isTicketCurator && (
           <NavigationListAccordion
