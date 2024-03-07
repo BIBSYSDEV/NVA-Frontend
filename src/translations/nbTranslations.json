@@ -1739,8 +1739,8 @@
       "publishing_period": "Publiseringsperiode",
       "scientific_value": {
         "level_one": "Nivå 1",
-        "level_zero": "Nivå 0",
-        "level_two": "Nivå 2"
+        "level_two": "Nivå 2",
+        "level_zero": "Nivå 0"
       },
       "title_search": "Tittelsøk"
     },
