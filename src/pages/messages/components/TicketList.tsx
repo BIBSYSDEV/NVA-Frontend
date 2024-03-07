@@ -69,14 +69,16 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
         {isOnTasksPage && (
-          <Grid item xs={16} md={5} lg={4}>
-            <CuratorSelector roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]} />
-          </Grid>
-        )}
-        {isOnTasksPage && (
-          <Grid item xs={16} md={6} lg={5}>
-            <AreaOfResponsibilitySelector />
-          </Grid>
+          <>
+            <Grid item xs={16} md={5} lg={4}>
+              <CuratorSelector
+                roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
+              />
+            </Grid>
+            <Grid item xs={16} md={6} lg={5}>
+              <AreaOfResponsibilitySelector />
+            </Grid>
+          </>
         )}
       </Grid>
 

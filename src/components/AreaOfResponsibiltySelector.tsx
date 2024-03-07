@@ -1,6 +1,4 @@
 import { Autocomplete, Checkbox, Chip, TextField } from '@mui/material';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -29,7 +27,7 @@ export const AreaOfResponsibilitySelector = () => {
   const areasOfResponsibilityIds = institutionUserQuery.data?.viewingScope?.includedUnits ?? [];
 
   const organizationQuery = useQuery({
-    enabled: !!areasOfResponsibilityIds,
+    enabled: areasOfResponsibilityIds.length > 0,
     queryKey: ['organizations', areasOfResponsibilityIds],
     queryFn: async () => {
       const areaPromises = areasOfResponsibilityIds.map(async (orgId) => {
@@ -54,7 +52,7 @@ export const AreaOfResponsibilitySelector = () => {
       disabled={organizationQuery.isLoading}
       loading={organizationQuery.isLoading}
       getOptionLabel={(option) => getLanguageString(option.labels)}
-      renderTags={(values, getTagProps) => (
+      renderTags={(values) => (
         <Chip
           sx={{ py: '0.1rem' }}
           label={t('common.chosen', { count: values.length })}
@@ -78,12 +76,7 @@ export const AreaOfResponsibilitySelector = () => {
       }}
       renderOption={(props, option, { selected }) => (
         <li {...props} key={option.id}>
-          <Checkbox
-            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-            checkedIcon={<CheckBoxIcon fontSize="small" />}
-            style={{ marginRight: 8 }}
-            checked={selected}
-          />
+          <Checkbox sx={{ mr: '0.5rem' }} checked={selected} size="small" />
           {getLanguageString(option.labels)}
         </li>
       )}
