@@ -1,4 +1,4 @@
-import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import AddIcon from '@mui/icons-material/AddCircle';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
@@ -125,10 +125,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
         startIcon={<AddIcon />}
         onClick={toggleAffiliationModal}
-        sx={{
-          gridArea: 'add-affiliation',
-          justifyContent: 'flex-start',
-        }}>
+        sx={{ gridArea: 'add-affiliation', alignSelf: 'start' }}>
         {t('registration.contributors.add_affiliation')}
       </Button>
 

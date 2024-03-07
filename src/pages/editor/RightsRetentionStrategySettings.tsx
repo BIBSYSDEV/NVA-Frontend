@@ -30,10 +30,10 @@ export const RightsRetentionStrategySettings = () => {
   const updateRightsRetentionStrategy = useMutation({
     mutationFn: (customer: CustomerInstitution) => updateCustomerInstitution(customer),
     onSuccess: (response) => {
+      dispatch(setCustomer(response.data));
       dispatch(
         setNotification({ message: t('feedback.success.update_rights_retention_strategy'), variant: 'success' })
       );
-      dispatch(setCustomer(response.data));
     },
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.update_rights_retention_strategy'), variant: 'error' })),

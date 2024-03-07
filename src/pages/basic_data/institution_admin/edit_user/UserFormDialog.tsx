@@ -123,6 +123,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
           customerId,
           roles: user.roles,
           nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', personQuery.data?.identifiers),
+          viewingScope: user.viewingScope,
         });
       }
     },
@@ -144,6 +145,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
           institution: customerId,
           roles: [{ type: 'Role', rolename: RoleName.Creator }],
           username: username,
+          viewingScope: { type: 'ViewingScope', includedUnits: [] },
         }
       : institutionUserQuery.data,
   };
@@ -202,15 +204,17 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
 
                       setFieldValue(UserFormFieldName.Roles, newUserRoles);
                       const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
-                      if (hasCuratorRole && !values.user?.viewingScope?.includedUnits.length && topOrgCristinId) {
+                      if (hasCuratorRole && !values.user?.viewingScope.includedUnits.length && topOrgCristinId) {
                         setFieldValue(UserFormFieldName.ViewingScope, [topOrgCristinId]);
+                      } else if (!hasCuratorRole) {
+                        setFieldValue(UserFormFieldName.ViewingScope, []);
                       }
                     }}
                   />
                   <Divider orientation="vertical" />
                   <TasksFormSection
                     roles={values.user?.roles.map((role) => role.rolename)}
-                    viewingScopes={values.user?.viewingScope?.includedUnits ?? []}
+                    viewingScopes={values.user?.viewingScope.includedUnits ?? []}
                     updateViewingScopes={(newViewingScopes) =>
                       setFieldValue(UserFormFieldName.ViewingScope, newViewingScopes)
                     }
