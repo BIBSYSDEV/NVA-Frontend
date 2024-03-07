@@ -1,3 +1,6 @@
+import LinkIcon from '@mui/icons-material/Link';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import {
   Box,
   Chip,
@@ -5,8 +8,8 @@ import {
   Divider,
   Grid,
   IconButton,
-  Link as MuiLink,
   List,
+  Link as MuiLink,
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -17,11 +20,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { fetchResults, FetchResultsParams } from '../../api/searchApi';
-import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
@@ -184,6 +187,32 @@ const ResearchProfile = () => {
             <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
               {orcidUri}
             </Typography>
+          </Box>
+        )}
+
+        {(person.contactDetails?.email || person.contactDetails?.telephone || person.contactDetails?.webPage) && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mt: '0.75rem' }}>
+            <Typography fontWeight="bold">{t('my_page.my_profile.contact_information')}</Typography>
+            {person.contactDetails.email && (
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <MailOutlineIcon />
+                <MuiLink href={`mailto:${person.contactDetails.email}`}>{person.contactDetails.email}</MuiLink>
+              </Box>
+            )}
+            {person.contactDetails.telephone && (
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <PhoneEnabledIcon />
+                <MuiLink href={`tel:${person.contactDetails.telephone}`}>{person.contactDetails.telephone}</MuiLink>
+              </Box>
+            )}
+            {person.contactDetails.webPage && (
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <LinkIcon />
+                <MuiLink href={person.contactDetails.webPage} target="_blank" rel="noopener noreferrer">
+                  {person.contactDetails.webPage}
+                </MuiLink>
+              </Box>
+            )}
           </Box>
         )}
 

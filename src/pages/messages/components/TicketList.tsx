@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { CuratorSelector } from '../../../components/CuratorSelector';
+import { DialoguesWithoutCuratorButton } from '../../../components/DialoguesWithoutCuratorButton';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
@@ -64,9 +65,14 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <Grid item xs={16} md={5} lg={4}>
           <TicketStatusFilter />
         </Grid>
-        <Grid item xs={16} md={11} lg={12}>
+        <Grid item xs={16} md={6} lg={8}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
+        {isOnTasksPage && (
+          <Grid item xs={16} md={5} lg={4}>
+            <DialoguesWithoutCuratorButton />
+          </Grid>
+        )}
         <Grid item xs={16} md={5} lg={4}>
           {isOnTasksPage && (
             <CuratorSelector roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]} />
