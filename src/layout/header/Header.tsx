@@ -56,8 +56,10 @@ export const Header = () => {
     }
   }, [dispatch, customer]);
 
+  const isTicketCurator = hasCuratorRole(user);
+
   const notificationsQuery = useQuery({
-    enabled: user?.isDoiCurator || user?.isSupportCurator || user?.isPublishingCurator,
+    enabled: isTicketCurator,
     queryKey: ['notifications', notificationsParams],
     queryFn: () => fetchCustomerTickets(notificationsParams),
     meta: { errorMessage: false },
@@ -173,7 +175,7 @@ export const Header = () => {
                   {t('basic_data.basic_data')}
                 </MenuButton>
               )}
-              {(hasCuratorRole(user) || user?.isNviCurator) && (
+              {(isTicketCurator || user?.isNviCurator) && (
                 <Badge
                   badgeContent={notificationCounts || null}
                   color="info"
