@@ -6,14 +6,18 @@ import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
 
+const statusNew: TicketStatus = 'New';
+
 export const DialoguesWithoutCuratorButton = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const statusNew: TicketStatus = 'New';
+
+  const dialoguesWithoutCuratorSelected =
+    searchParams.get(TicketSearchParam.Status) === statusNew && !searchParams.get(TicketSearchParam.Assignee);
 
   const toggleDialoguesWithoutCurators = () => {
-    if (dialoguesWithoutCuratorSelected()) {
+    if (dialoguesWithoutCuratorSelected) {
       searchParams.delete(TicketSearchParam.Status);
     } else {
       searchParams.set(TicketSearchParam.Status, statusNew);
@@ -22,15 +26,11 @@ export const DialoguesWithoutCuratorButton = () => {
     history.push({ search: searchParams.toString() });
   };
 
-  const dialoguesWithoutCuratorSelected = () => {
-    return searchParams.get(TicketSearchParam.Status) === statusNew && !searchParams.get(TicketSearchParam.Assignee);
-  };
-
   return (
     <Button
       fullWidth
       size="medium"
-      variant={dialoguesWithoutCuratorSelected() ? 'contained' : 'outlined'}
+      variant={dialoguesWithoutCuratorSelected ? 'contained' : 'outlined'}
       color="primary"
       sx={{ textTransform: 'none' }}
       startIcon={<ChatBubble />}
