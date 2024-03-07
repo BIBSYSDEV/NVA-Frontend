@@ -16,7 +16,7 @@ export const ScientificValueFilter = () => {
   const searchParams = new URLSearchParams(history.location.search);
   const scientificValueParam = searchParams.get(ResultParam.ScientificValue) || '';
 
-  const [values, setValues] = useState({
+  const [selectedScientificValues, setSelectedScientificValues] = useState({
     levelZero: scientificValueParam.includes(ScientificValueLevels.LevelZero),
     levelOne: scientificValueParam.includes(ScientificValueLevels.LevelOne),
     levelTwo: scientificValueParam.includes(ScientificValueLevels.LevelTwo),
@@ -24,7 +24,7 @@ export const ScientificValueFilter = () => {
 
   // Used to clear value based on URL params
   useEffect(() => {
-    setValues({
+    setSelectedScientificValues({
       levelZero: scientificValueParam.includes(ScientificValueLevels.LevelZero),
       levelOne: scientificValueParam.includes(ScientificValueLevels.LevelOne),
       levelTwo: scientificValueParam.includes(ScientificValueLevels.LevelTwo),
@@ -33,14 +33,14 @@ export const ScientificValueFilter = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
-    const newValues = { ...values, [name]: checked };
+    const newSelectedScientificValues = { ...selectedScientificValues, [name]: checked };
 
-    setValues(newValues);
+    setSelectedScientificValues(newSelectedScientificValues);
 
     const scientificValues = [
-      newValues.levelZero ? ScientificValueLevels.LevelZero : '',
-      newValues.levelOne ? ScientificValueLevels.LevelOne : '',
-      newValues.levelTwo ? ScientificValueLevels.LevelTwo : '',
+      newSelectedScientificValues.levelZero ? ScientificValueLevels.LevelZero : '',
+      newSelectedScientificValues.levelOne ? ScientificValueLevels.LevelOne : '',
+      newSelectedScientificValues.levelTwo ? ScientificValueLevels.LevelTwo : '',
     ]
       .filter(Boolean)
       .join(',');
@@ -56,15 +56,15 @@ export const ScientificValueFilter = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <FormControlLabel
-        control={<Checkbox name="levelZero" checked={values.levelZero} onChange={handleChange} />}
+        control={<Checkbox name="levelZero" checked={selectedScientificValues.levelZero} onChange={handleChange} />}
         label={t('search.advanced_search.scientific_value.level_zero')}
       />
       <FormControlLabel
-        control={<Checkbox name="levelOne" checked={values.levelOne} onChange={handleChange} />}
+        control={<Checkbox name="levelOne" checked={selectedScientificValues.levelOne} onChange={handleChange} />}
         label={t('search.advanced_search.scientific_value.level_one')}
       />
       <FormControlLabel
-        control={<Checkbox name="levelTwo" checked={values.levelTwo} onChange={handleChange} />}
+        control={<Checkbox name="levelTwo" checked={selectedScientificValues.levelTwo} onChange={handleChange} />}
         label={t('search.advanced_search.scientific_value.level_two')}
       />
     </Box>
