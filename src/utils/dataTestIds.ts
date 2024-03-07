@@ -553,6 +553,7 @@ export const dataTestId = {
       correctionListRadioButton: 'correction-list-radio-button',
     },
     curatorSelector: 'curator-selector',
+    dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {

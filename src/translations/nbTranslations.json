@@ -1784,6 +1784,7 @@
   "tasks": {
     "all_nvi_results": "Alle NVI-resultater",
     "correction_list": "Retteliste",
+    "dialogues_without_curator": "Dialoger uten kurator",
     "my_nvi_results": "Mine NVI-resultater",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
