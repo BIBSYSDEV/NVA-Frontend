@@ -12,7 +12,7 @@ enum ScientificValueLevels {
 }
 
 export const ScientificValueFilter = () => {
-  const [t] = useTranslation();
+  const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
   const scientificValueParam = searchParams.get(ResultParam.ScientificValue) ?? '';
