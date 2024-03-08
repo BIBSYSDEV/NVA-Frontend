@@ -66,7 +66,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <Grid item xs={16} md={5} lg={4}>
           <TicketStatusFilter />
         </Grid>
-        <Grid item xs={16} md={6} lg={8}>
+        <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
         {isOnTasksPage && (
