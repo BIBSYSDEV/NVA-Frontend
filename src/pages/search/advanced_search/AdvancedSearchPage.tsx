@@ -20,6 +20,8 @@ import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { ScientificIndexStatuses } from '../../../utils/nviHelpers';
 import { ExportResultsButton } from '../ExportResultsButton';
 import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
@@ -92,7 +94,7 @@ export const AdvancedSearchPage = () => {
 
   const handleNviReportedCheckbox = (event: React.SyntheticEvent, checked: boolean) => {
     if (checked) {
-      params.set(ResultParam.ScientificIndexStatus, 'Reported');
+      params.set(ResultParam.ScientificIndexStatus, ScientificIndexStatuses.Reported);
     } else {
       params.delete(ResultParam.ScientificIndexStatus);
     }
@@ -180,9 +182,10 @@ export const AdvancedSearchPage = () => {
         <Grid item>
           <StyledTypography fontWeight="bold">{t('common.nvi')}</StyledTypography>
           <FormControlLabel
-            control={<Checkbox name="nviReported" />}
+            data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
+            control={<Checkbox name="scientificIndexStatus" />}
             onChange={handleNviReportedCheckbox}
-            checked={params.get(ResultParam.ScientificIndexStatus) === 'Reported'}
+            checked={params.get(ResultParam.ScientificIndexStatus) === ScientificIndexStatuses.Reported}
             label={t('search.advanced_search.reported')}
           />
         </Grid>
