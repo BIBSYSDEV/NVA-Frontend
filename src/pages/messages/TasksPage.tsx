@@ -153,13 +153,16 @@ const TasksPage = () => {
     .filter(Boolean)
     .join(' AND ');
 
+  const getViewingScopeFromUrlOrDefaultToUsersViewingScope =
+    searchParams.get(TicketSearchParam.ViewingScope) || organizationScope.join(',');
+
   const ticketSearchParams: FetchTicketsParams = {
     query: ticketQueryString,
     results: rowsPerPage,
     from: (page - 1) * rowsPerPage,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
-    viewingScope: searchParams.get(TicketSearchParam.ViewingScope),
+    viewingScope: getViewingScopeFromUrlOrDefaultToUsersViewingScope,
     excludeSubUnits: excludeSubunits,
   };
 
