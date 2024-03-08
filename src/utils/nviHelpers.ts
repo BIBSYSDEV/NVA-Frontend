@@ -9,10 +9,6 @@ import { nviApplicableTypes } from './registration-helpers';
 
 const minNviYear = 2011;
 
-export enum ScientificIndexStatuses {
-  Reported = 'Reported',
-}
-
 export const getNviYearFilterValues = () => {
   const thisYear = new Date().getFullYear();
   const nviYearFilterValues = [];

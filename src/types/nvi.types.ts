@@ -1,6 +1,10 @@
 import { LanguageString, SearchResponse } from './common.types';
 import { PublicationInstanceType, RegistrationDate } from './registration.types';
 
+export enum ScientificIndexStatuses {
+  Reported = 'Reported',
+}
+
 interface NviCandidateContributor {
   id?: string;
   name: string;
