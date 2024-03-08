@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 enum ScientificValueLevels {
   LevelZero = 'Unassigned,LevelZero',
@@ -43,14 +44,17 @@ export const ScientificValueFilter = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <FormControlLabel
+        data-testid={dataTestId.startPage.advancedSearch.scientificValueLevels.levelZeroCheckbox}
         control={<Checkbox name="levelZero" checked={levelZeroSelected} onChange={handleChange} />}
         label={t('search.advanced_search.scientific_value.level_zero')}
       />
       <FormControlLabel
+        data-testid={dataTestId.startPage.advancedSearch.scientificValueLevels.levelOneCheckbox}
         control={<Checkbox name="levelOne" checked={levelOneSelected} onChange={handleChange} />}
         label={t('search.advanced_search.scientific_value.level_one')}
       />
       <FormControlLabel
+        data-testid={dataTestId.startPage.advancedSearch.scientificValueLevels.levelTwoCheckbox}
         control={<Checkbox name="levelTwo" checked={levelTwoSelected} onChange={handleChange} />}
         label={t('search.advanced_search.scientific_value.level_two')}
       />
