@@ -24,8 +24,8 @@ export interface TicketCollection {
 }
 
 export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
-export type TicketStatus = 'New' | 'Pending' | 'Closed' | 'Completed' | 'Not Applicable';
-export const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];
+export type TicketStatus = 'New' | 'Pending' | 'Closed' | 'Completed' | 'NotApplicable';
+export const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed', 'NotApplicable'];
 
 interface BaseTicket {
   type: TicketType;

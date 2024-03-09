@@ -96,7 +96,7 @@ export const RegistrationLandingPage = () => {
                 refetchRegistrationAndTickets={refetchRegistrationAndTickets}
                 tickets={
                   ticketsQuery.data?.tickets
-                    ? ticketsQuery.data.tickets.filter((ticket) => ticket.status !== 'Not Applicable')
+                    ? ticketsQuery.data.tickets.filter((ticket) => ticket.status !== 'NotApplicable')
                     : []
                 }
                 isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
