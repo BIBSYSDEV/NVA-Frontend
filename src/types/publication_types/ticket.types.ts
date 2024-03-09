@@ -1,5 +1,5 @@
 import { AssociatedFile } from '../associatedArtifact.types';
-import { SearchResponse } from '../common.types';
+import { AggregationValue, SearchResponse } from '../common.types';
 import { PublishStrategy } from '../customerInstitution.types';
 import { BaseEntityDescription, PublicationInstanceType, Registration } from '../registration.types';
 
@@ -90,3 +90,18 @@ interface AggregationBucket {
 }
 
 export type TicketSearchResponse = SearchResponse<ExpandedTicket, TicketAggregations>;
+
+type NotificationKey =
+  | 'UnassignedNotification'
+  | 'GeneralSupportNotification'
+  | 'UserNotification'
+  | 'PublishingRequestNotification'
+  | 'DoiRequestNotification';
+
+type CustomerTicketAggregations = {
+  type?: AggregationValue<TicketType>[];
+  status?: AggregationValue<TicketStatus>[];
+  notifications?: AggregationValue<NotificationKey>[];
+};
+
+export type CustomerTicketSearchResponse = SearchResponse<ExpandedTicket, CustomerTicketAggregations>;

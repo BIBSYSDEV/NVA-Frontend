@@ -548,11 +548,13 @@ export const dataTestId = {
     userRolesAndHelpLink: 'user-roles-and-help-link',
   },
   tasksPage: {
+    areaOfResponsibilitySelector: 'area-of-responsibility-selector',
     correctionList: {
       correctionListAccordion: 'correction-list-accordion',
       correctionListRadioButton: 'correction-list-radio-button',
     },
     curatorSelector: 'curator-selector',
+    dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {
