@@ -1,6 +1,6 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
-import { NviCandidate, NviCandidateSearchResponse } from '../types/nvi.types';
+import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
 import { CustomerTicketSearchResponse, TicketSearchResponse } from '../types/publication_types/ticket.types';
 import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
@@ -170,6 +170,7 @@ export enum ResultParam {
   Course = 'course',
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
+  ExcludeSubunits = 'excludeSubunits',
   Files = 'files',
   From = 'from',
   FundingIdentifier = 'fundingIdentifier',
@@ -190,8 +191,10 @@ export enum ResultParam {
   Query = 'query',
   Results = 'results',
   ScientificIndex = 'scientificIndex',
+  ScientificIndexStatus = 'scientificIndexStatus',
   ScientificReportPeriodBeforeParam = 'scientificReportPeriodBefore',
   ScientificReportPeriodSinceParam = 'scientificReportPeriodSince',
+  ScientificValue = 'scientificValue',
   Series = 'series',
   Sort = 'sort',
   Tags = 'tags',
@@ -216,6 +219,7 @@ export interface FetchResultsParams {
   [ResultParam.Course]?: string | null;
   [ResultParam.CristinIdentifier]?: string | null;
   [ResultParam.Doi]?: string | null;
+  [ResultParam.ExcludeSubunits]?: boolean | null;
   [ResultParam.Files]?: string | null;
   [ResultParam.From]?: number | null;
   [ResultParam.FundingIdentifier]?: string | null;
@@ -237,8 +241,10 @@ export interface FetchResultsParams {
   [ResultParam.Results]?: number | null;
   [ResultParam.Series]?: string | null;
   [ResultParam.ScientificIndex]?: string | null;
+  [ResultParam.ScientificIndexStatus]?: ScientificIndexStatuses | null;
   [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
   [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
+  [ResultParam.ScientificValue]?: string | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
@@ -280,6 +286,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.doi) {
     searchParams.set(ResultParam.Doi, params.doi);
+  }
+  if (params.excludeSubunits) {
+    searchParams.set(ResultParam.ExcludeSubunits, params.excludeSubunits.toString());
   }
   if (params.files) {
     searchParams.set(ResultParam.Files, params.files);
@@ -338,6 +347,12 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.scientificIndex) {
     searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
     searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificIndex);
+  }
+  if (params.scientificIndexStatus) {
+    searchParams.set(ResultParam.ScientificIndexStatus, params.scientificIndexStatus);
+  }
+  if (params.scientificValue) {
+    searchParams.set(ResultParam.ScientificValue, params.scientificValue);
   }
   if (params.series) {
     searchParams.set(ResultParam.Series, params.series);
