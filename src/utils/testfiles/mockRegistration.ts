@@ -29,7 +29,7 @@ export const mockRegistration: JournalRegistration = {
       size: 10,
       mimeType: '',
       administrativeAgreement: false,
-      publisherAuthority: false,
+      publisherVersion: 'PublishedVersion',
       embargoDate: null,
       license: null,
       rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },

@@ -14,6 +14,8 @@ export interface FileRrs {
   configuredType?: CustomerRrsType;
 }
 
+export type PublisherVersion = 'PublishedVersion' | 'AcceptedVersion' | null;
+
 export interface AssociatedFile {
   type: AssociatedFileType;
   identifier: string;
@@ -21,7 +23,7 @@ export interface AssociatedFile {
   size: number;
   mimeType?: string;
   administrativeAgreement: boolean;
-  publisherAuthority: boolean | null;
+  publisherVersion: PublisherVersion;
   embargoDate: Date | null;
   license: string | null;
   legalNote?: string;
@@ -35,7 +37,7 @@ export const emptyFile: AssociatedFile = {
   size: 0,
   mimeType: '',
   administrativeAgreement: false,
-  publisherAuthority: null,
+  publisherVersion: null,
   embargoDate: null,
   license: '',
   rightsRetentionStrategy: {

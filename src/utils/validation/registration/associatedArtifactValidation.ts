@@ -34,7 +34,7 @@ export const associatedFileValidationSchema = Yup.object({
         ? schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid)
         : schema
     ),
-  publisherAuthority: Yup.boolean()
+  publisherVersion: Yup.string()
     .nullable()
     .when(['type', 'administrativeAgreement'], ([type, administrativeAgreement], schema) =>
       associatedArtifactIsFile({ type }) && administrativeAgreement === false && isTypeWithFileVersionField(type)

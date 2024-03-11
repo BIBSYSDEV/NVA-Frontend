@@ -103,9 +103,11 @@ export const FileRow = ({
       </Typography>
       {showFileVersionField && (
         <Typography data-testid={dataTestId.registrationLandingPage.fileVersion} sx={{ gridArea: 'version' }}>
-          {file.publisherAuthority
+          {file.publisherVersion === 'PublishedVersion'
             ? t('registration.files_and_license.published_version')
-            : t('registration.files_and_license.accepted_version')}
+            : file.publisherVersion === 'AcceptedVersion'
+              ? t('registration.files_and_license.accepted_version')
+              : null}
         </Typography>
       )}
 
