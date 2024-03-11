@@ -58,9 +58,8 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
       } else {
         params.delete(ResultParam.ExcludeSubunits);
       }
-    } else {
-      params.delete(ResultParam.ExcludeSubunits);
     }
+
     history.push({ search: params.toString() });
   };
 
@@ -93,6 +92,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
               params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
             } else {
               params.delete(ResultParam.TopLevelOrganization);
+              params.delete(ResultParam.ExcludeSubunits);
             }
             params.set(ResultParam.From, '0');
             params.delete(ResultParam.Unit);
