@@ -1,15 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Chip,
-  Divider,
-  FormControlLabel,
-  Grid,
-  Theme,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Button, Chip, Divider, Grid, Theme, Typography, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -61,12 +50,11 @@ export const AdvancedSearchPage = () => {
   const categoryShould = (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
   const topLevelOrganizationId = params.get(ResultParam.TopLevelOrganization);
   const unitId = params.get(ResultParam.Unit);
-  const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true' ? 'true' : null;
+  const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
 
   const resultSearchQueryConfig: FetchResultsParams = {
     categoryShould,
     contributorName: params.get(ResultParam.ContributorName),
-    excludeSubunits: Boolean(excludeSubunits),
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
@@ -80,7 +68,8 @@ export const AdvancedSearchPage = () => {
     series: params.get(ResultParam.Series),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
-    topLevelOrganization: excludeSubunits === 'true' && !!unitId ? undefined : topLevelOrganizationId,
+    excludeSubunits,
+    topLevelOrganization: excludeSubunits && !!unitId ? null : topLevelOrganizationId,
     unit: unitId,
   };
 
@@ -90,19 +79,6 @@ export const AdvancedSearchPage = () => {
     meta: { errorMessage: t('feedback.error.search') },
     keepPreviousData: true,
   });
-
-  const handleCheckedExcludeSubunits = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (topLevelOrganizationId) {
-      if (event.target.checked) {
-        params.set(ResultParam.ExcludeSubunits, 'true');
-      } else {
-        params.delete(ResultParam.ExcludeSubunits);
-      }
-    } else {
-      params.delete(ResultParam.ExcludeSubunits);
-    }
-    history.push({ search: params.toString() });
-  };
 
   return (
     <Grid
@@ -200,16 +176,6 @@ export const AdvancedSearchPage = () => {
               alignItems: 'start',
             }}>
             <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  disabled={!topLevelOrganizationId}
-                  onChange={handleCheckedExcludeSubunits}
-                  checked={!!topLevelOrganizationId && !!excludeSubunits}
-                />
-              }
-              label={t('tasks.nvi.exclude_subunits')}
-            />
           </Box>
         </Grid>
       </Grid>
