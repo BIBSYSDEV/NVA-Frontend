@@ -79,6 +79,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         inputMode="search"
         sx={{ minWidth: '15rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
+        getOptionKey={(option) => option.id}
         filterOptions={(options) => options}
         onInputChange={(_, value, reason) => {
           if (reason !== 'reset') {
@@ -126,6 +127,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         disabled={!topLevelOrganizationId || subUnits.length === 0}
         sx={{ minWidth: '15rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
+        getOptionKey={(option) => option.id}
         onChange={(_, selectedUnit) => {
           const params = new URLSearchParams(history.location.search);
           if (selectedUnit) {
