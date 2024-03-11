@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -47,22 +47,22 @@ export const ScientificValueFilter = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <FormGroup row onChange={handleChange}>
       <FormControlLabel
         data-testid={dataTestId.startPage.advancedSearch.scientificValueLevels.levelZeroCheckbox}
-        control={<Checkbox name="levelZero" checked={selectedScientificValues.levelZero} onChange={handleChange} />}
+        control={<Checkbox name="levelZero" checked={selectedScientificValues.levelZero} />}
         label={t('search.advanced_search.scientific_value.level_zero')}
       />
       <FormControlLabel
         data-testid={dataTestId.startPage.advancedSearch.scientificValueLevels.levelOneCheckbox}
-        control={<Checkbox name="levelOne" checked={selectedScientificValues.levelOne} onChange={handleChange} />}
+        control={<Checkbox name="levelOne" checked={selectedScientificValues.levelOne} />}
         label={t('search.advanced_search.scientific_value.level_one')}
       />
       <FormControlLabel
         data-testid={dataTestId.startPage.advancedSearch.scientificValueLevels.levelTwoCheckbox}
-        control={<Checkbox name="levelTwo" checked={selectedScientificValues.levelTwo} onChange={handleChange} />}
+        control={<Checkbox name="levelTwo" checked={selectedScientificValues.levelTwo} />}
         label={t('search.advanced_search.scientific_value.level_two')}
       />
-    </Box>
+    </FormGroup>
   );
 };
