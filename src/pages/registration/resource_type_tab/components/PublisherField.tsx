@@ -123,7 +123,7 @@ export const PublisherField = () => {
                 required
                 label={t('common.publisher')}
                 isLoading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
-                placeholder={!publisher?.id ? t('registration.resource_type.search_for_publisher') : ''}
+                placeholder={!publisher?.id ? t('registration.resource_type.search_for_publisher_placeholder') : ''}
                 showSearchIcon={!publisher?.id}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
