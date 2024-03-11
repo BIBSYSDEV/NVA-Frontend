@@ -1,4 +1,15 @@
-import { Box, Button, Chip, Divider, Grid, Theme, Typography, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Chip,
+  Divider,
+  FormControlLabel,
+  Grid,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -7,8 +18,10 @@ import { useHistory } from 'react-router-dom';
 import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
+import { ScientificIndexStatuses } from '../../../types/nvi.types';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { ExportResultsButton } from '../ExportResultsButton';
 import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
@@ -65,6 +78,7 @@ export const AdvancedSearchPage = () => {
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publisher: params.get(ResultParam.Publisher),
     results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    scientificIndexStatus: params.get(ResultParam.ScientificIndexStatus) as ScientificIndexStatuses | null,
     scientificValue: params.get(ResultParam.ScientificValue),
     series: params.get(ResultParam.Series),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
@@ -79,6 +93,16 @@ export const AdvancedSearchPage = () => {
     meta: { errorMessage: t('feedback.error.search') },
     keepPreviousData: true,
   });
+
+  const handleNviReportedCheckbox = (event: React.SyntheticEvent, checked: boolean) => {
+    if (checked) {
+      params.set(ResultParam.ScientificIndexStatus, ScientificIndexStatuses.Reported);
+    } else {
+      params.delete(ResultParam.ScientificIndexStatus);
+    }
+
+    history.push({ search: params.toString() });
+  };
 
   return (
     <Grid
@@ -153,6 +177,19 @@ export const AdvancedSearchPage = () => {
         <Grid item>
           <StyledTypography fontWeight="bold">{t('common.language')}</StyledTypography>
           <LanguageFilter />
+        </Grid>
+
+        {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+
+        <Grid item>
+          <StyledTypography fontWeight="bold">{t('common.nvi')}</StyledTypography>
+          <FormControlLabel
+            data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
+            control={<Checkbox name="scientificIndexStatus" />}
+            onChange={handleNviReportedCheckbox}
+            checked={params.get(ResultParam.ScientificIndexStatus) === ScientificIndexStatuses.Reported}
+            label={t('search.advanced_search.reported')}
+          />
         </Grid>
       </Grid>
 

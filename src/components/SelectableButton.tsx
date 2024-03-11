@@ -24,6 +24,11 @@ export const SelectableButton = ({
       bgcolor: isSelected ? undefined : 'background.default',
       borderColor: `${rest.color}.main`,
       textTransform: 'none',
+
+      '.MuiButton-endIcon': {
+        ml: 'auto',
+        mr: '0.5rem',
+      },
     }}>
     {children}
   </Button>
