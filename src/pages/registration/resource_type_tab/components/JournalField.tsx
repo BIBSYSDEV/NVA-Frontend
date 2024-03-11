@@ -163,7 +163,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                 label={t('registration.resource_type.journal')}
                 isLoading={journalOptionsQuery.isFetching || journalQuery.isFetching}
                 placeholder={
-                  !reference?.publicationContext.id ? t('registration.resource_type.search_for_journal') : ''
+                  !reference?.publicationContext.id ? t('registration.resource_type.search_for_title_or_issn') : ''
                 }
                 showSearchIcon={!reference?.publicationContext.id}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
