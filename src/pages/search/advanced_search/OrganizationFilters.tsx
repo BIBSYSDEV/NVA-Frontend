@@ -1,4 +1,4 @@
-import { Autocomplete, Box, TextField } from '@mui/material';
+import { Autocomplete, Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,9 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
+  const params = new URLSearchParams(history.location.search);
+  const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
+  const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
 
   const topLevelOrganizationQuery = useQuery({
     queryKey: [topLevelOrganizationId],
@@ -48,13 +51,33 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
 
   const isLoading = topLevelOrganizationQuery.isFetching || organizationSearchQuery.isFetching;
 
+  const handleCheckedExcludeSubunits = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (topLevelOrgParam) {
+      if (event.target.checked) {
+        params.set(ResultParam.ExcludeSubunits, 'true');
+      } else {
+        params.delete(ResultParam.ExcludeSubunits);
+      }
+    }
+
+    history.push({ search: params.toString() });
+  };
+
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem 1rem', flexWrap: 'wrap' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        gap: '0.5rem 1rem',
+        flexDirection: { xs: 'column', lg: 'row' },
+        width: '100%',
+        alignItems: 'start',
+      }}>
       <Autocomplete
+        fullWidth
         size="small"
         options={options}
         inputMode="search"
-        sx={{ width: '20rem' }}
+        sx={{ minWidth: '15rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
         filterOptions={(options) => options}
         onInputChange={(_, value, reason) => {
@@ -69,6 +92,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
               params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
             } else {
               params.delete(ResultParam.TopLevelOrganization);
+              params.delete(ResultParam.ExcludeSubunits);
             }
             params.set(ResultParam.From, '0');
             params.delete(ResultParam.Unit);
@@ -94,12 +118,13 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
       />
 
       <Autocomplete
+        fullWidth
         size="small"
         options={subUnits}
         value={selectedSubUnit}
         inputMode="search"
         disabled={!topLevelOrganizationId || subUnits.length === 0}
-        sx={{ width: '20rem' }}
+        sx={{ minWidth: '15rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
         onChange={(_, selectedUnit) => {
           const params = new URLSearchParams(history.location.search);
@@ -121,6 +146,18 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
             placeholder={t('search.search_for_sub_unit')}
           />
         )}
+      />
+
+      <FormControlLabel
+        sx={{ whiteSpace: 'nowrap' }}
+        control={
+          <Checkbox
+            disabled={!topLevelOrganizationId}
+            onChange={handleCheckedExcludeSubunits}
+            checked={!!topLevelOrganizationId && !!excludeSubunits}
+          />
+        }
+        label={t('tasks.nvi.exclude_subunits')}
       />
     </Box>
   );

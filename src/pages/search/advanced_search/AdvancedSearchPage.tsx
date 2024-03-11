@@ -64,6 +64,7 @@ export const AdvancedSearchPage = () => {
   const categoryShould = (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
   const topLevelOrganizationId = params.get(ResultParam.TopLevelOrganization);
   const unitId = params.get(ResultParam.Unit);
+  const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
 
   const resultSearchQueryConfig: FetchResultsParams = {
     categoryShould,
@@ -83,7 +84,8 @@ export const AdvancedSearchPage = () => {
     series: params.get(ResultParam.Series),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
-    topLevelOrganization: topLevelOrganizationId,
+    excludeSubunits,
+    topLevelOrganization: excludeSubunits && !!unitId ? null : topLevelOrganizationId,
     unit: unitId,
   };
 
