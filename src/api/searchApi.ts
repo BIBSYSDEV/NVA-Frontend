@@ -1,6 +1,6 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
-import { NviCandidate, NviCandidateSearchResponse } from '../types/nvi.types';
+import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
 import { CustomerTicketSearchResponse, TicketSearchResponse } from '../types/publication_types/ticket.types';
 import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
@@ -191,9 +191,9 @@ export enum ResultParam {
   Results = 'results',
   ScientificIndex = 'scientificIndex',
   ScientificIndexStatus = 'scientificIndexStatus',
-  ScientificValue = 'scientificValue',
   ScientificReportPeriodBeforeParam = 'scientificReportPeriodBefore',
   ScientificReportPeriodSinceParam = 'scientificReportPeriodSince',
+  ScientificValue = 'scientificValue',
   Series = 'series',
   Sort = 'sort',
   Tags = 'tags',
@@ -240,9 +240,9 @@ export interface FetchResultsParams {
   [ResultParam.Series]?: string | null;
   [ResultParam.ScientificIndex]?: string | null;
   [ResultParam.ScientificIndexStatus]?: ScientificIndexStatuses | null;
-  [ResultParam.ScientificValue]?: string | null;
   [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
   [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
+  [ResultParam.ScientificValue]?: string | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
