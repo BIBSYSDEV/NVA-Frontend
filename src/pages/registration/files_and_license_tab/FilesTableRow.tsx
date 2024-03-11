@@ -33,7 +33,7 @@ import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, AssociatedFileType, FileRrs, PublisherVersion } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
 import { LicenseUri, licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
@@ -169,7 +169,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     row
                     sx={{ flexWrap: 'nowrap' }}
                     onChange={(event) => {
-                      const fileVersion = event.target.value as PublisherVersion;
+                      const fileVersion = event.target.value as FileVersion;
                       setFieldValue(field.name, fileVersion);
 
                       if (fileVersion === 'PublishedVersion') {
@@ -189,12 +189,12 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       }
                     }}>
                     <FormControlLabel
-                      value={'AcceptedVersion' as PublisherVersion}
+                      value={'AcceptedVersion' as FileVersion}
                       control={<Radio />}
                       label={t('registration.files_and_license.accepted')}
                     />
                     <FormControlLabel
-                      value={'PublishedVersion' as PublisherVersion}
+                      value={'PublishedVersion' as FileVersion}
                       control={<Radio />}
                       label={t('registration.files_and_license.published')}
                     />

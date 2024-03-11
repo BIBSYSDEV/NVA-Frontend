@@ -1,3 +1,4 @@
+import { FileVersion } from '../../types/associatedArtifact.types';
 import { ContributorRole } from '../../types/contributor.types';
 import { CustomerRrsType } from '../../types/customerInstitution.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
@@ -30,7 +31,7 @@ export const mockRegistration: JournalRegistration = {
       size: 10,
       mimeType: '',
       administrativeAgreement: false,
-      publisherVersion: 'PublishedVersion',
+      publisherVersion: FileVersion.Published,
       embargoDate: null,
       license: null,
       rightsRetentionStrategy: {

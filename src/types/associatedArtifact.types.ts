@@ -14,7 +14,10 @@ export interface FileRrs {
   configuredType?: CustomerRrsType;
 }
 
-export type PublisherVersion = 'PublishedVersion' | 'AcceptedVersion' | null;
+export enum FileVersion {
+  Published = 'PublishedVersion',
+  Accepted = 'AcceptedVersion',
+}
 
 export interface AssociatedFile {
   type: AssociatedFileType;
@@ -23,7 +26,7 @@ export interface AssociatedFile {
   size: number;
   mimeType?: string;
   administrativeAgreement: boolean;
-  publisherVersion: PublisherVersion;
+  publisherVersion: FileVersion | null;
   embargoDate: Date | null;
   license: string | null;
   legalNote?: string;
