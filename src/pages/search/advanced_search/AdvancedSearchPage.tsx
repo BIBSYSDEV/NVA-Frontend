@@ -168,15 +168,7 @@ export const AdvancedSearchPage = () => {
 
         <Grid item>
           <StyledTypography fontWeight="bold">{t('common.institution')}</StyledTypography>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', lg: 'row' },
-              gap: '1rem',
-              alignItems: 'start',
-            }}>
-            <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
-          </Box>
+          <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
         </Grid>
       </Grid>
 
