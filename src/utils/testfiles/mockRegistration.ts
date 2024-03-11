@@ -1,4 +1,5 @@
 import { ContributorRole } from '../../types/contributor.types';
+import { CustomerRrsType } from '../../types/customerInstitution.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { TicketCollection } from '../../types/publication_types/ticket.types';
 import { JournalType } from '../../types/publicationFieldNames';
@@ -32,7 +33,10 @@ export const mockRegistration: JournalRegistration = {
       publisherVersion: 'PublishedVersion',
       embargoDate: null,
       license: null,
-      rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },
+      rightsRetentionStrategy: {
+        type: 'NullRightsRetentionStrategy',
+        configuredType: CustomerRrsType.NullRightsRetentionStrategy,
+      },
     },
   ],
   fundings: [],
