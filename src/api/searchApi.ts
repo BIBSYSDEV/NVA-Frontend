@@ -1,13 +1,14 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
-import { TicketSearchResponse } from '../types/publication_types/ticket.types';
+import { CustomerTicketSearchResponse, TicketSearchResponse } from '../types/publication_types/ticket.types';
 import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
 export enum TicketSearchParam {
+  Aggregation = 'aggregation',
   Assignee = 'assignee',
   Query = 'query',
   Role = 'role',
@@ -21,6 +22,7 @@ export enum TicketSearchParam {
 }
 
 export interface FetchTicketsParams {
+  [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
   [TicketSearchParam.Query]?: string | null;
   [TicketSearchParam.Role]?: 'creator';
@@ -54,6 +56,25 @@ export const fetchTickets = async (params: FetchTicketsParams) => {
 
   const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
     url: `${SearchApiPath.Tickets}?${searchParams.toString()}`,
+  });
+
+  return getTickets.data;
+};
+
+export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
+  const searchParams = new URLSearchParams();
+
+  if (params.aggregation) {
+    searchParams.set(TicketSearchParam.Aggregation, params.aggregation);
+  }
+
+  searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
+  searchParams.set(TicketSearchParam.Results, (params.results ?? 10).toString());
+  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'createdDate');
+  searchParams.set(TicketSearchParam.SortOrder, params.sortOrder || 'desc');
+
+  const getTickets = await authenticatedApiRequest2<CustomerTicketSearchResponse>({
+    url: `${SearchApiPath.CustomerTickets}?${searchParams.toString()}`,
   });
 
   return getTickets.data;

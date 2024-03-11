@@ -69,6 +69,7 @@ export const AddAdminDialog = ({
           { type: 'Role', rolename: RoleName.InstitutionAdmin },
           { type: 'Role', rolename: RoleName.Creator },
         ],
+        viewingScope: { type: 'ViewingScope', includedUnits: [] },
       });
       if (isErrorStatus(createNvaUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
