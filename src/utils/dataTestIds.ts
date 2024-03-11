@@ -145,6 +145,11 @@ export const dataTestId = {
       removeFacetButton: 'remove-facet-button',
       removeFilterButton: 'remove-filter-button',
       scientificIndexStatusCheckbox: 'scientific-index-status-checkbox',
+      scientificValueLevels: {
+        levelOneCheckbox: 'level-one-checkbox',
+        levelTwoCheckbox: 'level-two-checkbox',
+        levelZeroCheckbox: 'level-zero-checkbox',
+      },
       searchButton: 'search-button',
       seriesField: 'series-field',
     },

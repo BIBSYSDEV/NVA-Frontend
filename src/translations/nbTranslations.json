@@ -1742,6 +1742,11 @@
       "choose_one_or_more": "Velg ett eller flere",
       "publishing_period": "Publiseringsperiode",
       "reported": "Rapporterte",
+      "scientific_value": {
+        "level_one": "Nivå 1",
+        "level_two": "Nivå 2",
+        "level_zero": "Nivå 0"
+      },
       "title_search": "Tittelsøk"
     },
     "export": "Eksporter",

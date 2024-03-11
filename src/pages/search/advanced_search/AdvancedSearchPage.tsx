@@ -31,6 +31,7 @@ import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
+import { ScientificValueFilter } from './ScientificValueFilter';
 import { SeriesFilter } from './SeriesFilter';
 
 const StyledDivider = styled(Divider)(({ theme }) => ({
@@ -78,6 +79,7 @@ export const AdvancedSearchPage = () => {
     publisher: params.get(ResultParam.Publisher),
     results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     scientificIndexStatus: params.get(ResultParam.ScientificIndexStatus) as ScientificIndexStatuses | null,
+    scientificValue: params.get(ResultParam.ScientificValue),
     series: params.get(ResultParam.Series),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
@@ -210,19 +212,25 @@ export const AdvancedSearchPage = () => {
       <GridRowDivider />
 
       <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
-        <Grid item>
-          <StyledTypography fontWeight="bold">{t('common.publisher')}</StyledTypography>
-          <PublisherFilter />
+        <Grid container item direction={isLargeScreen ? 'row' : 'column'} gap={2}>
+          <Grid item>
+            <StyledTypography fontWeight="bold">{t('common.publisher')}</StyledTypography>
+            <PublisherFilter />
+          </Grid>
+
+          <Grid item>
+            <StyledTypography fontWeight="bold">{t('registration.resource_type.journal')}</StyledTypography>
+            <JournalFilter />
+          </Grid>
+
+          <Grid item>
+            <StyledTypography fontWeight="bold">{t('registration.resource_type.series')}</StyledTypography>
+            <SeriesFilter />
+          </Grid>
         </Grid>
 
         <Grid item>
-          <StyledTypography fontWeight="bold">{t('registration.resource_type.journal')}</StyledTypography>
-          <JournalFilter />
-        </Grid>
-
-        <Grid item>
-          <StyledTypography fontWeight="bold">{t('registration.resource_type.series')}</StyledTypography>
-          <SeriesFilter />
+          <ScientificValueFilter />
         </Grid>
       </Grid>
 
