@@ -36,10 +36,14 @@ export const associatedFileValidationSchema = Yup.object({
     ),
   publisherVersion: Yup.string()
     .nullable()
-    .when(['type', 'administrativeAgreement'], ([type, administrativeAgreement], schema) =>
-      associatedArtifactIsFile({ type }) && administrativeAgreement === false && isTypeWithFileVersionField(type)
-        ? schema.required(associatedArtifactErrorMessage.fileVersionRequired)
-        : schema
+    .when(
+      ['type', 'administrativeAgreement', '$publicationInstanceType'],
+      ([type, administrativeAgreement, publicationInstanceType], schema) =>
+        associatedArtifactIsFile({ type }) &&
+        administrativeAgreement === false &&
+        isTypeWithFileVersionField(publicationInstanceType)
+          ? schema.required(associatedArtifactErrorMessage.fileVersionRequired)
+          : schema
     ),
   license: Yup.string()
     .nullable()
