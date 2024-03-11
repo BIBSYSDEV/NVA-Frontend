@@ -144,6 +144,7 @@ export const dataTestId = {
       publisherField: 'publisher-field',
       removeFacetButton: 'remove-facet-button',
       removeFilterButton: 'remove-filter-button',
+      scientificIndexStatusCheckbox: 'scientific-index-status-checkbox',
       searchButton: 'search-button',
       seriesField: 'series-field',
     },
