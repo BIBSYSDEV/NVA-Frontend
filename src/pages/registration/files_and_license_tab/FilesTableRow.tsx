@@ -159,7 +159,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         {showFileVersion && (
           <TableCell>
             <Field name={publisherVersionFieldName}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
+              {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                 <FormControl
                   data-testid={dataTestId.registrationWizard.files.version}
                   required
@@ -189,12 +189,12 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       }
                     }}>
                     <FormControlLabel
-                      value={'AcceptedVersion' as FileVersion}
+                      value={FileVersion.Accepted}
                       control={<Radio />}
                       label={t('registration.files_and_license.accepted')}
                     />
                     <FormControlLabel
-                      value={'PublishedVersion' as FileVersion}
+                      value={FileVersion.Published}
                       control={<Radio />}
                       label={t('registration.files_and_license.published')}
                     />
