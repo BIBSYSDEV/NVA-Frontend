@@ -151,6 +151,8 @@
     "add_custom": "Legg til {{- name}}",
     "cancel": "Avbryt",
     "category": "Kategori",
+    "chosen_one": "{{count}} valgt",
+    "chosen_other": "{{count}} valgte",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
