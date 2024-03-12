@@ -127,6 +127,7 @@ const TasksPage = () => {
     Pending: false,
     Completed: false,
     Closed: false,
+    NotApplicable: false,
   });
 
   const selectedTicketTypes = Object.entries(ticketTypes)
