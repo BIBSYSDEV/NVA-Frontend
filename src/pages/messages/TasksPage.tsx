@@ -159,11 +159,11 @@ const TasksPage = () => {
     .filter(Boolean)
     .join(' AND ');
 
-  const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.ViewingScope) ? rowsPerPage : 0;
+  const ignoreResultsWhenViewingScopeIsOmitted = searchParams.get(TicketSearchParam.ViewingScope) ? rowsPerPage : 0;
 
   const ticketSearchParams: FetchTicketsParams = {
     query: ticketQueryString,
-    results: numberOfResultsGivenViewingScope,
+    results: ignoreResultsWhenViewingScopeIsOmitted,
     from: (page - 1) * rowsPerPage,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
