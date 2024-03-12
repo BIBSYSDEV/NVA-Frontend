@@ -7,8 +7,23 @@ import { fetchOrganization } from '../api/cristinApi';
 import { fetchUser } from '../api/roleApi';
 import { TicketSearchParam } from '../api/searchApi';
 import { RootState } from '../redux/store';
+import { Organization } from '../types/organization.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { getLanguageString } from '../utils/translation-helpers';
+
+interface OrganizationOption extends Organization {
+  level: number;
+}
+
+function buildOrganizationOptions(topLevelOrganizations: Organization[]): OrganizationOption[] {
+  return topLevelOrganizations.flatMap((org) => buildOrganizationOption(org, 0));
+}
+
+function buildOrganizationOption(org: Organization, level: number): OrganizationOption[] {
+  const option = { ...org, level };
+  const subOptions = org.hasPart?.flatMap((subOrg) => buildOrganizationOption(subOrg, level + 1)) || [];
+  return [option, ...subOptions];
+}
 
 export const AreaOfResponsibilitySelector = () => {
   const { t } = useTranslation();
@@ -33,7 +48,13 @@ export const AreaOfResponsibilitySelector = () => {
       const areaPromises = areasOfResponsibilityIds.map(async (orgId) => {
         return await fetchOrganization(orgId);
       });
-      return await Promise.all(areaPromises);
+      const organizations = await Promise.all(areaPromises);
+      const organizationOptions = buildOrganizationOptions(organizations);
+      if (!searchParams.get(TicketSearchParam.ViewingScope)) {
+        searchParams.set(TicketSearchParam.ViewingScope, organizationOptions.map((org) => org.id).join(','));
+        history.push({ search: searchParams.toString() });
+      }
+      return organizationOptions;
     },
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
@@ -49,6 +70,7 @@ export const AreaOfResponsibilitySelector = () => {
       options={organizationOptions}
       value={selectedOrganizations}
       disableCloseOnSelect
+      disableClearable
       disabled={organizationQuery.isLoading}
       loading={organizationQuery.isLoading}
       getOptionLabel={(option) => getLanguageString(option.labels)}
@@ -76,7 +98,7 @@ export const AreaOfResponsibilitySelector = () => {
       }}
       renderOption={(props, option, { selected }) => (
         <li {...props} key={option.id}>
-          <Checkbox sx={{ mr: '0.5rem' }} checked={selected} size="small" />
+          <Checkbox sx={{ ml: `${option.level}rem`, mr: '0.5rem' }} checked={selected} size="small" />
           {getLanguageString(option.labels)}
         </li>
       )}
