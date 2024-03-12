@@ -151,6 +151,8 @@
     "add_custom": "Legg til {{- name}}",
     "cancel": "Avbryt",
     "category": "Kategori",
+    "chosen_one": "{{count}} vald",
+    "chosen_other": "{{count}} valde",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
@@ -629,6 +631,7 @@
         "Closed": "Avvist",
         "Completed": "Ferdig",
         "New": "Innmeldt",
+        "NotApplicable": "Ikkje relevant",
         "Pending": "Behandlast"
       },
       "types": {
@@ -671,7 +674,7 @@
         "helper_text_modal": {
           "detailed_paragraph_1": "Om du har ein ORCID, så oppfordrar vi deg til å kople den til forskarprofilen din. Om du ikkje har ein ORCID, så kan du opprette den samstundes som du koplar den til forskarprofilen din.",
           "detailed_paragraph_2": "Enkelte forleggjarar og finansiørar krev at du har ein ORCID, for å kunne levere inn høvesvis manuskript og søknader om finansiering. Om dei ikkje krev det, så bør du som forskar krevje det. Då blir dine forskingsresultat enklare for alle å sitere korrekt og det blir mindre arbeid i etterkant. Kopling av ORCID til forskarprofilen din er eit tilbod, ikkje eit krav. Du kan trekke koplinga di når du ønskjer under MIN SIDE | Personalia.",
-          "introduction": "",
+          "introduction": "ORCID gjev deg ein varig, digital identifikator som du sjølv eig og kontrollerer, og som skil deg frå andre forskarar. Ved å kople din ORCID til din forskarprofil, vil NVA i framtida kunne importere fleire av dine publikasjonar, raskare og meir korrekt.",
           "link": "For ytterlegare informasjon gå til ORCID",
           "modal_title": "Open Researcher Contributor IDentity (ORCID)"
         },
@@ -1290,7 +1293,7 @@
       "request_doi_description": "Når du ber om ein DOI (Digital Object Identifier) vil bestillinga gå via ein kurator ved din institusjon for kvalitetskontroll. Legg til ein melding ved eventuelle spørsmål eller avklaringar.",
       "reserve_doi": "Reserver ein DOI",
       "reserved_doi": "Reservert DOI",
-      "result_not_published": "",
+      "result_not_published": "Resultatet er ikkje publisert",
       "scopus_id": "Scopus ID",
       "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
@@ -1302,8 +1305,8 @@
         "has_reserved_doi": "Du har reservert ein DOI til denne registreringa. Den kan delast med dei som ønskjer å sitere dette resultatet. Når registreringa blir publisert og blir offentleg tilgjengeleg, må ein kurator validere metadata før DOI blir offentleg tilgjengeleg.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synleg for andre brukarar, men ein kurator må godkjenne filene som er lasta opp før dei blir synlege.",
         "metadata_published_waiting_for_files_curator": "Alle filer og valde lisensar blir publisert og vil straks bli tilgjengelege for andre.",
-        "publish_registration": "",
-        "published_registration": "",
+        "publish_registration": "Publiser registrering",
+        "published_registration": "Registreringa er publisert.",
         "registration_is_published": "Registreringa er publisert. Metadata er offentleg tilgjengeleg.",
         "registration_is_published_with_files": "Registreringa er publisert. Metadata og fil(er) er offentleg tilgjengelege.",
         "registration_will_soon_be_published": "Registreringa vil bli publisert om kort tid. Last sida på nytt om litt for å sjå oppdatert info.",
@@ -1312,7 +1315,7 @@
         "waiting_for_rejected_doi": "Det kan ta litt tid før ein reservert DOI forsvinn. Last innhaldet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Du kan publisere registreringa på eiga hand. Innhaldet vil då bli synleg for andre brukarar.",
         "you_can_publish_metadata": "Du kan publisere metadata sjølv, men ein kurator må godkjenne filene som er lasta opp før dei kan visast til andre brukarar.",
-        "you_can_publish_metadata_files_info": ""
+        "you_can_publish_metadata_files_info": "Når fil(er) og vald lisens er godkjent av kurator blir dei offentleg tilgjengelege."
       },
       "validation_errors": "Valideringsfeil"
     },
@@ -1692,10 +1695,10 @@
         "search_for_related_registrations_helper": "Vel mellom registreringar som er publisert i NVA"
       },
       "resource_type": "Kategori",
-      "search_for_journal": "Søk etter tidsskrift",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgjevar",
-      "search_for_series": "Søk etter serie",
+      "search_for_publisher_placeholder": "",
+      "search_for_title_or_issn": "",
       "select_resource_type": "Vel kategori",
       "series": "Serie",
       "series_info": "Om publikasjonen inngår i ein serie",
@@ -1738,6 +1741,11 @@
       "advanced_search_description": "Søk blant alle publiserte resultat",
       "choose_one_or_more": "Vel eitt eller fleire",
       "publishing_period": "Publiseringsperiode",
+      "reported": "Rapporterte",
+      "scientific_value": {
+        "level_one": "",
+        "level_other": ""
+      },
       "title_search": "Tittelsøk"
     },
     "export": "Eksporter",
@@ -1784,6 +1792,7 @@
   "tasks": {
     "all_nvi_results": "Alle NVI-resultat",
     "correction_list": "Retteliste",
+    "dialogues_without_curator": "Dialogar utan kurator",
     "my_nvi_results": "Mine NVI-resultat",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
