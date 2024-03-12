@@ -1743,8 +1743,7 @@
       "publishing_period": "Publication period",
       "reported": "Reported",
       "scientific_value": {
-        "level_one": "",
-        "level_other": ""
+        "level": ""
       },
       "title_search": "Search for title"
     },
