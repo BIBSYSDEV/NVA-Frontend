@@ -18,7 +18,7 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
@@ -193,6 +193,10 @@ export const PublishingAccordion = ({
   const unpublishedOrDeleted =
     registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
 
+  const filesAwaitingApproval = registration.associatedArtifacts.filter(
+    (artifact) => artifact.type === 'UnpublishedFile'
+  ).length;
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
@@ -329,7 +333,11 @@ export const PublishingAccordion = ({
         )}
 
         {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
-          <Typography>{t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}</Typography>
+          <Trans
+            t={t}
+            i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files"
+            components={[<Typography paragraph />]}
+          />
         )}
 
         {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
@@ -345,20 +353,28 @@ export const PublishingAccordion = ({
 
         {canHandlePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <Typography paragraph>
-              {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files_curator')}
-            </Typography>
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.approve_publishing_request_description"
+              components={[<Typography />]}
+            />
             <LoadingButton
-              sx={{ bgcolor: 'white' }}
+              sx={{ bgcolor: 'white', mb: '0.5rem' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
               startIcon={<AttachFileIcon fontSize="large" />}
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-              {t('registration.public_page.approve_publish_request')} (
-              {registration.associatedArtifacts.filter((artifact) => artifact.type === 'UnpublishedFile').length})
+              {t('registration.public_page.approve_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
+
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
+              values={{ count: filesAwaitingApproval }}
+              components={[<Typography />]}
+            />
             <LoadingButton
               sx={{ bgcolor: 'white' }}
               variant="outlined"
@@ -367,7 +383,7 @@ export const PublishingAccordion = ({
               onClick={() => ticketMutation.mutate({ status: 'Closed' })}
               loading={isLoading === LoadingState.RejectPublishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
-              {t('registration.public_page.reject_publish_request')}
+              {t('registration.public_page.reject_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
           </Box>
         )}
