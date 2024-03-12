@@ -69,9 +69,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
   const isAcceptedFile = file.publisherAuthority === false;
 
-  const rrsStrategy = file.rightsRetentionStrategy.configuredType
-    ? file.rightsRetentionStrategy.configuredType
-    : customer?.rightsRetentionStrategy.type;
+  const rrsStrategy = file.rightsRetentionStrategy.configuredType ?? customer?.rightsRetentionStrategy.type;
 
   const isNullRrs = rrsStrategy === CustomerRrsType.NullRightsRetentionStrategy;
   const isCustomerRrs = rrsStrategy === CustomerRrsType.RightsRetentionStrategy;
