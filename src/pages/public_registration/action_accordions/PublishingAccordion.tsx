@@ -268,7 +268,7 @@ export const PublishingAccordion = ({
         {/* Option to reload data if status is not up to date with ticket */}
         {!tabErrors && hasMismatchingPublishedStatus && (
           <>
-            <Typography gutterBottom>
+            <Typography paragraph sx={{ mt: '1rem' }}>
               {hasUnpublishedFiles && isPublishedRegistration
                 ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
