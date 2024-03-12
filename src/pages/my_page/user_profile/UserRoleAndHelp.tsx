@@ -38,7 +38,7 @@ export const UserRoleAndHelp = () => {
               flexWrap: 'wrap',
               mb: '0.5rem',
             }}>
-            {nvaUser.viewingScope?.includedUnits.map((orgId) => (
+            {nvaUser.viewingScope.includedUnits.map((orgId) => (
               <ViewingScopeChip key={orgId} organizationId={orgId} />
             ))}
           </Box>

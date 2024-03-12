@@ -39,3 +39,12 @@ export const getTimePeriodString = (date1: Date, date2: Date, t: TFunction) => {
     return t('common.x_years', { count: yearsCount });
   }
 };
+
+export const getInitials = (name: string) => {
+  if (!name) return '';
+
+  const splittedNames = name.split(' ');
+  const firstNameInitial = splittedNames[0][0];
+  const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
+  return `${firstNameInitial}${lastNameInitial}`.toUpperCase();
+};

@@ -24,6 +24,7 @@ import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { getById } from '../../api/commonApi';
 import { fetchRegistration } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -177,41 +178,70 @@ export const PublicSeries = ({
 };
 
 interface PublicJournalContentProps {
-  id?: string;
+  id: string;
   errorMessage: string;
 }
 
+const journalIdSubstring = '/journal/';
+const seriesIdSubstring = '/series/';
+
 const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [journal, isLoadingJournal] = useFetchResource<Journal | Series>(id ?? '', errorMessage);
+  const [alternativeJournalId, setAlternativeJournalId] = useState('');
 
-  return id ? (
+  const journalQuery = useQuery({
+    enabled: !!id,
+    queryKey: ['channel', id],
+    queryFn: () => getById<Journal | Series>(id),
+    retry: 1,
+    meta: {
+      errorMessage: false,
+      handleError: () => {
+        // Some IDs are mixed with journal and series, so we must retry with the alternative ID
+        const currentId = id?.toLowerCase();
+        if (currentId?.includes(journalIdSubstring)) {
+          const alternativeId = currentId.replace(journalIdSubstring, seriesIdSubstring);
+          setAlternativeJournalId(alternativeId);
+        } else if (currentId?.includes(seriesIdSubstring)) {
+          const alternativeId = currentId.replace(seriesIdSubstring, journalIdSubstring);
+          setAlternativeJournalId(alternativeId);
+        }
+      },
+    },
+  });
+
+  const journalBackupQuery = useQuery({
+    enabled: journalQuery.isError && !!alternativeJournalId,
+    queryKey: ['channel', alternativeJournalId],
+    queryFn: () => getById<Journal | Series>(alternativeJournalId),
+    retry: 1,
+    meta: { errorMessage },
+  });
+
+  const isLoadingJournal = (!!id && journalQuery.isLoading) || (journalQuery.isError && journalBackupQuery.isLoading);
+  const journal = journalQuery.data ?? journalBackupQuery.data;
+
+  return isLoadingJournal ? (
+    <ListSkeleton height={20} />
+  ) : !journal ? null : (
     <>
-      {isLoadingJournal ? (
-        <ListSkeleton height={20} />
-      ) : (
-        journal && (
-          <>
-            <Typography>{journal.name}</Typography>
-            <Typography>
-              {[
-                journal.printIssn ? `${t('registration.resource_type.print_issn')}: ${journal.printIssn}` : '',
-                journal.onlineIssn ? `${t('registration.resource_type.online_issn')}: ${journal.onlineIssn}` : '',
-              ]
-                .filter((issn) => issn)
-                .join(', ')}
-            </Typography>
-            <NpiLevelTypography scientificValue={journal.scientificValue} />
-            {journal.sameAs && (
-              <Typography component={Link} href={journal.sameAs} target="_blank">
-                {t('registration.public_page.find_in_channel_registry')}
-              </Typography>
-            )}
-          </>
-        )
+      <Typography>{journal.name}</Typography>
+      <Typography>
+        {[
+          journal.printIssn ? `${t('registration.resource_type.print_issn')}: ${journal.printIssn}` : '',
+          journal.onlineIssn ? `${t('registration.resource_type.online_issn')}: ${journal.onlineIssn}` : '',
+        ]
+          .filter((issn) => issn)
+          .join(', ')}
+      </Typography>
+      <NpiLevelTypography scientificValue={journal.scientificValue} />
+      {journal.sameAs && (
+        <Typography component={Link} href={journal.sameAs} target="_blank">
+          {t('registration.public_page.find_in_channel_registry')}
+        </Typography>
       )}
     </>
-  ) : null;
+  );
 };
 
 interface PublicPresentationProps {
@@ -760,7 +790,7 @@ const PublicOtherPerformanceDialogContent = ({ otherPerformance }: { otherPerfor
       <Typography paragraph>{performanceType}</Typography>
 
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{place.label}</Typography>
+      <Typography paragraph>{place?.label}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{extent}</Typography>

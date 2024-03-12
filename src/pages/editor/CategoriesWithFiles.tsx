@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { CategorySelector } from '../../components/CategorySelector';
+import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -44,7 +45,10 @@ const CategoriesWithFilesForCustomer = ({ customer }: CategoriesWithFilesForCust
 
   const customerMutation = useMutation({
     mutationFn: () => updateCustomerInstitution({ ...customer, allowFileUploadForTypes: selectedCategories }),
-    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' })),
+    onSuccess: (response) => {
+      dispatch(setCustomer(response.data));
+      dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
+    },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' })),
   });
 

@@ -3,13 +3,15 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Box, Theme, Typography, useMediaQuery } from '@mui/material';
+import { AppBar, Badge, Box, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getById } from '../../api/commonApi';
+import { fetchCustomerTickets } from '../../api/searchApi';
+import { notificationsParams } from '../../pages/messages/TasksPage';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -53,6 +55,25 @@ export const Header = () => {
       dispatch(setCustomer(customer));
     }
   }, [dispatch, customer]);
+
+  const isTicketCurator = hasCuratorRole(user);
+
+  const notificationsQuery = useQuery({
+    enabled: isTicketCurator,
+    queryKey: ['notifications', notificationsParams],
+    queryFn: () => fetchCustomerTickets(notificationsParams),
+    meta: { errorMessage: false },
+  });
+
+  const userNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
+    (notification) => notification.key === 'UserNotification'
+  )?.count;
+
+  const unassignedNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
+    (notification) => notification.key === 'UnassignedNotification'
+  )?.count;
+
+  const notificationCounts = [userNotificationsCount, unassignedNotificationsCount].filter(Boolean).join('+');
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -154,15 +175,25 @@ export const Header = () => {
                   {t('basic_data.basic_data')}
                 </MenuButton>
               )}
-              {(hasCuratorRole(user) || user?.isNviCurator) && (
-                <MenuButton
-                  color="inherit"
-                  data-testid={dataTestId.header.tasksLink}
-                  isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
-                  to={UrlPathTemplate.Tasks}
-                  startIcon={<AssignmentIcon />}>
-                  {t('common.tasks')}
-                </MenuButton>
+              {(isTicketCurator || user?.isNviCurator) && (
+                <Badge
+                  badgeContent={notificationCounts || null}
+                  color="info"
+                  sx={{
+                    '& .MuiBadge-badge': {
+                      right: 20,
+                      top: 20,
+                    },
+                  }}>
+                  <MenuButton
+                    color="inherit"
+                    data-testid={dataTestId.header.tasksLink}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
+                    to={UrlPathTemplate.Tasks}
+                    startIcon={<AssignmentIcon />}>
+                    {t('common.tasks')}
+                  </MenuButton>
+                </Badge>
               )}
               {user && (
                 <MenuButton

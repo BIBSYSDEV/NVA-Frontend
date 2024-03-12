@@ -26,7 +26,7 @@ export const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
         </TableCell>
         <TableCell>
           <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            {curator.viewingScope?.includedUnits.map((orgId) => (
+            {curator.viewingScope.includedUnits.map((orgId) => (
               <ViewingScopeChip key={orgId} organizationId={orgId} />
             ))}
           </Box>

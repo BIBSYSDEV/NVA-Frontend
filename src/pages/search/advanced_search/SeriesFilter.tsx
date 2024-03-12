@@ -7,6 +7,7 @@ import { searchForSeries } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Series } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
 export const SeriesFilter = () => {
@@ -70,12 +71,13 @@ export const SeriesFilter = () => {
           <Typography>{option.name}</Typography>
         </li>
       )}
+      data-testid={dataTestId.startPage.advancedSearch.seriesField}
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
           variant="outlined"
           isLoading={isFetching}
-          placeholder={t('registration.resource_type.search_for_series')}
+          placeholder={t('registration.resource_type.search_for_title_or_issn')}
           showSearchIcon={!seriesParam}
           multiline
         />
