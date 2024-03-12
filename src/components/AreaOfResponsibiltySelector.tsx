@@ -16,16 +16,13 @@ interface OrganizationOption extends Organization {
 }
 
 function buildOrganizationOptions(topLevelOrganizations: Organization[]): OrganizationOption[] {
-  const options: OrganizationOption[] = [];
-  topLevelOrganizations.forEach((org) => buildOrganizationOption(org, 0, options));
-  return options;
+  return topLevelOrganizations.flatMap((org) => buildOrganizationOption(org, 0));
 }
 
-function buildOrganizationOption(org: Organization, level: number, options: OrganizationOption[]): void {
-  options.push({ ...org, level: level });
-  if (org.hasPart?.length) {
-    org.hasPart.forEach((org) => buildOrganizationOption(org, level + 1, options));
-  }
+function buildOrganizationOption(org: Organization, level: number): OrganizationOption[] {
+  const option = { ...org, level };
+  const subOptions = org.hasPart?.flatMap((subOrg) => buildOrganizationOption(subOrg, level + 1)) || [];
+  return [option, ...subOptions];
 }
 
 export const AreaOfResponsibilitySelector = () => {
