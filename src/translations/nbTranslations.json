@@ -1743,8 +1743,7 @@
       "publishing_period": "Publiseringsperiode",
       "reported": "Rapporterte",
       "scientific_value": {
-        "level_one": "Nivå 1",
-        "level_other": ""
+        "level": "Nivå {{level}}"
       },
       "title_search": "Tittelsøk"
     },
