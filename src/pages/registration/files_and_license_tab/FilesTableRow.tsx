@@ -67,7 +67,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
-  const isAcceptedFile = file.publisherVersion === 'AcceptedVersion';
+  const isAcceptedFile = file.publisherVersion === FileVersion.Accepted;
 
   const rrsStrategy = file.rightsRetentionStrategy.configuredType
     ? file.rightsRetentionStrategy.configuredType
@@ -172,7 +172,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       const fileVersion = event.target.value as FileVersion;
                       setFieldValue(field.name, fileVersion);
 
-                      if (fileVersion === 'PublishedVersion') {
+                      if (fileVersion === FileVersion.Published) {
                         const nullRrsValue: FileRrs = {
                           type: 'NullRightsRetentionStrategy',
                           configuredType: rrsStrategy,
