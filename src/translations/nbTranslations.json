@@ -674,7 +674,7 @@
         "helper_text_modal": {
           "detailed_paragraph_1": "Om du har en ORCID, så oppfordres du til å kople den til din forskerprofil. Om du ikke har en ORCID, så kan du opprette den samtidig som du kopler den til forskerprofilen din.",
           "detailed_paragraph_2": "Enkelte forleggere og finansiører krever at du har en ORCID, for å kunne levere inn henholdsvis manuskript og søknader om finansiering. Om de ikke krever det, så bør du som forsker kreve det. Da blir dine forskningsresultat enklere for alle å sitere korrekt og det blir mindre arbeid i etterkant. Kopling av ORCID til din forskerprofil er et tilbud, ikke et krav. Du kan trekke din kobling når du ønsker under MIN SIDE | Personalia.",
-          "introduction": "ORCID gir deg varig digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Den viktigste gevinsten du får i dag ved å kople din ORCID til din forskerprofil, er raskere, mer korrekt og import av flere av dine publikasjoner.",
+          "introduction": "ORCID gir deg en varig, digital identifikator som du selv eier og kontrollerer, og som skiller deg fra andre forskere. Ved å koble din ORCID til din forskerprofil, vil NVA i fremtiden kunne importere flere av dine publikasjoner, raskere og mer korrekt.",
           "link": "For ytterligere informasjon gå til ORCID",
           "modal_title": "Open Researcher Contributor IDentity (ORCID)"
         },
@@ -1747,9 +1747,7 @@
       "publishing_period": "Publiseringsperiode",
       "reported": "Rapporterte",
       "scientific_value": {
-        "level_one": "Nivå 1",
-        "level_two": "Nivå 2",
-        "level_zero": "Nivå 0"
+        "level": "Nivå {{level}}"
       },
       "title_search": "Tittelsøk"
     },

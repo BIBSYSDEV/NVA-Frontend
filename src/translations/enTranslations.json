@@ -151,6 +151,8 @@
     "add_custom": "Add {{- name}}",
     "cancel": "Cancel",
     "category": "Category",
+    "chosen_one": "{{count}} selected",
+    "chosen_other": "{{count}} selected",
     "clear": "Clear",
     "click_to_show_all": "Click to show all",
     "close": "Close",
@@ -629,6 +631,7 @@
         "Closed": "Rejected",
         "Completed": "Completed",
         "New": "New",
+        "NotApplicable": "Not relevant",
         "Pending": "Pending"
       },
       "types": {
@@ -671,7 +674,7 @@
         "helper_text_modal": {
           "detailed_paragraph_1": "If you have an ORCID, you are encouraged to link it to your researcher profile. If you do not have an ORCID, you can create it at the same time as you link it to your researcher profile.",
           "detailed_paragraph_2": "Some publishers and funders require you to have an ORCID, in order to submit manuscripts and applications for funding respectively. If they do not require it, you as a researcher should demand it. Your research results will become easier for everyone to cite correctly and there is less work afterwards. Linking ORCID to your researcher profile is an offer, not a requirement. You can withdraw your link whenever you want under MY PAGE | Personal information.",
-          "introduction": "",
+          "introduction": "ORCID provides you with a permanent, digital identifier that you own and control, distinguishing you from other researchers. By linking your ORCID to your researcher profile, the NVA will be able to import more of your publications in the future, faster and more accurately.",
           "link": "For more information go to ORCID",
           "modal_title": "Open Researcher Contributor IDentity (ORCID)"
         },
@@ -1290,7 +1293,7 @@
       "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
       "reserve_doi": "Reserve a DOI",
       "reserved_doi": "Reserved DOI",
-      "result_not_published": "",
+      "result_not_published": "The result is not published",
       "scopus_id": "Scopus ID",
       "subject_and_classification": "Subject and classification",
       "tasks_panel": {
@@ -1302,8 +1305,8 @@
         "has_reserved_doi": "Registration has received a reserved DOI. When the registration is published a DOI request will be created and sent to curator.",
         "metadata_published_waiting_for_files": "Metadata is published and visible to other users, but a curator must approve the uploaded files before they will be visible.",
         "metadata_published_waiting_for_files_curator": "All files and selected licenses are published and will immediately become available to others.",
-        "publish_registration": "",
-        "published_registration": "",
+        "publish_registration": "Publish registration",
+        "published_registration": "The registration is published",
         "registration_is_published": "The registration has been published. Metadata and any files are publicly available.",
         "registration_is_published_with_files": "The registration is published. Metadata and file(s) are publicly available.",
         "registration_will_soon_be_published": "The registration will be published soon. Reload page to see updated status.",
@@ -1312,7 +1315,7 @@
         "waiting_for_rejected_doi": "It can take some time before the reserved DOI is removed. Reload to check again.",
         "you_can_publish_everything": "You can publish on your own. The content will then be visible to other users.",
         "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the files you uploaded before they can be displayed to other users.",
-        "you_can_publish_metadata_files_info": ""
+        "you_can_publish_metadata_files_info": "When file(s) and selected license have been approved by the curator, they will be made public."
       },
       "validation_errors": "Validation errors"
     },
@@ -1692,10 +1695,10 @@
         "search_for_related_registrations_helper": "Choose from registrations published in NVA"
       },
       "resource_type": "Category",
-      "search_for_journal": "Search for journals",
       "search_for_original_article": "Search for original article",
       "search_for_publisher": "Search for publisher",
-      "search_for_series": "Search for series",
+      "search_for_publisher_placeholder": "",
+      "search_for_title_or_issn": "",
       "select_resource_type": "Select category",
       "series": "Series",
       "series_info": "If the publication is part of a series",
@@ -1738,6 +1741,10 @@
       "advanced_search_description": "Search among all published results",
       "choose_one_or_more": "Chose one or more",
       "publishing_period": "Publication period",
+      "reported": "Reported",
+      "scientific_value": {
+        "level": ""
+      },
       "title_search": "Search for title"
     },
     "export": "Export",
@@ -1784,6 +1791,7 @@
   "tasks": {
     "all_nvi_results": "All NVI results",
     "correction_list": "Correction list",
+    "dialogues_without_curator": "Dialogs without a curator",
     "my_nvi_results": "My NVI results",
     "nvi": {
       "approve_nvi_candidate": "Approve",

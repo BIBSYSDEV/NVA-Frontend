@@ -51,17 +51,17 @@ export const ScientificValueFilter = () => {
       <FormControlLabel
         data-testid={dataTestId.startPage.advancedSearch.scientificValueLevels.levelZeroCheckbox}
         control={<Checkbox name="levelZero" checked={selectedScientificValues.levelZero} />}
-        label={t('search.advanced_search.scientific_value.level_zero')}
+        label={t('search.advanced_search.scientific_value.level', { level: 0 })}
       />
       <FormControlLabel
         data-testid={dataTestId.startPage.advancedSearch.scientificValueLevels.levelOneCheckbox}
         control={<Checkbox name="levelOne" checked={selectedScientificValues.levelOne} />}
-        label={t('search.advanced_search.scientific_value.level_one')}
+        label={t('search.advanced_search.scientific_value.level', { level: 1 })}
       />
       <FormControlLabel
         data-testid={dataTestId.startPage.advancedSearch.scientificValueLevels.levelTwoCheckbox}
         control={<Checkbox name="levelTwo" checked={selectedScientificValues.levelTwo} />}
-        label={t('search.advanced_search.scientific_value.level_two')}
+        label={t('search.advanced_search.scientific_value.level', { level: 2 })}
       />
     </FormGroup>
   );
