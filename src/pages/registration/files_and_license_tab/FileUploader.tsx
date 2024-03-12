@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { UppyDashboard } from '../../../components/UppyDashboard';
-import { RootState } from '../../../redux/store';
 import { AssociatedFile, emptyFile, Uppy } from '../../../types/associatedArtifact.types';
 
 interface FileUploaderProps {
@@ -11,10 +9,8 @@ interface FileUploaderProps {
 }
 
 export const FileUploader = ({ addFile, uppy, disabled = false }: FileUploaderProps) => {
-  const customer = useSelector((state: RootState) => state.customer);
-
   useEffect(() => {
-    if (uppy && !uppy.hasUploadSuccessEventListener && customer) {
+    if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {
         const newFile: AssociatedFile = {
           ...emptyFile,
@@ -29,7 +25,7 @@ export const FileUploader = ({ addFile, uppy, disabled = false }: FileUploaderPr
       // Avoid duplicating event listener
       uppy.hasUploadSuccessEventListener = true;
     }
-  }, [addFile, uppy, customer]);
+  }, [addFile, uppy]);
 
   return uppy ? <UppyDashboard uppy={uppy} disabled={disabled} /> : null;
 };
