@@ -67,6 +67,11 @@ const StyledStatusRadio = styled(Radio)({
 
 const nviYearFilterValues = getNviYearFilterValues();
 
+export const notificationsParams: FetchTicketsParams = {
+  results: 0,
+  aggregation: 'all',
+};
+
 const TasksPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -174,10 +179,6 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
-  const notificationsParams: FetchTicketsParams = {
-    results: 0,
-    aggregation: 'all',
-  };
   const notificationsQuery = useQuery({
     enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
     queryKey: ['notifications', notificationsParams],

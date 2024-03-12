@@ -68,10 +68,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
   const isAcceptedFile = file.publisherVersion === FileVersion.Accepted;
-
-  const rrsStrategy = file.rightsRetentionStrategy.configuredType
-    ? file.rightsRetentionStrategy.configuredType
-    : customer?.rightsRetentionStrategy.type;
+  const rrsStrategy = file.rightsRetentionStrategy.configuredType ?? customer?.rightsRetentionStrategy.type;
 
   const isNullRrs = rrsStrategy === CustomerRrsType.NullRightsRetentionStrategy;
   const isCustomerRrs = rrsStrategy === CustomerRrsType.RightsRetentionStrategy;

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { UppyDashboard } from '../../../components/UppyDashboard';
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, emptyFile, Uppy } from '../../../types/associatedArtifact.types';
-import { CustomerRrsType } from '../../../types/customerInstitution.types';
 
 interface FileUploaderProps {
   addFile: (file: AssociatedFile) => void;
@@ -23,13 +22,7 @@ export const FileUploader = ({ addFile, uppy, disabled = false }: FileUploaderPr
           name: file?.name ?? '',
           mimeType: file?.type ?? '',
           size: file?.size ?? 0,
-          rightsRetentionStrategy: {
-            type:
-              customer.rightsRetentionStrategy.type === CustomerRrsType.NullRightsRetentionStrategy
-                ? 'NullRightsRetentionStrategy'
-                : 'CustomerRightsRetentionStrategy',
-            configuredType: customer.rightsRetentionStrategy.type,
-          },
+          rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },
         };
         addFile(newFile);
       });
