@@ -162,7 +162,7 @@ const TasksPage = () => {
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     viewingScope: searchParams.get(TicketSearchParam.ViewingScope),
-    excludeSubUnits: !!searchParams.get(TicketSearchParam.ViewingScope),
+    excludeSubUnits: true,
   };
 
   const ticketsQuery = useQuery({
