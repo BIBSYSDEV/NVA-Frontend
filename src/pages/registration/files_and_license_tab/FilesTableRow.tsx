@@ -33,7 +33,7 @@ import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, AssociatedFileType, FileRrs } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
 import { LicenseUri, licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
@@ -61,14 +61,13 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
   const administrativeAgreementFieldName = `${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`;
-  const publisherAuthorityFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`;
+  const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
-  const isAcceptedFile = file.publisherAuthority === false;
-
+  const isAcceptedFile = file.publisherVersion === FileVersion.Accepted;
   const rrsStrategy = file.rightsRetentionStrategy.configuredType ?? customer?.rightsRetentionStrategy.type;
 
   const isNullRrs = rrsStrategy === CustomerRrsType.NullRightsRetentionStrategy;
@@ -144,7 +143,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     setFieldValue(fileTypeFieldName, newAssociatedFileType);
 
                     field.onChange(event);
-                    setFieldValue(publisherAuthorityFieldName, null);
+                    setFieldValue(publisherVersionFieldName, null);
                     setFieldValue(licenseFieldName, null);
                     setFieldValue(embargoFieldName, null);
                   }}
@@ -156,8 +155,8 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
         {showFileVersion && (
           <TableCell>
-            <Field name={publisherAuthorityFieldName}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
+            <Field name={publisherVersionFieldName}>
+              {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                 <FormControl
                   data-testid={dataTestId.registrationWizard.files.version}
                   required
@@ -167,10 +166,10 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     row
                     sx={{ flexWrap: 'nowrap' }}
                     onChange={(event) => {
-                      const isPublishedFile = JSON.parse(event.target.value);
-                      setFieldValue(field.name, isPublishedFile);
+                      const fileVersion = event.target.value as FileVersion;
+                      setFieldValue(field.name, fileVersion);
 
-                      if (isPublishedFile) {
+                      if (fileVersion === FileVersion.Published) {
                         const nullRrsValue: FileRrs = {
                           type: 'NullRightsRetentionStrategy',
                           configuredType: rrsStrategy,
@@ -187,12 +186,12 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       }
                     }}>
                     <FormControlLabel
-                      value={false}
+                      value={FileVersion.Accepted}
                       control={<Radio />}
                       label={t('registration.files_and_license.accepted')}
                     />
                     <FormControlLabel
-                      value={true}
+                      value={FileVersion.Published}
                       control={<Radio />}
                       label={t('registration.files_and_license.published')}
                     />

@@ -200,7 +200,7 @@ export enum FileFieldNames {
 export enum SpecificFileFieldNames {
   Type = 'type',
   AdministrativeAgreement = 'administrativeAgreement',
-  PublisherAuthority = 'publisherAuthority',
+  PublisherVersion = 'publisherVersion',
   EmbargoDate = 'embargoDate',
   License = 'license',
   LegalNote = 'legalNote',

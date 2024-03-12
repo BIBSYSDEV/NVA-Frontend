@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
@@ -103,9 +103,11 @@ export const FileRow = ({
       </Typography>
       {showFileVersionField && (
         <Typography data-testid={dataTestId.registrationLandingPage.fileVersion} sx={{ gridArea: 'version' }}>
-          {file.publisherAuthority
+          {file.publisherVersion === FileVersion.Published
             ? t('registration.files_and_license.published_version')
-            : t('registration.files_and_license.accepted_version')}
+            : file.publisherVersion === FileVersion.Accepted
+              ? t('registration.files_and_license.accepted_version')
+              : null}
         </Typography>
       )}
 
