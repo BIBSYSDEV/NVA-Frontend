@@ -169,7 +169,10 @@ export const PublishingAccordion = ({
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
-  const hasUnpublishedFiles = registration.associatedArtifacts.some((artifact) => artifact.type === 'UnpublishedFile');
+  const filesAwaitingApproval = registration.associatedArtifacts.filter(
+    (artifact) => artifact.type === 'UnpublishedFile'
+  ).length;
+  const hasUnpublishedFiles = filesAwaitingApproval > 0;
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
@@ -192,10 +195,6 @@ export const PublishingAccordion = ({
 
   const unpublishedOrDeleted =
     registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
-
-  const filesAwaitingApproval = registration.associatedArtifacts.filter(
-    (artifact) => artifact.type === 'UnpublishedFile'
-  ).length;
 
   return (
     <Accordion
