@@ -14,7 +14,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
-import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
+import { TicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
@@ -64,7 +64,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
 
       <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
         <Grid item xs={16} md={5} lg={4}>
-          <TicketStatusFilter isOnTasksPage={isOnTasksPage} />
+          <TicketStatusFilter defaultStatusFilter={isOnTasksPage ? ['Pending'] : ticketStatusValues} />
         </Grid>
         <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />

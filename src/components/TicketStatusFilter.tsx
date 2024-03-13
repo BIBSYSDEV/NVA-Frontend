@@ -7,14 +7,13 @@ import { TicketStatus, ticketStatusValues } from '../types/publication_types/tic
 import { dataTestId } from '../utils/dataTestIds';
 
 interface TicketStatusFilterProps {
-  isOnTasksPage: boolean;
+  defaultStatusFilter?: TicketStatus[];
 }
 
-export const TicketStatusFilter = ({ isOnTasksPage }: TicketStatusFilterProps) => {
+export const TicketStatusFilter = ({ defaultStatusFilter = ticketStatusValues }: TicketStatusFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const defaultStatusFilter = (isOnTasksPage ? ['Pending'] : ticketStatusValues) as TicketStatus[];
   const [selectedStatuses, setSelectedStatuses] = useState(defaultStatusFilter);
 
   useEffect(() => {

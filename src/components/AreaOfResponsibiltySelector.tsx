@@ -54,7 +54,7 @@ export const AreaOfResponsibilitySelector = () => {
     },
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
-  const organizationOptions = useMemo(() => organizationQuery.data ?? [], [organizationQuery]);
+  const organizationOptions = useMemo(() => organizationQuery.data ?? [], [organizationQuery.data]);
 
   useEffect(() => {
     const sp = new URLSearchParams(history.location.search);
