@@ -160,7 +160,16 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                     getOptionLabel={(option) => getLanguageString(option.labels)}
                     renderOption={(props, option) => (
                       <li {...props} key={option.id}>
-                        {getLanguageString(option.labels)}
+                        <Box>
+                          <Typography fontWeight="bold">{getLanguageString(option.labels)}</Typography>
+                          <Typography>
+                            {' '}
+                            {getLanguageString(
+                              option.labels,
+                              currentLanguage === 'nob' || currentLanguage === 'nno' ? 'en' : 'no'
+                            )}
+                          </Typography>
+                        </Box>
                       </li>
                     )}
                     onChange={(_, value) => setFieldValue(field.name, value)}
