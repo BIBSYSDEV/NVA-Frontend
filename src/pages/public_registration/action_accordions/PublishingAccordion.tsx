@@ -342,12 +342,22 @@ export const PublishingAccordion = ({
 
         {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
           <Box sx={{ mt: '0.5rem' }}>
-            <Typography paragraph>{t('registration.public_page.tasks_panel.published_registration')}</Typography>
-            <Typography paragraph>
-              {registrationHasFile
-                ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
-                : t('registration.public_page.tasks_panel.registration_is_published')}
-            </Typography>
+            {registratorPublishesMetadataAndFiles ? (
+              <>
+                <Typography paragraph>{t('registration.public_page.tasks_panel.published_registration')}</Typography>
+                <Typography paragraph>
+                  {registrationHasFile
+                    ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
+                    : t('registration.public_page.tasks_panel.registration_is_published')}
+                </Typography>
+              </>
+            ) : (
+              <Trans
+                t={t}
+                i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
+                components={[<Typography paragraph />]}
+              />
+            )}
           </Box>
         )}
 

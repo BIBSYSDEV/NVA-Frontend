@@ -1315,6 +1315,7 @@
         "published_registration": "Registreringen er publisert.",
         "registration_is_published": "Forskningsresultatet er publisert og offentlig tilgjengelig i NVA.",
         "registration_is_published_with_files": "Forskningsresultatet er publisert med fil(er) og offentlig tilgjengelig i NVA.",
+        "registration_is_published_workflow2": "<0>Fil og lisens er godkjent og offentlig i NVA.</0><0>Du kan fritt endre på beskrivelse av resultatet, men endrer du fil eller lisens må registreringen godkjennes på nytt.</0>",
         "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Vent litt før du oppdaterer siden på nytt for å se status.",
         "reload": "Last på nytt",
         "review_preview_before_publishing": "Se over utkast før du går videre.",
