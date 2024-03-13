@@ -92,10 +92,27 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                       }}>
                       {suggestedInstitutions.map((suggestedInstitution) => (
                         <FormControlLabel
+                          sx={{
+                            '& .MuiFormControlLabel-label': {
+                              width: '30rem',
+                            },
+                          }}
                           key={suggestedInstitution}
                           value={suggestedInstitution}
                           control={<Radio size="small" />}
-                          label={<AffiliationHierarchy unitUri={suggestedInstitution} />}
+                          label={
+                            <Box
+                              sx={{
+                                border: '1px solid',
+                                borderRadius: '4px',
+                                p: '0.5rem',
+                                mb: '0.5rem',
+                                boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
+                                bgcolor: 'white',
+                              }}>
+                              <AffiliationHierarchy unitUri={suggestedInstitution} />
+                            </Box>
+                          }
                         />
                       ))}
                     </RadioGroup>
