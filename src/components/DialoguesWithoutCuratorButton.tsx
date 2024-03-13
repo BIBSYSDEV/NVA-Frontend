@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { TicketSearchParam, fetchCustomerTickets } from '../api/searchApi';
+import { fetchCustomerTickets, TicketSearchParam } from '../api/searchApi';
 import { notificationsParams } from '../pages/messages/TasksPage';
 import { RootState } from '../redux/store';
 import { TicketStatus } from '../types/publication_types/ticket.types';

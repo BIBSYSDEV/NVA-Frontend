@@ -1,27 +1,34 @@
 import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus, ticketStatusValues } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
 
-export const TicketStatusFilter = () => {
+interface TicketStatusFilterProps {
+  isOnTasksPage: boolean;
+}
+
+export const TicketStatusFilter = ({ isOnTasksPage }: TicketStatusFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
-  const selectedStatuses = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
-    ticketStatusValues) as TicketStatus[];
+
+  const defaultStatusFilter = (isOnTasksPage ? ['Pending'] : ticketStatusValues) as TicketStatus[];
+  const [selectedStatuses, setSelectedStatuses] = useState(defaultStatusFilter);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(history.location.search);
+    if (selectedStatuses.length > 0) {
+      searchParams.set(TicketSearchParam.Status, selectedStatuses.join(','));
+      history.push({ search: searchParams.toString() });
+    } else {
+      setSelectedStatuses(ticketStatusValues);
+    }
+  }, [history, selectedStatuses]);
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
-    const newSelectedStatuses = event.target.value as TicketStatus[];
-
-    if (newSelectedStatuses.length > 0) {
-      searchParams.set(TicketSearchParam.Status, newSelectedStatuses.join(','));
-    } else {
-      searchParams.delete(TicketSearchParam.Status);
-    }
-
-    history.push({ search: searchParams.toString() });
+    setSelectedStatuses(event.target.value as TicketStatus[]);
   };
 
   return (

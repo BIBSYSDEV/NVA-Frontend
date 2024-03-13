@@ -1,5 +1,6 @@
 import { Autocomplete, Checkbox, Chip, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -49,16 +50,19 @@ export const AreaOfResponsibilitySelector = () => {
         return await fetchOrganization(orgId);
       });
       const organizations = await Promise.all(areaPromises);
-      const organizationOptions = buildOrganizationOptions(organizations);
-      if (!searchParams.get(TicketSearchParam.ViewingScope)) {
-        searchParams.set(TicketSearchParam.ViewingScope, organizationOptions.map((org) => org.id).join(','));
-        history.push({ search: searchParams.toString() });
-      }
-      return organizationOptions;
+      return buildOrganizationOptions(organizations);
     },
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
-  const organizationOptions = organizationQuery.data ?? [];
+  const organizationOptions = useMemo(() => organizationQuery.data ?? [], [organizationQuery]);
+
+  useEffect(() => {
+    const sp = new URLSearchParams(history.location.search);
+    if (!sp.get(TicketSearchParam.ViewingScope)) {
+      sp.set(TicketSearchParam.ViewingScope, organizationOptions.map((org) => org.id).join(','));
+      history.push({ search: sp.toString() });
+    }
+  }, [organizationOptions, history]);
 
   const selectedAreaIdsFromUrl = searchParams.get(TicketSearchParam.ViewingScope)?.split(',');
   const selectedOrganizations = organizationOptions.filter((org) => selectedAreaIdsFromUrl?.includes(org.id));
