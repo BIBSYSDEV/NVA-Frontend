@@ -241,7 +241,7 @@ export const PublishingAccordion = ({
         {(registration.status === RegistrationStatus.Published ||
           registration.status === RegistrationStatus.Deleted ||
           registration.status === RegistrationStatus.Unpublished) && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mb: '0.5rem' }}>
             <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
               <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
               {registration.publishedDate && (
@@ -284,18 +284,6 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {/* Show current status info */}
-        {!!lastPublishingRequest &&
-          !hasMismatchingPublishedStatus &&
-          (isDraftRegistration || hasUnpublishedFiles) &&
-          (registratorPublishesMetadataOnly ? (
-            hasClosedTicket ? (
-              <Typography paragraph>
-                {t('registration.public_page.tasks_panel.has_rejected_files_publishing_request')}
-              </Typography>
-            ) : null
-          ) : null)}
-
         {/* Tell user what they can publish */}
         {!lastPublishingRequest && isDraftRegistration && registrationIsValid && (
           <>
@@ -330,6 +318,14 @@ export const PublishingAccordion = ({
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
             {t('registration.public_page.tasks_panel.publish_registration')}
           </LoadingButton>
+        )}
+
+        {isPublishedRegistration && hasClosedTicket && (
+          <Trans
+            t={t}
+            i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
+            components={[<Typography paragraph />]}
+          />
         )}
 
         {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
