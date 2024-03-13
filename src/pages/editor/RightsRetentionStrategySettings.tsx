@@ -19,7 +19,7 @@ import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { CustomerInstitution, RightsRetentionStrategyTypes } from '../../types/customerInstitution.types';
+import { CustomerInstitution, CustomerRrsType } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
 export const RightsRetentionStrategySettings = () => {
@@ -30,10 +30,10 @@ export const RightsRetentionStrategySettings = () => {
   const updateRightsRetentionStrategy = useMutation({
     mutationFn: (customer: CustomerInstitution) => updateCustomerInstitution(customer),
     onSuccess: (response) => {
+      dispatch(setCustomer(response.data));
       dispatch(
         setNotification({ message: t('feedback.success.update_rights_retention_strategy'), variant: 'success' })
       );
-      dispatch(setCustomer(response.data));
     },
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.update_rights_retention_strategy'), variant: 'error' })),
@@ -50,16 +50,15 @@ export const RightsRetentionStrategySettings = () => {
           initialValues={customer}
           onSubmit={async (values) => await updateRightsRetentionStrategy.mutateAsync(values)}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => {
-            const isRrs = values.rightsRetentionStrategy?.type === RightsRetentionStrategyTypes.RightsRetentionStrategy;
+            const isRrs = values.rightsRetentionStrategy?.type === CustomerRrsType.RightsRetentionStrategy;
             const isOverridableRrs =
-              values.rightsRetentionStrategy?.type === RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy;
-            const isNullRrs =
-              values.rightsRetentionStrategy?.type === RightsRetentionStrategyTypes.NullRightsRetentionStrategy;
+              values.rightsRetentionStrategy?.type === CustomerRrsType.OverridableRightsRetentionStrategy;
+            const isNullRrs = values.rightsRetentionStrategy?.type === CustomerRrsType.NullRightsRetentionStrategy;
 
             return (
               <Box component={Form} sx={{ maxWidth: '35rem' }}>
                 <Field name={'rightsRetentionStrategy.type'}>
-                  {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
+                  {({ field }: FieldProps<CustomerRrsType>) => (
                     <FormControlLabel
                       label={t('editor.retention_strategy.rights_retention_strategy')}
                       control={
@@ -73,8 +72,8 @@ export const RightsRetentionStrategySettings = () => {
                             setFieldValue(
                               field.name,
                               isRrs || isOverridableRrs
-                                ? RightsRetentionStrategyTypes.NullRightsRetentionStrategy
-                                : RightsRetentionStrategyTypes.RightsRetentionStrategy
+                                ? CustomerRrsType.NullRightsRetentionStrategy
+                                : CustomerRrsType.RightsRetentionStrategy
                             );
                             setFieldValue('rightsRetentionStrategy.id', '');
                           }}
@@ -117,7 +116,7 @@ export const RightsRetentionStrategySettings = () => {
                 </Typography>
 
                 <Field name={'rightsRetentionStrategy.type'}>
-                  {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
+                  {({ field }: FieldProps<CustomerRrsType>) => (
                     <FormControlLabel
                       label={t('editor.retention_strategy.rrs_override')}
                       control={
@@ -131,8 +130,8 @@ export const RightsRetentionStrategySettings = () => {
                             setFieldValue(
                               field.name,
                               isRrs
-                                ? RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                                : RightsRetentionStrategyTypes.RightsRetentionStrategy
+                                ? CustomerRrsType.OverridableRightsRetentionStrategy
+                                : CustomerRrsType.RightsRetentionStrategy
                             );
                           }}
                         />

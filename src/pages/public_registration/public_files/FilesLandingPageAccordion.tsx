@@ -1,5 +1,7 @@
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { LinkButton } from '../../../components/PageWithSideMenu';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -8,6 +10,7 @@ import {
   isTypeWithFileVersionField,
   userCanEditRegistration,
 } from '../../../utils/registration-helpers';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 
@@ -33,10 +36,12 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     registration.status === RegistrationStatus.Published ||
     registration.status === RegistrationStatus.PublishedMetadata;
 
-  return publishableFilesLength > 0 || (userIsRegistrationAdmin && associatedFiles.length > 0) ? (
+  return publishableFilesLength > 0 ||
+    (userIsRegistrationAdmin && associatedFiles.length > 0) ||
+    (userIsRegistrationAdmin && registration.associatedArtifacts.length === 0) ? (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
-      defaultExpanded={filesToShow.length > 0}
+      defaultExpanded
       heading={
         <Box
           sx={{
@@ -56,6 +61,32 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           )}
         </Box>
       }>
+      {registration.associatedArtifacts.length === 0 && (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '1rem',
+          }}>
+          <Typography
+            sx={{
+              py: '0.3rem',
+              px: { xs: '2rem', sm: '3rem' },
+              bgcolor: 'primary.light',
+              color: 'primary.contrastText',
+            }}
+            data-testid={dataTestId.registrationLandingPage.noLinkOrFilesWarning}>
+            {t('registration.files_and_license.no_files_or_links_present_in_this_registration')}
+          </Typography>
+          <LinkButton
+            data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
+            startIcon={<FileUploadIcon />}
+            to={`${getRegistrationWizardPath(registration.identifier)}?tab=3`}>
+            {t('registration.files_and_license.add_files_or_links')}
+          </LinkButton>
+        </Box>
+      )}
       {filesToShow.map((file, index) => (
         <FileRow
           key={file.identifier}

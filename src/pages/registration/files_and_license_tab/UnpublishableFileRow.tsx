@@ -70,7 +70,7 @@ export const UnpublishableFileRow = ({ file, removeFile, baseFieldName, disabled
                   setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.Type}`, newAssociatedFileType);
 
                   field.onChange(event);
-                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`, null);
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`, null);
                   setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.License}`, null);
                   setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`, null);
                 }}

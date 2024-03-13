@@ -614,9 +614,12 @@ export const getOutputName = (item: OutputItem): string => {
       return (item as Concert).place.label;
     case 'OtherPerformance': {
       const otherMusicPerformance = item as OtherMusicPerformance;
-      return otherMusicPerformance.place.label
-        ? otherMusicPerformance.place.label
-        : otherMusicPerformance.performanceType;
+
+      return (
+        otherMusicPerformance.place?.label ||
+        otherMusicPerformance.performanceType ||
+        i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
+      );
     }
     case 'LiteraryArtsMonograph':
       return (item as LiteraryArtsMonograph).publisher.name;
@@ -666,16 +669,6 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
-
-export const getContributorInitials = (name: string) => {
-  if (!name) return '';
-
-  const splittedNames = name.split(' ');
-  const firstNameInitial = splittedNames[0][0];
-  const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
-  const initials = `${firstNameInitial}${lastNameInitial}`.toUpperCase();
-  return initials;
-};
 
 export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||

@@ -10,10 +10,11 @@ import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { fetchJournal, fetchPublisher, fetchSeries } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
-import { PublicationInstanceType } from '../../../types/registration.types';
+import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   createSearchConfigFromSearchParams,
+  getFileFacetText,
   isValidIsbn,
   PropertySearch,
   removeSearchParamValue,
@@ -31,6 +32,7 @@ const facetParams: string[] = [
   ResultParam.Contributor,
   ResultParam.Journal,
   ResultParam.Publisher,
+  ResultParam.Files,
   ResultParam.FundingSource,
   ResultParam.ScientificIndex,
   ResultParam.Series,
@@ -270,7 +272,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         />
                       );
                     }
-
                     break;
                   }
                   case ResultParam.Series: {
@@ -286,7 +287,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         <SelectedSeriesFacetButton seriesIdentifier={typeof value === 'string' ? value : value[0]} />
                       );
                     }
-
                     break;
                   }
                   case ResultParam.Journal: {
@@ -302,12 +302,16 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         <SelectedJournalFacetButton journalIdentifier={typeof value === 'string' ? value : value[0]} />
                       );
                     }
-
                     break;
                   }
                   case ResultParam.ScientificIndex: {
                     fieldName = t('basic_data.nvi.nvi_publication_year');
                     fieldValueText = value;
+                    break;
+                  }
+                  case ResultParam.Files: {
+                    fieldName = t('registration.files_and_license.files');
+                    fieldValueText = getFileFacetText(value as AggregationFileKeyType, t);
                     break;
                   }
                   default:

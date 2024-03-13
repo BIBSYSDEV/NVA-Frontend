@@ -1,6 +1,6 @@
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import CancelIcon from '@mui/icons-material/Cancel';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
 import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
@@ -191,7 +191,7 @@ export const ContributorRow = ({
             size="small"
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
             onClick={() => setOpenRemoveContributor(true)}
-            startIcon={<CancelIcon color="primary" />}>
+            startIcon={<RemoveIcon color="primary" />}>
             {t('registration.contributors.remove_contributor')}
           </Button>
         </Box>

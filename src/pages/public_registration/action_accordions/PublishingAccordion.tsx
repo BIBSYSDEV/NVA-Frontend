@@ -90,14 +90,29 @@ export const PublishingAccordion = ({
     onSettled: () => setIsLoading(LoadingState.None),
     onSuccess: (_, variables) => {
       if (variables.status === 'Completed') {
-        dispatch(setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' }));
+        dispatch(
+          setNotification({
+            message: t('feedback.success.publishing_request_approved'),
+            variant: 'success',
+          })
+        );
       } else if (variables.status === 'Closed') {
-        dispatch(setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' }));
+        dispatch(
+          setNotification({
+            message: t('feedback.success.publishing_request_rejected'),
+            variant: 'success',
+          })
+        );
       }
       refetchData();
     },
     onError: () =>
-      dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' })),
+      dispatch(
+        setNotification({
+          message: t('feedback.error.update_publishing_request'),
+          variant: 'error',
+        })
+      ),
   });
 
   const [tabErrors, setTabErrors] = useState<TabErrors>();
@@ -123,7 +138,12 @@ export const PublishingAccordion = ({
     setIsLoading(LoadingState.CreatePublishingRequest);
     const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
+      dispatch(
+        setNotification({
+          message: t('feedback.error.create_publishing_request'),
+          variant: 'error',
+        })
+      );
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
       userCanPublish
         ? dispatch(
@@ -132,7 +152,12 @@ export const PublishingAccordion = ({
               variant: 'success',
             })
           )
-        : dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
+        : dispatch(
+            setNotification({
+              message: t('feedback.success.create_publishing_request'),
+              variant: 'success',
+            })
+          );
       refetchData();
     }
     setIsLoading(LoadingState.None);
@@ -175,8 +200,13 @@ export const PublishingAccordion = ({
       elevation={3}
       defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('registration.public_page.publication')}
-        {lastPublishingRequest && ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
+        {registration.status === RegistrationStatus.Unpublished || registration.status === RegistrationStatus.Deleted
+          ? t(`registration.status.${registration.status}`)
+          : t('registration.public_page.publication')}
+        {lastPublishingRequest &&
+          registration.status !== RegistrationStatus.Unpublished &&
+          registration.status !== RegistrationStatus.Deleted &&
+          ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         {!registrationIsValid && !unpublishedOrDeleted && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
             <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
@@ -265,12 +295,22 @@ export const PublishingAccordion = ({
         {/* Tell user what they can publish */}
         {!lastPublishingRequest && isDraftRegistration && registrationIsValid && (
           <>
-            {registratorPublishesMetadataAndFiles ? (
-              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
-            ) : registratorPublishesMetadataOnly ? (
-              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
+            <Typography paragraph>
+              {t('registration.public_page.tasks_panel.review_preview_before_publishing')}
+            </Typography>
+
+            {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
+              <Typography paragraph>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
+            ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
+              <>
+                <Typography paragraph>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
+                {hasUnpublishedFiles && (
+                  <Typography paragraph>
+                    {t('registration.public_page.tasks_panel.you_can_publish_metadata_files_info')}
+                  </Typography>
+                )}
+              </>
             ) : null}
-            <Typography>{t('registration.public_page.tasks_panel.review_preview_before_publishing')}</Typography>
           </>
         )}
 
@@ -278,13 +318,13 @@ export const PublishingAccordion = ({
           <LoadingButton
             disabled={isLoading !== LoadingState.None || !registrationIsValid}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
-            sx={{ mt: '1rem', bgcolor: 'white' }}
-            variant="outlined"
+            sx={{ mt: '1rem' }}
+            variant="contained"
+            color="info"
+            fullWidth
             onClick={onClickPublish}
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
-            {customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly'
-              ? t('registration.public_page.tasks_panel.publish_metadata')
-              : t('registration.public_page.tasks_panel.publish_metadata_and_files')}
+            {t('registration.public_page.tasks_panel.publish_registration')}
           </LoadingButton>
         )}
 
@@ -293,11 +333,14 @@ export const PublishingAccordion = ({
         )}
 
         {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
-          <Typography sx={{ mt: '0.5rem' }}>
-            {registrationHasFile
-              ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
-              : t('registration.public_page.tasks_panel.registration_is_published')}
-          </Typography>
+          <Box sx={{ mt: '0.5rem' }}>
+            <Typography paragraph>{t('registration.public_page.tasks_panel.published_registration')}</Typography>
+            <Typography paragraph>
+              {registrationHasFile
+                ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
+                : t('registration.public_page.tasks_panel.registration_is_published')}
+            </Typography>
+          </Box>
         )}
 
         {canHandlePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
