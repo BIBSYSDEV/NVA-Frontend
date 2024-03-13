@@ -10,11 +10,13 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Typography,
 } from '@mui/material';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../api/apiPaths';
+import i18n from '../../translations/i18n';
 import { SearchResponse } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -56,7 +58,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('feedback.error.get_institutions'),
   });
-
+  const currentLanguage = i18n.language;
   const options = isLoadingInstitutions || !institutions ? [] : institutions.hits;
 
   return (
@@ -112,7 +114,16 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                   getOptionLabel={(option) => getLanguageString(option.labels)}
                   renderOption={(props, option) => (
                     <li {...props} key={option.id}>
-                      {getLanguageString(option.labels)}
+                      <Box>
+                        <Typography fontWeight="bold">{getLanguageString(option.labels)}</Typography>
+                        <Typography>
+                          {!!option.country && <>{option.country} | </>}
+                          {getLanguageString(
+                            option.labels,
+                            currentLanguage === 'nob' || currentLanguage === 'nno' ? 'en' : 'no'
+                          )}
+                        </Typography>
+                      </Box>
                     </li>
                   )}
                   filterOptions={(options) => options}
