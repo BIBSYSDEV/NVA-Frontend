@@ -1,10 +1,10 @@
 import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus, ticketStatusValues } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
+import { useEffect } from 'react';
 
 interface TicketStatusFilterProps {
   defaultStatusFilter?: TicketStatus[];
@@ -13,22 +13,28 @@ interface TicketStatusFilterProps {
 export const TicketStatusFilter = ({ defaultStatusFilter = ticketStatusValues }: TicketStatusFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const searchParams = new URLSearchParams(history.location.search);
 
-  const [selectedStatuses, setSelectedStatuses] = useState(defaultStatusFilter);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(history.location.search);
-    if (selectedStatuses.length > 0) {
-      searchParams.set(TicketSearchParam.Status, selectedStatuses.join(','));
-      history.push({ search: searchParams.toString() });
-    } else {
-      setSelectedStatuses(ticketStatusValues);
-    }
-  }, [history, selectedStatuses]);
+  const statusesFromParams = searchParams.get(TicketSearchParam.Status)?.split(',') ?? [];
+  const selectedStatuses = (statusesFromParams.length > 0 ? statusesFromParams : defaultStatusFilter) as TicketStatus[];
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
-    setSelectedStatuses(event.target.value as TicketStatus[]);
+    const stats = event.target.value as TicketStatus[];
+    if (stats.length > 0) {
+      searchParams.set(TicketSearchParam.Status, stats.join(','));
+    } else {
+      searchParams.set(TicketSearchParam.Status, ticketStatusValues.join(','));
+    }
+    history.push({ search: searchParams.toString() });
   };
+
+  useEffect(() => {
+    const sp = new URLSearchParams(history.location.search);
+    if (!sp.get(TicketSearchParam.Status)) {
+      sp.set(TicketSearchParam.Status, defaultStatusFilter.join(','));
+      history.push({ search: sp.toString() });
+    }
+  }, [defaultStatusFilter, history]);
 
   return (
     <FormControl variant="outlined" size="small" sx={{ width: '100%' }}>
