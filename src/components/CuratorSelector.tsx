@@ -1,4 +1,5 @@
 import { Autocomplete, Avatar, Box, Typography } from '@mui/material';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -30,11 +31,23 @@ export const CuratorSelector = ({ roleFilter }: CuratorSelectorProps) => {
     queryFn: () => fetchUsers(customerId, roleFilter),
     meta: { errorMessage: t('feedback.error.get_curators_for_institution') },
   });
+  const curators = useMemo(() => curatorsQuery.data ?? [], [curatorsQuery.data]);
 
   // Ensure current user is first in list of curators
-  const curatorOptions = (curatorsQuery.data ?? []).sort((a, b) =>
+  const curatorOptions = (curators ?? []).sort((a, b) =>
     a.username === user?.nvaUsername ? -1 : b.username === user?.nvaUsername ? 1 : 0
   );
+
+  useEffect(() => {
+    const sp = new URLSearchParams(history.location.search);
+    if (!sp.get(TicketSearchParam.Assignee)) {
+      sp.set(
+        TicketSearchParam.Assignee,
+        curators.find((curator) => curator.cristinId === user?.cristinId)?.username ?? ''
+      );
+      history.push({ search: sp.toString() });
+    }
+  }, [curators, history, user]);
 
   const selectedCurator =
     curatorOptions.find((curator) => curator.username === searchParams.get(TicketSearchParam.Assignee)) ?? null;
