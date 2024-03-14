@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchOrganization } from '../api/cristinApi';
+import { fetchOrganizations } from '../api/cristinApi';
 import { fetchUser } from '../api/roleApi';
 import { TicketSearchParam } from '../api/searchApi';
 import { RootState } from '../redux/store';
@@ -44,21 +44,11 @@ export const AreaOfResponsibilitySelector = () => {
   const organizationQuery = useQuery({
     enabled: areasOfResponsibilityIds.length > 0,
     queryKey: ['organizations', areasOfResponsibilityIds],
-    queryFn: async () => {
-      const areaPromises = areasOfResponsibilityIds.map(async (orgId) => {
-        return await fetchOrganization(orgId);
-      });
-      const organizations = await Promise.all(areaPromises);
-      const organizationOptions = buildOrganizationOptions(organizations);
-      if (!searchParams.get(TicketSearchParam.ViewingScope)) {
-        searchParams.set(TicketSearchParam.ViewingScope, organizationOptions.map((org) => org.id).join(','));
-        history.push({ search: searchParams.toString() });
-      }
-      return organizationOptions;
-    },
+    queryFn: async () => fetchOrganizations(areasOfResponsibilityIds),
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
-  const organizationOptions = organizationQuery.data ?? [];
+  const organizations = organizationQuery.data ?? [];
+  const organizationOptions = buildOrganizationOptions(organizations);
 
   const selectedAreaIdsFromUrl = searchParams.get(TicketSearchParam.ViewingScope)?.split(',');
   const selectedOrganizations = organizationOptions.filter((org) => selectedAreaIdsFromUrl?.includes(org.id));

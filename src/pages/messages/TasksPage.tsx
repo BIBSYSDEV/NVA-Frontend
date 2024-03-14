@@ -50,6 +50,7 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
+import { TicketListDefaultValueWrapper } from '../../components/TicketListDefaultValueWrapper';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
@@ -541,14 +542,16 @@ const TasksPage = () => {
           </PrivateRoute>
 
           <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isTicketCurator}>
-            <TicketList
-              ticketsQuery={ticketsQuery}
-              rowsPerPage={rowsPerPage}
-              setRowsPerPage={setRowsPerPage}
-              page={page}
-              setPage={setPage}
-              title={t('common.tasks')}
-            />
+            <TicketListDefaultValueWrapper>
+              <TicketList
+                ticketsQuery={ticketsQuery}
+                rowsPerPage={rowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+                page={page}
+                setPage={setPage}
+                title={t('common.tasks')}
+              />
+            </TicketListDefaultValueWrapper>
           </PrivateRoute>
           <PrivateRoute
             exact
