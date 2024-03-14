@@ -24,7 +24,7 @@ import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { AffiliationHierarchy } from './AffiliationHierarchy';
+import { SuggestedAffiliationsLabelContent } from './SuggestedAffiliationsLabelContent';
 
 enum SelectOrganizationFormField {
   Unit = 'unit',
@@ -110,7 +110,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                                 boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
                                 bgcolor: 'white',
                               }}>
-                              <AffiliationHierarchy unitUri={suggestedInstitution} />
+                              <SuggestedAffiliationsLabelContent unitUri={suggestedInstitution} />
                             </Box>
                           }
                         />
