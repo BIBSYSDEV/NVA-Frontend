@@ -59,11 +59,12 @@ export const OrganizationOverview = () => {
 
 interface OrganizationLevelProps {
   organization: Organization;
+  level?: number;
 }
 
-const OrganizationLevel = ({ organization }: OrganizationLevelProps) => {
+const OrganizationLevel = ({ organization, level = 0 }: OrganizationLevelProps) => {
   return (
-    <Accordion elevation={2} disableGutters sx={{ bgcolor: 'secondary.main' }}>
+    <Accordion elevation={2} disableGutters sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light' }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr auto', width: '100%' }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
@@ -72,7 +73,11 @@ const OrganizationLevel = ({ organization }: OrganizationLevelProps) => {
         </Box>
       </AccordionSummary>
       <AccordionDetails>
-        {organization.hasPart?.map((subunit) => <OrganizationLevel key={subunit.id} organization={subunit} />)}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          {organization.hasPart?.map((subunit) => (
+            <OrganizationLevel key={subunit.id} organization={subunit} level={level + 1} />
+          ))}
+        </Box>
       </AccordionDetails>
     </Accordion>
   );
