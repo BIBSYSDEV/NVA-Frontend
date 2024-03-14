@@ -47,7 +47,7 @@ export const OrganizationOverview = () => {
       {organizationQuery.isLoading ? (
         <ListSkeleton height={100} minWidth={100} />
       ) : (
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {organizationQuery.data?.hasPart?.map((organization) => (
             <OrganizationLevel key={organization.id} organization={organization} />
           ))}
@@ -63,7 +63,7 @@ interface OrganizationLevelProps {
 
 const OrganizationLevel = ({ organization }: OrganizationLevelProps) => {
   return (
-    <Accordion elevation={5} disableGutters>
+    <Accordion elevation={2} disableGutters sx={{ bgcolor: 'secondary.main' }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr auto', width: '100%' }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
