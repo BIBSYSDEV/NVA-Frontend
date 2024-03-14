@@ -1,6 +1,15 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Link, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Autocomplete,
+  Box,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -9,12 +18,15 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
+import { getAllChildOrganizations, getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 export const OrganizationOverview = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const organizationId = user?.topOrgCristinId;
+  const organizationId = 'https://api.dev.nva.aws.unit.no/cristin/organization/185.90.0.0'; //  user?.topOrgCristinId;
+
+  const [searchId, setSearchId] = useState('');
 
   const organizationQuery = useQuery({
     queryKey: [organizationId],
@@ -25,9 +37,7 @@ export const OrganizationOverview = () => {
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
-  if (!organizationId) {
-    return null;
-  }
+  const allSubUnits = getSortedSubUnits(organizationQuery.data?.hasPart);
 
   return (
     <>
@@ -48,8 +58,20 @@ export const OrganizationOverview = () => {
         <ListSkeleton height={100} minWidth={100} />
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <Autocomplete
+            options={allSubUnits}
+            inputMode="search"
+            sx={{ minWidth: '15rem' }}
+            getOptionLabel={(option) => getLanguageString(option.labels)}
+            getOptionKey={(option) => option.id}
+            onChange={(_, selectedUnit) => setSearchId(selectedUnit?.id ?? '')}
+            renderInput={(params) => (
+              <TextField {...params} variant="outlined" label={t('search.search_for_sub_unit')} />
+            )}
+          />
+
           {organizationQuery.data?.hasPart?.map((organization) => (
-            <OrganizationLevel key={organization.id} organization={organization} />
+            <OrganizationLevel key={organization.id} organization={organization} searchId={searchId} />
           ))}
         </Box>
       )}
@@ -59,13 +81,21 @@ export const OrganizationOverview = () => {
 
 interface OrganizationLevelProps {
   organization: Organization;
+  searchId: string;
   level?: number;
 }
 
-const OrganizationLevel = ({ organization, level = 0 }: OrganizationLevelProps) => {
+const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLevelProps) => {
+  if (!!searchId && organization.id !== searchId) {
+    const allSubunits = getAllChildOrganizations(organization.hasPart ?? []);
+    if (!allSubunits.some((subunit) => subunit.id === searchId)) {
+      return null;
+    }
+  }
+
   return (
     <Accordion elevation={2} disableGutters sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light' }}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary>
         <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr auto', width: '100%' }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
           <Typography>{getLanguageString(organization.labels, 'en')}</Typography>
@@ -75,7 +105,7 @@ const OrganizationLevel = ({ organization, level = 0 }: OrganizationLevelProps) 
       <AccordionDetails>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {organization.hasPart?.map((subunit) => (
-            <OrganizationLevel key={subunit.id} organization={subunit} level={level + 1} />
+            <OrganizationLevel key={subunit.id} organization={subunit} level={level + 1} searchId={searchId} />
           ))}
         </Box>
       </AccordionDetails>
