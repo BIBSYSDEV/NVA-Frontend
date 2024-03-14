@@ -10,7 +10,7 @@ interface AffiliationHierarchyProps {
   unitUri: string;
 }
 
-export const SuggestedAffiliationsLabelContent = ({ unitUri }: AffiliationHierarchyProps) => {
+export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
   const { t } = useTranslation();
 
   const organizationQuery = useQuery({
@@ -27,7 +27,15 @@ export const SuggestedAffiliationsLabelContent = ({ unitUri }: AffiliationHierar
   return organizationQuery.isLoading ? (
     <AffiliationSkeleton />
   ) : organization ? (
-    <div>
+    <Box
+      sx={{
+        border: '1px solid',
+        borderRadius: '4px',
+        p: '0.5rem',
+        mb: '0.5rem',
+        boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
+        bgcolor: 'white',
+      }}>
       {unitNames.map((unitName, index) =>
         index === 0 ? (
           <Box sx={{ display: 'flex', gap: '0.15rem' }} key={unitName + index}>
@@ -40,7 +48,7 @@ export const SuggestedAffiliationsLabelContent = ({ unitUri }: AffiliationHierar
           <Typography key={unitName + index}>| {unitName}</Typography>
         )
       )}
-    </div>
+    </Box>
   ) : (
     <Typography sx={{ fontStyle: 'italic' }}>
       [{t('feedback.error.get_affiliation_name', { unitUri, interpolation: { escapeValue: false } })}]

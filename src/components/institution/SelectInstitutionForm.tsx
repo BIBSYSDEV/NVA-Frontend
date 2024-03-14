@@ -24,7 +24,7 @@ import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { SuggestedAffiliationsLabelContent } from './SuggestedAffiliationsLabelContent';
+import { OrganizationTree } from './OrganizationTree';
 
 enum SelectOrganizationFormField {
   Unit = 'unit',
@@ -100,19 +100,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                           key={suggestedInstitution}
                           value={suggestedInstitution}
                           control={<Radio size="small" />}
-                          label={
-                            <Box
-                              sx={{
-                                border: '1px solid',
-                                borderRadius: '4px',
-                                p: '0.5rem',
-                                mb: '0.5rem',
-                                boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
-                                bgcolor: 'white',
-                              }}>
-                              <SuggestedAffiliationsLabelContent unitUri={suggestedInstitution} />
-                            </Box>
-                          }
+                          label={<OrganizationTree unitUri={suggestedInstitution} />}
                         />
                       ))}
                     </RadioGroup>
