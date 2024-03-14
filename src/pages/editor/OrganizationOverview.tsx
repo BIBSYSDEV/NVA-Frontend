@@ -61,7 +61,6 @@ export const OrganizationOverview = () => {
           <Autocomplete
             options={allSubUnits}
             inputMode="search"
-            sx={{ minWidth: '15rem' }}
             getOptionLabel={(option) => getLanguageString(option.labels)}
             getOptionKey={(option) => option.id}
             onChange={(_, selectedUnit) => setSearchId(selectedUnit?.id ?? '')}
