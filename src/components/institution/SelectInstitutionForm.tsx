@@ -94,7 +94,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                         <FormControlLabel
                           sx={{
                             '& .MuiFormControlLabel-label': {
-                              width: '30rem',
+                              width: '100%',
                             },
                           }}
                           key={suggestedInstitution}
@@ -180,7 +180,6 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                         <Box>
                           <Typography fontWeight="bold">{getLanguageString(option.labels)}</Typography>
                           <Typography>
-                            {' '}
                             {getLanguageString(
                               option.labels,
                               currentLanguage === 'nob' || currentLanguage === 'nno' ? 'en' : 'no'
