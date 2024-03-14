@@ -206,7 +206,7 @@
     "other": "Annet",
     "overview": "Oversikt",
     "page_title": "Nasjonalt vitenarkiv",
-    "pagination_rows_per_page": "Antall rader per side:",
+    "pagination_rows_per_page": "Antall resultater per side:",
     "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
     "person": "Person",
     "place": "Sted",
