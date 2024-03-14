@@ -1,3 +1,4 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
   AccordionDetails,
@@ -94,6 +95,8 @@ const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLe
     }
   }
 
+  const hasSubunit = organization.hasPart && organization.hasPart.length > 0;
+
   return (
     <Accordion
       elevation={2}
@@ -101,20 +104,22 @@ const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLe
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light' }}
       expanded={expanded || !!searchId}
       onChange={() => setExpanded(!expanded)}>
-      <AccordionSummary>
-        <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr auto', width: '100%' }}>
+      <AccordionSummary expandIcon={hasSubunit ? <ExpandMoreIcon /> : null}>
+        <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr auto' }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
           <Typography>{getLanguageString(organization.labels, 'en')}</Typography>
           <Typography sx={{ minWidth: '8rem' }}>{getIdentifierFromId(organization.id)}</Typography>
         </Box>
       </AccordionSummary>
-      <AccordionDetails>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          {organization.hasPart?.map((subunit) => (
-            <OrganizationLevel key={subunit.id} organization={subunit} level={level + 1} searchId={searchId} />
-          ))}
-        </Box>
-      </AccordionDetails>
+      {hasSubunit && (
+        <AccordionDetails>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            {organization.hasPart?.map((subunit) => (
+              <OrganizationLevel key={subunit.id} organization={subunit} level={level + 1} searchId={searchId} />
+            ))}
+          </Box>
+        </AccordionDetails>
+      )}
     </Accordion>
   );
 };
