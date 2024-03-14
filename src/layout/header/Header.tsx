@@ -1,9 +1,9 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddIcon from '@mui/icons-material/Add';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import StoreIcon from '@mui/icons-material/Store';
 import { AppBar, Badge, Box, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
@@ -146,7 +146,7 @@ export const Header = () => {
               {organization?.acronym &&
                 (user?.isEditor ? (
                   <MenuButton
-                    startIcon={<StoreIcon />}
+                    startIcon={<AccountBalanceIcon />}
                     isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
                     color="inherit"
                     data-testid={dataTestId.header.editorLink}
