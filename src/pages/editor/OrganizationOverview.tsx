@@ -1,8 +1,8 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Link, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getById } from '../../api/commonApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -38,16 +38,20 @@ export const OrganizationOverview = () => {
         {t('editor.organization_overview')}
       </Typography>
 
-      <Typography sx={{ mb: '2rem' }}>Ved behov for endringer, kontakt Sikt.</Typography>
+      <Typography sx={{ mb: '2rem' }}>
+        <Trans t={t} i18nKey="editor.institution.institution_helper_text">
+          <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
+        </Trans>
+      </Typography>
 
       {organizationQuery.isLoading ? (
         <ListSkeleton height={100} minWidth={100} />
       ) : (
-        <>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           {organizationQuery.data?.hasPart?.map((organization) => (
             <OrganizationLevel key={organization.id} organization={organization} />
           ))}
-        </>
+        </Box>
       )}
     </>
   );
@@ -58,15 +62,13 @@ interface OrganizationLevelProps {
 }
 
 const OrganizationLevel = ({ organization }: OrganizationLevelProps) => {
-  const hasSubunits = organization.hasPart && organization.hasPart.length > 0;
-
   return (
     <Accordion elevation={5} disableGutters>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr auto', width: '100%' }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
           <Typography>{getLanguageString(organization.labels, 'en')}</Typography>
-          <Typography sx={{ mr: '2rem' }}>{getIdentifierFromId(organization.id)}</Typography>
+          <Typography sx={{ minWidth: '8rem' }}>{getIdentifierFromId(organization.id)}</Typography>
         </Box>
       </AccordionSummary>
       <AccordionDetails>
