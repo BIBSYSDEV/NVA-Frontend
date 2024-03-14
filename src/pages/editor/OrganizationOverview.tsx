@@ -104,7 +104,7 @@ const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLe
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light' }}
       expanded={expanded || !!searchId}
       onChange={() => setExpanded(!expanded)}>
-      <AccordionSummary expandIcon={hasSubunit ? <ExpandMoreIcon /> : null}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: hasSubunit ? null : 'hidden' }} />}>
         <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr auto' }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
           <Typography>{getLanguageString(organization.labels, 'en')}</Typography>
