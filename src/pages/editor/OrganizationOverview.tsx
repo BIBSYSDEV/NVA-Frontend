@@ -24,7 +24,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 export const OrganizationOverview = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const organizationId = 'https://api.dev.nva.aws.unit.no/cristin/organization/185.90.0.0'; //  user?.topOrgCristinId;
+  const organizationId = user?.topOrgCristinId;
 
   const [searchId, setSearchId] = useState('');
 
@@ -86,15 +86,22 @@ interface OrganizationLevelProps {
 }
 
 const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLevelProps) => {
+  const [expanded, setExpanded] = useState(false);
+
   if (!!searchId && organization.id !== searchId) {
-    const allSubunits = getAllChildOrganizations(organization.hasPart ?? []);
+    const allSubunits = getAllChildOrganizations(organization.hasPart);
     if (!allSubunits.some((subunit) => subunit.id === searchId)) {
-      return null;
+      return null; // Hide this element if the searched ID is not a part of this unit
     }
   }
 
   return (
-    <Accordion elevation={2} disableGutters sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light' }}>
+    <Accordion
+      elevation={2}
+      disableGutters
+      sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light' }}
+      expanded={expanded || !!searchId}
+      onChange={() => setExpanded(!expanded)}>
       <AccordionSummary>
         <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr auto', width: '100%' }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
