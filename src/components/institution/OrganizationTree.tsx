@@ -39,7 +39,7 @@ export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
       {units.map((unit, index) =>
         index === 0 ? (
           <Box sx={{ display: 'flex', gap: '0.15rem' }} key={unit.id}>
-            <Typography variant="body2" fontWeight="bold" fontSize={9} sx={{ verticalAlign: 'super' }}>
+            <Typography component="sup" fontWeight="bold" fontSize={'10px'}>
               {organization.country}
             </Typography>
             <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(unit.labels)}</Typography>
