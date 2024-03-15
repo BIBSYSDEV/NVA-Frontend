@@ -398,6 +398,8 @@
       "rrs_required_link": "*Felt med stjerne er obligatorisk"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
+    "subunits_count_one": "{{count}} underenhet",
+    "subunits_count_other": "{{count}} underenheter",
     "vocabulary": "Vokabular",
     "vocabulary_status": {
       "Allowed": "Tillatt",

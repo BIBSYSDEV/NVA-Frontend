@@ -86,6 +86,7 @@ interface OrganizationLevelProps {
 }
 
 const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLevelProps) => {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
 
   if (!!searchId && organization.id !== searchId) {
@@ -95,7 +96,7 @@ const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLe
     }
   }
 
-  const hasSubunit = organization.hasPart && organization.hasPart.length > 0;
+  const subunitsCount = organization.hasPart?.length ?? 0;
 
   return (
     <Accordion
@@ -104,20 +105,21 @@ const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLe
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light' }}
       expanded={expanded || !!searchId}
       onChange={() => setExpanded(!expanded)}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: hasSubunit ? null : 'hidden' }} />}>
-        <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 1fr auto' }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
+        <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '3fr 3fr 1fr 1fr' }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
           <Typography>{getLanguageString(organization.labels, 'en')}</Typography>
-          <Typography sx={{ minWidth: '8rem' }}>{getIdentifierFromId(organization.id)}</Typography>
+          <Typography>{getIdentifierFromId(organization.id)}</Typography>
+          <Typography>{subunitsCount > 0 && t('editor.subunits_count', { count: subunitsCount })}</Typography>
         </Box>
       </AccordionSummary>
-      {hasSubunit && (
+      {subunitsCount > 0 && (
         <AccordionDetails>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {organization.hasPart?.map((subunit) => (
-              <OrganizationLevel key={subunit.id} organization={subunit} level={level + 1} searchId={searchId} />
-            ))}
-          </Box>
+          {/* <Box sx={{ display: 'flex', flexDirection: 'column' }}> */}
+          {organization.hasPart?.map((subunit) => (
+            <OrganizationLevel key={subunit.id} organization={subunit} level={level + 1} searchId={searchId} />
+          ))}
+          {/* </Box> */}
         </AccordionDetails>
       )}
     </Accordion>
