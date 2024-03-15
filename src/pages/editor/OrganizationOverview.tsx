@@ -102,7 +102,7 @@ const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLe
     <Accordion
       elevation={2}
       disableGutters
-      sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light' }}
+      sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: `${level}rem` }}
       expanded={expanded || !!searchId}
       onChange={() => setExpanded(!expanded)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
@@ -114,12 +114,10 @@ const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLe
         </Box>
       </AccordionSummary>
       {subunitsCount > 0 && (
-        <AccordionDetails>
-          {/* <Box sx={{ display: 'flex', flexDirection: 'column' }}> */}
+        <AccordionDetails sx={{ pr: 0 }}>
           {organization.hasPart?.map((subunit) => (
             <OrganizationLevel key={subunit.id} organization={subunit} level={level + 1} searchId={searchId} />
           ))}
-          {/* </Box> */}
         </AccordionDetails>
       )}
     </Accordion>
