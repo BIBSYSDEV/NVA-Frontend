@@ -22,7 +22,7 @@ export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
   });
   const organization = organizationQuery.data;
 
-  const unitNames = getOrganizationHierarchy(organizationQuery.data).map((unit) => getLanguageString(unit.labels));
+  const units = getOrganizationHierarchy(organization);
 
   return organizationQuery.isLoading ? (
     <AffiliationSkeleton />
@@ -36,16 +36,16 @@ export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
         boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
         bgcolor: 'white',
       }}>
-      {unitNames.map((unitName, index) =>
+      {units.map((unit, index) =>
         index === 0 ? (
-          <Box sx={{ display: 'flex', gap: '0.15rem' }} key={unitName + index}>
+          <Box sx={{ display: 'flex', gap: '0.15rem' }} key={unit.id}>
             <Typography variant="body2" fontWeight="bold" fontSize={9} sx={{ verticalAlign: 'super' }}>
               {organization.country}
             </Typography>
-            <Typography sx={{ fontWeight: 'bold' }}>{unitName}</Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(unit.labels)}</Typography>
           </Box>
         ) : (
-          <Typography key={unitName + index}>| {unitName}</Typography>
+          <Typography key={unit.id}>| {getLanguageString(unit.labels)}</Typography>
         )
       )}
     </Box>
