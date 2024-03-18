@@ -68,9 +68,9 @@ const EditorPage = () => {
             </LinkButton>
 
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorInstitutionOverview}
+              isSelected={currentPath === UrlPathTemplate.EditorOrganizationOverview}
               data-testid={dataTestId.editor.organizationOverviewLinkButton}
-              to={UrlPathTemplate.EditorInstitutionOverview}>
+              to={UrlPathTemplate.EditorOrganizationOverview}>
               {t('editor.organization_overview')}
             </LinkButton>
           </NavigationList>
@@ -158,7 +158,7 @@ const EditorPage = () => {
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.EditorInstitutionOverview}
+            path={UrlPathTemplate.EditorOrganizationOverview}
             component={OrganizationOverview}
             isAuthorized={hasCustomer}
           />

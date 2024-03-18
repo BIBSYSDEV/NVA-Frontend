@@ -93,7 +93,7 @@ export const dataTestId = {
     institutionsNameLinkButton: 'institutions-name-link-button',
     doiLinkButton: 'doi-link-button',
     organizationAccordion: (id: string) => `organization-accordion-${id}`,
-    organizationOverviewLinkButton: 'institution-overview-link-button',
+    organizationOverviewLinkButton: 'organization-overview-link-button',
     organizationOverviewSearchField: 'organization-overview-search-field',
     overviewAccordion: 'overview-accordion',
     publishStrategyLinkButton: 'publishing-strategy-link-button',
