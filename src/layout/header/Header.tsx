@@ -11,8 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getById } from '../../api/commonApi';
-import { FetchTicketsParams, fetchCustomerTickets } from '../../api/searchApi';
-import { notificationsParams } from '../../pages/messages/TasksPage';
+import { fetchCustomerTickets } from '../../api/searchApi';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -24,6 +23,7 @@ import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
+import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
 
 const StyledBadge = styled(Badge)({
   '& .MuiBadge-badge': {
@@ -66,11 +66,7 @@ export const Header = () => {
 
   const isTicketCurator = hasCuratorRole(user);
 
-  const dialogueNotificationsParams: FetchTicketsParams = {
-    ...notificationsParams,
-    owner: user?.nvaUsername,
-    viewedByNot: user?.nvaUsername,
-  };
+  const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
   const dialogueNotificationsQuery = useQuery({
     enabled: !!user?.isCreator && !!dialogueNotificationsParams.owner,
     queryKey: ['notifications', dialogueNotificationsParams],
@@ -80,8 +76,8 @@ export const Header = () => {
 
   const taskNotificationsQuery = useQuery({
     enabled: isTicketCurator,
-    queryKey: ['notifications', notificationsParams],
-    queryFn: () => fetchCustomerTickets(notificationsParams),
+    queryKey: ['notifications', taskNotificationsParams],
+    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
     meta: { errorMessage: false },
   });
 

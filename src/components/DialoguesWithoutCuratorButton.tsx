@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam, fetchCustomerTickets } from '../api/searchApi';
-import { notificationsParams } from '../pages/messages/TasksPage';
 import { RootState } from '../redux/store';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
+import { taskNotificationsParams } from '../utils/searchHelpers';
 
 const statusNew: TicketStatus = 'New';
 
@@ -23,8 +23,8 @@ export const DialoguesWithoutCuratorButton = () => {
 
   const notificationsQuery = useQuery({
     enabled: user?.isDoiCurator || user?.isSupportCurator || user?.isPublishingCurator,
-    queryKey: ['notifications', notificationsParams],
-    queryFn: () => fetchCustomerTickets(notificationsParams),
+    queryKey: ['notifications', taskNotificationsParams],
+    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
     meta: { errorMessage: false },
   });
 

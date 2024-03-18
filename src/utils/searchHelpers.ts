@@ -1,4 +1,4 @@
-import { ResultParam } from '../api/searchApi';
+import { FetchTicketsParams, ResultParam } from '../api/searchApi';
 import { TFunction } from 'i18next';
 import { AggregationFileKeyType } from '../types/registration.types';
 
@@ -133,3 +133,14 @@ export const getFileFacetText = (key: AggregationFileKeyType, t: TFunction<'tran
       ? t('registration.files_and_license.registration_without_file')
       : t('registration.missing_name');
 };
+
+export const taskNotificationsParams: FetchTicketsParams = {
+  results: 0,
+  aggregation: 'all',
+};
+
+export const getDialogueNotificationsParams = (username?: string): FetchTicketsParams => ({
+  ...taskNotificationsParams,
+  owner: username,
+  viewedByNot: username,
+});

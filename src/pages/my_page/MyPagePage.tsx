@@ -43,7 +43,7 @@ import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
 import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
-import { notificationsParams } from '../messages/TasksPage';
+import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 
 const MyPagePage = () => {
   const dispatch = useDispatch();
@@ -117,17 +117,13 @@ const MyPagePage = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 
-  const ownerNotificationsParams: FetchTicketsParams = {
-    ...notificationsParams,
-    owner: user?.nvaUsername,
-    viewedByNot: user?.nvaUsername,
-  };
+  const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
 
   const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
   const notificationsQuery = useQuery({
-    enabled: isOnDialoguePage && !!user?.isCreator && !!ownerNotificationsParams.owner,
-    queryKey: ['notifications', ownerNotificationsParams],
-    queryFn: () => fetchCustomerTickets(ownerNotificationsParams),
+    enabled: isOnDialoguePage && !!user?.isCreator && !!dialogueNotificationsParams.owner,
+    queryKey: ['notifications', dialogueNotificationsParams],
+    queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
     meta: { errorMessage: false },
   });
 
