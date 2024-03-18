@@ -21,6 +21,7 @@ import { Organization } from '../../types/organization.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getAllChildOrganizations, getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { dataTestId } from '../../utils/dataTestIds';
 
 export const OrganizationOverview = () => {
   const { t } = useTranslation();
@@ -60,6 +61,7 @@ export const OrganizationOverview = () => {
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <Autocomplete
+            data-testid={dataTestId.editor.organizationOverviewSearchField}
             options={allSubUnits}
             inputMode="search"
             getOptionLabel={(option) => getLanguageString(option.labels)}
@@ -110,6 +112,7 @@ const OrganizationLevel = ({
 
   return (
     <Accordion
+      data-testid={dataTestId.editor.organizationAccordion(organization.id)}
       elevation={2}
       disableGutters
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: `${level}rem` }}

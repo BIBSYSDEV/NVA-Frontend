@@ -69,7 +69,7 @@ const EditorPage = () => {
 
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.EditorInstitutionOverview}
-              data-testid={dataTestId.editor.institutionOverviewLinkButton}
+              data-testid={dataTestId.editor.organizationOverviewLinkButton}
               to={UrlPathTemplate.EditorInstitutionOverview}>
               {t('editor.organization_overview')}
             </LinkButton>

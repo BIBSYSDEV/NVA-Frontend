@@ -90,9 +90,11 @@ export const dataTestId = {
   editor: {
     areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
     categoriesLinkButton: 'categories-link-button',
-    institutionOverviewLinkButton: 'institution-overview-link-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
     doiLinkButton: 'doi-link-button',
+    organizationAccordion: (id: string) => `organization-accordion-${id}`,
+    organizationOverviewLinkButton: 'institution-overview-link-button',
+    organizationOverviewSearchField: 'organization-overview-search-field',
     overviewAccordion: 'overview-accordion',
     publishStrategyLinkButton: 'publishing-strategy-link-button',
     settingsAccordion: 'settings-accordion',
