@@ -8,8 +8,8 @@
         "name": "Archaeology and Conservation"
       },
       {
-        "id": "1004",
-        "name": "Architecture and Design"
+        "id": "1170",
+        "name": "Art, Design, and Architecture"
       },
       {
         "id": "1013",
@@ -24,10 +24,6 @@
         "name": "Classical Studies"
       },
       {
-        "id": "1006",
-        "name": "Dance"
-      },
-      {
         "id": "1007",
         "name": "English Studies"
       },
@@ -40,8 +36,8 @@
         "name": "Germanic Studies"
       },
       {
-        "id": "1010",
-        "name": "History"
+        "id": "1168",
+        "name": "History and History of Ideas"
       },
       {
         "id": "1023",
@@ -64,8 +60,8 @@
         "name": "Musicology"
       },
       {
-        "id": "1008",
-        "name": "Philosophy and History of Ideas"
+        "id": "1166",
+        "name": "Philosophy"
       },
       {
         "id": "1019",
@@ -100,10 +96,6 @@
       {
         "id": "1035",
         "name": "Business and Finance"
-      },
-      {
-        "id": "1033",
-        "name": "Development Studies"
       },
       {
         "id": "1029",
@@ -274,92 +266,44 @@
     "subjectArea": "Natural Sciences and Engineering",
     "subdomains": [
       {
-        "id": "1042",
-        "name": "Applied geology, petroleum science and engineering"
-      },
-      {
-        "id": "1036",
-        "name": "Biology"
-      },
-      {
-        "id": "1043",
+        "id": "1150",
         "name": "Biotechnology"
       },
       {
-        "id": "1050",
-        "name": "Chemical Engineering"
+        "id": "1157",
+        "name": "Chemistry and Materials Science and Engineering"
       },
       {
-        "id": "1040",
-        "name": "Chemistry"
+        "id": "1162",
+        "name": "Construction Technology"
       },
       {
-        "id": "1044",
-        "name": "Civil Engineering"
+        "id": "1155",
+        "name": "Earth science"
       },
       {
-        "id": "1045",
-        "name": "Computer and information science, Computer engineering"
-      },
-      {
-        "id": "1038",
-        "name": "Earth sciences"
-      },
-      {
-        "id": "1047",
-        "name": "Electric power engineering"
-      },
-      {
-        "id": "1046",
-        "name": "Electronics and cybernetics"
+        "id": "1160",
+        "name": "Electrical science"
       },
       {
         "id": "1048",
         "name": "Energy"
       },
       {
-        "id": "1054",
-        "name": "Environmental technology and industrial ecology"
-      },
-      {
-        "id": "1056",
-        "name": "General Technology"
-      },
-      {
-        "id": "1049",
-        "name": "Industrial engineering and management"
-      },
-      {
-        "id": "1039",
-        "name": "Informatics"
+        "id": "1152",
+        "name": "IKT"
       },
       {
         "id": "1058",
         "name": "Interdisciplinary Natural Sciences"
       },
       {
-        "id": "1051",
-        "name": "Marine Technology"
-      },
-      {
-        "id": "1053",
-        "name": "Materials Science and Engineering"
-      },
-      {
         "id": "1041",
         "name": "Mathematics"
       },
       {
-        "id": "1052",
-        "name": "Mechanical engineering"
-      },
-      {
         "id": "1057",
         "name": "Multidisciplinar technology"
-      },
-      {
-        "id": "1055",
-        "name": "Networks and network based services"
       },
       {
         "id": "1037",

@@ -1,3 +1,4 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddIcon from '@mui/icons-material/Add';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
@@ -119,8 +120,8 @@ export const Header = () => {
                   bgcolor: 'primary.light',
                   borderRadius: '50%',
                   padding: '0.2rem',
-                  width: '2.7rem',
-                  height: '2.7rem',
+                  width: '2.25rem',
+                  height: '2.25rem',
                 }}
               />
             }>
@@ -145,11 +146,7 @@ export const Header = () => {
               {organization?.acronym &&
                 (user?.isEditor ? (
                   <MenuButton
-                    sx={{
-                      fontSize: '1.25rem',
-                      fontWeight: 700,
-                      textTransform: 'none',
-                    }}
+                    startIcon={<AccountBalanceIcon />}
                     isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
                     color="inherit"
                     data-testid={dataTestId.header.editorLink}
