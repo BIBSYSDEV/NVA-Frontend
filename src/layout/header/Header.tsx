@@ -172,7 +172,7 @@ export const Header = () => {
               )}
               {(isTicketCurator || user?.isNviCurator) && (
                 <Badge
-                  badgeContent={pendingTasksCount + unassignedTasksCount || null}
+                  badgeContent={pendingTasksCount + unassignedTasksCount}
                   color="info"
                   sx={{
                     '& .MuiBadge-badge': {
