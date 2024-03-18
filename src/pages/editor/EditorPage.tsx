@@ -20,13 +20,15 @@ import { CategoriesWithFiles } from './CategoriesWithFiles';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
+import { OrganizationOverview } from './OrganizationOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { VocabularySettings } from './VocabularySettings';
 
 const EditorPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const isEditor = !!user?.customerId && user.isEditor;
+  const hasCustomer = !!user?.customerId;
+  const isEditor = hasCustomer && user.isEditor;
 
   const institutionId = user?.topOrgCristinId ?? '';
 
@@ -64,6 +66,14 @@ const EditorPage = () => {
               to={UrlPathTemplate.EditorInstitution}>
               {t('editor.institution.institution_profile')}
             </LinkButton>
+
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorOrganizationOverview}
+              data-testid={dataTestId.editor.organizationOverviewLinkButton}
+              to={UrlPathTemplate.EditorOrganizationOverview}>
+              {t('editor.organization_overview')}
+            </LinkButton>
+
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.EditorDoi}
               data-testid={dataTestId.editor.doiLinkButton}
@@ -146,6 +156,12 @@ const EditorPage = () => {
             path={UrlPathTemplate.EditorCategories}
             component={CategoriesWithFiles}
             isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorOrganizationOverview}
+            component={OrganizationOverview}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>

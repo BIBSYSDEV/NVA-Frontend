@@ -380,6 +380,7 @@
       "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
       "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
     },
+    "organization_overview": "Organisasjonsstruktur",
     "publish_strategy": {
       "files_and_licenses": "Filer og lisenser",
       "metadata": "Metadata",
@@ -398,6 +399,8 @@
       "rrs_required_link": "*Felt med stjerne er obligatorisk"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
+    "subunits_count_one": "{{count}} underenhet",
+    "subunits_count_other": "{{count}} underenheter",
     "vocabulary": "Vokabular",
     "vocabulary_status": {
       "Allowed": "Tillatt",
