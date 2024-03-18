@@ -22,7 +22,8 @@ import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { AffiliationHierarchy } from './AffiliationHierarchy';
+import { OrganizationRenderOption } from '../OrganizationRenderOption';
+import { OrganizationTree } from './OrganizationTree';
 
 enum SelectOrganizationFormField {
   Unit = 'unit',
@@ -90,10 +91,15 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                       }}>
                       {suggestedInstitutions.map((suggestedInstitution) => (
                         <FormControlLabel
+                          sx={{
+                            '& .MuiFormControlLabel-label': {
+                              width: '100%',
+                            },
+                          }}
                           key={suggestedInstitution}
                           value={suggestedInstitution}
                           control={<Radio size="small" />}
-                          label={<AffiliationHierarchy unitUri={suggestedInstitution} />}
+                          label={<OrganizationTree unitUri={suggestedInstitution} />}
                         />
                       ))}
                     </RadioGroup>
@@ -110,11 +116,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                   options={options}
                   inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
                   getOptionLabel={(option) => getLanguageString(option.labels)}
-                  renderOption={(props, option) => (
-                    <li {...props} key={option.id}>
-                      {getLanguageString(option.labels)}
-                    </li>
-                  )}
+                  renderOption={(props, option) => <OrganizationRenderOption props={props} option={option} />}
                   filterOptions={(options) => options}
                   onInputChange={(_, value, reason) => {
                     if (field.value) {
@@ -147,11 +149,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                   <Autocomplete
                     options={getSortedSubUnits(values.unit?.hasPart)}
                     getOptionLabel={(option) => getLanguageString(option.labels)}
-                    renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        {getLanguageString(option.labels)}
-                      </li>
-                    )}
+                    renderOption={(props, option) => <OrganizationRenderOption props={props} option={option} />}
                     onChange={(_, value) => setFieldValue(field.name, value)}
                     filterOptions={(options, state) =>
                       options.filter((option) =>

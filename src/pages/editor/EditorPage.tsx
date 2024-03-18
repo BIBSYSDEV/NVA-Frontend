@@ -61,6 +61,13 @@ const EditorPage = () => {
           defaultPath={UrlPathTemplate.EditorCurators}>
           <NavigationList>
             <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorOrganizationOverview}
+              data-testid={dataTestId.editor.organizationOverviewLinkButton}
+              to={UrlPathTemplate.EditorOrganizationOverview}>
+              {t('editor.organization_overview')}
+            </LinkButton>
+
+            <LinkButton
               isSelected={currentPath === UrlPathTemplate.EditorCurators}
               data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
               to={UrlPathTemplate.EditorCurators}>
@@ -68,10 +75,10 @@ const EditorPage = () => {
             </LinkButton>
 
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorOrganizationOverview}
-              data-testid={dataTestId.editor.organizationOverviewLinkButton}
-              to={UrlPathTemplate.EditorOrganizationOverview}>
-              {t('editor.organization_overview')}
+              isSelected={currentPath === UrlPathTemplate.EditorDoi}
+              data-testid={dataTestId.editor.doiLinkButton}
+              to={UrlPathTemplate.EditorDoi}>
+              {t('common.doi_long')}
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
@@ -95,12 +102,6 @@ const EditorPage = () => {
               data-testid={dataTestId.editor.institutionsNameLinkButton}
               to={UrlPathTemplate.EditorInstitution}>
               {t('editor.institution.institution_name')}
-            </LinkButton>
-            <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorDoi}
-              data-testid={dataTestId.editor.doiLinkButton}
-              to={UrlPathTemplate.EditorDoi}>
-              {t('common.doi_long')}
             </LinkButton>
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
