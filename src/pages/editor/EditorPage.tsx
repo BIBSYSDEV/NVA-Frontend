@@ -58,20 +58,20 @@ const EditorPage = () => {
             />
           }
           accordionPath={UrlPathTemplate.EditorOverview}
-          defaultPath={UrlPathTemplate.EditorCurators}>
+          defaultPath={UrlPathTemplate.EditorInstitution}>
           <NavigationList>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorInstitution}
+              data-testid={dataTestId.editor.institutionsNameLinkButton}
+              to={UrlPathTemplate.EditorInstitution}>
+              {t('editor.institution.institution_profile')}
+            </LinkButton>
+
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.EditorOrganizationOverview}
               data-testid={dataTestId.editor.organizationOverviewLinkButton}
               to={UrlPathTemplate.EditorOrganizationOverview}>
               {t('editor.organization_overview')}
-            </LinkButton>
-
-            <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorCurators}
-              data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
-              to={UrlPathTemplate.EditorCurators}>
-              {t('editor.curators.areas_of_responsibility')}
             </LinkButton>
 
             <LinkButton
@@ -95,13 +95,13 @@ const EditorPage = () => {
             />
           }
           accordionPath={UrlPathTemplate.EditorSettings}
-          defaultPath={UrlPathTemplate.EditorInstitution}>
+          defaultPath={UrlPathTemplate.EditorCurators}>
           <NavigationList>
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorInstitution}
-              data-testid={dataTestId.editor.institutionsNameLinkButton}
-              to={UrlPathTemplate.EditorInstitution}>
-              {t('editor.institution.institution_name')}
+              isSelected={currentPath === UrlPathTemplate.EditorCurators}
+              data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
+              to={UrlPathTemplate.EditorCurators}>
+              {t('editor.curators.areas_of_responsibility')}
             </LinkButton>
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
