@@ -116,7 +116,9 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                   options={options}
                   inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
                   getOptionLabel={(option) => getLanguageString(option.labels)}
-                  renderOption={(props, option) => <OrganizationRenderOption props={props} option={option} />}
+                  renderOption={(props, option) => (
+                    <OrganizationRenderOption key={option.id} props={props} option={option} />
+                  )}
                   filterOptions={(options) => options}
                   onInputChange={(_, value, reason) => {
                     if (field.value) {
@@ -149,7 +151,9 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                   <Autocomplete
                     options={getSortedSubUnits(values.unit?.hasPart)}
                     getOptionLabel={(option) => getLanguageString(option.labels)}
-                    renderOption={(props, option) => <OrganizationRenderOption props={props} option={option} />}
+                    renderOption={(props, option) => (
+                      <OrganizationRenderOption key={option.id} props={props} option={option} />
+                    )}
                     onChange={(_, value) => setFieldValue(field.name, value)}
                     filterOptions={(options, state) =>
                       options.filter((option) =>
