@@ -128,7 +128,7 @@ const OrganizationLevel = ({
             '& > p': { fontWeight: isSearchedUnit ? 700 : undefined },
           }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
-          <Typography>{getLanguageString(organization.labels, 'en')}</Typography>
+          <Typography>{organization.labels['en']}</Typography>
           <Typography>{getIdentifierFromId(organization.id)}</Typography>
           <Typography>{subunitsCount > 0 && t('editor.subunits_count', { count: subunitsCount })}</Typography>
         </Box>
