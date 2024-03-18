@@ -28,8 +28,8 @@ export const DialoguesWithoutCuratorButton = () => {
     meta: { errorMessage: false },
   });
 
-  const unassignedNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'UnassignedNotification'
+  const unassignedNotificationsCount = notificationsQuery.data?.aggregations?.status?.find(
+    (notification) => notification.key === 'New'
   )?.count;
 
   const toggleDialoguesWithoutCurators = () => {

@@ -91,17 +91,10 @@ interface AggregationBucket {
 
 export type TicketSearchResponse = SearchResponse<ExpandedTicket, TicketAggregations>;
 
-type NotificationKey =
-  | 'UnassignedNotification'
-  | 'GeneralSupportNotification'
-  | 'UserNotification'
-  | 'PublishingRequestNotification'
-  | 'DoiRequestNotification';
-
 type CustomerTicketAggregations = {
   type?: AggregationValue<TicketType>[];
   status?: AggregationValue<TicketStatus>[];
-  notifications?: AggregationValue<NotificationKey>[];
+  byUserPending?: AggregationValue<TicketType>[];
 };
 
 export type CustomerTicketSearchResponse = SearchResponse<ExpandedTicket, CustomerTicketAggregations>;
