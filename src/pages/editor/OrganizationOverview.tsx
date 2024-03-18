@@ -115,7 +115,7 @@ const OrganizationLevel = ({
       data-testid={dataTestId.editor.organizationAccordion(organization.id)}
       elevation={2}
       disableGutters
-      sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: `${level}rem` }}
+      sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: { xs: undefined, md: `${level}rem` } }}
       expanded={expanded || (!!searchId && !includeAllSubunits)}
       onChange={() => setExpanded(!expanded)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
@@ -123,8 +123,8 @@ const OrganizationLevel = ({
           sx={{
             width: '100%',
             display: 'grid',
-            gap: '1rem',
-            gridTemplateColumns: '3fr 3fr 1fr 1fr',
+            gap: '0.5rem 1rem',
+            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr', lg: '3fr 3fr 1fr 1fr' },
             '& > p': { fontWeight: isSearchedUnit ? 700 : undefined },
           }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
