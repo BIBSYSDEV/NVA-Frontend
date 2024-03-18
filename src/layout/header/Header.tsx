@@ -66,21 +66,19 @@ export const Header = () => {
 
   const isTicketCurator = hasCuratorRole(user);
 
-  const ownerNotificationsParams: FetchTicketsParams = {
+  const dialogueNotificationsParams: FetchTicketsParams = {
     ...notificationsParams,
     owner: user?.nvaUsername,
     viewedByNot: user?.nvaUsername,
   };
   const dialogueNotificationsQuery = useQuery({
-    enabled: !!user?.isCreator && !!ownerNotificationsParams.owner,
-    queryKey: ['notifications', ownerNotificationsParams],
-    queryFn: () => fetchCustomerTickets(ownerNotificationsParams),
+    enabled: !!user?.isCreator && !!dialogueNotificationsParams.owner,
+    queryKey: ['notifications', dialogueNotificationsParams],
+    queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
     meta: { errorMessage: false },
   });
 
-  const dialogueNotificationsCount = dialogueNotificationsQuery.data?.totalHits ?? 0;
-
-  const tasksNotificationsQuery = useQuery({
+  const taskNotificationsQuery = useQuery({
     enabled: isTicketCurator,
     queryKey: ['notifications', notificationsParams],
     queryFn: () => fetchCustomerTickets(notificationsParams),
@@ -88,12 +86,12 @@ export const Header = () => {
   });
 
   const pendingTasksCount =
-    tasksNotificationsQuery.data?.aggregations?.byUserPending
+    taskNotificationsQuery.data?.aggregations?.byUserPending
       ?.map((notification) => notification.count)
       .reduce((a, b) => a + b, 0) ?? 0;
 
   const unassignedTasksCount =
-    tasksNotificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
+    taskNotificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -204,7 +202,7 @@ export const Header = () => {
                 </StyledBadge>
               )}
               {user && (
-                <StyledBadge badgeContent={dialogueNotificationsCount}>
+                <StyledBadge badgeContent={dialogueNotificationsQuery.data?.totalHits}>
                   <MenuButton
                     color="inherit"
                     data-testid={dataTestId.header.myPageLink}

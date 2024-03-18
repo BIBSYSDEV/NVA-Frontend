@@ -10,32 +10,33 @@ import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 export enum TicketSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
-  Query = 'query',
-  Role = 'role',
-  Results = 'results',
+  ExcludeSubUnits = 'excludeSubUnits',
   From = 'from',
   OrderBy = 'orderBy',
-  SortOrder = 'sortOrder',
-  ViewingScope = 'viewingScope',
-  ExcludeSubUnits = 'excludeSubUnits',
-  Status = 'status',
   Owner = 'owner',
+  Query = 'query',
+  Results = 'results',
+  Role = 'role',
+  SortOrder = 'sortOrder',
+  Status = 'status',
   ViewedByNot = 'viewedByNot',
+  ViewingScope = 'viewingScope',
 }
 
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
-  [TicketSearchParam.Query]?: string | null;
-  [TicketSearchParam.Role]?: 'creator';
-  [TicketSearchParam.Results]?: number | null;
+  [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
   [TicketSearchParam.OrderBy]?: 'createdDate' | null;
-  [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
-  [TicketSearchParam.ViewingScope]?: string | null;
-  [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.Owner]?: string | null;
+  [TicketSearchParam.Query]?: string | null;
+  [TicketSearchParam.Results]?: number | null;
+  [TicketSearchParam.Role]?: 'creator';
+  [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
+  [TicketSearchParam.Status]?: string | null;
   [TicketSearchParam.ViewedByNot]?: string | null;
+  [TicketSearchParam.ViewingScope]?: string | null;
 }
 
 export const fetchTickets = async (params: FetchTicketsParams) => {
