@@ -41,6 +41,7 @@ import { NviCandidateAggregations } from '../../types/nvi.types';
 import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useSetDefaultTicketSearchParams } from '../../utils/hooks/useSetDefaultTicketSearchParams';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -50,7 +51,6 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
-import { TicketListDefaultValueWrapper } from '../../components/TicketListDefaultValueWrapper';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
@@ -172,8 +172,9 @@ const TasksPage = () => {
     excludeSubUnits: true,
   };
 
+  const defaultTicketParamsAdded = useSetDefaultTicketSearchParams();
   const ticketsQuery = useQuery({
-    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
+    enabled: isOnTicketsPage && !institutionUserQuery.isLoading && defaultTicketParamsAdded,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
@@ -542,16 +543,14 @@ const TasksPage = () => {
           </PrivateRoute>
 
           <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isTicketCurator}>
-            <TicketListDefaultValueWrapper>
-              <TicketList
-                ticketsQuery={ticketsQuery}
-                rowsPerPage={rowsPerPage}
-                setRowsPerPage={setRowsPerPage}
-                page={page}
-                setPage={setPage}
-                title={t('common.tasks')}
-              />
-            </TicketListDefaultValueWrapper>
+            <TicketList
+              ticketsQuery={ticketsQuery}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              page={page}
+              setPage={setPage}
+              title={t('common.tasks')}
+            />
           </PrivateRoute>
           <PrivateRoute
             exact

@@ -1,18 +1,14 @@
-import { ReactNode, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetchOrganizations } from '../api/cristinApi';
-import { fetchUser } from '../api/roleApi';
-import { TicketSearchParam } from '../api/searchApi';
-import { RootState } from '../redux/store';
-import { Organization } from '../types/organization.types';
-import { TicketStatus } from '../types/publication_types/ticket.types';
-
-interface TicketListDefaultValueWrapperProps {
-  children: ReactNode;
-}
+import { fetchOrganizations } from '../../api/cristinApi';
+import { fetchUser } from '../../api/roleApi';
+import { TicketSearchParam } from '../../api/searchApi';
+import { RootState } from '../../redux/store';
+import { TicketStatus } from '../../types/publication_types/ticket.types';
+import { Organization } from '../../types/organization.types';
 
 function flattenOrganizationsWithSubunits(topLevelOrganizations: Organization[]): Organization[] {
   return topLevelOrganizations.flatMap((org) => flattenOrganizationWithSubunits(org));
@@ -23,7 +19,9 @@ function flattenOrganizationWithSubunits(org: Organization): Organization[] {
   return [org, ...subUnits];
 }
 
-export const TicketListDefaultValueWrapper = ({ children }: TicketListDefaultValueWrapperProps) => {
+export const useSetDefaultTicketSearchParams = (): boolean => {
+  const [defaultParamsAdded, setDefaultParamsAdded] = useState(false);
+
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const nvaUsername = user?.nvaUsername ?? '';
@@ -67,7 +65,9 @@ export const TicketListDefaultValueWrapper = ({ children }: TicketListDefaultVal
     }
 
     history.push({ search: searchParams.toString() });
+
+    setDefaultParamsAdded(true);
   }, [organizationQuery.data, history, nvaUsername]);
 
-  return <>{children}</>;
+  return defaultParamsAdded;
 };
