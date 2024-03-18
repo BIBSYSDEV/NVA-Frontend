@@ -94,7 +94,7 @@ const TasksPage = () => {
 
   const institutionUserQuery = useQuery({
     enabled: !!nvaUsername,
-    queryKey: [nvaUsername],
+    queryKey: ['user', nvaUsername],
     queryFn: () => fetchUser(nvaUsername),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
