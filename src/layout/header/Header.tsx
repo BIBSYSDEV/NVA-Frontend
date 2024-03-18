@@ -66,15 +66,13 @@ export const Header = () => {
     meta: { errorMessage: false },
   });
 
-  const userNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'UserNotification'
-  )?.count;
+  const pendingTasksCount =
+    notificationsQuery.data?.aggregations?.byUserPending
+      ?.map((notification) => notification.count)
+      .reduce((a, b) => a + b, 0) ?? 0;
 
-  const unassignedNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'UnassignedNotification'
-  )?.count;
-
-  const notificationCounts = [userNotificationsCount, unassignedNotificationsCount].filter(Boolean).join('+');
+  const unassignedTasksCount =
+    notificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -174,7 +172,7 @@ export const Header = () => {
               )}
               {(isTicketCurator || user?.isNviCurator) && (
                 <Badge
-                  badgeContent={notificationCounts || null}
+                  badgeContent={pendingTasksCount + unassignedTasksCount}
                   color="info"
                   sx={{
                     '& .MuiBadge-badge': {

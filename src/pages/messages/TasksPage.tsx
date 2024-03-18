@@ -185,14 +185,14 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
-  const doiNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'DoiRequestNotification'
+  const doiNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'DoiRequest'
   )?.count;
-  const publishingNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'PublishingRequestNotification'
+  const publishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'PublishingRequest'
   )?.count;
-  const supportNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'GeneralSupportNotification'
+  const supportNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'GeneralSupportCase'
   )?.count;
 
   const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
