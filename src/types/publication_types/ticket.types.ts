@@ -1,5 +1,5 @@
 import { AssociatedFile } from '../associatedArtifact.types';
-import { AggregationValue, SearchResponse } from '../common.types';
+import { AggregationValue, SearchResponse, SearchResponse2 } from '../common.types';
 import { PublishStrategy } from '../customerInstitution.types';
 import { BaseEntityDescription, PublicationInstanceType, Registration } from '../registration.types';
 
@@ -97,4 +97,4 @@ type CustomerTicketAggregations = {
   byUserPending?: AggregationValue<TicketType>[];
 };
 
-export type CustomerTicketSearchResponse = SearchResponse<ExpandedTicket, CustomerTicketAggregations>;
+export type CustomerTicketSearchResponse = SearchResponse2<ExpandedTicket, CustomerTicketAggregations>;

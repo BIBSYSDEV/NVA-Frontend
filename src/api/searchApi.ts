@@ -19,6 +19,8 @@ export enum TicketSearchParam {
   ViewingScope = 'viewingScope',
   ExcludeSubUnits = 'excludeSubUnits',
   Status = 'status',
+  Owner = 'owner',
+  ViewedByNot = 'viewedByNot',
 }
 
 export interface FetchTicketsParams {
@@ -32,6 +34,8 @@ export interface FetchTicketsParams {
   [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
   [TicketSearchParam.ViewingScope]?: string | null;
   [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
+  [TicketSearchParam.Owner]?: string | null;
+  [TicketSearchParam.ViewedByNot]?: string | null;
 }
 
 export const fetchTickets = async (params: FetchTicketsParams) => {
@@ -66,6 +70,14 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   if (params.aggregation) {
     searchParams.set(TicketSearchParam.Aggregation, params.aggregation);
+  }
+
+  if (params.owner) {
+    searchParams.set(TicketSearchParam.Owner, params.owner);
+  }
+
+  if (params.viewedByNot) {
+    searchParams.set(TicketSearchParam.ViewedByNot, params.viewedByNot);
   }
 
   searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());

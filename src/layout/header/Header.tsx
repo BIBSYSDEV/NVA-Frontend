@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getById } from '../../api/commonApi';
-import { fetchCustomerTickets } from '../../api/searchApi';
+import { FetchTicketsParams, fetchCustomerTickets } from '../../api/searchApi';
 import { notificationsParams } from '../../pages/messages/TasksPage';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
@@ -59,7 +59,21 @@ export const Header = () => {
 
   const isTicketCurator = hasCuratorRole(user);
 
-  const notificationsQuery = useQuery({
+  const ownerNotificationsParams: FetchTicketsParams = {
+    ...notificationsParams,
+    owner: user?.nvaUsername,
+    viewedByNot: user?.nvaUsername,
+  };
+  const dialogueNotificationsQuery = useQuery({
+    enabled: !!user?.isCreator && !!ownerNotificationsParams.owner,
+    queryKey: ['notifications', ownerNotificationsParams],
+    queryFn: () => fetchCustomerTickets(ownerNotificationsParams),
+    meta: { errorMessage: false },
+  });
+
+  const dialogueNotificationsCount = dialogueNotificationsQuery.data?.totalHits ?? 0;
+
+  const tasksNotificationsQuery = useQuery({
     enabled: isTicketCurator,
     queryKey: ['notifications', notificationsParams],
     queryFn: () => fetchCustomerTickets(notificationsParams),
@@ -67,12 +81,12 @@ export const Header = () => {
   });
 
   const pendingTasksCount =
-    notificationsQuery.data?.aggregations?.byUserPending
+    tasksNotificationsQuery.data?.aggregations?.byUserPending
       ?.map((notification) => notification.count)
       .reduce((a, b) => a + b, 0) ?? 0;
 
   const unassignedTasksCount =
-    notificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
+    tasksNotificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -191,14 +205,24 @@ export const Header = () => {
                 </Badge>
               )}
               {user && (
-                <MenuButton
-                  color="inherit"
-                  data-testid={dataTestId.header.myPageLink}
-                  isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
-                  to={UrlPathTemplate.MyPage}
-                  startIcon={<FavoriteBorderIcon />}>
-                  {t('my_page.my_page')}
-                </MenuButton>
+                <Badge
+                  badgeContent={dialogueNotificationsCount}
+                  color="info"
+                  sx={{
+                    '& .MuiBadge-badge': {
+                      right: 20,
+                      top: 20,
+                    },
+                  }}>
+                  <MenuButton
+                    color="inherit"
+                    data-testid={dataTestId.header.myPageLink}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
+                    to={UrlPathTemplate.MyPage}
+                    startIcon={<FavoriteBorderIcon />}>
+                    {t('my_page.my_page')}
+                  </MenuButton>
+                </Badge>
               )}
             </>
           )}
