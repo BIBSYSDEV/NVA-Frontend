@@ -14,7 +14,7 @@ export const OrganizationRenderOption = ({ props, option }: OrganizationRenderOp
   const currentLanguage = i18n.language;
 
   return (
-    <li {...props} key={option.id}>
+    <li {...props}>
       <div>
         <Typography fontWeight="bold">{getLanguageString(option.labels)}</Typography>
         <Typography>
