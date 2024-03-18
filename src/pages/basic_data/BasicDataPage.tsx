@@ -1,8 +1,8 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AdjustIcon from '@mui/icons-material/Adjust';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
-import StoreIcon from '@mui/icons-material/Store';
 import { Divider, FormControlLabel, FormGroup, MenuItem, Radio, Select } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -132,7 +132,7 @@ const BasicDataPage = () => {
           <>
             <NavigationListAccordion
               title={t('common.institutions')}
-              startIcon={<StoreIcon sx={{ bgcolor: 'grey.500' }} />}
+              startIcon={<AccountBalanceIcon sx={{ bgcolor: 'grey.500' }} />}
               accordionPath={UrlPathTemplate.BasicDataInstitutions}
               dataTestId={dataTestId.basicData.institutionsAccordion}>
               <NavigationList>

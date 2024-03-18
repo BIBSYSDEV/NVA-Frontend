@@ -1,6 +1,6 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import GavelIcon from '@mui/icons-material/Gavel';
-import StoreIcon from '@mui/icons-material/Store';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -46,7 +46,7 @@ const EditorPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu>
-        <SideNavHeader text={organizationQuery.data?.acronym} icon={StoreIcon} />
+        <SideNavHeader text={organizationQuery.data?.acronym} icon={AccountBalanceIcon} />
         <NavigationListAccordion
           dataTestId={dataTestId.editor.overviewAccordion}
           title={t('common.overview')}
