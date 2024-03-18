@@ -4,7 +4,7 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Badge, Box, Theme, Typography, useMediaQuery } from '@mui/material';
+import { AppBar, Badge, Box, Theme, Typography, styled, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +24,13 @@ import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
+
+const StyledBadge = styled(Badge)({
+  '& .MuiBadge-badge': {
+    right: 20,
+    top: 20,
+  },
+});
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -185,15 +192,7 @@ export const Header = () => {
                 </MenuButton>
               )}
               {(isTicketCurator || user?.isNviCurator) && (
-                <Badge
-                  badgeContent={pendingTasksCount + unassignedTasksCount}
-                  color="info"
-                  sx={{
-                    '& .MuiBadge-badge': {
-                      right: 20,
-                      top: 20,
-                    },
-                  }}>
+                <StyledBadge badgeContent={pendingTasksCount + unassignedTasksCount}>
                   <MenuButton
                     color="inherit"
                     data-testid={dataTestId.header.tasksLink}
@@ -202,18 +201,10 @@ export const Header = () => {
                     startIcon={<AssignmentIcon />}>
                     {t('common.tasks')}
                   </MenuButton>
-                </Badge>
+                </StyledBadge>
               )}
               {user && (
-                <Badge
-                  badgeContent={dialogueNotificationsCount}
-                  color="info"
-                  sx={{
-                    '& .MuiBadge-badge': {
-                      right: 20,
-                      top: 20,
-                    },
-                  }}>
+                <StyledBadge badgeContent={dialogueNotificationsCount}>
                   <MenuButton
                     color="inherit"
                     data-testid={dataTestId.header.myPageLink}
@@ -222,7 +213,7 @@ export const Header = () => {
                     startIcon={<FavoriteBorderIcon />}>
                     {t('my_page.my_page')}
                   </MenuButton>
-                </Badge>
+                </StyledBadge>
               )}
             </>
           )}

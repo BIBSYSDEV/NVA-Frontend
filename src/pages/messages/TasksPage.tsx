@@ -297,7 +297,7 @@ const TasksPage = () => {
               {isPublishingCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
-                  endIcon={<Badge badgeContent={publishingNotificationsCount} color="info" />}
+                  endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.publishingRequest}
                   color="publishingRequest"
@@ -311,7 +311,7 @@ const TasksPage = () => {
               {isDoiCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
-                  endIcon={<Badge badgeContent={doiNotificationsCount} color="info" />}
+                  endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.doiRequest}
                   color="doiRequest"
@@ -325,7 +325,7 @@ const TasksPage = () => {
               {isSupportCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
-                  endIcon={<Badge badgeContent={supportNotificationsCount} color="info" />}
+                  endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.generalSupportCase}
                   color="generalSupportCase"

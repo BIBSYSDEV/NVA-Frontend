@@ -238,7 +238,7 @@ const MyPagePage = () => {
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
-                endIcon={<Badge badgeContent={unreadPublishingCount} color="info" />}
+                endIcon={<Badge badgeContent={unreadPublishingCount} />}
                 showCheckbox
                 isSelected={selectedTypes.publishingRequest}
                 color="publishingRequest"
@@ -252,7 +252,7 @@ const MyPagePage = () => {
 
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.doiButton}
-                endIcon={<Badge badgeContent={unreadDoiCount} color="info" />}
+                endIcon={<Badge badgeContent={unreadDoiCount} />}
                 showCheckbox
                 isSelected={selectedTypes.doiRequest}
                 color="doiRequest"
@@ -264,7 +264,7 @@ const MyPagePage = () => {
 
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.supportButton}
-                endIcon={<Badge badgeContent={unreadGeneralSupportCount} color="info" />}
+                endIcon={<Badge badgeContent={unreadGeneralSupportCount} />}
                 showCheckbox
                 isSelected={selectedTypes.generalSupportCase}
                 color="generalSupportCase"

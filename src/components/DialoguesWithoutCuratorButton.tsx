@@ -50,7 +50,7 @@ export const DialoguesWithoutCuratorButton = () => {
       color="primary"
       sx={{ textTransform: 'none' }}
       startIcon={<ChatBubble />}
-      endIcon={<Badge badgeContent={unassignedNotificationsCount} color="info" sx={{ ml: '1rem' }} />}
+      endIcon={<Badge badgeContent={unassignedNotificationsCount} sx={{ ml: '1rem' }} />}
       onClick={toggleDialoguesWithoutCurators}
       title={t('tasks.dialogues_without_curator')}
       data-testid={dataTestId.tasksPage.dialoguesWithoutCuratorButton}>
