@@ -82,14 +82,24 @@ export const OrganizationOverview = () => {
 interface OrganizationLevelProps {
   organization: Organization;
   searchId: string;
+  includeAllSubunits?: boolean;
   level?: number;
+  defaultExpanded?: boolean;
 }
 
-const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLevelProps) => {
+const OrganizationLevel = ({
+  organization,
+  searchId,
+  level = 0,
+  includeAllSubunits = false,
+}: OrganizationLevelProps) => {
   const { t } = useTranslation();
+
   const [expanded, setExpanded] = useState(false);
 
-  if (!!searchId && organization.id !== searchId) {
+  const isSearchedUnit = organization.id === searchId;
+
+  if (!!searchId && !isSearchedUnit && !includeAllSubunits) {
     const allSubunits = getAllChildOrganizations(organization.hasPart);
     if (!allSubunits.some((subunit) => subunit.id === searchId)) {
       return null; // Hide this element if the searched ID is not a part of this unit
@@ -103,10 +113,17 @@ const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLe
       elevation={2}
       disableGutters
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: `${level}rem` }}
-      expanded={expanded || !!searchId}
+      expanded={expanded || (!!searchId && !includeAllSubunits)}
       onChange={() => setExpanded(!expanded)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
-        <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '3fr 3fr 1fr 1fr' }}>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'grid',
+            gap: '1rem',
+            gridTemplateColumns: '3fr 3fr 1fr 1fr',
+            '& > p': { fontWeight: isSearchedUnit ? 700 : undefined },
+          }}>
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
           <Typography>{getLanguageString(organization.labels, 'en')}</Typography>
           <Typography>{getIdentifierFromId(organization.id)}</Typography>
@@ -116,7 +133,13 @@ const OrganizationLevel = ({ organization, searchId, level = 0 }: OrganizationLe
       {subunitsCount > 0 && (
         <AccordionDetails sx={{ pr: 0 }}>
           {organization.hasPart?.map((subunit) => (
-            <OrganizationLevel key={subunit.id} organization={subunit} level={level + 1} searchId={searchId} />
+            <OrganizationLevel
+              key={subunit.id}
+              organization={subunit}
+              level={level + 1}
+              searchId={searchId}
+              includeAllSubunits={includeAllSubunits || isSearchedUnit}
+            />
           ))}
         </AccordionDetails>
       )}
