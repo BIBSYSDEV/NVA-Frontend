@@ -43,7 +43,7 @@ export const EditorDoi = () => {
                 rowGap: '0.3rem',
                 width: 'max(30%, 250px)',
               }}>
-              <Typography variant="h3">{t('basic_data.institutions.doi_member_id')}:</Typography>
+              <Typography variant="h3">{t('basic_data.institutions.doi_repo_id')}:</Typography>
               {customer.doiAgent?.username ? (
                 <Typography sx={{ color: 'primary.light', bgcolor: 'grey.400', p: '0.7rem' }}>
                   {customer.doiAgent.username}
