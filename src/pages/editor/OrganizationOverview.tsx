@@ -73,7 +73,7 @@ export const OrganizationOverview = () => {
           />
 
           {organizationQuery.data?.hasPart?.map((organization) => (
-            <OrganizationLevel key={organization.id} organization={organization} searchId={searchId} />
+            <OrganizationAccordion key={organization.id} organization={organization} searchId={searchId} />
           ))}
         </Box>
       )}
@@ -81,20 +81,19 @@ export const OrganizationOverview = () => {
   );
 };
 
-interface OrganizationLevelProps {
+interface OrganizationAccordionProps {
   organization: Organization;
   searchId: string;
   includeAllSubunits?: boolean;
   level?: number;
-  defaultExpanded?: boolean;
 }
 
-const OrganizationLevel = ({
+const OrganizationAccordion = ({
   organization,
   searchId,
   level = 0,
   includeAllSubunits = false,
-}: OrganizationLevelProps) => {
+}: OrganizationAccordionProps) => {
   const { t } = useTranslation();
 
   const [expanded, setExpanded] = useState(false);
@@ -136,7 +135,7 @@ const OrganizationLevel = ({
       {subunitsCount > 0 && (
         <AccordionDetails sx={{ pr: 0 }}>
           {organization.hasPart?.map((subunit) => (
-            <OrganizationLevel
+            <OrganizationAccordion
               key={subunit.id}
               organization={subunit}
               level={level + 1}
