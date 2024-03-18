@@ -13,13 +13,19 @@ export const OrganizationRenderOption = ({ props, option }: OrganizationRenderOp
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
 
+  const mainLanguageText = getLanguageString(option.labels);
+  const secondaryLanguageText = getLanguageString(
+    option.labels,
+    currentLanguage === 'nob' || currentLanguage === 'nno' ? 'en' : 'no'
+  );
+
   return (
     <li {...props} key={option.id}>
       <div>
         <Typography fontWeight="bold">{getLanguageString(option.labels)}</Typography>
         <Typography>
           {option.country && `${option.country} | `}
-          {getLanguageString(option.labels, currentLanguage === 'nob' || currentLanguage === 'nno' ? 'en' : 'no')}
+          {mainLanguageText !== secondaryLanguageText && secondaryLanguageText}
         </Typography>
       </div>
     </li>

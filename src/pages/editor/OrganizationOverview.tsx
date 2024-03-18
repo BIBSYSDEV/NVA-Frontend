@@ -22,6 +22,7 @@ import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getAllChildOrganizations, getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
+import { OrganizationRenderOption } from '../../components/OrganizationRenderOption';
 
 export const OrganizationOverview = () => {
   const { t } = useTranslation();
@@ -65,6 +66,15 @@ export const OrganizationOverview = () => {
             options={allSubUnits}
             inputMode="search"
             getOptionLabel={(option) => getLanguageString(option.labels)}
+            renderOption={(props, option) => <OrganizationRenderOption key={option.id} props={props} option={option} />}
+            filterOptions={(options, state) =>
+              options.filter(
+                (option) =>
+                  Object.values(option.labels).some((label) =>
+                    label.toLowerCase().includes(state.inputValue.toLowerCase())
+                  ) || option.id.includes(state.inputValue)
+              )
+            }
             getOptionKey={(option) => option.id}
             onChange={(_, selectedUnit) => setSearchId(selectedUnit?.id ?? '')}
             renderInput={(params) => (
