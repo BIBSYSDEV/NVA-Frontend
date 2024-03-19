@@ -4,7 +4,7 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Badge, Box, Theme, Typography, styled, useMediaQuery } from '@mui/material';
+import { AppBar, Badge, Box, Theme, styled, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -157,24 +157,16 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
-              {organization?.acronym &&
-                (hasCustomer ? (
-                  <MenuButton
-                    startIcon={<AccountBalanceIcon />}
-                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
-                    color="inherit"
-                    data-testid={dataTestId.header.editorLink}
-                    to={UrlPathTemplate.EditorInstitution}>
-                    {organization.acronym}
-                  </MenuButton>
-                ) : (
-                  <Typography
-                    variant="h1"
-                    component="span"
-                    sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
-                    {organization.acronym}
-                  </Typography>
-                ))}
+              {organization?.acronym && hasCustomer && (
+                <MenuButton
+                  startIcon={<AccountBalanceIcon />}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
+                  color="inherit"
+                  data-testid={dataTestId.header.editorLink}
+                  to={UrlPathTemplate.EditorInstitution}>
+                  {organization.acronym}
+                </MenuButton>
+              )}
 
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <MenuButton
