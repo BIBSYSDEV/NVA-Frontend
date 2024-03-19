@@ -230,7 +230,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
               <Button onClick={onClose}>{t('common.cancel')}</Button>
               <LoadingButton
                 loading={isSubmitting}
-                disabled={!values.person || !values.user}
+                disabled={!values.person || internalEmployments.length === 0 || !values.user}
                 variant="contained"
                 type="submit">
                 {t('common.save')}
