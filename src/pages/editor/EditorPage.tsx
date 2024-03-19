@@ -22,6 +22,7 @@ import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { VocabularySettings } from './VocabularySettings';
 
 const EditorPage = () => {
@@ -79,6 +80,12 @@ const EditorPage = () => {
               data-testid={dataTestId.editor.doiLinkButton}
               to={UrlPathTemplate.EditorDoi}>
               {t('common.doi_long')}
+            </LinkButton>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorPublishStrategyOverview}
+              data-testid={dataTestId.editor.publishStrategyOverviewLinkButton}
+              to={UrlPathTemplate.EditorPublishStrategyOverview}>
+              {t('editor.publish_strategy.publish_strategy')}
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
@@ -138,6 +145,12 @@ const EditorPage = () => {
             path={UrlPathTemplate.EditorPublishStrategy}
             component={PublishStrategySettings}
             isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorPublishStrategyOverview}
+            component={PublishingStrategyOverview}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact
