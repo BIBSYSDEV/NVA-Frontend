@@ -122,7 +122,7 @@ const MyPagePage = () => {
   const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
   const notificationsQuery = useQuery({
     enabled: isOnDialoguePage && !!user?.isCreator && !!dialogueNotificationsParams.owner,
-    queryKey: ['notifications', dialogueNotificationsParams],
+    queryKey: ['dialogueNotifications', dialogueNotificationsParams],
     queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
     meta: { errorMessage: false },
   });

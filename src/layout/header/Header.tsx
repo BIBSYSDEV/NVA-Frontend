@@ -69,14 +69,14 @@ export const Header = () => {
   const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
   const dialogueNotificationsQuery = useQuery({
     enabled: !!user?.isCreator && !!dialogueNotificationsParams.owner,
-    queryKey: ['notifications', dialogueNotificationsParams],
+    queryKey: ['dialogueNotifications', dialogueNotificationsParams],
     queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
     meta: { errorMessage: false },
   });
 
   const taskNotificationsQuery = useQuery({
     enabled: isTicketCurator,
-    queryKey: ['notifications', taskNotificationsParams],
+    queryKey: ['taskNotifications', taskNotificationsParams],
     queryFn: () => fetchCustomerTickets(taskNotificationsParams),
     meta: { errorMessage: false },
   });

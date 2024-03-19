@@ -176,7 +176,7 @@ const TasksPage = () => {
 
   const notificationsQuery = useQuery({
     enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
-    queryKey: ['notifications', taskNotificationsParams],
+    queryKey: ['taskNotifications', taskNotificationsParams],
     queryFn: () => fetchCustomerTickets(taskNotificationsParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });

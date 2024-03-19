@@ -23,7 +23,7 @@ export const DialoguesWithoutCuratorButton = () => {
 
   const notificationsQuery = useQuery({
     enabled: user?.isDoiCurator || user?.isSupportCurator || user?.isPublishingCurator,
-    queryKey: ['notifications', taskNotificationsParams],
+    queryKey: ['taskNotifications', taskNotificationsParams],
     queryFn: () => fetchCustomerTickets(taskNotificationsParams),
     meta: { errorMessage: false },
   });
