@@ -1,6 +1,6 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import GavelIcon from '@mui/icons-material/Gavel';
-import StoreIcon from '@mui/icons-material/Store';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -20,13 +20,15 @@ import { CategoriesWithFiles } from './CategoriesWithFiles';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
+import { OrganizationOverview } from './OrganizationOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { VocabularySettings } from './VocabularySettings';
 
 const EditorPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const isEditor = !!user?.customerId && user.isEditor;
+  const hasCustomer = !!user?.customerId;
+  const isEditor = hasCustomer && user.isEditor;
 
   const institutionId = user?.topOrgCristinId ?? '';
 
@@ -44,7 +46,7 @@ const EditorPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu>
-        <SideNavHeader text={organizationQuery.data?.acronym} icon={StoreIcon} />
+        <SideNavHeader text={organizationQuery.data?.acronym} icon={AccountBalanceIcon} />
         <NavigationListAccordion
           dataTestId={dataTestId.editor.overviewAccordion}
           title={t('common.overview')}
@@ -56,13 +58,27 @@ const EditorPage = () => {
             />
           }
           accordionPath={UrlPathTemplate.EditorOverview}
-          defaultPath={UrlPathTemplate.EditorCurators}>
+          defaultPath={UrlPathTemplate.EditorInstitution}>
           <NavigationList>
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorCurators}
-              data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
-              to={UrlPathTemplate.EditorCurators}>
-              {t('editor.curators.areas_of_responsibility')}
+              isSelected={currentPath === UrlPathTemplate.EditorInstitution}
+              data-testid={dataTestId.editor.institutionsNameLinkButton}
+              to={UrlPathTemplate.EditorInstitution}>
+              {t('editor.institution.institution_profile')}
+            </LinkButton>
+
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorOrganizationOverview}
+              data-testid={dataTestId.editor.organizationOverviewLinkButton}
+              to={UrlPathTemplate.EditorOrganizationOverview}>
+              {t('editor.organization_overview')}
+            </LinkButton>
+
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorDoi}
+              data-testid={dataTestId.editor.doiLinkButton}
+              to={UrlPathTemplate.EditorDoi}>
+              {t('common.doi_long')}
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
@@ -79,19 +95,13 @@ const EditorPage = () => {
             />
           }
           accordionPath={UrlPathTemplate.EditorSettings}
-          defaultPath={UrlPathTemplate.EditorInstitution}>
+          defaultPath={UrlPathTemplate.EditorCurators}>
           <NavigationList>
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorInstitution}
-              data-testid={dataTestId.editor.institutionsNameLinkButton}
-              to={UrlPathTemplate.EditorInstitution}>
-              {t('editor.institution.institution_name')}
-            </LinkButton>
-            <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorDoi}
-              data-testid={dataTestId.editor.doiLinkButton}
-              to={UrlPathTemplate.EditorDoi}>
-              {t('common.doi_long')}
+              isSelected={currentPath === UrlPathTemplate.EditorCurators}
+              data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
+              to={UrlPathTemplate.EditorCurators}>
+              {t('editor.curators.areas_of_responsibility')}
             </LinkButton>
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
@@ -146,6 +156,12 @@ const EditorPage = () => {
             path={UrlPathTemplate.EditorCategories}
             component={CategoriesWithFiles}
             isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorOrganizationOverview}
+            component={OrganizationOverview}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>

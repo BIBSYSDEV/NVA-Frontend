@@ -105,6 +105,13 @@ export const fetchOrganization = async (id: string) => {
   return fetchOrganizationResponse.data;
 };
 
+export const fetchOrganizations = async (ids: string[]) => {
+  const areaPromises = ids.map(async (id) => {
+    return await fetchOrganization(id);
+  });
+  return await Promise.all(areaPromises);
+};
+
 export const fetchPositions = async (includeDisabledPositions: boolean) => {
   const fetchPositionsResponse = await apiRequest2<PositionResponse>({
     url: includeDisabledPositions ? CristinApiPath.Position : `${CristinApiPath.Position}?active=true`,

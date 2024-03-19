@@ -41,6 +41,7 @@ import { NviCandidateAggregations } from '../../types/nvi.types';
 import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useSetDefaultTicketSearchParams } from '../../utils/hooks/useSetDefaultTicketSearchParams';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -50,6 +51,7 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
+import { taskNotificationsParams } from '../../utils/searchHelpers';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
@@ -66,11 +68,6 @@ const StyledStatusRadio = styled(Radio)({
 });
 
 const nviYearFilterValues = getNviYearFilterValues();
-
-export const notificationsParams: FetchTicketsParams = {
-  results: 0,
-  aggregation: 'all',
-};
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -93,7 +90,7 @@ const TasksPage = () => {
 
   const institutionUserQuery = useQuery({
     enabled: !!nvaUsername,
-    queryKey: [nvaUsername],
+    queryKey: ['user', nvaUsername],
     queryFn: () => fetchUser(nvaUsername),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
@@ -171,8 +168,9 @@ const TasksPage = () => {
     excludeSubUnits: true,
   };
 
+  const defaultTicketParamsAdded = useSetDefaultTicketSearchParams();
   const ticketsQuery = useQuery({
-    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
+    enabled: isOnTicketsPage && !institutionUserQuery.isLoading && defaultTicketParamsAdded,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
@@ -180,19 +178,19 @@ const TasksPage = () => {
 
   const notificationsQuery = useQuery({
     enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
-    queryKey: ['notifications', notificationsParams],
-    queryFn: () => fetchCustomerTickets(notificationsParams),
+    queryKey: ['taskNotifications', taskNotificationsParams],
+    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
-  const doiNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'DoiRequestNotification'
+  const doiNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'DoiRequest'
   )?.count;
-  const publishingNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'PublishingRequestNotification'
+  const publishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'PublishingRequest'
   )?.count;
-  const supportNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'GeneralSupportNotification'
+  const supportNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'GeneralSupportCase'
   )?.count;
 
   const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
@@ -297,7 +295,7 @@ const TasksPage = () => {
               {isPublishingCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
-                  endIcon={<Badge badgeContent={publishingNotificationsCount} color="info" />}
+                  endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.publishingRequest}
                   color="publishingRequest"
@@ -311,7 +309,7 @@ const TasksPage = () => {
               {isDoiCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
-                  endIcon={<Badge badgeContent={doiNotificationsCount} color="info" />}
+                  endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.doiRequest}
                   color="doiRequest"
@@ -325,7 +323,7 @@ const TasksPage = () => {
               {isSupportCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
-                  endIcon={<Badge badgeContent={supportNotificationsCount} color="info" />}
+                  endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.generalSupportCase}
                   color="generalSupportCase"
