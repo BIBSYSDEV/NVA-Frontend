@@ -51,6 +51,7 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
+import { taskNotificationsParams } from '../../utils/searchHelpers';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
@@ -67,11 +68,6 @@ const StyledStatusRadio = styled(Radio)({
 });
 
 const nviYearFilterValues = getNviYearFilterValues();
-
-export const notificationsParams: FetchTicketsParams = {
-  results: 0,
-  aggregation: 'all',
-};
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -182,8 +178,8 @@ const TasksPage = () => {
 
   const notificationsQuery = useQuery({
     enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
-    queryKey: ['notifications', notificationsParams],
-    queryFn: () => fetchCustomerTickets(notificationsParams),
+    queryKey: ['taskNotifications', taskNotificationsParams],
+    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
@@ -299,7 +295,7 @@ const TasksPage = () => {
               {isPublishingCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
-                  endIcon={<Badge badgeContent={publishingNotificationsCount} color="info" />}
+                  endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.publishingRequest}
                   color="publishingRequest"
@@ -313,7 +309,7 @@ const TasksPage = () => {
               {isDoiCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
-                  endIcon={<Badge badgeContent={doiNotificationsCount} color="info" />}
+                  endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.doiRequest}
                   color="doiRequest"
@@ -327,7 +323,7 @@ const TasksPage = () => {
               {isSupportCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
-                  endIcon={<Badge badgeContent={supportNotificationsCount} color="info" />}
+                  endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.generalSupportCase}
                   color="generalSupportCase"

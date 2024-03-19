@@ -3,13 +3,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Button, Divider, FormControlLabel, Typography } from '@mui/material';
+import { Badge, Button, Divider, FormControlLabel, Typography } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { FetchTicketsParams, TicketSearchParam, fetchTickets } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -43,6 +43,7 @@ import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
 import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
+import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 
 const MyPagePage = () => {
   const dispatch = useDispatch();
@@ -115,6 +116,26 @@ const MyPagePage = () => {
     queryFn: () => fetchTickets(ticketSearchParams),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
+
+  const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
+
+  const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
+  const notificationsQuery = useQuery({
+    enabled: isOnDialoguePage && !!user?.isCreator && !!dialogueNotificationsParams.owner,
+    queryKey: ['dialogueNotifications', dialogueNotificationsParams],
+    queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
+    meta: { errorMessage: false },
+  });
+
+  const unreadDoiCount = notificationsQuery.data?.aggregations?.type?.find(
+    (bucket) => bucket.key === 'DoiRequest'
+  )?.count;
+  const unreadPublishingCount = notificationsQuery.data?.aggregations?.type?.find(
+    (bucket) => bucket.key === 'PublishingRequest'
+  )?.count;
+  const unreadGeneralSupportCount = notificationsQuery.data?.aggregations?.type?.find(
+    (bucket) => bucket.key === 'GeneralSupportCase'
+  )?.count;
 
   const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
@@ -213,6 +234,7 @@ const MyPagePage = () => {
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
+                endIcon={<Badge badgeContent={unreadPublishingCount} />}
                 showCheckbox
                 isSelected={selectedTypes.publishingRequest}
                 color="publishingRequest"
@@ -226,6 +248,7 @@ const MyPagePage = () => {
 
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.doiButton}
+                endIcon={<Badge badgeContent={unreadDoiCount} />}
                 showCheckbox
                 isSelected={selectedTypes.doiRequest}
                 color="doiRequest"
@@ -237,6 +260,7 @@ const MyPagePage = () => {
 
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.supportButton}
+                endIcon={<Badge badgeContent={unreadGeneralSupportCount} />}
                 showCheckbox
                 isSelected={selectedTypes.generalSupportCase}
                 color="generalSupportCase"

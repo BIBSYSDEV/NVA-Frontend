@@ -4,7 +4,7 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Badge, Box, Theme, Typography, useMediaQuery } from '@mui/material';
+import { AppBar, Badge, Box, Theme, Typography, styled, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getById } from '../../api/commonApi';
 import { fetchCustomerTickets } from '../../api/searchApi';
-import { notificationsParams } from '../../pages/messages/TasksPage';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -24,6 +23,14 @@ import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
+import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
+
+const StyledBadge = styled(Badge)({
+  '& .MuiBadge-badge': {
+    right: 20,
+    top: 20,
+  },
+});
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -59,20 +66,28 @@ export const Header = () => {
 
   const isTicketCurator = hasCuratorRole(user);
 
-  const notificationsQuery = useQuery({
+  const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
+  const dialogueNotificationsQuery = useQuery({
+    enabled: !!user?.isCreator && !!dialogueNotificationsParams.owner,
+    queryKey: ['dialogueNotifications', dialogueNotificationsParams],
+    queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
+    meta: { errorMessage: false },
+  });
+
+  const taskNotificationsQuery = useQuery({
     enabled: isTicketCurator,
-    queryKey: ['notifications', notificationsParams],
-    queryFn: () => fetchCustomerTickets(notificationsParams),
+    queryKey: ['taskNotifications', taskNotificationsParams],
+    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
     meta: { errorMessage: false },
   });
 
   const pendingTasksCount =
-    notificationsQuery.data?.aggregations?.byUserPending
+    taskNotificationsQuery.data?.aggregations?.byUserPending
       ?.map((notification) => notification.count)
       .reduce((a, b) => a + b, 0) ?? 0;
 
   const unassignedTasksCount =
-    notificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
+    taskNotificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -171,15 +186,7 @@ export const Header = () => {
                 </MenuButton>
               )}
               {(isTicketCurator || user?.isNviCurator) && (
-                <Badge
-                  badgeContent={pendingTasksCount + unassignedTasksCount}
-                  color="info"
-                  sx={{
-                    '& .MuiBadge-badge': {
-                      right: 20,
-                      top: 20,
-                    },
-                  }}>
+                <StyledBadge badgeContent={pendingTasksCount + unassignedTasksCount}>
                   <MenuButton
                     color="inherit"
                     data-testid={dataTestId.header.tasksLink}
@@ -188,17 +195,19 @@ export const Header = () => {
                     startIcon={<AssignmentIcon />}>
                     {t('common.tasks')}
                   </MenuButton>
-                </Badge>
+                </StyledBadge>
               )}
               {user && (
-                <MenuButton
-                  color="inherit"
-                  data-testid={dataTestId.header.myPageLink}
-                  isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
-                  to={UrlPathTemplate.MyPage}
-                  startIcon={<FavoriteBorderIcon />}>
-                  {t('my_page.my_page')}
-                </MenuButton>
+                <StyledBadge badgeContent={dialogueNotificationsQuery.data?.totalHits}>
+                  <MenuButton
+                    color="inherit"
+                    data-testid={dataTestId.header.myPageLink}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
+                    to={UrlPathTemplate.MyPage}
+                    startIcon={<FavoriteBorderIcon />}>
+                    {t('my_page.my_page')}
+                  </MenuButton>
+                </StyledBadge>
               )}
             </>
           )}
