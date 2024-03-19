@@ -18,12 +18,12 @@ import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
-import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
 
 const StyledBadge = styled(Badge)({
   '& .MuiBadge-badge': {
@@ -39,6 +39,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const institutionId = user?.topOrgCristinId ?? '';
+  const hasCustomer = !!user?.customerId;
 
   const organizationQuery = useQuery({
     enabled: !!institutionId,
@@ -157,7 +158,7 @@ export const Header = () => {
           {!isMobile && (
             <>
               {organization?.acronym &&
-                (user?.isEditor ? (
+                (hasCustomer ? (
                   <MenuButton
                     startIcon={<AccountBalanceIcon />}
                     isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
