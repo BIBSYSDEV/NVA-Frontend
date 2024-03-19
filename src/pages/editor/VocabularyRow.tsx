@@ -10,7 +10,6 @@ const toggleButtonSx: SxProps = { width: 'fit-content', px: '1rem' };
 interface VocabularyRowProps {
   vocabulary: CustomerVocabulary;
   updateVocabularies: (newVocabulary: CustomerVocabulary) => Promise<void>;
-  isLoadingCustomer: boolean;
   dataTestId: string;
   disabled: boolean;
 }

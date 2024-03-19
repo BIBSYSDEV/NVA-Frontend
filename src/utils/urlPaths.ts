@@ -21,7 +21,7 @@ export enum UrlPathTemplate {
   EditorOverview = '/editor/overview',
   EditorPublishStrategy = '/editor/settings/publish-strategy',
   EditorSettings = '/editor/settings',
-  EditorVocabulary = '/editor/settings/vocabulary',
+  EditorVocabulary = '/editor/overview/vocabulary',
   EditorCategories = '/editor/settings/categories',
   Home = '/',
   Login = '/login',

@@ -80,6 +80,13 @@ const EditorPage = () => {
               to={UrlPathTemplate.EditorDoi}>
               {t('common.doi_long')}
             </LinkButton>
+
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+              data-testid={dataTestId.editor.vocabularyLinkButton}
+              to={UrlPathTemplate.EditorVocabulary}>
+              {t('editor.vocabulary')}
+            </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
         {isEditor && (
@@ -102,12 +109,6 @@ const EditorPage = () => {
                 data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
                 to={UrlPathTemplate.EditorCurators}>
                 {t('editor.curators.areas_of_responsibility')}
-              </LinkButton>
-              <LinkButton
-                isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
-                data-testid={dataTestId.editor.vocabularyLinkButton}
-                to={UrlPathTemplate.EditorVocabulary}>
-                {t('editor.vocabulary')}
               </LinkButton>
               <LinkButton
                 isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
