@@ -8,16 +8,7 @@ import { fetchUser } from '../../api/roleApi';
 import { TicketSearchParam } from '../../api/searchApi';
 import { RootState } from '../../redux/store';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
-import { Organization } from '../../types/organization.types';
-
-function flattenOrganizationsWithSubunits(topLevelOrganizations: Organization[]): Organization[] {
-  return topLevelOrganizations.flatMap((org) => flattenOrganizationWithSubunits(org));
-}
-
-function flattenOrganizationWithSubunits(org: Organization): Organization[] {
-  const subUnits = org.hasPart?.flatMap((subOrg) => flattenOrganizationWithSubunits(subOrg)) || [];
-  return [org, ...subUnits];
-}
+import { getAllChildOrganizations } from '../institutions-helpers';
 
 export const useSetDefaultTicketSearchParams = (): boolean => {
   const [defaultParamsAdded, setDefaultParamsAdded] = useState(false);
@@ -44,14 +35,14 @@ export const useSetDefaultTicketSearchParams = (): boolean => {
   });
 
   useEffect(() => {
-    if (!organizationQuery.data) {
+    if (!organizationQuery.data || defaultParamsAdded) {
       return;
     }
 
     const searchParams = new URLSearchParams(history.location.search);
 
     const organizations = organizationQuery.data;
-    const organizationsWithSubUnits = flattenOrganizationsWithSubunits(organizations);
+    const organizationsWithSubUnits = getAllChildOrganizations(organizations);
     if (!searchParams.get(TicketSearchParam.ViewingScope)) {
       searchParams.set(TicketSearchParam.ViewingScope, organizationsWithSubUnits.map((org) => org.id).join(','));
     }
@@ -67,7 +58,7 @@ export const useSetDefaultTicketSearchParams = (): boolean => {
     history.push({ search: searchParams.toString() });
 
     setDefaultParamsAdded(true);
-  }, [organizationQuery.data, history, nvaUsername]);
+  }, [organizationQuery.data, history, nvaUsername, defaultParamsAdded]);
 
   return defaultParamsAdded;
 };
