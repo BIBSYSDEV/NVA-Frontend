@@ -31,7 +31,7 @@ export const getSortedSubUnits = (subUnits: Organization[] = []) => {
   return units.sort((a, b) => (getLanguageString(a.labels) < getLanguageString(b.labels) ? -1 : 1));
 };
 
-const getAllChildOrganizations = (units: Organization[] = [], result: Organization[] = []): Organization[] => {
+export const getAllChildOrganizations = (units: Organization[] = [], result: Organization[] = []): Organization[] => {
   if (!units.length) {
     return result;
   }

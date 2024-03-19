@@ -10,28 +10,33 @@ import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 export enum TicketSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
-  Query = 'query',
-  Role = 'role',
-  Results = 'results',
+  ExcludeSubUnits = 'excludeSubUnits',
   From = 'from',
   OrderBy = 'orderBy',
+  Owner = 'owner',
+  Query = 'query',
+  Results = 'results',
+  Role = 'role',
   SortOrder = 'sortOrder',
-  ViewingScope = 'viewingScope',
-  ExcludeSubUnits = 'excludeSubUnits',
   Status = 'status',
+  ViewedByNot = 'viewedByNot',
+  ViewingScope = 'viewingScope',
 }
 
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
-  [TicketSearchParam.Query]?: string | null;
-  [TicketSearchParam.Role]?: 'creator';
-  [TicketSearchParam.Results]?: number | null;
+  [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
   [TicketSearchParam.OrderBy]?: 'createdDate' | null;
+  [TicketSearchParam.Owner]?: string | null;
+  [TicketSearchParam.Query]?: string | null;
+  [TicketSearchParam.Results]?: number | null;
+  [TicketSearchParam.Role]?: 'creator';
   [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
+  [TicketSearchParam.Status]?: string | null;
+  [TicketSearchParam.ViewedByNot]?: string | null;
   [TicketSearchParam.ViewingScope]?: string | null;
-  [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
 }
 
 export const fetchTickets = async (params: FetchTicketsParams) => {
@@ -66,6 +71,14 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   if (params.aggregation) {
     searchParams.set(TicketSearchParam.Aggregation, params.aggregation);
+  }
+
+  if (params.owner) {
+    searchParams.set(TicketSearchParam.Owner, params.owner);
+  }
+
+  if (params.viewedByNot) {
+    searchParams.set(TicketSearchParam.ViewedByNot, params.viewedByNot);
   }
 
   searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
@@ -171,6 +184,7 @@ export enum ResultParam {
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
   ExcludeSubunits = 'excludeSubunits',
+  Fields = 'fields',
   Files = 'files',
   From = 'from',
   FundingIdentifier = 'fundingIdentifier',
@@ -207,6 +221,20 @@ export enum ResultSearchOrder {
   ModifiedDate = 'modifiedDate',
   PublicationDate = 'publicationDate',
 }
+
+const queryFieldsValue = [
+  ResultParam.Title,
+  ResultParam.Abstract,
+  ResultParam.ContributorName,
+  ResultParam.Doi,
+  ResultParam.Tags,
+  ResultParam.Issn,
+  ResultParam.Handle,
+  ResultParam.FundingIdentifier,
+  ResultParam.Course,
+  ResultParam.CristinIdentifier,
+  ResultParam.Identifier,
+].join(',');
 
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
@@ -343,6 +371,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
+    searchParams.set(ResultParam.Fields, queryFieldsValue);
   }
   if (params.scientificIndex) {
     searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());

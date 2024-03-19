@@ -18,7 +18,7 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
@@ -169,7 +169,10 @@ export const PublishingAccordion = ({
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
-  const hasUnpublishedFiles = registration.associatedArtifacts.some((artifact) => artifact.type === 'UnpublishedFile');
+  const filesAwaitingApproval = registration.associatedArtifacts.filter(
+    (artifact) => artifact.type === 'UnpublishedFile'
+  ).length;
+  const hasUnpublishedFiles = filesAwaitingApproval > 0;
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
@@ -237,7 +240,7 @@ export const PublishingAccordion = ({
         {(registration.status === RegistrationStatus.Published ||
           registration.status === RegistrationStatus.Deleted ||
           registration.status === RegistrationStatus.Unpublished) && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mb: '0.5rem' }}>
             <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
               <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
               {registration.publishedDate && (
@@ -264,7 +267,7 @@ export const PublishingAccordion = ({
         {/* Option to reload data if status is not up to date with ticket */}
         {!tabErrors && hasMismatchingPublishedStatus && (
           <>
-            <Typography gutterBottom>
+            <Typography paragraph sx={{ mt: '1rem' }}>
               {hasUnpublishedFiles && isPublishedRegistration
                 ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
@@ -279,18 +282,6 @@ export const PublishingAccordion = ({
             </LoadingButton>
           </>
         )}
-
-        {/* Show current status info */}
-        {!!lastPublishingRequest &&
-          !hasMismatchingPublishedStatus &&
-          (isDraftRegistration || hasUnpublishedFiles) &&
-          (registratorPublishesMetadataOnly ? (
-            hasClosedTicket ? (
-              <Typography paragraph>
-                {t('registration.public_page.tasks_panel.has_rejected_files_publishing_request')}
-              </Typography>
-            ) : null
-          ) : null)}
 
         {/* Tell user what they can publish */}
         {!lastPublishingRequest && isDraftRegistration && registrationIsValid && (
@@ -328,37 +319,67 @@ export const PublishingAccordion = ({
           </LoadingButton>
         )}
 
+        {isPublishedRegistration && hasClosedTicket && (
+          <Trans
+            t={t}
+            i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
+            components={[<Typography paragraph />]}
+          />
+        )}
+
         {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
-          <Typography>{t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}</Typography>
+          <Trans
+            t={t}
+            i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files"
+            components={[<Typography paragraph />]}
+          />
         )}
 
         {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
           <Box sx={{ mt: '0.5rem' }}>
-            <Typography paragraph>{t('registration.public_page.tasks_panel.published_registration')}</Typography>
-            <Typography paragraph>
-              {registrationHasFile
-                ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
-                : t('registration.public_page.tasks_panel.registration_is_published')}
-            </Typography>
+            {registratorPublishesMetadataAndFiles ? (
+              <>
+                <Typography paragraph>{t('registration.public_page.tasks_panel.published_registration')}</Typography>
+                <Typography paragraph>
+                  {registrationHasFile
+                    ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
+                    : t('registration.public_page.tasks_panel.registration_is_published')}
+                </Typography>
+              </>
+            ) : (
+              <Trans
+                t={t}
+                i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
+                components={[<Typography paragraph />]}
+              />
+            )}
           </Box>
         )}
 
         {canHandlePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <Typography paragraph>
-              {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files_curator')}
-            </Typography>
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.approve_publishing_request_description"
+              components={[<Typography />]}
+            />
             <LoadingButton
-              sx={{ bgcolor: 'white' }}
+              sx={{ bgcolor: 'white', mb: '0.5rem' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
               startIcon={<AttachFileIcon fontSize="large" />}
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-              {t('registration.public_page.approve_publish_request')} (
-              {registration.associatedArtifacts.filter((artifact) => artifact.type === 'UnpublishedFile').length})
+              {t('registration.public_page.approve_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
+
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
+              values={{ count: filesAwaitingApproval }}
+              components={[<Typography />]}
+            />
             <LoadingButton
               sx={{ bgcolor: 'white' }}
               variant="outlined"
@@ -367,7 +388,7 @@ export const PublishingAccordion = ({
               onClick={() => ticketMutation.mutate({ status: 'Closed' })}
               loading={isLoading === LoadingState.RejectPublishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
-              {t('registration.public_page.reject_publish_request')}
+              {t('registration.public_page.reject_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
           </Box>
         )}

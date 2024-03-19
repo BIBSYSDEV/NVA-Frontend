@@ -1,9 +1,10 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddIcon from '@mui/icons-material/Add';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Badge, Box, Theme, Typography, useMediaQuery } from '@mui/material';
+import { AppBar, Badge, Box, Theme, Typography, styled, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getById } from '../../api/commonApi';
 import { fetchCustomerTickets } from '../../api/searchApi';
-import { notificationsParams } from '../../pages/messages/TasksPage';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -23,6 +23,14 @@ import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
+import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
+
+const StyledBadge = styled(Badge)({
+  '& .MuiBadge-badge': {
+    right: 20,
+    top: 20,
+  },
+});
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -58,22 +66,28 @@ export const Header = () => {
 
   const isTicketCurator = hasCuratorRole(user);
 
-  const notificationsQuery = useQuery({
-    enabled: isTicketCurator,
-    queryKey: ['notifications', notificationsParams],
-    queryFn: () => fetchCustomerTickets(notificationsParams),
+  const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
+  const dialogueNotificationsQuery = useQuery({
+    enabled: !!user?.isCreator && !!dialogueNotificationsParams.owner,
+    queryKey: ['dialogueNotifications', dialogueNotificationsParams],
+    queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
     meta: { errorMessage: false },
   });
 
-  const userNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'UserNotification'
-  )?.count;
+  const taskNotificationsQuery = useQuery({
+    enabled: isTicketCurator,
+    queryKey: ['taskNotifications', taskNotificationsParams],
+    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
+    meta: { errorMessage: false },
+  });
 
-  const unassignedNotificationsCount = notificationsQuery.data?.aggregations?.notifications?.find(
-    (notification) => notification.key === 'UnassignedNotification'
-  )?.count;
+  const pendingTasksCount =
+    taskNotificationsQuery.data?.aggregations?.byUserPending
+      ?.map((notification) => notification.count)
+      .reduce((a, b) => a + b, 0) ?? 0;
 
-  const notificationCounts = [userNotificationsCount, unassignedNotificationsCount].filter(Boolean).join('+');
+  const unassignedTasksCount =
+    taskNotificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -119,8 +133,8 @@ export const Header = () => {
                   bgcolor: 'primary.light',
                   borderRadius: '50%',
                   padding: '0.2rem',
-                  width: '2.7rem',
-                  height: '2.7rem',
+                  width: '2.25rem',
+                  height: '2.25rem',
                 }}
               />
             }>
@@ -145,15 +159,11 @@ export const Header = () => {
               {organization?.acronym &&
                 (user?.isEditor ? (
                   <MenuButton
-                    sx={{
-                      fontSize: '1.25rem',
-                      fontWeight: 700,
-                      textTransform: 'none',
-                    }}
+                    startIcon={<AccountBalanceIcon />}
                     isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
                     color="inherit"
                     data-testid={dataTestId.header.editorLink}
-                    to={UrlPathTemplate.EditorCurators}>
+                    to={UrlPathTemplate.EditorInstitution}>
                     {organization.acronym}
                   </MenuButton>
                 ) : (
@@ -176,15 +186,7 @@ export const Header = () => {
                 </MenuButton>
               )}
               {(isTicketCurator || user?.isNviCurator) && (
-                <Badge
-                  badgeContent={notificationCounts || null}
-                  color="info"
-                  sx={{
-                    '& .MuiBadge-badge': {
-                      right: 20,
-                      top: 20,
-                    },
-                  }}>
+                <StyledBadge badgeContent={pendingTasksCount + unassignedTasksCount}>
                   <MenuButton
                     color="inherit"
                     data-testid={dataTestId.header.tasksLink}
@@ -193,17 +195,19 @@ export const Header = () => {
                     startIcon={<AssignmentIcon />}>
                     {t('common.tasks')}
                   </MenuButton>
-                </Badge>
+                </StyledBadge>
               )}
               {user && (
-                <MenuButton
-                  color="inherit"
-                  data-testid={dataTestId.header.myPageLink}
-                  isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
-                  to={UrlPathTemplate.MyPage}
-                  startIcon={<FavoriteBorderIcon />}>
-                  {t('my_page.my_page')}
-                </MenuButton>
+                <StyledBadge badgeContent={dialogueNotificationsQuery.data?.totalHits}>
+                  <MenuButton
+                    color="inherit"
+                    data-testid={dataTestId.header.myPageLink}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
+                    to={UrlPathTemplate.MyPage}
+                    startIcon={<FavoriteBorderIcon />}>
+                    {t('my_page.my_page')}
+                  </MenuButton>
+                </StyledBadge>
               )}
             </>
           )}

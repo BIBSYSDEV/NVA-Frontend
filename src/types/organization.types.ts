@@ -7,4 +7,5 @@ export interface Organization {
   acronym?: string;
   partOf?: Omit<Organization, 'acronym'>[];
   hasPart?: Omit<Organization, 'acronym'>[];
+  country?: string;
 }

@@ -193,6 +193,9 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiBadge: {
+        defaultProps: { color: 'info' },
+      },
       MuiChip: {
         styleOverrides: {
           root: {
