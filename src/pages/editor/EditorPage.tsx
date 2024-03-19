@@ -29,7 +29,6 @@ const EditorPage = () => {
   const user = useSelector((store: RootState) => store.user);
   const hasCustomer = !!user?.customerId;
   const isEditor = hasCustomer && user.isEditor;
-  const isCreator = hasCustomer && user.isCreator;
 
   const institutionId = user?.topOrgCristinId ?? '';
 
@@ -144,7 +143,7 @@ const EditorPage = () => {
             exact
             path={UrlPathTemplate.EditorInstitution}
             component={EditorInstitution}
-            isAuthorized={isCreator}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact
@@ -152,7 +151,7 @@ const EditorPage = () => {
             component={EditorCurators}
             isAuthorized={isEditor}
           />
-          <PrivateRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} isAuthorized={isCreator} />
+          <PrivateRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} isAuthorized={hasCustomer} />
           <PrivateRoute
             exact
             path={UrlPathTemplate.EditorCategories}
@@ -163,7 +162,7 @@ const EditorPage = () => {
             exact
             path={UrlPathTemplate.EditorOrganizationOverview}
             component={OrganizationOverview}
-            isAuthorized={isCreator}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>
