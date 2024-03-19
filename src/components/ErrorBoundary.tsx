@@ -7,10 +7,14 @@ import { LocalStorageKey } from '../utils/constants';
 type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
 
 class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassProps>> {
-  state = { hasError: false };
+  state = { hasError: false, chunkError: false };
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+  static getDerivedStateFromError(error: any) {
+    if (/Loading chunk [\d]+ failed/.test(error)) {
+      return { hasError: true, chunkError: true };
+    } else {
+      return { hasError: true, chunkError: false };
+    }
   }
 
   componentDidUpdate(prevProps: ErrorBoundaryClassProps) {
@@ -18,16 +22,17 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
     const { hasError } = this.state;
 
     if (hasError && (pathname !== prevProps.location.pathname || search !== prevProps.location.search)) {
-      this.setState({ hasError: false });
+      this.setState({ hasError: false, chunkError: false });
     }
   }
 
   // Force page refresh if a chunk is not found. This error is usually caused by a new
   // version of the app being deployed, and the old chunks currently used has been invalidated.
-  componentDidCatch(error: any) {
+  componentDidCatch() {
     const { t } = this.props;
+    const { chunkError } = this.state;
 
-    if (/Loading chunk [\d]+ failed/.test(error)) {
+    if (chunkError) {
       const lastUpdateTime = parseInt(localStorage.getItem(LocalStorageKey.AppUpdateTime) ?? '');
       const currentTime = Date.now();
 
@@ -46,9 +51,13 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
 
   render() {
     const { t, children } = this.props;
-    const { hasError } = this.state;
+    const { hasError, chunkError } = this.state;
 
-    return hasError ? <ErrorMessage errorMessage={t('common.error_occurred')} /> : children ?? null;
+    if (hasError) {
+      return chunkError ? null : <ErrorMessage errorMessage={t('common.error_occurred')} />;
+    }
+
+    return children;
   }
 }
 
