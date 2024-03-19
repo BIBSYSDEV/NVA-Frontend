@@ -46,8 +46,6 @@ import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 
 const MyPagePage = () => {
-  console.log('my page');
-
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const location = useLocation();
