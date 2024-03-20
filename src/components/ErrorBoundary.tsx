@@ -6,23 +6,32 @@ import { LocalStorageKey } from '../utils/constants';
 
 type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
 
+enum ErrorType {
+  None,
+  Chunk,
+  Other,
+}
+
 class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassProps>> {
-  state = { hasError: false, chunkError: false };
+  state = { error: ErrorType.None };
 
   static getDerivedStateFromError(error: any) {
     if (/Loading chunk [\d]+ failed/.test(error)) {
-      return { hasError: true, chunkError: true };
+      return { error: ErrorType.Chunk };
     } else {
-      return { hasError: true, chunkError: false };
+      return { error: ErrorType.Other };
     }
   }
 
   componentDidUpdate(prevProps: ErrorBoundaryClassProps) {
     const { pathname, search } = this.props.location;
-    const { hasError } = this.state;
+    const { error } = this.state;
 
-    if (hasError && (pathname !== prevProps.location.pathname || search !== prevProps.location.search)) {
-      this.setState({ hasError: false, chunkError: false });
+    if (
+      error !== ErrorType.None &&
+      (pathname !== prevProps.location.pathname || search !== prevProps.location.search)
+    ) {
+      this.setState({ error: ErrorType.None });
     }
   }
 
@@ -30,9 +39,9 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
   // version of the app being deployed, and the old chunks currently used has been invalidated.
   componentDidCatch() {
     const { t } = this.props;
-    const { chunkError } = this.state;
+    const { error } = this.state;
 
-    if (chunkError) {
+    if (error === ErrorType.Chunk) {
       const lastUpdateTime = parseInt(localStorage.getItem(LocalStorageKey.AppUpdateTime) ?? '');
       const currentTime = Date.now();
 
@@ -51,13 +60,15 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
 
   render() {
     const { t, children } = this.props;
-    const { hasError, chunkError } = this.state;
+    const { error } = this.state;
 
-    if (hasError) {
-      return chunkError ? null : <ErrorMessage errorMessage={t('common.error_occurred')} />;
+    if (error === ErrorType.None) {
+      return children;
+    } else if (error === ErrorType.Other) {
+      return <ErrorMessage errorMessage={t('common.error_occurred')} />;
+    } else if (error === ErrorType.Chunk) {
+      return null;
     }
-
-    return children;
   }
 }
 
