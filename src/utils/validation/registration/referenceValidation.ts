@@ -66,9 +66,6 @@ const resourceErrorMessage = {
   corrigendumForInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.resource_type.original_article'),
   }),
-  countryRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('common.country'),
-  }),
   dateToBeforeDateFrom: i18n.t('feedback.validation.cannot_be_before', {
     field: i18n.t('common.end_date'),
     limitField: i18n.t('common.start_date'),
@@ -123,9 +120,6 @@ const resourceErrorMessage = {
   pagesMustBeBigger: i18n.t('feedback.validation.must_be_bigger_than', {
     field: i18n.t('registration.resource_type.number_of_pages'),
     limit: 1,
-  }),
-  placeRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.place_for_event'),
   }),
   publishedInRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.chapter.published_in'),
@@ -347,8 +341,8 @@ const presentationPublicationInstance = Yup.object<YupShape<PresentationPublicat
 const presentationPublicationContext = Yup.object<YupShape<PresentationPublicationContext>>({
   label: Yup.string().nullable().required(resourceErrorMessage.eventTitleRequired),
   place: Yup.object().shape({
-    label: Yup.string().nullable().required(resourceErrorMessage.placeRequired),
-    country: Yup.string().nullable().required(resourceErrorMessage.countryRequired),
+    label: Yup.string().nullable(),
+    country: Yup.string().nullable(),
   }),
   agent: Yup.object().shape({
     name: Yup.string().nullable().required(resourceErrorMessage.organizerRequired),
