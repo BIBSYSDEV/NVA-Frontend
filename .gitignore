@@ -30,9 +30,6 @@ yarn-error.log*
 .idea
 *.iml
 
-# vscode
-.vscode
-
 # cypress
 cypress/screenshots
 cypress/videos
