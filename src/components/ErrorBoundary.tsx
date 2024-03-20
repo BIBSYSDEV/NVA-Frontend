@@ -16,11 +16,7 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
   state = { error: ErrorType.None };
 
   static getDerivedStateFromError(error: any) {
-    if (/Loading chunk [\d]+ failed/.test(error)) {
-      return { error: ErrorType.Chunk };
-    } else {
-      return { error: ErrorType.Other };
-    }
+    return /Loading chunk [\d]+ failed/.test(error) ? { error: ErrorType.Chunk } : { error: ErrorType.Other };
   }
 
   componentDidUpdate(prevProps: ErrorBoundaryClassProps) {
@@ -62,12 +58,13 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
     const { t, children } = this.props;
     const { error } = this.state;
 
-    if (error === ErrorType.None) {
-      return children;
-    } else if (error === ErrorType.Other) {
-      return <ErrorMessage errorMessage={t('common.error_occurred')} />;
-    } else if (error === ErrorType.Chunk) {
-      return null;
+    switch (error) {
+      case ErrorType.None:
+        return children;
+      case ErrorType.Other:
+        return <ErrorMessage errorMessage={t('common.error_occurred')} />;
+      case ErrorType.Chunk:
+        return null;
     }
   }
 }
