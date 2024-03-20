@@ -36,7 +36,8 @@ export const NavigationListAccordion = ({
       sx={{
         mb: '0.5rem',
         bgcolor: 'secondary.dark',
-      }}>
+      }}
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
       <AccordionSummary
         sx={{ paddingX: '0.75rem' }}
         expandIcon={!isExpanded ? <ExpandMoreIcon /> : null}
