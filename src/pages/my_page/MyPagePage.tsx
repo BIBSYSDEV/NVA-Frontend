@@ -55,6 +55,7 @@ const MyPagePage = () => {
   const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
   const personId = user?.cristinId ?? '';
   const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
+
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const apiPage = page - 1;
