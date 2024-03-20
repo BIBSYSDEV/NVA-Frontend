@@ -70,6 +70,7 @@ const StyledStatusRadio = styled(Radio)({
 const nviYearFilterValues = getNviYearFilterValues();
 
 const TasksPage = () => {
+  console.log('TasksPage');
   const { t } = useTranslation();
   const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
