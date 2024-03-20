@@ -22,12 +22,12 @@ const StyledItemContainer = styled('div')({
   alignItems: 'center',
 });
 
-const StyledAccessRight = styled('div')({
+export const StyledAccessRight = styled('div')({
   display: 'flex',
   gap: '0.5rem',
 });
 
-const StyledAccessRightsContainer = styled('div')({
+export const StyledAccessRightsContainer = styled('div')({
   display: 'flex',
   justifyContent: 'space-evenly',
   marginTop: '0.5rem',

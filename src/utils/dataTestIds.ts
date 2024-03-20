@@ -97,6 +97,7 @@ export const dataTestId = {
     organizationOverviewSearchField: 'organization-overview-search-field',
     overviewAccordion: 'overview-accordion',
     publishStrategyLinkButton: 'publishing-strategy-link-button',
+    publishStrategyOverviewLinkButton: 'publishing-strategy-overview-link-button',
     settingsAccordion: 'settings-accordion',
     vocabularyLinkButton: 'vocabulary-link-button',
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
