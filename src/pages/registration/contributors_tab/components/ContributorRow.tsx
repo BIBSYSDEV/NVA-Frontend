@@ -175,7 +175,6 @@ export const ContributorRow = ({
           </Box>
           {!contributor.identity.id && (
             <Button
-              title={t('registration.contributors.verify_person')}
               variant="outlined"
               sx={{ textTransform: 'none' }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
@@ -183,7 +182,7 @@ export const ContributorRow = ({
               )}
               startIcon={<WarningIcon color="warning" />}
               onClick={() => setOpenVerifyContributor(true)}>
-              {t('registration.contributors.unidentified_contributor')}
+              {t('registration.contributors.verify_contributor')}
             </Button>
           )}
 

@@ -188,7 +188,7 @@ export const AddContributorForm = ({
           size="large"
           variant="contained">
           {initialSearchTerm
-            ? t('registration.contributors.verify_person')
+            ? t('registration.contributors.verify_contributor')
             : t('registration.contributors.add_contributor')}
         </Button>
       </Box>
