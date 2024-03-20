@@ -4,7 +4,7 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Badge, Box, Theme, Typography, styled, useMediaQuery } from '@mui/material';
+import { AppBar, Badge, Box, Theme, styled, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,12 +18,12 @@ import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
-import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
 
 const StyledBadge = styled(Badge)({
   '& .MuiBadge-badge': {
@@ -39,6 +39,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const institutionId = user?.topOrgCristinId ?? '';
+  const hasCustomer = !!user?.customerId;
 
   const organizationQuery = useQuery({
     enabled: !!institutionId,
@@ -156,24 +157,16 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
-              {organization?.acronym &&
-                (user?.isEditor ? (
-                  <MenuButton
-                    startIcon={<AccountBalanceIcon />}
-                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
-                    color="inherit"
-                    data-testid={dataTestId.header.editorLink}
-                    to={UrlPathTemplate.EditorInstitution}>
-                    {organization.acronym}
-                  </MenuButton>
-                ) : (
-                  <Typography
-                    variant="h1"
-                    component="span"
-                    sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
-                    {organization.acronym}
-                  </Typography>
-                ))}
+              {organization?.acronym && hasCustomer && (
+                <MenuButton
+                  startIcon={<AccountBalanceIcon />}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
+                  color="inherit"
+                  data-testid={dataTestId.header.editorLink}
+                  to={UrlPathTemplate.EditorInstitution}>
+                  {organization.acronym}
+                </MenuButton>
+              )}
 
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <MenuButton
