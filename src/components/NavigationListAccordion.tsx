@@ -1,5 +1,14 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionProps, AccordionSummary, Box, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionProps,
+  AccordionSummary,
+  Box,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { ReactNode } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -23,6 +32,7 @@ export const NavigationListAccordion = ({
   ...props
 }: NavigationListAccordionProps) => {
   const history = useHistory();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const isExpanded = expanded !== undefined ? expanded : currentPath.startsWith(accordionPath);
 
@@ -37,7 +47,11 @@ export const NavigationListAccordion = ({
         mb: '0.5rem',
         bgcolor: 'secondary.dark',
       }}
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+      onClick={() => {
+        if (!isMobile) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }}>
       <AccordionSummary
         sx={{ paddingX: '0.75rem' }}
         expandIcon={!isExpanded ? <ExpandMoreIcon /> : null}
