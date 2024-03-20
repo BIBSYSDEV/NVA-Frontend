@@ -1,4 +1,8 @@
 {
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
   "i18n-ally.sourceLanguage": "nb",
   "i18n-ally.displayLanguage": "nb",
   "i18n-ally.localesPaths": ["src/translations"],
