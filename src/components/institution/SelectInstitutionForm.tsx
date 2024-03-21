@@ -55,6 +55,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
 
   const organizationQueryParams: OrganizationSearchParams = {
     query: debouncedQuery,
+    includeSubunits: true,
   };
   const organizationSearchQuery = useQuery({
     enabled: !!debouncedQuery,
