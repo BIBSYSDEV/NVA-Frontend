@@ -1,6 +1,6 @@
 import FilterVintageIcon from '@mui/icons-material/FilterVintage';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Chip, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, Chip, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -8,15 +8,10 @@ import { useSelector } from 'react-redux';
 import { registrationRows, RegistrationTypeElement } from '../../components/CategorySelector';
 import { RootState } from '../../redux/store';
 import { PublicationType } from '../../types/publicationFieldNames';
-import { PublicationInstanceType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { nviApplicableTypes } from '../../utils/registration-helpers';
 
-interface CategorySelectorProps {
-  onCategoryClick: (category: PublicationInstanceType) => void;
-}
-
-export const CategoriesWithFilesOverview = ({ onCategoryClick }: CategorySelectorProps) => {
+export const CategoriesWithFilesOverview = () => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
   const selectedCategories = customer?.allowFileUploadForTypes ?? [];
@@ -89,7 +84,6 @@ export const CategoriesWithFilesOverview = ({ onCategoryClick }: CategorySelecto
                 selected: selectedCategories.includes(registrationType),
               }))
             )}
-            onChangeType={onCategoryClick}
           />
         ))}
       </Box>
@@ -98,7 +92,6 @@ export const CategoriesWithFilesOverview = ({ onCategoryClick }: CategorySelecto
 };
 
 interface RegistrationTypesRowProps {
-  onChangeType: (type: PublicationInstanceType) => void;
   mainType: PublicationType;
   registrationTypes: RegistrationTypeElement[];
 }
@@ -108,7 +101,7 @@ const RegistrationTypesRow = ({ mainType, registrationTypes }: RegistrationTypes
 
   return registrationTypes.length > 0 ? (
     <>
-      <Typography fontWeight={700} sx={{ maxWidth: '10rem' }}>
+      <Typography fontWeight="bold" sx={{ maxWidth: '10rem' }}>
         {t(`registration.publication_types.${mainType}`)}
       </Typography>
       <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
@@ -128,23 +121,19 @@ export const CategoryChip = ({ category }: CategoryChipProps) => {
   const { t } = useTranslation();
 
   return (
-    <Tooltip title={category.disableText}>
-      <span>
-        <Chip
-          data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
-          icon={
-            nviApplicableTypes.includes(category.value) ? (
-              <FilterVintageIcon
-                titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-                fontSize="small"
-              />
-            ) : undefined
-          }
-          variant={category.selected ? 'filled' : 'outlined'}
-          color="primary"
-          label={category.text}
-        />
-      </span>
-    </Tooltip>
+    <Chip
+      data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
+      icon={
+        nviApplicableTypes.includes(category.value) ? (
+          <FilterVintageIcon
+            titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+            fontSize="small"
+          />
+        ) : undefined
+      }
+      variant={category.selected ? 'filled' : 'outlined'}
+      color="primary"
+      label={category.text}
+    />
   );
 };
