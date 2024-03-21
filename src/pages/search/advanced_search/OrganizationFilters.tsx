@@ -1,4 +1,15 @@
-import { Autocomplete, Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  TextField,
+} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +21,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
 
 interface OrganizationFiltersProps {
   topLevelOrganizationId: string | null;
@@ -24,6 +36,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const params = new URLSearchParams(history.location.search);
   const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
   const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
+  const [showUnitSelection, setShowUnitSelection] = useState(false);
 
   const topLevelOrganizationQuery = useQuery({
     queryKey: [topLevelOrganizationId],
@@ -118,37 +131,53 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         )}
       />
 
-      <Autocomplete
-        fullWidth
-        size="small"
-        options={subUnits}
-        value={selectedSubUnit}
-        inputMode="search"
-        disabled={!topLevelOrganizationId || subUnits.length === 0}
-        sx={{ minWidth: '15rem' }}
-        getOptionLabel={(option) => getLanguageString(option.labels)}
-        getOptionKey={(option) => option.id}
-        onChange={(_, selectedUnit) => {
-          const params = new URLSearchParams(history.location.search);
-          if (selectedUnit) {
-            params.set(ResultParam.Unit, selectedUnit.id);
-          } else {
-            params.delete(ResultParam.Unit);
-          }
-          params.set(ResultParam.From, '0');
-          history.push({ search: params.toString() });
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            multiline
-            InputLabelProps={{ shrink: true }}
-            data-testid={dataTestId.organization.subSearchField}
-            placeholder={t('search.search_for_sub_unit')}
-          />
-        )}
-      />
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Autocomplete
+          fullWidth
+          size="small"
+          options={subUnits}
+          value={selectedSubUnit}
+          inputMode="search"
+          disabled={!topLevelOrganizationId || subUnits.length === 0}
+          sx={{ minWidth: '15rem' }}
+          getOptionLabel={(option) => getLanguageString(option.labels)}
+          getOptionKey={(option) => option.id}
+          onChange={(_, selectedUnit) => {
+            const params = new URLSearchParams(history.location.search);
+            if (selectedUnit) {
+              params.set(ResultParam.Unit, selectedUnit.id);
+            } else {
+              params.delete(ResultParam.Unit);
+            }
+            params.set(ResultParam.From, '0');
+            history.push({ search: params.toString() });
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="outlined"
+              multiline
+              InputLabelProps={{ shrink: true }}
+              data-testid={dataTestId.organization.subSearchField}
+              placeholder={t('search.search_for_sub_unit')}
+            />
+          )}
+        />
+
+        <Button onClick={() => setShowUnitSelection(!showUnitSelection)}>Se organisasjonsstruktur</Button>
+        <Dialog open={showUnitSelection} onClose={() => setShowUnitSelection(false)} maxWidth="lg">
+          <DialogTitle>Organisasjonsstruktur</DialogTitle>
+          <DialogContent>
+            {topLevelOrganizationQuery.data && (
+              <OrganizationHierarchyFilter organization={topLevelOrganizationQuery.data} />
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowUnitSelection(false)}>Avbryt</Button>
+            <Button variant="contained">Velg</Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
 
       <FormControlLabel
         sx={{ whiteSpace: 'nowrap' }}
