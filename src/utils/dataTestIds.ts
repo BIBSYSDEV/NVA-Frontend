@@ -105,6 +105,7 @@ export const dataTestId = {
     rrsLink: 'rrs-link',
     rrsOverride: 'rrs-override',
     rrsSaveButton: 'rrs-save-button',
+    supportLinkButton: 'institution-support-link-button',
     vocabularyDisabled: 'vocabulary-disabled',
     vocabularyAllowed: 'vocabulary-allowed',
     vocabularyDefault: 'vocabulary-default',
