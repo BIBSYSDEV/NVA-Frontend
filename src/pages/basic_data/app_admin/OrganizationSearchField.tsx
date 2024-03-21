@@ -46,7 +46,7 @@ export const OrganizationSearchField = ({
     meta: { errorMessage: t('feedback.error.get_institutions') },
   });
 
-  const isLoading = isLoadingDefaultOptions || organizationSearchQuery.isLoading;
+  const isLoading = isLoadingDefaultOptions || organizationSearchQuery.isFetching;
 
   return (
     <Autocomplete
