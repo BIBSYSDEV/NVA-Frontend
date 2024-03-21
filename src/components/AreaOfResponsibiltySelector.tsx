@@ -64,8 +64,8 @@ export const AreaOfResponsibilitySelector = () => {
       title={getLanguageString(organizationOptions[0].labels)}
       label={t('editor.curators.area_of_responsibility')}
       InputLabelProps={{ shrink: true }}
-      sx={{
-        '& .MuiInputBase-input': {
+      inputProps={{
+        style: {
           overflow: 'hidden',
           textOverflow: 'ellipsis',
         },
