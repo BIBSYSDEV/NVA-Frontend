@@ -47,8 +47,6 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
 
   const options = organizationSearchQuery.data?.hits ?? [];
 
-  console.log(options);
-
   const subUnits = getSortedSubUnits(topLevelOrganizationQuery.data?.hasPart);
   const selectedSubUnit = subUnits.find((unit) => unit.id === unitId) ?? null;
 

@@ -64,8 +64,6 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
     meta: { errorMessage: t('feedback.error.get_institutions') },
   });
 
-  console.log(organizationSearchQuery.data?.hits);
-
   return (
     <Formik
       initialValues={initialValuesOrganizationForm}
