@@ -1,14 +1,15 @@
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { fetchOrganizations } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
 import { TicketSearchParam } from '../../api/searchApi';
 import { RootState } from '../../redux/store';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { getAllChildOrganizations } from '../institutions-helpers';
+import { UrlPathTemplate } from '../urlPaths';
 
 export const useSetDefaultTicketSearchParams = (): boolean => {
   const [defaultParamsAdded, setDefaultParamsAdded] = useState(false);
@@ -18,6 +19,10 @@ export const useSetDefaultTicketSearchParams = (): boolean => {
   const nvaUsername = user?.nvaUsername ?? '';
 
   const history = useHistory();
+
+  const isOnTasksPage =
+    history.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) &&
+    history.location.pathname.endsWith(UrlPathTemplate.TasksDialogue);
 
   const institutionUserQuery = useQuery({
     enabled: !!nvaUsername,
@@ -35,7 +40,7 @@ export const useSetDefaultTicketSearchParams = (): boolean => {
   });
 
   useEffect(() => {
-    if (!organizationQuery.data || defaultParamsAdded) {
+    if (!organizationQuery.data || defaultParamsAdded || !isOnTasksPage) {
       return;
     }
 
@@ -58,7 +63,7 @@ export const useSetDefaultTicketSearchParams = (): boolean => {
     history.push({ search: searchParams.toString() });
 
     setDefaultParamsAdded(true);
-  }, [organizationQuery.data, history, nvaUsername, defaultParamsAdded]);
+  }, [organizationQuery.data, history, nvaUsername, defaultParamsAdded, isOnTasksPage]);
 
   return defaultParamsAdded;
 };

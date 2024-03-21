@@ -44,6 +44,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { useSetDefaultTicketSearchParams } from '../../utils/hooks/useSetDefaultTicketSearchParams';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
+import { taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
@@ -51,7 +52,6 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
-import { taskNotificationsParams } from '../../utils/searchHelpers';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
@@ -247,7 +247,11 @@ const TasksPage = () => {
       <SideMenu
         expanded={isOnTicketsPage || isOnNviCandidatesPage || isOnCorrectionListPage}
         minimizedMenu={
-          <Link to={isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi}>
+          <Link
+            to={{
+              pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
+              search: (location?.state as any)?.previousSearch,
+            }}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
             </StyledMinimizedMenuButton>
