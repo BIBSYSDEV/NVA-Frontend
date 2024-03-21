@@ -19,6 +19,7 @@ export const ListPagination = ({
   showPaginationTop,
   sortingComponent,
   maxHits,
+  rowsPerPageOptions,
 }: ListPaginationProps) => {
   const itemsStart = count > 0 ? (page - 1) * rowsPerPage + 1 : 0;
   const itemsEnd = Math.min(page * rowsPerPage, count);
@@ -38,6 +39,7 @@ export const ListPagination = ({
         onPageChange={onPageChange}
         onRowsPerPageChange={onRowsPerPageChange}
         pageCounterComponent={pageCounter}
+        rowsPerPageOptions={rowsPerPageOptions}
       />
     </>
   );
