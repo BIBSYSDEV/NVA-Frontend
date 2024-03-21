@@ -54,7 +54,7 @@ const registrationRows: RegistrationRowConfig[] = [
 
 interface CategorySelectorProps {
   selectedCategories: PublicationInstanceType[];
-  onCategoryClick: (category: PublicationInstanceType) => void;
+  onCategoryClick?: (category: PublicationInstanceType) => void;
   disabledCategories?: DisabledCategory[];
 }
 
@@ -135,7 +135,7 @@ export const CategorySelector = ({
 };
 
 interface RegistrationTypesRowProps {
-  onChangeType: (type: PublicationInstanceType) => void;
+  onChangeType?: (type: PublicationInstanceType) => void;
   mainType: PublicationType;
   registrationTypes: RegistrationTypeElement[];
 }
@@ -159,7 +159,7 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
 
 interface CategoryChipProps {
   category: RegistrationTypeElement;
-  onClickChip: (type: PublicationInstanceType) => void;
+  onClickChip?: (type: PublicationInstanceType) => void;
 }
 
 export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
@@ -181,7 +181,7 @@ export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
           }
           variant={category.selected ? 'filled' : 'outlined'}
           color="primary"
-          onClick={() => onClickChip(category.value)}
+          onClick={onClickChip ? () => onClickChip(category.value) : undefined}
           label={category.text}
         />
       </span>
