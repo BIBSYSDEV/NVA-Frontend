@@ -2,69 +2,24 @@ import FilterVintageIcon from '@mui/icons-material/FilterVintage';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Chip, TextField, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-} from '../types/publicationFieldNames';
-import { PublicationInstanceType } from '../types/registration.types';
-import { dataTestId } from '../utils/dataTestIds';
-import { nviApplicableTypes } from '../utils/registration-helpers';
-
-export interface RegistrationTypeElement {
-  value: PublicationInstanceType;
-  text: string;
-  selected: boolean;
-  disableText?: string;
-}
-
-interface RegistrationRowConfig {
-  mainType: PublicationType;
-  registrationTypes: PublicationInstanceType[];
-}
-
-export interface DisabledCategory {
-  type: PublicationInstanceType;
-  text: string;
-}
-
-export const registrationRows: RegistrationRowConfig[] = [
-  { mainType: PublicationType.PublicationInJournal, registrationTypes: Object.values(JournalType) },
-  { mainType: PublicationType.Book, registrationTypes: Object.values(BookType) },
-  { mainType: PublicationType.Report, registrationTypes: Object.values(ReportType) },
-  { mainType: PublicationType.Degree, registrationTypes: Object.values(DegreeType) },
-  { mainType: PublicationType.Anthology, registrationTypes: Object.values(ChapterType) },
-  { mainType: PublicationType.Presentation, registrationTypes: Object.values(PresentationType) },
-  { mainType: PublicationType.Artistic, registrationTypes: Object.values(ArtisticType) },
-  { mainType: PublicationType.MediaContribution, registrationTypes: Object.values(MediaType) },
-  { mainType: PublicationType.ResearchData, registrationTypes: Object.values(ResearchDataType) },
-  { mainType: PublicationType.ExhibitionContent, registrationTypes: Object.values(ExhibitionContentType) },
-  { mainType: PublicationType.GeographicalContent, registrationTypes: Object.values(OtherRegistrationType) },
-];
+import { useSelector } from 'react-redux';
+import { registrationRows, RegistrationTypeElement } from '../../components/CategorySelector';
+import { RootState } from '../../redux/store';
+import { PublicationType } from '../../types/publicationFieldNames';
+import { PublicationInstanceType } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
+import { nviApplicableTypes } from '../../utils/registration-helpers';
 
 interface CategorySelectorProps {
-  selectedCategories: PublicationInstanceType[];
   onCategoryClick: (category: PublicationInstanceType) => void;
-  disabledCategories?: DisabledCategory[];
 }
 
-export const CategorySelector = ({
-  disabledCategories,
-  onCategoryClick,
-  selectedCategories,
-}: CategorySelectorProps) => {
+export const CategoriesWithFilesOverview = ({ onCategoryClick }: CategorySelectorProps) => {
   const { t } = useTranslation();
-
+  const customer = useSelector((store: RootState) => store.customer);
+  const selectedCategories = customer?.allowFileUploadForTypes ?? [];
   const [searchValue, setSearchValue] = useState('');
 
   const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
@@ -76,6 +31,14 @@ export const CategorySelector = ({
 
   return (
     <>
+      <Helmet>
+        <title>{t('editor.categories_with_files')}</title>
+      </Helmet>
+
+      <Typography variant="h2" gutterBottom>
+        {t('editor.categories_with_files')}
+      </Typography>
+
       <Box
         sx={{
           display: 'flex',
@@ -107,6 +70,7 @@ export const CategorySelector = ({
           <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
         </Box>
       </Box>
+
       <Box
         sx={{
           display: 'grid',
@@ -123,7 +87,6 @@ export const CategorySelector = ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
                 selected: selectedCategories.includes(registrationType),
-                disableText: disabledCategories?.find((category) => category.type === registrationType)?.text,
               }))
             )}
             onChangeType={onCategoryClick}
@@ -140,7 +103,7 @@ interface RegistrationTypesRowProps {
   registrationTypes: RegistrationTypeElement[];
 }
 
-const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: RegistrationTypesRowProps) => {
+const RegistrationTypesRow = ({ mainType, registrationTypes }: RegistrationTypesRowProps) => {
   const { t } = useTranslation();
 
   return registrationTypes.length > 0 ? (
@@ -150,7 +113,7 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
       </Typography>
       <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
         {registrationTypes.map((registrationType) => (
-          <CategoryChip key={registrationType.value} category={registrationType} onClickChip={onChangeType} />
+          <CategoryChip key={registrationType.value} category={registrationType} />
         ))}
       </Box>
     </>
@@ -159,10 +122,9 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
 
 interface CategoryChipProps {
   category: RegistrationTypeElement;
-  onClickChip: (type: PublicationInstanceType) => void;
 }
 
-export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
+export const CategoryChip = ({ category }: CategoryChipProps) => {
   const { t } = useTranslation();
 
   return (
@@ -170,7 +132,6 @@ export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
       <span>
         <Chip
           data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
-          disabled={!!category.disableText}
           icon={
             nviApplicableTypes.includes(category.value) ? (
               <FilterVintageIcon
@@ -181,7 +142,6 @@ export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
           }
           variant={category.selected ? 'filled' : 'outlined'}
           color="primary"
-          onClick={() => onClickChip(category.value)}
           label={category.text}
         />
       </span>
