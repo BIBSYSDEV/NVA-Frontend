@@ -16,6 +16,7 @@ import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
+import { useSetDefaultTicketSearchParams } from '../../../utils/hooks/useSetDefaultTicketSearchParams';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketListItem } from './TicketListItem';
@@ -27,9 +28,18 @@ interface TicketListProps {
   setPage: Dispatch<SetStateAction<number>>;
   page: number;
   title: string;
+  setDefaultParamsAdded?: (value: boolean) => void;
 }
 
-export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
+export const TicketList = ({
+  ticketsQuery,
+  setRowsPerPage,
+  rowsPerPage,
+  setPage,
+  page,
+  title,
+  setDefaultParamsAdded,
+}: TicketListProps) => {
   const { t } = useTranslation();
   const location = useLocation();
   const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
@@ -55,6 +65,13 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       ]}
     />
   );
+
+  const defaultTicketParamsAdded = useSetDefaultTicketSearchParams();
+  useEffect(() => {
+    if (setDefaultParamsAdded !== undefined) {
+      setDefaultParamsAdded(defaultTicketParamsAdded);
+    }
+  }, [defaultTicketParamsAdded, setDefaultParamsAdded]);
 
   return (
     <section>

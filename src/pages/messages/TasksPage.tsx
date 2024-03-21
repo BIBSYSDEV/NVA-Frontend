@@ -41,7 +41,6 @@ import { NviCandidateAggregations } from '../../types/nvi.types';
 import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useSetDefaultTicketSearchParams } from '../../utils/hooks/useSetDefaultTicketSearchParams';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -168,9 +167,9 @@ const TasksPage = () => {
     excludeSubUnits: true,
   };
 
-  const defaultTicketParamsAdded = useSetDefaultTicketSearchParams();
+  const [defaultParamsAdded, setDefaultParamsAdded] = useState(false);
   const ticketsQuery = useQuery({
-    enabled: isOnTicketsPage && !institutionUserQuery.isLoading && defaultTicketParamsAdded,
+    enabled: isOnTicketsPage && !institutionUserQuery.isLoading && defaultParamsAdded,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
@@ -546,6 +545,7 @@ const TasksPage = () => {
               page={page}
               setPage={setPage}
               title={t('common.tasks')}
+              setDefaultParamsAdded={setDefaultParamsAdded}
             />
           </PrivateRoute>
           <PrivateRoute
