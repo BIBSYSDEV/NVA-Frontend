@@ -3,9 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { OrganizationSearchParams, fetchOrganization, searchForOrganizations } from '../../../api/cristinApi';
+import { fetchOrganization, OrganizationSearchParams, searchForOrganizations } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
@@ -105,6 +106,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         disabled={topLevelOrganizationQuery.isFetching}
         value={topLevelOrganizationQuery.data ?? null}
         loading={isLoading}
+        renderOption={(props, option) => <OrganizationRenderOption key={option.id} props={props} option={option} />}
         renderInput={(params) => (
           <AutocompleteTextField
             {...params}
@@ -138,6 +140,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
           params.set(ResultParam.From, '0');
           history.push({ search: params.toString() });
         }}
+        renderOption={(props, option) => <OrganizationRenderOption key={option.id} props={props} option={option} />}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -156,7 +159,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
           <Checkbox
             disabled={!topLevelOrganizationId}
             onChange={handleCheckedExcludeSubunits}
-            checked={!!topLevelOrganizationId && !!excludeSubunits}
+            checked={!!topLevelOrganizationId && excludeSubunits}
           />
         }
         label={t('tasks.nvi.exclude_subunits')}
