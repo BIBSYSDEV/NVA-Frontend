@@ -92,6 +92,7 @@ export const searchForOrganizations = async (params: OrganizationSearchParams) =
   const queryParams = queryContent ? `?${queryContent}` : '';
 
   const fetchOrganizationsResponse = await apiRequest2<SearchResponse<Organization>>({
+    headers: { Accept: 'application/json; version=1' },
     url: `${CristinApiPath.Organization}${queryParams}`,
   });
 
