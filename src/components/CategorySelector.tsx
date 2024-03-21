@@ -21,7 +21,7 @@ import { PublicationInstanceType } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { nviApplicableTypes } from '../utils/registration-helpers';
 
-export interface RegistrationTypeElement {
+interface RegistrationTypeElement {
   value: PublicationInstanceType;
   text: string;
   selected: boolean;
@@ -38,7 +38,7 @@ export interface DisabledCategory {
   text: string;
 }
 
-export const registrationRows: RegistrationRowConfig[] = [
+const registrationRows: RegistrationRowConfig[] = [
   { mainType: PublicationType.PublicationInJournal, registrationTypes: Object.values(JournalType) },
   { mainType: PublicationType.Book, registrationTypes: Object.values(BookType) },
   { mainType: PublicationType.Report, registrationTypes: Object.values(ReportType) },
