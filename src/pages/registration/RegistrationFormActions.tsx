@@ -115,20 +115,15 @@ export const RegistrationFormActions = ({
         )}
         <Button
           sx={{
-            height: '1.375rem',
-            bgcolor: 'white',
-            borderStyle: 'solid',
-            borderRadius: '8px 0px',
-            borderWidth: '1px 5px',
-            borderColor: 'generalSupportCase.main',
             gridArea: 'support-button',
             width: 'fit-content',
             justifySelf: 'center',
           }}
+          variant="contained"
           size="small"
           data-testid={dataTestId.registrationWizard.formActions.openSupportButton}
           onClick={toggleSupportModal}>
-          {t('my_page.messages.types.GeneralSupportCase')}
+          {t('my_page.messages.get_curator_support')}
         </Button>
         {!isLastTab ? (
           <Box
