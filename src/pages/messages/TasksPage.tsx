@@ -36,14 +36,15 @@ import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } fro
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
 import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useSetDefaultTicketSearchParams } from '../../utils/hooks/useSetDefaultTicketSearchParams';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
+import { taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
@@ -51,7 +52,6 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
-import { taskNotificationsParams } from '../../utils/searchHelpers';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
@@ -69,9 +69,13 @@ const StyledStatusRadio = styled(Radio)({
 
 const nviYearFilterValues = getNviYearFilterValues();
 
+interface LocationState {
+  previousSearch: string;
+}
+
 const TasksPage = () => {
   const { t } = useTranslation();
-  const location = useLocation();
+  const location = useLocation<LocationState | undefined>();
   const user = useSelector((store: RootState) => store.user);
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;
@@ -168,9 +172,8 @@ const TasksPage = () => {
     excludeSubUnits: true,
   };
 
-  const defaultTicketParamsAdded = useSetDefaultTicketSearchParams();
   const ticketsQuery = useQuery({
-    enabled: isOnTicketsPage && !institutionUserQuery.isLoading && defaultTicketParamsAdded,
+    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
@@ -247,7 +250,11 @@ const TasksPage = () => {
       <SideMenu
         expanded={isOnTicketsPage || isOnNviCandidatesPage || isOnCorrectionListPage}
         minimizedMenu={
-          <Link to={isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi}>
+          <Link
+            to={{
+              pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
+              search: location.state?.previousSearch,
+            }}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
             </StyledMinimizedMenuButton>
@@ -539,14 +546,16 @@ const TasksPage = () => {
           </PrivateRoute>
 
           <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isTicketCurator}>
-            <TicketList
-              ticketsQuery={ticketsQuery}
-              rowsPerPage={rowsPerPage}
-              setRowsPerPage={setRowsPerPage}
-              page={page}
-              setPage={setPage}
-              title={t('common.tasks')}
-            />
+            <TicketListDefaultValuesWrapper>
+              <TicketList
+                ticketsQuery={ticketsQuery}
+                rowsPerPage={rowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+                page={page}
+                setPage={setPage}
+                title={t('common.tasks')}
+              />
+            </TicketListDefaultValuesWrapper>
           </PrivateRoute>
           <PrivateRoute
             exact
