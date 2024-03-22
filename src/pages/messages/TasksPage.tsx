@@ -167,9 +167,8 @@ const TasksPage = () => {
     excludeSubUnits: true,
   };
 
-  const [defaultParamsAdded, setDefaultParamsAdded] = useState(false);
   const ticketsQuery = useQuery({
-    enabled: isOnTicketsPage && !institutionUserQuery.isLoading && defaultParamsAdded,
+    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
@@ -246,7 +245,11 @@ const TasksPage = () => {
       <SideMenu
         expanded={isOnTicketsPage || isOnNviCandidatesPage || isOnCorrectionListPage}
         minimizedMenu={
-          <Link to={isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi}>
+          <Link
+            to={{
+              pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
+              search: (location?.state as any)?.previousSearch,
+            }}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
             </StyledMinimizedMenuButton>
@@ -545,7 +548,6 @@ const TasksPage = () => {
               page={page}
               setPage={setPage}
               title={t('common.tasks')}
-              setDefaultParamsAdded={setDefaultParamsAdded}
             />
           </PrivateRoute>
           <PrivateRoute

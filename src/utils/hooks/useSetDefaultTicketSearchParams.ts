@@ -9,6 +9,7 @@ import { TicketSearchParam } from '../../api/searchApi';
 import { RootState } from '../../redux/store';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { getAllChildOrganizations } from '../institutions-helpers';
+import { UrlPathTemplate } from '../urlPaths';
 
 export const useSetDefaultTicketSearchParams = (): boolean => {
   const [defaultParamsAdded, setDefaultParamsAdded] = useState(false);
@@ -18,6 +19,7 @@ export const useSetDefaultTicketSearchParams = (): boolean => {
   const nvaUsername = user?.nvaUsername ?? '';
 
   const history = useHistory();
+  const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
 
   const institutionUserQuery = useQuery({
     enabled: !!nvaUsername,
@@ -35,30 +37,21 @@ export const useSetDefaultTicketSearchParams = (): boolean => {
   });
 
   useEffect(() => {
-    if (!organizationQuery.data || defaultParamsAdded) {
+    if (!isOnTasksPage || !organizationQuery.data || defaultParamsAdded || history.location.search) {
       return;
     }
 
-    const searchParams = new URLSearchParams(history.location.search);
-
     const organizations = organizationQuery.data;
     const organizationsWithSubUnits = getAllChildOrganizations(organizations);
-    if (!searchParams.get(TicketSearchParam.ViewingScope)) {
-      searchParams.set(TicketSearchParam.ViewingScope, organizationsWithSubUnits.map((org) => org.id).join(','));
-    }
 
-    if (!searchParams.get(TicketSearchParam.Assignee)) {
-      searchParams.set(TicketSearchParam.Assignee, nvaUsername);
-    }
-
-    if (!searchParams.get(TicketSearchParam.Status)) {
-      searchParams.set(TicketSearchParam.Status, 'Pending' as TicketStatus);
-    }
-
+    const searchParams = new URLSearchParams(history.location.search);
+    searchParams.set(TicketSearchParam.ViewingScope, organizationsWithSubUnits.map((org) => org.id).join(','));
+    searchParams.set(TicketSearchParam.Assignee, nvaUsername);
+    searchParams.set(TicketSearchParam.Status, 'Pending' as TicketStatus);
     history.push({ search: searchParams.toString() });
 
     setDefaultParamsAdded(true);
-  }, [organizationQuery.data, history, nvaUsername, defaultParamsAdded]);
+  }, [organizationQuery.data, history, nvaUsername, defaultParamsAdded, isOnTasksPage]);
 
   return defaultParamsAdded;
 };

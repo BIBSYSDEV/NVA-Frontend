@@ -28,18 +28,9 @@ interface TicketListProps {
   setPage: Dispatch<SetStateAction<number>>;
   page: number;
   title: string;
-  setDefaultParamsAdded?: (value: boolean) => void;
 }
 
-export const TicketList = ({
-  ticketsQuery,
-  setRowsPerPage,
-  rowsPerPage,
-  setPage,
-  page,
-  title,
-  setDefaultParamsAdded,
-}: TicketListProps) => {
+export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
   const location = useLocation();
   const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
@@ -66,12 +57,7 @@ export const TicketList = ({
     />
   );
 
-  const defaultTicketParamsAdded = useSetDefaultTicketSearchParams();
-  useEffect(() => {
-    if (setDefaultParamsAdded !== undefined) {
-      setDefaultParamsAdded(defaultTicketParamsAdded);
-    }
-  }, [defaultTicketParamsAdded, setDefaultParamsAdded]);
+  useSetDefaultTicketSearchParams();
 
   return (
     <section>
