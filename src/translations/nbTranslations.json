@@ -1706,7 +1706,7 @@
       "type_work_specified": "Egendefinert type verk",
       "volume": "Volum"
     },
-    "result_is_deleted": "Resultatet er slettet",
+    "result_is_deleted_or_unpublished": "Resultatet er {{status}}",
     "status": {
       "DELETED": "Slettet",
       "DRAFT": "Kladd",
