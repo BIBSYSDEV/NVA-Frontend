@@ -38,12 +38,17 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
   const params = new URLSearchParams(history.location.search);
 
   const [searchId, setSearchId] = useState('');
-  const [selectedId, setSelectedId] = useState('');
+  const [selectedId, setSelectedId] = useState(params.get(ResultParam.Unit) ?? '');
+
+  const closeDialog = () => {
+    onClose();
+    // setSearchId('');
+  };
 
   const allSubUnits = getSortedSubUnits(organization.hasPart);
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="lg">
+    <Dialog open={open} onClose={closeDialog} maxWidth="lg">
       <DialogTitle>Velg underenhet</DialogTitle>
       <DialogContent>
         <Typography sx={{ mb: '2rem' }}>
@@ -87,7 +92,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onClose}>Avbryt</Button>
+        <Button onClick={closeDialog}>Avbryt</Button>
         <Button
           variant="contained"
           disabled={!selectedId}
@@ -95,7 +100,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
             params.delete(ResultParam.From);
             params.set(ResultParam.Unit, selectedId);
             history.push({ search: params.toString() });
-            onClose();
+            closeDialog();
           }}>
           Velg
         </Button>
@@ -123,12 +128,15 @@ const OrganizationAccordion = ({
 }: OrganizationAccordionProps) => {
   const { t } = useTranslation();
 
-  const [expanded, setExpanded] = useState(false);
-
   const isSearchedUnit = organization.id === searchId;
 
+  const allSubunits = getAllChildOrganizations(organization.hasPart);
+
+  const [expanded, setExpanded] = useState(
+    organization.id === selectedId || allSubunits.some((subunit) => subunit.id === selectedId)
+  );
+
   if (!!searchId && !isSearchedUnit && !includeAllSubunits) {
-    const allSubunits = getAllChildOrganizations(organization.hasPart);
     if (!allSubunits.some((subunit) => subunit.id === searchId)) {
       return null; // Hide this element if the searched ID is not a part of this unit
     }
