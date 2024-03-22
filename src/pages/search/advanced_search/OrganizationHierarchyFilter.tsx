@@ -42,13 +42,13 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
 
   const closeDialog = () => {
     onClose();
-    // setSearchId('');
+    setSearchId('');
   };
 
   const allSubUnits = getSortedSubUnits(organization.hasPart);
 
   return (
-    <Dialog open={open} onClose={closeDialog} maxWidth="lg">
+    <Dialog open={open} onClose={closeDialog} maxWidth="lg" transitionDuration={0}>
       <DialogTitle>Velg underenhet</DialogTitle>
       <DialogContent>
         <Typography sx={{ mb: '2rem' }}>
