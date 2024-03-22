@@ -91,6 +91,7 @@ export const dataTestId = {
     areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
     categoriesLinkButton: 'categories-link-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
+    institutionSupportInputField: 'institution-support-input-field',
     doiLinkButton: 'doi-link-button',
     organizationAccordion: (id: string) => `organization-accordion-${id}`,
     organizationOverviewLinkButton: 'organization-overview-link-button',
