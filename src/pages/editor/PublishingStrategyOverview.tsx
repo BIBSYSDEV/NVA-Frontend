@@ -83,22 +83,33 @@ export const PublishingStrategyOverview = () => {
             <Divider />
 
             <Typography variant="h3">{t('editor.retention_strategy.rrs')}</Typography>
-            <Box sx={{ bgcolor: 'white', border: '1px solid', borderRadius: '4px', p: '0.5rem' }}>
-              <Typography>Institusjonen følger Rights RetentionStrategy (RRS)</Typography>
-            </Box>
+
+            <Typography>Institusjonen har oppgitt en Rights Retention Strategy (RRS) i NVA.</Typography>
+            <Typography>
+              Lisens CC-BY blir automatisk satt på akseptert versjon av filer i registreringen av en vitenskapelig
+              artikkel i NVA.
+            </Typography>
+
             <Typography variant="h3">{t('editor.retention_strategy.rrs_info_page')}</Typography>
-            <Box sx={{ bgcolor: 'white', border: '1px solid', borderRadius: '4px', p: '0.5rem' }}>
-              <Link href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer">
-                {customer.rightsRetentionStrategy.id}
-              </Link>
-            </Box>
-            <Box sx={{ bgcolor: 'white', border: '1px solid', borderRadius: '4px', p: '0.5rem' }}>
-              <Typography>{t('editor.retention_strategy.rrs_override')}</Typography>
-            </Box>
-            <Typography fontStyle="italic">
-              Rights Retention Strategy vil sørge for at fulltekstersjoner av alle vitenskapelige artikler gjøres åpent
-              tilgjengelig i,iddelbart uten embargo og uavhengig av publikasjonssted og finansiør. Dette vil bidra til
-              at institusjonen så raskt som mulig når målet om at alle publikasjoner skal være åpent tilgjengelig.
+
+            <Link href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer">
+              {customer.rightsRetentionStrategy.id}
+            </Link>
+
+            <Typography variant="h3">Mulig å ikke følge institusjonens rettighetspolitikk</Typography>
+
+            <Typography>
+              Publiseringskurator har tilgang til å sette at filer ikke følger institusjonens rettigethspolitikk (RRS).
+            </Typography>
+
+            <Typography>
+              Om registrator ikke øsnker følge institusjonens rettighetspolitikk (RRS) så se på vilkår om for ikke følge{' '}
+              RRS på informasjonsside om institusjonens rettighetspolitikk
+            </Typography>
+
+            <Typography>
+              Med å følge rettighetspolitikk (RRS) så blir vitenskapelige artikler åpent tilgjengelig umiddelbart uten
+              embargo.{' '}
             </Typography>
           </Box>
         </>
