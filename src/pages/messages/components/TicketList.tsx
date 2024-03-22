@@ -16,7 +16,6 @@ import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
-import { useSetDefaultTicketSearchParams } from '../../../utils/hooks/useSetDefaultTicketSearchParams';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketListItem } from './TicketListItem';
@@ -56,8 +55,6 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       ]}
     />
   );
-
-  useSetDefaultTicketSearchParams();
 
   return (
     <section>

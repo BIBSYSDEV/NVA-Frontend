@@ -51,6 +51,7 @@ import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
 import { taskNotificationsParams } from '../../utils/searchHelpers';
+import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
@@ -67,6 +68,10 @@ const StyledStatusRadio = styled(Radio)({
 });
 
 const nviYearFilterValues = getNviYearFilterValues();
+
+interface LocationState {
+  previousSearch: string;
+}
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -248,7 +253,7 @@ const TasksPage = () => {
           <Link
             to={{
               pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
-              search: (location?.state as any)?.previousSearch,
+              search: (location.state as LocationState)?.previousSearch,
             }}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
@@ -541,14 +546,16 @@ const TasksPage = () => {
           </PrivateRoute>
 
           <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isTicketCurator}>
-            <TicketList
-              ticketsQuery={ticketsQuery}
-              rowsPerPage={rowsPerPage}
-              setRowsPerPage={setRowsPerPage}
-              page={page}
-              setPage={setPage}
-              title={t('common.tasks')}
-            />
+            <TicketListDefaultValuesWrapper>
+              <TicketList
+                ticketsQuery={ticketsQuery}
+                rowsPerPage={rowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+                page={page}
+                setPage={setPage}
+                title={t('common.tasks')}
+              />
+            </TicketListDefaultValuesWrapper>
           </PrivateRoute>
           <PrivateRoute
             exact

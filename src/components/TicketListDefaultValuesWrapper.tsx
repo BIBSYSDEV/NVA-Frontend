@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import { useHistory } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetchOrganizations } from '../../api/cristinApi';
-import { fetchUser } from '../../api/roleApi';
-import { TicketSearchParam } from '../../api/searchApi';
-import { RootState } from '../../redux/store';
-import { TicketStatus } from '../../types/publication_types/ticket.types';
-import { getAllChildOrganizations } from '../institutions-helpers';
-import { UrlPathTemplate } from '../urlPaths';
+import { fetchUser } from '../api/roleApi';
+import { fetchOrganizations } from '../api/cristinApi';
+import { getAllChildOrganizations } from '../utils/institutions-helpers';
+import { TicketSearchParam } from '../api/searchApi';
+import { TicketStatus } from '../types/publication_types/ticket.types';
 
-export const useSetDefaultTicketSearchParams = (): boolean => {
-  const [defaultParamsAdded, setDefaultParamsAdded] = useState(false);
+interface TicketListDefaultValuesWrapperProps {
+  children: ReactNode;
+}
 
+export const TicketListDefaultValuesWrapper = ({ children }: TicketListDefaultValuesWrapperProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const nvaUsername = user?.nvaUsername ?? '';
 
   const history = useHistory();
-  const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
 
   const institutionUserQuery = useQuery({
     enabled: !!nvaUsername,
@@ -37,7 +37,7 @@ export const useSetDefaultTicketSearchParams = (): boolean => {
   });
 
   useEffect(() => {
-    if (!isOnTasksPage || !organizationQuery.data || defaultParamsAdded || history.location.search) {
+    if (!organizationQuery.data || history.location.search) {
       return;
     }
 
@@ -49,9 +49,7 @@ export const useSetDefaultTicketSearchParams = (): boolean => {
     searchParams.set(TicketSearchParam.Assignee, nvaUsername);
     searchParams.set(TicketSearchParam.Status, 'Pending' as TicketStatus);
     history.push({ search: searchParams.toString() });
+  }, [organizationQuery.data, history, nvaUsername]);
 
-    setDefaultParamsAdded(true);
-  }, [organizationQuery.data, history, nvaUsername, defaultParamsAdded, isOnTasksPage]);
-
-  return defaultParamsAdded;
+  return <>{children}</>;
 };
