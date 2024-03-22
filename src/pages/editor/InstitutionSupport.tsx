@@ -1,50 +1,77 @@
-import LabelIcon from '@mui/icons-material/Label';
 import LinkIcon from '@mui/icons-material/Link';
+import { LoadingButton } from '@mui/lab';
 import { Box, InputAdornment, TextField, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import { setCustomer } from '../../redux/customerReducer';
+import { setNotification } from '../../redux/notificationSlice';
+import { RootState } from '../../redux/store';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
 
 export const InstitutionSupport = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const customer = useSelector((store: RootState) => store.customer);
+
+  const customerMutation = useMutation({
+    mutationFn: (values: CustomerInstitution) =>
+      updateCustomerInstitution({ ...values, serviceCenterUri: values.serviceCenterUri }),
+    onSuccess: (response) => {
+      dispatch(setCustomer(response.data));
+      dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
+    },
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' })),
+  });
 
   return (
     <>
-      <Typography variant="h2">{t('editor.institution.institution_support')}</Typography>
-      <Typography sx={{ fontStyle: 'italic', marginTop: '0.5rem', marginBottom: '1rem' }}>
-        {t('editor.retention_strategy.rrs_required_link')}
-      </Typography>
+      {customer && (
+        <Formik initialValues={customer} onSubmit={async (values) => customerMutation.mutate(values)}>
+          {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => (
+            <Form style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <Typography variant="h2">{t('editor.institution.institution_support')}</Typography>
+              <Typography sx={{ fontStyle: 'italic', marginTop: '0.5rem', marginBottom: '1rem' }}>
+                {t('editor.retention_strategy.rrs_required_link')}
+              </Typography>
+              <Typography>{t('editor.institution.institution_support_description')}</Typography>
 
-      <Typography>{t('editor.institution.institution_support_description')}</Typography>
+              <Field name={'serviceCenterUri'}>
+                {({ field }: FieldProps<string>) => (
+                  <TextField
+                    sx={{ mb: { xs: '1rem', md: 0 }, maxWidth: '40rem' }}
+                    {...field}
+                    disabled={isSubmitting}
+                    value={values.serviceCenterUri}
+                    type="url"
+                    label={t('common.url')}
+                    placeholder={t('editor.retention_strategy.rrs_link')}
+                    variant="filled"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LinkIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    onChange={(event) => {
+                      setFieldValue(field.name, event.target.value);
+                    }}
+                  />
+                )}
+              </Field>
 
-      <Box sx={{ display: 'flex', gap: '1rem', maxWidth: '70%' }}>
-        <TextField
-          type="url"
-          label={t('common.url')}
-          placeholder={t('editor.retention_strategy.rrs_link')}
-          variant="filled"
-          fullWidth
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LinkIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          type="text"
-          label={t('common.url_name')}
-          placeholder={t('editor.retention_strategy.rrs_link')}
-          variant="filled"
-          fullWidth
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LabelIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Box>
+              <Box sx={{ mt: 'auto', display: 'flex', justifyContent: 'center' }}>
+                <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
+                  {t('common.save')}
+                </LoadingButton>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      )}
     </>
   );
 };
