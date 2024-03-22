@@ -69,7 +69,7 @@ export const InstitutionSupport = () => {
                 variant="contained"
                 type="submit"
                 loading={customerMutation.isLoading}
-                sx={{ mt: 'auto', alignSelf: 'center', width: 'fit-content' }}>
+                sx={{ mt: 'auto', alignSelf: 'center' }}>
                 {t('common.save')}
               </LoadingButton>
             </Form>
