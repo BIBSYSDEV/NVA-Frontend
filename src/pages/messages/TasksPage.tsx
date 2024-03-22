@@ -36,6 +36,7 @@ import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } fro
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
 import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
@@ -43,6 +44,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
+import { taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
@@ -50,8 +52,6 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
-import { taskNotificationsParams } from '../../utils/searchHelpers';
-import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
