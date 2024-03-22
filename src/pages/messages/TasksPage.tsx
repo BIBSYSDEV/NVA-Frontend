@@ -75,7 +75,7 @@ interface LocationState {
 
 const TasksPage = () => {
   const { t } = useTranslation();
-  const location = useLocation();
+  const location = useLocation<LocationState | undefined>();
   const user = useSelector((store: RootState) => store.user);
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;
@@ -253,7 +253,7 @@ const TasksPage = () => {
           <Link
             to={{
               pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
-              search: (location.state as LocationState)?.previousSearch,
+              search: location.state?.previousSearch,
             }}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
