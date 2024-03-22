@@ -1,6 +1,6 @@
 import LinkIcon from '@mui/icons-material/Link';
 import { LoadingButton } from '@mui/lab';
-import { Box, InputAdornment, TextField, Typography } from '@mui/material';
+import { InputAdornment, TextField, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -37,9 +37,6 @@ export const InstitutionSupport = () => {
           {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => (
             <Form style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               <Typography variant="h2">{t('editor.institution.institution_support')}</Typography>
-              <Typography sx={{ fontStyle: 'italic', marginTop: '0.5rem', marginBottom: '1rem' }}>
-                {t('editor.retention_strategy.rrs_required_link')}
-              </Typography>
               <Typography>{t('editor.institution.institution_support_description')}</Typography>
 
               <Field name={'serviceCenterUri'}>
@@ -68,11 +65,13 @@ export const InstitutionSupport = () => {
                 )}
               </Field>
 
-              <Box sx={{ mt: 'auto', display: 'flex', justifyContent: 'center' }}>
-                <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
-                  {t('common.save')}
-                </LoadingButton>
-              </Box>
+              <LoadingButton
+                variant="contained"
+                type="submit"
+                loading={customerMutation.isLoading}
+                sx={{ mt: 'auto', alignSelf: 'center', width: 'fit-content' }}>
+                {t('common.save')}
+              </LoadingButton>
             </Form>
           )}
         </Formik>
