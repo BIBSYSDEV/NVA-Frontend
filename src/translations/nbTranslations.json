@@ -616,6 +616,7 @@
       "files_published_unknown": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
+      "get_curator_support": "Få hjelp av kurator",
       "mark_as_completed": "Sett til ferdig",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
