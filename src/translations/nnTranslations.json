@@ -237,6 +237,7 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Vel",
     "select_institution": "Vel institusjon",
+    "select_unit": "Vel eining",
     "send": "Send",
     "settings": "Innstillingar",
     "show": "Vis",
@@ -378,6 +379,7 @@
       "institution_profile": "Institusjonsprofil",
       "institution_short_name": "Institusjonen sitt kortnamn",
       "not_rbo_funded": "Institusjonen får ikkje finansiering via Resultatbasert omfordeling (RBO)",
+      "organizing": "Organisering",
       "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
     },
     "organization_overview": "Organisasjonsstruktur",
@@ -615,6 +617,7 @@
       "files_published_unknown": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
+      "get_curator_support": "",
       "mark_as_completed": "Sett til ferdig",
       "no_messages": "Du har ingen meldingar",
       "ticket_types": {
@@ -656,6 +659,7 @@
         "upload_profile_photo": "Last opp profilbilete",
         "upload_profile_photo_info": "Maksimum storleik: 1 MB. Støtta filtypar: .jpg eller .jpeg"
       },
+      "list_contains_all_registration_you_have_created": "",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskingsresultat",
       "orcid": {
@@ -692,11 +696,6 @@
       }
     },
     "no_employments": "Ingen tilsetjingar",
-    "project_registration_status": {
-      "concluded": "Avslutta",
-      "not_started": "Ikkje starta",
-      "ongoing": "Pågåande"
-    },
     "project_registrations": "Prosjektregistreringar",
     "public_research_profile": "Offentleg forskarprofil",
     "registrations": {
@@ -1153,9 +1152,8 @@
         "VideoEditor": "Klipper",
         "Writer": "Tekstforfattar"
       },
-      "unidentified_contributor": "Bidragsytar er uidentifisert",
       "verify_affiliation": "Bekreft tilknyting",
-      "verify_person": "Verifiser person"
+      "verify_contributor": "Identifiser bidragsytar"
     },
     "curator_support_info": "Her kan du spørje din kurator om hjelp med alt som har med registrering og publisering av forskingsresultat. Du finn svar på spørsmåla dine på \"Mi side\" og på registreringa si presentasjonsside.",
     "delete_registration": "Slette resultat",
@@ -1706,7 +1704,7 @@
       "type_work_specified": "Eigendefinert type verk",
       "volume": "Volum"
     },
-    "result_is_deleted": "Resultatet er sletta",
+    "result_is_deleted_or_unpublished": "Resultatet er {{status}}",
     "status": {
       "DELETED": "Sletta",
       "DRAFT": "Kladd",

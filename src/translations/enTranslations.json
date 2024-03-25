@@ -237,6 +237,7 @@
     "search_summary_other": "{{count}} results for \"{{searchTerm}}\"",
     "select": "Select",
     "select_institution": "Select institution",
+    "select_unit": "Select unit",
     "send": "Send",
     "settings": "Settings",
     "show": "Show",
@@ -378,6 +379,7 @@
       "institution_profile": "Institution profile",
       "institution_short_name": "Institution short name",
       "not_rbo_funded": "The institution does not receive funding via Results-based redistribution (RBO)",
+      "organizing": "Organization",
       "rbo_funded": "The institution receives funding via Results-based redistribution (RBO)"
     },
     "organization_overview": "Organizational structure",
@@ -615,6 +617,7 @@
       "files_published_unknown": "File(s) published",
       "files_rejected": "File(s) rejected",
       "general_support_pending": "Pending follow-up",
+      "get_curator_support": "",
       "mark_as_completed": "Mark as completed",
       "no_messages": "You have no messages",
       "ticket_types": {
@@ -656,6 +659,7 @@
         "upload_profile_photo": "Upload profile picture",
         "upload_profile_photo_info": "Maximum size: 1 MB. Supported file types: .jpg or .jpeg"
       },
+      "list_contains_all_registration_you_have_created": "",
       "my_projects": "My projects",
       "my_research_results": "My research results",
       "orcid": {
@@ -692,11 +696,6 @@
       }
     },
     "no_employments": "No employments",
-    "project_registration_status": {
-      "concluded": "Concluded",
-      "not_started": "Not started",
-      "ongoing": "Ongoing"
-    },
     "project_registrations": "Project registrations",
     "public_research_profile": "Public researcher profile",
     "registrations": {
@@ -1153,9 +1152,8 @@
         "VideoEditor": "Video editor",
         "Writer": "Writer"
       },
-      "unidentified_contributor": "Contributor is unidentified",
       "verify_affiliation": "Verify affiliation",
-      "verify_person": "Verify person"
+      "verify_contributor": "Identify contributor"
     },
     "curator_support_info": "Here you can ask your curator for help with everything related to the registration and publication of research results. You can find answers to your questions on \"My page\" and on the registration presentation page.",
     "delete_registration": "Delete result",
@@ -1706,7 +1704,7 @@
       "type_work_specified": "Custom work type",
       "volume": "Volume"
     },
-    "result_is_deleted": "The result is deleted",
+    "result_is_deleted_or_unpublished": "The result is {{status}}",
     "status": {
       "DELETED": "Deleted",
       "DRAFT": "Draft",
