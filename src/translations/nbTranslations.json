@@ -237,6 +237,7 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
     "select_institution": "Velg institusjon",
+    "select_unit": "Velg enhet",
     "send": "Send",
     "settings": "Innstillinger",
     "show": "Vis",
@@ -658,8 +659,8 @@
         "upload_profile_photo": "Last opp profilfoto",
         "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
       },
-      "my_projects": "Mine prosjekt",
       "list_contains_all_registration_you_have_created": "Listen viser alle prosjekter du har registrert",
+      "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
