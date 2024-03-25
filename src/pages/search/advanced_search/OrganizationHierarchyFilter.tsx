@@ -141,7 +141,7 @@ const OrganizationAccordion = ({
 
   const allSubunits = getAllChildOrganizations(organization.hasPart);
 
-  const [expanded, setExpanded] = useState(
+  const [expandedState, setExpandedState] = useState(
     organization.id === selectedId || allSubunits.some((subunit) => subunit.id === selectedId)
   );
 
@@ -151,7 +151,7 @@ const OrganizationAccordion = ({
     }
   }
 
-  const shouldExpand = expanded || (!!searchId && !includeAllSubunits);
+  const expanded = expandedState || (!!searchId && !includeAllSubunits);
   const subunitsCount = organization.hasPart?.length ?? 0;
 
   return (
@@ -164,8 +164,8 @@ const OrganizationAccordion = ({
       }}
       disableGutters
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: { xs: undefined, md: `${level}rem` } }}
-      expanded={shouldExpand}
-      onChange={() => setExpanded(!expanded)}>
+      expanded={expanded}
+      onChange={() => setExpandedState(!expandedState)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
         <Box
           sx={{
@@ -190,7 +190,7 @@ const OrganizationAccordion = ({
       </AccordionSummary>
       {subunitsCount > 0 && (
         <AccordionDetails sx={{ pr: 0 }}>
-          {shouldExpand &&
+          {expanded &&
             organization.hasPart?.map((subunit) => (
               <OrganizationAccordion
                 key={subunit.id}
