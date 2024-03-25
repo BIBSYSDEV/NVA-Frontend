@@ -1,7 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "always"
+    "source.organizeImports": "explicit"
   },
   "i18n-ally.sourceLanguage": "nb",
   "i18n-ally.displayLanguage": "nb",
