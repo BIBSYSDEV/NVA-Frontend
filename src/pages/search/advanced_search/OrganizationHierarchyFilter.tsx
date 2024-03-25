@@ -1,4 +1,6 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import {
   Accordion,
   AccordionDetails,
@@ -12,7 +14,6 @@ import {
   DialogProps,
   DialogTitle,
   Link,
-  Radio,
   TextField,
   Typography,
 } from '@mui/material';
@@ -138,11 +139,12 @@ const OrganizationAccordion = ({
   const { t } = useTranslation();
 
   const isSearchedUnit = organization.id === searchId;
+  const isSelectedUnit = organization.id === selectedId;
 
   const allSubunits = getAllChildOrganizations(organization.hasPart);
 
   const [expandedState, setExpandedState] = useState(
-    organization.id === selectedId || allSubunits.some((subunit) => subunit.id === selectedId)
+    isSelectedUnit || allSubunits.some((subunit) => subunit.id === selectedId)
   );
 
   if (!!searchId && !isSearchedUnit && !includeAllSubunits) {
@@ -177,9 +179,10 @@ const OrganizationAccordion = ({
               lg: 'auto 3fr 3fr 1fr 1fr',
               alignItems: 'center',
             },
+            py: '0.25rem',
             '& > p': { fontWeight: isSearchedUnit ? 700 : undefined },
           }}>
-          <Radio size="small" checked={selectedId === organization.id} />
+          {isSelectedUnit ? <RadioButtonCheckedIcon fontSize="small" /> : <RadioButtonUncheckedIcon fontSize="small" />}
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
           <Typography sx={{ gridColumn: { xs: '1/3', lg: '3/4' } }}>{organization.labels['en']}</Typography>
           <Typography sx={{ gridColumn: { xs: '1/3', lg: '4/5' } }}>{getIdentifierFromId(organization.id)}</Typography>
