@@ -16,13 +16,13 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getById } from '../../api/commonApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
+import { OrganizationRenderOption } from '../../components/OrganizationRenderOption';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getAllChildOrganizations, getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { dataTestId } from '../../utils/dataTestIds';
-import { OrganizationRenderOption } from '../../components/OrganizationRenderOption';
 
 export const OrganizationOverview = () => {
   const { t } = useTranslation();
@@ -72,7 +72,7 @@ export const OrganizationOverview = () => {
                 (option) =>
                   Object.values(option.labels).some((label) =>
                     label.toLowerCase().includes(state.inputValue.toLowerCase())
-                  ) || option.id.includes(state.inputValue)
+                  ) || getIdentifierFromId(option.id).includes(state.inputValue)
               )
             }
             getOptionKey={(option) => option.id}
@@ -106,7 +106,7 @@ const OrganizationAccordion = ({
 }: OrganizationAccordionProps) => {
   const { t } = useTranslation();
 
-  const [expanded, setExpanded] = useState(false);
+  const [expandedState, setExpandedState] = useState(false);
 
   const isSearchedUnit = organization.id === searchId;
 
@@ -116,7 +116,7 @@ const OrganizationAccordion = ({
       return null; // Hide this element if the searched ID is not a part of this unit
     }
   }
-
+  const expanded = expandedState || (!!searchId && !includeAllSubunits);
   const subunitsCount = organization.hasPart?.length ?? 0;
 
   return (
@@ -125,8 +125,8 @@ const OrganizationAccordion = ({
       elevation={2}
       disableGutters
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: { xs: undefined, md: `${level}rem` } }}
-      expanded={expanded || (!!searchId && !includeAllSubunits)}
-      onChange={() => setExpanded(!expanded)}>
+      expanded={expanded}
+      onChange={() => setExpandedState(!expanded)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
         <Box
           sx={{
@@ -144,15 +144,16 @@ const OrganizationAccordion = ({
       </AccordionSummary>
       {subunitsCount > 0 && (
         <AccordionDetails sx={{ pr: 0 }}>
-          {organization.hasPart?.map((subunit) => (
-            <OrganizationAccordion
-              key={subunit.id}
-              organization={subunit}
-              level={level + 1}
-              searchId={searchId}
-              includeAllSubunits={includeAllSubunits || isSearchedUnit}
-            />
-          ))}
+          {expanded &&
+            organization.hasPart?.map((subunit) => (
+              <OrganizationAccordion
+                key={subunit.id}
+                organization={subunit}
+                level={level + 1}
+                searchId={searchId}
+                includeAllSubunits={includeAllSubunits || isSearchedUnit}
+              />
+            ))}
         </AccordionDetails>
       )}
     </Accordion>
