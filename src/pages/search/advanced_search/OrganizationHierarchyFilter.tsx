@@ -171,11 +171,9 @@ const OrganizationAccordion = ({
           sx={{
             width: '100%',
             display: 'grid',
-            gap: '0.5rem 1rem',
+            gap: '0.25rem 1rem',
             gridTemplateColumns: {
-              xs: '1fr',
-              sm: '1fr 1fr',
-              md: '1fr',
+              xs: 'auto 1fr',
               lg: 'auto 3fr 3fr 1fr 1fr',
               alignItems: 'center',
             },
@@ -183,9 +181,11 @@ const OrganizationAccordion = ({
           }}>
           <Radio size="small" checked={selectedId === organization.id} />
           <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
-          <Typography>{organization.labels['en']}</Typography>
-          <Typography>{getIdentifierFromId(organization.id)}</Typography>
-          <Typography>{subunitsCount > 0 && t('editor.subunits_count', { count: subunitsCount })}</Typography>
+          <Typography sx={{ gridColumn: { xs: '1/3', lg: '3/4' } }}>{organization.labels['en']}</Typography>
+          <Typography sx={{ gridColumn: { xs: '1/3', lg: '4/5' } }}>{getIdentifierFromId(organization.id)}</Typography>
+          <Typography sx={{ gridColumn: { xs: '1/3', lg: '5/6' } }}>
+            {subunitsCount > 0 && t('editor.subunits_count', { count: subunitsCount })}
+          </Typography>
         </Box>
       </AccordionSummary>
       {subunitsCount > 0 && (
