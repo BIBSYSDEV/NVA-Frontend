@@ -222,20 +222,6 @@ export enum ResultSearchOrder {
   PublicationDate = 'publicationDate',
 }
 
-const queryFieldsValue = [
-  ResultParam.Title,
-  ResultParam.Abstract,
-  ResultParam.ContributorName,
-  ResultParam.Doi,
-  ResultParam.Tags,
-  ResultParam.Issn,
-  ResultParam.Handle,
-  ResultParam.FundingIdentifier,
-  ResultParam.Course,
-  ResultParam.CristinIdentifier,
-  ResultParam.Identifier,
-].join(',');
-
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
@@ -371,7 +357,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
-    searchParams.set(ResultParam.Fields, queryFieldsValue);
+    searchParams.set(ResultParam.Fields, `${ResultParam.Title},${ResultParam.Abstract},${ResultParam.ContributorName}`);
   }
   if (params.scientificIndex) {
     searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
