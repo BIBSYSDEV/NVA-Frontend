@@ -6,7 +6,7 @@ module.exports = {
     ecmaVersion: 2022,
   },
   settings: { react: { version: 'detect' } },
-  plugins: ['react', 'react-hooks', 'jsx-a11y', '@typescript-eslint', '@tanstack/query' /*, 'prettier'*/],
+  plugins: ['react', 'react-hooks', 'jsx-a11y', '@typescript-eslint', '@tanstack/query'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -14,9 +14,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:@tanstack/eslint-plugin-query/recommended',
-
-    // 'plugin:cypress/recommended', // avoid showing cypress variables as error
-    // 'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display Prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    'plugin:prettier/recommended',
   ],
   rules: {
     'react/react-in-jsx-scope': 'off',
@@ -27,7 +25,4 @@ module.exports = {
     'no-debugger': 'warn',
     '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
   },
-  // rules: {
-  //   'prettier/prettier': 2,
-  // },
 };
