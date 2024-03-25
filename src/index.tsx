@@ -1,5 +1,3 @@
-import './init'; // Must be the first import
-
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
