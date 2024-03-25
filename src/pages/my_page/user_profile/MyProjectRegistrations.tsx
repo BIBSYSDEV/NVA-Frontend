@@ -1,6 +1,6 @@
 import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { searchForProjects } from '../../../api/cristinApi';
@@ -42,10 +42,6 @@ export const MyProjectRegistrations = () => {
 
   const projectsToShow = filteredProjects.slice(rowsPerPage * (page - 1), rowsPerPage * page);
   const validPage = page - 1 < Math.ceil(filteredProjects.length / rowsPerPage) ? page : 1;
-
-  useEffect(() => {
-    setPage(1);
-  }, []);
 
   return (
     <div>
