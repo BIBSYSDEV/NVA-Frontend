@@ -79,7 +79,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
                 (option) =>
                   Object.values(option.labels).some((label) =>
                     label.toLowerCase().includes(state.inputValue.toLowerCase())
-                  ) || option.id.includes(state.inputValue)
+                  ) || getIdentifierFromId(option.id).includes(state.inputValue)
               )
             }
             getOptionKey={(option) => option.id}

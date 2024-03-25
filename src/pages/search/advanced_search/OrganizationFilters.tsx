@@ -26,6 +26,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
   const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
   const [showUnitSelection, setShowUnitSelection] = useState(false);
+  const toggleShowUnitSelection = () => setShowUnitSelection(!showUnitSelection);
 
   const topLevelOrganizationQuery = useQuery({
     queryKey: [topLevelOrganizationId],
@@ -78,7 +79,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         gap: '0.5rem 1rem',
         flexDirection: { xs: 'column', lg: 'row' },
         width: '100%',
-        alignItems: 'center',
+        alignItems: { xs: 'start', lg: 'center' },
       }}>
       <Autocomplete
         fullWidth
@@ -130,7 +131,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
       <Chip
         data-testid={dataTestId.organization.subSearchField}
         color="primary"
-        onClick={() => setShowUnitSelection(!showUnitSelection)}
+        onClick={toggleShowUnitSelection}
         label={
           unitId ? (
             subUnitQuery.isLoading ? (
@@ -161,7 +162,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         <OrganizationHierarchyFilter
           organization={topLevelOrganizationQuery.data}
           open={showUnitSelection}
-          onClose={() => setShowUnitSelection(false)}
+          onClose={toggleShowUnitSelection}
         />
       )}
 
