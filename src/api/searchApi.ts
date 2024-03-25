@@ -184,7 +184,6 @@ export enum ResultParam {
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
   ExcludeSubunits = 'excludeSubunits',
-  Fields = 'fields',
   Files = 'files',
   From = 'from',
   FundingIdentifier = 'fundingIdentifier',
@@ -357,7 +356,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
-    searchParams.set(ResultParam.Fields, `${ResultParam.Title},${ResultParam.Abstract},${ResultParam.ContributorName}`);
   }
   if (params.scientificIndex) {
     searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
