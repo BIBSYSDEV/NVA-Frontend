@@ -8,11 +8,13 @@ import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
+import { fetchJournal, fetchPublisher, fetchSeries } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
-import { PublicationInstanceType } from '../../../types/registration.types';
+import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   createSearchConfigFromSearchParams,
+  getFileFacetText,
   isValidIsbn,
   PropertySearch,
   removeSearchParamValue,
@@ -28,14 +30,12 @@ import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
 const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
-  ResultParam.Course,
-  ResultParam.CristinIdentifier,
-  ResultParam.Doi,
+  ResultParam.Journal,
+  ResultParam.Publisher,
+  ResultParam.Files,
   ResultParam.FundingSource,
-  ResultParam.Handle,
-  ResultParam.Identifier,
-  ResultParam.Isbn,
-  ResultParam.Issn,
+  ResultParam.ScientificIndex,
+  ResultParam.Series,
   ResultParam.TopLevelOrganization,
 ];
 
@@ -257,6 +257,63 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     }
                     break;
                   }
+                  case ResultParam.Publisher: {
+                    fieldName = t('common.publisher');
+                    const publisherLabels = registrationQuery.data?.aggregations?.publisher?.find(
+                      (bucket) => bucket.key === value
+                    )?.labels;
+                    const publisherName = publisherLabels ? getLanguageString(publisherLabels) : '';
+                    if (publisherName) {
+                      fieldValueText = publisherName;
+                    } else {
+                      fieldValueText = (
+                        <SelectedPublisherFacetButton
+                          publisherIdentifier={typeof value === 'string' ? value : value[0]}
+                        />
+                      );
+                    }
+                    break;
+                  }
+                  case ResultParam.Series: {
+                    fieldName = t('registration.resource_type.series');
+                    const seriesLabels = registrationQuery.data?.aggregations?.series?.find(
+                      (bucket) => bucket.key === value
+                    )?.labels;
+                    const seriesName = seriesLabels ? getLanguageString(seriesLabels) : '';
+                    if (seriesName) {
+                      fieldValueText = seriesName;
+                    } else {
+                      fieldValueText = (
+                        <SelectedSeriesFacetButton seriesIdentifier={typeof value === 'string' ? value : value[0]} />
+                      );
+                    }
+                    break;
+                  }
+                  case ResultParam.Journal: {
+                    fieldName = t('registration.resource_type.journal');
+                    const journalLabels = registrationQuery.data?.aggregations?.journal?.find(
+                      (bucket) => bucket.key === value
+                    )?.labels;
+                    const journalName = journalLabels ? getLanguageString(journalLabels) : '';
+                    if (journalName) {
+                      fieldValueText = journalName;
+                    } else {
+                      fieldValueText = (
+                        <SelectedJournalFacetButton journalIdentifier={typeof value === 'string' ? value : value[0]} />
+                      );
+                    }
+                    break;
+                  }
+                  case ResultParam.ScientificIndex: {
+                    fieldName = t('basic_data.nvi.nvi_publication_year');
+                    fieldValueText = value;
+                    break;
+                  }
+                  case ResultParam.Files: {
+                    fieldName = t('registration.files_and_license.files');
+                    fieldValueText = getFileFacetText(value as AggregationFileKeyType, t);
+                    break;
+                  }
                   default:
                     fieldValueText = typeof value === 'string' ? value : t('common.unknown');
                 }
@@ -347,6 +404,66 @@ const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetB
   const fundingName = getLanguageString(fundingSourcesQuery.data?.name) || t('common.unknown');
 
   return <>{fundingSourcesQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
+};
+
+interface SelectedPublisherFacetButtonProps {
+  publisherIdentifier: string;
+}
+
+const SelectedPublisherFacetButton = ({ publisherIdentifier }: SelectedPublisherFacetButtonProps) => {
+  const { t } = useTranslation();
+
+  const publisherQuery = useQuery({
+    queryKey: [publisherIdentifier],
+    queryFn: () => (publisherIdentifier ? fetchPublisher(publisherIdentifier) : undefined),
+    staleTime: Infinity,
+    cacheTime: 1_800_000,
+    meta: { errorMessage: t('feedback.error.get_publisher') },
+  });
+
+  const publisherName = publisherQuery.data?.name || t('common.unknown');
+
+  return <>{publisherQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : publisherName}</>;
+};
+
+interface SelectedSeriesFacetButtonProps {
+  seriesIdentifier: string;
+}
+
+const SelectedSeriesFacetButton = ({ seriesIdentifier }: SelectedSeriesFacetButtonProps) => {
+  const { t } = useTranslation();
+
+  const seriesQuery = useQuery({
+    queryKey: [seriesIdentifier],
+    queryFn: () => (seriesIdentifier ? fetchSeries(seriesIdentifier) : undefined),
+    staleTime: Infinity,
+    cacheTime: 1_800_000,
+    meta: { errorMessage: t('feedback.error.get_series') },
+  });
+
+  const seriesName = seriesQuery.data?.name || t('common.unknown');
+
+  return <>{seriesQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : seriesName}</>;
+};
+
+interface SelectedJournalFacetButtonProps {
+  journalIdentifier: string;
+}
+
+const SelectedJournalFacetButton = ({ journalIdentifier }: SelectedJournalFacetButtonProps) => {
+  const { t } = useTranslation();
+
+  const journalQuery = useQuery({
+    queryKey: [journalIdentifier],
+    queryFn: () => (journalIdentifier ? fetchJournal(journalIdentifier) : undefined),
+    staleTime: Infinity,
+    cacheTime: 1_800_000,
+    meta: { errorMessage: t('feedback.error.get_journal') },
+  });
+
+  const journalName = journalQuery.data?.name || t('common.unknown');
+
+  return <>{journalQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : journalName}</>;
 };
 
 const FilterButton = () => {

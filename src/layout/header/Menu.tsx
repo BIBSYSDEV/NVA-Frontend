@@ -85,13 +85,13 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               <Typography>{t('my_page.my_page')}</Typography>
             </MenuItem>
           ),
-          user?.isEditor && (
+          !!user?.customerId && (
             <MenuItem
               key={dataTestId.header.editorLink}
               data-testid={dataTestId.header.editorLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.EditorCurators}>
+              to={UrlPathTemplate.EditorInstitution}>
               <Typography>{organizationQuery.data?.acronym}</Typography>
             </MenuItem>
           ),

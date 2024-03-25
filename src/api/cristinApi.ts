@@ -1,3 +1,4 @@
+import { AxiosHeaders } from 'axios';
 import { SearchResponse } from '../types/common.types';
 import { Keywords } from '../types/keywords.types';
 import { Organization } from '../types/organization.types';
@@ -78,13 +79,20 @@ export interface OrganizationSearchParams {
   query?: string;
   page?: number;
   results?: number;
+  includeSubunits?: boolean;
 }
 
 export const searchForOrganizations = async (params: OrganizationSearchParams) => {
   const searchParams = new URLSearchParams();
+  const headers = new AxiosHeaders();
+
   if (params.query) {
     searchParams.set('query', params.query);
   }
+  if (params.includeSubunits) {
+    headers.set('Accept', 'application/json; version=1');
+  }
+
   searchParams.set('results', params.results?.toString() ?? '20');
   searchParams.set('page', params.page?.toString() ?? '1');
 
@@ -92,6 +100,7 @@ export const searchForOrganizations = async (params: OrganizationSearchParams) =
   const queryParams = queryContent ? `?${queryContent}` : '';
 
   const fetchOrganizationsResponse = await apiRequest2<SearchResponse<Organization>>({
+    headers,
     url: `${CristinApiPath.Organization}${queryParams}`,
   });
 
@@ -103,6 +112,13 @@ export const fetchOrganization = async (id: string) => {
     url: id,
   });
   return fetchOrganizationResponse.data;
+};
+
+export const fetchOrganizations = async (ids: string[]) => {
+  const areaPromises = ids.map(async (id) => {
+    return await fetchOrganization(id);
+  });
+  return await Promise.all(areaPromises);
 };
 
 export const fetchPositions = async (includeDisabledPositions: boolean) => {

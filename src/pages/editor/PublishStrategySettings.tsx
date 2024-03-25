@@ -1,8 +1,7 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
-
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +10,7 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { PublishStrategy } from '../../types/customerInstitution.types';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { RightsRetentionStrategySettings } from './RightsRetentionStrategySettings';
 
@@ -53,24 +51,16 @@ export const PublishStrategySettings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
-  const [isUpdating, setIsUpdating] = useState<PublishStrategy>();
 
-  const setPublicationWorkflow = async (publishStrategy: PublishStrategy) => {
-    if (customer) {
-      setIsUpdating(publishStrategy);
-      const updateCustomerResponse = await updateCustomerInstitution({
-        ...customer,
-        publicationWorkflow: publishStrategy,
-      });
-      if (isErrorStatus(updateCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.update_publish_strategy'), variant: 'error' }));
-      } else if (isSuccessStatus(updateCustomerResponse.status)) {
-        dispatch(setCustomer(updateCustomerResponse.data));
-        dispatch(setNotification({ message: t('feedback.success.update_publish_strategy'), variant: 'success' }));
-      }
-      setIsUpdating(undefined);
-    }
-  };
+  const updateRightsRetentionStrategy = useMutation({
+    mutationFn: (customer: CustomerInstitution) => updateCustomerInstitution(customer),
+    onSuccess: (response) => {
+      dispatch(setCustomer(response.data));
+      dispatch(setNotification({ message: t('feedback.success.update_publish_strategy'), variant: 'success' }));
+    },
+    onError: () =>
+      dispatch(setNotification({ message: t('feedback.error.update_publish_strategy'), variant: 'error' })),
+  });
 
   const currentPublishStrategy = customer?.publicationWorkflow;
 
@@ -88,10 +78,21 @@ export const PublishStrategySettings = () => {
             <StyledItemContainer>
               <PublishStrategyButton
                 focusRipple
-                disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
-                isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+                disabled={
+                  updateRightsRetentionStrategy.isLoading ||
+                  currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'
+                }
+                isSelected={
+                  !updateRightsRetentionStrategy.isLoading &&
+                  currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'
+                }
                 data-testid={dataTestId.editor.workflowRegistratorPublishesAll}
-                onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
+                onClick={() =>
+                  updateRightsRetentionStrategy.mutate({
+                    ...customer,
+                    publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
+                  })
+                }>
                 <Box>
                   <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
                     {t('editor.publish_strategy.registrator_publishes_without_curator')}
@@ -111,18 +112,30 @@ export const PublishStrategySettings = () => {
                   </Typography>
                 </Box>
               </PublishStrategyButton>
-              {isUpdating === 'RegistratorPublishesMetadataAndFiles' && (
-                <CircularProgress aria-labelledby="publish-strategy-label" />
-              )}
+              {updateRightsRetentionStrategy.isLoading &&
+                customer.publicationWorkflow !== 'RegistratorPublishesMetadataAndFiles' && (
+                  <CircularProgress aria-labelledby="publish-strategy-label" />
+                )}
             </StyledItemContainer>
 
             <StyledItemContainer>
               <PublishStrategyButton
                 focusRipple
-                disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
-                isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+                disabled={
+                  updateRightsRetentionStrategy.isLoading ||
+                  currentPublishStrategy === 'RegistratorPublishesMetadataOnly'
+                }
+                isSelected={
+                  !updateRightsRetentionStrategy.isLoading &&
+                  currentPublishStrategy === 'RegistratorPublishesMetadataOnly'
+                }
                 data-testid={dataTestId.editor.workflowRegistratorPublishesMetadata}
-                onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
+                onClick={() =>
+                  updateRightsRetentionStrategy.mutate({
+                    ...customer,
+                    publicationWorkflow: 'RegistratorPublishesMetadataOnly',
+                  })
+                }>
                 <Box>
                   <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
                     {t('editor.publish_strategy.registrator_publishes_metadata')}
@@ -142,9 +155,10 @@ export const PublishStrategySettings = () => {
                   </Typography>
                 </Box>
               </PublishStrategyButton>
-              {isUpdating === 'RegistratorPublishesMetadataOnly' && (
-                <CircularProgress aria-labelledby="publish-strategy-label" />
-              )}
+              {updateRightsRetentionStrategy.isLoading &&
+                customer.publicationWorkflow !== 'RegistratorPublishesMetadataOnly' && (
+                  <CircularProgress aria-labelledby="publish-strategy-label" />
+                )}
             </StyledItemContainer>
           </Box>
           <RightsRetentionStrategySettings />

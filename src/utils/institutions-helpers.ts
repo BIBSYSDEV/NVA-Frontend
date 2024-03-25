@@ -18,7 +18,7 @@ export const getDistinctContributorUnits = (contributors: Contributor[]) => {
 export const getOrganizationHierarchy = (unit?: Organization, result: Organization[] = []): Organization[] => {
   if (!unit) {
     return result;
-  } else if (!unit.partOf) {
+  } else if (!unit.partOf || unit.partOf.length === 0) {
     return [unit, ...result];
   }
 
@@ -31,7 +31,7 @@ export const getSortedSubUnits = (subUnits: Organization[] = []) => {
   return units.sort((a, b) => (getLanguageString(a.labels) < getLanguageString(b.labels) ? -1 : 1));
 };
 
-const getAllChildOrganizations = (units: Organization[] = [], result: Organization[] = []): Organization[] => {
+export const getAllChildOrganizations = (units: Organization[] = [], result: Organization[] = []): Organization[] => {
   if (!units.length) {
     return result;
   }
@@ -40,7 +40,9 @@ const getAllChildOrganizations = (units: Organization[] = [], result: Organizati
 };
 
 export const getTopLevelOrganization = (organization: Organization): Organization =>
-  !organization.partOf ? organization : getTopLevelOrganization(organization.partOf[0]);
+  !organization.partOf || organization.partOf.length === 0
+    ? organization
+    : getTopLevelOrganization(organization.partOf[0]);
 
 export const sortCustomerInstitutions = <T extends SimpleCustomerInstitution>(customers: T[] = []) =>
   customers.sort((a, b) => (a.displayName.toLocaleLowerCase() < b.displayName.toLocaleLowerCase() ? -1 : 1));

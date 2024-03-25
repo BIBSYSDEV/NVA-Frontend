@@ -17,43 +17,58 @@ export const EditorDoi = () => {
       ) : (
         <>
           {!customer.doiAgent.username ? (
-            <Typography paragraph>
+            <Typography paragraph fontWeight="bold">
               <Trans t={t} i18nKey="editor.doi.institution_cannot_create_doi">
                 <MuiLink href={'mailto:kontakt@sikt.no'} target="_blank" rel="noopener noreferrer" />
               </Trans>
             </Typography>
           ) : (
-            <Typography paragraph>{t('editor.doi.institution_can_create_doi')}</Typography>
+            <Typography paragraph fontWeight="bold">
+              {t('editor.doi.institution_can_create_doi')}
+            </Typography>
           )}
 
           <Box
             sx={{
-              bgcolor: 'grey.400',
-              width: 'fit-content',
-              p: '1rem 2rem',
               display: 'flex',
-              gap: '3rem',
-              'h3, p': {
-                fontSize: '1rem',
-                fontWeight: 500,
-              },
+              columnGap: '1rem',
+              width: '100%',
+              'h3, p': { fontWeight: '500' },
             }}>
-            <div>
-              <Typography variant="h3">{t('basic_data.institutions.doi_repo_id')}</Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                rowGap: '0.3rem',
+                width: 'max(30%, 250px)',
+              }}>
+              <Typography variant="h3">{t('basic_data.institutions.doi_repo_id')}:</Typography>
               {customer.doiAgent?.username ? (
-                <Typography sx={{ color: 'primary.light' }}>{customer.doiAgent.username}</Typography>
+                <Typography sx={{ color: 'primary.light', bgcolor: 'grey.400', p: '0.7rem' }}>
+                  {customer.doiAgent.username}
+                </Typography>
               ) : (
                 '—'
               )}
-            </div>
-            <div>
-              <Typography variant="h3">{t('basic_data.institutions.doi_prefix')}</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                rowGap: '0.3rem',
+                width: 'max(30%, 250px)',
+              }}>
+              <Typography variant="h3">{t('basic_data.institutions.institution_doi_prefix')}:</Typography>
               {customer.doiAgent?.prefix ? (
-                <Typography sx={{ color: 'primary.light' }}>{customer.doiAgent.prefix}</Typography>
+                <Typography sx={{ color: 'primary.light', bgcolor: 'grey.400', p: '0.7rem' }}>
+                  {customer.doiAgent.prefix}
+                </Typography>
               ) : (
                 '—'
               )}
-            </div>
+            </Box>
           </Box>
 
           <Box component="ul" sx={{ pl: '1rem' }}>

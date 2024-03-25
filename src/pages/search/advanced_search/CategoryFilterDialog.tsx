@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
@@ -25,6 +25,11 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
       setSelectedCategories([...selectedCategories, type]);
     }
   };
+
+  // Used to clear value from parent component
+  useEffect(() => {
+    setSelectedCategories(currentCategories);
+  }, [currentCategories]);
 
   return (
     <Dialog open={open} onClose={closeDialog} maxWidth="md" fullWidth>

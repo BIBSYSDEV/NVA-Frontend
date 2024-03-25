@@ -13,7 +13,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { fetchResults, FetchResultsParams, ResultParam, SortOrder } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -64,6 +64,7 @@ const HomePage = () => {
     contributorName: params.get(ResultParam.ContributorName),
     course: params.get(ResultParam.Course),
     cristinIdentifier: params.get(ResultParam.CristinIdentifier),
+    files: params.get(ResultParam.Files),
     doi: params.get(ResultParam.Doi),
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
@@ -73,7 +74,7 @@ const HomePage = () => {
     isbn: params.get(ResultParam.Isbn),
     issn: params.get(ResultParam.Issn),
     journal: params.get(ResultParam.Journal),
-    order: params.get(ResultParam.Order),
+    order: params.get(ResultParam.Order) as ResultSearchOrder | null,
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     publisher: params.get(ResultParam.Publisher),
@@ -138,6 +139,16 @@ const HomePage = () => {
       <SideMenu>
         <SideNavHeader icon={SearchIcon} text={t('common.search')} />
         <NavigationListAccordion
+          title={t('search.advanced_search.advanced_search')}
+          startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
+          accordionPath={UrlPathTemplate.Search}
+          dataTestId={dataTestId.startPage.advancedSearchAccordion}>
+          <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>
+            {t('search.advanced_search.advanced_search_description')}
+          </Typography>
+        </NavigationListAccordion>
+
+        <NavigationListAccordion
           title={t('common.filter')}
           startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
           accordionPath=""
@@ -156,14 +167,6 @@ const HomePage = () => {
               ) : null
             ) : null}
           </Box>
-        </NavigationListAccordion>
-
-        <NavigationListAccordion
-          title={t('search.advanced_search')}
-          startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
-          accordionPath={UrlPathTemplate.Search}
-          dataTestId={dataTestId.startPage.advancedSearchAccordion}>
-          <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>{t('search.advanced_search_description')}</Typography>
         </NavigationListAccordion>
 
         <NavigationListAccordion

@@ -119,12 +119,6 @@ export const allPublicationInstanceTypes = [
   ...Object.values(OtherRegistrationType),
 ];
 
-export enum RegistrationFieldName {
-  Identifier = 'identifier',
-  ModifiedDate = 'modifiedDate',
-  PublishedDate = 'publishedDate',
-}
-
 // Enums representing name of fields used by Formik
 export const contextTypeBaseFieldName = 'entityDescription.reference.publicationContext';
 export const instanceTypeBaseFieldName = 'entityDescription.reference.publicationInstance';
@@ -206,10 +200,11 @@ export enum FileFieldNames {
 export enum SpecificFileFieldNames {
   Type = 'type',
   AdministrativeAgreement = 'administrativeAgreement',
-  PublisherAuthority = 'publisherAuthority',
+  PublisherVersion = 'publisherVersion',
   EmbargoDate = 'embargoDate',
   License = 'license',
   LegalNote = 'legalNote',
+  RightsRetentionStrategy = 'rightsRetentionStrategy',
 }
 
 // The following fields should be present in "associatedArtifacts[index].<KEY> for links"

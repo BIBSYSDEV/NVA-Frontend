@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always"
+  },
+  "i18n-ally.sourceLanguage": "nb",
+  "i18n-ally.displayLanguage": "nb",
+  "i18n-ally.localesPaths": ["src/translations"],
+  "i18n-ally.pathMatcher": "{locale}Translations.json",
+  "i18n-ally.keystyle": "nested"
+}

@@ -115,7 +115,7 @@ const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] =
         const file = artifact as AssociatedFile;
         fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`);
         if (!file.administrativeAgreement) {
-          fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`);
+          fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);
         }
@@ -420,7 +420,7 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
     if (associatedArtifactIsFile(artifact)) {
       const touched: FormikTouched<AssociatedFile> = {
         administrativeAgreement: true,
-        publisherAuthority: true,
+        publisherVersion: true,
         embargoDate: true,
         license: true,
       };

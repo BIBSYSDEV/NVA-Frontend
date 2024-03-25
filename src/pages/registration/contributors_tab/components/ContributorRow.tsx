@@ -1,6 +1,6 @@
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import CancelIcon from '@mui/icons-material/Cancel';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
 import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
@@ -175,7 +175,6 @@ export const ContributorRow = ({
           </Box>
           {!contributor.identity.id && (
             <Button
-              title={t('registration.contributors.verify_person')}
               variant="outlined"
               sx={{ textTransform: 'none' }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
@@ -183,7 +182,7 @@ export const ContributorRow = ({
               )}
               startIcon={<WarningIcon color="warning" />}
               onClick={() => setOpenVerifyContributor(true)}>
-              {t('registration.contributors.unidentified_contributor')}
+              {t('registration.contributors.verify_contributor')}
             </Button>
           )}
 
@@ -191,7 +190,7 @@ export const ContributorRow = ({
             size="small"
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
             onClick={() => setOpenRemoveContributor(true)}
-            startIcon={<CancelIcon color="primary" />}>
+            startIcon={<RemoveIcon color="primary" />}>
             {t('registration.contributors.remove_contributor')}
           </Button>
         </Box>

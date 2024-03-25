@@ -54,6 +54,12 @@ export const RegistrationLandingPage = () => {
   const registration = registrationQuery.data;
   const registrationId = registration?.id ?? '';
 
+  if (identifier !== registration?.identifier && !!registration?.identifier) {
+    const newPath = history.location.pathname.replace(identifier, registration.identifier);
+    const searchParams = history.location.search ?? '';
+    history.replace(newPath + searchParams);
+  }
+
   const isRegistrationAdmin =
     userIsRegistrationOwner(user, registration) || userIsRegistrationCurator(user, registration);
   const isAllowedToSeePublicRegistration =
@@ -94,7 +100,11 @@ export const RegistrationLandingPage = () => {
               <ActionPanel
                 registration={registration}
                 refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                tickets={ticketsQuery.data?.tickets ?? []}
+                tickets={
+                  ticketsQuery.data?.tickets
+                    ? ticketsQuery.data.tickets.filter((ticket) => ticket.status !== 'NotApplicable')
+                    : []
+                }
                 isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
               />
             )}

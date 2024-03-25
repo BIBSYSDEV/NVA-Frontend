@@ -1,6 +1,23 @@
 import { Uppy as UppyType } from '@uppy/core';
+import { CustomerRrsType } from './customerInstitution.types';
 
 export type AssociatedFileType = 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
+
+type FileRrsType =
+  | 'NullRightsRetentionStrategy'
+  | 'FunderRightsRetentionStrategy'
+  | 'CustomerRightsRetentionStrategy'
+  | 'OverriddenRightsRetentionStrategy';
+
+export interface FileRrs {
+  type: FileRrsType;
+  configuredType?: CustomerRrsType;
+}
+
+export enum FileVersion {
+  Published = 'PublishedVersion',
+  Accepted = 'AcceptedVersion',
+}
 
 export interface AssociatedFile {
   type: AssociatedFileType;
@@ -9,10 +26,11 @@ export interface AssociatedFile {
   size: number;
   mimeType?: string;
   administrativeAgreement: boolean;
-  publisherAuthority: boolean | null;
+  publisherVersion: FileVersion | null;
   embargoDate: Date | null;
   license: string | null;
   legalNote?: string;
+  rightsRetentionStrategy: FileRrs;
 }
 
 export const emptyFile: AssociatedFile = {
@@ -22,9 +40,12 @@ export const emptyFile: AssociatedFile = {
   size: 0,
   mimeType: '',
   administrativeAgreement: false,
-  publisherAuthority: null,
+  publisherVersion: null,
   embargoDate: null,
   license: '',
+  rightsRetentionStrategy: {
+    type: 'NullRightsRetentionStrategy',
+  },
 };
 
 export interface AssociatedLink {

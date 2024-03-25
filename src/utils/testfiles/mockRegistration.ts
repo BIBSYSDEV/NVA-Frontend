@@ -1,3 +1,4 @@
+import { FileVersion } from '../../types/associatedArtifact.types';
 import { ContributorRole } from '../../types/contributor.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { TicketCollection } from '../../types/publication_types/ticket.types';
@@ -29,9 +30,10 @@ export const mockRegistration: JournalRegistration = {
       size: 10,
       mimeType: '',
       administrativeAgreement: false,
-      publisherAuthority: false,
+      publisherVersion: FileVersion.Published,
       embargoDate: null,
       license: null,
+      rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },
     },
   ],
   fundings: [],

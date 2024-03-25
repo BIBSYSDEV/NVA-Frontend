@@ -81,7 +81,7 @@ export const AppRoutes = () => {
         <PrivateRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} isAuthorized={isAdmin} />
 
         {/* EditorRoutes */}
-        <PrivateRoute path={UrlPathTemplate.Editor} component={EditorPage} isAuthorized={isEditor} />
+        <PrivateRoute path={UrlPathTemplate.Editor} component={EditorPage} isAuthorized={hasCustomerId} />
 
         {/* Wildcard path must be last, otherwise it will catch all routes */}
         <Route path={UrlPathTemplate.Wildcard} component={NotFound} />

@@ -6,6 +6,7 @@ import { fetchFundingSources } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSource } from '../../../types/project.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const FundingSourceFilter = () => {
@@ -35,6 +36,7 @@ export const FundingSourceFilter = () => {
 
   return (
     <Autocomplete
+      size="small"
       sx={{ minWidth: '15rem' }}
       disabled={!fundingSourcesQuery.data}
       value={fundingSourcesList.find((source) => source.identifier === fundingSourceParam) ?? null}
@@ -48,6 +50,7 @@ export const FundingSourceFilter = () => {
           {getLanguageString(option.name)}
         </li>
       )}
+      data-testid={dataTestId.startPage.advancedSearch.fundingSourceField}
       renderInput={(params) => (
         <AutocompleteTextField
           isLoading={fundingSourcesQuery.isLoading}

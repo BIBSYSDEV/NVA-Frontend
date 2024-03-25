@@ -21,9 +21,9 @@ export const CustomerInstitutionTextField = ({
         data-testid={dataTestId}
         id={dataTestId}
         label={label}
+        fullWidth
         required={required}
         disabled={disabled}
-        fullWidth
         value={field.value ?? ''}
         variant="filled"
         error={touched && !!error}

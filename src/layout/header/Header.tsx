@@ -1,26 +1,36 @@
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddIcon from '@mui/icons-material/Add';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Box, Theme, Typography, useMediaQuery } from '@mui/material';
+import { AppBar, Badge, Box, Theme, styled, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getById } from '../../api/commonApi';
+import { fetchCustomerTickets } from '../../api/searchApi';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
+
+const StyledBadge = styled(Badge)({
+  '& .MuiBadge-badge': {
+    right: 20,
+    top: 20,
+  },
+});
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -29,6 +39,7 @@ export const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const institutionId = user?.topOrgCristinId ?? '';
+  const hasCustomer = !!user?.customerId;
 
   const organizationQuery = useQuery({
     enabled: !!institutionId,
@@ -53,6 +64,31 @@ export const Header = () => {
       dispatch(setCustomer(customer));
     }
   }, [dispatch, customer]);
+
+  const isTicketCurator = hasCuratorRole(user);
+
+  const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
+  const dialogueNotificationsQuery = useQuery({
+    enabled: !!user?.isCreator && !!dialogueNotificationsParams.owner,
+    queryKey: ['dialogueNotifications', dialogueNotificationsParams],
+    queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
+    meta: { errorMessage: false },
+  });
+
+  const taskNotificationsQuery = useQuery({
+    enabled: isTicketCurator,
+    queryKey: ['taskNotifications', taskNotificationsParams],
+    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
+    meta: { errorMessage: false },
+  });
+
+  const pendingTasksCount =
+    taskNotificationsQuery.data?.aggregations?.byUserPending
+      ?.map((notification) => notification.count)
+      .reduce((a, b) => a + b, 0) ?? 0;
+
+  const unassignedTasksCount =
+    taskNotificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -98,8 +134,8 @@ export const Header = () => {
                   bgcolor: 'primary.light',
                   borderRadius: '50%',
                   padding: '0.2rem',
-                  width: '2.7rem',
-                  height: '2.7rem',
+                  width: '2.25rem',
+                  height: '2.25rem',
                 }}
               />
             }>
@@ -121,28 +157,16 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
-              {organization?.acronym &&
-                (user?.isEditor ? (
-                  <MenuButton
-                    sx={{
-                      fontSize: '1.25rem',
-                      fontWeight: 700,
-                      textTransform: 'none',
-                    }}
-                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
-                    color="inherit"
-                    data-testid={dataTestId.header.editorLink}
-                    to={UrlPathTemplate.EditorCurators}>
-                    {organization.acronym}
-                  </MenuButton>
-                ) : (
-                  <Typography
-                    variant="h1"
-                    component="span"
-                    sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
-                    {organization.acronym}
-                  </Typography>
-                ))}
+              {organization?.acronym && hasCustomer && (
+                <MenuButton
+                  startIcon={<AccountBalanceIcon />}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
+                  color="inherit"
+                  data-testid={dataTestId.header.editorLink}
+                  to={UrlPathTemplate.EditorInstitution}>
+                  {organization.acronym}
+                </MenuButton>
+              )}
 
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <MenuButton
@@ -154,25 +178,29 @@ export const Header = () => {
                   {t('basic_data.basic_data')}
                 </MenuButton>
               )}
-              {(hasCuratorRole(user) || user?.isNviCurator) && (
-                <MenuButton
-                  color="inherit"
-                  data-testid={dataTestId.header.tasksLink}
-                  isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
-                  to={UrlPathTemplate.Tasks}
-                  startIcon={<AssignmentIcon />}>
-                  {t('common.tasks')}
-                </MenuButton>
+              {(isTicketCurator || user?.isNviCurator) && (
+                <StyledBadge badgeContent={pendingTasksCount + unassignedTasksCount}>
+                  <MenuButton
+                    color="inherit"
+                    data-testid={dataTestId.header.tasksLink}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
+                    to={UrlPathTemplate.Tasks}
+                    startIcon={<AssignmentIcon />}>
+                    {t('common.tasks')}
+                  </MenuButton>
+                </StyledBadge>
               )}
               {user && (
-                <MenuButton
-                  color="inherit"
-                  data-testid={dataTestId.header.myPageLink}
-                  isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
-                  to={UrlPathTemplate.MyPage}
-                  startIcon={<FavoriteBorderIcon />}>
-                  {t('my_page.my_page')}
-                </MenuButton>
+                <StyledBadge badgeContent={dialogueNotificationsQuery.data?.totalHits}>
+                  <MenuButton
+                    color="inherit"
+                    data-testid={dataTestId.header.myPageLink}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
+                    to={UrlPathTemplate.MyPage}
+                    startIcon={<FavoriteBorderIcon />}>
+                    {t('my_page.my_page')}
+                  </MenuButton>
+                </StyledBadge>
               )}
             </>
           )}

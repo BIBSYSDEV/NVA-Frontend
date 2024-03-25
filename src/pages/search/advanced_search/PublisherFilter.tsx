@@ -7,6 +7,7 @@ import { searchForPublishers } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Publisher } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
 export const PublisherFilter = () => {
@@ -48,6 +49,7 @@ export const PublisherFilter = () => {
 
   return (
     <Autocomplete
+      size="small"
       sx={{ minWidth: '15rem' }}
       value={publisherParam && selectedPublisherQuery.data?.hits[0] ? selectedPublisherQuery.data.hits[0] : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -71,12 +73,13 @@ export const PublisherFilter = () => {
           <Typography>{option.name}</Typography>
         </li>
       )}
+      data-testid={dataTestId.startPage.advancedSearch.publisherField}
       renderInput={(params) => (
         <AutocompleteTextField
           {...params}
           variant="outlined"
           isLoading={isFetching}
-          placeholder={t('registration.resource_type.search_for_publisher')}
+          placeholder={t('registration.resource_type.search_for_publisher_placeholder')}
           showSearchIcon={!publisherParam}
           multiline
         />

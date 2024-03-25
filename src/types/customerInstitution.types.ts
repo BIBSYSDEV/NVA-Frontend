@@ -36,16 +36,14 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   serviceCenterUri?: string;
   nviInstitution: boolean;
   rboInstitution: boolean;
-  rightsRetentionStrategy: RightsRetentionStrategy;
+  rightsRetentionStrategy: {
+    type: CustomerRrsType;
+    id: string;
+  };
   allowFileUploadForTypes: PublicationInstanceType[];
 }
 
-interface RightsRetentionStrategy {
-  type: RightsRetentionStrategyTypes;
-  id: string;
-}
-
-export enum RightsRetentionStrategyTypes {
+export enum CustomerRrsType {
   NullRightsRetentionStrategy = 'NullRightsRetentionStrategy',
   RightsRetentionStrategy = 'RightsRetentionStrategy',
   OverridableRightsRetentionStrategy = 'OverridableRightsRetentionStrategy',
@@ -97,7 +95,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   sector: Sector.Uhi,
   nviInstitution: false,
   rboInstitution: false,
-  rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
+  rightsRetentionStrategy: { type: CustomerRrsType.NullRightsRetentionStrategy, id: '' },
   allowFileUploadForTypes: allPublicationInstanceTypes,
 };
 
