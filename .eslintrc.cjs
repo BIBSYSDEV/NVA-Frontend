@@ -3,7 +3,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 2022,
+    ecmaVersion: 6,
   },
   settings: { react: { version: 'detect' } },
   plugins: ['react', 'react-hooks', 'jsx-a11y', '@typescript-eslint', '@tanstack/query'],
