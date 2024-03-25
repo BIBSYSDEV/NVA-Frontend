@@ -57,9 +57,6 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
 
   const options = organizationSearchQuery.data?.hits ?? [];
 
-  // const subUnits = getSortedSubUnits(topLevelOrganizationQuery.data?.hasPart);
-  // const selectedSubUnit = subUnits.find((unit) => unit.id === unitId) ?? null;
-
   const isLoading = topLevelOrganizationQuery.isFetching || organizationSearchQuery.isFetching;
 
   const handleCheckedExcludeSubunits = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +140,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
             )
           ) : (
             <Box component="span" sx={{ textWrap: 'nowrap' }}>
-              Velg underenhet
+              {t('common.select_unit')}
             </Box>
           )
         }

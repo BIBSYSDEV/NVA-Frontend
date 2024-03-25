@@ -58,7 +58,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
 
   return (
     <Dialog open={open} onClose={closeDialog} maxWidth="lg" transitionDuration={0}>
-      <DialogTitle>Velg underenhet</DialogTitle>
+      <DialogTitle>{t('common.select_unit')}</DialogTitle>
       <DialogContent>
         <Typography sx={{ mb: '2rem' }}>
           <Trans t={t} i18nKey="editor.institution.institution_helper_text">
@@ -101,7 +101,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={closeDialog}>Avbryt</Button>
+        <Button onClick={closeDialog}>{t('common.cancel')}</Button>
         <Button
           variant="contained"
           disabled={!selectedId}
@@ -111,7 +111,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
             history.push({ search: params.toString() });
             closeDialog();
           }}>
-          Velg
+          {t('common.select')}
         </Button>
       </DialogActions>
     </Dialog>
