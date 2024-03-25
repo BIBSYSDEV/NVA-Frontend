@@ -694,11 +694,6 @@
       }
     },
     "no_employments": "Ingen ansettelser",
-    "project_registration_status": {
-      "concluded": "Avsluttet",
-      "not_started": "Ikke startet",
-      "ongoing": "Pågående"
-    },
     "project_registrations": "Prosjektregistreringer",
     "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
