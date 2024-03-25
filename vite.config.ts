@@ -13,5 +13,12 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
+    rollupOptions: {
+      onwarn: ({ message }) => {
+        if (message.startsWith('[plugin vite-plugin-eslint]')) {
+          throw new Error(message);
+        }
+      },
+    },
   },
 });
