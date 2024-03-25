@@ -150,6 +150,7 @@ const OrganizationAccordion = ({
     }
   }
 
+  const shouldExpand = expanded || (!!searchId && !includeAllSubunits);
   const subunitsCount = organization.hasPart?.length ?? 0;
 
   return (
@@ -162,7 +163,7 @@ const OrganizationAccordion = ({
       }}
       disableGutters
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: { xs: undefined, md: `${level}rem` } }}
-      expanded={expanded || (!!searchId && !includeAllSubunits)}
+      expanded={shouldExpand}
       onChange={() => setExpanded(!expanded)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
         <Box
@@ -188,17 +189,18 @@ const OrganizationAccordion = ({
       </AccordionSummary>
       {subunitsCount > 0 && (
         <AccordionDetails sx={{ pr: 0 }}>
-          {organization.hasPart?.map((subunit) => (
-            <OrganizationAccordion
-              key={subunit.id}
-              organization={subunit}
-              level={level + 1}
-              searchId={searchId}
-              includeAllSubunits={includeAllSubunits || isSearchedUnit}
-              selectedId={selectedId}
-              setSelectedId={setSelectedId}
-            />
-          ))}
+          {shouldExpand &&
+            organization.hasPart?.map((subunit) => (
+              <OrganizationAccordion
+                key={subunit.id}
+                organization={subunit}
+                level={level + 1}
+                searchId={searchId}
+                includeAllSubunits={includeAllSubunits || isSearchedUnit}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
+              />
+            ))}
         </AccordionDetails>
       )}
     </Accordion>
