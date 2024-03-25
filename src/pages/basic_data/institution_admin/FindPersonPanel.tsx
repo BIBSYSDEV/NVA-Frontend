@@ -136,9 +136,11 @@ export const FindPersonPanel = () => {
                     setFieldValue('person', newPerson);
                     setShowNoNinDialog(false);
                   }}>
-                  <Trans t={t} i18nKey="basic_data.add_employee.missing_nin_description">
-                    <Typography paragraph />
-                  </Trans>
+                  <Trans
+                    t={t}
+                    i18nKey="basic_data.add_employee.missing_nin_description"
+                    components={[<Typography paragraph />]}
+                  />
                 </ConfirmDialog>
               </>
             )}
