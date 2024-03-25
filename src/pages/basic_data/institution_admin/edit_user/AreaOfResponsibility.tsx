@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchOrganization } from '../../../../api/cristinApi';
+import { OrganizationRenderOption } from '../../../../components/OrganizationRenderOption';
 import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
@@ -63,11 +64,7 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
           data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
           options={options}
           getOptionLabel={(option) => getLanguageString(option.labels)}
-          renderOption={(props, option) => (
-            <li {...props} key={option.id}>
-              {getLanguageString(option.labels)}
-            </li>
-          )}
+          renderOption={(props, option) => <OrganizationRenderOption key={option.id} props={props} option={option} />}
           disabled={isSubmitting}
           onChange={(_, value) => {
             if (value) {

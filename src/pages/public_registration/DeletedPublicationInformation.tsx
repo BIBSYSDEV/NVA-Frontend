@@ -1,11 +1,11 @@
-import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { Box, Link, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { getTitleString } from '../../utils/registration-helpers';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { fetchRegistration } from '../../api/registrationApi';
-import { getIdentifierFromId } from '../../utils/general-helpers';
 import { PageSpinner } from '../../components/PageSpinner';
+import { Registration, RegistrationStatus } from '../../types/registration.types';
+import { getIdentifierFromId } from '../../utils/general-helpers';
+import { getTitleString } from '../../utils/registration-helpers';
 
 interface DeletePublicationInformationProps {
   registration: Registration;
@@ -39,7 +39,9 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
               my: '1rem',
             }}>
             <Typography variant="h2" component="h1">
-              {t('registration.result_is_deleted')}
+              {t('registration.result_is_deleted_or_unpublished', {
+                status: t(`registration.status.${registration.status}`).toLowerCase(),
+              })}
             </Typography>
           </Box>
 
@@ -58,7 +60,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
                 <PageSpinner aria-label={t('registration.citation_points_to')} />
               ) : (
                 <Typography>
-                  {t('registration.citation_points_to')}
+                  {`${t('registration.citation_points_to')} `}
                   <Link href={`/registration/${originalIdentifier}`}>{originalRegistrationMainTitle}</Link>
                 </Typography>
               )}
