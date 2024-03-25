@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets, fetchTickets } from '../../api/searchApi';
+import { fetchCustomerTickets, fetchTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -29,6 +29,7 @@ import { TicketStatus, ticketStatusValues } from '../../types/publication_types/
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
+import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
@@ -43,7 +44,6 @@ import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
 import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
-import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 
 const MyPagePage = () => {
   const dispatch = useDispatch();
@@ -64,12 +64,6 @@ const MyPagePage = () => {
   const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
     published: false,
     unpublished: true,
-  });
-
-  const [selectedProjectStatus, setSelectedProjectStatus] = useState({
-    notStarted: false,
-    ongoing: true,
-    concluded: false,
   });
 
   const [selectedTypes, setSelectedTypes] = useState({
@@ -330,56 +324,10 @@ const MyPagePage = () => {
             accordionPath={UrlPathTemplate.MyPageProjectRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
-            <NavigationList>
-              <StyledTicketSearchFormGroup>
-                <FormControlLabel
-                  data-testid={dataTestId.myPage.myProjectRegistrationsOngoingCheckbox}
-                  checked={selectedProjectStatus.ongoing}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() =>
-                        setSelectedProjectStatus({
-                          ...selectedProjectStatus,
-                          ongoing: !selectedProjectStatus.ongoing,
-                        })
-                      }
-                    />
-                  }
-                  label={t('my_page.project_registration_status.ongoing')}
-                />
-                <FormControlLabel
-                  data-testid={dataTestId.myPage.myProjectRegistrationsNotStartedCheckbox}
-                  checked={selectedProjectStatus.notStarted}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() =>
-                        setSelectedProjectStatus({
-                          ...selectedProjectStatus,
-                          notStarted: !selectedProjectStatus.notStarted,
-                        })
-                      }
-                    />
-                  }
-                  label={t('my_page.project_registration_status.not_started')}
-                />
-                <FormControlLabel
-                  data-testid={dataTestId.myPage.myProjectRegistrationsConcludedCheckbox}
-                  checked={selectedProjectStatus.concluded}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() =>
-                        setSelectedProjectStatus({
-                          ...selectedProjectStatus,
-                          concluded: !selectedProjectStatus.concluded,
-                        })
-                      }
-                    />
-                  }
-                  label={t('my_page.project_registration_status.concluded')}
-                />
-              </StyledTicketSearchFormGroup>
-            </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
+            <Typography sx={{ margin: '1rem' }}>
+              {t('my_page.my_profile.list_contains_all_registration_you_have_created')}
+            </Typography>
             <LinkCreateButton
               data-testid={dataTestId.myPage.createProjectButton}
               isSelected={showCreateProject}
@@ -450,11 +398,7 @@ const MyPagePage = () => {
             isAuthorized={isAuthenticated}
           />
           <PrivateRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} isAuthorized={isAuthenticated}>
-            <MyProjectRegistrations
-              selectedOngoing={selectedProjectStatus.ongoing}
-              selectedNotStarted={selectedProjectStatus.notStarted}
-              selectedConcluded={selectedProjectStatus.concluded}
-            />
+            <MyProjectRegistrations />
           </PrivateRoute>
           <PrivateRoute
             exact

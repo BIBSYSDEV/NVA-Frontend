@@ -659,6 +659,7 @@
         "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
       },
       "my_projects": "Mine prosjekt",
+      "list_contains_all_registration_you_have_created": "Listen viser alle prosjekter du har registrert",
       "my_research_results": "Mine forskningsresultat",
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
@@ -694,11 +695,6 @@
       }
     },
     "no_employments": "Ingen ansettelser",
-    "project_registration_status": {
-      "concluded": "Avsluttet",
-      "not_started": "Ikke startet",
-      "ongoing": "Pågående"
-    },
     "project_registrations": "Prosjektregistreringer",
     "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
