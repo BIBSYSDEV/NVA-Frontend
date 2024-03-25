@@ -51,6 +51,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
   const closeDialog = () => {
     onClose();
     setSearchId('');
+    setSelectedId(unitFromParams);
   };
 
   const allSubUnits = getSortedSubUnits(organization.hasPart);
