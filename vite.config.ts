@@ -1,8 +1,9 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import eslint from 'vite-plugin-eslint';
 
 export default defineConfig({
-  plugins: [react(), splitVendorChunkPlugin()],
+  plugins: [react(), eslint(), splitVendorChunkPlugin()],
   server: {
     open: true,
     port: 3000,

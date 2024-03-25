@@ -22,7 +22,7 @@ const userSlice = createSlice({
       const allowedCustomersString = getStringValue(action.payload['custom:allowedCustomers']);
 
       const roleItems = rolesString.split(',').map((roleItem) => roleItem.split('@') as [RoleName, string]);
-      const roles = roleItems.filter(([_, thisCustomerId]) => thisCustomerId === customerId).map(([role]) => role);
+      const roles = roleItems.filter(([, thisCustomerId]) => thisCustomerId === customerId).map(([role]) => role);
       const allowedCustomers = allowedCustomersString.split(',').filter((customer) => customer);
 
       const user: User = {
@@ -61,6 +61,7 @@ const userSlice = createSlice({
     },
     logoutSuccess: (state) => {
       state = null;
+      return state; // TODO: should not return?
     },
   },
 });
