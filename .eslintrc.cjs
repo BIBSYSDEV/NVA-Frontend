@@ -1,10 +1,6 @@
 module.exports = {
-  env: { node: true, browser: true },
+  env: { node: true, browser: true, es6: true },
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    sourceType: 'module',
-    ecmaVersion: 6,
-  },
   settings: { react: { version: 'detect' } },
   plugins: ['react', 'react-hooks', 'jsx-a11y', '@typescript-eslint', '@tanstack/query'],
   extends: [
