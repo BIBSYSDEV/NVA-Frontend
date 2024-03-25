@@ -80,7 +80,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         gap: '0.5rem 1rem',
         flexDirection: { xs: 'column', lg: 'row' },
         width: '100%',
-        alignItems: 'start',
+        alignItems: 'center',
       }}>
       <Autocomplete
         fullWidth
@@ -154,7 +154,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
               }
             : undefined
         }
-        sx={{ maxWidth: '15rem' }}
+        sx={{ minWidth: unitId ? '15rem' : undefined }}
         disabled={!topLevelOrganizationQuery.data?.hasPart || topLevelOrganizationQuery.data?.hasPart?.length === 0}
       />
 

@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
@@ -36,9 +36,17 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
+  const unitFromParams = params.get(ResultParam.Unit) ?? '';
 
   const [searchId, setSearchId] = useState('');
-  const [selectedId, setSelectedId] = useState(params.get(ResultParam.Unit) ?? '');
+  const [selectedId, setSelectedId] = useState(unitFromParams);
+
+  useEffect(() => {
+    // Reset selection state when URL is updated elsewhere
+    if (!unitFromParams) {
+      setSelectedId('');
+    }
+  }, [unitFromParams]);
 
   const closeDialog = () => {
     onClose();
