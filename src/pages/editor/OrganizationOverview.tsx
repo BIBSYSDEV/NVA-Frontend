@@ -81,10 +81,9 @@ export const OrganizationOverview = () => {
               <TextField {...params} variant="outlined" label={t('search.search_for_sub_unit')} />
             )}
           />
-
-          {organizationQuery.data?.hasPart?.map((organization) => (
-            <OrganizationAccordion key={organization.id} organization={organization} searchId={searchId} />
-          ))}
+          {organizationQuery.data && (
+            <OrganizationAccordion organization={organizationQuery.data} searchId={searchId} />
+          )}
         </Box>
       )}
     </>

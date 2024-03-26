@@ -15,7 +15,7 @@ export enum UrlPathTemplate {
   BasicDataPersonRegister = '/basic-data/person-register',
   Editor = '/editor',
   EditorCurators = '/editor/settings/curators',
-  EditorCurators2 = '/editor/settings/curators2',
+  EditorCurators2 = '/editor/overview/curators2',
   EditorDoi = '/editor/overview/doi',
   EditorInstitution = '/editor/overview/institution',
   EditorOrganizationOverview = '/editor/overview/organization',
