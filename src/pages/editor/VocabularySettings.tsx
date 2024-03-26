@@ -8,25 +8,16 @@ import { authenticatedApiRequest } from '../../api/apiRequest';
 import { setPartialCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { CustomerVocabulary, VocabularyList, VocabularyStatus } from '../../types/customerInstitution.types';
+import {
+  CustomerVocabulary,
+  defaultHrcsActivity,
+  defaultHrcsCategory,
+  VocabularyList,
+} from '../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { VocabularyRow } from './VocabularyRow';
-
-const defaultHrcsActivity: CustomerVocabulary = {
-  type: 'Vocabulary',
-  id: 'https://nva.unit.no/hrcs/activity',
-  status: VocabularyStatus.Disabled,
-  name: 'HRCS Activity',
-};
-
-const defaultHrcsCategory: CustomerVocabulary = {
-  type: 'Vocabulary',
-  id: 'https://nva.unit.no/hrcs/category',
-  status: VocabularyStatus.Disabled,
-  name: 'HRCS Category',
-};
 
 export const getTranslatedVocabularyName = (t: TFunction, id: string) =>
   id === defaultHrcsActivity.id

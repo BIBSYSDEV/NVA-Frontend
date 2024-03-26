@@ -99,6 +99,7 @@ export const dataTestId = {
     publishStrategyLinkButton: 'publishing-strategy-link-button',
     settingsAccordion: 'settings-accordion',
     vocabularyLinkButton: 'vocabulary-link-button',
+    vocabularyOverviewLinkButton: 'vocabulary-overview-link-button',
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
     hrcsCategoryButtonGroup: 'hrcs-category-button-group',
     rrs: 'rrs',
