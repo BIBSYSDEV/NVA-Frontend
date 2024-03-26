@@ -1,7 +1,7 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
-import { CustomerTicketSearchResponse, TicketSearchResponse } from '../types/publication_types/ticket.types';
+import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
 import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
@@ -19,6 +19,7 @@ export enum TicketSearchParam {
   Role = 'role',
   SortOrder = 'sortOrder',
   Status = 'status',
+  Type = 'type',
   ViewedByNot = 'viewedByNot',
   ViewingScope = 'viewingScope',
 }
@@ -35,36 +36,10 @@ export interface FetchTicketsParams {
   [TicketSearchParam.Role]?: 'creator';
   [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
   [TicketSearchParam.Status]?: string | null;
+  [TicketSearchParam.Type]?: string | null;
   [TicketSearchParam.ViewedByNot]?: string | null;
   [TicketSearchParam.ViewingScope]?: string | null;
 }
-
-export const fetchTickets = async (params: FetchTicketsParams) => {
-  const searchParams = new URLSearchParams();
-  if (params.query) {
-    searchParams.set(TicketSearchParam.Query, params.query);
-  }
-  if (params.role) {
-    searchParams.set(TicketSearchParam.Role, params.role);
-  }
-  if (params.viewingScope) {
-    searchParams.set(TicketSearchParam.ViewingScope, params.viewingScope);
-  }
-  if (params.excludeSubUnits) {
-    searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
-  }
-
-  searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
-  searchParams.set(TicketSearchParam.Results, (params.results ?? 10).toString());
-  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'createdDate');
-  searchParams.set(TicketSearchParam.SortOrder, params.sortOrder || 'desc');
-
-  const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
-    url: `${SearchApiPath.Tickets}?${searchParams.toString()}`,
-  });
-
-  return getTickets.data;
-};
 
 export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
   const searchParams = new URLSearchParams();
@@ -79,6 +54,30 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   if (params.viewedByNot) {
     searchParams.set(TicketSearchParam.ViewedByNot, params.viewedByNot);
+  }
+
+  if (params.assignee) {
+    searchParams.set(TicketSearchParam.Assignee, params.assignee);
+  }
+
+  if (params.status) {
+    searchParams.set(TicketSearchParam.Status, params.status);
+  }
+
+  if (params.type) {
+    searchParams.set(TicketSearchParam.Type, params.type);
+  }
+
+  if (params.viewingScope) {
+    searchParams.set(TicketSearchParam.ViewingScope, params.viewingScope);
+  }
+
+  if (params.excludeSubUnits) {
+    searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
+  }
+
+  if (params.role) {
+    searchParams.set(TicketSearchParam.Role, params.role);
   }
 
   searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
