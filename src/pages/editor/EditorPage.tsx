@@ -21,6 +21,7 @@ import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
+import { OrganizationCurators } from './OrganizationCurators';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { VocabularySettings } from './VocabularySettings';
@@ -73,6 +74,12 @@ const EditorPage = () => {
               data-testid={dataTestId.editor.organizationOverviewLinkButton}
               to={UrlPathTemplate.EditorOrganizationOverview}>
               {t('editor.organization_overview')}
+            </LinkButton>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorCurators2}
+              // data-testid={dataTestId.editor.organizationOverviewLinkButton}
+              to={UrlPathTemplate.EditorCurators2}>
+              Kuratorer
             </LinkButton>
 
             <LinkButton
@@ -175,6 +182,12 @@ const EditorPage = () => {
             exact
             path={UrlPathTemplate.EditorOrganizationOverview}
             component={OrganizationOverview}
+            isAuthorized={hasCustomer}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorCurators2}
+            component={OrganizationCurators}
             isAuthorized={hasCustomer}
           />
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
