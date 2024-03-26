@@ -22,7 +22,6 @@ const userSlice = createSlice({
       const allowedCustomersString = getStringValue(action.payload['custom:allowedCustomers']);
 
       const roleItems = rolesString.split(',').map((roleItem) => roleItem.split('@') as [RoleName, string]);
-
       const roles = roleItems.flatMap(([role, thisCustomerId]) =>
         !thisCustomerId || thisCustomerId === customerId ? [role] : []
       );
