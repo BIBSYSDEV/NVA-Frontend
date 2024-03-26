@@ -34,10 +34,12 @@ export const PublicationDateIntervalFilter = ({ datePickerProps, boxProps }: Pub
       const year = newDate.getFullYear();
       if (year.toString().length === 4) {
         searchParams.set(param, year.toString());
+        searchParams.delete(ResultParam.From);
         history.push({ search: searchParams.toString() });
       }
     } else {
       searchParams.delete(param);
+      searchParams.delete(ResultParam.From);
       history.push({ search: searchParams.toString() });
     }
   };

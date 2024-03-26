@@ -23,6 +23,7 @@ export enum UrlPathTemplate {
   EditorSettings = '/editor/settings',
   EditorVocabulary = '/editor/settings/vocabulary',
   EditorCategories = '/editor/settings/categories',
+  EditorCategoriesOverview = '/editor/overview/categories',
   Home = '/',
   Login = '/login',
   Logout = '/logout',

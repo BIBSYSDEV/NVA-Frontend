@@ -1,14 +1,13 @@
 import { Autocomplete, TextFieldProps } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { FieldInputProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CristinApiPath } from '../../../api/apiPaths';
+import { OrganizationSearchParams, searchForOrganizations } from '../../../api/cristinApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
-import { SearchResponse } from '../../../types/common.types';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
@@ -36,16 +35,22 @@ export const OrganizationSearchField = ({
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
-  const [institutionOptions, isLoadingInstitutionOptions] = useFetch<SearchResponse<Organization>>({
-    url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
-    errorMessage: t('feedback.error.get_institutions'),
+
+  const organizationQueryParams: OrganizationSearchParams = {
+    query: debouncedQuery,
+  };
+  const organizationSearchQuery = useQuery({
+    enabled: !!debouncedQuery,
+    queryKey: ['organization', organizationQueryParams],
+    queryFn: () => searchForOrganizations(organizationQueryParams),
+    meta: { errorMessage: t('feedback.error.get_institutions') },
   });
-  const isLoading = isLoadingDefaultOptions || isLoadingInstitutionOptions;
-  const options = isLoadingInstitutionOptions || !institutionOptions ? defaultOptions : institutionOptions.hits;
+
+  const isLoading = isLoadingDefaultOptions || organizationSearchQuery.isFetching;
 
   return (
     <Autocomplete
-      options={options}
+      options={organizationSearchQuery.data?.hits ?? defaultOptions}
       inputMode="search"
       disabled={disabled}
       getOptionLabel={(option) => getLanguageString(option.labels)}

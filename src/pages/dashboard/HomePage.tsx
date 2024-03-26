@@ -13,7 +13,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -139,6 +139,16 @@ const HomePage = () => {
       <SideMenu>
         <SideNavHeader icon={SearchIcon} text={t('common.search')} />
         <NavigationListAccordion
+          title={t('search.advanced_search.advanced_search')}
+          startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
+          accordionPath={UrlPathTemplate.Search}
+          dataTestId={dataTestId.startPage.advancedSearchAccordion}>
+          <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>
+            {t('search.advanced_search.advanced_search_description')}
+          </Typography>
+        </NavigationListAccordion>
+
+        <NavigationListAccordion
           title={t('common.filter')}
           startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
           accordionPath=""
@@ -157,16 +167,6 @@ const HomePage = () => {
               ) : null
             ) : null}
           </Box>
-        </NavigationListAccordion>
-
-        <NavigationListAccordion
-          title={t('search.advanced_search.advanced_search')}
-          startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
-          accordionPath={UrlPathTemplate.Search}
-          dataTestId={dataTestId.startPage.advancedSearchAccordion}>
-          <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>
-            {t('search.advanced_search.advanced_search_description')}
-          </Typography>
         </NavigationListAccordion>
 
         <NavigationListAccordion

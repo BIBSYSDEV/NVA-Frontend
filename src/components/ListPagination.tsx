@@ -1,17 +1,10 @@
 import { ReactNode } from 'react';
-import { ListPaginationBottom } from './ListPaginationBottom';
+import { ListPaginationBottom, ListPaginationBottomProps } from './ListPaginationBottom';
 import { ListPaginationCounter } from './ListPaginationCounter';
 import { ListPaginationTop } from './ListPaginationTop';
 
-interface ListPaginationProps {
+interface ListPaginationProps extends Omit<ListPaginationBottomProps, 'pageCounterComponent'> {
   children: ReactNode;
-  count: number;
-  rowsPerPage: number;
-  page: number;
-  onPageChange: (newPage: number) => void;
-  onRowsPerPageChange: (newRowsPerPage: number) => void;
-  rowsPerPageOptions?: number[];
-  maxHits?: number; // Default limit of 10_000 hits in ElasticSearch
   showPaginationTop?: boolean;
   sortingComponent?: ReactNode;
 }
@@ -25,6 +18,8 @@ export const ListPagination = ({
   onRowsPerPageChange,
   showPaginationTop,
   sortingComponent,
+  maxHits,
+  rowsPerPageOptions,
 }: ListPaginationProps) => {
   const itemsStart = count > 0 ? (page - 1) * rowsPerPage + 1 : 0;
   const itemsEnd = Math.min(page * rowsPerPage, count);
@@ -40,9 +35,11 @@ export const ListPagination = ({
         count={count}
         rowsPerPage={rowsPerPage}
         page={page}
+        maxHits={maxHits}
         onPageChange={onPageChange}
         onRowsPerPageChange={onRowsPerPageChange}
         pageCounterComponent={pageCounter}
+        rowsPerPageOptions={rowsPerPageOptions}
       />
     </>
   );

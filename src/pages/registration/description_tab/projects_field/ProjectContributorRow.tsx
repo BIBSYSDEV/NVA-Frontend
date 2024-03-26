@@ -67,10 +67,13 @@ export const ProjectContributorRow = ({
 
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
   const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
+
   const fetchSuggestedInstitutions = async (affiliationIds: string[]) => {
-    if (affiliationIds.length > 0) {
-      setIsLoadingDefaultOptions(true);
+    if (affiliationIds.length === 0) {
+      return;
     }
+
+    setIsLoadingDefaultOptions(true);
 
     // Find affiliations with distinct top levels
     const distinctInstitutions = affiliationIds.reduce((accumumlator: string[], current) => {

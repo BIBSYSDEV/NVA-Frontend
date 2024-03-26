@@ -17,6 +17,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { CategoriesWithFiles } from './CategoriesWithFiles';
+import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
@@ -49,7 +50,7 @@ const EditorPage = () => {
         <SideNavHeader text={organizationQuery.data?.acronym} icon={AccountBalanceIcon} />
         <NavigationListAccordion
           dataTestId={dataTestId.editor.overviewAccordion}
-          title={t('common.overview')}
+          title={t('editor.institution.organizing')}
           startIcon={
             <ArchitectureIcon
               sx={{
@@ -80,49 +81,56 @@ const EditorPage = () => {
               to={UrlPathTemplate.EditorDoi}>
               {t('common.doi_long')}
             </LinkButton>
-          </NavigationList>
-        </NavigationListAccordion>
-
-        <NavigationListAccordion
-          dataTestId={dataTestId.editor.settingsAccordion}
-          title={t('common.settings')}
-          startIcon={
-            <GavelIcon
-              sx={{
-                bgcolor: 'white',
-                padding: '0.1rem',
-              }}
-            />
-          }
-          accordionPath={UrlPathTemplate.EditorSettings}
-          defaultPath={UrlPathTemplate.EditorCurators}>
-          <NavigationList>
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorCurators}
-              data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
-              to={UrlPathTemplate.EditorCurators}>
-              {t('editor.curators.areas_of_responsibility')}
-            </LinkButton>
-            <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
-              data-testid={dataTestId.editor.vocabularyLinkButton}
-              to={UrlPathTemplate.EditorVocabulary}>
-              {t('editor.vocabulary')}
-            </LinkButton>
-            <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
-              data-testid={dataTestId.editor.publishStrategyLinkButton}
-              to={UrlPathTemplate.EditorPublishStrategy}>
-              {t('editor.publish_strategy.publish_strategy')}
-            </LinkButton>
-            <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorCategories}
+              isSelected={currentPath === UrlPathTemplate.EditorCategoriesOverview}
               data-testid={dataTestId.editor.categoriesLinkButton}
-              to={UrlPathTemplate.EditorCategories}>
+              to={UrlPathTemplate.EditorCategoriesOverview}>
               {t('editor.categories_with_files')}
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
+        {isEditor && (
+          <NavigationListAccordion
+            dataTestId={dataTestId.editor.settingsAccordion}
+            title={t('common.settings')}
+            startIcon={
+              <GavelIcon
+                sx={{
+                  bgcolor: 'white',
+                  padding: '0.1rem',
+                }}
+              />
+            }
+            accordionPath={UrlPathTemplate.EditorSettings}
+            defaultPath={UrlPathTemplate.EditorCurators}>
+            <NavigationList>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorCurators}
+                data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
+                to={UrlPathTemplate.EditorCurators}>
+                {t('editor.curators.areas_of_responsibility')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+                data-testid={dataTestId.editor.vocabularyLinkButton}
+                to={UrlPathTemplate.EditorVocabulary}>
+                {t('editor.vocabulary')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
+                data-testid={dataTestId.editor.publishStrategyLinkButton}
+                to={UrlPathTemplate.EditorPublishStrategy}>
+                {t('editor.publish_strategy.publish_strategy')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorCategories}
+                data-testid={dataTestId.editor.categoriesLinkButton}
+                to={UrlPathTemplate.EditorCategories}>
+                {t('editor.categories_with_files')}
+              </LinkButton>
+            </NavigationList>
+          </NavigationListAccordion>
+        )}
       </SideMenu>
       <BackgroundDiv>
         <Switch>
@@ -142,7 +150,7 @@ const EditorPage = () => {
             exact
             path={UrlPathTemplate.EditorInstitution}
             component={EditorInstitution}
-            isAuthorized={isEditor}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact
@@ -150,12 +158,18 @@ const EditorPage = () => {
             component={EditorCurators}
             isAuthorized={isEditor}
           />
-          <PrivateRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} isAuthorized={isEditor} />
+          <PrivateRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} isAuthorized={hasCustomer} />
           <PrivateRoute
             exact
             path={UrlPathTemplate.EditorCategories}
             component={CategoriesWithFiles}
             isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorCategoriesOverview}
+            component={CategoriesWithFilesOverview}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact
