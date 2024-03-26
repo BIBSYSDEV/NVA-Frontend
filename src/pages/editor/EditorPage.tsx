@@ -17,6 +17,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { CategoriesWithFiles } from './CategoriesWithFiles';
+import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
@@ -79,6 +80,12 @@ const EditorPage = () => {
               data-testid={dataTestId.editor.doiLinkButton}
               to={UrlPathTemplate.EditorDoi}>
               {t('common.doi_long')}
+            </LinkButton>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorCategoriesOverview}
+              data-testid={dataTestId.editor.categoriesLinkButton}
+              to={UrlPathTemplate.EditorCategoriesOverview}>
+              {t('editor.categories_with_files')}
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
@@ -157,6 +164,12 @@ const EditorPage = () => {
             path={UrlPathTemplate.EditorCategories}
             component={CategoriesWithFiles}
             isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorCategoriesOverview}
+            component={CategoriesWithFilesOverview}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact

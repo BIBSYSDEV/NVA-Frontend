@@ -6,28 +6,38 @@ import { LocalStorageKey } from '../utils/constants';
 
 type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
 
-class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassProps>> {
-  state = { hasError: false };
+enum ErrorType {
+  None,
+  Chunk,
+  Other,
+}
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassProps>> {
+  state = { error: ErrorType.None };
+
+  static getDerivedStateFromError(error: any) {
+    return /Loading chunk [\d]+ failed/.test(error) ? { error: ErrorType.Chunk } : { error: ErrorType.Other };
   }
 
   componentDidUpdate(prevProps: ErrorBoundaryClassProps) {
     const { pathname, search } = this.props.location;
-    const { hasError } = this.state;
+    const { error } = this.state;
 
-    if (hasError && (pathname !== prevProps.location.pathname || search !== prevProps.location.search)) {
-      this.setState({ hasError: false });
+    if (
+      error !== ErrorType.None &&
+      (pathname !== prevProps.location.pathname || search !== prevProps.location.search)
+    ) {
+      this.setState({ error: ErrorType.None });
     }
   }
 
   // Force page refresh if a chunk is not found. This error is usually caused by a new
   // version of the app being deployed, and the old chunks currently used has been invalidated.
-  componentDidCatch(error: any) {
+  componentDidCatch() {
     const { t } = this.props;
+    const { error } = this.state;
 
-    if (/Loading chunk [\d]+ failed/.test(error)) {
+    if (error === ErrorType.Chunk) {
       const lastUpdateTime = parseInt(localStorage.getItem(LocalStorageKey.AppUpdateTime) ?? '');
       const currentTime = Date.now();
 
@@ -46,9 +56,16 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
 
   render() {
     const { t, children } = this.props;
-    const { hasError } = this.state;
+    const { error } = this.state;
 
-    return hasError ? <ErrorMessage errorMessage={t('common.error_occurred')} /> : children ?? null;
+    switch (error) {
+      case ErrorType.None:
+        return children;
+      case ErrorType.Other:
+        return <ErrorMessage errorMessage={t('common.error_occurred')} />;
+      case ErrorType.Chunk:
+        return null;
+    }
   }
 }
 

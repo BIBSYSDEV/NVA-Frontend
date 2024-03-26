@@ -46,16 +46,19 @@ export const NavigationListAccordion = ({
       sx={{
         mb: '0.5rem',
         bgcolor: 'secondary.dark',
-      }}
-      onClick={() => {
-        if (!isMobile) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
       }}>
       <AccordionSummary
         sx={{ paddingX: '0.75rem' }}
         expandIcon={!isExpanded ? <ExpandMoreIcon /> : null}
-        onClick={() => !isExpanded && history.push(defaultPath)}>
+        onClick={() => {
+          if (!isExpanded) {
+            history.push(defaultPath);
+
+            if (!isMobile) {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }
+        }}>
         <Box
           sx={{
             display: 'flex',

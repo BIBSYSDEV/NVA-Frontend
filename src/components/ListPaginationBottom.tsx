@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ROWS_PER_PAGE_OPTIONS } from '../utils/constants';
 import { dataTestId } from '../utils/dataTestIds';
 
-interface ListPaginationBottomProps {
+export interface ListPaginationBottomProps {
   count: number;
   rowsPerPage: number;
   page: number;
