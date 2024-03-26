@@ -276,10 +276,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -351,7 +347,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1766,7 +1766,7 @@
     "search_for_funding_identifier": "Søk på Tilskudds-ID",
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
-    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv,",
+    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
     "search_project_placeholder": "Søk etter tittel, prosjekt-ID, tilskudds-ID eller deltaker",
     "search_term_label": "Verdi",
     "sector": "Sektor",
