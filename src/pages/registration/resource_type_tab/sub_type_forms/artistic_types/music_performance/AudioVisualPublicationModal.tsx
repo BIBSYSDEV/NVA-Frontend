@@ -357,3 +357,4 @@ const MaskIsrcInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...pr
     onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll('-', '') } })}
   />
 ));
+MaskIsrcInput.displayName = 'MaskIsrcInput';

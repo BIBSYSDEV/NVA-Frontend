@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { fetchCustomerTickets, fetchTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -75,7 +75,7 @@ const MyPagePage = () => {
   const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
 
   const selectedTypesArray = Object.entries(selectedTypes)
-    .filter(([_, selected]) => selected)
+    .filter(([, selected]) => selected)
     .map(([key]) => key);
 
   const typeQuery =

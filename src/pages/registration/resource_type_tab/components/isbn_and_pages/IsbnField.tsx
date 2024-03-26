@@ -24,6 +24,7 @@ const MaskIsbnInput = forwardRef<HTMLElement, MaskInputProps>((props, ref) => {
     />
   );
 });
+MaskIsbnInput.displayName = 'MaskIsbnInput';
 
 interface IsbnFieldProps {
   fieldName: string;

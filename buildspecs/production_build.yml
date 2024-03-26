@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    VITE_API_HOST: 'https://my-nva-api.no'
+
 phases:
   install:
     runtime-versions:

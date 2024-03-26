@@ -151,7 +151,7 @@ const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown
     mainTitle: true,
     tags: true,
   },
-  fundings: fundings.map((_) => ({
+  fundings: fundings.map(() => ({
     source: true,
     id: true,
     identifier: true,
@@ -408,7 +408,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
 
 const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<unknown> => ({
   entityDescription: {
-    contributors: contributors.map((_) => ({
+    contributors: contributors.map(() => ({
       correspondingAuthor: true,
       sequence: true,
     })),
