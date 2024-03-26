@@ -137,7 +137,7 @@ const TasksPage = () => {
   });
 
   const selectedTicketTypes = Object.entries(ticketTypes)
-    .filter(([_, selected]) => selected)
+    .filter(([, selected]) => selected)
     .map(([key]) => key);
 
   const ticketTypeQuery =

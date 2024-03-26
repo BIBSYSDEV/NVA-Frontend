@@ -94,7 +94,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
           {affiliation.type === 'Organization' && <AffiliationHierarchy unitUri={affiliation.id} />}
           {affiliation.type === 'UnconfirmedOrganization' && (
             <>
-              <Typography>"{affiliation.name}"</Typography>
+              <Typography>&quot;{affiliation.name}&quot;</Typography>
               <Button
                 variant="outlined"
                 sx={{ textTransform: 'none' }}
