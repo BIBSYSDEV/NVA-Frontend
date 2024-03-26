@@ -188,7 +188,6 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                     </>
                   )}
                   <IconButton
-                    // sx={{ gridColumn: '5' }}
                     onClick={() => remove(index)}
                     data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}>
