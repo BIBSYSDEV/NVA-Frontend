@@ -11,7 +11,7 @@ import { useFetch } from '../utils/hooks/useFetch';
 import { getLanguageString } from '../utils/translation-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
 
-interface NfrProjectSearchProps extends Pick<TextFieldProps, 'onBlur' | 'required' | 'name'> {
+interface NfrProjectSearchProps extends Pick<TextFieldProps, 'onBlur' | 'required' | 'name' | 'sx'> {
   onSelectProject: (selectedProject: NfrProject | null) => void;
   errorMessage?: string;
 }

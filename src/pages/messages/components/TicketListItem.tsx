@@ -67,13 +67,15 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       }}>
       <MuiLink
         component={Link}
-        to={
-          window.location.pathname === UrlPathTemplate.TasksDialogue
-            ? getTasksRegistrationPath(identifier)
-            : window.location.pathname === UrlPathTemplate.MyPageMyMessages
-              ? getMyMessagesRegistrationPath(identifier)
-              : ''
-        }
+        to={{
+          pathname:
+            window.location.pathname === UrlPathTemplate.TasksDialogue
+              ? getTasksRegistrationPath(identifier)
+              : window.location.pathname === UrlPathTemplate.MyPageMyMessages
+                ? getMyMessagesRegistrationPath(identifier)
+                : '',
+          state: { previousSearch: window.location.search },
+        }}
         onClick={() => {
           if (!viewedByUser) {
             viewStatusMutation.mutate();

@@ -1,6 +1,6 @@
 import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { searchForProjects } from '../../../api/cristinApi';
@@ -12,17 +12,7 @@ import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { canEditProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 
-interface MyProjectRegistrationsProps {
-  selectedOngoing?: boolean;
-  selectedNotStarted?: boolean;
-  selectedConcluded?: boolean;
-}
-
-export const MyProjectRegistrations = ({
-  selectedOngoing,
-  selectedNotStarted,
-  selectedConcluded,
-}: MyProjectRegistrationsProps) => {
+export const MyProjectRegistrations = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const cristinIdentifier = getIdentifierFromId(user?.cristinId ?? '');
@@ -37,36 +27,21 @@ export const MyProjectRegistrations = ({
   });
 
   const projects = projectsQuery.data?.hits ?? [];
-  const filteredProjects = projects
-    .filter(
-      ({ status }) =>
-        (status === 'ACTIVE' && selectedOngoing) ||
-        (status === 'NOTSTARTED' && selectedNotStarted) ||
-        (status === 'CONCLUDED' && selectedConcluded) ||
-        ((status === 'ACTIVE' || status === 'NOTSTARTED' || status === 'CONCLUDED') &&
-          !selectedOngoing &&
-          !selectedNotStarted &&
-          !selectedConcluded)
-    )
-    .sort((a, b) => {
-      if (a.status === 'ACTIVE' && b.status !== 'ACTIVE') {
-        return -1;
-      } else if (a.status !== 'ACTIVE' && b.status === 'ACTIVE') {
-        return 1;
-      } else if (a.status === 'NOTSTARTED' && b.status !== 'NOTSTARTED') {
-        return -1;
-      } else if (a.status !== 'NOTSTARTED' && b.status === 'NOTSTARTED') {
-        return 1;
-      }
-      return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
-    });
+  const filteredProjects = projects.sort((a, b) => {
+    if (a.status === 'ACTIVE' && b.status !== 'ACTIVE') {
+      return -1;
+    } else if (a.status !== 'ACTIVE' && b.status === 'ACTIVE') {
+      return 1;
+    } else if (a.status === 'NOTSTARTED' && b.status !== 'NOTSTARTED') {
+      return -1;
+    } else if (a.status !== 'NOTSTARTED' && b.status === 'NOTSTARTED') {
+      return 1;
+    }
+    return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+  });
 
   const projectsToShow = filteredProjects.slice(rowsPerPage * (page - 1), rowsPerPage * page);
   const validPage = page - 1 < Math.ceil(filteredProjects.length / rowsPerPage) ? page : 1;
-
-  useEffect(() => {
-    setPage(1);
-  }, [selectedOngoing, selectedNotStarted, selectedConcluded]);
 
   return (
     <div>

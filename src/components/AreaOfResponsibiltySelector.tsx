@@ -53,7 +53,25 @@ export const AreaOfResponsibilitySelector = () => {
   const selectedAreaIdsFromUrl = searchParams.get(TicketSearchParam.ViewingScope)?.split(',');
   const selectedOrganizations = organizationOptions.filter((org) => selectedAreaIdsFromUrl?.includes(org.id));
 
-  return (
+  const onlyOneAreaOfResponsibilitySelectable = organizationOptions.length === 1;
+
+  return onlyOneAreaOfResponsibilitySelectable ? (
+    <TextField
+      size="small"
+      fullWidth
+      disabled
+      defaultValue={getLanguageString(organizationOptions[0].labels)}
+      title={getLanguageString(organizationOptions[0].labels)}
+      label={t('editor.curators.area_of_responsibility')}
+      InputLabelProps={{ shrink: true }}
+      inputProps={{
+        style: {
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        },
+      }}
+    />
+  ) : (
     <Autocomplete
       multiple
       autoHighlight

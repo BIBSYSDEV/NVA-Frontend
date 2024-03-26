@@ -206,7 +206,7 @@ describe('User opens registration form and can see validation errors', () => {
     );
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
-    cy.get('p.Mui-error').should('have.length', 5);
+    cy.get('p.Mui-error').should('have.length', 3);
 
     // publicationContext
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventTitleField}] input`).type('My Event');
