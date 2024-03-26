@@ -14,7 +14,6 @@ Also ensure that the following criterias are met:
 - [ ] The changes are tested OK for different screen sizes
 - [ ] The changes are tested OK for a11y
 - [ ] Interactive elements have data-testids
-- [ ] I have described what this PR solves
 - [ ] I have done a QA of my own changes
 
 _Note: some of these criterias may not always be relevant, and can simply be marked as completed._
