@@ -49,6 +49,7 @@ export const VocabularyOverview = () => {
           .map((vocabulary) => {
             return (
               <Card
+                key={vocabulary.id}
                 sx={{
                   bgcolor: 'white',
                   maxWidth: '450px',
