@@ -17,6 +17,7 @@ export enum UrlPathTemplate {
   EditorCurators = '/editor/settings/curators',
   EditorDoi = '/editor/overview/doi',
   EditorInstitution = '/editor/overview/institution',
+  EditorInstitutionSupport = '/editor/settings/support',
   EditorOrganizationOverview = '/editor/overview/organization',
   EditorOverview = '/editor/overview',
   EditorPublishStrategy = '/editor/settings/publish-strategy',

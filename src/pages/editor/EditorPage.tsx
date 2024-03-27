@@ -21,6 +21,7 @@ import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
+import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { VocabularySettings } from './VocabularySettings';
@@ -137,6 +138,12 @@ const EditorPage = () => {
                 to={UrlPathTemplate.EditorCategories}>
                 {t('editor.categories_with_files')}
               </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorInstitutionSupport}
+                data-testid={dataTestId.editor.supportLinkButton}
+                to={UrlPathTemplate.EditorInstitutionSupport}>
+                {t('editor.institution.change_institution_support')}
+              </LinkButton>
             </NavigationList>
           </NavigationListAccordion>
         )}
@@ -191,6 +198,11 @@ const EditorPage = () => {
             path={UrlPathTemplate.EditorOrganizationOverview}
             component={OrganizationOverview}
             isAuthorized={hasCustomer}
+          />
+          <PrivateRoute
+            path={UrlPathTemplate.EditorInstitutionSupport}
+            component={InstitutionSupport}
+            isAuthorized={isEditor}
           />
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>

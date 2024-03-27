@@ -370,6 +370,7 @@
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
+      "change_institution_support": "Endre brukerstøttepunkt",
       "institution_code": "Kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
       "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
@@ -378,6 +379,8 @@
       "institution_name_norwegian": "Norsk navn",
       "institution_profile": "Institusjonsprofil",
       "institution_short_name": "Kortnavn",
+      "institution_support": "Institusjonens brukerstøtte",
+      "institution_support_description": "Institusjonens brukerstøtte vises under kuratorstøtte.",
       "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
       "organizing": "Organisering",
       "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
