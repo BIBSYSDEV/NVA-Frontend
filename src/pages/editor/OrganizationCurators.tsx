@@ -5,14 +5,14 @@ import {
   AccordionSummary,
   Autocomplete,
   Box,
-  Link,
+  Button,
   TextField,
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getById } from '../../api/commonApi';
 import { fetchUsers } from '../../api/roleApi';
@@ -26,6 +26,7 @@ import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getAllChildOrganizations, getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { rolesWithAreaOfResponsibility } from '../basic_data/institution_admin/edit_user/TasksFormSection';
+import { UserFormDialog } from '../basic_data/institution_admin/edit_user/UserFormDialog';
 
 export const OrganizationCurators = () => {
   const { t } = useTranslation();
@@ -56,16 +57,10 @@ export const OrganizationCurators = () => {
   return (
     <>
       <Helmet>
-        <title>{t('editor.organization_overview')}</title>
+        <title>Oversikt over kuratorer</title>
       </Helmet>
       <Typography variant="h1" sx={{ mb: '1rem' }}>
-        {t('editor.organization_overview')}
-      </Typography>
-
-      <Typography sx={{ mb: '2rem' }}>
-        <Trans t={t} i18nKey="editor.institution.institution_helper_text">
-          <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
-        </Trans>
+        Oversikt over kuratorer
       </Typography>
 
       {organizationQuery.isLoading || curatorsQuery.isLoading ? (
@@ -98,6 +93,7 @@ export const OrganizationCurators = () => {
               organization={organizationQuery.data}
               searchId={searchId}
               curators={curatorsQuery.data ?? []}
+              refetchCurators={curatorsQuery.refetch}
             />
           )}
         </Box>
@@ -110,6 +106,7 @@ interface OrganizationAccordionProps {
   organization: Organization;
   searchId: string;
   curators: InstitutionUser[];
+  refetchCurators: () => void;
   includeAllSubunits?: boolean;
   level?: number;
 }
@@ -118,6 +115,7 @@ const OrganizationAccordion = ({
   organization,
   searchId,
   curators,
+  refetchCurators,
   level = 0,
   includeAllSubunits = false,
 }: OrganizationAccordionProps) => {
@@ -163,17 +161,7 @@ const OrganizationAccordion = ({
       </AccordionSummary>
       <AccordionDetails sx={{ pr: 0 }}>
         {curatorsOnThisUnit.map((user) => (
-          <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr 3fr' }}>
-            <Typography>
-              {user.givenName} {user.familyName}
-            </Typography>
-            <Typography>
-              {user.roles
-                .filter((role) => rolesWithAreaOfResponsibility.includes(role.rolename))
-                .map((role) => role.rolename)
-                .join(', ')}
-            </Typography>
-          </Box>
+          <CuratorRow curator={user} refetchCurators={refetchCurators} />
         ))}
         {expanded &&
           organization.hasPart?.map((subunit) => (
@@ -184,9 +172,50 @@ const OrganizationAccordion = ({
               searchId={searchId}
               includeAllSubunits={includeAllSubunits || isSearchedUnit}
               curators={curators}
+              refetchCurators={refetchCurators}
             />
           ))}
       </AccordionDetails>
     </Accordion>
+  );
+};
+
+interface CuratorRowProps {
+  curator: InstitutionUser;
+  refetchCurators: () => void;
+}
+
+const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const toggleDialog = () => {
+    if (openDialog) {
+      refetchCurators();
+    }
+    setOpenDialog(!openDialog);
+  };
+
+  return (
+    <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr auto 4fr' }}>
+      <Typography>
+        {curator.givenName} {curator.familyName}
+      </Typography>
+      <Button variant="outlined" size="small" onClick={toggleDialog}>
+        Endre bruker
+      </Button>
+      <Typography>
+        {curator.roles
+          .filter((role) => rolesWithAreaOfResponsibility.includes(role.rolename))
+          .map((role) => role.rolename)
+          .join(', ')}
+      </Typography>
+      {curator.cristinId && (
+        <UserFormDialog
+          open={openDialog}
+          onClose={toggleDialog}
+          existingPerson={curator.cristinId}
+          existingUser={curator}
+        />
+      )}
+    </Box>
   );
 };
