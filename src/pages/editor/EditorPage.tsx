@@ -24,6 +24,7 @@ import { EditorInstitution } from './EditorInstitution';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { VocabularySettings } from './VocabularySettings';
+import { VocabularyOverview } from './VocabularyOverview';
 
 const EditorPage = () => {
   const { t } = useTranslation();
@@ -81,6 +82,14 @@ const EditorPage = () => {
               to={UrlPathTemplate.EditorDoi}>
               {t('common.doi_long')}
             </LinkButton>
+
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorVocabularyOverview}
+              data-testid={dataTestId.editor.vocabularyOverviewLinkButton}
+              to={UrlPathTemplate.EditorVocabularyOverview}>
+              {t('editor.vocabulary')}
+            </LinkButton>
+
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.EditorCategoriesOverview}
               data-testid={dataTestId.editor.categoriesLinkButton}
@@ -111,16 +120,16 @@ const EditorPage = () => {
                 {t('editor.curators.areas_of_responsibility')}
               </LinkButton>
               <LinkButton
-                isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
-                data-testid={dataTestId.editor.vocabularyLinkButton}
-                to={UrlPathTemplate.EditorVocabulary}>
-                {t('editor.vocabulary')}
-              </LinkButton>
-              <LinkButton
                 isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
                 data-testid={dataTestId.editor.publishStrategyLinkButton}
                 to={UrlPathTemplate.EditorPublishStrategy}>
                 {t('editor.publish_strategy.publish_strategy')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+                data-testid={dataTestId.editor.vocabularyLinkButton}
+                to={UrlPathTemplate.EditorVocabulary}>
+                {t('editor.vocabulary')}
               </LinkButton>
               <LinkButton
                 isSelected={currentPath === UrlPathTemplate.EditorCategories}
@@ -139,6 +148,12 @@ const EditorPage = () => {
             path={UrlPathTemplate.EditorVocabulary}
             component={VocabularySettings}
             isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorVocabularyOverview}
+            component={VocabularyOverview}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact

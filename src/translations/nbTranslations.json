@@ -404,6 +404,8 @@
     "subunits_count_one": "{{count}} underenhet",
     "subunits_count_other": "{{count}} underenheter",
     "vocabulary": "Vokabular",
+    "vocabulary_controlled": "Kontrollerte emneord",
+    "vocabulary_description": "Kontrollerte emneord (vokabular) som kan benyttes ved registrering av nytt resultat.",
     "vocabulary_status": {
       "Allowed": "Tillatt",
       "Default": "Standard",
