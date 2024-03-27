@@ -2,7 +2,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, Divider, Link, styled, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
@@ -19,6 +19,8 @@ const PublishStrategyContainer = styled('div')({
 export const PublishingStrategyOverview = () => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
+
+  const coalitionSUrl = 'https://www.coalition-s.org/resources/rights-retention-strategy/';
 
   const currentPublishStrategy = customer?.publicationWorkflow;
   const isRrs = customer?.rightsRetentionStrategy?.type === CustomerRrsType.RightsRetentionStrategy;
@@ -83,34 +85,26 @@ export const PublishingStrategyOverview = () => {
             <Divider />
 
             <Typography variant="h3">{t('editor.retention_strategy.rrs')}</Typography>
-
-            <Typography>Institusjonen har oppgitt en Rights Retention Strategy (RRS) i NVA.</Typography>
-            <Typography>
-              Lisens CC-BY blir automatisk satt på akseptert versjon av filer i registreringen av en vitenskapelig
-              artikkel i NVA.
-            </Typography>
-
+            {(isRrs || isOverridableRrs) && (
+              <Trans i18nKey="editor.retention_strategy.customer_has_rrs_text" components={[<Typography />]} />
+            )}
             <Typography variant="h3">{t('editor.retention_strategy.rrs_info_page')}</Typography>
 
             <Link href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer">
               {customer.rightsRetentionStrategy.id}
             </Link>
 
-            <Typography variant="h3">Mulig å ikke følge institusjonens rettighetspolitikk</Typography>
+            <Typography variant="h3">{t('editor.retention_strategy.possible_not_to_follow_rrs')}</Typography>
 
-            <Typography>
-              Publiseringskurator har tilgang til å sette at filer ikke følger institusjonens rettigethspolitikk (RRS).
-            </Typography>
-
-            <Typography>
-              Om registrator ikke øsnker følge institusjonens rettighetspolitikk (RRS) så se på vilkår om for ikke følge{' '}
-              RRS på informasjonsside om institusjonens rettighetspolitikk
-            </Typography>
-
-            <Typography>
-              Med å følge rettighetspolitikk (RRS) så blir vitenskapelige artikler åpent tilgjengelig umiddelbart uten
-              embargo.{' '}
-            </Typography>
+            <Trans
+              i18nKey="editor.retention_strategy.curator_can_override_rrs_text"
+              components={[
+                <Typography />,
+                <Typography>
+                  <Link href={coalitionSUrl} target="_blank" rel="noopener noreferrer" />
+                </Typography>,
+              ]}
+            />
           </Box>
         </>
       )}
