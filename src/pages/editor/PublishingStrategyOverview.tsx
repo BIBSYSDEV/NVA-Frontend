@@ -97,7 +97,15 @@ export const PublishingStrategyOverview = () => {
 
                 <Typography variant="h3">{t('editor.retention_strategy.possible_not_to_follow_rrs')}</Typography>
                 {isOverridableRrs ? (
-                  <Typography>TEST</Typography>
+                  <Trans
+                    i18nKey="editor.retention_strategy.creator_can_override_rrs_text"
+                    components={[
+                      <Typography>
+                        <Link href={coalitionSUrl} target="_blank" rel="noopener noreferrer" />
+                      </Typography>,
+                      <Typography />,
+                    ]}
+                  />
                 ) : (
                   <Trans
                     i18nKey="editor.retention_strategy.curator_can_override_rrs_text"
