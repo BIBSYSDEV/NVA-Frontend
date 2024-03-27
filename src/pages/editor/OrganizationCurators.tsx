@@ -5,29 +5,34 @@ import {
   AccordionSummary,
   Autocomplete,
   Box,
-  Link,
+  Button,
   TextField,
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getById } from '../../api/commonApi';
+import { fetchUsers } from '../../api/roleApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../components/OrganizationRenderOption';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
+import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getAllChildOrganizations, getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { rolesWithAreaOfResponsibility } from '../basic_data/institution_admin/edit_user/TasksFormSection';
+import { UserFormDialog } from '../basic_data/institution_admin/edit_user/UserFormDialog';
 
-export const OrganizationOverview = () => {
+export const OrganizationCurators = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const organizationId = user?.topOrgCristinId;
+  const customerId = user?.customerId;
 
   const [searchId, setSearchId] = useState('');
 
@@ -40,24 +45,25 @@ export const OrganizationOverview = () => {
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
+  const curatorsQuery = useQuery({
+    queryKey: ['curators', customerId],
+    enabled: !!customerId,
+    queryFn: () => (customerId ? fetchUsers(customerId, rolesWithAreaOfResponsibility) : undefined),
+    meta: { errorMessage: t('feedback.error.get_users_for_institution') },
+  });
+
   const allSubUnits = getSortedSubUnits(organizationQuery.data?.hasPart);
 
   return (
     <>
       <Helmet>
-        <title>{t('editor.organization_overview')}</title>
+        <title>Oversikt over kuratorer</title>
       </Helmet>
       <Typography variant="h1" sx={{ mb: '1rem' }}>
-        {t('editor.organization_overview')}
+        Oversikt over kuratorer
       </Typography>
 
-      <Typography sx={{ mb: '2rem' }}>
-        <Trans t={t} i18nKey="editor.institution.institution_helper_text">
-          <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
-        </Trans>
-      </Typography>
-
-      {organizationQuery.isLoading ? (
+      {organizationQuery.isLoading || curatorsQuery.isLoading ? (
         <ListSkeleton height={100} minWidth={100} />
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -81,8 +87,14 @@ export const OrganizationOverview = () => {
               <TextField {...params} variant="outlined" label={t('search.search_for_sub_unit')} />
             )}
           />
+
           {organizationQuery.data && (
-            <OrganizationAccordion organization={organizationQuery.data} searchId={searchId} />
+            <OrganizationAccordion
+              organization={organizationQuery.data}
+              searchId={searchId}
+              curators={curatorsQuery.data ?? []}
+              refetchCurators={curatorsQuery.refetch}
+            />
           )}
         </Box>
       )}
@@ -93,6 +105,8 @@ export const OrganizationOverview = () => {
 interface OrganizationAccordionProps {
   organization: Organization;
   searchId: string;
+  curators: InstitutionUser[];
+  refetchCurators: () => void;
   includeAllSubunits?: boolean;
   level?: number;
 }
@@ -100,12 +114,14 @@ interface OrganizationAccordionProps {
 const OrganizationAccordion = ({
   organization,
   searchId,
+  curators,
+  refetchCurators,
   level = 0,
   includeAllSubunits = false,
 }: OrganizationAccordionProps) => {
   const { t } = useTranslation();
 
-  const [expandedState, setExpandedState] = useState(false);
+  const [expandedState, setExpandedState] = useState(level === 0);
 
   const isSearchedUnit = organization.id === searchId;
 
@@ -118,6 +134,8 @@ const OrganizationAccordion = ({
   const expanded = expandedState || (!!searchId && !includeAllSubunits);
   const subunitsCount = organization.hasPart?.length ?? 0;
 
+  const curatorsOnThisUnit = curators.filter((curator) => curator.viewingScope.includedUnits.includes(organization.id));
+
   return (
     <Accordion
       data-testid={dataTestId.editor.organizationAccordion(organization.id)}
@@ -126,35 +144,78 @@ const OrganizationAccordion = ({
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: { xs: undefined, md: `${level}rem` } }}
       expanded={expanded}
       onChange={() => setExpandedState(!expanded)}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Box
           sx={{
             width: '100%',
             display: 'grid',
             gap: '0.5rem 1rem',
-            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr', lg: '3fr 3fr 1fr 1fr' },
+            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr', lg: '3fr 1fr 1fr 1fr' },
             '& > p': { fontWeight: isSearchedUnit ? 700 : undefined },
           }}>
-          <Typography>{getLanguageString(organization.labels, 'nb')}</Typography>
-          <Typography>{organization.labels['en']}</Typography>
+          <Typography>{getLanguageString(organization.labels)}</Typography>
+          <Typography>{curatorsOnThisUnit.length} kuratorer</Typography>
           <Typography>{getIdentifierFromId(organization.id)}</Typography>
           <Typography>{subunitsCount > 0 && t('editor.subunits_count', { count: subunitsCount })}</Typography>
         </Box>
       </AccordionSummary>
-      {subunitsCount > 0 && (
-        <AccordionDetails sx={{ pr: 0 }}>
-          {expanded &&
-            organization.hasPart?.map((subunit) => (
-              <OrganizationAccordion
-                key={subunit.id}
-                organization={subunit}
-                level={level + 1}
-                searchId={searchId}
-                includeAllSubunits={includeAllSubunits || isSearchedUnit}
-              />
-            ))}
-        </AccordionDetails>
-      )}
+      <AccordionDetails sx={{ pr: 0 }}>
+        {curatorsOnThisUnit.map((user) => (
+          <CuratorRow curator={user} refetchCurators={refetchCurators} />
+        ))}
+        {expanded &&
+          organization.hasPart?.map((subunit) => (
+            <OrganizationAccordion
+              key={subunit.id}
+              organization={subunit}
+              level={level + 1}
+              searchId={searchId}
+              includeAllSubunits={includeAllSubunits || isSearchedUnit}
+              curators={curators}
+              refetchCurators={refetchCurators}
+            />
+          ))}
+      </AccordionDetails>
     </Accordion>
+  );
+};
+
+interface CuratorRowProps {
+  curator: InstitutionUser;
+  refetchCurators: () => void;
+}
+
+const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const toggleDialog = () => {
+    if (openDialog) {
+      refetchCurators();
+    }
+    setOpenDialog(!openDialog);
+  };
+
+  return (
+    <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr auto 4fr' }}>
+      <Typography>
+        {curator.givenName} {curator.familyName}
+      </Typography>
+      <Button variant="outlined" size="small" onClick={toggleDialog}>
+        Endre bruker
+      </Button>
+      <Typography>
+        {curator.roles
+          .filter((role) => rolesWithAreaOfResponsibility.includes(role.rolename))
+          .map((role) => role.rolename)
+          .join(', ')}
+      </Typography>
+      {curator.cristinId && (
+        <UserFormDialog
+          open={openDialog}
+          onClose={toggleDialog}
+          existingPerson={curator.cristinId}
+          existingUser={curator}
+        />
+      )}
+    </Box>
   );
 };
