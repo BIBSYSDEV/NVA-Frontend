@@ -26,7 +26,6 @@ export const PublishingStrategyOverview = () => {
   const isRrs = customer?.rightsRetentionStrategy?.type === CustomerRrsType.RightsRetentionStrategy;
   const isOverridableRrs =
     customer?.rightsRetentionStrategy?.type === CustomerRrsType.OverridableRightsRetentionStrategy;
-  const isNullRrs = customer?.rightsRetentionStrategy?.type === CustomerRrsType.NullRightsRetentionStrategy;
 
   return (
     <>
@@ -42,7 +41,7 @@ export const PublishingStrategyOverview = () => {
             <Typography variant="h2">{t('editor.publish_strategy.publish_strategy')}</Typography>
             <PublishStrategyContainer>
               {currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles' ? (
-                <Box>
+                <>
                   <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
                     {t('editor.publish_strategy.registrator_publishes_without_curator')}
                   </Typography>
@@ -59,9 +58,9 @@ export const PublishingStrategyOverview = () => {
                   <Typography sx={{ textAlign: 'center' }}>
                     {t('editor.publish_strategy.registrator_publishes_without_curator_description')}
                   </Typography>
-                </Box>
+                </>
               ) : (
-                <Box>
+                <>
                   <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
                     {t('editor.publish_strategy.registrator_publishes_metadata')}
                   </Typography>
@@ -78,7 +77,7 @@ export const PublishingStrategyOverview = () => {
                   <Typography sx={{ textAlign: 'center' }}>
                     {t('editor.publish_strategy.registrator_publishes_metadata_description')}
                   </Typography>
-                </Box>
+                </>
               )}
             </PublishStrategyContainer>
 
