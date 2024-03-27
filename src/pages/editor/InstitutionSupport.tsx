@@ -19,8 +19,7 @@ export const InstitutionSupport = () => {
   const customer = useSelector((store: RootState) => store.customer);
 
   const customerMutation = useMutation({
-    mutationFn: (values: CustomerInstitution) =>
-      updateCustomerInstitution({ ...values, serviceCenterUri: values.serviceCenterUri }),
+    mutationFn: (values: CustomerInstitution) => updateCustomerInstitution(values),
     onSuccess: (response) => {
       dispatch(setCustomer(response.data));
       dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
@@ -33,10 +32,12 @@ export const InstitutionSupport = () => {
       {!customer ? (
         <PageSpinner />
       ) : (
-        <Formik initialValues={customer} onSubmit={async (values) => customerMutation.mutate(values)}>
+        <Formik initialValues={customer} onSubmit={async (values) => customerMutation.mutateAsync(values)}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => (
             <Form style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <Typography variant="h2">{t('editor.institution.institution_support')}</Typography>
+              <Typography gutterBottom variant="h2">
+                {t('editor.institution.institution_support')}
+              </Typography>
               <Typography>{t('editor.institution.institution_support_description')}</Typography>
 
               <Field name={'serviceCenterUri'}>
@@ -46,7 +47,6 @@ export const InstitutionSupport = () => {
                     sx={{ mb: { xs: '1rem', md: 0 }, maxWidth: '40rem' }}
                     {...field}
                     disabled={isSubmitting}
-                    value={values.serviceCenterUri}
                     type="url"
                     label={t('common.url')}
                     placeholder={t('editor.retention_strategy.rrs_link')}
@@ -58,9 +58,6 @@ export const InstitutionSupport = () => {
                         </InputAdornment>
                       ),
                     }}
-                    onChange={(event) => {
-                      setFieldValue(field.name, event.target.value);
-                    }}
                   />
                 )}
               </Field>
@@ -68,7 +65,7 @@ export const InstitutionSupport = () => {
               <LoadingButton
                 variant="contained"
                 type="submit"
-                loading={customerMutation.isLoading}
+                loading={isSubmitting}
                 sx={{ mt: 'auto', alignSelf: 'center' }}>
                 {t('common.save')}
               </LoadingButton>
