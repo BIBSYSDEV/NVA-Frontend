@@ -33,12 +33,12 @@ export const InstitutionSupport = () => {
         <PageSpinner />
       ) : (
         <Formik initialValues={customer} onSubmit={async (values) => customerMutation.mutateAsync(values)}>
-          {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => (
+          {({ isSubmitting }: FormikProps<CustomerInstitution>) => (
             <Form style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               <Typography gutterBottom variant="h2">
                 {t('editor.institution.institution_support')}
               </Typography>
-              <Typography>{t('editor.institution.institution_support_description')}</Typography>
+              <Typography paragraph>{t('editor.institution.institution_support_description')}</Typography>
 
               <Field name={'serviceCenterUri'}>
                 {({ field }: FieldProps<string>) => (
