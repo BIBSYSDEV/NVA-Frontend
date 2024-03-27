@@ -39,9 +39,9 @@ export const updateDoiAgent = async (doiAgent: DoiAgent, cancelToken?: CancelTok
     cancelToken,
   });
 
-export const fetchVocabulary = async (customerIdentifier: string) => {
+export const fetchVocabulary = async (customerId: string) => {
   const getVocabulary = await authenticatedApiRequest2<VocabularyList>({
-    url: `${customerIdentifier}/vocabularies`,
+    url: `${customerId}/vocabularies`,
   });
 
   return getVocabulary.data;
