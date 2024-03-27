@@ -85,26 +85,42 @@ export const PublishingStrategyOverview = () => {
             <Divider />
 
             <Typography variant="h3">{t('editor.retention_strategy.rrs')}</Typography>
-            {(isRrs || isOverridableRrs) && (
-              <Trans i18nKey="editor.retention_strategy.customer_has_rrs_text" components={[<Typography />]} />
+            {isRrs || isOverridableRrs ? (
+              <>
+                <Trans i18nKey="editor.retention_strategy.customer_has_rrs_text" components={[<Typography />]} />
+
+                <Typography variant="h3">{t('editor.retention_strategy.rrs_info_page')}</Typography>
+
+                <Link href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer">
+                  {customer.rightsRetentionStrategy.id}
+                </Link>
+
+                <Typography variant="h3">{t('editor.retention_strategy.possible_not_to_follow_rrs')}</Typography>
+                {isOverridableRrs ? (
+                  <Typography>TEST</Typography>
+                ) : (
+                  <Trans
+                    i18nKey="editor.retention_strategy.curator_can_override_rrs_text"
+                    components={[
+                      <Typography />,
+                      <Typography>
+                        <Link href={coalitionSUrl} target="_blank" rel="noopener noreferrer" />
+                      </Typography>,
+                    ]}
+                  />
+                )}
+              </>
+            ) : (
+              <Trans
+                i18nKey="editor.retention_strategy.customer_has_no_rrs"
+                components={[
+                  <Typography />,
+                  <Typography>
+                    <Link href={coalitionSUrl} target="_blank" rel="noopener noreferrer" />
+                  </Typography>,
+                ]}
+              />
             )}
-            <Typography variant="h3">{t('editor.retention_strategy.rrs_info_page')}</Typography>
-
-            <Link href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer">
-              {customer.rightsRetentionStrategy.id}
-            </Link>
-
-            <Typography variant="h3">{t('editor.retention_strategy.possible_not_to_follow_rrs')}</Typography>
-
-            <Trans
-              i18nKey="editor.retention_strategy.curator_can_override_rrs_text"
-              components={[
-                <Typography />,
-                <Typography>
-                  <Link href={coalitionSUrl} target="_blank" rel="noopener noreferrer" />
-                </Typography>,
-              ]}
-            />
           </Box>
         </>
       )}
