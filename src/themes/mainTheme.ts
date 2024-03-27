@@ -1,6 +1,6 @@
 import { PaletteColorOptions, SxProps, createTheme } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
-import { enUS as pickersEnUs, nbNO as pickersNbNo } from '@mui/x-date-pickers';
+import { enUS as pickersEnUs, nbNO as pickersNbNo } from '@mui/x-date-pickers/locales';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
