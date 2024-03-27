@@ -4,7 +4,7 @@ import { TFunction } from 'i18next';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { fetchVocabulary } from '../../api/searchApi';
+import { fetchVocabulary } from '../../api/customerInstitutionsApi';
 import { RootState } from '../../redux/store';
 import {
   defaultHrcsActivity,

@@ -1,5 +1,4 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { TFunction } from 'i18next';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -17,14 +16,8 @@ import {
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
+import { getTranslatedVocabularyName } from './VocabularyOverview';
 import { VocabularyRow } from './VocabularyRow';
-
-export const getTranslatedVocabularyName = (t: TFunction, id: string) =>
-  id === defaultHrcsActivity.id
-    ? t('editor.hrcs_activity')
-    : id === defaultHrcsCategory.id
-      ? t('editor.hrcs_categories')
-      : '';
 
 export const VocabularySettings = () => {
   const { t } = useTranslation();

@@ -6,7 +6,6 @@ import { PublicationInstanceType, Registration, RegistrationAggregations } from 
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
-import { VocabularyList } from '../types/customerInstitution.types';
 
 export enum TicketSearchParam {
   Aggregation = 'aggregation',
@@ -420,12 +419,4 @@ export const fetchRegistrationsExport = async (searchParams: URLSearchParams) =>
 
   const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
   return fetchExport.data;
-};
-
-export const fetchVocabulary = async (customerIdentifier: string) => {
-  const getVocabulary = await authenticatedApiRequest2<VocabularyList>({
-    url: `${customerIdentifier}/vocabularies`,
-  });
-
-  return getVocabulary.data;
 };
