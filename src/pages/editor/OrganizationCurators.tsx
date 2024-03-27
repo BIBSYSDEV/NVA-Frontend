@@ -150,7 +150,7 @@ const OrganizationAccordion = ({
             width: '100%',
             display: 'grid',
             gap: '0.5rem 1rem',
-            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr', lg: '3fr 3fr 1fr 1fr' },
+            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr', lg: '3fr 1fr 1fr 1fr' },
             '& > p': { fontWeight: isSearchedUnit ? 700 : undefined },
           }}>
           <Typography>{getLanguageString(organization.labels)}</Typography>
