@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
 import { CustomerRrsType } from '../../types/customerInstitution.types';
-import { StyledAccessRight, StyledAccessRightsContainer } from './PublishStrategySettings';
 
 const PublishStrategyContainer = styled('div')({
   padding: '0.5rem',
@@ -16,11 +15,23 @@ const PublishStrategyContainer = styled('div')({
   boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
 });
 
+export const StyledAccessRight = styled('div')({
+  display: 'flex',
+  gap: '0.5rem',
+});
+
+const coalitionSUrl = 'https://www.coalition-s.org/resources/rights-retention-strategy/';
+
+export const StyledAccessRightsContainer = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-evenly',
+  marginTop: '0.5rem',
+  marginBottom: '0.5rem',
+});
+
 export const PublishingStrategyOverview = () => {
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
-
-  const coalitionSUrl = 'https://www.coalition-s.org/resources/rights-retention-strategy/';
 
   const currentPublishStrategy = customer?.publicationWorkflow;
   const isRrs = customer?.rightsRetentionStrategy?.type === CustomerRrsType.RightsRetentionStrategy;

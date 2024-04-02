@@ -12,6 +12,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { StyledAccessRight, StyledAccessRightsContainer } from './PublishingStrategyOverview';
 import { RightsRetentionStrategySettings } from './RightsRetentionStrategySettings';
 
 const StyledItemContainer = styled('div')({
@@ -20,18 +21,6 @@ const StyledItemContainer = styled('div')({
   gap: '1rem',
   maxWidth: '40rem',
   alignItems: 'center',
-});
-
-export const StyledAccessRight = styled('div')({
-  display: 'flex',
-  gap: '0.5rem',
-});
-
-export const StyledAccessRightsContainer = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-evenly',
-  marginTop: '0.5rem',
-  marginBottom: '0.5rem',
 });
 
 interface PublishStrategyButtonProps {
