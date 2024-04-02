@@ -21,7 +21,7 @@ export enum TicketSearchParam {
   Status = 'status',
   Type = 'type',
   ViewedByNot = 'viewedByNot',
-  ViewingScope = 'viewingScope',
+  OrganizationId = 'organizationId',
 }
 
 export interface FetchTicketsParams {
@@ -38,7 +38,7 @@ export interface FetchTicketsParams {
   [TicketSearchParam.Status]?: string | null;
   [TicketSearchParam.Type]?: string | null;
   [TicketSearchParam.ViewedByNot]?: string | null;
-  [TicketSearchParam.ViewingScope]?: string | null;
+  [TicketSearchParam.OrganizationId]?: string | null;
 }
 
 export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
@@ -48,16 +48,24 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
     searchParams.set(TicketSearchParam.Aggregation, params.aggregation);
   }
 
+  if (params.assignee) {
+    searchParams.set(TicketSearchParam.Assignee, params.assignee);
+  }
+
+  if (params.excludeSubUnits) {
+    searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
+  }
+
+  if (params.organizationId) {
+    searchParams.set(TicketSearchParam.OrganizationId, params.organizationId);
+  }
+
   if (params.owner) {
     searchParams.set(TicketSearchParam.Owner, params.owner);
   }
 
-  if (params.viewedByNot) {
-    searchParams.set(TicketSearchParam.ViewedByNot, params.viewedByNot);
-  }
-
-  if (params.assignee) {
-    searchParams.set(TicketSearchParam.Assignee, params.assignee);
+  if (params.role) {
+    searchParams.set(TicketSearchParam.Role, params.role);
   }
 
   if (params.status) {
@@ -68,16 +76,8 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
     searchParams.set(TicketSearchParam.Type, params.type);
   }
 
-  if (params.viewingScope) {
-    searchParams.set(TicketSearchParam.ViewingScope, params.viewingScope);
-  }
-
-  if (params.excludeSubUnits) {
-    searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
-  }
-
-  if (params.role) {
-    searchParams.set(TicketSearchParam.Role, params.role);
+  if (params.viewedByNot) {
+    searchParams.set(TicketSearchParam.ViewedByNot, params.viewedByNot);
   }
 
   searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());

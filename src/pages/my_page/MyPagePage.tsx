@@ -90,7 +90,7 @@ const MyPagePage = () => {
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     status: searchParams.get(TicketSearchParam.Status),
     viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
-    // type: selectedTypesArray.join(','),
+    type: selectedTypesArray.join(','),
   };
 
   const ticketsQuery = useQuery({

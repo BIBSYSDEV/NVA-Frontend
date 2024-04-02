@@ -45,7 +45,7 @@ export const TicketListDefaultValuesWrapper = ({ children }: TicketListDefaultVa
     const organizationsWithSubUnits = getAllChildOrganizations(organizations);
 
     const searchParams = new URLSearchParams(history.location.search);
-    searchParams.set(TicketSearchParam.ViewingScope, organizationsWithSubUnits.map((org) => org.id).join(','));
+    searchParams.set(TicketSearchParam.OrganizationId, organizationsWithSubUnits.map((org) => org.id).join(','));
     searchParams.set(TicketSearchParam.Assignee, nvaUsername);
     searchParams.set(TicketSearchParam.Status, 'Pending' as TicketStatus);
     history.push({ search: searchParams.toString() });

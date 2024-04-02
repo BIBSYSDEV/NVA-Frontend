@@ -126,7 +126,7 @@ const TasksPage = () => {
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
 
-  const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.ViewingScope) ? rowsPerPage : 0;
+  const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.OrganizationId) ? rowsPerPage : 0;
 
   const ticketSearchParams: FetchTicketsParams = {
     query: searchParams.get(TicketSearchParam.Query),
@@ -134,11 +134,11 @@ const TasksPage = () => {
     from: (page - 1) * rowsPerPage,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
-    viewingScope: searchParams.get(TicketSearchParam.ViewingScope),
+    organizationId: searchParams.get(TicketSearchParam.OrganizationId),
     excludeSubUnits: true,
     assignee: searchParams.get(TicketSearchParam.Assignee),
     status: searchParams.get(TicketSearchParam.Status),
-    // type: selectedTicketTypes.join(','),
+    type: selectedTicketTypes.join(','),
     viewedByNot: ticketUnreadFilter && user ? user.nvaUsername : '',
   };
 
