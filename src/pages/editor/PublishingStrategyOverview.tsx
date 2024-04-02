@@ -41,7 +41,7 @@ export const PublishingStrategyOverview = () => {
   return (
     <>
       <Helmet>
-        <title id="publish-strategy-label">{t('editor.publish_strategy.publish_strategy')}</title>
+        <title>{t('editor.publish_strategy.publish_strategy')}</title>
       </Helmet>
 
       {!customer ? (
