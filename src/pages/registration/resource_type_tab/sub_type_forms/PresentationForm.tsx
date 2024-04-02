@@ -55,13 +55,20 @@ export const PresentationForm = () => {
           />
         )}
       </Field>
+
+      <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <PeriodFields
+          fromFieldName={ResourceFieldNames.PublicationContextTimeFrom}
+          toFieldName={ResourceFieldNames.PublicationContextTimeTo}
+        />
+      </Box>
+
       <Field name={ResourceFieldNames.PublicationContextPlaceLabel}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <TextField
             {...field}
             id={field.name}
             value={field.value ?? ''}
-            required
             data-testid={dataTestId.registrationWizard.resourceType.placeField}
             variant="filled"
             fullWidth
@@ -98,7 +105,6 @@ export const PresentationForm = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                required
                 data-testid={dataTestId.registrationWizard.resourceType.eventCountryField}
                 label={t('common.country')}
                 variant="filled"
@@ -110,13 +116,6 @@ export const PresentationForm = () => {
           />
         )}
       </Field>
-
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <PeriodFields
-          fromFieldName={ResourceFieldNames.PublicationContextTimeFrom}
-          toFieldName={ResourceFieldNames.PublicationContextTimeTo}
-        />
-      </Box>
     </>
   );
 };

@@ -46,7 +46,7 @@ export const AddContributorModal = ({
     <Modal
       headingText={
         initialSearchTerm
-          ? t('registration.contributors.verify_person')
+          ? t('registration.contributors.verify_contributor')
           : t('registration.contributors.add_contributor')
       }
       onClose={handleCloseModal}

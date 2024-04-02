@@ -1,5 +1,5 @@
 import { CancelToken } from 'axios';
-import { CustomerInstitution, DoiAgent, ProtectedDoiAgent } from '../types/customerInstitution.types';
+import { CustomerInstitution, DoiAgent, ProtectedDoiAgent, VocabularyList } from '../types/customerInstitution.types';
 import { CustomerInstitutionApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
@@ -38,3 +38,11 @@ export const updateDoiAgent = async (doiAgent: DoiAgent, cancelToken?: CancelTok
     data: doiAgent,
     cancelToken,
   });
+
+export const fetchVocabulary = async (customerId: string) => {
+  const getVocabulary = await authenticatedApiRequest2<VocabularyList>({
+    url: `${customerId}/vocabularies`,
+  });
+
+  return getVocabulary.data;
+};

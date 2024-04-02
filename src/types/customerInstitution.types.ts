@@ -71,12 +71,28 @@ export enum VocabularyStatus {
   Disabled = 'Disabled',
 }
 
+export const visibleVocabularyStatuses = [VocabularyStatus.Default, VocabularyStatus.Allowed];
+
 export interface CustomerVocabulary {
   type: 'Vocabulary';
   id: string;
   name: string;
   status: VocabularyStatus;
 }
+
+export const defaultHrcsActivity: CustomerVocabulary = {
+  type: 'Vocabulary',
+  id: 'https://nva.unit.no/hrcs/activity',
+  status: VocabularyStatus.Disabled,
+  name: 'HRCS Activity',
+};
+
+export const defaultHrcsCategory: CustomerVocabulary = {
+  type: 'Vocabulary',
+  id: 'https://nva.unit.no/hrcs/category',
+  status: VocabularyStatus.Disabled,
+  name: 'HRCS Category',
+};
 
 export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   type: 'Customer',
