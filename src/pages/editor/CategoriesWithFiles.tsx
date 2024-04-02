@@ -62,7 +62,11 @@ const CategoriesWithFilesForCustomer = ({ customer }: CategoriesWithFilesForCust
 
   return (
     <>
-      <CategorySelector selectedCategories={selectedCategories} onCategoryClick={onSelectType} />
+      <CategorySelector
+        enableNviHighLightning={false}
+        selectedCategories={selectedCategories}
+        onCategoryClick={onSelectType}
+      />
 
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem', mt: '2rem' }}>
         <Button onClick={() => setSelectedCategories(customer.allowFileUploadForTypes)}>{t('common.cancel')}</Button>

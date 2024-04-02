@@ -56,16 +56,19 @@ interface CategorySelectorProps {
   selectedCategories: PublicationInstanceType[];
   onCategoryClick?: (category: PublicationInstanceType) => void;
   disabledCategories?: DisabledCategory[];
+  enableNviHighLightning: boolean;
 }
 
 export const CategorySelector = ({
   disabledCategories,
   onCategoryClick,
   selectedCategories,
+  enableNviHighLightning,
 }: CategorySelectorProps) => {
   const { t } = useTranslation();
 
   const [searchValue, setSearchValue] = useState('');
+  const [higlightNviCategories, setHighlightNviCategories] = useState(false);
 
   const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
     const lowerCaseSearchValue = searchValue.toLowerCase();
@@ -93,19 +96,39 @@ export const CategorySelector = ({
           InputProps={{ endAdornment: <SearchIcon /> }}
           onChange={(event) => setSearchValue(event.target.value)}
         />
-        <Box
-          sx={{
-            display: 'flex',
-            gap: '0.5rem',
-            alignItems: 'center',
-          }}>
-          <FilterVintageIcon
-            color="primary"
-            titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-            fontSize="small"
-          />
-          <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
-        </Box>
+        {enableNviHighLightning ? (
+          <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <Chip
+              icon={
+                <FilterVintageIcon
+                  color="primary"
+                  titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+                  fontSize="small"
+                />
+              }
+              color="primary"
+              onClick={() => {
+                setHighlightNviCategories(!higlightNviCategories);
+              }}
+              variant={higlightNviCategories ? 'filled' : 'outlined'}
+              label={t('registration.resource_type.nvi.can_give_publication_points')}
+            />
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '0.5rem',
+              alignItems: 'center',
+            }}>
+            <FilterVintageIcon
+              color="primary"
+              titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+              fontSize="small"
+            />
+            <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
+          </Box>
+        )}
       </Box>
       <Box
         sx={{
@@ -118,6 +141,7 @@ export const CategorySelector = ({
           <RegistrationTypesRow
             key={mainType}
             mainType={mainType}
+            higlightNviCategories={higlightNviCategories}
             registrationTypes={filterRegistrationTypes(
               registrationTypes.map((registrationType) => ({
                 value: registrationType,
@@ -138,9 +162,15 @@ interface RegistrationTypesRowProps {
   onChangeType?: (type: PublicationInstanceType) => void;
   mainType: PublicationType;
   registrationTypes: RegistrationTypeElement[];
+  higlightNviCategories: boolean;
 }
 
-const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: RegistrationTypesRowProps) => {
+const RegistrationTypesRow = ({
+  mainType,
+  registrationTypes,
+  onChangeType,
+  higlightNviCategories,
+}: RegistrationTypesRowProps) => {
   const { t } = useTranslation();
 
   return registrationTypes.length > 0 ? (
@@ -150,7 +180,12 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
       </Typography>
       <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
         {registrationTypes.map((registrationType) => (
-          <CategoryChip key={registrationType.value} category={registrationType} onClickChip={onChangeType} />
+          <CategoryChip
+            key={registrationType.value}
+            higlightNviCategories={higlightNviCategories}
+            category={registrationType}
+            onClickChip={onChangeType}
+          />
         ))}
       </Box>
     </>
@@ -160,11 +195,15 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
 interface CategoryChipProps {
   category: RegistrationTypeElement;
   onClickChip?: (type: PublicationInstanceType) => void;
+  higlightNviCategories?: boolean;
 }
 
-export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
+export const CategoryChip = ({ category, onClickChip, higlightNviCategories }: CategoryChipProps) => {
   const { t } = useTranslation();
 
+  const isHighlightedNviCategory = (value: PublicationInstanceType): boolean => {
+    return nviApplicableTypes.includes(value) && !!higlightNviCategories;
+  };
   return (
     <Tooltip title={category.disableText}>
       <span>
@@ -179,7 +218,7 @@ export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
               />
             ) : undefined
           }
-          variant={category.selected ? 'filled' : 'outlined'}
+          variant={category.selected || isHighlightedNviCategory(category.value) ? 'filled' : 'outlined'}
           color="primary"
           onClick={onClickChip ? () => onClickChip(category.value) : undefined}
           label={category.text}
