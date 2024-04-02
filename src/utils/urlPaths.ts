@@ -21,6 +21,7 @@ export enum UrlPathTemplate {
   EditorOrganizationOverview = '/editor/overview/organization',
   EditorOverview = '/editor/overview',
   EditorPublishStrategy = '/editor/settings/publish-strategy',
+  EditorPublishStrategyOverview = '/editor/overview/publish-strategy',
   EditorSettings = '/editor/settings',
   EditorVocabulary = '/editor/settings/vocabulary',
   EditorVocabularyOverview = '/editor/overview/vocabulary',

@@ -24,8 +24,9 @@ import { EditorInstitution } from './EditorInstitution';
 import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
-import { VocabularySettings } from './VocabularySettings';
+import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { VocabularyOverview } from './VocabularyOverview';
+import { VocabularySettings } from './VocabularySettings';
 
 const EditorPage = () => {
   const { t } = useTranslation();
@@ -82,6 +83,12 @@ const EditorPage = () => {
               data-testid={dataTestId.editor.doiLinkButton}
               to={UrlPathTemplate.EditorDoi}>
               {t('common.doi_long')}
+            </LinkButton>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorPublishStrategyOverview}
+              data-testid={dataTestId.editor.publishStrategyOverviewLinkButton}
+              to={UrlPathTemplate.EditorPublishStrategyOverview}>
+              {t('editor.publish_strategy.publish_strategy')}
             </LinkButton>
 
             <LinkButton
@@ -167,6 +174,12 @@ const EditorPage = () => {
             path={UrlPathTemplate.EditorPublishStrategy}
             component={PublishStrategySettings}
             isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorPublishStrategyOverview}
+            component={PublishingStrategyOverview}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact
