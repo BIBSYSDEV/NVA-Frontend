@@ -52,13 +52,19 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
   const closeDialog = () => {
     onClose();
     setSearchId('');
-    setSelectedId(unitFromParams);
   };
 
   const allSubUnits = getSortedSubUnits(organization.hasPart);
 
   return (
-    <Dialog open={open} onClose={closeDialog} maxWidth="lg" transitionDuration={0}>
+    <Dialog
+      open={open}
+      onClose={() => {
+        closeDialog();
+        setSelectedId(unitFromParams);
+      }}
+      maxWidth="lg"
+      transitionDuration={0}>
       <DialogTitle>{t('common.select_unit')}</DialogTitle>
       <DialogContent>
         <Typography sx={{ mb: '2rem' }}>
@@ -102,7 +108,13 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={closeDialog}>{t('common.cancel')}</Button>
+        <Button
+          onClick={() => {
+            closeDialog();
+            setSelectedId(unitFromParams);
+          }}>
+          {t('common.cancel')}
+        </Button>
         <Button
           variant="contained"
           disabled={!selectedId}
@@ -111,6 +123,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
             params.set(ResultParam.Unit, selectedId);
             history.push({ search: params.toString() });
             closeDialog();
+            setSelectedId(selectedId);
           }}>
           {t('common.select')}
         </Button>
