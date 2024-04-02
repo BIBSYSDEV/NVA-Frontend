@@ -86,7 +86,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                   setFieldValue(field.name, date ?? '');
                 }}
                 value={field.value ? new Date(field.value) : null}
-                maxDate={values.endDate ? new Date(values.endDate) : null}
+                maxDate={values.endDate ? new Date(values.endDate) : undefined}
                 format="dd.MM.yyyy"
                 slotProps={{
                   textField: {
@@ -112,7 +112,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                   setFieldValue(field.name, date);
                 }}
                 value={field.value ? new Date(field.value) : null}
-                minDate={values.startDate ? new Date(values.startDate) : null}
+                minDate={values.startDate ? new Date(values.startDate) : undefined}
                 format="dd.MM.yyyy"
                 slotProps={{
                   textField: {

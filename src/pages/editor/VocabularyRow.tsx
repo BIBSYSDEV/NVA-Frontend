@@ -3,14 +3,13 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
 import { dataTestId as dataTestIds } from '../../utils/dataTestIds';
-import { getTranslatedVocabularyName } from './VocabularySettings';
+import { getTranslatedVocabularyName } from './VocabularyOverview';
 
 const toggleButtonSx: SxProps = { width: 'fit-content', px: '1rem' };
 
 interface VocabularyRowProps {
   vocabulary: CustomerVocabulary;
   updateVocabularies: (newVocabulary: CustomerVocabulary) => Promise<void>;
-  isLoadingCustomer: boolean;
   dataTestId: string;
   disabled: boolean;
 }

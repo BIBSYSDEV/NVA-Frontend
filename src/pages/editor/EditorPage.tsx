@@ -21,8 +21,11 @@ import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
+import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublishingStrategyOverview } from './PublishingStrategyOverview';
+import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 
 const EditorPage = () => {
@@ -82,6 +85,20 @@ const EditorPage = () => {
               {t('common.doi_long')}
             </LinkButton>
             <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorPublishStrategyOverview}
+              data-testid={dataTestId.editor.publishStrategyOverviewLinkButton}
+              to={UrlPathTemplate.EditorPublishStrategyOverview}>
+              {t('editor.publish_strategy.publish_strategy')}
+            </LinkButton>
+
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorVocabularyOverview}
+              data-testid={dataTestId.editor.vocabularyOverviewLinkButton}
+              to={UrlPathTemplate.EditorVocabularyOverview}>
+              {t('editor.vocabulary')}
+            </LinkButton>
+
+            <LinkButton
               isSelected={currentPath === UrlPathTemplate.EditorCategoriesOverview}
               data-testid={dataTestId.editor.categoriesLinkButton}
               to={UrlPathTemplate.EditorCategoriesOverview}>
@@ -111,22 +128,28 @@ const EditorPage = () => {
                 {t('editor.curators.areas_of_responsibility')}
               </LinkButton>
               <LinkButton
-                isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
-                data-testid={dataTestId.editor.vocabularyLinkButton}
-                to={UrlPathTemplate.EditorVocabulary}>
-                {t('editor.vocabulary')}
-              </LinkButton>
-              <LinkButton
                 isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
                 data-testid={dataTestId.editor.publishStrategyLinkButton}
                 to={UrlPathTemplate.EditorPublishStrategy}>
                 {t('editor.publish_strategy.publish_strategy')}
               </LinkButton>
               <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+                data-testid={dataTestId.editor.vocabularyLinkButton}
+                to={UrlPathTemplate.EditorVocabulary}>
+                {t('editor.vocabulary')}
+              </LinkButton>
+              <LinkButton
                 isSelected={currentPath === UrlPathTemplate.EditorCategories}
                 data-testid={dataTestId.editor.categoriesLinkButton}
                 to={UrlPathTemplate.EditorCategories}>
                 {t('editor.categories_with_files')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorInstitutionSupport}
+                data-testid={dataTestId.editor.supportLinkButton}
+                to={UrlPathTemplate.EditorInstitutionSupport}>
+                {t('editor.institution.change_institution_support')}
               </LinkButton>
             </NavigationList>
           </NavigationListAccordion>
@@ -142,9 +165,21 @@ const EditorPage = () => {
           />
           <PrivateRoute
             exact
+            path={UrlPathTemplate.EditorVocabularyOverview}
+            component={VocabularyOverview}
+            isAuthorized={hasCustomer}
+          />
+          <PrivateRoute
+            exact
             path={UrlPathTemplate.EditorPublishStrategy}
             component={PublishStrategySettings}
             isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorPublishStrategyOverview}
+            component={PublishingStrategyOverview}
+            isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact
@@ -176,6 +211,11 @@ const EditorPage = () => {
             path={UrlPathTemplate.EditorOrganizationOverview}
             component={OrganizationOverview}
             isAuthorized={hasCustomer}
+          />
+          <PrivateRoute
+            path={UrlPathTemplate.EditorInstitutionSupport}
+            component={InstitutionSupport}
+            isAuthorized={isEditor}
           />
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>
