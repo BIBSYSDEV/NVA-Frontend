@@ -123,7 +123,6 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
             params.set(ResultParam.Unit, selectedId);
             history.push({ search: params.toString() });
             closeDialog();
-            setSelectedId(selectedId);
           }}>
           {t('common.select')}
         </Button>
