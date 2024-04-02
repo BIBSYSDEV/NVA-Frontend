@@ -110,6 +110,7 @@ export const CategorySelector = ({
               onClick={() => {
                 setHighlightNviCategories(!higlightNviCategories);
               }}
+              data-testid={dataTestId.registrationWizard.resourceType.resourceTypeNviHighLightChipButton}
               variant={higlightNviCategories ? 'filled' : 'outlined'}
               label={t('registration.resource_type.nvi.can_give_publication_points')}
             />
