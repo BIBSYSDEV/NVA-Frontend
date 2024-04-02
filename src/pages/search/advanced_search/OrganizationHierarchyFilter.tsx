@@ -172,14 +172,13 @@ const OrganizationAccordion = ({
     <Accordion
       data-testid={dataTestId.editor.organizationAccordion(organization.id)}
       elevation={2}
-      onClick={(event) => {
-        event.stopPropagation();
-        setSelectedId(organization.id);
-      }}
       disableGutters
       sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: { xs: undefined, md: `${level}rem` } }}
       expanded={expanded}
-      onChange={() => setExpandedState(!expandedState)}>
+      onChange={() => {
+        setExpandedState(!expandedState);
+        setSelectedId(organization.id);
+      }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
         <Box
           sx={{
