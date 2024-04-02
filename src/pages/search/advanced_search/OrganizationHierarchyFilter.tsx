@@ -173,7 +173,10 @@ const OrganizationAccordion = ({
       data-testid={dataTestId.editor.organizationAccordion(organization.id)}
       elevation={2}
       disableGutters
-      sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: { xs: undefined, md: `${level}rem` } }}
+      sx={{
+        bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light',
+        ml: { xs: undefined, md: level > 0 ? '1rem' : 0 },
+      }}
       expanded={expanded}
       onChange={() => {
         setExpandedState(!expandedState);
