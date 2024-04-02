@@ -88,7 +88,7 @@ export const Header = () => {
   return (
     <AppBar position="sticky" elevation={0} sx={{ color: 'white' }}>
       <Box
-        aria-label="Main Navigation"
+        aria-label={t('common.main')}
         component="nav"
         sx={{
           display: 'grid',
