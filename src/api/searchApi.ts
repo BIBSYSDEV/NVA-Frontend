@@ -397,7 +397,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.unit) {
     searchParams.set(ResultParam.Unit, params.unit);
-    searchParams.delete(ResultParam.TopLevelOrganization);
   }
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');

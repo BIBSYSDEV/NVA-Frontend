@@ -85,8 +85,7 @@ export const AdvancedSearchPage = () => {
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
     excludeSubunits,
-    topLevelOrganization: topLevelOrganizationId,
-    unit: unitId,
+    unit: unitId ?? topLevelOrganizationId,
   };
 
   const resultSearchQuery = useQuery({
