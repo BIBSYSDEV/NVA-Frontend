@@ -36,7 +36,7 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
       <DialogTitle>{t('search.select_one_or_more_categories')}</DialogTitle>
       <DialogContent>
         <CategorySelector
-          enableNviHighLightning={true}
+          enableNviHighlightning={true}
           selectedCategories={selectedCategories}
           onCategoryClick={onSelectType}
         />

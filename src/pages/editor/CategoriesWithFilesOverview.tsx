@@ -18,7 +18,7 @@ export const CategoriesWithFilesOverview = () => {
       <Typography variant="h2" gutterBottom>
         {t('editor.categories_with_files')}
       </Typography>
-      <CategorySelector enableNviHighLightning={false} selectedCategories={selectedCategories} />
+      <CategorySelector enableNviHighlightning={false} selectedCategories={selectedCategories} />
     </>
   );
 };

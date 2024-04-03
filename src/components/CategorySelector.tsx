@@ -56,19 +56,19 @@ interface CategorySelectorProps {
   selectedCategories: PublicationInstanceType[];
   onCategoryClick?: (category: PublicationInstanceType) => void;
   disabledCategories?: DisabledCategory[];
-  enableNviHighLightning: boolean;
+  enableNviHighlightning: boolean;
 }
 
 export const CategorySelector = ({
   disabledCategories,
   onCategoryClick,
   selectedCategories,
-  enableNviHighLightning,
+  enableNviHighlightning,
 }: CategorySelectorProps) => {
   const { t } = useTranslation();
 
   const [searchValue, setSearchValue] = useState('');
-  const [higlightNviCategories, setHighlightNviCategories] = useState(false);
+  const [highlightNviCategories, setHighlightNviCategories] = useState(false);
 
   const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
     const lowerCaseSearchValue = searchValue.toLowerCase();
@@ -96,25 +96,21 @@ export const CategorySelector = ({
           InputProps={{ endAdornment: <SearchIcon /> }}
           onChange={(event) => setSearchValue(event.target.value)}
         />
-        {enableNviHighLightning ? (
-          <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <Chip
-              icon={
-                <FilterVintageIcon
-                  color="primary"
-                  titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-                  fontSize="small"
-                />
-              }
-              color="primary"
-              onClick={() => {
-                setHighlightNviCategories(!higlightNviCategories);
-              }}
-              data-testid={dataTestId.registrationWizard.resourceType.resourceTypeNviHighLightChipButton}
-              variant={higlightNviCategories ? 'filled' : 'outlined'}
-              label={t('registration.resource_type.nvi.can_give_publication_points')}
-            />
-          </Box>
+        {enableNviHighlightning ? (
+          <Chip
+            icon={
+              <FilterVintageIcon
+                color="primary"
+                titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+                fontSize="small"
+              />
+            }
+            color="primary"
+            onClick={() => setHighlightNviCategories(!highlightNviCategories)}
+            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeNviHighLightChipButton}
+            variant={highlightNviCategories ? 'filled' : 'outlined'}
+            label={t('registration.resource_type.nvi.can_give_publication_points')}
+          />
         ) : (
           <Box
             sx={{
@@ -142,7 +138,7 @@ export const CategorySelector = ({
           <RegistrationTypesRow
             key={mainType}
             mainType={mainType}
-            higlightNviCategories={higlightNviCategories}
+            higlightNviCategories={highlightNviCategories}
             registrationTypes={filterRegistrationTypes(
               registrationTypes.map((registrationType) => ({
                 value: registrationType,
