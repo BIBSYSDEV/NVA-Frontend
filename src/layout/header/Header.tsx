@@ -154,10 +154,10 @@ export const Header = () => {
               {organization?.acronym && hasCustomer && (
                 <MenuButton
                   startIcon={<AccountBalanceIcon />}
-                  isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.Institution)}
                   color="inherit"
                   data-testid={dataTestId.header.editorLink}
-                  to={UrlPathTemplate.EditorInstitution}>
+                  to={UrlPathTemplate.InstitutionOverviewPage}>
                   {organization.acronym}
                 </MenuButton>
               )}
