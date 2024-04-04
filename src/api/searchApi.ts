@@ -53,7 +53,7 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
   }
 
   if (params.excludeSubUnits) {
-    searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
+    // searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
   }
 
   if (params.organizationId) {
@@ -73,7 +73,7 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
   }
 
   if (params.type) {
-    searchParams.set(TicketSearchParam.Type, params.type);
+    // searchParams.set(TicketSearchParam.Type, params.type);
   }
 
   if (params.viewedByNot) {

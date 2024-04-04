@@ -111,8 +111,15 @@ export const fetchOrganization = async (id: string) => {
   const fetchOrganizationResponse = await apiRequest2<Organization>({
     url: id,
   });
+  setIdentifierFromId(fetchOrganizationResponse.data);
   return fetchOrganizationResponse.data;
 };
+
+function setIdentifierFromId(org: Organization) {
+  org.identifier = getIdentifierFromId(org.id);
+  org.hasPart?.map((subOrg) => setIdentifierFromId(subOrg));
+  org.partOf?.map((subOrg) => setIdentifierFromId(subOrg));
+}
 
 export const fetchOrganizations = async (ids: string[]) => {
   const areaPromises = ids.map(async (id) => {
