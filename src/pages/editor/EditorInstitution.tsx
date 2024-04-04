@@ -114,7 +114,7 @@ export const EditorInstitution = () => {
           <Box sx={{ display: 'grid', gridTemplateColumns: 'auto auto', maxWidth: '80%' }}>
             <div>
               <Typography variant="h3" gutterBottom>
-                Institusjonens administrator(er)
+                {t('my_page.roles.institution_admin_plural')}
               </Typography>
               {!!institutionAdmins &&
                 institutionAdmins.map((admin) => {
@@ -124,7 +124,7 @@ export const EditorInstitution = () => {
 
             <div>
               <Typography variant="h3" gutterBottom>
-                Institusjonens redaktør(er)
+                {t('my_page.roles.institution_editor_plural')}
               </Typography>
               {!!institutionEditors &&
                 institutionEditors.map((editor) => {
