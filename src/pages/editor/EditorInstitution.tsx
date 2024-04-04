@@ -1,18 +1,23 @@
-import { CircularProgress, Link, Typography } from '@mui/material';
+import { Box, CircularProgress, Link, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getById } from '../../api/commonApi';
+import { fetchUsers } from '../../api/roleApi';
+import { ProfilePicture } from '../../components/ProfilePicture';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { Organization } from '../../types/organization.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 export const EditorInstitution = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const customerId = user?.customerId ?? '';
   const [customer, isLoadingCustomer] = useFetch<CustomerInstitution>({
     url: user?.customerId ? user.customerId : '',
     errorMessage: t('feedback.error.get_customer'),
@@ -32,6 +37,21 @@ export const EditorInstitution = () => {
     cacheTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
+
+  const institutionUsersQuery = useQuery({
+    queryKey: ['curators', customerId],
+    enabled: !!customerId,
+    queryFn: () => (customerId ? fetchUsers(customerId, [RoleName.Editor, RoleName.InstitutionAdmin]) : undefined),
+    meta: { errorMessage: t('feedback.error.get_users_for_institution') },
+  });
+
+  const institutionAdmins = institutionUsersQuery.data?.filter((user) =>
+    user.roles.some((role) => role.rolename === RoleName.InstitutionAdmin)
+  );
+
+  const institutionEditors = institutionUsersQuery.data?.filter((user) =>
+    user.roles.some((role) => role.rolename === RoleName.Editor)
+  );
 
   return (
     <>
@@ -91,6 +111,28 @@ export const EditorInstitution = () => {
             {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
           </Typography>
 
+          <Box sx={{ display: 'grid', gridTemplateColumns: 'auto auto', maxWidth: '80%' }}>
+            <div>
+              <Typography variant="h3" gutterBottom>
+                Institusjonens administrator(er)
+              </Typography>
+              {!!institutionAdmins &&
+                institutionAdmins.map((admin) => {
+                  return <InstitutionUserItem key={admin.cristinId} user={admin} />;
+                })}
+            </div>
+
+            <div>
+              <Typography variant="h3" gutterBottom>
+                Institusjonens redaktør(er)
+              </Typography>
+              {!!institutionEditors &&
+                institutionEditors.map((editor) => {
+                  return <InstitutionUserItem key={editor.cristinId} user={editor} />;
+                })}
+            </div>
+          </Box>
+
           <Typography sx={{ pt: '1rem' }}>
             <Trans t={t} i18nKey="editor.institution.institution_helper_text">
               <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
@@ -99,5 +141,20 @@ export const EditorInstitution = () => {
         </>
       )}
     </>
+  );
+};
+
+interface InstitutionUserItemProps {
+  user: InstitutionUser;
+}
+
+const InstitutionUserItem = ({ user }: InstitutionUserItemProps) => {
+  const fullName = `${user.givenName} ${user.familyName}`;
+
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
+      <ProfilePicture sx={{ height: '1.5rem' }} personId={user.cristinId ?? ''} fullName={fullName} />
+      <Link href={`${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(user.cristinId ?? '')}`}>{fullName}</Link>
+    </Box>
   );
 };
