@@ -13,6 +13,7 @@ import { InstitutionUser, RoleName } from '../../types/user.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getFullName } from '../../utils/user-helpers';
 
 export const EditorInstitution = () => {
   const { t } = useTranslation();
@@ -118,12 +119,14 @@ export const EditorInstitution = () => {
               {institutionAdmins && (
                 <div>
                   <Typography variant="h3" gutterBottom>
-                    {t('editor.institution.institution_admin_plural')}
+                    {institutionAdmins.length > 0
+                      ? t('editor.institution.institution_admin_plural')
+                      : t('editor.institution.institution_admin_single')}
                   </Typography>
                   {institutionAdmins.length > 0 ? (
                     institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
                   ) : (
-                    <Typography>{t('editor.institution.institution_has_no_administrators')}</Typography>
+                    <Typography>{t('editor.institution.institution_has_no_administrator')}</Typography>
                   )}
                 </div>
               )}
@@ -131,12 +134,14 @@ export const EditorInstitution = () => {
               {institutionEditors && (
                 <div>
                   <Typography variant="h3" gutterBottom>
-                    {t('editor.institution.institution_editor_plural')}
+                    {institutionEditors.length > 0
+                      ? t('editor.institution.institution_editor_plural')
+                      : t('editor.institution.institution_editor_single')}
                   </Typography>
                   {institutionEditors.length > 0 ? (
                     institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
                   ) : (
-                    <Typography>{t('editor.institution.institution_has_no_editors')}</Typography>
+                    <Typography>{t('editor.institution.institution_has_no_editor')}</Typography>
                   )}
                 </div>
               )}
@@ -159,7 +164,7 @@ interface InstitutionUserItemProps {
 }
 
 const InstitutionUserLink = ({ user }: InstitutionUserItemProps) => {
-  const fullName = `${user.givenName} ${user.familyName}`;
+  const fullName = getFullName(user.givenName, user.familyName);
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
