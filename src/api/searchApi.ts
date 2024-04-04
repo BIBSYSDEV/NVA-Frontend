@@ -414,7 +414,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
 
 export const fetchRegistrationsExport = async (searchParams: URLSearchParams) => {
   searchParams.set(ResultParam.From, '0');
-  searchParams.set(ResultParam.Results, '1000');
+  searchParams.set(ResultParam.Results, '400');
   const url = `${SearchApiPath.Registrations}?${searchParams.toString()}`;
 
   const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
