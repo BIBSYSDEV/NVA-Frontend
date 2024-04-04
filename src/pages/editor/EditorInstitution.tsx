@@ -112,25 +112,31 @@ export const EditorInstitution = () => {
           </Typography>
 
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <Typography variant="h3" gutterBottom>
-                {t('my_page.roles.institution_admin_plural')}
-              </Typography>
-              {!!institutionAdmins &&
-                institutionAdmins.map((admin) => {
-                  return <InstitutionUserItem key={admin.cristinId} user={admin} />;
-                })}
-            </div>
+            {institutionAdmins && (
+              <div>
+                <Typography variant="h3" gutterBottom>
+                  {t('editor.institution.institution_admin_plural')}
+                </Typography>
+                {institutionAdmins.length > 0 ? (
+                  institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
+                ) : (
+                  <Typography>{t('editor.institution.institution_has_no_administrators')}</Typography>
+                )}
+              </div>
+            )}
 
-            <div>
-              <Typography variant="h3" gutterBottom>
-                {t('my_page.roles.institution_editor_plural')}
-              </Typography>
-              {!!institutionEditors &&
-                institutionEditors.map((editor) => {
-                  return <InstitutionUserItem key={editor.cristinId} user={editor} />;
-                })}
-            </div>
+            {institutionEditors && (
+              <div>
+                <Typography variant="h3" gutterBottom>
+                  {t('editor.institution.institution_editor_plural')}
+                </Typography>
+                {institutionEditors.length > 0 ? (
+                  institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
+                ) : (
+                  <Typography>{t('editor.institution.institution_has_no_editors')}</Typography>
+                )}
+              </div>
+            )}
           </Box>
 
           <Typography sx={{ pt: '1rem' }}>
@@ -148,7 +154,7 @@ interface InstitutionUserItemProps {
   user: InstitutionUser;
 }
 
-const InstitutionUserItem = ({ user }: InstitutionUserItemProps) => {
+const InstitutionUserLink = ({ user }: InstitutionUserItemProps) => {
   const fullName = `${user.givenName} ${user.familyName}`;
 
   return (
