@@ -119,9 +119,8 @@ export const EditorInstitution = () => {
               {institutionAdmins && (
                 <div>
                   <Typography variant="h3" gutterBottom>
-                    {institutionAdmins.length > 0
-                      ? t('editor.institution.institution_admin_plural')
-                      : t('editor.institution.institution_admin_single')}
+                    {institutionAdmins.length > 0 &&
+                      t('editor.institution.institution_admin', { count: institutionAdmins.length })}
                   </Typography>
                   {institutionAdmins.length > 0 ? (
                     institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
@@ -134,9 +133,8 @@ export const EditorInstitution = () => {
               {institutionEditors && (
                 <div>
                   <Typography variant="h3" gutterBottom>
-                    {institutionEditors.length > 0
-                      ? t('editor.institution.institution_editor_plural')
-                      : t('editor.institution.institution_editor_single')}
+                    {institutionEditors.length > 0 &&
+                      t('editor.institution.institution_editor', { count: institutionEditors.length })}
                   </Typography>
                   {institutionEditors.length > 0 ? (
                     institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)

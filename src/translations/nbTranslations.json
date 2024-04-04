@@ -373,11 +373,11 @@
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
       "change_institution_support": "Endre brukerstøttepunkt",
-      "institution_admin_plural": "Institusjonens administratorer",
-      "institution_admin_single": "Institusjonens administrator",
+      "institution_admin_one": "Institusjonens administrator",
+      "institution_admin_other": "Institusjonens administratorer",
       "institution_code": "Kode",
-      "institution_editor_plural": "Institusjonens redaktører",
-      "institution_editor_single": "Institusjonens redaktør",
+      "institution_editor_one": "Institusjonens redaktør",
+      "institution_editor_other": "Institusjonens redaktører",
       "institution_has_no_administrator": "Institusjonen har ingen administrator",
       "institution_has_no_editor": "Institusjonen har ingen redaktør",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
@@ -419,6 +419,7 @@
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
     "subunits_count_one": "{{count}} underenhet",
     "subunits_count_other": "{{count}} underenheter",
+
     "vocabulary": "Vokabular",
     "vocabulary_controlled": "Kontrollerte emneord",
     "vocabulary_description": "Kontrollerte emneord (vokabular) som kan benyttes ved registrering av nytt resultat.",
