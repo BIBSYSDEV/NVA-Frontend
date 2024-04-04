@@ -111,7 +111,7 @@ export const EditorInstitution = () => {
             {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
           </Typography>
 
-          <Box sx={{ display: 'grid', gridTemplateColumns: 'auto auto', maxWidth: '80%' }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
               <Typography variant="h3" gutterBottom>
                 {t('my_page.roles.institution_admin_plural')}
