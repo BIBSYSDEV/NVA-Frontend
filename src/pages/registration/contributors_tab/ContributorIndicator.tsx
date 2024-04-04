@@ -1,5 +1,6 @@
 import { styled, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../translations/i18n';
 import { Contributor } from '../../../types/contributor.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getInitials } from '../../../utils/general-helpers';
@@ -14,6 +15,7 @@ export const StyledBaseContributorIndicator = styled('div')({
 });
 StyledBaseContributorIndicator.defaultProps = {
   role: 'img',
+  'aria-label': i18n.t('common.initials'),
 };
 
 export const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({

@@ -39,7 +39,7 @@ export const EditorInstitution = () => {
   });
 
   const institutionUsersQuery = useQuery({
-    queryKey: ['curators', customerId],
+    queryKey: ['institutionUsers', customerId],
     enabled: !!customerId,
     queryFn: () => (customerId ? fetchUsers(customerId, [RoleName.Editor, RoleName.InstitutionAdmin]) : undefined),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
