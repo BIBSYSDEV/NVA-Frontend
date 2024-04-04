@@ -17,12 +17,12 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 export const EditorInstitution = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const customerId = user?.customerId ?? '';
   const [customer, isLoadingCustomer] = useFetch<CustomerInstitution>({
     url: user?.customerId ? user.customerId : '',
     errorMessage: t('feedback.error.get_customer'),
     withAuthentication: true,
   });
+  const customerId = customer?.id ?? '';
   const [institution, isLoadingInstitution] = useFetchResource<Organization>(
     user?.topOrgCristinId ? user.topOrgCristinId : '',
     t('feedback.error.get_institution')
@@ -45,11 +45,13 @@ export const EditorInstitution = () => {
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
-  const institutionAdmins = institutionUsersQuery.data?.filter((user) =>
+  const institutionUsers = institutionUsersQuery.data ?? [];
+
+  const institutionAdmins = institutionUsers.filter((user) =>
     user.roles.some((role) => role.rolename === RoleName.InstitutionAdmin)
   );
 
-  const institutionEditors = institutionUsersQuery.data?.filter((user) =>
+  const institutionEditors = institutionUsers.filter((user) =>
     user.roles.some((role) => role.rolename === RoleName.Editor)
   );
 
@@ -111,33 +113,35 @@ export const EditorInstitution = () => {
             {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
           </Typography>
 
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-            {institutionAdmins && (
-              <div>
-                <Typography variant="h3" gutterBottom>
-                  {t('editor.institution.institution_admin_plural')}
-                </Typography>
-                {institutionAdmins.length > 0 ? (
-                  institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
-                ) : (
-                  <Typography>{t('editor.institution.institution_has_no_administrators')}</Typography>
-                )}
-              </div>
-            )}
+          {institutionUsers && (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
+              {institutionAdmins && (
+                <div>
+                  <Typography variant="h3" gutterBottom>
+                    {t('editor.institution.institution_admin_plural')}
+                  </Typography>
+                  {institutionAdmins.length > 0 ? (
+                    institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
+                  ) : (
+                    <Typography>{t('editor.institution.institution_has_no_administrators')}</Typography>
+                  )}
+                </div>
+              )}
 
-            {institutionEditors && (
-              <div>
-                <Typography variant="h3" gutterBottom>
-                  {t('editor.institution.institution_editor_plural')}
-                </Typography>
-                {institutionEditors.length > 0 ? (
-                  institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
-                ) : (
-                  <Typography>{t('editor.institution.institution_has_no_editors')}</Typography>
-                )}
-              </div>
-            )}
-          </Box>
+              {institutionEditors && (
+                <div>
+                  <Typography variant="h3" gutterBottom>
+                    {t('editor.institution.institution_editor_plural')}
+                  </Typography>
+                  {institutionEditors.length > 0 ? (
+                    institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
+                  ) : (
+                    <Typography>{t('editor.institution.institution_has_no_editors')}</Typography>
+                  )}
+                </div>
+              )}
+            </Box>
+          )}
 
           <Typography sx={{ pt: '1rem' }}>
             <Trans t={t} i18nKey="editor.institution.institution_helper_text">
