@@ -148,7 +148,7 @@ describe.skip('Menu', () => {
   });
 
   it('Unauthorized user should see Forbidden page when visiting editor page', () => {
-    cy.visit(UrlPathTemplate.Editor);
+    cy.visit(UrlPathTemplate.Institution);
     cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
     cy.get('[data-testid=forbidden]').should('not.exist');

@@ -42,7 +42,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
 
       <FieldArray name={DescriptionFieldNames.Fundings}>
         {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: '1rem', md: '0.5rem' } }}>
             {currentFundings.map((funding, index) => {
               const baseFieldName = `${name}[${index}]`;
               const hasSelectedSource = !!funding.source;
@@ -61,7 +61,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                   sx={{
                     display: 'grid',
                     gridTemplateColumns: { xs: '1fr', md: '4fr 6fr 2fr 2fr 1fr' },
-                    gap: '1rem',
+                    gap: '0.5rem 1rem',
                     alignItems: 'center',
                   }}>
                   <FundingSourceField fieldName={`${baseFieldName}.${SpecificFundingFieldNames.Source}`} />
@@ -188,7 +188,6 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                     </>
                   )}
                   <IconButton
-                    sx={{ gridColumn: '5' }}
                     onClick={() => remove(index)}
                     data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}>
