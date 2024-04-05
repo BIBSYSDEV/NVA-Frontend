@@ -179,12 +179,14 @@
     "funding": "Finansiering",
     "help": "Hjelp",
     "id": "ID",
+    "initials": "",
     "institution": "Institusjon",
     "institutions": "Institusjonar",
     "justification": "Grunngjeving",
     "language": "Språk",
     "last_name": "Etternamn",
     "link": "Lenkje",
+    "main": "Hovud",
     "menu": "Meny",
     "message": "Melding",
     "move_down": "Flytt ned",
@@ -370,7 +372,14 @@
     "hrcs_activity": "Health Research Classification System — Activity",
     "hrcs_categories": "Health Research Classification System Health Research Classification System — Categories Categories",
     "institution": {
+      "change_institution_support": "Endre brukarstøttepunkt",
+      "institution_admin_one": "",
+      "institution_admin_other": "",
       "institution_code": "Institusjonen sin kode",
+      "institution_editor_one": "",
+      "institution_editor_other": "",
+      "institution_has_no_administrator": "",
+      "institution_has_no_editor": "",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringar.",
       "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil bruke Norsk vitskapsindeks",
       "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitskapsindeks",
@@ -378,6 +387,8 @@
       "institution_name_norwegian": "Institusjonen sitt norske namn",
       "institution_profile": "Institusjonsprofil",
       "institution_short_name": "Institusjonen sitt kortnamn",
+      "institution_support": "Insitusjonen si brukarstøtte",
+      "institution_support_description": "Institusjonen si brukarstøtte er vist under kuratorstøtte.",
       "not_rbo_funded": "Institusjonen får ikkje finansiering via Resultatbasert omfordeling (RBO)",
       "organizing": "Organisering",
       "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
@@ -393,6 +404,11 @@
       "registrator_publishes_without_curator_description": "Institusjonen bestemmer kven som er Registrator."
     },
     "retention_strategy": {
+      "creator_can_override_rrs_text": "<0>Institusjonen har opna opp for at registrator sjølv kan velje å ikkje følgje institusjonen sin rettspolitikk (RRS). Med å følgje rettspolitikk (RRS) blir vitskaplege artiklar ope tilgjengelege straks utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></0> <1>I NVA fjernar registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å fjerne avkryssinga av RRS så blir lisensen som er sett på fila fjerna og lisensen må settast på nytt.</1>",
+      "curator_can_override_rrs_text": "<0>Publiseringskurator har tilgang til å setje at filer ikkje følgjer institusjonen sin rettspolitikk (RRS).</0> <0>Om registrator ikkje ynskjer å følgje institusjonen sin rettspolitikk (RRS), sjå på vilkår for ikkje å følgje RRS på informasjonssida om institusjonen sin rettspolitikk.</0> <1>Med å følgje rettspolitikk (RRS) blir vitskaplege artiklar ope tilgjengelege straks utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S</0>.</1>",
+      "customer_has_no_rrs": "<0>Institusjonen har ikkje oppgitt ein rettspolitikk (RRS) i NVA.</0> <0>Utan institusjonell rettspolitikk er det opp til registrator å setje korrekt lisens på akseptert versjon av filer i registrering av vitskaplege artiklar.</0> <1>Det er opp til registrator om eventuelt å merke at publikasjonen skal følgje ein RRS. Ved å følgje rettspolitikk (RRS) blir vitskaplege artiklar ope tilgjengelege straks utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></1> <0>Om publikasjonen er finansiert av ein aktør som pålegg å følgje RRS (ref. Plan S), må RRS settast. I NVA set registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å avkrysse for RRS så setjast lisens på fila til CC-BY.</0>",
+      "customer_has_rrs_text": "<0>Institusjonen har oppgitt ein rettspolitikk (RRS) i NVA.</0> <0>Lisens CC-BY blir sett når du vel akseptert versjon på fila i registreringa av ein vitskapleg artikkel i NVA.</0>",
+      "possible_not_to_follow_rrs": "Mogleg å ikkje følgje institusjonen sin rettspolitikk",
       "rights_retention_strategy": "Rights Retention Strategy (RRS)",
       "rrs": "Rettspolitikk",
       "rrs_info_page": "Institusjonane sin informasjonsside om rettspolitikk",
@@ -404,6 +420,8 @@
     "subunits_count_one": "{{count}} undereining",
     "subunits_count_other": "{{count}} undereiningar",
     "vocabulary": "Vokabular",
+    "vocabulary_controlled": "Kontrollerte emneord",
+    "vocabulary_description": "Kontrollerte emneord (vokabular) som kan bli brukt ved registrering av nytt resultat.",
     "vocabulary_status": {
       "Allowed": "Tillate",
       "Default": "Standard",
@@ -617,7 +635,7 @@
       "files_published_unknown": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
-      "get_curator_support": "",
+      "get_curator_support": "Få hjelp av kurator",
       "mark_as_completed": "Sett til ferdig",
       "no_messages": "Du har ingen meldingar",
       "ticket_types": {
@@ -659,7 +677,7 @@
         "upload_profile_photo": "Last opp profilbilete",
         "upload_profile_photo_info": "Maksimum storleik: 1 MB. Støtta filtypar: .jpg eller .jpeg"
       },
-      "list_contains_all_registration_you_have_created": "",
+      "list_contains_all_registration_you_have_created": "Lista viser alle prosjekt du har registrert",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskingsresultat",
       "orcid": {
