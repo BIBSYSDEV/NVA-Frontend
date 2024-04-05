@@ -21,11 +21,14 @@ import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
+import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
+import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 
-const EditorPage = () => {
+const InstitutionPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const hasCustomer = !!user?.customerId;
@@ -58,33 +61,47 @@ const EditorPage = () => {
               }}
             />
           }
-          accordionPath={UrlPathTemplate.EditorOverview}
-          defaultPath={UrlPathTemplate.EditorInstitution}>
+          accordionPath={UrlPathTemplate.InstitutionOverview}
+          defaultPath={UrlPathTemplate.InstitutionOverviewPage}>
           <NavigationList>
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorInstitution}
+              isSelected={currentPath === UrlPathTemplate.InstitutionOverviewPage}
               data-testid={dataTestId.editor.institutionsNameLinkButton}
-              to={UrlPathTemplate.EditorInstitution}>
+              to={UrlPathTemplate.InstitutionOverviewPage}>
               {t('editor.institution.institution_profile')}
             </LinkButton>
 
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorOrganizationOverview}
+              isSelected={currentPath === UrlPathTemplate.InstitutionOrganizationOverview}
               data-testid={dataTestId.editor.organizationOverviewLinkButton}
-              to={UrlPathTemplate.EditorOrganizationOverview}>
+              to={UrlPathTemplate.InstitutionOrganizationOverview}>
               {t('editor.organization_overview')}
             </LinkButton>
 
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorDoi}
+              isSelected={currentPath === UrlPathTemplate.InstitutionDoi}
               data-testid={dataTestId.editor.doiLinkButton}
-              to={UrlPathTemplate.EditorDoi}>
+              to={UrlPathTemplate.InstitutionDoi}>
               {t('common.doi_long')}
             </LinkButton>
             <LinkButton
-              isSelected={currentPath === UrlPathTemplate.EditorCategoriesOverview}
+              isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategyOverview}
+              data-testid={dataTestId.editor.publishStrategyOverviewLinkButton}
+              to={UrlPathTemplate.InstitutionPublishStrategyOverview}>
+              {t('editor.publish_strategy.publish_strategy')}
+            </LinkButton>
+
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionVocabularyOverview}
+              data-testid={dataTestId.editor.vocabularyOverviewLinkButton}
+              to={UrlPathTemplate.InstitutionVocabularyOverview}>
+              {t('editor.vocabulary')}
+            </LinkButton>
+
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionCategoriesOverview}
               data-testid={dataTestId.editor.categoriesLinkButton}
-              to={UrlPathTemplate.EditorCategoriesOverview}>
+              to={UrlPathTemplate.InstitutionCategoriesOverview}>
               {t('editor.categories_with_files')}
             </LinkButton>
           </NavigationList>
@@ -101,32 +118,38 @@ const EditorPage = () => {
                 }}
               />
             }
-            accordionPath={UrlPathTemplate.EditorSettings}
-            defaultPath={UrlPathTemplate.EditorCurators}>
+            accordionPath={UrlPathTemplate.InstitutionSettings}
+            defaultPath={UrlPathTemplate.InstitutionCurators}>
             <NavigationList>
               <LinkButton
-                isSelected={currentPath === UrlPathTemplate.EditorCurators}
+                isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
                 data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
-                to={UrlPathTemplate.EditorCurators}>
+                to={UrlPathTemplate.InstitutionCurators}>
                 {t('editor.curators.areas_of_responsibility')}
               </LinkButton>
               <LinkButton
-                isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
-                data-testid={dataTestId.editor.vocabularyLinkButton}
-                to={UrlPathTemplate.EditorVocabulary}>
-                {t('editor.vocabulary')}
-              </LinkButton>
-              <LinkButton
-                isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
+                isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategy}
                 data-testid={dataTestId.editor.publishStrategyLinkButton}
-                to={UrlPathTemplate.EditorPublishStrategy}>
+                to={UrlPathTemplate.InstitutionPublishStrategy}>
                 {t('editor.publish_strategy.publish_strategy')}
               </LinkButton>
               <LinkButton
-                isSelected={currentPath === UrlPathTemplate.EditorCategories}
+                isSelected={currentPath === UrlPathTemplate.InstitutionVocabulary}
+                data-testid={dataTestId.editor.vocabularyLinkButton}
+                to={UrlPathTemplate.InstitutionVocabulary}>
+                {t('editor.vocabulary')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.InstitutionCategories}
                 data-testid={dataTestId.editor.categoriesLinkButton}
-                to={UrlPathTemplate.EditorCategories}>
+                to={UrlPathTemplate.InstitutionCategories}>
                 {t('editor.categories_with_files')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.InstitutionSupport}
+                data-testid={dataTestId.editor.supportLinkButton}
+                to={UrlPathTemplate.InstitutionSupport}>
+                {t('editor.institution.change_institution_support')}
               </LinkButton>
             </NavigationList>
           </NavigationListAccordion>
@@ -136,46 +159,63 @@ const EditorPage = () => {
         <Switch>
           <PrivateRoute
             exact
-            path={UrlPathTemplate.EditorVocabulary}
+            path={UrlPathTemplate.InstitutionVocabulary}
             component={VocabularySettings}
             isAuthorized={isEditor}
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.EditorPublishStrategy}
+            path={UrlPathTemplate.InstitutionVocabularyOverview}
+            component={VocabularyOverview}
+            isAuthorized={hasCustomer}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.InstitutionPublishStrategy}
             component={PublishStrategySettings}
             isAuthorized={isEditor}
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.EditorInstitution}
+            path={UrlPathTemplate.InstitutionPublishStrategyOverview}
+            component={PublishingStrategyOverview}
+            isAuthorized={hasCustomer}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.InstitutionOverviewPage}
             component={EditorInstitution}
             isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.EditorCurators}
+            path={UrlPathTemplate.InstitutionCurators}
             component={EditorCurators}
             isAuthorized={isEditor}
           />
-          <PrivateRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} isAuthorized={hasCustomer} />
+          <PrivateRoute exact path={UrlPathTemplate.InstitutionDoi} component={EditorDoi} isAuthorized={hasCustomer} />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.EditorCategories}
+            path={UrlPathTemplate.InstitutionCategories}
             component={CategoriesWithFiles}
             isAuthorized={isEditor}
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.EditorCategoriesOverview}
+            path={UrlPathTemplate.InstitutionCategoriesOverview}
             component={CategoriesWithFilesOverview}
             isAuthorized={hasCustomer}
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.EditorOrganizationOverview}
+            path={UrlPathTemplate.InstitutionOrganizationOverview}
             component={OrganizationOverview}
             isAuthorized={hasCustomer}
+          />
+          <PrivateRoute
+            path={UrlPathTemplate.InstitutionSupport}
+            component={InstitutionSupport}
+            isAuthorized={isEditor}
           />
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>
@@ -184,4 +224,4 @@ const EditorPage = () => {
   );
 };
 
-export default EditorPage;
+export default InstitutionPage;

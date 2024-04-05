@@ -4,7 +4,7 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Badge, Box, Theme, styled, useMediaQuery } from '@mui/material';
+import { AppBar, Badge, Box, Theme, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,13 +24,6 @@ import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
-
-const StyledBadge = styled(Badge)({
-  '& .MuiBadge-badge': {
-    right: 20,
-    top: 20,
-  },
-});
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -95,6 +88,7 @@ export const Header = () => {
   return (
     <AppBar position="sticky" elevation={0} sx={{ color: 'white' }}>
       <Box
+        aria-label={t('common.main')}
         component="nav"
         sx={{
           display: 'grid',
@@ -160,10 +154,10 @@ export const Header = () => {
               {organization?.acronym && hasCustomer && (
                 <MenuButton
                   startIcon={<AccountBalanceIcon />}
-                  isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.Institution)}
                   color="inherit"
                   data-testid={dataTestId.header.editorLink}
-                  to={UrlPathTemplate.EditorInstitution}>
+                  to={UrlPathTemplate.InstitutionOverviewPage}>
                   {organization.acronym}
                 </MenuButton>
               )}
@@ -179,28 +173,32 @@ export const Header = () => {
                 </MenuButton>
               )}
               {(isTicketCurator || user?.isNviCurator) && (
-                <StyledBadge badgeContent={pendingTasksCount + unassignedTasksCount}>
-                  <MenuButton
-                    color="inherit"
-                    data-testid={dataTestId.header.tasksLink}
-                    isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
-                    to={UrlPathTemplate.Tasks}
-                    startIcon={<AssignmentIcon />}>
-                    {t('common.tasks')}
-                  </MenuButton>
-                </StyledBadge>
+                <MenuButton
+                  color="inherit"
+                  data-testid={dataTestId.header.tasksLink}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
+                  to={UrlPathTemplate.Tasks}
+                  startIcon={
+                    <Badge badgeContent={pendingTasksCount + unassignedTasksCount}>
+                      <AssignmentIcon />
+                    </Badge>
+                  }>
+                  {t('common.tasks')}
+                </MenuButton>
               )}
               {user && (
-                <StyledBadge badgeContent={dialogueNotificationsQuery.data?.totalHits}>
-                  <MenuButton
-                    color="inherit"
-                    data-testid={dataTestId.header.myPageLink}
-                    isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
-                    to={UrlPathTemplate.MyPage}
-                    startIcon={<FavoriteBorderIcon />}>
-                    {t('my_page.my_page')}
-                  </MenuButton>
-                </StyledBadge>
+                <MenuButton
+                  color="inherit"
+                  data-testid={dataTestId.header.myPageLink}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
+                  to={UrlPathTemplate.MyPage}
+                  startIcon={
+                    <Badge badgeContent={dialogueNotificationsQuery.data?.totalHits}>
+                      <FavoriteBorderIcon />
+                    </Badge>
+                  }>
+                  {t('my_page.my_page')}
+                </MenuButton>
               )}
             </>
           )}

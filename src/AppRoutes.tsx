@@ -10,7 +10,7 @@ import { hasCuratorRole } from './utils/user-helpers';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
-const EditorPage = lazy(() => import('./pages/editor/EditorPage'));
+const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
@@ -80,8 +80,8 @@ export const AppRoutes = () => {
         {/* BasicDataRoutes */}
         <PrivateRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} isAuthorized={isAdmin} />
 
-        {/* EditorRoutes */}
-        <PrivateRoute path={UrlPathTemplate.Editor} component={EditorPage} isAuthorized={hasCustomerId} />
+        {/* InstitutionRoutes */}
+        <PrivateRoute path={UrlPathTemplate.Institution} component={EditorPage} isAuthorized={hasCustomerId} />
 
         {/* Wildcard path must be last, otherwise it will catch all routes */}
         <Route path={UrlPathTemplate.Wildcard} component={NotFound} />
