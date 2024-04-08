@@ -54,7 +54,6 @@ import {
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
-import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -116,12 +115,8 @@ export const nviApplicableTypes: string[] = [
   ChapterType.AcademicChapter,
 ];
 
-export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
-  !!user &&
-  !!registration &&
-  hasCuratorRole(user) &&
-  !!user.customerId &&
-  user.customerId === registration.publisher.id;
+export const userHasSameCustomerAsRegistration = (user: User | null, registration?: Registration) =>
+  !!user?.customerId && registration?.publisher.id === user.customerId;
 
 export const userIsValidImporter = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
