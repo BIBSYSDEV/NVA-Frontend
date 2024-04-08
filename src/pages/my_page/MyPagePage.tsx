@@ -79,7 +79,7 @@ const MyPagePage = () => {
     query: searchParams.get(TicketSearchParam.Query),
     results: rowsPerPage,
     from: apiPage * rowsPerPage,
-    role: 'creator',
+    owner: user?.nvaUsername ?? '',
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     status: searchParams.get(TicketSearchParam.Status),
