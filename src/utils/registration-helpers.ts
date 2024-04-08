@@ -116,9 +116,6 @@ export const nviApplicableTypes: string[] = [
   ChapterType.AcademicChapter,
 ];
 
-export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
-
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user &&
   !!registration &&
