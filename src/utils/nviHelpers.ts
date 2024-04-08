@@ -85,9 +85,10 @@ const hasChangedContributorsOrAffiliations = async (
 };
 
 export const willResetNviStatuses = async (persistedRegistration: Registration, updatedRegistration: Registration) => {
-  const canBeNviCandidate = nviApplicableTypes.includes(
-    persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
-  );
+  const canBeNviCandidate =
+    nviApplicableTypes.findIndex(
+      (category) => category === persistedRegistration.entityDescription?.reference?.publicationInstance?.type
+    ) >= 0;
   if (!canBeNviCandidate) {
     return false;
   }

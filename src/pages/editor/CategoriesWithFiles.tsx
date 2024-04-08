@@ -63,7 +63,7 @@ const CategoriesWithFilesForCustomer = ({ customer }: CategoriesWithFilesForCust
   return (
     <>
       <CategorySelector
-        enableNviHighlightning={false}
+        canSelectAllNviCategories={false}
         selectedCategories={selectedCategories}
         onCategoryClick={onSelectType}
       />

@@ -6,21 +6,6 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/ass
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-  allPublicationInstanceTypes,
-} from '../types/publicationFieldNames';
-import {
   AudioVisualPublication,
   Award,
   Broadcast,
@@ -45,6 +30,21 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import {
+  allPublicationInstanceTypes,
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+} from '../types/publicationFieldNames';
 import {
   Journal,
   PublicationInstanceType,
@@ -109,7 +109,7 @@ export const isOtherRegistration = (instanceType: any) => Object.values(OtherReg
 
 export const isExhibitionContent = (instanceType: any) => Object.values(ExhibitionContentType).includes(instanceType);
 
-export const nviApplicableTypes: string[] = [
+export const nviApplicableTypes: PublicationInstanceType[] = [
   JournalType.AcademicArticle,
   JournalType.AcademicLiteratureReview,
   BookType.AcademicMonograph,

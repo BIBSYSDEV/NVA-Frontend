@@ -1,8 +1,8 @@
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
-import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
+import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationChannelType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { nviApplicableTypes } from '../../../../utils/registration-helpers';
@@ -23,7 +23,7 @@ const journalArticleTypes = [
 export const JournalForm = () => {
   const { t } = useTranslation();
   const { values } = useFormikContext<JournalRegistration>();
-  const instanceType = values.entityDescription.reference?.publicationInstance.type ?? '';
+  const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
@@ -47,7 +47,9 @@ export const JournalForm = () => {
         <JournalDetailsFields />
       </InputContainerBox>
 
-      {nviApplicableTypes.includes(instanceType) ? <NviValidation registration={values} /> : null}
+      {nviApplicableTypes.findIndex((category) => category === instanceType) >= 0 ? (
+        <NviValidation registration={values} />
+      ) : null}
     </>
   );
 };

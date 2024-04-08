@@ -231,7 +231,7 @@ export const SelectRegistrationTypeField = () => {
         </Box>
 
         <CategorySelector
-          enableNviHighlightning={true}
+          canSelectAllNviCategories={false}
           selectedCategories={currentInstanceType ? [currentInstanceType] : []}
           onCategoryClick={onChangeType}
           disabledCategories={disabledCategories}
