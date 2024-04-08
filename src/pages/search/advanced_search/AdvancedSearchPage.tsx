@@ -15,7 +15,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
@@ -85,8 +85,7 @@ export const AdvancedSearchPage = () => {
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     title: params.get(ResultParam.Title),
     excludeSubunits,
-    topLevelOrganization: excludeSubunits && !!unitId ? null : topLevelOrganizationId,
-    unit: unitId,
+    unit: unitId ?? topLevelOrganizationId,
   };
 
   const resultSearchQuery = useQuery({

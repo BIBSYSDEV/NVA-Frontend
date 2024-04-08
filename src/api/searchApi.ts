@@ -184,7 +184,6 @@ export enum ResultParam {
   CristinIdentifier = 'cristinIdentifier',
   Doi = 'doi',
   ExcludeSubunits = 'excludeSubunits',
-  Fields = 'fields',
   Files = 'files',
   From = 'from',
   FundingIdentifier = 'fundingIdentifier',
@@ -221,20 +220,6 @@ export enum ResultSearchOrder {
   ModifiedDate = 'modifiedDate',
   PublicationDate = 'publicationDate',
 }
-
-const queryFieldsValue = [
-  ResultParam.Title,
-  ResultParam.Abstract,
-  ResultParam.ContributorName,
-  ResultParam.Doi,
-  ResultParam.Tags,
-  ResultParam.Issn,
-  ResultParam.Handle,
-  ResultParam.FundingIdentifier,
-  ResultParam.Course,
-  ResultParam.CristinIdentifier,
-  ResultParam.Identifier,
-].join(',');
 
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
@@ -371,7 +356,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
-    searchParams.set(ResultParam.Fields, queryFieldsValue);
   }
   if (params.scientificIndex) {
     searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
@@ -414,7 +398,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
 
 export const fetchRegistrationsExport = async (searchParams: URLSearchParams) => {
   searchParams.set(ResultParam.From, '0');
-  searchParams.set(ResultParam.Results, '1000');
+  searchParams.set(ResultParam.Results, '400');
   const url = `${SearchApiPath.Registrations}?${searchParams.toString()}`;
 
   const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });

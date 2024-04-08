@@ -179,12 +179,14 @@
     "funding": "Finansiering",
     "help": "Hjelp",
     "id": "ID",
+    "initials": "Initialer",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
     "justification": "Begrunnelse",
     "language": "Språk",
     "last_name": "Etternavn",
     "link": "Lenke",
+    "main": "Hoved",
     "menu": "Meny",
     "message": "Melding",
     "move_down": "Flytt ned",
@@ -276,6 +278,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -347,11 +353,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -378,7 +380,14 @@
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
+      "change_institution_support": "Endre brukerstøttepunkt",
+      "institution_admin_one": "Institusjonens administrator",
+      "institution_admin_other": "Institusjonens administratorer",
       "institution_code": "Kode",
+      "institution_editor_one": "Institusjonens redaktør",
+      "institution_editor_other": "Institusjonens redaktører",
+      "institution_has_no_administrator": "Institusjonen har ingen administrator",
+      "institution_has_no_editor": "Institusjonen har ingen redaktør",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
       "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
       "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitenskapsindeks",
@@ -386,6 +395,8 @@
       "institution_name_norwegian": "Norsk navn",
       "institution_profile": "Institusjonsprofil",
       "institution_short_name": "Kortnavn",
+      "institution_support": "Institusjonens brukerstøtte",
+      "institution_support_description": "Institusjonens brukerstøtte vises under kuratorstøtte.",
       "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
       "organizing": "Organisering",
       "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
@@ -401,6 +412,11 @@
       "registrator_publishes_without_curator_description": "Institusjonen bestemmer hvem som er Registrator."
     },
     "retention_strategy": {
+      "creator_can_override_rrs_text": "<0>Institusjonen har åpnet opp for at registrator selv kan velge å ikke følge institusjonen sin rettighetspolitikk (RRS). Med å følge rettighetspolitikk (RRS) så blir vitenskapelige artikler åpent tilgjengelig umiddelbart uten embargo. <0>Se cOAlition S sin nettside for informasjon om RRS og Plan S.</0></0> <1>I NVA så fjerner registrator RRS på den aksepterte versjonen av filen i registreringen av en vitenskapelig artikkel. Avkryssingen av RRS kommer frem ved å trykke på pil-ikonet under den aksepterte versjonen av filen. Ved å fjerne avkryssingen av RRS så fjernes lisensen satt på filen og lisensen må settes på nytt.</1>",
+      "curator_can_override_rrs_text": "<0>Publiseringskurator har tilgang til å sette at filer ikke følger institusjonens rettigethspolitikk (RRS).</0> <0>Om registrator ikke ønsker å følge institusjonens rettighetspolitikk (RRS), så se på vilkår for ikke å følge RRS på informasjonsside om institusjonens rettighetspolitikk.</0> <1>Med å følge rettighetspolitikk (RRS) så blir vitenskapelige artikler åpent tilgjengelig umiddelbart uten embargo. <0>Se cOAlition S sin nettside for informasjon om RRS og Plan S</0>.</1>",
+      "customer_has_no_rrs": "<0>Institusjonen har ikke oppgitt en rettighetspolitikk (RRS) i NVA.</0> <0>Uten institusjonell rettighetspolitikk så er det da opp til registrator å sette korrekt lisens på akseptert versjon av filer i registrering av vitenskapelige artikler.</0> <1>Det er opp til registrator om eventuelt markere t publikasjonen skal følge en RRS. Med å følge rettighetspolitikk (RRS) så blir vitenskapelige artikler åpent tilgjengelig umiddelbart uten embargo. <0>Se cOAlition S sin nettside for informasjon om RRS og Plan S.</0></1> <0>Hvis publikasjonen er finansiert av en aktør som pålegger å følge RRS (ref. Plan S) så må RRS settes. I NVA så setter registrator RRS på den aksepterte versjonen av filen i registreringen av en vitenskapelig artikkel. Avkryssingen av RRS kommer frem ved å trykke på pil-ikonet under den aksepterte versjonen av filen. Ved å avkrysse for RRS så settes lisens på filen til CC-BY.</0>",
+      "customer_has_rrs_text": "<0>Institusjonen har oppgitt en rettighetspolitikk (RRS) i NVA.</0> <0>Lisens CC-BY blir satt når du velger akseptert versjon på filen i registreringen av en vitenskapelig artikkel i NVA.</0>",
+      "possible_not_to_follow_rrs": "Mulig å ikke følge institusjonens rettighetspolitikk",
       "rights_retention_strategy": "Rights Retention Strategy (RRS)",
       "rrs": "Rettighetspolitikk",
       "rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk",
@@ -412,6 +428,8 @@
     "subunits_count_one": "{{count}} underenhet",
     "subunits_count_other": "{{count}} underenheter",
     "vocabulary": "Vokabular",
+    "vocabulary_controlled": "Kontrollerte emneord",
+    "vocabulary_description": "Kontrollerte emneord (vokabular) som kan benyttes ved registrering av nytt resultat.",
     "vocabulary_status": {
       "Allowed": "Tillatt",
       "Default": "Standard",
