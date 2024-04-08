@@ -1,11 +1,14 @@
+import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Autocomplete,
   Box,
-  Button,
+  IconButton,
   TextField,
   Typography,
 } from '@mui/material';
@@ -20,7 +23,7 @@ import { ListSkeleton } from '../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../components/OrganizationRenderOption';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
-import { InstitutionUser } from '../../types/user.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getAllChildOrganizations, getSortedSubUnits } from '../../utils/institutions-helpers';
@@ -150,19 +153,20 @@ const OrganizationAccordion = ({
             width: '100%',
             display: 'grid',
             gap: '0.5rem 1rem',
-            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr', lg: '3fr 1fr 1fr 1fr' },
+            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr', lg: '2fr 1fr 1fr' },
             '& > p': { fontWeight: isSearchedUnit ? 700 : undefined },
           }}>
           <Typography>{getLanguageString(organization.labels)}</Typography>
           <Typography>{curatorsOnThisUnit.length} kuratorer</Typography>
-          <Typography>{getIdentifierFromId(organization.id)}</Typography>
           <Typography>{subunitsCount > 0 && t('editor.subunits_count', { count: subunitsCount })}</Typography>
         </Box>
       </AccordionSummary>
       <AccordionDetails sx={{ pr: 0 }}>
-        {curatorsOnThisUnit.map((user) => (
-          <CuratorRow curator={user} refetchCurators={refetchCurators} />
-        ))}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1px', mb: '1rem' }}>
+          {curatorsOnThisUnit.map((user) => (
+            <CuratorRow curator={user} refetchCurators={refetchCurators} />
+          ))}
+        </Box>
         {expanded &&
           organization.hasPart?.map((subunit) => (
             <OrganizationAccordion
@@ -185,6 +189,15 @@ interface CuratorRowProps {
   refetchCurators: () => void;
 }
 
+const roles: RoleName[] = [
+  RoleName.SupportCurator,
+  RoleName.PublishingCurator,
+  RoleName.CuratorThesis,
+  RoleName.CuratorThesisEmbargo,
+  RoleName.DoiCurator,
+  RoleName.NviCurator,
+];
+
 const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => {
@@ -195,19 +208,51 @@ const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
   };
 
   return (
-    <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr auto 4fr' }}>
-      <Typography>
-        {curator.givenName} {curator.familyName}
-      </Typography>
-      <Button variant="outlined" size="small" onClick={toggleDialog}>
-        Endre bruker
-      </Button>
-      <Typography>
-        {curator.roles
-          .filter((role) => rolesWithAreaOfResponsibility.includes(role.rolename))
-          .map((role) => role.rolename)
-          .join(', ')}
-      </Typography>
+    <Box
+      sx={{
+        bgcolor: 'background.default',
+        display: 'grid',
+        gap: '1rem',
+        gridTemplateColumns: '1fr auto',
+        alignItems: 'center',
+        p: '0.375rem 0.5rem',
+      }}>
+      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <Typography>
+          {curator.givenName} {curator.familyName}
+        </Typography>
+        <IconButton title="Endre bruker" onClick={toggleDialog} size="small" sx={{ bgcolor: 'secondary.light' }}>
+          <EditIcon fontSize="small" />
+        </IconButton>
+      </Box>
+
+      <Box sx={{ display: 'flex', gap: '1rem' }}>
+        {roles.map((role) => (
+          <Box key={role} sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+            {curator.roles.some((userRole) => userRole.rolename === role) ? (
+              <RadioButtonCheckedIcon />
+            ) : (
+              <RadioButtonUncheckedIcon />
+            )}
+            <Typography>
+              {role === RoleName.SupportCurator
+                ? 'Brukerstøtte'
+                : role === RoleName.PublishingCurator
+                  ? 'Publisering'
+                  : role === RoleName.CuratorThesis
+                    ? 'Studentoppgaver'
+                    : role === RoleName.CuratorThesisEmbargo
+                      ? 'Embargo'
+                      : role === RoleName.DoiCurator
+                        ? 'DOI'
+                        : role === RoleName.NviCurator
+                          ? 'NVI'
+                          : '-TODO-'}
+            </Typography>
+          </Box>
+        ))}
+      </Box>
+
       {curator.cristinId && (
         <UserFormDialog
           open={openDialog}

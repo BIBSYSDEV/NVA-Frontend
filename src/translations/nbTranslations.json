@@ -359,7 +359,15 @@
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
       "areas_of_responsibility": "Ansvarsområder",
-      "no_users_found": "Ingen brukere funnet"
+      "no_users_found": "Ingen brukere funnet",
+      "role": {
+        "Support-Curator": "Brukerstøtte",
+        "Publishing-Curator": "Publisering",
+        "Curator-thesis": "Studentoppgaver",
+        "Curator-thesis-embargo": "Embargo",
+        "Doi-Curator": "DOI",
+        "Nvi-Curator": "NVI"
+      }
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er en persistent identifikator.|Gjør det enklere å sitere publikasjoner korrekt.|Metadata om resultatet blir delt internasjonalt.|Synligheten til resultatet øker.|Bidrar til å oppfylle FAIR-prinsippene.|Understøtter åpen forskning.",
