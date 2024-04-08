@@ -179,6 +179,7 @@
     "funding": "Finansiering",
     "help": "Hjelp",
     "id": "ID",
+    "initials": "Initialer",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
     "justification": "Begrunnelse",
@@ -277,6 +278,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -348,11 +353,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -372,7 +373,13 @@
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
       "change_institution_support": "Endre brukerstøttepunkt",
+      "institution_admin_one": "Institusjonens administrator",
+      "institution_admin_other": "Institusjonens administratorer",
       "institution_code": "Kode",
+      "institution_editor_one": "Institusjonens redaktør",
+      "institution_editor_other": "Institusjonens redaktører",
+      "institution_has_no_administrator": "Institusjonen har ingen administrator",
+      "institution_has_no_editor": "Institusjonen har ingen redaktør",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
       "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
       "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitenskapsindeks",

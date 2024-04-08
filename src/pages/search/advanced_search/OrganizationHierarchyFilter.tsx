@@ -52,13 +52,19 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
   const closeDialog = () => {
     onClose();
     setSearchId('');
-    setSelectedId(unitFromParams);
   };
 
   const allSubUnits = getSortedSubUnits(organization.hasPart);
 
   return (
-    <Dialog open={open} onClose={closeDialog} maxWidth="lg" transitionDuration={0}>
+    <Dialog
+      open={open}
+      onClose={() => {
+        closeDialog();
+        setSelectedId(unitFromParams);
+      }}
+      maxWidth="lg"
+      transitionDuration={0}>
       <DialogTitle>{t('common.select_unit')}</DialogTitle>
       <DialogContent>
         <Typography sx={{ mb: '2rem' }}>
@@ -102,7 +108,13 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={closeDialog}>{t('common.cancel')}</Button>
+        <Button
+          onClick={() => {
+            closeDialog();
+            setSelectedId(unitFromParams);
+          }}>
+          {t('common.cancel')}
+        </Button>
         <Button
           variant="contained"
           disabled={!selectedId}
@@ -160,14 +172,16 @@ const OrganizationAccordion = ({
     <Accordion
       data-testid={dataTestId.editor.organizationAccordion(organization.id)}
       elevation={2}
-      onClick={(event) => {
-        event.stopPropagation();
-        setSelectedId(organization.id);
-      }}
       disableGutters
-      sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: { xs: undefined, md: `${level}rem` } }}
+      sx={{
+        bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light',
+        ml: { xs: undefined, md: level > 0 ? '1rem' : 0 },
+      }}
       expanded={expanded}
-      onChange={() => setExpandedState(!expandedState)}>
+      onChange={() => {
+        setExpandedState(!expandedState);
+        setSelectedId(organization.id);
+      }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
         <Box
           sx={{
