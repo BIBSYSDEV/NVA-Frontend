@@ -22,12 +22,12 @@ import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
 import { InstitutionSupport } from './InstitutionSupport';
-import { OrganizationCurators } from './OrganizationCurators';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
+import { OrganizationCurators } from './curators/OrganizationCurators';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
