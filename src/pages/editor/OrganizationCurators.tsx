@@ -10,7 +10,6 @@ import {
   SxProps,
   TextField,
   Typography,
-  styled,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -196,18 +195,49 @@ interface CuratorRowProps {
   refetchCurators: () => void;
 }
 
-const StyledUnselectedIcon = styled('span')(({ theme }) => ({
-  width: '1.5rem',
-  height: '1.5rem',
-  borderRadius: '50%',
-  border: 'solid 2px',
-  borderColor: theme.palette.secondary.dark,
-}));
-
 const selectedIconStyling: SxProps = {
   p: '0.125rem',
   borderRadius: '50%',
 };
+
+const rolesToShow = [
+  {
+    rolename: RoleName.SupportCurator,
+    name: 'Brukerstøtte',
+    color: 'generalSupportCase.main',
+    SelectedIcon: MarkEmailReadIcon,
+  },
+  {
+    rolename: RoleName.PublishingCurator,
+    name: 'Publisering',
+    color: 'publishingRequest.main',
+    SelectedIcon: TaskIcon,
+  },
+  {
+    rolename: RoleName.CuratorThesis,
+    name: 'Studentoppgaver',
+    color: 'publishingRequest.main',
+    SelectedIcon: SchoolIcon,
+  },
+  {
+    rolename: RoleName.CuratorThesisEmbargo,
+    name: 'Embargo',
+    color: 'publishingRequest.main',
+    SelectedIcon: EventIcon,
+  },
+  {
+    rolename: RoleName.DoiCurator,
+    name: 'DOI',
+    color: 'doiRequest.main',
+    SelectedIcon: AddLinkIcon,
+  },
+  {
+    rolename: RoleName.NviCurator,
+    name: 'NVI',
+    color: 'nvi.main',
+    SelectedIcon: AdjustIcon,
+  },
+];
 
 const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -238,59 +268,24 @@ const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
       </Box>
 
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-          {curator.roles.some((userRole) => userRole.rolename === RoleName.SupportCurator) ? (
-            <MarkEmailReadIcon sx={{ ...selectedIconStyling, bgcolor: 'generalSupportCase.main' }} />
-          ) : (
-            <StyledUnselectedIcon />
-          )}
-          <Typography>Brukerstøtte</Typography>
-        </Box>
-
-        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-          {curator.roles.some((userRole) => userRole.rolename === RoleName.PublishingCurator) ? (
-            <TaskIcon sx={{ ...selectedIconStyling, bgcolor: 'publishingRequest.main' }} />
-          ) : (
-            <StyledUnselectedIcon />
-          )}
-          <Typography>Publisering</Typography>
-        </Box>
-
-        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-          {curator.roles.some((userRole) => userRole.rolename === RoleName.CuratorThesis) ? (
-            <SchoolIcon sx={{ ...selectedIconStyling, bgcolor: 'publishingRequest.main' }} />
-          ) : (
-            <StyledUnselectedIcon />
-          )}
-          <Typography>Studentoppgaver</Typography>
-        </Box>
-
-        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-          {curator.roles.some((userRole) => userRole.rolename === RoleName.CuratorThesisEmbargo) ? (
-            <EventIcon sx={{ ...selectedIconStyling, bgcolor: 'publishingRequest.main' }} />
-          ) : (
-            <StyledUnselectedIcon />
-          )}
-          <Typography>Embargo</Typography>
-        </Box>
-
-        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-          {curator.roles.some((userRole) => userRole.rolename === RoleName.DoiCurator) ? (
-            <AddLinkIcon sx={{ ...selectedIconStyling, bgcolor: 'doiRequest.main' }} />
-          ) : (
-            <StyledUnselectedIcon />
-          )}
-          <Typography>DOI</Typography>
-        </Box>
-
-        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-          {curator.roles.some((userRole) => userRole.rolename === RoleName.NviCurator) ? (
-            <AdjustIcon sx={{ ...selectedIconStyling, bgcolor: 'nvi.main' }} />
-          ) : (
-            <StyledUnselectedIcon />
-          )}
-          <Typography>NVI</Typography>
-        </Box>
+        {rolesToShow.map(({ rolename, color, SelectedIcon, name }) => (
+          <Box key={rolename} sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+            {curator.roles.some((userRole) => userRole.rolename === rolename) ? (
+              <SelectedIcon sx={{ ...selectedIconStyling, bgcolor: color }} />
+            ) : (
+              <Box
+                sx={{
+                  width: '1.5rem',
+                  height: '1.5rem',
+                  borderRadius: '50%',
+                  border: 'solid 2px',
+                  borderColor: 'secondary.dark',
+                }}
+              />
+            )}
+            <Typography>{name}</Typography>
+          </Box>
+        ))}
       </Box>
 
       {curator.cristinId && (
