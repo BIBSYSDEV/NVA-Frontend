@@ -111,14 +111,15 @@ export const fetchOrganization = async (id: string) => {
   const fetchOrganizationResponse = await apiRequest2<Organization>({
     url: id,
   });
-  setIdentifierFromId(fetchOrganizationResponse.data);
+  addIdentifierToOrganization(fetchOrganizationResponse.data);
   return fetchOrganizationResponse.data;
 };
 
-function setIdentifierFromId(org: Organization) {
+function addIdentifierToOrganization(org: Organization) {
+  if (org.identifier) return;
   org.identifier = getIdentifierFromId(org.id);
-  org.hasPart?.map((subOrg) => setIdentifierFromId(subOrg));
-  org.partOf?.map((subOrg) => setIdentifierFromId(subOrg));
+  org.hasPart?.map((subOrg) => addIdentifierToOrganization(subOrg));
+  org.partOf?.map((subOrg) => addIdentifierToOrganization(subOrg));
 }
 
 export const fetchOrganizations = async (ids: string[]) => {
