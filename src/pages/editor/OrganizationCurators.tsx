@@ -7,7 +7,6 @@ import {
   Autocomplete,
   Box,
   IconButton,
-  SxProps,
   TextField,
   Typography,
 } from '@mui/material';
@@ -159,7 +158,7 @@ const OrganizationAccordion = ({
             width: '100%',
             display: 'grid',
             gap: '0.5rem 1rem',
-            gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr', lg: '2fr 1fr 1fr' },
+            gridTemplateColumns: { xs: '1fr', sm: '2fr 1fr 1fr' },
             '& > p': { fontWeight: isSearchedUnit ? 700 : undefined },
           }}>
           <Typography>{getLanguageString(organization.labels)}</Typography>
@@ -167,6 +166,7 @@ const OrganizationAccordion = ({
           <Typography>{subunitsCount > 0 && t('editor.subunits_count', { count: subunitsCount })}</Typography>
         </Box>
       </AccordionSummary>
+
       <AccordionDetails sx={{ pr: 0 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1px', mb: '1rem' }}>
           {curatorsOnThisUnit.map((user) => (
@@ -195,12 +195,7 @@ interface CuratorRowProps {
   refetchCurators: () => void;
 }
 
-const selectedIconStyling: SxProps = {
-  p: '0.125rem',
-  borderRadius: '50%',
-};
-
-const rolesToShow = [
+const curatorRolesConfig = [
   { rolename: RoleName.SupportCurator, color: 'generalSupportCase.main', SelectedIcon: MarkEmailReadIcon },
   { rolename: RoleName.PublishingCurator, color: 'publishingRequest.main', SelectedIcon: TaskIcon },
   { rolename: RoleName.CuratorThesis, color: 'publishingRequest.main', SelectedIcon: SchoolIcon },
@@ -225,11 +220,11 @@ const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
         bgcolor: 'background.default',
         display: 'grid',
         gap: '1rem',
-        gridTemplateColumns: '1fr auto',
+        gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
         alignItems: 'center',
         p: '0.375rem 0.5rem',
       }}>
-      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', minWidth: '10rem' }}>
         <Typography>
           {curator.givenName} {curator.familyName}
         </Typography>
@@ -238,11 +233,11 @@ const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
         </IconButton>
       </Box>
 
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
-        {rolesToShow.map(({ rolename, color, SelectedIcon }) => (
+      <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        {curatorRolesConfig.map(({ rolename, color, SelectedIcon }) => (
           <Box key={rolename} sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
             {curator.roles.some((userRole) => userRole.rolename === rolename) ? (
-              <SelectedIcon sx={{ ...selectedIconStyling, bgcolor: color }} />
+              <SelectedIcon sx={{ p: '0.125rem', borderRadius: '50%', bgcolor: color }} />
             ) : (
               <Box
                 sx={{
