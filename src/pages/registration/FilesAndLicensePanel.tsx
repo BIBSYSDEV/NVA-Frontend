@@ -22,7 +22,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { AssociatedFile, AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
-import { licenses, LicenseUri } from '../../types/license.types';
+import { LicenseUri, licenses } from '../../types/license.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -34,18 +34,17 @@ import {
   isDegreeWithProtectedFiles,
   isEmbargoed,
   isTypeWithFileVersionField,
-  userIsRegistrationCurator,
-  userIsRegistrationOwner,
+  userCanEditRegistration,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
-import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
-import { FileUploader } from './files_and_license_tab/FileUploader';
-import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
 import { HelperTextModal } from './HelperTextModal';
+import { FileUploader } from './files_and_license_tab/FileUploader';
+import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
 import { DoiField } from './resource_type_tab/components/DoiField';
 
 export const administrativeAgreementId = 'administrative-agreement';
@@ -109,13 +108,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const originalDoi = entityDescription?.reference?.doi;
   const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
 
-  const isValidImporter = userIsValidImporter(user, values);
-  const isRegistrationCurator = userIsRegistrationCurator(user, values);
   const isProtectedDegree = isDegreeWithProtectedFiles(publicationInstanceType);
-  const canEditDegreeFiles = isRegistrationCurator && !!user?.isThesisCurator;
-  const canEditOtherFiles = isRegistrationCurator || userIsRegistrationOwner(user, values);
-  const canEditFiles =
-    (!isProtectedDegree && canEditOtherFiles) || (isProtectedDegree && canEditDegreeFiles) || isValidImporter;
+  const canEditFiles = userCanEditRegistration(values) || userIsValidImporter(user, values);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -298,9 +292,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         });
 
                         const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
-                        const canEditThisFile = isEmbargoedDegreeFile
-                          ? canEditDegreeFiles && user.isEmbargoThesisCurator
-                          : canEditFiles;
+                        const canEditThisFile = isEmbargoedDegreeFile ? !!user?.isEmbargoThesisCurator : canEditFiles;
 
                         return (
                           <FilesTableRow
