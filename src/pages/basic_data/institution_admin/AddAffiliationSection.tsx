@@ -3,6 +3,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -40,9 +41,7 @@ export const AddAffiliationSection = () => {
               options={organizationOptions}
               getOptionLabel={(option) => getLanguageString(option.labels)}
               renderOption={(props, option) => (
-                <li {...props} key={option.id}>
-                  {getLanguageString(option.labels)}
-                </li>
+                <OrganizationRenderOption key={option.id} props={props} option={option} />
               )}
               loading={isLoadingCurrentOrganization}
               onChange={(_, value) => setFieldValue(field.name, value?.id)}
