@@ -213,7 +213,6 @@ const InstitutionPage = () => {
             isAuthorized={hasCustomer}
           />
           <PrivateRoute
-            exact
             path={UrlPathTemplate.InstitutionSupport}
             component={InstitutionSupport}
             isAuthorized={isEditor}

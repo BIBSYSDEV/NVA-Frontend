@@ -6,7 +6,7 @@ import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import SchoolIcon from '@mui/icons-material/School';
 import TaskIcon from '@mui/icons-material/Task';
 import { Box, IconButton, Typography } from '@mui/material';
-import { useState } from 'react';
+import { ComponentType, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { UserFormDialog } from '../../basic_data/institution_admin/edit_user/UserFormDialog';
@@ -23,7 +23,17 @@ const curatorRolesConfig = [
   { rolename: RoleName.CuratorThesisEmbargo, color: 'publishingRequest.main', SelectedIcon: EventIcon },
   { rolename: RoleName.DoiCurator, color: 'doiRequest.main', SelectedIcon: AddLinkIcon },
   { rolename: RoleName.NviCurator, color: 'nvi.main', SelectedIcon: AdjustIcon },
-];
+] satisfies {
+  rolename:
+    | RoleName.SupportCurator
+    | RoleName.PublishingCurator
+    | RoleName.CuratorThesis
+    | RoleName.CuratorThesisEmbargo
+    | RoleName.DoiCurator
+    | RoleName.NviCurator;
+  color: string;
+  SelectedIcon: ComponentType<any>;
+}[];
 
 export const OrganizationCuratorRow = ({ curator, refetchCurators }: OrganizationCuratorRowProps) => {
   const { t } = useTranslation();
@@ -78,7 +88,7 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators }: Organizatio
                   }}
                 />
               )}
-              <Typography>{t<any>(`editor.curators.role.${rolename}`)}</Typography>
+              <Typography>{t(`editor.curators.role.${rolename}`)}</Typography>
             </Box>
           );
         })}
