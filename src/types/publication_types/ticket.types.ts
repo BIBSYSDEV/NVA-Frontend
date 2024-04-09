@@ -1,5 +1,5 @@
 import { AssociatedFile } from '../associatedArtifact.types';
-import { AggregationValue, SearchResponse, SearchResponse2 } from '../common.types';
+import { AggregationValue, SearchResponse2 } from '../common.types';
 import { PublishStrategy } from '../customerInstitution.types';
 import { BaseEntityDescription, PublicationInstanceType, Registration } from '../registration.types';
 
@@ -77,19 +77,6 @@ interface Person {
   lastName: string;
   username: string;
 }
-
-type TicketAggregations = {
-  [fieldName: string]: {
-    buckets?: AggregationBucket[];
-  };
-};
-
-interface AggregationBucket {
-  key: string;
-  docCount: number;
-}
-
-export type TicketSearchResponse = SearchResponse<ExpandedTicket, TicketAggregations>;
 
 type CustomerTicketAggregations = {
   type?: AggregationValue<TicketType>[];
