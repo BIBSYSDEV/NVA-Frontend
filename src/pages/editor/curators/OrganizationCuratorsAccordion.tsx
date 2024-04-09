@@ -61,7 +61,7 @@ export const OrganizationCuratorsAccordion = ({
             '& > p': { fontWeight: isSearchedUnit ? 700 : undefined },
           }}>
           <Typography>{getLanguageString(organization.labels)}</Typography>
-          <Typography>{curatorsOnThisUnit.length} kuratorer</Typography>
+          <Typography>{t('editor.curators.curators_count', { count: curatorsOnThisUnit.length })}</Typography>
           <Typography>{subunitsCount > 0 && t('editor.subunits_count', { count: subunitsCount })}</Typography>
         </Box>
       </AccordionSummary>

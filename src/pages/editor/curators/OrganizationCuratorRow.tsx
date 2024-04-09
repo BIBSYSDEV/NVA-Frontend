@@ -49,7 +49,11 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators }: Organizatio
         <Typography>
           {curator.givenName} {curator.familyName}
         </Typography>
-        <IconButton title="Endre bruker" onClick={toggleDialog} size="small" sx={{ bgcolor: 'secondary.light' }}>
+        <IconButton
+          title={t('editor.curators.edit_user')}
+          onClick={toggleDialog}
+          size="small"
+          sx={{ bgcolor: 'secondary.light' }}>
           <EditIcon fontSize="small" />
         </IconButton>
       </Box>

@@ -359,8 +359,11 @@
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting",
     "curators": {
+      "administer_curators": "Administrer tilganger til kuratorer",
       "area_of_responsibility": "Ansvarsområde",
-      "areas_of_responsibility": "Ansvarsområder",
+      "curators_count_one": "{{count}} kurator",
+      "curators_count_other": "{{count}} kuratorer",
+      "edit_user": "Endre bruker",
       "no_users_found": "Ingen brukere funnet",
       "role": {
         "Support-Curator": "Brukerstøtte",

@@ -46,10 +46,10 @@ export const OrganizationCurators = () => {
   return (
     <>
       <Helmet>
-        <title>Oversikt over kuratorer</title>
+        <title>{t('editor.curators.administer_curators')}</title>
       </Helmet>
       <Typography variant="h1" sx={{ mb: '1rem' }}>
-        Oversikt over kuratorer
+        {t('editor.curators.administer_curators')}
       </Typography>
 
       {organizationQuery.isLoading || curatorsQuery.isLoading ? (

@@ -18,7 +18,6 @@ import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { CategoriesWithFiles } from './CategoriesWithFiles';
 import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
-import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
 import { InstitutionSupport } from './InstitutionSupport';
@@ -123,17 +122,10 @@ const InstitutionPage = () => {
             defaultPath={UrlPathTemplate.InstitutionCurators}>
             <NavigationList>
               <LinkButton
-                isSelected={currentPath === UrlPathTemplate.InstitutionCurators2}
-                // data-testid={dataTestId.editor.organizationOverviewLinkButton}
-                to={UrlPathTemplate.InstitutionCurators2}>
-                Kuratorer
-              </LinkButton>
-
-              <LinkButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
                 data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
                 to={UrlPathTemplate.InstitutionCurators}>
-                {t('editor.curators.areas_of_responsibility')}
+                {t('editor.curators.administer_curators')}
               </LinkButton>
               <LinkButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategy}
@@ -198,7 +190,7 @@ const InstitutionPage = () => {
           <PrivateRoute
             exact
             path={UrlPathTemplate.InstitutionCurators}
-            component={EditorCurators}
+            component={OrganizationCurators}
             isAuthorized={isEditor}
           />
           <PrivateRoute exact path={UrlPathTemplate.InstitutionDoi} component={EditorDoi} isAuthorized={hasCustomer} />
@@ -218,12 +210,6 @@ const InstitutionPage = () => {
             exact
             path={UrlPathTemplate.InstitutionOrganizationOverview}
             component={OrganizationOverview}
-            isAuthorized={hasCustomer}
-          />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionCurators2}
-            component={OrganizationCurators}
             isAuthorized={hasCustomer}
           />
           <PrivateRoute
