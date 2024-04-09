@@ -1,7 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import {
   Accordion,
   AccordionDetails,
@@ -9,8 +7,10 @@ import {
   Autocomplete,
   Box,
   IconButton,
+  SxProps,
   TextField,
   Typography,
+  styled,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -30,6 +30,13 @@ import { getAllChildOrganizations, getSortedSubUnits } from '../../utils/institu
 import { getLanguageString } from '../../utils/translation-helpers';
 import { rolesWithAreaOfResponsibility } from '../basic_data/institution_admin/edit_user/TasksFormSection';
 import { UserFormDialog } from '../basic_data/institution_admin/edit_user/UserFormDialog';
+
+import AddLinkIcon from '@mui/icons-material/AddLink';
+import AdjustIcon from '@mui/icons-material/Adjust';
+import EventIcon from '@mui/icons-material/Event';
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
+import SchoolIcon from '@mui/icons-material/School';
+import TaskIcon from '@mui/icons-material/Task';
 
 export const OrganizationCurators = () => {
   const { t } = useTranslation();
@@ -189,14 +196,18 @@ interface CuratorRowProps {
   refetchCurators: () => void;
 }
 
-const roles: RoleName[] = [
-  RoleName.SupportCurator,
-  RoleName.PublishingCurator,
-  RoleName.CuratorThesis,
-  RoleName.CuratorThesisEmbargo,
-  RoleName.DoiCurator,
-  RoleName.NviCurator,
-];
+const StyledUnselectedIcon = styled('span')(({ theme }) => ({
+  width: '1.5rem',
+  height: '1.5rem',
+  borderRadius: '50%',
+  border: 'solid 2px',
+  borderColor: theme.palette.secondary.dark,
+}));
+
+const selectedIconStyling: SxProps = {
+  p: '0.125rem',
+  borderRadius: '50%',
+};
 
 const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -227,30 +238,59 @@ const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
       </Box>
 
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        {roles.map((role) => (
-          <Box key={role} sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-            {curator.roles.some((userRole) => userRole.rolename === role) ? (
-              <RadioButtonCheckedIcon />
-            ) : (
-              <RadioButtonUncheckedIcon />
-            )}
-            <Typography>
-              {role === RoleName.SupportCurator
-                ? 'Brukerstøtte'
-                : role === RoleName.PublishingCurator
-                  ? 'Publisering'
-                  : role === RoleName.CuratorThesis
-                    ? 'Studentoppgaver'
-                    : role === RoleName.CuratorThesisEmbargo
-                      ? 'Embargo'
-                      : role === RoleName.DoiCurator
-                        ? 'DOI'
-                        : role === RoleName.NviCurator
-                          ? 'NVI'
-                          : '-TODO-'}
-            </Typography>
-          </Box>
-        ))}
+        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+          {curator.roles.some((userRole) => userRole.rolename === RoleName.SupportCurator) ? (
+            <MarkEmailReadIcon sx={{ ...selectedIconStyling, bgcolor: 'generalSupportCase.main' }} />
+          ) : (
+            <StyledUnselectedIcon />
+          )}
+          <Typography>Brukerstøtte</Typography>
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+          {curator.roles.some((userRole) => userRole.rolename === RoleName.PublishingCurator) ? (
+            <TaskIcon sx={{ ...selectedIconStyling, bgcolor: 'publishingRequest.main' }} />
+          ) : (
+            <StyledUnselectedIcon />
+          )}
+          <Typography>Publisering</Typography>
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+          {curator.roles.some((userRole) => userRole.rolename === RoleName.CuratorThesis) ? (
+            <SchoolIcon sx={{ ...selectedIconStyling, bgcolor: 'publishingRequest.main' }} />
+          ) : (
+            <StyledUnselectedIcon />
+          )}
+          <Typography>Studentoppgaver</Typography>
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+          {curator.roles.some((userRole) => userRole.rolename === RoleName.CuratorThesisEmbargo) ? (
+            <EventIcon sx={{ ...selectedIconStyling, bgcolor: 'publishingRequest.main' }} />
+          ) : (
+            <StyledUnselectedIcon />
+          )}
+          <Typography>Embargo</Typography>
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+          {curator.roles.some((userRole) => userRole.rolename === RoleName.DoiCurator) ? (
+            <AddLinkIcon sx={{ ...selectedIconStyling, bgcolor: 'doiRequest.main' }} />
+          ) : (
+            <StyledUnselectedIcon />
+          )}
+          <Typography>DOI</Typography>
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+          {curator.roles.some((userRole) => userRole.rolename === RoleName.NviCurator) ? (
+            <AdjustIcon sx={{ ...selectedIconStyling, bgcolor: 'nvi.main' }} />
+          ) : (
+            <StyledUnselectedIcon />
+          )}
+          <Typography>NVI</Typography>
+        </Box>
       </Box>
 
       {curator.cristinId && (
