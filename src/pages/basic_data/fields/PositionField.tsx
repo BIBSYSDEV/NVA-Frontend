@@ -35,9 +35,13 @@ export const PositionField = ({
 
   const sortedPositions = useMemo(
     () =>
-      [...(positionsQuery.data?.positions ?? [])].sort((a, b) =>
-        getLanguageString(a.labels).toLowerCase() > getLanguageString(b.labels).toLowerCase() ? 1 : -1
-      ),
+      [...(positionsQuery.data?.positions ?? [])].sort((a, b) => {
+        if (a.enabled === b.enabled) {
+          return getLanguageString(a.labels).toLowerCase() > getLanguageString(b.labels).toLowerCase() ? 1 : -1;
+        } else {
+          return +b.enabled - +a.enabled;
+        }
+      }),
     [positionsQuery.data?.positions]
   );
 
