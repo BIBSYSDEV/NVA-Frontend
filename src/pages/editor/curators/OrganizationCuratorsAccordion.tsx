@@ -48,7 +48,10 @@ export const OrganizationCuratorsAccordion = ({
       data-testid={dataTestId.editor.organizationAccordion(organization.id)}
       elevation={2}
       disableGutters
-      sx={{ bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light', ml: { xs: undefined, md: `${level}rem` } }}
+      sx={{
+        bgcolor: level % 2 === 0 ? 'secondary.main' : 'secondary.light',
+        ml: { xs: undefined, md: level > 0 ? '1rem' : 0 },
+      }}
       expanded={expanded}
       onChange={() => setExpandedState(!expanded)}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -69,7 +72,7 @@ export const OrganizationCuratorsAccordion = ({
       <AccordionDetails sx={{ pr: 0 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1px', mb: '1rem' }}>
           {curatorsOnThisUnit.map((user) => (
-            <OrganizationCuratorRow curator={user} refetchCurators={refetchCurators} />
+            <OrganizationCuratorRow key={user.username} curator={user} refetchCurators={refetchCurators} />
           ))}
         </Box>
         {expanded &&
