@@ -50,7 +50,7 @@ export const RegistrationLandingPage = () => {
   });
 
   const registration = registrationQuery.data;
-  const registrationId = registration?.id ?? '';
+  const registrationId = registration?.id;
 
   if (identifier !== registration?.identifier && !!registration?.identifier) {
     const newPath = history.location.pathname.replace(identifier, registration.identifier);
@@ -67,9 +67,9 @@ export const RegistrationLandingPage = () => {
     registration?.status === RegistrationStatus.Unpublished;
 
   const ticketsQuery = useQuery({
-    enabled: canEditRegistration,
+    enabled: canEditRegistration && !!registrationId,
     queryKey: ['registrationTickets', registrationId],
-    queryFn: () => fetchRegistrationTickets(registrationId),
+    queryFn: () => (registrationId ? fetchRegistrationTickets(registrationId) : null),
     meta: { errorMessage: t('feedback.error.get_tickets') },
   });
 
