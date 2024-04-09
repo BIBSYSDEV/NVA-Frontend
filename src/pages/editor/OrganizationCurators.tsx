@@ -234,24 +234,29 @@ const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
       </Box>
 
       <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-        {curatorRolesConfig.map(({ rolename, color, SelectedIcon }) => (
-          <Box key={rolename} sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-            {curator.roles.some((userRole) => userRole.rolename === rolename) ? (
-              <SelectedIcon sx={{ p: '0.125rem', borderRadius: '50%', bgcolor: color }} />
-            ) : (
-              <Box
-                sx={{
-                  width: '1.5rem',
-                  height: '1.5rem',
-                  borderRadius: '50%',
-                  border: 'solid 2px',
-                  borderColor: 'secondary.dark',
-                }}
-              />
-            )}
-            <Typography>{t<any>(`editor.curators.role.${rolename}`)}</Typography>
-          </Box>
-        ))}
+        {curatorRolesConfig.map(({ rolename, color, SelectedIcon }) => {
+          const isSelected = curator.roles.some((userRole) => userRole.rolename === rolename);
+          return (
+            <Box
+              key={rolename}
+              sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center', opacity: isSelected ? 1 : 0.75 }}>
+              {isSelected ? (
+                <SelectedIcon sx={{ p: '0.125rem', borderRadius: '50%', bgcolor: color }} />
+              ) : (
+                <Box
+                  sx={{
+                    width: '1.5rem',
+                    height: '1.5rem',
+                    borderRadius: '50%',
+                    border: 'solid 2px',
+                    borderColor: 'secondary.dark',
+                  }}
+                />
+              )}
+              <Typography>{t<any>(`editor.curators.role.${rolename}`)}</Typography>
+            </Box>
+          );
+        })}
       </Box>
 
       {curator.cristinId && (
