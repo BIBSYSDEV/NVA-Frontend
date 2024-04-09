@@ -33,7 +33,6 @@ import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
-import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
@@ -46,10 +45,6 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
-
-type TicketStatusFilter = {
-  [key in TicketStatus]: boolean;
-};
 
 export const StyledSearchModeButton = styled(LinkButton)({
   borderRadius: '1.5rem',
@@ -174,13 +169,6 @@ const TasksPage = () => {
   // NVI data
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
-  const [ticketStatusFilter, setTicketStatusFilter] = useState<TicketStatusFilter>({
-    New: true,
-    Pending: false,
-    Completed: false,
-    Closed: false,
-    NotApplicable: false,
-  });
 
   const nviSearchQuery = queryParam ? `&query=${queryParam}` : '';
 
@@ -355,9 +343,6 @@ const TasksPage = () => {
                     isSelected={showOnlyMyTasks}
                     startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
                     onClick={() => {
-                      if (ticketStatusFilter.New) {
-                        setTicketStatusFilter({ ...ticketStatusFilter, New: false });
-                      }
                       setShowOnlyMyTasks(true);
                     }}>
                     {t('tasks.my_nvi_results')}
