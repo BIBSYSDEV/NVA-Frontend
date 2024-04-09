@@ -110,10 +110,9 @@ export const AdvancedSearchPage = () => {
       container
       rowGap={2}
       sx={{
-        bgcolor: 'secondary.main',
-        p: '1rem',
+        px: '1rem',
       }}>
-      <Typography variant="h3">{t('search.advanced_search.advanced_search')}</Typography>
+      <Typography variant="h2">{t('search.advanced_search.advanced_search')}</Typography>
       <Grid item xs={12}>
         <StyledTypography fontWeight="bold">{t('search.advanced_search.title_search')}</StyledTypography>
         <Box sx={{ display: 'flex', gap: '0.5rem' }}>

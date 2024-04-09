@@ -20,15 +20,7 @@ export const SearchTextField = ({ clearValue, ...props }: SearchTextFieldProps) 
       size="small"
       aria-label={t('common.search')}
       InputProps={{
-        startAdornment: (
-          <IconButton
-            type="submit"
-            data-testid={dataTestId.startPage.searchButton}
-            title={t('common.search')}
-            size="small">
-            <SearchIcon />
-          </IconButton>
-        ),
+        startAdornment: <SearchIcon color="disabled" />,
         endAdornment:
           props.value && clearValue ? (
             <IconButton onClick={clearValue} title={t('common.clear')} size="small">

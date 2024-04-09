@@ -44,8 +44,11 @@ export const LanguageFilter = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', minWidth: '15rem' }}>
       <FormControl>
-        <InputLabel sx={{ lineHeight: '0.75' }}>{t('registration.description.primary_language')}</InputLabel>
+        <InputLabel id="language-select-label" sx={{ lineHeight: '0.75' }}>
+          {t('registration.description.primary_language')}
+        </InputLabel>
         <Select
+          labelId="language-select-label"
           multiple
           size="small"
           open={open}
