@@ -23,13 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import {
-  fetchCustomerTickets,
-  fetchNviCandidates,
-  fetchTickets,
-  FetchTicketsParams,
-  TicketSearchParam,
-} from '../../api/searchApi';
+import { fetchCustomerTickets, fetchNviCandidates, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -39,7 +33,6 @@ import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
-import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
@@ -52,10 +45,6 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
-
-type TicketStatusFilter = {
-  [key in TicketStatus]: boolean;
-};
 
 export const StyledSearchModeButton = styled(LinkButton)({
   borderRadius: '1.5rem',
@@ -128,54 +117,30 @@ const TasksPage = () => {
     publishingRequest: isPublishingCurator,
   });
 
-  const [ticketStatusFilter, setTicketStatusFilter] = useState<TicketStatusFilter>({
-    New: true,
-    Pending: false,
-    Completed: false,
-    Closed: false,
-    NotApplicable: false,
-  });
-
   const selectedTicketTypes = Object.entries(ticketTypes)
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
 
-  const ticketTypeQuery =
-    selectedTicketTypes.length > 0 ? `(${selectedTicketTypes.map((type) => 'type:' + type).join(' OR ')})` : '';
-
-  const selectedStatusesArray = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
-    ticketStatusValues) as TicketStatus[];
-
-  const ticketStatusQuery =
-    selectedStatusesArray.length > 0
-      ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
-      : '';
-
-  const assignee = searchParams.get(TicketSearchParam.Assignee);
-  const ticketAssigneeQuery = assignee ? `(assignee.username:"${assignee}")` : '';
-
-  const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
-
-  const ticketQueryString = [queryParam, ticketTypeQuery, ticketStatusQuery, ticketAssigneeQuery, ticketViewedByQuery]
-    .filter(Boolean)
-    .join(' AND ');
-
-  const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.ViewingScope) ? rowsPerPage : 0;
+  const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.OrganizationId) ? rowsPerPage : 0;
 
   const ticketSearchParams: FetchTicketsParams = {
-    query: ticketQueryString,
+    query: searchParams.get(TicketSearchParam.Query),
     results: numberOfResultsGivenViewingScope,
     from: (page - 1) * rowsPerPage,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
-    viewingScope: searchParams.get(TicketSearchParam.ViewingScope),
+    organizationId: searchParams.get(TicketSearchParam.OrganizationId),
     excludeSubUnits: true,
+    assignee: searchParams.get(TicketSearchParam.Assignee),
+    status: searchParams.get(TicketSearchParam.Status),
+    type: selectedTicketTypes.join(','),
+    viewedByNot: ticketUnreadFilter && user ? user.nvaUsername : '',
   };
 
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
     queryKey: ['tickets', ticketSearchParams],
-    queryFn: () => fetchTickets(ticketSearchParams),
+    queryFn: () => fetchCustomerTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
@@ -196,10 +161,10 @@ const TasksPage = () => {
     (notification) => notification.key === 'GeneralSupportCase'
   )?.count;
 
-  const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
-  const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
-  const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
-  const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
+  const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
+  const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
+  const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
+  const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   // NVI data
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
@@ -378,9 +343,6 @@ const TasksPage = () => {
                     isSelected={showOnlyMyTasks}
                     startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
                     onClick={() => {
-                      if (ticketStatusFilter.New) {
-                        setTicketStatusFilter({ ...ticketStatusFilter, New: false });
-                      }
                       setShowOnlyMyTasks(true);
                     }}>
                     {t('tasks.my_nvi_results')}

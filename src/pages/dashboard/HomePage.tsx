@@ -13,7 +13,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../api/searchApi';
+import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -48,9 +48,10 @@ const HomePage = () => {
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
-  const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
-  const projectIsSelected = paramsSearchType === SearchTypeValue.Project;
+  const isOnFilterPage = location.pathname === UrlPathTemplate.Home;
+  const resultIsSelected = isOnFilterPage && (!paramsSearchType || paramsSearchType === SearchTypeValue.Result);
+  const personIsSeleced = isOnFilterPage && paramsSearchType === SearchTypeValue.Person;
+  const projectIsSelected = isOnFilterPage && paramsSearchType === SearchTypeValue.Project;
 
   const rowsPerPage = Number(params.get(SearchParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]);
   const page = Number(params.get(SearchParam.Page) ?? 1);
