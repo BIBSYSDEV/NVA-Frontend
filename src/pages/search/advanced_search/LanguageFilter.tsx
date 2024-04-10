@@ -56,7 +56,6 @@ export const LanguageFilter = () => {
           onClose={toggleOpenOptions}
           value={languageParam}
           data-testid={dataTestId.startPage.advancedSearch.publicationLanguageField}
-          label={t('registration.description.primary_language')}
           onChange={(event) => {
             updateSelectedLanguages(event.target.value as string[]);
             toggleOpenOptions();
