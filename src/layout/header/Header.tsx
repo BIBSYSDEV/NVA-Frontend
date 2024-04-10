@@ -180,7 +180,7 @@ export const Header = () => {
                   to={UrlPathTemplate.Tasks}
                   startIcon={
                     <Badge badgeContent={pendingTasksCount + unassignedTasksCount}>
-                      <AssignmentIcon />
+                      <AssignmentIcon fontSize="small" />
                     </Badge>
                   }>
                   {t('common.tasks')}
@@ -194,7 +194,7 @@ export const Header = () => {
                   to={UrlPathTemplate.MyPage}
                   startIcon={
                     <Badge badgeContent={dialogueNotificationsQuery.data?.totalHits}>
-                      <FavoriteBorderIcon />
+                      <FavoriteBorderIcon fontSize="small" />
                     </Badge>
                   }>
                   {t('my_page.my_page')}
