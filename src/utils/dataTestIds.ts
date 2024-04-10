@@ -483,7 +483,7 @@ export const dataTestId = {
       removeRelationButton: (value: string) => (value ? `remove-relation-button-${value}` : 'remove-relation-button'),
       resourceTypeChip: (type: string) => `resource-type-chip-${type}`,
       resourceTypeSearchField: 'resource-type-search-field',
-      resourceTypeNviHighLightChipButton: 'resource-nvi-highlighted-chip-button',
+      resourceTypeNviHighlightChipButton: 'resource-nvi-highlighted-chip-button',
       revisionField: 'revision-field',
       scientificSubjectField: 'scientific-subject-field',
       scoreEnsemble: 'score-ensemble',

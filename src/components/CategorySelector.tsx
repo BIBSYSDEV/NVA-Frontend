@@ -118,7 +118,7 @@ export const CategorySelector = ({
               }
               setHighlightNviCategories(!highlightNviCategories);
             }}
-            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeNviHighLightChipButton}
+            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeNviHighlightChipButton}
             variant={highlightNviCategories ? 'filled' : 'outlined'}
             label={t('registration.resource_type.nvi.can_give_publication_points')}
           />
