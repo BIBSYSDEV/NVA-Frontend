@@ -54,7 +54,7 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.4",
     "react-i18next": "^12.3.1",
-    "react-imask": "^7.5.0",
+    "react-imask": "^7.6.0",
     "react-redux": "^9.1.0",
     "react-router-dom": "^5.3.4",
     "react-share": "^4.4.1",
