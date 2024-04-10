@@ -10,7 +10,7 @@ import { SeriesFields } from '../components/SeriesFields';
 
 export const BookForm = () => {
   const { values } = useFormikContext<BookRegistration>();
-  const instanceType = values.entityDescription.reference?.publicationInstance.type ?? '';
+  const instanceType = values.entityDescription.reference?.publicationInstance.type;
 
   return (
     <>
@@ -23,9 +23,7 @@ export const BookForm = () => {
 
       <SeriesFields />
 
-      {nviApplicableTypes.findIndex((category) => category === instanceType) >= 0 ? (
-        <NviValidation registration={values} />
-      ) : null}
+      {instanceType && nviApplicableTypes.includes(instanceType) ? <NviValidation registration={values} /> : null}
     </>
   );
 };
