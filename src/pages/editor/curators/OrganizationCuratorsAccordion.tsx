@@ -1,5 +1,6 @@
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Organization } from '../../../types/organization.types';
@@ -7,6 +8,7 @@ import { InstitutionUser } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getAllChildOrganizations } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { AddCuratorDialog } from './AddCuratorDialog';
 import { OrganizationCuratorRow } from './OrganizationCuratorRow';
 
 interface OrganizationCuratorsAccordionProps {
@@ -28,6 +30,7 @@ export const OrganizationCuratorsAccordion = ({
 }: OrganizationCuratorsAccordionProps) => {
   const { t } = useTranslation();
 
+  const [openAddCuratorDialog, setOpenAddCuratorDialog] = useState(false);
   const [expandedState, setExpandedState] = useState(level === 0);
 
   const isSearchedUnit = organization.id === searchId;
@@ -75,6 +78,17 @@ export const OrganizationCuratorsAccordion = ({
             <OrganizationCuratorRow key={user.username} curator={user} refetchCurators={refetchCurators} />
           ))}
         </Box>
+
+        <Button
+          variant="contained"
+          sx={{ mb: '1rem' }}
+          startIcon={<AddCircleOutlineOutlinedIcon />}
+          onClick={() => setOpenAddCuratorDialog(true)}>
+          Legg til kurator
+        </Button>
+
+        <AddCuratorDialog open={openAddCuratorDialog} onClose={() => setOpenAddCuratorDialog(false)} />
+
         {expanded &&
           organization.hasPart?.map((subunit) => (
             <OrganizationCuratorsAccordion
