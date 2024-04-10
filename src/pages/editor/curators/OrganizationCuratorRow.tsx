@@ -12,8 +12,9 @@ import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFullName } from '../../../utils/user-helpers';
 import { UserFormDialog } from '../../basic_data/institution_admin/edit_user/UserFormDialog';
+import { OrganizationCuratorsProps } from './OrganizationCurators';
 
-interface OrganizationCuratorRowProps {
+interface OrganizationCuratorRowProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
   curator: InstitutionUser;
   refetchCurators: () => void;
 }
@@ -37,7 +38,7 @@ const curatorRolesConfig = [
   SelectedIcon: ComponentType<any>;
 }[];
 
-export const OrganizationCuratorRow = ({ curator, refetchCurators }: OrganizationCuratorRowProps) => {
+export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers }: OrganizationCuratorRowProps) => {
   const { t } = useTranslation();
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => {
@@ -59,14 +60,16 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators }: Organizatio
       }}>
       <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', minWidth: '10rem' }}>
         <Typography>{getFullName(curator.givenName, curator.familyName)}</Typography>
-        <IconButton
-          data-testid={dataTestId.editor.editUserButton}
-          title={t('editor.curators.edit_user')}
-          onClick={toggleDialog}
-          size="small"
-          sx={{ bgcolor: 'secondary.light' }}>
-          <EditIcon fontSize="small" />
-        </IconButton>
+        {canEditUsers && (
+          <IconButton
+            data-testid={dataTestId.editor.editUserButton}
+            title={t('editor.curators.edit_user')}
+            onClick={toggleDialog}
+            size="small"
+            sx={{ bgcolor: 'secondary.light' }}>
+            <EditIcon fontSize="small" />
+          </IconButton>
+        )}
       </Box>
 
       <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
