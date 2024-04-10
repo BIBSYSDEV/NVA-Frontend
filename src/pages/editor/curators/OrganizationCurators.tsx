@@ -17,7 +17,12 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { rolesWithAreaOfResponsibility } from '../../basic_data/institution_admin/edit_user/TasksFormSection';
 import { OrganizationCuratorsAccordion } from './OrganizationCuratorsAccordion';
 
-export const OrganizationCurators = () => {
+export interface OrganizationCuratorsProps {
+  heading: string;
+  canEditUsers?: boolean;
+}
+
+export const OrganizationCurators = ({ heading, canEditUsers = false }: OrganizationCuratorsProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const organizationId = user?.topOrgCristinId;
@@ -46,10 +51,10 @@ export const OrganizationCurators = () => {
   return (
     <>
       <Helmet>
-        <title>{t('editor.curators.administer_curators')}</title>
+        <title>{heading}</title>
       </Helmet>
       <Typography variant="h1" sx={{ mb: '1rem' }}>
-        {t('editor.curators.administer_curators')}
+        {heading}
       </Typography>
 
       {organizationQuery.isLoading || curatorsQuery.isLoading ? (
@@ -83,6 +88,7 @@ export const OrganizationCurators = () => {
               searchId={searchId}
               curators={curatorsQuery.data ?? []}
               refetchCurators={curatorsQuery.refetch}
+              canEditUsers={canEditUsers}
             />
           )}
         </Box>

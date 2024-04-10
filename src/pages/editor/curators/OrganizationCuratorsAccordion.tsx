@@ -10,8 +10,9 @@ import { getAllChildOrganizations } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { AddCuratorDialog } from './AddCuratorDialog';
 import { OrganizationCuratorRow } from './OrganizationCuratorRow';
+import { OrganizationCuratorsProps } from './OrganizationCurators';
 
-interface OrganizationCuratorsAccordionProps {
+interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
   organization: Organization;
   searchId: string;
   curators: InstitutionUser[];
@@ -25,6 +26,7 @@ export const OrganizationCuratorsAccordion = ({
   searchId,
   curators,
   refetchCurators,
+  canEditUsers,
   level = 0,
   includeAllSubunits = false,
 }: OrganizationCuratorsAccordionProps) => {
@@ -75,7 +77,12 @@ export const OrganizationCuratorsAccordion = ({
       <AccordionDetails sx={{ pr: 0 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1px', mb: '1rem' }}>
           {curatorsOnThisUnit.map((user) => (
-            <OrganizationCuratorRow key={user.username} curator={user} refetchCurators={refetchCurators} />
+            <OrganizationCuratorRow
+              key={user.username}
+              curator={user}
+              refetchCurators={refetchCurators}
+              canEditUsers={canEditUsers}
+            />
           ))}
         </Box>
 
@@ -99,6 +106,7 @@ export const OrganizationCuratorsAccordion = ({
               includeAllSubunits={includeAllSubunits || isSearchedUnit}
               curators={curators}
               refetchCurators={refetchCurators}
+              canEditUsers={canEditUsers}
             />
           ))}
       </AccordionDetails>
