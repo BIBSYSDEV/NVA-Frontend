@@ -278,10 +278,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -353,7 +349,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -361,6 +361,7 @@
     "curators": {
       "administer_curators": "Administrer tilganger til kuratorer",
       "area_of_responsibility": "Ansvarsområde",
+      "curators": "Kuratorer",
       "curators_count_one": "{{count}} kurator",
       "curators_count_other": "{{count}} kuratorer",
       "edit_user": "Endre bruker",

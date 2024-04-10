@@ -37,6 +37,7 @@ const InstitutionPage = () => {
   const institutionId = user?.topOrgCristinId ?? '';
 
   const organizationQuery = useQuery({
+    enabled: !!institutionId,
     queryKey: [institutionId],
     queryFn: () => getById<Organization>(institutionId),
     staleTime: Infinity,
@@ -70,14 +71,18 @@ const InstitutionPage = () => {
               to={UrlPathTemplate.InstitutionOverviewPage}>
               {t('editor.institution.institution_profile')}
             </LinkButton>
-
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.InstitutionOrganizationOverview}
               data-testid={dataTestId.editor.organizationOverviewLinkButton}
               to={UrlPathTemplate.InstitutionOrganizationOverview}>
               {t('editor.organization_overview')}
             </LinkButton>
-
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionCuratorsOverview}
+              data-testid={dataTestId.editor.curatorsOverviewLinkButton}
+              to={UrlPathTemplate.InstitutionCuratorsOverview}>
+              {t('editor.curators.curators')}
+            </LinkButton>
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.InstitutionDoi}
               data-testid={dataTestId.editor.doiLinkButton}
@@ -90,14 +95,12 @@ const InstitutionPage = () => {
               to={UrlPathTemplate.InstitutionPublishStrategyOverview}>
               {t('editor.publish_strategy.publish_strategy')}
             </LinkButton>
-
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.InstitutionVocabularyOverview}
               data-testid={dataTestId.editor.vocabularyOverviewLinkButton}
               to={UrlPathTemplate.InstitutionVocabularyOverview}>
               {t('editor.vocabulary')}
             </LinkButton>
-
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.InstitutionCategoriesOverview}
               data-testid={dataTestId.editor.categoriesLinkButton}
@@ -110,20 +113,13 @@ const InstitutionPage = () => {
           <NavigationListAccordion
             dataTestId={dataTestId.editor.settingsAccordion}
             title={t('common.settings')}
-            startIcon={
-              <GavelIcon
-                sx={{
-                  bgcolor: 'white',
-                  padding: '0.1rem',
-                }}
-              />
-            }
+            startIcon={<GavelIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
             accordionPath={UrlPathTemplate.InstitutionSettings}
             defaultPath={UrlPathTemplate.InstitutionCurators}>
             <NavigationList>
               <LinkButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
-                data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
+                data-testid={dataTestId.editor.curatorsSettingsLinkButton}
                 to={UrlPathTemplate.InstitutionCurators}>
                 {t('editor.curators.administer_curators')}
               </LinkButton>
@@ -187,8 +183,11 @@ const InstitutionPage = () => {
             component={EditorInstitution}
             isAuthorized={hasCustomer}
           />
+          <PrivateRoute exact path={UrlPathTemplate.InstitutionCuratorsOverview} isAuthorized={hasCustomer}>
+            <OrganizationCurators heading={t('editor.curators.curators')} />
+          </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.InstitutionCurators} isAuthorized={isEditor}>
-            <OrganizationCurators canEditUsers />
+            <OrganizationCurators heading={t('editor.curators.administer_curators')} canEditUsers />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.InstitutionDoi} component={EditorDoi} isAuthorized={hasCustomer} />
           <PrivateRoute

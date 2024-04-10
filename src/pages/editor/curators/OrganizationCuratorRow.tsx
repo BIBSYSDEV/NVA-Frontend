@@ -14,7 +14,7 @@ import { getFullName } from '../../../utils/user-helpers';
 import { UserFormDialog } from '../../basic_data/institution_admin/edit_user/UserFormDialog';
 import { OrganizationCuratorsProps } from './OrganizationCurators';
 
-interface OrganizationCuratorRowProps extends OrganizationCuratorsProps {
+interface OrganizationCuratorRowProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
   curator: InstitutionUser;
   refetchCurators: () => void;
 }

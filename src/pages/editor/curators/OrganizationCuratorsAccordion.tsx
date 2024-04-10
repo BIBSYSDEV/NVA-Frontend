@@ -10,7 +10,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { OrganizationCuratorRow } from './OrganizationCuratorRow';
 import { OrganizationCuratorsProps } from './OrganizationCurators';
 
-interface OrganizationCuratorsAccordionProps extends OrganizationCuratorsProps {
+interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
   organization: Organization;
   searchId: string;
   curators: InstitutionUser[];

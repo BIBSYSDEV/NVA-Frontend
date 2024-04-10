@@ -7,7 +7,7 @@
     "pre-commit": "npx lint-staged && npm run unused-i18n-keys",
     "prepare": "husky",
     "start": "react-scripts -r @cypress/instrument-cra start",
-    "start:mock": "set REACT_APP_USE_MOCK=true&& npm start",
+    "start:mock": "export REACT_APP_USE_MOCK=true && npm start",
     "test": "cypress run",
     "test:cypress": "start-server-and-test start:mock http://localhost:3000 test",
     "unused-i18n-keys": "i18n-unused display-unused"

@@ -18,10 +18,11 @@ import { rolesWithAreaOfResponsibility } from '../../basic_data/institution_admi
 import { OrganizationCuratorsAccordion } from './OrganizationCuratorsAccordion';
 
 export interface OrganizationCuratorsProps {
+  heading: string;
   canEditUsers?: boolean;
 }
 
-export const OrganizationCurators = ({ canEditUsers = false }: OrganizationCuratorsProps) => {
+export const OrganizationCurators = ({ heading, canEditUsers = false }: OrganizationCuratorsProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const organizationId = user?.topOrgCristinId;
@@ -50,10 +51,10 @@ export const OrganizationCurators = ({ canEditUsers = false }: OrganizationCurat
   return (
     <>
       <Helmet>
-        <title>{t('editor.curators.administer_curators')}</title>
+        <title>{heading}</title>
       </Helmet>
       <Typography variant="h1" sx={{ mb: '1rem' }}>
-        {t('editor.curators.administer_curators')}
+        {heading}
       </Typography>
 
       {organizationQuery.isLoading || curatorsQuery.isLoading ? (
