@@ -47,9 +47,7 @@ export const JournalForm = () => {
         <JournalDetailsFields />
       </InputContainerBox>
 
-      {instanceType && nviApplicableTypes.includes(instanceType) ? (
-        <NviValidation registration={values} />
-      ) : null}
+      {instanceType && nviApplicableTypes.includes(instanceType) ? <NviValidation registration={values} /> : null}
     </>
   );
 };
