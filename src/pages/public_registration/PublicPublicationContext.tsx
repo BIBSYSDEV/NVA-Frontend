@@ -790,7 +790,7 @@ const PublicOtherPerformanceDialogContent = ({ otherPerformance }: { otherPerfor
       <Typography paragraph>{performanceType}</Typography>
 
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{place.label}</Typography>
+      <Typography paragraph>{place?.label}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{extent}</Typography>

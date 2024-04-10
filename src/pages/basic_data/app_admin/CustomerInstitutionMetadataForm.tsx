@@ -16,9 +16,9 @@ import {
   CustomerInstitutionFieldNames,
   CustomerInstitutionFormData,
   DoiAgent,
+  Sector,
   emptyCustomerInstitution,
   emptyProtectedDoiAgent,
-  Sector,
 } from '../../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -157,6 +157,7 @@ export const CustomerInstitutionMetadataForm = ({
             <Field name={CustomerInstitutionFieldNames.Sector}>
               {({ field }: FieldProps) => (
                 <TextField
+                  data-testid={dataTestId.basicData.institutionAdmin.sectorField}
                   {...field}
                   select
                   fullWidth

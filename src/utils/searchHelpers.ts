@@ -1,4 +1,6 @@
-import { ResultParam } from '../api/searchApi';
+import { FetchTicketsParams, ResultParam } from '../api/searchApi';
+import { TFunction } from 'i18next';
+import { AggregationFileKeyType } from '../types/registration.types';
 
 export enum SearchParam {
   From = 'from',
@@ -123,3 +125,22 @@ export const removeSearchParamValue = (params: URLSearchParams, key: string, val
 export const isValidIsbn = (value: string): boolean => {
   return value.startsWith('978-') && value.replaceAll('-', '').length === 13;
 };
+
+export const getFileFacetText = (key: AggregationFileKeyType, t: TFunction<'translation'>) => {
+  return key === 'hasPublicFiles'
+    ? t('registration.files_and_license.registration_with_file')
+    : key === 'noFiles'
+      ? t('registration.files_and_license.registration_without_file')
+      : t('registration.missing_name');
+};
+
+export const taskNotificationsParams: FetchTicketsParams = {
+  results: 0,
+  aggregation: 'all',
+};
+
+export const getDialogueNotificationsParams = (username?: string): FetchTicketsParams => ({
+  ...taskNotificationsParams,
+  owner: username,
+  viewedByNot: username,
+});

@@ -1,5 +1,5 @@
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
-import { Box, Button, IconButton, MenuItem, Menu as MuiMenu, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, IconButton, Menu as MuiMenu, MenuItem, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -85,13 +85,13 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               <Typography>{t('my_page.my_page')}</Typography>
             </MenuItem>
           ),
-          user?.isEditor && (
+          !!user?.customerId && (
             <MenuItem
               key={dataTestId.header.editorLink}
               data-testid={dataTestId.header.editorLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.EditorCurators}>
+              to={UrlPathTemplate.InstitutionOverviewPage}>
               <Typography>{organizationQuery.data?.acronym}</Typography>
             </MenuItem>
           ),

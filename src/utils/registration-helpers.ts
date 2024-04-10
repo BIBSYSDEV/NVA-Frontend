@@ -54,7 +54,6 @@ import {
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
-import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -116,15 +115,8 @@ export const nviApplicableTypes: string[] = [
   ChapterType.AcademicChapter,
 ];
 
-export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
-
-export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
-  !!user &&
-  !!registration &&
-  hasCuratorRole(user) &&
-  !!user.customerId &&
-  user.customerId === registration.publisher.id;
+export const userHasSameCustomerAsRegistration = (user: User | null, registration?: Registration) =>
+  !!user?.customerId && registration?.publisher.id === user.customerId;
 
 export const userIsValidImporter = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
@@ -614,9 +606,12 @@ export const getOutputName = (item: OutputItem): string => {
       return (item as Concert).place.label;
     case 'OtherPerformance': {
       const otherMusicPerformance = item as OtherMusicPerformance;
-      return otherMusicPerformance.place.label
-        ? otherMusicPerformance.place.label
-        : otherMusicPerformance.performanceType;
+
+      return (
+        otherMusicPerformance.place?.label ||
+        otherMusicPerformance.performanceType ||
+        i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
+      );
     }
     case 'LiteraryArtsMonograph':
       return (item as LiteraryArtsMonograph).publisher.name;
@@ -666,16 +661,6 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
-
-export const getContributorInitials = (name: string) => {
-  if (!name) return '';
-
-  const splittedNames = name.split(' ');
-  const firstNameInitial = splittedNames[0][0];
-  const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
-  const initials = `${firstNameInitial}${lastNameInitial}`.toUpperCase();
-  return initials;
-};
 
 export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||

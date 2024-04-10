@@ -3,13 +3,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Button, Divider, FormControlLabel, Typography } from '@mui/material';
+import { Badge, Button, Divider, FormControlLabel, Typography } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { FetchTicketsParams, TicketSearchParam, fetchTickets } from '../../api/searchApi';
+import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -23,12 +23,11 @@ import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
+import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
@@ -45,7 +44,6 @@ import { MyResults } from './user_profile/MyResults';
 import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 const MyPagePage = () => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -65,12 +63,6 @@ const MyPagePage = () => {
     unpublished: true,
   });
 
-  const [selectedProjectStatus, setSelectedProjectStatus] = useState({
-    notStarted: false,
-    ongoing: true,
-    concluded: false,
-  });
-
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
     generalSupportCase: true,
@@ -83,43 +75,49 @@ const MyPagePage = () => {
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
 
-  const typeQuery =
-    selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
-
-  const selectedStatusesArray = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
-    ticketStatusValues) as TicketStatus[];
-
-  const statusQuery =
-    selectedStatusesArray.length > 0
-      ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
-      : '';
-
-  const queryParam = searchParams.get(TicketSearchParam.Query);
-
-  const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
-
-  const query = [queryParam, typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
-
   const ticketSearchParams: FetchTicketsParams = {
-    query,
+    query: searchParams.get(TicketSearchParam.Query),
     results: rowsPerPage,
     from: apiPage * rowsPerPage,
-    role: 'creator',
+    owner: user?.nvaUsername,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+    status: searchParams.get(TicketSearchParam.Status),
+    viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
+    type: selectedTypesArray.join(','),
   };
 
   const ticketsQuery = useQuery({
     enabled: !!user?.isCreator,
     queryKey: ['tickets', ticketSearchParams],
-    queryFn: () => fetchTickets(ticketSearchParams),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
+    queryFn: () => fetchCustomerTickets(ticketSearchParams),
+    meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
-  const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
-  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
-  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
-  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
+  const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
+
+  const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
+  const notificationsQuery = useQuery({
+    enabled: isOnDialoguePage && !!user?.isCreator && !!dialogueNotificationsParams.owner,
+    queryKey: ['dialogueNotifications', dialogueNotificationsParams],
+    queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
+    meta: { errorMessage: false },
+  });
+
+  const unreadDoiCount = notificationsQuery.data?.aggregations?.type?.find(
+    (bucket) => bucket.key === 'DoiRequest'
+  )?.count;
+  const unreadPublishingCount = notificationsQuery.data?.aggregations?.type?.find(
+    (bucket) => bucket.key === 'PublishingRequest'
+  )?.count;
+  const unreadGeneralSupportCount = notificationsQuery.data?.aggregations?.type?.find(
+    (bucket) => bucket.key === 'GeneralSupportCase'
+  )?.count;
+
+  const typeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
+  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
+  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
+  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
@@ -213,6 +211,7 @@ const MyPagePage = () => {
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
+                endIcon={<Badge badgeContent={unreadPublishingCount} />}
                 showCheckbox
                 isSelected={selectedTypes.publishingRequest}
                 color="publishingRequest"
@@ -226,6 +225,7 @@ const MyPagePage = () => {
 
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.doiButton}
+                endIcon={<Badge badgeContent={unreadDoiCount} />}
                 showCheckbox
                 isSelected={selectedTypes.doiRequest}
                 color="doiRequest"
@@ -237,6 +237,7 @@ const MyPagePage = () => {
 
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.supportButton}
+                endIcon={<Badge badgeContent={unreadGeneralSupportCount} />}
                 showCheckbox
                 isSelected={selectedTypes.generalSupportCase}
                 color="generalSupportCase"
@@ -306,56 +307,10 @@ const MyPagePage = () => {
             accordionPath={UrlPathTemplate.MyPageProjectRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
-            <NavigationList>
-              <StyledTicketSearchFormGroup>
-                <FormControlLabel
-                  data-testid={dataTestId.myPage.myProjectRegistrationsOngoingCheckbox}
-                  checked={selectedProjectStatus.ongoing}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() =>
-                        setSelectedProjectStatus({
-                          ...selectedProjectStatus,
-                          ongoing: !selectedProjectStatus.ongoing,
-                        })
-                      }
-                    />
-                  }
-                  label={t('my_page.project_registration_status.ongoing')}
-                />
-                <FormControlLabel
-                  data-testid={dataTestId.myPage.myProjectRegistrationsNotStartedCheckbox}
-                  checked={selectedProjectStatus.notStarted}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() =>
-                        setSelectedProjectStatus({
-                          ...selectedProjectStatus,
-                          notStarted: !selectedProjectStatus.notStarted,
-                        })
-                      }
-                    />
-                  }
-                  label={t('my_page.project_registration_status.not_started')}
-                />
-                <FormControlLabel
-                  data-testid={dataTestId.myPage.myProjectRegistrationsConcludedCheckbox}
-                  checked={selectedProjectStatus.concluded}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() =>
-                        setSelectedProjectStatus({
-                          ...selectedProjectStatus,
-                          concluded: !selectedProjectStatus.concluded,
-                        })
-                      }
-                    />
-                  }
-                  label={t('my_page.project_registration_status.concluded')}
-                />
-              </StyledTicketSearchFormGroup>
-            </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
+            <Typography sx={{ margin: '1rem' }}>
+              {t('my_page.my_profile.list_contains_all_registration_you_have_created')}
+            </Typography>
             <LinkCreateButton
               data-testid={dataTestId.myPage.createProjectButton}
               isSelected={showCreateProject}
@@ -426,11 +381,7 @@ const MyPagePage = () => {
             isAuthorized={isAuthenticated}
           />
           <PrivateRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} isAuthorized={isAuthenticated}>
-            <MyProjectRegistrations
-              selectedOngoing={selectedProjectStatus.ongoing}
-              selectedNotStarted={selectedProjectStatus.notStarted}
-              selectedConcluded={selectedProjectStatus.concluded}
-            />
+            <MyProjectRegistrations />
           </PrivateRoute>
           <PrivateRoute
             exact

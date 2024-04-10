@@ -81,7 +81,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
             data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
             variant="outlined"
             onClick={() => setShowDeleteModal(true)}>
-            {t('common.delete')}
+            {t('unpublish_actions.unpublish')}
           </Button>
         )}
       </Box>

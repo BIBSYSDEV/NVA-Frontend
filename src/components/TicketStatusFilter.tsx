@@ -25,7 +25,7 @@ export const TicketStatusFilter = () => {
   };
 
   return (
-    <FormControl variant="outlined" size="small" sx={{ minWidth: '15rem' }}>
+    <FormControl variant="outlined" size="small" sx={{ width: '100%' }}>
       <InputLabel id={'status-filter-select'}>{t('tasks.status')}</InputLabel>
       <Select
         labelId={'status-filter-select'}

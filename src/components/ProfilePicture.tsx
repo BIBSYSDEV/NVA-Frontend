@@ -2,8 +2,8 @@ import { Box, BoxProps, Skeleton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { StyledBaseContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
 import { dataTestId } from '../utils/dataTestIds';
+import { getInitials } from '../utils/general-helpers';
 import { useProfilePicture } from '../utils/hooks/useProfilePicture';
-import { getContributorInitials } from '../utils/registration-helpers';
 
 interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
   personId: string;
@@ -42,7 +42,7 @@ export const ProfilePicture = ({ personId, fullName, isPublicPage = false, sx }:
             width: '100%',
           }}
           data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
-          {getContributorInitials(fullName)}
+          {getInitials(fullName)}
         </StyledBaseContributorIndicator>
       )}
     </Box>

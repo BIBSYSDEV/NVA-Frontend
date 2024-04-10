@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { searchForSeries } from '../../../api/publicationChannelApi';
+import { fetchSeries, searchForSeries } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Series } from '../../../types/registration.types';
@@ -30,7 +30,7 @@ export const SeriesFilter = () => {
   const selectedSeriesQuery = useQuery({
     enabled: !!seriesParam,
     queryKey: [seriesParam],
-    queryFn: () => searchForSeries(seriesParam ?? '', '2023'),
+    queryFn: () => (seriesParam ? fetchSeries(seriesParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
@@ -51,17 +51,13 @@ export const SeriesFilter = () => {
     <Autocomplete
       size="small"
       sx={{ minWidth: '15rem' }}
-      value={seriesParam && selectedSeriesQuery.data?.hits[0] ? selectedSeriesQuery.data.hits[0] : null}
+      value={seriesParam && selectedSeriesQuery.data ? selectedSeriesQuery.data : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       options={debouncedQuery && seriesQuery === debouncedQuery && !seriesOptionsQuery.isLoading ? seriesList : []}
       filterOptions={(options) => options}
       inputValue={seriesQuery}
-      onInputChange={(_, newInputValue) => {
-        setSeriesQuery(newInputValue);
-      }}
-      onChange={(_, newValue) => {
-        handleChange(newValue);
-      }}
+      onInputChange={(_, newInputValue) => setSeriesQuery(newInputValue)}
+      onChange={(_, newValue) => handleChange(newValue)}
       blurOnSelect
       disableClearable={!seriesQuery}
       loading={isFetching}
@@ -77,7 +73,7 @@ export const SeriesFilter = () => {
           {...params}
           variant="outlined"
           isLoading={isFetching}
-          placeholder={t('registration.resource_type.search_for_series')}
+          placeholder={t('registration.resource_type.search_for_title_or_issn')}
           showSearchIcon={!seriesParam}
           multiline
         />
