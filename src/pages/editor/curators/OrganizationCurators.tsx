@@ -17,7 +17,11 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { rolesWithAreaOfResponsibility } from '../../basic_data/institution_admin/edit_user/TasksFormSection';
 import { OrganizationCuratorsAccordion } from './OrganizationCuratorsAccordion';
 
-export const OrganizationCurators = () => {
+export interface OrganizationCuratorsProps {
+  canEditUsers?: boolean;
+}
+
+export const OrganizationCurators = ({ canEditUsers = false }: OrganizationCuratorsProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const organizationId = user?.topOrgCristinId;
@@ -83,6 +87,7 @@ export const OrganizationCurators = () => {
               searchId={searchId}
               curators={curatorsQuery.data ?? []}
               refetchCurators={curatorsQuery.refetch}
+              canEditUsers={canEditUsers}
             />
           )}
         </Box>

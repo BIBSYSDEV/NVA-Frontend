@@ -187,12 +187,9 @@ const InstitutionPage = () => {
             component={EditorInstitution}
             isAuthorized={hasCustomer}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionCurators}
-            component={OrganizationCurators}
-            isAuthorized={isEditor}
-          />
+          <PrivateRoute exact path={UrlPathTemplate.InstitutionCurators} isAuthorized={isEditor}>
+            <OrganizationCurators canEditUsers />
+          </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.InstitutionDoi} component={EditorDoi} isAuthorized={hasCustomer} />
           <PrivateRoute
             exact
