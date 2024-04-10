@@ -18,15 +18,15 @@ import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { CategoriesWithFiles } from './CategoriesWithFiles';
 import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
-import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
 import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
-import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
+import { OrganizationCurators } from './curators/OrganizationCurators';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
@@ -125,7 +125,7 @@ const InstitutionPage = () => {
                 isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
                 data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
                 to={UrlPathTemplate.InstitutionCurators}>
-                {t('editor.curators.areas_of_responsibility')}
+                {t('editor.curators.administer_curators')}
               </LinkButton>
               <LinkButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategy}
@@ -190,7 +190,7 @@ const InstitutionPage = () => {
           <PrivateRoute
             exact
             path={UrlPathTemplate.InstitutionCurators}
-            component={EditorCurators}
+            component={OrganizationCurators}
             isAuthorized={isEditor}
           />
           <PrivateRoute exact path={UrlPathTemplate.InstitutionDoi} component={EditorDoi} isAuthorized={hasCustomer} />
