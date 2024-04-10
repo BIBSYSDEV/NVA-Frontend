@@ -90,6 +90,7 @@ export const dataTestId = {
   editor: {
     areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
     categoriesLinkButton: 'categories-link-button',
+    editUserButton: 'edit-user-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
     institutionSupportInputField: 'institution-support-input-field',
     doiLinkButton: 'doi-link-button',
