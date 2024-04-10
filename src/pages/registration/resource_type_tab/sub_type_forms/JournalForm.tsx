@@ -47,7 +47,7 @@ export const JournalForm = () => {
         <JournalDetailsFields />
       </InputContainerBox>
 
-      {nviApplicableTypes.findIndex((category) => category === instanceType) >= 0 ? (
+      {instanceType && nviApplicableTypes.includes(instanceType) ? (
         <NviValidation registration={values} />
       ) : null}
     </>
