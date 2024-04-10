@@ -231,7 +231,6 @@ export const SelectRegistrationTypeField = () => {
         </Box>
 
         <CategorySelector
-          canSelectAllNviCategories={false}
           selectedCategories={currentInstanceType ? [currentInstanceType] : []}
           onCategoryClick={onChangeType}
           disabledCategories={disabledCategories}

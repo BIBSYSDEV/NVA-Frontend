@@ -57,7 +57,6 @@ interface CategorySelectorProps {
   setSelectedCategories?: (categories: PublicationInstanceType[]) => void;
   onCategoryClick?: (category: PublicationInstanceType) => void;
   disabledCategories?: DisabledCategory[];
-  canSelectAllNviCategories: boolean;
 }
 
 export const CategorySelector = ({
@@ -65,7 +64,6 @@ export const CategorySelector = ({
   onCategoryClick,
   selectedCategories,
   setSelectedCategories,
-  canSelectAllNviCategories,
 }: CategorySelectorProps) => {
   const { t } = useTranslation();
 
@@ -100,7 +98,7 @@ export const CategorySelector = ({
           InputProps={{ endAdornment: <SearchIcon /> }}
           onChange={(event) => setSearchValue(event.target.value)}
         />
-        {canSelectAllNviCategories ? (
+        {setSelectedCategories ? (
           <Chip
             icon={
               <FilterVintageIcon
