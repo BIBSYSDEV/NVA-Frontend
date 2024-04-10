@@ -11,23 +11,26 @@ interface SearchTextFieldProps extends Omit<OutlinedTextFieldProps, 'variant'> {
 export const SearchTextField = ({ clearValue, ...props }: SearchTextFieldProps) => {
   const { t } = useTranslation();
   return (
-    <TextField
-      {...props}
-      type="search"
-      data-testid={dataTestId.startPage.searchField}
-      fullWidth
-      variant="outlined"
-      size="small"
-      aria-label={t('common.search')}
-      InputProps={{
-        startAdornment: <SearchIcon color="disabled" />,
-        endAdornment:
-          props.value && clearValue ? (
-            <IconButton onClick={clearValue} title={t('common.clear')} size="small">
-              <ClearIcon />
-            </IconButton>
-          ) : null,
-      }}
-    />
+    <>
+      <TextField
+        {...props}
+        type="search"
+        data-testid={dataTestId.startPage.searchField}
+        fullWidth
+        variant="outlined"
+        size="small"
+        aria-label={t('common.search')}
+        InputProps={{
+          startAdornment: <SearchIcon color="disabled" />,
+          endAdornment:
+            props.value && clearValue ? (
+              <IconButton onClick={clearValue} title={t('common.clear')} size="small">
+                <ClearIcon />
+              </IconButton>
+            ) : null,
+        }}
+      />
+      <input type="submit" hidden />
+    </>
   );
 };
