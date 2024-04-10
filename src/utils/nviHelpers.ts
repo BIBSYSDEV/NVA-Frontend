@@ -86,9 +86,7 @@ const hasChangedContributorsOrAffiliations = async (
 
 export const willResetNviStatuses = async (persistedRegistration: Registration, updatedRegistration: Registration) => {
   const canBeNviCandidate =
-    nviApplicableTypes.findIndex(
-      (category) => category === persistedRegistration.entityDescription?.reference?.publicationInstance?.type
-    ) >= 0;
+    !!persistedRegistration.entityDescription?.reference?.publicationInstance?.type && nviApplicableTypes.includes(persistedRegistration.entityDescription?.reference?.publicationInstance?.type);
   if (!canBeNviCandidate) {
     return false;
   }
