@@ -84,6 +84,12 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
         initialValues={otherPerformance ?? emptyOtherPerformance}
         validationSchema={validationSchema}
         onSubmit={(values) => {
+          if (!values.place?.type) {
+            values.place = {
+              ...emptyPlace,
+              ...values.place,
+            };
+          }
           onSubmit(values);
           closeModal();
         }}>

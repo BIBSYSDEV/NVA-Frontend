@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
+import { FileVersion } from '../../../types/associatedArtifact.types';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
@@ -34,12 +35,18 @@ export const associatedFileValidationSchema = Yup.object({
         ? schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid)
         : schema
     ),
-  publisherAuthority: Yup.boolean()
+  publisherVersion: Yup.string()
     .nullable()
-    .when(['type', 'administrativeAgreement'], ([type, administrativeAgreement], schema) =>
-      associatedArtifactIsFile({ type }) && administrativeAgreement === false && isTypeWithFileVersionField(type)
-        ? schema.required(associatedArtifactErrorMessage.fileVersionRequired)
-        : schema
+    .when(
+      ['type', 'administrativeAgreement', '$publicationInstanceType'],
+      ([type, administrativeAgreement, publicationInstanceType], schema) =>
+        associatedArtifactIsFile({ type }) &&
+        administrativeAgreement === false &&
+        isTypeWithFileVersionField(publicationInstanceType)
+          ? schema
+              .required(associatedArtifactErrorMessage.fileVersionRequired)
+              .oneOf([FileVersion.Published, FileVersion.Accepted], associatedArtifactErrorMessage.fileVersionRequired)
+          : schema
     ),
   license: Yup.string()
     .nullable()

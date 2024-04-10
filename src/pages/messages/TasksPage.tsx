@@ -5,6 +5,7 @@ import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RuleIcon from '@mui/icons-material/Rule';
 import {
+  Badge,
   Box,
   Button,
   FormControlLabel,
@@ -13,8 +14,8 @@ import {
   MenuItem,
   Radio,
   Select,
-  Typography,
   styled,
+  Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -22,20 +23,21 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { FetchTicketsParams, TicketSearchParam, fetchNviCandidates, fetchTickets } from '../../api/searchApi';
+import { fetchCustomerTickets, fetchNviCandidates, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
-import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
-import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
+import { taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
@@ -43,10 +45,6 @@ import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
-
-type TicketStatusFilter = {
-  [key in TicketStatus]: boolean;
-};
 
 export const StyledSearchModeButton = styled(LinkButton)({
   borderRadius: '1.5rem',
@@ -60,9 +58,13 @@ const StyledStatusRadio = styled(Radio)({
 
 const nviYearFilterValues = getNviYearFilterValues();
 
+interface LocationState {
+  previousSearch: string;
+}
+
 const TasksPage = () => {
   const { t } = useTranslation();
-  const location = useLocation();
+  const location = useLocation<LocationState | undefined>();
   const user = useSelector((store: RootState) => store.user);
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;
@@ -81,7 +83,7 @@ const TasksPage = () => {
 
   const institutionUserQuery = useQuery({
     enabled: !!nvaUsername,
-    queryKey: [nvaUsername],
+    queryKey: ['user', nvaUsername],
     queryFn: () => fetchUser(nvaUsername),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
@@ -94,15 +96,15 @@ const TasksPage = () => {
   const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : '';
 
   const [organizationScope, setOrganizationScope] = useState(
-    institutionUserQuery.data?.viewingScope?.includedUnits ?? []
+    institutionUserQuery.data?.viewingScope.includedUnits ?? []
   );
 
   useEffect(() => {
     // Must populate the state after the request is done
-    if (institutionUserQuery.data?.viewingScope?.includedUnits) {
+    if (institutionUserQuery.data?.viewingScope.includedUnits) {
       setOrganizationScope(institutionUserQuery.data.viewingScope.includedUnits);
     }
-  }, [institutionUserQuery.data?.viewingScope?.includedUnits]);
+  }, [institutionUserQuery.data?.viewingScope.includedUnits]);
 
   const [showOnlyMyTasks, setShowOnlyMyTasks] = useState(false);
 
@@ -115,64 +117,54 @@ const TasksPage = () => {
     publishingRequest: isPublishingCurator,
   });
 
-  const [ticketStatusFilter, setTicketStatusFilter] = useState<TicketStatusFilter>({
-    New: true,
-    Pending: false,
-    Completed: false,
-    Closed: false,
-  });
-
   const selectedTicketTypes = Object.entries(ticketTypes)
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
 
-  const ticketTypeQuery =
-    selectedTicketTypes.length > 0 ? `(${selectedTicketTypes.map((type) => 'type:' + type).join(' OR ')})` : '';
-
-  const selectedTicketStatuses = Object.entries(ticketStatusFilter)
-    .filter(([_, selected]) => selected)
-    .map(([key]) => key);
-
-  const ticketStatusQuery =
-    selectedTicketStatuses.length > 0
-      ? `(${selectedTicketStatuses.map((status) => 'status:' + status).join(' OR ')})`
-      : '';
-
-  const ticketAssigneeQuery = showOnlyMyTasks && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
-
-  const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
-
-  const ticketQueryString = [queryParam, ticketTypeQuery, ticketStatusQuery, ticketAssigneeQuery, ticketViewedByQuery]
-    .filter(Boolean)
-    .join(' AND ');
+  const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.OrganizationId) ? rowsPerPage : 0;
 
   const ticketSearchParams: FetchTicketsParams = {
-    query: ticketQueryString,
-    results: rowsPerPage,
+    query: searchParams.get(TicketSearchParam.Query),
+    results: numberOfResultsGivenViewingScope,
     from: (page - 1) * rowsPerPage,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
-    viewingScope: organizationScope.length > 0 ? organizationScope.join(',') : null,
-    excludeSubUnits: excludeSubunits,
+    organizationId: searchParams.get(TicketSearchParam.OrganizationId),
+    excludeSubUnits: true,
+    assignee: searchParams.get(TicketSearchParam.Assignee),
+    status: searchParams.get(TicketSearchParam.Status),
+    type: selectedTicketTypes.join(','),
+    viewedByNot: ticketUnreadFilter && user ? user.nvaUsername : '',
   };
 
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
     queryKey: ['tickets', ticketSearchParams],
-    queryFn: () => fetchTickets(ticketSearchParams),
+    queryFn: () => fetchCustomerTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
-  const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
-  const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
-  const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
-  const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
+  const notificationsQuery = useQuery({
+    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
+    queryKey: ['taskNotifications', taskNotificationsParams],
+    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
+    meta: { errorMessage: t('feedback.error.get_messages') },
+  });
 
-  const ticketStatusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
-  const ticketNewCount = ticketStatusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
-  const ticketPendingCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
-  const ticketCompletedCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
-  const ticketClosedCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
+  const doiNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'DoiRequest'
+  )?.count;
+  const publishingNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'PublishingRequest'
+  )?.count;
+  const supportNotificationsCount = notificationsQuery.data?.aggregations?.byUserPending?.find(
+    (notification) => notification.key === 'GeneralSupportCase'
+  )?.count;
+
+  const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
+  const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
+  const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
+  const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   // NVI data
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
@@ -223,7 +215,11 @@ const TasksPage = () => {
       <SideMenu
         expanded={isOnTicketsPage || isOnNviCandidatesPage || isOnCorrectionListPage}
         minimizedMenu={
-          <Link to={isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi}>
+          <Link
+            to={{
+              pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
+              search: location.state?.previousSearch,
+            }}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
             </StyledMinimizedMenuButton>
@@ -231,13 +227,15 @@ const TasksPage = () => {
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
-        <OrganizationScope
-          organizationScope={organizationScope}
-          setOrganizationScope={setOrganizationScope}
-          excludeSubunits={excludeSubunits}
-          setExcludeSubunits={setExcludeSubunits}
-          hide={isOnCorrectionListPage}
-        />
+        {!isOnTicketsPage && (
+          <OrganizationScope
+            organizationScope={organizationScope}
+            setOrganizationScope={setOrganizationScope}
+            excludeSubunits={excludeSubunits}
+            setExcludeSubunits={setExcludeSubunits}
+            hide={isOnCorrectionListPage}
+          />
+        )}
 
         {isTicketCurator && (
           <NavigationListAccordion
@@ -269,6 +267,7 @@ const TasksPage = () => {
               {isPublishingCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
+                  endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.publishingRequest}
                   color="publishingRequest"
@@ -282,6 +281,7 @@ const TasksPage = () => {
               {isDoiCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
+                  endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.doiRequest}
                   color="doiRequest"
@@ -295,6 +295,7 @@ const TasksPage = () => {
               {isSupportCurator && (
                 <SelectableButton
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
+                  endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
                   isSelected={ticketTypes.generalSupportCase}
                   color="generalSupportCase"
@@ -306,97 +307,6 @@ const TasksPage = () => {
                     : t('my_page.messages.types.GeneralSupportCase')}
                 </SelectableButton>
               )}
-            </StyledTicketSearchFormGroup>
-
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
-              <StyledSearchModeButton
-                data-testid={dataTestId.tasksPage.searchMode.myTasksButton}
-                isSelected={showOnlyMyTasks}
-                startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                onClick={() => {
-                  if (ticketStatusFilter.New) {
-                    setTicketStatusFilter({ ...ticketStatusFilter, New: false });
-                  }
-                  setShowOnlyMyTasks(true);
-                }}>
-                {t('tasks.my_user_dialogs')}
-              </StyledSearchModeButton>
-              <StyledSearchModeButton
-                data-testid={dataTestId.tasksPage.searchMode.allTasksButton}
-                isSelected={!showOnlyMyTasks}
-                startIcon={!showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                onClick={() => setShowOnlyMyTasks(false)}>
-                {t('tasks.all_user_dialogs')}
-              </StyledSearchModeButton>
-            </StyledTicketSearchFormGroup>
-
-            <StyledTicketSearchFormGroup>
-              <FormLabel component="legend" sx={{ fontWeight: 700 }}>
-                {t('tasks.status')}
-              </FormLabel>
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
-                disabled={showOnlyMyTasks}
-                checked={ticketStatusFilter.New}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() => setTicketStatusFilter({ ...ticketStatusFilter, New: !ticketStatusFilter.New })}
-                  />
-                }
-                label={
-                  ticketStatusFilter.New && ticketNewCount
-                    ? `${t('my_page.messages.ticket_types.New')} (${ticketNewCount})`
-                    : t('my_page.messages.ticket_types.New')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
-                checked={ticketStatusFilter.Pending}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() =>
-                      setTicketStatusFilter({ ...ticketStatusFilter, Pending: !ticketStatusFilter.Pending })
-                    }
-                  />
-                }
-                label={
-                  ticketStatusFilter.Pending && ticketPendingCount
-                    ? `${t('my_page.messages.ticket_types.Pending')} (${ticketPendingCount})`
-                    : t('my_page.messages.ticket_types.Pending')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
-                checked={ticketStatusFilter.Completed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() =>
-                      setTicketStatusFilter({ ...ticketStatusFilter, Completed: !ticketStatusFilter.Completed })
-                    }
-                  />
-                }
-                label={
-                  ticketStatusFilter.Completed && ticketCompletedCount
-                    ? `${t('my_page.messages.ticket_types.Completed')} (${ticketCompletedCount})`
-                    : t('my_page.messages.ticket_types.Completed')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
-                checked={ticketStatusFilter.Closed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() =>
-                      setTicketStatusFilter({ ...ticketStatusFilter, Closed: !ticketStatusFilter.Closed })
-                    }
-                  />
-                }
-                label={
-                  ticketStatusFilter.Closed && ticketClosedCount
-                    ? `${t('my_page.messages.ticket_types.Closed')} (${ticketClosedCount})`
-                    : t('my_page.messages.ticket_types.Closed')
-                }
-              />
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>
         )}
@@ -433,9 +343,6 @@ const TasksPage = () => {
                     isSelected={showOnlyMyTasks}
                     startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
                     onClick={() => {
-                      if (ticketStatusFilter.New) {
-                        setTicketStatusFilter({ ...ticketStatusFilter, New: false });
-                      }
                       setShowOnlyMyTasks(true);
                     }}>
                     {t('tasks.my_nvi_results')}
@@ -601,14 +508,16 @@ const TasksPage = () => {
           </PrivateRoute>
 
           <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isTicketCurator}>
-            <TicketList
-              ticketsQuery={ticketsQuery}
-              rowsPerPage={rowsPerPage}
-              setRowsPerPage={setRowsPerPage}
-              page={page}
-              setPage={setPage}
-              title={t('common.tasks')}
-            />
+            <TicketListDefaultValuesWrapper>
+              <TicketList
+                ticketsQuery={ticketsQuery}
+                rowsPerPage={rowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+                page={page}
+                setPage={setPage}
+                title={t('common.tasks')}
+              />
+            </TicketListDefaultValuesWrapper>
           </PrivateRoute>
           <PrivateRoute
             exact

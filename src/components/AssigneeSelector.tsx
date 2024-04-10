@@ -9,7 +9,7 @@ import { StyledBaseContributorIndicator } from '../pages/registration/contributo
 import { RootState } from '../redux/store';
 import { RoleName } from '../types/user.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { getContributorInitials } from '../utils/registration-helpers';
+import { getInitials } from '../utils/general-helpers';
 import { getFullName } from '../utils/user-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
 
@@ -58,7 +58,7 @@ export const AssigneeSelector = ({
   const isLoading = isUpdating || curatorsQuery.isLoading || assigneeQuery.isFetching;
 
   const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
-  const assigneeInitials = getContributorInitials(assigneeName);
+  const assigneeInitials = getInitials(assigneeName);
 
   return showCuratorSearch ? (
     <Autocomplete
@@ -69,13 +69,6 @@ export const AssigneeSelector = ({
         </li>
       )}
       disabled={isLoading}
-      filterOptions={(options, state) => {
-        const filter = state.inputValue.toLocaleLowerCase();
-        return options.filter((option) => {
-          const name = getFullName(option.givenName, option.familyName).toLocaleLowerCase();
-          return name.includes(filter);
-        });
-      }}
       onChange={async (_, value) => {
         try {
           await onSelectAssignee(value?.username ?? '');

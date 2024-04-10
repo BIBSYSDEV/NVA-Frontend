@@ -36,16 +36,14 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   serviceCenterUri?: string;
   nviInstitution: boolean;
   rboInstitution: boolean;
-  rightsRetentionStrategy: RightsRetentionStrategy;
+  rightsRetentionStrategy: {
+    type: CustomerRrsType;
+    id: string;
+  };
   allowFileUploadForTypes: PublicationInstanceType[];
 }
 
-interface RightsRetentionStrategy {
-  type: RightsRetentionStrategyTypes;
-  id: string;
-}
-
-export enum RightsRetentionStrategyTypes {
+export enum CustomerRrsType {
   NullRightsRetentionStrategy = 'NullRightsRetentionStrategy',
   RightsRetentionStrategy = 'RightsRetentionStrategy',
   OverridableRightsRetentionStrategy = 'OverridableRightsRetentionStrategy',
@@ -73,12 +71,28 @@ export enum VocabularyStatus {
   Disabled = 'Disabled',
 }
 
+export const visibleVocabularyStatuses = [VocabularyStatus.Default, VocabularyStatus.Allowed];
+
 export interface CustomerVocabulary {
   type: 'Vocabulary';
   id: string;
   name: string;
   status: VocabularyStatus;
 }
+
+export const defaultHrcsActivity: CustomerVocabulary = {
+  type: 'Vocabulary',
+  id: 'https://nva.unit.no/hrcs/activity',
+  status: VocabularyStatus.Disabled,
+  name: 'HRCS Activity',
+};
+
+export const defaultHrcsCategory: CustomerVocabulary = {
+  type: 'Vocabulary',
+  id: 'https://nva.unit.no/hrcs/category',
+  status: VocabularyStatus.Disabled,
+  name: 'HRCS Category',
+};
 
 export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   type: 'Customer',
@@ -97,7 +111,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   sector: Sector.Uhi,
   nviInstitution: false,
   rboInstitution: false,
-  rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
+  rightsRetentionStrategy: { type: CustomerRrsType.NullRightsRetentionStrategy, id: '' },
   allowFileUploadForTypes: allPublicationInstanceTypes,
 };
 

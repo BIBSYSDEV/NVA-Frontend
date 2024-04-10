@@ -66,9 +66,9 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     queryKey: [personId],
     queryFn: () => getById<CristinPerson>(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
-    initialData: existingPersonObject,
   });
-  const personEmployments = personQuery.data?.employments ?? [];
+  const person = existingPersonObject ?? personQuery.data;
+  const personEmployments = person?.employments ?? [];
 
   const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
   const internalEmployments: Employment[] = [];
@@ -84,7 +84,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     }
   });
 
-  const personCristinIdentifier = getValueByKey('CristinIdentifier', personQuery.data?.identifiers);
+  const personCristinIdentifier = getValueByKey('CristinIdentifier', person?.identifiers);
   const username =
     personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
 
@@ -122,7 +122,8 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         return await createUser({
           customerId,
           roles: user.roles,
-          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', personQuery.data?.identifiers),
+          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', person?.identifiers),
+          viewingScope: user.viewingScope,
         });
       }
     },
@@ -133,17 +134,13 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   });
 
   const initialValues: UserFormData = {
-    person: personQuery.data
-      ? {
-          ...personQuery.data,
-          employments: internalEmployments,
-        }
-      : personQuery.data,
+    person: person ? { ...person, employments: internalEmployments } : person,
     user: institutionUserQuery.isError
       ? {
           institution: customerId,
           roles: [{ type: 'Role', rolename: RoleName.Creator }],
           username: username,
+          viewingScope: { type: 'ViewingScope', includedUnits: [] },
         }
       : institutionUserQuery.data,
   };
@@ -202,15 +199,17 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
 
                       setFieldValue(UserFormFieldName.Roles, newUserRoles);
                       const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
-                      if (hasCuratorRole && !values.user?.viewingScope?.includedUnits.length && topOrgCristinId) {
+                      if (hasCuratorRole && !values.user?.viewingScope.includedUnits.length && topOrgCristinId) {
                         setFieldValue(UserFormFieldName.ViewingScope, [topOrgCristinId]);
+                      } else if (!hasCuratorRole) {
+                        setFieldValue(UserFormFieldName.ViewingScope, []);
                       }
                     }}
                   />
                   <Divider orientation="vertical" />
                   <TasksFormSection
                     roles={values.user?.roles.map((role) => role.rolename)}
-                    viewingScopes={values.user?.viewingScope?.includedUnits ?? []}
+                    viewingScopes={values.user?.viewingScope.includedUnits ?? []}
                     updateViewingScopes={(newViewingScopes) =>
                       setFieldValue(UserFormFieldName.ViewingScope, newViewingScopes)
                     }
@@ -226,7 +225,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
               <Button onClick={onClose}>{t('common.cancel')}</Button>
               <LoadingButton
                 loading={isSubmitting}
-                disabled={!values.person || !values.user}
+                disabled={!values.person || internalEmployments.length === 0 || !values.user}
                 variant="contained"
                 type="submit">
                 {t('common.save')}

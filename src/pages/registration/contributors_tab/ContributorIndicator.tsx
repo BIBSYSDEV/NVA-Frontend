@@ -1,8 +1,9 @@
 import { styled, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../../translations/i18n';
 import { Contributor } from '../../../types/contributor.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getContributorInitials } from '../../../utils/registration-helpers';
+import { getInitials } from '../../../utils/general-helpers';
 
 export const StyledBaseContributorIndicator = styled('div')({
   width: '1.75rem',
@@ -14,6 +15,7 @@ export const StyledBaseContributorIndicator = styled('div')({
 });
 StyledBaseContributorIndicator.defaultProps = {
   role: 'img',
+  'aria-label': i18n.t('common.initials'),
 };
 
 export const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
@@ -37,7 +39,7 @@ interface ContributorIndicatorProps {
 
 export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps) => {
   const { t } = useTranslation();
-  const initials = getContributorInitials(contributor.identity.name);
+  const initials = getInitials(contributor.identity.name);
 
   const hasId = !!contributor.identity.id;
   const hasVerifiedAffiliation =

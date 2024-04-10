@@ -1,5 +1,5 @@
 import { AssociatedFile } from '../associatedArtifact.types';
-import { SearchResponse } from '../common.types';
+import { AggregationValue, SearchResponse2 } from '../common.types';
 import { PublishStrategy } from '../customerInstitution.types';
 import { BaseEntityDescription, PublicationInstanceType, Registration } from '../registration.types';
 
@@ -24,7 +24,8 @@ export interface TicketCollection {
 }
 
 export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
-export type TicketStatus = 'New' | 'Pending' | 'Closed' | 'Completed';
+export type TicketStatus = 'New' | 'Pending' | 'Closed' | 'Completed' | 'NotApplicable';
+export const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];
 
 interface BaseTicket {
   type: TicketType;
@@ -77,15 +78,10 @@ interface Person {
   username: string;
 }
 
-type TicketAggregations = {
-  [fieldName: string]: {
-    buckets?: AggregationBucket[];
-  };
+type CustomerTicketAggregations = {
+  type?: AggregationValue<TicketType>[];
+  status?: AggregationValue<TicketStatus>[];
+  byUserPending?: AggregationValue<TicketType>[];
 };
 
-interface AggregationBucket {
-  key: string;
-  docCount: number;
-}
-
-export type TicketSearchResponse = SearchResponse<ExpandedTicket, TicketAggregations>;
+export type CustomerTicketSearchResponse = SearchResponse2<ExpandedTicket, CustomerTicketAggregations>;

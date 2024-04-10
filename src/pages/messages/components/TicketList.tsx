@@ -1,20 +1,27 @@
-import { Box, List, Typography } from '@mui/material';
+import { Grid, List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
+import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
+import { CuratorSelector } from '../../../components/CuratorSelector';
+import { DialoguesWithoutCuratorButton } from '../../../components/DialoguesWithoutCuratorButton';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
-import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
+import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
+import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
+import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
-  ticketsQuery: UseQueryResult<TicketSearchResponse>;
+  ticketsQuery: UseQueryResult<CustomerTicketSearchResponse>;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -24,6 +31,8 @@ interface TicketListProps {
 
 export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
 
@@ -53,13 +62,29 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <title>{title}</title>
       </Helmet>
 
-      <Typography variant="h2" sx={{ mb: '1rem' }}>
-        {title}
-      </Typography>
-
-      <Box sx={{ mb: '1rem', display: 'flex', gap: '0.5rem' }}>
-        <SearchForm sx={{ flex: '1 0 15rem' }} placeholder={t('tasks.search_placeholder')} />
-      </Box>
+      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
+        <Grid item xs={16} md={5} lg={4}>
+          <TicketStatusFilter />
+        </Grid>
+        <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
+          <SearchForm placeholder={t('tasks.search_placeholder')} />
+        </Grid>
+        {isOnTasksPage && (
+          <>
+            <Grid item xs={16} md={5} lg={4}>
+              <DialoguesWithoutCuratorButton />
+            </Grid>
+            <Grid item xs={16} md={5} lg={4}>
+              <CuratorSelector
+                roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
+              />
+            </Grid>
+            <Grid item xs={16} md={6} lg={5}>
+              <AreaOfResponsibilitySelector />
+            </Grid>
+          </>
+        )}
+      </Grid>
 
       {ticketsQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
@@ -69,7 +94,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             <Typography>{t('my_page.messages.no_messages')}</Typography>
           ) : (
             <ListPagination
-              count={ticketsQuery.data?.size ?? 0}
+              count={ticketsQuery.data?.totalHits ?? 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={(newPage) => setPage(newPage)}

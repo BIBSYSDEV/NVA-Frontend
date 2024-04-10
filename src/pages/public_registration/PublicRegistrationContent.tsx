@@ -105,11 +105,10 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
                 bgcolor: 'primary.light',
                 color: 'primary.contrastText',
               }}>
-              {t('registration.public_page.metadata_not_published')}
+              {t('registration.public_page.result_not_published')}
             </Typography>
           </Box>
         )}
-
         {entityDescription?.alternativeTitles.und && (
           <Box sx={{ borderTop: '1px solid', py: '1rem' }}>
             <Typography variant="h3" component="h2">

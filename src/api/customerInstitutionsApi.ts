@@ -1,7 +1,7 @@
 import { CancelToken } from 'axios';
-import { CustomerInstitution, DoiAgent } from '../types/customerInstitution.types';
+import { CustomerInstitution, DoiAgent, ProtectedDoiAgent, VocabularyList } from '../types/customerInstitution.types';
 import { CustomerInstitutionApiPath } from './apiPaths';
-import { authenticatedApiRequest } from './apiRequest';
+import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
 export const createCustomerInstitution = async (
   customer: Omit<CustomerInstitution, 'doiAgent'>,
@@ -25,6 +25,12 @@ export const updateCustomerInstitution = async (
     cancelToken,
   });
 
+export const fetchDoiAgent = async (doiAgentId: string) =>
+  await authenticatedApiRequest2<ProtectedDoiAgent>({
+    url: doiAgentId,
+    method: 'GET',
+  });
+
 export const updateDoiAgent = async (doiAgent: DoiAgent, cancelToken?: CancelToken) =>
   await authenticatedApiRequest<DoiAgent>({
     url: doiAgent.id,
@@ -32,3 +38,11 @@ export const updateDoiAgent = async (doiAgent: DoiAgent, cancelToken?: CancelTok
     data: doiAgent,
     cancelToken,
   });
+
+export const fetchVocabulary = async (customerId: string) => {
+  const getVocabulary = await authenticatedApiRequest2<VocabularyList>({
+    url: `${customerId}/vocabularies`,
+  });
+
+  return getVocabulary.data;
+};

@@ -2,7 +2,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,10 +16,10 @@ import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
 import { getTitleString, userCanDeleteRegistration } from '../utils/registration-helpers';
 import {
+  UrlPathTemplate,
   getRegistrationLandingPagePath,
   getRegistrationWizardPath,
   getResearchProfilePath,
-  UrlPathTemplate,
 } from '../utils/urlPaths';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
@@ -115,7 +115,7 @@ export const RegistrationListItemContent = ({
                   bgcolor: 'primary.light',
                   color: 'primary.contrastText',
                 }}>
-                {t('registration.public_page.metadata_not_published')}
+                {t('registration.public_page.result_not_published')}
               </Typography>
             )}
         </Box>

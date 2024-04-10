@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Checkbox, Chip, Divider, FormControlLabel, FormLabel, TextField } from '@mui/material';
+import { Box, Button, Checkbox, Divider, FormControlLabel, FormLabel, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -9,16 +9,16 @@ import {
   updateCustomerInstitution,
   updateDoiAgent,
 } from '../../../api/customerInstitutionsApi';
-import { InputContainerBox, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
+import { InputContainerBox } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import {
   CustomerInstitution,
   CustomerInstitutionFieldNames,
   CustomerInstitutionFormData,
   DoiAgent,
+  Sector,
   emptyCustomerInstitution,
   emptyProtectedDoiAgent,
-  Sector,
 } from '../../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -26,6 +26,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 import { customerInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
 import { CustomerDoiPasswordField } from './CustomerDoiPasswordField';
+import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { CustomerInstitutionInformationFromCristin } from './CustomerInstitutionInformationFromCristin';
 import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
 import { OrganizationSearchField } from './OrganizationSearchField';
@@ -114,7 +115,7 @@ export const CustomerInstitutionMetadataForm = ({
       validateOnChange
       validationSchema={customerInstitutionValidationSchema}
       onSubmit={handleSubmit}>
-      {({ values, isSubmitting, setValues, setFieldValue }: FormikProps<CustomerInstitutionFormData>) => (
+      {({ values, isSubmitting, setValues, setFieldValue, resetForm }: FormikProps<CustomerInstitutionFormData>) => (
         <Form noValidate>
           <InputContainerBox>
             {!editMode && (
@@ -155,30 +156,30 @@ export const CustomerInstitutionMetadataForm = ({
 
             <Field name={CustomerInstitutionFieldNames.Sector}>
               {({ field }: FieldProps) => (
-                <div>
-                  <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                    {t('basic_data.institutions.sector')}
-                  </FormLabel>
-                  <Box sx={{ display: 'flex', gap: '0.5rem', mt: '0.5rem' }}>
-                    {Object.values(Sector).map((sector) => (
-                      <Chip
-                        key={sector}
-                        data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}
-                        label={t(`basic_data.institutions.sector_values.${sector}`)}
-                        color="primary"
-                        variant={field.value === sector ? 'filled' : 'outlined'}
-                        onClick={() => setFieldValue(field.name, sector)}
-                      />
-                    ))}
-                  </Box>
-                </div>
+                <TextField
+                  data-testid={dataTestId.basicData.institutionAdmin.sectorField}
+                  {...field}
+                  select
+                  fullWidth
+                  required
+                  label={t('basic_data.institutions.sector')}
+                  variant="filled">
+                  {Object.values(Sector).map((sector) => (
+                    <MenuItem
+                      key={sector}
+                      value={sector}
+                      data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}>
+                      {t(`basic_data.institutions.sector_values.${sector}`)}
+                    </MenuItem>
+                  ))}
+                </TextField>
               )}
             </Field>
 
-            <div>
+            <Box sx={{ display: 'flex', gap: '1.5rem' }}>
               <Field name={CustomerInstitutionFieldNames.NviInstitution}>
                 {({ field }: FieldProps<boolean>) => (
-                  <>
+                  <div>
                     <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                       {t('common.nvi')}
                     </FormLabel>
@@ -198,13 +199,13 @@ export const CustomerInstitutionMetadataForm = ({
                         />
                       }
                     />
-                  </>
+                  </div>
                 )}
               </Field>
 
               <Field name={CustomerInstitutionFieldNames.RboInstitution}>
                 {({ field }: FieldProps<boolean>) => (
-                  <Box sx={{ ml: '2rem' }}>
+                  <div>
                     <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                       {t('common.rbo')}
                     </FormLabel>
@@ -219,10 +220,10 @@ export const CustomerInstitutionMetadataForm = ({
                         />
                       }
                     />
-                  </Box>
+                  </div>
                 )}
               </Field>
-            </div>
+            </Box>
 
             <Divider />
 
@@ -245,62 +246,87 @@ export const CustomerInstitutionMetadataForm = ({
                 />
               )}
             </Field>
-
-            <Divider />
-
             {editMode && (
-              <div>
-                <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                  {t('common.doi_long')}
-                </FormLabel>
-                <Field name={CustomerInstitutionFieldNames.CanAssignDoi}>
-                  {({ field }: FieldProps<boolean>) => (
-                    <FormControlLabel
-                      label={t('basic_data.institutions.can_assign_doi')}
-                      control={
-                        <Checkbox
-                          data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
-                          {...field}
-                          checked={field.value}
-                        />
-                      }
-                    />
-                  )}
-                </Field>
-                {values.canAssignDoi && (
-                  <Box sx={{ display: 'flex', gap: '1rem' }}>
-                    <Field name={CustomerInstitutionFieldNames.DoiUsername}>
-                      {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
-                        <TextField
-                          {...field}
-                          data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
-                          label={t('basic_data.institutions.doi_repo_id')}
-                          required
-                          fullWidth
-                          onChange={(event) => {
-                            const inputValue = event.target.value;
-                            const formattedValue = inputValue.toUpperCase().replace(/[^A-Z.]/g, '');
-                            setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
-                          }}
-                          variant="filled"
-                          error={touched && !!error}
-                          helperText={<ErrorMessage name={field.name} />}
+              <>
+                <Divider />
+                <Box sx={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
+                  <div>
+                    <FormLabel component="legend" sx={{ fontWeight: 'bold', minWidth: '18rem' }}>
+                      {t('common.doi_long')}
+                    </FormLabel>
+                    <Field fullwidt name={CustomerInstitutionFieldNames.CanAssignDoi}>
+                      {({ field }: FieldProps<boolean>) => (
+                        <FormControlLabel
+                          label={t('basic_data.institutions.can_assign_doi')}
+                          control={
+                            <Checkbox
+                              data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
+                              {...field}
+                              onChange={(_event, checked) => {
+                                if (!checked) {
+                                  setFieldValue(CustomerInstitutionFieldNames.DoiUsername, '');
+                                  setFieldValue(CustomerInstitutionFieldNames.DoiPrefix, '');
+                                  setFieldValue(CustomerInstitutionFieldNames.DoiPassword, undefined);
+                                }
+                                setFieldValue(CustomerInstitutionFieldNames.CanAssignDoi, checked);
+                              }}
+                              checked={field.value}
+                            />
+                          }
                         />
                       )}
                     </Field>
-                    <CustomerInstitutionTextField
-                      required
-                      name={CustomerInstitutionFieldNames.DoiPrefix}
-                      label={t('basic_data.institutions.doi_prefix')}
-                      dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
-                    />
+                  </div>
 
-                    <CustomerDoiPasswordField doiAgentId={customerInstitution?.doiAgent.id ?? ''} />
-                  </Box>
-                )}
-              </div>
+                  <Field name={CustomerInstitutionFieldNames.DoiUsername}>
+                    {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+                      <TextField
+                        {...field}
+                        data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
+                        label={t('basic_data.institutions.doi_repo_id')}
+                        required={values.canAssignDoi}
+                        disabled={!values.canAssignDoi}
+                        fullWidth
+                        onChange={(event) => {
+                          const inputValue = event.target.value;
+                          const formattedValue = inputValue.toUpperCase().replace(/[^A-Z.]/g, '');
+                          setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
+                        }}
+                        variant="filled"
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  </Field>
+                  <CustomerInstitutionTextField
+                    disabled={!values.canAssignDoi}
+                    required={values.canAssignDoi}
+                    name={CustomerInstitutionFieldNames.DoiPrefix}
+                    label={t('basic_data.institutions.doi_prefix')}
+                    dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
+                  />
+
+                  <CustomerDoiPasswordField
+                    disabled={!values.canAssignDoi}
+                    doiAgentId={customerInstitution?.doiAgent.id ?? ''}
+                  />
+                </Box>
+              </>
             )}
-            <StyledRightAlignedWrapper>
+            {editMode && customerInstitution && (
+              <>
+                <Divider sx={{ my: '1rem' }} />
+                <CustomerInstitutionAdminsForm
+                  cristinInstitutionId={customerInstitution.cristinId}
+                  customerInstitutionId={customerInstitution.id}
+                />
+              </>
+            )}
+            <Divider />
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Button sx={{ marginRight: '1rem' }} onClick={() => resetForm()}>
+                {t('common.cancel')}
+              </Button>
               <LoadingButton
                 data-testid={dataTestId.basicData.institutionAdmin.saveButton}
                 variant="contained"
@@ -308,7 +334,7 @@ export const CustomerInstitutionMetadataForm = ({
                 type="submit">
                 {editMode ? t('common.save') : t('common.create')}
               </LoadingButton>
-            </StyledRightAlignedWrapper>
+            </Box>
           </InputContainerBox>
         </Form>
       )}

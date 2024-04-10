@@ -1,14 +1,19 @@
-import { CircularProgress, Link, Typography } from '@mui/material';
+import { Box, CircularProgress, Link, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getById } from '../../api/commonApi';
+import { fetchUsers } from '../../api/roleApi';
+import { ProfilePicture } from '../../components/ProfilePicture';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { Organization } from '../../types/organization.types';
+import { InstitutionUser, RoleName } from '../../types/user.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getFullName } from '../../utils/user-helpers';
 
 export const EditorInstitution = () => {
   const { t } = useTranslation();
@@ -18,6 +23,7 @@ export const EditorInstitution = () => {
     errorMessage: t('feedback.error.get_customer'),
     withAuthentication: true,
   });
+  const customerId = customer?.id ?? '';
   const [institution, isLoadingInstitution] = useFetchResource<Organization>(
     user?.topOrgCristinId ? user.topOrgCristinId : '',
     t('feedback.error.get_institution')
@@ -33,10 +39,27 @@ export const EditorInstitution = () => {
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
+  const institutionUsersQuery = useQuery({
+    queryKey: ['institutionUsers', customerId],
+    enabled: !!customerId,
+    queryFn: () => (customerId ? fetchUsers(customerId, [RoleName.Editor, RoleName.InstitutionAdmin]) : undefined),
+    meta: { errorMessage: t('feedback.error.get_users_for_institution') },
+  });
+
+  const institutionUsers = institutionUsersQuery.data ?? [];
+
+  const institutionAdmins = institutionUsers.filter((user) =>
+    user.roles.some((role) => role.rolename === RoleName.InstitutionAdmin)
+  );
+
+  const institutionEditors = institutionUsers.filter((user) =>
+    user.roles.some((role) => role.rolename === RoleName.Editor)
+  );
+
   return (
     <>
       <Helmet>
-        <title>{t('editor.institution.institution_name')}</title>
+        <title>{t('editor.institution.institution_profile')}</title>
       </Helmet>
       {isLoadingCustomer || isLoadingInstitution ? (
         <CircularProgress />
@@ -91,6 +114,38 @@ export const EditorInstitution = () => {
             {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
           </Typography>
 
+          {institutionUsers && (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
+              {institutionAdmins && (
+                <div>
+                  <Typography variant="h3" gutterBottom>
+                    {institutionAdmins.length > 0 &&
+                      t('editor.institution.institution_admin', { count: institutionAdmins.length })}
+                  </Typography>
+                  {institutionAdmins.length > 0 ? (
+                    institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
+                  ) : (
+                    <Typography>{t('editor.institution.institution_has_no_administrator')}</Typography>
+                  )}
+                </div>
+              )}
+
+              {institutionEditors && (
+                <div>
+                  <Typography variant="h3" gutterBottom>
+                    {institutionEditors.length > 0 &&
+                      t('editor.institution.institution_editor', { count: institutionEditors.length })}
+                  </Typography>
+                  {institutionEditors.length > 0 ? (
+                    institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
+                  ) : (
+                    <Typography>{t('editor.institution.institution_has_no_editor')}</Typography>
+                  )}
+                </div>
+              )}
+            </Box>
+          )}
+
           <Typography sx={{ pt: '1rem' }}>
             <Trans t={t} i18nKey="editor.institution.institution_helper_text">
               <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
@@ -99,5 +154,20 @@ export const EditorInstitution = () => {
         </>
       )}
     </>
+  );
+};
+
+interface InstitutionUserItemProps {
+  user: InstitutionUser;
+}
+
+const InstitutionUserLink = ({ user }: InstitutionUserItemProps) => {
+  const fullName = getFullName(user.givenName, user.familyName);
+
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
+      <ProfilePicture sx={{ height: '1.5rem' }} personId={user.cristinId ?? ''} fullName={fullName} />
+      <Link href={`${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(user.cristinId ?? '')}`}>{fullName}</Link>
+    </Box>
   );
 };

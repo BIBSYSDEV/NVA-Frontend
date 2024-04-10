@@ -1,6 +1,19 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -15,10 +28,10 @@ import { RootState } from '../../../../redux/store';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
-import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
+import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { CristinPersonList } from './CristinPersonList';
+import { CristinPersonTableRow } from './AddContributorTableRow';
 
 interface AddContributorFormProps {
   addContributor: (selectedUser: CristinPerson) => void;
@@ -41,7 +54,7 @@ export const AddContributorForm = ({
   const user = useSelector((store: RootState) => store.user);
 
   const [isAddingSelf, setIsAddingSelf] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<CristinPerson>();
+  const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [page, setPage] = useState(1);
@@ -108,20 +121,38 @@ export const AddContributorForm = ({
         <ListSkeleton arrayLength={3} minWidth={100} height={80} />
       ) : userSearch && personQuery.data && personQuery.data.size > 0 && debouncedSearchTerm ? (
         <ListPagination
-          count={personQuery.data?.size ?? 0}
+          count={personQuery.data.size}
           rowsPerPage={rowsPerPage}
           page={page}
-          onPageChange={(newPage) => setPage(newPage)}
+          onPageChange={setPage}
           onRowsPerPageChange={(newRowsPerPage) => {
             setRowsPerPage(newRowsPerPage);
             setPage(1);
-          }}>
-          <CristinPersonList
-            personSearch={personQuery.data}
-            userId={selectedUser?.id}
-            onSelectContributor={setSelectedUser}
-            searchTerm={debouncedSearchTerm}
-          />
+          }}
+          showPaginationTop>
+          <TableContainer component={Paper} sx={{ my: '0.5rem' }} elevation={3}>
+            <Table size="medium">
+              <caption style={visuallyHidden}>{t('search.persons')}</caption>
+              <TableHead>
+                <TableRow>
+                  <TableCell width="10%">{t('registration.contributors.select_all')}</TableCell>
+                  <TableCell width="20%">{t('common.person')}</TableCell>
+                  <TableCell width="45%">{t('my_page.my_profile.heading.affiliations')}</TableCell>
+                  <TableCell width="25%">{t('common.result_registrations')}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {personQuery.data.hits.map((cristinPerson) => (
+                  <CristinPersonTableRow
+                    key={cristinPerson.id}
+                    cristinPerson={cristinPerson}
+                    setSelectedPerson={setSelectedPerson}
+                    selectedPerson={selectedPerson}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </ListPagination>
       ) : (
         debouncedSearchTerm && <Typography>{t('common.no_hits')}</Typography>
@@ -152,12 +183,12 @@ export const AddContributorForm = ({
         )}
         <Button
           data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
-          disabled={!selectedUser}
-          onClick={() => selectedUser && addContributor(selectedUser)}
+          disabled={!selectedPerson}
+          onClick={() => selectedPerson && addContributor(selectedPerson)}
           size="large"
           variant="contained">
           {initialSearchTerm
-            ? t('registration.contributors.verify_person')
+            ? t('registration.contributors.verify_contributor')
             : t('registration.contributors.add_contributor')}
         </Button>
       </Box>

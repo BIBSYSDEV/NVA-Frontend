@@ -11,18 +11,18 @@ import {
   RadioGroup,
   TextField,
 } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CristinApiPath } from '../../api/apiPaths';
-import { SearchResponse } from '../../types/common.types';
+import { OrganizationSearchParams, searchForOrganizations } from '../../api/cristinApi';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
-import { useFetch } from '../../utils/hooks/useFetch';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { AffiliationHierarchy } from './AffiliationHierarchy';
+import { OrganizationRenderOption } from '../OrganizationRenderOption';
+import { OrganizationTree } from './OrganizationTree';
 
 enum SelectOrganizationFormField {
   Unit = 'unit',
@@ -52,12 +52,17 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
-  const [institutions, isLoadingInstitutions] = useFetch<SearchResponse<Organization>>({
-    url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
-    errorMessage: t('feedback.error.get_institutions'),
-  });
 
-  const options = isLoadingInstitutions || !institutions ? [] : institutions.hits;
+  const organizationQueryParams: OrganizationSearchParams = {
+    query: debouncedQuery,
+    includeSubunits: true,
+  };
+  const organizationSearchQuery = useQuery({
+    enabled: !!debouncedQuery,
+    queryKey: ['organization', organizationQueryParams],
+    queryFn: () => searchForOrganizations(organizationQueryParams),
+    meta: { errorMessage: t('feedback.error.get_institutions') },
+  });
 
   return (
     <Formik
@@ -90,10 +95,15 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                       }}>
                       {suggestedInstitutions.map((suggestedInstitution) => (
                         <FormControlLabel
+                          sx={{
+                            '& .MuiFormControlLabel-label': {
+                              width: '100%',
+                            },
+                          }}
                           key={suggestedInstitution}
                           value={suggestedInstitution}
                           control={<Radio size="small" />}
-                          label={<AffiliationHierarchy unitUri={suggestedInstitution} />}
+                          label={<OrganizationTree unitUri={suggestedInstitution} />}
                         />
                       ))}
                     </RadioGroup>
@@ -107,13 +117,11 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
               {({ field }: FieldProps<Organization>) => (
                 <Autocomplete
                   {...field}
-                  options={options}
+                  options={organizationSearchQuery.data?.hits ?? []}
                   inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
                   getOptionLabel={(option) => getLanguageString(option.labels)}
                   renderOption={(props, option) => (
-                    <li {...props} key={option.id}>
-                      {getLanguageString(option.labels)}
-                    </li>
+                    <OrganizationRenderOption key={option.id} props={props} option={option} />
                   )}
                   filterOptions={(options) => options}
                   onInputChange={(_, value, reason) => {
@@ -128,7 +136,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                     resetForm();
                     setFieldValue(field.name, value);
                   }}
-                  loading={isLoadingInstitutions}
+                  loading={organizationSearchQuery.isLoading}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -148,9 +156,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                     options={getSortedSubUnits(values.unit?.hasPart)}
                     getOptionLabel={(option) => getLanguageString(option.labels)}
                     renderOption={(props, option) => (
-                      <li {...props} key={option.id}>
-                        {getLanguageString(option.labels)}
-                      </li>
+                      <OrganizationRenderOption key={option.id} props={props} option={option} />
                     )}
                     onChange={(_, value) => setFieldValue(field.name, value)}
                     filterOptions={(options, state) =>

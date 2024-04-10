@@ -119,7 +119,7 @@ export const SeriesField = () => {
                 {...params}
                 label={t('registration.resource_type.series_title')}
                 isLoading={seriesOptionsQuery.isFetching || seriesQuery.isFetching}
-                placeholder={!field.value ? t('registration.resource_type.search_for_series') : ''}
+                placeholder={!field.value ? t('registration.resource_type.search_for_title_or_issn') : ''}
                 showSearchIcon={!field.value}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />

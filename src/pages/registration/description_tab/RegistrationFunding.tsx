@@ -1,8 +1,8 @@
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
+import { Box, Button, IconButton, InputAdornment, SxProps, TextField, Typography } from '@mui/material';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { FundingSourceField } from '../../../components/FundingSourceField';
@@ -18,6 +18,10 @@ import { fundingSourceIsNfr, getNfrProjectUrl } from './projects_field/projectHe
 interface FundingsFieldProps {
   currentFundings: Funding[];
 }
+
+const getTextFieldMargin = (isError: boolean): SxProps => ({
+  mt: isError ? '1.5rem' : 0,
+});
 
 export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => {
   const { t } = useTranslation();
@@ -38,7 +42,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
 
       <FieldArray name={DescriptionFieldNames.Fundings}>
         {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: '1rem', md: '0.5rem' } }}>
             {currentFundings.map((funding, index) => {
               const baseFieldName = `${name}[${index}]`;
               const hasSelectedSource = !!funding.source;
@@ -57,7 +61,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                   sx={{
                     display: 'grid',
                     gridTemplateColumns: { xs: '1fr', md: '4fr 6fr 2fr 2fr 1fr' },
-                    gap: '1rem',
+                    gap: '0.5rem 1rem',
                     alignItems: 'center',
                   }}>
                   <FundingSourceField fieldName={`${baseFieldName}.${SpecificFundingFieldNames.Source}`} />
@@ -65,15 +69,22 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                   {hasSelectedNfrSource &&
                     (hasSelectedNfrProject ? (
                       <>
-                        <TextField
-                          value={getLanguageString(funding.labels)}
-                          disabled
-                          label={t('registration.description.funding.funding_name')}
-                          fullWidth
-                          variant="filled"
-                          multiline
-                          data-testid={dataTestId.registrationWizard.description.fundingProjectField}
-                        />
+                        <Field name={`${baseFieldName}.${SpecificFundingFieldNames.NorwegianLabel}`}>
+                          {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                            <TextField
+                              value={getLanguageString(funding.labels)}
+                              disabled
+                              label={t('registration.description.funding.funding_name')}
+                              fullWidth
+                              variant="filled"
+                              multiline
+                              sx={getTextFieldMargin(touched && !!error)}
+                              error={touched && !!error}
+                              helperText={<ErrorMessage name={field.name} />}
+                              data-testid={dataTestId.registrationWizard.description.fundingProjectField}
+                            />
+                          )}
+                        </Field>
                         <TextField
                           value={funding.identifier}
                           disabled={hasSelectedNfrSource}
@@ -111,6 +122,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                             required
                             name={name}
                             onBlur={onBlur}
+                            sx={getTextFieldMargin(touched && !!error)}
                             errorMessage={touched && !!error ? error : undefined}
                             data-testid={dataTestId.registrationWizard.description.fundingNfrProjectSearchField}
                           />
@@ -131,6 +143,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                             variant="filled"
                             multiline
                             required={!hasSelectedNfrSource}
+                            sx={getTextFieldMargin(touched && !!error)}
                             error={touched && !!error}
                             helperText={touched && !!error ? error : undefined}
                             data-testid={dataTestId.registrationWizard.description.fundingProjectField}
@@ -165,6 +178,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                                 <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
                               ),
                             }}
+                            sx={getTextFieldMargin(touched && !!error)}
                             error={touched && !!error}
                             helperText={touched && !!error ? error : undefined}
                             data-testid={dataTestId.registrationWizard.description.fundingSumField}
@@ -174,7 +188,6 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                     </>
                   )}
                   <IconButton
-                    sx={{ gridColumn: '5' }}
                     onClick={() => remove(index)}
                     data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}>

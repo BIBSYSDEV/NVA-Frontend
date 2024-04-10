@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../api/searchApi';
 
-const commonDatepickerProps: Partial<DatePickerProps<Date | null>> = {
+const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   views: ['year'],
   disableHighlightToday: true,
   slotProps: { textField: { sx: { maxWidth: '10rem' }, size: 'small' } },
@@ -12,7 +12,7 @@ const commonDatepickerProps: Partial<DatePickerProps<Date | null>> = {
 
 interface PublicationDateIntervalFilterProps {
   boxProps?: Pick<BoxProps, 'sx'>;
-  datePickerProps?: Partial<DatePickerProps<Date | null>>;
+  datePickerProps?: Partial<DatePickerProps<Date>>;
 }
 
 export const PublicationDateIntervalFilter = ({ datePickerProps, boxProps }: PublicationDateIntervalFilterProps) => {
@@ -23,8 +23,8 @@ export const PublicationDateIntervalFilter = ({ datePickerProps, boxProps }: Pub
   const selectedYearSinceParam = searchParams.get(ResultParam.PublicationYearSince);
   const selectedYearBeforeParam = searchParams.get(ResultParam.PublicationYearBefore);
 
-  const selectedYearSinceDate = selectedYearSinceParam ? new Date(selectedYearSinceParam) : null;
-  const selectedYearBeforeDate = selectedYearBeforeParam ? new Date(selectedYearBeforeParam) : null;
+  const selectedYearSinceDate = selectedYearSinceParam ? new Date(selectedYearSinceParam) : undefined;
+  const selectedYearBeforeDate = selectedYearBeforeParam ? new Date(selectedYearBeforeParam) : undefined;
 
   const onChangeDate = (
     newDate: Date | null,
@@ -34,10 +34,12 @@ export const PublicationDateIntervalFilter = ({ datePickerProps, boxProps }: Pub
       const year = newDate.getFullYear();
       if (year.toString().length === 4) {
         searchParams.set(param, year.toString());
+        searchParams.delete(ResultParam.From);
         history.push({ search: searchParams.toString() });
       }
     } else {
       searchParams.delete(param);
+      searchParams.delete(ResultParam.From);
       history.push({ search: searchParams.toString() });
     }
   };

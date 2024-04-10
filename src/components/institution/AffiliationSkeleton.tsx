@@ -14,7 +14,7 @@ export const AffiliationSkeleton = ({ commaSeparated = false }: AffiliationSkele
   });
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', minWidth: '30rem' }}>
       {commaSeparated ? (
         <Skeleton width={widthsRef.current.long} />
       ) : (

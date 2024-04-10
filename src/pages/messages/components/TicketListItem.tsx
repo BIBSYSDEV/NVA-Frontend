@@ -8,10 +8,9 @@ import { RegistrationListItemContent } from '../../../components/RegistrationLis
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
-import { Registration, emptyRegistration } from '../../../types/registration.types';
-import { getTimePeriodString } from '../../../utils/general-helpers';
-import { getContributorInitials } from '../../../utils/registration-helpers';
-import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
+import { emptyRegistration, Registration } from '../../../types/registration.types';
+import { getInitials, getTimePeriodString } from '../../../utils/general-helpers';
+import { getMyMessagesRegistrationPath, getTasksRegistrationPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
@@ -68,13 +67,15 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       }}>
       <MuiLink
         component={Link}
-        to={
-          window.location.pathname === UrlPathTemplate.TasksDialogue
-            ? getTasksRegistrationPath(identifier)
-            : window.location.pathname === UrlPathTemplate.MyPageMyMessages
-              ? getMyMessagesRegistrationPath(identifier)
-              : ''
-        }
+        to={{
+          pathname:
+            window.location.pathname === UrlPathTemplate.TasksDialogue
+              ? getTasksRegistrationPath(identifier)
+              : window.location.pathname === UrlPathTemplate.MyPageMyMessages
+                ? getMyMessagesRegistrationPath(identifier)
+                : '',
+          state: { previousSearch: window.location.search },
+        }}
         onClick={() => {
           if (!viewedByUser) {
             viewStatusMutation.mutate();
@@ -101,7 +102,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           <Typography lineHeight="2rem">{ticketAge}</Typography>
           {assigneeFullName && (
             <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
-              <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>
+              <StyledVerifiedContributor>{getInitials(assigneeFullName)}</StyledVerifiedContributor>
             </Tooltip>
           )}
         </Box>

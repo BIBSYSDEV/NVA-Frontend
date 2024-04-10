@@ -13,6 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  Link as MuiLink,
   Paper,
   Popover,
   Radio,
@@ -27,13 +28,13 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, AssociatedFileType, RightsRetentionStrategy } from '../../../types/associatedArtifact.types';
-import { RightsRetentionStrategyTypes } from '../../../types/customerInstitution.types';
+import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
+import { CustomerRrsType } from '../../../types/customerInstitution.types';
 import { LicenseUri, licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
@@ -60,13 +61,28 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
   const administrativeAgreementFieldName = `${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`;
-  const publisherAuthorityFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`;
+  const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
-  const fileHasFunderRrs = file.rightsRetentionStrategy?.type === 'FunderRightsRetentionStrategy';
+  const isAcceptedFile = file.publisherVersion === FileVersion.Accepted;
+  const rrsStrategy = file.rightsRetentionStrategy.configuredType ?? customer?.rightsRetentionStrategy.type;
+
+  const isNullRrs = rrsStrategy === CustomerRrsType.NullRightsRetentionStrategy;
+  const isCustomerRrs = rrsStrategy === CustomerRrsType.RightsRetentionStrategy;
+  const isOverridableRrs = rrsStrategy === CustomerRrsType.OverridableRightsRetentionStrategy;
+
+  const fileHasFunderRrs = file.rightsRetentionStrategy.type === 'FunderRightsRetentionStrategy';
+  const fileHasCustomerRrs = file.rightsRetentionStrategy.type === 'CustomerRightsRetentionStrategy';
+  const fileHasOverriddenRrs = file.rightsRetentionStrategy.type === 'OverriddenRightsRetentionStrategy';
+
+  const canOverrideRrs = isAcceptedFile && (isOverridableRrs || (isCustomerRrs && user?.isPublishingCurator));
+
+  const rrsPolicyLink = customer?.rightsRetentionStrategy.id ? (
+    <MuiLink href={customer.rightsRetentionStrategy.id} target="_blank" rel="noopener noreferrer" />
+  ) : null;
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
@@ -127,7 +143,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     setFieldValue(fileTypeFieldName, newAssociatedFileType);
 
                     field.onChange(event);
-                    setFieldValue(publisherAuthorityFieldName, null);
+                    setFieldValue(publisherVersionFieldName, null);
                     setFieldValue(licenseFieldName, null);
                     setFieldValue(embargoFieldName, null);
                   }}
@@ -139,8 +155,8 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
         {showFileVersion && (
           <TableCell>
-            <Field name={publisherAuthorityFieldName}>
-              {({ field, meta: { error, touched } }: FieldProps) => (
+            <Field name={publisherVersionFieldName}>
+              {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                 <FormControl
                   data-testid={dataTestId.registrationWizard.files.version}
                   required
@@ -150,19 +166,32 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     row
                     sx={{ flexWrap: 'nowrap' }}
                     onChange={(event) => {
-                      setFieldValue(field.name, JSON.parse(event.target.value));
-                      if (fileHasFunderRrs) {
+                      const fileVersion = event.target.value as FileVersion;
+                      setFieldValue(field.name, fileVersion);
+
+                      if (fileVersion === FileVersion.Published) {
+                        const nullRrsValue: FileRrs = {
+                          type: 'NullRightsRetentionStrategy',
+                          configuredType: rrsStrategy,
+                        };
+                        setFieldValue(rrsFieldName, nullRrsValue);
                         setFieldValue(licenseFieldName, null);
-                        setFieldValue(rrsFieldName, undefined);
+                      } else if (isCustomerRrs || isOverridableRrs) {
+                        const customerRrsValue: FileRrs = {
+                          type: 'CustomerRightsRetentionStrategy',
+                          configuredType: rrsStrategy,
+                        };
+                        setFieldValue(rrsFieldName, customerRrsValue);
+                        setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
                       }
                     }}>
                     <FormControlLabel
-                      value={false}
+                      value={FileVersion.Accepted}
                       control={<Radio />}
                       label={t('registration.files_and_license.accepted')}
                     />
                     <FormControlLabel
-                      value={true}
+                      value={FileVersion.Published}
                       control={<Radio />}
                       label={t('registration.files_and_license.published')}
                     />
@@ -182,7 +211,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 data-testid={dataTestId.registrationWizard.files.selectLicenseField}
                 sx={{ minWidth: '15rem' }}
                 select
-                disabled={disabled || fileHasFunderRrs}
+                disabled={disabled}
                 SelectProps={{
                   renderValue: (option) => {
                     const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
@@ -222,6 +251,20 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               </TextField>
             )}
           </Field>
+          {fileHasCustomerRrs && (
+            <Typography>
+              <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
+                {rrsPolicyLink}
+              </Trans>
+            </Typography>
+          )}
+          {fileHasOverriddenRrs && (
+            <Typography>
+              <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
+                {rrsPolicyLink}
+              </Trans>
+            </Typography>
+          )}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -232,34 +275,74 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 m: '1rem 1rem 0 1rem',
                 display: 'grid',
                 gridTemplateColumns: '1fr auto',
-                gap: '1rem',
+                gap: '2rem',
               }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {!file.publisherAuthority &&
-                  customer?.rightsRetentionStrategy.type ===
-                    RightsRetentionStrategyTypes.NullRightsRetentionStrategy && (
-                    <FormControlLabel
-                      label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
-                      control={
-                        <Checkbox
-                          checked={fileHasFunderRrs}
-                          onChange={() => {
-                            if (fileHasFunderRrs) {
-                              setFieldValue(rrsFieldName, undefined);
-                              setFieldValue(licenseFieldName, null);
-                            } else {
-                              const newRrsValue: RightsRetentionStrategy = {
-                                type: 'FunderRightsRetentionStrategy',
-                                configuredType: customer.rightsRetentionStrategy.type,
-                              };
-                              setFieldValue(rrsFieldName, newRrsValue);
-                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                            }
-                          }}
-                        />
-                      }
-                    />
-                  )}
+                {isAcceptedFile && isNullRrs && (
+                  <FormControlLabel
+                    label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
+                    control={
+                      <Checkbox
+                        checked={fileHasFunderRrs}
+                        onChange={() => {
+                          if (fileHasFunderRrs) {
+                            const nullRrsValue: FileRrs = {
+                              type: 'NullRightsRetentionStrategy',
+                              configuredType: rrsStrategy,
+                            };
+                            setFieldValue(rrsFieldName, nullRrsValue);
+                            setFieldValue(licenseFieldName, null);
+                          } else {
+                            const newRrsValue: FileRrs = {
+                              type: 'FunderRightsRetentionStrategy',
+                              configuredType: rrsStrategy,
+                            };
+                            setFieldValue(rrsFieldName, newRrsValue);
+                            setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                          }
+                        }}
+                      />
+                    }
+                  />
+                )}
+
+                {fileHasCustomerRrs && isCustomerRrs && (
+                  <Typography>
+                    {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
+                  </Typography>
+                )}
+
+                {canOverrideRrs && (
+                  <FormControlLabel
+                    label={
+                      <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
+                        {rrsPolicyLink}
+                      </Trans>
+                    }
+                    control={
+                      <Checkbox
+                        checked={!fileHasOverriddenRrs}
+                        onChange={() => {
+                          if (fileHasOverriddenRrs) {
+                            const customerRrsValue: FileRrs = {
+                              type: 'CustomerRightsRetentionStrategy',
+                              configuredType: rrsStrategy,
+                            };
+                            setFieldValue(rrsFieldName, customerRrsValue);
+                            setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                          } else {
+                            const overriddenRrsValue: FileRrs = {
+                              type: 'OverriddenRightsRetentionStrategy',
+                              configuredType: rrsStrategy,
+                            };
+                            setFieldValue(rrsFieldName, overriddenRrsValue);
+                            setFieldValue(licenseFieldName, null);
+                          }
+                        }}
+                      />
+                    }
+                  />
+                )}
 
                 {user?.isPublishingCurator && (
                   <Field name={legalNoteFieldName}>

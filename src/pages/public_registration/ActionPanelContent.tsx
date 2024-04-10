@@ -11,7 +11,11 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getTitleString, userCanDeleteRegistration, userIsRegistrationCurator } from '../../utils/registration-helpers';
+import {
+  getTitleString,
+  userCanDeleteRegistration,
+  userHasSameCustomerAsRegistration,
+} from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
@@ -36,7 +40,8 @@ export const ActionPanelContent = ({
   const currentPath = history.location.pathname;
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
-  const userIsCurator = userIsRegistrationCurator(user, registration);
+
+  const canBeCuratorForThisCustomer = userHasSameCustomerAsRegistration(user, registration);
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
   const publishingRequestTickets = tickets.filter(
@@ -113,7 +118,7 @@ export const ActionPanelContent = ({
                   isLoadingData={isLoadingData}
                   registration={registration}
                   doiRequestTicket={doiRequestTicket}
-                  userIsCurator={userIsCurator}
+                  userIsCurator={!!user?.isDoiCurator && canBeCuratorForThisCustomer}
                   addMessage={addMessage}
                 />
               )}
@@ -125,7 +130,7 @@ export const ActionPanelContent = ({
       {(canCreateTickets || currentSupportTicket || isInRegistrationWizard) && (
         <ErrorBoundary>
           <SupportAccordion
-            userIsCurator={userIsCurator}
+            userIsCurator={!!user?.isSupportCurator && canBeCuratorForThisCustomer}
             registration={registration}
             supportTicket={currentSupportTicket}
             addMessage={addMessage}
