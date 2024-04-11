@@ -5,15 +5,16 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getById } from '../../api/commonApi';
 import { fetchUsers } from '../../api/roleApi';
-import { ProfilePicture } from '../../components/ProfilePicture';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { Organization } from '../../types/organization.types';
 import { InstitutionUser, RoleName } from '../../types/user.types';
+import { getInitials } from '../../utils/general-helpers';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName } from '../../utils/user-helpers';
+import { StyledBaseContributorIndicator } from '../registration/contributors_tab/ContributorIndicator';
 
 export const EditorInstitution = () => {
   const { t } = useTranslation();
@@ -228,7 +229,13 @@ const InstitutionUserLink = ({ user }: InstitutionUserItemProps) => {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
-      <ProfilePicture sx={{ height: '1.5rem' }} personId={user.cristinId ?? ''} fullName={fullName} />
+      <StyledBaseContributorIndicator
+        sx={{
+          bgcolor: 'primary.main',
+          color: 'primary.contrastText',
+        }}>
+        {getInitials(fullName)}
+      </StyledBaseContributorIndicator>
       <Link href={`${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(user.cristinId ?? '')}`}>{fullName}</Link>
     </Box>
   );
