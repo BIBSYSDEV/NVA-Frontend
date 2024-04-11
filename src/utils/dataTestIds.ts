@@ -88,8 +88,10 @@ export const dataTestId = {
     subSearchField: 'sub-organization-search-field',
   },
   editor: {
-    areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
     categoriesLinkButton: 'categories-link-button',
+    curatorsOverviewLinkButton: 'curators-overview-link-button',
+    curatorsSettingsLinkButton: 'curators-settings-link-button',
+    editUserButton: 'edit-user-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
     institutionSupportInputField: 'institution-support-input-field',
     doiLinkButton: 'doi-link-button',
