@@ -5,8 +5,9 @@ import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 
 const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
-  views: ['year'],
+  views: ['day'],
   disableHighlightToday: true,
+
   slotProps: { textField: { sx: { maxWidth: '10rem' }, size: 'small' } },
 };
 
