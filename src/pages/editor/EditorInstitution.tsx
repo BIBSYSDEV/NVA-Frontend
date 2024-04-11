@@ -57,6 +57,8 @@ export const EditorInstitution = () => {
     user.roles.some((role) => role.rolename === RoleName.Editor)
   );
 
+  const customerSector = customer && customer?.sector;
+
   return (
     <>
       <Helmet>
@@ -115,7 +117,11 @@ export const EditorInstitution = () => {
                 <Typography variant="h3" component="h2">
                   {t('basic_data.institutions.sector')}
                 </Typography>
-                <Typography paragraph>{customer?.sector ?? '-'}</Typography>
+                {customer ? (
+                  <Typography paragraph>{t(`basic_data.institutions.sector_values.${customer.sector}`)}</Typography>
+                ) : (
+                  <Typography>-</Typography>
+                )}
               </div>
             </Grid>
 
