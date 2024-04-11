@@ -108,9 +108,9 @@ export const CategorySelector = ({
             color="primary"
             title={t('registration.resource_type.nvi.select_all_nvi_categories')}
             onClick={() => {
-              if (!highlightNviCategories && setSelectedCategories) {
+              if (!highlightNviCategories) {
                 setSelectedCategories([...selectedCategories, ...nviApplicableTypes]);
-              } else if (setSelectedCategories) {
+              } else {
                 const newCategories = selectedCategories.filter((category) => !nviApplicableTypes.includes(category));
                 setSelectedCategories(newCategories);
               }
