@@ -106,11 +106,9 @@ export const EditorInstitution = () => {
               <Typography variant="h3" component="h2">
                 {t('basic_data.institutions.sector')}
               </Typography>
-              {customer ? (
-                <Typography>{t(`basic_data.institutions.sector_values.${customer.sector}`)}</Typography>
-              ) : (
-                <Typography>-</Typography>
-              )}
+              <Typography>
+                {customer?.sector ? t(`basic_data.institutions.sector_values.${customer.sector}`) : '-'}
+              </Typography>
             </Grid>
 
             <Grid item xs={12} md={4}>
@@ -167,7 +165,7 @@ export const EditorInstitution = () => {
             </Grid>
 
             {institutionUsers && (
-              <Grid container item xs={12} sm={8}>
+              <Grid container item xs={12} sm={7}>
                 {institutionAdmins && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="h3" gutterBottom>
