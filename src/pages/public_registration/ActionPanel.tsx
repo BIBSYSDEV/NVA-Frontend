@@ -55,7 +55,7 @@ export const ActionPanel = ({
         />
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
-        <LogPanel tickets={tickets} registrationPublishedDate={registration.publishedDate ?? ''} />
+        <LogPanel tickets={tickets} registration={registration} />
       </TabPanel>
     </Paper>
   );
