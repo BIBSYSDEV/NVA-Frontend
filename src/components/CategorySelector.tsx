@@ -114,7 +114,6 @@ export const CategorySelector = ({
                 const newCategories = selectedCategories.filter((category) => !nviApplicableTypes.includes(category));
                 setSelectedCategories(newCategories);
               }
-              setHighlightNviCategories(!highlightNviCategories);
             }}
             data-testid={dataTestId.registrationWizard.resourceType.resourceTypeNviHighlightChipButton}
             variant={highlightNviCategories ? 'filled' : 'outlined'}
