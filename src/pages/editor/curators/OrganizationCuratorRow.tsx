@@ -87,8 +87,7 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers 
                     width: '1.5rem',
                     height: '1.5rem',
                     borderRadius: '50%',
-                    border: 'solid 2px',
-                    borderColor: 'secondary.dark',
+                    bgcolor: 'grey.300',
                   }}
                 />
               )}
