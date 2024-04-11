@@ -71,82 +71,68 @@ export const EditorInstitution = () => {
         <Grid container spacing={2}>
           <Grid container item xs={12} spacing={2}>
             <Grid item xs={12} md={4}>
-              <>
-                <Typography variant="h3" component="h2">
-                  {t('editor.institution.institution_name_norwegian')}
-                </Typography>
-                <Typography>{institution?.labels.nb ?? '-'}</Typography>
-              </>
+              <Typography variant="h3" component="h2">
+                {t('editor.institution.institution_name_norwegian')}
+              </Typography>
+              <Typography>{institution?.labels.nb ?? '-'}</Typography>
             </Grid>
 
             <Grid item xs={12} md={4}>
-              <>
-                <Typography variant="h3" component="h2">
-                  {t('editor.institution.institution_name_english')}
-                </Typography>
-                <Typography>{institution?.labels.en ?? '-'}</Typography>
-              </>
+              <Typography variant="h3" component="h2">
+                {t('editor.institution.institution_name_english')}
+              </Typography>
+              <Typography>{institution?.labels.en ?? '-'}</Typography>
             </Grid>
 
             <Grid container item xs={8} md={4}>
               <Grid item xs={6}>
-                <div>
-                  <Typography variant="h3" component="h2">
-                    {t('editor.institution.institution_short_name')}
-                  </Typography>
-                  <Typography>{organizationQuery.data?.acronym ?? '-'}</Typography>
-                </div>
+                <Typography variant="h3" component="h2">
+                  {t('editor.institution.institution_short_name')}
+                </Typography>
+                <Typography>{organizationQuery.data?.acronym ?? '-'}</Typography>
               </Grid>
 
               <Grid item xs={6}>
-                <div>
-                  <Typography variant="h3" component="h2">
-                    {t('editor.institution.institution_code')}
-                  </Typography>
-                  <Typography>{institution?.id.split('/').pop() ?? '-'}</Typography>
-                </div>
+                <Typography variant="h3" component="h2">
+                  {t('editor.institution.institution_code')}
+                </Typography>
+                <Typography>{institution?.id.split('/').pop() ?? '-'}</Typography>
               </Grid>
             </Grid>
           </Grid>
 
           <Grid container item xs={12} spacing={2}>
             <Grid item xs={12} md={4}>
-              <div>
-                <Typography variant="h3" component="h2">
-                  {t('basic_data.institutions.sector')}
-                </Typography>
-                {customer ? (
-                  <Typography>{t(`basic_data.institutions.sector_values.${customer.sector}`)}</Typography>
+              <Typography variant="h3" component="h2">
+                {t('basic_data.institutions.sector')}
+              </Typography>
+              {customer ? (
+                <Typography>{t(`basic_data.institutions.sector_values.${customer.sector}`)}</Typography>
+              ) : (
+                <Typography>-</Typography>
+              )}
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Typography variant="h3" component="h2">
+                {t('editor.institution.unique_feide_id')}
+              </Typography>
+              <Typography>{customer?.feideOrganizationDomain ?? '-'}</Typography>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Typography variant="h3" component="h2">
+                {t('basic_data.institutions.ror')}
+              </Typography>
+              <Typography>
+                {customer?.rorId ? (
+                  <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
+                    {customer.rorId}
+                  </Link>
                 ) : (
-                  <Typography>-</Typography>
+                  '-'
                 )}
-              </div>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-              <div>
-                <Typography variant="h3" component="h2">
-                  {t('editor.institution.unique_feide_id')}
-                </Typography>
-                <Typography>{customer?.feideOrganizationDomain ?? '-'}</Typography>
-              </div>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-              <div>
-                <Typography variant="h3" component="h2">
-                  {t('basic_data.institutions.ror')}
-                </Typography>
-                <Typography>
-                  {customer?.rorId ? (
-                    <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
-                      {customer.rorId}
-                    </Link>
-                  ) : (
-                    '-'
-                  )}
-                </Typography>
-              </div>
+              </Typography>
             </Grid>
           </Grid>
 
@@ -181,7 +167,7 @@ export const EditorInstitution = () => {
             </Grid>
 
             {institutionUsers && (
-              <Grid container item xs={12} sm={8} md={6}>
+              <Grid container item xs={12} sm={8}>
                 {institutionAdmins && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="h3" gutterBottom>
