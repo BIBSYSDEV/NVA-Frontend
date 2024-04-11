@@ -359,6 +359,7 @@
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting",
     "curators": {
+      "add_curator": "Legg til kurator",
       "administer_curators": "Administrer tilganger til kuratorer",
       "area_of_responsibility": "Ansvarsområde",
       "curators": "Kuratorer",

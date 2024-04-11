@@ -86,13 +86,15 @@ export const OrganizationCuratorsAccordion = ({
           ))}
         </Box>
 
-        <Button
-          variant="contained"
-          sx={{ mb: '1rem' }}
-          startIcon={<AddCircleOutlineOutlinedIcon />}
-          onClick={() => setOpenAddCuratorDialog(true)}>
-          Legg til kurator
-        </Button>
+        {canEditUsers && (
+          <Button
+            variant="contained"
+            sx={{ mb: '1rem' }}
+            startIcon={<AddCircleOutlineOutlinedIcon />}
+            onClick={() => setOpenAddCuratorDialog(true)}>
+            {t('editor.curators.add_curator')}
+          </Button>
+        )}
 
         <AddCuratorDialog open={openAddCuratorDialog} onClose={() => setOpenAddCuratorDialog(false)} />
 
