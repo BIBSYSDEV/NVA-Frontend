@@ -17,8 +17,8 @@ import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
-import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
@@ -69,8 +69,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         </Grid>
         <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
-          <TicketDateIntervalFilter />
         </Grid>
+
         {isOnTasksPage && (
           <>
             <Grid item xs={16} md={5} lg={4}>
@@ -86,6 +86,9 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             </Grid>
           </>
         )}
+        <Grid item xs={16} md={6} lg={5}>
+          <TicketDateIntervalFilter />{' '}
+        </Grid>
       </Grid>
 
       {ticketsQuery.isLoading ? (

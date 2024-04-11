@@ -4,15 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 
-const commonDatepickerProps: Partial<DatePickerProps<Date | null>> = {
-  views: ['day'],
+const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
+  views: ['year'],
   disableHighlightToday: true,
   slotProps: { textField: { sx: { maxWidth: '10rem' }, size: 'small' } },
 };
 
 interface TicketDateIntervalFilterProps {
   boxProps?: Pick<BoxProps, 'sx'>;
-  datePickerProps?: Partial<DatePickerProps<Date | null>>;
+  datePickerProps?: Partial<DatePickerProps<Date>>;
 }
 
 export const TicketDateIntervalFilter = ({ datePickerProps, boxProps }: TicketDateIntervalFilterProps) => {
@@ -23,8 +23,8 @@ export const TicketDateIntervalFilter = ({ datePickerProps, boxProps }: TicketDa
   const selectedDateSinceParam = searchParams.get(TicketSearchParam.FromDate);
   const selectedDateBeforeParam = searchParams.get(TicketSearchParam.ToDate);
 
-  const selectedDateSinceDate = selectedDateSinceParam ? new Date(selectedDateSinceParam) : null;
-  const selectedDateBeforeDate = selectedDateBeforeParam ? new Date(selectedDateBeforeParam) : null;
+  const selectedDateSinceDate = selectedDateSinceParam ? new Date(selectedDateSinceParam) : undefined;
+  const selectedDateBeforeDate = selectedDateBeforeParam ? new Date(selectedDateBeforeParam) : undefined;
 
   const onChangeDate = (newDate: Date | null, param: TicketSearchParam.FromDate | TicketSearchParam.ToDate) => {
     if (newDate) {
