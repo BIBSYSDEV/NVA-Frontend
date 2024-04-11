@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Link, Typography } from '@mui/material';
+import { Box, CircularProgress, Grid, Link, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
@@ -61,97 +61,157 @@ export const EditorInstitution = () => {
       <Helmet>
         <title>{t('editor.institution.institution_profile')}</title>
       </Helmet>
+      <Typography variant="h2" gutterBottom>
+        {t('editor.institution.institution_profile')}
+      </Typography>
       {isLoadingCustomer || isLoadingInstitution ? (
         <CircularProgress />
       ) : (
-        <>
-          <Typography variant="h3" component="h2">
-            {t('editor.institution.institution_name_norwegian')}
-          </Typography>
-          <Typography paragraph>{institution?.labels.nb ?? '-'}</Typography>
+        <Grid container xs={12}>
+          <Grid container item xs={12} spacing={2}>
+            <Grid item xs={12} md={4}>
+              <>
+                <Typography variant="h3" component="h2">
+                  {t('editor.institution.institution_name_norwegian')}
+                </Typography>
+                <Typography paragraph>{institution?.labels.nb ?? '-'}</Typography>
+              </>
+            </Grid>
 
-          <Typography variant="h3" component="h2">
-            {t('editor.institution.institution_name_english')}
-          </Typography>
-          <Typography paragraph>{institution?.labels.en ?? '-'}</Typography>
+            <Grid item xs={12} md={4}>
+              <>
+                <Typography variant="h3" component="h2">
+                  {t('editor.institution.institution_name_english')}
+                </Typography>
+                <Typography paragraph>{institution?.labels.en ?? '-'}</Typography>
+              </>
+            </Grid>
 
-          <Typography variant="h3" component="h2">
-            {t('editor.institution.institution_short_name')}
-          </Typography>
-          <Typography paragraph>{organizationQuery.data?.acronym ?? '-'}</Typography>
+            <Grid container item xs={12} md={4}>
+              <Grid item xs={6}>
+                <div>
+                  <Typography variant="h3" component="h2">
+                    {t('editor.institution.institution_short_name')}
+                  </Typography>
+                  <Typography paragraph>{organizationQuery.data?.acronym ?? '-'}</Typography>
+                </div>
+              </Grid>
 
-          <Typography variant="h3" component="h2">
-            {t('editor.institution.institution_code')}
-          </Typography>
-          <Typography paragraph>{institution?.id.split('/').pop() ?? '-'}</Typography>
+              <Grid item xs={6}>
+                <div>
+                  <Typography variant="h3" component="h2">
+                    {t('editor.institution.institution_code')}
+                  </Typography>
+                  <Typography paragraph>{institution?.id.split('/').pop() ?? '-'}</Typography>
+                </div>
+              </Grid>
+            </Grid>
+          </Grid>
 
-          <Typography variant="h3" component="h2">
-            {t('basic_data.institutions.ror')}
-          </Typography>
-          <Typography paragraph>
-            {customer?.rorId ? (
-              <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
-                {customer.rorId}
-              </Link>
-            ) : (
-              '-'
+          <Grid container item xs={12}>
+            <Grid item xs={12} md={4}>
+              <div>
+                <Typography variant="h3" component="h2">
+                  Sektor
+                </Typography>
+                <Typography paragraph>{customer?.sector ?? '-'}</Typography>
+              </div>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <div>
+                <Typography variant="h3" component="h2">
+                  Unik FeideID
+                </Typography>
+                <Typography paragraph>{customer?.feideOrganizationDomain ?? '-'}</Typography>
+              </div>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <div>
+                <Typography variant="h3" component="h2">
+                  {t('basic_data.institutions.ror')}
+                </Typography>
+                <Typography paragraph>
+                  {customer?.rorId ? (
+                    <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
+                      {customer.rorId}
+                    </Link>
+                  ) : (
+                    '-'
+                  )}
+                </Typography>
+              </div>
+            </Grid>
+          </Grid>
+
+          <Grid container item xs={12} md={6} spacing={3}>
+            <Grid item xs={12}>
+              <Typography variant="h3" component="h2">
+                {t('common.nvi')}
+              </Typography>
+              <Typography paragraph>
+                {customer?.nviInstitution
+                  ? t('editor.institution.institution_is_nvi_institution')
+                  : t('editor.institution.institution_is_not_nvi_institution')}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography variant="h3" component="h2">
+                {t('common.rbo')}
+              </Typography>
+              <Typography paragraph gutterBottom>
+                {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography variant="h3">Institusjonens brukerstøtte</Typography>
+              <Link>{customer?.serviceCenterUri}</Link>
+            </Grid>
+
+            {institutionUsers && (
+              <Grid container item xs={12}>
+                {institutionAdmins && (
+                  <div>
+                    <Typography variant="h3" gutterBottom>
+                      {institutionAdmins.length > 0 &&
+                        t('editor.institution.institution_admin', { count: institutionAdmins.length })}
+                    </Typography>
+                    {institutionAdmins.length > 0 ? (
+                      institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
+                    ) : (
+                      <Typography>{t('editor.institution.institution_has_no_administrator')}</Typography>
+                    )}
+                  </div>
+                )}
+
+                {institutionEditors && (
+                  <div>
+                    <Typography variant="h3" gutterBottom>
+                      {institutionEditors.length > 0 &&
+                        t('editor.institution.institution_editor', { count: institutionEditors.length })}
+                    </Typography>
+                    {institutionEditors.length > 0 ? (
+                      institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
+                    ) : (
+                      <Typography>{t('editor.institution.institution_has_no_editor')}</Typography>
+                    )}
+                  </div>
+                )}
+              </Grid>
             )}
-          </Typography>
 
-          <Typography variant="h3" component="h2">
-            {t('common.nvi')}
-          </Typography>
-          <Typography paragraph>
-            {customer?.nviInstitution
-              ? t('editor.institution.institution_is_nvi_institution')
-              : t('editor.institution.institution_is_not_nvi_institution')}
-          </Typography>
-
-          <Typography variant="h3" component="h2">
-            {t('common.rbo')}
-          </Typography>
-          <Typography paragraph>
-            {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
-          </Typography>
-
-          {institutionUsers && (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
-              {institutionAdmins && (
-                <div>
-                  <Typography variant="h3" gutterBottom>
-                    {institutionAdmins.length > 0 &&
-                      t('editor.institution.institution_admin', { count: institutionAdmins.length })}
-                  </Typography>
-                  {institutionAdmins.length > 0 ? (
-                    institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
-                  ) : (
-                    <Typography>{t('editor.institution.institution_has_no_administrator')}</Typography>
-                  )}
-                </div>
-              )}
-
-              {institutionEditors && (
-                <div>
-                  <Typography variant="h3" gutterBottom>
-                    {institutionEditors.length > 0 &&
-                      t('editor.institution.institution_editor', { count: institutionEditors.length })}
-                  </Typography>
-                  {institutionEditors.length > 0 ? (
-                    institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
-                  ) : (
-                    <Typography>{t('editor.institution.institution_has_no_editor')}</Typography>
-                  )}
-                </div>
-              )}
-            </Box>
-          )}
-
-          <Typography sx={{ pt: '1rem' }}>
-            <Trans t={t} i18nKey="editor.institution.institution_helper_text">
-              <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
-            </Trans>
-          </Typography>
-        </>
+            <Grid item xs={12}>
+              <Typography sx={{ pt: '1rem' }}>
+                <Trans t={t} i18nKey="editor.institution.institution_helper_text">
+                  <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
+                </Trans>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
       )}
     </>
   );
