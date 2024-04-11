@@ -88,7 +88,7 @@ export const EditorInstitution = () => {
               </>
             </Grid>
 
-            <Grid container item xs={12} md={4}>
+            <Grid container item xs={8} md={4}>
               <Grid item xs={6}>
                 <div>
                   <Typography variant="h3" component="h2">
@@ -181,7 +181,7 @@ export const EditorInstitution = () => {
             </Grid>
 
             {institutionUsers && (
-              <Grid container item xs={12}>
+              <Grid container item xs={12} sm={8} md={6}>
                 {institutionAdmins && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="h3" gutterBottom>
