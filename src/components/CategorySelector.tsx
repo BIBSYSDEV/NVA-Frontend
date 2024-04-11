@@ -68,9 +68,7 @@ export const CategorySelector = ({
   const { t } = useTranslation();
 
   const [searchValue, setSearchValue] = useState('');
-  const [highlightNviCategories, setHighlightNviCategories] = useState(
-    nviApplicableTypes.every((category) => selectedCategories.includes(category))
-  );
+  const highlightNviCategories = nviApplicableTypes.every((category) => selectedCategories.includes(category));
 
   const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
     const lowerCaseSearchValue = searchValue.toLowerCase();
