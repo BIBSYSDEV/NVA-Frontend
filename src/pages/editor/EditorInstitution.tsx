@@ -112,7 +112,7 @@ export const EditorInstitution = () => {
             <Grid item xs={12} md={4}>
               <div>
                 <Typography variant="h3" component="h2">
-                  Sektor
+                  {t('basic_data.institutions.sector')}
                 </Typography>
                 <Typography paragraph>{customer?.sector ?? '-'}</Typography>
               </div>
@@ -121,7 +121,7 @@ export const EditorInstitution = () => {
             <Grid item xs={12} md={4}>
               <div>
                 <Typography variant="h3" component="h2">
-                  Unik FeideID
+                  {t('editor.institution.unique_feide_id')}
                 </Typography>
                 <Typography paragraph>{customer?.feideOrganizationDomain ?? '-'}</Typography>
               </div>
@@ -167,8 +167,10 @@ export const EditorInstitution = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Typography variant="h3">Institusjonens brukerstøtte</Typography>
-              <Link>{customer?.serviceCenterUri}</Link>
+              <Typography variant="h3">{t('editor.institution.institution_support')}</Typography>
+              <Link href={customer?.serviceCenterUri} target="_blank" rel="noopener noreferrer">
+                {customer?.serviceCenterUri}
+              </Link>
             </Grid>
 
             {institutionUsers && (

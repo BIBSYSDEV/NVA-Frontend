@@ -403,7 +403,8 @@
       "institution_support_description": "Institusjonens brukerstøtte vises under kuratorstøtte.",
       "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
       "organizing": "Organisering",
-      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
+      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)",
+      "unique_feide_id": "Unik FeideID"
     },
     "organization_overview": "Organisasjonsstruktur",
     "publish_strategy": {
