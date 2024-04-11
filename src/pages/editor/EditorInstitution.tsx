@@ -165,7 +165,7 @@ export const EditorInstitution = () => {
             </Grid>
 
             {institutionUsers && (
-              <Grid container item xs={12} sm={7}>
+              <Grid container item xs={12} md={8}>
                 {institutionAdmins && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="h3" gutterBottom>
