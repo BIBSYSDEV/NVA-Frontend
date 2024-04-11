@@ -57,8 +57,6 @@ export const EditorInstitution = () => {
     user.roles.some((role) => role.rolename === RoleName.Editor)
   );
 
-  const customerSector = customer && customer?.sector;
-
   return (
     <>
       <Helmet>
@@ -70,14 +68,14 @@ export const EditorInstitution = () => {
       {isLoadingCustomer || isLoadingInstitution ? (
         <CircularProgress />
       ) : (
-        <Grid container xs={12}>
+        <Grid container spacing={2}>
           <Grid container item xs={12} spacing={2}>
             <Grid item xs={12} md={4}>
               <>
                 <Typography variant="h3" component="h2">
                   {t('editor.institution.institution_name_norwegian')}
                 </Typography>
-                <Typography paragraph>{institution?.labels.nb ?? '-'}</Typography>
+                <Typography>{institution?.labels.nb ?? '-'}</Typography>
               </>
             </Grid>
 
@@ -86,7 +84,7 @@ export const EditorInstitution = () => {
                 <Typography variant="h3" component="h2">
                   {t('editor.institution.institution_name_english')}
                 </Typography>
-                <Typography paragraph>{institution?.labels.en ?? '-'}</Typography>
+                <Typography>{institution?.labels.en ?? '-'}</Typography>
               </>
             </Grid>
 
@@ -96,7 +94,7 @@ export const EditorInstitution = () => {
                   <Typography variant="h3" component="h2">
                     {t('editor.institution.institution_short_name')}
                   </Typography>
-                  <Typography paragraph>{organizationQuery.data?.acronym ?? '-'}</Typography>
+                  <Typography>{organizationQuery.data?.acronym ?? '-'}</Typography>
                 </div>
               </Grid>
 
@@ -105,20 +103,20 @@ export const EditorInstitution = () => {
                   <Typography variant="h3" component="h2">
                     {t('editor.institution.institution_code')}
                   </Typography>
-                  <Typography paragraph>{institution?.id.split('/').pop() ?? '-'}</Typography>
+                  <Typography>{institution?.id.split('/').pop() ?? '-'}</Typography>
                 </div>
               </Grid>
             </Grid>
           </Grid>
 
-          <Grid container item xs={12}>
+          <Grid container item xs={12} spacing={2}>
             <Grid item xs={12} md={4}>
               <div>
                 <Typography variant="h3" component="h2">
                   {t('basic_data.institutions.sector')}
                 </Typography>
                 {customer ? (
-                  <Typography paragraph>{t(`basic_data.institutions.sector_values.${customer.sector}`)}</Typography>
+                  <Typography>{t(`basic_data.institutions.sector_values.${customer.sector}`)}</Typography>
                 ) : (
                   <Typography>-</Typography>
                 )}
@@ -130,7 +128,7 @@ export const EditorInstitution = () => {
                 <Typography variant="h3" component="h2">
                   {t('editor.institution.unique_feide_id')}
                 </Typography>
-                <Typography paragraph>{customer?.feideOrganizationDomain ?? '-'}</Typography>
+                <Typography>{customer?.feideOrganizationDomain ?? '-'}</Typography>
               </div>
             </Grid>
 
@@ -139,7 +137,7 @@ export const EditorInstitution = () => {
                 <Typography variant="h3" component="h2">
                   {t('basic_data.institutions.ror')}
                 </Typography>
-                <Typography paragraph>
+                <Typography>
                   {customer?.rorId ? (
                     <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
                       {customer.rorId}
@@ -152,12 +150,12 @@ export const EditorInstitution = () => {
             </Grid>
           </Grid>
 
-          <Grid container item xs={12} md={6} spacing={3}>
+          <Grid container item xs={12} md={12} spacing={2}>
             <Grid item xs={12}>
               <Typography variant="h3" component="h2">
                 {t('common.nvi')}
               </Typography>
-              <Typography paragraph>
+              <Typography>
                 {customer?.nviInstitution
                   ? t('editor.institution.institution_is_nvi_institution')
                   : t('editor.institution.institution_is_not_nvi_institution')}
@@ -168,13 +166,15 @@ export const EditorInstitution = () => {
               <Typography variant="h3" component="h2">
                 {t('common.rbo')}
               </Typography>
-              <Typography paragraph gutterBottom>
+              <Typography>
                 {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
               </Typography>
             </Grid>
 
             <Grid item xs={12}>
-              <Typography variant="h3">{t('editor.institution.institution_support')}</Typography>
+              <Typography variant="h3" component="h2">
+                {t('editor.institution.institution_support')}
+              </Typography>
               <Link href={customer?.serviceCenterUri} target="_blank" rel="noopener noreferrer">
                 {customer?.serviceCenterUri}
               </Link>
@@ -183,7 +183,7 @@ export const EditorInstitution = () => {
             {institutionUsers && (
               <Grid container item xs={12}>
                 {institutionAdmins && (
-                  <div>
+                  <Grid item xs={12} sm={6}>
                     <Typography variant="h3" gutterBottom>
                       {institutionAdmins.length > 0 &&
                         t('editor.institution.institution_admin', { count: institutionAdmins.length })}
@@ -193,11 +193,11 @@ export const EditorInstitution = () => {
                     ) : (
                       <Typography>{t('editor.institution.institution_has_no_administrator')}</Typography>
                     )}
-                  </div>
+                  </Grid>
                 )}
 
                 {institutionEditors && (
-                  <div>
+                  <Grid item xs={12} sm={6}>
                     <Typography variant="h3" gutterBottom>
                       {institutionEditors.length > 0 &&
                         t('editor.institution.institution_editor', { count: institutionEditors.length })}
@@ -207,7 +207,7 @@ export const EditorInstitution = () => {
                     ) : (
                       <Typography>{t('editor.institution.institution_has_no_editor')}</Typography>
                     )}
-                  </div>
+                  </Grid>
                 )}
               </Grid>
             )}
