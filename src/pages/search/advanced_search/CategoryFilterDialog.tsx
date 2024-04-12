@@ -35,7 +35,11 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
     <Dialog open={open} onClose={closeDialog} maxWidth="md" fullWidth>
       <DialogTitle>{t('search.select_one_or_more_categories')}</DialogTitle>
       <DialogContent>
-        <CategorySelector selectedCategories={selectedCategories} onCategoryClick={onSelectType} />
+        <CategorySelector
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
+          onCategoryClick={onSelectType}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={closeDialog}>{t('common.cancel')}</Button>
