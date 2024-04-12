@@ -69,7 +69,7 @@
     "@types/isbn-utils": "^1.1.6",
     "@types/jest": "^29.5.12",
     "@types/react": "^18.2.76",
-    "@types/react-dom": "^18.2.24",
+    "@types/react-dom": "^18.2.25",
     "@types/react-router-dom": "^5.3.3",
     "axe-core": "^4.9.0",
     "axios-mock-adapter": "^1.22.0",
