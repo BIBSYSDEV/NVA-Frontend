@@ -23,7 +23,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
 
   const organizationQuery = useQuery({
     enabled: !!resourceOwnerAffiliationId,
-    queryKey: ['log', 'organization', resourceOwnerAffiliationId],
+    queryKey: ['organization', resourceOwnerAffiliationId],
     queryFn: resourceOwnerAffiliationId ? () => fetchOrganization(resourceOwnerAffiliationId) : undefined,
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
@@ -32,7 +32,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
 
   const personQuery = useQuery({
     enabled: !!resourceOwnerId,
-    queryKey: ['log', 'user', resourceOwnerId],
+    queryKey: ['user', resourceOwnerId],
     queryFn: resourceOwnerId ? () => fetchUser(resourceOwnerId) : undefined,
     retry: 0,
     staleTime: Infinity,
