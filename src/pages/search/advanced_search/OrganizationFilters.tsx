@@ -34,7 +34,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const organizationQuery = useQuery({
     enabled: !!user?.topOrgCristinId,
     queryKey: ['organization', user?.topOrgCristinId],
-    queryFn: user?.topOrgCristinId ? () => fetchOrganization(user?.topOrgCristinId ?? '') : undefined,
+    queryFn: user ? () => fetchOrganization(user.topOrgCristinId ?? '') : undefined,
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
@@ -69,7 +69,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
     meta: { errorMessage: t('feedback.error.get_institutions') },
   });
 
-  const defaultOptions = userOrganization !== undefined ? [userOrganization] : [];
+  const defaultOptions = userOrganization ? [userOrganization] : [];
   const options = organizationSearchQuery.data?.hits ?? defaultOptions;
 
   const isLoading = topLevelOrganizationQuery.isFetching || organizationSearchQuery.isFetching;
