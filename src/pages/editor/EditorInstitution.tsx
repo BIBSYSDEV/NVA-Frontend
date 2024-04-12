@@ -222,6 +222,7 @@ const InstitutionUserLink = ({ user }: InstitutionUserItemProps) => {
         sx={{
           bgcolor: 'primary.main',
           color: 'primary.contrastText',
+          aspectRatio: 1,
         }}>
         {getInitials(fullName)}
       </StyledBaseContributorIndicator>
