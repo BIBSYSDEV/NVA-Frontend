@@ -88,7 +88,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
       {registration && (
-        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+        <StyledStatusMessageBox key="registration-created-log-entry" sx={{ bgcolor: 'publishingRequest.main' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography>{t('common.created')}:</Typography>
             {organizationQuery.isLoading || userQuery.isLoading ? (
@@ -112,7 +112,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
               ticketTypesToShow.includes(logEntry.type))
         )
         .sort((a, b) => new Date(a.modifiedDate).getTime() - new Date(b.modifiedDate).getTime())
-        .map((logEntry) => {
+        .map((logEntry, index) => {
           if (isTicket(logEntry) && logEntry.type === 'PublishingRequest') {
             return <CompletedPublishingRequestStatusBox key={logEntry.id} ticket={logEntry as PublishingTicket} />;
           }
@@ -121,7 +121,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           }
           if (isNonTicketLogEntry(logEntry)) {
             return (
-              <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+              <StyledStatusMessageBox key={index} sx={{ bgcolor: 'publishingRequest.main' }}>
                 <Typography>{logEntry.description}</Typography>
                 <Typography>{new Date(logEntry.modifiedDate).toLocaleDateString()}</Typography>
               </StyledStatusMessageBox>
