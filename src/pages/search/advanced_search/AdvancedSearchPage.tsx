@@ -15,7 +15,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
+import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
@@ -42,13 +42,11 @@ const StyledTypography = styled(Typography)({
   marginBottom: '0.5rem',
 });
 
-const GridRowDivider = () => {
-  return (
-    <Grid item xs={12}>
-      <StyledDivider />
-    </Grid>
-  );
-};
+const gridRowDivider = (
+  <Grid item xs={12}>
+    <StyledDivider />
+  </Grid>
+);
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
@@ -189,7 +187,7 @@ export const AdvancedSearchPage = () => {
           </Grid>
         </Grid>
 
-        <GridRowDivider />
+        {gridRowDivider}
 
         <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
           <Grid item>
@@ -205,7 +203,7 @@ export const AdvancedSearchPage = () => {
           </Grid>
         </Grid>
 
-        <GridRowDivider />
+        {gridRowDivider}
 
         <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
           <Grid container item direction={isLargeScreen ? 'row' : 'column'} gap={2}>
@@ -230,7 +228,7 @@ export const AdvancedSearchPage = () => {
           </Grid>
         </Grid>
 
-        <GridRowDivider />
+        {gridRowDivider}
 
         <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
           <Grid item>

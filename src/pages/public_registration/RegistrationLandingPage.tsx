@@ -2,16 +2,15 @@ import { Box } from '@mui/material';
 import { Query, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { fetchRegistration, fetchRegistrationTickets } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
 import { setNotification } from '../../redux/notificationSlice';
-import { RootState } from '../../redux/store';
 import { DeletedRegistrationProblem } from '../../types/error_responses';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
-import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import { userCanEditRegistration } from '../../utils/registration-helpers';
 import { IdentifierParams } from '../../utils/urlPaths';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
@@ -24,7 +23,6 @@ export const RegistrationLandingPage = () => {
   const dispatch = useDispatch();
   const { identifier } = useParams<IdentifierParams>();
   const shouldNotRedirect = new URLSearchParams(history.location.search).has('shouldNotRedirect');
-  const user = useSelector((store: RootState) => store.user);
 
   const registrationQuery = useQuery({
     queryKey: ['registration', identifier, shouldNotRedirect],
@@ -52,7 +50,7 @@ export const RegistrationLandingPage = () => {
   });
 
   const registration = registrationQuery.data;
-  const registrationId = registration?.id ?? '';
+  const registrationId = registration?.id;
 
   if (identifier !== registration?.identifier && !!registration?.identifier) {
     const newPath = history.location.pathname.replace(identifier, registration.identifier);
@@ -60,18 +58,18 @@ export const RegistrationLandingPage = () => {
     history.replace(newPath + searchParams);
   }
 
-  const isRegistrationAdmin =
-    userIsRegistrationOwner(user, registration) || userIsRegistrationCurator(user, registration);
+  const canEditRegistration = registration && userCanEditRegistration(registration);
+
   const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.Published ||
-    isRegistrationAdmin ||
+    canEditRegistration ||
     registration?.status === RegistrationStatus.DraftForDeletion ||
     registration?.status === RegistrationStatus.Unpublished;
 
   const ticketsQuery = useQuery({
-    enabled: isRegistrationAdmin,
+    enabled: canEditRegistration && !!registrationId,
     queryKey: ['registrationTickets', registrationId],
-    queryFn: () => fetchRegistrationTickets(registrationId),
+    queryFn: () => (registrationId ? fetchRegistrationTickets(registrationId) : null),
     meta: { errorMessage: t('feedback.error.get_tickets') },
   });
 
@@ -89,14 +87,14 @@ export const RegistrationLandingPage = () => {
         gridTemplateAreas: { xs: '"tasks" "registration"', sm: '"registration tasks"' },
         gap: '1rem',
       }}>
-      {registrationQuery.isLoading || (isRegistrationAdmin && ticketsQuery.isLoading) ? (
+      {registrationQuery.isLoading || (canEditRegistration && ticketsQuery.isLoading) ? (
         <PageSpinner aria-label={t('common.result')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>
             <PublicRegistrationContent registration={registration} />
 
-            {isRegistrationAdmin && ticketsQuery.isSuccess && (
+            {canEditRegistration && ticketsQuery.isSuccess && (
               <ActionPanel
                 registration={registration}
                 refetchRegistrationAndTickets={refetchRegistrationAndTickets}
