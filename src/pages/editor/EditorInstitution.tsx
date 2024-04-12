@@ -69,39 +69,37 @@ export const EditorInstitution = () => {
         <CircularProgress />
       ) : (
         <Grid container spacing={2}>
-          <Grid container item xs={12} spacing={2}>
-            <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h3" component="h2">
+              {t('editor.institution.institution_name_norwegian')}
+            </Typography>
+            <Typography>{institution?.labels.nb ?? '-'}</Typography>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Typography variant="h3" component="h2">
+              {t('editor.institution.institution_name_english')}
+            </Typography>
+            <Typography>{institution?.labels.en ?? '-'}</Typography>
+          </Grid>
+
+          <Grid container item xs={8} md={4}>
+            <Grid item xs={6}>
               <Typography variant="h3" component="h2">
-                {t('editor.institution.institution_name_norwegian')}
+                {t('editor.institution.institution_short_name')}
               </Typography>
-              <Typography>{institution?.labels.nb ?? '-'}</Typography>
+              <Typography>{organizationQuery.data?.acronym ?? '-'}</Typography>
             </Grid>
 
-            <Grid item xs={12} md={4}>
+            <Grid item xs={6}>
               <Typography variant="h3" component="h2">
-                {t('editor.institution.institution_name_english')}
+                {t('editor.institution.institution_code')}
               </Typography>
-              <Typography>{institution?.labels.en ?? '-'}</Typography>
-            </Grid>
-
-            <Grid container item xs={8} md={4}>
-              <Grid item xs={6}>
-                <Typography variant="h3" component="h2">
-                  {t('editor.institution.institution_short_name')}
-                </Typography>
-                <Typography>{organizationQuery.data?.acronym ?? '-'}</Typography>
-              </Grid>
-
-              <Grid item xs={6}>
-                <Typography variant="h3" component="h2">
-                  {t('editor.institution.institution_code')}
-                </Typography>
-                <Typography>{institution?.id.split('/').pop() ?? '-'}</Typography>
-              </Grid>
+              <Typography>{institution?.id.split('/').pop() ?? '-'}</Typography>
             </Grid>
           </Grid>
 
-          <Grid container item xs={12} spacing={2}>
+          <Grid container item spacing={2}>
             <Grid item xs={12} md={4}>
               <Typography variant="h3" component="h2">
                 {t('basic_data.institutions.sector')}
@@ -134,75 +132,73 @@ export const EditorInstitution = () => {
             </Grid>
           </Grid>
 
-          <Grid container item xs={12} md={12} spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h3" component="h2">
-                {t('common.nvi')}
-              </Typography>
-              <Typography>
-                {customer?.nviInstitution
-                  ? t('editor.institution.institution_is_nvi_institution')
-                  : t('editor.institution.institution_is_not_nvi_institution')}
-              </Typography>
+          <Grid item xs={12}>
+            <Typography variant="h3" component="h2">
+              {t('common.nvi')}
+            </Typography>
+            <Typography>
+              {customer?.nviInstitution
+                ? t('editor.institution.institution_is_nvi_institution')
+                : t('editor.institution.institution_is_not_nvi_institution')}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Typography variant="h3" component="h2">
+              {t('common.rbo')}
+            </Typography>
+            <Typography>
+              {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Typography variant="h3" component="h2">
+              {t('editor.institution.institution_support')}
+            </Typography>
+            <Link href={customer?.serviceCenterUri} target="_blank" rel="noopener noreferrer">
+              {customer?.serviceCenterUri}
+            </Link>
+          </Grid>
+
+          {institutionUsers && (
+            <Grid container item xs={12} md={8}>
+              {institutionAdmins && (
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h3" gutterBottom>
+                    {institutionAdmins.length > 0 &&
+                      t('editor.institution.institution_admin', { count: institutionAdmins.length })}
+                  </Typography>
+                  {institutionAdmins.length > 0 ? (
+                    institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
+                  ) : (
+                    <Typography>{t('editor.institution.institution_has_no_administrator')}</Typography>
+                  )}
+                </Grid>
+              )}
+
+              {institutionEditors && (
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="h3" gutterBottom>
+                    {institutionEditors.length > 0 &&
+                      t('editor.institution.institution_editor', { count: institutionEditors.length })}
+                  </Typography>
+                  {institutionEditors.length > 0 ? (
+                    institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
+                  ) : (
+                    <Typography>{t('editor.institution.institution_has_no_editor')}</Typography>
+                  )}
+                </Grid>
+              )}
             </Grid>
+          )}
 
-            <Grid item xs={12}>
-              <Typography variant="h3" component="h2">
-                {t('common.rbo')}
-              </Typography>
-              <Typography>
-                {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Typography variant="h3" component="h2">
-                {t('editor.institution.institution_support')}
-              </Typography>
-              <Link href={customer?.serviceCenterUri} target="_blank" rel="noopener noreferrer">
-                {customer?.serviceCenterUri}
-              </Link>
-            </Grid>
-
-            {institutionUsers && (
-              <Grid container item xs={12} md={8}>
-                {institutionAdmins && (
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="h3" gutterBottom>
-                      {institutionAdmins.length > 0 &&
-                        t('editor.institution.institution_admin', { count: institutionAdmins.length })}
-                    </Typography>
-                    {institutionAdmins.length > 0 ? (
-                      institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
-                    ) : (
-                      <Typography>{t('editor.institution.institution_has_no_administrator')}</Typography>
-                    )}
-                  </Grid>
-                )}
-
-                {institutionEditors && (
-                  <Grid item xs={12} sm={6}>
-                    <Typography variant="h3" gutterBottom>
-                      {institutionEditors.length > 0 &&
-                        t('editor.institution.institution_editor', { count: institutionEditors.length })}
-                    </Typography>
-                    {institutionEditors.length > 0 ? (
-                      institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
-                    ) : (
-                      <Typography>{t('editor.institution.institution_has_no_editor')}</Typography>
-                    )}
-                  </Grid>
-                )}
-              </Grid>
-            )}
-
-            <Grid item xs={12}>
-              <Typography sx={{ pt: '1rem' }}>
-                <Trans t={t} i18nKey="editor.institution.institution_helper_text">
-                  <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
-                </Trans>
-              </Typography>
-            </Grid>
+          <Grid item xs={12}>
+            <Typography sx={{ pt: '1rem' }}>
+              <Trans t={t} i18nKey="editor.institution.institution_helper_text">
+                <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
+              </Trans>
+            </Typography>
           </Grid>
         </Grid>
       )}
