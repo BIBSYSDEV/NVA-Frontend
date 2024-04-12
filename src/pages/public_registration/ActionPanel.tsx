@@ -1,4 +1,4 @@
-import { Box, Paper, Tab, Tabs } from '@mui/material';
+import { Paper, Tab, Tabs } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -23,28 +23,29 @@ export const ActionPanel = ({
   const [tabValue, setTabValue] = useState(0);
 
   return (
-    <Paper elevation={0} data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
-      <Box sx={{ color: 'primary.contrastText' }}>
-        <Tabs
-          value={tabValue}
-          onChange={(_, newValue) => setTabValue(newValue)}
-          sx={{ bgcolor: 'primary.main', px: '0.5rem' }}
-          textColor="inherit"
-          TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
-          <Tab
-            label={t('common.tasks')}
-            data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelTasks}
-            id="action-panel-tab-0"
-            aria-controls="action-panel-tab-panel-0"
-          />
-          <Tab
-            label={t('common.log')}
-            data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
-            id="action-panel-tab-1"
-            aria-controls="action-panel-tab-panel-1"
-          />
-        </Tabs>
-      </Box>
+    <Paper
+      elevation={0}
+      sx={{ color: 'primary.contrastText' }}
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
+      <Tabs
+        value={tabValue}
+        onChange={(_, newValue) => setTabValue(newValue)}
+        sx={{ bgcolor: 'primary.main', px: '0.5rem' }}
+        textColor="inherit"
+        TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
+        <Tab
+          label={t('common.tasks')}
+          data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelTasks}
+          id="action-panel-tab-0"
+          aria-controls="action-panel-tab-panel-0"
+        />
+        <Tab
+          label={t('common.log')}
+          data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
+          id="action-panel-tab-1"
+          aria-controls="action-panel-tab-panel-1"
+        />
+      </Tabs>
       <TabPanel tabValue={tabValue} index={0}>
         <ActionPanelContent
           tickets={tickets}
