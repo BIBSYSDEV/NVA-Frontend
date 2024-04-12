@@ -5,6 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getById } from '../../api/commonApi';
 import { fetchUsers } from '../../api/roleApi';
+import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { Organization } from '../../types/organization.types';
@@ -159,36 +160,40 @@ export const EditorInstitution = () => {
             </Link>
           </Grid>
 
-          {institutionUsers && (
-            <Grid container item xs={12} md={8}>
-              {institutionAdmins && (
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="h3" gutterBottom>
-                    {institutionAdmins.length > 0 &&
-                      t('editor.institution.institution_admin', { count: institutionAdmins.length })}
-                  </Typography>
-                  {institutionAdmins.length > 0 ? (
-                    institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
-                  ) : (
-                    <Typography>{t('editor.institution.institution_has_no_administrator')}</Typography>
-                  )}
-                </Grid>
-              )}
+          {institutionUsersQuery.isLoading ? (
+            <PageSpinner />
+          ) : (
+            institutionUsers && (
+              <Grid container item xs={12}>
+                {institutionAdmins && (
+                  <Grid item xs={12} sm={4} md={6} lg={4}>
+                    <Typography variant="h3" gutterBottom>
+                      {institutionAdmins.length > 0 &&
+                        t('editor.institution.institution_admin', { count: institutionAdmins.length })}
+                    </Typography>
+                    {institutionAdmins.length > 0 ? (
+                      institutionAdmins.map((admin) => <InstitutionUserLink key={admin.cristinId} user={admin} />)
+                    ) : (
+                      <Typography>{t('editor.institution.institution_has_no_administrator')}</Typography>
+                    )}
+                  </Grid>
+                )}
 
-              {institutionEditors && (
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="h3" gutterBottom>
-                    {institutionEditors.length > 0 &&
-                      t('editor.institution.institution_editor', { count: institutionEditors.length })}
-                  </Typography>
-                  {institutionEditors.length > 0 ? (
-                    institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
-                  ) : (
-                    <Typography>{t('editor.institution.institution_has_no_editor')}</Typography>
-                  )}
-                </Grid>
-              )}
-            </Grid>
+                {institutionEditors && (
+                  <Grid item xs={12} sm={4} md={6} lg={4}>
+                    <Typography variant="h3" gutterBottom>
+                      {institutionEditors.length > 0 &&
+                        t('editor.institution.institution_editor', { count: institutionEditors.length })}
+                    </Typography>
+                    {institutionEditors.length > 0 ? (
+                      institutionEditors.map((editor) => <InstitutionUserLink key={editor.cristinId} user={editor} />)
+                    ) : (
+                      <Typography>{t('editor.institution.institution_has_no_editor')}</Typography>
+                    )}
+                  </Grid>
+                )}
+              </Grid>
+            )
           )}
 
           <Grid item xs={12}>
