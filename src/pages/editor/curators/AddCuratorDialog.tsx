@@ -15,21 +15,22 @@ import {
   FormGroup,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { t } from 'i18next';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { fetchUser } from '../../../api/roleApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser, updateUser } from '../../../api/roleApi';
 import { fetchEmployees } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
 import { CristinPerson, InstitutionUser, RoleName } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { getOrganizationHierarchy } from '../../../utils/institutions-helpers';
+import { getAllChildOrganizations, getOrganizationHierarchy } from '../../../utils/institutions-helpers';
 import { getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
 import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/ViewingScopeChip';
 
@@ -82,11 +83,14 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization }: AddCura
       let viewingScope = [...currentUser.viewingScope.includedUnits];
 
       const newOrganizationId = !viewingScope.includes(currentOrganization.id) ? currentOrganization.id : null;
-      const hierarchy = getOrganizationHierarchy(currentOrganization)
+      const parentOrganizations = getOrganizationHierarchy(currentOrganization)
         .filter((org) => org.id !== currentOrganization.id)
         .map((org) => org.id);
+      const childrenOrganizations = getAllChildOrganizations(currentOrganization.hasPart).map((unit) => unit.id);
 
-      viewingScope = viewingScope.filter((id) => !hierarchy.includes(id));
+      viewingScope = viewingScope.filter(
+        (id) => !parentOrganizations.includes(id) && !childrenOrganizations.includes(id)
+      );
 
       if (newOrganizationId) {
         viewingScope.push(newOrganizationId);
@@ -150,12 +154,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization }: AddCura
             {userQuery.isLoading || (userQuery.data && !userInitialValues) ? (
               <CircularProgress />
             ) : userQuery.data && userInitialValues ? (
-              <UserForm
-                closeDialog={closeDialog}
-                initialValues={userInitialValues}
-                currentUser={userQuery.data}
-                currentOrganization={currentOrganization}
-              />
+              <UserForm closeDialog={closeDialog} initialValues={userInitialValues} currentUser={userQuery.data} />
             ) : (
               <>
                 <Typography>
@@ -180,20 +179,32 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization }: AddCura
   );
 };
 
-interface UserFormProps extends Pick<AddCuratorDialogProps, 'currentOrganization'> {
+interface UserFormProps {
   closeDialog: () => void;
   currentUser: InstitutionUser;
   initialValues: InstitutionUser;
 }
 
-const UserForm = ({ closeDialog, currentUser, currentOrganization, initialValues }: UserFormProps) => {
+const UserForm = ({ closeDialog, currentUser, initialValues }: UserFormProps) => {
+  const dispatch = useDispatch();
+
   const currentViewingScope = currentUser.viewingScope.includedUnits;
   const newViewingScope = initialValues.viewingScope.includedUnits;
 
   const allViewingScopes = Array.from(new Set([...currentViewingScope, ...newViewingScope]));
 
+  const userMutation = useMutation({
+    mutationFn: (user: InstitutionUser) => updateUser(user.username, user),
+    onError: () =>
+      dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' })),
+    onSuccess: () => {
+      dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
+      closeDialog();
+    },
+  });
+
   return (
-    <Formik initialValues={initialValues} onSubmit={(values) => console.log('submit', values)}>
+    <Formik initialValues={initialValues} onSubmit={async (values) => await userMutation.mutateAsync(values)}>
       {({ values, setFieldValue, dirty, isSubmitting }: FormikProps<InstitutionUser>) => (
         <Form noValidate>
           <Typography variant="h3" gutterBottom>
