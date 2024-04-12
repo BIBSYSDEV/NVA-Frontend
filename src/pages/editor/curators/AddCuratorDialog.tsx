@@ -244,11 +244,24 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
             component="fieldset"
             onChange={(event: ChangeEvent<any>) => {
               const role = event.target.value as RoleName;
-              const roleExists = values.roles.some((thisRole) => thisRole.rolename === role);
 
-              const newRoles = roleExists
+              const isRemovingRole = values.roles.some((thisRole) => thisRole.rolename === role);
+
+              let newRoles = isRemovingRole
                 ? values.roles.filter((selectedRole) => selectedRole.rolename !== role)
                 : [...values.roles, { type: 'Role', rolename: role }];
+
+              if (isRemovingRole) {
+                // Remove roles that depend on the removed role
+                if (role === RoleName.PublishingCurator) {
+                  newRoles = newRoles.filter(
+                    (role) =>
+                      role.rolename !== RoleName.CuratorThesis && role.rolename !== RoleName.CuratorThesisEmbargo
+                  );
+                } else if (role === RoleName.CuratorThesis) {
+                  newRoles = newRoles.filter((role) => role.rolename !== RoleName.CuratorThesisEmbargo);
+                }
+              }
 
               setFieldValue('roles', newRoles);
             }}
@@ -274,6 +287,7 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
                 label={t('my_page.roles.publishing_curator')}
               />
               <FormControlLabel
+                disabled={!values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
                 control={
                   <Checkbox
                     checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
@@ -283,6 +297,7 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
                 label={'Studentoppgave'}
               />
               <FormControlLabel
+                disabled={!values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
                 control={
                   <Checkbox
                     checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesisEmbargo)}
