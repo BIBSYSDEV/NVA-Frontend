@@ -13,6 +13,12 @@ import { CompletedPublishingRequestStatusBox } from './action_accordions/Complet
 const ticketStatusesToShow: TicketStatus[] = ['Completed', 'Closed'];
 const ticketTypesToShow: TicketType[] = ['PublishingRequest', 'DoiRequest'];
 
+type LogList = (Ticket | RegistrationModifiedEntry)[];
+
+interface RegistrationModifiedEntry {
+  modifiedDate: string;
+}
+
 interface LogPanelProps {
   tickets: Ticket[];
   registration: Registration;
@@ -41,6 +47,17 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     cacheTime: 1_800_000, // 30 minutes
   });
 
+  function isTicket(object: any): object is Ticket {
+    return ('type' as TicketType) in object;
+  }
+
+  const logs: LogList = [...tickets];
+
+  if (registration.publishedDate && registration.publishedDate < registration.modifiedDate) {
+    const registrationLastModified: RegistrationModifiedEntry = { modifiedDate: registration.modifiedDate };
+    logs.push(registrationLastModified);
+  }
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
       {registration && (
@@ -65,15 +82,27 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           <Typography>{new Date(registration.publishedDate).toLocaleDateString()}</Typography>
         </StyledStatusMessageBox>
       )}
-      {tickets
-        .filter((ticket) => ticketStatusesToShow.includes(ticket.status) && ticketTypesToShow.includes(ticket.type))
+      {logs
+        .filter(
+          (logEntry) =>
+            !isTicket(logEntry) ||
+            (ticketStatusesToShow.includes(logEntry.status) && ticketTypesToShow.includes(logEntry.type))
+        )
         .sort((a, b) => +a.modifiedDate - +b.modifiedDate)
-        .map((ticket) => {
-          if (ticket.type === 'PublishingRequest') {
-            return <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket as PublishingTicket} />;
+        .map((logEntry) => {
+          if (isTicket(logEntry) && logEntry.type === 'PublishingRequest') {
+            return <CompletedPublishingRequestStatusBox key={logEntry.id} ticket={logEntry as PublishingTicket} />;
           }
-          if (ticket.type === 'DoiRequest') {
-            return <DoiRequestMessagesColumn key={ticket.id} ticket={ticket} />;
+          if (isTicket(logEntry) && logEntry.type === 'DoiRequest') {
+            return <DoiRequestMessagesColumn key={logEntry.id} ticket={logEntry} />;
+          }
+          if (!isTicket(logEntry)) {
+            return (
+              <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+                <Typography>{t('common.last_modified')}</Typography>
+                <Typography>{new Date(logEntry.modifiedDate).toLocaleDateString()}</Typography>
+              </StyledStatusMessageBox>
+            );
           }
           return null;
         })}
