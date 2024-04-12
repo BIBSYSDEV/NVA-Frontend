@@ -1,4 +1,4 @@
-import { PublishingTicket, Ticket, TicketStatus } from '../../types/publication_types/ticket.types';
+import { PublishingTicket, Ticket, TicketStatus, TicketType } from '../../types/publication_types/ticket.types';
 import { Box, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
@@ -10,6 +10,9 @@ import { DoiRequestMessagesColumn } from '../messages/components/DoiRequestMessa
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
 import { CompletedPublishingRequestStatusBox } from './action_accordions/CompletedPublishingRequestStatusBox';
 
+const ticketStatusesToShow: TicketStatus[] = ['Completed', 'Closed'];
+const ticketTypesToShow: TicketType[] = ['PublishingRequest', 'DoiRequest'];
+
 interface LogPanelProps {
   tickets: Ticket[];
   registration: Registration;
@@ -17,7 +20,6 @@ interface LogPanelProps {
 
 export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const { t } = useTranslation();
-  const ticketStatusesToShow: TicketStatus[] = ['Completed', 'Closed'];
   const resourceOwnerAffiliationId = registration.resourceOwner.ownerAffiliation;
   const resourceOwnerId = registration.resourceOwner.owner;
 
@@ -30,7 +32,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     cacheTime: 1_800_000, // 30 minutes
   });
 
-  const personQuery = useQuery({
+  const userQuery = useQuery({
     enabled: !!resourceOwnerId,
     queryKey: ['user', resourceOwnerId],
     queryFn: resourceOwnerId ? () => fetchUser(resourceOwnerId) : undefined,
@@ -45,12 +47,12 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography>{t('common.created')}:</Typography>
-            {organizationQuery.isLoading || personQuery.isLoading ? (
+            {organizationQuery.isLoading || userQuery.isLoading ? (
               <Skeleton sx={{ width: '4rem' }} />
             ) : (
               <Typography>
                 {organizationQuery.data ? organizationQuery.data?.acronym : t('common.unknown')}
-                {personQuery.data ? `, ${getFullName(personQuery.data.givenName, personQuery.data.familyName)}` : ''}
+                {userQuery.data ? `, ${getFullName(userQuery.data.givenName, userQuery.data.familyName)}` : ''}
               </Typography>
             )}
           </Box>
@@ -64,7 +66,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
         </StyledStatusMessageBox>
       )}
       {tickets
-        .filter((ticket) => ticketStatusesToShow.includes(ticket.status))
+        .filter((ticket) => ticketStatusesToShow.includes(ticket.status) && ticketTypesToShow.includes(ticket.type))
         .sort((a, b) => +a.modifiedDate - +b.modifiedDate)
         .map((ticket) => {
           if (ticket.type === 'PublishingRequest') {

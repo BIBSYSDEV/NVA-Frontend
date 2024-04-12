@@ -33,14 +33,12 @@ export const ActionPanel = ({
           TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
           <Tab
             label={t('common.tasks')}
-            aria-label={t('common.tasks')}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelTasks}
             id="action-panel-tab-0"
             aria-controls="action-panel-tab-panel-0"
           />
           <Tab
             label={t('common.log')}
-            aria-label={t('common.log')}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
             id="action-panel-tab-1"
             aria-controls="action-panel-tab-panel-1"
