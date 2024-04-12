@@ -18,13 +18,14 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { t } from 'i18next';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchUser } from '../../../api/roleApi';
 import { fetchEmployees } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { RootState } from '../../../redux/store';
+import { Organization } from '../../../types/organization.types';
 import { CristinPerson, InstitutionUser, RoleName } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
@@ -33,10 +34,10 @@ import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/V
 
 interface AddCuratorDialogProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
-  currentOrganizationId: string;
+  currentOrganization: Organization;
 }
 
-export const AddCuratorDialog = ({ onClose, open, currentOrganizationId }: AddCuratorDialogProps) => {
+export const AddCuratorDialog = ({ onClose, open, currentOrganization }: AddCuratorDialogProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
@@ -45,10 +46,12 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganizationId }: AddCu
   const debouncedSearchQuery = useDebounce(searchQuery);
 
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson | null>(null);
+  const [userInitialValues, setUserInitialValues] = useState<InstitutionUser>();
 
   const closeDialog = () => {
     setSearchQuery('');
     setSelectedPerson(null);
+    setUserInitialValues(undefined);
     onClose();
   };
 
@@ -66,11 +69,36 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganizationId }: AddCu
 
   const userQuery = useQuery({
     enabled: open && !!selectedPerson && !!username,
-    queryKey: [username],
+    queryKey: ['user', username],
     queryFn: () => fetchUser(username),
     meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,
   });
+
+  useEffect(() => {
+    const currentUser = userQuery.data;
+    if (currentUser) {
+      const viewingScope = [...currentUser.viewingScope.includedUnits];
+
+      const newOrganizationId = !viewingScope.includes(currentOrganization.id) ? currentOrganization.id : null;
+
+      if (newOrganizationId) {
+        viewingScope.push(newOrganizationId);
+      }
+
+      //  TODO: Remove overlapping units
+
+      const initialValues: InstitutionUser = {
+        ...currentUser,
+        viewingScope: {
+          ...currentUser.viewingScope,
+          includedUnits: viewingScope,
+        },
+      };
+
+      setUserInitialValues(initialValues);
+    }
+  }, [currentOrganization, userQuery.data]);
 
   return (
     <Dialog open={open} onClose={closeDialog} maxWidth="md" fullWidth>
@@ -88,6 +116,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganizationId }: AddCu
             if (reason === 'clear' || reason === 'reset') {
               setSearchQuery('');
               setSelectedPerson(null);
+              setUserInitialValues(undefined);
             } else {
               setSearchQuery(value);
             }
@@ -114,13 +143,14 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganizationId }: AddCu
 
         {selectedPerson && (
           <>
-            {userQuery.isLoading ? (
+            {userQuery.isLoading || (userQuery.data && !userInitialValues) ? (
               <CircularProgress />
-            ) : userQuery.data ? (
+            ) : userQuery.data && userInitialValues ? (
               <UserForm
                 closeDialog={closeDialog}
+                initialValues={userInitialValues}
                 currentUser={userQuery.data}
-                currentOrganizationId={currentOrganizationId}
+                currentOrganization={currentOrganization}
               />
             ) : (
               <>
@@ -146,16 +176,17 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganizationId }: AddCu
   );
 };
 
-interface UserFormProps extends Pick<AddCuratorDialogProps, 'currentOrganizationId'> {
+interface UserFormProps extends Pick<AddCuratorDialogProps, 'currentOrganization'> {
   closeDialog: () => void;
   currentUser: InstitutionUser;
+  initialValues: InstitutionUser;
 }
 
-const UserForm = ({ closeDialog, currentUser, currentOrganizationId }: UserFormProps) => {
-  // Todo: set new viewing scope
-  const initialValues = currentUser;
+const UserForm = ({ closeDialog, currentUser, currentOrganization, initialValues }: UserFormProps) => {
+  const currentViewingScope = currentUser.viewingScope.includedUnits;
+  const newViewingScope = initialValues.viewingScope.includedUnits;
 
-  const shouldAddUnit = !currentUser.viewingScope.includedUnits.includes(currentOrganizationId);
+  const allViewingScopes = Array.from(new Set([...currentViewingScope, ...newViewingScope]));
 
   return (
     <Formik initialValues={initialValues} onSubmit={(values) => console.log('submit', values)}>
@@ -166,17 +197,18 @@ const UserForm = ({ closeDialog, currentUser, currentOrganizationId }: UserFormP
           </Typography>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'start' }}>
-            <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              {currentUser.viewingScope.includedUnits.map((organizationId) => (
-                <ViewingScopeChip key={organizationId} organizationId={organizationId} disabled={isSubmitting} />
-              ))}
-            </Box>
-            {shouldAddUnit && (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <ViewingScopeChip organizationId={currentOrganizationId} disabled={isSubmitting} />
-                <Typography>(NY)</Typography>
-              </Box>
-            )}
+            {allViewingScopes.map((organizationId) => {
+              const isNewUnit =
+                newViewingScope.includes(organizationId) && !currentViewingScope.includes(organizationId);
+              //TODO: isRemovedUnit
+
+              return (
+                <Box key={organizationId} sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  <ViewingScopeChip key={organizationId} organizationId={organizationId} disabled={isSubmitting} />
+                  {isNewUnit && <Typography>(NY)</Typography>}
+                </Box>
+              );
+            })}
           </Box>
 
           <Typography variant="h3" sx={{ mt: '1rem' }}>

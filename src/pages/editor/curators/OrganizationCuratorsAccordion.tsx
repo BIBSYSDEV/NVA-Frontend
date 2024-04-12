@@ -95,11 +95,10 @@ export const OrganizationCuratorsAccordion = ({
             {t('editor.curators.add_curator')}
           </Button>
         )}
-
         <AddCuratorDialog
           open={openAddCuratorDialog}
           onClose={() => setOpenAddCuratorDialog(false)}
-          currentOrganizationId={organization.id}
+          currentOrganization={organization}
         />
 
         {expanded &&
