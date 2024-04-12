@@ -100,8 +100,9 @@ export const mainTheme = createTheme(
         light: Color.InfoLight,
       },
       grey: {
-        400: '#d9d9d9',
-        500: '#A1A1A1',
+        300: '#EEEEEE',
+        400: '#DDDDDD',
+        500: '#CCCCCC',
       },
       registration: {
         main: Color.Registration,
