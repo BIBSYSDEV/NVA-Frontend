@@ -12,11 +12,11 @@ import { AddCuratorDialog } from './AddCuratorDialog';
 import { OrganizationCuratorRow } from './OrganizationCuratorRow';
 import { OrganizationCuratorsProps } from './OrganizationCurators';
 
-interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
+export interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
   organization: Organization;
   searchId: string;
   curators: InstitutionUser[];
-  refetchCurators: () => void;
+  refetchCurators: () => Promise<unknown>;
   includeAllSubunits?: boolean;
   level?: number;
 }
@@ -99,6 +99,7 @@ export const OrganizationCuratorsAccordion = ({
           open={openAddCuratorDialog}
           onClose={() => setOpenAddCuratorDialog(false)}
           currentOrganization={organization}
+          refetchCurators={refetchCurators}
         />
 
         {expanded &&

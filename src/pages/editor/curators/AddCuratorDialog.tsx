@@ -33,13 +33,16 @@ import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getAllChildOrganizations, getOrganizationHierarchy } from '../../../utils/institutions-helpers';
 import { getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
 import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/ViewingScopeChip';
+import { OrganizationCuratorsAccordionProps } from './OrganizationCuratorsAccordion';
 
-interface AddCuratorDialogProps extends Pick<DialogProps, 'open'> {
+interface AddCuratorDialogProps
+  extends Pick<DialogProps, 'open'>,
+    Pick<OrganizationCuratorsAccordionProps, 'refetchCurators'> {
   onClose: () => void;
   currentOrganization: Organization;
 }
 
-export const AddCuratorDialog = ({ onClose, open, currentOrganization }: AddCuratorDialogProps) => {
+export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCurators }: AddCuratorDialogProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
@@ -154,7 +157,12 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization }: AddCura
             {userQuery.isLoading || (userQuery.data && !userInitialValues) ? (
               <CircularProgress />
             ) : userQuery.data && userInitialValues ? (
-              <UserForm closeDialog={closeDialog} initialValues={userInitialValues} currentUser={userQuery.data} />
+              <UserForm
+                closeDialog={closeDialog}
+                initialValues={userInitialValues}
+                currentUser={userQuery.data}
+                refetchCurators={refetchCurators}
+              />
             ) : (
               <>
                 <Typography>
@@ -179,13 +187,13 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization }: AddCura
   );
 };
 
-interface UserFormProps {
+interface UserFormProps extends Pick<OrganizationCuratorsAccordionProps, 'refetchCurators'> {
   closeDialog: () => void;
   currentUser: InstitutionUser;
   initialValues: InstitutionUser;
 }
 
-const UserForm = ({ closeDialog, currentUser, initialValues }: UserFormProps) => {
+const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: UserFormProps) => {
   const dispatch = useDispatch();
 
   const currentViewingScope = currentUser.viewingScope.includedUnits;
@@ -197,7 +205,8 @@ const UserForm = ({ closeDialog, currentUser, initialValues }: UserFormProps) =>
     mutationFn: (user: InstitutionUser) => updateUser(user.username, user),
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' })),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await refetchCurators();
       dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
       closeDialog();
     },
