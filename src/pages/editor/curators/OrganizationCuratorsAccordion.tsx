@@ -96,7 +96,11 @@ export const OrganizationCuratorsAccordion = ({
           </Button>
         )}
 
-        <AddCuratorDialog open={openAddCuratorDialog} onClose={() => setOpenAddCuratorDialog(false)} />
+        <AddCuratorDialog
+          open={openAddCuratorDialog}
+          onClose={() => setOpenAddCuratorDialog(false)}
+          currentOrganizationId={organization.id}
+        />
 
         {expanded &&
           organization.hasPart?.map((subunit) => (

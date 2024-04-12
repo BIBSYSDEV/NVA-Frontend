@@ -1,6 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import {
   Autocomplete,
+  Box,
   Button,
   Checkbox,
   CircularProgress,
@@ -28,13 +29,14 @@ import { CristinPerson, InstitutionUser, RoleName } from '../../../types/user.ty
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
-import { AreaOfResponsibility } from '../../basic_data/institution_admin/edit_user/AreaOfResponsibility';
+import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/ViewingScopeChip';
 
 interface AddCuratorDialogProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
+  currentOrganizationId: string;
 }
 
-export const AddCuratorDialog = ({ onClose, open }: AddCuratorDialogProps) => {
+export const AddCuratorDialog = ({ onClose, open, currentOrganizationId }: AddCuratorDialogProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
@@ -115,7 +117,11 @@ export const AddCuratorDialog = ({ onClose, open }: AddCuratorDialogProps) => {
             {userQuery.isLoading ? (
               <CircularProgress />
             ) : userQuery.data ? (
-              <UserForm closeDialog={closeDialog} initialValues={userQuery.data} />
+              <UserForm
+                closeDialog={closeDialog}
+                currentUser={userQuery.data}
+                currentOrganizationId={currentOrganizationId}
+              />
             ) : (
               <>
                 <Typography>
@@ -140,23 +146,39 @@ export const AddCuratorDialog = ({ onClose, open }: AddCuratorDialogProps) => {
   );
 };
 
-interface UserFormProps {
+interface UserFormProps extends Pick<AddCuratorDialogProps, 'currentOrganizationId'> {
   closeDialog: () => void;
-  initialValues: InstitutionUser;
+  currentUser: InstitutionUser;
 }
 
-const UserForm = ({ closeDialog, initialValues }: UserFormProps) => {
+const UserForm = ({ closeDialog, currentUser, currentOrganizationId }: UserFormProps) => {
+  // Todo: set new viewing scope
+  const initialValues = currentUser;
+
+  const shouldAddUnit = !currentUser.viewingScope.includedUnits.includes(currentOrganizationId);
+
   return (
-    <Formik initialValues={initialValues} enableReinitialize onSubmit={(values) => console.log('submit', values)}>
+    <Formik initialValues={initialValues} onSubmit={(values) => console.log('submit', values)}>
       {({ values, setFieldValue, dirty, isSubmitting }: FormikProps<InstitutionUser>) => (
         <Form noValidate>
           <Typography variant="h3" gutterBottom>
             {t('editor.curators.area_of_responsibility')}
           </Typography>
-          <AreaOfResponsibility
-            viewingScopes={values.viewingScope?.includedUnits ?? []}
-            updateViewingScopes={(newViewingScopes) => setFieldValue('viewingScope.includedUnits', newViewingScopes)}
-          />
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'start' }}>
+            <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {currentUser.viewingScope.includedUnits.map((organizationId) => (
+                <ViewingScopeChip key={organizationId} organizationId={organizationId} disabled={isSubmitting} />
+              ))}
+            </Box>
+            {shouldAddUnit && (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <ViewingScopeChip organizationId={currentOrganizationId} disabled={isSubmitting} />
+                <Typography>(NY)</Typography>
+              </Box>
+            )}
+          </Box>
+
           <Typography variant="h3" sx={{ mt: '1rem' }}>
             {t('my_page.my_profile.heading.roles')}
           </Typography>
@@ -164,10 +186,10 @@ const UserForm = ({ closeDialog, initialValues }: UserFormProps) => {
             component="fieldset"
             onChange={(event: ChangeEvent<any>) => {
               const role = event.target.value as RoleName;
-              const roleExists = values.roles?.some((r: any) => r.rolename === role);
+              const roleExists = values.roles.some((thisRole) => thisRole.rolename === role);
 
               const newRoles = roleExists
-                ? values.roles.filter((selectedRole: any) => selectedRole.rolename !== role)
+                ? values.roles.filter((selectedRole) => selectedRole.rolename !== role)
                 : [...values.roles, { type: 'Role', rolename: role }];
 
               setFieldValue('roles', newRoles);
@@ -175,6 +197,15 @@ const UserForm = ({ closeDialog, initialValues }: UserFormProps) => {
             // data-testid={dataTestId.basicData.personAdmin.roleSelector}
           >
             <FormGroup sx={{ gap: '0.5rem' }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={values.roles.some((role) => role.rolename === RoleName.SupportCurator)}
+                    value={RoleName.SupportCurator}
+                  />
+                }
+                label={t('my_page.roles.support_curator')}
+              />
               <FormControlLabel
                 control={
                   <Checkbox
@@ -214,15 +245,6 @@ const UserForm = ({ closeDialog, initialValues }: UserFormProps) => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={values.roles.some((role) => role.rolename === RoleName.SupportCurator)}
-                    value={RoleName.SupportCurator}
-                  />
-                }
-                label={t('my_page.roles.support_curator')}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
                     checked={values.roles.some((role) => role.rolename === RoleName.NviCurator)}
                     value={RoleName.NviCurator}
                   />
@@ -231,7 +253,6 @@ const UserForm = ({ closeDialog, initialValues }: UserFormProps) => {
               />
             </FormGroup>
           </FormControl>
-
           <DialogActions sx={{ justifyContent: 'center', p: 0 }}>
             <Button onClick={closeDialog}>{t('common.cancel')}</Button>
             <LoadingButton loading={isSubmitting} type="submit" variant="contained" disabled={!dirty}>
