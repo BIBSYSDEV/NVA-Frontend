@@ -16,6 +16,7 @@ export enum UrlPathTemplate {
   Home = '/',
   Institution = '/institution',
   InstitutionCurators = '/institution/settings/curators',
+  InstitutionCuratorsOverview = '/institution/overview/curators',
   InstitutionDoi = '/institution/overview/doi',
   InstitutionOverviewPage = '/institution/overview/institution',
   InstitutionSupport = '/institution/settings/support',
