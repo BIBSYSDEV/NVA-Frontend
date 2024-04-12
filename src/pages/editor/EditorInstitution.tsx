@@ -83,15 +83,15 @@ export const EditorInstitution = () => {
             <Typography>{institution?.labels.en ?? '-'}</Typography>
           </Grid>
 
-          <Grid container item xs={8} md={4}>
-            <Grid item xs={6}>
+          <Grid container item xs={12} md={4}>
+            <Grid item xs={4} md={6}>
               <Typography variant="h3" component="h2">
                 {t('editor.institution.institution_short_name')}
               </Typography>
               <Typography>{organizationQuery.data?.acronym ?? '-'}</Typography>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={4} md={6}>
               <Typography variant="h3" component="h2">
                 {t('editor.institution.institution_code')}
               </Typography>
@@ -99,37 +99,35 @@ export const EditorInstitution = () => {
             </Grid>
           </Grid>
 
-          <Grid container item spacing={2}>
-            <Grid item xs={12} md={4}>
-              <Typography variant="h3" component="h2">
-                {t('basic_data.institutions.sector')}
-              </Typography>
-              <Typography>
-                {customer?.sector ? t(`basic_data.institutions.sector_values.${customer.sector}`) : '-'}
-              </Typography>
-            </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h3" component="h2">
+              {t('basic_data.institutions.sector')}
+            </Typography>
+            <Typography>
+              {customer?.sector ? t(`basic_data.institutions.sector_values.${customer.sector}`) : '-'}
+            </Typography>
+          </Grid>
 
-            <Grid item xs={12} md={4}>
-              <Typography variant="h3" component="h2">
-                {t('editor.institution.unique_feide_id')}
-              </Typography>
-              <Typography>{customer?.feideOrganizationDomain ?? '-'}</Typography>
-            </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h3" component="h2">
+              {t('editor.institution.unique_feide_id')}
+            </Typography>
+            <Typography>{customer?.feideOrganizationDomain ?? '-'}</Typography>
+          </Grid>
 
-            <Grid item xs={12} md={4}>
-              <Typography variant="h3" component="h2">
-                {t('basic_data.institutions.ror')}
-              </Typography>
-              <Typography>
-                {customer?.rorId ? (
-                  <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
-                    {customer.rorId}
-                  </Link>
-                ) : (
-                  '-'
-                )}
-              </Typography>
-            </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="h3" component="h2">
+              {t('basic_data.institutions.ror')}
+            </Typography>
+            <Typography>
+              {customer?.rorId ? (
+                <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
+                  {customer.rorId}
+                </Link>
+              ) : (
+                '-'
+              )}
+            </Typography>
           </Grid>
 
           <Grid item xs={12}>
