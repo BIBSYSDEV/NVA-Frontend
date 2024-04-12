@@ -29,6 +29,7 @@ import { Organization } from '../../../types/organization.types';
 import { CristinPerson, InstitutionUser, RoleName } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { getOrganizationHierarchy } from '../../../utils/institutions-helpers';
 import { getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
 import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/ViewingScopeChip';
 
@@ -78,15 +79,18 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization }: AddCura
   useEffect(() => {
     const currentUser = userQuery.data;
     if (currentUser) {
-      const viewingScope = [...currentUser.viewingScope.includedUnits];
+      let viewingScope = [...currentUser.viewingScope.includedUnits];
 
       const newOrganizationId = !viewingScope.includes(currentOrganization.id) ? currentOrganization.id : null;
+      const hierarchy = getOrganizationHierarchy(currentOrganization)
+        .filter((org) => org.id !== currentOrganization.id)
+        .map((org) => org.id);
+
+      viewingScope = viewingScope.filter((id) => !hierarchy.includes(id));
 
       if (newOrganizationId) {
         viewingScope.push(newOrganizationId);
       }
-
-      //  TODO: Remove overlapping units
 
       const initialValues: InstitutionUser = {
         ...currentUser,
@@ -200,12 +204,14 @@ const UserForm = ({ closeDialog, currentUser, currentOrganization, initialValues
             {allViewingScopes.map((organizationId) => {
               const isNewUnit =
                 newViewingScope.includes(organizationId) && !currentViewingScope.includes(organizationId);
-              //TODO: isRemovedUnit
+              const isRemovedUnit =
+                !newViewingScope.includes(organizationId) && currentViewingScope.includes(organizationId);
 
               return (
                 <Box key={organizationId} sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                   <ViewingScopeChip key={organizationId} organizationId={organizationId} disabled={isSubmitting} />
                   {isNewUnit && <Typography>(NY)</Typography>}
+                  {isRemovedUnit && <Typography>(FJERNES)</Typography>}
                 </Box>
               );
             })}
@@ -287,7 +293,11 @@ const UserForm = ({ closeDialog, currentUser, currentOrganization, initialValues
           </FormControl>
           <DialogActions sx={{ justifyContent: 'center', p: 0 }}>
             <Button onClick={closeDialog}>{t('common.cancel')}</Button>
-            <LoadingButton loading={isSubmitting} type="submit" variant="contained" disabled={!dirty}>
+            <LoadingButton
+              loading={isSubmitting}
+              type="submit"
+              variant="contained"
+              disabled={!dirty && newViewingScope.at(-1) === currentViewingScope.at(-1)}>
               {t('common.add')}
             </LoadingButton>
           </DialogActions>
