@@ -160,6 +160,7 @@
     "close_forever": "Lukk og ikke vis igjen",
     "country": "Land",
     "create": "Opprett",
+    "created": "Opprettet",
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskrivelse",
@@ -186,6 +187,7 @@
     "language": "Språk",
     "last_name": "Etternavn",
     "link": "Lenke",
+    "log": "Logg",
     "main": "Hoved",
     "menu": "Meny",
     "message": "Melding",
@@ -278,6 +280,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -349,11 +355,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -368,12 +370,12 @@
       "edit_user": "Endre bruker",
       "no_users_found": "Ingen brukere funnet",
       "role": {
-        "Support-Curator": "Brukerstøtte",
-        "Publishing-Curator": "Publisering",
         "Curator-thesis": "Studentoppgaver",
         "Curator-thesis-embargo": "Embargo",
         "Doi-Curator": "DOI",
-        "Nvi-Curator": "NVI"
+        "Nvi-Curator": "NVI",
+        "Publishing-Curator": "Publisering",
+        "Support-Curator": "Brukerstøtte"
       }
     },
     "doi": {
@@ -404,7 +406,8 @@
       "institution_support_description": "Institusjonens brukerstøtte vises under kuratorstøtte.",
       "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
       "organizing": "Organisering",
-      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
+      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)",
+      "unique_feide_id": "Unik Feide-ID"
     },
     "organization_overview": "Organisasjonsstruktur",
     "publish_strategy": {
@@ -1672,8 +1675,8 @@
       "nvi": {
         "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",
         "can_give_publication_points": "Kan gi publiseringspoeng",
-        "select_all_nvi_categories": "Velg alle",
-        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)"
+        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)",
+        "select_all_nvi_categories": "Velg alle"
       },
       "online_issn": "Online ISSN",
       "or": "Eller",

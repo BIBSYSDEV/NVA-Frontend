@@ -76,9 +76,7 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers 
         {curatorRolesConfig.map(({ rolename, color, SelectedIcon }) => {
           const isSelected = curator.roles.some((userRole) => userRole.rolename === rolename);
           return (
-            <Box
-              key={rolename}
-              sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center', opacity: isSelected ? 1 : 0.75 }}>
+            <Box key={rolename} sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
               {isSelected ? (
                 <SelectedIcon sx={{ p: '0.125rem', borderRadius: '50%', bgcolor: color }} />
               ) : (
@@ -87,12 +85,11 @@ export const OrganizationCuratorRow = ({ curator, refetchCurators, canEditUsers 
                     width: '1.5rem',
                     height: '1.5rem',
                     borderRadius: '50%',
-                    border: 'solid 2px',
-                    borderColor: 'secondary.dark',
+                    bgcolor: 'grey.300',
                   }}
                 />
               )}
-              <Typography>{t(`editor.curators.role.${rolename}`)}</Typography>
+              <Typography sx={{ opacity: isSelected ? 1 : 0.75 }}>{t(`editor.curators.role.${rolename}`)}</Typography>
             </Box>
           );
         })}
