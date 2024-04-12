@@ -13,10 +13,19 @@ import { CompletedPublishingRequestStatusBox } from './action_accordions/Complet
 const ticketStatusesToShow: TicketStatus[] = ['Completed', 'Closed'];
 const ticketTypesToShow: TicketType[] = ['PublishingRequest', 'DoiRequest'];
 
-type LogList = (Ticket | RegistrationModifiedEntry)[];
+type LogList = (Ticket | NonTicketLogEntry)[];
 
-interface RegistrationModifiedEntry {
+interface NonTicketLogEntry {
   modifiedDate: string;
+  description: string;
+}
+
+function isTicket(object: any): object is Ticket {
+  return ('type' as TicketType) in object;
+}
+
+function isNonTicketLogEntry(object: any): object is NonTicketLogEntry {
+  return 'description' in object;
 }
 
 interface LogPanelProps {
@@ -47,16 +56,34 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     cacheTime: 1_800_000, // 30 minutes
   });
 
-  function isTicket(object: any): object is Ticket {
-    return ('type' as TicketType) in object;
-  }
-
   const logs: LogList = [...tickets];
 
+  if (registration.publishedDate) {
+    const registrationPublished: NonTicketLogEntry = {
+      modifiedDate: registration.publishedDate,
+      description: t('registration.status.PUBLISHED_METADATA'),
+    };
+    logs.push(registrationPublished);
+  }
+
   if (registration.publishedDate && registration.publishedDate < registration.modifiedDate) {
-    const registrationLastModified: RegistrationModifiedEntry = { modifiedDate: registration.modifiedDate };
+    const registrationLastModified: NonTicketLogEntry = {
+      modifiedDate: registration.modifiedDate,
+      description: t('common.last_modified'),
+    };
     logs.push(registrationLastModified);
   }
+
+  const closedPublishingRequests = tickets.filter(
+    (ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Closed'
+  );
+  closedPublishingRequests.forEach((ticket) => {
+    const fileRejected: NonTicketLogEntry = {
+      modifiedDate: ticket.modifiedDate,
+      description: t('my_page.messages.files_rejected'),
+    };
+    logs.push(fileRejected);
+  });
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
@@ -76,19 +103,15 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
         </StyledStatusMessageBox>
       )}
-      {registration.publishedDate && (
-        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-          <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
-          <Typography>{new Date(registration.publishedDate).toLocaleDateString()}</Typography>
-        </StyledStatusMessageBox>
-      )}
       {logs
         .filter(
           (logEntry) =>
-            !isTicket(logEntry) ||
-            (ticketStatusesToShow.includes(logEntry.status) && ticketTypesToShow.includes(logEntry.type))
+            isNonTicketLogEntry(logEntry) ||
+            (isTicket(logEntry) &&
+              ticketStatusesToShow.includes(logEntry.status) &&
+              ticketTypesToShow.includes(logEntry.type))
         )
-        .sort((a, b) => +a.modifiedDate - +b.modifiedDate)
+        .sort((a, b) => new Date(a.modifiedDate).getTime() - new Date(b.modifiedDate).getTime())
         .map((logEntry) => {
           if (isTicket(logEntry) && logEntry.type === 'PublishingRequest') {
             return <CompletedPublishingRequestStatusBox key={logEntry.id} ticket={logEntry as PublishingTicket} />;
@@ -96,10 +119,10 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           if (isTicket(logEntry) && logEntry.type === 'DoiRequest') {
             return <DoiRequestMessagesColumn key={logEntry.id} ticket={logEntry} />;
           }
-          if (!isTicket(logEntry)) {
+          if (isNonTicketLogEntry(logEntry)) {
             return (
               <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-                <Typography>{t('common.last_modified')}</Typography>
+                <Typography>{logEntry.description}</Typography>
                 <Typography>{new Date(logEntry.modifiedDate).toLocaleDateString()}</Typography>
               </StyledStatusMessageBox>
             );
