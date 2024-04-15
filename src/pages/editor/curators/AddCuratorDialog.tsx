@@ -212,7 +212,10 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
   });
 
   return (
-    <Formik initialValues={initialValues} onSubmit={async (values) => await userMutation.mutateAsync(values)}>
+    <Formik
+      initialValues={initialValues}
+      enableReinitialize
+      onSubmit={async (values) => await userMutation.mutateAsync(values)}>
       {({ values, setFieldValue, dirty, isSubmitting }: FormikProps<InstitutionUser>) => (
         <Form noValidate>
           <Typography variant="h3" gutterBottom>
