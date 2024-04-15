@@ -271,6 +271,7 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
                 sx={{ bgcolor: 'generalSupportCase.main' }}
                 label={t('my_page.roles.support_curator')}
                 description={t('my_page.roles.support_curator_description')}
+                disabled={isSubmitting}
                 checked={values.roles.some((role) => role.rolename === RoleName.SupportCurator)}
                 value={RoleName.SupportCurator}
               />
@@ -278,20 +279,21 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
                 sx={{ bgcolor: 'publishingRequest.main' }}
                 label={t('my_page.roles.publishing_curator')}
                 description={t('my_page.roles.publishing_curator_description')}
+                disabled={isSubmitting}
                 checked={values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
                 value={RoleName.PublishingCurator}
               />
               <RoleSelectBox
                 sx={{ bgcolor: 'publishingRequest.main', ml: '1rem' }}
-                label={'Studentoppgave'}
-                disabled={!values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
+                label={t('editor.curators.role.Curator-thesis')}
+                disabled={isSubmitting || !values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
                 checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
                 value={RoleName.CuratorThesis}
               />
               <RoleSelectBox
                 sx={{ bgcolor: 'publishingRequest.main', ml: '2rem' }}
-                label={'Embargo'}
-                disabled={!values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
+                label={t('editor.curators.role.Curator-thesis-embargo')}
+                disabled={isSubmitting || !values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
                 checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesisEmbargo)}
                 value={RoleName.CuratorThesisEmbargo}
               />
@@ -299,6 +301,7 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
                 sx={{ bgcolor: 'doiRequest.main' }}
                 label={t('my_page.roles.doi_curator')}
                 description={t('my_page.roles.doi_curator_description')}
+                disabled={isSubmitting}
                 checked={values.roles.some((role) => role.rolename === RoleName.DoiCurator)}
                 value={RoleName.DoiCurator}
               />
@@ -306,6 +309,7 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
                 sx={{ bgcolor: 'nvi.main' }}
                 label={t('my_page.roles.nvi_curator')}
                 description={t('my_page.roles.nvi_curator_description')}
+                disabled={isSubmitting}
                 checked={values.roles.some((role) => role.rolename === RoleName.NviCurator)}
                 value={RoleName.NviCurator}
               />
