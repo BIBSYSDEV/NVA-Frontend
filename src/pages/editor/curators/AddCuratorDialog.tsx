@@ -42,12 +42,12 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
   const debouncedSearchQuery = useDebounce(searchQuery);
 
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson | null>(null);
-  const [userInitialValues, setUserInitialValues] = useState<InstitutionUser>();
+  const [userInitialValues, setUserInitialValues] = useState<InstitutionUser | null>(null);
 
   const closeDialog = () => {
     setSearchQuery('');
     setSelectedPerson(null);
-    setUserInitialValues(undefined);
+    setUserInitialValues(null);
     onClose();
   };
 
@@ -77,13 +77,14 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
       let viewingScope = [...currentUser.viewingScope.includedUnits];
 
       const newOrganizationId = !viewingScope.includes(currentOrganization.id) ? currentOrganization.id : null;
-      const parentOrganizations = getOrganizationHierarchy(currentOrganization)
+
+      // Remove organizations conflicting with the new organization
+      const parentOrganizationIds = getOrganizationHierarchy(currentOrganization)
         .filter((org) => org.id !== currentOrganization.id)
         .map((org) => org.id);
-      const childrenOrganizations = getAllChildOrganizations(currentOrganization.hasPart).map((unit) => unit.id);
-
+      const childOrganizationIds = getAllChildOrganizations(currentOrganization.hasPart).map((unit) => unit.id);
       viewingScope = viewingScope.filter(
-        (id) => !parentOrganizations.includes(id) && !childrenOrganizations.includes(id)
+        (id) => !parentOrganizationIds.includes(id) && !childOrganizationIds.includes(id)
       );
 
       if (newOrganizationId) {
@@ -118,7 +119,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
             if (reason === 'clear' || reason === 'reset') {
               setSearchQuery('');
               setSelectedPerson(null);
-              setUserInitialValues(undefined);
+              setUserInitialValues(null);
             } else {
               setSearchQuery(value);
             }
