@@ -3,7 +3,6 @@ import {
   Autocomplete,
   Box,
   Button,
-  Checkbox,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -11,7 +10,6 @@ import {
   DialogProps,
   DialogTitle,
   FormControl,
-  FormControlLabel,
   FormGroup,
   Typography,
 } from '@mui/material';
@@ -24,6 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser, updateUser } from '../../../api/roleApi';
 import { fetchEmployees } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { RoleSelectBox } from '../../../components/RoleSelectBox';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
@@ -237,7 +236,7 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
             })}
           </Box>
 
-          <Typography variant="h3" sx={{ mt: '1rem' }}>
+          <Typography variant="h3" sx={{ mt: '1rem' }} gutterBottom>
             {t('my_page.my_profile.heading.roles')}
           </Typography>
           <FormControl
@@ -267,62 +266,48 @@ const UserForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: 
             }}
             // data-testid={dataTestId.basicData.personAdmin.roleSelector}
           >
-            <FormGroup sx={{ gap: '0.5rem' }}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={values.roles.some((role) => role.rolename === RoleName.SupportCurator)}
-                    value={RoleName.SupportCurator}
-                  />
-                }
+            <FormGroup sx={{ gap: '0.25rem', ml: '0.5rem' }}>
+              <RoleSelectBox
+                sx={{ bgcolor: 'generalSupportCase.main' }}
                 label={t('my_page.roles.support_curator')}
+                description={t('my_page.roles.support_curator_description')}
+                checked={values.roles.some((role) => role.rolename === RoleName.SupportCurator)}
+                value={RoleName.SupportCurator}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
-                    value={RoleName.PublishingCurator}
-                  />
-                }
+              <RoleSelectBox
+                sx={{ bgcolor: 'publishingRequest.main' }}
                 label={t('my_page.roles.publishing_curator')}
+                description={t('my_page.roles.publishing_curator_description')}
+                checked={values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
+                value={RoleName.PublishingCurator}
               />
-              <FormControlLabel
-                disabled={!values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
-                control={
-                  <Checkbox
-                    checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
-                    value={RoleName.CuratorThesis}
-                  />
-                }
+              <RoleSelectBox
+                sx={{ bgcolor: 'publishingRequest.main', ml: '1rem' }}
                 label={'Studentoppgave'}
+                disabled={!values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
+                checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
+                value={RoleName.CuratorThesis}
               />
-              <FormControlLabel
-                disabled={!values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
-                control={
-                  <Checkbox
-                    checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesisEmbargo)}
-                    value={RoleName.CuratorThesisEmbargo}
-                  />
-                }
+              <RoleSelectBox
+                sx={{ bgcolor: 'publishingRequest.main', ml: '2rem' }}
                 label={'Embargo'}
+                disabled={!values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
+                checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesisEmbargo)}
+                value={RoleName.CuratorThesisEmbargo}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={values.roles.some((role) => role.rolename === RoleName.DoiCurator)}
-                    value={RoleName.DoiCurator}
-                  />
-                }
+              <RoleSelectBox
+                sx={{ bgcolor: 'doiRequest.main' }}
                 label={t('my_page.roles.doi_curator')}
+                description={t('my_page.roles.doi_curator_description')}
+                checked={values.roles.some((role) => role.rolename === RoleName.DoiCurator)}
+                value={RoleName.DoiCurator}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={values.roles.some((role) => role.rolename === RoleName.NviCurator)}
-                    value={RoleName.NviCurator}
-                  />
-                }
+              <RoleSelectBox
+                sx={{ bgcolor: 'nvi.main' }}
                 label={t('my_page.roles.nvi_curator')}
+                description={t('my_page.roles.nvi_curator_description')}
+                checked={values.roles.some((role) => role.rolename === RoleName.NviCurator)}
+                value={RoleName.NviCurator}
               />
             </FormGroup>
           </FormControl>
