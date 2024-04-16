@@ -70,6 +70,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
     queryFn: () => fetchUser(username),
     meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,
+    cacheTime: 0, // Disable caching since this user in many cases will be changed, and the cached data then will be outdated
   });
 
   useEffect(() => {
@@ -106,7 +107,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
 
   return (
     <Dialog open={open} onClose={closeDialog} maxWidth="sm" fullWidth>
-      <DialogTitle id="add-curator-title">{t('editor.curators.add_curator')}</DialogTitle>
+      <DialogTitle>{t('editor.curators.add_curator')}</DialogTitle>
 
       <DialogContent>
         <Autocomplete
@@ -148,7 +149,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
         {selectedPerson && (
           <>
             {userQuery.isLoading || (userQuery.data && !userInitialValues) ? (
-              <CircularProgress aria-labelledby="add-curator-title" />
+              <CircularProgress aria-label={t('editor.curators.add_curator')} />
             ) : userQuery.data && userInitialValues ? (
               <AddCuratorForm
                 closeDialog={closeDialog}
