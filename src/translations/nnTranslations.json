@@ -359,9 +359,21 @@
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriane der institusjonen din tillèt filopplasting",
     "curators": {
+      "administer_curators": "Administrer tilgånger til kuratorar",
       "area_of_responsibility": "Ansvarsområde",
-      "areas_of_responsibility": "Ansvarsområder",
-      "no_users_found": "Ingen brukarar funne"
+      "curators": "Kuratorar",
+      "curators_count_one": "{{count}} kurator",
+      "curators_count_other": "{{count}} kuratorar",
+      "edit_user": "Endre brukar",
+      "no_users_found": "Ingen brukarar funne",
+      "role": {
+        "Curator-thesis": "Studentoppgåver",
+        "Curator-thesis-embargo": "Embargo",
+        "Doi-Curator": "DOI",
+        "Nvi-Curator": "NVI",
+        "Publishing-Curator": "Publisering",
+        "Support-Curator": "Brukarstøtte"
+      }
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er ein persistent identifikator.|Gjer det enklare å sitere publikasjonar korrekt.|Metadata om resultatet blir delt internasjonalt.|Synlegheita til resultatet aukar.|Bidreg til å oppfylle FAIR-prinsippa.|Støttar open forsking.",
@@ -1659,7 +1671,8 @@
       "nvi": {
         "applicable": "Publikasjonen kan inngå i Norsk vitskapsindeks",
         "can_give_publication_points": "Kan gje publiseringspoeng",
-        "channel_not_rated": "Publikasjonen kan ikkje inngå i Norsk vitskapsindeks sidan publiseringskanalen ikkje er på nivå 1 eller 2. (Nivå kan blir endra før årets rapporteringsfrist sånn at publikasjonen kan inngå i Norsk vitskapsindeks)"
+        "channel_not_rated": "Publikasjonen kan ikkje inngå i Norsk vitskapsindeks sidan publiseringskanalen ikkje er på nivå 1 eller 2. (Nivå kan blir endra før årets rapporteringsfrist sånn at publikasjonen kan inngå i Norsk vitskapsindeks)",
+        "select_all_nvi_categories": "Vel alle"
       },
       "online_issn": "Online ISSN",
       "or": "Eller",
