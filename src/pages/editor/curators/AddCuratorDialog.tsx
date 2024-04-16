@@ -20,10 +20,9 @@ import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
 import { CristinPerson, InstitutionUser } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getAllChildOrganizations, getOrganizationHierarchy } from '../../../utils/institutions-helpers';
-import { getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
+import { getFullCristinName, getUsername } from '../../../utils/user-helpers';
 import { AddCuratorForm } from './AddCuratorForm';
 import { OrganizationCuratorsAccordionProps } from './OrganizationCuratorsAccordion';
 
@@ -59,10 +58,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
-  const personCristinIdentifier = getValueByKey('CristinIdentifier', selectedPerson?.identifiers);
-  const topOrgCristinIdentifier = getIdentifierFromId(topOrgCristinId);
-  const username =
-    personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
+  const username = getUsername(selectedPerson, topOrgCristinId);
 
   const userQuery = useQuery({
     enabled: open && !!selectedPerson && !!username,
