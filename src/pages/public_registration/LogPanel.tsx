@@ -1,14 +1,14 @@
-import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Box, Skeleton, Tooltip, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
+import { TFunction } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
+import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
-import { TFunction } from 'i18next';
 
 interface LogItem {
   modifiedDate: string;
