@@ -11,7 +11,7 @@ const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   views: ['year', 'month', 'day'],
   disableHighlightToday: true,
   slotProps: {
-    textField: { sx: { width: 'fit-content' }, size: 'small' },
+    textField: { sx: { maxWidth: '10rem' }, size: 'small' },
   },
 };
 
@@ -63,7 +63,7 @@ export const TicketDateIntervalFilter = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
       <DatePicker
         {...commonDatepickerProps}
         data-testid={dataTestId.myPage.myMessages.ticketFilterFromDatePicker}
