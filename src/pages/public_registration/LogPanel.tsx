@@ -8,7 +8,6 @@ import { Registration } from '../../types/registration.types';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
 
-type LogList = LogItem[];
 interface LogItem {
   modifiedDate: string;
   description: string;
@@ -43,7 +42,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     cacheTime: 1_800_000, // 30 minutes
   });
 
-  const logs: LogList = [];
+  const logs: LogItem[] = [];
 
   if (registration.publishedDate) {
     const registrationPublished: LogItem = {
@@ -66,11 +65,12 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   tickets.forEach((ticket) => {
     switch (ticket.type) {
       case 'PublishingRequest': {
-        if (ticket.status === 'Completed' && (ticket as PublishingTicket).approvedFiles.length > 0) {
+        const publishingTicket = ticket as PublishingTicket;
+        if (ticket.status === 'Completed' && publishingTicket.approvedFiles.length > 0) {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.files_published', {
-              count: (ticket as PublishingTicket).approvedFiles.length,
+              count: publishingTicket.approvedFiles.length,
             }),
             type: 'PublishingRequest',
           });
