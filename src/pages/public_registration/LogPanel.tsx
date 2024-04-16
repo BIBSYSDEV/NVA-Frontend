@@ -1,16 +1,19 @@
 import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
-import { Box, Skeleton, Typography } from '@mui/material';
+import { Box, Skeleton, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
 import { Registration } from '../../types/registration.types';
+import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
+import { TFunction } from 'i18next';
 
 interface LogItem {
   modifiedDate: string;
   description: string;
+  descriptionAppendage?: string[];
   type: TicketType;
 }
 
@@ -18,6 +21,8 @@ interface LogPanelProps {
   tickets: Ticket[];
   registration: Registration;
 }
+
+const tooltipDelay = 400;
 
 export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const { t } = useTranslation();
@@ -72,6 +77,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             description: t('my_page.messages.files_published', {
               count: publishingTicket.approvedFiles.length,
             }),
+            descriptionAppendage: getFileNamesForTicket(publishingTicket, registration, t),
             type: 'PublishingRequest',
           });
         } else if (ticket.status === 'Closed') {
@@ -120,20 +126,58 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
               </Typography>
             )}
           </Box>
-          <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
+          <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()} enterDelay={tooltipDelay}>
+            <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
+          </Tooltip>
         </StyledStatusMessageBox>
       )}
       {logs
         .sort((a, b) => new Date(a.modifiedDate).getTime() - new Date(b.modifiedDate).getTime())
         .map((logItem, index) => {
           const bgColor = logItem.type === 'PublishingRequest' ? 'publishingRequest.main' : 'doiRequest.main';
+          const modifiedDate = new Date(logItem.modifiedDate);
           return (
             <StyledStatusMessageBox key={index} sx={{ bgcolor: `${bgColor}` }}>
               <Typography>{logItem.description}</Typography>
-              <Typography>{new Date(logItem.modifiedDate).toLocaleDateString()}</Typography>
+              <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
+                <Typography>{modifiedDate.toLocaleDateString()}</Typography>
+              </Tooltip>
+              {logItem.descriptionAppendage && logItem.descriptionAppendage?.length > 0 && (
+                <Box
+                  component="ul"
+                  sx={{
+                    gridColumn: '1/3',
+                    m: '0',
+                    p: 'inherit',
+                    color: 'black',
+                  }}>
+                  {logItem.descriptionAppendage.map((desc, index) => (
+                    <li key={index}>
+                      <Tooltip title={desc === t('common.deleted') ? '' : desc} enterDelay={tooltipDelay}>
+                        <Typography
+                          sx={{
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}>
+                          {desc}
+                        </Typography>
+                      </Tooltip>
+                    </li>
+                  ))}
+                </Box>
+              )}
             </StyledStatusMessageBox>
           );
         })}
     </Box>
   );
 };
+
+function getFileNamesForTicket(ticket: PublishingTicket, registration: Registration, t: TFunction<'translation'>) {
+  return ticket.approvedFiles.map(
+    (identifier) =>
+      getAssociatedFiles(registration.associatedArtifacts).find((file) => file.identifier === identifier)?.name ??
+      t('common.deleted')
+  );
+}
