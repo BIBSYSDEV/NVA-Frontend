@@ -14,7 +14,7 @@ export const RoleSelectBox = ({ label, description, disabled, checked, value, sx
     label={
       <>
         <Typography sx={{ fontWeight: 600, color: disabled ? undefined : 'textPrimary' }}>{label}</Typography>
-        <Typography>{description}</Typography>
+        <Typography sx={{ color: disabled ? undefined : 'textPrimary' }}>{description}</Typography>
       </>
     }
   />

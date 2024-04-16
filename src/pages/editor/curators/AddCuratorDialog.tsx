@@ -79,18 +79,19 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
       let viewingScope = [...currentUser.viewingScope.includedUnits];
 
       const newOrganizationId = !viewingScope.includes(currentOrganization.id) ? currentOrganization.id : null;
-
-      // Remove organizations conflicting with the new organization
-      const parentOrganizationIds = getOrganizationHierarchy(currentOrganization)
-        .filter((org) => org.id !== currentOrganization.id)
-        .map((org) => org.id);
-      const childOrganizationIds = getAllChildOrganizations(currentOrganization.hasPart).map((unit) => unit.id);
-      viewingScope = viewingScope.filter(
-        (id) => !parentOrganizationIds.includes(id) && !childOrganizationIds.includes(id)
-      );
-
       if (newOrganizationId) {
-        viewingScope.push(newOrganizationId);
+        // Remove organizations conflicting with the new organization
+        const parentOrganizationIds = getOrganizationHierarchy(currentOrganization)
+          .filter((org) => org.id !== currentOrganization.id)
+          .map((org) => org.id);
+        const childOrganizationIds = getAllChildOrganizations(currentOrganization.hasPart).map((unit) => unit.id);
+        viewingScope = viewingScope.filter(
+          (id) => !parentOrganizationIds.includes(id) && !childOrganizationIds.includes(id)
+        );
+
+        if (newOrganizationId) {
+          viewingScope.push(newOrganizationId);
+        }
       }
 
       const initialValues: InstitutionUser = {
@@ -154,11 +155,12 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
               <AddCuratorForm
                 closeDialog={closeDialog}
                 initialValues={userInitialValues}
-                currentUser={userQuery.data}
+                currentViewingScope={userQuery.data.viewingScope.includedUnits}
                 refetchCurators={refetchCurators}
               />
             ) : (
               <>
+                {/* TODO: Support creation of new User */}
                 <Typography>
                   Brukeren du ønsker å legge til som kurator må logge inn i løsningnen for å få tildelt en bruker før du
                   kan gi dem kuratortilgang.

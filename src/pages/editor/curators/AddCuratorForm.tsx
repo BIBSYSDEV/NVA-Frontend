@@ -15,6 +15,13 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/ViewingScopeChip';
 import { OrganizationCuratorsAccordionProps } from './OrganizationCuratorsAccordion';
 
+const StyledViewingScopeChipContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.25rem',
+  alignItems: 'start',
+});
+
 const StyledAreOfResponsibilityHeading = styled(Typography)({
   marginTop: '0.5rem',
 });
@@ -22,15 +29,19 @@ StyledAreOfResponsibilityHeading.defaultProps = { variant: 'h4', gutterBottom: t
 
 interface AddCuratorFormProps extends Pick<OrganizationCuratorsAccordionProps, 'refetchCurators'> {
   closeDialog: () => void;
-  currentUser: InstitutionUser;
+  currentViewingScope: string[];
   initialValues: InstitutionUser;
 }
 
-export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetchCurators }: AddCuratorFormProps) => {
+export const AddCuratorForm = ({
+  closeDialog,
+  currentViewingScope,
+  initialValues,
+  refetchCurators,
+}: AddCuratorFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const currentViewingScope = currentUser.viewingScope.includedUnits;
   const newViewingScope = initialValues.viewingScope.includedUnits;
   const allViewingScopes = Array.from(new Set([...currentViewingScope, ...newViewingScope]));
 
@@ -39,13 +50,13 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
   const addedViewingScopes: string[] = [];
 
   allViewingScopes.forEach((unit) => {
-    const isInCurrent = currentViewingScope.includes(unit);
-    const isInNew = newViewingScope.includes(unit);
-    if (isInCurrent && isInNew) {
+    const isInCurrentViewingScope = currentViewingScope.includes(unit);
+    const isInNewViewingScope = newViewingScope.includes(unit);
+    if (isInCurrentViewingScope && isInNewViewingScope) {
       activeViewingScopes.push(unit);
-    } else if (isInCurrent && !isInNew) {
+    } else if (isInCurrentViewingScope && !isInNewViewingScope) {
       removedViewingScopes.push(unit);
-    } else if (!isInCurrent && isInNew) {
+    } else if (!isInCurrentViewingScope && isInNewViewingScope) {
       addedViewingScopes.push(unit);
     }
   });
@@ -78,15 +89,17 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
               <StyledAreOfResponsibilityHeading>
                 {t('editor.curators.active_area_of_responsibilities')}
               </StyledAreOfResponsibilityHeading>
-              {activeViewingScopes.map((organizationId) => (
-                <ViewingScopeChip
-                  key={organizationId}
-                  icon={<CheckIcon />}
-                  variant="filled"
-                  organizationId={organizationId}
-                  disabled={isSubmitting}
-                />
-              ))}
+              <StyledViewingScopeChipContainer>
+                {activeViewingScopes.map((organizationId) => (
+                  <ViewingScopeChip
+                    key={organizationId}
+                    icon={<CheckIcon />}
+                    variant="filled"
+                    organizationId={organizationId}
+                    disabled={isSubmitting}
+                  />
+                ))}
+              </StyledViewingScopeChipContainer>
             </>
           )}
 
@@ -95,14 +108,16 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
               <StyledAreOfResponsibilityHeading>
                 {t('editor.curators.removed_area_of_responsibilities')}
               </StyledAreOfResponsibilityHeading>
-              {removedViewingScopes.map((organizationId) => (
-                <ViewingScopeChip
-                  key={organizationId}
-                  icon={<ClearIcon />}
-                  organizationId={organizationId}
-                  disabled={isSubmitting}
-                />
-              ))}
+              <StyledViewingScopeChipContainer>
+                {removedViewingScopes.map((organizationId) => (
+                  <ViewingScopeChip
+                    key={organizationId}
+                    icon={<ClearIcon />}
+                    organizationId={organizationId}
+                    disabled={isSubmitting}
+                  />
+                ))}
+              </StyledViewingScopeChipContainer>
             </>
           )}
 
@@ -111,15 +126,17 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
               <StyledAreOfResponsibilityHeading>
                 {t('editor.curators.added_area_of_responsibilities')}
               </StyledAreOfResponsibilityHeading>
-              {addedViewingScopes.map((organizationId) => (
-                <ViewingScopeChip
-                  key={organizationId}
-                  icon={<CheckIcon />}
-                  variant="filled"
-                  organizationId={organizationId}
-                  disabled={isSubmitting}
-                />
-              ))}
+              <StyledViewingScopeChipContainer>
+                {addedViewingScopes.map((organizationId) => (
+                  <ViewingScopeChip
+                    key={organizationId}
+                    icon={<CheckIcon />}
+                    variant="filled"
+                    organizationId={organizationId}
+                    disabled={isSubmitting}
+                  />
+                ))}
+              </StyledViewingScopeChipContainer>
             </>
           )}
 
