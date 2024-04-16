@@ -9,6 +9,7 @@ import { updateUser } from '../../../api/roleApi';
 import { RoleSelectBox } from '../../../components/RoleSelectBox';
 import { setNotification } from '../../../redux/notificationSlice';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/ViewingScopeChip';
 import { OrganizationCuratorsAccordionProps } from './OrganizationCuratorsAccordion';
 
@@ -146,8 +147,11 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
             </FormGroup>
           </FormControl>
           <DialogActions sx={{ justifyContent: 'center', p: 0 }}>
-            <Button onClick={closeDialog}>{t('common.cancel')}</Button>
+            <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={closeDialog}>
+              {t('common.cancel')}
+            </Button>
             <LoadingButton
+              data-testid={dataTestId.confirmDialog.acceptButton}
               loading={isSubmitting}
               type="submit"
               variant="contained"

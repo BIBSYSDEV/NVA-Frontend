@@ -89,6 +89,7 @@ export const OrganizationCuratorsAccordion = ({
         {canEditUsers && (
           <Button
             variant="contained"
+            data-testid={dataTestId.editor.addCuratorButton(organization.id)}
             sx={{ mb: '1rem' }}
             startIcon={<AddCircleOutlineOutlinedIcon />}
             onClick={() => setOpenAddCuratorDialog(true)}>

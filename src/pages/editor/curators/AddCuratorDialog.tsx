@@ -19,6 +19,7 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
 import { CristinPerson, InstitutionUser } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getAllChildOrganizations, getOrganizationHierarchy } from '../../../utils/institutions-helpers';
@@ -105,7 +106,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
 
   return (
     <Dialog open={open} onClose={closeDialog} maxWidth="md" fullWidth>
-      <DialogTitle>{t('editor.curators.add_curator')}</DialogTitle>
+      <DialogTitle id="add-curator-title">{t('editor.curators.add_curator')}</DialogTitle>
 
       <DialogContent>
         <Autocomplete
@@ -134,7 +135,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
           sx={{ mb: '1rem' }}
           renderInput={(params) => (
             <AutocompleteTextField
-              // data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeSearchField}
+              data-testid={dataTestId.editor.curatorsSearchForPersonField}
               {...params}
               label={t('common.person')}
               isLoading={employeeSearchQuery.isFetching}
@@ -147,7 +148,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
         {selectedPerson && (
           <>
             {userQuery.isLoading || (userQuery.data && !userInitialValues) ? (
-              <CircularProgress />
+              <CircularProgress aria-labelledby="add-curator-title" />
             ) : userQuery.data && userInitialValues ? (
               <AddCuratorForm
                 closeDialog={closeDialog}
@@ -172,7 +173,9 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
 
       {(!selectedPerson || !userQuery.data) && (
         <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button onClick={closeDialog}>{t('common.cancel')}</Button>
+          <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={closeDialog}>
+            {t('common.cancel')}
+          </Button>
         </DialogActions>
       )}
     </Dialog>
