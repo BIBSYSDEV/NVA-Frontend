@@ -72,7 +72,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
   useEffect(() => {
     const currentUser = userQuery.data;
     if (currentUser) {
-      let viewingScope = [...currentUser.viewingScope.includedUnits];
+      let viewingScope = currentUser.viewingScope.includedUnits;
 
       const newOrganizationId = !viewingScope.includes(currentOrganization.id) ? currentOrganization.id : null;
       if (newOrganizationId) {
@@ -85,9 +85,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
           (id) => !parentOrganizationIds.includes(id) && !childOrganizationIds.includes(id)
         );
 
-        if (newOrganizationId) {
-          viewingScope.push(newOrganizationId);
-        }
+        viewingScope.push(newOrganizationId);
       }
 
       const initialValues: InstitutionUser = {

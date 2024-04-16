@@ -49,7 +49,7 @@ export const AddCuratorForm = ({
   const removedViewingScopes: string[] = [];
   const addedViewingScopes: string[] = [];
 
-  allViewingScopes.forEach((unit) => {
+  allViewingScopes.forEach((unit, index) => {
     const isInCurrentViewingScope = currentViewingScope.includes(unit);
     const isInNewViewingScope = newViewingScope.includes(unit);
     if (isInCurrentViewingScope && isInNewViewingScope) {
@@ -75,7 +75,7 @@ export const AddCuratorForm = ({
   return (
     <Formik initialValues={initialValues} onSubmit={async (values) => await userMutation.mutateAsync(values)}>
       {({ values, setFieldValue, dirty, isSubmitting }: FormikProps<InstitutionUser>) => (
-        <Form noValidate>
+        <Form>
           <Typography variant="h3" gutterBottom>
             {t('editor.curators.area_of_responsibility')}
           </Typography>
@@ -228,7 +228,7 @@ export const AddCuratorForm = ({
               loading={isSubmitting}
               type="submit"
               variant="contained"
-              disabled={!dirty && newViewingScope.at(-1) === currentViewingScope.at(-1)}>
+              disabled={!dirty && addedViewingScopes.length === 0}>
               {t('common.add')}
             </LoadingButton>
           </DialogActions>
