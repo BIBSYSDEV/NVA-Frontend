@@ -3,7 +3,7 @@ import { Checkbox, CheckboxProps, FormControlLabel, FormControlLabelProps, Typog
 interface RoleSelectBoxProps
   extends Pick<FormControlLabelProps, 'sx' | 'disabled' | 'label'>,
     Pick<CheckboxProps, 'checked' | 'value'> {
-  description?: string;
+  description: string;
 }
 
 export const RoleSelectBox = ({ label, description, disabled, checked, value, sx }: RoleSelectBoxProps) => (

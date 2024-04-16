@@ -22,8 +22,8 @@ export const ViewingScopeChip = ({ organizationId, ...props }: ViewingScopeChipP
 
   return (
     <Chip
+      color="primary"
       {...props}
-      color={props.color ?? 'primary'}
       label={
         organizationQuery.isLoading ? (
           <Skeleton sx={{ width: '15rem' }} />
