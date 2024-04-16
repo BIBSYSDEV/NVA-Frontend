@@ -376,7 +376,7 @@
       "removed_area_of_responsibilities": "Ansvarsområder som fjernes",
       "role": {
         "Curator-thesis": "Studentoppgave",
-        "Curator-thesis-embargo": "Embargo",
+        "Curator-thesis-embargo": "Studentembargo",
         "Doi-Curator": "DOI",
         "Nvi-Curator": "NVI",
         "Publishing-Curator": "Publisering",
@@ -769,7 +769,9 @@
       "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
       "support_curator": "Brukerstøttekurator",
       "support_curator_description": "Kan se og behandle brukerstøttehenvendelser.",
+      "thesis_curator": "Studentoppgavekurator",
       "thesis_curator_description": "Kan opprette og endre studentoppgaver.",
+      "thesis_embargo_curator": "Studentoppgave med embargo-kurator",
       "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
     }
   },
