@@ -11,7 +11,7 @@ const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   disableHighlightToday: true,
 
   slotProps: {
-    textField: { sx: { maxWidth: '10rem' }, size: 'small' },
+    textField: { sx: { width: 'fit-content' }, size: 'small' },
   },
 };
 
@@ -24,26 +24,41 @@ export const TicketDateIntervalFilter = ({ datePickerProps, boxProps }: TicketDa
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
+  const maxDate = new Date();
 
   const selectedDatesParam = searchParams.get(TicketSearchParam.CreatedDate);
   const dateArray = selectedDatesParam ? selectedDatesParam.split(',') : [];
 
-  const [firstDate, setFirstDate] = useState<Date | null>(dateArray.length ? new Date(dateArray.shift() || '') : null);
-  const [lastDate, setLastDate] = useState<Date | null>(dateArray.length ? new Date(dateArray.pop() || '') : null);
+  const [selectedFromDate, setSelectedFromDate] = useState<Date | null>(
+    dateArray.length ? new Date(dateArray.shift() || '') : null
+  );
+
+  const [selectedToDate, setSelectedToDate] = useState<Date | null>(
+    dateArray.length ? new Date(dateArray.pop() || '') : null
+  );
 
   const onChangeDate = (newDate: Date | null, type: 'from' | 'to') => {
-    let firstDateString = firstDate ? firstDate.toISOString().slice(0, 10) : '';
-    let lastDateString = lastDate ? lastDate.toISOString().slice(0, 10) : '';
+    const fromDateString =
+      type === 'from' && newDate
+        ? newDate.toISOString().slice(0, 10)
+        : selectedFromDate
+          ? selectedFromDate.toISOString().slice(0, 10)
+          : '';
+
+    const toDateString =
+      type === 'to' && newDate
+        ? newDate.toISOString().slice(0, 10)
+        : selectedToDate
+          ? selectedToDate.toISOString().slice(0, 10)
+          : '';
 
     if (type === 'from') {
-      firstDateString = newDate ? newDate.toISOString().slice(0, 10) : '';
-      setFirstDate(newDate);
+      setSelectedFromDate(newDate);
     } else if (type === 'to') {
-      lastDateString = newDate ? newDate.toISOString().slice(0, 10) : '';
-      setLastDate(newDate);
+      setSelectedToDate(newDate);
     }
 
-    const newDateParam = `${firstDateString},${lastDateString}`;
+    const newDateParam = `${fromDateString},${toDateString}`;
     if (newDateParam !== ',') {
       searchParams.set(TicketSearchParam.CreatedDate, newDateParam);
     } else {
@@ -53,19 +68,22 @@ export const TicketDateIntervalFilter = ({ datePickerProps, boxProps }: TicketDa
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-evenly', gap: '1rem', ...boxProps?.sx }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem', ...boxProps?.sx }}>
       <DatePicker
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('registration.resource_type.date_from')}
-        value={firstDate}
+        value={selectedFromDate}
+        maxDate={maxDate}
         onChange={(date) => onChangeDate(date, 'from')}
       />
       <DatePicker
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('registration.resource_type.date_to')}
-        value={lastDate}
+        value={selectedToDate}
+        maxDate={maxDate}
+        minDate={selectedFromDate ? selectedFromDate : undefined}
         onChange={(date) => onChangeDate(date, 'to')}
       />
     </Box>
