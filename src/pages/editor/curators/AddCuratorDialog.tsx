@@ -105,7 +105,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
   }, [currentOrganization, userQuery.data]);
 
   return (
-    <Dialog open={open} onClose={closeDialog} maxWidth="md" fullWidth>
+    <Dialog open={open} onClose={closeDialog} maxWidth="sm" fullWidth>
       <DialogTitle id="add-curator-title">{t('editor.curators.add_curator')}</DialogTitle>
 
       <DialogContent>

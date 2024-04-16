@@ -1,16 +1,14 @@
-import { Chip, Skeleton } from '@mui/material';
+import { Chip, ChipProps, Skeleton } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../../api/cristinApi';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
-interface ViewingScopeChipProps {
+interface ViewingScopeChipProps extends ChipProps {
   organizationId: string;
-  onRemove?: () => void;
-  disabled?: boolean;
 }
 
-export const ViewingScopeChip = ({ organizationId, onRemove, disabled }: ViewingScopeChipProps) => {
+export const ViewingScopeChip = ({ organizationId, ...props }: ViewingScopeChipProps) => {
   const { t } = useTranslation();
 
   const organizationQuery = useQuery({
@@ -24,8 +22,8 @@ export const ViewingScopeChip = ({ organizationId, onRemove, disabled }: Viewing
 
   return (
     <Chip
-      color="primary"
-      disabled={disabled}
+      {...props}
+      color={props.color ?? 'primary'}
       label={
         organizationQuery.isLoading ? (
           <Skeleton sx={{ width: '15rem' }} />
@@ -35,7 +33,6 @@ export const ViewingScopeChip = ({ organizationId, onRemove, disabled }: Viewing
           t('common.unknown')
         )
       }
-      onDelete={onRemove}
     />
   );
 };

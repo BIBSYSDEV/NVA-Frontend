@@ -46,7 +46,7 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
             <ViewingScopeChip
               key={organizationId}
               organizationId={organizationId}
-              onRemove={
+              onDelete={
                 viewingScopes.length > 1
                   ? () => updateViewingScopes(viewingScopes.filter((scope) => scope !== organizationId))
                   : undefined

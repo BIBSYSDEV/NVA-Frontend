@@ -1,9 +1,11 @@
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, DialogActions, FormControl, FormGroup, Typography } from '@mui/material';
+import { Button, DialogActions, FormControl, FormGroup, Typography, styled } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { ChangeEvent } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../api/roleApi';
 import { RoleSelectBox } from '../../../components/RoleSelectBox';
@@ -12,6 +14,11 @@ import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/ViewingScopeChip';
 import { OrganizationCuratorsAccordionProps } from './OrganizationCuratorsAccordion';
+
+const StyledAreOfResponsibilityHeading = styled(Typography)({
+  marginTop: '0.5rem',
+});
+StyledAreOfResponsibilityHeading.defaultProps = { variant: 'h4', gutterBottom: true };
 
 interface AddCuratorFormProps extends Pick<OrganizationCuratorsAccordionProps, 'refetchCurators'> {
   closeDialog: () => void;
@@ -25,8 +32,23 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
 
   const currentViewingScope = currentUser.viewingScope.includedUnits;
   const newViewingScope = initialValues.viewingScope.includedUnits;
-
   const allViewingScopes = Array.from(new Set([...currentViewingScope, ...newViewingScope]));
+
+  const activeViewingScopes: string[] = [];
+  const removedViewingScopes: string[] = [];
+  const addedViewingScopes: string[] = [];
+
+  allViewingScopes.forEach((unit) => {
+    const isInCurrent = currentViewingScope.includes(unit);
+    const isInNew = newViewingScope.includes(unit);
+    if (isInCurrent && isInNew) {
+      activeViewingScopes.push(unit);
+    } else if (isInCurrent && !isInNew) {
+      removedViewingScopes.push(unit);
+    } else if (!isInCurrent && isInNew) {
+      addedViewingScopes.push(unit);
+    }
+  });
 
   const userMutation = useMutation({
     mutationFn: (user: InstitutionUser) => updateUser(user.username, user),
@@ -50,22 +72,59 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
             {t('editor.curators.area_of_responsibility')}
           </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'start' }}>
-            {allViewingScopes.map((organizationId) => {
-              const isNewUnit =
-                newViewingScope.includes(organizationId) && !currentViewingScope.includes(organizationId);
-              const isRemovedUnit =
-                !newViewingScope.includes(organizationId) && currentViewingScope.includes(organizationId);
+          <Trans i18nKey="editor.curators.area_of_responsibility_description">
+            <Typography gutterBottom />
+          </Trans>
 
-              return (
-                <Box key={organizationId} sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                  <ViewingScopeChip key={organizationId} organizationId={organizationId} disabled={isSubmitting} />
-                  {isNewUnit && <Typography>(NY)</Typography>}
-                  {isRemovedUnit && <Typography>(FJERNES)</Typography>}
-                </Box>
-              );
-            })}
-          </Box>
+          {activeViewingScopes.length > 0 && (
+            <>
+              <StyledAreOfResponsibilityHeading>
+                {t('editor.curators.active_area_of_responsibilities')}
+              </StyledAreOfResponsibilityHeading>
+              {activeViewingScopes.map((organizationId) => (
+                <ViewingScopeChip
+                  key={organizationId}
+                  icon={<CheckIcon />}
+                  variant="filled"
+                  organizationId={organizationId}
+                  disabled={isSubmitting}
+                />
+              ))}
+            </>
+          )}
+
+          {removedViewingScopes.length > 0 && (
+            <>
+              <StyledAreOfResponsibilityHeading>
+                {t('editor.curators.removed_area_of_responsibilities')}
+              </StyledAreOfResponsibilityHeading>
+              {removedViewingScopes.map((organizationId) => (
+                <ViewingScopeChip
+                  key={organizationId}
+                  icon={<ClearIcon />}
+                  organizationId={organizationId}
+                  disabled={isSubmitting}
+                />
+              ))}
+            </>
+          )}
+
+          {addedViewingScopes.length > 0 && (
+            <>
+              <StyledAreOfResponsibilityHeading>
+                {t('editor.curators.added_area_of_responsibilities')}
+              </StyledAreOfResponsibilityHeading>
+              {addedViewingScopes.map((organizationId) => (
+                <ViewingScopeChip
+                  key={organizationId}
+                  icon={<CheckIcon />}
+                  variant="filled"
+                  organizationId={organizationId}
+                  disabled={isSubmitting}
+                />
+              ))}
+            </>
+          )}
 
           <Typography variant="h3" sx={{ mt: '1rem' }} gutterBottom>
             {t('my_page.my_profile.heading.roles')}
@@ -94,9 +153,7 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
               }
 
               setFieldValue('roles', newRoles);
-            }}
-            // data-testid={dataTestId.basicData.personAdmin.roleSelector}
-          >
+            }}>
             <FormGroup sx={{ gap: '0.25rem', ml: '0.5rem' }}>
               <RoleSelectBox
                 sx={{ bgcolor: 'generalSupportCase.main' }}
@@ -146,7 +203,7 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
               />
             </FormGroup>
           </FormControl>
-          <DialogActions sx={{ justifyContent: 'center', p: 0 }}>
+          <DialogActions sx={{ justifyContent: 'center', pb: 0, mt: '1rem' }}>
             <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={closeDialog}>
               {t('common.cancel')}
             </Button>
