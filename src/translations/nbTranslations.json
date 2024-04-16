@@ -375,7 +375,7 @@
       "no_users_found": "Ingen brukere funnet",
       "removed_area_of_responsibilities": "Ansvarsområder som fjernes",
       "role": {
-        "Curator-thesis": "Studentoppgaver",
+        "Curator-thesis": "Studentoppgave",
         "Curator-thesis-embargo": "Embargo",
         "Doi-Curator": "DOI",
         "Nvi-Curator": "NVI",
@@ -768,7 +768,9 @@
       "publishing_curator": "Publiseringskurator",
       "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
       "support_curator": "Brukerstøttekurator",
-      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser."
+      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser.",
+      "thesis_curator_description": "Kan opprette og endre studentoppgaver.",
+      "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
     }
   },
   "privacy": {

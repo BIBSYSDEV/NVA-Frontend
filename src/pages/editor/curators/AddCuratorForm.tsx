@@ -174,6 +174,7 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
               <RoleSelectBox
                 sx={{ bgcolor: 'publishingRequest.main', ml: '1rem' }}
                 label={t('editor.curators.role.Curator-thesis')}
+                description={t('my_page.roles.thesis_curator_description')}
                 disabled={isSubmitting || !values.roles.some((role) => role.rolename === RoleName.PublishingCurator)}
                 checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
                 value={RoleName.CuratorThesis}
@@ -181,6 +182,7 @@ export const AddCuratorForm = ({ closeDialog, currentUser, initialValues, refetc
               <RoleSelectBox
                 sx={{ bgcolor: 'publishingRequest.main', ml: '2rem' }}
                 label={t('editor.curators.role.Curator-thesis-embargo')}
+                description={t('my_page.roles.thesis_embargo_curator_description')}
                 disabled={isSubmitting || !values.roles.some((role) => role.rolename === RoleName.CuratorThesis)}
                 checked={values.roles.some((role) => role.rolename === RoleName.CuratorThesisEmbargo)}
                 value={RoleName.CuratorThesisEmbargo}
