@@ -524,6 +524,8 @@ export const dataTestId = {
     messagesAccordion: 'messages-accordion',
     myMessages: {
       ticketStatusField: 'ticket-status-field',
+      ticketFilterFromDatePicker: 'ticket-filter-from-date-picker',
+      ticketFilterToDatePicker: 'ticket-filter-to-date-picker',
     },
     myProfileLink: 'my-profile-link',
     myProfile: {

@@ -1,26 +1,21 @@
-import { Box, BoxProps } from '@mui/material';
+import { Box } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   format: 'dd.MM.yyyy',
   views: ['year', 'month', 'day'],
   disableHighlightToday: true,
-
   slotProps: {
     textField: { sx: { width: 'fit-content' }, size: 'small' },
   },
 };
 
-interface TicketDateIntervalFilterProps {
-  boxProps?: Pick<BoxProps, 'sx'>;
-  datePickerProps?: Partial<DatePickerProps<Date>>;
-}
-
-export const TicketDateIntervalFilter = ({ datePickerProps, boxProps }: TicketDateIntervalFilterProps) => {
+export const TicketDateIntervalFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
@@ -68,10 +63,10 @@ export const TicketDateIntervalFilter = ({ datePickerProps, boxProps }: TicketDa
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem', ...boxProps?.sx }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem' }}>
       <DatePicker
         {...commonDatepickerProps}
-        {...datePickerProps}
+        data-testid={dataTestId.myPage.myMessages.ticketFilterFromDatePicker}
         label={t('registration.resource_type.date_from')}
         value={selectedFromDate}
         maxDate={maxDate}
@@ -79,7 +74,7 @@ export const TicketDateIntervalFilter = ({ datePickerProps, boxProps }: TicketDa
       />
       <DatePicker
         {...commonDatepickerProps}
-        {...datePickerProps}
+        data-testid={dataTestId.myPage.myMessages.ticketFilterToDatePicker}
         label={t('registration.resource_type.date_to')}
         value={selectedToDate}
         maxDate={maxDate}
