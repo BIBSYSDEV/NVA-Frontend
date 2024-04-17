@@ -21,19 +21,25 @@ import { Organization } from '../../../types/organization.types';
 import { CristinPerson, InstitutionUser } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { getAllChildOrganizations, getOrganizationHierarchy } from '../../../utils/institutions-helpers';
+import { getAllChildOrganizations } from '../../../utils/institutions-helpers';
 import { getFullCristinName, getUsername } from '../../../utils/user-helpers';
 import { AddCuratorForm } from './AddCuratorForm';
 import { OrganizationCuratorsAccordionProps } from './OrganizationCuratorsAccordion';
 
 interface AddCuratorDialogProps
   extends Pick<DialogProps, 'open'>,
-    Pick<OrganizationCuratorsAccordionProps, 'refetchCurators'> {
+    Pick<OrganizationCuratorsAccordionProps, 'refetchCurators' | 'parentOrganizationIds'> {
   onClose: () => void;
   currentOrganization: Organization;
 }
 
-export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCurators }: AddCuratorDialogProps) => {
+export const AddCuratorDialog = ({
+  onClose,
+  open,
+  currentOrganization,
+  refetchCurators,
+  parentOrganizationIds,
+}: AddCuratorDialogProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
@@ -77,9 +83,6 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
       const newOrganizationId = !viewingScope.includes(currentOrganization.id) ? currentOrganization.id : null;
       if (newOrganizationId) {
         // Remove organizations conflicting with the new organization
-        const parentOrganizationIds = getOrganizationHierarchy(currentOrganization)
-          .filter((org) => org.id !== currentOrganization.id)
-          .map((org) => org.id);
         const childOrganizationIds = getAllChildOrganizations(currentOrganization.hasPart).map((unit) => unit.id);
         viewingScope = viewingScope.filter(
           (id) => !parentOrganizationIds.includes(id) && !childOrganizationIds.includes(id)
@@ -98,7 +101,7 @@ export const AddCuratorDialog = ({ onClose, open, currentOrganization, refetchCu
 
       setUserInitialValues(initialValues);
     }
-  }, [currentOrganization, userQuery.data]);
+  }, [currentOrganization, parentOrganizationIds, userQuery.data]);
 
   return (
     <Dialog open={open} onClose={closeDialog} maxWidth="sm" fullWidth>

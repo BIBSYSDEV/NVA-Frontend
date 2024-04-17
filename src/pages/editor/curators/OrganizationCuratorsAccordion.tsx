@@ -17,6 +17,7 @@ export interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCur
   searchId: string;
   curators: InstitutionUser[];
   refetchCurators: () => Promise<unknown>;
+  parentOrganizationIds: string[];
   includeAllSubunits?: boolean;
   level?: number;
 }
@@ -27,6 +28,7 @@ export const OrganizationCuratorsAccordion = ({
   curators,
   refetchCurators,
   canEditUsers,
+  parentOrganizationIds,
   level = 0,
   includeAllSubunits = false,
 }: OrganizationCuratorsAccordionProps) => {
@@ -101,6 +103,7 @@ export const OrganizationCuratorsAccordion = ({
           onClose={() => setOpenAddCuratorDialog(false)}
           currentOrganization={organization}
           refetchCurators={refetchCurators}
+          parentOrganizationIds={parentOrganizationIds}
         />
 
         {expanded &&
@@ -114,6 +117,7 @@ export const OrganizationCuratorsAccordion = ({
               curators={curators}
               refetchCurators={refetchCurators}
               canEditUsers={canEditUsers}
+              parentOrganizationIds={[...parentOrganizationIds, organization.id]}
             />
           ))}
       </AccordionDetails>
