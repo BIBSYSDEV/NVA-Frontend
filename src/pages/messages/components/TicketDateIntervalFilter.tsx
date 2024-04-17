@@ -69,8 +69,12 @@ export const TicketDateIntervalFilter = () => {
         data-testid={dataTestId.myPage.myMessages.ticketFilterFromDatePicker}
         label={t('registration.resource_type.date_from')}
         value={selectedFromDate}
-        maxDate={maxDate}
-        onChange={(date) => onChangeDate(date, 'from')}
+        maxDate={selectedToDate ? selectedToDate : maxDate}
+        onChange={(date, context) => {
+          if (context.validationError !== 'invalidDate') {
+            onChangeDate(date, 'from');
+          }
+        }}
       />
       <DatePicker
         {...commonDatepickerProps}
@@ -79,7 +83,11 @@ export const TicketDateIntervalFilter = () => {
         value={selectedToDate}
         maxDate={maxDate}
         minDate={selectedFromDate ? selectedFromDate : undefined}
-        onChange={(date) => onChangeDate(date, 'to')}
+        onChange={(date, context) => {
+          if (context.validationError !== 'invalidDate') {
+            onChangeDate(date, 'to');
+          }
+        }}
       />
     </Box>
   );
