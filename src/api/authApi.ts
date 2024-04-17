@@ -28,6 +28,8 @@ export const getAccessToken = async () => {
     return currentSession.tokens?.accessToken.toString() ?? null;
   } catch (error) {
     if (error === 'The user is not authenticated') {
+      // Expired session token. Set state in localStorage that App.tsx can act upon
+      localStorage.setItem(LocalStorageKey.ExpiredToken, 'true');
       window.location.href = UrlPathTemplate.Home;
     }
     return null;

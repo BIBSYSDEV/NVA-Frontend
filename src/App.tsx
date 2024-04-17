@@ -18,10 +18,11 @@ import { SkipLink } from './components/SkipLink';
 import { Footer } from './layout/Footer';
 import { Notifier } from './layout/Notifier';
 import { Header } from './layout/header/Header';
+import { setNotification } from './redux/notificationSlice';
 import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
-import { USE_MOCK_DATA } from './utils/constants';
+import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
 import { getDateFnsLocale } from './utils/date-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
@@ -55,6 +56,14 @@ export const App = () => {
       Amplify.configure(authOptions);
     }
   }, []);
+
+  const hasExpiredToken = !!localStorage.getItem(LocalStorageKey.ExpiredToken);
+  useEffect(() => {
+    if (hasExpiredToken) {
+      dispatch(setNotification({ message: t('authorization.expired_token_info'), variant: 'info' }));
+      localStorage.removeItem(LocalStorageKey.ExpiredToken);
+    }
+  }, [t, dispatch, hasExpiredToken]);
 
   useEffect(() => {
     // Fetch attributes of authenticated user

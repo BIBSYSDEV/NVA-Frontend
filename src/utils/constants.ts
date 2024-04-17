@@ -24,6 +24,7 @@ export enum LocalStorageKey {
   AmplifyRedirect = 'amplifySignInRedirect',
   Beta = 'beta',
   EnvironmentBanner = 'environmentBanner',
+  ExpiredToken = 'expiredToken',
   ShowTagline = 'showTagline',
   RedirectPath = 'redirectPath',
 }
