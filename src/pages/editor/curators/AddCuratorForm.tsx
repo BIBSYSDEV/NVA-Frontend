@@ -49,7 +49,7 @@ export const AddCuratorForm = ({
   const removedViewingScopes: string[] = [];
   const addedViewingScopes: string[] = [];
 
-  allViewingScopes.forEach((unit, index) => {
+  allViewingScopes.forEach((unit) => {
     const isInCurrentViewingScope = currentViewingScope.includes(unit);
     const isInNewViewingScope = newViewingScope.includes(unit);
     if (isInCurrentViewingScope && isInNewViewingScope) {
