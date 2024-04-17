@@ -1845,6 +1845,7 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
+        "New": "Kandidat",
         "Pending": "Kandidat",
         "Rejected": "Avvist"
       },
