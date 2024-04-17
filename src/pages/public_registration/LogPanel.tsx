@@ -13,7 +13,7 @@ import { StyledStatusMessageBox } from '../messages/components/PublishingRequest
 interface LogItem {
   modifiedDate: string;
   description: string;
-  descriptionAppendage?: string[];
+  fileNames?: string[];
   type: TicketType;
 }
 
@@ -77,7 +77,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             description: t('my_page.messages.files_published', {
               count: publishingTicket.approvedFiles.length,
             }),
-            descriptionAppendage: getFileNamesForTicket(publishingTicket, registration, t),
+            fileNames: getFileNamesForTicket(publishingTicket, registration, t),
             type: 'PublishingRequest',
           });
         } else if (ticket.status === 'Closed') {
@@ -115,20 +115,18 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
       {registration && (
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography>{t('common.created')}:</Typography>
-            {organizationQuery.isLoading || userQuery.isLoading ? (
-              <Skeleton sx={{ width: '4rem' }} />
-            ) : (
-              <Typography>
-                {organizationQuery.data ? organizationQuery.data?.acronym : t('common.unknown')}
-                {userQuery.data ? `, ${getFullName(userQuery.data.givenName, userQuery.data.familyName)}` : ''}
-              </Typography>
-            )}
-          </Box>
+          <Typography>{t('common.created')}</Typography>
           <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()} enterDelay={tooltipDelay}>
             <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
           </Tooltip>
+          {organizationQuery.isLoading || userQuery.isLoading ? (
+            <Skeleton sx={{ width: '4rem' }} />
+          ) : (
+            <Typography>
+              {organizationQuery.data ? organizationQuery.data?.acronym : t('common.unknown')}
+              {userQuery.data ? `, ${getFullName(userQuery.data.givenName, userQuery.data.familyName)}` : ''}
+            </Typography>
+          )}
         </StyledStatusMessageBox>
       )}
       {logs
@@ -142,7 +140,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
               <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
                 <Typography>{modifiedDate.toLocaleDateString()}</Typography>
               </Tooltip>
-              {logItem.descriptionAppendage && logItem.descriptionAppendage?.length > 0 && (
+              {logItem.fileNames && logItem.fileNames.length > 0 && (
                 <Box
                   component="ul"
                   sx={{
@@ -151,7 +149,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
                     p: 'inherit',
                     color: 'black',
                   }}>
-                  {logItem.descriptionAppendage.map((desc, index) => (
+                  {logItem.fileNames.map((desc, index) => (
                     <li key={index}>
                       <Tooltip title={desc === t('common.deleted') ? '' : desc} enterDelay={tooltipDelay}>
                         <Typography
@@ -159,6 +157,9 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
+                            fontStyle: desc === t('common.deleted') ? 'italic' : 'normal',
+                            width: 'fit-content',
+                            maxWidth: '100%',
                           }}>
                           {desc}
                         </Typography>
