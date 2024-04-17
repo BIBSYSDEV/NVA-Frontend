@@ -122,7 +122,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         return await createUser({
           customerId,
           roles: user.roles,
-          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', person?.identifiers),
+          cristinId: personCristinIdentifier,
           viewingScope: user.viewingScope,
         });
       }
