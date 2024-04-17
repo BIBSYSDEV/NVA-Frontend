@@ -63,7 +63,7 @@ export const TicketDateIntervalFilter = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: { xs: 'wrap', sm: 'nowrap' } }}>
       <DatePicker
         {...commonDatepickerProps}
         data-testid={dataTestId.myPage.myMessages.ticketFilterFromDatePicker}
