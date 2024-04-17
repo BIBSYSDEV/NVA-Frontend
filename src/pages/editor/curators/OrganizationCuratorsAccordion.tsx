@@ -19,7 +19,6 @@ export interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCur
   refetchCurators: () => Promise<unknown>;
   parentOrganizationIds: string[];
   includeAllSubunits?: boolean;
-  level?: number;
 }
 
 export const OrganizationCuratorsAccordion = ({
@@ -29,10 +28,10 @@ export const OrganizationCuratorsAccordion = ({
   refetchCurators,
   canEditUsers,
   parentOrganizationIds,
-  level = 0,
   includeAllSubunits = false,
 }: OrganizationCuratorsAccordionProps) => {
   const { t } = useTranslation();
+  const level = parentOrganizationIds.length;
 
   const [openAddCuratorDialog, setOpenAddCuratorDialog] = useState(false);
   const [expandedState, setExpandedState] = useState(level === 0);
@@ -111,7 +110,6 @@ export const OrganizationCuratorsAccordion = ({
             <OrganizationCuratorsAccordion
               key={subunit.id}
               organization={subunit}
-              level={level + 1}
               searchId={searchId}
               includeAllSubunits={includeAllSubunits || isSearchedUnit}
               curators={curators}

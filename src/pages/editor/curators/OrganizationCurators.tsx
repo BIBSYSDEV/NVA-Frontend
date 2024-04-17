@@ -89,7 +89,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
               curators={curatorsQuery.data ?? []}
               refetchCurators={curatorsQuery.refetch}
               canEditUsers={canEditUsers}
-              parentOrganizationIds={[organizationQuery.data.id]}
+              parentOrganizationIds={[]}
             />
           )}
         </Box>

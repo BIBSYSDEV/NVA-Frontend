@@ -43,7 +43,6 @@ export const AddCuratorDialog = ({
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
-
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
 
@@ -56,6 +55,10 @@ export const AddCuratorDialog = ({
     setUserInitialValues(null);
     onClose();
   };
+
+  // if (open) {
+  //   console.log(parentOrganizationIds.length);
+  // }
 
   const employeeSearchQuery = useQuery({
     enabled: open && !!topOrgCristinId && !!debouncedSearchQuery && debouncedSearchQuery === searchQuery,
