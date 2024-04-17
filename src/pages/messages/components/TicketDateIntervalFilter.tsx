@@ -22,25 +22,25 @@ export const TicketDateIntervalFilter = () => {
   const maxDate = new Date();
 
   const selectedDatesParam = searchParams.get(TicketSearchParam.CreatedDate);
-  const dateArray = selectedDatesParam ? selectedDatesParam.split(',') : [];
+  const selectedDatesParamArray = selectedDatesParam ? selectedDatesParam.split(',') : [];
 
   const [selectedFromDate, setSelectedFromDate] = useState<Date | null>(
-    dateArray.length ? new Date(dateArray.shift() || '') : null
+    selectedDatesParamArray.length ? new Date(selectedDatesParamArray.shift() || '') : null
   );
 
   const [selectedToDate, setSelectedToDate] = useState<Date | null>(
-    dateArray.length ? new Date(dateArray.pop() || '') : null
+    selectedDatesParamArray.length ? new Date(selectedDatesParamArray.pop() || '') : null
   );
 
   const onChangeDate = (newDate: Date | null, type: 'from' | 'to') => {
-    const fromDateString =
+    const selectedFromDateString =
       type === 'from' && newDate
         ? newDate.toISOString().slice(0, 10)
         : selectedFromDate
           ? selectedFromDate.toISOString().slice(0, 10)
           : '';
 
-    const toDateString =
+    const selectedToDateString =
       type === 'to' && newDate
         ? newDate.toISOString().slice(0, 10)
         : selectedToDate
@@ -53,7 +53,7 @@ export const TicketDateIntervalFilter = () => {
       setSelectedToDate(newDate);
     }
 
-    const newDateParam = `${fromDateString},${toDateString}`;
+    const newDateParam = `${selectedFromDateString},${selectedToDateString}`;
     if (newDateParam !== ',') {
       searchParams.set(TicketSearchParam.CreatedDate, newDateParam);
     } else {
