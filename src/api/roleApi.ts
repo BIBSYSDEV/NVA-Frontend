@@ -4,7 +4,7 @@ import { RoleApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
 interface CreateUserPayload extends Pick<InstitutionUser, 'roles' | 'viewingScope'> {
-  cristinId: string;
+  cristinIdentifier: string;
   customerId: string;
 }
 
