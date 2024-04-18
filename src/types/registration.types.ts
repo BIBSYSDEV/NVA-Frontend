@@ -221,6 +221,7 @@ export const emptyRegistrationDate: RegistrationDate = {
 };
 
 export interface RegistrationPreview {
+  abstract: string;
   contributors: Contributor[];
   identifier: string;
   id: string;

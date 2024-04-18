@@ -49,7 +49,7 @@ export const fetchUser = async (username: string) => {
   return userResponse.data;
 };
 
-export const fetchUsers = async (customerId: string, role: RoleName | RoleName[]) => {
+export const fetchUsers = async (customerId: string, role?: RoleName | RoleName[]) => {
   const searchParams = new URLSearchParams();
 
   if (customerId) {
