@@ -120,7 +120,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         return await createUser({
           customerId,
           roles: user.roles,
-          cristinIdentifier: personCristinIdentifier,
+          cristinId: personCristinIdentifier,
           viewingScope: user.viewingScope,
         });
       }

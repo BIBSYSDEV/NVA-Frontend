@@ -63,7 +63,7 @@ export const AddAdminDialog = ({
       // Create NVA User with admin role
       const customerId = new URLSearchParams(location.search).get('id') as string;
       const createNvaUserResponse = await createUser({
-        cristinIdentifier: cristinPerson.cristinIdentifier,
+        cristinId: cristinPerson.cristinIdentifier,
         customerId,
         roles: [
           { type: 'Role', rolename: RoleName.InstitutionAdmin },
