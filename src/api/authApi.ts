@@ -34,7 +34,7 @@ export const getAccessToken = async () => {
       window.location.href = UrlPathTemplate.Home;
       return null;
     }
-  } catch (error) {
+  } catch {
     return null;
   }
 };
