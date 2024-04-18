@@ -23,7 +23,7 @@ import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { CristinPerson, Employment, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { getValueByKey } from '../../../../utils/user-helpers';
+import { getUsername, getValueByKey } from '../../../../utils/user-helpers';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
@@ -84,9 +84,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     }
   });
 
-  const personCristinIdentifier = getValueByKey('CristinIdentifier', person?.identifiers);
-  const username =
-    personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
+  const username = getUsername(person, topOrgCristinId);
 
   const institutionUserQuery = useQuery({
     enabled: open && !existingUser && !!username,
