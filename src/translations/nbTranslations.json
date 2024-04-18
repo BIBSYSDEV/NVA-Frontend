@@ -1870,9 +1870,9 @@
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
   },
   "log": {
-    "archived_file_one": "{{count}} fil arkivert siden",
-    "archived_file_other": "{{count}} filer arkivert siden",
-    "deleted_file_one": "{{count}} fil slettet siden",
-    "deleted_file_other": "{{count}} filer slettet siden"
+    "archived_file_one": "{{count}} fil arkivert i etterkant",
+    "archived_file_other": "{{count}} filer arkivert i etterkant",
+    "deleted_file_one": "{{count}} fil slettet i etterkant",
+    "deleted_file_other": "{{count}} filer slettet i etterkant"
   }
 }
