@@ -1,6 +1,5 @@
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Organization } from '../../../types/organization.types';
@@ -8,17 +7,16 @@ import { InstitutionUser } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getAllChildOrganizations } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { AddCuratorDialog } from './AddCuratorDialog';
 import { OrganizationCuratorRow } from './OrganizationCuratorRow';
 import { OrganizationCuratorsProps } from './OrganizationCurators';
 
-export interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
+interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
   organization: Organization;
   searchId: string;
   curators: InstitutionUser[];
-  refetchCurators: () => Promise<unknown>;
-  parentOrganizationIds: string[];
+  refetchCurators: () => void;
   includeAllSubunits?: boolean;
+  level?: number;
 }
 
 export const OrganizationCuratorsAccordion = ({
@@ -27,13 +25,11 @@ export const OrganizationCuratorsAccordion = ({
   curators,
   refetchCurators,
   canEditUsers,
-  parentOrganizationIds,
+  level = 0,
   includeAllSubunits = false,
 }: OrganizationCuratorsAccordionProps) => {
   const { t } = useTranslation();
-  const level = parentOrganizationIds.length;
 
-  const [openAddCuratorDialog, setOpenAddCuratorDialog] = useState(false);
   const [expandedState, setExpandedState] = useState(level === 0);
 
   const isSearchedUnit = organization.id === searchId;
@@ -86,36 +82,17 @@ export const OrganizationCuratorsAccordion = ({
             />
           ))}
         </Box>
-
-        {canEditUsers && (
-          <Button
-            variant="contained"
-            data-testid={dataTestId.editor.addCuratorButton(organization.id)}
-            sx={{ mb: '1rem' }}
-            startIcon={<AddCircleOutlineOutlinedIcon />}
-            onClick={() => setOpenAddCuratorDialog(true)}>
-            {t('editor.curators.add_curator')}
-          </Button>
-        )}
-        <AddCuratorDialog
-          open={openAddCuratorDialog}
-          onClose={() => setOpenAddCuratorDialog(false)}
-          currentOrganization={organization}
-          refetchCurators={refetchCurators}
-          parentOrganizationIds={parentOrganizationIds}
-        />
-
         {expanded &&
           organization.hasPart?.map((subunit) => (
             <OrganizationCuratorsAccordion
               key={subunit.id}
               organization={subunit}
+              level={level + 1}
               searchId={searchId}
               includeAllSubunits={includeAllSubunits || isSearchedUnit}
               curators={curators}
               refetchCurators={refetchCurators}
               canEditUsers={canEditUsers}
-              parentOrganizationIds={[...parentOrganizationIds, organization.id]}
             />
           ))}
       </AccordionDetails>

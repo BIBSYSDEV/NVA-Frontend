@@ -12,7 +12,6 @@ import {
   User,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
-import { getIdentifierFromId } from './general-helpers';
 
 export const getValueByKey = (
   key: CristinPersonIdentifierType | CristinPersonNameType,
@@ -91,18 +90,3 @@ export const hasCuratorRole = (user: User | null) =>
     user.isSupportCurator ||
     user.isThesisCurator ||
     user.isEmbargoThesisCurator);
-
-export const getUsername = (person?: CristinPerson | null, topOrgCristinId?: string) => {
-  if (!person || !topOrgCristinId) {
-    return '';
-  }
-
-  const personCristinIdentifier = getValueByKey('CristinIdentifier', person.identifiers);
-  const topOrgCristinIdentifier = getIdentifierFromId(topOrgCristinId);
-
-  if (!personCristinIdentifier || !topOrgCristinIdentifier) {
-    return '';
-  }
-
-  return `${personCristinIdentifier}@${topOrgCristinIdentifier}`;
-};

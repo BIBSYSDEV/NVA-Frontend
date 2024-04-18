@@ -281,6 +281,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -352,31 +356,22 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting",
     "curators": {
-      "active_area_of_responsibilities": "Tilknyttede ansvarsområder",
-      "add_curator": "Legg til kurator",
-      "added_area_of_responsibilities": "Ansvarsområder som legges til",
       "administer_curators": "Administrer tilganger til kuratorer",
       "area_of_responsibility": "Ansvarsområde",
-      "area_of_responsibility_description": "<0>Legg til ansvarsområder som kuratoren er knyttet til.</0><0>Legger du til et ansvarsområde som er en over- eller underenhet på et ansvarsområde som kurator allerede er tilknyttet, så fjernes ansvarsområdet til over- eller underenheten.</0><0>Fjerner du ansvarsområder for kuratoren, så sjekk at det er andre kuratorer som er tilknyttet det ansvarsområdet.</0>",
       "curators": "Kuratorer",
       "curators_count_one": "{{count}} kurator",
       "curators_count_other": "{{count}} kuratorer",
       "edit_user": "Endre bruker",
       "no_users_found": "Ingen brukere funnet",
-      "removed_area_of_responsibilities": "Ansvarsområder som fjernes",
       "role": {
-        "Curator-thesis": "Studentoppgave",
-        "Curator-thesis-embargo": "Studentembargo",
+        "Curator-thesis": "Studentoppgaver",
+        "Curator-thesis-embargo": "Embargo",
         "Doi-Curator": "DOI",
         "Nvi-Curator": "NVI",
         "Publishing-Curator": "Publisering",
@@ -768,11 +763,7 @@
       "publishing_curator": "Publiseringskurator",
       "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
       "support_curator": "Brukerstøttekurator",
-      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser.",
-      "thesis_curator": "Studentoppgavekurator",
-      "thesis_curator_description": "Kan opprette og endre studentoppgaver.",
-      "thesis_embargo_curator": "Studentoppgave med embargo-kurator",
-      "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
+      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser."
     }
   },
   "privacy": {

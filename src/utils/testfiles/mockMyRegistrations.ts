@@ -3,8 +3,6 @@ import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registr
 export const mockMyRegistrations: MyRegistrationsResponse = {
   publications: [
     {
-      abstract:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum velit tellus, bibendum id diam vel, mattis dictum sem. Vivamus condimentum urna a vehicula pharetra. Cras fermentum quam a ligula ultrices mollis. Donec dapibus leo quis leo tincidunt, sit amet dignissim diam vehicula. In vel malesuada quam. Sed lacinia justo non odio viverra, non accumsan nisl pharetra. Cras et ultricies velit.',
       contributors: [],
       identifier: '12345678',
       id: 'https://nva.no/publication/12345678',
@@ -16,8 +14,6 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'kare@unit.no',
     },
     {
-      abstract:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum velit tellus, bibendum id diam vel, mattis dictum sem. Vivamus condimentum urna a vehicula pharetra. Cras fermentum quam a ligula ultrices mollis. Donec dapibus leo quis leo tincidunt, sit amet dignissim diam vehicula. In vel malesuada quam. Sed lacinia justo non odio viverra, non accumsan nisl pharetra. Cras et ultricies velit.',
       contributors: [],
       identifier: '4327439',
       id: 'https://nva.no/publication/4327439',
@@ -29,7 +25,6 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'kari@ntnu.no',
     },
     {
-      abstract: '',
       contributors: [],
       identifier: '53453453',
       id: 'https://nva.no/publication/53453453',
@@ -40,8 +35,6 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'arne@uio.no',
     },
     {
-      abstract:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum velit tellus, bibendum id diam vel, mattis dictum sem. Vivamus condimentum urna a vehicula pharetra. Cras fermentum quam a ligula ultrices mollis. Donec dapibus leo quis leo tincidunt, sit amet dignissim diam vehicula. In vel malesuada quam. Sed lacinia justo non odio viverra, non accumsan nisl pharetra. Cras et ultricies velit.',
       contributors: [],
       identifier: '3333439',
       id: 'https://nva.no/publication/3333439',
@@ -52,7 +45,6 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'bob@boffaloe.com',
     },
     {
-      abstract: '',
       contributors: [],
       identifier: '3533439',
       id: 'https://nva.no/publication/3533439',
@@ -63,7 +55,6 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'bob@ryder.net',
     },
     {
-      abstract: '',
       contributors: [],
       identifier: '12345679',
       id: 'https://nva.no/publication/12345679',

@@ -7,8 +7,8 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
 import { setNotification } from '../../redux/notificationSlice';
-import { emptyRegistration, Registration, RegistrationPreview } from '../../types/registration.types';
-import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { Registration, RegistrationPreview, emptyRegistration } from '../../types/registration.types';
+import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { getTitleString } from '../../utils/registration-helpers';
@@ -36,7 +36,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
   const registrationsOnPage = registrations.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
   const registrationsCopy = registrationsOnPage.map((registrationPreview) => {
-    const { identifier, id, contributors, mainTitle, publicationInstance, status, abstract } = registrationPreview;
+    const { identifier, id, contributors, mainTitle, publicationInstance, status } = registrationPreview;
     return {
       ...emptyRegistration,
       identifier,
@@ -44,7 +44,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       status,
       entityDescription: {
         mainTitle,
-        abstract,
         contributors,
         reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
       },

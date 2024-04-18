@@ -152,7 +152,7 @@ export const mainTheme = createTheme(
       },
       h4: {
         fontSize: '0.9rem',
-        fontWeight: 600,
+        fontWeight: 400,
       },
       overline: {
         fontSize: '0.75rem',
