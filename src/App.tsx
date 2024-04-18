@@ -60,10 +60,8 @@ export const App = () => {
   const hasExpiredToken = !!localStorage.getItem(LocalStorageKey.ExpiredToken);
   useEffect(() => {
     if (hasExpiredToken) {
-      console.log('>> Expired token detected in LS', window.location.pathname);
       dispatch(setNotification({ message: t('authorization.expired_token_info'), variant: 'info' }));
       localStorage.removeItem(LocalStorageKey.ExpiredToken);
-      // Check if user is on protected page, and redirect?
     }
   }, [t, dispatch, hasExpiredToken]);
 

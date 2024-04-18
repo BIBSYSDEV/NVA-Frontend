@@ -1,6 +1,7 @@
 import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
 import { FeideUser } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
+import { UrlPathTemplate } from '../utils/urlPaths';
 
 export const getUserAttributes = async (retryNumber = 0): Promise<FeideUser | null> => {
   try {
@@ -24,13 +25,13 @@ export const getAccessToken = async () => {
   }
   try {
     const currentSession = await fetchAuthSession();
-    console.log('Current session', currentSession.tokens);
+
     if (currentSession.tokens) {
       return currentSession.tokens.accessToken.toString();
     } else {
-      console.log('> The user is not authenticated');
       // Expired session token. Set state in localStorage that App.tsx can act upon
       localStorage.setItem(LocalStorageKey.ExpiredToken, 'true');
+      window.location.href = UrlPathTemplate.Home;
       return null;
     }
   } catch (error) {
