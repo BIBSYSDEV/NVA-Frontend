@@ -80,15 +80,14 @@ export const AddCuratorDialog = ({
     if (currentUser) {
       let viewingScope = currentUser.viewingScope.includedUnits;
 
-      const newOrganizationId = !viewingScope.includes(currentOrganization.id) ? currentOrganization.id : null;
-      if (newOrganizationId) {
+      if (!viewingScope.includes(currentOrganization.id)) {
         // Remove organizations conflicting with the new organization
         const childOrganizationIds = getAllChildOrganizations(currentOrganization.hasPart).map((unit) => unit.id);
         viewingScope = viewingScope.filter(
           (id) => !parentOrganizationIds.includes(id) && !childOrganizationIds.includes(id)
         );
 
-        viewingScope.push(newOrganizationId);
+        viewingScope.push(currentOrganization.id);
       }
 
       const initialValues: InstitutionUser = {
