@@ -1,6 +1,5 @@
 import { Box, Skeleton, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
@@ -13,7 +12,7 @@ import { StyledStatusMessageBox } from '../messages/components/PublishingRequest
 interface LogItem {
   modifiedDate: string;
   description: string;
-  fileNames?: string[];
+  filesInfo?: TicketFilesInfo;
   type: TicketType;
 }
 
@@ -77,7 +76,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             description: t('my_page.messages.files_published', {
               count: publishingTicket.approvedFiles.length,
             }),
-            fileNames: getFileNamesForTicket(publishingTicket, registration, t),
+            filesInfo: getTicketFilesInfo(publishingTicket, registration),
             type: 'PublishingRequest',
           });
         } else if (ticket.status === 'Closed') {
@@ -140,33 +139,44 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
               <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
                 <Typography>{modifiedDate.toLocaleDateString()}</Typography>
               </Tooltip>
-              {logItem.fileNames && logItem.fileNames.length > 0 && (
-                <Box
-                  component="ul"
-                  sx={{
-                    gridColumn: '1/3',
-                    m: '0',
-                    p: 'inherit',
-                    color: 'black',
-                  }}>
-                  {logItem.fileNames.map((desc, index) => (
-                    <li key={index}>
-                      <Tooltip title={desc === t('common.deleted') ? '' : desc} enterDelay={tooltipDelay}>
-                        <Typography
-                          sx={{
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            fontStyle: desc === t('common.deleted') ? 'italic' : 'normal',
-                            width: 'fit-content',
-                            maxWidth: '100%',
-                          }}>
-                          {desc}
-                        </Typography>
-                      </Tooltip>
-                    </li>
-                  ))}
-                </Box>
+              {logItem.filesInfo &&
+                logItem.filesInfo.approvedFileNames &&
+                logItem.filesInfo.approvedFileNames.length > 0 && (
+                  <Box
+                    component="ul"
+                    sx={{
+                      gridColumn: '1/3',
+                      m: '0',
+                      p: 'inherit',
+                      color: 'black',
+                    }}>
+                    {logItem.filesInfo.approvedFileNames.map((fileName, index) => (
+                      <li key={index}>
+                        <Tooltip title={fileName} enterDelay={tooltipDelay}>
+                          <Typography
+                            sx={{
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              width: 'fit-content',
+                              maxWidth: '100%',
+                            }}>
+                            {fileName}
+                          </Typography>
+                        </Tooltip>
+                      </li>
+                    ))}
+                  </Box>
+                )}
+              {logItem.filesInfo && logItem.filesInfo.numberOfUnpublishableFiles > 0 && (
+                <Typography sx={{ gridColumn: '1/3', fontStyle: 'italic' }}>
+                  {t('log.archived_file', { count: logItem.filesInfo.numberOfUnpublishableFiles })}
+                </Typography>
+              )}
+              {logItem.filesInfo && logItem.filesInfo.numberOfDeletedFiles > 0 && (
+                <Typography sx={{ gridColumn: '1/3', fontStyle: 'italic' }}>
+                  {t('log.deleted_file', { count: logItem.filesInfo.numberOfDeletedFiles })}
+                </Typography>
               )}
             </StyledStatusMessageBox>
           );
@@ -175,10 +185,30 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   );
 };
 
-function getFileNamesForTicket(ticket: PublishingTicket, registration: Registration, t: TFunction<'translation'>) {
-  return ticket.approvedFiles.map(
-    (identifier) =>
-      getAssociatedFiles(registration.associatedArtifacts).find((file) => file.identifier === identifier)?.name ??
-      t('common.deleted')
+interface TicketFilesInfo {
+  approvedFileNames: string[];
+  numberOfUnpublishableFiles: number;
+  numberOfDeletedFiles: number;
+}
+
+function getTicketFilesInfo(ticket: PublishingTicket, registration: Registration): TicketFilesInfo {
+  const filesOnRegistration = getAssociatedFiles(registration.associatedArtifacts);
+
+  const publishedFilesOnTicket = filesOnRegistration.filter(
+    (file) => file.type === 'PublishedFile' && ticket.approvedFiles.includes(file.identifier)
   );
+
+  const unpublishedFilesOnTicket = filesOnRegistration.filter(
+    (file) => file.type === 'UnpublishableFile' && ticket.approvedFiles.includes(file.identifier)
+  );
+
+  const deletedFilesOnTicket = ticket.approvedFiles.filter(
+    (identifier) => !filesOnRegistration.some((file) => file.identifier === identifier)
+  );
+
+  return {
+    approvedFileNames: publishedFilesOnTicket.map((file) => file.name),
+    numberOfUnpublishableFiles: unpublishedFilesOnTicket.length,
+    numberOfDeletedFiles: deletedFilesOnTicket.length,
+  };
 }
