@@ -160,6 +160,7 @@
     "close_forever": "Lukk og ikkje vis igjen",
     "country": "Land",
     "create": "Opprett",
+    "created": "Oppretta",
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskriving",
@@ -184,8 +185,10 @@
     "institutions": "Institusjonar",
     "justification": "Grunngjeving",
     "language": "Språk",
+    "last_modified": "Sist endra",
     "last_name": "Etternamn",
     "link": "Lenkje",
+    "log": "Logg",
     "main": "Hovud",
     "menu": "Meny",
     "message": "Melding",
@@ -359,13 +362,18 @@
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriane der institusjonen din tillèt filopplasting",
     "curators": {
+      "active_area_of_responsibilities": "",
+      "add_curator": "Legg til kurator",
+      "added_area_of_responsibilities": "Ansvarsområder som blir lagt til",
       "administer_curators": "Administrer tilgånger til kuratorar",
       "area_of_responsibility": "Ansvarsområde",
+      "area_of_responsibility_description": "",
       "curators": "Kuratorar",
       "curators_count_one": "{{count}} kurator",
       "curators_count_other": "{{count}} kuratorar",
       "edit_user": "Endre brukar",
       "no_users_found": "Ingen brukarar funne",
+      "removed_area_of_responsibilities": "Ansvarsområder som blir fjerna",
       "role": {
         "Curator-thesis": "Studentoppgåver",
         "Curator-thesis-embargo": "Embargo",
@@ -403,7 +411,8 @@
       "institution_support_description": "Institusjonen si brukarstøtte er vist under kuratorstøtte.",
       "not_rbo_funded": "Institusjonen får ikkje finansiering via Resultatbasert omfordeling (RBO)",
       "organizing": "Organisering",
-      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
+      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)",
+      "unique_feide_id": "Unik Feide-ID"
     },
     "organization_overview": "Organisasjonsstruktur",
     "publish_strategy": {
@@ -636,6 +645,12 @@
       "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
     }
   },
+  "log": {
+    "archived_file_one": "{{count}} fil arkivert i etterkant",
+    "archived_file_other": "{{count}} filer arkivert i etterkant",
+    "deleted_file_one": "{{count}} fil sletta i etterkant",
+    "deleted_file_other": "{{count}} filer sletta i etterkant"
+  },
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statusar",
@@ -759,7 +774,11 @@
       "publishing_curator": "Publiseringskurator",
       "publishing_curator_description": "Kan sjå og behandle publiseringsførespurnader.",
       "support_curator": "Brukarstøttekurator",
-      "support_curator_description": "Kan sjå og behandle brukarstøtteførespurnader."
+      "support_curator_description": "Kan sjå og behandle brukarstøtteførespurnader.",
+      "thesis_curator": "Studentoppgåvekurator",
+      "thesis_curator_description": "Kan opprette og endre studentoppgåver",
+      "thesis_embargo_curator": "Studentoppgåve med embargo-kurator",
+      "thesis_embargo_curator_description": "Kan sjå og endre embargofiler på studentoppgåver."
     }
   },
   "privacy": {
@@ -1841,6 +1860,7 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjend",
+        "New": "Kandidat",
         "Pending": "Kandidat",
         "Rejected": "Avvist"
       },
