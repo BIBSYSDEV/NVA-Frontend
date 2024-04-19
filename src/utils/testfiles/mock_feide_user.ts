@@ -10,7 +10,7 @@ export const mockUser: FeideUser = {
   'custom:topOrgCristinId': 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
   'custom:nvaUsername': '1@20754.0.0.0',
   'custom:roles':
-    'Creator@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Curator@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Curator-thesis@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Curator-thesis-embargo@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,App-admin@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Institution-admin@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Editor@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
+    'Creator,Doi-Curator,Support-Curator,Publishing-Curator,Curator-thesis,Curator-thesis-embargo,App-admin,Institution-admin,Editor',
   'custom:accessRights': '',
   'custom:allowedCustomers': 'https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
 };
