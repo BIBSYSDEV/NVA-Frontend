@@ -58,7 +58,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(PublicationsApiPath.RegistrationsByOwner)).reply(200, mockMyRegistrations);
 
   //MY MESSAGES
-  mock.onGet(new RegExp(SearchApiPath.Tickets)).reply(200, mockSearchTasks);
+  mock.onGet(new RegExp(SearchApiPath.CustomerTickets)).reply(200, mockSearchTasks);
   mock.onGet(new RegExp('/tickets')).reply(200, mockTicketCollection);
 
   // PUBLICATION CHANNEL
