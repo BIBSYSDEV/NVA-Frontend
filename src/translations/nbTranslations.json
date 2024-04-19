@@ -1882,6 +1882,8 @@
   "log": {
     "archived_file_one": "{{count}} fil arkivert i etterkant",
     "archived_file_other": "{{count}} filer arkivert i etterkant",
+    "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
+    "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_file_one": "{{count}} fil slettet i etterkant",
     "deleted_file_other": "{{count}} filer slettet i etterkant"
   }

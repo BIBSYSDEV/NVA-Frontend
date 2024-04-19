@@ -111,8 +111,19 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     }
   });
 
+  const numberOfArchivedFilesOnRegistration = getAssociatedFiles(registration.associatedArtifacts).filter(
+    (file) => file.type === 'UnpublishableFile'
+  ).length;
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
+      {numberOfArchivedFilesOnRegistration > 0 && (
+        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+          <Typography sx={{ gridColumn: '1/3', fontStyle: 'italic' }}>
+            {t('log.archived_files_on_registration', { count: numberOfArchivedFilesOnRegistration })}
+          </Typography>
+        </StyledStatusMessageBox>
+      )}
       {registration && (
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
           <Typography>{t('common.created')}</Typography>
