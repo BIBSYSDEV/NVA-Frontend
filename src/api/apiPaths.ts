@@ -47,7 +47,6 @@ export enum RoleApiPath {
 
 export enum SearchApiPath {
   Registrations = '/search/resources',
-  Tickets = '/search/tickets',
   CustomerTickets = '/search/customer/tickets',
   ImportCandidates = '/search/import-candidates',
   NviCandidate = '/scientific-index/candidate',
