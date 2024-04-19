@@ -123,17 +123,10 @@ export const AddCuratorDialog = ({
               {getFullCristinName(option.names)}
             </li>
           )}
-          onInputChange={(_, value, reason) => {
-            if (reason === 'clear' || reason === 'reset') {
-              setSearchQuery('');
-              setSelectedPerson(null);
-              setUserInitialValues(null);
-            } else {
-              setSearchQuery(value);
-            }
-          }}
+          onInputChange={(_, value) => setSearchQuery(value)}
           onChange={async (_, value) => {
             setSearchQuery('');
+            setUserInitialValues(null);
             setSelectedPerson(value);
           }}
           getOptionLabel={(option) => getFullCristinName(option.names)}
