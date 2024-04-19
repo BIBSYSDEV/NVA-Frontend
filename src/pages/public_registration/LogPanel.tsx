@@ -1,16 +1,19 @@
-import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
-import { Box, Skeleton, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Box, Skeleton, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
+import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
+import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
+import { ticketColor } from '../messages/components/TicketListItem';
 
 interface LogItem {
   modifiedDate: string;
   description: string;
+  filesInfo?: TicketFilesInfo;
   type: TicketType;
 }
 
@@ -18,6 +21,8 @@ interface LogPanelProps {
   tickets: Ticket[];
   registration: Registration;
 }
+
+const tooltipDelay = 400;
 
 export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const { t } = useTranslation();
@@ -72,6 +77,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             description: t('my_page.messages.files_published', {
               count: publishingTicket.approvedFiles.length,
             }),
+            filesInfo: getTicketFilesInfo(publishingTicket, registration),
             type: 'PublishingRequest',
           });
         } else if (ticket.status === 'Closed') {
@@ -109,31 +115,98 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
       {registration && (
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography>{t('common.created')}:</Typography>
-            {organizationQuery.isLoading || userQuery.isLoading ? (
-              <Skeleton sx={{ width: '4rem' }} />
-            ) : (
-              <Typography>
-                {organizationQuery.data ? organizationQuery.data?.acronym : t('common.unknown')}
-                {userQuery.data ? `, ${getFullName(userQuery.data.givenName, userQuery.data.familyName)}` : ''}
-              </Typography>
-            )}
-          </Box>
-          <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
+          <Typography>{t('common.created')}</Typography>
+          <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()} enterDelay={tooltipDelay}>
+            <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
+          </Tooltip>
+          {organizationQuery.isLoading || userQuery.isLoading ? (
+            <Skeleton sx={{ width: '4rem' }} />
+          ) : (
+            <Typography>
+              {organizationQuery.data ? organizationQuery.data?.acronym : t('common.unknown')}
+              {userQuery.data ? `, ${getFullName(userQuery.data.givenName, userQuery.data.familyName)}` : ''}
+            </Typography>
+          )}
         </StyledStatusMessageBox>
       )}
       {logs
         .sort((a, b) => new Date(a.modifiedDate).getTime() - new Date(b.modifiedDate).getTime())
         .map((logItem, index) => {
-          const bgColor = logItem.type === 'PublishingRequest' ? 'publishingRequest.main' : 'doiRequest.main';
+          const modifiedDate = new Date(logItem.modifiedDate);
           return (
-            <StyledStatusMessageBox key={index} sx={{ bgcolor: `${bgColor}` }}>
+            <StyledStatusMessageBox key={index} sx={{ bgcolor: ticketColor[logItem.type] }}>
               <Typography>{logItem.description}</Typography>
-              <Typography>{new Date(logItem.modifiedDate).toLocaleDateString()}</Typography>
+              <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
+                <Typography>{modifiedDate.toLocaleDateString()}</Typography>
+              </Tooltip>
+              {logItem.filesInfo?.approvedFileNames && logItem.filesInfo.approvedFileNames.length > 0 && (
+                <Box
+                  component="ul"
+                  sx={{
+                    gridColumn: '1/3',
+                    m: '0',
+                    p: 'inherit',
+                    color: 'black',
+                  }}>
+                  {logItem.filesInfo.approvedFileNames.map((fileName, index) => (
+                    <li key={index}>
+                      <Tooltip title={fileName} enterDelay={tooltipDelay}>
+                        <Typography
+                          sx={{
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            width: 'fit-content',
+                            maxWidth: '100%',
+                          }}>
+                          {fileName}
+                        </Typography>
+                      </Tooltip>
+                    </li>
+                  ))}
+                </Box>
+              )}
+              {logItem.filesInfo && logItem.filesInfo.numberOfUnpublishableFiles > 0 && (
+                <Typography sx={{ gridColumn: '1/3', fontStyle: 'italic' }}>
+                  {t('log.archived_file', { count: logItem.filesInfo.numberOfUnpublishableFiles })}
+                </Typography>
+              )}
+              {logItem.filesInfo && logItem.filesInfo.numberOfDeletedFiles > 0 && (
+                <Typography sx={{ gridColumn: '1/3', fontStyle: 'italic' }}>
+                  {t('log.deleted_file', { count: logItem.filesInfo.numberOfDeletedFiles })}
+                </Typography>
+              )}
             </StyledStatusMessageBox>
           );
         })}
     </Box>
   );
 };
+
+interface TicketFilesInfo {
+  approvedFileNames: string[];
+  numberOfUnpublishableFiles: number;
+  numberOfDeletedFiles: number;
+}
+
+function getTicketFilesInfo(ticket: PublishingTicket, registration: Registration): TicketFilesInfo {
+  const filesOnRegistration = getAssociatedFiles(registration.associatedArtifacts);
+
+  const publishedFilesOnTicket = filesOnRegistration.filter(
+    (file) => file.type === 'PublishedFile' && ticket.approvedFiles.includes(file.identifier)
+  );
+
+  const unpublishedFilesOnTicket = filesOnRegistration.filter(
+    (file) => file.type === 'UnpublishableFile' && ticket.approvedFiles.includes(file.identifier)
+  );
+
+  const deletedFilesOnTicket = ticket.approvedFiles.filter(
+    (identifier) => !filesOnRegistration.some((file) => file.identifier === identifier)
+  );
+
+  return {
+    approvedFileNames: publishedFilesOnTicket.map((file) => file.name),
+    numberOfUnpublishableFiles: unpublishedFilesOnTicket.length,
+    numberOfDeletedFiles: deletedFilesOnTicket.length,
+  };
+}

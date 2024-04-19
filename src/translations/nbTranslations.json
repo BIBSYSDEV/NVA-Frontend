@@ -1878,5 +1878,11 @@
     "unpublish_registration_duplicate_citation_information": "Da kan du legge inn en lenke til det andre forskningsresultatet. Alle oppslag på det avpubliserte forskningsresultatet vil da føre til det andre, publiserte forskningsresultatet.",
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet."
+  },
+  "log": {
+    "archived_file_one": "{{count}} fil arkivert i etterkant",
+    "archived_file_other": "{{count}} filer arkivert i etterkant",
+    "deleted_file_one": "{{count}} fil slettet i etterkant",
+    "deleted_file_other": "{{count}} filer slettet i etterkant"
   }
 }
