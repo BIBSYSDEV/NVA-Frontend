@@ -41,7 +41,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
           {institutions.map((institution) => (
             <TableRow key={institution.id}>
               <TableCell>
-                <Typography>{institution.displayName}</Typography>
+                <Typography>{institution.displayName ?? institution.id}</Typography>
               </TableCell>
               <TableCell>
                 <Typography>{institution.doiPrefix}</Typography>
@@ -54,7 +54,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
                   variant="outlined"
                   startIcon={<EditIcon />}
                   component={RouterLink}
-                  data-testid={dataTestId.basicData.customers.editInstitutionButton(institution.displayName)}
+                  data-testid={dataTestId.basicData.customers.editInstitutionButton(institution.id)}
                   to={getAdminInstitutionPath(institution.id)}>
                   <Typography>{t('common.edit')}</Typography>
                 </Button>
