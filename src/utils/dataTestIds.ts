@@ -29,7 +29,7 @@ export const dataTestId = {
     centralImportAccordion: 'central-import-accordion',
     customers: {
       customerList: 'customer-institutions-list',
-      editInstitutionButton: (name: string) => `edit-institution-button-${name.toLowerCase().replaceAll(' ', '-')}`,
+      editInstitutionButton: (id: string) => `edit-institution-button-${id}`,
     },
     institutionsAccordion: 'institutions-accordion',
     institutionAdmin: {
