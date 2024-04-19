@@ -9,6 +9,7 @@ import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
 import { ticketColor } from '../messages/components/TicketListItem';
+import { AssociatedFile } from '../../types/associatedArtifact.types';
 
 interface LogItem {
   modifiedDate: string;
@@ -28,6 +29,11 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const { t } = useTranslation();
   const resourceOwnerAffiliationId = registration.resourceOwner.ownerAffiliation;
   const resourceOwnerId = registration.resourceOwner.owner;
+
+  const registrationFiles = getAssociatedFiles(registration.associatedArtifacts);
+  const numberOfArchivedFilesOnRegistration = registrationFiles.filter(
+    (file) => file.type === 'UnpublishableFile'
+  ).length;
 
   const organizationQuery = useQuery({
     enabled: !!resourceOwnerAffiliationId,
@@ -77,7 +83,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             description: t('my_page.messages.files_published', {
               count: publishingTicket.approvedFiles.length,
             }),
-            filesInfo: getTicketFilesInfo(publishingTicket, registration),
+            filesInfo: getTicketFilesInfo(publishingTicket, registrationFiles),
             type: 'PublishingRequest',
           });
         } else if (ticket.status === 'Closed') {
@@ -110,10 +116,6 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
       }
     }
   });
-
-  const numberOfArchivedFilesOnRegistration = getAssociatedFiles(registration.associatedArtifacts).filter(
-    (file) => file.type === 'UnpublishableFile'
-  ).length;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '0.5rem' }}>
@@ -200,19 +202,17 @@ interface TicketFilesInfo {
   numberOfDeletedFiles: number;
 }
 
-function getTicketFilesInfo(ticket: PublishingTicket, registration: Registration): TicketFilesInfo {
-  const filesOnRegistration = getAssociatedFiles(registration.associatedArtifacts);
-
-  const publishedFilesOnTicket = filesOnRegistration.filter(
+function getTicketFilesInfo(ticket: PublishingTicket, registrationFiles: AssociatedFile[]): TicketFilesInfo {
+  const publishedFilesOnTicket = registrationFiles.filter(
     (file) => file.type === 'PublishedFile' && ticket.approvedFiles.includes(file.identifier)
   );
 
-  const unpublishedFilesOnTicket = filesOnRegistration.filter(
+  const unpublishedFilesOnTicket = registrationFiles.filter(
     (file) => file.type === 'UnpublishableFile' && ticket.approvedFiles.includes(file.identifier)
   );
 
   const deletedFilesOnTicket = ticket.approvedFiles.filter(
-    (identifier) => !filesOnRegistration.some((file) => file.identifier === identifier)
+    (identifier) => !registrationFiles.some((file) => file.identifier === identifier)
   );
 
   return {
