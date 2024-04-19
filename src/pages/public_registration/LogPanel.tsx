@@ -8,6 +8,7 @@ import { Registration } from '../../types/registration.types';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
+import { ticketColor } from '../messages/components/TicketListItem';
 
 interface LogItem {
   modifiedDate: string;
@@ -131,43 +132,40 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
       {logs
         .sort((a, b) => new Date(a.modifiedDate).getTime() - new Date(b.modifiedDate).getTime())
         .map((logItem, index) => {
-          const bgColor = logItem.type === 'PublishingRequest' ? 'publishingRequest.main' : 'doiRequest.main';
           const modifiedDate = new Date(logItem.modifiedDate);
           return (
-            <StyledStatusMessageBox key={index} sx={{ bgcolor: `${bgColor}` }}>
+            <StyledStatusMessageBox key={index} sx={{ bgcolor: ticketColor[logItem.type] }}>
               <Typography>{logItem.description}</Typography>
               <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
                 <Typography>{modifiedDate.toLocaleDateString()}</Typography>
               </Tooltip>
-              {logItem.filesInfo &&
-                logItem.filesInfo.approvedFileNames &&
-                logItem.filesInfo.approvedFileNames.length > 0 && (
-                  <Box
-                    component="ul"
-                    sx={{
-                      gridColumn: '1/3',
-                      m: '0',
-                      p: 'inherit',
-                      color: 'black',
-                    }}>
-                    {logItem.filesInfo.approvedFileNames.map((fileName, index) => (
-                      <li key={index}>
-                        <Tooltip title={fileName} enterDelay={tooltipDelay}>
-                          <Typography
-                            sx={{
-                              whiteSpace: 'nowrap',
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                              width: 'fit-content',
-                              maxWidth: '100%',
-                            }}>
-                            {fileName}
-                          </Typography>
-                        </Tooltip>
-                      </li>
-                    ))}
-                  </Box>
-                )}
+              {logItem.filesInfo?.approvedFileNames && logItem.filesInfo.approvedFileNames.length > 0 && (
+                <Box
+                  component="ul"
+                  sx={{
+                    gridColumn: '1/3',
+                    m: '0',
+                    p: 'inherit',
+                    color: 'black',
+                  }}>
+                  {logItem.filesInfo.approvedFileNames.map((fileName, index) => (
+                    <li key={index}>
+                      <Tooltip title={fileName} enterDelay={tooltipDelay}>
+                        <Typography
+                          sx={{
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            width: 'fit-content',
+                            maxWidth: '100%',
+                          }}>
+                          {fileName}
+                        </Typography>
+                      </Tooltip>
+                    </li>
+                  ))}
+                </Box>
+              )}
               {logItem.filesInfo && logItem.filesInfo.numberOfUnpublishableFiles > 0 && (
                 <Typography sx={{ gridColumn: '1/3', fontStyle: 'italic' }}>
                   {t('log.archived_file', { count: logItem.filesInfo.numberOfUnpublishableFiles })}
