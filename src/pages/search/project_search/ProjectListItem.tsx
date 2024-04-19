@@ -27,10 +27,7 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
 
   return (
-    <SearchListItem
-      sx={{
-        borderLeftColor: 'project.main',
-      }}>
+    <SearchListItem sx={{ borderLeftColor: 'project.main' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
         <Typography sx={{ fontSize: '1rem', fontWeight: '600' }} gutterBottom>
           <MuiLink component={Link} to={getProjectPath(project.id)}>
