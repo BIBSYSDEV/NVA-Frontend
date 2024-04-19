@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { searchForJournals } from '../../../api/publicationChannelApi';
+import { fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Journal } from '../../../types/registration.types';
@@ -30,7 +30,7 @@ export const JournalFilter = () => {
   const selectedJournalQuery = useQuery({
     enabled: !!journalParam,
     queryKey: [journalParam],
-    queryFn: () => searchForJournals(journalParam ?? '', '2023'),
+    queryFn: () => (journalParam ? fetchJournal(journalParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });
@@ -51,17 +51,13 @@ export const JournalFilter = () => {
     <Autocomplete
       size="small"
       sx={{ minWidth: '15rem' }}
-      value={journalParam && selectedJournalQuery.data?.hits[0] ? selectedJournalQuery.data.hits[0] : null}
+      value={journalParam && selectedJournalQuery.data ? selectedJournalQuery.data : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       options={debouncedQuery && journalQuery === debouncedQuery && !journalOptionsQuery.isLoading ? journalList : []}
       filterOptions={(options) => options}
       inputValue={journalQuery}
-      onInputChange={(_, newInputValue) => {
-        setJournalQuery(newInputValue);
-      }}
-      onChange={(_, newValue) => {
-        handleChange(newValue);
-      }}
+      onInputChange={(_, newInputValue) => setJournalQuery(newInputValue)}
+      onChange={(_, newValue) => handleChange(newValue)}
       blurOnSelect
       disableClearable={!journalQuery}
       loading={isFetching}

@@ -160,6 +160,7 @@
     "close_forever": "Lukk og ikke vis igjen",
     "country": "Land",
     "create": "Opprett",
+    "created": "Opprettet",
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskrivelse",
@@ -179,12 +180,16 @@
     "funding": "Finansiering",
     "help": "Hjelp",
     "id": "ID",
+    "initials": "Initialer",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
     "justification": "Begrunnelse",
     "language": "Språk",
+    "last_modified": "Sist endret",
     "last_name": "Etternavn",
     "link": "Lenke",
+    "log": "Logg",
+    "main": "Hoved",
     "menu": "Meny",
     "message": "Melding",
     "move_down": "Flytt ned",
@@ -357,9 +362,26 @@
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting",
     "curators": {
+      "active_area_of_responsibilities": "Tilknyttede ansvarsområder",
+      "add_curator": "Legg til kurator",
+      "added_area_of_responsibilities": "Ansvarsområder som legges til",
+      "administer_curators": "Administrer tilganger til kuratorer",
       "area_of_responsibility": "Ansvarsområde",
-      "areas_of_responsibility": "Ansvarsområder",
-      "no_users_found": "Ingen brukere funnet"
+      "area_of_responsibility_description": "<0>Legg til ansvarsområder som kuratoren er knyttet til.</0><0>Legger du til et ansvarsområde som er en over- eller underenhet på et ansvarsområde som kurator allerede er tilknyttet, så fjernes ansvarsområdet til over- eller underenheten.</0><0>Fjerner du ansvarsområder for kuratoren, så sjekk at det er andre kuratorer som er tilknyttet det ansvarsområdet.</0>",
+      "curators": "Kuratorer",
+      "curators_count_one": "{{count}} kurator",
+      "curators_count_other": "{{count}} kuratorer",
+      "edit_user": "Endre bruker",
+      "no_users_found": "Ingen brukere funnet",
+      "removed_area_of_responsibilities": "Ansvarsområder som fjernes",
+      "role": {
+        "Curator-thesis": "Studentoppgave",
+        "Curator-thesis-embargo": "Studentembargo",
+        "Doi-Curator": "DOI",
+        "Nvi-Curator": "NVI",
+        "Publishing-Curator": "Publisering",
+        "Support-Curator": "Brukerstøtte"
+      }
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er en persistent identifikator.|Gjør det enklere å sitere publikasjoner korrekt.|Metadata om resultatet blir delt internasjonalt.|Synligheten til resultatet øker.|Bidrar til å oppfylle FAIR-prinsippene.|Understøtter åpen forskning.",
@@ -370,7 +392,14 @@
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
+      "change_institution_support": "Endre brukerstøttepunkt",
+      "institution_admin_one": "Institusjonens administrator",
+      "institution_admin_other": "Institusjonens administratorer",
       "institution_code": "Kode",
+      "institution_editor_one": "Institusjonens redaktør",
+      "institution_editor_other": "Institusjonens redaktører",
+      "institution_has_no_administrator": "Institusjonen har ingen administrator",
+      "institution_has_no_editor": "Institusjonen har ingen redaktør",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
       "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
       "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitenskapsindeks",
@@ -378,9 +407,12 @@
       "institution_name_norwegian": "Norsk navn",
       "institution_profile": "Institusjonsprofil",
       "institution_short_name": "Kortnavn",
+      "institution_support": "Institusjonens brukerstøtte",
+      "institution_support_description": "Institusjonens brukerstøtte vises under kuratorstøtte.",
       "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
       "organizing": "Organisering",
-      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
+      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)",
+      "unique_feide_id": "Unik Feide-ID"
     },
     "organization_overview": "Organisasjonsstruktur",
     "publish_strategy": {
@@ -393,6 +425,11 @@
       "registrator_publishes_without_curator_description": "Institusjonen bestemmer hvem som er Registrator."
     },
     "retention_strategy": {
+      "creator_can_override_rrs_text": "<0>Institusjonen har åpnet opp for at registrator selv kan velge å ikke følge institusjonen sin rettighetspolitikk (RRS). Med å følge rettighetspolitikk (RRS) så blir vitenskapelige artikler åpent tilgjengelig umiddelbart uten embargo. <0>Se cOAlition S sin nettside for informasjon om RRS og Plan S.</0></0> <1>I NVA så fjerner registrator RRS på den aksepterte versjonen av filen i registreringen av en vitenskapelig artikkel. Avkryssingen av RRS kommer frem ved å trykke på pil-ikonet under den aksepterte versjonen av filen. Ved å fjerne avkryssingen av RRS så fjernes lisensen satt på filen og lisensen må settes på nytt.</1>",
+      "curator_can_override_rrs_text": "<0>Publiseringskurator har tilgang til å sette at filer ikke følger institusjonens rettigethspolitikk (RRS).</0> <0>Om registrator ikke ønsker å følge institusjonens rettighetspolitikk (RRS), så se på vilkår for ikke å følge RRS på informasjonsside om institusjonens rettighetspolitikk.</0> <1>Med å følge rettighetspolitikk (RRS) så blir vitenskapelige artikler åpent tilgjengelig umiddelbart uten embargo. <0>Se cOAlition S sin nettside for informasjon om RRS og Plan S</0>.</1>",
+      "customer_has_no_rrs": "<0>Institusjonen har ikke oppgitt en rettighetspolitikk (RRS) i NVA.</0> <0>Uten institusjonell rettighetspolitikk så er det da opp til registrator å sette korrekt lisens på akseptert versjon av filer i registrering av vitenskapelige artikler.</0> <1>Det er opp til registrator om eventuelt markere t publikasjonen skal følge en RRS. Med å følge rettighetspolitikk (RRS) så blir vitenskapelige artikler åpent tilgjengelig umiddelbart uten embargo. <0>Se cOAlition S sin nettside for informasjon om RRS og Plan S.</0></1> <0>Hvis publikasjonen er finansiert av en aktør som pålegger å følge RRS (ref. Plan S) så må RRS settes. I NVA så setter registrator RRS på den aksepterte versjonen av filen i registreringen av en vitenskapelig artikkel. Avkryssingen av RRS kommer frem ved å trykke på pil-ikonet under den aksepterte versjonen av filen. Ved å avkrysse for RRS så settes lisens på filen til CC-BY.</0>",
+      "customer_has_rrs_text": "<0>Institusjonen har oppgitt en rettighetspolitikk (RRS) i NVA.</0> <0>Lisens CC-BY blir satt når du velger akseptert versjon på filen i registreringen av en vitenskapelig artikkel i NVA.</0>",
+      "possible_not_to_follow_rrs": "Mulig å ikke følge institusjonens rettighetspolitikk",
       "rights_retention_strategy": "Rights Retention Strategy (RRS)",
       "rrs": "Rettighetspolitikk",
       "rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk",
@@ -404,6 +441,8 @@
     "subunits_count_one": "{{count}} underenhet",
     "subunits_count_other": "{{count}} underenheter",
     "vocabulary": "Vokabular",
+    "vocabulary_controlled": "Kontrollerte emneord",
+    "vocabulary_description": "Kontrollerte emneord (vokabular) som kan benyttes ved registrering av nytt resultat.",
     "vocabulary_status": {
       "Allowed": "Tillatt",
       "Default": "Standard",
@@ -729,7 +768,11 @@
       "publishing_curator": "Publiseringskurator",
       "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
       "support_curator": "Brukerstøttekurator",
-      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser."
+      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser.",
+      "thesis_curator": "Studentoppgavekurator",
+      "thesis_curator_description": "Kan opprette og endre studentoppgaver.",
+      "thesis_embargo_curator": "Studentoppgave med embargo-kurator",
+      "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
     }
   },
   "privacy": {
@@ -1641,7 +1684,8 @@
       "nvi": {
         "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",
         "can_give_publication_points": "Kan gi publiseringspoeng",
-        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)"
+        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)",
+        "select_all_nvi_categories": "Velg alle"
       },
       "online_issn": "Online ISSN",
       "or": "Eller",
@@ -1810,6 +1854,7 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
+        "New": "Kandidat",
         "Pending": "Kandidat",
         "Rejected": "Avvist"
       },

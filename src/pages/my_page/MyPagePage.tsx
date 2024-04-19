@@ -7,9 +7,9 @@ import { Badge, Button, Divider, FormControlLabel, Typography } from '@mui/mater
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets, fetchTickets } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -23,9 +23,7 @@ import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { TicketStatus, ticketStatusValues } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -46,7 +44,6 @@ import { MyResults } from './user_profile/MyResults';
 import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 const MyPagePage = () => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -78,37 +75,23 @@ const MyPagePage = () => {
     .filter(([, selected]) => selected)
     .map(([key]) => key);
 
-  const typeQuery =
-    selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
-
-  const selectedStatusesArray = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
-    ticketStatusValues) as TicketStatus[];
-
-  const statusQuery =
-    selectedStatusesArray.length > 0
-      ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
-      : '';
-
-  const queryParam = searchParams.get(TicketSearchParam.Query);
-
-  const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
-
-  const query = [queryParam, typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
-
   const ticketSearchParams: FetchTicketsParams = {
-    query,
+    query: searchParams.get(TicketSearchParam.Query),
     results: rowsPerPage,
     from: apiPage * rowsPerPage,
-    role: 'creator',
+    owner: user?.nvaUsername,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+    status: searchParams.get(TicketSearchParam.Status),
+    viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
+    type: selectedTypesArray.join(','),
   };
 
   const ticketsQuery = useQuery({
     enabled: !!user?.isCreator,
     queryKey: ['tickets', ticketSearchParams],
-    queryFn: () => fetchTickets(ticketSearchParams),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
+    queryFn: () => fetchCustomerTickets(ticketSearchParams),
+    meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
   const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
@@ -131,10 +114,10 @@ const MyPagePage = () => {
     (bucket) => bucket.key === 'GeneralSupportCase'
   )?.count;
 
-  const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
-  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
-  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
-  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
+  const typeBuckets = ticketsQuery.data?.aggregations?.type ?? [];
+  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
+  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
+  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);

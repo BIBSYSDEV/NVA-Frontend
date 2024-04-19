@@ -25,6 +25,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const institutionId = user?.topOrgCristinId ?? '';
 
   const organizationQuery = useQuery({
+    enabled: !!institutionId,
     queryKey: [institutionId],
     queryFn: () => getById<Organization>(institutionId),
     staleTime: Infinity,
@@ -91,7 +92,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               data-testid={dataTestId.header.editorLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.EditorInstitution}>
+              to={UrlPathTemplate.InstitutionOverviewPage}>
               <Typography>{organizationQuery.data?.acronym}</Typography>
             </MenuItem>
           ),

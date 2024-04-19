@@ -6,21 +6,6 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/ass
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-  allPublicationInstanceTypes,
-} from '../types/publicationFieldNames';
-import {
   AudioVisualPublication,
   Award,
   Broadcast,
@@ -46,6 +31,21 @@ import {
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import {
+  allPublicationInstanceTypes,
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+} from '../types/publicationFieldNames';
+import {
   Journal,
   PublicationInstanceType,
   Publisher,
@@ -54,7 +54,6 @@ import {
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
-import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -109,22 +108,15 @@ export const isOtherRegistration = (instanceType: any) => Object.values(OtherReg
 
 export const isExhibitionContent = (instanceType: any) => Object.values(ExhibitionContentType).includes(instanceType);
 
-export const nviApplicableTypes: string[] = [
+export const nviApplicableTypes: PublicationInstanceType[] = [
   JournalType.AcademicArticle,
   JournalType.AcademicLiteratureReview,
   BookType.AcademicMonograph,
   ChapterType.AcademicChapter,
 ];
 
-export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
-
-export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
-  !!user &&
-  !!registration &&
-  hasCuratorRole(user) &&
-  !!user.customerId &&
-  user.customerId === registration.publisher.id;
+export const userHasSameCustomerAsRegistration = (user: User | null, registration?: Registration) =>
+  !!user?.customerId && registration?.publisher.id === user.customerId;
 
 export const userIsValidImporter = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';

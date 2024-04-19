@@ -1,6 +1,6 @@
 import { PaletteColorOptions, SxProps, createTheme } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
-import { enUS as pickersEnUs, nbNO as pickersNbNo } from '@mui/x-date-pickers';
+import { enUS as pickersEnUs, nbNO as pickersNbNo } from '@mui/x-date-pickers/locales';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
@@ -99,8 +99,9 @@ export const mainTheme = createTheme(
         light: Color.InfoLight,
       },
       grey: {
-        400: '#d9d9d9',
-        500: '#A1A1A1',
+        300: '#EEEEEE',
+        400: '#DDDDDD',
+        500: '#CCCCCC',
       },
       registration: {
         main: Color.Registration,
@@ -150,7 +151,7 @@ export const mainTheme = createTheme(
       },
       h4: {
         fontSize: '0.9rem',
-        fontWeight: 400,
+        fontWeight: 600,
       },
       overline: {
         fontSize: '0.75rem',

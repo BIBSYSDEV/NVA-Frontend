@@ -7,6 +7,7 @@ module.exports = {
     '_one',
     '_other',
     'disciplines.',
+    'editor.curators.role.',
     'licenses.labels.',
     'my_page.messages.ticket_types.',
     'my_page.messages.types.',

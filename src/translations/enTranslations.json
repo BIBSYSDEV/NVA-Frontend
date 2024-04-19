@@ -179,12 +179,14 @@
     "funding": "Funding",
     "help": "Help",
     "id": "ID",
+    "initials": "Initials",
     "institution": "Institution",
     "institutions": "Institutions",
     "justification": "Justification",
     "language": "Language",
     "last_name": "Last name",
     "link": "Link",
+    "main": "Main",
     "menu": "Menu",
     "message": "Message",
     "move_down": "Move down",
@@ -357,9 +359,21 @@
     "categories_with_files": "Categories with File Upload",
     "categories_with_files_description": "Specify the categories where your institution allows file upload",
     "curators": {
+      "administer_curators": "Administer access for curators",
       "area_of_responsibility": "Area of responsibility",
-      "areas_of_responsibility": "Areas of responsibility",
-      "no_users_found": "No users found"
+      "curators": "Curators",
+      "curators_count_one": "{{count}} curator",
+      "curators_count_other": "{{count}} curators",
+      "edit_user": "Change user",
+      "no_users_found": "No users found",
+      "role": {
+        "Curator-thesis": "Student theses",
+        "Curator-thesis-embargo": "Embargo",
+        "Doi-Curator": "DOI",
+        "Nvi-Curator": "NVI",
+        "Publishing-Curator": "Publishing",
+        "Support-Curator": "User support"
+      }
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about the result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
@@ -370,7 +384,14 @@
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
+      "change_institution_support": "Change user support point of contact",
+      "institution_admin_one": "The institution's administrator",
+      "institution_admin_other": "The institution's administrators",
       "institution_code": "The institution's code",
+      "institution_editor_one": "The institution's editor",
+      "institution_editor_other": "The institution's editors",
+      "institution_has_no_administrator": "The institution has no administrator",
+      "institution_has_no_editor": "The institution has no editor",
       "institution_helper_text": "Contact <0>Sikt</0> if changes are needed.",
       "institution_is_not_nvi_institution": "Contact Sikt if your institution wants to use the Norwegian Science Index",
       "institution_is_nvi_institution": "The institution reports to the Norwegian Science Index",
@@ -378,6 +399,8 @@
       "institution_name_norwegian": "The institution's Norwegian name",
       "institution_profile": "Institution profile",
       "institution_short_name": "Institution short name",
+      "institution_support": "Institution's user support",
+      "institution_support_description": "The institution's user support is shown under curator support.",
       "not_rbo_funded": "The institution does not receive funding via Results-based redistribution (RBO)",
       "organizing": "Organization",
       "rbo_funded": "The institution receives funding via Results-based redistribution (RBO)"
@@ -393,6 +416,11 @@
       "registrator_publishes_without_curator_description": "The institution determines who is the Registrar."
     },
     "retention_strategy": {
+      "creator_can_override_rrs_text": "<0>The institution has made it possible for the registrar to choose not to follow the institution's rights retention strategy (RRS). By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></0> <1>In NVA, the registrar removes RRS from the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By removing the check from RRS, the selected license on the file is removed and the license must be selected again.</1>",
+      "curator_can_override_rrs_text": "<0>The publishing curator has access to set that files do not follow the institution's rights retention strategy (RRS).</0> <0>If the registrar does not wish to follow the institution's rights retention strategy (RRS), look at the terms for not following RRS on the information page about the institution's rights retention strategy.</0> <1>By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S</0>.</1>",
+      "customer_has_no_rrs": "<0>The institution has not provided a rights retention strategy (RRS) in NVA.</0> <0>Without an institutional rights retention strategy, it is up to the registrar to set the correct license on the accepted version of files in the registration of scientific articles.</0> <1>It is up to the registrar to potentially mark whether the publication should follow an RRS. By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></1> <0>If the publication is funded by an actor that requires adherence to RRS (ref. Plan S), then RRS must be set. In NVA, the registrar sets RRS on the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By checking the box for RRS, the license for the file is set to CC-BY.</0>",
+      "customer_has_rrs_text": "<0>The institution has provided a rights retention strategy (RRS) in NVA.</0> <0>The CC-BY licence is set when you choose the accepted version of the file in the registration of a scientific article in NVA.</0>v",
+      "possible_not_to_follow_rrs": "Possible to not follow the institution's rights retention policy",
       "rights_retention_strategy": "Rights Retention Strategy (RRS)",
       "rrs": "Rights policy",
       "rrs_info_page": "The institution's information page about rights policy",
@@ -404,6 +432,8 @@
     "subunits_count_one": "{{count}} sub unit",
     "subunits_count_other": "{{count}} sub units",
     "vocabulary": "Vocabulary",
+    "vocabulary_controlled": "Controlled subject terms",
+    "vocabulary_description": "Controlled subject terms (vocabulary) that can be used when registering a new result.",
     "vocabulary_status": {
       "Allowed": "Allowed",
       "Default": "Default",
@@ -617,7 +647,7 @@
       "files_published_unknown": "File(s) published",
       "files_rejected": "File(s) rejected",
       "general_support_pending": "Pending follow-up",
-      "get_curator_support": "",
+      "get_curator_support": "Get help from a curator",
       "mark_as_completed": "Mark as completed",
       "no_messages": "You have no messages",
       "ticket_types": {
@@ -659,7 +689,7 @@
         "upload_profile_photo": "Upload profile picture",
         "upload_profile_photo_info": "Maximum size: 1 MB. Supported file types: .jpg or .jpeg"
       },
-      "list_contains_all_registration_you_have_created": "",
+      "list_contains_all_registration_you_have_created": "The list shows all the projects you have registered",
       "my_projects": "My projects",
       "my_research_results": "My research results",
       "orcid": {
@@ -1641,7 +1671,8 @@
       "nvi": {
         "applicable": "The publication can be included in the Norwegian Science Index",
         "can_give_publication_points": "Can give publication points",
-        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (The level can be changed before the year's reporting deadline so that the publication can be included in the Norwegian Science Index)"
+        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (The level can be changed before the year's reporting deadline so that the publication can be included in the Norwegian Science Index)",
+        "select_all_nvi_categories": "Select all"
       },
       "online_issn": "Online ISSN",
       "or": "Or",

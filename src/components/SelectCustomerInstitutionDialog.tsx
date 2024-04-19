@@ -1,16 +1,19 @@
 import { LoadingButton } from '@mui/lab';
-import { Autocomplete, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Autocomplete, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
 import { authenticatedApiRequest } from '../api/apiRequest';
 import { getUserAttributes } from '../api/authApi';
+import { fetchOrganizations } from '../api/cristinApi';
 import { setNotification } from '../redux/notificationSlice';
 import { setUser } from '../redux/userSlice';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import { isSuccessStatus } from '../utils/constants';
 import { sortCustomerInstitutions } from '../utils/institutions-helpers';
+import { OrganizationRenderOption } from './OrganizationRenderOption';
 
 interface SelectCustomerInstitutionDialogProps {
   allowedCustomerIds: string[];
@@ -70,6 +73,18 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
     setIsSelectingCustomer(false);
   };
 
+  const customersCristinIds = allowedCustomers.map((customer) => customer.cristinId);
+
+  const organizationQuery = useQuery({
+    enabled: !!customersCristinIds,
+    queryKey: ['organizations', customersCristinIds],
+    queryFn: customersCristinIds ? () => fetchOrganizations(customersCristinIds) : undefined,
+    meta: { errorMessage: t('feedback.error.get_institution') },
+    cacheTime: 1_800_000, // 30 minutes
+  });
+
+  const organizations = organizationQuery.data;
+
   return (
     <Dialog open={openDialog} fullWidth maxWidth="sm">
       <DialogTitle>{t('common.select_institution')}</DialogTitle>
@@ -80,6 +95,18 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
           loading={isLoadingCustomers}
           onChange={(_, value) => setSelectedCustomer(value)}
           isOptionEqualToValue={(option, value) => option.id === value.id}
+          renderOption={(props, option) => {
+            const organization = organizations && organizations.find((org) => org.id === option.cristinId);
+            return organization ? (
+              <OrganizationRenderOption key={organization.id} props={props} option={organization} />
+            ) : (
+              <li {...props}>
+                <Typography fontWeight="bold" key={option.id}>
+                  {option.displayName}
+                </Typography>
+              </li>
+            );
+          }}
           renderInput={(params) => (
             <TextField
               {...params}

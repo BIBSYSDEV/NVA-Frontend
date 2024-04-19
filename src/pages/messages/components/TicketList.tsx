@@ -14,14 +14,14 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
-import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
+import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
-  ticketsQuery: UseQueryResult<TicketSearchResponse>;
+  ticketsQuery: UseQueryResult<CustomerTicketSearchResponse>;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -94,7 +94,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             <Typography>{t('my_page.messages.no_messages')}</Typography>
           ) : (
             <ListPagination
-              count={ticketsQuery.data?.size ?? 0}
+              count={ticketsQuery.data?.totalHits ?? 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={(newPage) => setPage(newPage)}
