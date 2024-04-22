@@ -126,7 +126,6 @@ export const AddCuratorDialog = ({
           onInputChange={(_, value) => setSearchQuery(value)}
           onChange={async (_, value) => {
             setSearchQuery('');
-            setUserInitialValues(null);
             setSelectedPerson(value);
           }}
           getOptionLabel={(option) => getFullCristinName(option.names)}
