@@ -32,29 +32,28 @@ export const TicketDateIntervalFilter = () => {
     selectedDatesParamArray.length ? new Date(selectedDatesParamArray.pop() || '') : null
   );
 
-  const onChangeDate = (newDate: Date | null, type: 'from' | 'to') => {
-    const selectedFromDateString =
-      type === 'from' && newDate
-        ? newDate.toISOString().slice(0, 10)
-        : selectedFromDate
-          ? selectedFromDate.toISOString().slice(0, 10)
-          : '';
+  const onChangeFromDate = (newDate: Date | null) => {
+    const selectedFromDateString = newDate ? newDate.toISOString().slice(0, 10) : '';
+    setSelectedFromDate(newDate);
 
-    const selectedToDateString =
-      type === 'to' && newDate
-        ? newDate.toISOString().slice(0, 10)
-        : selectedToDate
-          ? selectedToDate.toISOString().slice(0, 10)
-          : '';
+    const newDateParam =
+      selectedFromDateString + (selectedToDate ? `,${selectedToDate.toISOString().slice(0, 10)}` : '');
 
-    if (type === 'from') {
-      setSelectedFromDate(newDate);
-    } else if (type === 'to') {
-      setSelectedToDate(newDate);
-    }
+    updateSearchParams(newDateParam);
+  };
 
-    const newDateParam = `${selectedFromDateString},${selectedToDateString}`;
-    if (newDateParam !== ',') {
+  const onChangeToDate = (newDate: Date | null) => {
+    const selectedToDateString = newDate ? newDate.toISOString().slice(0, 10) : '';
+    setSelectedToDate(newDate);
+
+    const newDateParam =
+      (selectedFromDate ? `${selectedFromDate.toISOString().slice(0, 10)},` : '') + selectedToDateString;
+
+    updateSearchParams(newDateParam);
+  };
+
+  const updateSearchParams = (newDateParam: string) => {
+    if (newDateParam !== '') {
       searchParams.set(TicketSearchParam.CreatedDate, newDateParam);
     } else {
       searchParams.delete(TicketSearchParam.CreatedDate);
@@ -72,7 +71,7 @@ export const TicketDateIntervalFilter = () => {
         maxDate={selectedToDate ? selectedToDate : maxDate}
         onChange={(date, context) => {
           if (context.validationError !== 'invalidDate') {
-            onChangeDate(date, 'from');
+            onChangeFromDate(date);
           }
         }}
       />
@@ -85,7 +84,7 @@ export const TicketDateIntervalFilter = () => {
         minDate={selectedFromDate ? selectedFromDate : undefined}
         onChange={(date, context) => {
           if (context.validationError !== 'invalidDate') {
-            onChangeDate(date, 'to');
+            onChangeToDate(date);
           }
         }}
       />
