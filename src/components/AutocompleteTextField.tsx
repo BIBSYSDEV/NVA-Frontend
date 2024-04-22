@@ -4,7 +4,7 @@ import { AutocompleteRenderInputParams, CircularProgress, TextField, TextFieldPr
 interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
     Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur' | 'multiline' | 'variant'> {
-  isLoading: boolean;
+  isLoading?: boolean;
   showSearchIcon?: boolean;
   errorMessage?: string;
 }

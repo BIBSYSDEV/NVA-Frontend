@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { getById } from '../../../api/commonApi';
 import { fetchUsers } from '../../../api/roleApi';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
 import { RootState } from '../../../redux/store';
@@ -37,7 +38,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
   const customerId = user?.customerId;
 
   const [searchType, setSearchType] = useState(SearchTypeValue.Unit);
-  const [searchId, setSearchId] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
   const organizationQuery = useQuery({
     queryKey: [organizationId],
@@ -83,17 +84,19 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
               }}
               size="small"
               value={searchType}
+              aria-label="LOL"
+              inputProps={{ 'aria-label': t('common.type') }}
               onChange={(event) => {
                 setSearchType(event.target.value as unknown as SearchTypeValue);
-                setSearchId('');
+                setSearchValue('');
               }}>
               <MenuItem value={SearchTypeValue.Unit} sx={{ display: 'flex', gap: '0.5rem' }}>
                 <AccountBalanceIcon fontSize="small" />
-                Enhet
+                {t('registration.contributors.department')}
               </MenuItem>
               <MenuItem value={SearchTypeValue.Person} sx={{ display: 'flex', gap: '0.5rem' }}>
                 <PersonIcon fontSize="small" />
-                Kurator
+                {t('my_page.roles.curator')}
               </MenuItem>
             </TextField>
 
@@ -117,22 +120,24 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
                   )
                 }
                 getOptionKey={(option) => option.id}
-                onChange={(_, selectedUnit) => setSearchId(selectedUnit?.id ?? '')}
+                onChange={(_, selectedUnit) => setSearchValue(selectedUnit?.id ?? '')}
                 renderInput={(params) => (
-                  <TextField {...params} variant="outlined" label={t('search.search_for_sub_unit')} />
+                  <AutocompleteTextField
+                    {...params}
+                    showSearchIcon
+                    variant="outlined"
+                    placeholder={t('editor.curators.search_for_unit')}
+                  />
                 )}
               />
             ) : (
               <Autocomplete
                 fullWidth
                 size="small"
-                // data-testid={dataTestId.editor.organizationOverviewSearchField}
+                data-testid={dataTestId.editor.organizationOverviewSearchField}
                 options={curatorsQuery.data ?? []}
                 inputMode="search"
                 getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
-                // renderOption={(props, option) => (
-                //   <OrganizationRenderOption key={option.id} props={props} option={option} />
-                // )}
                 filterOptions={(options, state) =>
                   options.filter((option) =>
                     getFullName(option.givenName, option.familyName)
@@ -141,9 +146,14 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
                   )
                 }
                 getOptionKey={(option) => option.username}
-                onChange={(_, selectedUser) => setSearchId(selectedUser?.username ?? '')}
+                onChange={(_, selectedUser) => setSearchValue(selectedUser?.username ?? '')}
                 renderInput={(params) => (
-                  <TextField {...params} variant="outlined" label={t('search.search_for_sub_unit')} />
+                  <AutocompleteTextField
+                    {...params}
+                    showSearchIcon
+                    variant="outlined"
+                    placeholder={t('editor.curators.search_for_curator')}
+                  />
                 )}
               />
             )}
@@ -152,8 +162,8 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
           {organizationQuery.data && (
             <OrganizationCuratorsAccordion
               organization={organizationQuery.data}
-              searchId={searchType === SearchTypeValue.Unit ? searchId : undefined}
-              curatorSearch={searchType === SearchTypeValue.Person ? searchId : undefined}
+              unitSearch={searchType === SearchTypeValue.Unit ? searchValue : undefined}
+              curatorSearch={searchType === SearchTypeValue.Person ? searchValue : undefined}
               curators={curatorsQuery.data ?? []}
               refetchCurators={curatorsQuery.refetch}
               canEditUsers={canEditUsers}

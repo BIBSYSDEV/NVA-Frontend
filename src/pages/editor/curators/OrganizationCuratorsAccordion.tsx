@@ -14,7 +14,7 @@ import { OrganizationCuratorsProps } from './OrganizationCurators';
 
 export interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
   organization: Organization;
-  searchId?: string;
+  unitSearch?: string;
   curatorSearch?: string;
   curators: InstitutionUser[];
   refetchCurators: () => Promise<unknown>;
@@ -24,7 +24,7 @@ export interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCur
 
 export const OrganizationCuratorsAccordion = ({
   organization,
-  searchId,
+  unitSearch,
   curatorSearch,
   curators,
   refetchCurators,
@@ -38,16 +38,16 @@ export const OrganizationCuratorsAccordion = ({
   const [openAddCuratorDialog, setOpenAddCuratorDialog] = useState(false);
   const [expandedState, setExpandedState] = useState(level === 0);
 
-  const isSearchedUnit = organization.id === searchId;
+  const isSearchedUnit = organization.id === unitSearch;
 
   const curatorsOnThisUnit = curators.filter((curator) => curator.viewingScope.includedUnits.includes(organization.id));
   const searchedCurators = curatorSearch
     ? curatorsOnThisUnit.filter((curator) => curator.username === curatorSearch)
     : curatorsOnThisUnit;
 
-  if (!!searchId && !isSearchedUnit && !includeAllSubunits) {
+  if (!!unitSearch && !isSearchedUnit && !includeAllSubunits) {
     const allSubunits = getAllChildOrganizations(organization.hasPart);
-    if (!allSubunits.some((subunit) => subunit.id === searchId)) {
+    if (!allSubunits.some((subunit) => subunit.id === unitSearch)) {
       return null; // Hide this element if the searched ID is not a part of this unit
     }
   }
@@ -56,14 +56,16 @@ export const OrganizationCuratorsAccordion = ({
     const searchedCurator = curators.filter((curator) => curator.username === curatorSearch);
     if (searchedCurator.length === 1) {
       const allSubunits = getAllChildOrganizations([organization]).map((subunit) => subunit.id);
-      const overlap = allSubunits.some((subunit) => searchedCurator[0].viewingScope.includedUnits.includes(subunit));
-      if (!overlap) {
+      const overlappingOrg = allSubunits.some((subunit) =>
+        searchedCurator[0].viewingScope.includedUnits.includes(subunit)
+      );
+      if (!overlappingOrg) {
         return null;
       }
     }
   }
 
-  const expanded = expandedState || (!!searchId && !includeAllSubunits) || !!curatorSearch;
+  const expanded = expandedState || (!!unitSearch && !includeAllSubunits) || !!curatorSearch;
   const subunitsCount = organization.hasPart?.length ?? 0;
 
   return (
@@ -127,7 +129,7 @@ export const OrganizationCuratorsAccordion = ({
             <OrganizationCuratorsAccordion
               key={subunit.id}
               organization={subunit}
-              searchId={searchId}
+              unitSearch={unitSearch}
               curatorSearch={curatorSearch}
               includeAllSubunits={includeAllSubunits || isSearchedUnit}
               curators={curators}
