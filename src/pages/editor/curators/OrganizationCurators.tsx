@@ -80,12 +80,11 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
                 '.MuiSelect-select': {
                   display: 'flex',
                   gap: '0.5rem',
-                  bgcolor: 'registration.main',
                 },
               }}
+              SelectProps={{ sx: { bgcolor: 'registration.main' } }}
               size="small"
               value={searchType}
-              aria-label="LOL"
               inputProps={{ 'aria-label': t('common.type') }}
               onChange={(event) => {
                 setSearchType(event.target.value as unknown as SearchTypeValue);

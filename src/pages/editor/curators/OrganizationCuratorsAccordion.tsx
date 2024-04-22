@@ -50,10 +50,8 @@ export const OrganizationCuratorsAccordion = ({
   if (curatorSearch) {
     const searchedCurator = curators.filter((curator) => curator.username === curatorSearch);
     if (searchedCurator.length === 1) {
-      const allSubunits = getAllChildOrganizations([organization]).map((subunit) => subunit.id);
-      const overlappingOrg = allSubunits.some((subunit) =>
-        searchedCurator[0].viewingScope.includedUnits.includes(subunit)
-      );
+      const allSubunits = getAllChildOrganizations([organization]).map((unit) => unit.id);
+      const overlappingOrg = allSubunits.some((unit) => searchedCurator[0].viewingScope.includedUnits.includes(unit));
       if (!overlappingOrg) {
         return null;
       }
