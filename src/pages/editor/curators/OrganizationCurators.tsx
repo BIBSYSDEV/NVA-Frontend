@@ -75,13 +75,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
           <Box sx={{ display: 'flex', gap: '0.5rem', flexDirection: { xs: 'column', sm: 'row' } }}>
             <TextField
               select
-              sx={{
-                width: '9rem',
-                '.MuiSelect-select': {
-                  display: 'flex',
-                  gap: '0.5rem',
-                },
-              }}
+              sx={{ width: '9rem', '.MuiSelect-select': { display: 'flex', gap: '0.5rem' } }}
               SelectProps={{ sx: { bgcolor: 'registration.main' } }}
               size="small"
               value={searchType}
