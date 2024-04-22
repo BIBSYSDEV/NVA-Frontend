@@ -14,7 +14,8 @@ import { OrganizationCuratorsProps } from './OrganizationCurators';
 
 export interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCuratorsProps, 'canEditUsers'> {
   organization: Organization;
-  searchId: string;
+  searchId?: string;
+  curatorSearch?: string;
   curators: InstitutionUser[];
   refetchCurators: () => Promise<unknown>;
   parentOrganizationIds: string[];
@@ -24,6 +25,7 @@ export interface OrganizationCuratorsAccordionProps extends Pick<OrganizationCur
 export const OrganizationCuratorsAccordion = ({
   organization,
   searchId,
+  curatorSearch,
   curators,
   refetchCurators,
   canEditUsers,
@@ -38,16 +40,31 @@ export const OrganizationCuratorsAccordion = ({
 
   const isSearchedUnit = organization.id === searchId;
 
+  const curatorsOnThisUnit = curators.filter((curator) => curator.viewingScope.includedUnits.includes(organization.id));
+  const searchedCurators = curatorSearch
+    ? curatorsOnThisUnit.filter((curator) => curator.username === curatorSearch)
+    : curatorsOnThisUnit;
+
   if (!!searchId && !isSearchedUnit && !includeAllSubunits) {
     const allSubunits = getAllChildOrganizations(organization.hasPart);
     if (!allSubunits.some((subunit) => subunit.id === searchId)) {
       return null; // Hide this element if the searched ID is not a part of this unit
     }
   }
-  const expanded = expandedState || (!!searchId && !includeAllSubunits);
-  const subunitsCount = organization.hasPart?.length ?? 0;
 
-  const curatorsOnThisUnit = curators.filter((curator) => curator.viewingScope.includedUnits.includes(organization.id));
+  if (curatorSearch) {
+    const searchedCurator = curators.filter((curator) => curator.username === curatorSearch);
+    if (searchedCurator.length === 1) {
+      const allSubunits = getAllChildOrganizations([organization]).map((subunit) => subunit.id);
+      const overlap = allSubunits.some((subunit) => searchedCurator[0].viewingScope.includedUnits.includes(subunit));
+      if (!overlap) {
+        return null;
+      }
+    }
+  }
+
+  const expanded = expandedState || (!!searchId && !includeAllSubunits) || !!curatorSearch;
+  const subunitsCount = organization.hasPart?.length ?? 0;
 
   return (
     <Accordion
@@ -77,7 +94,7 @@ export const OrganizationCuratorsAccordion = ({
 
       <AccordionDetails sx={{ pr: 0 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1px', mb: '1rem' }}>
-          {curatorsOnThisUnit.map((user) => (
+          {searchedCurators.map((user) => (
             <OrganizationCuratorRow
               key={user.username}
               curator={user}
@@ -111,6 +128,7 @@ export const OrganizationCuratorsAccordion = ({
               key={subunit.id}
               organization={subunit}
               searchId={searchId}
+              curatorSearch={curatorSearch}
               includeAllSubunits={includeAllSubunits || isSearchedUnit}
               curators={curators}
               refetchCurators={refetchCurators}
