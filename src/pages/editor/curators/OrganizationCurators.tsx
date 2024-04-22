@@ -57,6 +57,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
   });
 
   const allSubUnits = getSortedSubUnits(organizationQuery.data?.hasPart);
+  const allCurators = curatorsQuery.data ?? [];
 
   return (
     <>
@@ -104,6 +105,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
               <Autocomplete
                 fullWidth
                 size="small"
+                value={allSubUnits.find((unit) => unit.id === searchValue) ?? null}
                 data-testid={dataTestId.editor.organizationOverviewSearchField}
                 options={allSubUnits}
                 inputMode="search"
@@ -134,6 +136,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
               <Autocomplete
                 fullWidth
                 size="small"
+                value={allCurators.find((curator) => curator.username === searchValue) ?? null}
                 data-testid={dataTestId.editor.organizationOverviewSearchField}
                 options={curatorsQuery.data ?? []}
                 inputMode="search"
