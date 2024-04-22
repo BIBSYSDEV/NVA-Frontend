@@ -40,11 +40,10 @@ export const OrganizationCuratorsAccordion = ({
 
   const isSearchedUnit = organization.id === unitSearch;
 
-  // Avoid rendering organizations that are not part of the search results
   if (!!unitSearch && !isSearchedUnit && !includeAllSubunits) {
     const allSubunits = getAllChildOrganizations(organization.hasPart);
     if (!allSubunits.some((subunit) => subunit.id === unitSearch)) {
-      return null;
+      return null; // Hide this element if the searched organization ID is not a part of this unit
     }
   }
   if (curatorSearch) {
@@ -53,7 +52,7 @@ export const OrganizationCuratorsAccordion = ({
       const allSubunits = getAllChildOrganizations([organization]).map((unit) => unit.id);
       const overlappingOrg = allSubunits.some((unit) => searchedCurator[0].viewingScope.includedUnits.includes(unit));
       if (!overlappingOrg) {
-        return null;
+        return null; // Hide this element if the searched curator is not a part of this unit
       }
     }
   }
