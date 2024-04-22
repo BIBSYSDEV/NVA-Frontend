@@ -40,18 +40,13 @@ export const OrganizationCuratorsAccordion = ({
 
   const isSearchedUnit = organization.id === unitSearch;
 
-  const curatorsOnThisUnit = curators.filter((curator) => curator.viewingScope.includedUnits.includes(organization.id));
-  const searchedCurators = curatorSearch
-    ? curatorsOnThisUnit.filter((curator) => curator.username === curatorSearch)
-    : curatorsOnThisUnit;
-
+  // Avoid rendering organizations that are not part of the search results
   if (!!unitSearch && !isSearchedUnit && !includeAllSubunits) {
     const allSubunits = getAllChildOrganizations(organization.hasPart);
     if (!allSubunits.some((subunit) => subunit.id === unitSearch)) {
-      return null; // Hide this element if the searched ID is not a part of this unit
+      return null;
     }
   }
-
   if (curatorSearch) {
     const searchedCurator = curators.filter((curator) => curator.username === curatorSearch);
     if (searchedCurator.length === 1) {
@@ -64,6 +59,11 @@ export const OrganizationCuratorsAccordion = ({
       }
     }
   }
+
+  const curatorsOnThisUnit = curators.filter((curator) => curator.viewingScope.includedUnits.includes(organization.id));
+  const searchedCurators = curatorSearch
+    ? curatorsOnThisUnit.filter((curator) => curator.username === curatorSearch)
+    : curatorsOnThisUnit;
 
   const expanded = expandedState || (!!unitSearch && !includeAllSubunits) || !!curatorSearch;
   const subunitsCount = organization.hasPart?.length ?? 0;

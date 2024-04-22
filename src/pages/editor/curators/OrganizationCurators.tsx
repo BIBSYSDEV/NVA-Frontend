@@ -71,7 +71,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
         <ListSkeleton height={100} minWidth={100} />
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+          <Box sx={{ display: 'flex', gap: '0.5rem', flexDirection: { xs: 'column', sm: 'row' } }}>
             <TextField
               select
               sx={{
