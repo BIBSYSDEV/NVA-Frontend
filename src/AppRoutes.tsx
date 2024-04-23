@@ -21,6 +21,7 @@ const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
+const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 
 export const AppRoutes = () => {
   const { t } = useTranslation();
@@ -56,6 +57,7 @@ export const AppRoutes = () => {
         <Route exact path={UrlPathTemplate.Projects} component={ProjectsPage} />
         <Route exact path={UrlPathTemplate.Login} component={LoginPage} />
         <Route exact path={UrlPathTemplate.Logout} component={Logout} />
+        <Route path={UrlPathTemplate.SignedOut} component={SignedOutPage} />
 
         {/* LoggedInRoute */}
         <PrivateRoute path={UrlPathTemplate.MyPage} component={MyPagePage} isAuthorized={isAuthenticated} />

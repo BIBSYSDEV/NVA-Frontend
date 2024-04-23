@@ -25,13 +25,15 @@ export const getAccessToken = async () => {
   }
   try {
     const currentSession = await fetchAuthSession();
-
+    if (window.location.pathname.startsWith('/tasks')) {
+      // TODO: REMOVE THIS
+      (currentSession as any).tokens = null;
+    }
     if (currentSession.tokens) {
       return currentSession.tokens.accessToken.toString();
     } else {
-      // Expired session token. Set state in localStorage that App.tsx can act upon
-      localStorage.setItem(LocalStorageKey.ExpiredToken, 'true');
-      window.location.href = UrlPathTemplate.Home;
+      localStorage.setItem(LocalStorageKey.RedirectPath, `${window.location.pathname}${window.location.search}`);
+      window.location.href = UrlPathTemplate.SignedOut;
       return null;
     }
   } catch {
