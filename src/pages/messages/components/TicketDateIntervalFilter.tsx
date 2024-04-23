@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { formatDateStringToISO } from '../../../utils/date-helpers';
 
 const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   format: 'dd.MM.yyyy',
@@ -33,21 +34,21 @@ export const TicketDateIntervalFilter = () => {
   );
 
   const onChangeFromDate = (newDate: Date | null) => {
-    const selectedFromDateString = newDate ? newDate.toISOString().slice(0, 10) : '';
     setSelectedFromDate(newDate);
 
-    const newDateParam =
-      selectedFromDateString + (selectedToDate ? `,${selectedToDate.toISOString().slice(0, 10)}` : '');
+    const selectedFromDateString = newDate ? formatDateStringToISO(newDate) : '';
+
+    const newDateParam = selectedFromDateString + (selectedToDate ? `,${formatDateStringToISO(selectedToDate)}` : '');
 
     updateSearchParams(newDateParam);
   };
 
   const onChangeToDate = (newDate: Date | null) => {
-    const selectedToDateString = newDate ? newDate.toISOString().slice(0, 10) : '';
     setSelectedToDate(newDate);
 
-    const newDateParam =
-      (selectedFromDate ? `${selectedFromDate.toISOString().slice(0, 10)},` : '') + selectedToDateString;
+    const selectedToDateString = newDate ? formatDateStringToISO(newDate) : '';
+
+    const newDateParam = (selectedFromDate ? `${formatDateStringToISO(selectedFromDate)},` : '') + selectedToDateString;
 
     updateSearchParams(newDateParam);
   };
