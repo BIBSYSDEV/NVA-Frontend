@@ -11,11 +11,8 @@ const SignedOutPage = () => {
   // TODO: Handle is user is authenticated
 
   const previousPath = localStorage.getItem(LocalStorageKey.RedirectPath);
-  if (previousPath) {
-    localStorage.removeItem(LocalStorageKey.RedirectPath);
-  }
-
   const pathAfterLogin = previousPath ?? UrlPathTemplate.Home;
+  console.log('SignedOutPage, next path', pathAfterLogin);
 
   return (
     <Box sx={{ m: '4rem 1rem 1rem 1rem' }}>

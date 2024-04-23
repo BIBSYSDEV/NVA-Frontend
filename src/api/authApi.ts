@@ -32,6 +32,7 @@ export const getAccessToken = async () => {
     if (currentSession.tokens) {
       return currentSession.tokens.accessToken.toString();
     } else {
+      console.log('No access token found');
       localStorage.setItem(LocalStorageKey.RedirectPath, `${window.location.pathname}${window.location.search}`);
       window.location.href = UrlPathTemplate.SignedOut;
       return null;
