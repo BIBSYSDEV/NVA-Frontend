@@ -381,7 +381,9 @@
         "Nvi-Curator": "NVI",
         "Publishing-Curator": "Publisering",
         "Support-Curator": "Brukerstøtte"
-      }
+      },
+      "search_for_curator": "Søk etter kurator",
+      "search_for_unit": "Søk etter enhet"
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er en persistent identifikator.|Gjør det enklere å sitere publikasjoner korrekt.|Metadata om resultatet blir delt internasjonalt.|Synligheten til resultatet øker.|Bidrar til å oppfylle FAIR-prinsippene.|Understøtter åpen forskning.",
