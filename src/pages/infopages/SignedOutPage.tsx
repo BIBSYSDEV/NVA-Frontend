@@ -26,6 +26,7 @@ const SignedOutPage = () => {
 
       <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
         <Button
+          data-testid={dataTestId.common.cancel}
           component={Link}
           to={UrlPathTemplate.Home}
           variant="outlined"
