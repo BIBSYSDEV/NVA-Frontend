@@ -24,6 +24,7 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
+import { PublicationInstanceType } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -75,6 +76,9 @@ const MyPagePage = () => {
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
 
+  const categoryShould =
+    (searchParams.get(TicketSearchParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
+
   const ticketSearchParams: FetchTicketsParams = {
     query: searchParams.get(TicketSearchParam.Query),
     results: rowsPerPage,
@@ -85,6 +89,7 @@ const MyPagePage = () => {
     status: searchParams.get(TicketSearchParam.Status),
     viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
     type: selectedTypesArray.join(','),
+    categoryShould: categoryShould.join(','),
   };
 
   const ticketsQuery = useQuery({

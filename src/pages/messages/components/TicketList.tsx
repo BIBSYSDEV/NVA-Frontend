@@ -1,11 +1,12 @@
-import { Grid, List, Typography } from '@mui/material';
+import { Box, Chip, Grid, List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
+import { CategoryChip } from '../../../components/CategorySelector';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { DialoguesWithoutCuratorButton } from '../../../components/DialoguesWithoutCuratorButton';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -15,9 +16,11 @@ import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
+import { PublicationInstanceType } from '../../../types/registration.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { CategoryFilterDialog } from '../../search/advanced_search/CategoryFilterDialog';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
@@ -31,8 +34,14 @@ interface TicketListProps {
 
 export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
+  const history = useHistory();
+  const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
+  const params = new URLSearchParams(history.location.search);
+  const categoryShould =
+    (params.get(TicketSearchParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
+
+  const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
+  const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
 
@@ -41,6 +50,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       typesetMathJax();
     }
   }, [tickets]);
+
+  console.log(tickets);
 
   const sortingComponent = (
     <SortSelector
@@ -84,6 +95,43 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             </Grid>
           </>
         )}
+        <Grid item>
+          <Typography fontWeight="bold">{t('common.category')}</Typography>
+          <section>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+              {categoryShould.slice(0, 3).map((category) => (
+                <CategoryChip
+                  key={category}
+                  category={{
+                    value: category,
+                    text: t(`registration.publication_types.${category}`),
+                    selected: true,
+                  }}
+                  onClickChip={toggleCategoryFilter}
+                />
+              ))}
+              {categoryShould.length > 3 ? (
+                <Chip
+                  label={t('common.x_others', { count: categoryShould.length - 3 })}
+                  variant="filled"
+                  color="primary"
+                  onClick={toggleCategoryFilter}
+                />
+              ) : (
+                <Chip
+                  label={t('registration.resource_type.select_resource_type')}
+                  color="primary"
+                  onClick={toggleCategoryFilter}
+                />
+              )}
+            </Box>
+            <CategoryFilterDialog
+              open={openCategoryFilter}
+              currentCategories={categoryShould}
+              closeDialog={toggleCategoryFilter}
+            />
+          </section>
+        </Grid>
       </Grid>
 
       {ticketsQuery.isLoading ? (

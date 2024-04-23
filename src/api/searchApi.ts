@@ -10,6 +10,7 @@ import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 export enum TicketSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
+  CategoryShould = 'categoryShould',
   ExcludeSubUnits = 'excludeSubUnits',
   From = 'from',
   OrderBy = 'orderBy',
@@ -27,6 +28,7 @@ export enum TicketSearchParam {
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
+  [TicketSearchParam.CategoryShould]?: string | null;
   [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
   [TicketSearchParam.OrderBy]?: 'createdDate' | null;
@@ -50,6 +52,10 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   if (params.assignee) {
     searchParams.set(TicketSearchParam.Assignee, params.assignee);
+  }
+
+  if (params.categoryShould) {
+    searchParams.set(TicketSearchParam.CategoryShould, params.categoryShould);
   }
 
   if (params.excludeSubUnits) {
