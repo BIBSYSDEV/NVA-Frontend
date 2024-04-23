@@ -23,44 +23,42 @@ export const TicketDateIntervalFilter = () => {
   const maxDate = new Date();
 
   const selectedDatesParam = searchParams.get(TicketSearchParam.CreatedDate);
-  const selectedDatesParamArray = selectedDatesParam ? selectedDatesParam.split(',') : [];
 
-  const [selectedFromDate, setSelectedFromDate] = useState<Date | null>(
-    selectedDatesParamArray.length ? new Date(selectedDatesParamArray.shift() || '') : null
-  );
-
-  const [selectedToDate, setSelectedToDate] = useState<Date | null>(
-    selectedDatesParamArray.length ? new Date(selectedDatesParamArray.pop() || '') : null
-  );
+  const [startParam, endParam] = selectedDatesParam ? selectedDatesParam.split(',') : [];
+  const [selectedFromDate, setSelectedFromDate] = useState<string | undefined>(startParam ? startParam : '');
+  const [selectedToDate, setSelectedToDate] = useState<string | undefined>(endParam ? endParam : '');
 
   const onChangeFromDate = (newDate: Date | null) => {
-    setSelectedFromDate(newDate);
-
-    const selectedFromDateString = newDate ? formatDateStringToISO(newDate) : '';
-
-    const newDateParam = selectedFromDateString + (selectedToDate ? `,${formatDateStringToISO(selectedToDate)}` : '');
-
-    updateSearchParams(newDateParam);
+    const newFromDate = newDate ? formatDateStringToISO(newDate) : undefined;
+    setSelectedFromDate(newFromDate);
+    updateSearchParams(`${newFromDate},${selectedToDate}`);
   };
 
   const onChangeToDate = (newDate: Date | null) => {
-    setSelectedToDate(newDate);
-
-    const selectedToDateString = newDate ? formatDateStringToISO(newDate) : '';
-
-    const newDateParam =
-      (selectedFromDate ? `${formatDateStringToISO(selectedFromDate)}` : '') + `,${selectedToDateString}`;
-
-    updateSearchParams(newDateParam);
+    const newToDate = newDate ? formatDateStringToISO(newDate) : undefined;
+    setSelectedToDate(newToDate);
+    updateSearchParams(`${selectedFromDate},${newToDate}`);
   };
 
   const updateSearchParams = (newDateParam: string) => {
-    if (newDateParam !== '') {
+    const [fromDate, toDate] = newDateParam.split(',');
+
+    if (isValidDate(fromDate) && isValidDate(toDate)) {
       searchParams.set(TicketSearchParam.CreatedDate, newDateParam);
+    } else if (isValidDate(fromDate)) {
+      searchParams.set(TicketSearchParam.CreatedDate, fromDate);
+    } else if (isValidDate(toDate)) {
+      searchParams.set(TicketSearchParam.CreatedDate, `,${toDate}`);
     } else {
       searchParams.delete(TicketSearchParam.CreatedDate);
     }
+
     history.push({ search: searchParams.toString() });
+  };
+
+  const isValidDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return !isNaN(date.getTime());
   };
 
   return (
@@ -69,8 +67,8 @@ export const TicketDateIntervalFilter = () => {
         {...commonDatepickerProps}
         data-testid={dataTestId.myPage.myMessages.ticketFilterFromDatePicker}
         label={t('registration.resource_type.date_from')}
-        value={selectedFromDate}
-        maxDate={selectedToDate ? selectedToDate : maxDate}
+        value={selectedFromDate ? new Date(selectedFromDate) : null}
+        maxDate={selectedToDate ? new Date(selectedToDate) : maxDate}
         onChange={(date, context) => {
           if (context.validationError !== 'invalidDate') {
             onChangeFromDate(date);
@@ -81,9 +79,9 @@ export const TicketDateIntervalFilter = () => {
         {...commonDatepickerProps}
         data-testid={dataTestId.myPage.myMessages.ticketFilterToDatePicker}
         label={t('registration.resource_type.date_to')}
-        value={selectedToDate}
+        value={selectedToDate ? new Date(selectedToDate) : null}
         maxDate={maxDate}
-        minDate={selectedFromDate ? selectedFromDate : undefined}
+        minDate={selectedFromDate ? new Date(selectedFromDate) : undefined}
         onChange={(date, context) => {
           if (context.validationError !== 'invalidDate') {
             onChangeToDate(date);
