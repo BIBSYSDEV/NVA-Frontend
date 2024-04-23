@@ -1,4 +1,4 @@
-import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
+import { fetchAuthSession, fetchUserAttributes, signOut } from 'aws-amplify/auth';
 import { FeideUser } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
@@ -28,11 +28,11 @@ export const getAccessToken = async () => {
     if (window.location.pathname.startsWith('/tasks')) {
       // TODO: REMOVE THIS
       (currentSession as any).tokens = null;
+      await signOut();
     }
     if (currentSession.tokens) {
       return currentSession.tokens.accessToken.toString();
     } else {
-      console.log('No access token found');
       localStorage.setItem(LocalStorageKey.RedirectPath, `${window.location.pathname}${window.location.search}`);
       window.location.href = UrlPathTemplate.SignedOut;
       return null;

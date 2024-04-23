@@ -1,38 +1,39 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { RootState } from '../../redux/store';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const SignedOutPage = () => {
   const { t } = useTranslation();
+  const { handleLogin } = useAuthentication();
+  const user = useSelector((store: RootState) => store.user);
 
-  // TODO: Handle is user is authenticated
-
-  const previousPath = localStorage.getItem(LocalStorageKey.RedirectPath);
-  const pathAfterLogin = previousPath ?? UrlPathTemplate.Home;
-  console.log('SignedOutPage, next path', pathAfterLogin);
+  if (user) {
+    return <Redirect to={UrlPathTemplate.Home} />;
+  }
 
   return (
     <Box sx={{ m: '4rem 1rem 1rem 1rem' }}>
       <Typography variant="h1" gutterBottom>
-        Du er utlogget
+        {t('authorization.signed_out')}
       </Typography>
-      <Typography paragraph>
-        Din sesjon har utløpt, og du har blitt logget ut. Fortsett som anonym bruker, eller logg inn på nytt.
-      </Typography>
+      <Typography paragraph>{t('authorization.expired_token_info')}</Typography>
 
       <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-        <Button component={Link} to={UrlPathTemplate.Home} variant="outlined">
+        <Button
+          component={Link}
+          to={UrlPathTemplate.Home}
+          variant="outlined"
+          onClick={() => localStorage.removeItem(LocalStorageKey.RedirectPath)}>
           {t('authorization.back_to_home')}
         </Button>
 
-        <Button
-          variant="contained"
-          data-testid={dataTestId.header.logInButton}
-          component={Link}
-          to={{ pathname: UrlPathTemplate.Login, state: pathAfterLogin }}>
+        <Button variant="contained" data-testid={dataTestId.header.logInButton} onClick={handleLogin}>
           {t('authorization.login')}
         </Button>
       </Box>
