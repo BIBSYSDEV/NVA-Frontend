@@ -103,7 +103,7 @@ export const OrganizationCuratorsAccordion = ({
           ))}
         </Box>
 
-        {canEditUsers && (
+        {canEditUsers && !curatorSearch && (
           <Button
             variant="contained"
             data-testid={dataTestId.editor.addCuratorButton(organization.id)}
