@@ -48,7 +48,8 @@ export const TicketDateIntervalFilter = () => {
 
     const selectedToDateString = newDate ? formatDateStringToISO(newDate) : '';
 
-    const newDateParam = (selectedFromDate ? `${formatDateStringToISO(selectedFromDate)},` : '') + selectedToDateString;
+    const newDateParam =
+      (selectedFromDate ? `${formatDateStringToISO(selectedFromDate)}` : '') + `,${selectedToDateString}`;
 
     updateSearchParams(newDateParam);
   };
