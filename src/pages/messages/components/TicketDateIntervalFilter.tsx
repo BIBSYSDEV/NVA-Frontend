@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
@@ -24,19 +23,15 @@ export const TicketDateIntervalFilter = () => {
 
   const selectedDatesParam = searchParams.get(TicketSearchParam.CreatedDate);
 
-  const [startParam, endParam] = selectedDatesParam ? selectedDatesParam.split(',') : [];
-  const [selectedFromDate, setSelectedFromDate] = useState<string | undefined>(startParam ? startParam : '');
-  const [selectedToDate, setSelectedToDate] = useState<string | undefined>(endParam ? endParam : '');
+  const [selectedFromDate, selectedToDate] = selectedDatesParam ? selectedDatesParam.split(',') : [];
 
   const onChangeFromDate = (newDate: Date | null) => {
     const newFromDate = newDate ? formatDateStringToISO(newDate) : undefined;
-    setSelectedFromDate(newFromDate);
     updateSearchParams(`${newFromDate},${selectedToDate}`);
   };
 
   const onChangeToDate = (newDate: Date | null) => {
     const newToDate = newDate ? formatDateStringToISO(newDate) : undefined;
-    setSelectedToDate(newToDate);
     updateSearchParams(`${selectedFromDate},${newToDate}`);
   };
 
