@@ -15,6 +15,11 @@ const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   },
 };
 
+const isValidDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return !isNaN(date.getTime());
+};
+
 export const TicketDateIntervalFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -49,11 +54,6 @@ export const TicketDateIntervalFilter = () => {
     }
 
     history.push({ search: searchParams.toString() });
-  };
-
-  const isValidDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return !isNaN(date.getTime());
   };
 
   return (
