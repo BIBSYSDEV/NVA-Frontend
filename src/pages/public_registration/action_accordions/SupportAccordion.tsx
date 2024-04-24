@@ -4,7 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
+import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { Ticket } from '../../../types/publication_types/ticket.types';
@@ -57,13 +57,14 @@ export const SupportAccordion = ({
   };
 
   const isPendingSupportTicket = supportTicket?.status === 'New' || supportTicket?.status === 'Pending';
+  const ownerHasReadTicket = supportTicket?.viewedBy.includes(supportTicket?.owner);
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{ bgcolor: 'generalSupportCase.light' }}
       elevation={3}
-      defaultExpanded={isRegistrationWizard || isPendingSupportTicket}>
+      defaultExpanded={isRegistrationWizard || isPendingSupportTicket || !ownerHasReadTicket}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
         {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
