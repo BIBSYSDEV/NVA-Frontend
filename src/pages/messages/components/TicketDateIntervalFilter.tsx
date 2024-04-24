@@ -27,24 +27,21 @@ export const TicketDateIntervalFilter = () => {
   const maxDate = new Date();
 
   const selectedDatesParam = searchParams.get(TicketSearchParam.CreatedDate);
-
   const [selectedFromDate, selectedToDate] = selectedDatesParam ? selectedDatesParam.split(',') : [];
 
   const onChangeFromDate = (newDate: Date | null) => {
-    const newFromDate = newDate ? formatDateStringToISO(newDate) : undefined;
-    updateSearchParams(`${newFromDate},${selectedToDate}`);
+    const newFromDate = newDate ? formatDateStringToISO(newDate) : '';
+    updateSearchParams(newFromDate, selectedToDate);
   };
 
   const onChangeToDate = (newDate: Date | null) => {
-    const newToDate = newDate ? formatDateStringToISO(newDate) : undefined;
-    updateSearchParams(`${selectedFromDate},${newToDate}`);
+    const newToDate = newDate ? formatDateStringToISO(newDate) : '';
+    updateSearchParams(selectedFromDate, newToDate);
   };
 
-  const updateSearchParams = (newDateParam: string) => {
-    const [fromDate, toDate] = newDateParam.split(',');
-
+  const updateSearchParams = (fromDate: string, toDate: string) => {
     if (isValidDate(fromDate) && isValidDate(toDate)) {
-      searchParams.set(TicketSearchParam.CreatedDate, newDateParam);
+      searchParams.set(TicketSearchParam.CreatedDate, `${fromDate},${toDate}`);
     } else if (isValidDate(fromDate)) {
       searchParams.set(TicketSearchParam.CreatedDate, fromDate);
     } else if (isValidDate(toDate)) {
@@ -52,7 +49,6 @@ export const TicketDateIntervalFilter = () => {
     } else {
       searchParams.delete(TicketSearchParam.CreatedDate);
     }
-
     history.push({ search: searchParams.toString() });
   };
 
