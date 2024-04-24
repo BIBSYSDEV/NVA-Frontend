@@ -15,11 +15,6 @@ const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   },
 };
 
-const isValidDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return !isNaN(date.getTime());
-};
-
 export const TicketDateIntervalFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -27,27 +22,24 @@ export const TicketDateIntervalFilter = () => {
   const maxDate = new Date();
 
   const selectedDatesParam = searchParams.get(TicketSearchParam.CreatedDate);
-  const [selectedFromDate, selectedToDate] = selectedDatesParam ? selectedDatesParam.split(',') : [];
+  const [selectedFromDate, selectedToDate] = selectedDatesParam ? selectedDatesParam.split(',') : ['', ''];
 
   const onChangeFromDate = (newDate: Date | null) => {
     const newFromDate = newDate ? formatDateStringToISO(newDate) : '';
-    updateSearchParams(newFromDate, selectedToDate);
+    if (!newFromDate && !selectedToDate) {
+      searchParams.delete(TicketSearchParam.CreatedDate);
+    } else {
+      searchParams.set(TicketSearchParam.CreatedDate, `${newFromDate},${selectedToDate}`);
+    }
+    history.push({ search: searchParams.toString() });
   };
 
   const onChangeToDate = (newDate: Date | null) => {
     const newToDate = newDate ? formatDateStringToISO(newDate) : '';
-    updateSearchParams(selectedFromDate, newToDate);
-  };
-
-  const updateSearchParams = (fromDate: string, toDate: string) => {
-    if (isValidDate(fromDate) && isValidDate(toDate)) {
-      searchParams.set(TicketSearchParam.CreatedDate, `${fromDate},${toDate}`);
-    } else if (isValidDate(fromDate)) {
-      searchParams.set(TicketSearchParam.CreatedDate, fromDate);
-    } else if (isValidDate(toDate)) {
-      searchParams.set(TicketSearchParam.CreatedDate, `,${toDate}`);
-    } else {
+    if (!selectedFromDate && !newToDate) {
       searchParams.delete(TicketSearchParam.CreatedDate);
+    } else {
+      searchParams.set(TicketSearchParam.CreatedDate, `${selectedFromDate},${newToDate}`);
     }
     history.push({ search: searchParams.toString() });
   };
