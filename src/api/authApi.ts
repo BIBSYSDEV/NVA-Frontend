@@ -1,6 +1,7 @@
 import { fetchAuthSession, fetchUserAttributes, signOut } from 'aws-amplify/auth';
 import { FeideUser } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
+import { getCurrentPath } from '../utils/general-helpers';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 export const getUserAttributes = async (retryNumber = 0): Promise<FeideUser | null> => {
@@ -33,8 +34,7 @@ export const getAccessToken = async () => {
     if (currentSession.tokens) {
       return currentSession.tokens.accessToken.toString();
     } else {
-      localStorage.setItem(LocalStorageKey.RedirectPath, `${window.location.pathname}${window.location.search}`);
-      window.location.href = UrlPathTemplate.SignedOut;
+      window.location.href = `${UrlPathTemplate.SignedOut}?path=${getCurrentPath()}`;
       return null;
     }
   } catch {

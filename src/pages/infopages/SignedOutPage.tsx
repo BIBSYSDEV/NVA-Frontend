@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -11,6 +11,7 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 const SignedOutPage = () => {
   const { t } = useTranslation();
   const { handleLogin } = useAuthentication();
+  const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
 
   if (user) {
@@ -34,7 +35,16 @@ const SignedOutPage = () => {
           {t('authorization.back_to_home')}
         </Button>
 
-        <Button variant="contained" data-testid={dataTestId.header.logInButton} onClick={handleLogin}>
+        <Button
+          variant="contained"
+          data-testid={dataTestId.header.logInButton}
+          onClick={() => {
+            const redirectPath = new URLSearchParams(location.search).get('path');
+            if (redirectPath) {
+              localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
+            }
+            handleLogin();
+          }}>
           {t('authorization.login')}
         </Button>
       </Box>

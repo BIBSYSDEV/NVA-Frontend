@@ -48,3 +48,5 @@ export const getInitials = (name: string) => {
   const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
   return `${firstNameInitial}${lastNameInitial}`.toUpperCase();
 };
+
+export const getCurrentPath = () => `${window.location.pathname}${window.location.search}`;
