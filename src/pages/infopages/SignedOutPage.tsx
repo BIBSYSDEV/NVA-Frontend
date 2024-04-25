@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { RootState } from '../../redux/store';
-import { LocalStorageKey } from '../../utils/constants';
+import { LocalStorageKey, redirectPathQueryKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -39,7 +39,7 @@ const SignedOutPage = () => {
           variant="contained"
           data-testid={dataTestId.header.logInButton}
           onClick={() => {
-            const redirectPath = new URLSearchParams(location.search).get('path');
+            const redirectPath = new URLSearchParams(location.search).get(redirectPathQueryKey);
             if (redirectPath) {
               localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
             }
