@@ -27,5 +27,3 @@ export enum LocalStorageKey {
   ShowTagline = 'showTagline',
   RedirectPath = 'redirectPath',
 }
-
-export const redirectPathQueryKey = 'path';
