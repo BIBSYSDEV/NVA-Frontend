@@ -19,7 +19,7 @@ const SignedOutPage = () => {
   }
 
   return (
-    <Box sx={{ m: '4rem 1rem 1rem 1rem' }}>
+    <Box sx={{ m: '4rem 1rem' }}>
       <Typography variant="h1" gutterBottom>
         {t('authorization.signed_out')}
       </Typography>
