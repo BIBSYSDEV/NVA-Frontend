@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
@@ -51,9 +50,6 @@ export const AdvancedSearchPage = () => {
   const history = useHistory();
   const showFilterDivider = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
-
-  const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
-  const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
 
   const params = new URLSearchParams(history.location.search);
 

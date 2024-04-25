@@ -89,16 +89,14 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
           </>
         )}
 
-        {isOnMyPage && (
-          <>
-            <Grid item xs={16} md={6} lg={5}>
-              <TicketDateIntervalFilter />
-            </Grid>
+        <Grid item xs={16} md={6} lg={5}>
+          <TicketDateIntervalFilter />
+        </Grid>
 
-            <Grid item>
-              <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
-            </Grid>
-          </>
+        {isOnMyPage && (
+          <Grid item>
+            <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
+          </Grid>
         )}
       </Grid>
 

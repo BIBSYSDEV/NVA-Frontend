@@ -18,12 +18,12 @@ export const CategorySearchFilter = ({ searchParam }: CategorySearchFilterProps)
   const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
   const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
 
-  const publicationType = (params.get(searchParam)?.split(',') as PublicationInstanceType[] | null) ?? [];
+  const selectedCategories = (params.get(searchParam)?.split(',') as PublicationInstanceType[] | null) ?? [];
 
   return (
     <section>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-        {publicationType.slice(0, 3).map((category) => (
+        {selectedCategories.slice(0, 3).map((category) => (
           <CategoryChip
             key={category}
             category={{
@@ -34,9 +34,9 @@ export const CategorySearchFilter = ({ searchParam }: CategorySearchFilterProps)
             onClickChip={toggleCategoryFilter}
           />
         ))}
-        {publicationType.length > 3 ? (
+        {selectedCategories.length > 3 ? (
           <Chip
-            label={t('common.x_others', { count: publicationType.length - 3 })}
+            label={t('common.x_others', { count: selectedCategories.length - 3 })}
             variant="filled"
             color="primary"
             onClick={toggleCategoryFilter}
@@ -51,7 +51,7 @@ export const CategorySearchFilter = ({ searchParam }: CategorySearchFilterProps)
       </Box>
       <CategoryFilterDialog
         open={openCategoryFilter}
-        currentCategories={publicationType}
+        currentCategories={selectedCategories}
         closeDialog={toggleCategoryFilter}
         searchParam={searchParam}
       />
