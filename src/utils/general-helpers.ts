@@ -50,13 +50,9 @@ export const getInitials = (name: string) => {
 };
 
 export const getCurrentPath = () => {
-  const pathname = window.location.pathname;
-  const searchParams = new URLSearchParams(window.location.search);
-  const queryString = searchParams.toString();
-
-  if (queryString) {
-    const encodedSearchParams = encodeURIComponent(queryString);
-    return `${pathname}?${encodedSearchParams}`;
+  const { pathname, search } = window.location;
+  if (search) {
+    return `${pathname}${search}`;
   } else {
     return pathname;
   }
