@@ -76,8 +76,8 @@ const MyPagePage = () => {
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
 
-  const categoryShould =
-    (searchParams.get(TicketSearchParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
+  const publicationType =
+    (searchParams.get(TicketSearchParam.PublicationType)?.split(',') as PublicationInstanceType[] | null) ?? [];
 
   const ticketSearchParams: FetchTicketsParams = {
     query: searchParams.get(TicketSearchParam.Query),
@@ -90,7 +90,7 @@ const MyPagePage = () => {
     status: searchParams.get(TicketSearchParam.Status),
     viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
     type: selectedTypesArray.join(','),
-    categoryShould: categoryShould.join(','),
+    publicationType: publicationType.join(','),
   };
 
   const ticketsQuery = useQuery({

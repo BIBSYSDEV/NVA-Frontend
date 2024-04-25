@@ -15,7 +15,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
@@ -162,6 +162,7 @@ export const AdvancedSearchPage = () => {
                 open={openCategoryFilter}
                 currentCategories={categoryShould}
                 closeDialog={toggleCategoryFilter}
+                searchParam={ResultParam.CategoryShould}
               />
             </section>
           </Grid>

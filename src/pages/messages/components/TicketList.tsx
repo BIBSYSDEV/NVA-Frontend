@@ -38,8 +38,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
   const history = useHistory();
   const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
   const params = new URLSearchParams(history.location.search);
-  const categoryShould =
-    (params.get(TicketSearchParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
+  const publicationType =
+    (params.get(TicketSearchParam.PublicationType)?.split(',') as PublicationInstanceType[] | null) ?? [];
 
   const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
   const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
@@ -51,8 +51,6 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       typesetMathJax();
     }
   }, [tickets]);
-
-  console.log(tickets);
 
   const sortingComponent = (
     <SortSelector
@@ -102,10 +100,9 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         </Grid>
 
         <Grid item>
-          <Typography fontWeight="bold">{t('common.category')}</Typography>
           <section>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-              {categoryShould.slice(0, 3).map((category) => (
+              {publicationType.slice(0, 3).map((category) => (
                 <CategoryChip
                   key={category}
                   category={{
@@ -116,9 +113,9 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
                   onClickChip={toggleCategoryFilter}
                 />
               ))}
-              {categoryShould.length > 3 ? (
+              {publicationType.length > 3 ? (
                 <Chip
-                  label={t('common.x_others', { count: categoryShould.length - 3 })}
+                  label={t('common.x_others', { count: publicationType.length - 3 })}
                   variant="filled"
                   color="primary"
                   onClick={toggleCategoryFilter}
@@ -133,8 +130,9 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             </Box>
             <CategoryFilterDialog
               open={openCategoryFilter}
-              currentCategories={categoryShould}
+              currentCategories={publicationType}
               closeDialog={toggleCategoryFilter}
+              searchParam={TicketSearchParam.PublicationType}
             />
           </section>
         </Grid>

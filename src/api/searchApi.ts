@@ -10,11 +10,12 @@ import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 export enum TicketSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
-  CategoryShould = 'categoryShould',
+  CreatedDate = 'createdDate',
   ExcludeSubUnits = 'excludeSubUnits',
   From = 'from',
   OrderBy = 'orderBy',
   Owner = 'owner',
+  PublicationType = 'publicationType',
   Query = 'query',
   Results = 'results',
   Role = 'role',
@@ -23,18 +24,17 @@ export enum TicketSearchParam {
   Type = 'type',
   ViewedByNot = 'viewedByNot',
   OrganizationId = 'organizationId',
-  CreatedDate = 'createdDate',
 }
 
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
-  [TicketSearchParam.CategoryShould]?: string | null;
   [TicketSearchParam.CreatedDate]?: string | null;
   [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
   [TicketSearchParam.OrderBy]?: 'createdDate' | null;
   [TicketSearchParam.Owner]?: string | null;
+  [TicketSearchParam.PublicationType]?: string | null;
   [TicketSearchParam.Query]?: string | null;
   [TicketSearchParam.Results]?: number | null;
   [TicketSearchParam.Role]?: 'creator';
@@ -56,10 +56,6 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
     searchParams.set(TicketSearchParam.Assignee, params.assignee);
   }
 
-  if (params.categoryShould) {
-    searchParams.set(TicketSearchParam.CategoryShould, params.categoryShould);
-  }
-
   if (params.createdDate) {
     searchParams.set(TicketSearchParam.CreatedDate, params.createdDate);
   }
@@ -74,6 +70,10 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   if (params.owner) {
     searchParams.set(TicketSearchParam.Owner, params.owner);
+  }
+
+  if (params.publicationType) {
+    searchParams.set(TicketSearchParam.PublicationType, params.publicationType);
   }
 
   if (params.query) {
