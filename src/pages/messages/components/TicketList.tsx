@@ -21,6 +21,7 @@ import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { CategoryFilterDialog } from '../../search/advanced_search/CategoryFilterDialog';
+import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
@@ -73,13 +74,14 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <title>{title}</title>
       </Helmet>
 
-      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
+      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
         <Grid item xs={16} md={5} lg={4}>
           <TicketStatusFilter />
         </Grid>
         <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
+
         {isOnTasksPage && (
           <>
             <Grid item xs={16} md={5} lg={4}>
@@ -95,6 +97,10 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             </Grid>
           </>
         )}
+        <Grid item xs={16} md={6} lg={5}>
+          <TicketDateIntervalFilter />
+        </Grid>
+
         <Grid item>
           <Typography fontWeight="bold">{t('common.category')}</Typography>
           <section>

@@ -23,7 +23,7 @@ import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ExportResultsButton } from '../ExportResultsButton';
-import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter';
+import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
@@ -123,7 +123,7 @@ export const AdvancedSearchPage = () => {
         <Grid item container direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
           <Grid item sx={{ width: 'fit-content' }}>
             <StyledTypography fontWeight="bold">{t('search.advanced_search.publishing_period')}</StyledTypography>
-            <PublicationDateIntervalFilter />
+            <PublicationYearIntervalFilter />
           </Grid>
 
           {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}

@@ -23,12 +23,14 @@ export enum TicketSearchParam {
   Type = 'type',
   ViewedByNot = 'viewedByNot',
   OrganizationId = 'organizationId',
+  CreatedDate = 'createdDate',
 }
 
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
   [TicketSearchParam.CategoryShould]?: string | null;
+  [TicketSearchParam.CreatedDate]?: string | null;
   [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
   [TicketSearchParam.OrderBy]?: 'createdDate' | null;
@@ -56,6 +58,10 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   if (params.categoryShould) {
     searchParams.set(TicketSearchParam.CategoryShould, params.categoryShould);
+  }
+
+  if (params.createdDate) {
+    searchParams.set(TicketSearchParam.CreatedDate, params.createdDate);
   }
 
   if (params.excludeSubUnits) {
