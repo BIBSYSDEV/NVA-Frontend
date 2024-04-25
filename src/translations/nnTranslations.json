@@ -160,6 +160,7 @@
     "close_forever": "Lukk og ikkje vis igjen",
     "country": "Land",
     "create": "Opprett",
+    "created": "Oppretta",
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskriving",
@@ -184,8 +185,10 @@
     "institutions": "Institusjonar",
     "justification": "Grunngjeving",
     "language": "Språk",
+    "last_modified": "Sist endra",
     "last_name": "Etternamn",
     "link": "Lenkje",
+    "log": "Logg",
     "main": "Hovud",
     "menu": "Meny",
     "message": "Melding",
@@ -359,13 +362,18 @@
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriane der institusjonen din tillèt filopplasting",
     "curators": {
+      "active_area_of_responsibilities": "Tilknytta ansvarsområder",
+      "add_curator": "Legg til kurator",
+      "added_area_of_responsibilities": "Ansvarsområder som blir lagt til",
       "administer_curators": "Administrer tilgånger til kuratorar",
       "area_of_responsibility": "Ansvarsområde",
+      "area_of_responsibility_description": "<0>Legg til ansvarsområde som kuratoren er knytt til.</0><0>Legg du til eit ansvarsområde som er ei over- eller undereining på eit ansvarsområde som kurator allereie er tilknytt, så blir ansvarsområdet til over- eller undereininga fjerna.</0><0>Fjernar du ansvarsområde for kuratoren, så sjekk at det er andre kuratorar som er tilknytt det ansvarsområdet.</0>",
       "curators": "Kuratorar",
       "curators_count_one": "{{count}} kurator",
       "curators_count_other": "{{count}} kuratorar",
       "edit_user": "Endre brukar",
       "no_users_found": "Ingen brukarar funne",
+      "removed_area_of_responsibilities": "Ansvarsområder som blir fjerna",
       "role": {
         "Curator-thesis": "Studentoppgåver",
         "Curator-thesis-embargo": "Embargo",
@@ -373,7 +381,9 @@
         "Nvi-Curator": "NVI",
         "Publishing-Curator": "Publisering",
         "Support-Curator": "Brukarstøtte"
-      }
+      },
+      "search_for_curator": "Søk etter kurator",
+      "search_for_unit": "Søk etter eining"
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er ein persistent identifikator.|Gjer det enklare å sitere publikasjonar korrekt.|Metadata om resultatet blir delt internasjonalt.|Synlegheita til resultatet aukar.|Bidreg til å oppfylle FAIR-prinsippa.|Støttar open forsking.",
@@ -403,7 +413,8 @@
       "institution_support_description": "Institusjonen si brukarstøtte er vist under kuratorstøtte.",
       "not_rbo_funded": "Institusjonen får ikkje finansiering via Resultatbasert omfordeling (RBO)",
       "organizing": "Organisering",
-      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
+      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)",
+      "unique_feide_id": "Unik Feide-ID"
     },
     "organization_overview": "Organisasjonsstruktur",
     "publish_strategy": {
@@ -636,6 +647,14 @@
       "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
     }
   },
+  "log": {
+    "archived_file_one": "{{count}} fil arkivert i etterkant",
+    "archived_file_other": "{{count}} filer arkivert i etterkant",
+    "archived_files_on_registration_one": "Registreringa har {{count}} arkivert fil",
+    "archived_files_on_registration_other": "Registreringa har {{count}} arkiverte filer",
+    "deleted_file_one": "{{count}} fil sletta i etterkant",
+    "deleted_file_other": "{{count}} filer sletta i etterkant"
+  },
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statusar",
@@ -759,7 +778,11 @@
       "publishing_curator": "Publiseringskurator",
       "publishing_curator_description": "Kan sjå og behandle publiseringsførespurnader.",
       "support_curator": "Brukarstøttekurator",
-      "support_curator_description": "Kan sjå og behandle brukarstøtteførespurnader."
+      "support_curator_description": "Kan sjå og behandle brukarstøtteførespurnader.",
+      "thesis_curator": "Studentoppgåvekurator",
+      "thesis_curator_description": "Kan opprette og endre studentoppgåver",
+      "thesis_embargo_curator": "Studentoppgåve med embargo-kurator",
+      "thesis_embargo_curator_description": "Kan sjå og endre embargofiler på studentoppgåver."
     }
   },
   "privacy": {
@@ -1841,6 +1864,7 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjend",
+        "New": "Kandidat",
         "Pending": "Kandidat",
         "Rejected": "Avvist"
       },

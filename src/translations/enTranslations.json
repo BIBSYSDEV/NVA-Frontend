@@ -160,6 +160,7 @@
     "close_forever": "Close and do not show again",
     "country": "Country",
     "create": "Create",
+    "created": "Created",
     "date": "Date",
     "delete": "Delete",
     "description": "Description",
@@ -184,8 +185,10 @@
     "institutions": "Institutions",
     "justification": "Justification",
     "language": "Language",
+    "last_modified": "Last modified",
     "last_name": "Last name",
     "link": "Link",
+    "log": "Log",
     "main": "Main",
     "menu": "Menu",
     "message": "Message",
@@ -359,13 +362,18 @@
     "categories_with_files": "Categories with File Upload",
     "categories_with_files_description": "Specify the categories where your institution allows file upload",
     "curators": {
+      "active_area_of_responsibilities": "Active areas of responsibility",
+      "add_curator": "Add curator",
+      "added_area_of_responsibilities": "Added areas of responsibility",
       "administer_curators": "Administer access for curators",
       "area_of_responsibility": "Area of responsibility",
+      "area_of_responsibility_description": "<0>Add areas of responsibility that the curator is linked to.</0><0>If you add an area of responsibility that is a superior or subordinate unit to an area of responsibility that the curator is already linked to, the area of responsibility for the superior or subordinate unit is removed.</0><0>If you remove areas of responsibility for the curator, check that there are other curators linked to that area of responsibility.</0>",
       "curators": "Curators",
       "curators_count_one": "{{count}} curator",
       "curators_count_other": "{{count}} curators",
       "edit_user": "Change user",
       "no_users_found": "No users found",
+      "removed_area_of_responsibilities": "Removed areas of responsibility",
       "role": {
         "Curator-thesis": "Student theses",
         "Curator-thesis-embargo": "Embargo",
@@ -373,7 +381,9 @@
         "Nvi-Curator": "NVI",
         "Publishing-Curator": "Publishing",
         "Support-Curator": "User support"
-      }
+      },
+      "search_for_curator": "Search for curator",
+      "search_for_unit": "Search for unit"
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about the result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
@@ -403,7 +413,8 @@
       "institution_support_description": "The institution's user support is shown under curator support.",
       "not_rbo_funded": "The institution does not receive funding via Results-based redistribution (RBO)",
       "organizing": "Organization",
-      "rbo_funded": "The institution receives funding via Results-based redistribution (RBO)"
+      "rbo_funded": "The institution receives funding via Results-based redistribution (RBO)",
+      "unique_feide_id": "Unique Feide ID"
     },
     "organization_overview": "Organizational structure",
     "publish_strategy": {
@@ -419,7 +430,7 @@
       "creator_can_override_rrs_text": "<0>The institution has made it possible for the registrar to choose not to follow the institution's rights retention strategy (RRS). By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></0> <1>In NVA, the registrar removes RRS from the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By removing the check from RRS, the selected license on the file is removed and the license must be selected again.</1>",
       "curator_can_override_rrs_text": "<0>The publishing curator has access to set that files do not follow the institution's rights retention strategy (RRS).</0> <0>If the registrar does not wish to follow the institution's rights retention strategy (RRS), look at the terms for not following RRS on the information page about the institution's rights retention strategy.</0> <1>By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S</0>.</1>",
       "customer_has_no_rrs": "<0>The institution has not provided a rights retention strategy (RRS) in NVA.</0> <0>Without an institutional rights retention strategy, it is up to the registrar to set the correct license on the accepted version of files in the registration of scientific articles.</0> <1>It is up to the registrar to potentially mark whether the publication should follow an RRS. By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></1> <0>If the publication is funded by an actor that requires adherence to RRS (ref. Plan S), then RRS must be set. In NVA, the registrar sets RRS on the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By checking the box for RRS, the license for the file is set to CC-BY.</0>",
-      "customer_has_rrs_text": "<0>The institution has provided a rights retention strategy (RRS) in NVA.</0> <0>The CC-BY licence is set when you choose the accepted version of the file in the registration of a scientific article in NVA.</0>v",
+      "customer_has_rrs_text": "<0>The institution has provided a rights retention strategy (RRS) in NVA.</0> <0>The CC-BY license is set when you choose the accepted version of the file in the registration of a scientific article in NVA.</0>v",
       "possible_not_to_follow_rrs": "Possible to not follow the institution's rights retention policy",
       "rights_retention_strategy": "Rights Retention Strategy (RRS)",
       "rrs": "Rights policy",
@@ -636,6 +647,14 @@
       "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
     }
   },
+  "log": {
+    "archived_file_one": "{{count}} file archived afterwards",
+    "archived_file_other": "{{count}} files archived afterwards",
+    "archived_files_on_registration_one": "The registration has {{count}} archived file",
+    "archived_files_on_registration_other": "The registration has {{count}} archived files",
+    "deleted_file_one": "{{count}} files deleted afterwards",
+    "deleted_file_other": "{{count}} files deleted afterwards"
+  },
   "my_page": {
     "messages": {
       "all_ticket_types": "All statuses",
@@ -736,7 +755,7 @@
       "published": "Published",
       "unpublished": "Draft"
     },
-    "research_profile": "Research profile",
+    "research_profile": "Researcher profile",
     "roles": {
       "app_admin": "System administrator",
       "app_admin_description": "Registers new institutions in the service and assigns the Administrator role.",
@@ -759,7 +778,11 @@
       "publishing_curator": "Publishing curator",
       "publishing_curator_description": "Can view and handle publishing requests.",
       "support_curator": "User support curator",
-      "support_curator_description": "Can view and handle user support requests."
+      "support_curator_description": "Can view and handle user support requests.",
+      "thesis_curator": "Thesis curator",
+      "thesis_curator_description": "Can create and edit theses.",
+      "thesis_embargo_curator": "Thesis with embargo curator",
+      "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
   },
   "privacy": {
@@ -1841,6 +1864,7 @@
       "save_note": "Save note",
       "status": {
         "Approved": "Approved",
+        "New": "Candidate",
         "Pending": "Candidate",
         "Rejected": "Rejected"
       },
@@ -1861,7 +1885,7 @@
     "unpublish_registration": "Unpublish research result",
     "unpublish_registration_detail_1": "Upon unpublishing, the research result will not be searchable in NVA, but will still be available when looking up the reference.",
     "unpublish_registration_detail_2": "Any files will be removed from the research result by unpublishing, but will not be permanently deleted.",
-    "unpublish_registration_duplicate_citation_information": "In order for all citations to be carried forward, you must look up the other registration. Then all citations will still lead to the other version",
+    "unpublish_registration_duplicate_citation_information": "In order for all citations to be carried forward, you must look up the other registration. Then all citations will still lead to the other version.",
     "unpublish_registration_duplicate_question": "Is there another published version of the same research result?",
     "unpublish_registration_reason": "Enter a brief justification for why this research result should no longer be published. The justification will be displayed on the research result when looking up the reference to the research result."
   }

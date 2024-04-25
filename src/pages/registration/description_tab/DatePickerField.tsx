@@ -78,7 +78,7 @@ export const DatePickerField = () => {
         }}
       />
       <FormControlLabel
-        sx={{ alignSelf: 'start', mt: '0.4rem' }} // Center field regardless of error state of published date field
+        sx={{ alignSelf: 'start', mt: '0.4rem', width: 'fit-content' }} // Center field regardless of error state of published date field
         control={
           <Checkbox
             checked={yearOnly}

@@ -63,6 +63,7 @@ export const SearchListItem = styled(ListItem)(({ theme }) => ({
   borderLeft: '1.25rem solid',
   flexDirection: 'column',
   alignItems: 'start',
+  background: 'white',
 }));
 
 export const StyledStatusCheckbox = styled(Checkbox)({

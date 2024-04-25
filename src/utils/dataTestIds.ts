@@ -29,7 +29,7 @@ export const dataTestId = {
     centralImportAccordion: 'central-import-accordion',
     customers: {
       customerList: 'customer-institutions-list',
-      editInstitutionButton: (name: string) => `edit-institution-button-${name.toLowerCase().replaceAll(' ', '-')}`,
+      editInstitutionButton: (id: string) => `edit-institution-button-${id}`,
     },
     institutionsAccordion: 'institutions-accordion',
     institutionAdmin: {
@@ -88,9 +88,11 @@ export const dataTestId = {
     subSearchField: 'sub-organization-search-field',
   },
   editor: {
+    addCuratorButton: (id: string) => `add-curator-button-${id}`,
     categoriesLinkButton: 'categories-link-button',
     curatorsOverviewLinkButton: 'curators-overview-link-button',
     curatorsSettingsLinkButton: 'curators-settings-link-button',
+    curatorsSearchForPersonField: 'curators-search-for-person-field',
     editUserButton: 'edit-user-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
     institutionSupportInputField: 'institution-support-input-field',
@@ -524,6 +526,8 @@ export const dataTestId = {
     messagesAccordion: 'messages-accordion',
     myMessages: {
       ticketStatusField: 'ticket-status-field',
+      ticketFilterFromDatePicker: 'ticket-filter-from-date-picker',
+      ticketFilterToDatePicker: 'ticket-filter-to-date-picker',
     },
     myProfileLink: 'my-profile-link',
     myProfile: {
