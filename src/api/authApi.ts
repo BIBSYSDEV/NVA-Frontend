@@ -1,4 +1,4 @@
-import { fetchAuthSession, fetchUserAttributes, signOut } from 'aws-amplify/auth';
+import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
 import { FeideUser } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA, redirectPathQueryKey } from '../utils/constants';
 import { getCurrentPath } from '../utils/general-helpers';
@@ -26,11 +26,6 @@ export const getAccessToken = async () => {
   }
   try {
     const currentSession = await fetchAuthSession();
-    if (window.location.pathname.startsWith('/tasks')) {
-      // TODO: REMOVE THIS
-      (currentSession as any).tokens = null;
-      await signOut();
-    }
     if (currentSession.tokens) {
       return currentSession.tokens.accessToken.toString();
     } else {
