@@ -49,4 +49,15 @@ export const getInitials = (name: string) => {
   return `${firstNameInitial}${lastNameInitial}`.toUpperCase();
 };
 
-export const getCurrentPath = () => `${window.location.pathname}${window.location.search}`;
+export const getCurrentPath = () => {
+  const pathname = window.location.pathname;
+  const searchParams = new URLSearchParams(window.location.search);
+  const queryString = searchParams.toString();
+
+  if (queryString) {
+    const encodedSearchParams = encodeURIComponent(queryString);
+    return `${pathname}?${encodedSearchParams}`;
+  } else {
+    return pathname;
+  }
+};

@@ -34,7 +34,7 @@ export const getAccessToken = async () => {
     if (currentSession.tokens) {
       return currentSession.tokens.accessToken.toString();
     } else {
-      window.location.href = `${UrlPathTemplate.SignedOut}?path=${getCurrentPath()}`;
+      window.location.href = `${UrlPathTemplate.SignedOut}?path=${encodeURIComponent(getCurrentPath())}`;
       return null;
     }
   } catch {
