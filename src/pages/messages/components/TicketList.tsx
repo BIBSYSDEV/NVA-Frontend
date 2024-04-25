@@ -1,4 +1,4 @@
-import { Box, Chip, Grid, List, Typography } from '@mui/material';
+import { Grid, List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
-import { CategoryChip } from '../../../components/CategorySelector';
+import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { DialoguesWithoutCuratorButton } from '../../../components/DialoguesWithoutCuratorButton';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -20,7 +20,6 @@ import { PublicationInstanceType } from '../../../types/registration.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import { CategoryFilterDialog } from '../../search/advanced_search/CategoryFilterDialog';
 import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { TicketListItem } from './TicketListItem';
 
@@ -100,41 +99,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         </Grid>
 
         <Grid item>
-          <section>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-              {publicationType.slice(0, 3).map((category) => (
-                <CategoryChip
-                  key={category}
-                  category={{
-                    value: category,
-                    text: t(`registration.publication_types.${category}`),
-                    selected: true,
-                  }}
-                  onClickChip={toggleCategoryFilter}
-                />
-              ))}
-              {publicationType.length > 3 ? (
-                <Chip
-                  label={t('common.x_others', { count: publicationType.length - 3 })}
-                  variant="filled"
-                  color="primary"
-                  onClick={toggleCategoryFilter}
-                />
-              ) : (
-                <Chip
-                  label={t('registration.resource_type.select_resource_type')}
-                  color="primary"
-                  onClick={toggleCategoryFilter}
-                />
-              )}
-            </Box>
-            <CategoryFilterDialog
-              open={openCategoryFilter}
-              currentCategories={publicationType}
-              closeDialog={toggleCategoryFilter}
-              searchParam={TicketSearchParam.PublicationType}
-            />
-          </section>
+          <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
         </Grid>
       </Grid>
 

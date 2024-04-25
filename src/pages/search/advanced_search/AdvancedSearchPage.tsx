@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Checkbox,
-  Chip,
   Divider,
   FormControlLabel,
   Grid,
@@ -16,7 +15,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
-import { CategoryChip } from '../../../components/CategorySelector';
+import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { SearchForm } from '../../../components/SearchForm';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
 import { PublicationInstanceType } from '../../../types/registration.types';
@@ -25,7 +24,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { ExportResultsButton } from '../ExportResultsButton';
 import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
-import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
@@ -130,41 +128,7 @@ export const AdvancedSearchPage = () => {
 
           <Grid item>
             <StyledTypography fontWeight="bold">{t('common.category')}</StyledTypography>
-            <section>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-                {categoryShould.slice(0, 3).map((category) => (
-                  <CategoryChip
-                    key={category}
-                    category={{
-                      value: category,
-                      text: t(`registration.publication_types.${category}`),
-                      selected: true,
-                    }}
-                    onClickChip={toggleCategoryFilter}
-                  />
-                ))}
-                {categoryShould.length > 3 ? (
-                  <Chip
-                    label={t('common.x_others', { count: categoryShould.length - 3 })}
-                    variant="filled"
-                    color="primary"
-                    onClick={toggleCategoryFilter}
-                  />
-                ) : (
-                  <Chip
-                    label={t('registration.resource_type.select_resource_type')}
-                    color="primary"
-                    onClick={toggleCategoryFilter}
-                  />
-                )}
-              </Box>
-              <CategoryFilterDialog
-                open={openCategoryFilter}
-                currentCategories={categoryShould}
-                closeDialog={toggleCategoryFilter}
-                searchParam={ResultParam.CategoryShould}
-              />
-            </section>
+            <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
           </Grid>
 
           {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
