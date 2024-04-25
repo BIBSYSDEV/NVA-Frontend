@@ -1,6 +1,6 @@
 import { Grid, List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -16,7 +16,6 @@ import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
-import { PublicationInstanceType } from '../../../types/registration.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
@@ -36,12 +35,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
   const { t } = useTranslation();
   const history = useHistory();
   const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
-  const params = new URLSearchParams(history.location.search);
-  const publicationType =
-    (params.get(TicketSearchParam.PublicationType)?.split(',') as PublicationInstanceType[] | null) ?? [];
-
-  const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
-  const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
+  const isOnMyPage = history.location.pathname === UrlPathTemplate.MyPageMyMessages;
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
 
@@ -94,13 +88,18 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             </Grid>
           </>
         )}
-        <Grid item xs={16} md={6} lg={5}>
-          <TicketDateIntervalFilter />
-        </Grid>
 
-        <Grid item>
-          <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
-        </Grid>
+        {isOnMyPage && (
+          <>
+            <Grid item xs={16} md={6} lg={5}>
+              <TicketDateIntervalFilter />
+            </Grid>
+
+            <Grid item>
+              <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
+            </Grid>
+          </>
+        )}
       </Grid>
 
       {ticketsQuery.isLoading ? (
