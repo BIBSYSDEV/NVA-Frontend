@@ -8,7 +8,7 @@ import { PublicationInstanceType } from '../types/registration.types';
 import { CategoryChip } from './CategorySelector';
 
 interface CategorySearchFilterProps {
-  searchParam: ResultParam | TicketSearchParam;
+  searchParam: ResultParam.CategoryShould | TicketSearchParam.PublicationType;
 }
 
 export const CategorySearchFilter = ({ searchParam }: CategorySearchFilterProps) => {

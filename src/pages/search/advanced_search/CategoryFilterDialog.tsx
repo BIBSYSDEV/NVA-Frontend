@@ -10,7 +10,7 @@ interface CategoryFilterDialogProps {
   open: boolean;
   currentCategories: PublicationInstanceType[];
   closeDialog: () => void;
-  searchParam: ResultParam | TicketSearchParam;
+  searchParam: ResultParam.CategoryShould | TicketSearchParam.PublicationType;
 }
 
 export const CategoryFilterDialog = ({

@@ -3,7 +3,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
@@ -33,9 +33,9 @@ interface TicketListProps {
 
 export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
-  const isOnMyPage = history.location.pathname === UrlPathTemplate.MyPageMyMessages;
+  const location = useLocation();
+  const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
+  const isOnMyPage = location.pathname === UrlPathTemplate.MyPageMyMessages;
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
 
