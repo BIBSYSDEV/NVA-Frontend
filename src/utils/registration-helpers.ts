@@ -6,6 +6,21 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/ass
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+  allPublicationInstanceTypes,
+} from '../types/publicationFieldNames';
+import {
   AudioVisualPublication,
   Award,
   Broadcast,
@@ -30,21 +45,6 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import {
-  allPublicationInstanceTypes,
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-} from '../types/publicationFieldNames';
 import {
   Journal,
   PublicationInstanceType,
@@ -633,16 +633,16 @@ export const getOutputName = (item: OutputItem): string => {
 };
 
 export const userCanEditRegistration = (registration: Registration) =>
-  registration.allowedOperations.includes('update');
+  registration.allowedOperations?.includes('update');
 
 export const userCanUnpublishRegistration = (registration: Registration) =>
-  registration.allowedOperations.includes('unpublish');
+  registration.allowedOperations?.includes('unpublish');
 
 export const userCanPublishRegistration = (registration: Registration) =>
-  registration.allowedOperations.includes('ticket/publish');
+  registration.allowedOperations?.includes('ticket/publish');
 
 export const userCanDeleteRegistration = (registration: Registration) =>
-  registration.allowedOperations.includes('delete');
+  registration.allowedOperations?.includes('delete');
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';

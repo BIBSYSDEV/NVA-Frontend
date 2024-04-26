@@ -362,12 +362,12 @@
     "categories_with_files": "Kategorier med filopplasting",
     "categories_with_files_description": "Angi kategoriane der institusjonen din tillèt filopplasting",
     "curators": {
-      "active_area_of_responsibilities": "",
+      "active_area_of_responsibilities": "Tilknytta ansvarsområder",
       "add_curator": "Legg til kurator",
       "added_area_of_responsibilities": "Ansvarsområder som blir lagt til",
       "administer_curators": "Administrer tilgånger til kuratorar",
       "area_of_responsibility": "Ansvarsområde",
-      "area_of_responsibility_description": "",
+      "area_of_responsibility_description": "<0>Legg til ansvarsområde som kuratoren er knytt til.</0><0>Legg du til eit ansvarsområde som er ei over- eller undereining på eit ansvarsområde som kurator allereie er tilknytt, så blir ansvarsområdet til over- eller undereininga fjerna.</0><0>Fjernar du ansvarsområde for kuratoren, så sjekk at det er andre kuratorar som er tilknytt det ansvarsområdet.</0>",
       "curators": "Kuratorar",
       "curators_count_one": "{{count}} kurator",
       "curators_count_other": "{{count}} kuratorar",
@@ -381,7 +381,9 @@
         "Nvi-Curator": "NVI",
         "Publishing-Curator": "Publisering",
         "Support-Curator": "Brukarstøtte"
-      }
+      },
+      "search_for_curator": "Søk etter kurator",
+      "search_for_unit": "Søk etter eining"
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er ein persistent identifikator.|Gjer det enklare å sitere publikasjonar korrekt.|Metadata om resultatet blir delt internasjonalt.|Synlegheita til resultatet aukar.|Bidreg til å oppfylle FAIR-prinsippa.|Støttar open forsking.",
@@ -648,6 +650,8 @@
   "log": {
     "archived_file_one": "{{count}} fil arkivert i etterkant",
     "archived_file_other": "{{count}} filer arkivert i etterkant",
+    "archived_files_on_registration_one": "Registreringa har {{count}} arkivert fil",
+    "archived_files_on_registration_other": "Registreringa har {{count}} arkiverte filer",
     "deleted_file_one": "{{count}} fil sletta i etterkant",
     "deleted_file_other": "{{count}} filer sletta i etterkant"
   },

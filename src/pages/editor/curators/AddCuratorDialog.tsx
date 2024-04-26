@@ -7,22 +7,21 @@ import {
   DialogContent,
   DialogProps,
   DialogTitle,
-  Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { fetchUser } from '../../../api/roleApi';
+import { CreateUserPayload, fetchUser } from '../../../api/roleApi';
 import { fetchEmployees } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
-import { CristinPerson, InstitutionUser } from '../../../types/user.types';
+import { CristinPerson, InstitutionUser, RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getAllChildOrganizations } from '../../../utils/institutions-helpers';
-import { getFullCristinName, getUsername } from '../../../utils/user-helpers';
+import { getFullCristinName, getUsername, getValueByKey } from '../../../utils/user-helpers';
 import { AddCuratorForm } from './AddCuratorForm';
 import { OrganizationCuratorsAccordionProps } from './OrganizationCuratorsAccordion';
 
@@ -48,7 +47,7 @@ export const AddCuratorDialog = ({
   const debouncedSearchQuery = useDebounce(searchQuery);
 
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson | null>(null);
-  const [userInitialValues, setUserInitialValues] = useState<InstitutionUser | null>(null);
+  const [userInitialValues, setUserInitialValues] = useState<InstitutionUser | CreateUserPayload | null>(null);
 
   const closeDialog = () => {
     setSearchQuery('');
@@ -97,10 +96,20 @@ export const AddCuratorDialog = ({
           includedUnits: viewingScope,
         },
       };
-
       setUserInitialValues(initialValues);
+    } else if (userQuery.isError && selectedPerson && user?.customerId) {
+      const newUser: CreateUserPayload = {
+        cristinIdentifier: getValueByKey('CristinIdentifier', selectedPerson.identifiers),
+        roles: [{ type: 'Role', rolename: RoleName.Creator }],
+        customerId: user.customerId,
+        viewingScope: {
+          type: 'ViewingScope',
+          includedUnits: [currentOrganization.id],
+        },
+      };
+      setUserInitialValues(newUser);
     }
-  }, [currentOrganization, parentOrganizationIds, userQuery.data]);
+  }, [currentOrganization, parentOrganizationIds, userQuery.data, userQuery.isError, selectedPerson, user?.customerId]);
 
   return (
     <Dialog open={open} onClose={closeDialog} maxWidth="sm" fullWidth>
@@ -114,17 +123,10 @@ export const AddCuratorDialog = ({
               {getFullCristinName(option.names)}
             </li>
           )}
-          onInputChange={(_, value, reason) => {
-            if (reason === 'clear' || reason === 'reset') {
-              setSearchQuery('');
-              setSelectedPerson(null);
-              setUserInitialValues(null);
-            } else {
-              setSearchQuery(value);
-            }
-          }}
+          onInputChange={(_, value) => setSearchQuery(value)}
           onChange={async (_, value) => {
             setSearchQuery('');
+            setUserInitialValues(null);
             setSelectedPerson(value);
           }}
           getOptionLabel={(option) => getFullCristinName(option.names)}
@@ -145,32 +147,21 @@ export const AddCuratorDialog = ({
 
         {selectedPerson && (
           <>
-            {userQuery.isLoading || (userQuery.data && !userInitialValues) ? (
+            {userQuery.isLoading || !userInitialValues ? (
               <CircularProgress aria-label={t('editor.curators.add_curator')} />
-            ) : userQuery.data && userInitialValues ? (
+            ) : (
               <AddCuratorForm
                 closeDialog={closeDialog}
                 initialValues={userInitialValues}
-                currentViewingScope={userQuery.data.viewingScope.includedUnits}
+                currentViewingScope={userQuery.data?.viewingScope.includedUnits ?? []}
                 refetchCurators={refetchCurators}
               />
-            ) : (
-              <>
-                {/* TODO: Support creation of new User */}
-                <Typography>
-                  Brukeren du ønsker å legge til som kurator må logge inn i løsningnen for å få tildelt en bruker før du
-                  kan gi dem kuratortilgang.
-                </Typography>
-                <Typography>
-                  Be {getFullCristinName(selectedPerson.names)} om å logge inn i NVA før du prøver igjen.
-                </Typography>
-              </>
             )}
           </>
         )}
       </DialogContent>
 
-      {(!selectedPerson || !userQuery.data) && (
+      {!userInitialValues && (
         <DialogActions sx={{ justifyContent: 'center' }}>
           <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={closeDialog}>
             {t('common.cancel')}
