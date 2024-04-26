@@ -78,6 +78,7 @@ const MyPagePage = () => {
   const ticketSearchParams: FetchTicketsParams = {
     query: searchParams.get(TicketSearchParam.Query),
     results: rowsPerPage,
+    createdDate: searchParams.get(TicketSearchParam.CreatedDate),
     from: apiPage * rowsPerPage,
     owner: user?.nvaUsername,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
@@ -85,6 +86,7 @@ const MyPagePage = () => {
     status: searchParams.get(TicketSearchParam.Status),
     viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
     type: selectedTypesArray.join(','),
+    publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
 
   const ticketsQuery = useQuery({

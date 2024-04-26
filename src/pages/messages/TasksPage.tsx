@@ -135,6 +135,7 @@ const TasksPage = () => {
     status: searchParams.get(TicketSearchParam.Status),
     type: selectedTicketTypes.join(','),
     viewedByNot: ticketUnreadFilter && user ? user.nvaUsername : '',
+    createdDate: searchParams.get(TicketSearchParam.CreatedDate),
   };
 
   const ticketsQuery = useQuery({

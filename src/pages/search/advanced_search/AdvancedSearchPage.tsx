@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Checkbox,
-  Chip,
   Divider,
   FormControlLabel,
   Grid,
@@ -12,20 +11,18 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../../api/searchApi';
-import { CategoryChip } from '../../../components/CategorySelector';
+import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
+import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { SearchForm } from '../../../components/SearchForm';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ExportResultsButton } from '../ExportResultsButton';
-import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter';
+import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
-import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
@@ -53,9 +50,6 @@ export const AdvancedSearchPage = () => {
   const history = useHistory();
   const showFilterDivider = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
-
-  const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
-  const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
 
   const params = new URLSearchParams(history.location.search);
 
@@ -123,47 +117,14 @@ export const AdvancedSearchPage = () => {
         <Grid item container direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
           <Grid item sx={{ width: 'fit-content' }}>
             <StyledTypography fontWeight="bold">{t('search.advanced_search.publishing_period')}</StyledTypography>
-            <PublicationDateIntervalFilter />
+            <PublicationYearIntervalFilter />
           </Grid>
 
           {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
             <StyledTypography fontWeight="bold">{t('common.category')}</StyledTypography>
-            <section>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-                {categoryShould.slice(0, 3).map((category) => (
-                  <CategoryChip
-                    key={category}
-                    category={{
-                      value: category,
-                      text: t(`registration.publication_types.${category}`),
-                      selected: true,
-                    }}
-                    onClickChip={toggleCategoryFilter}
-                  />
-                ))}
-                {categoryShould.length > 3 ? (
-                  <Chip
-                    label={t('common.x_others', { count: categoryShould.length - 3 })}
-                    variant="filled"
-                    color="primary"
-                    onClick={toggleCategoryFilter}
-                  />
-                ) : (
-                  <Chip
-                    label={t('registration.resource_type.select_resource_type')}
-                    color="primary"
-                    onClick={toggleCategoryFilter}
-                  />
-                )}
-              </Box>
-              <CategoryFilterDialog
-                open={openCategoryFilter}
-                currentCategories={categoryShould}
-                closeDialog={toggleCategoryFilter}
-              />
-            </section>
+            <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
           </Grid>
 
           {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}

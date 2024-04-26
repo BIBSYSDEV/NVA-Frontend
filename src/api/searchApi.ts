@@ -10,10 +10,12 @@ import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 export enum TicketSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
+  CreatedDate = 'createdDate',
   ExcludeSubUnits = 'excludeSubUnits',
   From = 'from',
   OrderBy = 'orderBy',
   Owner = 'owner',
+  PublicationType = 'publicationType',
   Query = 'query',
   Results = 'results',
   Role = 'role',
@@ -27,10 +29,12 @@ export enum TicketSearchParam {
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
+  [TicketSearchParam.CreatedDate]?: string | null;
   [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
   [TicketSearchParam.OrderBy]?: 'createdDate' | null;
   [TicketSearchParam.Owner]?: string | null;
+  [TicketSearchParam.PublicationType]?: string | null;
   [TicketSearchParam.Query]?: string | null;
   [TicketSearchParam.Results]?: number | null;
   [TicketSearchParam.Role]?: 'creator';
@@ -52,6 +56,10 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
     searchParams.set(TicketSearchParam.Assignee, params.assignee);
   }
 
+  if (params.createdDate) {
+    searchParams.set(TicketSearchParam.CreatedDate, params.createdDate);
+  }
+
   if (params.excludeSubUnits) {
     searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
   }
@@ -62,6 +70,10 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   if (params.owner) {
     searchParams.set(TicketSearchParam.Owner, params.owner);
+  }
+
+  if (params.publicationType) {
+    searchParams.set(TicketSearchParam.PublicationType, params.publicationType);
   }
 
   if (params.query) {
