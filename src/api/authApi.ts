@@ -4,19 +4,12 @@ import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { getCurrentPath } from '../utils/general-helpers';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
-export const getUserAttributes = async (retryNumber = 0): Promise<FeideUser | null> => {
+export const getUserAttributes = async (): Promise<FeideUser | null> => {
   try {
     const userAttributes = (await fetchUserAttributes()) as FeideUser;
     return userAttributes;
-  } catch (error) {
-    if (localStorage.getItem(LocalStorageKey.AmplifyRedirect) && retryNumber < 3) {
-      // Retry when user has signed in, as the user attributes are not always available immediately for some reason
-      await new Promise((resolve) => setTimeout(resolve, 1000 * (retryNumber + 1)));
-      return await getUserAttributes(retryNumber + 1);
-    }
+  } catch {
     return null;
-  } finally {
-    localStorage.removeItem(LocalStorageKey.AmplifyRedirect);
   }
 };
 
