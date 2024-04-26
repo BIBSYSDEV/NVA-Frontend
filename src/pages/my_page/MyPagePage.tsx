@@ -86,6 +86,7 @@ const MyPagePage = () => {
     status: searchParams.get(TicketSearchParam.Status),
     viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
     type: selectedTypesArray.join(','),
+    publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
 
   const ticketsQuery = useQuery({
