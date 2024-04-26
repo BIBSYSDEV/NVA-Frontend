@@ -57,6 +57,7 @@ export enum UrlPathTemplate {
   ReportsInternationalCooperation = '/reports/international-cooperation',
   ReportsNvi = '/reports/nvi',
   Search = '/search',
+  SignedOut = '/signed-out',
   Tasks = '/tasks',
   TasksDialogue = '/tasks/dialogue',
   TasksDialogueRegistration = '/tasks/dialogue/:identifier',
