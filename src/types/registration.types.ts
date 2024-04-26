@@ -110,7 +110,7 @@ export interface BaseRegistration {
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
-  readonly allowedOperations: RegistrationOperation[];
+  readonly allowedOperations?: RegistrationOperation[];
   readonly publicationNotes?: PublicationNote[];
   subjects: string[];
   projects: ResearchProject[];

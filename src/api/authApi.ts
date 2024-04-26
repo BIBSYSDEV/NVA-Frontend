@@ -1,6 +1,7 @@
 import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
 import { FeideUser } from '../types/user.types';
-import { USE_MOCK_DATA } from '../utils/constants';
+import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
+import { getCurrentPath } from '../utils/general-helpers';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 export const getUserAttributes = async (): Promise<FeideUser | null> => {
@@ -18,11 +19,15 @@ export const getAccessToken = async () => {
   }
   try {
     const currentSession = await fetchAuthSession();
-    return currentSession.tokens?.accessToken.toString() ?? null;
-  } catch (error) {
-    if (error === 'The user is not authenticated') {
-      window.location.href = UrlPathTemplate.Home;
+    if (currentSession.tokens) {
+      return currentSession.tokens.accessToken.toString();
+    } else {
+      const searchParams = new URLSearchParams();
+      searchParams.set(LocalStorageKey.RedirectPath, getCurrentPath());
+      window.location.href = `${UrlPathTemplate.SignedOut}?${searchParams.toString()}`;
+      return null;
     }
+  } catch {
     return null;
   }
 };
