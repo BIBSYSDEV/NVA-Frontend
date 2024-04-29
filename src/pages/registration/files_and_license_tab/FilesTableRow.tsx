@@ -2,6 +2,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {
   Box,
   Checkbox,
@@ -10,10 +11,10 @@ import {
   FormControlLabel,
   FormHelperText,
   IconButton,
+  Link as MuiLink,
   ListItemIcon,
   ListItemText,
   MenuItem,
-  Link as MuiLink,
   Paper,
   Popover,
   Radio,
@@ -35,7 +36,7 @@ import { TruncatableTypography } from '../../../components/TruncatableTypography
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
-import { LicenseUri, licenses } from '../../../types/license.types';
+import { licenses, LicenseUri } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -87,6 +88,12 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
+
+  const [inactiveLicensesOpen, setInactiveLicensesOpen] = useState(false);
+  const activeLicenses = licenses.filter(
+    (license) => license.version === 4 || license.id === LicenseUri.CC0 || license.id === LicenseUri.RightsReserved
+  );
+  const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
 
   return (
     <>
@@ -230,24 +237,48 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 label={t('registration.files_and_license.conditions_for_using_file')}
                 required
                 onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
-                {licenses
-                  .filter((license) => license.version === 4 || !license.version)
-                  .map((license) => (
-                    <MenuItem
-                      data-testid={dataTestId.registrationWizard.files.licenseItem}
-                      key={license.id}
-                      value={license.id}
-                      divider
-                      dense
-                      sx={{ gap: '1rem' }}>
-                      <ListItemIcon>
-                        <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                      </ListItemIcon>
-                      <ListItemText>
-                        <Typography>{license.name}</Typography>
-                      </ListItemText>
-                    </MenuItem>
-                  ))}
+                {activeLicenses.map((license) => (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItem}
+                    key={license.id}
+                    value={license.id}
+                    divider
+                    dense
+                    sx={{ gap: '1rem' }}>
+                    <ListItemIcon>
+                      <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography>{license.name}</Typography>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
+                <MenuItem
+                  data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
+                  title={t('registration.files_and_license.show_all_older_versions')}
+                  sx={{ display: 'flex', justifyContent: 'center' }}
+                  onClickCapture={(e) => {
+                    e.stopPropagation();
+                    setInactiveLicensesOpen(!inactiveLicensesOpen);
+                  }}>
+                  <MoreHorizIcon />
+                </MenuItem>
+                {inactiveLicenses.map((license) => (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItem}
+                    key={license.id}
+                    value={license.id}
+                    divider
+                    dense
+                    sx={{ gap: '1rem', display: inactiveLicensesOpen ? 'flex' : 'none' }}>
+                    <ListItemIcon>
+                      <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography>{license.name}</Typography>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
               </TextField>
             )}
           </Field>
