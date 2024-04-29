@@ -35,11 +35,7 @@ export const getAccessToken = async () => {
 export const userIsAuthenticated = async () => {
   try {
     const cognitoUser = await fetchAuthSession();
-    if (cognitoUser) {
-      return true;
-    } else {
-      return false;
-    }
+    return !!cognitoUser.tokens;
   } catch {
     return false;
   }
