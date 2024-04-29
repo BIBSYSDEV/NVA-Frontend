@@ -111,11 +111,61 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 export type SortOrder = 'desc' | 'asc';
 export type ImportCandidateOrderBy = 'createdDate' | 'importStatus.modifiedDate';
 
-export interface FetchImportCandidatesParams {
-  query?: string;
-  orderBy?: ImportCandidateOrderBy;
-  sortOrder?: SortOrder;
+// export interface FetchImportCandidatesParams {
+//   query?: string;
+//   orderBy?: ImportCandidateOrderBy;
+//   sortOrder?: SortOrder;
+// }
+
+export enum ImportCandidatesSearchParam {
+  Aggregation = 'aggregation',
+  From = 'from',
+  OrderBy = 'orderBy',
+  Query = 'query',
+  Results = 'results',
+  SortOrder = 'sortOrder',
 }
+
+export interface FetchImportCandidatesParams {
+  [ImportCandidatesSearchParam.Aggregation]?: 'all' | null;
+  [ImportCandidatesSearchParam.From]?: number | null;
+  [ImportCandidatesSearchParam.OrderBy]?: ImportCandidateOrderBy | null;
+  [ImportCandidatesSearchParam.Query]?: string | null;
+  [ImportCandidatesSearchParam.Results]?: number | null;
+  [ImportCandidatesSearchParam.SortOrder]?: SortOrder | null;
+}
+
+export const fetchImportCandidates2 = async ({
+  from,
+  results,
+  query,
+  orderBy,
+  sortOrder,
+}: FetchImportCandidatesParams) => {
+  const params = new URLSearchParams();
+
+  params.set(ImportCandidatesSearchParam.Results, (results ?? 10).toString());
+  params.set(ImportCandidatesSearchParam.From, (from ?? 0).toString());
+
+  if (query) {
+    params.set(ImportCandidatesSearchParam.Query, query);
+  }
+  if (orderBy) {
+    params.set(ImportCandidatesSearchParam.OrderBy, orderBy);
+  }
+  if (sortOrder) {
+    params.set(ImportCandidatesSearchParam.SortOrder, sortOrder);
+  }
+  const paramsString = params.toString();
+
+  const getImportCandidates = await authenticatedApiRequest2<
+    SearchResponse<ImportCandidateSummary, ImportCandidateAggregations>
+  >({
+    url: `${SearchApiPath.ImportCandidates}?${paramsString}`,
+  });
+
+  return getImportCandidates.data;
+};
 
 export const fetchImportCandidates = async (
   results: number,
