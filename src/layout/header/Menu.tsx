@@ -5,7 +5,7 @@ import { MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getById } from '../../api/commonApi';
+import { fetchResource } from '../../api/commonApi';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -27,7 +27,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const organizationQuery = useQuery({
     enabled: !!institutionId,
     queryKey: ['organization', institutionId],
-    queryFn: () => getById<Organization>(institutionId),
+    queryFn: () => fetchResource<Organization>(institutionId),
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },

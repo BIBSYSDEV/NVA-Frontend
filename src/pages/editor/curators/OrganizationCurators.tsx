@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getById } from '../../../api/commonApi';
+import { fetchResource } from '../../../api/commonApi';
 import { fetchUsers } from '../../../api/roleApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { ListSkeleton } from '../../../components/ListSkeleton';
@@ -43,7 +43,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
   const organizationQuery = useQuery({
     queryKey: ['organization', organizationId],
     enabled: !!organizationId,
-    queryFn: organizationId ? () => getById<Organization>(organizationId) : undefined,
+    queryFn: organizationId ? () => fetchResource<Organization>(organizationId) : undefined,
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },

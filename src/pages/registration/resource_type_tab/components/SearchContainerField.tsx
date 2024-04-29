@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getById } from '../../../../api/commonApi';
+import { fetchResource } from '../../../../api/commonApi';
 import { fetchResults } from '../../../../api/searchApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -192,7 +192,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],
     enabled: !!publisherId,
-    queryFn: () => getById<Publisher>(publisherId),
+    queryFn: () => fetchResource<Publisher>(publisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
@@ -200,7 +200,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const seriesQuery = useQuery({
     queryKey: ['channel', seriesId],
     enabled: !!seriesId,
-    queryFn: () => getById<Series>(seriesId),
+    queryFn: () => fetchResource<Series>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
