@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getById } from '../../api/commonApi';
+import { getByIdAuthenticated } from '../../api/commonApi';
 import { fetchUsers } from '../../api/roleApi';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
@@ -36,7 +36,7 @@ export const EditorInstitution = () => {
   const organizationQuery = useQuery({
     enabled: !!institutionId,
     queryKey: [institutionId],
-    queryFn: () => getById<Organization>(institutionId),
+    queryFn: () => getByIdAuthenticated<Organization>(institutionId),
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },

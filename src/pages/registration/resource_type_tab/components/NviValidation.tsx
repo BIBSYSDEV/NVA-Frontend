@@ -2,7 +2,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import { Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { getById } from '../../../../api/commonApi';
+import { getByIdAuthenticated } from '../../../../api/commonApi';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
@@ -46,7 +46,7 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
   const journalQuery = useQuery({
     queryKey: [journalId],
     enabled: !!journalId,
-    queryFn: () => getById<Journal>(journalId),
+    queryFn: () => getByIdAuthenticated<Journal>(journalId),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });
@@ -64,7 +64,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
   const publisherQuery = useQuery({
     queryKey: [publisherId],
     enabled: !!publisherId,
-    queryFn: () => getById<Publisher>(publisherId),
+    queryFn: () => getByIdAuthenticated<Publisher>(publisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
@@ -72,7 +72,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
   const seriesQuery = useQuery({
     queryKey: [seriesId],
     enabled: !!seriesId,
-    queryFn: () => getById<Series>(seriesId),
+    queryFn: () => getByIdAuthenticated<Series>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
@@ -98,7 +98,7 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
   const containerQuery = useQuery({
     queryKey: [containerId],
     enabled: !!containerId,
-    queryFn: () => getById<BookRegistration>(containerId),
+    queryFn: () => getByIdAuthenticated<BookRegistration>(containerId),
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
@@ -108,7 +108,7 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
   const publisherQuery = useQuery({
     queryKey: [publisherId],
     enabled: !!publisherId,
-    queryFn: () => getById<Publisher>(publisherId),
+    queryFn: () => getByIdAuthenticated<Publisher>(publisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
@@ -116,7 +116,7 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
   const seriesQuery = useQuery({
     queryKey: [seriesId],
     enabled: !!seriesId,
-    queryFn: () => getById<Series>(seriesId),
+    queryFn: () => getByIdAuthenticated<Series>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });

@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { getById } from '../../api/commonApi';
+import { getByIdAuthenticated } from '../../api/commonApi';
 import { fetchCustomerTickets } from '../../api/searchApi';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
@@ -37,7 +37,7 @@ export const Header = () => {
   const organizationQuery = useQuery({
     enabled: !!institutionId,
     queryKey: [institutionId],
-    queryFn: () => getById<Organization>(institutionId),
+    queryFn: () => getByIdAuthenticated<Organization>(institutionId),
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },

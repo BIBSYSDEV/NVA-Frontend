@@ -15,7 +15,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { getById } from '../../../../api/commonApi';
+import { getByIdAuthenticated } from '../../../../api/commonApi';
 import { updateCristinPerson } from '../../../../api/cristinApi';
 import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
@@ -64,7 +64,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   const personQuery = useQuery({
     enabled: open && !existingPersonObject && !!personId,
     queryKey: [personId],
-    queryFn: () => getById<CristinPerson>(personId),
+    queryFn: () => getByIdAuthenticated<CristinPerson>(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
   const person = existingPersonObject ?? personQuery.data;
