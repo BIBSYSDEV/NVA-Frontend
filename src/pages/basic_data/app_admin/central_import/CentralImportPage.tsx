@@ -6,8 +6,9 @@ import { useHistory } from 'react-router-dom';
 import {
   FetchImportCandidatesParams,
   ImportCandidateOrderBy,
+  ImportCandidatesSearchParam,
   SortOrder,
-  fetchImportCandidates,
+  fetchImportCandidates2,
 } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
@@ -35,25 +36,24 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
-  const queryValue: ImportCandidateStatus = statusFilter.NOT_IMPORTED
+  const selectedStatusFilter: ImportCandidateStatus = statusFilter.NOT_IMPORTED
     ? 'NOT_IMPORTED'
     : statusFilter.IMPORTED
       ? 'IMPORTED'
       : 'NOT_APPLICABLE';
 
-  const query = [`importStatus.candidateStatus:${queryValue}`, `publicationYear:${yearFilter}`, params.get('query')]
-    .filter(Boolean)
-    .join(' AND ');
-
   const importCandidateQueryParams: FetchImportCandidatesParams = {
-    query,
-    orderBy: (params.get(SearchParam.OrderBy) as ImportCandidateOrderBy | null) ?? 'createdDate',
-    sortOrder: (params.get(SearchParam.SortOrder) as SortOrder | null) ?? 'desc',
+    query: params.get(ImportCandidatesSearchParam.Query),
+    publicationYear: yearFilter.toString(),
+    importStatus: selectedStatusFilter,
+    orderBy: (params.get(ImportCandidatesSearchParam.OrderBy) as ImportCandidateOrderBy | null) ?? 'createdDate',
+    sortOrder: (params.get(ImportCandidatesSearchParam.SortOrder) as SortOrder | null) ?? 'desc',
+    from: page * rowsPerPage,
+    size: rowsPerPage,
   };
-
   const importCandidateQuery = useQuery({
-    queryKey: ['importCandidates', rowsPerPage, page, importCandidateQueryParams],
-    queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, importCandidateQueryParams),
+    queryKey: ['importCandidates', importCandidateQueryParams],
+    queryFn: () => fetchImportCandidates2(importCandidateQueryParams),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 

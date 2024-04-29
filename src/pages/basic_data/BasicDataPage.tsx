@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { fetchImportCandidates } from '../../api/searchApi';
+import { FetchImportCandidatesParams, fetchImportCandidates2 } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -59,10 +59,14 @@ const BasicDataPage = () => {
   });
   const [candidateYearFilter, setCandidateYearFilter] = useState(yearOptions[0]);
 
+  const importCandidatesFacetsParams: FetchImportCandidatesParams = {
+    size: 0,
+    publicationYear: candidateYearFilter.toString(),
+  };
   const importCandidatesFacetsQuery = useQuery({
     enabled: location.pathname === UrlPathTemplate.BasicDataCentralImport,
-    queryKey: ['importCandidatesFacets', candidateYearFilter],
-    queryFn: () => fetchImportCandidates(0, 0, { query: `publicationYear:${candidateYearFilter}` }),
+    queryKey: ['importCandidatesFacets', importCandidatesFacetsParams],
+    queryFn: () => fetchImportCandidates2(importCandidatesFacetsParams),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 

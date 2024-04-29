@@ -1,5 +1,9 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
-import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
+import {
+  ImportCandidateAggregations,
+  ImportCandidateStatus,
+  ImportCandidateSummary,
+} from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
 import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
 import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
@@ -111,50 +115,60 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 export type SortOrder = 'desc' | 'asc';
 export type ImportCandidateOrderBy = 'createdDate' | 'importStatus.modifiedDate';
 
-// export interface FetchImportCandidatesParams {
-//   query?: string;
-//   orderBy?: ImportCandidateOrderBy;
-//   sortOrder?: SortOrder;
-// }
-
 export enum ImportCandidatesSearchParam {
   Aggregation = 'aggregation',
   From = 'from',
+  ImportStatus = 'importStatus',
   OrderBy = 'orderBy',
+  PublicationYear = 'publicationYear',
   Query = 'query',
-  Results = 'results',
+  Size = 'size',
   SortOrder = 'sortOrder',
 }
 
 export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.Aggregation]?: 'all' | null;
   [ImportCandidatesSearchParam.From]?: number | null;
+  [ImportCandidatesSearchParam.ImportStatus]?: ImportCandidateStatus | null;
   [ImportCandidatesSearchParam.OrderBy]?: ImportCandidateOrderBy | null;
+  [ImportCandidatesSearchParam.PublicationYear]?: string | null;
   [ImportCandidatesSearchParam.Query]?: string | null;
-  [ImportCandidatesSearchParam.Results]?: number | null;
+  [ImportCandidatesSearchParam.Size]?: number | null;
   [ImportCandidatesSearchParam.SortOrder]?: SortOrder | null;
 }
 
 export const fetchImportCandidates2 = async ({
+  aggregation,
   from,
-  results,
-  query,
+  importStatus,
   orderBy,
+  publicationYear,
+  query,
+  size,
   sortOrder,
 }: FetchImportCandidatesParams) => {
   const params = new URLSearchParams();
 
-  params.set(ImportCandidatesSearchParam.Results, (results ?? 10).toString());
+  params.set(ImportCandidatesSearchParam.Size, (size ?? 10).toString());
   params.set(ImportCandidatesSearchParam.From, (from ?? 0).toString());
 
   if (query) {
     params.set(ImportCandidatesSearchParam.Query, query);
+  }
+  if (publicationYear) {
+    params.set(ImportCandidatesSearchParam.PublicationYear, publicationYear);
+  }
+  if (importStatus) {
+    params.set(ImportCandidatesSearchParam.ImportStatus, importStatus);
   }
   if (orderBy) {
     params.set(ImportCandidatesSearchParam.OrderBy, orderBy);
   }
   if (sortOrder) {
     params.set(ImportCandidatesSearchParam.SortOrder, sortOrder);
+  }
+  if (aggregation) {
+    params.set(ImportCandidatesSearchParam.Aggregation, aggregation);
   }
   const paramsString = params.toString();
 
