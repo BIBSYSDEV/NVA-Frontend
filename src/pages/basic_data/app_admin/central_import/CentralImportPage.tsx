@@ -1,6 +1,7 @@
 import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
@@ -73,6 +74,9 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
 
   return (
     <section>
+      <Helmet>
+        <title>{t('basic_data.central_import.central_import')}</title>
+      </Helmet>
       <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 
       {importCandidateQuery.isLoading ? (
