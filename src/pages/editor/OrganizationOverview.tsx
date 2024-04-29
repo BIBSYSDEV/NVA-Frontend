@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getByIdAuthenticated } from '../../api/commonApi';
+import { getById } from '../../api/commonApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../components/OrganizationRenderOption';
 import { RootState } from '../../redux/store';
@@ -32,9 +32,9 @@ export const OrganizationOverview = () => {
   const [searchId, setSearchId] = useState('');
 
   const organizationQuery = useQuery({
-    queryKey: [organizationId],
+    queryKey: ['organization', organizationId],
     enabled: !!organizationId,
-    queryFn: organizationId ? () => getByIdAuthenticated<Organization>(organizationId) : undefined,
+    queryFn: organizationId ? () => getById<Organization>(organizationId) : undefined,
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },

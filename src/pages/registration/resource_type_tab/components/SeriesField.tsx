@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getByIdAuthenticated } from '../../../../api/commonApi';
+import { getById } from '../../../../api/commonApi';
 import { searchForSeries } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
@@ -53,9 +53,9 @@ export const SeriesField = () => {
   }, [setFieldValue, series?.title, seriesOptionsQuery.data?.hits]);
 
   const seriesQuery = useQuery({
-    queryKey: [series?.id],
+    queryKey: ['channel', series?.id],
     enabled: !!series?.id,
-    queryFn: () => getByIdAuthenticated<Series>(series?.id ?? ''),
+    queryFn: () => getById<Series>(series?.id ?? ''),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });

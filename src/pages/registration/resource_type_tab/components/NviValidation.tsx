@@ -2,7 +2,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import { Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { getByIdAuthenticated } from '../../../../api/commonApi';
+import { getById, getByIdAuthenticated } from '../../../../api/commonApi';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
@@ -44,9 +44,9 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
   const journalId = registration.entityDescription.reference?.publicationContext.id ?? '';
 
   const journalQuery = useQuery({
-    queryKey: [journalId],
+    queryKey: ['channel', journalId],
     enabled: !!journalId,
-    queryFn: () => getByIdAuthenticated<Journal>(journalId),
+    queryFn: () => getById<Journal>(journalId),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });
@@ -62,17 +62,17 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
   const seriesId = registration.entityDescription.reference?.publicationContext.series?.id ?? '';
 
   const publisherQuery = useQuery({
-    queryKey: [publisherId],
+    queryKey: ['channel', publisherId],
     enabled: !!publisherId,
-    queryFn: () => getByIdAuthenticated<Publisher>(publisherId),
+    queryFn: () => getById<Publisher>(publisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
 
   const seriesQuery = useQuery({
-    queryKey: [seriesId],
+    queryKey: ['channel', seriesId],
     enabled: !!seriesId,
-    queryFn: () => getByIdAuthenticated<Series>(seriesId),
+    queryFn: () => getById<Series>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
@@ -106,17 +106,17 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
   const seriesId = containerQuery.data?.entityDescription.reference?.publicationContext.series?.id ?? '';
 
   const publisherQuery = useQuery({
-    queryKey: [publisherId],
+    queryKey: ['channel', publisherId],
     enabled: !!publisherId,
-    queryFn: () => getByIdAuthenticated<Publisher>(publisherId),
+    queryFn: () => getById<Publisher>(publisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
 
   const seriesQuery = useQuery({
-    queryKey: [seriesId],
+    queryKey: ['channel', seriesId],
     enabled: !!seriesId,
-    queryFn: () => getByIdAuthenticated<Series>(seriesId),
+    queryFn: () => getById<Series>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });

@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
-import { getByIdAuthenticated } from '../../api/commonApi';
+import { getById } from '../../api/commonApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
@@ -38,8 +38,8 @@ const InstitutionPage = () => {
 
   const organizationQuery = useQuery({
     enabled: !!institutionId,
-    queryKey: [institutionId],
-    queryFn: () => getByIdAuthenticated<Organization>(institutionId),
+    queryKey: ['organization', institutionId],
+    queryFn: () => getById<Organization>(institutionId),
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
