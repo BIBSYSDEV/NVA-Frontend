@@ -5,12 +5,12 @@ import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  CreateNoteData,
-  SetNviCandidateStatusData,
   createNote,
+  CreateNoteData,
   deleteCandidateNote,
   setCandidateAssignee,
   setCandidateStatus,
+  SetNviCandidateStatusData,
 } from '../../../api/scientificIndexApi';
 import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -144,7 +144,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
       <Box sx={{ m: '1rem' }}>
         <AssigneeSelector
           assignee={myApproval?.assignee}
-          canSetAssignee={myApproval?.status === 'Pending'}
+          canSetAssignee={myApproval?.status === 'New' || myApproval?.status === 'Pending'}
           onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
           isUpdating={assigneeMutation.isLoading}
           roleFilter={RoleName.NviCurator}
