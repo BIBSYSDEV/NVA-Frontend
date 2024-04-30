@@ -1,8 +1,10 @@
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createNote,
@@ -199,16 +201,18 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {myApproval?.status !== 'Approved' && (
           <>
-            <Typography gutterBottom>{t('tasks.nvi.approve_nvi_candidate_description')}</Typography>
+            <Typography fontWeight="bold">NVI Status</Typography>
+            <Trans i18nKey="tasks.nvi.approve_nvi_candidate_description" components={[<Typography paragraph />]} />
             <LoadingButton
               data-testid={dataTestId.tasksPage.nvi.approveButton}
               variant="outlined"
               fullWidth
               size="small"
-              sx={{ mb: '1rem' }}
+              sx={{ mb: '1rem', bgcolor: 'white' }}
               loading={statusMutation.isLoading && statusMutation.variables?.status === 'Approved'}
               disabled={isMutating}
               onClick={() => statusMutation.mutate({ status: 'Approved' })}>
+              <CheckIcon sx={{ mr: '0.5rem' }} />
               {t('tasks.nvi.approve_nvi_candidate')}
             </LoadingButton>
           </>
@@ -222,9 +226,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               variant="outlined"
               fullWidth
               size="small"
-              sx={{ mb: '1rem' }}
+              sx={{ mb: '1rem', bgcolor: '#eeeeee', alignItems: 'center' }}
               disabled={isMutating || hasSelectedRejectCandidate}
               onClick={() => setHasSelectedRejectCandidate(true)}>
+              <ClearIcon sx={{ mr: '0.5rem' }} />
               {t('tasks.nvi.reject_nvi_candidate')}
             </Button>
 
