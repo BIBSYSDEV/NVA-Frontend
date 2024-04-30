@@ -2,7 +2,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {
   Box,
   Checkbox,
@@ -253,16 +252,19 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     </ListItemText>
                   </MenuItem>
                 ))}
-                <MenuItem
-                  data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
-                  title={t('registration.files_and_license.show_all_older_versions')}
-                  sx={{ display: 'flex', justifyContent: 'center' }}
-                  onClickCapture={(e) => {
-                    e.stopPropagation();
-                    setInactiveLicensesOpen(!inactiveLicensesOpen);
-                  }}>
-                  <MoreHorizIcon />
-                </MenuItem>
+                {!inactiveLicensesOpen && (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
+                    sx={{ display: 'flex', justifyContent: 'center' }}
+                    onClickCapture={(e) => {
+                      e.stopPropagation();
+                      setInactiveLicensesOpen(!inactiveLicensesOpen);
+                    }}>
+                    <Typography sx={{ fontStyle: 'italic' }}>
+                      {t('registration.files_and_license.show_all_older_versions')}
+                    </Typography>
+                  </MenuItem>
+                )}
                 {inactiveLicenses.map((license) => (
                   <MenuItem
                     data-testid={dataTestId.registrationWizard.files.licenseItem}
