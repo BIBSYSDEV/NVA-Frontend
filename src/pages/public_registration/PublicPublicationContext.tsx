@@ -23,7 +23,7 @@ import { useQuery } from '@tanstack/react-query';
 import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getById } from '../../api/commonApi';
+import { fetchResource } from '../../api/commonApi';
 import { fetchRegistration } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -190,7 +190,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   const journalQuery = useQuery({
     enabled: !!id,
     queryKey: ['channel', id],
-    queryFn: () => getById<Journal | Series>(id),
+    queryFn: () => fetchResource<Journal | Series>(id),
     retry: 1,
     meta: {
       errorMessage: false,
@@ -211,7 +211,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   const journalBackupQuery = useQuery({
     enabled: journalQuery.isError && !!alternativeJournalId,
     queryKey: ['channel', alternativeJournalId],
-    queryFn: () => getById<Journal | Series>(alternativeJournalId),
+    queryFn: () => fetchResource<Journal | Series>(alternativeJournalId),
     retry: 1,
     meta: { errorMessage },
   });
