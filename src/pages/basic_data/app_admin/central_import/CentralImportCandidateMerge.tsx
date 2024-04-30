@@ -108,7 +108,7 @@ export const CentralImportCandidateMerge = () => {
       onSubmit={async (values) => {
         await registrationMutation.mutateAsync(values);
         await importCandidateMutation.mutateAsync();
-        registrationQuery.refetch();
+        await registrationQuery.refetch();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
         history.push(getRegistrationWizardPath(registrationIdentifier));
       }}>
