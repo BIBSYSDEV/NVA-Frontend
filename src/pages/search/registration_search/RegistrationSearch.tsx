@@ -56,7 +56,7 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
 
   return (
     <section>
-      {registrationQuery.isLoading ? (
+      {registrationQuery.isPending ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
         <>

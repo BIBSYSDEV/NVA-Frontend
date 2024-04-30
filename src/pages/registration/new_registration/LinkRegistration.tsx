@@ -95,7 +95,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     }
   }, [resultsQuery.isSuccess, resultsQuery.data, doiQuery]);
 
-  const isLookingUpDoi = resultsQuery.isFetching || mutateDoi.isLoading;
+  const isLookingUpDoi = resultsQuery.isFetching || mutateDoi.isPending;
 
   const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
     let doiUrl = values.link.trim();

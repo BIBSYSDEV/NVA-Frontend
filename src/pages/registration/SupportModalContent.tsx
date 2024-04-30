@@ -21,13 +21,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
     enabled: !!registration,
     queryKey: ['registrationTickets', registration.id],
     queryFn: () => fetchRegistrationTickets(registration.id),
-    onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.get_tickets'),
-          variant: 'error',
-        })
-      ),
+    meta: { errorMessage: t('feedback.error.get_tickets') },
   });
 
   const createSupportTicketMutation = useMutation(
@@ -56,7 +50,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
         ),
     }
   );
-  const isLoading = ticketsQuery.isLoading || createSupportTicketMutation.isLoading;
+  const isLoading = ticketsQuery.isPending || createSupportTicketMutation.isPending;
 
   const currentSupportTicket = ticketsQuery.data?.tickets
     .filter((ticket) => ticket.type === 'GeneralSupportCase')

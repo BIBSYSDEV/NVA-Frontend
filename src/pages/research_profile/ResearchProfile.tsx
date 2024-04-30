@@ -12,7 +12,7 @@ import {
   Link as MuiLink,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +26,6 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -63,7 +62,7 @@ const ResearchProfile = () => {
     enabled: !!personId,
     queryKey: [personId],
     queryFn: () => fetchPerson(personId),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 
   const person = personQuery.data;
@@ -84,7 +83,7 @@ const ResearchProfile = () => {
     queryKey: ['projects', projectRowsPerPage, projectsPage, personIdNumber],
     queryFn: () => searchForProjects(projectRowsPerPage, projectsPage, { participant: personIdNumber }),
     meta: { errorMessage: t('feedback.error.project_search') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const projects = projectsQuery.data?.hits ?? [];
@@ -113,7 +112,7 @@ const ResearchProfile = () => {
     ? `${t('my_page.my_profile.projects')} (${projectsQuery.data.size})`
     : t('my_page.my_profile.projects');
 
-  return personQuery.isLoading ? (
+  return personQuery.isPending ? (
     <PageSpinner aria-label={t('my_page.research_profile')} />
   ) : !person ? (
     <NotFound />
@@ -259,7 +258,7 @@ const ResearchProfile = () => {
         <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
           {registrationsHeading}
         </Typography>
-        {registrationsQuery.isLoading || promotedPublicationsQuery.isLoading ? (
+        {registrationsQuery.isPending || promotedPublicationsQuery.isPending ? (
           <CircularProgress aria-labelledby="registration-label" />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <ListPagination
@@ -285,7 +284,7 @@ const ResearchProfile = () => {
         <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
           {projectHeading}
         </Typography>
-        {projectsQuery.isLoading ? (
+        {projectsQuery.isPending ? (
           <CircularProgress aria-labelledby="project-label" />
         ) : projects.length > 0 ? (
           <ListPagination

@@ -78,7 +78,7 @@ export const JournalFormDialog = ({
     },
   });
 
-  const isLoading = journalMutation.isLoading || seriesMutation.isLoading;
+  const isLoading = journalMutation.isPending || seriesMutation.isPending;
 
   return (
     <Dialog open={open} onClose={closeDialog} fullWidth>

@@ -100,7 +100,7 @@ export const CentralImportCandidateMerge = () => {
     registration?.entityDescription?.reference?.publicationInstance?.type ?? ''
   );
 
-  return registrationQuery.isLoading || importCandidateQuery.isLoading ? (
+  return registrationQuery.isPending || importCandidateQuery.isPending ? (
     <PageSpinner />
   ) : !registration || !importCandidate ? null : (
     <Formik
@@ -253,7 +253,7 @@ export const CentralImportCandidateMerge = () => {
             <LoadingButton
               type="submit"
               variant="contained"
-              loading={isSubmitting || registrationMutation.isLoading || importCandidateMutation.isLoading}>
+              loading={isSubmitting || registrationMutation.isPending || importCandidateMutation.isPending}>
               {t('basic_data.central_import.merge_candidate.merge')}
             </LoadingButton>
           </Box>

@@ -36,7 +36,7 @@ export const OrganizationOverview = () => {
     enabled: !!organizationId,
     queryFn: organizationId ? () => getById<Organization>(organizationId) : undefined,
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
@@ -57,7 +57,7 @@ export const OrganizationOverview = () => {
         </Trans>
       </Typography>
 
-      {organizationQuery.isLoading ? (
+      {organizationQuery.isPending ? (
         <ListSkeleton height={100} minWidth={100} />
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

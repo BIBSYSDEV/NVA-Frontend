@@ -91,7 +91,7 @@ export const NviCandidatePage = () => {
 
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
-  ) : registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
+  ) : registrationQuery.isPending || nviCandidateQuery.isPending ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : (
     <Box

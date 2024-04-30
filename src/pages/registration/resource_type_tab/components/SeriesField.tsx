@@ -72,7 +72,7 @@ export const SeriesField = () => {
             aria-labelledby={`${seriesFieldTestId}-label`}
             popupIcon={null}
             options={
-              debouncedQuery && query === debouncedQuery && !seriesOptionsQuery.isLoading
+              debouncedQuery && query === debouncedQuery && !seriesOptionsQuery.isPending
                 ? seriesOptionsQuery.data?.hits ?? []
                 : []
             }

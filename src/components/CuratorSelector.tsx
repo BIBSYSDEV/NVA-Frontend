@@ -1,8 +1,8 @@
 import { Autocomplete, Avatar, Box, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { fetchUsers } from '../api/roleApi';
 import { TicketSearchParam } from '../api/searchApi';
 import { RootState } from '../redux/store';
@@ -52,8 +52,8 @@ export const CuratorSelector = ({ roleFilter }: CuratorSelectorProps) => {
       options={curatorOptions}
       value={selectedCurator}
       autoHighlight
-      disabled={curatorsQuery.isLoading}
-      loading={curatorsQuery.isLoading}
+      disabled={curatorsQuery.isPending}
+      loading={curatorsQuery.isPending}
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
       isOptionEqualToValue={(option, value) => option.username === value?.username}
       onChange={(_, value) => {
@@ -79,7 +79,7 @@ export const CuratorSelector = ({ roleFilter }: CuratorSelectorProps) => {
           variant="outlined"
           size="small"
           label={t('my_page.roles.curator')}
-          isLoading={curatorsQuery.isLoading}
+          isLoading={curatorsQuery.isPending}
           placeholder={t('common.search')}
           InputProps={{
             ...params.InputProps,

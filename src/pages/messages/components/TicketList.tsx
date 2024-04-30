@@ -100,7 +100,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         )}
       </Grid>
 
-      {ticketsQuery.isLoading ? (
+      {ticketsQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>

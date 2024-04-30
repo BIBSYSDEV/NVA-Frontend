@@ -218,7 +218,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
     meta: { errorMessage },
   });
 
-  const isLoadingJournal = (!!id && journalQuery.isLoading) || (journalQuery.isError && journalBackupQuery.isLoading);
+  const isLoadingJournal = (!!id && journalQuery.isPending) || (journalQuery.isError && journalBackupQuery.isPending);
   const journal = journalQuery.data ?? journalBackupQuery.data;
 
   return isLoadingJournal ? (

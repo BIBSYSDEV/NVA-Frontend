@@ -2,7 +2,7 @@ import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import {
@@ -93,7 +93,7 @@ const HomePage = () => {
     queryKey: ['registrations', registrationsQueryConfig],
     queryFn: () => fetchResults(registrationsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const personSearchTerm = params.get(PersonSearchParameter.Name) ?? '.';
@@ -109,7 +109,7 @@ const HomePage = () => {
     queryKey: ['person', rowsPerPage, page, personQueryParams],
     queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
     meta: { errorMessage: t('feedback.error.search') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const projectSearchTerm = params.get(ProjectSearchParameter.Query);
@@ -132,7 +132,7 @@ const HomePage = () => {
     queryKey: ['projects', rowsPerPage, page, projectQueryParams],
     queryFn: () => searchForProjects(rowsPerPage, page, projectQueryParams),
     meta: { errorMessage: t('feedback.error.project_search') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   return (

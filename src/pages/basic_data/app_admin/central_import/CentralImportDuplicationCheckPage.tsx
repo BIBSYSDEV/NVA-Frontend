@@ -93,7 +93,7 @@ export const CentralImportDuplicationCheckPage = () => {
         gap: '1rem',
       }}>
       <BackgroundDiv>
-        {importCandidateSearchQuery.isLoading || importCandidateQuery.isLoading ? (
+        {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
         ) : importCandidateSearchResult && importCandidate ? (
           <>

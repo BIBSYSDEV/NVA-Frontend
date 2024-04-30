@@ -5,7 +5,6 @@ import { useLocation } from 'react-router';
 import { fetchProject } from '../../api/cristinApi';
 import { PageSpinner } from '../../components/PageSpinner';
 import { StyledPageContent } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/notificationSlice';
 import { ProjectLandingPage } from './ProjectLandingPage';
 
 const ProjectsPage = () => {
@@ -17,12 +16,12 @@ const ProjectsPage = () => {
   const projectQuery = useQuery({
     queryKey: [projectId],
     queryFn: () => fetchProject(projectId),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_project'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_project') },
   });
 
   return (
     <StyledPageContent>
-      {projectQuery.isLoading ? (
+      {projectQuery.isPending ? (
         <PageSpinner aria-label={t('project.project')} />
       ) : (
         projectQuery.data && <ProjectLandingPage project={projectQuery.data} refetchProject={projectQuery.refetch} />

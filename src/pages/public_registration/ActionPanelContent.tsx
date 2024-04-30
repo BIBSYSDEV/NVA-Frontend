@@ -151,7 +151,7 @@ export const ActionPanelContent = ({
             title={t('my_page.registrations.delete_registration')}
             onAccept={draftRegistrationMutation.mutate}
             onCancel={() => setShowDeleteModal(false)}
-            isLoading={draftRegistrationMutation.isLoading}>
+            isLoading={draftRegistrationMutation.isPending}>
             <Typography>
               {t('my_page.registrations.delete_registration_message', {
                 title: getTitleString(registration?.entityDescription?.mainTitle),

@@ -81,8 +81,8 @@ export const AreaOfResponsibilitySelector = () => {
       value={selectedOrganizations}
       disableCloseOnSelect
       disableClearable
-      disabled={organizationQuery.isLoading}
-      loading={organizationQuery.isLoading}
+      disabled={organizationQuery.isPending}
+      loading={organizationQuery.isPending}
       getOptionLabel={(option) => getLanguageString(option.labels)}
       renderTags={(values) => (
         <Chip

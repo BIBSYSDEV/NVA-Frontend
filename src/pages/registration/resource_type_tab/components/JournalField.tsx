@@ -113,7 +113,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             aria-labelledby={`${journalFieldTestId}-label`}
             popupIcon={null}
             options={
-              debouncedQuery && query === debouncedQuery && !journalOptionsQuery.isLoading
+              debouncedQuery && query === debouncedQuery && !journalOptionsQuery.isPending
                 ? journalOptionsQuery.data?.hits ?? []
                 : []
             }

@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { fetchRegistration } from '../../../../../api/registrationApi';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
-import { setNotification } from '../../../../../redux/notificationSlice';
 import {
   ArtisticOutputItem,
   AudioVisualPublication,
@@ -92,7 +91,7 @@ export const OutputRow = ({
     enabled: !!exhibitionCatalogIdentifier,
     queryKey: ['registration', exhibitionCatalogIdentifier],
     queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
   const title = shouldFetchItem ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle : getOutputName(item);
@@ -106,7 +105,7 @@ export const OutputRow = ({
       )}
       <TableCell>
         {shouldFetchItem ? (
-          exhibitionCatalogQuery.isLoading ? (
+          exhibitionCatalogQuery.isPending ? (
             <Skeleton />
           ) : (
             <Typography>{exhibitionCatalogQuery.data?.entityDescription?.mainTitle}</Typography>

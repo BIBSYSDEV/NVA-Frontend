@@ -70,7 +70,7 @@ export const PublisherField = () => {
             aria-labelledby={`${publisherFieldTestId}-label`}
             popupIcon={null}
             options={
-              debouncedQuery && query === debouncedQuery && !publisherOptionsQuery.isLoading
+              debouncedQuery && query === debouncedQuery && !publisherOptionsQuery.isPending
                 ? publisherOptionsQuery.data?.hits ?? []
                 : []
             }

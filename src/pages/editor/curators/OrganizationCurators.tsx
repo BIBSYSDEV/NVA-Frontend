@@ -45,7 +45,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
     enabled: !!organizationId,
     queryFn: organizationId ? () => getById<Organization>(organizationId) : undefined,
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
@@ -68,7 +68,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
         {heading}
       </Typography>
 
-      {organizationQuery.isLoading || curatorsQuery.isLoading ? (
+      {organizationQuery.isPending || curatorsQuery.isPending ? (
         <ListSkeleton height={100} minWidth={100} />
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

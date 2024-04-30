@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { fetchProject } from '../../api/cristinApi';
-import { setNotification } from '../../redux/notificationSlice';
 import { ResearchProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getProjectPath } from '../../utils/urlPaths';
@@ -65,14 +64,14 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
   const projectQuery = useQuery({
     queryKey: [project.id],
     queryFn: () => fetchProject(project.id),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_project'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_project') },
   });
   const fetchedProject = projectQuery.data;
   const projectTitle = fetchedProject?.title ?? project.name;
 
   return (
     <StyledProjectGridRow sx={{ ':not(:last-of-type)': { mb: '1rem' } }}>
-      {projectQuery.isLoading ? (
+      {projectQuery.isPending ? (
         <Skeleton />
       ) : (
         <Typography
@@ -90,19 +89,19 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
         </Typography>
       )}
       <Divider component="span" orientation="vertical" />
-      {projectQuery.isLoading ? (
+      {projectQuery.isPending ? (
         <Skeleton />
       ) : (
         <Typography variant="body1">{getProjectCoordinatingInstitutionName(fetchedProject)}</Typography>
       )}
       <Divider component="span" orientation="vertical" />
-      {projectQuery.isLoading ? (
+      {projectQuery.isPending ? (
         <Skeleton />
       ) : (
         <Typography variant="body1">{getProjectManagerName(fetchedProject)}</Typography>
       )}
       <Divider component="span" orientation="vertical" />
-      {projectQuery.isLoading ? (
+      {projectQuery.isPending ? (
         <Skeleton />
       ) : fetchedProject ? (
         <div>

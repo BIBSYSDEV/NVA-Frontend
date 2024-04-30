@@ -87,7 +87,7 @@ export const RegistrationLandingPage = () => {
         gridTemplateAreas: { xs: '"tasks" "registration"', sm: '"registration tasks"' },
         gap: '1rem',
       }}>
-      {registrationQuery.isLoading || (canEditRegistration && ticketsQuery.isLoading) ? (
+      {registrationQuery.isPending || (canEditRegistration && ticketsQuery.isPending) ? (
         <PageSpinner aria-label={t('common.result')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (

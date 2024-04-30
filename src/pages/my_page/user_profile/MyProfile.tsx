@@ -50,7 +50,7 @@ export const MyProfile = () => {
   const personQuery = useQuery({
     queryKey: [personId],
     queryFn: () => fetchPerson(personId),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 
   const person = personQuery.data;
@@ -105,7 +105,7 @@ export const MyProfile = () => {
         {t('my_page.my_profile.heading.personalia')}
       </Typography>
 
-      {personQuery.isLoading && !person ? (
+      {personQuery.isPending && !person ? (
         <PageSpinner aria-labelledby="personalia-id" />
       ) : (
         <Formik

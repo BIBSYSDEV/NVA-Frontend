@@ -64,7 +64,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     enabled: !!userCristinId,
     queryKey: [userCristinId],
     queryFn: () => fetchPerson(userCristinId),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
   const fetchCristinPersonRef = useRef(cristinPersonQuery.refetch);
   const cristinPerson = cristinPersonQuery.data;
@@ -143,7 +143,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <div>
-      {cristinPersonQuery.isLoading ? (
+      {cristinPersonQuery.isPending ? (
         <CircularProgress aria-labelledby="orcid-label" />
       ) : isAddingOrcid ? (
         <Skeleton width="20rem" />

@@ -17,7 +17,7 @@ export const ViewingScopeChip = ({ organizationId, ...props }: ViewingScopeChipP
     queryFn: organizationId ? () => fetchOrganization(organizationId) : undefined,
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   return (
@@ -25,7 +25,7 @@ export const ViewingScopeChip = ({ organizationId, ...props }: ViewingScopeChipP
       color="primary"
       {...props}
       label={
-        organizationQuery.isLoading ? (
+        organizationQuery.isPending ? (
           <Skeleton sx={{ width: '15rem' }} />
         ) : organizationQuery.data?.labels ? (
           getLanguageString(organizationQuery.data.labels)
