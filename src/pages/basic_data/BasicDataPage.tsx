@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { FetchImportCandidatesParams, fetchImportCandidates2 } from '../../api/searchApi';
+import { FetchImportCandidatesParams, fetchImportCandidates } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -60,25 +60,26 @@ const BasicDataPage = () => {
   const [candidateYearFilter, setCandidateYearFilter] = useState(yearOptions[0]);
 
   const importCandidatesFacetsParams: FetchImportCandidatesParams = {
+    aggregation: 'all',
     size: 0,
     publicationYear: candidateYearFilter.toString(),
   };
   const importCandidatesFacetsQuery = useQuery({
     enabled: location.pathname === UrlPathTemplate.BasicDataCentralImport,
     queryKey: ['importCandidatesFacets', importCandidatesFacetsParams],
-    queryFn: () => fetchImportCandidates2(importCandidatesFacetsParams),
+    queryFn: () => fetchImportCandidates(importCandidatesFacetsParams),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 
-  const statusBuckets = importCandidatesFacetsQuery.data?.aggregations?.['importStatus.candidateStatus'].buckets;
+  const statusBuckets = importCandidatesFacetsQuery.data?.aggregations?.importStatus;
   const toImportCount = statusBuckets
-    ? (statusBuckets.find((bucket) => bucket.key === 'NOT_IMPORTED')?.docCount ?? 0).toLocaleString()
+    ? (statusBuckets.find((aggregation) => aggregation.key === 'NOT_IMPORTED')?.count ?? 0).toLocaleString()
     : '';
   const importedCount = statusBuckets
-    ? (statusBuckets.find((bucket) => bucket.key === 'IMPORTED')?.docCount ?? 0).toLocaleString()
+    ? (statusBuckets.find((aggregation) => aggregation.key === 'IMPORTED')?.count ?? 0).toLocaleString()
     : '';
   const notApplicableCount = statusBuckets
-    ? (statusBuckets.find((bucket) => bucket.key === 'NOT_APPLICABLE')?.docCount ?? 0).toLocaleString()
+    ? (statusBuckets.find((aggregation) => aggregation.key === 'NOT_APPLICABLE')?.count ?? 0).toLocaleString()
     : '';
 
   const expandedMenu =

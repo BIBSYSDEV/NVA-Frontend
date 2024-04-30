@@ -118,6 +118,7 @@ export type ImportCandidateOrderBy = 'createdDate' | 'importStatus.modifiedDate'
 export enum ImportCandidatesSearchParam {
   Aggregation = 'aggregation',
   From = 'from',
+  Identifier = 'id',
   ImportStatus = 'importStatus',
   OrderBy = 'orderBy',
   PublicationYear = 'publicationYear',
@@ -129,6 +130,7 @@ export enum ImportCandidatesSearchParam {
 export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.Aggregation]?: 'all' | null;
   [ImportCandidatesSearchParam.From]?: number | null;
+  [ImportCandidatesSearchParam.Identifier]?: string | null;
   [ImportCandidatesSearchParam.ImportStatus]?: ImportCandidateStatus | null;
   [ImportCandidatesSearchParam.OrderBy]?: ImportCandidateOrderBy | null;
   [ImportCandidatesSearchParam.PublicationYear]?: string | null;
@@ -137,9 +139,10 @@ export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.SortOrder]?: SortOrder | null;
 }
 
-export const fetchImportCandidates2 = async ({
+export const fetchImportCandidates = async ({
   aggregation,
   from,
+  id,
   importStatus,
   orderBy,
   publicationYear,
@@ -158,6 +161,9 @@ export const fetchImportCandidates2 = async ({
   if (publicationYear) {
     params.set(ImportCandidatesSearchParam.PublicationYear, publicationYear);
   }
+  if (id) {
+    params.set(ImportCandidatesSearchParam.Identifier, id);
+  }
   if (importStatus) {
     params.set(ImportCandidatesSearchParam.ImportStatus, importStatus);
   }
@@ -169,34 +175,6 @@ export const fetchImportCandidates2 = async ({
   }
   if (aggregation) {
     params.set(ImportCandidatesSearchParam.Aggregation, aggregation);
-  }
-  const paramsString = params.toString();
-
-  const getImportCandidates = await authenticatedApiRequest2<
-    SearchResponse<ImportCandidateSummary, ImportCandidateAggregations>
-  >({
-    url: `${SearchApiPath.ImportCandidates}?${paramsString}`,
-  });
-
-  return getImportCandidates.data;
-};
-
-export const fetchImportCandidates = async (
-  results: number,
-  from: number,
-  { query, orderBy, sortOrder }: FetchImportCandidatesParams
-) => {
-  const params = new URLSearchParams();
-  params.set('results', results.toString());
-  params.set('from', from.toString());
-  if (query) {
-    params.set('query', query);
-  }
-  if (orderBy) {
-    params.set('orderBy', orderBy);
-  }
-  if (sortOrder) {
-    params.set('sortOrder', sortOrder);
   }
   const paramsString = params.toString();
 

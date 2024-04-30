@@ -9,7 +9,7 @@ import {
   ImportCandidateOrderBy,
   ImportCandidatesSearchParam,
   SortOrder,
-  fetchImportCandidates2,
+  fetchImportCandidates,
 } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
@@ -54,7 +54,7 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
   };
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', importCandidateQueryParams],
-    queryFn: () => fetchImportCandidates2(importCandidateQueryParams),
+    queryFn: () => fetchImportCandidates(importCandidateQueryParams),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 

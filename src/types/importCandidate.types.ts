@@ -1,4 +1,4 @@
-import { UnconfirmedOrganization } from './common.types';
+import { AggregationValue, UnconfirmedOrganization } from './common.types';
 import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
 import { ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
@@ -35,7 +35,7 @@ interface ImportCandidateStatusBucket {
 }
 
 export interface ImportCandidateAggregations {
-  'importStatus.candidateStatus': { buckets: ImportCandidateStatusBucket[] };
+  importStatus: AggregationValue<ImportCandidateStatus>[];
 }
 
 export interface ImportCandidateSummary {
