@@ -1855,6 +1855,7 @@
       "exclude_subunits": "Ekskluder underenheter",
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
+      "nvi_status": "NVI Status",
       "note": "Merknad",
       "previous_candidate": "Gå til forrige kandidat",
       "publication_points": "Publiseringspoeng",
