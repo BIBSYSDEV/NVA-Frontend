@@ -62,7 +62,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   const cristinPersonQuery = useQuery({
     enabled: !!userCristinId,
-    queryKey: [userCristinId],
+    queryKey: ['person', userCristinId],
     queryFn: () => fetchPerson(userCristinId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });

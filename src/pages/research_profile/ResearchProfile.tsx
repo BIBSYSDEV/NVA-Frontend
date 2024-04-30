@@ -16,7 +16,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
@@ -40,7 +40,6 @@ import { ProjectListItem } from '../search/project_search/ProjectListItem';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 
 const ResearchProfile = () => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
   const [registrationsPage, setRegistrationsPage] = useState(1);
@@ -60,7 +59,7 @@ const ResearchProfile = () => {
 
   const personQuery = useQuery({
     enabled: !!personId,
-    queryKey: [personId],
+    queryKey: ['person', personId],
     queryFn: () => fetchPerson(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });

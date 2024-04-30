@@ -108,8 +108,8 @@ export const CentralImportCandidateMerge = () => {
       onSubmit={async (values) => {
         await registrationMutation.mutateAsync(values);
         await importCandidateMutation.mutateAsync();
+        registrationQuery.refetch();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
-        registrationQuery.remove(); // Remove cached data, to ensure correct data is shown in wizard after redirect
         history.push(getRegistrationWizardPath(registrationIdentifier));
       }}>
       {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (

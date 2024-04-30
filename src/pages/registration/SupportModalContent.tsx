@@ -24,32 +24,31 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
     meta: { errorMessage: t('feedback.error.get_tickets') },
   });
 
-  const createSupportTicketMutation = useMutation(
-    async (message: string) => {
+  const createSupportTicketMutation = useMutation({
+    mutationFn: async (message: string) => {
       const newTicket = (await createTicket(registration.id, 'GeneralSupportCase', true)).data;
       if (newTicket) {
         await addTicketMessage(newTicket.id, message);
       }
     },
-    {
-      onSuccess: () => {
-        dispatch(
-          setNotification({
-            message: t('feedback.success.send_message'),
-            variant: 'success',
-          })
-        );
-        closeModal();
-      },
-      onError: () =>
-        dispatch(
-          setNotification({
-            message: t('feedback.error.send_message'),
-            variant: 'error',
-          })
-        ),
-    }
-  );
+    onSuccess: () => {
+      dispatch(
+        setNotification({
+          message: t('feedback.success.send_message'),
+          variant: 'success',
+        })
+      );
+      closeModal();
+    },
+    onError: () =>
+      dispatch(
+        setNotification({
+          message: t('feedback.error.send_message'),
+          variant: 'error',
+        })
+      ),
+  });
+
   const isLoading = ticketsQuery.isPending || createSupportTicketMutation.isPending;
 
   const currentSupportTicket = ticketsQuery.data?.tickets

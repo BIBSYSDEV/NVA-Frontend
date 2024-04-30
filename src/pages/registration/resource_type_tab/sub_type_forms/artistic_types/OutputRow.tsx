@@ -6,7 +6,6 @@ import { Box, Button, Skeleton, TableCell, TableRow, Tooltip, Typography } from 
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { fetchRegistration } from '../../../../../api/registrationApi';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import {
@@ -79,7 +78,6 @@ export const OutputRow = ({
   maxIndex,
   showTypeColumn = false,
 }: OutputRowProps) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openEditItem, setOpenEditItem] = useState(false);
   const [openRemoveItem, setOpenRemoveItem] = useState(false);

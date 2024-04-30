@@ -356,7 +356,8 @@ const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetBu
   const { t } = useTranslation();
 
   const personQuery = useQuery({
-    queryKey: [personId],
+    enabled: !!personId,
+    queryKey: ['person', personId],
     queryFn: () => (personId ? fetchPerson(personId) : undefined),
     meta: { errorMessage: t('feedback.error.get_person') },
   });

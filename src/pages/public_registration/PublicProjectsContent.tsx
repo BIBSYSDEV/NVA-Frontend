@@ -2,7 +2,6 @@ import { Divider, Link, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { fetchProject } from '../../api/cristinApi';
 import { ResearchProject } from '../../types/project.types';
@@ -58,11 +57,11 @@ interface ProjectRowProps {
 }
 
 const ProjectRow = ({ project }: ProjectRowProps) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const projectQuery = useQuery({
-    queryKey: [project.id],
+    enabled: !!project.id,
+    queryKey: ['project', project.id],
     queryFn: () => fetchProject(project.id),
     meta: { errorMessage: t('feedback.error.get_project') },
   });

@@ -48,7 +48,8 @@ export const MyProfile = () => {
   const personId = user?.cristinId ?? '';
 
   const personQuery = useQuery({
-    queryKey: [personId],
+    enabled: !!personId,
+    queryKey: ['person', personId],
     queryFn: () => fetchPerson(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
