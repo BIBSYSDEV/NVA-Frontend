@@ -8,8 +8,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { FetchImportCandidatesParams, fetchImportCandidates } from '../../api/searchApi';
+import { Link, Redirect, Switch, useHistory, useLocation } from 'react-router-dom';
+import { FetchImportCandidatesParams, ImportCandidatesSearchParam, fetchImportCandidates } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -48,15 +48,15 @@ const BasicDataPage = () => {
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const isInternalImporter = !!user?.customerId && user.isInternalImporter;
   const location = useLocation();
+  const history = useHistory();
+  const searchParams = new URLSearchParams(location.search);
+
+  const selectedImportStatus =
+    (searchParams.get(ImportCandidatesSearchParam.ImportStatus) as ImportCandidateStatus | null) ?? 'NOT_IMPORTED';
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
 
-  const [selectedImportCandidateStatus, setSelectedImportCandidateStatus] = useState<CandidateStatusFilter>({
-    NOT_IMPORTED: true,
-    IMPORTED: false,
-    NOT_APPLICABLE: false,
-  });
   const [candidateYearFilter, setCandidateYearFilter] = useState(yearOptions[0]);
 
   const importCandidatesFacetsParams: FetchImportCandidatesParams = {
@@ -197,16 +197,16 @@ const BasicDataPage = () => {
               <FormGroup sx={{ mx: '1rem' }}>
                 <FormControlLabel
                   data-testid={dataTestId.basicData.centralImport.filter.notImportedRadio}
-                  checked={selectedImportCandidateStatus.NOT_IMPORTED}
+                  checked={selectedImportStatus === 'NOT_IMPORTED'}
                   control={
                     <Radio
-                      onChange={() =>
-                        setSelectedImportCandidateStatus({
-                          NOT_IMPORTED: !selectedImportCandidateStatus.NOT_IMPORTED,
-                          IMPORTED: false,
-                          NOT_APPLICABLE: false,
-                        })
-                      }
+                      onChange={() => {
+                        searchParams.set(
+                          ImportCandidatesSearchParam.ImportStatus,
+                          'NOT_IMPORTED' satisfies ImportCandidateStatus
+                        );
+                        history.push({ search: searchParams.toString() });
+                      }}
                     />
                   }
                   label={
@@ -217,16 +217,16 @@ const BasicDataPage = () => {
                 />
                 <FormControlLabel
                   data-testid={dataTestId.basicData.centralImport.filter.importedRadio}
-                  checked={selectedImportCandidateStatus.IMPORTED}
+                  checked={selectedImportStatus === 'IMPORTED'}
                   control={
                     <Radio
-                      onChange={() =>
-                        setSelectedImportCandidateStatus({
-                          NOT_IMPORTED: false,
-                          IMPORTED: !selectedImportCandidateStatus.IMPORTED,
-                          NOT_APPLICABLE: false,
-                        })
-                      }
+                      onChange={() => {
+                        searchParams.set(
+                          ImportCandidatesSearchParam.ImportStatus,
+                          'IMPORTED' satisfies ImportCandidateStatus
+                        );
+                        history.push({ search: searchParams.toString() });
+                      }}
                     />
                   }
                   label={
@@ -237,16 +237,16 @@ const BasicDataPage = () => {
                 />
                 <FormControlLabel
                   data-testid={dataTestId.basicData.centralImport.filter.notApplicableRadio}
-                  checked={selectedImportCandidateStatus.NOT_APPLICABLE}
+                  checked={selectedImportStatus === 'NOT_APPLICABLE'}
                   control={
                     <Radio
-                      onChange={() =>
-                        setSelectedImportCandidateStatus({
-                          NOT_IMPORTED: false,
-                          IMPORTED: false,
-                          NOT_APPLICABLE: !selectedImportCandidateStatus.NOT_APPLICABLE,
-                        })
-                      }
+                      onChange={() => {
+                        searchParams.set(
+                          ImportCandidatesSearchParam.ImportStatus,
+                          'NOT_APPLICABLE' satisfies ImportCandidateStatus
+                        );
+                        history.push({ search: searchParams.toString() });
+                      }}
                     />
                   }
                   label={
@@ -288,7 +288,7 @@ const BasicDataPage = () => {
             <AdminCustomerInstitutionsContainer />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isInternalImporter}>
-            <CentralImportPage statusFilter={selectedImportCandidateStatus} yearFilter={candidateYearFilter} />
+            <CentralImportPage statusFilter={selectedImportStatus} yearFilter={candidateYearFilter} />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImportCandidate} isAuthorized={isInternalImporter}>
             <CentralImportDuplicationCheckPage />

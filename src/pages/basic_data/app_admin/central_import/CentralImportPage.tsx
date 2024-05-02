@@ -20,11 +20,10 @@ import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { SearchParam } from '../../../../utils/searchHelpers';
-import { CandidateStatusFilter } from '../../BasicDataPage';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
 interface CentralImportPageProps {
-  statusFilter: CandidateStatusFilter;
+  statusFilter: ImportCandidateStatus;
   yearFilter: number;
 }
 
@@ -37,16 +36,10 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
-  const selectedStatusFilter: ImportCandidateStatus = statusFilter.NOT_IMPORTED
-    ? 'NOT_IMPORTED'
-    : statusFilter.IMPORTED
-      ? 'IMPORTED'
-      : 'NOT_APPLICABLE';
-
   const importCandidateQueryParams: FetchImportCandidatesParams = {
     query: params.get(ImportCandidatesSearchParam.Query),
     publicationYear: yearFilter,
-    importStatus: selectedStatusFilter,
+    importStatus: statusFilter,
     orderBy: (params.get(ImportCandidatesSearchParam.OrderBy) as ImportCandidateOrderBy | null) ?? 'createdDate',
     sortOrder: (params.get(ImportCandidatesSearchParam.SortOrder) as SortOrder | null) ?? 'desc',
     from: page * rowsPerPage,
