@@ -13,6 +13,9 @@ interface NviApprovalsProps {
 
 export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
   const { t } = useTranslation();
+  const checkedApprovals = approvals.filter(
+    (approval) => approval.status === 'Approved' || approval.status === 'Rejected'
+  );
 
   return (
     <Box sx={{ m: '1rem', border: '0.5px solid' }}>
@@ -25,7 +28,7 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
           bgcolor: 'nvi.main',
         }}>
         <Typography fontWeight="bold" sx={{ alignSelf: 'center', p: '0.5rem' }}>
-          Sjekkes (0 av 2)
+          {t('tasks.nvi.approval_status_count', { checked: checkedApprovals.length, total: approvals.length })}
         </Typography>
 
         {approvals.length > 0 && (
@@ -34,7 +37,7 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
               bgcolor: 'white',
               p: '0.5rem',
               display: 'grid',
-              gridTemplateColumns: 'repeat(3, auto)',
+              gridTemplateColumns: '1fr 3fr 1fr',
               gap: '0.5rem 0.75rem',
             }}>
             {approvals.map((approvalStatus) => (
@@ -84,8 +87,13 @@ const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalSta
           {institutionAcronym ? institutionAcronym : getLanguageString(institutionQuery.data?.labels)}
         </Typography>
       )}
-      <Typography sx={{ whiteSpace: 'nowrap' }}>{t(`tasks.nvi.status.${approvalStatus.status}`)}</Typography>
-      <PublicationPointsTypography sx={{ whiteSpace: 'nowrap' }} points={approvalStatus.points} />
+      <Typography sx={{ whiteSpace: 'nowrap', justifySelf: 'center' }}>
+        {t(`tasks.nvi.status.${approvalStatus.status}`)}
+      </Typography>
+      <PublicationPointsTypography
+        sx={{ whiteSpace: 'nowrap', justifySelf: 'end', mr: '0.5rem' }}
+        points={approvalStatus.points}
+      />
     </>
   );
 };
