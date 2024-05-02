@@ -50,8 +50,8 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
         sx={{
           display: 'flex',
           justifyContent: 'space-around',
-          mb: '0.5rem',
           bgcolor: 'nvi.light',
+          my: '0.25rem',
         }}>
         <Typography>=</Typography>
         <Typography>{t('tasks.nvi.publication_points')}</Typography>
