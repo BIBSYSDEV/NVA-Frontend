@@ -84,7 +84,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
             <Typography fontWeight="bold">{t('unpublish_actions.unpublish_header')}</Typography>
             {userCanUnpublish ? (
               <>
-                <Typography>{t('unpublish_actions.unpublish_info')}</Typography>
+                <Typography gutterBottom>{t('unpublish_actions.unpublish_info')}</Typography>
                 <Button
                   data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
                   variant="outlined"
