@@ -45,7 +45,7 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
 
   const importCandidateQueryParams: FetchImportCandidatesParams = {
     query: params.get(ImportCandidatesSearchParam.Query),
-    publicationYear: yearFilter.toString(),
+    publicationYear: yearFilter,
     importStatus: selectedStatusFilter,
     orderBy: (params.get(ImportCandidatesSearchParam.OrderBy) as ImportCandidateOrderBy | null) ?? 'createdDate',
     sortOrder: (params.get(ImportCandidatesSearchParam.SortOrder) as SortOrder | null) ?? 'desc',

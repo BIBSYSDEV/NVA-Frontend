@@ -133,7 +133,7 @@ export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.Identifier]?: string | null;
   [ImportCandidatesSearchParam.ImportStatus]?: ImportCandidateStatus | null;
   [ImportCandidatesSearchParam.OrderBy]?: ImportCandidateOrderBy | null;
-  [ImportCandidatesSearchParam.PublicationYear]?: string | null;
+  [ImportCandidatesSearchParam.PublicationYear]?: number | null;
   [ImportCandidatesSearchParam.Query]?: string | null;
   [ImportCandidatesSearchParam.Size]?: number | null;
   [ImportCandidatesSearchParam.SortOrder]?: SortOrder | null;
@@ -159,7 +159,7 @@ export const fetchImportCandidates = async ({
     params.set(ImportCandidatesSearchParam.Query, query);
   }
   if (publicationYear) {
-    params.set(ImportCandidatesSearchParam.PublicationYear, publicationYear);
+    params.set(ImportCandidatesSearchParam.PublicationYear, publicationYear.toString());
   }
   if (id) {
     params.set(ImportCandidatesSearchParam.Identifier, id);

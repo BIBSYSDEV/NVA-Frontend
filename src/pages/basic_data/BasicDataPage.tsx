@@ -62,7 +62,7 @@ const BasicDataPage = () => {
   const importCandidatesFacetsParams: FetchImportCandidatesParams = {
     aggregation: 'all',
     size: 0,
-    publicationYear: candidateYearFilter.toString(),
+    publicationYear: candidateYearFilter,
   };
   const importCandidatesFacetsQuery = useQuery({
     enabled: location.pathname === UrlPathTemplate.BasicDataCentralImport,
