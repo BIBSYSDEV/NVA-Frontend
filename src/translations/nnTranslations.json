@@ -22,11 +22,13 @@
     "cancel_create_user_text": "Du må opprette ein brukar for å gå vidare. Viss du avbryt, blir du logga ut. Ønskjer du å avbryte?",
     "cancel_create_user_title": "Ønskjer du å avbryte?",
     "create_user_info": "Som brukar blir du tilgjengeleg for alle som skal leggje til forfattar eller bidragsytar på resultat.",
+    "expired_token_info": "Sesjonen din har gått ut, og du har blitt logga ut. Fortset som anonym brukar, eller logg inn på nytt.",
     "forbidden": "Forbode",
     "forbidden_description": "Du er ikkje autorisert til å sjå innhaldet på denne sida. Kontakt administrator om dette ikkje stemmer.",
     "login": "Logg inn",
     "logout": "Logg ut",
     "registration_not_published": "Denne registreringa er ikkje publisert enno.",
+    "signed_out": "Du er utlogga",
     "your_user_profile": "Din brukarprofil"
   },
   "basic_data": {
@@ -1283,6 +1285,7 @@
       "remove_file_description": "Ønskjer du å fjerne {{fileName}}?",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenkjer å publisere",
       "resource_is_a_reference": "Ressursen er ein referanse og har ingen filer eller lenkjer å publisere",
+      "show_all_older_versions": "Vis alle tidlegare versjonar",
       "size": "Størrelse",
       "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfattaren sin siste gjennomarbeida versjon etter at artikkelen har vore gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikkje forlaget sine sidetal og grafiske stil, eller eventuelle redaksjonelle omskrivingar, som den publiserte versjonen har. Denne versjonen bør delast i NVA, helst i pdf-format, med ein CC-BY-lisens.",
       "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfattaren sin siste gjennomarbeidde versjon etter at artikkelen har vore gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikkje forlaget sine sidetal og grafiske stil, eller eventuelle redaksjonelle omskrivingar, som den publiserte versjonen har. Denne versjonen bør delast i NVA, helst i pdf-format, med ein CC-BY-lisens.",

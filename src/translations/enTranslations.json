@@ -22,11 +22,13 @@
     "cancel_create_user_text": "You must create a user to proceed. If you cancel, you will be logged out. Do you want to cancel?",
     "cancel_create_user_title": "Do you want to cancel?",
     "create_user_info": "As a user you will be visible to anyone who wants to add an author or other contributors to results.",
+    "expired_token_info": "Your session has expired and you have been logged out. Continue as an anonymous user or log in again.",
     "forbidden": "Forbidden",
     "forbidden_description": "You are not authorized to view the content on this page. Contact the administrator if you think this is incorrect.",
     "login": "Log in",
     "logout": "Log out",
     "registration_not_published": "This registration has not been published yet.",
+    "signed_out": "You are logged out",
     "your_user_profile": "Your user profile"
   },
   "basic_data": {
@@ -1283,6 +1285,7 @@
       "remove_file_description": "Do you want to remove {{fileName}}?",
       "resource_has_no_files_or_links": "The resource does not have any files or links to publish",
       "resource_is_a_reference": "The resource is a reference and has no files or links to publish",
+      "show_all_older_versions": "Show all previous versions",
       "size": "Size",
       "version_accepted_helper_text": "<0>Accepted version</0>: The version of a research paper accepted by a journal after peer review. This version does not normally include any changes made after acceptance such as copy editing, or typesetting. This version should be shared in NVA, preferable in PDF format and under a CC-BY license.",
       "version_accepted_helper_text_metadata_only": "<0>Accepted version</0>: The version of a research paper accepted by a journal after peer review. This version does not normally include any changes made after acceptance such as copy editing, or typesetting. This version should be shared in NVA, preferable in PDF format and under a CC-BY license.",
