@@ -179,7 +179,7 @@ export const fetchImportCandidates = async ({
   const paramsString = params.toString();
 
   const getImportCandidates = await authenticatedApiRequest2<
-    SearchResponse<ImportCandidateSummary, ImportCandidateAggregations>
+    SearchResponse2<ImportCandidateSummary, ImportCandidateAggregations>
   >({
     url: `${SearchApiPath.ImportCandidates}?${paramsString}`,
   });
