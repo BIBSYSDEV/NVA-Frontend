@@ -21,7 +21,8 @@ export const ImportCandidatesMenuFilters = () => {
 
   const selectedImportStatus =
     (searchParams.get(ImportCandidatesSearchParam.ImportStatus) as ImportCandidateStatus | null) ?? 'NOT_IMPORTED';
-  const selectedPublicationYear = searchParams.get(ImportCandidatesSearchParam.PublicationYear) ?? yearOptions[0];
+  const selectedPublicationYearParam = searchParams.get(ImportCandidatesSearchParam.PublicationYear);
+  const selectedPublicationYear = selectedPublicationYearParam ? +selectedPublicationYearParam : thisYear;
 
   const importCandidatesFacetsParams: FetchImportCandidatesParams = {
     aggregation: 'all',
