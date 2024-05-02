@@ -27,7 +27,7 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
           pb: '0.25rem',
           bgcolor: 'nvi.main',
         }}>
-        <Typography fontWeight="bold" sx={{ alignSelf: 'center', p: '0.5rem' }}>
+        <Typography fontWeight="bold" sx={{ alignSelf: 'center', my: '0.5rem' }}>
           {t('tasks.nvi.approval_status_count', { checked: checkedApprovals.length, total: approvals.length })}
         </Typography>
 
@@ -37,8 +37,8 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
               bgcolor: 'white',
               p: '0.5rem',
               display: 'grid',
-              gridTemplateColumns: '1fr 3fr 1fr',
-              gap: '0.5rem 0.75rem',
+              gridTemplateColumns: 'auto 3fr 1fr',
+              gap: '0.5rem',
             }}>
             {approvals.map((approvalStatus) => (
               <InstitutionApprovalStatusRow key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
@@ -53,7 +53,7 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
           bgcolor: 'nvi.light',
           my: '0.25rem',
         }}>
-        <Typography>=</Typography>
+        <section>=</section>
         <Typography>{t('tasks.nvi.publication_points')}</Typography>
         {totalPoints && <PublicationPointsTypography points={totalPoints} />}
       </Box>
