@@ -1,4 +1,5 @@
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, DialogActions, Divider, IconButton, TextField, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
@@ -69,27 +70,34 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
         <Divider flexItem />
-        {!showDeleteField && (
-          <IconButton
-            data-testid={dataTestId.unpublishActions.showUnpublishButtonButton}
-            title={t('common.show_more_options')}
-            onClick={() => setShowDeleteField(true)}>
-            <MoreHorizIcon />
-          </IconButton>
+        <IconButton
+          sx={{ width: 'fit-content', alignSelf: 'center', p: '0' }}
+          data-testid={dataTestId.unpublishActions.showUnpublishButtonButton}
+          title={t('common.show_more_options')}
+          onClick={() => setShowDeleteField(!showDeleteField)}>
+          {showDeleteField ? <ExpandLess /> : <ExpandMore />}
+        </IconButton>
+        {showDeleteField && (
+          <>
+            <Typography fontWeight="bold">{t('unpublish_actions.unpublish_header')}</Typography>
+            {userCanUnpublish ? (
+              <>
+                <Typography>{t('unpublish_actions.unpublish_info')}</Typography>
+                <Button
+                  data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
+                  variant="outlined"
+                  sx={{ bgcolor: 'white' }}
+                  onClick={() => setShowDeleteModal(true)}>
+                  {t('unpublish_actions.unpublish')}
+                </Button>
+              </>
+            ) : (
+              <Trans t={t} i18nKey="unpublish_actions.unpublish_not_allowed" components={[<Typography paragraph />]} />
+            )}
+          </>
         )}
-        {showDeleteField &&
-          (userCanUnpublish ? (
-            <Button
-              data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
-              variant="outlined"
-              onClick={() => setShowDeleteModal(true)}>
-              {t('unpublish_actions.unpublish')}
-            </Button>
-          ) : (
-            <Trans t={t} i18nKey="unpublish_actions.unpublish_not_allowed" components={[<Typography paragraph />]} />
-          ))}
       </Box>
       <Modal
         headingText={t('registration.delete_registration')}
