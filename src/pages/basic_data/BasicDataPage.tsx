@@ -5,7 +5,6 @@ import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
 import { Divider, FormControlLabel, FormGroup, MenuItem, Radio, Select } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory, useLocation } from 'react-router-dom';
@@ -53,16 +52,16 @@ const BasicDataPage = () => {
 
   const selectedImportStatus =
     (searchParams.get(ImportCandidatesSearchParam.ImportStatus) as ImportCandidateStatus | null) ?? 'NOT_IMPORTED';
+  const selectedPublicationYear = searchParams.get(ImportCandidatesSearchParam.PublicationYear) ?? yearOptions[0];
+
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
 
-  const [candidateYearFilter, setCandidateYearFilter] = useState(yearOptions[0]);
-
   const importCandidatesFacetsParams: FetchImportCandidatesParams = {
     aggregation: 'all',
     size: 0,
-    publicationYear: candidateYearFilter,
+    publicationYear: +selectedPublicationYear,
   };
   const importCandidatesFacetsQuery = useQuery({
     enabled: location.pathname === UrlPathTemplate.BasicDataCentralImport,
@@ -195,6 +194,22 @@ const BasicDataPage = () => {
             dataTestId={dataTestId.basicData.centralImportAccordion}>
             <NavigationList component="div">
               <FormGroup sx={{ mx: '1rem' }}>
+                <Select
+                  size="small"
+                  sx={{ mt: '0.5rem' }}
+                  value={selectedPublicationYear}
+                  inputProps={{ 'aria-label': t('common.year') }}
+                  onChange={(event) => {
+                    searchParams.set(ImportCandidatesSearchParam.PublicationYear, event.target.value.toString());
+                    history.push({ search: searchParams.toString() });
+                  }}>
+                  {yearOptions.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
+
                 <FormControlLabel
                   data-testid={dataTestId.basicData.centralImport.filter.notImportedRadio}
                   checked={selectedImportStatus === 'NOT_IMPORTED'}
@@ -255,19 +270,6 @@ const BasicDataPage = () => {
                       : t('basic_data.central_import.status.NOT_APPLICABLE')
                   }
                 />
-
-                <Select
-                  size="small"
-                  sx={{ mt: '0.5rem' }}
-                  value={candidateYearFilter}
-                  inputProps={{ 'aria-label': t('common.year') }}
-                  onChange={(event) => setCandidateYearFilter(+event.target.value)}>
-                  {yearOptions.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                </Select>
               </FormGroup>
             </NavigationList>
           </NavigationListAccordion>
@@ -288,7 +290,7 @@ const BasicDataPage = () => {
             <AdminCustomerInstitutionsContainer />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isInternalImporter}>
-            <CentralImportPage statusFilter={selectedImportStatus} yearFilter={candidateYearFilter} />
+            <CentralImportPage statusFilter={selectedImportStatus} yearFilter={+selectedPublicationYear} />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImportCandidate} isAuthorized={isInternalImporter}>
             <CentralImportDuplicationCheckPage />
