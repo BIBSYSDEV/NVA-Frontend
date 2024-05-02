@@ -1285,6 +1285,7 @@
       "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
+      "show_all_older_versions": "Vis alle tidligere versjoner",
       "size": "Størrelse",
       "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
       "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",

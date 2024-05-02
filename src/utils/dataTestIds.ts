@@ -362,6 +362,7 @@ export const dataTestId = {
       legalNoteField: 'legal-note-field',
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
+      licenseItemShowOlderVersion: 'license-item-show-older-versions',
       licenseModal: 'license-modal',
       linkToResourceField: 'link-to-resource-field',
       removeFileButton: 'button-remove-file',
