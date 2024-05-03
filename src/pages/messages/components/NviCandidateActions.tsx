@@ -220,20 +220,20 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {myApproval?.status !== 'Rejected' && (
           <>
-            <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
+            <Typography paragraph>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
             <Button
               data-testid={dataTestId.tasksPage.nvi.rejectButton}
               variant="outlined"
               fullWidth
               size="small"
-              sx={{ mb: '1rem', bgcolor: '#eeeeee' }}
+              sx={{ mb: '1rem', bgcolor: 'white' }}
               disabled={isMutating || hasSelectedRejectCandidate}
               endIcon={<ClearIcon />}
               onClick={() => setHasSelectedRejectCandidate(true)}>
               {t('tasks.nvi.reject_nvi_candidate')}
             </Button>
 
-            <Divider sx={{ mb: '1rem', bgcolor: 'lightgray' }} />
+            <Divider sx={{ mb: '1rem' }} />
 
             {hasSelectedRejectCandidate && (
               <MessageForm

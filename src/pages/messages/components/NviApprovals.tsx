@@ -18,7 +18,7 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
   );
 
   return (
-    <Box sx={{ m: '1rem', border: '0.5px solid' }}>
+    <Box sx={{ m: '1rem', border: '0.5px solid', borderColor: 'nvi-main' }}>
       <Box
         sx={{
           display: 'flex',
@@ -37,7 +37,8 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
               bgcolor: 'white',
               p: '0.5rem',
               display: 'grid',
-              gridTemplateColumns: 'auto 3fr 1fr',
+              gridTemplateColumns: '1fr 3fr 1fr',
+              justifyItems: 'center',
               gap: '0.5rem',
             }}>
             {approvals.map((approvalStatus) => (
@@ -48,9 +49,10 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
       </Box>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-around',
+          display: 'grid',
+          gridTemplateColumns: '1fr 3fr 1fr',
           bgcolor: 'nvi.light',
+          justifyItems: 'center',
           my: '0.25rem',
         }}>
         <section>=</section>
@@ -90,10 +92,7 @@ const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalSta
       <Typography sx={{ whiteSpace: 'nowrap', justifySelf: 'center' }}>
         {t(`tasks.nvi.status.${approvalStatus.status}`)}
       </Typography>
-      <PublicationPointsTypography
-        sx={{ whiteSpace: 'nowrap', justifySelf: 'end', mr: '0.5rem' }}
-        points={approvalStatus.points}
-      />
+      <PublicationPointsTypography sx={{ whiteSpace: 'nowrap' }} points={approvalStatus.points} />
     </>
   );
 };
