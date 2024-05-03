@@ -18,7 +18,7 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
   );
 
   return (
-    <Box sx={{ m: '1rem', border: '0.5px solid', borderColor: 'nvi-main' }}>
+    <Box sx={{ m: '1rem', border: '0.5px solid', borderColor: 'nvi.main' }}>
       <Box
         sx={{
           display: 'flex',
