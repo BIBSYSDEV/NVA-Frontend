@@ -11,7 +11,7 @@ import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { CandidateOffsetState } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
+import { getNviCandidatePath, IdentifierParams } from '../../../utils/urlPaths';
 import { Forbidden } from '../../errorpages/Forbidden';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NavigationIconButton } from './NavigationIconButton';
