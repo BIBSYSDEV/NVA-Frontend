@@ -53,6 +53,7 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
           gridTemplateColumns: '1fr 3fr 1fr',
           bgcolor: 'nvi.light',
           justifyItems: 'center',
+          px: '0.25rem',
           my: '0.25rem',
         }}>
         <section>=</section>
