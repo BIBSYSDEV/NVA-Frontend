@@ -178,7 +178,7 @@ export const AddContributorForm = ({
           <Button
             data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
             onClick={openAddUnverifiedContributor}>
-            {t('registration.contributors.contributor_not_found')}
+            {t('registration.contributors.add_new_contributor')}
           </Button>
         )}
         <Button
