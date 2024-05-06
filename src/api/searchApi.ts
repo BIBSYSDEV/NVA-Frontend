@@ -159,7 +159,8 @@ export const fetchImportCandidates = async ({
     params.set(ImportCandidatesSearchParam.Query, query);
   }
   if (publicationYear) {
-    params.set(ImportCandidatesSearchParam.PublicationYear, publicationYear.toString());
+    const yearString = publicationYear.toString();
+    params.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
   }
   if (id) {
     params.set(ImportCandidatesSearchParam.Identifier, id);
