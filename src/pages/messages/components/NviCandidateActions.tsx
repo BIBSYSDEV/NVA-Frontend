@@ -1,8 +1,10 @@
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createNote,
@@ -199,15 +201,17 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {myApproval?.status !== 'Approved' && (
           <>
-            <Typography gutterBottom>{t('tasks.nvi.approve_nvi_candidate_description')}</Typography>
+            <Typography fontWeight="bold">{t('tasks.nvi.nvi_status')}</Typography>
+            <Trans i18nKey="tasks.nvi.approve_nvi_candidate_description" components={[<Typography paragraph />]} />
             <LoadingButton
               data-testid={dataTestId.tasksPage.nvi.approveButton}
               variant="outlined"
               fullWidth
               size="small"
-              sx={{ mb: '1rem' }}
+              sx={{ mb: '1rem', bgcolor: 'white' }}
               loading={statusMutation.isLoading && statusMutation.variables?.status === 'Approved'}
               disabled={isMutating}
+              endIcon={<CheckIcon />}
               onClick={() => statusMutation.mutate({ status: 'Approved' })}>
               {t('tasks.nvi.approve_nvi_candidate')}
             </LoadingButton>
@@ -216,17 +220,20 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {myApproval?.status !== 'Rejected' && (
           <>
-            <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
+            <Typography paragraph>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
             <Button
               data-testid={dataTestId.tasksPage.nvi.rejectButton}
               variant="outlined"
               fullWidth
               size="small"
-              sx={{ mb: '1rem' }}
+              sx={{ mb: '1rem', bgcolor: 'white' }}
               disabled={isMutating || hasSelectedRejectCandidate}
+              endIcon={<ClearIcon />}
               onClick={() => setHasSelectedRejectCandidate(true)}>
               {t('tasks.nvi.reject_nvi_candidate')}
             </Button>
+
+            <Divider sx={{ mb: '1rem' }} />
 
             {hasSelectedRejectCandidate && (
               <MessageForm
