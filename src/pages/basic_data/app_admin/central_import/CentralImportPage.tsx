@@ -6,9 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
   FetchImportCandidatesParams,
-  ImportCandidateOrderBy,
   ImportCandidatesSearchParam,
-  SortOrder,
   fetchImportCandidates,
 } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
@@ -16,34 +14,31 @@ import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { SearchForm } from '../../../../components/SearchForm';
 import { SortSelector } from '../../../../components/SortSelector';
-import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
+import { useImportCandidatesParams } from '../../../../utils/hooks/useImportCandidatesParams';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { SearchParam } from '../../../../utils/searchHelpers';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
-interface CentralImportPageProps {
-  statusFilter: ImportCandidateStatus;
-  yearFilter: number;
-}
+const thisYear = new Date().getFullYear();
 
-export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPageProps) => {
+export const CentralImportPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
-  const resultsParam = params.get(SearchParam.Results);
-  const fromParam = params.get(SearchParam.From);
-  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
-  const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
+
+  const importCandidateParams = useImportCandidatesParams();
+
+  const sizeParam = importCandidateParams.sizeParam ?? ROWS_PER_PAGE_OPTIONS[0];
+  const fromParam = importCandidateParams.fromParam ?? 0;
 
   const importCandidateQueryParams: FetchImportCandidatesParams = {
-    query: params.get(ImportCandidatesSearchParam.Query),
-    publicationYear: yearFilter,
-    importStatus: statusFilter,
-    orderBy: (params.get(ImportCandidatesSearchParam.OrderBy) as ImportCandidateOrderBy | null) ?? 'createdDate',
-    sortOrder: (params.get(ImportCandidatesSearchParam.SortOrder) as SortOrder | null) ?? 'desc',
-    from: page * rowsPerPage,
-    size: rowsPerPage,
+    query: importCandidateParams.queryParam,
+    publicationYear: importCandidateParams.publicationYearParam ?? thisYear,
+    importStatus: importCandidateParams.importStatusParam ?? 'NOT_IMPORTED',
+    orderBy: importCandidateParams.orderByParam ?? 'createdDate',
+    sortOrder: importCandidateParams.sortOrderParam ?? 'desc',
+    size: sizeParam,
+    from: fromParam,
   };
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', importCandidateQueryParams],
@@ -52,8 +47,8 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
   });
 
   const updatePath = (from: string, results: string) => {
-    params.set(SearchParam.From, from);
-    params.set(SearchParam.Results, results);
+    params.set(ImportCandidatesSearchParam.From, from);
+    params.set(ImportCandidatesSearchParam.Size, results);
     history.push({ search: params.toString() });
   };
 
@@ -64,6 +59,7 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
   }, [importCandidateQuery.data?.hits]);
 
   const searchResults = importCandidateQuery.data?.hits ?? [];
+  const page = Math.floor(fromParam / sizeParam) || 0;
 
   return (
     <section>
@@ -77,15 +73,15 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
       ) : searchResults.length > 0 ? (
         <ListPagination
           count={importCandidateQuery.data?.totalHits ?? 0}
-          rowsPerPage={rowsPerPage}
+          rowsPerPage={sizeParam}
           page={page + 1}
-          onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
+          onPageChange={(newPage) => updatePath(((newPage - 1) * sizeParam).toString(), sizeParam.toString())}
           onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
           showPaginationTop
           sortingComponent={
             <SortSelector
-              sortKey={SearchParam.SortOrder}
-              orderKey={SearchParam.OrderBy}
+              sortKey={ImportCandidatesSearchParam.SortOrder}
+              orderKey={ImportCandidatesSearchParam.OrderBy}
               aria-label={t('search.sort_by')}
               size="small"
               variant="standard"

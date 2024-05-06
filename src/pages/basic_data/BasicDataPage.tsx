@@ -20,7 +20,6 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useImportCandidatesParams } from '../../utils/hooks/useImportCandidatesParams';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
@@ -37,8 +36,6 @@ export type CandidateStatusFilter = {
   [key in ImportCandidateStatus]: boolean;
 };
 
-const thisYear = new Date().getFullYear();
-
 const BasicDataPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -46,8 +43,6 @@ const BasicDataPage = () => {
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const isInternalImporter = !!user?.customerId && user.isInternalImporter;
   const location = useLocation();
-
-  const { importStatusParam, publicationYearParam } = useImportCandidatesParams();
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -171,10 +166,7 @@ const BasicDataPage = () => {
             <AdminCustomerInstitutionsContainer />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isInternalImporter}>
-            <CentralImportPage
-              statusFilter={importStatusParam ?? 'NOT_IMPORTED'}
-              yearFilter={publicationYearParam ?? thisYear}
-            />
+            <CentralImportPage />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImportCandidate} isAuthorized={isInternalImporter}>
             <CentralImportDuplicationCheckPage />
