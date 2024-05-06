@@ -20,7 +20,7 @@ export const ImportCandidatesMenuFilters = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const { importStatusParam, publicationYearParam } = useImportCandidatesParams();
+  const { importStatusParam, publicationYearParam, fromParam } = useImportCandidatesParams();
   const publicationYear = publicationYearParam ?? thisYear;
   const importStatus = importStatusParam ?? 'NOT_IMPORTED';
 
@@ -35,6 +35,12 @@ export const ImportCandidatesMenuFilters = () => {
     queryFn: () => fetchImportCandidates(importCandidatesFacetsParams),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
+
+  const resetPagination = () => {
+    if (fromParam) {
+      searchParams.set(ImportCandidatesSearchParam.From, '0');
+    }
+  };
 
   const statusBuckets = importCandidatesFacetsQuery.data?.aggregations?.importStatus;
   const toImportCount = statusBuckets
@@ -56,6 +62,7 @@ export const ImportCandidatesMenuFilters = () => {
         inputProps={{ 'aria-label': t('common.year') }}
         onChange={(event) => {
           searchParams.set(ImportCandidatesSearchParam.PublicationYear, event.target.value.toString());
+          resetPagination();
           history.push({ search: searchParams.toString() });
         }}>
         {yearOptions.map((year) => (
@@ -70,6 +77,7 @@ export const ImportCandidatesMenuFilters = () => {
         value={importStatus}
         onChange={(_, value) => {
           searchParams.set(ImportCandidatesSearchParam.ImportStatus, value);
+          resetPagination();
           history.push({ search: searchParams.toString() });
         }}>
         <FormControlLabel
