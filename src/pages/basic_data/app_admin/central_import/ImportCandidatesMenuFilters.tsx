@@ -9,6 +9,7 @@ import {
 } from '../../../../api/searchApi';
 import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { useImportCandidatesParams } from '../../../../utils/hooks/useImportCandidatesParams';
 import { UrlPathTemplate } from '../../../../utils/urlPaths';
 
 const thisYear = new Date().getFullYear();
@@ -19,15 +20,14 @@ export const ImportCandidatesMenuFilters = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const selectedImportStatus =
-    (searchParams.get(ImportCandidatesSearchParam.ImportStatus) as ImportCandidateStatus | null) ?? 'NOT_IMPORTED';
-  const selectedPublicationYearParam = searchParams.get(ImportCandidatesSearchParam.PublicationYear);
-  const selectedPublicationYear = selectedPublicationYearParam ? +selectedPublicationYearParam : thisYear;
+  const { importStatusParam, publicationYearParam } = useImportCandidatesParams();
+  const publicationYear = publicationYearParam ?? thisYear;
+  const importStatus = importStatusParam ?? 'NOT_IMPORTED';
 
   const importCandidatesFacetsParams: FetchImportCandidatesParams = {
     aggregation: 'all',
     size: 0,
-    publicationYear: +selectedPublicationYear,
+    publicationYear,
   };
   const importCandidatesFacetsQuery = useQuery({
     enabled: history.location.pathname === UrlPathTemplate.BasicDataCentralImport,
@@ -52,10 +52,14 @@ export const ImportCandidatesMenuFilters = () => {
       <Select
         size="small"
         sx={{ mt: '0.5rem' }}
-        value={selectedPublicationYear}
+        value={publicationYear}
         inputProps={{ 'aria-label': t('common.year') }}
         onChange={(event) => {
-          searchParams.set(ImportCandidatesSearchParam.PublicationYear, event.target.value.toString());
+          if (event.target.value) {
+            searchParams.set(ImportCandidatesSearchParam.PublicationYear, event.target.value.toString());
+          } else {
+            searchParams.delete(ImportCandidatesSearchParam.PublicationYear);
+          }
           history.push({ search: searchParams.toString() });
         }}>
         {yearOptions.map((year) => (
@@ -67,7 +71,7 @@ export const ImportCandidatesMenuFilters = () => {
 
       <RadioGroup
         sx={{ mt: '1rem' }}
-        value={selectedImportStatus}
+        value={importStatus}
         onChange={(_, value) => {
           searchParams.set(ImportCandidatesSearchParam.ImportStatus, value);
           history.push({ search: searchParams.toString() });

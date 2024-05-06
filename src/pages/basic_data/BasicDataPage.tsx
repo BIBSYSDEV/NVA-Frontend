@@ -7,7 +7,6 @@ import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { ImportCandidatesSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -21,6 +20,7 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useImportCandidatesParams } from '../../utils/hooks/useImportCandidatesParams';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
@@ -38,7 +38,6 @@ export type CandidateStatusFilter = {
 };
 
 const thisYear = new Date().getFullYear();
-const yearOptions = [thisYear, thisYear - 1, thisYear - 2, thisYear - 3, thisYear - 4, thisYear - 5];
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
@@ -47,11 +46,8 @@ const BasicDataPage = () => {
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const isInternalImporter = !!user?.customerId && user.isInternalImporter;
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
 
-  const selectedImportStatus =
-    (searchParams.get(ImportCandidatesSearchParam.ImportStatus) as ImportCandidateStatus | null) ?? 'NOT_IMPORTED';
-  const selectedPublicationYear = searchParams.get(ImportCandidatesSearchParam.PublicationYear) ?? yearOptions[0];
+  const { importStatusParam, publicationYearParam } = useImportCandidatesParams();
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -175,7 +171,10 @@ const BasicDataPage = () => {
             <AdminCustomerInstitutionsContainer />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isInternalImporter}>
-            <CentralImportPage statusFilter={selectedImportStatus} yearFilter={+selectedPublicationYear} />
+            <CentralImportPage
+              statusFilter={importStatusParam ?? 'NOT_IMPORTED'}
+              yearFilter={publicationYearParam ?? thisYear}
+            />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImportCandidate} isAuthorized={isInternalImporter}>
             <CentralImportDuplicationCheckPage />
