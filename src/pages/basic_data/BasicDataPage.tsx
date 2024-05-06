@@ -43,7 +43,6 @@ const BasicDataPage = () => {
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const isInternalImporter = !!user?.customerId && user.isInternalImporter;
   const location = useLocation();
-
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';

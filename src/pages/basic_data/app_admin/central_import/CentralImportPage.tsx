@@ -59,7 +59,6 @@ export const CentralImportPage = () => {
   }, [importCandidateQuery.data?.hits]);
 
   const searchResults = importCandidateQuery.data?.hits ?? [];
-  const page = Math.floor(fromParam / sizeParam) || 0;
 
   return (
     <section>
@@ -74,7 +73,7 @@ export const CentralImportPage = () => {
         <ListPagination
           count={importCandidateQuery.data?.totalHits ?? 0}
           rowsPerPage={sizeParam}
-          page={page + 1}
+          page={Math.floor(fromParam / sizeParam) + 1}
           onPageChange={(newPage) => updatePath(((newPage - 1) * sizeParam).toString(), sizeParam.toString())}
           onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
           showPaginationTop

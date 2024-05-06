@@ -55,11 +55,7 @@ export const ImportCandidatesMenuFilters = () => {
         value={publicationYear}
         inputProps={{ 'aria-label': t('common.year') }}
         onChange={(event) => {
-          if (event.target.value) {
-            searchParams.set(ImportCandidatesSearchParam.PublicationYear, event.target.value.toString());
-          } else {
-            searchParams.delete(ImportCandidatesSearchParam.PublicationYear);
-          }
+          searchParams.set(ImportCandidatesSearchParam.PublicationYear, event.target.value.toString());
           history.push({ search: searchParams.toString() });
         }}>
         {yearOptions.map((year) => (

@@ -9,20 +9,20 @@ export const useImportCandidatesParams = () => {
   const aggregationParam = searchParams.get(ImportCandidatesSearchParam.Aggregation);
   const fromParam = searchParams.get(ImportCandidatesSearchParam.From) as number | null;
   const importStatusParam = searchParams.get(ImportCandidatesSearchParam.ImportStatus) as ImportCandidateStatus | null;
-  const sizeParam = searchParams.get(ImportCandidatesSearchParam.Size) as number | null;
   const orderByParam = searchParams.get(ImportCandidatesSearchParam.OrderBy) as ImportCandidateOrderBy | null;
-  const sortOrderParam = searchParams.get(ImportCandidatesSearchParam.SortOrder) as SortOrder | null;
-  const queryParam = searchParams.get(ImportCandidatesSearchParam.Query);
   const publicationYearParam = searchParams.get(ImportCandidatesSearchParam.PublicationYear) as number | null;
+  const queryParam = searchParams.get(ImportCandidatesSearchParam.Query);
+  const sizeParam = searchParams.get(ImportCandidatesSearchParam.Size) as number | null;
+  const sortOrderParam = searchParams.get(ImportCandidatesSearchParam.SortOrder) as SortOrder | null;
 
   return {
     aggregationParam,
-    importStatusParam,
-    publicationYearParam,
-    sizeParam,
     fromParam,
+    importStatusParam,
     orderByParam,
-    sortOrderParam,
+    publicationYearParam,
     queryParam,
+    sizeParam,
+    sortOrderParam,
   };
 };
