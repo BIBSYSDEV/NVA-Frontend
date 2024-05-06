@@ -56,6 +56,7 @@ export const ImportCandidatesMenuFilters = () => {
   return (
     <FormGroup sx={{ mx: '1rem' }}>
       <Select
+        data-testid={dataTestId.basicData.centralImport.filter.publicationYearSelect}
         size="small"
         sx={{ mt: '0.5rem' }}
         value={publicationYear}
