@@ -75,7 +75,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
         <IconButton
           sx={{ width: 'fit-content', alignSelf: 'center', p: '0' }}
           data-testid={dataTestId.unpublishActions.showUnpublishButtonButton}
-          title={t('common.show_more_options')}
+          title={showDeleteField ? t('common.show_fewer_options') : t('common.show_more_options')}
           onClick={() => setShowDeleteField(!showDeleteField)}>
           {showDeleteField ? <ExpandLess /> : <ExpandMore />}
         </IconButton>
