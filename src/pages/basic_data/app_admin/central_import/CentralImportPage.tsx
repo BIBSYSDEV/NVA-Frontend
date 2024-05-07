@@ -39,6 +39,7 @@ export const CentralImportPage = () => {
     sortOrder: importCandidateParams.sortOrderParam ?? 'desc',
     topLevelOrganization: importCandidateParams.topLevelOrganizationParam,
     type: importCandidateParams.typeParam,
+    collaborationType: importCandidateParams.collaborationTypeParam,
     size: sizeParam,
     from: fromParam,
   };

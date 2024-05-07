@@ -47,7 +47,7 @@ export const ImportCandidatesMenuFilters = () => {
   };
 
   const updateSearchParams = (param: ImportCandidatesSearchParam, value: string) => {
-    if (searchParams.has(param)) {
+    if (searchParams.get(param) === value) {
       searchParams.delete(param);
     } else {
       searchParams.set(param, value);
@@ -69,6 +69,7 @@ export const ImportCandidatesMenuFilters = () => {
 
   const typeAggregations = importCandidatesFacetsQuery.data?.aggregations?.type ?? [];
   const topLevelOrgAggregations = importCandidatesFacetsQuery.data?.aggregations?.topLevelOrganization ?? [];
+  const collaborationTypeAggregations = importCandidatesFacetsQuery.data?.aggregations?.collaborationType ?? [];
 
   return (
     <FormGroup sx={{ mx: '1rem', mb: '1rem' }}>
@@ -160,6 +161,25 @@ export const ImportCandidatesMenuFilters = () => {
                 label={getLanguageString(facet.labels) || getIdentifierFromId(facet.key)}
                 count={facet.count}
                 onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.TopLevelOrganization, facet.key)}
+              />
+            ))}
+          </FacetItem>
+        )}
+
+        {collaborationTypeAggregations?.length > 0 && (
+          <FacetItem
+            title={t('basic_data.central_import.collaboration_type.Collaborative')}
+            dataTestId={dataTestId.startPage.typeFacets /*TODO*/}>
+            {collaborationTypeAggregations.map((facet) => (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={importCandidatesFacetsQuery.isLoading}
+                isSelected={importCandidateParams.collaborationTypeParam === facet.key}
+                label={t(`basic_data.central_import.collaboration_type.${facet.key}`)}
+                count={facet.count}
+                onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.CollaborationType, facet.key)}
               />
             ))}
           </FacetItem>

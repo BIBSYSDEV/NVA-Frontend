@@ -1,5 +1,6 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import {
+  CollaborationType,
   ImportCandidateAggregations,
   ImportCandidateStatus,
   ImportCandidateSummary,
@@ -117,6 +118,7 @@ export type ImportCandidateOrderBy = 'createdDate';
 
 export enum ImportCandidatesSearchParam {
   Aggregation = 'aggregation',
+  CollaborationType = 'collaborationType',
   From = 'from',
   Identifier = 'id',
   ImportStatus = 'importStatus',
@@ -131,6 +133,7 @@ export enum ImportCandidatesSearchParam {
 
 export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.Aggregation]?: 'all' | null;
+  [ImportCandidatesSearchParam.CollaborationType]?: CollaborationType | null;
   [ImportCandidatesSearchParam.From]?: number | null;
   [ImportCandidatesSearchParam.Identifier]?: string | null;
   [ImportCandidatesSearchParam.ImportStatus]?: ImportCandidateStatus | null;
@@ -155,6 +158,7 @@ export const fetchImportCandidates = async ({
   sortOrder,
   topLevelOrganization,
   type,
+  collaborationType,
 }: FetchImportCandidatesParams) => {
   const params = new URLSearchParams();
 
@@ -185,6 +189,9 @@ export const fetchImportCandidates = async ({
   }
   if (type) {
     params.set(ImportCandidatesSearchParam.Type, type);
+  }
+  if (collaborationType) {
+    params.set(ImportCandidatesSearchParam.CollaborationType, collaborationType);
   }
   if (aggregation) {
     params.set(ImportCandidatesSearchParam.Aggregation, aggregation);

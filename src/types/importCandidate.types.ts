@@ -35,10 +35,12 @@ export interface ImportCandidate extends Registration {
   importStatus: ImportStatus;
 }
 
+export type CollaborationType = 'Collaborative' | 'NonCollaborative';
+
 export interface ImportCandidateAggregations extends Pick<RegistrationAggregations, 'type' | 'topLevelOrganization'> {
   files?: AggregationValue<AggregationFileKeyType>[]; // TODO: Reuse 'files' from RegistrationAggregations
   importStatus?: AggregationValue<ImportCandidateStatus>[];
-  collaborationType?: AggregationValue<'Collaborative' | 'NonCollaborative'>[];
+  collaborationType?: AggregationValue<CollaborationType>[];
 }
 
 export interface ImportCandidateSummary {
