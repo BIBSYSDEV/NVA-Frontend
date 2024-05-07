@@ -446,7 +446,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
   const getResults = await apiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
-    url: `${SearchApiPath.Registrations}?${searchParams.toString()}&loff=32`,
+    url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
     signal,
   });
 
