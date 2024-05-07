@@ -290,7 +290,7 @@ const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialo
     <Dialog open={open} onKeyDown={handleKeypress}>
       <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
       <DialogContent>
-        <Typography>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
+        <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
         <TextField
           data-testid={dataTestId.tasksPage.nvi.rejectionModalTextField}
           inputProps={{ maxLength: 160 }}
