@@ -1863,7 +1863,7 @@
       "previous_candidate": "Gå til forrige kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
-      "reject_nvi_candidate_description": "Skal forskningsresultatet ikke NVI-rapporteres så skriv en begrunnelse for dette i merknadsfeltet og deretter velg \"Avvis resultat\"",
+      "reject_nvi_candidate_description": "Skal forskningsresultatet ikke NVI-rapporteres så skriv en begrunnelse for dette i tekstfeltet som vises og deretter velg \"Avvis\"",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
       "reject_nvi_candidate_modal_text": "Vennligst oppgi en detaljert begrunnelse på hvorfor du avviser. Begrunnelsen må inneholde minst 10 tegn.",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
