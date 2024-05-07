@@ -113,7 +113,7 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 };
 
 export type SortOrder = 'desc' | 'asc';
-export type ImportCandidateOrderBy = 'createdDate' | 'importStatus.modifiedDate';
+export type ImportCandidateOrderBy = 'createdDate';
 
 export enum ImportCandidatesSearchParam {
   Aggregation = 'aggregation',
@@ -159,7 +159,8 @@ export const fetchImportCandidates = async ({
     params.set(ImportCandidatesSearchParam.Query, query);
   }
   if (publicationYear) {
-    params.set(ImportCandidatesSearchParam.PublicationYear, publicationYear.toString());
+    const yearString = publicationYear.toString();
+    params.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
   }
   if (id) {
     params.set(ImportCandidatesSearchParam.Identifier, id);
