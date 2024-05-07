@@ -274,20 +274,14 @@ interface RejectionDialogProps {
   isLoading: boolean;
 }
 
+const maxLength = 160;
+
 const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialogProps) => {
   const { t } = useTranslation();
   const [reason, setReason] = useState('');
-  const maxLength = 160;
-
-  const handleKeypress = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter' || event.key === 'NumpadEnter') {
-      event.preventDefault();
-      onAccept(reason.trim());
-    }
-  };
 
   return (
-    <Dialog open={open} onKeyDown={handleKeypress}>
+    <Dialog open={open}>
       <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
       <DialogContent>
         <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
