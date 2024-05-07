@@ -113,7 +113,7 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 };
 
 export type SortOrder = 'desc' | 'asc';
-export type ImportCandidateOrderBy = 'createdDate' | 'importStatus.modifiedDate';
+export type ImportCandidateOrderBy = 'createdDate';
 
 export enum ImportCandidatesSearchParam {
   Aggregation = 'aggregation',

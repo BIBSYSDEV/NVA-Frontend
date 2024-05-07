@@ -87,7 +87,6 @@ export const CentralImportPage = () => {
               options={[
                 { orderBy: 'createdDate', sortOrder: 'desc', label: t('basic_data.central_import.sort_newest_first') },
                 { orderBy: 'createdDate', sortOrder: 'asc', label: t('basic_data.central_import.sort_oldest_first') },
-                { orderBy: 'importStatus.modifiedDate', sortOrder: 'desc', label: t('search.sort_by_modified_date') },
               ]}
             />
           }>
