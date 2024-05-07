@@ -41,19 +41,15 @@ export const ImportCandidatesMenuFilters = () => {
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 
-  const resetPagination = () => {
-    if (importCandidateParams.fromParam) {
-      searchParams.set(ImportCandidatesSearchParam.From, '0');
-    }
-  };
-
   const updateSearchParams = (param: ImportCandidatesSearchParam, value: string) => {
     if (searchParams.get(param) === value) {
       searchParams.delete(param);
     } else {
       searchParams.set(param, value);
     }
-    resetPagination();
+    if (importCandidateParams.fromParam) {
+      searchParams.delete(ImportCandidatesSearchParam.From);
+    }
     history.push({ search: searchParams.toString() });
   };
 
@@ -81,11 +77,9 @@ export const ImportCandidatesMenuFilters = () => {
         sx={{ mt: '0.5rem' }}
         value={publicationYear}
         inputProps={{ 'aria-label': t('common.year') }}
-        onChange={(event) => {
-          searchParams.set(ImportCandidatesSearchParam.PublicationYear, event.target.value.toString());
-          resetPagination();
-          history.push({ search: searchParams.toString() });
-        }}>
+        onChange={(event) =>
+          updateSearchParams(ImportCandidatesSearchParam.PublicationYear, event.target.value.toString())
+        }>
         {yearOptions.map((year) => (
           <MenuItem key={year} value={year}>
             {year}
@@ -96,11 +90,7 @@ export const ImportCandidatesMenuFilters = () => {
       <RadioGroup
         sx={{ mt: '1rem' }}
         value={importStatus}
-        onChange={(_, value) => {
-          searchParams.set(ImportCandidatesSearchParam.ImportStatus, value);
-          resetPagination();
-          history.push({ search: searchParams.toString() });
-        }}>
+        onChange={(_, value) => updateSearchParams(ImportCandidatesSearchParam.ImportStatus, value)}>
         <FormControlLabel
           data-testid={dataTestId.basicData.centralImport.filter.notImportedRadio}
           value={'NOT_IMPORTED' satisfies ImportCandidateStatus}
