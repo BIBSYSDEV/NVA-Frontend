@@ -1,7 +1,17 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -233,30 +243,85 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               {t('tasks.nvi.reject_nvi_candidate')}
             </Button>
 
-            <Divider sx={{ mb: '1rem' }} />
+            <RejectionDialog
+              open={hasSelectedRejectCandidate}
+              onCancel={() => setHasSelectedRejectCandidate(false)}
+              onAccept={async (reason) => {
+                await statusMutation.mutateAsync({ status: 'Rejected', reason });
+                setHasSelectedRejectCandidate(false);
+              }}
+              isLoading={statusMutation.isLoading}
+            />
 
-            {hasSelectedRejectCandidate && (
-              <MessageForm
-                confirmAction={async (reason) => {
-                  await statusMutation.mutateAsync({ status: 'Rejected', reason });
-                  setHasSelectedRejectCandidate(false);
-                }}
-                cancelAction={() => setHasSelectedRejectCandidate(false)}
-                fieldLabel={t('tasks.nvi.reject_nvi_candidate_form_label')}
-                buttonTitle={t('tasks.nvi.reject_nvi_candidate')}
-              />
-            )}
+            <Divider sx={{ mb: '1rem' }} />
           </>
         )}
 
-        {!hasSelectedRejectCandidate && (
-          <MessageForm
-            confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
-            fieldLabel={t('tasks.nvi.note')}
-            buttonTitle={t('tasks.nvi.save_note')}
-          />
-        )}
+        <MessageForm
+          confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
+          fieldLabel={t('tasks.nvi.note')}
+          buttonTitle={t('tasks.nvi.save_note')}
+        />
       </Box>
     </>
+  );
+};
+
+interface RejectionDialogProps {
+  open: boolean;
+  onCancel: () => void;
+  onAccept: (reason: string) => Promise<unknown> | void;
+  isLoading: boolean;
+}
+
+const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialogProps) => {
+  const { t } = useTranslation();
+  const [reason, setReason] = useState('');
+  const maxLength = 160;
+
+  const handleKeypress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === 'NumpadEnter') {
+      event.preventDefault();
+      onAccept(reason.trim());
+    }
+  };
+
+  return (
+    <Dialog open={open} onKeyDown={handleKeypress}>
+      <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
+      <DialogContent>
+        <Typography>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
+        <TextField
+          data-testid={dataTestId.tasksPage.nvi.rejectionModalTextField}
+          inputProps={{ maxLength: 160 }}
+          variant="filled"
+          multiline
+          minRows={3}
+          maxRows={Infinity}
+          fullWidth
+          required
+          label={t('tasks.nvi.reject_nvi_candidate_form_label')}
+          helperText={`${reason.length}/${maxLength}`}
+          FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+          onChange={(event) => setReason(event.target.value)}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button data-testid={dataTestId.tasksPage.nvi.rejectionModalCancelButton} onClick={onCancel}>
+          {t('common.cancel')}
+        </Button>
+        <LoadingButton
+          data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
+          loading={isLoading}
+          disabled={reason.length < 10}
+          variant="contained"
+          onClick={() => {
+            onAccept(reason.trim());
+            setReason('');
+          }}>
+          {t('common.reject')}
+        </LoadingButton>
+      </DialogActions>
+    </Dialog>
   );
 };
