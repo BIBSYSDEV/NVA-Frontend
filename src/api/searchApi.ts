@@ -7,7 +7,12 @@ import {
 } from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
 import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
-import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
+import {
+  AggregationFileKeyType,
+  PublicationInstanceType,
+  Registration,
+  RegistrationAggregations,
+} from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
@@ -119,6 +124,7 @@ export type ImportCandidateOrderBy = 'createdDate';
 export enum ImportCandidatesSearchParam {
   Aggregation = 'aggregation',
   CollaborationType = 'collaborationType',
+  Files = 'filesStatus',
   From = 'from',
   Identifier = 'id',
   ImportStatus = 'importStatus',
@@ -134,6 +140,7 @@ export enum ImportCandidatesSearchParam {
 export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.Aggregation]?: 'all' | null;
   [ImportCandidatesSearchParam.CollaborationType]?: CollaborationType | null;
+  [ImportCandidatesSearchParam.Files]?: AggregationFileKeyType | null;
   [ImportCandidatesSearchParam.From]?: number | null;
   [ImportCandidatesSearchParam.Identifier]?: string | null;
   [ImportCandidatesSearchParam.ImportStatus]?: ImportCandidateStatus | null;
@@ -148,6 +155,7 @@ export interface FetchImportCandidatesParams {
 
 export const fetchImportCandidates = async ({
   aggregation,
+  filesStatus,
   from,
   id,
   importStatus,
@@ -192,6 +200,9 @@ export const fetchImportCandidates = async ({
   }
   if (collaborationType) {
     params.set(ImportCandidatesSearchParam.CollaborationType, collaborationType);
+  }
+  if (filesStatus) {
+    params.set(ImportCandidatesSearchParam.Files, filesStatus);
   }
   if (aggregation) {
     params.set(ImportCandidatesSearchParam.Aggregation, aggregation);

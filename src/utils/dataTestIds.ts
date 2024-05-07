@@ -168,6 +168,7 @@ export const dataTestId = {
     },
     advancedSearchAccordion: 'advanced-search-accordion',
     categoryFacets: 'category-facets',
+    collaboardationTypeFacets: 'collaboration-type-facets',
     contributorFacets: 'contributor-facets',
     coordinatingFacets: 'coordinating-facets',
     facetItem: (value: string) => `facet-item-${value}`,

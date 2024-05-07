@@ -11,6 +11,7 @@ import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useImportCandidatesParams } from '../../../../utils/hooks/useImportCandidatesParams';
+import { getFileFacetText } from '../../../../utils/searchHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../../../utils/urlPaths';
 import { FacetItem } from '../../../search/FacetItem';
@@ -70,6 +71,7 @@ export const ImportCandidatesMenuFilters = () => {
   const typeAggregations = importCandidatesFacetsQuery.data?.aggregations?.type ?? [];
   const topLevelOrgAggregations = importCandidatesFacetsQuery.data?.aggregations?.topLevelOrganization ?? [];
   const collaborationTypeAggregations = importCandidatesFacetsQuery.data?.aggregations?.collaborationType ?? [];
+  const filesAggregations = importCandidatesFacetsQuery.data?.aggregations?.filesStatus ?? [];
 
   return (
     <FormGroup sx={{ mx: '1rem', mb: '1rem' }}>
@@ -169,7 +171,7 @@ export const ImportCandidatesMenuFilters = () => {
         {collaborationTypeAggregations?.length > 0 && (
           <FacetItem
             title={t('basic_data.central_import.collaboration_type.Collaborative')}
-            dataTestId={dataTestId.startPage.typeFacets /*TODO*/}>
+            dataTestId={dataTestId.startPage.collaboardationTypeFacets}>
             {collaborationTypeAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
@@ -180,6 +182,23 @@ export const ImportCandidatesMenuFilters = () => {
                 label={t(`basic_data.central_import.collaboration_type.${facet.key}`)}
                 count={facet.count}
                 onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.CollaborationType, facet.key)}
+              />
+            ))}
+          </FacetItem>
+        )}
+
+        {filesAggregations?.length > 0 && (
+          <FacetItem title={t('registration.files_and_license.files')} dataTestId={dataTestId.startPage.filesFacets}>
+            {filesAggregations.map((facet) => (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={importCandidatesFacetsQuery.isLoading}
+                isSelected={importCandidateParams.filesParam === facet.key}
+                label={getFileFacetText(facet.key, t)}
+                count={facet.count}
+                onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.Files, facet.key)}
               />
             ))}
           </FacetItem>
