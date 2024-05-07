@@ -293,7 +293,7 @@ const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialo
         <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
         <TextField
           data-testid={dataTestId.tasksPage.nvi.rejectionModalTextField}
-          inputProps={{ maxLength: 160 }}
+          inputProps={{ maxLength: maxLength }}
           variant="filled"
           multiline
           minRows={3}
