@@ -35,7 +35,6 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
   const { t } = useTranslation();
   const location = useLocation();
   const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
-  const isOnMyPage = location.pathname === UrlPathTemplate.MyPageMyMessages;
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
 
@@ -93,11 +92,9 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
           <TicketDateIntervalFilter />
         </Grid>
 
-        {isOnMyPage && (
-          <Grid item>
-            <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
-          </Grid>
-        )}
+        <Grid item>
+          <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
+        </Grid>
       </Grid>
 
       {ticketsQuery.isLoading ? (
