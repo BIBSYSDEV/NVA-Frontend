@@ -12,7 +12,13 @@ import { MapPublicationInstance } from './publication_types/otherRegistration.ty
 import { PresentationPublicationInstance } from './publication_types/presentationRegistration.types';
 import { ReportPublicationInstance } from './publication_types/reportRegistration.types';
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
-import { Journal, Publisher, Registration } from './registration.types';
+import {
+  AggregationFileKeyType,
+  Journal,
+  Publisher,
+  Registration,
+  RegistrationAggregations,
+} from './registration.types';
 
 export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
 
@@ -29,8 +35,10 @@ export interface ImportCandidate extends Registration {
   importStatus: ImportStatus;
 }
 
-export interface ImportCandidateAggregations {
-  importStatus: AggregationValue<ImportCandidateStatus>[];
+export interface ImportCandidateAggregations extends Pick<RegistrationAggregations, 'type' | 'topLevelOrganization'> {
+  files?: AggregationValue<AggregationFileKeyType>[]; // TODO: Reuse 'files' from RegistrationAggregations
+  importStatus?: AggregationValue<ImportCandidateStatus>[];
+  collaborationType?: AggregationValue<'Collaborative' | 'NonCollaborative'>[];
 }
 
 export interface ImportCandidateSummary {

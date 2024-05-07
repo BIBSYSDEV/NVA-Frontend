@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { ImportCandidateOrderBy, ImportCandidatesSearchParam, SortOrder } from '../../api/searchApi';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
+import { PublicationInstanceType } from '../../types/registration.types';
 
 export const useImportCandidatesParams = () => {
   const location = useLocation();
@@ -14,6 +15,7 @@ export const useImportCandidatesParams = () => {
   const queryParam = searchParams.get(ImportCandidatesSearchParam.Query);
   const sizeParam = searchParams.get(ImportCandidatesSearchParam.Size) as number | null;
   const sortOrderParam = searchParams.get(ImportCandidatesSearchParam.SortOrder) as SortOrder | null;
+  const typeParam = searchParams.get(ImportCandidatesSearchParam.Type) as PublicationInstanceType | null;
 
   return {
     aggregationParam,
@@ -24,5 +26,6 @@ export const useImportCandidatesParams = () => {
     queryParam,
     sizeParam,
     sortOrderParam,
+    typeParam,
   };
 };

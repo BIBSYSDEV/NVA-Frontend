@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../../api/searchApi';
-import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getFileFacetText, removeSearchParamValue } from '../../../../utils/searchHelpers';
@@ -58,8 +57,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {typeFacet.length > 0 && (
         <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
           {typeFacet.map((facet) => {
-            const registrationType = facet.key as PublicationInstanceType;
-            const isSelected = selectedCategory === registrationType;
+            const isSelected = selectedCategory === facet.key;
 
             return (
               <FacetListItem
@@ -68,7 +66,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 dataTestId={dataTestId.startPage.facetItem(facet.key)}
                 isLoading={registrationQuery.isLoading}
                 isSelected={isSelected}
-                label={t(`registration.publication_types.${registrationType}`)}
+                label={t(`registration.publication_types.${facet.key}`)}
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected

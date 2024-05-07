@@ -11,6 +11,8 @@ import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useImportCandidatesParams } from '../../../../utils/hooks/useImportCandidatesParams';
 import { UrlPathTemplate } from '../../../../utils/urlPaths';
+import { FacetItem } from '../../../search/FacetItem';
+import { FacetListItem } from '../../../search/FacetListItem';
 
 const thisYear = new Date().getFullYear();
 const yearOptions = [thisYear, thisYear - 1, thisYear - 2, thisYear - 3, thisYear - 4, thisYear - 5];
@@ -20,7 +22,7 @@ export const ImportCandidatesMenuFilters = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const { importStatusParam, publicationYearParam, fromParam } = useImportCandidatesParams();
+  const { importStatusParam, publicationYearParam, fromParam, typeParam } = useImportCandidatesParams();
   const publicationYear = publicationYearParam ?? thisYear;
   const importStatus = importStatusParam ?? 'NOT_IMPORTED';
 
@@ -42,6 +44,16 @@ export const ImportCandidatesMenuFilters = () => {
     }
   };
 
+  const updateSearchParams = (param: ImportCandidatesSearchParam, value: string) => {
+    if (searchParams.has(param)) {
+      searchParams.delete(param);
+    } else {
+      searchParams.set(param, value);
+    }
+    resetPagination();
+    history.push({ search: searchParams.toString() });
+  };
+
   const statusBuckets = importCandidatesFacetsQuery.data?.aggregations?.importStatus;
   const toImportCount = statusBuckets
     ? (statusBuckets.find((aggregation) => aggregation.key === 'NOT_IMPORTED')?.count ?? 0).toLocaleString()
@@ -52,6 +64,8 @@ export const ImportCandidatesMenuFilters = () => {
   const notApplicableCount = statusBuckets
     ? (statusBuckets.find((aggregation) => aggregation.key === 'NOT_APPLICABLE')?.count ?? 0).toLocaleString()
     : '';
+
+  const typeAggregations = importCandidatesFacetsQuery.data?.aggregations?.type ?? [];
 
   return (
     <FormGroup sx={{ mx: '1rem' }}>
@@ -112,6 +126,25 @@ export const ImportCandidatesMenuFilters = () => {
           }
         />
       </RadioGroup>
+
+      {typeAggregations?.length > 0 && (
+        <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
+          {typeAggregations.map((facet) => {
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={importCandidatesFacetsQuery.isLoading}
+                isSelected={typeParam === facet.key}
+                label={t(`registration.publication_types.${facet.key}`)}
+                count={facet.count}
+                onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.Type, facet.key)}
+              />
+            );
+          })}
+        </FacetItem>
+      )}
     </FormGroup>
   );
 };
