@@ -1,4 +1,4 @@
-import { FormControlLabel, FormGroup, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
+import { Box, FormControlLabel, FormGroup, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -9,7 +9,9 @@ import {
 } from '../../../../api/searchApi';
 import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useImportCandidatesParams } from '../../../../utils/hooks/useImportCandidatesParams';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../../../utils/urlPaths';
 import { FacetItem } from '../../../search/FacetItem';
 import { FacetListItem } from '../../../search/FacetListItem';
@@ -22,9 +24,9 @@ export const ImportCandidatesMenuFilters = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const { importStatusParam, publicationYearParam, fromParam, typeParam } = useImportCandidatesParams();
-  const publicationYear = publicationYearParam ?? thisYear;
-  const importStatus = importStatusParam ?? 'NOT_IMPORTED';
+  const importCandidateParams = useImportCandidatesParams();
+  const publicationYear = importCandidateParams.publicationYearParam ?? thisYear;
+  const importStatus = importCandidateParams.importStatusParam ?? 'NOT_IMPORTED';
 
   const importCandidatesFacetsParams: FetchImportCandidatesParams = {
     aggregation: 'all',
@@ -39,7 +41,7 @@ export const ImportCandidatesMenuFilters = () => {
   });
 
   const resetPagination = () => {
-    if (fromParam) {
+    if (importCandidateParams.fromParam) {
       searchParams.set(ImportCandidatesSearchParam.From, '0');
     }
   };
@@ -66,9 +68,10 @@ export const ImportCandidatesMenuFilters = () => {
     : '';
 
   const typeAggregations = importCandidatesFacetsQuery.data?.aggregations?.type ?? [];
+  const topLevelOrgAggregations = importCandidatesFacetsQuery.data?.aggregations?.topLevelOrganization ?? [];
 
   return (
-    <FormGroup sx={{ mx: '1rem' }}>
+    <FormGroup sx={{ mx: '1rem', mb: '1rem' }}>
       <Select
         data-testid={dataTestId.basicData.centralImport.filter.publicationYearSelect}
         size="small"
@@ -127,24 +130,41 @@ export const ImportCandidatesMenuFilters = () => {
         />
       </RadioGroup>
 
-      {typeAggregations?.length > 0 && (
-        <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
-          {typeAggregations.map((facet) => {
-            return (
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '0.5rem' }}>
+        {typeAggregations?.length > 0 && (
+          <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
+            {typeAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
                 dataTestId={dataTestId.startPage.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
-                isSelected={typeParam === facet.key}
+                isSelected={importCandidateParams.typeParam === facet.key}
                 label={t(`registration.publication_types.${facet.key}`)}
                 count={facet.count}
                 onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.Type, facet.key)}
               />
-            );
-          })}
-        </FacetItem>
-      )}
+            ))}
+          </FacetItem>
+        )}
+
+        {topLevelOrgAggregations?.length > 0 && (
+          <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.typeFacets}>
+            {topLevelOrgAggregations.map((facet) => (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={importCandidatesFacetsQuery.isLoading}
+                isSelected={importCandidateParams.topLevelOrganizationParam === facet.key}
+                label={getLanguageString(facet.labels) || getIdentifierFromId(facet.key)}
+                count={facet.count}
+                onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.TopLevelOrganization, facet.key)}
+              />
+            ))}
+          </FacetItem>
+        )}
+      </Box>
     </FormGroup>
   );
 };

@@ -15,6 +15,7 @@ export const useImportCandidatesParams = () => {
   const queryParam = searchParams.get(ImportCandidatesSearchParam.Query);
   const sizeParam = searchParams.get(ImportCandidatesSearchParam.Size) as number | null;
   const sortOrderParam = searchParams.get(ImportCandidatesSearchParam.SortOrder) as SortOrder | null;
+  const topLevelOrganizationParam = searchParams.get(ImportCandidatesSearchParam.TopLevelOrganization);
   const typeParam = searchParams.get(ImportCandidatesSearchParam.Type) as PublicationInstanceType | null;
 
   return {
@@ -26,6 +27,7 @@ export const useImportCandidatesParams = () => {
     queryParam,
     sizeParam,
     sortOrderParam,
+    topLevelOrganizationParam,
     typeParam,
   };
 };

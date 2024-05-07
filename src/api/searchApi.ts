@@ -125,6 +125,7 @@ export enum ImportCandidatesSearchParam {
   Query = 'query',
   Size = 'size',
   SortOrder = 'sortOrder',
+  TopLevelOrganization = 'topLevelOrganization',
   Type = 'type',
 }
 
@@ -138,6 +139,7 @@ export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.Query]?: string | null;
   [ImportCandidatesSearchParam.Size]?: number | null;
   [ImportCandidatesSearchParam.SortOrder]?: SortOrder | null;
+  [ImportCandidatesSearchParam.TopLevelOrganization]?: string | null;
   [ImportCandidatesSearchParam.Type]?: PublicationInstanceType | null;
 }
 
@@ -151,6 +153,7 @@ export const fetchImportCandidates = async ({
   query,
   size,
   sortOrder,
+  topLevelOrganization,
   type,
 }: FetchImportCandidatesParams) => {
   const params = new URLSearchParams();
@@ -176,6 +179,9 @@ export const fetchImportCandidates = async ({
   }
   if (sortOrder) {
     params.set(ImportCandidatesSearchParam.SortOrder, sortOrder);
+  }
+  if (topLevelOrganization) {
+    params.set(ImportCandidatesSearchParam.TopLevelOrganization, topLevelOrganization);
   }
   if (type) {
     params.set(ImportCandidatesSearchParam.Type, type);

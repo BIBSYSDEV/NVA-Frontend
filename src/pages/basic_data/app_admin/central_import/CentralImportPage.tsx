@@ -37,6 +37,7 @@ export const CentralImportPage = () => {
     importStatus: importCandidateParams.importStatusParam ?? 'NOT_IMPORTED',
     orderBy: importCandidateParams.orderByParam ?? 'createdDate',
     sortOrder: importCandidateParams.sortOrderParam ?? 'desc',
+    topLevelOrganization: importCandidateParams.topLevelOrganizationParam,
     type: importCandidateParams.typeParam,
     size: sizeParam,
     from: fromParam,
