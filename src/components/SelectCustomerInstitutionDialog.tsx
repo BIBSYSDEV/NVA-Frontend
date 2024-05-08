@@ -80,7 +80,7 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
     queryKey: ['organizations', customersCristinIds],
     queryFn: customersCristinIds ? () => fetchOrganizations(customersCristinIds) : undefined,
     meta: { errorMessage: t('feedback.error.get_institution') },
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const organizations = organizationQuery.data;

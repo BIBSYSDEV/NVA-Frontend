@@ -86,7 +86,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
         <title>{t('common.result_registrations')}</title>
       </Helmet>
       <div>
-        {registrationsQuery.isLoading ? (
+        {registrationsQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <>
@@ -117,7 +117,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
         title={t('my_page.registrations.delete_registration')}
         onAccept={() => deleteDraftRegistrationMutation.mutate()}
         onCancel={() => setShowDeleteModal(false)}
-        isLoading={deleteDraftRegistrationMutation.isLoading}>
+        isLoading={deleteDraftRegistrationMutation.isPending}>
         <Typography>{t('my_page.registrations.delete_all_draft_registrations_message')}</Typography>
       </ConfirmDialog>
     </>

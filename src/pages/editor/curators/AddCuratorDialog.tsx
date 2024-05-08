@@ -71,7 +71,7 @@ export const AddCuratorDialog = ({
     queryFn: () => fetchUser(username),
     meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,
-    cacheTime: 0, // Disable caching since this user in many cases will be changed, and the cached data then will be outdated
+    gcTime: 0, // Disable caching since this user in many cases will be changed, and the cached data then will be outdated
   });
 
   useEffect(() => {
@@ -147,7 +147,7 @@ export const AddCuratorDialog = ({
 
         {selectedPerson && (
           <>
-            {userQuery.isLoading || !userInitialValues ? (
+            {userQuery.isPending || !userInitialValues ? (
               <CircularProgress aria-label={t('editor.curators.add_curator')} />
             ) : (
               <AddCuratorForm

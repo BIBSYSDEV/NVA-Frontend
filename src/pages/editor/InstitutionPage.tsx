@@ -41,7 +41,7 @@ const InstitutionPage = () => {
     queryKey: ['organization', institutionId],
     queryFn: () => fetchResource<Organization>(institutionId),
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 

@@ -31,7 +31,7 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
     queryFn: topOrgCristinId ? () => fetchOrganization(topOrgCristinId) : undefined,
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
   const currentOrganization = organizationQuery.data;
   const options = currentOrganization

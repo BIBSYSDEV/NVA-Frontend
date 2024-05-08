@@ -76,14 +76,14 @@ const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalSta
     queryFn: () => fetchOrganization(approvalStatus.institutionId),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000,
+    gcTime: 1_800_000,
   });
 
   const institutionAcronym = institutionQuery.data?.acronym ?? '';
 
   return (
     <>
-      {institutionQuery.isLoading ? (
+      {institutionQuery.isPending ? (
         <Skeleton sx={{ width: '8rem' }} />
       ) : (
         <Typography>

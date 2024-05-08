@@ -67,7 +67,7 @@ export const CentralImportPage = () => {
       </Helmet>
       <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 
-      {importCandidateQuery.isLoading ? (
+      {importCandidateQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : searchResults.length > 0 ? (
         <ListPagination

@@ -25,7 +25,7 @@ export const OrganizationScopeItem = ({
     queryFn: () => fetchOrganization(organizationScopeId),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000,
+    gcTime: 1_800_000,
   });
 
   return (
@@ -39,7 +39,7 @@ export const OrganizationScopeItem = ({
         gap: '0.25rem',
       }}
       elevation={0}>
-      {organizationQuery.isLoading ? (
+      {organizationQuery.isPending ? (
         <Skeleton sx={{ width: '100%' }} />
       ) : (
         <Typography sx={{ fontWeight: 700 }}>{getLanguageString(organizationQuery.data?.labels)}</Typography>

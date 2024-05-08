@@ -2,9 +2,7 @@ import { Autocomplete } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { fetchFundingSources } from '../api/cristinApi';
-import { setNotification } from '../redux/notificationSlice';
 import { dataTestId } from '../utils/dataTestIds';
 import { getLanguageString } from '../utils/translation-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
@@ -15,14 +13,13 @@ interface FundingSourceFieldProps {
 
 export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const fundingSourcesQuery = useQuery({
     queryKey: ['fundingSources'],
     queryFn: fetchFundingSources,
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_funding_sources'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_funding_sources') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
@@ -55,7 +52,7 @@ export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
               onBlur={field.onBlur}
               {...params}
               label={t('registration.description.funding.funder')}
-              isLoading={fundingSourcesQuery.isLoading}
+              isLoading={fundingSourcesQuery.isPending}
               placeholder={t('common.search')}
               showSearchIcon={!field.value}
               multiline

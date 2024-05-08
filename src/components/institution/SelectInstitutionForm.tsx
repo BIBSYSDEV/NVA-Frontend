@@ -136,7 +136,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                     resetForm();
                     setFieldValue(field.name, value);
                   }}
-                  loading={organizationSearchQuery.isLoading}
+                  loading={organizationSearchQuery.isPending}
                   renderInput={(params) => (
                     <TextField
                       {...params}

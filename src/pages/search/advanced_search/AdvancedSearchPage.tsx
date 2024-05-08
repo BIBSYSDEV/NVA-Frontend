@@ -10,10 +10,10 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { styled } from '@mui/system';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
+import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { SearchForm } from '../../../components/SearchForm';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
@@ -84,7 +84,7 @@ export const AdvancedSearchPage = () => {
     queryKey: ['registrations', resultSearchQueryConfig],
     queryFn: () => fetchResults(resultSearchQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const handleNviReportedCheckbox = (event: React.SyntheticEvent, checked: boolean) => {

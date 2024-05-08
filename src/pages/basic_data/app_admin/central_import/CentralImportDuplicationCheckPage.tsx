@@ -68,10 +68,11 @@ export const CentralImportDuplicationCheckPage = () => {
       ),
   });
 
+  const importedRegistrationId = importCandidate?.importStatus.nvaPublicationId ?? '';
   const importedRegistrationQuery = useQuery({
-    enabled:
-      importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importCandidate.importStatus.nvaPublicationId,
-    queryFn: () => fetchRegistration(getIdentifierFromId(importCandidate?.importStatus.nvaPublicationId ?? '')),
+    queryKey: ['registration', importedRegistrationId],
+    enabled: importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importedRegistrationId,
+    queryFn: () => fetchRegistration(getIdentifierFromId(importedRegistrationId)),
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
@@ -98,7 +99,7 @@ export const CentralImportDuplicationCheckPage = () => {
         gap: '1rem',
       }}>
       <BackgroundDiv>
-        {importCandidateSearchQuery.isLoading || importCandidateQuery.isLoading ? (
+        {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
         ) : importCandidateSearchResult && importCandidate ? (
           <>

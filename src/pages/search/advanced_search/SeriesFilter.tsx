@@ -45,7 +45,7 @@ export const SeriesFilter = () => {
     history.push({ search: searchParams.toString() });
   };
 
-  const isFetching = seriesParam ? selectedSeriesQuery.isLoading : seriesOptionsQuery.isFetching;
+  const isFetching = seriesParam ? selectedSeriesQuery.isPending : seriesOptionsQuery.isFetching;
 
   return (
     <Autocomplete
@@ -53,7 +53,7 @@ export const SeriesFilter = () => {
       sx={{ minWidth: '15rem' }}
       value={seriesParam && selectedSeriesQuery.data ? selectedSeriesQuery.data : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      options={debouncedQuery && seriesQuery === debouncedQuery && !seriesOptionsQuery.isLoading ? seriesList : []}
+      options={debouncedQuery && seriesQuery === debouncedQuery && !seriesOptionsQuery.isPending ? seriesList : []}
       filterOptions={(options) => options}
       inputValue={seriesQuery}
       onInputChange={(_, newInputValue) => setSeriesQuery(newInputValue)}

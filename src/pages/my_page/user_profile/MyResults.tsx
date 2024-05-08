@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchPromotedPublicationsById } from '../../../api/preferencesApi';
-import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { RootState } from '../../../redux/store';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
@@ -45,7 +45,7 @@ export const MyResults = () => {
       <Typography id="registration-label" variant="h2" gutterBottom>
         {t('my_page.my_profile.my_research_results')}
       </Typography>
-      {registrationsQuery.isLoading ? (
+      {registrationsQuery.isPending ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress aria-labelledby="registration-label" />
         </Box>

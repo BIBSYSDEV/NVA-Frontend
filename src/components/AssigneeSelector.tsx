@@ -55,7 +55,7 @@ export const AssigneeSelector = ({
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
-  const isLoading = isUpdating || curatorsQuery.isLoading || assigneeQuery.isFetching;
+  const isLoading = isUpdating || curatorsQuery.isPending || assigneeQuery.isFetching;
 
   const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
   const assigneeInitials = getInitials(assigneeName);
@@ -80,7 +80,7 @@ export const AssigneeSelector = ({
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
       isOptionEqualToValue={(option, value) => option.username === value?.username}
       value={assigneeQuery.data ?? null}
-      loading={isUpdating || curatorsQuery.isLoading}
+      loading={isUpdating || curatorsQuery.isPending}
       renderInput={(params) => (
         <AutocompleteTextField
           data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeSearchField}
