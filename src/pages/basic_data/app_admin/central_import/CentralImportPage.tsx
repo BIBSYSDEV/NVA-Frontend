@@ -34,7 +34,7 @@ export const CentralImportPage = () => {
   const importCandidateQueryParams: FetchImportCandidatesParams = {
     query: importCandidateParams.queryParam,
     publicationYear: importCandidateParams.publicationYearParam ?? thisYear,
-    filesStatus: importCandidateParams.filesParam,
+    files: importCandidateParams.filesParam,
     importStatus: importCandidateParams.importStatusParam ?? 'NOT_IMPORTED',
     orderBy: importCandidateParams.orderByParam ?? 'createdDate',
     sortOrder: importCandidateParams.sortOrderParam ?? 'desc',

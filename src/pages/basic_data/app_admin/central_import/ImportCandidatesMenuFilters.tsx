@@ -67,7 +67,7 @@ export const ImportCandidatesMenuFilters = () => {
   const typeAggregations = importCandidatesFacetsQuery.data?.aggregations?.type ?? [];
   const topLevelOrgAggregations = importCandidatesFacetsQuery.data?.aggregations?.topLevelOrganization ?? [];
   const collaborationTypeAggregations = importCandidatesFacetsQuery.data?.aggregations?.collaborationType ?? [];
-  const filesAggregations = importCandidatesFacetsQuery.data?.aggregations?.filesStatus ?? [];
+  const filesAggregations = importCandidatesFacetsQuery.data?.aggregations?.files ?? [];
 
   return (
     <FormGroup sx={{ mx: '1rem', mb: '1rem' }}>

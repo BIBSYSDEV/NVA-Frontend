@@ -124,7 +124,7 @@ export type ImportCandidateOrderBy = 'createdDate';
 export enum ImportCandidatesSearchParam {
   Aggregation = 'aggregation',
   CollaborationType = 'collaborationType',
-  Files = 'filesStatus',
+  Files = 'files',
   From = 'from',
   Identifier = 'id',
   ImportStatus = 'importStatus',
@@ -187,8 +187,8 @@ export const fetchImportCandidates = async (params: FetchImportCandidatesParams)
   if (params.collaborationType) {
     searchParams.set(ImportCandidatesSearchParam.CollaborationType, params.collaborationType);
   }
-  if (params.filesStatus) {
-    searchParams.set(ImportCandidatesSearchParam.Files, params.filesStatus);
+  if (params.files) {
+    searchParams.set(ImportCandidatesSearchParam.Files, params.files);
   }
   if (params.aggregation) {
     searchParams.set(ImportCandidatesSearchParam.Aggregation, params.aggregation);
