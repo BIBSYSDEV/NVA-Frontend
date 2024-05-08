@@ -56,7 +56,7 @@ When working on new features, bug fixes, etc, one should branch out from the `de
 
 ### Update test
 
-When one want to update the test environment one will usually create a PR from the `develop` branch into the `staging` branch. Once this PR is merged, Amplify will automatically update the test environment.
+When one want to update the test environment one will usually create a PR from the `develop` branch into the `staging` branch. We prefer to write a title on the PR on the same format each time "Update staging <date>" to make it easier to find in the commit log. The description will typically be the release log. The merge should be done with "Create a merge commit" to ensure that all commits gets a separate commit message and to avoid merge conflicts. Once this PR is merged, Amplify will automatically update the test environment.
 
 ### Update sandbox
 
@@ -64,8 +64,22 @@ When one want to update the sandbox environment one will usually create a PR fro
 
 ### Update prod
 
-To update the prod enviroment one will usually create a PR from the `staging` branch (that should have been verified by necessary stakeholders on the test environment) into the `main` branch. Once this PR is merged, Amplify will automatically update the prod environment.
+To update the prod environment one will usually create a PR from the `staging` branch (that should have been verified by necessary stakeholders on the test environment) into the `main` branch. We prefer to write a title on the PR on the same format "Update prod <date>" to make it easier to find in the commit log. The description will typically be the release log. The merge should be done with "Create a merge commit" to ensure that all commits gets a separate commit message and to avoid merge conflicts. Once this PR is merged, Amplify will automatically update the prod environment.
 
 ### Deploy a feature branch
 
 In some cases one might want to deploy a feature branch to allow PO or other stakeholders to verify the changes before they are merged to `develop`. This can be achieved by using the "Connect branch" feature in AWS Amplify. After deploying the branch, environment variables `REACT_APP_REDIRECT_SIGN_IN` and `REACT_APP_REDIRECT_SIGN_OUT` must be set, and access control for the branch must be configured (if necessary). Remember to re-deploy after configuring environment variables. Lastly, the branch url has to be added to `Allowed callback URLs` and `Allowed sign-out URLs` in `Hosted UI` in `Cognito` in the NVA environment.
+
+### A template for the release log
+
+🚀 Ny funksjonalitet 🚀
+
+- Description of change (Link to jira issue)
+
+🐛 Bugfiks 🐛
+
+- Description of change (Link to jira issue)
+
+🎨 Designendringer 🎨
+
+- Description of change (Link to jira issue)
