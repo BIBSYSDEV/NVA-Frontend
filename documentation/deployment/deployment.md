@@ -52,7 +52,7 @@ gitGraph
 
 ### Lokalise
 
-Lokalise is a software that we use for maintaining translations in different languages. The developers provide the translation in bokmål and external translaters provide the translations for other languages in the lokalise app. Because of this we need to merge the changes from lokalise into the devlop branch once translations have been added, and upon deployment is a good time to do it. To merge the changes we need to create a pull a pull request from lokalise into the develop branch by clicking the "build only" button in the [download section](https://app.lokalise.com/download/8976449362e0d7af005bc1.77420911/). This will create a PR in github (it might take some time), which can be merged. If there are no changes, there will be no PR in git. This can also be checked in the lokalise app.
+Lokalise is a software that we use for maintaining translations in different languages. The developers provide the translation in bokmål and external translaters provide the translations for other languages in the lokalise app. Because of this we need to merge the changes from lokalise into the devlop branch once translations have been added, and upon deployment is a good time to do it. To merge the changes we need to create a pull request from lokalise into the develop branch by clicking the "build only" button in the [download section](https://app.lokalise.com/download/8976449362e0d7af005bc1.77420911/). This will create a PR in github (it might take some time), which can be merged. If there are no changes, there will be no PR in git. This can also be checked in the lokalise app.
 
 ### Update dev
 
