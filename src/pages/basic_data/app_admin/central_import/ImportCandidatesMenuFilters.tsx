@@ -125,12 +125,12 @@ export const ImportCandidatesMenuFilters = () => {
 
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '0.5rem' }}>
         {typeAggregations?.length > 0 && (
-          <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
+          <FacetItem title={t('common.category')} dataTestId={dataTestId.aggregations.typeFacets}>
             {typeAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.typeParam === facet.key}
                 label={t(`registration.publication_types.${facet.key}`)}
@@ -142,12 +142,12 @@ export const ImportCandidatesMenuFilters = () => {
         )}
 
         {topLevelOrgAggregations?.length > 0 && (
-          <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.typeFacets}>
+          <FacetItem title={t('common.institution')} dataTestId={dataTestId.aggregations.typeFacets}>
             {topLevelOrgAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.topLevelOrganizationParam === facet.key}
                 label={getLanguageString(facet.labels) || getIdentifierFromId(facet.key)}
@@ -161,12 +161,12 @@ export const ImportCandidatesMenuFilters = () => {
         {collaborationTypeAggregations?.length > 0 && (
           <FacetItem
             title={t('basic_data.central_import.collaboration_type.Collaborative')}
-            dataTestId={dataTestId.startPage.collaboardationTypeFacets}>
+            dataTestId={dataTestId.aggregations.collaboardationTypeFacets}>
             {collaborationTypeAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.collaborationTypeParam === facet.key}
                 label={t(`basic_data.central_import.collaboration_type.${facet.key}`)}
@@ -178,12 +178,12 @@ export const ImportCandidatesMenuFilters = () => {
         )}
 
         {filesAggregations?.length > 0 && (
-          <FacetItem title={t('registration.files_and_license.files')} dataTestId={dataTestId.startPage.filesFacets}>
+          <FacetItem title={t('registration.files_and_license.files')} dataTestId={dataTestId.aggregations.filesFacets}>
             {filesAggregations.map((facet) => (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
                 isSelected={importCandidateParams.filesParam === facet.key}
                 label={getFileFacetText(facet.key, t)}
