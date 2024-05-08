@@ -11,8 +11,9 @@ import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { CandidateOffsetState } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { getNviCandidatePath, IdentifierParams } from '../../../utils/urlPaths';
+import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
 import { Forbidden } from '../../errorpages/Forbidden';
+import NotFound from '../../errorpages/NotFound';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NavigationIconButton } from './NavigationIconButton';
 import { NviApprovals } from './NviApprovals';
@@ -89,9 +90,15 @@ export const NviCandidatePage = () => {
         }
       : undefined;
 
-  return nviCandidateQuery.error?.response?.status === 401 ? (
-    <Forbidden />
-  ) : registrationQuery.isPending || nviCandidateQuery.isPending ? (
+  if (nviCandidateQuery.error?.response?.status === 401) {
+    return <Forbidden />;
+  }
+
+  if (nviCandidateQuery.error?.response?.status === 404) {
+    return <NotFound />;
+  }
+
+  return registrationQuery.isPending || nviCandidateQuery.isPending ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : (
     <Box

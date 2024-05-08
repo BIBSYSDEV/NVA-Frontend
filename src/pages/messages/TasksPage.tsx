@@ -124,6 +124,7 @@ const TasksPage = () => {
   const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.OrganizationId) ? rowsPerPage : 0;
 
   const ticketSearchParams: FetchTicketsParams = {
+    aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
     results: numberOfResultsGivenViewingScope,
     from: (page - 1) * rowsPerPage,
@@ -136,6 +137,7 @@ const TasksPage = () => {
     type: selectedTicketTypes.join(','),
     viewedByNot: ticketUnreadFilter && user ? user.nvaUsername : '',
     createdDate: searchParams.get(TicketSearchParam.CreatedDate),
+    publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
 
   const ticketsQuery = useQuery({
