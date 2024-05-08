@@ -296,17 +296,16 @@ const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialo
         resetForm();
       }}>
       {({ isSubmitting, resetForm, values }) => (
-        <Form>
-          <Dialog
-            open={open}
-            onClose={() => {
-              onCancel();
-              resetForm();
-            }}>
-            <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
-            <DialogContent>
-              <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
-
+        <Dialog
+          open={open}
+          onClose={() => {
+            onCancel();
+            resetForm();
+          }}>
+          <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
+          <DialogContent>
+            <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
+            <Form>
               <Field name="reason">
                 {({ field }: FieldProps<string>) => (
                   <TextField
@@ -339,9 +338,9 @@ const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialo
                   {t('common.reject')}
                 </LoadingButton>
               </DialogActions>
-            </DialogContent>
-          </Dialog>
-        </Form>
+            </Form>
+          </DialogContent>
+        </Dialog>
       )}
     </Formik>
   );
