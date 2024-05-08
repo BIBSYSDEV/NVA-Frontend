@@ -50,13 +50,17 @@ gitGraph
     merge staging tag:"deploy: prod"
 ```
 
+### Lokalise
+
+Lokalise is a software that we use for maintaining translations in different languages. The developers provide the translation in bokmål and external translaters provide the translations for other languages in the lokalise app. Because of this we need to merge the changes from lokalise into the devlop branch once translations have been added, and upon deployment is a good time to do it. To merge the changes we need to create a pull a pull request from lokalise into the develop branch by clicking the "build only" button in the [download section](https://app.lokalise.com/download/8976449362e0d7af005bc1.77420911/). This will create a PR in github (it might take some time), which can be merged. If there are no changes, there will be no PR in git. This can also be checked in the lokalise app.
+
 ### Update dev
 
 When working on new features, bug fixes, etc, one should branch out from the `develop` branch. When the job is done, one should create a new PR back into the `develop` branch. Hence, `develop` should include all the newest features, and should always have the newest code. Once a PR is merged into `develop`, Amplify will detect the update and automatically update the app deployed for the dev environment.
 
 ### Update test
 
-When one want to update the test environment one will usually create a PR from the `develop` branch into the `staging` branch. We prefer to write a title on the PR on the same format each time "Update staging <date>" to make it easier to find in the commit log. The description will typically be the release log. The merge should be done with "Create a merge commit" to ensure that all commits gets a separate commit message and to avoid merge conflicts. Once this PR is merged, Amplify will automatically update the test environment.
+When one want to update the test environment one will usually create a PR from the `develop` branch into the `staging` branch. We prefer to write a title on the PR on the same format each time "Update staging CURRENT_DATE" to make it easier to find in the commit log. The description will typically be the change log. The merge should be done with "Create a merge commit" to ensure that all commits gets a separate commit message and to avoid merge conflicts. Once this PR is merged, Amplify will automatically update the test environment.
 
 ### Update sandbox
 
@@ -64,7 +68,7 @@ When one want to update the sandbox environment one will usually create a PR fro
 
 ### Update prod
 
-To update the prod environment one will usually create a PR from the `staging` branch (that should have been verified by necessary stakeholders on the test environment) into the `main` branch. We prefer to write a title on the PR on the same format "Update prod <date>" to make it easier to find in the commit log. The description will typically be the release log. The merge should be done with "Create a merge commit" to ensure that all commits gets a separate commit message and to avoid merge conflicts. Once this PR is merged, Amplify will automatically update the prod environment.
+To update the prod environment one will usually create a PR from the `staging` branch (that should have been verified by necessary stakeholders on the test environment) into the `main` branch. We prefer to write a title on the PR on the same format "Update prod CURRENT_DATE" to make it easier to find in the commit log. The description will typically be the change log. The merge should be done with "Create a merge commit" to ensure that all commits gets a separate commit message and to avoid merge conflicts. Once this PR is merged, Amplify will automatically update the prod environment.
 
 ### Deploy a feature branch
 
