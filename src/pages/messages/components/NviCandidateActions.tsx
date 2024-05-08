@@ -295,7 +295,7 @@ const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialo
         await onAccept(values.reason.trim());
         resetForm();
       }}>
-      {({ isSubmitting }) => (
+      {({ isSubmitting, values }) => (
         <Dialog open={open}>
           <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
           <DialogContent>
@@ -327,7 +327,7 @@ const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialo
                 <LoadingButton
                   data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
                   loading={isLoading}
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || values.reason.length < 10}
                   variant="contained"
                   type="submit">
                   {t('common.reject')}
