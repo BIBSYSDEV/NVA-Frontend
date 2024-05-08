@@ -74,7 +74,7 @@ To update the prod environment one will usually create a PR from the `staging` b
 
 In some cases one might want to deploy a feature branch to allow PO or other stakeholders to verify the changes before they are merged to `develop`. This can be achieved by using the "Connect branch" feature in AWS Amplify. After deploying the branch, environment variables `REACT_APP_REDIRECT_SIGN_IN` and `REACT_APP_REDIRECT_SIGN_OUT` must be set, and access control for the branch must be configured (if necessary). Remember to re-deploy after configuring environment variables. Lastly, the branch url has to be added to `Allowed callback URLs` and `Allowed sign-out URLs` in `Hosted UI` in `Cognito` in the NVA environment.
 
-### A template for the release log
+### A template for the change log
 
 🚀 Ny funksjonalitet 🚀
 
