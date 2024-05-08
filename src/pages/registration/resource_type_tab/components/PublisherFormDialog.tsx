@@ -68,7 +68,7 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
                     variant="filled"
                     required
                     label={t('common.name')}
-                    disabled={publisherMutation.isLoading}
+                    disabled={publisherMutation.isPending}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -81,7 +81,7 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
                     variant="filled"
                     required
                     label={t('common.link')}
-                    disabled={publisherMutation.isLoading}
+                    disabled={publisherMutation.isPending}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -95,7 +95,7 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
                     variant="filled"
                     label={t('registration.resource_type.isbn_prefix')}
                     inputProps={{ maxLength: 13 }}
-                    disabled={publisherMutation.isLoading}
+                    disabled={publisherMutation.isPending}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -104,10 +104,10 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
             </Box>
           </DialogContent>
           <DialogActions>
-            <Button onClick={closeDialog} disabled={publisherMutation.isLoading}>
+            <Button onClick={closeDialog} disabled={publisherMutation.isPending}>
               {t('common.cancel')}
             </Button>
-            <LoadingButton variant="contained" loading={publisherMutation.isLoading} type="submit">
+            <LoadingButton variant="contained" loading={publisherMutation.isPending} type="submit">
               {t('common.save')}
             </LoadingButton>
           </DialogActions>

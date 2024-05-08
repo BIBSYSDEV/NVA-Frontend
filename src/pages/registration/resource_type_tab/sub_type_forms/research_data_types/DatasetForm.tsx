@@ -80,7 +80,7 @@ export const DatasetForm = () => {
                 setRelatedRegistrationsQuery('');
               }}
               blurOnSelect
-              loading={relatedRegistrationsOptionsQuery.isLoading}
+              loading={relatedRegistrationsOptionsQuery.isPending}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
               renderOption={(props, option, state) => (
@@ -141,7 +141,7 @@ export const DatasetForm = () => {
                 setRelatedDmpQuery('');
               }}
               blurOnSelect
-              loading={relatedDmpOptionsQuery.isLoading}
+              loading={relatedDmpOptionsQuery.isPending}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
               renderOption={(props, option, state) => (

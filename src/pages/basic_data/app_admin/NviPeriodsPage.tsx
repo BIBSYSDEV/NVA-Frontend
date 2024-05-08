@@ -24,7 +24,7 @@ export const NviPeriodsPage = () => {
 
   return (
     <Box component="section">
-      {nviPeriodsQuery.isLoading ? (
+      {nviPeriodsQuery.isPending ? (
         <ListSkeleton height={100} minWidth={100} />
       ) : sortedPeriods.length === 0 ? (
         <Typography>{t('common.no_hits')}</Typography>

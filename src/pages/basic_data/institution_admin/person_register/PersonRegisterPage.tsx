@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -50,7 +50,7 @@ export const PersonRegisterPage = () => {
         ? fetchEmployees(user?.topOrgCristinId, rowsPerPage, page, debouncedSearchQuery, signal)
         : null,
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const employees = employeeSearchQuery.data?.hits ?? [];
@@ -80,7 +80,7 @@ export const PersonRegisterPage = () => {
         }}
       />
 
-      {employees.length === 0 && !employeeSearchQuery.isLoading ? (
+      {employees.length === 0 && !employeeSearchQuery.isPending ? (
         <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
       ) : (
         <>
@@ -106,7 +106,7 @@ export const PersonRegisterPage = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {employeeSearchQuery.isLoading
+                  {employeeSearchQuery.isPending
                     ? [...Array(5)].map((_, index) => (
                         <TableRow key={index} sx={{ height: '4rem' }}>
                           <TableCell>

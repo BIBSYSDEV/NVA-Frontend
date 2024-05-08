@@ -17,7 +17,7 @@ import {
   styled,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -124,6 +124,7 @@ const TasksPage = () => {
   const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.OrganizationId) ? rowsPerPage : 0;
 
   const ticketSearchParams: FetchTicketsParams = {
+    aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
     results: numberOfResultsGivenViewingScope,
     from: (page - 1) * rowsPerPage,
@@ -140,14 +141,14 @@ const TasksPage = () => {
   };
 
   const ticketsQuery = useQuery({
-    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
+    enabled: isOnTicketsPage && !institutionUserQuery.isPending,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchCustomerTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
   const notificationsQuery = useQuery({
-    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
+    enabled: isOnTicketsPage && !institutionUserQuery.isPending,
     queryKey: ['taskNotifications', taskNotificationsParams],
     queryFn: () => fetchCustomerTickets(taskNotificationsParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
@@ -193,7 +194,7 @@ const TasksPage = () => {
     queryKey: ['nviCandidates', rowsPerPage, page, nviListQuery],
     queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviListQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const nviAggregations = nviAggregationsQuery.data?.aggregations;

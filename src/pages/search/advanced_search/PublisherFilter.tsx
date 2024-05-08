@@ -45,7 +45,7 @@ export const PublisherFilter = () => {
     history.push({ search: searchParams.toString() });
   };
 
-  const isFetching = publisherParam ? selectedPublisherQuery.isLoading : publisherOptionsQuery.isFetching;
+  const isFetching = publisherParam ? selectedPublisherQuery.isPending : publisherOptionsQuery.isFetching;
 
   return (
     <Autocomplete
@@ -54,7 +54,7 @@ export const PublisherFilter = () => {
       value={publisherParam && selectedPublisherQuery.data ? selectedPublisherQuery.data : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       options={
-        debouncedQuery && publisherQuery === debouncedQuery && !publisherOptionsQuery.isLoading ? publisherList : []
+        debouncedQuery && publisherQuery === debouncedQuery && !publisherOptionsQuery.isPending ? publisherList : []
       }
       filterOptions={(options) => options}
       inputValue={publisherQuery}
