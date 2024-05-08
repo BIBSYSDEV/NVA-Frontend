@@ -22,7 +22,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { AssociatedFile, AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
-import { LicenseUri, licenses } from '../../types/license.types';
+import { licenses, LicenseUri } from '../../types/license.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -35,6 +35,7 @@ import {
   isEmbargoed,
   isTypeWithFileVersionField,
   userCanEditRegistration,
+  userCanUnpublishRegistration,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 import {
@@ -291,8 +292,14 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                           return false;
                         });
 
+                        const canEditEmbargoedDegreeFile = !!user?.isEmbargoThesisCurator;
+                        const canEditNonEmbargoedDegreeFile =
+                          file.type === 'PublishedFile' ? userCanUnpublishRegistration(values) : canEditFiles;
+
                         const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
-                        const canEditThisFile = isEmbargoedDegreeFile ? !!user?.isEmbargoThesisCurator : canEditFiles;
+                        const canEditThisFile = isEmbargoedDegreeFile
+                          ? canEditEmbargoedDegreeFile
+                          : canEditNonEmbargoedDegreeFile;
 
                         return (
                           <FilesTableRow
