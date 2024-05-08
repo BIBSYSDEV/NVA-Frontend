@@ -2,6 +2,7 @@ import { signInWithRedirect, signOut } from 'aws-amplify/auth';
 import { useDispatch } from 'react-redux';
 import { logoutSuccess, setUser } from '../../redux/userSlice';
 import { LocalStorageKey, USE_MOCK_DATA } from '../constants';
+import { getCurrentPath } from '../general-helpers';
 import { mockUser } from '../testfiles/mock_feide_user';
 import { UrlPathTemplate } from '../urlPaths';
 
@@ -9,8 +10,6 @@ interface UseAuthentication {
   handleLogin: () => void;
   handleLogout: () => void;
 }
-
-export const getCurrentPath = () => `${window.location.pathname}${window.location.search}`;
 
 export const useAuthentication = (): UseAuthentication => {
   const dispatch = useDispatch();

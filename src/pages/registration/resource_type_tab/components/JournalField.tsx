@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getById } from '../../../../api/commonApi';
+import { fetchResource } from '../../../../api/commonApi';
 import { searchForJournals } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
@@ -94,9 +94,9 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   }, [setFieldValue, journalsByIssnQuery.data, confirmedContextType]);
 
   const journalQuery = useQuery({
-    queryKey: [journalId],
+    queryKey: ['channel', journalId],
     enabled: !!journalId,
-    queryFn: () => getById<Journal>(journalId),
+    queryFn: () => fetchResource<Journal>(journalId),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });

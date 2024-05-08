@@ -15,6 +15,7 @@ export const dataTestId = {
         importedRadio: 'imported-radio',
         notImportedRadio: 'not-imported-radio',
         notApplicableRadio: 'not-applicable-radio',
+        publicationYearSelect: 'publication-year-select',
       },
       importCandidateButton: 'import-candidate-button',
       resetButton: 'duplicate-search-reset-button',
@@ -146,6 +147,7 @@ export const dataTestId = {
   startPage: {
     advancedSearch: {
       activateFilterButton: 'activate-filter-button',
+      downloadResultsButton: 'download-results-button',
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
@@ -362,6 +364,7 @@ export const dataTestId = {
       legalNoteField: 'legal-note-field',
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
+      licenseItemShowOlderVersion: 'license-item-show-older-versions',
       licenseModal: 'license-modal',
       linkToResourceField: 'link-to-resource-field',
       removeFileButton: 'button-remove-file',
