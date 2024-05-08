@@ -153,61 +153,47 @@ export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.Type]?: PublicationInstanceType | null;
 }
 
-export const fetchImportCandidates = async ({
-  aggregation,
-  filesStatus,
-  from,
-  id,
-  importStatus,
-  orderBy,
-  publicationYear,
-  query,
-  size,
-  sortOrder,
-  topLevelOrganization,
-  type,
-  collaborationType,
-}: FetchImportCandidatesParams) => {
-  const params = new URLSearchParams();
+export const fetchImportCandidates = async (params: FetchImportCandidatesParams) => {
+  const searchParams = new URLSearchParams();
 
-  params.set(ImportCandidatesSearchParam.Size, (size ?? 10).toString());
-  params.set(ImportCandidatesSearchParam.From, (from ?? 0).toString());
+  searchParams.set(ImportCandidatesSearchParam.Size, (params.size ?? 10).toString());
+  searchParams.set(ImportCandidatesSearchParam.From, (params.from ?? 0).toString());
 
-  if (query) {
-    params.set(ImportCandidatesSearchParam.Query, query);
+  if (params.query) {
+    searchParams.set(ImportCandidatesSearchParam.Query, params.query);
   }
-  if (publicationYear) {
-    const yearString = publicationYear.toString();
-    params.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
+  if (params.publicationYear) {
+    const yearString = params.publicationYear.toString();
+    searchParams.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
   }
-  if (id) {
-    params.set(ImportCandidatesSearchParam.Identifier, id);
+  if (params.id) {
+    searchParams.set(ImportCandidatesSearchParam.Identifier, params.id);
   }
-  if (importStatus) {
-    params.set(ImportCandidatesSearchParam.ImportStatus, importStatus);
+  if (params.importStatus) {
+    searchParams.set(ImportCandidatesSearchParam.ImportStatus, params.importStatus);
   }
-  if (orderBy) {
-    params.set(ImportCandidatesSearchParam.OrderBy, orderBy);
+  if (params.orderBy) {
+    searchParams.set(ImportCandidatesSearchParam.OrderBy, params.orderBy);
   }
-  if (sortOrder) {
-    params.set(ImportCandidatesSearchParam.SortOrder, sortOrder);
+  if (params.sortOrder) {
+    searchParams.set(ImportCandidatesSearchParam.SortOrder, params.sortOrder);
   }
-  if (topLevelOrganization) {
-    params.set(ImportCandidatesSearchParam.TopLevelOrganization, topLevelOrganization);
+  if (params.topLevelOrganization) {
+    searchParams.set(ImportCandidatesSearchParam.TopLevelOrganization, params.topLevelOrganization);
   }
-  if (type) {
-    params.set(ImportCandidatesSearchParam.Type, type);
+  if (params.type) {
+    searchParams.set(ImportCandidatesSearchParam.Type, params.type);
   }
-  if (collaborationType) {
-    params.set(ImportCandidatesSearchParam.CollaborationType, collaborationType);
+  if (params.collaborationType) {
+    searchParams.set(ImportCandidatesSearchParam.CollaborationType, params.collaborationType);
   }
-  if (filesStatus) {
-    params.set(ImportCandidatesSearchParam.Files, filesStatus);
+  if (params.filesStatus) {
+    searchParams.set(ImportCandidatesSearchParam.Files, params.filesStatus);
   }
-  if (aggregation) {
-    params.set(ImportCandidatesSearchParam.Aggregation, aggregation);
+  if (params.aggregation) {
+    searchParams.set(ImportCandidatesSearchParam.Aggregation, params.aggregation);
   }
-  const paramsString = params.toString();
+  const paramsString = searchParams.toString();
 
   const getImportCandidates = await authenticatedApiRequest2<
     SearchResponse2<ImportCandidateSummary, ImportCandidateAggregations>
