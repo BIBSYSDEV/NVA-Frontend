@@ -293,13 +293,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         });
 
                         const canEditEmbargoedDegreeFile = !!user?.isEmbargoThesisCurator;
-                        const canEditNonEmbargoedDegreeFile =
+                        const canEditFile =
                           file.type === 'PublishedFile' ? userCanUnpublishRegistration(values) : canEditFiles;
 
                         const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
-                        const canEditThisFile = isEmbargoedDegreeFile
-                          ? canEditEmbargoedDegreeFile
-                          : canEditNonEmbargoedDegreeFile;
+                        const canEditThisFile = isEmbargoedDegreeFile ? canEditEmbargoedDegreeFile : canEditFile;
 
                         return (
                           <FilesTableRow
