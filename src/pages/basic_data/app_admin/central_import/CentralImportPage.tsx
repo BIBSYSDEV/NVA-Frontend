@@ -1,54 +1,24 @@
 import { List, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import {
-  FetchImportCandidatesParams,
-  ImportCandidatesSearchParam,
-  fetchImportCandidates,
-} from '../../../../api/searchApi';
+import { ImportCandidatesSearchParam } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { SearchForm } from '../../../../components/SearchForm';
 import { SortSelector } from '../../../../components/SortSelector';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
-import { useImportCandidatesParams } from '../../../../utils/hooks/useImportCandidatesParams';
+import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { CentralImportResultItem } from './CentralImportResultItem';
-
-const thisYear = new Date().getFullYear();
 
 export const CentralImportPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
-  const importCandidateParams = useImportCandidatesParams();
-
-  const sizeParam = importCandidateParams.sizeParam ?? ROWS_PER_PAGE_OPTIONS[0];
-  const fromParam = importCandidateParams.fromParam ?? 0;
-
-  const importCandidateQueryParams: FetchImportCandidatesParams = {
-    query: importCandidateParams.queryParam,
-    publicationYear: importCandidateParams.publicationYearParam ?? thisYear,
-    files: importCandidateParams.filesParam,
-    importStatus: importCandidateParams.importStatusParam ?? 'NOT_IMPORTED',
-    orderBy: importCandidateParams.orderByParam ?? 'createdDate',
-    sortOrder: importCandidateParams.sortOrderParam ?? 'desc',
-    topLevelOrganization: importCandidateParams.topLevelOrganizationParam,
-    type: importCandidateParams.typeParam,
-    collaborationType: importCandidateParams.collaborationTypeParam,
-    size: sizeParam,
-    from: fromParam,
-  };
-  const importCandidateQuery = useQuery({
-    queryKey: ['importCandidates', importCandidateQueryParams],
-    queryFn: () => fetchImportCandidates(importCandidateQueryParams),
-    meta: { errorMessage: t('feedback.error.get_import_candidates') },
-  });
+  const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery();
 
   const updatePath = (from: string, results: string) => {
     params.set(ImportCandidatesSearchParam.From, from);
@@ -76,9 +46,11 @@ export const CentralImportPage = () => {
       ) : searchResults.length > 0 ? (
         <ListPagination
           count={importCandidateQuery.data?.totalHits ?? 0}
-          rowsPerPage={sizeParam}
-          page={Math.floor(fromParam / sizeParam) + 1}
-          onPageChange={(newPage) => updatePath(((newPage - 1) * sizeParam).toString(), sizeParam.toString())}
+          rowsPerPage={importCandidateParams.size}
+          page={Math.floor(importCandidateParams.from / importCandidateParams.size) + 1}
+          onPageChange={(newPage) =>
+            updatePath(((newPage - 1) * importCandidateParams.size).toString(), importCandidateParams.size.toString())
+          }
           onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
           showPaginationTop
           sortingComponent={

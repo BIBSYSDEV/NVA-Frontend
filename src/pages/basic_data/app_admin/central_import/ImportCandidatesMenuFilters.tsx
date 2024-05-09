@@ -10,7 +10,7 @@ import {
 import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { useImportCandidatesParams } from '../../../../utils/hooks/useImportCandidatesParams';
+import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
 import { getFileFacetText } from '../../../../utils/searchHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../../../utils/urlPaths';
@@ -25,14 +25,12 @@ export const ImportCandidatesMenuFilters = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const importCandidateParams = useImportCandidatesParams();
-  const publicationYear = importCandidateParams.publicationYearParam ?? thisYear;
-  const importStatus = importCandidateParams.importStatusParam ?? 'NOT_IMPORTED';
+  const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery();
 
   const importCandidatesFacetsParams: FetchImportCandidatesParams = {
     aggregation: 'all',
     size: 0,
-    publicationYear,
+    publicationYear: importCandidateParams.publicationYear,
   };
   const importCandidatesFacetsQuery = useQuery({
     enabled: history.location.pathname === UrlPathTemplate.BasicDataCentralImport,
@@ -47,9 +45,7 @@ export const ImportCandidatesMenuFilters = () => {
     } else {
       searchParams.set(param, value);
     }
-    if (importCandidateParams.fromParam) {
-      searchParams.delete(ImportCandidatesSearchParam.From);
-    }
+    searchParams.delete(ImportCandidatesSearchParam.From);
     history.push({ search: searchParams.toString() });
   };
 
@@ -64,10 +60,10 @@ export const ImportCandidatesMenuFilters = () => {
     ? (statusBuckets.find((aggregation) => aggregation.key === 'NOT_APPLICABLE')?.count ?? 0).toLocaleString()
     : '';
 
-  const typeAggregations = importCandidatesFacetsQuery.data?.aggregations?.type ?? [];
-  const topLevelOrgAggregations = importCandidatesFacetsQuery.data?.aggregations?.topLevelOrganization ?? [];
-  const collaborationTypeAggregations = importCandidatesFacetsQuery.data?.aggregations?.collaborationType ?? [];
-  const filesAggregations = importCandidatesFacetsQuery.data?.aggregations?.files ?? [];
+  const typeAggregations = importCandidateQuery.data?.aggregations?.type ?? [];
+  const topLevelOrgAggregations = importCandidateQuery.data?.aggregations?.topLevelOrganization ?? [];
+  const collaborationTypeAggregations = importCandidateQuery.data?.aggregations?.collaborationType ?? [];
+  const filesAggregations = importCandidateQuery.data?.aggregations?.files ?? [];
 
   return (
     <FormGroup sx={{ mx: '1rem', mb: '1rem' }}>
@@ -75,7 +71,7 @@ export const ImportCandidatesMenuFilters = () => {
         data-testid={dataTestId.basicData.centralImport.filter.publicationYearSelect}
         size="small"
         sx={{ mt: '0.5rem' }}
-        value={publicationYear}
+        value={importCandidateParams.publicationYear}
         inputProps={{ 'aria-label': t('common.year') }}
         onChange={(event) =>
           updateSearchParams(ImportCandidatesSearchParam.PublicationYear, event.target.value.toString())
@@ -89,7 +85,7 @@ export const ImportCandidatesMenuFilters = () => {
 
       <RadioGroup
         sx={{ mt: '1rem' }}
-        value={importStatus}
+        value={importCandidateParams.importStatus}
         onChange={(_, value) => updateSearchParams(ImportCandidatesSearchParam.ImportStatus, value)}>
         <FormControlLabel
           data-testid={dataTestId.basicData.centralImport.filter.notImportedRadio}
@@ -132,7 +128,7 @@ export const ImportCandidatesMenuFilters = () => {
                 identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
-                isSelected={importCandidateParams.typeParam === facet.key}
+                isSelected={importCandidateParams.type === facet.key}
                 label={t(`registration.publication_types.${facet.key}`)}
                 count={facet.count}
                 onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.Type, facet.key)}
@@ -149,7 +145,7 @@ export const ImportCandidatesMenuFilters = () => {
                 identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
-                isSelected={importCandidateParams.topLevelOrganizationParam === facet.key}
+                isSelected={importCandidateParams.topLevelOrganization === facet.key}
                 label={getLanguageString(facet.labels) || getIdentifierFromId(facet.key)}
                 count={facet.count}
                 onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.TopLevelOrganization, facet.key)}
@@ -168,7 +164,7 @@ export const ImportCandidatesMenuFilters = () => {
                 identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
-                isSelected={importCandidateParams.collaborationTypeParam === facet.key}
+                isSelected={importCandidateParams.collaborationType === facet.key}
                 label={t(`basic_data.central_import.collaboration_type.${facet.key}`)}
                 count={facet.count}
                 onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.CollaborationType, facet.key)}
@@ -185,7 +181,7 @@ export const ImportCandidatesMenuFilters = () => {
                 identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={importCandidatesFacetsQuery.isLoading}
-                isSelected={importCandidateParams.filesParam === facet.key}
+                isSelected={importCandidateParams.files === facet.key}
                 label={getFileFacetText(facet.key, t)}
                 count={facet.count}
                 onClickFacet={() => updateSearchParams(ImportCandidatesSearchParam.Files, facet.key)}
