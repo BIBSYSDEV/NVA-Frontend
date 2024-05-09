@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { fetchImportCandidate, fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
-import { fetchImportCandidates } from '../../../../api/searchApi';
+import { FetchImportCandidatesParams, fetchImportCandidates } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
@@ -35,9 +35,14 @@ export const CentralImportDuplicationCheckPage = () => {
   const [registrationIdentifier, setRegistrationIdentifier] = useState('');
   const [showNotApplicableDialog, setShowNotApplicableDialog] = useState(false);
 
+  const importCandidatesParams: FetchImportCandidatesParams = {
+    from: 0,
+    size: 1,
+    id: identifier,
+  };
   const importCandidateSearchQuery = useQuery({
-    queryKey: ['importCandidateSearch', identifier],
-    queryFn: () => fetchImportCandidates(1, 0, { query: `id:"${identifier}"` }),
+    queryKey: ['importCandidateSearch', importCandidatesParams],
+    queryFn: () => fetchImportCandidates(importCandidatesParams),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
   const importCandidateSearchResult = importCandidateSearchQuery.data?.hits[0];
@@ -63,10 +68,11 @@ export const CentralImportDuplicationCheckPage = () => {
       ),
   });
 
+  const importedRegistrationId = importCandidate?.importStatus.nvaPublicationId ?? '';
   const importedRegistrationQuery = useQuery({
-    enabled:
-      importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importCandidate.importStatus.nvaPublicationId,
-    queryFn: () => fetchRegistration(getIdentifierFromId(importCandidate?.importStatus.nvaPublicationId ?? '')),
+    queryKey: ['registration', importedRegistrationId],
+    enabled: importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importedRegistrationId,
+    queryFn: () => fetchRegistration(getIdentifierFromId(importedRegistrationId)),
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
@@ -93,7 +99,7 @@ export const CentralImportDuplicationCheckPage = () => {
         gap: '1rem',
       }}>
       <BackgroundDiv>
-        {importCandidateSearchQuery.isLoading || importCandidateQuery.isLoading ? (
+        {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
         ) : importCandidateSearchResult && importCandidate ? (
           <>

@@ -15,7 +15,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import { getById } from '../../../../api/commonApi';
+import { fetchProtectedResource } from '../../../../api/commonApi';
 import { updateCristinPerson } from '../../../../api/cristinApi';
 import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
@@ -64,7 +64,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   const personQuery = useQuery({
     enabled: open && !existingPersonObject && !!personId,
     queryKey: [personId],
-    queryFn: () => getById<CristinPerson>(personId),
+    queryFn: () => fetchProtectedResource<CristinPerson>(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
   const person = existingPersonObject ?? personQuery.data;
@@ -120,7 +120,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         return await createUser({
           customerId,
           roles: user.roles,
-          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', person?.identifiers),
+          cristinIdentifier: getValueByKey('CristinIdentifier', person?.identifiers),
           viewingScope: user.viewingScope,
         });
       }
@@ -168,7 +168,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => (
           <Form noValidate>
             <DialogContent sx={{ minHeight: '30vh' }}>
-              {(!values.person && personQuery.isLoading) || (!values.user && institutionUserQuery.isLoading) ? (
+              {(!values.person && personQuery.isPending) || (!values.user && institutionUserQuery.isPending) ? (
                 <PageSpinner aria-labelledby="edit-user-heading" />
               ) : !values.person ? (
                 <Typography>{t('feedback.error.get_person')}</Typography>

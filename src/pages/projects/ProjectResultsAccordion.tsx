@@ -2,7 +2,7 @@ import { CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
@@ -35,7 +35,7 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
     <LandingPageAccordion
       dataTestId={dataTestId.projectLandingPage.resultsAccordion}
       heading={results ? `${t('project.results')} (${results.totalHits})` : t('project.results')}>
-      {resultsQuery.isLoading ? (
+      {resultsQuery.isPending ? (
         <CircularProgress aria-label={t('project.results')} />
       ) : results && results.totalHits > 0 ? (
         <ListPagination

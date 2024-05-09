@@ -1,5 +1,9 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
-import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
+import {
+  ImportCandidateAggregations,
+  ImportCandidateStatus,
+  ImportCandidateSummary,
+} from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
 import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
 import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
@@ -10,10 +14,12 @@ import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 export enum TicketSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
+  CreatedDate = 'createdDate',
   ExcludeSubUnits = 'excludeSubUnits',
   From = 'from',
   OrderBy = 'orderBy',
   Owner = 'owner',
+  PublicationType = 'publicationType',
   Query = 'query',
   Results = 'results',
   Role = 'role',
@@ -27,10 +33,12 @@ export enum TicketSearchParam {
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
+  [TicketSearchParam.CreatedDate]?: string | null;
   [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
   [TicketSearchParam.OrderBy]?: 'createdDate' | null;
   [TicketSearchParam.Owner]?: string | null;
+  [TicketSearchParam.PublicationType]?: string | null;
   [TicketSearchParam.Query]?: string | null;
   [TicketSearchParam.Results]?: number | null;
   [TicketSearchParam.Role]?: 'creator';
@@ -52,6 +60,10 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
     searchParams.set(TicketSearchParam.Assignee, params.assignee);
   }
 
+  if (params.createdDate) {
+    searchParams.set(TicketSearchParam.CreatedDate, params.createdDate);
+  }
+
   if (params.excludeSubUnits) {
     searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
   }
@@ -62,6 +74,10 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 
   if (params.owner) {
     searchParams.set(TicketSearchParam.Owner, params.owner);
+  }
+
+  if (params.publicationType) {
+    searchParams.set(TicketSearchParam.PublicationType, params.publicationType);
   }
 
   if (params.query) {
@@ -97,35 +113,74 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 };
 
 export type SortOrder = 'desc' | 'asc';
-export type ImportCandidateOrderBy = 'createdDate' | 'importStatus.modifiedDate';
+export type ImportCandidateOrderBy = 'createdDate';
 
-export interface FetchImportCandidatesParams {
-  query?: string;
-  orderBy?: ImportCandidateOrderBy;
-  sortOrder?: SortOrder;
+export enum ImportCandidatesSearchParam {
+  Aggregation = 'aggregation',
+  From = 'from',
+  Identifier = 'id',
+  ImportStatus = 'importStatus',
+  OrderBy = 'orderBy',
+  PublicationYear = 'publicationYear',
+  Query = 'query',
+  Size = 'size',
+  SortOrder = 'sortOrder',
 }
 
-export const fetchImportCandidates = async (
-  results: number,
-  from: number,
-  { query, orderBy, sortOrder }: FetchImportCandidatesParams
-) => {
+export interface FetchImportCandidatesParams {
+  [ImportCandidatesSearchParam.Aggregation]?: 'all' | null;
+  [ImportCandidatesSearchParam.From]?: number | null;
+  [ImportCandidatesSearchParam.Identifier]?: string | null;
+  [ImportCandidatesSearchParam.ImportStatus]?: ImportCandidateStatus | null;
+  [ImportCandidatesSearchParam.OrderBy]?: ImportCandidateOrderBy | null;
+  [ImportCandidatesSearchParam.PublicationYear]?: number | null;
+  [ImportCandidatesSearchParam.Query]?: string | null;
+  [ImportCandidatesSearchParam.Size]?: number | null;
+  [ImportCandidatesSearchParam.SortOrder]?: SortOrder | null;
+}
+
+export const fetchImportCandidates = async ({
+  aggregation,
+  from,
+  id,
+  importStatus,
+  orderBy,
+  publicationYear,
+  query,
+  size,
+  sortOrder,
+}: FetchImportCandidatesParams) => {
   const params = new URLSearchParams();
-  params.set('results', results.toString());
-  params.set('from', from.toString());
+
+  params.set(ImportCandidatesSearchParam.Size, (size ?? 10).toString());
+  params.set(ImportCandidatesSearchParam.From, (from ?? 0).toString());
+
   if (query) {
-    params.set('query', query);
+    params.set(ImportCandidatesSearchParam.Query, query);
+  }
+  if (publicationYear) {
+    const yearString = publicationYear.toString();
+    params.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
+  }
+  if (id) {
+    params.set(ImportCandidatesSearchParam.Identifier, id);
+  }
+  if (importStatus) {
+    params.set(ImportCandidatesSearchParam.ImportStatus, importStatus);
   }
   if (orderBy) {
-    params.set('orderBy', orderBy);
+    params.set(ImportCandidatesSearchParam.OrderBy, orderBy);
   }
   if (sortOrder) {
-    params.set('sortOrder', sortOrder);
+    params.set(ImportCandidatesSearchParam.SortOrder, sortOrder);
+  }
+  if (aggregation) {
+    params.set(ImportCandidatesSearchParam.Aggregation, aggregation);
   }
   const paramsString = params.toString();
 
   const getImportCandidates = await authenticatedApiRequest2<
-    SearchResponse<ImportCandidateSummary, ImportCandidateAggregations>
+    SearchResponse2<ImportCandidateSummary, ImportCandidateAggregations>
   >({
     url: `${SearchApiPath.ImportCandidates}?${paramsString}`,
   });
@@ -397,13 +452,4 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   });
 
   return getResults.data;
-};
-
-export const fetchRegistrationsExport = async (searchParams: URLSearchParams) => {
-  searchParams.set(ResultParam.From, '0');
-  searchParams.set(ResultParam.Results, '400');
-  const url = `${SearchApiPath.Registrations}?${searchParams.toString()}`;
-
-  const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
-  return fetchExport.data;
 };

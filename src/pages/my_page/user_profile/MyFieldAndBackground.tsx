@@ -27,7 +27,8 @@ export const MyFieldAndBackground = () => {
   const debouncedKeywordsSearchTerm = useDebounce(keywordSearchTerm);
 
   const personQuery = useQuery({
-    queryKey: [personId],
+    enabled: !!personId,
+    queryKey: ['person', personId],
     queryFn: () => fetchPerson(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });

@@ -48,7 +48,7 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
                 key={facet.key}
                 identifier={facet.key}
                 dataTestId={dataTestId.startPage.facetItem(facet.key)}
-                isLoading={personQuery.isLoading}
+                isLoading={personQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -72,7 +72,7 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
                 key={facet.key}
                 identifier={facet.key}
                 dataTestId={dataTestId.startPage.facetItem(facet.key)}
-                isLoading={personQuery.isLoading}
+                isLoading={personQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}

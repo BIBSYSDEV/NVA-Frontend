@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getById } from '../../../../api/commonApi';
+import { fetchResource } from '../../../../api/commonApi';
 import { searchForPublishers } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
@@ -51,9 +51,9 @@ export const PublisherField = () => {
   }, [setFieldValue, publisher?.name, publisherOptionsQuery.data?.hits]);
 
   const publisherQuery = useQuery({
-    queryKey: [publisher?.id],
+    queryKey: ['channel', publisher?.id],
     enabled: !!publisher?.id,
-    queryFn: () => getById<Publisher>(publisher?.id ?? ''),
+    queryFn: () => fetchResource<Publisher>(publisher?.id ?? ''),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
@@ -70,7 +70,7 @@ export const PublisherField = () => {
             aria-labelledby={`${publisherFieldTestId}-label`}
             popupIcon={null}
             options={
-              debouncedQuery && query === debouncedQuery && !publisherOptionsQuery.isLoading
+              debouncedQuery && query === debouncedQuery && !publisherOptionsQuery.isPending
                 ? publisherOptionsQuery.data?.hits ?? []
                 : []
             }

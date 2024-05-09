@@ -7,7 +7,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { ChangeEvent } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { updateUser } from '../../../api/roleApi';
+import { CreateUserPayload, createUser, updateUser } from '../../../api/roleApi';
 import { RoleSelectBox } from '../../../components/RoleSelectBox';
 import { setNotification } from '../../../redux/notificationSlice';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
@@ -30,7 +30,7 @@ StyledAreOfResponsibilityHeading.defaultProps = { variant: 'h4', gutterBottom: t
 interface AddCuratorFormProps extends Pick<OrganizationCuratorsAccordionProps, 'refetchCurators'> {
   closeDialog: () => void;
   currentViewingScope: string[];
-  initialValues: InstitutionUser;
+  initialValues: InstitutionUser | CreateUserPayload;
 }
 
 export const AddCuratorForm = ({
@@ -62,7 +62,13 @@ export const AddCuratorForm = ({
   });
 
   const userMutation = useMutation({
-    mutationFn: (user: InstitutionUser) => updateUser(user.username, user),
+    mutationFn: (user: InstitutionUser | CreateUserPayload) => {
+      if ('username' in user) {
+        return updateUser(user.username, user);
+      } else {
+        return createUser(user);
+      }
+    },
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' })),
     onSuccess: async () => {
@@ -74,7 +80,7 @@ export const AddCuratorForm = ({
 
   return (
     <Formik initialValues={initialValues} onSubmit={async (values) => await userMutation.mutateAsync(values)}>
-      {({ values, setFieldValue, dirty, isSubmitting }: FormikProps<InstitutionUser>) => (
+      {({ values, setFieldValue, dirty, isSubmitting }: FormikProps<InstitutionUser | CreateUserPayload>) => (
         <Form>
           <Typography variant="h3" gutterBottom>
             {t('editor.curators.area_of_responsibility')}
@@ -228,7 +234,9 @@ export const AddCuratorForm = ({
               loading={isSubmitting}
               type="submit"
               variant="contained"
-              disabled={!dirty && addedViewingScopes.length === 0}>
+              disabled={
+                (!dirty && addedViewingScopes.length === 0) || (!('username' in values) && values.roles.length === 1)
+              }>
               {t('common.add')}
             </LoadingButton>
           </DialogActions>

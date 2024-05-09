@@ -15,6 +15,7 @@ export const dataTestId = {
         importedRadio: 'imported-radio',
         notImportedRadio: 'not-imported-radio',
         notApplicableRadio: 'not-applicable-radio',
+        publicationYearSelect: 'publication-year-select',
       },
       importCandidateButton: 'import-candidate-button',
       resetButton: 'duplicate-search-reset-button',
@@ -29,7 +30,7 @@ export const dataTestId = {
     centralImportAccordion: 'central-import-accordion',
     customers: {
       customerList: 'customer-institutions-list',
-      editInstitutionButton: (name: string) => `edit-institution-button-${name.toLowerCase().replaceAll(' ', '-')}`,
+      editInstitutionButton: (id: string) => `edit-institution-button-${id}`,
     },
     institutionsAccordion: 'institutions-accordion',
     institutionAdmin: {
@@ -146,6 +147,7 @@ export const dataTestId = {
   startPage: {
     advancedSearch: {
       activateFilterButton: 'activate-filter-button',
+      downloadResultsButton: 'download-results-button',
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
@@ -362,6 +364,7 @@ export const dataTestId = {
       legalNoteField: 'legal-note-field',
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
+      licenseItemShowOlderVersion: 'license-item-show-older-versions',
       licenseModal: 'license-modal',
       linkToResourceField: 'link-to-resource-field',
       removeFileButton: 'button-remove-file',
@@ -526,6 +529,8 @@ export const dataTestId = {
     messagesAccordion: 'messages-accordion',
     myMessages: {
       ticketStatusField: 'ticket-status-field',
+      ticketFilterFromDatePicker: 'ticket-filter-from-date-picker',
+      ticketFilterToDatePicker: 'ticket-filter-to-date-picker',
     },
     myProfileLink: 'my-profile-link',
     myProfile: {

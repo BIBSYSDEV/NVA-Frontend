@@ -22,11 +22,13 @@
     "cancel_create_user_text": "You must create a user to proceed. If you cancel, you will be logged out. Do you want to cancel?",
     "cancel_create_user_title": "Do you want to cancel?",
     "create_user_info": "As a user you will be visible to anyone who wants to add an author or other contributors to results.",
+    "expired_token_info": "Your session has expired and you have been logged out. Continue as an anonymous user or log in again.",
     "forbidden": "Forbidden",
     "forbidden_description": "You are not authorized to view the content on this page. Contact the administrator if you think this is incorrect.",
     "login": "Log in",
     "logout": "Log out",
     "registration_not_published": "This registration has not been published yet.",
+    "signed_out": "You are logged out",
     "your_user_profile": "Your user profile"
   },
   "basic_data": {
@@ -160,6 +162,7 @@
     "close_forever": "Close and do not show again",
     "country": "Country",
     "create": "Create",
+    "created": "Created",
     "date": "Date",
     "delete": "Delete",
     "description": "Description",
@@ -184,8 +187,10 @@
     "institutions": "Institutions",
     "justification": "Justification",
     "language": "Language",
+    "last_modified": "Last modified",
     "last_name": "Last name",
     "link": "Link",
+    "log": "Log",
     "main": "Main",
     "menu": "Menu",
     "message": "Message",
@@ -199,7 +204,7 @@
     "none": "None",
     "not_decided": "Not decided",
     "number_short": "No.",
-    "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
+    "nva_tagline": "National research archive (NVA)",
     "nvi": "Norwegian Science Index (NVI)",
     "open": "Open",
     "or": "Or",
@@ -208,7 +213,7 @@
     "order": "Order",
     "other": "Other",
     "overview": "Overview",
-    "page_title": "Nasjonalt Vitenarkiv",
+    "page_title": "National research archive",
     "pagination_rows_per_page": "Number of rows per page:",
     "pagination_showing_interval": "Showing {{start}}-{{end}} of {{total}}",
     "person": "Person",
@@ -246,6 +251,7 @@
     "show_all": "Show all",
     "show_details": "Show details",
     "show_fewer": "Show fewer",
+    "show_fewer_options": "Show fewer options",
     "show_more": "Show more",
     "show_more_options": "Show more options",
     "skip_to_main_content": "Jump to main content",
@@ -359,13 +365,18 @@
     "categories_with_files": "Categories with File Upload",
     "categories_with_files_description": "Specify the categories where your institution allows file upload",
     "curators": {
+      "active_area_of_responsibilities": "Active areas of responsibility",
+      "add_curator": "Add curator",
+      "added_area_of_responsibilities": "Added areas of responsibility",
       "administer_curators": "Administer access for curators",
       "area_of_responsibility": "Area of responsibility",
+      "area_of_responsibility_description": "<0>Add areas of responsibility that the curator is linked to.</0><0>If you add an area of responsibility that is a superior or subordinate unit to an area of responsibility that the curator is already linked to, the area of responsibility for the superior or subordinate unit is removed.</0><0>If you remove areas of responsibility for the curator, check that there are other curators linked to that area of responsibility.</0>",
       "curators": "Curators",
       "curators_count_one": "{{count}} curator",
       "curators_count_other": "{{count}} curators",
       "edit_user": "Change user",
       "no_users_found": "No users found",
+      "removed_area_of_responsibilities": "Removed areas of responsibility",
       "role": {
         "Curator-thesis": "Student theses",
         "Curator-thesis-embargo": "Embargo",
@@ -373,7 +384,9 @@
         "Nvi-Curator": "NVI",
         "Publishing-Curator": "Publishing",
         "Support-Curator": "User support"
-      }
+      },
+      "search_for_curator": "Search for curator",
+      "search_for_unit": "Search for unit"
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about the result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
@@ -387,7 +400,7 @@
       "change_institution_support": "Change user support point of contact",
       "institution_admin_one": "The institution's administrator",
       "institution_admin_other": "The institution's administrators",
-      "institution_code": "The institution's code",
+      "institution_code": "Code",
       "institution_editor_one": "The institution's editor",
       "institution_editor_other": "The institution's editors",
       "institution_has_no_administrator": "The institution has no administrator",
@@ -398,12 +411,13 @@
       "institution_name_english": "The institution's English name",
       "institution_name_norwegian": "The institution's Norwegian name",
       "institution_profile": "Institution profile",
-      "institution_short_name": "Institution short name",
+      "institution_short_name": "Short name",
       "institution_support": "Institution's user support",
       "institution_support_description": "The institution's user support is shown under curator support.",
       "not_rbo_funded": "The institution does not receive funding via Results-based redistribution (RBO)",
       "organizing": "Organization",
-      "rbo_funded": "The institution receives funding via Results-based redistribution (RBO)"
+      "rbo_funded": "The institution receives funding via Results-based redistribution (RBO)",
+      "unique_feide_id": "Unique Feide ID"
     },
     "organization_overview": "Organizational structure",
     "publish_strategy": {
@@ -419,7 +433,7 @@
       "creator_can_override_rrs_text": "<0>The institution has made it possible for the registrar to choose not to follow the institution's rights retention strategy (RRS). By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></0> <1>In NVA, the registrar removes RRS from the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By removing the check from RRS, the selected license on the file is removed and the license must be selected again.</1>",
       "curator_can_override_rrs_text": "<0>The publishing curator has access to set that files do not follow the institution's rights retention strategy (RRS).</0> <0>If the registrar does not wish to follow the institution's rights retention strategy (RRS), look at the terms for not following RRS on the information page about the institution's rights retention strategy.</0> <1>By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S</0>.</1>",
       "customer_has_no_rrs": "<0>The institution has not provided a rights retention strategy (RRS) in NVA.</0> <0>Without an institutional rights retention strategy, it is up to the registrar to set the correct license on the accepted version of files in the registration of scientific articles.</0> <1>It is up to the registrar to potentially mark whether the publication should follow an RRS. By following a rights retention strategy (RRS), scientific articles become openly available immediately without embargo. <0>See cOAlition S's website for information on RRS and Plan S.</0></1> <0>If the publication is funded by an actor that requires adherence to RRS (ref. Plan S), then RRS must be set. In NVA, the registrar sets RRS on the accepted version of the file in the registration of a scientific article. The RRS checkbox appears by clicking on the arrow icon under the accepted version of the file. By checking the box for RRS, the license for the file is set to CC-BY.</0>",
-      "customer_has_rrs_text": "<0>The institution has provided a rights retention strategy (RRS) in NVA.</0> <0>The CC-BY licence is set when you choose the accepted version of the file in the registration of a scientific article in NVA.</0>v",
+      "customer_has_rrs_text": "<0>The institution has provided a rights retention strategy (RRS) in NVA.</0> <0>The CC-BY license is set when you choose the accepted version of the file in the registration of a scientific article in NVA.</0>v",
       "possible_not_to_follow_rrs": "Possible to not follow the institution's rights retention policy",
       "rights_retention_strategy": "Rights Retention Strategy (RRS)",
       "rrs": "Rights policy",
@@ -494,7 +508,6 @@
       "get_publishers": "Publisher search failed",
       "get_registration": "Failed to load registration",
       "get_registrations": "Failed to load registrations",
-      "get_registrations_export": "Failed to retrieve result export",
       "get_series": "Failed to retrieve series",
       "get_tickets": "Could not get cases",
       "get_users_for_institution": "Failed to retrieve users",
@@ -636,6 +649,14 @@
       "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
     }
   },
+  "log": {
+    "archived_file_one": "{{count}} file archived afterwards",
+    "archived_file_other": "{{count}} files archived afterwards",
+    "archived_files_on_registration_one": "The registration has {{count}} archived file",
+    "archived_files_on_registration_other": "The registration has {{count}} archived files",
+    "deleted_file_one": "{{count}} files deleted afterwards",
+    "deleted_file_other": "{{count}} files deleted afterwards"
+  },
   "my_page": {
     "messages": {
       "all_ticket_types": "All statuses",
@@ -736,7 +757,7 @@
       "published": "Published",
       "unpublished": "Draft"
     },
-    "research_profile": "Research profile",
+    "research_profile": "Researcher profile",
     "roles": {
       "app_admin": "System administrator",
       "app_admin_description": "Registers new institutions in the service and assigns the Administrator role.",
@@ -759,7 +780,11 @@
       "publishing_curator": "Publishing curator",
       "publishing_curator_description": "Can view and handle publishing requests.",
       "support_curator": "User support curator",
-      "support_curator_description": "Can view and handle user support requests."
+      "support_curator_description": "Can view and handle user support requests.",
+      "thesis_curator": "Thesis curator",
+      "thesis_curator_description": "Can create and edit theses.",
+      "thesis_embargo_curator": "Thesis with embargo curator",
+      "thesis_embargo_curator_description": "Can view and edit files with embargo on theses."
     }
   },
   "privacy": {
@@ -1091,12 +1116,12 @@
       "add_affiliation": "Add affiliation",
       "add_contributor": "Add contributor",
       "add_duplicate_affiliation": "Affiliation is already added",
+      "add_new_contributor": "Add new contributor",
       "add_self_as_contributor": "Add me as contributor",
       "add_unverified_contributor": "Add a non-verified contributor.",
       "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}}?",
       "contributor": "Contributor",
       "contributor_already_added": "Chosen contributor is already added",
-      "contributor_not_found": "Contributor not found",
       "corresponding": "Corresponding",
       "department": "Department",
       "identification": "Identification",
@@ -1260,6 +1285,7 @@
       "remove_file_description": "Do you want to remove {{fileName}}?",
       "resource_has_no_files_or_links": "The resource does not have any files or links to publish",
       "resource_is_a_reference": "The resource is a reference and has no files or links to publish",
+      "show_all_older_versions": "Show all previous versions",
       "size": "Size",
       "version_accepted_helper_text": "<0>Accepted version</0>: The version of a research paper accepted by a journal after peer review. This version does not normally include any changes made after acceptance such as copy editing, or typesetting. This version should be shared in NVA, preferable in PDF format and under a CC-BY license.",
       "version_accepted_helper_text_metadata_only": "<0>Accepted version</0>: The version of a research paper accepted by a journal after peer review. This version does not normally include any changes made after acceptance such as copy editing, or typesetting. This version should be shared in NVA, preferable in PDF format and under a CC-BY license.",
@@ -1820,6 +1846,7 @@
     "dialogues_without_curator": "Dialogs without a curator",
     "my_nvi_results": "My NVI results",
     "nvi": {
+      "approval_status_count": "Checked ({{checked}} of {{total}})",
       "approve_nvi_candidate": "Approve",
       "approve_nvi_candidate_description": "Approval of the result.",
       "assigned": "In progress",
@@ -1831,16 +1858,18 @@
       "next_candidate": "Go to the next candidate",
       "no_nvi_candidates": "No NVI candidates",
       "note": "Note",
+      "nvi_status": "NVI status",
       "previous_candidate": "Go to previous candidate",
       "publication_points": "Publication points",
       "reject_nvi_candidate": "Reject",
-      "reject_nvi_candidate_description": "Rejection of the result.",
+      "reject_nvi_candidate_description": "If the result is not to be reported to NVI, write a justification in the notes field and then choose \"Reject result\"",
       "reject_nvi_candidate_form_label": "Rejection reason",
       "reporting_period_closed": "The reporting period for this result is closed.",
       "reporting_period_missing": "The reporting period for this result is not open.",
       "save_note": "Save note",
       "status": {
         "Approved": "Approved",
+        "New": "Candidate",
         "Pending": "Candidate",
         "Rejected": "Rejected"
       },
@@ -1858,10 +1887,13 @@
     "search_duplicate_facets": "Search with DOI, handle or title",
     "search_for_duplicate": "Search for registered result",
     "unpublish": "Unpublish",
+    "unpublish_header": "Unpublish",
+    "unpublish_info": "The result will no longer be visible to others if you choose to unpublish it. You may republish it later",
+    "unpublish_not_allowed": "<0>You can not unpublish this result, because it has either an uploaded file with an approved license or has been reported to the Norwegian science index (NVI).</0><0>If you need to unpublish the result, please contact a curator via curator support.</0>",
     "unpublish_registration": "Unpublish research result",
     "unpublish_registration_detail_1": "Upon unpublishing, the research result will not be searchable in NVA, but will still be available when looking up the reference.",
     "unpublish_registration_detail_2": "Any files will be removed from the research result by unpublishing, but will not be permanently deleted.",
-    "unpublish_registration_duplicate_citation_information": "In order for all citations to be carried forward, you must look up the other registration. Then all citations will still lead to the other version",
+    "unpublish_registration_duplicate_citation_information": "In order for all citations to be carried forward, you must look up the other registration. Then all citations will still lead to the other version.",
     "unpublish_registration_duplicate_question": "Is there another published version of the same research result?",
     "unpublish_registration_reason": "Enter a brief justification for why this research result should no longer be published. The justification will be displayed on the research result when looking up the reference to the research result."
   }

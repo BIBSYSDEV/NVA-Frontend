@@ -79,7 +79,7 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
       onClick={() => setExpanded(true)}>
       <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         <span>
-          {senderQuery.isLoading ? (
+          {senderQuery.isPending ? (
             <Skeleton sx={{ width: '8rem' }} />
           ) : (
             <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>

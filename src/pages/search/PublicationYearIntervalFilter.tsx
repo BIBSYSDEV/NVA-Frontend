@@ -15,7 +15,7 @@ interface PublicationDateIntervalFilterProps {
   datePickerProps?: Partial<DatePickerProps<Date>>;
 }
 
-export const PublicationDateIntervalFilter = ({ datePickerProps, boxProps }: PublicationDateIntervalFilterProps) => {
+export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: PublicationDateIntervalFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
