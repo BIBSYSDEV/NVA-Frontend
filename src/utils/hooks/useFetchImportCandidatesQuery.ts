@@ -10,9 +10,6 @@ export const useFetchImportCandidatesQuery = (enabled = true) => {
   const { t } = useTranslation();
   const importCandidateQueryParams = useImportCandidatesParams();
 
-  const sizeParam = importCandidateQueryParams.sizeParam ?? ROWS_PER_PAGE_OPTIONS[0];
-  const fromParam = importCandidateQueryParams.fromParam ?? 0;
-
   const importCandidateParams = {
     aggregation: 'all',
     query: importCandidateQueryParams.queryParam,
@@ -24,8 +21,8 @@ export const useFetchImportCandidatesQuery = (enabled = true) => {
     topLevelOrganization: importCandidateQueryParams.topLevelOrganizationParam,
     type: importCandidateQueryParams.typeParam,
     collaborationType: importCandidateQueryParams.collaborationTypeParam,
-    size: sizeParam,
-    from: fromParam,
+    size: importCandidateQueryParams.sizeParam ?? ROWS_PER_PAGE_OPTIONS[0],
+    from: importCandidateQueryParams.fromParam ?? 0,
   } satisfies FetchImportCandidatesParams;
 
   const importCandidateQuery = useQuery({
