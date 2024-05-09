@@ -25,7 +25,9 @@ export const ImportCandidatesMenuFilters = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery();
+  const shouldFetchImportCandidates = history.location.pathname === UrlPathTemplate.BasicDataCentralImport;
+
+  const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery(shouldFetchImportCandidates);
 
   const importCandidatesFacetsParams: FetchImportCandidatesParams = {
     aggregation: 'all',
@@ -33,7 +35,7 @@ export const ImportCandidatesMenuFilters = () => {
     publicationYear: importCandidateParams.publicationYear,
   };
   const importCandidatesFacetsQuery = useQuery({
-    enabled: history.location.pathname === UrlPathTemplate.BasicDataCentralImport,
+    enabled: shouldFetchImportCandidates,
     queryKey: ['importCandidatesFacets', importCandidatesFacetsParams],
     queryFn: () => fetchImportCandidates(importCandidatesFacetsParams),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },

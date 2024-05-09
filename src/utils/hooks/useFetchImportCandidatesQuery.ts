@@ -6,7 +6,7 @@ import { useImportCandidatesParams } from './useImportCandidatesParams';
 
 const defaultYearParam = new Date().getFullYear();
 
-export const useFetchImportCandidatesQuery = () => {
+export const useFetchImportCandidatesQuery = (enabled = true) => {
   const { t } = useTranslation();
   const importCandidateQueryParams = useImportCandidatesParams();
 
@@ -29,6 +29,7 @@ export const useFetchImportCandidatesQuery = () => {
   } satisfies FetchImportCandidatesParams;
 
   const importCandidateQuery = useQuery({
+    enabled,
     queryKey: ['importCandidates', importCandidateParams],
     queryFn: () => fetchImportCandidates(importCandidateParams),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
