@@ -35,7 +35,7 @@ export default defineConfig({
       },
       output: {
         experimentalMinChunkSize: 10_000,
-        manualChunks(id) {
+        manualChunks: (id) => {
           if (largeLibraries.some((library) => id.includes(`node_modules/${library}`))) {
             return id.toString().split('node_modules/')[1].split('/')[0].toString();
           }
