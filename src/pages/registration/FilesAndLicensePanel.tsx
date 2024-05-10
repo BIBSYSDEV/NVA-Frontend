@@ -112,6 +112,22 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const isProtectedDegree = isDegreeWithProtectedFiles(publicationInstanceType);
   const canEditFiles = userCanEditRegistration(values) || userIsValidImporter(user, values);
 
+  function canEditFile(file: AssociatedFile) {
+    if (isProtectedDegree && isEmbargoed(file.embargoDate)) {
+      return !!user?.isEmbargoThesisCurator;
+    }
+
+    if (isProtectedDegree) {
+      return !!user?.isThesisCurator;
+    }
+
+    if (file.type === 'PublishedFile') {
+      return userCanUnpublishRegistration(values) ?? false;
+    }
+
+    return true;
+  }
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
@@ -292,18 +308,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                           return false;
                         });
 
-                        const canEditEmbargoedDegreeFile = !!user?.isEmbargoThesisCurator;
-                        const canEditFile =
-                          file.type === 'PublishedFile' ? userCanUnpublishRegistration(values) : canEditFiles;
-
-                        const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
-                        const canEditThisFile = isEmbargoedDegreeFile ? canEditEmbargoedDegreeFile : canEditFile;
-
                         return (
                           <FilesTableRow
                             key={file.identifier}
                             file={file}
-                            disabled={!canEditThisFile}
+                            disabled={!canEditFile(file)}
                             removeFile={() => {
                               const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                               const remainingFiles = uppy
