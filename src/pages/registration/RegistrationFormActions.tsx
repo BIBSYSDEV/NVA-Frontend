@@ -39,7 +39,7 @@ export const RegistrationFormActions = ({
   const history = useHistory();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { values, setTouched } = useFormikContext<Registration>();
+  const { values, setTouched, resetForm } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
@@ -63,11 +63,12 @@ export const RegistrationFormActions = ({
         ['registration', updateRegistrationResponse.data.identifier],
         updateRegistrationResponse.data
       );
+      const newErrors = validateForm(updateRegistrationResponse.data);
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
+      resetForm({ values: updateRegistrationResponse.data, errors: newErrors });
       if (isLastTab) {
         history.push(getRegistrationLandingPagePath(values.identifier));
       } else {
-        const newErrors = validateForm(updateRegistrationResponse.data);
         setTouched(setNestedObjectValues(newErrors, true));
       }
     }
