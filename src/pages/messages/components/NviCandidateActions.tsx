@@ -17,12 +17,12 @@ import { ChangeEvent, ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  CreateNoteData,
-  SetNviCandidateStatusData,
   createNote,
+  CreateNoteData,
   deleteCandidateNote,
   setCandidateAssignee,
   setCandidateStatus,
+  SetNviCandidateStatusData,
 } from '../../../api/scientificIndexApi';
 import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -250,7 +250,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                 await statusMutation.mutateAsync({ status: 'Rejected', reason });
                 setHasSelectedRejectCandidate(false);
               }}
-              isLoading={statusMutation.isLoading}
+              isLoading={statusMutation.isPending}
             />
 
             <Divider sx={{ mb: '1rem' }} />
