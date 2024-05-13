@@ -90,7 +90,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const canEditRegistration = registration && userCanEditRegistration(registration);
 
-  return registrationQuery.isLoading || (canHaveNviCandidate && nviCandidateQuery.isLoading) ? (
+  return registrationQuery.isPending || (canHaveNviCandidate && nviCandidateQuery.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />

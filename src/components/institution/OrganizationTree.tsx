@@ -18,13 +18,13 @@ export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
     queryFn: () => fetchOrganization(unitUri),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
   const organization = organizationQuery.data;
 
   const units = getOrganizationHierarchy(organization);
 
-  return organizationQuery.isLoading ? (
+  return organizationQuery.isPending ? (
     <AffiliationSkeleton />
   ) : organization ? (
     <Box

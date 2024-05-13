@@ -49,7 +49,7 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {projectQuery.isLoading ? (
+      {projectQuery.isPending ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projectsSearchResults && projectsSearchResults.length > 0 ? (
         <div>

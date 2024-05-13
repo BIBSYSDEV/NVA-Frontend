@@ -168,7 +168,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => (
           <Form noValidate>
             <DialogContent sx={{ minHeight: '30vh' }}>
-              {(!values.person && personQuery.isLoading) || (!values.user && institutionUserQuery.isLoading) ? (
+              {(!values.person && personQuery.isPending) || (!values.user && institutionUserQuery.isPending) ? (
                 <PageSpinner aria-labelledby="edit-user-heading" />
               ) : !values.person ? (
                 <Typography>{t('feedback.error.get_person')}</Typography>

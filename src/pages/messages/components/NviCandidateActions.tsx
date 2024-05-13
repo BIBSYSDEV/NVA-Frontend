@@ -17,12 +17,12 @@ import { ChangeEvent, ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  createNote,
   CreateNoteData,
+  SetNviCandidateStatusData,
+  createNote,
   deleteCandidateNote,
   setCandidateAssignee,
   setCandidateStatus,
-  SetNviCandidateStatusData,
 } from '../../../api/scientificIndexApi';
 import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -110,7 +110,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_nvi_status'), variant: 'error' })),
   });
 
-  const isMutating = createNoteMutation.isLoading || statusMutation.isLoading;
+  const isMutating = createNoteMutation.isPending || statusMutation.isPending;
 
   const rejectionNotes: NviNote[] = (
     (nviCandidate?.approvals.filter((status) => status.status === 'Rejected') ?? []) as RejectedApproval[]
@@ -158,7 +158,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           assignee={myApproval?.assignee}
           canSetAssignee={myApproval?.status === 'New' || myApproval?.status === 'Pending'}
           onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
-          isUpdating={assigneeMutation.isLoading}
+          isUpdating={assigneeMutation.isPending}
           roleFilter={RoleName.NviCurator}
           iconBackgroundColor="nvi.main"
         />
@@ -190,8 +190,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               }
 
               const isDeleting =
-                (statusMutation.isLoading && statusMutation.variables?.status === 'Pending') ||
-                (deleteNoteMutation.isLoading && deleteNoteMutation.variables === noteIdentifier);
+                (statusMutation.isPending && statusMutation.variables?.status === 'Pending') ||
+                (deleteNoteMutation.isPending && deleteNoteMutation.variables === noteIdentifier);
 
               return (
                 <ErrorBoundary key={noteIdentifier ?? note.date}>
@@ -219,7 +219,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               fullWidth
               size="small"
               sx={{ mb: '1rem', bgcolor: 'white' }}
-              loading={statusMutation.isLoading && statusMutation.variables?.status === 'Approved'}
+              loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
               disabled={isMutating}
               endIcon={<CheckIcon />}
               onClick={() => statusMutation.mutate({ status: 'Approved' })}>

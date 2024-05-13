@@ -29,11 +29,6 @@ export interface ImportCandidate extends Registration {
   importStatus: ImportStatus;
 }
 
-interface ImportCandidateStatusBucket {
-  key: ImportCandidateStatus;
-  docCount: number;
-}
-
 export interface ImportCandidateAggregations {
   importStatus: AggregationValue<ImportCandidateStatus>[];
 }

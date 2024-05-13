@@ -31,7 +31,7 @@ export const DownloadFileButton = ({ file }: DownloadFileButtonProps) => {
       return downloadFileResponse;
     },
     meta: { errorMessage: t('feedback.error.download_file') },
-    cacheTime: 0,
+    gcTime: 0,
   });
 
   return downloadFileQuery.isFetching ? (

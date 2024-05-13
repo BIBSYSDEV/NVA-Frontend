@@ -36,7 +36,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
         {editMode ? t('basic_data.institutions.edit_institution') : t('basic_data.institutions.add_institution')}
       </PageHeader>
 
-      {isLoadingCustomerInstitution || adminsQuery.isLoading ? (
+      {isLoadingCustomerInstitution || adminsQuery.isPending ? (
         <PageSpinner aria-labelledby="admin-institution-label" />
       ) : (
         <>
