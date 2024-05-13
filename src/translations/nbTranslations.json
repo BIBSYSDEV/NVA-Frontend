@@ -51,6 +51,10 @@
     "central_import": {
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
+      "collaboration_type": {
+        "Collaborative": "Sampublikasjon",
+        "NonCollaborative": "Ikke sampublikasjon"
+      },
       "create_new": "Opprett ny",
       "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importdata.",
       "duplicate_search_hits": "Søket ga følgende treff:",

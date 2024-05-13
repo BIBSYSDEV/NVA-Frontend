@@ -281,7 +281,7 @@ export type AggregationFileKeyType = 'hasPublicFiles' | 'noFiles';
 
 export interface RegistrationAggregations {
   topLevelOrganization?: AggregationValue[];
-  type?: AggregationValue[];
+  type?: AggregationValue<PublicationInstanceType>[];
   fundingSource?: AggregationValue[];
   contributor?: AggregationValue[];
   publisher?: AggregationValue[];

@@ -56,14 +56,16 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   return (
     <>
       {coordinatingFacet && coordinatingFacet?.length > 0 && (
-        <FacetItem title={t('project.coordinating_institution')} dataTestId={dataTestId.startPage.coordinatingFacets}>
+        <FacetItem
+          title={t('project.coordinating_institution')}
+          dataTestId={dataTestId.aggregations.coordinatingFacets}>
           {coordinatingFacet.map((facet) => {
             const isSelected = selectedCoordinating.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
@@ -80,14 +82,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
       )}
 
       {responsibleFacet && responsibleFacet?.length > 0 && (
-        <FacetItem title={t('search.responsible_institution')} dataTestId={dataTestId.startPage.responsibleFacets}>
+        <FacetItem title={t('search.responsible_institution')} dataTestId={dataTestId.aggregations.responsibleFacets}>
           {responsibleFacet.map((facet) => {
             const isSelected = selectedResponsible.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
@@ -104,14 +106,16 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
       )}
 
       {participantOrgFacet && participantOrgFacet?.length > 0 && (
-        <FacetItem title={t('search.participating_institution')} dataTestId={dataTestId.startPage.participantOrgFacets}>
+        <FacetItem
+          title={t('search.participating_institution')}
+          dataTestId={dataTestId.aggregations.participantOrgFacets}>
           {participantOrgFacet.map((facet) => {
             const isSelected = selectedParticipantOrg.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
@@ -128,14 +132,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
       )}
 
       {sectorFacet && sectorFacet?.length > 0 && (
-        <FacetItem title={t('search.sector')} dataTestId={dataTestId.startPage.sectorFacets}>
+        <FacetItem title={t('search.sector')} dataTestId={dataTestId.aggregations.sectorFacets}>
           {sectorFacet.map((facet) => {
             const isSelected = selectedSectors.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
@@ -152,14 +156,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
       )}
 
       {categoryFacet && categoryFacet?.length > 0 && (
-        <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.categoryFacets}>
+        <FacetItem title={t('common.category')} dataTestId={dataTestId.aggregations.categoryFacets}>
           {categoryFacet.map((facet) => {
             const isSelected = selecetedCategories.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
@@ -176,14 +180,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
       )}
 
       {healthProjectFacet && healthProjectFacet?.length > 0 && (
-        <FacetItem title={t('search.health_project_type')} dataTestId={dataTestId.startPage.healthProjectFacets}>
+        <FacetItem title={t('search.health_project_type')} dataTestId={dataTestId.aggregations.healthProjectFacets}>
           {healthProjectFacet.map((facet) => {
             const isSelected = selectedHealthProject.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
@@ -200,14 +204,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
       )}
 
       {participantFacet && participantFacet?.length > 0 && (
-        <FacetItem title={t('search.participant')} dataTestId={dataTestId.startPage.participantFacets}>
+        <FacetItem title={t('search.participant')} dataTestId={dataTestId.aggregations.participantFacets}>
           {participantFacet.map((facet) => {
             const isSelected = selectedParticipants.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
@@ -224,14 +228,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
       )}
 
       {fundingSourceFacet && fundingSourceFacet?.length > 0 && (
-        <FacetItem title={t('common.funding')} dataTestId={dataTestId.startPage.fundingSourceFacets}>
+        <FacetItem title={t('common.funding')} dataTestId={dataTestId.aggregations.fundingSourceFacets}>
           {fundingSourceFacet.map((facet) => {
             const isSelected = selectedFundingSources.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={projectQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
