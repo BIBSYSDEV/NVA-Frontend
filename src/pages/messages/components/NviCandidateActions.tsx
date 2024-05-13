@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
+import { ChangeEvent, ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -34,7 +34,6 @@ import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { MessageItem } from './MessageList';
-import { Field, FieldProps, Form, Formik } from 'formik';
 
 interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
@@ -277,71 +276,61 @@ interface RejectionDialogProps {
 
 const maxLength = 160;
 
-interface RejectionFormData {
-  reason: string;
-}
-
 const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialogProps) => {
   const { t } = useTranslation();
+  const [reason, setReason] = useState('');
 
-  const initialValues: RejectionFormData = {
-    reason: '',
+  const handleAccept = async () => {
+    await onAccept(reason.trim());
+    setReason('');
+  };
+
+  const handleClose = () => {
+    onCancel();
+    setReason('');
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setReason(event.target.value);
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={async (values, { resetForm }) => {
-        await onAccept(values.reason.trim());
-        resetForm();
-      }}>
-      {({ isSubmitting, resetForm, values }) => (
-        <Dialog
-          open={open}
-          onClose={() => {
-            onCancel();
-            resetForm();
-          }}>
-          <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
-          <DialogContent>
-            <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
-            <Form>
-              <Field name="reason">
-                {({ field }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    data-testid={dataTestId.tasksPage.nvi.rejectionModalTextField}
-                    inputProps={{ maxLength: maxLength }}
-                    variant="filled"
-                    multiline
-                    minRows={3}
-                    maxRows={Infinity}
-                    fullWidth
-                    required
-                    label={t('tasks.nvi.reject_nvi_candidate_form_label')}
-                    helperText={`${field.value.length}/${maxLength}`}
-                    FormHelperTextProps={{ sx: { textAlign: 'end' } }}
-                  />
-                )}
-              </Field>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
+      <DialogContent>
+        <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
+        <form onSubmit={handleAccept}>
+          <TextField
+            value={reason}
+            onChange={handleChange}
+            data-testid={dataTestId.tasksPage.nvi.rejectionModalTextField}
+            inputProps={{ maxLength: maxLength }}
+            variant="filled"
+            multiline
+            minRows={3}
+            maxRows={Infinity}
+            fullWidth
+            required
+            label={t('tasks.nvi.reject_nvi_candidate_form_label')}
+            helperText={`${reason.length}/${maxLength}`}
+            FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+          />
 
-              <DialogActions>
-                <Button data-testid={dataTestId.tasksPage.nvi.rejectionModalCancelButton} onClick={onCancel}>
-                  {t('common.cancel')}
-                </Button>
-                <LoadingButton
-                  data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
-                  loading={isLoading}
-                  disabled={isSubmitting || values.reason.length < 10}
-                  variant="contained"
-                  type="submit">
-                  {t('common.reject')}
-                </LoadingButton>
-              </DialogActions>
-            </Form>
-          </DialogContent>
-        </Dialog>
-      )}
-    </Formik>
+          <DialogActions>
+            <Button data-testid={dataTestId.tasksPage.nvi.rejectionModalCancelButton} onClick={handleClose}>
+              {t('common.cancel')}
+            </Button>
+            <LoadingButton
+              data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
+              loading={isLoading}
+              disabled={reason.length < 10}
+              variant="contained"
+              type="submit">
+              {t('common.reject')}
+            </LoadingButton>
+          </DialogActions>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 };
