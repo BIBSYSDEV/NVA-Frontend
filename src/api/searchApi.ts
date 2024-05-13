@@ -159,12 +159,14 @@ export const fetchImportCandidates = async (params: FetchImportCandidatesParams)
   searchParams.set(ImportCandidatesSearchParam.Size, (params.size ?? 10).toString());
   searchParams.set(ImportCandidatesSearchParam.From, (params.from ?? 0).toString());
 
-  if (params.query) {
-    searchParams.set(ImportCandidatesSearchParam.Query, params.query);
+  if (params.aggregation) {
+    searchParams.set(ImportCandidatesSearchParam.Aggregation, params.aggregation);
   }
-  if (params.publicationYear) {
-    const yearString = params.publicationYear.toString();
-    searchParams.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
+  if (params.collaborationType) {
+    searchParams.set(ImportCandidatesSearchParam.CollaborationType, params.collaborationType);
+  }
+  if (params.files) {
+    searchParams.set(ImportCandidatesSearchParam.Files, params.files);
   }
   if (params.id) {
     searchParams.set(ImportCandidatesSearchParam.Identifier, params.id);
@@ -175,6 +177,13 @@ export const fetchImportCandidates = async (params: FetchImportCandidatesParams)
   if (params.orderBy) {
     searchParams.set(ImportCandidatesSearchParam.OrderBy, params.orderBy);
   }
+  if (params.publicationYear) {
+    const yearString = params.publicationYear.toString();
+    searchParams.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
+  }
+  if (params.query) {
+    searchParams.set(ImportCandidatesSearchParam.Query, params.query);
+  }
   if (params.sortOrder) {
     searchParams.set(ImportCandidatesSearchParam.SortOrder, params.sortOrder);
   }
@@ -184,15 +193,7 @@ export const fetchImportCandidates = async (params: FetchImportCandidatesParams)
   if (params.type) {
     searchParams.set(ImportCandidatesSearchParam.Type, params.type);
   }
-  if (params.collaborationType) {
-    searchParams.set(ImportCandidatesSearchParam.CollaborationType, params.collaborationType);
-  }
-  if (params.files) {
-    searchParams.set(ImportCandidatesSearchParam.Files, params.files);
-  }
-  if (params.aggregation) {
-    searchParams.set(ImportCandidatesSearchParam.Aggregation, params.aggregation);
-  }
+
   const paramsString = searchParams.toString();
 
   const getImportCandidates = await authenticatedApiRequest2<
