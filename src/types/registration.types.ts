@@ -309,7 +309,7 @@ export interface UnpublishPublicationRequest {
   comment: string;
 }
 
-export interface NpiSubjectSubdomain {
+interface NpiSubjectSubdomain {
   id: string;
   name: string;
 }
