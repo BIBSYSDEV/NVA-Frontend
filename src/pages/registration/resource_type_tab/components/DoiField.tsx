@@ -1,4 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -24,9 +25,14 @@ export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
   const referenceDoi = values.entityDescription?.reference?.doi ?? '';
 
   return doi || referenceDoi ? (
-    <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '1rem', alignItems: 'center' }}>
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: { xs: 'auto auto', md: '1fr auto auto' },
+        gap: '0.5rem',
+        alignItems: 'center',
+      }}>
       <TextField
-        id="doi-field"
         data-testid="doi-field"
         variant="filled"
         fullWidth
@@ -38,6 +44,14 @@ export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
 
       {referenceDoi && (
         <>
+          <Button
+            variant="outlined"
+            endIcon={<OpenInNewIcon />}
+            href={referenceDoi}
+            target="_blank"
+            rel="noopener noreferrer">
+            {t('common.open')}
+          </Button>
           <Button
             color="error"
             variant="outlined"
