@@ -715,5 +715,5 @@ export const findParentSubject = (disciplines: NpiSubjectDomain[], npiSubjectHea
   const parent = disciplines.find((domain) =>
     domain.subdomains.some((subdomain) => subdomain.id === npiSubjectHeadingId)
   );
-  return parent ?? null;
+  return parent ? parent.id : null;
 };
