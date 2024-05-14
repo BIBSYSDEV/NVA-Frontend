@@ -1,17 +1,7 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import { LoadingButton } from '@mui/lab';
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -34,6 +24,7 @@ import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { MessageItem } from './MessageList';
+import { NviCandidateRejectionDialog } from './NviCandidateRejectionDialog';
 
 interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
@@ -243,7 +234,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               {t('tasks.nvi.reject_nvi_candidate')}
             </Button>
 
-            <RejectionDialog
+            <NviCandidateRejectionDialog
               open={hasSelectedRejectCandidate}
               onCancel={() => setHasSelectedRejectCandidate(false)}
               onAccept={async (reason) => {
@@ -264,69 +255,5 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         />
       </Box>
     </>
-  );
-};
-
-interface RejectionDialogProps {
-  open: boolean;
-  onCancel: () => void;
-  onAccept: (reason: string) => Promise<unknown>;
-  isLoading: boolean;
-}
-
-const maxReasonLength = 160;
-const minReasonLength = 10;
-
-const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialogProps) => {
-  const { t } = useTranslation();
-  const [reason, setReason] = useState('');
-
-  const handleAccept = async () => {
-    await onAccept(reason.trim());
-    setReason('');
-  };
-
-  const handleClose = () => {
-    onCancel();
-    setReason('');
-  };
-
-  return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
-      <form onSubmit={handleAccept}>
-        <DialogContent>
-          <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
-          <TextField
-            value={reason}
-            onChange={(event) => setReason(event.target.value)}
-            data-testid={dataTestId.tasksPage.nvi.rejectionModalTextField}
-            inputProps={{ minLength: minReasonLength, maxLength: maxReasonLength }}
-            variant="filled"
-            multiline
-            minRows={3}
-            fullWidth
-            required
-            name="reason"
-            label={t('tasks.nvi.reject_nvi_candidate_form_label')}
-            helperText={`${reason.length}/${maxReasonLength}`}
-            FormHelperTextProps={{ sx: { textAlign: 'end' } }}
-          />
-        </DialogContent>
-
-        <DialogActions>
-          <Button data-testid={dataTestId.tasksPage.nvi.rejectionModalCancelButton} onClick={handleClose}>
-            {t('common.cancel')}
-          </Button>
-          <LoadingButton
-            data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
-            loading={isLoading}
-            variant="contained"
-            type="submit">
-            {t('common.reject')}
-          </LoadingButton>
-        </DialogActions>
-      </form>
-    </Dialog>
   );
 };
