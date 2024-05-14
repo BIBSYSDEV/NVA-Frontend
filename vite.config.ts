@@ -29,6 +29,7 @@ export default defineConfig({
     outDir: 'build',
     rollupOptions: {
       onwarn: ({ message }) => {
+        console.warn(message); // eslint-disable-line no-console
         if (message.startsWith('[plugin vite-plugin-eslint]')) {
           throw new Error(message);
         }
