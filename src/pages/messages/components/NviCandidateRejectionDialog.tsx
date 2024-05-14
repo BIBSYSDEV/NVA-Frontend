@@ -23,12 +23,6 @@ export const NviCandidateRejectionDialog = ({
   const { t } = useTranslation();
   const [reason, setReason] = useState('');
 
-  const handleAccept = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    await onAccept(reason.trim());
-    setReason('');
-  };
-
   const handleClose = () => {
     onCancel();
     setReason('');
@@ -37,7 +31,12 @@ export const NviCandidateRejectionDialog = ({
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
-      <form onSubmit={handleAccept}>
+      <form
+        onSubmit={async (event) => {
+          event.preventDefault();
+          await onAccept(reason.trim());
+          setReason('');
+        }}>
         <DialogContent>
           <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
           <TextField
