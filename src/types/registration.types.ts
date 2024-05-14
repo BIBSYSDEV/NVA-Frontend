@@ -308,3 +308,14 @@ export interface UnpublishPublicationRequest {
   duplicateOf?: string;
   comment: string;
 }
+
+export interface NpiSubjectSubdomain {
+  id: string;
+  name: string;
+}
+
+export interface NpiSubjectDomain {
+  id: string;
+  subjectArea: string;
+  subdomains: NpiSubjectSubdomain[];
+}

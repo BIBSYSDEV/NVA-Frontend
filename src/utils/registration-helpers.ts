@@ -6,21 +6,6 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/ass
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-  allPublicationInstanceTypes,
-} from '../types/publicationFieldNames';
-import {
   AudioVisualPublication,
   Award,
   Broadcast,
@@ -46,7 +31,23 @@ import {
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import {
+  allPublicationInstanceTypes,
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+} from '../types/publicationFieldNames';
+import {
   Journal,
+  NpiSubjectDomain,
   PublicationInstanceType,
   Publisher,
   Registration,
@@ -708,4 +709,12 @@ export const getDisabledCategories = (
   }
 
   return disabledCategories;
+};
+
+export const findParentSubject = (json: NpiSubjectDomain[], npiSubjectHeading: string): string | null => {
+  const parent: NpiSubjectDomain | undefined = json.find((domain) => {
+    return domain.subdomains.some((subdomain) => subdomain.id === npiSubjectHeading);
+  });
+
+  return parent ? parent.id : null;
 };
