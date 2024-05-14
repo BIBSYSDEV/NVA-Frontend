@@ -6,7 +6,6 @@ import { apiRequest, authenticatedApiRequest, authenticatedApiRequest2 } from '.
 
 interface DownloadFileResponse {
   id: string;
-  presignedDownloadUrl?: string;
   uri?: string;
 }
 
