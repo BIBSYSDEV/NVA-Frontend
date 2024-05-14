@@ -711,9 +711,9 @@ export const getDisabledCategories = (
   return disabledCategories;
 };
 
-export const findParentSubject = (json: NpiSubjectDomain[], npiSubjectHeading: string): string | null => {
+export const findParentSubject = (json: NpiSubjectDomain[], npiSubjectHeadingId: string): string | null => {
   const parent: NpiSubjectDomain | undefined = json.find((domain) => {
-    return domain.subdomains.some((subdomain) => subdomain.id === npiSubjectHeading);
+    return domain.subdomains.some((subdomain) => subdomain.id === npiSubjectHeadingId);
   });
 
   return parent ? parent.id : null;
