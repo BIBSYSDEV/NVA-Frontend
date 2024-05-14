@@ -22,7 +22,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { AssociatedFile, AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
-import { LicenseUri, licenses } from '../../types/license.types';
+import { licenses, LicenseUri } from '../../types/license.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -35,6 +35,7 @@ import {
   isEmbargoed,
   isTypeWithFileVersionField,
   userCanEditRegistration,
+  userCanUnpublishRegistration,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 import {
@@ -110,6 +111,22 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const isProtectedDegree = isDegreeWithProtectedFiles(publicationInstanceType);
   const canEditFiles = userCanEditRegistration(values) || userIsValidImporter(user, values);
+
+  function canEditFile(file: AssociatedFile) {
+    if (isProtectedDegree && isEmbargoed(file.embargoDate)) {
+      return !!user?.isEmbargoThesisCurator;
+    }
+
+    if (isProtectedDegree) {
+      return !!user?.isThesisCurator;
+    }
+
+    if (file.type === 'PublishedFile') {
+      return userCanUnpublishRegistration(values) ?? false;
+    }
+
+    return true;
+  }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -291,14 +308,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                           return false;
                         });
 
-                        const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
-                        const canEditThisFile = isEmbargoedDegreeFile ? !!user?.isEmbargoThesisCurator : canEditFiles;
-
                         return (
                           <FilesTableRow
                             key={file.identifier}
                             file={file}
-                            disabled={!canEditThisFile}
+                            disabled={!canEditFile(file)}
                             removeFile={() => {
                               const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                               const remainingFiles = uppy

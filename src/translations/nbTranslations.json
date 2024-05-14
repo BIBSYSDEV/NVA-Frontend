@@ -1256,6 +1256,7 @@
       "administrative_agreement": "Administrativ avtale",
       "administrative_contract": "Intern fil som aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
+      "disabled_helper_text": "Denne filen er allerede publisert med en godkjent lisens. Ta kontakt med kurator om du vil endre eller slette filen",
       "embargo": "Embargo/utsatt publisering",
       "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
