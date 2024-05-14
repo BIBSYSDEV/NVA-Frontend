@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ChangeEvent, ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -270,11 +270,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 interface RejectionDialogProps {
   open: boolean;
   onCancel: () => void;
-  onAccept: (reason: string) => Promise<unknown> | void;
+  onAccept: (reason: string) => Promise<unknown>;
   isLoading: boolean;
 }
 
-const maxLength = 160;
+const maxReasonLength = 160;
+const minReasonLength = 10;
 
 const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialogProps) => {
   const { t } = useTranslation();
@@ -290,47 +291,42 @@ const RejectionDialog = ({ open, onCancel, onAccept, isLoading }: RejectionDialo
     setReason('');
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setReason(event.target.value);
-  };
-
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{t('tasks.nvi.reject_nvi_candidate')}</DialogTitle>
-      <DialogContent>
-        <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
-        <form onSubmit={handleAccept}>
+      <form onSubmit={handleAccept}>
+        <DialogContent>
+          <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
           <TextField
             value={reason}
-            onChange={handleChange}
+            onChange={(event) => setReason(event.target.value)}
             data-testid={dataTestId.tasksPage.nvi.rejectionModalTextField}
-            inputProps={{ maxLength: maxLength }}
+            inputProps={{ minLength: minReasonLength, maxLength: maxReasonLength }}
             variant="filled"
             multiline
             minRows={3}
-            maxRows={Infinity}
             fullWidth
             required
+            name="reason"
             label={t('tasks.nvi.reject_nvi_candidate_form_label')}
-            helperText={`${reason.length}/${maxLength}`}
+            helperText={`${reason.length}/${maxReasonLength}`}
             FormHelperTextProps={{ sx: { textAlign: 'end' } }}
           />
+        </DialogContent>
 
-          <DialogActions>
-            <Button data-testid={dataTestId.tasksPage.nvi.rejectionModalCancelButton} onClick={handleClose}>
-              {t('common.cancel')}
-            </Button>
-            <LoadingButton
-              data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
-              loading={isLoading}
-              disabled={reason.length < 10}
-              variant="contained"
-              type="submit">
-              {t('common.reject')}
-            </LoadingButton>
-          </DialogActions>
-        </form>
-      </DialogContent>
+        <DialogActions>
+          <Button data-testid={dataTestId.tasksPage.nvi.rejectionModalCancelButton} onClick={handleClose}>
+            {t('common.cancel')}
+          </Button>
+          <LoadingButton
+            data-testid={dataTestId.tasksPage.nvi.rejectionModalRejectButton}
+            loading={isLoading}
+            variant="contained"
+            type="submit">
+            {t('common.reject')}
+          </LoadingButton>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };
