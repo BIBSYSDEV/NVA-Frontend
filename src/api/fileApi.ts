@@ -1,13 +1,21 @@
 import { AwsS3Part } from '@uppy/aws-s3-multipart';
 import { UppyFile } from '@uppy/core';
 import { isSuccessStatus } from '../utils/constants';
-import { FileApiPath } from './apiPaths';
+import { FileApiPath, PublicationsApiPath } from './apiPaths';
 import { apiRequest, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
 interface DownloadFileResponse {
   id: string;
-  expires: string;
+  presignedDownloadUrl?: string;
+  uri?: string;
 }
+
+export const downloadImportCandidateFile = async (importCandidateIdentifier: string, fileId: string) => {
+  const downloadFileResponse = await authenticatedApiRequest2<DownloadFileResponse>({
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}/file/${fileId}`,
+  });
+  return downloadFileResponse.data;
+};
 
 export const downloadPrivateFile2 = async (registrationIdentifier: string, fileId: string) => {
   const downloadFileResponse = await authenticatedApiRequest2<DownloadFileResponse>({
