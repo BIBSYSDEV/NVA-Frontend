@@ -27,9 +27,8 @@ export const DownloadFileButton = ({ file }: DownloadFileButtonProps) => {
         values.type === 'Publication'
           ? await downloadPrivateFile2(values.identifier, file.identifier)
           : await downloadImportCandidateFile(values.identifier, file.identifier);
-      const presignedUrl = downloadFileResponse.id || downloadFileResponse?.uri;
-      if (presignedUrl) {
-        openFileInNewTab(presignedUrl);
+      if (downloadFileResponse.id) {
+        openFileInNewTab(downloadFileResponse.id);
       }
       setDownloadFile(false); // Ensure that a new URL is obtained every time, due to expiration
       return downloadFileResponse;

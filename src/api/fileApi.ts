@@ -6,7 +6,6 @@ import { apiRequest, authenticatedApiRequest, authenticatedApiRequest2 } from '.
 
 interface DownloadFileResponse {
   id: string;
-  uri?: string;
 }
 
 export const downloadImportCandidateFile = async (importCandidateIdentifier: string, fileId: string) => {
