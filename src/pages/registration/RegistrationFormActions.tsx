@@ -63,13 +63,13 @@ export const RegistrationFormActions = ({
         ['registration', updateRegistrationResponse.data.identifier],
         updateRegistrationResponse.data
       );
-      const newErrors = validateForm(updateRegistrationResponse.data);
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
-      resetForm({ values: updateRegistrationResponse.data, errors: newErrors });
       if (isLastTab) {
         history.push(getRegistrationLandingPagePath(values.identifier));
       } else {
+        const newErrors = validateForm(updateRegistrationResponse.data);
         setTouched(setNestedObjectValues(newErrors, true));
+        resetForm({ values: updateRegistrationResponse.data, errors: newErrors });
       }
     }
     setIsSaving(false);
