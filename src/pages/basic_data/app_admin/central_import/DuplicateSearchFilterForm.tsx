@@ -1,3 +1,4 @@
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
 import { styled as muiStyled } from '@mui/system';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
@@ -81,14 +82,26 @@ export const DuplicateSearchFilterForm = ({
                 />
                 <Field name={'doi'}>
                   {({ field }: FieldProps<string>) => (
-                    <TextField
-                      data-testid={dataTestId.basicData.centralImport.textFieldDoi}
-                      variant="outlined"
-                      {...field}
-                      fullWidth
-                      multiline
-                      disabled={!values.isDoiChecked}
-                    />
+                    <Box sx={{ width: '100%', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                      <TextField
+                        data-testid={dataTestId.basicData.centralImport.textFieldDoi}
+                        variant="outlined"
+                        {...field}
+                        fullWidth
+                        multiline
+                        disabled={!values.isDoiChecked}
+                      />
+                      {field.value && (
+                        <Button
+                          variant="outlined"
+                          endIcon={<OpenInNewIcon />}
+                          href={field.value}
+                          target="_blank"
+                          rel="noopener noreferrer">
+                          {t('common.open')}
+                        </Button>
+                      )}
+                    </Box>
                   )}
                 </Field>
               </StyledFormElementWrapper>
