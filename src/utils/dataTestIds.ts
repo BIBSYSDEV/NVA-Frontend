@@ -588,6 +588,9 @@ export const dataTestId = {
       nextCandidateButton: 'next-candidate-button',
       previousCandidateButton: 'previous-nvi-candidate-button',
       rejectButton: 'reject-button',
+      rejectionModalCancelButton: 'rejection-modal-cancel-button',
+      rejectionModalRejectButton: 'rejection-modal-reject-button',
+      rejectionModalTextField: 'rejection-modal-text-field',
       statusFilter: {
         approvedRadio: 'approved-radio',
         approvedCollaborationRadio: 'approved-collaboration-radio',

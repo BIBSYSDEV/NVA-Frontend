@@ -7,12 +7,12 @@ import { ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  CreateNoteData,
-  SetNviCandidateStatusData,
   createNote,
+  CreateNoteData,
   deleteCandidateNote,
   setCandidateAssignee,
   setCandidateStatus,
+  SetNviCandidateStatusData,
 } from '../../../api/scientificIndexApi';
 import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -24,6 +24,7 @@ import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { MessageItem } from './MessageList';
+import { NviCandidateRejectionDialog } from './NviCandidateRejectionDialog';
 
 interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
@@ -233,29 +234,25 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               {t('tasks.nvi.reject_nvi_candidate')}
             </Button>
 
-            <Divider sx={{ mb: '1rem' }} />
+            <NviCandidateRejectionDialog
+              open={hasSelectedRejectCandidate}
+              onCancel={() => setHasSelectedRejectCandidate(false)}
+              onAccept={async (reason) => {
+                await statusMutation.mutateAsync({ status: 'Rejected', reason });
+                setHasSelectedRejectCandidate(false);
+              }}
+              isLoading={statusMutation.isPending}
+            />
 
-            {hasSelectedRejectCandidate && (
-              <MessageForm
-                confirmAction={async (reason) => {
-                  await statusMutation.mutateAsync({ status: 'Rejected', reason });
-                  setHasSelectedRejectCandidate(false);
-                }}
-                cancelAction={() => setHasSelectedRejectCandidate(false)}
-                fieldLabel={t('tasks.nvi.reject_nvi_candidate_form_label')}
-                buttonTitle={t('tasks.nvi.reject_nvi_candidate')}
-              />
-            )}
+            <Divider sx={{ mb: '1rem' }} />
           </>
         )}
 
-        {!hasSelectedRejectCandidate && (
-          <MessageForm
-            confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
-            fieldLabel={t('tasks.nvi.note')}
-            buttonTitle={t('tasks.nvi.save_note')}
-          />
-        )}
+        <MessageForm
+          confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
+          fieldLabel={t('tasks.nvi.note')}
+          buttonTitle={t('tasks.nvi.save_note')}
+        />
       </Box>
     </>
   );
