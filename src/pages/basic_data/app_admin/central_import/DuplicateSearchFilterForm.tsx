@@ -60,6 +60,7 @@ export const DuplicateSearchFilterForm = ({
             <Field
               as={StyledFormControlLabel}
               type="checkbox"
+              id="doi-label"
               name="isDoiChecked"
               control={<Checkbox />}
               label={t('common.doi')}
@@ -75,8 +76,9 @@ export const DuplicateSearchFilterForm = ({
             />
             <Field name={'doi'}>
               {({ field }: FieldProps<string>) => (
-                <Box sx={{ width: '100%', display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
                   <TextField
+                    inputProps={{ 'aria-labelledby': 'doi-label' }}
                     data-testid={dataTestId.basicData.centralImport.textFieldDoi}
                     variant="outlined"
                     {...field}
@@ -107,6 +109,7 @@ export const DuplicateSearchFilterForm = ({
             <Field
               as={StyledFormControlLabel}
               type="checkbox"
+              id="title-label"
               name="isTitleChecked"
               control={<Checkbox />}
               label={t('common.title')}
@@ -120,6 +123,7 @@ export const DuplicateSearchFilterForm = ({
             <Field name={'title'}>
               {({ field }: FieldProps<string>) => (
                 <TextField
+                  inputProps={{ 'aria-labelledby': 'title-label' }}
                   data-testid={dataTestId.basicData.centralImport.textFieldTitle}
                   fullWidth
                   {...field}
@@ -134,6 +138,7 @@ export const DuplicateSearchFilterForm = ({
             <Field
               as={StyledFormControlLabel}
               type="checkbox"
+              id="author-label"
               name="isAuthorChecked"
               control={<Checkbox />}
               label={t('basic_data.central_import.author')}
@@ -147,6 +152,7 @@ export const DuplicateSearchFilterForm = ({
             <Field name={'author'}>
               {({ field }: FieldProps<string>) => (
                 <TextField
+                  inputProps={{ 'aria-labelledby': 'author-label' }}
                   data-testid={dataTestId.basicData.centralImport.textFieldAuthor}
                   fullWidth
                   {...field}
@@ -161,6 +167,7 @@ export const DuplicateSearchFilterForm = ({
             <Field
               as={StyledFormControlLabel}
               type="checkbox"
+              id="issn-label"
               name="isIssnChecked"
               control={<Checkbox />}
               label={t('registration.resource_type.issn')}
@@ -174,6 +181,7 @@ export const DuplicateSearchFilterForm = ({
             <Field name={'issn'}>
               {({ field }: FieldProps<string>) => (
                 <TextField
+                  inputProps={{ 'aria-labelledby': 'issn-label' }}
                   data-testid={dataTestId.basicData.centralImport.textFieldIssn}
                   fullWidth
                   {...field}
@@ -187,6 +195,7 @@ export const DuplicateSearchFilterForm = ({
             <Field
               as={StyledFormControlLabel}
               type="checkbox"
+              id="year-label"
               name="isYearPublishedChecked"
               control={<Checkbox />}
               label={t('registration.year_published')}
@@ -200,6 +209,7 @@ export const DuplicateSearchFilterForm = ({
             <Field name={'yearPublished'}>
               {({ field }: FieldProps<string>) => (
                 <TextField
+                  inputProps={{ 'aria-labelledby': 'year-label' }}
                   data-testid={dataTestId.basicData.centralImport.textFieldYear}
                   fullWidth
                   {...field}
