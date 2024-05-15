@@ -83,7 +83,7 @@ export const DuplicateSearchFilterForm = ({
                     variant="outlined"
                     {...field}
                     fullWidth
-                    sx={{ flex: '1 1 20rem' }}
+                    sx={{ flex: '1 20rem' }}
                     size="small"
                     multiline
                     disabled={!values.isDoiChecked}

@@ -1,4 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
+import LinkIcon from '@mui/icons-material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
@@ -27,15 +28,17 @@ export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
   return doi || referenceDoi ? (
     <Box
       sx={{
-        display: 'grid',
-        gridTemplateColumns: { xs: 'auto auto', md: '1fr auto auto' },
+        display: 'flex',
         gap: '0.5rem',
         alignItems: 'center',
+        flexWrap: 'wrap',
       }}>
       <TextField
+        InputProps={{ startAdornment: <LinkIcon sx={{ mr: '0.5rem' }} /> }}
         data-testid="doi-field"
         variant="filled"
         fullWidth
+        sx={{ flex: '1 20rem' }}
         label={t('registration.registration.link_to_resource')}
         disabled
         value={doi || referenceDoi}
