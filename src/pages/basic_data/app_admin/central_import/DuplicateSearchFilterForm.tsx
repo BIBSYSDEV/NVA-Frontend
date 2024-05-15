@@ -75,13 +75,15 @@ export const DuplicateSearchFilterForm = ({
             />
             <Field name={'doi'}>
               {({ field }: FieldProps<string>) => (
-                <Box sx={{ width: '100%', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <Box sx={{ width: '100%', display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
                   <TextField
                     data-testid={dataTestId.basicData.centralImport.textFieldDoi}
                     variant="outlined"
                     {...field}
                     fullWidth
+                    sx={{ flex: '1 1 20rem' }}
                     size="small"
+                    multiline
                     disabled={!values.isDoiChecked}
                   />
                   {field.value && (
@@ -123,6 +125,7 @@ export const DuplicateSearchFilterForm = ({
                   {...field}
                   variant="outlined"
                   size="small"
+                  multiline
                   disabled={!values.isTitleChecked}
                 />
               )}
@@ -149,6 +152,7 @@ export const DuplicateSearchFilterForm = ({
                   {...field}
                   variant="outlined"
                   size="small"
+                  multiline
                   disabled={!values.isAuthorChecked}
                 />
               )}
@@ -206,7 +210,7 @@ export const DuplicateSearchFilterForm = ({
               )}
             </Field>
 
-            <Box sx={{ gridColumn: '1 / span 2', display: 'flex' }}>
+            <Box sx={{ gridColumn: '1 / span 2', display: 'flex', gap: '1rem' }}>
               <Button
                 data-testid={dataTestId.basicData.centralImport.resetButton}
                 variant="outlined"
@@ -215,7 +219,6 @@ export const DuplicateSearchFilterForm = ({
                 {t('basic_data.central_import.reset_search_values')}
               </Button>
               <Button
-                style={{ marginLeft: '1rem' }}
                 data-testid={dataTestId.basicData.centralImport.searchButton}
                 variant="contained"
                 type="submit"
