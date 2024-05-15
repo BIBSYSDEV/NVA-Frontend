@@ -100,17 +100,19 @@ export const MyFieldAndBackground = () => {
                       value={field.value ?? []}
                       multiple
                       options={keywordsResult}
-                      isOptionEqualToValue={(option, value) => option.type === value.type}
-                      getOptionLabel={(option) => getLanguageString(option.label)}
-                      getOptionDisabled={(option) => field.value.some((keyword) => keyword.type === option.type)}
+                      isOptionEqualToValue={(option, value) => option.identifier === value.identifier}
+                      getOptionLabel={(option) => getLanguageString(option.labels)}
+                      getOptionDisabled={(option) =>
+                        field.value.some((keyword) => keyword.identifier === option.identifier)
+                      }
                       renderOption={(props, option) => (
-                        <li {...props} key={option.type}>
-                          <Typography>{getLanguageString(option.label)}</Typography>
+                        <li {...props} key={option.identifier}>
+                          <Typography>{getLanguageString(option.labels)}</Typography>
                         </li>
                       )}
                       renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.label)} />
+                          <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.labels)} />
                         ))
                       }
                       filterOptions={(options) => options}
