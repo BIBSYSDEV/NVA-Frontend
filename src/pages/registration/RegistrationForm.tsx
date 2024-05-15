@@ -16,7 +16,7 @@ import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
-import { getTouchedTabFields, validateForm } from '../../utils/formik-helpers';
+import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers';
 import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -84,8 +84,8 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
-        validate={validateForm}
-        initialErrors={validateForm(registration)}
+        validate={validateRegistrationForm}
+        initialErrors={validateRegistrationForm(registration)}
         initialTouched={getTouchedTabFields(highestValidatedTab, registration)}
         onSubmit={() => {
           /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
@@ -126,7 +126,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               <RegistrationFormActions
                 tabNumber={tabNumber}
                 setTabNumber={setTabNumber}
-                validateForm={validateForm}
+                validateForm={validateRegistrationForm}
                 persistedRegistration={registration}
                 isNviCandidate={isNviCandidate}
               />

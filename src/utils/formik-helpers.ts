@@ -74,7 +74,7 @@ export const getTabErrors = (
   return tabErrors;
 };
 
-export const getFirstErrorTab = (tabErrors?: TabErrors) =>
+export const getFirstErrorTab = (tabErrors: TabErrors | null) =>
   tabErrors
     ? tabErrors[RegistrationTab.Description].length > 0
       ? RegistrationTab.Description
@@ -456,24 +456,13 @@ export const getTouchedTabFields = (
   return mergedFields;
 };
 
-export const checkIfTabErrors = (tabErrors: TabErrors) => {
-  let errors = 0;
-  Object.entries(tabErrors).forEach(([key, value]) => {
-    if (value.length > 0) {
-      ++errors;
-      return;
-    }
-  });
-  return errors > 0;
-};
-
-export const validateForm = (values: Registration): FormikErrors<Registration> => {
-  const publicationInstance = values.entityDescription?.reference?.publicationInstance;
+export const validateRegistrationForm = (registration: Registration): FormikErrors<Registration> => {
+  const publicationInstance = registration.entityDescription?.reference?.publicationInstance;
 
   try {
-    validateYupSchema<Registration>(values, registrationValidationSchema, true, {
+    validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
       publicationInstanceType: publicationInstance?.type ?? '',
-      publicationStatus: values?.status,
+      publicationStatus: registration?.status,
     });
   } catch (err) {
     return yupToFormErrors(err);

@@ -28,7 +28,7 @@ import { PublishingTicket } from '../../../types/publication_types/ticket.types'
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { checkIfTabErrors, getFirstErrorTab, getTabErrors, validateForm } from '../../../utils/formik-helpers';
+import { getFirstErrorTab, getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers';
 import { userCanPublishRegistration } from '../../../utils/registration-helpers';
 import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
@@ -70,10 +70,9 @@ export const PublishingAccordion = ({
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
   const userCanPublish = userCanPublishRegistration(registration);
 
-  const formErrors = validateForm(registration);
+  const formErrors = validateRegistrationForm(registration);
   const registrationIsValid = Object.keys(formErrors).length <= 0;
-  const tabErrors = getTabErrors(registration, formErrors);
-  const hasTabErrors = checkIfTabErrors(tabErrors);
+  const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
 
   const lastPublishingRequest = publishingRequestTickets.at(-1);
 
@@ -203,7 +202,7 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {hasTabErrors && !unpublishedOrDeleted && (
+        {tabErrors && !unpublishedOrDeleted && (
           <>
             <Typography>{t('registration.public_page.error_description')}</Typography>
             <ErrorList tabErrors={tabErrors} />
