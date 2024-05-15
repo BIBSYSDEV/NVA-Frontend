@@ -6,8 +6,16 @@ export const CompareDoiField = ({ doi }: { doi: string }) => {
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-      <TextField variant="standard" size="small" sx={{ flex: '1 10rem' }} disabled multiline value={doi} />
+    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+      <TextField
+        variant="standard"
+        label={t('common.doi')}
+        size="small"
+        sx={{ flex: '1 1 10rem' }}
+        disabled
+        multiline
+        value={doi}
+      />
       {doi && (
         <Button
           href={doi}
