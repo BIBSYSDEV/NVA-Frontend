@@ -1,16 +1,11 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
-import { styled as muiStyled } from '@mui/system';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DuplicateSearchFilters, DuplicateSearchForm } from '../../../../types/duplicateSearchTypes';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-
-const StyledFormControlLabel = muiStyled(FormControlLabel)({
-  marginRight: 0,
-});
 
 interface DuplicateSearchFilterFormProps {
   importCandidate: ImportCandidateSummary;
@@ -54,11 +49,11 @@ export const DuplicateSearchFilterForm = ({
             sx={{
               display: 'grid',
               gridTemplateColumns: 'auto 1fr',
-              gap: '0.5rem 1rem',
+              gap: '0.5rem',
               my: '1rem',
             }}>
             <Field
-              as={StyledFormControlLabel}
+              as={FormControlLabel}
               type="checkbox"
               id="doi-label"
               name="isDoiChecked"
@@ -107,7 +102,7 @@ export const DuplicateSearchFilterForm = ({
             </Typography>
 
             <Field
-              as={StyledFormControlLabel}
+              as={FormControlLabel}
               type="checkbox"
               id="title-label"
               name="isTitleChecked"
@@ -136,7 +131,7 @@ export const DuplicateSearchFilterForm = ({
             </Field>
 
             <Field
-              as={StyledFormControlLabel}
+              as={FormControlLabel}
               type="checkbox"
               id="author-label"
               name="isAuthorChecked"
@@ -165,7 +160,7 @@ export const DuplicateSearchFilterForm = ({
             </Field>
 
             <Field
-              as={StyledFormControlLabel}
+              as={FormControlLabel}
               type="checkbox"
               id="issn-label"
               name="isIssnChecked"
@@ -193,7 +188,7 @@ export const DuplicateSearchFilterForm = ({
             </Field>
 
             <Field
-              as={StyledFormControlLabel}
+              as={FormControlLabel}
               type="checkbox"
               id="year-label"
               name="isYearPublishedChecked"
