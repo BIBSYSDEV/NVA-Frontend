@@ -71,7 +71,7 @@ export const PublishingAccordion = ({
   const userCanPublish = userCanPublishRegistration(registration);
 
   const formErrors = validateRegistrationForm(registration);
-  const registrationIsValid = Object.keys(formErrors).length <= 0;
+  const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
 
   const lastPublishingRequest = publishingRequestTickets.at(-1);
