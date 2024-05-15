@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import { FormikErrors, FormikTouched, getIn } from 'formik';
+import { FormikErrors, FormikTouched, getIn, validateYupSchema, yupToFormErrors } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import {
   AssociatedArtifact,
@@ -24,6 +24,7 @@ import { ExhibitionRegistration } from '../types/publication_types/exhibitionCon
 import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import { Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
+import { registrationValidationSchema } from './validation/registration/registrationValidation';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -453,4 +454,29 @@ export const getTouchedTabFields = (
   }
   const mergedFields = deepmerge.all(fieldsToTouchOnMount);
   return mergedFields;
+};
+
+export const checkIfTabErrors = (tabErrors: TabErrors) => {
+  let errors = 0;
+  Object.entries(tabErrors).forEach(([key, value]) => {
+    if (value.length > 0) {
+      ++errors;
+      return;
+    }
+  });
+  return errors > 0;
+};
+
+export const validateForm = (values: Registration): FormikErrors<Registration> => {
+  const publicationInstance = values.entityDescription?.reference?.publicationInstance;
+
+  try {
+    validateYupSchema<Registration>(values, registrationValidationSchema, true, {
+      publicationInstanceType: publicationInstance?.type ?? '',
+      publicationStatus: values?.status,
+    });
+  } catch (err) {
+    return yupToFormErrors(err);
+  }
+  return {};
 };

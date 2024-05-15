@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useUppy } from '@uppy/react';
-import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -16,11 +16,10 @@ import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
-import { getTouchedTabFields } from '../../utils/formik-helpers';
+import { getTouchedTabFields, validateForm } from '../../utils/formik-helpers';
 import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
@@ -73,20 +72,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
-
-  const validateForm = (values: Registration): FormikErrors<Registration> => {
-    const publicationInstance = values.entityDescription?.reference?.publicationInstance;
-
-    try {
-      validateYupSchema<Registration>(values, registrationValidationSchema, true, {
-        publicationInstanceType: publicationInstance?.type ?? '',
-        publicationStatus: registration?.status,
-      });
-    } catch (err) {
-      return yupToFormErrors(err);
-    }
-    return {};
-  };
 
   const canEditRegistration = registration && userCanEditRegistration(registration);
 
