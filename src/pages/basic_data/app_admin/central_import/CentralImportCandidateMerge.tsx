@@ -26,6 +26,7 @@ import { displayDate } from '../../../../utils/date-helpers';
 import { getMainRegistrationType } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
+import { CompareDoiField } from './CompareDoiField';
 import { CompareFields } from './CompareFields';
 import { CompareJournalFields } from './CompareJournalFields';
 
@@ -143,8 +144,14 @@ export const CentralImportCandidateMerge = () => {
           <CompareFields
             candidateLabel={t('common.doi')}
             variant="standard"
-            candidateValue={importCandidate.doi || importCandidate.entityDescription?.reference?.doi}
-            registrationValue={registration.doi || registration.entityDescription?.reference?.doi}
+            renderCandidateValue={
+              <CompareDoiField
+                doi={importCandidate?.doi ?? (importCandidate?.entityDescription?.reference?.doi || '')}
+              />
+            }
+            renderRegistrationValue={
+              <CompareDoiField doi={registration.doi || registration.entityDescription?.reference?.doi || ''} />
+            }
           />
 
           <CompareFields
