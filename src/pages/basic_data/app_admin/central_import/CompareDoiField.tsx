@@ -11,7 +11,7 @@ export const CompareDoiField = ({ doi }: { doi: string }) => {
         variant="standard"
         label={t('common.doi')}
         size="small"
-        sx={{ flex: '1 1 10rem' }}
+        sx={{ flex: '1 10rem' }}
         disabled
         multiline
         value={doi}
