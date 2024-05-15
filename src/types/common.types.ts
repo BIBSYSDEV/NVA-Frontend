@@ -61,7 +61,7 @@ export interface AggregationValue<KeyType = string> {
 }
 
 export interface Country {
-  type: string;
+  type: 'Country';
   identifier: string;
   identifierAlpha3: string;
   labels: {
