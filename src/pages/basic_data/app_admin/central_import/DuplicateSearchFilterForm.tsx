@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { DuplicateSearchFilters, DuplicateSearchForm } from '../../../../types/duplicateSearchTypes';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { isValidUrl } from '../../../../utils/general-helpers';
 
 interface DuplicateSearchFilterFormProps {
   importCandidate: ImportCandidateSummary;
@@ -83,7 +84,7 @@ export const DuplicateSearchFilterForm = ({
                     multiline
                     disabled={!values.isDoiChecked}
                   />
-                  {field.value && (
+                  {field.value && isValidUrl(field.value) && (
                     <Button
                       variant="outlined"
                       endIcon={<OpenInNewIcon />}
