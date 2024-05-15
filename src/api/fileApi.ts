@@ -8,23 +8,23 @@ interface DownloadFileResponse {
   id: string;
 }
 
-export const downloadImportCandidateFile = async (importCandidateIdentifier: string, fileId: string) => {
+export const downloadImportCandidateFile = async (importCandidateIdentifier: string, fileIdentifier: string) => {
   const downloadFileResponse = await authenticatedApiRequest2<DownloadFileResponse>({
-    url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}/file/${fileId}`,
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}/file/${fileIdentifier}`,
   });
   return downloadFileResponse.data;
 };
 
-export const downloadPrivateFile2 = async (registrationIdentifier: string, fileId: string) => {
+export const downloadPrivateFile2 = async (registrationIdentifier: string, fileIdentifier: string) => {
   const downloadFileResponse = await authenticatedApiRequest2<DownloadFileResponse>({
-    url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileId}`,
+    url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileIdentifier}`,
   });
   return downloadFileResponse.data;
 };
 
-export const downloadPrivateFile = async (registrationIdentifier: string, fileId: string) => {
+export const downloadPrivateFile = async (registrationIdentifier: string, fileIdentifier: string) => {
   const downloadFileResponse = await authenticatedApiRequest<DownloadFileResponse>({
-    url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileId}`,
+    url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileIdentifier}`,
   });
   if (isSuccessStatus(downloadFileResponse.status)) {
     return downloadFileResponse.data;
@@ -32,9 +32,9 @@ export const downloadPrivateFile = async (registrationIdentifier: string, fileId
   return null;
 };
 
-export const downloadPublicFile = async (registrationIdentifier: string, fileId: string) => {
+export const downloadPublicFile = async (registrationIdentifier: string, fileIdentifier: string) => {
   const downloadFileResponse = await apiRequest<DownloadFileResponse>({
-    url: `${FileApiPath.PublicDownload}/${registrationIdentifier}/files/${fileId}`,
+    url: `${FileApiPath.PublicDownload}/${registrationIdentifier}/files/${fileIdentifier}`,
   });
   if (isSuccessStatus(downloadFileResponse.status)) {
     return downloadFileResponse.data;
