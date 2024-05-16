@@ -121,6 +121,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
       return !!user?.isThesisCurator;
     }
 
+    if (values.type === 'ImportCandidate') {
+      return !!user?.isInternalImporter;
+    }
+
     if (file.type === 'PublishedFile') {
       return userCanUnpublishRegistration(values) ?? false;
     }
