@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { PublicationType } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
-import { getMainRegistrationType, isBook } from '../../registration-helpers';
+import { getMainRegistrationType, isBook, isChapter } from '../../registration-helpers';
 import { YupShape } from '../validationHelpers';
 import { associatedFileValidationSchema } from './associatedArtifactValidation';
 import { contributorsValidationSchema } from './contributorValidation';
@@ -45,7 +45,9 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     npiSubjectHeading: Yup.string()
       .nullable()
       .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
-        isBook(publicationInstanceType) ? schema.required(registrationErrorMessage.npiSubjectRequired) : schema
+        isBook(publicationInstanceType) || isChapter(publicationInstanceType)
+          ? schema.required(registrationErrorMessage.npiSubjectRequired)
+          : schema
       ),
     publicationDate: Yup.object<YupShape<RegistrationDate>>({
       year: Yup.number()
