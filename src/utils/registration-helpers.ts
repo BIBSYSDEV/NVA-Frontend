@@ -1,4 +1,5 @@
 import { TFunction } from 'i18next';
+import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
@@ -722,3 +723,22 @@ export const findParentSubject = (disciplines: NpiSubjectDomain[], npiSubjectHea
   );
   return parent ? parent.id : null;
 };
+
+export const registrationLanguageOptions = [
+  getLanguageByIso6393Code('eng'),
+  getLanguageByIso6393Code('nob'),
+  getLanguageByIso6393Code('nno'),
+  getLanguageByIso6393Code('dan'),
+  getLanguageByIso6393Code('fin'),
+  getLanguageByIso6393Code('fra'),
+  getLanguageByIso6393Code('isl'),
+  getLanguageByIso6393Code('ita'),
+  getLanguageByIso6393Code('nld'),
+  getLanguageByIso6393Code('por'),
+  getLanguageByIso6393Code('rus'),
+  getLanguageByIso6393Code('sme'),
+  getLanguageByIso6393Code('spa'),
+  getLanguageByIso6393Code('swe'),
+  getLanguageByIso6393Code('deu'),
+  getLanguageByIso6393Code('mis'),
+];
