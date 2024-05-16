@@ -4,12 +4,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
-import i18n from '../../../translations/i18n';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { languageOptions } from '../../registration/DescriptionPanel';
+import { languageOptions } from '../../../utils/registration-helpers';
 
 export const LanguageFilter = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
   const languageParam = searchParams.get(ResultParam.PublicationLanguageShould)?.split(',') || [];

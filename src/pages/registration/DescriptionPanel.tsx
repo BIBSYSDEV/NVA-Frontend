@@ -8,29 +8,11 @@ import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { languageOptions } from '../../utils/registration-helpers';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
-
-export const languageOptions = [
-  getLanguageByIso6393Code('eng'),
-  getLanguageByIso6393Code('nob'),
-  getLanguageByIso6393Code('nno'),
-  getLanguageByIso6393Code('dan'),
-  getLanguageByIso6393Code('fin'),
-  getLanguageByIso6393Code('fra'),
-  getLanguageByIso6393Code('isl'),
-  getLanguageByIso6393Code('ita'),
-  getLanguageByIso6393Code('nld'),
-  getLanguageByIso6393Code('por'),
-  getLanguageByIso6393Code('rus'),
-  getLanguageByIso6393Code('sme'),
-  getLanguageByIso6393Code('spa'),
-  getLanguageByIso6393Code('swe'),
-  getLanguageByIso6393Code('deu'),
-  getLanguageByIso6393Code('mis'),
-];
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
