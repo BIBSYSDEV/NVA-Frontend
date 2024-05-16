@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
+import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -198,7 +199,7 @@ export const MyProfile = () => {
                   </Grid>
                   <Grid item xs={14} md={12}>
                     <StyledGridBox>
-                      {/* <NationalIdNumberField nationalId={user.nationalIdNumber} /> */}
+                      <NationalIdNumberField nationalId={user.nationalIdNumber} />
                       <TextField
                         value={getIdentifierFromId(personId ?? '')}
                         disabled
