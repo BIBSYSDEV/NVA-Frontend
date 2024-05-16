@@ -198,3 +198,16 @@ export const emptyNviVerification: NviVerification = {
     id: '',
   },
 };
+
+export const emptyPerson: FlatCristinPerson = {
+  nationalId: '',
+  firstName: '',
+  lastName: '',
+  id: '',
+  cristinIdentifier: '',
+  affiliations: [],
+  employments: [],
+  background: {},
+  keywords: [],
+  nvi: emptyNviVerification,
+};

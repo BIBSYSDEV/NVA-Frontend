@@ -14,7 +14,7 @@ import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
-import { UserFormData, UserFormFieldName } from './UserFormDialog';
+import { UserFormData, UserFormFieldName } from './userFormHelpers';
 
 export const AffiliationFormSection = () => {
   const { t } = useTranslation();

@@ -44,11 +44,9 @@ import {
 } from '../public_registration/PublicPublicationContext';
 import { HelperTextModal } from './HelperTextModal';
 import { FileUploader } from './files_and_license_tab/FileUploader';
-import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { FilesTableRow, administrativeAgreementId } from './files_and_license_tab/FilesTableRow';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
 import { DoiField } from './resource_type_tab/components/DoiField';
-
-export const administrativeAgreementId = 'administrative-agreement';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
