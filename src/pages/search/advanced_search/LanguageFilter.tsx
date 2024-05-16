@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { languageOptions } from '../../../utils/registration-helpers';
+import { registrationLanguageOptions } from '../../../utils/registration-helpers';
 
 export const LanguageFilter = () => {
   const { t, i18n } = useTranslation();
@@ -21,7 +21,10 @@ export const LanguageFilter = () => {
   const updateSelectedLanguages = (selectedUris: string[]) => {
     if (selectedUris && selectedUris.length > 0) {
       const languages = selectedUris
-        .map((iso6393Code) => languageOptions.find((language) => language.iso6393Code === iso6393Code)?.iso6393Code)
+        .map(
+          (iso6393Code) =>
+            registrationLanguageOptions.find((language) => language.iso6393Code === iso6393Code)?.iso6393Code
+        )
         .filter(Boolean);
 
       if (languages.length > 0) {
@@ -37,7 +40,7 @@ export const LanguageFilter = () => {
   };
 
   const selectedLanguages = languageParam
-    .map((iso6393Code) => languageOptions.find((language) => language.iso6393Code === iso6393Code))
+    .map((iso6393Code) => registrationLanguageOptions.find((language) => language.iso6393Code === iso6393Code))
     .filter(Boolean) as Language[];
 
   return (
@@ -61,7 +64,7 @@ export const LanguageFilter = () => {
           }}
           renderValue={() => t('search.advanced_search.choose_one_or_more')}
           variant="outlined">
-          {languageOptions.map(({ uri, iso6393Code, nob, eng }) => (
+          {registrationLanguageOptions.map(({ uri, iso6393Code, nob, eng }) => (
             <MenuItem value={iso6393Code} key={uri} data-testid={`publication-language-${uri}`}>
               {i18n.language === 'nob' ? nob : eng}
             </MenuItem>

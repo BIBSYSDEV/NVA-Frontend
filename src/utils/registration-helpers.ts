@@ -724,7 +724,7 @@ export const findParentSubject = (disciplines: NpiSubjectDomain[], npiSubjectHea
   return parent ? parent.id : null;
 };
 
-export const languageOptions = [
+export const registrationLanguageOptions = [
   getLanguageByIso6393Code('eng'),
   getLanguageByIso6393Code('nob'),
   getLanguageByIso6393Code('nno'),

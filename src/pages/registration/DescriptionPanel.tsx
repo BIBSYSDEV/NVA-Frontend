@@ -8,7 +8,7 @@ import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { languageOptions } from '../../utils/registration-helpers';
+import { registrationLanguageOptions } from '../../utils/registration-helpers';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
@@ -185,13 +185,13 @@ export const DescriptionPanel = () => {
               placeholder={t('registration.description.primary_language')}
               select
               variant="filled">
-              {!languageOptions.some((language) => language.uri === field.value) && (
+              {!registrationLanguageOptions.some((language) => language.uri === field.value) && (
                 // Show if Registration has a language that's currently not supported
                 <MenuItem value={field.value} disabled>
                   {i18n.language === 'nob' ? getLanguageByIso6393Code('und').nob : getLanguageByIso6393Code('und').eng}
                 </MenuItem>
               )}
-              {languageOptions.map(({ uri, nob, eng }) => (
+              {registrationLanguageOptions.map(({ uri, nob, eng }) => (
                 <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
                   {i18n.language === 'nob' ? nob : eng}
                 </MenuItem>
