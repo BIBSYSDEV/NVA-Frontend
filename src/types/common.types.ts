@@ -59,13 +59,3 @@ export interface AggregationValue<KeyType = string> {
   count: number;
   labels?: LanguageString;
 }
-
-export interface Country {
-  type: 'Country';
-  identifier: string;
-  identifierAlpha3: string;
-  labels: {
-    en: string;
-    nb: string;
-  };
-}
