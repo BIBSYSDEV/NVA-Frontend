@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { BookType, ChapterType, ReportType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 
@@ -73,6 +74,8 @@ export const ChapterForm = () => {
           />
         ) : null}
       </div>
+
+      <NpiDisciplineField />
 
       <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
         <Field name={ResourceFieldNames.PagesFrom}>
