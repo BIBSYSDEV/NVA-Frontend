@@ -38,7 +38,7 @@ export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
         data-testid="doi-field"
         variant="filled"
         fullWidth
-        sx={{ flex: '1 20rem' }}
+        sx={{ flex: '1 25rem' }}
         label={t('registration.registration.link_to_resource')}
         disabled
         value={doi || referenceDoi}
@@ -46,7 +46,7 @@ export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
       />
 
       {referenceDoi && (
-        <>
+        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
           <Button
             variant="outlined"
             endIcon={<OpenInNewIcon />}
@@ -74,7 +74,7 @@ export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
             dialogDataTestId="confirm-delete-doi-dialog">
             <Typography>{t('registration.resource_type.remove_doi_text')}</Typography>
           </ConfirmDialog>
-        </>
+        </Box>
       )}
     </Box>
   ) : null;
