@@ -6,6 +6,21 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/ass
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+  allPublicationInstanceTypes,
+} from '../types/publicationFieldNames';
+import {
   AudioVisualPublication,
   Award,
   Broadcast,
@@ -30,21 +45,6 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import {
-  allPublicationInstanceTypes,
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-} from '../types/publicationFieldNames';
 import {
   Journal,
   NpiSubjectDomain,
@@ -258,27 +258,27 @@ export const contributorConfig: ContributorConfig = {
   },
   // Book
   [BookType.AcademicMonograph]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.NonFictionMonograph]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.PopularScienceMonograph]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Textbook]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Encyclopedia]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.ExhibitionCatalog]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Anthology]: {
@@ -287,27 +287,27 @@ export const contributorConfig: ContributorConfig = {
   },
   // Report
   [ReportType.Research]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.Policy]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.WorkingPaper]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.BookOfAbstracts]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.ConferenceReport]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.Report]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Degree
@@ -497,7 +497,12 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [],
   },
   [MediaType.MediaInterview]: {
-    primaryRoles: [ContributorRole.Journalist, ContributorRole.InterviewSubject, ContributorRole.Other],
+    primaryRoles: [
+      ContributorRole.Journalist,
+      ContributorRole.InterviewSubject,
+      ContributorRole.Creator,
+      ContributorRole.Other,
+    ],
     secondaryRoles: [],
   },
   [MediaType.MediaBlogPost]: {
