@@ -1,7 +1,9 @@
 export interface Keywords {
-  label: {
-    nb?: string;
+  type: 'Keyword';
+  id: string;
+  identifier: string;
+  labels: {
     en?: string;
+    nb?: string;
   };
-  type: string;
 }
