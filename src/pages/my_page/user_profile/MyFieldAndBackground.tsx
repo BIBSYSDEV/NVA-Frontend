@@ -16,16 +16,6 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 
 type PersonBackgroundFormData = Pick<FlatCristinPerson, 'background' | 'keywords'>;
 
-const castKeywords = (data: any): Keywords[] =>
-  data.map((keyword: any) => {
-    return {
-      type: 'Keyword',
-      id: '',
-      identifier: keyword.type,
-      labels: keyword.label,
-    };
-  });
-
 export const MyFieldAndBackground = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -61,7 +51,16 @@ export const MyFieldAndBackground = () => {
       no: personBackground.no ?? '',
       en: personBackground.en ?? '',
     },
-    keywords: personKeywords ? castKeywords(personKeywords) : [],
+    keywords: personKeywords
+      ? personKeywords.map((keyword: any) => {
+          return {
+            type: 'Keyword',
+            id: '',
+            identifier: keyword.type,
+            labels: keyword.label,
+          };
+        })
+      : [],
   };
 
   const updatePerson = useMutation({
