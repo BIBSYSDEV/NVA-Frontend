@@ -32,7 +32,6 @@ export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
         border: '1px solid',
         borderRadius: '4px',
         p: '0.5rem',
-        mb: '0.5rem',
         boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
         bgcolor: 'white',
       }}>
