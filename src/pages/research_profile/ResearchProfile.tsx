@@ -170,7 +170,7 @@ const ResearchProfile = () => {
                   borderColor: 'primary.main',
                 }}>
                 <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(role.labels)} &bull;</Typography>
-                <AffiliationHierarchy key={organization} unitUri={organization} />
+                <AffiliationHierarchy unitUri={organization} />
               </Box>
             ))}
           </Box>
