@@ -1,5 +1,5 @@
 import { AggregationValue, LanguageString } from './common.types';
-import { Keywords } from './keywords.types';
+import { Keywords, KeywordsOld } from './keywords.types';
 
 export enum RoleName {
   AppAdmin = 'App-admin',
@@ -150,7 +150,7 @@ export interface FlatCristinPerson {
     no?: string | null;
     en?: string | null;
   };
-  keywords?: Keywords[];
+  keywords?: (Keywords | KeywordsOld)[];
   nvi?: NviVerification;
   contactDetails?: CristinPersonContactDetails;
 }

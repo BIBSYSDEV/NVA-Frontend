@@ -9,12 +9,22 @@ import { fetchPerson, searchForKeywords, updateCristinPerson } from '../../../ap
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { Keywords } from '../../../types/keywords.types';
+import { Keywords, KeywordsOld } from '../../../types/keywords.types';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 type PersonBackgroundFormData = Pick<FlatCristinPerson, 'background' | 'keywords'>;
+
+const castKeywords = (data: any): Keywords[] =>
+  data.map((keyword: any) => {
+    return {
+      type: 'Keyword',
+      id: '',
+      identifier: keyword.type,
+      labels: keyword.label,
+    };
+  });
 
 export const MyFieldAndBackground = () => {
   const { t } = useTranslation();
@@ -51,18 +61,28 @@ export const MyFieldAndBackground = () => {
       no: personBackground.no ?? '',
       en: personBackground.en ?? '',
     },
-    keywords: personKeywords ?? [],
+    keywords: personKeywords ? castKeywords(personKeywords) : [],
   };
 
   const updatePerson = useMutation({
     mutationFn: async (values: PersonBackgroundFormData) => {
       if (personId) {
+        const keywords = values.keywords as Keywords[];
+        const mappedKeywords: KeywordsOld[] = keywords
+          ? keywords.map((keyword) => {
+              return {
+                type: keyword.identifier,
+                label: keyword.labels,
+              };
+            })
+          : [];
+
         const payload: PersonBackgroundFormData = {
           background: {
             no: values.background.no === '' ? null : values.background.no,
             en: values.background.en === '' ? null : values.background.en,
           },
-          keywords: values.keywords,
+          keywords: mappedKeywords,
         };
         await updateCristinPerson(personId, payload);
       }
