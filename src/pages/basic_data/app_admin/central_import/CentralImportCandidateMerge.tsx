@@ -179,36 +179,42 @@ export const CentralImportCandidateMerge = () => {
           <CompareFields
             candidateLabel={t('common.doi')}
             registrationLabel={t('registration.files_and_license.link_to_resource')}
-            onOverwrite={() => {
-              if (!importCandidate.entityDescription?.reference?.doi) {
-                return;
-              }
-              const currentAssociatedLinkIndex = values.associatedArtifacts.findIndex(
-                (artifact) => artifact.type === 'AssociatedLink'
-              );
+            onOverwrite={
+              !importCandidate.entityDescription?.reference?.doi ||
+              registration.doi ||
+              registration.entityDescription?.reference?.doi
+                ? undefined
+                : () => {
+                    const currentAssociatedLinkIndex = values.associatedArtifacts.findIndex(
+                      (artifact) => artifact.type === 'AssociatedLink'
+                    );
 
-              if (currentAssociatedLinkIndex !== undefined && currentAssociatedLinkIndex > -1) {
-                setFieldValue(
-                  `${FileFieldNames.AssociatedArtifacts}.${currentAssociatedLinkIndex}.id`,
-                  importCandidate.entityDescription.reference.doi
-                );
-              } else {
-                setFieldValue(FileFieldNames.AssociatedArtifacts, [
-                  ...(values.associatedArtifacts ?? []),
-                  {
-                    type: 'AssociatedLink',
-                    id: importCandidate.entityDescription.reference.doi,
-                  },
-                ]);
-              }
-            }}
+                    if (currentAssociatedLinkIndex !== undefined && currentAssociatedLinkIndex > -1) {
+                      setFieldValue(
+                        `${FileFieldNames.AssociatedArtifacts}.${currentAssociatedLinkIndex}.id`,
+                        importCandidate.entityDescription?.reference?.doi
+                      );
+                    } else {
+                      setFieldValue(FileFieldNames.AssociatedArtifacts, [
+                        ...(values.associatedArtifacts ?? []),
+                        {
+                          type: 'AssociatedLink',
+                          id: importCandidate.entityDescription?.reference?.doi,
+                        },
+                      ]);
+                    }
+                  }
+            }
             candidateValue={importCandidate.entityDescription?.reference?.doi}
             registrationValue={
+              registration.doi ||
+              registration.entityDescription?.reference?.doi ||
               (
                 values.associatedArtifacts.find((artifact) => artifact.type === 'AssociatedLink') as
                   | AssociatedLink
                   | undefined
-              )?.id ?? ''
+              )?.id ||
+              ''
             }
           />
 
