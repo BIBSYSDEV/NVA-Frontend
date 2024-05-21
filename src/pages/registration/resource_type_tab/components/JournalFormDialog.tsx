@@ -106,7 +106,7 @@ export const JournalFormDialog = ({
           <DialogContent>
             <Typography paragraph>
               <Trans t={t} i18nKey="registration.resource_type.search_for_channel">
-                <MuiLink color="primary" href="https://portal.issn.org" target="_blank" rel="noopener noreferrer">
+                <MuiLink href="https://portal.issn.org" target="_blank" rel="noopener noreferrer">
                   https://portal.issn.org
                 </MuiLink>
               </Trans>
