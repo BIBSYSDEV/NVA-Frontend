@@ -89,9 +89,10 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'start',
+            width: '100%',
             gap: '0.25rem',
           }}>
-          {affiliation.type === 'Organization' && <OrganizationTree unitUri={affiliation.id} />}
+          {affiliation.type === 'Organization' && <OrganizationTree unitUri={affiliation.id} sx={{ width: '100%' }} />}
           {affiliation.type === 'UnconfirmedOrganization' && (
             <>
               <Typography>"{affiliation.name}"</Typography>

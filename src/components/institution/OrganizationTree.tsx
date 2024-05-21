@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, BoxProps, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
@@ -6,11 +6,11 @@ import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
 
-interface AffiliationHierarchyProps {
+interface AffiliationHierarchyProps extends Pick<BoxProps, 'sx'> {
   unitUri: string;
 }
 
-export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
+export const OrganizationTree = ({ unitUri, sx }: AffiliationHierarchyProps) => {
   const { t } = useTranslation();
 
   const organizationQuery = useQuery({
@@ -35,6 +35,7 @@ export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
         p: '0.5rem',
         boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
         bgcolor: 'white',
+        ...sx,
       }}>
       {units.map((unit, index) =>
         index === 0 ? (
