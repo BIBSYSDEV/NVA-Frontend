@@ -52,7 +52,7 @@ export const MyFieldAndBackground = () => {
       en: personBackground.en ?? '',
     },
     keywords: personKeywords
-      ? personKeywords.map((keyword: any) => {
+      ? personKeywords.map((keyword) => {
           return {
             type: 'Keyword',
             id: '',
