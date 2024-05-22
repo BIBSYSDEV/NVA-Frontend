@@ -127,7 +127,7 @@ export interface CristinPerson extends CreateCristinPerson {
     no?: string;
     en?: string;
   };
-  keywords?: Keywords[];
+  keywords?: KeywordsOld[];
 }
 
 export interface PersonAggregations {
