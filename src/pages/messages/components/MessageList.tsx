@@ -1,4 +1,5 @@
-import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Box, Button, Divider, IconButton, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -77,20 +78,25 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
         flexDirection: 'column',
       }}
       onClick={() => setExpanded(true)}>
-      <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-        <span>
-          {senderQuery.isPending ? (
-            <Skeleton sx={{ width: '8rem' }} />
-          ) : (
-            <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
-              {senderName ? senderName : <i>{t('common.unknown')}</i>}
-            </b>
-          )}
-        </span>
-        <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-          {new Date(date).toLocaleDateString()}
-        </span>
-      </Typography>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
+        <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+          <span>
+            {senderQuery.isPending ? (
+              <Skeleton sx={{ width: '8rem' }} />
+            ) : (
+              <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
+                {senderName ? senderName : <i>{t('common.unknown')}</i>}
+              </b>
+            )}
+          </span>
+          <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
+            {new Date(date).toLocaleDateString()}
+          </span>
+        </Typography>
+        <IconButton aria-label="delete" size="small" sx={{ alignSelf: 'end' }}>
+          <MoreVertIcon fontSize="inherit" />
+        </IconButton>
+      </Box>
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
