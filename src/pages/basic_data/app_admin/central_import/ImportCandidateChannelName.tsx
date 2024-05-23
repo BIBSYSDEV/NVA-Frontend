@@ -13,17 +13,15 @@ export const ImportCandidateChannelName = ({ importCandidate }: ImportCandidateC
   const shouldHaveJournal = isJournal(importCandidate.publicationInstance?.type);
 
   if (shouldHaveJournal) {
-    const journal = importCandidate.journal?.name;
-    if (journal) {
-      return <Typography fontWeight={600}>{journal}</Typography>;
+    if (importCandidate.journal?.name) {
+      return <Typography fontWeight={600}>{importCandidate.journal.name}</Typography>;
     } else {
       return <Typography>{t('basic_data.central_import.missing_journal')}</Typography>;
     }
   }
 
-  const publisher = importCandidate.publisher?.name;
-  if (publisher) {
-    return <Typography fontWeight={600}>{publisher}</Typography>;
+  if (importCandidate.publisher?.name) {
+    return <Typography fontWeight={600}>{importCandidate.publisher.name}</Typography>;
   }
   return <Typography>{t('basic_data.central_import.missing_publisher')}</Typography>;
 };
