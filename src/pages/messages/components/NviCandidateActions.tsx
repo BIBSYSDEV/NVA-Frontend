@@ -169,14 +169,14 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               gap: '0.25rem',
             }}>
             {sortedNotes.map((note) => {
-              let deleteFunction: (() => void) | undefined = undefined;
+              let deleteFunction: (() => Promise<any>) | undefined = undefined;
               const noteIdentifier = note.identifier;
 
               if (user?.nvaUsername && note.username === user.nvaUsername) {
                 if (note.type === 'FinalizedNote') {
-                  deleteFunction = () => statusMutation.mutate({ status: 'Pending' });
+                  deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
                 } else if (note.type === 'GeneralNote' && noteIdentifier) {
-                  deleteFunction = () => deleteNoteMutation.mutate(noteIdentifier);
+                  deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
                 }
               }
 

@@ -53,10 +53,15 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
   });
 
 export const deleteTicketMessage = async (ticketId: string, messageId: string) => {
-  await authenticatedApiRequest2({
-    url: `${ticketId}/message/${messageId}`,
-    method: 'DELETE',
-  });
+  try {
+    await authenticatedApiRequest2({
+      url: `${ticketId}/message/${messageId}`,
+      method: 'DELETE',
+    });
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 export const createTicket = async (registrationId: string, type: TicketType, returnCreatedTicket = false) => {

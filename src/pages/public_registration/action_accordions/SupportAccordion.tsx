@@ -4,7 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
+import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { Ticket } from '../../../types/publication_types/ticket.types';
@@ -89,7 +89,9 @@ export const SupportAccordion = ({
                   {t('my_page.messages.mark_as_completed')}
                 </LoadingButton>
               )}
-            {supportTicket.messages.length > 0 && <TicketMessageList ticket={supportTicket} />}
+            {supportTicket.messages.length > 0 && (
+              <TicketMessageList ticket={supportTicket} refetchData={refetchData} />
+            )}
           </>
         )}
         <MessageForm
