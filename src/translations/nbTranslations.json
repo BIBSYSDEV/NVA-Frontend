@@ -666,6 +666,8 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statuser",
+      "delete_message": "Slette melding",
+      "delete_message_description": "Er du sikker på at du vil slettte meldingen?",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",

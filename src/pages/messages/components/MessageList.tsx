@@ -67,6 +67,8 @@ export const TicketMessageList = ({ ticket, refetchData }: MessageListProps) => 
             backgroundColor={ticketColor[ticket.type]}
             onDelete={() => deleteSupportMessageMutation.mutateAsync(message.identifier)}
             isDeleting={deleteSupportMessageMutation.isPending}
+            confirmDialogTitle={t('my_page.messages.delete_message')}
+            confirmDialogContent={t('my_page.messages.delete_message_description')}
           />
         ))}
       </Box>
@@ -81,9 +83,20 @@ interface MessageItemProps {
   backgroundColor: string;
   onDelete?: () => Promise<boolean>;
   isDeleting?: boolean;
+  confirmDialogTitle?: string;
+  confirmDialogContent?: string;
 }
 
-export const MessageItem = ({ text, date, username, backgroundColor, onDelete, isDeleting }: MessageItemProps) => {
+export const MessageItem = ({
+  text,
+  date,
+  username,
+  backgroundColor,
+  onDelete,
+  isDeleting,
+  confirmDialogContent,
+  confirmDialogTitle,
+}: MessageItemProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
@@ -151,6 +164,7 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
               }}>
               <MenuItem
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteMessageButton}
+                disabled={!text}
                 onClick={() => {
                   setShowConfirmDialog(true);
                   setAnchorEl(null);
@@ -173,7 +187,7 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
         {text ? text : <Typography fontStyle="italic">{t('common.deleted')}</Typography>}
       </Box>
 
-      {expanded && onDelete && (
+      {expanded && onDelete && confirmDialogContent && confirmDialogTitle && (
         <>
           <Button
             size="small"
@@ -186,7 +200,7 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
 
           <ConfirmDialog
             open={showConfirmDialog}
-            title={t('tasks.nvi.delete_note')}
+            title={confirmDialogTitle}
             onAccept={async () => {
               const result = await onDelete();
               if (result) {
@@ -195,7 +209,7 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
             }}
             isLoading={isDeleting}
             onCancel={() => setShowConfirmDialog(false)}>
-            <Typography>{t('tasks.nvi.delete_note_description')}</Typography>
+            <Typography>{confirmDialogContent}</Typography>
           </ConfirmDialog>
         </>
       )}

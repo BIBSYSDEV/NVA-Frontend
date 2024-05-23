@@ -193,6 +193,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     backgroundColor="nvi.main"
                     onDelete={deleteFunction}
                     isDeleting={isDeleting}
+                    confirmDialogTitle={t('tasks.nvi.delete_note')}
+                    confirmDialogContent={t('tasks.nvi.delete_note_description')}
                   />
                 </ErrorBoundary>
               );
