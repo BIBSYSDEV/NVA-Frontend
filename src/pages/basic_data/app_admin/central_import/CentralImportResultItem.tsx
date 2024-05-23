@@ -6,9 +6,10 @@ import { SearchListItem } from '../../../../components/styled/Wrappers';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId, getTimePeriodString } from '../../../../utils/general-helpers';
-import { getTitleString, isJournal } from '../../../../utils/registration-helpers';
+import { getTitleString } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getResearchProfilePath } from '../../../../utils/urlPaths';
+import { ImportCandidateChannelName } from './ImportCandidateChannelName';
 
 interface CentralImportResultItemProps {
   importCandidate: ImportCandidateSummary;
@@ -86,32 +87,11 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
               </Typography>
             )}
 
-            <ImportCandidateChannelInfo importCandidate={importCandidate} />
+            <ImportCandidateChannelName importCandidate={importCandidate} />
           </Box>
         </div>
         <Typography sx={{ whiteSpace: 'nowrap' }}>{periodString}</Typography>
       </Box>
     </SearchListItem>
   );
-};
-
-export const ImportCandidateChannelInfo = ({ importCandidate }: CentralImportResultItemProps) => {
-  const { t } = useTranslation();
-
-  const shouldHaveJournal = isJournal(importCandidate.publicationInstance?.type);
-
-  if (shouldHaveJournal) {
-    const journal = importCandidate.journal?.name ?? importCandidate.journal?.id;
-    if (journal) {
-      return <Typography fontWeight={600}>{journal}</Typography>;
-    } else {
-      return <Typography>{t('basic_data.central_import.missing_journal')}</Typography>;
-    }
-  }
-
-  const publisher = importCandidate.publisher?.name ?? importCandidate.publisher?.id;
-  if (publisher) {
-    return <Typography fontWeight={600}>{publisher}</Typography>;
-  }
-  return <Typography>{t('basic_data.central_import.missing_publisher')}</Typography>;
 };
