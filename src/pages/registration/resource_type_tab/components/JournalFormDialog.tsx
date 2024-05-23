@@ -1,8 +1,19 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogProps,
+  DialogTitle,
+  Link as MuiLink,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { CreateJournalPayload, createJournal, createSeries } from '../../../../api/publicationChannelApi';
@@ -78,7 +89,7 @@ export const JournalFormDialog = ({
     },
   });
 
-  const isLoading = journalMutation.isLoading || seriesMutation.isLoading;
+  const isLoading = journalMutation.isPending || seriesMutation.isPending;
 
   return (
     <Dialog open={open} onClose={closeDialog} fullWidth>
@@ -93,6 +104,13 @@ export const JournalFormDialog = ({
         }>
         <Form>
           <DialogContent>
+            <Typography paragraph>
+              <Trans t={t} i18nKey="registration.resource_type.search_for_channel">
+                <MuiLink href="https://portal.issn.org" target="_blank" rel="noopener noreferrer">
+                  https://portal.issn.org
+                </MuiLink>
+              </Trans>
+            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <Field name="name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (

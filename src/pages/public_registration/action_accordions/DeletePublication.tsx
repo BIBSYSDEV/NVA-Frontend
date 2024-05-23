@@ -148,7 +148,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
                   {t('common.cancel')}
                 </Button>
                 <LoadingButton
-                  loading={unpublishRegistrationMutation.isLoading}
+                  loading={unpublishRegistrationMutation.isPending}
                   type="submit"
                   data-testid={dataTestId.unpublishActions.submitButton}
                   variant="outlined">

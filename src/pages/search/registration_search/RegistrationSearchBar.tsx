@@ -13,10 +13,10 @@ import { ResultParam } from '../../../api/searchApi';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
+  PropertySearch,
   createSearchConfigFromSearchParams,
   getFileFacetText,
   isValidIsbn,
-  PropertySearch,
   removeSearchParamValue,
 } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -201,7 +201,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
             )}
           </FieldArray>
 
-          {!registrationQuery.isLoading && selectedFacets.length > 0 && (
+          {!registrationQuery.isPending && selectedFacets.length > 0 && (
             <Box sx={{ gridArea: 'facets', display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
               {selectedFacets.map(({ param, value }) => {
                 let fieldName = '';
@@ -356,14 +356,15 @@ const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetBu
   const { t } = useTranslation();
 
   const personQuery = useQuery({
-    queryKey: [personId],
+    enabled: !!personId,
+    queryKey: ['person', personId],
     queryFn: () => (personId ? fetchPerson(personId) : undefined),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
   const personName = getFullCristinName(personQuery.data?.names) || t('common.unknown');
 
-  return <>{personQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;
+  return <>{personQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;
 };
 
 interface SelectedInstitutionFacetButtonProps {
@@ -377,13 +378,13 @@ const SelectedInstitutionFacetButton = ({ institutionId }: SelectedInstitutionFa
     queryKey: [institutionId],
     queryFn: () => (institutionId ? fetchOrganization(institutionId) : undefined),
     staleTime: Infinity,
-    cacheTime: 1_800_000,
+    gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
   const institutionName = getLanguageString(organizationQuery.data?.labels) || t('common.unknown');
 
-  return <>{organizationQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
+  return <>{organizationQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
 };
 
 interface SelectedFundingFacetButtonProps {
@@ -397,13 +398,13 @@ const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetB
     queryKey: ['fundingSources', fundingIdentifier],
     queryFn: () => (fundingIdentifier ? fetchFundingSource(fundingIdentifier) : undefined),
     staleTime: Infinity,
-    cacheTime: 1_800_000,
+    gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_funding_source') },
   });
 
   const fundingName = getLanguageString(fundingSourcesQuery.data?.name) || t('common.unknown');
 
-  return <>{fundingSourcesQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
+  return <>{fundingSourcesQuery.isPending ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
 };
 
 interface SelectedPublisherFacetButtonProps {
@@ -417,13 +418,13 @@ const SelectedPublisherFacetButton = ({ publisherIdentifier }: SelectedPublisher
     queryKey: [publisherIdentifier],
     queryFn: () => (publisherIdentifier ? fetchPublisher(publisherIdentifier) : undefined),
     staleTime: Infinity,
-    cacheTime: 1_800_000,
+    gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_publisher') },
   });
 
   const publisherName = publisherQuery.data?.name || t('common.unknown');
 
-  return <>{publisherQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : publisherName}</>;
+  return <>{publisherQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : publisherName}</>;
 };
 
 interface SelectedSeriesFacetButtonProps {
@@ -437,13 +438,13 @@ const SelectedSeriesFacetButton = ({ seriesIdentifier }: SelectedSeriesFacetButt
     queryKey: [seriesIdentifier],
     queryFn: () => (seriesIdentifier ? fetchSeries(seriesIdentifier) : undefined),
     staleTime: Infinity,
-    cacheTime: 1_800_000,
+    gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_series') },
   });
 
   const seriesName = seriesQuery.data?.name || t('common.unknown');
 
-  return <>{seriesQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : seriesName}</>;
+  return <>{seriesQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : seriesName}</>;
 };
 
 interface SelectedJournalFacetButtonProps {
@@ -457,13 +458,13 @@ const SelectedJournalFacetButton = ({ journalIdentifier }: SelectedJournalFacetB
     queryKey: [journalIdentifier],
     queryFn: () => (journalIdentifier ? fetchJournal(journalIdentifier) : undefined),
     staleTime: Infinity,
-    cacheTime: 1_800_000,
+    gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_journal') },
   });
 
   const journalName = journalQuery.data?.name || t('common.unknown');
 
-  return <>{journalQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : journalName}</>;
+  return <>{journalQuery.isPending ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : journalName}</>;
 };
 
 const FilterButton = () => {

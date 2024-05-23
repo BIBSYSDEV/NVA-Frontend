@@ -45,7 +45,7 @@ export const JournalFilter = () => {
     history.push({ search: searchParams.toString() });
   };
 
-  const isFetching = journalParam ? selectedJournalQuery.isLoading : journalOptionsQuery.isFetching;
+  const isFetching = journalParam ? selectedJournalQuery.isPending : journalOptionsQuery.isFetching;
 
   return (
     <Autocomplete
@@ -53,7 +53,7 @@ export const JournalFilter = () => {
       sx={{ minWidth: '15rem' }}
       value={journalParam && selectedJournalQuery.data ? selectedJournalQuery.data : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      options={debouncedQuery && journalQuery === debouncedQuery && !journalOptionsQuery.isLoading ? journalList : []}
+      options={debouncedQuery && journalQuery === debouncedQuery && !journalOptionsQuery.isPending ? journalList : []}
       filterOptions={(options) => options}
       inputValue={journalQuery}
       onInputChange={(_, newInputValue) => setJournalQuery(newInputValue)}

@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, BoxProps, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
@@ -6,25 +6,26 @@ import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
 
-interface AffiliationHierarchyProps {
+interface AffiliationHierarchyProps extends Pick<BoxProps, 'sx'> {
   unitUri: string;
 }
 
-export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
+export const OrganizationTree = ({ unitUri, sx }: AffiliationHierarchyProps) => {
   const { t } = useTranslation();
 
   const organizationQuery = useQuery({
-    queryKey: [unitUri],
+    enabled: !!unitUri,
+    queryKey: ['organization', unitUri],
     queryFn: () => fetchOrganization(unitUri),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
   const organization = organizationQuery.data;
 
   const units = getOrganizationHierarchy(organization);
 
-  return organizationQuery.isLoading ? (
+  return organizationQuery.isPending ? (
     <AffiliationSkeleton />
   ) : organization ? (
     <Box
@@ -32,9 +33,9 @@ export const OrganizationTree = ({ unitUri }: AffiliationHierarchyProps) => {
         border: '1px solid',
         borderRadius: '4px',
         p: '0.5rem',
-        mb: '0.5rem',
         boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
         bgcolor: 'white',
+        ...sx,
       }}>
       {units.map((unit, index) =>
         index === 0 ? (

@@ -40,15 +40,15 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
   return (
     <>
       {organizationFacet && organizationFacet?.length > 0 && (
-        <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
+        <FacetItem title={t('common.institution')} dataTestId={dataTestId.aggregations.institutionFacets}>
           {organizationFacet.map((facet) => {
             const isSelected = selectedOrganizations.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
-                isLoading={personQuery.isLoading}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
+                isLoading={personQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
@@ -64,15 +64,15 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
       )}
 
       {sectorFacet && sectorFacet?.length > 0 && (
-        <FacetItem title={t('search.sector')} dataTestId={dataTestId.startPage.sectorFacets}>
+        <FacetItem title={t('search.sector')} dataTestId={dataTestId.aggregations.sectorFacets}>
           {sectorFacet.map((facet) => {
             const isSelected = selectedSectors.includes(facet.key);
             return (
               <FacetListItem
                 key={facet.key}
                 identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
-                isLoading={personQuery.isLoading}
+                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
+                isLoading={personQuery.isPending}
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}

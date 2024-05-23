@@ -1,12 +1,18 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import {
+  CollaborationType,
   ImportCandidateAggregations,
   ImportCandidateStatus,
   ImportCandidateSummary,
 } from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
 import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
-import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
+import {
+  AggregationFileKeyType,
+  PublicationInstanceType,
+  Registration,
+  RegistrationAggregations,
+} from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
@@ -117,6 +123,8 @@ export type ImportCandidateOrderBy = 'createdDate';
 
 export enum ImportCandidatesSearchParam {
   Aggregation = 'aggregation',
+  CollaborationType = 'collaborationType',
+  Files = 'files',
   From = 'from',
   Identifier = 'id',
   ImportStatus = 'importStatus',
@@ -125,10 +133,14 @@ export enum ImportCandidatesSearchParam {
   Query = 'query',
   Size = 'size',
   SortOrder = 'sortOrder',
+  TopLevelOrganization = 'topLevelOrganization',
+  Type = 'type',
 }
 
 export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.Aggregation]?: 'all' | null;
+  [ImportCandidatesSearchParam.CollaborationType]?: CollaborationType | null;
+  [ImportCandidatesSearchParam.Files]?: AggregationFileKeyType | null;
   [ImportCandidatesSearchParam.From]?: number | null;
   [ImportCandidatesSearchParam.Identifier]?: string | null;
   [ImportCandidatesSearchParam.ImportStatus]?: ImportCandidateStatus | null;
@@ -137,47 +149,52 @@ export interface FetchImportCandidatesParams {
   [ImportCandidatesSearchParam.Query]?: string | null;
   [ImportCandidatesSearchParam.Size]?: number | null;
   [ImportCandidatesSearchParam.SortOrder]?: SortOrder | null;
+  [ImportCandidatesSearchParam.TopLevelOrganization]?: string | null;
+  [ImportCandidatesSearchParam.Type]?: PublicationInstanceType | null;
 }
 
-export const fetchImportCandidates = async ({
-  aggregation,
-  from,
-  id,
-  importStatus,
-  orderBy,
-  publicationYear,
-  query,
-  size,
-  sortOrder,
-}: FetchImportCandidatesParams) => {
-  const params = new URLSearchParams();
+export const fetchImportCandidates = async (params: FetchImportCandidatesParams) => {
+  const searchParams = new URLSearchParams();
 
-  params.set(ImportCandidatesSearchParam.Size, (size ?? 10).toString());
-  params.set(ImportCandidatesSearchParam.From, (from ?? 0).toString());
+  searchParams.set(ImportCandidatesSearchParam.Size, (params.size ?? 10).toString());
+  searchParams.set(ImportCandidatesSearchParam.From, (params.from ?? 0).toString());
 
-  if (query) {
-    params.set(ImportCandidatesSearchParam.Query, query);
+  if (params.aggregation) {
+    searchParams.set(ImportCandidatesSearchParam.Aggregation, params.aggregation);
   }
-  if (publicationYear) {
-    const yearString = publicationYear.toString();
-    params.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
+  if (params.collaborationType) {
+    searchParams.set(ImportCandidatesSearchParam.CollaborationType, params.collaborationType);
   }
-  if (id) {
-    params.set(ImportCandidatesSearchParam.Identifier, id);
+  if (params.files) {
+    searchParams.set(ImportCandidatesSearchParam.Files, params.files);
   }
-  if (importStatus) {
-    params.set(ImportCandidatesSearchParam.ImportStatus, importStatus);
+  if (params.id) {
+    searchParams.set(ImportCandidatesSearchParam.Identifier, params.id);
   }
-  if (orderBy) {
-    params.set(ImportCandidatesSearchParam.OrderBy, orderBy);
+  if (params.importStatus) {
+    searchParams.set(ImportCandidatesSearchParam.ImportStatus, params.importStatus);
   }
-  if (sortOrder) {
-    params.set(ImportCandidatesSearchParam.SortOrder, sortOrder);
+  if (params.orderBy) {
+    searchParams.set(ImportCandidatesSearchParam.OrderBy, params.orderBy);
   }
-  if (aggregation) {
-    params.set(ImportCandidatesSearchParam.Aggregation, aggregation);
+  if (params.publicationYear) {
+    const yearString = params.publicationYear.toString();
+    searchParams.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
   }
-  const paramsString = params.toString();
+  if (params.query) {
+    searchParams.set(ImportCandidatesSearchParam.Query, params.query);
+  }
+  if (params.sortOrder) {
+    searchParams.set(ImportCandidatesSearchParam.SortOrder, params.sortOrder);
+  }
+  if (params.topLevelOrganization) {
+    searchParams.set(ImportCandidatesSearchParam.TopLevelOrganization, params.topLevelOrganization);
+  }
+  if (params.type) {
+    searchParams.set(ImportCandidatesSearchParam.Type, params.type);
+  }
+
+  const paramsString = searchParams.toString();
 
   const getImportCandidates = await authenticatedApiRequest2<
     SearchResponse2<ImportCandidateSummary, ImportCandidateAggregations>

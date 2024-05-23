@@ -281,7 +281,7 @@ export type AggregationFileKeyType = 'hasPublicFiles' | 'noFiles';
 
 export interface RegistrationAggregations {
   topLevelOrganization?: AggregationValue[];
-  type?: AggregationValue[];
+  type?: AggregationValue<PublicationInstanceType>[];
   fundingSource?: AggregationValue[];
   contributor?: AggregationValue[];
   publisher?: AggregationValue[];
@@ -307,4 +307,15 @@ export interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
   duplicateOf?: string;
   comment: string;
+}
+
+interface NpiSubjectSubdomain {
+  id: string;
+  name: string;
+}
+
+export interface NpiSubjectDomain {
+  id: string;
+  subjectArea: string;
+  subdomains: NpiSubjectSubdomain[];
 }

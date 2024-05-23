@@ -9,7 +9,7 @@ import { fetchPerson, searchForKeywords, updateCristinPerson } from '../../../ap
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { Keywords } from '../../../types/keywords.types';
+import { Keywords, KeywordsOld } from '../../../types/keywords.types';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -27,7 +27,8 @@ export const MyFieldAndBackground = () => {
   const debouncedKeywordsSearchTerm = useDebounce(keywordSearchTerm);
 
   const personQuery = useQuery({
-    queryKey: [personId],
+    enabled: !!personId,
+    queryKey: ['person', personId],
     queryFn: () => fetchPerson(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
@@ -50,18 +51,32 @@ export const MyFieldAndBackground = () => {
       no: personBackground.no ?? '',
       en: personBackground.en ?? '',
     },
-    keywords: personKeywords ?? [],
+    keywords: personKeywords.map((keyword) => {
+      return {
+        type: 'Keyword',
+        id: '',
+        identifier: keyword.type,
+        labels: keyword.label,
+      };
+    }),
   };
 
   const updatePerson = useMutation({
     mutationFn: async (values: PersonBackgroundFormData) => {
       if (personId) {
+        const keywords = values.keywords as Keywords[];
+        const mappedKeywords: KeywordsOld[] = keywords.map((keyword) => {
+          return {
+            type: keyword.identifier,
+            label: keyword.labels,
+          };
+        });
         const payload: PersonBackgroundFormData = {
           background: {
             no: values.background.no === '' ? null : values.background.no,
             en: values.background.en === '' ? null : values.background.en,
           },
-          keywords: values.keywords,
+          keywords: mappedKeywords,
         };
         await updateCristinPerson(personId, payload);
       }
@@ -99,17 +114,19 @@ export const MyFieldAndBackground = () => {
                       value={field.value ?? []}
                       multiple
                       options={keywordsResult}
-                      isOptionEqualToValue={(option, value) => option.type === value.type}
-                      getOptionLabel={(option) => getLanguageString(option.label)}
-                      getOptionDisabled={(option) => field.value.some((keyword) => keyword.type === option.type)}
+                      isOptionEqualToValue={(option, value) => option.identifier === value.identifier}
+                      getOptionLabel={(option) => getLanguageString(option.labels)}
+                      getOptionDisabled={(option) =>
+                        field.value.some((keyword) => keyword.identifier === option.identifier)
+                      }
                       renderOption={(props, option) => (
-                        <li {...props} key={option.type}>
-                          <Typography>{getLanguageString(option.label)}</Typography>
+                        <li {...props} key={option.identifier}>
+                          <Typography>{getLanguageString(option.labels)}</Typography>
                         </li>
                       )}
                       renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.label)} />
+                          <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.labels)} />
                         ))
                       }
                       filterOptions={(options) => options}

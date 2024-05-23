@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchOrganization, OrganizationSearchParams, searchForOrganizations } from '../../../api/cristinApi';
+import { OrganizationSearchParams, fetchOrganization, searchForOrganizations } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
@@ -37,26 +37,26 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
     queryFn: user ? () => fetchOrganization(user.topOrgCristinId ?? '') : undefined,
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
   const userOrganization = organizationQuery.data;
 
   const topLevelOrganizationQuery = useQuery({
-    queryKey: [topLevelOrganizationId],
     enabled: !!topLevelOrganizationId,
+    queryKey: ['organization', topLevelOrganizationId],
     queryFn: () => fetchOrganization(topLevelOrganizationId ?? ''),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const subUnitQuery = useQuery({
-    queryKey: [unitId],
     enabled: !!unitId,
+    queryKey: ['organization', unitId],
     queryFn: () => fetchOrganization(unitId ?? ''),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const organizationQueryParams: OrganizationSearchParams = {
@@ -148,7 +148,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         onClick={toggleShowUnitSelection}
         label={
           unitId ? (
-            subUnitQuery.isLoading ? (
+            subUnitQuery.isPending ? (
               <Skeleton sx={{ minWidth: '10rem' }} />
             ) : (
               getLanguageString(subUnitQuery.data?.labels)

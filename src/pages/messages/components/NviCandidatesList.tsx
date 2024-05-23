@@ -40,7 +40,7 @@ export const NviCandidatesList = ({
 
       <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 
-      {nviCandidatesQuery.isLoading ? (
+      {nviCandidatesQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>

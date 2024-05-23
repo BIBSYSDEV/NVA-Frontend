@@ -51,6 +51,10 @@
     "central_import": {
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
+      "collaboration_type": {
+        "Collaborative": "Sampublikasjon",
+        "NonCollaborative": "Ikke sampublikasjon"
+      },
       "create_new": "Opprett ny",
       "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importdata.",
       "duplicate_search_hits": "Søket ga følgende treff:",
@@ -228,6 +232,7 @@
     "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les mer",
     "read_more_about_nva": "Les mer om NVA",
+    "reject": "Avvis",
     "reject_doi": "Avvis DOI",
     "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
     "remove": "Fjern",
@@ -284,10 +289,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -359,7 +360,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1252,6 +1257,7 @@
       "administrative_agreement": "Administrativ avtale",
       "administrative_contract": "Intern fil som aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
+      "disabled_helper_text": "Denne filen er allerede publisert med en godkjent lisens. Ta kontakt med kurator om du vil endre eller slette filen",
       "embargo": "Embargo/utsatt publisering",
       "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
@@ -1747,6 +1753,7 @@
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
       "resource_type": "Kategori",
+      "search_for_channel": "Søk etter globale kanaler på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
       "search_for_publisher_placeholder": "Søk etter navn",
@@ -1862,8 +1869,9 @@
       "previous_candidate": "Gå til forrige kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
-      "reject_nvi_candidate_description": "Skal forskningsresultatet ikke NVI-rapporteres så skriv en begrunnelse for dette i merknadsfeltet og deretter velg \"Avvis resultat\"",
+      "reject_nvi_candidate_description": "Skal forskningsresultatet ikke NVI-rapporteres så skriv en begrunnelse for dette i tekstfeltet som vises og deretter velg \"Avvis\"",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
+      "reject_nvi_candidate_modal_text": "Vennligst oppgi en detaljert begrunnelse på hvorfor du avviser. Begrunnelsen må inneholde minst 10 tegn.",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
       "save_note": "Lagre merknad",
