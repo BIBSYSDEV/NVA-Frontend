@@ -10,4 +10,4 @@ customHeaders:
       - key: 'X-Content-Type-Options'
         value: 'nosniff'
       - key: 'Content-Security-Policy'
-        value: "default-src 'self'; img-src * data:; script-src 'self' https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js; style-src 'self 'unsafe-inline' static:; connect-src https://api.dev.nva.aws.unit.no/*; font-src  https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/*"
+        value: "default-src 'self'; img-src * data:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js; style-src 'self' 'unsafe-inline' static:; connect-src https://api.dev.nva.aws.unit.no/*; font-src  https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/* data:"
