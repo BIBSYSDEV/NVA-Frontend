@@ -75,6 +75,8 @@
         "result_in_nva": "Resultat i NVA",
         "update_value": "Oppdater verdi"
       },
+      "missing_journal": "Mangler tidsskrift",
+      "missing_publisher": "Mangler utgiver",
       "not_applicable": "Mangelfull",
       "or_search_with": "eller søk med",
       "reset_search_values": "Tilbakestill verdier",
@@ -87,9 +89,7 @@
         "NOT_APPLICABLE": "Mangelfull",
         "NOT_IMPORTED": "Til import"
       },
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} identifisert)",
-      "missing_publisher": "Mangler utgiver",
-      "missing_journal": "Mangler tidsskrift"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} identifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",

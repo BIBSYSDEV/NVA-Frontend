@@ -30,68 +30,72 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
 
   return (
     <SearchListItem
-      sx={{ borderLeftColor: 'centralImport.main', display: 'flex', gap: '1rem' }}
+      sx={{
+        borderLeftColor: 'centralImport.main',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '1rem',
+        justifyContent: 'space-between',
+      }}
       data-testid={dataTestId.startPage.searchResultItem}>
-      <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'space-between', width: '100%' }}>
-        <div>
-          {heading && (
-            <Typography variant="overline" sx={{ color: 'primary.main' }}>
-              {heading}
+      <div>
+        {heading && (
+          <Typography variant="overline" color="primary">
+            {heading}
+          </Typography>
+        )}
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+          <MuiLink component={Link} to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
+            {getTitleString(importCandidate.mainTitle)}
+          </MuiLink>
+        </Typography>
+
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
+            {importCandidate.contributors.map((contributor, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-child)': { '&:after': { content: '";"' } },
+                }}>
+                <Typography variant="body2">
+                  {contributor.identity.id ? (
+                    <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                      {contributor.identity.name}
+                    </MuiLink>
+                  ) : (
+                    contributor.identity.name
+                  )}
+                </Typography>
+                <ContributorIndicators contributor={contributor} />
+              </Box>
+            ))}
+
+            <Typography>
+              {t('basic_data.central_import.verified_contributor_count', {
+                verifiedContributorCount,
+                contributorsCount,
+              })}
+            </Typography>
+          </Box>
+
+          {importCandidate.organizations.length > 0 && (
+            <Typography>
+              {importCandidate.organizations
+                .map((organization) =>
+                  organization.type === 'Organization' ? getLanguageString(organization.labels) : organization.name
+                )
+                .filter(Boolean)
+                .join(', ')}
             </Typography>
           )}
-          <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-            <MuiLink component={Link} to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
-              {getTitleString(importCandidate.mainTitle)}
-            </MuiLink>
-          </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
-              {importCandidate.contributors.map((contributor, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    '&:not(:last-child)': { '&:after': { content: '";"' } },
-                  }}>
-                  <Typography variant="body2">
-                    {contributor.identity.id ? (
-                      <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-                        {contributor.identity.name}
-                      </MuiLink>
-                    ) : (
-                      contributor.identity.name
-                    )}
-                  </Typography>
-                  <ContributorIndicators contributor={contributor} />
-                </Box>
-              ))}
-
-              <Typography>
-                {t('basic_data.central_import.verified_contributor_count', {
-                  verifiedContributorCount,
-                  contributorsCount,
-                })}
-              </Typography>
-            </Box>
-
-            {importCandidate.organizations.length > 0 && (
-              <Typography>
-                {importCandidate.organizations
-                  .map((organization) =>
-                    organization.type === 'Organization' ? getLanguageString(organization.labels) : organization.name
-                  )
-                  .filter(Boolean)
-                  .join(', ')}
-              </Typography>
-            )}
-
-            <ImportCandidateChannelName importCandidate={importCandidate} />
-          </Box>
-        </div>
-        <Typography sx={{ whiteSpace: 'nowrap' }}>{periodString}</Typography>
-      </Box>
+          <ImportCandidateChannelName importCandidate={importCandidate} />
+        </Box>
+      </div>
+      <Typography sx={{ whiteSpace: 'nowrap' }}>{periodString}</Typography>
     </SearchListItem>
   );
 };
