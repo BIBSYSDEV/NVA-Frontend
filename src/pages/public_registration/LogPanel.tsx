@@ -10,12 +10,14 @@ import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
 import { ticketColor } from '../messages/components/TicketListItem';
+import { Avatar } from '../../components/Avatar';
 
 interface LogItem {
   modifiedDate: string;
   description: string;
   filesInfo?: TicketFilesInfo;
   type: TicketType;
+  finalizedBy?: string;
 }
 
 interface LogPanelProps {
@@ -85,12 +87,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             }),
             filesInfo: getTicketFilesInfo(publishingTicket, registrationFiles),
             type: 'PublishingRequest',
+            finalizedBy: publishingTicket.finalizedBy,
           });
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.files_rejected'),
             type: 'PublishingRequest',
+            finalizedBy: publishingTicket.finalizedBy,
           });
         }
         break;
@@ -101,12 +105,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.doi_completed'),
             type: 'DoiRequest',
+            finalizedBy: ticket.finalizedBy,
           });
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.doi_closed'),
             type: 'DoiRequest',
+            finalizedBy: ticket.finalizedBy,
           });
         }
         break;
@@ -149,9 +155,12 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           return (
             <StyledStatusMessageBox key={index} sx={{ bgcolor: ticketColor[logItem.type] }}>
               <Typography>{logItem.description}</Typography>
-              <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
-                <Typography>{modifiedDate.toLocaleDateString()}</Typography>
-              </Tooltip>
+              <Box sx={{ display: 'flex' }}>
+                <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
+                  <Typography>{modifiedDate.toLocaleDateString()}</Typography>
+                </Tooltip>
+                {logItem.finalizedBy && <Avatar username={logItem.finalizedBy} />}
+              </Box>
               {logItem.filesInfo?.approvedFileNames && logItem.filesInfo.approvedFileNames.length > 0 && (
                 <Box
                   component="ul"
