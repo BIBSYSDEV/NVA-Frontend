@@ -1,11 +1,26 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Box, Button, Divider, IconButton, Skeleton, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu as MuiMenu,
+  MenuItem,
+  Skeleton,
+  Typography,
+} from '@mui/material';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { MouseEvent, ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { deleteTicketMessage } from '../../../api/registrationApi';
 import { fetchUser } from '../../../api/roleApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { setNotification } from '../../../redux/notificationSlice';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFullName } from '../../../utils/user-helpers';
@@ -17,6 +32,16 @@ interface MessageListProps {
 
 export const TicketMessageList = ({ ticket }: MessageListProps) => {
   const messages = ticket.messages ?? [];
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  console.log(messages);
+
+  const deleteMessageMutation = useMutation({
+    mutationFn: (messageId: string) => deleteTicketMessage(ticket.id, messageId),
+    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.delete_note'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_note'), variant: 'error' })),
+  });
 
   return (
     <ErrorBoundary>
@@ -37,6 +62,7 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
             date={message.createdDate}
             username={message.sender}
             backgroundColor={ticketColor[ticket.type]}
+            onDelete={() => deleteMessageMutation.mutate(message.identifier)}
           />
         ))}
       </Box>
@@ -57,6 +83,11 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const senderQuery = useQuery({
     queryKey: [username],
@@ -93,9 +124,32 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
             {new Date(date).toLocaleDateString()}
           </span>
         </Typography>
-        <IconButton aria-label="delete" size="small" sx={{ alignSelf: 'end' }}>
+        <IconButton
+          data-testid={dataTestId.registrationLandingPage.tasksPanel.messageOptionsButton}
+          aria-label="delete"
+          size="small"
+          sx={{ alignSelf: 'end' }}
+          onClick={handleClickMenuAnchor}>
           <MoreVertIcon fontSize="inherit" />
         </IconButton>
+        <MuiMenu
+          anchorEl={anchorEl}
+          keepMounted
+          open={!!anchorEl}
+          onClose={() => setAnchorEl(null)}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}>
+          <MenuItem
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteMessageButton}
+            onClick={() => setShowConfirmDialog(true)}>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText>{t('common.delete')}</ListItemText>
+          </MenuItem>
+        </MuiMenu>
       </Box>
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
