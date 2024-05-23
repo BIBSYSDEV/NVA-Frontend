@@ -87,7 +87,9 @@
         "NOT_APPLICABLE": "Mangelfull",
         "NOT_IMPORTED": "Til import"
       },
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} identifisert)"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} identifisert)",
+      "missing_publisher": "Mangler utgiver",
+      "missing_journal": "Mangler tidsskrift"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",

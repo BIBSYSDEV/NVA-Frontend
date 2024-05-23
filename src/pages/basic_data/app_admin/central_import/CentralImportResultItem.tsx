@@ -1,4 +1,4 @@
-import { Box, ListItemText, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ContributorIndicators } from '../../../../components/ContributorIndicators';
@@ -6,7 +6,7 @@ import { SearchListItem } from '../../../../components/styled/Wrappers';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId, getTimePeriodString } from '../../../../utils/general-helpers';
-import { getTitleString } from '../../../../utils/registration-helpers';
+import { getTitleString, isJournal } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getResearchProfilePath } from '../../../../utils/urlPaths';
 
@@ -28,9 +28,11 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
   const periodString = getTimePeriodString(new Date(importCandidate.createdDate), new Date(), t);
 
   return (
-    <SearchListItem sx={{ borderLeftColor: 'centralImport.main', display: 'flex', gap: '1rem' }}>
+    <SearchListItem
+      sx={{ borderLeftColor: 'centralImport.main', display: 'flex', gap: '1rem' }}
+      data-testid={dataTestId.startPage.searchResultItem}>
       <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'space-between', width: '100%' }}>
-        <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
+        <div>
           {heading && (
             <Typography variant="overline" sx={{ color: 'primary.main' }}>
               {heading}
@@ -41,49 +43,75 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
               {getTitleString(importCandidate.mainTitle)}
             </MuiLink>
           </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
-            {importCandidate.contributors.map((contributor, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  '&:not(:last-child)': { '&:after': { content: '";"' } },
-                }}>
-                <Typography variant="body2">
-                  {contributor.identity.id ? (
-                    <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-                      {contributor.identity.name}
-                    </MuiLink>
-                  ) : (
-                    contributor.identity.name
-                  )}
-                </Typography>
-                <ContributorIndicators contributor={contributor} />
-              </Box>
-            ))}
 
-            <Typography>
-              {t('basic_data.central_import.verified_contributor_count', {
-                verifiedContributorCount,
-                contributorsCount,
-              })}
-            </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
+              {importCandidate.contributors.map((contributor, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    '&:not(:last-child)': { '&:after': { content: '";"' } },
+                  }}>
+                  <Typography variant="body2">
+                    {contributor.identity.id ? (
+                      <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                        {contributor.identity.name}
+                      </MuiLink>
+                    ) : (
+                      contributor.identity.name
+                    )}
+                  </Typography>
+                  <ContributorIndicators contributor={contributor} />
+                </Box>
+              ))}
+
+              <Typography>
+                {t('basic_data.central_import.verified_contributor_count', {
+                  verifiedContributorCount,
+                  contributorsCount,
+                })}
+              </Typography>
+            </Box>
+
+            {importCandidate.organizations.length > 0 && (
+              <Typography>
+                {importCandidate.organizations
+                  .map((organization) =>
+                    organization.type === 'Organization' ? getLanguageString(organization.labels) : organization.name
+                  )
+                  .filter(Boolean)
+                  .join(', ')}
+              </Typography>
+            )}
+
+            <ImportCandidateChannelInfo importCandidate={importCandidate} />
           </Box>
-
-          {importCandidate.organizations.length > 0 && (
-            <Typography sx={{ mt: '0.5rem' }}>
-              {importCandidate.organizations
-                .map((organization) =>
-                  organization.type === 'Organization' ? getLanguageString(organization.labels) : organization.name
-                )
-                .filter(Boolean)
-                .join(', ')}
-            </Typography>
-          )}
-        </ListItemText>
+        </div>
         <Typography sx={{ whiteSpace: 'nowrap' }}>{periodString}</Typography>
       </Box>
     </SearchListItem>
   );
+};
+
+export const ImportCandidateChannelInfo = ({ importCandidate }: CentralImportResultItemProps) => {
+  const { t } = useTranslation();
+
+  const shouldHaveJournal = isJournal(importCandidate.publicationInstance?.type);
+
+  if (shouldHaveJournal) {
+    const journal = importCandidate.journal?.name ?? importCandidate.journal?.id;
+    if (journal) {
+      return <Typography fontWeight={600}>{journal}</Typography>;
+    } else {
+      return <Typography>{t('basic_data.central_import.missing_journal')}</Typography>;
+    }
+  }
+
+  const publisher = importCandidate.publisher?.name ?? importCandidate.publisher?.id;
+  if (publisher) {
+    return <Typography fontWeight={600}>{publisher}</Typography>;
+  }
+  return <Typography>{t('basic_data.central_import.missing_publisher')}</Typography>;
 };

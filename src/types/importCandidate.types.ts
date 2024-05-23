@@ -12,7 +12,7 @@ import { MapPublicationInstance } from './publication_types/otherRegistration.ty
 import { PresentationPublicationInstance } from './publication_types/presentationRegistration.types';
 import { ReportPublicationInstance } from './publication_types/reportRegistration.types';
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
-import { Journal, Publisher, Registration, RegistrationAggregations } from './registration.types';
+import { Journal, Publisher, Registration, RegistrationAggregations, Series } from './registration.types';
 
 export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
 
@@ -49,8 +49,9 @@ export interface ImportCandidateSummary {
   totalContributors: number;
   totalVerifiedContributors: number;
   organizations: (Pick<Organization, 'type' | 'id' | 'labels'> | UnconfirmedOrganization)[];
-  publisher: Pick<Publisher, 'id' | 'name'>;
-  journal: Pick<Journal, 'id'>;
+  publisher?: Partial<Publisher>;
+  journal?: Partial<Journal>;
+  series?: Partial<Series>;
   publicationInstance: PublicationInstance;
   contributors: Contributor[];
   printIssn?: string;
