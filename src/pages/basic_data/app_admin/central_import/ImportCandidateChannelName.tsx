@@ -13,7 +13,7 @@ export const ImportCandidateChannelName = ({ importCandidate }: ImportCandidateC
   const shouldHaveJournal = isJournal(importCandidate.publicationInstance?.type);
 
   if (shouldHaveJournal) {
-    const journal = importCandidate.journal?.name ?? importCandidate.journal?.id;
+    const journal = importCandidate.journal?.name;
     if (journal) {
       return <Typography fontWeight={600}>{journal}</Typography>;
     } else {
@@ -21,7 +21,7 @@ export const ImportCandidateChannelName = ({ importCandidate }: ImportCandidateC
     }
   }
 
-  const publisher = importCandidate.publisher?.name ?? importCandidate.publisher?.id;
+  const publisher = importCandidate.publisher?.name;
   if (publisher) {
     return <Typography fontWeight={600}>{publisher}</Typography>;
   }
