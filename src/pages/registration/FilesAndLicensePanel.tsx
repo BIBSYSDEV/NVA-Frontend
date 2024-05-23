@@ -35,6 +35,7 @@ import {
   isEmbargoed,
   isTypeWithFileVersionField,
   userCanEditRegistration,
+  userCanUnpublishRegistration,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 import {
@@ -43,11 +44,9 @@ import {
 } from '../public_registration/PublicPublicationContext';
 import { HelperTextModal } from './HelperTextModal';
 import { FileUploader } from './files_and_license_tab/FileUploader';
-import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { FilesTableRow, administrativeAgreementId } from './files_and_license_tab/FilesTableRow';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
 import { DoiField } from './resource_type_tab/components/DoiField';
-
-export const administrativeAgreementId = 'administrative-agreement';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -110,6 +109,26 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const isProtectedDegree = isDegreeWithProtectedFiles(publicationInstanceType);
   const canEditFiles = userCanEditRegistration(values) || userIsValidImporter(user, values);
+
+  function canEditFile(file: AssociatedFile) {
+    if (isProtectedDegree && isEmbargoed(file.embargoDate)) {
+      return !!user?.isEmbargoThesisCurator;
+    }
+
+    if (isProtectedDegree) {
+      return !!user?.isThesisCurator;
+    }
+
+    if (values.type === 'ImportCandidate') {
+      return !!user?.isInternalImporter;
+    }
+
+    if (file.type === 'PublishedFile') {
+      return userCanUnpublishRegistration(values) ?? false;
+    }
+
+    return true;
+  }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -291,14 +310,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                           return false;
                         });
 
-                        const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
-                        const canEditThisFile = isEmbargoedDegreeFile ? !!user?.isEmbargoThesisCurator : canEditFiles;
-
                         return (
                           <FilesTableRow
                             key={file.identifier}
                             file={file}
-                            disabled={!canEditThisFile}
+                            disabled={!canEditFile(file)}
                             removeFile={() => {
                               const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                               const remainingFiles = uppy

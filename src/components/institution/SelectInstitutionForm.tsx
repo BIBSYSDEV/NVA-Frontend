@@ -86,7 +86,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 <Field name={SelectOrganizationFormField.selectedSuggestedAffiliationId}>
                   {({ field }: FieldProps<string>) => (
                     <RadioGroup
-                      sx={{ gap: '0.25rem' }}
+                      sx={{ gap: '0.5rem' }}
                       {...field}
                       onChange={(event) => {
                         setSearchTerm('');
@@ -136,7 +136,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                     resetForm();
                     setFieldValue(field.name, value);
                   }}
-                  loading={organizationSearchQuery.isLoading}
+                  loading={organizationSearchQuery.isPending}
                   renderInput={(params) => (
                     <TextField
                       {...params}

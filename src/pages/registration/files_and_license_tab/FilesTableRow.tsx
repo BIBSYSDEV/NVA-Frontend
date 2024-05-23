@@ -10,10 +10,10 @@ import {
   FormControlLabel,
   FormHelperText,
   IconButton,
-  Link as MuiLink,
   ListItemIcon,
   ListItemText,
   MenuItem,
+  Link as MuiLink,
   Paper,
   Popover,
   Radio,
@@ -35,13 +35,14 @@ import { TruncatableTypography } from '../../../components/TruncatableTypography
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
-import { licenses, LicenseUri } from '../../../types/license.types';
+import { LicenseUri, licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
-import { administrativeAgreementId } from '../FilesAndLicensePanel';
 import { DownloadFileButton } from './DownloadFileButton';
+
+export const administrativeAgreementId = 'administrative-agreement';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -96,7 +97,10 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
   return (
     <>
-      <TableRow data-testid={dataTestId.registrationWizard.files.fileRow} sx={{ td: { pb: 0, borderBottom: 'unset' } }}>
+      <TableRow
+        data-testid={dataTestId.registrationWizard.files.fileRow}
+        title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
+        sx={{ bgcolor: disabled ? 'grey.400' : '', td: { pb: 0, borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: '13rem' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
         </TableCell>
@@ -300,7 +304,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           )}
         </TableCell>
       </TableRow>
-      <TableRow>
+      <TableRow
+        sx={{ bgcolor: disabled ? 'grey.400' : '' }}
+        title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}>
         <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
           <Collapse in={openCollapsable}>
             <Box
@@ -347,6 +353,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
                 {canOverrideRrs && (
                   <FormControlLabel
+                    disabled={disabled}
                     label={
                       <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
                         {rrsPolicyLink}

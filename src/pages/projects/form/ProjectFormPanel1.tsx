@@ -5,6 +5,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useTranslation } from 'react-i18next';
 import {
   CristinProject,
+  ProjectFieldName,
   ProjectOrganization,
   SaveCristinProject,
   emptyProjectContributor,
@@ -13,7 +14,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
-import { ProjectFieldName } from './ProjectFormDialog';
 import { ProjectFundingsField } from './ProjectFunding';
 
 interface ProjectFormPanel1Props {

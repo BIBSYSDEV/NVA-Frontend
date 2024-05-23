@@ -23,13 +23,11 @@ import { useQuery } from '@tanstack/react-query';
 import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
 import { fetchRegistration } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
-import { setNotification } from '../../redux/notificationSlice';
 import {
   AudioVisualPublication,
   Award,
@@ -218,7 +216,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
     meta: { errorMessage },
   });
 
-  const isLoadingJournal = (!!id && journalQuery.isLoading) || (journalQuery.isError && journalBackupQuery.isLoading);
+  const isLoadingJournal = (!!id && journalQuery.isPending) || (journalQuery.isError && journalBackupQuery.isPending);
   const journal = journalQuery.data ?? journalBackupQuery.data;
 
   return isLoadingJournal ? (
@@ -303,7 +301,6 @@ interface PublicOutputRowProps {
 }
 
 const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
@@ -315,13 +312,7 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
     enabled: !!exhibitionCatalogIdentifier,
     queryKey: ['registration', exhibitionCatalogIdentifier],
     queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
-    onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.get_registration'),
-          variant: 'error',
-        })
-      ),
+    meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
   const nameString = exhibitionCatalogIdentifier

@@ -2,7 +2,7 @@ import { Box, Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
-import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
+import disciplines from '../../resources/disciplines.json';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import {
   BookPublicationContext,
@@ -34,9 +34,11 @@ import {
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
+import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import {
+  findParentSubject,
   isArtistic,
   isBook,
   isChapter,
@@ -108,7 +110,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         {entityDescription?.npiSubjectHeading && (
           <Typography data-testid={dataTestId.registrationLandingPage.npi}>
             {t('registration.description.npi_disciplines')}:{' '}
-            {t(`disciplines.${entityDescription.npiSubjectHeading}` as any)}
+            {t(`disciplines.${entityDescription.npiSubjectHeading}` as any)} (
+            {t(`disciplines.${findParentSubject(disciplines, entityDescription.npiSubjectHeading)}` as any)})
           </Typography>
         )}
         {publicationInstance &&

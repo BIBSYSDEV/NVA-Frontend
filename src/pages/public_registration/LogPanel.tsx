@@ -3,13 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
+import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
 import { ticketColor } from '../messages/components/TicketListItem';
-import { AssociatedFile } from '../../types/associatedArtifact.types';
 
 interface LogItem {
   modifiedDate: string;
@@ -41,7 +41,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     queryFn: resourceOwnerAffiliationId ? () => fetchOrganization(resourceOwnerAffiliationId) : undefined,
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const userQuery = useQuery({
@@ -50,7 +50,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     queryFn: resourceOwnerId ? () => fetchUser(resourceOwnerId) : undefined,
     retry: 0,
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const logs: LogItem[] = [];
@@ -132,7 +132,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()} enterDelay={tooltipDelay}>
             <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
           </Tooltip>
-          {organizationQuery.isLoading || userQuery.isLoading ? (
+          {organizationQuery.isPending || userQuery.isPending ? (
             <Skeleton sx={{ width: '4rem' }} />
           ) : (
             <Typography>

@@ -50,7 +50,7 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
 
   return (
     <Box sx={{ display: 'flex', width: '12rem', height: '12rem', justifyContent: 'center' }}>
-      {profilePictureQuery.isFetching || mutateProfilePicture.isLoading ? (
+      {profilePictureQuery.isFetching || mutateProfilePicture.isPending ? (
         <Skeleton variant="circular" sx={{ height: '100%', aspectRatio: '1/1' }} />
       ) : profilePictureQuery.isSuccess ? (
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -118,7 +118,7 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
           toggleConfirmDialog();
         }}
         onCancel={toggleConfirmDialog}
-        isLoading={mutateProfilePicture.isLoading}
+        isLoading={mutateProfilePicture.isPending}
         dialogDataTestId={dataTestId.myPage.myProfile.removeProfilePictureDialog}>
         <Typography sx={{ whiteSpace: 'pre-wrap' }}>{t('my_page.my_profile.remove_profile_picture_info')}</Typography>
       </ConfirmDialog>

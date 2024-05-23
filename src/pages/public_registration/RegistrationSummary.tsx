@@ -24,7 +24,7 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
 
   const container = containerQuery.data;
 
-  return containerQuery.isLoading ? (
+  return containerQuery.isPending ? (
     <Skeleton width={400} />
   ) : container ? (
     <Link component={RouterLink} to={getRegistrationLandingPagePath(identifier)}>
