@@ -21,6 +21,7 @@ import { RootState } from '../../../redux/store';
 import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { toDateString } from '../../../utils/date-helpers';
 import { equalUris } from '../../../utils/general-helpers';
 import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
 import { PreviewFile } from './preview_file/PreviewFile';
@@ -129,7 +130,7 @@ export const FileRow = ({
         {file.embargoDate && fileIsEmbargoed ? (
           <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
             <LockIcon />
-            {t('common.will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
+            {t('common.will_be_available')} {toDateString(file.embargoDate)}
           </Typography>
         ) : (
           <Button

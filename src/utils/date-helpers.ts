@@ -3,7 +3,7 @@ import { RegistrationDate } from '../types/registration.types';
 
 export const displayDate = (date: Omit<RegistrationDate, 'type'> | undefined) => {
   if (date?.month && date?.day) {
-    return new Date(+date.year, +date.month - 1, +date.day).toLocaleDateString();
+    return toDateString(new Date(+date.year, +date.month - 1, +date.day));
   } else if (date?.year) {
     return date.year;
   } else {
@@ -20,4 +20,14 @@ export const getDateFnsLocale = (language: string) => {
 
 export const formatDateStringToISO = (date: Date) => {
   return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+};
+
+export const toDateString = (date: Date | string | number) => {
+  if (!date) {
+    return '';
+  }
+
+  const dateObject = date instanceof Date ? date : new Date(date);
+
+  return dateObject.toLocaleDateString('nb-NO', { year: 'numeric', month: '2-digit', day: '2-digit' });
 };
