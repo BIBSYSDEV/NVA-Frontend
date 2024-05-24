@@ -75,6 +75,8 @@
         "result_in_nva": "Resultat i NVA",
         "update_value": "Oppdater verdi"
       },
+      "missing_journal": "Mangler tidsskrift",
+      "missing_publisher": "Mangler utgiver",
       "not_applicable": "Mangelfull",
       "or_search_with": "eller søk med",
       "reset_search_values": "Tilbakestill verdier",
