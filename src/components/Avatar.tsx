@@ -1,7 +1,6 @@
 import { Avatar as MuiAvatar, AvatarProps as MuiAvatarProps, Tooltip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from '../api/roleApi';
-import { tooltipDelay } from '../utils/constants';
 import { getInitials } from '../utils/general-helpers';
 import { getFullName } from '../utils/user-helpers';
 
@@ -23,12 +22,11 @@ export const Avatar = ({ username, sx }: AvatarProps) => {
   const initials = getInitials(fullName);
 
   return (
-    <Tooltip title={fullName} enterDelay={tooltipDelay}>
+    <Tooltip title={fullName}>
       <MuiAvatar
         sx={{
           height: '1.3rem',
           width: '1.3rem',
-          ml: '0.5rem',
           fontSize: '0.7rem',
           bgcolor: 'primary.main',
           ...sx,

@@ -7,7 +7,6 @@ import { Avatar } from '../../components/Avatar';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
-import { tooltipDelay } from '../../utils/constants';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
@@ -134,7 +133,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
       {registration && (
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
           <Typography>{t('common.created')}</Typography>
-          <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()} enterDelay={tooltipDelay}>
+          <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()}>
             <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
           </Tooltip>
           {organizationQuery.isPending || userQuery.isPending ? (
@@ -154,8 +153,8 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           return (
             <StyledStatusMessageBox key={index} sx={{ bgcolor: ticketColor[logItem.type] }}>
               <Typography>{logItem.description}</Typography>
-              <Box sx={{ display: 'flex' }}>
-                <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <Tooltip title={modifiedDate.toLocaleTimeString()}>
                   <Typography>{modifiedDate.toLocaleDateString()}</Typography>
                 </Tooltip>
                 {logItem.finalizedBy && <Avatar username={logItem.finalizedBy} />}
@@ -171,7 +170,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
                   }}>
                   {logItem.filesInfo.approvedFileNames.map((fileName, index) => (
                     <li key={index}>
-                      <Tooltip title={fileName} enterDelay={tooltipDelay}>
+                      <Tooltip title={fileName}>
                         <Typography
                           sx={{
                             whiteSpace: 'nowrap',
