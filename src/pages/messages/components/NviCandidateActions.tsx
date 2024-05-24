@@ -42,7 +42,7 @@ interface NviCandidateActionsProps {
 export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviCandidateActionsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const user = useSelector((store: RootState) => store.user);
+  const user = useSelector((store: RootState) => store.user) ?? undefined;
   const candidateIdentifier = getIdentifierFromId(nviCandidate.id);
 
   const [hasSelectedRejectCandidate, setHasSelectedRejectCandidate] = useState(false);
@@ -191,6 +191,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     date={note.date}
                     username={note.username}
                     backgroundColor="nvi.main"
+                    canDeleteMessage={user && (user.isNviCurator || user.nvaUsername === note.username)}
                     onDelete={deleteFunction}
                     isDeleting={isDeleting}
                     confirmDialogTitle={t('tasks.nvi.delete_note')}
