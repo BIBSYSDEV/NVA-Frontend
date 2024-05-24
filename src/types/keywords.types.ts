@@ -7,3 +7,11 @@ export interface Keywords {
     nb?: string;
   };
 }
+
+export interface KeywordsOld {
+  type: string;
+  label: {
+    en?: string;
+    nb?: string;
+  };
+}

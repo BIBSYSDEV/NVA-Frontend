@@ -1,10 +1,26 @@
 import { TFunction } from 'i18next';
+import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
+import {
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+  allPublicationInstanceTypes,
+} from '../types/publicationFieldNames';
 import {
   AudioVisualPublication,
   Award,
@@ -30,21 +46,6 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import {
-  allPublicationInstanceTypes,
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-} from '../types/publicationFieldNames';
 import {
   Journal,
   NpiSubjectDomain,
@@ -258,27 +259,27 @@ export const contributorConfig: ContributorConfig = {
   },
   // Book
   [BookType.AcademicMonograph]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.NonFictionMonograph]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.PopularScienceMonograph]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Textbook]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Encyclopedia]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.ExhibitionCatalog]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Anthology]: {
@@ -287,27 +288,27 @@ export const contributorConfig: ContributorConfig = {
   },
   // Report
   [ReportType.Research]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.Policy]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.WorkingPaper]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.BookOfAbstracts]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.ConferenceReport]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.Report]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Degree
@@ -497,7 +498,12 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [],
   },
   [MediaType.MediaInterview]: {
-    primaryRoles: [ContributorRole.Journalist, ContributorRole.InterviewSubject, ContributorRole.Other],
+    primaryRoles: [
+      ContributorRole.Journalist,
+      ContributorRole.InterviewSubject,
+      ContributorRole.Creator,
+      ContributorRole.Other,
+    ],
     secondaryRoles: [],
   },
   [MediaType.MediaBlogPost]: {
@@ -717,3 +723,22 @@ export const findParentSubject = (disciplines: NpiSubjectDomain[], npiSubjectHea
   );
   return parent ? parent.id : null;
 };
+
+export const registrationLanguageOptions = [
+  getLanguageByIso6393Code('eng'),
+  getLanguageByIso6393Code('nob'),
+  getLanguageByIso6393Code('nno'),
+  getLanguageByIso6393Code('dan'),
+  getLanguageByIso6393Code('fin'),
+  getLanguageByIso6393Code('fra'),
+  getLanguageByIso6393Code('isl'),
+  getLanguageByIso6393Code('ita'),
+  getLanguageByIso6393Code('nld'),
+  getLanguageByIso6393Code('por'),
+  getLanguageByIso6393Code('rus'),
+  getLanguageByIso6393Code('sme'),
+  getLanguageByIso6393Code('spa'),
+  getLanguageByIso6393Code('swe'),
+  getLanguageByIso6393Code('deu'),
+  getLanguageByIso6393Code('mis'),
+];

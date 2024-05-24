@@ -75,6 +75,8 @@
         "result_in_nva": "Resultat i NVA",
         "update_value": "Oppdater verdi"
       },
+      "missing_journal": "Mangler tidsskrift",
+      "missing_publisher": "Mangler utgiver",
       "not_applicable": "Mangelfull",
       "or_search_with": "eller søk med",
       "reset_search_values": "Tilbakestill verdier",
@@ -1756,6 +1758,7 @@
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
       "resource_type": "Kategori",
+      "search_for_channel": "Søk i ISSN-portalen på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
       "search_for_publisher_placeholder": "Søk etter navn",

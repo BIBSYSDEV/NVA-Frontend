@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Modal } from '../../../../components/Modal';
-import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
+import { OrganizationTree } from '../../../../components/institution/OrganizationTree';
 import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { Affiliation } from '../../../../types/contributor.types';
@@ -89,9 +89,10 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'start',
+            width: '100%',
             gap: '0.25rem',
           }}>
-          {affiliation.type === 'Organization' && <AffiliationHierarchy unitUri={affiliation.id} />}
+          {affiliation.type === 'Organization' && <OrganizationTree unitUri={affiliation.id} sx={{ width: '100%' }} />}
           {affiliation.type === 'UnconfirmedOrganization' && (
             <>
               <Typography>"{affiliation.name}"</Typography>

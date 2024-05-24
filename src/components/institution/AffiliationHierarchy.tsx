@@ -16,7 +16,8 @@ export const AffiliationHierarchy = ({ unitUri, commaSeparated, boldTopLevel = t
   const { t } = useTranslation();
 
   const organizationQuery = useQuery({
-    queryKey: [unitUri],
+    enabled: !!unitUri,
+    queryKey: ['organization', unitUri],
     queryFn: () => fetchOrganization(unitUri),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,

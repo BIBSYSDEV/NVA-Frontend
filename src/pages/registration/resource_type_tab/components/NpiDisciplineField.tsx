@@ -16,7 +16,11 @@ const disciplineOptions = disciplines
   )
   .flat();
 
-export const NpiDisciplineField = () => {
+interface NpiDisciplineFieldProps {
+  required: boolean;
+}
+
+export const NpiDisciplineField = ({ required }: NpiDisciplineFieldProps) => {
   const { t } = useTranslation();
 
   return (
@@ -45,7 +49,7 @@ export const NpiDisciplineField = () => {
                 {...params}
                 onBlur={() => (!touched ? setFieldTouched(name, true, false) : null)}
                 label={t('registration.description.npi_disciplines')}
-                required
+                required={required}
                 fullWidth
                 variant="filled"
                 placeholder={!value ? t('registration.description.search_for_npi_discipline') : ''}

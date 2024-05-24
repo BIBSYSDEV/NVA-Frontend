@@ -1,4 +1,4 @@
-import { Box, ListItemText, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ContributorIndicators } from '../../../../components/ContributorIndicators';
@@ -9,6 +9,7 @@ import { getIdentifierFromId, getTimePeriodString } from '../../../../utils/gene
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getResearchProfilePath } from '../../../../utils/urlPaths';
+import { ImportCandidateChannelName } from './ImportCandidateChannelName';
 
 interface CentralImportResultItemProps {
   importCandidate: ImportCandidateSummary;
@@ -28,19 +29,27 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
   const periodString = getTimePeriodString(new Date(importCandidate.createdDate), new Date(), t);
 
   return (
-    <SearchListItem sx={{ borderLeftColor: 'centralImport.main', display: 'flex', gap: '1rem' }}>
-      <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'space-between', width: '100%' }}>
-        <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
-          {heading && (
-            <Typography variant="overline" sx={{ color: 'primary.main' }}>
-              {heading}
-            </Typography>
-          )}
-          <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-            <MuiLink component={Link} to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
-              {getTitleString(importCandidate.mainTitle)}
-            </MuiLink>
+    <SearchListItem
+      sx={{
+        borderLeftColor: 'centralImport.main',
+        flexDirection: 'row',
+        gap: '1rem',
+        justifyContent: 'space-between',
+      }}
+      data-testid={dataTestId.startPage.searchResultItem}>
+      <div>
+        {heading && (
+          <Typography variant="overline" color="primary">
+            {heading}
           </Typography>
+        )}
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+          <MuiLink component={Link} to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
+            {getTitleString(importCandidate.mainTitle)}
+          </MuiLink>
+        </Typography>
+
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
             {importCandidate.contributors.map((contributor, index) => (
               <Box
@@ -72,7 +81,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
           </Box>
 
           {importCandidate.organizations.length > 0 && (
-            <Typography sx={{ mt: '0.5rem' }}>
+            <Typography>
               {importCandidate.organizations
                 .map((organization) =>
                   organization.type === 'Organization' ? getLanguageString(organization.labels) : organization.name
@@ -81,9 +90,11 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
                 .join(', ')}
             </Typography>
           )}
-        </ListItemText>
-        <Typography sx={{ whiteSpace: 'nowrap' }}>{periodString}</Typography>
-      </Box>
+
+          <ImportCandidateChannelName importCandidate={importCandidate} />
+        </Box>
+      </div>
+      <Typography sx={{ whiteSpace: 'nowrap' }}>{periodString}</Typography>
     </SearchListItem>
   );
 };
