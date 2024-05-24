@@ -1,4 +1,5 @@
-import { enUS as englishLocale, nb as norwegianLocale } from 'date-fns/locale';
+import { enUS as englishPickerLocale, nbNO as norwegianPickerLocale } from '@mui/x-date-pickers/locales';
+import { enGB as englishDateLocale, nb as norwegianDateLocale } from 'date-fns/locale';
 import { RegistrationDate } from '../types/registration.types';
 
 export const displayDate = (date: Omit<RegistrationDate, 'type'> | undefined) => {
@@ -13,9 +14,16 @@ export const displayDate = (date: Omit<RegistrationDate, 'type'> | undefined) =>
 
 export const getDateFnsLocale = (language: string) => {
   if (language === 'nob' || language === 'nno') {
-    return norwegianLocale;
+    return norwegianDateLocale;
   }
-  return englishLocale;
+  return englishDateLocale;
+};
+
+export const getDatePickerLocaleText = (language: string) => {
+  if (language === 'nob' || language === 'nno') {
+    return norwegianPickerLocale.components.MuiLocalizationProvider.defaultProps.localeText;
+  }
+  return englishPickerLocale.components.MuiLocalizationProvider.defaultProps.localeText;
 };
 
 export const formatDateStringToISO = (date: Date) => {
