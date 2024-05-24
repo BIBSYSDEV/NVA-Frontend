@@ -1,14 +1,13 @@
 import { Avatar as MuiAvatar, AvatarProps as MuiAvatarProps, Tooltip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUser } from '../api/roleApi';
+import { tooltipDelay } from '../utils/constants';
 import { getInitials } from '../utils/general-helpers';
 import { getFullName } from '../utils/user-helpers';
 
 interface AvatarProps extends Pick<MuiAvatarProps, 'sx'> {
   username: string;
 }
-
-const tooltipDelay = 400;
 
 export const Avatar = ({ username, sx }: AvatarProps) => {
   const userQuery = useQuery({

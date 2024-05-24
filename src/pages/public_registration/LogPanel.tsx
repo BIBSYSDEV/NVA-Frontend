@@ -3,14 +3,15 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
+import { Avatar } from '../../components/Avatar';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
+import { tooltipDelay } from '../../utils/constants';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
 import { ticketColor } from '../messages/components/TicketListItem';
-import { Avatar } from '../../components/Avatar';
 
 interface LogItem {
   modifiedDate: string;
@@ -24,8 +25,6 @@ interface LogPanelProps {
   tickets: Ticket[];
   registration: Registration;
 }
-
-const tooltipDelay = 400;
 
 export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const { t } = useTranslation();

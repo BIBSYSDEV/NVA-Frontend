@@ -26,3 +26,5 @@ export enum LocalStorageKey {
   ShowTagline = 'showTagline',
   RedirectPath = 'redirectPath',
 }
+
+export const tooltipDelay = 400;
