@@ -171,7 +171,6 @@
     "created": "Opprettet",
     "date": "Dato",
     "delete": "Slett",
-    "deleted": "Slettet",
     "description": "Beskrivelse",
     "dialogue": "Dialog",
     "doi": "DOI",
@@ -680,6 +679,7 @@
       "general_support_pending": "Venter på oppfølging",
       "get_curator_support": "Få hjelp av kurator",
       "mark_as_completed": "Sett til ferdig",
+      "message_deleted": "Meldinger er slettet",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Avvist",
