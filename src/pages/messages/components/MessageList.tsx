@@ -2,7 +2,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
   Box,
-  Button,
   Divider,
   IconButton,
   ListItemIcon,
@@ -98,7 +97,6 @@ export const MessageItem = ({
   confirmDialogTitle,
 }: MessageItemProps) => {
   const { t } = useTranslation();
-  const [expanded, setExpanded] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const user = useSelector((store: RootState) => store.user);
@@ -123,11 +121,9 @@ export const MessageItem = ({
         bgcolor: backgroundColor,
         p: '0.5rem',
         borderRadius: '4px',
-        cursor: onDelete && !expanded ? 'pointer' : 'auto',
         display: 'flex',
         flexDirection: 'column',
-      }}
-      onClick={() => setExpanded(true)}>
+      }}>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
         <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           <span>
@@ -143,7 +139,7 @@ export const MessageItem = ({
             {new Date(date).toLocaleDateString()}
           </span>
         </Typography>
-        {canDeleteMessage && (
+        {canDeleteMessage && onDelete && (
           <>
             <IconButton
               data-testid={dataTestId.registrationLandingPage.tasksPanel.messageOptionsButton}
@@ -187,31 +183,20 @@ export const MessageItem = ({
         {text ? text : <Typography fontStyle="italic">{t('common.deleted')}</Typography>}
       </Box>
 
-      {expanded && onDelete && confirmDialogContent && confirmDialogTitle && (
-        <>
-          <Button
-            size="small"
-            disabled={showConfirmDialog}
-            variant="outlined"
-            sx={{ mt: '0.25rem', alignSelf: 'center' }}
-            onClick={() => setShowConfirmDialog(true)}>
-            {t('common.delete')}
-          </Button>
-
-          <ConfirmDialog
-            open={showConfirmDialog}
-            title={confirmDialogTitle}
-            onAccept={async () => {
-              const result = await onDelete();
-              if (result) {
-                setShowConfirmDialog(false);
-              }
-            }}
-            isLoading={isDeleting}
-            onCancel={() => setShowConfirmDialog(false)}>
-            <Typography>{confirmDialogContent}</Typography>
-          </ConfirmDialog>
-        </>
+      {onDelete && confirmDialogContent && confirmDialogTitle && (
+        <ConfirmDialog
+          open={showConfirmDialog}
+          title={confirmDialogTitle}
+          onAccept={async () => {
+            const result = await onDelete();
+            if (result) {
+              setShowConfirmDialog(false);
+            }
+          }}
+          isLoading={isDeleting}
+          onCancel={() => setShowConfirmDialog(false)}>
+          <Typography>{confirmDialogContent}</Typography>
+        </ConfirmDialog>
       )}
     </Box>
   );
