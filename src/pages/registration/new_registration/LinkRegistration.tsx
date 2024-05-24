@@ -8,27 +8,25 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Button,
   Divider,
   TextField,
   Typography,
 } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import { getRegistrationByDoi } from '../../../api/registrationApi';
-import { fetchResults } from '../../../api/searchApi';
 import { RegistrationList } from '../../../components/RegistrationList';
-import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { isValidUrl } from '../../../utils/general-helpers';
-import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
-import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { doiUrlBase, makeDoiUrl } from '../../../utils/general-helpers';
 import { RegistrationAccordion } from './RegistrationAccordion';
+import { useGetRegistrationsWithDoi } from '../../../api/hooks/useGetRegistrationsWithDoi';
+import { useGetDoiPreview } from '../../../api/hooks/useGetDoiPreview';
+import { useCreateRegistrationFromDoi } from '../../../api/hooks/useCreateRegistrationFromDoi';
+import { AxiosResponse } from 'axios';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { Registration } from '../../../types/registration.types';
 
 export interface StartRegistrationAccordionProps {
   expanded: boolean;
@@ -51,63 +49,43 @@ const emptyDoiFormValues: DoiFormValues = {
   [LinkRegistrationFormFieldName.Link]: '',
 };
 
-const doiUrlBase = 'https://doi.org/';
 const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
-const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+)\\b'); // https://stackoverflow.com/a/10324802
 
 export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation();
-  const [doiQuery, setDoiQuery] = useState('');
   const history = useHistory();
-  const dispatch = useDispatch();
+  const [doiQuery, setDoiQuery] = useState('');
 
-  const openRegistration = async () => {
-    if (!mutateDoi.data) {
-      return;
-    }
-    history.push(getRegistrationWizardPath(mutateDoi.data.identifier), { highestValidatedTab: -1 });
+  const onCreateRegistrationSuccess = (response: AxiosResponse<Registration, any>) => {
+    history.push(getRegistrationWizardPath(response.data.identifier), { highestValidatedTab: -1 });
   };
 
-  const resultsQuery = useQuery({
-    enabled: !!doiQuery,
-    queryKey: ['doi-results', doiQuery],
-    queryFn: () => fetchResults({ doi: doiQuery }),
-  });
+  const doiSearchResults = useGetRegistrationsWithDoi(doiQuery);
+  const doiPreview = useGetDoiPreview();
+  const createRegistrationFromDoi = useCreateRegistrationFromDoi(onCreateRegistrationSuccess);
 
-  const searchResults = resultsQuery.data?.hits ?? [];
+  const registrationsWithDoi = doiSearchResults.data?.hits ?? [];
+  const isLookingUpDoi = doiSearchResults.isFetching || doiPreview.isPending;
+  const isCreatingRegistration = createRegistrationFromDoi.isPending;
 
-  const mutateDoi = useMutation({
-    mutationFn: (doi: string) => getRegistrationByDoi(doi),
-    onSuccess: (response) => {
-      if (stringIncludesMathJax(response.title)) {
-        typesetMathJax();
-      }
-    },
-    onError: () => {
-      dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'error' }));
-    },
-  });
-
-  const mutateDoiRef = useRef(mutateDoi);
   useEffect(() => {
-    if (resultsQuery.isSuccess && resultsQuery.data.hits.length === 0) {
-      mutateDoiRef.current.mutate(doiQuery);
+    if (doiSearchResults.isSuccess && doiSearchResults.data.hits.length === 0) {
+      doiPreview.mutate(doiQuery);
     }
-  }, [resultsQuery.isSuccess, resultsQuery.data, doiQuery]);
+  }, [doiSearchResults.isSuccess, doiSearchResults.data, doiQuery]);
 
-  const isLookingUpDoi = resultsQuery.isFetching || mutateDoi.isPending;
+  const onSearchDoi = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
+    const doiUrl = makeDoiUrl(values.link);
 
-  const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
-    let doiUrl = values.link.trim();
-
-    if (!isValidUrl(doiUrl)) {
-      const regexMatch = doiRegExp.exec(doiUrl);
-      if (regexMatch && regexMatch.length > 0) {
-        doiUrl = `${doiUrlBase}${regexMatch[0]}`;
-      }
-    }
     setDoiQuery(doiUrl);
     setValues({ link: doiUrl });
+  };
+
+  const persistRegistration = async () => {
+    if (!doiPreview.data) {
+      return;
+    }
+    createRegistrationFromDoi.mutate(doiPreview.data);
   };
 
   return (
@@ -123,7 +101,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
       </AccordionSummary>
 
       <AccordionDetails>
-        <Formik onSubmit={onSubmit} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
+        <Formik onSubmit={onSearchDoi} initialValues={emptyDoiFormValues} validationSchema={doiValidationSchema}>
           {({ isSubmitting }) => (
             <Form noValidate>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -158,10 +136,10 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
             </Form>
           )}
         </Formik>
-        {resultsQuery.isFetched && searchResults.length === 0 && mutateDoi.isError && (
+        {doiSearchResults.isFetched && registrationsWithDoi.length === 0 && doiPreview.isError && (
           <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
         )}
-        {searchResults.length > 0 && (
+        {registrationsWithDoi.length > 0 && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <Divider />
             <Typography
@@ -174,29 +152,30 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
               }}>
               {t('registration.registration.registration_doi_validation_message')}
             </Typography>
-            <RegistrationList registrations={searchResults} />
+            <RegistrationList registrations={registrationsWithDoi} />
             <Divider />
           </Box>
         )}
-        {searchResults.length === 0 && mutateDoi.isSuccess && (
+        {registrationsWithDoi.length === 0 && doiPreview.isSuccess && (
           <div data-testid={dataTestId.registrationWizard.new.linkMetadata}>
             <Typography sx={{ mt: '1rem' }} variant="h3" gutterBottom>
               {t('common.result')}:
             </Typography>
-            <Typography>{mutateDoi.data.title}</Typography>
+            <Typography>{doiPreview.data.entityDescription.mainTitle}</Typography>
           </div>
         )}
       </AccordionDetails>
 
       <AccordionActions>
-        <Button
+        <LoadingButton
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           variant="contained"
-          disabled={isLookingUpDoi || searchResults.length > 0 || mutateDoi.isError || !doiQuery}
-          onClick={openRegistration}>
+          disabled={isLookingUpDoi || registrationsWithDoi.length > 0 || doiPreview.isError || !doiQuery}
+          loading={isCreatingRegistration}
+          onClick={persistRegistration}>
           {t('registration.registration.start_registration')}
-        </Button>
+        </LoadingButton>
       </AccordionActions>
     </RegistrationAccordion>
   );

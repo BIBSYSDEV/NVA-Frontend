@@ -240,6 +240,10 @@ export interface Doi {
   title: string;
 }
 
+export interface DoiPreview {
+  entityDescription: EntityDescription;
+}
+
 export const emptyRegistration: Registration = {
   type: 'Publication',
   id: '',
