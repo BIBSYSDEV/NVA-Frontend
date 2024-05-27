@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { createRegistrationFromDoi } from '../registrationApi';
-import { setNotification } from '../../redux/notificationSlice';
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { DoiPreview, Registration } from '../../types/registration.types';
 import { AxiosResponse } from 'axios';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../redux/notificationSlice';
+import { DoiPreview, Registration } from '../../types/registration.types';
+import { createRegistrationFromDoi } from '../registrationApi';
 
 export const useCreateRegistrationFromDoi = (onSuccess: (response: AxiosResponse<Registration, any>) => void) => {
   const dispatch = useDispatch();

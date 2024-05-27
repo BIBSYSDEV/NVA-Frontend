@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
-import { getRegistrationByDoi } from '../registrationApi';
-import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { setNotification } from '../../redux/notificationSlice';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../redux/notificationSlice';
+import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
+import { getRegistrationByDoi } from '../registrationApi';
 
-export const useGetDoiPreview = () => {
+export const useCreateDoiPreview = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 

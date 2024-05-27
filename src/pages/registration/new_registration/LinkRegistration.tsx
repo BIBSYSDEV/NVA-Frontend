@@ -12,21 +12,21 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { AxiosResponse } from 'axios';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useCreateDoiPreview } from '../../../api/hooks/useCreateDoiPreview';
+import { useCreateRegistrationFromDoi } from '../../../api/hooks/useCreateRegistrationFromDoi';
+import { useGetRegistrationsWithDoi } from '../../../api/hooks/useGetRegistrationsWithDoi';
 import { RegistrationList } from '../../../components/RegistrationList';
+import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { doiUrlBase, makeDoiUrl } from '../../../utils/general-helpers';
-import { RegistrationAccordion } from './RegistrationAccordion';
-import { useGetRegistrationsWithDoi } from '../../../api/hooks/useGetRegistrationsWithDoi';
-import { useGetDoiPreview } from '../../../api/hooks/useGetDoiPreview';
-import { useCreateRegistrationFromDoi } from '../../../api/hooks/useCreateRegistrationFromDoi';
-import { AxiosResponse } from 'axios';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
-import { Registration } from '../../../types/registration.types';
+import { RegistrationAccordion } from './RegistrationAccordion';
 
 export interface StartRegistrationAccordionProps {
   expanded: boolean;
@@ -61,7 +61,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   };
 
   const doiSearchResults = useGetRegistrationsWithDoi(doiQuery);
-  const doiPreview = useGetDoiPreview();
+  const doiPreview = useCreateDoiPreview();
   const createRegistrationFromDoi = useCreateRegistrationFromDoi(onCreateRegistrationSuccess);
 
   const registrationsWithDoi = doiSearchResults.data?.hits ?? [];
