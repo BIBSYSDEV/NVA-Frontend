@@ -15,4 +15,4 @@ customHeaders:
       - key: 'X-Content-Type-Options'
         value: 'nosniff'
       - key: 'Content-Security-Policy'
-        value: "default-src 'self'; img-src * data:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js; style-src 'self' 'unsafe-inline' static:; connect-src orcid.org api.dev.nva.aws.unit.no api.sandbox.nva.aws.unit.no api.e2e.nva.aws.unit.no api.nva.unit.no api.test.aws.unit.no data:; font-src 'self' cdn.jsdelivr.net data:"
+        value: "default-src 'self'; img-src * data:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js; style-src 'self' 'unsafe-inline' static:; connect-src doi.org orcid.org api.dev.nva.aws.unit.no api.sandbox.nva.aws.unit.no api.e2e.nva.aws.unit.no api.nva.unit.no api.test.aws.unit.no data:; font-src 'self' cdn.jsdelivr.net data:"
