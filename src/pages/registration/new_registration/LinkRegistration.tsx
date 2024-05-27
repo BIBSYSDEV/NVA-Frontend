@@ -74,7 +74,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     }
   }, [doiSearchResults.isSuccess, doiSearchResults.data, doiQuery, doiPreview]);
 
-  const onSearchDoi = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
+  const onSearchDoi = (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
     const doiUrl = makeDoiUrl(values.link);
 
     setDoiQuery(doiUrl);
