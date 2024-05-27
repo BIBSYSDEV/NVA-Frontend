@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import {
   PersonSearchParameter,
@@ -18,9 +19,11 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
+import { RootState } from '../../redux/store';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { PrivateRoute } from '../../utils/routes/Routes';
 import { SearchParam } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ClinicalTreatmentStudiesReports } from '../reports/ClinicalTreatmentStudiesReports';
@@ -42,6 +45,7 @@ enum SearchTypeValue {
 
 const HomePage = () => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
@@ -183,12 +187,14 @@ const HomePage = () => {
               to={UrlPathTemplate.Reports}>
               {t('common.overview')}
             </LinkButton>
-            <LinkButton
-              data-testid={dataTestId.startPage.reportsInsitutionNviButton}
-              isSelected={currentPath === UrlPathTemplate.ReportsInsitutionNvi}
-              to={UrlPathTemplate.ReportsInsitutionNvi}>
-              {t('search.reports.institution_nvi')}
-            </LinkButton>
+            {user?.isNviCurator && (
+              <LinkButton
+                data-testid={dataTestId.startPage.reportsInsitutionNviButton}
+                isSelected={currentPath === UrlPathTemplate.ReportsInsitutionNvi}
+                to={UrlPathTemplate.ReportsInsitutionNvi}>
+                {t('search.reports.institution_nvi')}
+              </LinkButton>
+            )}
             <LinkButton
               data-testid={dataTestId.startPage.reportsNviButton}
               isSelected={currentPath === UrlPathTemplate.ReportsNvi}
@@ -219,7 +225,12 @@ const HomePage = () => {
           <Route exact path={UrlPathTemplate.Search} component={AdvancedSearchPage} />
           <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
           <Route exact path={UrlPathTemplate.ReportsNvi} component={NviReports} />
-          <Route exact path={UrlPathTemplate.ReportsInsitutionNvi} component={InstititutionNviReports} />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.ReportsInsitutionNvi}
+            component={InstititutionNviReports}
+            isAuthorized={!!user?.isNviCurator}
+          />
           <Route
             exact
             path={UrlPathTemplate.ReportsInternationalCooperation}

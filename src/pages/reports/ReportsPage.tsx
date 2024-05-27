@@ -1,5 +1,7 @@
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import clinicalTreatmentStudiesThumbnail from '../../resources/images/clinical-treatment-studies-thumbnail.png';
 import internationalCooperationThumbnail from '../../resources/images/international-cooperation-report-thumbnail.png';
 import nviReportThumbnail from '../../resources/images/nvi-report-thumbnail.png';
@@ -8,6 +10,7 @@ import { ReportButton } from './ReportButton';
 
 const ReportsPage = () => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
 
   return (
     <Box
@@ -18,12 +21,14 @@ const ReportsPage = () => {
         px: { xs: '0.25rem', md: 0 },
         mb: '1rem',
       }}>
-      <ReportButton
-        title={t('search.reports.institution_nvi')}
-        description={''}
-        imageSrc={''}
-        path={UrlPathTemplate.ReportsInsitutionNvi}
-      />
+      {user?.isNviCurator && (
+        <ReportButton
+          title={t('search.reports.institution_nvi')}
+          description={''}
+          imageSrc={''}
+          path={UrlPathTemplate.ReportsInsitutionNvi}
+        />
+      )}
       <ReportButton
         title={t('common.nvi')}
         description={t('search.reports.external_reports')}
