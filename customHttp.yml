@@ -1,3 +1,7 @@
+# file added for AWS amplify, setting security headers.
+# https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js is added for MATH-jax support
+# font-src is added for MATH-jax support
+# script-src unsafe-inline is added because this is an SPA and won't work without it.
 customHeaders:
   - pattern: '**'
     headers:
@@ -10,4 +14,4 @@ customHeaders:
       - key: 'X-Content-Type-Options'
         value: 'nosniff'
       - key: 'Content-Security-Policy'
-        value: "default-src 'self'; img-src * data:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js; style-src 'self' 'unsafe-inline' static:; connect-src api.dev.nva.aws.unit.no data:; font-src * data:"
+        value: "default-src 'self'; img-src * data:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js; style-src 'self' 'unsafe-inline' static:; connect-src orcid.org api.dev.nva.aws.unit.no api.sandbox.nva.aws.unit.no api.e2e.nva.aws.unit.no api.nva.unit.no api.test.aws.unit.no data:; font-src cdn.jsdelivr.net data:"
