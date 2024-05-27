@@ -81,7 +81,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     setValues({ link: doiUrl });
   };
 
-  const persistRegistration = async () => {
+  const persistRegistration = () => {
     if (!doiPreview.data) {
       return;
     }
