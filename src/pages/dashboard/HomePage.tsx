@@ -24,6 +24,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { SearchParam } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ClinicalTreatmentStudiesReports } from '../reports/ClinicalTreatmentStudiesReports';
+import { InstititutionNviReports } from '../reports/InstitutionNviReports';
 import { InternationalCooperationReports } from '../reports/InternationalCooperationReports';
 import { NviReports } from '../reports/NviReports';
 import ReportsPage from '../reports/ReportsPage';
@@ -183,6 +184,12 @@ const HomePage = () => {
               {t('common.overview')}
             </LinkButton>
             <LinkButton
+              data-testid={dataTestId.startPage.reportsInsitutionNviButton}
+              isSelected={currentPath === UrlPathTemplate.ReportsInsitutionNvi}
+              to={UrlPathTemplate.ReportsInsitutionNvi}>
+              {t('search.reports.institution_nvi')}
+            </LinkButton>
+            <LinkButton
               data-testid={dataTestId.startPage.reportsNviButton}
               isSelected={currentPath === UrlPathTemplate.ReportsNvi}
               to={UrlPathTemplate.ReportsNvi}>
@@ -212,6 +219,7 @@ const HomePage = () => {
           <Route exact path={UrlPathTemplate.Search} component={AdvancedSearchPage} />
           <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
           <Route exact path={UrlPathTemplate.ReportsNvi} component={NviReports} />
+          <Route exact path={UrlPathTemplate.ReportsInsitutionNvi} component={InstititutionNviReports} />
           <Route
             exact
             path={UrlPathTemplate.ReportsInternationalCooperation}

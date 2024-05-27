@@ -196,6 +196,7 @@ export const dataTestId = {
     publicationDateFilter: 'publication-date-filter',
     reportsClinicalTreatmentStudiesButton: 'reports-clinical-treatment-studies-button',
     reportsInternationalWorkButton: 'reports-international-work-button',
+    reportsInsitutionNviButton: 'reports-institution-nvi-button',
     reportsNviButton: 'reports-nvi-button',
     reportsOverviewButton: 'reports-overview-button',
     reportsAccordion: 'reports-accordion',

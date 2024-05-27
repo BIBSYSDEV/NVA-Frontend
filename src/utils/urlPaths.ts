@@ -55,6 +55,7 @@ export enum UrlPathTemplate {
   Reports = '/reports',
   ReportsClinicalTreatmentStudies = '/reports/clinical-treatment-studies',
   ReportsInternationalCooperation = '/reports/international-cooperation',
+  ReportsInsitutionNvi = '/reports/institution-nvi',
   ReportsNvi = '/reports/nvi',
   Search = '/search',
   SignedOut = '/signed-out',

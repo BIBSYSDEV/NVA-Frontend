@@ -19,6 +19,12 @@ const ReportsPage = () => {
         mb: '1rem',
       }}>
       <ReportButton
+        title={t('search.reports.institution_nvi')}
+        description={''}
+        imageSrc={''}
+        path={UrlPathTemplate.ReportsInsitutionNvi}
+      />
+      <ReportButton
         title={t('common.nvi')}
         description={t('search.reports.external_reports')}
         imageSrc={nviReportThumbnail}
