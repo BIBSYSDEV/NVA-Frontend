@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -62,6 +62,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
 
   const doiSearchResults = useGetRegistrationsWithDoi(doiQuery);
   const doiPreview = useCreateDoiPreview();
+  const doiPreviewRef = useRef(doiPreview);
   const createRegistrationFromDoi = useCreateRegistrationFromDoi(onCreateRegistrationSuccess);
 
   const registrationsWithDoi = doiSearchResults.data?.hits ?? [];
@@ -70,9 +71,9 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
 
   useEffect(() => {
     if (doiSearchResults.isSuccess && doiSearchResults.data.hits.length === 0) {
-      doiPreview.mutate(doiQuery);
+      doiPreviewRef.current.mutate(doiQuery);
     }
-  }, [doiSearchResults.isSuccess, doiSearchResults.data, doiQuery, doiPreview]);
+  }, [doiSearchResults.isSuccess, doiSearchResults.data, doiQuery]);
 
   const onSearchDoi = (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
     const doiUrl = makeDoiUrl(values.link);
