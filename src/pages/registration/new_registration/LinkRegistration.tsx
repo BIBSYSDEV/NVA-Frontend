@@ -72,16 +72,16 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     if (doiSearchResults.isSuccess && doiSearchResults.data.hits.length === 0) {
       doiPreview.mutate(doiQuery);
     }
-  }, [doiSearchResults.isSuccess, doiSearchResults.data, doiQuery]);
+  }, [doiSearchResults.isSuccess, doiSearchResults.data, doiQuery, doiPreview]);
 
-  const onSearchDoi = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
+  const onSearchDoi = (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
     const doiUrl = makeDoiUrl(values.link);
 
     setDoiQuery(doiUrl);
     setValues({ link: doiUrl });
   };
 
-  const persistRegistration = async () => {
+  const persistRegistration = () => {
     if (!doiPreview.data) {
       return;
     }
