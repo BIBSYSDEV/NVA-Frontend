@@ -6,6 +6,7 @@ import { fetchUser } from '../../api/roleApi';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
+import { toDateString } from '../../utils/date-helpers';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
@@ -130,7 +131,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
           <Typography>{t('common.created')}</Typography>
           <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()} enterDelay={tooltipDelay}>
-            <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
+            <Typography>{toDateString(registration.createdDate)}</Typography>
           </Tooltip>
           {organizationQuery.isPending || userQuery.isPending ? (
             <Skeleton sx={{ width: '4rem' }} />
@@ -150,7 +151,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             <StyledStatusMessageBox key={index} sx={{ bgcolor: ticketColor[logItem.type] }}>
               <Typography>{logItem.description}</Typography>
               <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
-                <Typography>{modifiedDate.toLocaleDateString()}</Typography>
+                <Typography>{toDateString(modifiedDate)}</Typography>
               </Tooltip>
               {logItem.filesInfo?.approvedFileNames && logItem.filesInfo.approvedFileNames.length > 0 && (
                 <Box

@@ -5,6 +5,7 @@ import { fetchRegistration } from '../../../api/registrationApi';
 import { fetchUser } from '../../../api/roleApi';
 import { ProfilePicture } from '../../../components/ProfilePicture';
 import { PublicationNote, Registration } from '../../../types/registration.types';
+import { toDateString } from '../../../utils/date-helpers';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
@@ -48,9 +49,7 @@ export const DeletedRegistrationInformation = ({
       }}>
       <Typography>{t(`registration.status.${registration.status}`)}</Typography>
       <Box sx={{ display: 'flex', minWidth: '6rem', gap: '0.5rem', alignItems: 'center' }}>
-        {unpublishingNote.createdDate && (
-          <Typography>{new Date(unpublishingNote.createdDate).toLocaleDateString()}</Typography>
-        )}
+        {unpublishingNote.createdDate && <Typography>{toDateString(unpublishingNote.createdDate)}</Typography>}
         {senderQuery.isFetching ? (
           <Skeleton variant="circular" sx={{ width: '1.5rem', height: '1.5rem' }} />
         ) : (

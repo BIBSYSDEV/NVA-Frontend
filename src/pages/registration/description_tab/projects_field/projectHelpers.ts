@@ -1,5 +1,6 @@
 import { CristinProject, ProjectContributor, ProjectContributorIdentity } from '../../../../types/project.types';
 import { CristinPerson, User } from '../../../../types/user.types';
+import { toDateString } from '../../../../utils/date-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
@@ -20,8 +21,8 @@ export const getProjectPeriod = (project?: CristinProject) => {
   const startDate = new Date(project.startDate);
   const endDate = project.endDate && new Date(project.endDate);
   const dateInterval = [
-    startDate.toLocaleDateString(),
-    endDate && !isNaN(endDate.valueOf()) ? endDate.toLocaleDateString() : '?',
+    toDateString(startDate),
+    endDate && !isNaN(endDate.valueOf()) ? toDateString(endDate) : '?',
   ].join(' - ');
 
   return dateInterval;
