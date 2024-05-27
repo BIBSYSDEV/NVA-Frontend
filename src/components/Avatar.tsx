@@ -1,7 +1,6 @@
 import { Avatar as MuiAvatar, AvatarProps as MuiAvatarProps, Tooltip } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { fetchUser } from '../api/roleApi';
 import { getInitials } from '../utils/general-helpers';
+import { useFetchUserQuery } from '../utils/hooks/useFetchUserQuery';
 import { getFullName } from '../utils/user-helpers';
 
 interface AvatarProps extends Pick<MuiAvatarProps, 'sx'> {
@@ -9,15 +8,7 @@ interface AvatarProps extends Pick<MuiAvatarProps, 'sx'> {
 }
 
 export const Avatar = ({ username, sx }: AvatarProps) => {
-  const userQuery = useQuery({
-    enabled: !!username,
-    queryKey: ['user', username],
-    queryFn: () => fetchUser(username),
-    retry: 0,
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
-  const user = userQuery.data;
+  const user = useFetchUserQuery(username).data;
   const fullName = getFullName(user?.givenName, user?.familyName);
   const initials = getInitials(fullName);
 
