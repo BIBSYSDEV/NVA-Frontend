@@ -185,7 +185,7 @@ export const ContributorRow = ({
           {!contributor.identity.id && (
             <Button
               variant="outlined"
-              sx={{ textTransform: 'uppercase', paddingY: '0.1rem', paddingX: '0.75rem' }}
+              sx={{ padding: '0.1rem 0.75rem' }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
                 contributor.identity.name
               )}
