@@ -189,7 +189,7 @@ export const MessageItem = ({
       <Box
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={typeof text === 'string' ? Typography : 'div'}>
-        {text ? text : <Typography fontStyle="italic">{t('my_page.messages.message_deleted')}</Typography>}
+        {text ? text : <i>{t('my_page.messages.message_deleted')}</i>}
       </Box>
 
       {onDelete && confirmDialogContent && confirmDialogTitle && (
