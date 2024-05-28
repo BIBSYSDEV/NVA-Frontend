@@ -117,7 +117,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
       ) : fetchedPublisher ? (
         <>
           <Typography>{fetchedPublisher.name}</Typography>
-          <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} />
+          <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} publisherId={fetchedPublisher.id} />
           {fetchedPublisher.sameAs && (
             <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
               {t('registration.public_page.find_in_channel_registry')}
@@ -233,7 +233,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
           .filter((issn) => issn)
           .join(', ')}
       </Typography>
-      <NpiLevelTypography scientificValue={journal.scientificValue} />
+      <NpiLevelTypography scientificValue={journal.scientificValue} publisherId={journal.id} />
       {journal.sameAs && (
         <Typography component={Link} href={journal.sameAs} target="_blank">
           {t('registration.public_page.find_in_channel_registry')}
