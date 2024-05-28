@@ -35,6 +35,10 @@ interface AggregationCount {
   docCount: number;
 }
 
+interface OrgApprovalStatus extends AggregationCount {
+  [orgId: string]: OrgApprovalStatus | number;
+}
+
 export interface NviCandidateAggregations {
   approved: AggregationCount;
   approvedCollaboration: AggregationCount;
@@ -46,6 +50,7 @@ export interface NviCandidateAggregations {
   rejectedCollaboration: AggregationCount;
   completed: AggregationCount;
   totalCount: AggregationCount;
+  organizationApprovalStatuses: any;
 }
 
 export type NviCandidateSearchResponse = Omit<
