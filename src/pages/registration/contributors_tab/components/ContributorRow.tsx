@@ -158,7 +158,7 @@ export const ContributorRow = ({
           {!contributor.identity.id && (
             <Box sx={{ display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
               <ErrorIcon color="warning" />
-              <Typography fontWeight={700}>{t('registration.contributors.contributor_is_unidentified')}</Typography>
+              <Typography fontWeight="bold">{t('registration.contributors.contributor_is_unidentified')}</Typography>
             </Box>
           )}
           <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
