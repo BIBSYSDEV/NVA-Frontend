@@ -25,22 +25,27 @@ export const TicketDateIntervalFilter = () => {
 
   const onChangeFromDate = (newDate: Date | null) => {
     const newFromDate = newDate ? formatDateStringToISO(newDate) : '';
-    if (!newFromDate && !selectedToDate) {
-      searchParams.delete(TicketSearchParam.CreatedDate);
-    } else {
-      searchParams.set(TicketSearchParam.CreatedDate, `${newFromDate},${selectedToDate}`);
+    // check if year has 4 digits
+    if (newFromDate.match(/^\d{4}-/)) {
+      if (!newFromDate && !selectedToDate) {
+        searchParams.delete(TicketSearchParam.CreatedDate);
+      } else {
+        searchParams.set(TicketSearchParam.CreatedDate, `${newFromDate},${selectedToDate}`);
+      }
+      history.push({ search: searchParams.toString() });
     }
-    history.push({ search: searchParams.toString() });
   };
 
   const onChangeToDate = (newDate: Date | null) => {
     const newToDate = newDate ? formatDateStringToISO(newDate) : '';
-    if (!selectedFromDate && !newToDate) {
-      searchParams.delete(TicketSearchParam.CreatedDate);
-    } else {
-      searchParams.set(TicketSearchParam.CreatedDate, `${selectedFromDate},${newToDate}`);
+    if (newToDate.match(/^\d{4}-/)) {
+      if (!selectedFromDate && !newToDate) {
+        searchParams.delete(TicketSearchParam.CreatedDate);
+      } else {
+        searchParams.set(TicketSearchParam.CreatedDate, `${selectedFromDate},${newToDate}`);
+      }
+      history.push({ search: searchParams.toString() });
     }
-    history.push({ search: searchParams.toString() });
   };
 
   return (
