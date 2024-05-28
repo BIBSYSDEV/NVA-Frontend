@@ -118,8 +118,8 @@ export const MessageItem = ({
 
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
-  const truncatedName = (str: string): string => {
-    return str.length > 20 ? str.slice(0, 20) + '...' : str;
+  const truncatedName = (name: string): string => {
+    return name.length > 20 ? name.slice(0, 20) + '...' : name;
   };
 
   return (
