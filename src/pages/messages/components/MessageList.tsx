@@ -10,6 +10,7 @@ import {
   Menu as MuiMenu,
   MenuItem,
   Skeleton,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -116,6 +117,10 @@ export const MessageItem = ({
 
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
+  const truncatedName = (str: string): string => {
+    return str.length > 20 ? str.slice(0, 20) + '...' : str;
+  };
+
   return (
     <Box
       component="li"
@@ -130,15 +135,17 @@ export const MessageItem = ({
       onClick={() => setExpanded(true)}>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
         <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-          <span>
-            {senderQuery.isPending ? (
-              <Skeleton sx={{ width: '8rem' }} />
-            ) : (
-              <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
-                {senderName ? senderName : <i>{t('common.unknown')}</i>}
-              </b>
-            )}
-          </span>
+          <Tooltip title={senderName ? senderName : t('common.unknown')}>
+            <span>
+              {senderQuery.isPending ? (
+                <Skeleton sx={{ width: '8rem' }} />
+              ) : (
+                <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
+                  {senderName ? truncatedName(senderName) : <i>{t('common.unknown')}</i>}
+                </b>
+              )}
+            </span>
+          </Tooltip>
           <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
             {new Date(date).toLocaleDateString()}
           </span>
