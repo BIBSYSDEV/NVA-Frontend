@@ -25,7 +25,7 @@ import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
-import { getFullName } from '../../../utils/user-helpers';
+import { getFullName, truncateName } from '../../../utils/user-helpers';
 import { ticketColor } from './TicketListItem';
 
 interface MessageListProps {
@@ -119,10 +119,6 @@ export const MessageItem = ({
 
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
-  const truncatedName = (name: string): string => {
-    return name.length > 20 ? name.slice(0, 20) + '...' : name;
-  };
-
   return (
     <Box
       component="li"
@@ -141,7 +137,7 @@ export const MessageItem = ({
                 <Skeleton sx={{ width: '8rem' }} />
               ) : (
                 <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
-                  {senderName ? truncatedName(senderName) : <i>{t('common.unknown')}</i>}
+                  {senderName ? truncateName(senderName, 20) : <i>{t('common.unknown')}</i>}
                 </b>
               )}
             </span>
