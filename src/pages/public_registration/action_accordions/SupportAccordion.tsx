@@ -90,7 +90,7 @@ export const SupportAccordion = ({
                 </LoadingButton>
               )}
             {supportTicket.messages.length > 0 && (
-              <TicketMessageList ticket={supportTicket} refetchData={refetchData} />
+              <TicketMessageList ticket={supportTicket} refetchData={refetchData} canDeleteMessage={userIsCurator} />
             )}
           </>
         )}

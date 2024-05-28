@@ -31,9 +31,10 @@ import { ticketColor } from './TicketListItem';
 interface MessageListProps {
   ticket: Ticket;
   refetchData?: () => void;
+  canDeleteMessage?: boolean;
 }
 
-export const TicketMessageList = ({ ticket, refetchData }: MessageListProps) => {
+export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
   const messages = ticket.messages ?? [];
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ export const TicketMessageList = ({ ticket, refetchData }: MessageListProps) => 
             text={message.text}
             date={message.createdDate}
             username={message.sender}
-            canDeleteMessage={user && (user.isSupportCurator || user.nvaUsername === message.sender)}
+            canDeleteMessage={user && (canDeleteMessage || user.nvaUsername === message.sender)}
             backgroundColor={ticketColor[ticket.type]}
             onDelete={() => deleteSupportMessageMutation.mutateAsync(message.identifier)}
             isDeleting={deleteSupportMessageMutation.isPending}
