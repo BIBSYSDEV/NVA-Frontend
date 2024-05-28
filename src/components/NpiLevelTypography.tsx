@@ -22,8 +22,12 @@ export const NpiLevelTypography = ({ scientificValue, publisherId, ...typography
   const { t } = useTranslation();
 
   const levelString = scientificValue ? ScientificValueMapper[scientificValue] : null;
-  let year = publisherId ? publisherId.split('/').pop() : '';
-  year = year && year.match(/^\d{4}$/) ? ` (${year}) ` : '';
+  const year = publisherId
+    ?.split('/')
+    .pop()
+    ?.match(/^\d{4}$/)
+    ? ` (${publisherId.split('/').pop()}) `
+    : '';
 
   return (
     <Typography {...typographyProps}>
