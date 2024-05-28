@@ -235,11 +235,6 @@ export interface RegistrationPreview {
   };
 }
 
-export interface Doi {
-  identifier: string; // NVA identifier
-  title: string;
-}
-
 export interface DoiPreview {
   entityDescription: EntityDescription;
 }

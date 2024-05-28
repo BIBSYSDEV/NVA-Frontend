@@ -1,7 +1,4 @@
-import { Doi } from '../../types/registration.types';
+import { DoiPreview } from '../../types/registration.types';
+import { mockRegistration } from './mockRegistration';
 
-export const mockDoiLookup: Doi = {
-  identifier: '12345679',
-  title:
-    'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting',
-};
+export const mockDoiLookup: DoiPreview = { entityDescription: mockRegistration.entityDescription };
