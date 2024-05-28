@@ -146,11 +146,6 @@ export const ContributorRow = ({
           )}
         </Field>
       </TableCell>
-      <TableCell width="1">
-        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-          <ContributorIndicator contributor={contributor} />
-        </Box>
-      </TableCell>
       <TableCell>
         <Box
           sx={{
@@ -166,7 +161,8 @@ export const ContributorRow = ({
               <Typography fontWeight={700}>{t('registration.contributors.contributor_is_unidentified')}</Typography>
             </Box>
           )}
-          <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+            <ContributorIndicator contributor={contributor} />
             {contributor.identity.id ? (
               <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                 {contributor.identity.name}
