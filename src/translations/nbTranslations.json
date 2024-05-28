@@ -1129,6 +1129,7 @@
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
+      "contributor_is_unidentified": "Bidragsyter er uidentifisert",
       "corresponding": "Korresponderende",
       "department": "Enhet",
       "identification": "Identifisering",
