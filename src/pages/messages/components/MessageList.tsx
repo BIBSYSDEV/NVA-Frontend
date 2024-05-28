@@ -2,7 +2,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
   Box,
-  Button,
   Divider,
   IconButton,
   ListItemIcon,
@@ -37,6 +36,7 @@ export const TicketMessageList = ({ ticket, refetchData }: MessageListProps) => 
   const messages = ticket.messages ?? [];
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const user = useSelector((store: RootState) => store.user) ?? undefined;
 
   const deleteSupportMessageMutation = useMutation({
     mutationFn: (messageId: string) => deleteTicketMessage(ticket.id, messageId),
@@ -65,6 +65,7 @@ export const TicketMessageList = ({ ticket, refetchData }: MessageListProps) => 
             text={message.text}
             date={message.createdDate}
             username={message.sender}
+            canDeleteMessage={user && (user.isSupportCurator || user.nvaUsername === message.sender)}
             backgroundColor={ticketColor[ticket.type]}
             onDelete={() => deleteSupportMessageMutation.mutateAsync(message.identifier)}
             isDeleting={deleteSupportMessageMutation.isPending}
@@ -82,6 +83,7 @@ interface MessageItemProps {
   date: string;
   username: string;
   backgroundColor: string;
+  canDeleteMessage?: boolean;
   onDelete?: () => Promise<boolean>;
   isDeleting?: boolean;
   confirmDialogTitle?: string;
@@ -93,17 +95,16 @@ export const MessageItem = ({
   date,
   username,
   backgroundColor,
+  canDeleteMessage = false,
   onDelete,
   isDeleting,
   confirmDialogContent,
   confirmDialogTitle,
 }: MessageItemProps) => {
   const { t } = useTranslation();
-  const [expanded, setExpanded] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const user = useSelector((store: RootState) => store.user);
-  const canDeleteMessage = user && (user.nvaUsername === username || user.isSupportCurator || user.isNviCurator);
+  const open = Boolean(anchorEl);
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -128,11 +129,9 @@ export const MessageItem = ({
         bgcolor: backgroundColor,
         p: '0.5rem',
         borderRadius: '4px',
-        cursor: onDelete && !expanded ? 'pointer' : 'auto',
         display: 'flex',
         flexDirection: 'column',
-      }}
-      onClick={() => setExpanded(true)}>
+      }}>
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
         <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           <Tooltip title={senderName ? senderName : t('common.unknown')}>
@@ -150,9 +149,12 @@ export const MessageItem = ({
             {new Date(date).toLocaleDateString()}
           </span>
         </Typography>
-        {canDeleteMessage && (
-          <>
+        {canDeleteMessage && onDelete && (
+          <section>
             <IconButton
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.messageOptionsButton}
               aria-label="delete"
               size="small"
@@ -163,7 +165,7 @@ export const MessageItem = ({
             <MuiMenu
               anchorEl={anchorEl}
               keepMounted
-              open={!!anchorEl}
+              open={open}
               onClose={() => setAnchorEl(null)}
               anchorOrigin={{
                 vertical: 'bottom',
@@ -182,7 +184,7 @@ export const MessageItem = ({
                 <ListItemText>{t('common.delete')}</ListItemText>
               </MenuItem>
             </MuiMenu>
-          </>
+          </section>
         )}
       </Box>
 
@@ -191,34 +193,23 @@ export const MessageItem = ({
       <Box
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={typeof text === 'string' ? Typography : 'div'}>
-        {text ? text : <Typography fontStyle="italic">{t('common.deleted')}</Typography>}
+        {text ? text : <Typography fontStyle="italic">{t('my_page.messages.message_deleted')}</Typography>}
       </Box>
 
-      {expanded && onDelete && confirmDialogContent && confirmDialogTitle && (
-        <>
-          <Button
-            size="small"
-            disabled={showConfirmDialog}
-            variant="outlined"
-            sx={{ mt: '0.25rem', alignSelf: 'center' }}
-            onClick={() => setShowConfirmDialog(true)}>
-            {t('common.delete')}
-          </Button>
-
-          <ConfirmDialog
-            open={showConfirmDialog}
-            title={confirmDialogTitle}
-            onAccept={async () => {
-              const result = await onDelete();
-              if (result) {
-                setShowConfirmDialog(false);
-              }
-            }}
-            isLoading={isDeleting}
-            onCancel={() => setShowConfirmDialog(false)}>
-            <Typography>{confirmDialogContent}</Typography>
-          </ConfirmDialog>
-        </>
+      {onDelete && confirmDialogContent && confirmDialogTitle && (
+        <ConfirmDialog
+          open={showConfirmDialog}
+          title={confirmDialogTitle}
+          onAccept={async () => {
+            const result = await onDelete();
+            if (result) {
+              setShowConfirmDialog(false);
+            }
+          }}
+          isLoading={isDeleting}
+          onCancel={() => setShowConfirmDialog(false)}>
+          <Typography>{confirmDialogContent}</Typography>
+        </ConfirmDialog>
       )}
     </Box>
   );

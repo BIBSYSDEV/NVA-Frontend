@@ -110,7 +110,7 @@ export const CentralImportDuplicationCheckPage = () => {
 
             {importCandidate.importStatus.candidateStatus !== 'IMPORTED' ? (
               <>
-                <Typography variant="h3" sx={{ mt: '1rem' }}>
+                <Typography variant="h2" sx={{ mt: '1rem' }}>
                   {t('basic_data.central_import.search_for_duplicates')}:
                 </Typography>
                 <DuplicateSearchFilterForm

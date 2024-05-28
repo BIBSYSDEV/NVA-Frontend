@@ -52,16 +52,13 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
     data: { message },
   });
 
-export const deleteTicketMessage = async (ticketId: string, messageId: string) => {
-  try {
-    await authenticatedApiRequest2({
-      url: `${ticketId}/message/${messageId}`,
-      method: 'DELETE',
-    });
-    return true;
-  } catch {
-    return false;
-  }
+export const deleteTicketMessage = (ticketId: string, messageId: string) => {
+  return authenticatedApiRequest2({
+    url: `${ticketId}/message/${messageId}`,
+    method: 'DELETE',
+  })
+    .then(() => true)
+    .catch(() => false);
 };
 
 export const createTicket = async (registrationId: string, type: TicketType, returnCreatedTicket = false) => {
