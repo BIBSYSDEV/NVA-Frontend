@@ -43,10 +43,10 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
   const deleteSupportMessageMutation = useMutation({
     mutationFn: (messageId: string) => deleteTicketMessage(ticket.id, messageId),
     onSuccess: () => {
-      dispatch(setNotification({ message: t('feedback.success.delete_note'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.delete_message'), variant: 'success' }));
       refetchData && refetchData();
     },
-    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_note'), variant: 'error' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_message'), variant: 'error' })),
   });
 
   return (
