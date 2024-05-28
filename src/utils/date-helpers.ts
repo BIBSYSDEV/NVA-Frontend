@@ -3,13 +3,29 @@ import { enGB as englishDateLocale, nb as norwegianDateLocale } from 'date-fns/l
 import { RegistrationDate } from '../types/registration.types';
 
 export const displayDate = (date: Omit<RegistrationDate, 'type'> | undefined) => {
-  if (date?.month && date?.day) {
-    return toDateString(new Date(+date.year, +date.month - 1, +date.day));
+  if (date?.month && date?.day && date?.year) {
+    const dateObject = getRegistrationDate(date);
+    if (dateObject) {
+      return toDateString(dateObject);
+    } else {
+      return '';
+    }
   } else if (date?.year) {
     return date.year;
   } else {
     return '';
   }
+};
+
+export const getRegistrationDate = (date: Omit<RegistrationDate, 'type'> | undefined) => {
+  if (!date || !date.year) {
+    return null;
+  }
+  const year = date.year.padStart(4, '0');
+  const month = (date?.month ?? '1').padStart(2, '0');
+  const day = (date?.day ?? '1').padStart(2, '0');
+
+  return new Date(`${year}-${month}-${day}T12:00:00.000Z`);
 };
 
 export const getDateFnsLocale = (language: string) => {
