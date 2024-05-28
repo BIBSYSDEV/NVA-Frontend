@@ -25,8 +25,8 @@ import {
   Affiliation,
   Contributor,
   ContributorRole,
-  Identity,
   emptyContributor,
+  Identity,
 } from '../../../types/contributor.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
@@ -217,7 +217,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
                       <MailOutlineIcon />
                     </Tooltip>
                   </TableCell>
-                  <TableCell>{t('registration.contributors.identification')}</TableCell>
                   <TableCell>{t('common.name')}</TableCell>
                   <TableCell>{t('common.institution')}</TableCell>
                 </TableRow>

@@ -7,8 +7,8 @@ import {
   Button,
   Checkbox,
   IconButton,
-  MenuItem,
   Link as MuiLink,
+  MenuItem,
   TableCell,
   TableRow,
   TextField,
@@ -144,11 +144,6 @@ export const ContributorRow = ({
           )}
         </Field>
       </TableCell>
-      <TableCell width="1">
-        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-          <ContributorIndicator contributor={contributor} />
-        </Box>
-      </TableCell>
       <TableCell>
         <Box
           sx={{
@@ -157,7 +152,8 @@ export const ContributorRow = ({
             gap: '0.25rem',
             alignItems: 'start',
           }}>
-          <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+            <ContributorIndicator contributor={contributor} />
             {contributor.identity.id ? (
               <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                 {contributor.identity.name}
