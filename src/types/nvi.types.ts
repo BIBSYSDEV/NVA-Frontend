@@ -35,13 +35,15 @@ interface AggregationCount {
   docCount: number;
 }
 
+type NviAggregationStatus = NviCandidateStatus | 'Dispute';
+
 interface OrganizationDetail extends AggregationCount {
   dispute: AggregationCount;
   points: { value: number };
-  status: { [status in NviCandidateStatus]: AggregationCount };
+  status: { [status in NviAggregationStatus]?: AggregationCount };
 }
 
-interface OrganizationApprovalStatusDetail extends AggregationCount {
+export interface OrganizationApprovalStatusDetail extends AggregationCount {
   organizations: { [organizationId: string]: OrganizationDetail };
 }
 
