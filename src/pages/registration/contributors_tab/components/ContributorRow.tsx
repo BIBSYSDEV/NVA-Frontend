@@ -160,10 +160,12 @@ export const ContributorRow = ({
             alignItems: 'start',
             paddingY: '0.5rem',
           }}>
-          <Box sx={{ display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
-            <ErrorIcon color="warning" />
-            <Typography fontWeight={700}>{t('registration.contributors.contributor_is_unidentified')}</Typography>
-          </Box>
+          {!contributor.identity.id && (
+            <Box sx={{ display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
+              <ErrorIcon color="warning" />
+              <Typography fontWeight={700}>{t('registration.contributors.contributor_is_unidentified')}</Typography>
+            </Box>
+          )}
           <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
             {contributor.identity.id ? (
               <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
