@@ -36,7 +36,7 @@ export const unpublishRegistration = async (
 
 export const getRegistrationByDoi = async (doiUrl: string) => {
   const getRegistrationByDoiResponse = await authenticatedApiRequest2<DoiPreview>({
-    url: `${PublicationsApiPath.DoiLookup}/`,
+    url: PublicationsApiPath.DoiLookup,
     data: { doiUrl },
     method: 'POST',
   });
