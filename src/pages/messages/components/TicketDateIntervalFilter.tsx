@@ -7,7 +7,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { formatDateStringToISO } from '../../../utils/date-helpers';
 
 const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
-  format: 'dd.MM.yyyy',
   views: ['year', 'month', 'day'],
   disableHighlightToday: true,
   slotProps: {

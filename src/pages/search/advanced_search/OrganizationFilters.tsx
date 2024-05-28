@@ -42,8 +42,8 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const userOrganization = organizationQuery.data;
 
   const topLevelOrganizationQuery = useQuery({
-    queryKey: [topLevelOrganizationId],
     enabled: !!topLevelOrganizationId,
+    queryKey: ['organization', topLevelOrganizationId],
     queryFn: () => fetchOrganization(topLevelOrganizationId ?? ''),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
@@ -51,8 +51,8 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   });
 
   const subUnitQuery = useQuery({
-    queryKey: [unitId],
     enabled: !!unitId,
+    queryKey: ['organization', unitId],
     queryFn: () => fetchOrganization(unitId ?? ''),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,

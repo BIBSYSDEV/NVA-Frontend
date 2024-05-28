@@ -1,6 +1,7 @@
 import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
+import { toDateString } from '../../../utils/date-helpers';
 
 export const StyledMessagesContainer = styled(Box)({
   display: 'flex',
@@ -44,7 +45,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
           ) : (
             ticket.status === 'Closed' && <Typography>{t('my_page.messages.files_rejected')}</Typography>
           )}
-          {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
+          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       )}
     </StyledMessagesContainer>

@@ -63,6 +63,7 @@ import {
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { ContextPublisher, Journal, Publisher, Series } from '../../types/registration.types';
+import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
@@ -445,9 +446,7 @@ const PublicExhibitionMentionInPublicationDialogContent = ({
         {t('common.date')}
       </Typography>
       <Typography paragraph>
-        {exhibitionMentionInPublication.date?.value
-          ? new Date(exhibitionMentionInPublication.date.value).toLocaleDateString()
-          : '-'}
+        {exhibitionMentionInPublication.date?.value ? toDateString(exhibitionMentionInPublication.date.value) : '-'}
       </Typography>
       <Typography variant="h3" gutterBottom>
         {t('registration.resource_type.other_publisher_isbn_etc')}
@@ -496,9 +495,7 @@ const PublicExhibitionOtherPresentationDialogContent = ({
         {t('common.date')}
       </Typography>
       <Typography paragraph>
-        {exhibitionOtherPresentation.date?.value
-          ? new Date(exhibitionOtherPresentation.date.value).toLocaleDateString()
-          : '-'}
+        {exhibitionOtherPresentation.date?.value ? toDateString(exhibitionOtherPresentation.date.value) : '-'}
       </Typography>
     </DialogContent>
   );
@@ -525,7 +522,7 @@ const PublicCompetitionDialogContent = ({ competition }: { competition: Competit
       <Typography variant="h3">{t('registration.resource_type.artistic.competition_rank')}</Typography>
       <Typography paragraph>{competition.description}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
-      <Typography>{new Date(competition.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(competition.date.value)}</Typography>
     </DialogContent>
   );
 };
@@ -557,7 +554,7 @@ const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication
       <Typography variant="h3">{t('registration.resource_type.issue')}</Typography>
       <Typography paragraph>{mention.issue}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
-      <Typography>{new Date(mention.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(mention.date.value)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.other_publisher_isbn_etc')}</Typography>
       <Typography paragraph>{mention.otherInformation}</Typography>
     </DialogContent>
@@ -589,7 +586,7 @@ const PublicBroadcastDialogContent = ({ broadcast }: { broadcast: Broadcast }) =
       <Typography variant="h3">{t('common.publisher')}</Typography>
       <Typography paragraph>{broadcast.publisher.name}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
-      <Typography>{new Date(broadcast.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(broadcast.date.value)}</Typography>
     </DialogContent>
   );
 };
@@ -603,7 +600,7 @@ const PublicCinematicReleaseDialogContent = ({ cinematicRelease }: { cinematicRe
       <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{cinematicRelease.place.label}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.premiere_date')}</Typography>
-      <Typography>{new Date(cinematicRelease.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(cinematicRelease.date.value)}</Typography>
     </DialogContent>
   );
 };
@@ -625,7 +622,7 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
         </>
       )}
       <Typography variant="h3">{t('registration.resource_type.artistic.premiere_date')}</Typography>
-      <Typography>{new Date(otherRelease.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(otherRelease.date.value)}</Typography>
     </DialogContent>
   );
 };
@@ -732,7 +729,7 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
 
       <Typography variant="h3">{t('common.date')}</Typography>
       {time.type === 'Instant' ? (
-        <Typography paragraph>{new Date(time.value).toLocaleDateString()}</Typography>
+        <Typography paragraph>{toDateString(time.value)}</Typography>
       ) : (
         <Typography paragraph>{getPeriodString(time.from, time.to)}</Typography>
       )}
@@ -881,11 +878,13 @@ const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performan
       <Typography paragraph>{performance.place.label}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography paragraph>
-        {new Date(
-          +performance.publicationDate.year,
-          +performance.publicationDate.month,
-          +performance.publicationDate.day
-        ).toLocaleDateString()}
+        {toDateString(
+          new Date(
+            +performance.publicationDate.year,
+            +performance.publicationDate.month,
+            +performance.publicationDate.day
+          )
+        )}
       </Typography>
     </DialogContent>
   );

@@ -94,7 +94,6 @@ export const AffiliationFormSection = () => {
                   label={t('common.end_date')}
                   value={field.value ? new Date(field.value) : null}
                   onChange={(date: any) => setFieldValue(field.name, date ?? '')}
-                  format="dd.MM.yyyy"
                   views={['year', 'month', 'day']}
                   minDate={
                     employments[employmentIndex].startDate
