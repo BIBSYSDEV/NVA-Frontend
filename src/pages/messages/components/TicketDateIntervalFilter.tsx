@@ -24,30 +24,31 @@ export const TicketDateIntervalFilter = () => {
   const [selectedFromDate, selectedToDate] = selectedDatesParam ? selectedDatesParam.split(',') : ['', ''];
 
   const hasValidYear = (date: string) => {
-    return date === '' || date.match(/^\d{4}-/); // Check if year has 4 digits or date is erased
+    return date === '' || date.match(/^\d{4}-/);
+  };
+
+  const updateSearchParams = (newDate: string, otherDate: string, isFromDate: boolean) => {
+    const dateParam = isFromDate ? `${newDate},${otherDate}` : `${otherDate},${newDate}`;
+
+    if (!newDate && !otherDate) {
+      searchParams.delete(TicketSearchParam.CreatedDate);
+    } else {
+      searchParams.set(TicketSearchParam.CreatedDate, dateParam);
+    }
+    history.push({ search: searchParams.toString() });
   };
 
   const onChangeFromDate = (newDate: Date | null) => {
     const newFromDate = newDate ? formatDateStringToISO(newDate) : '';
     if (hasValidYear(newFromDate)) {
-      if (!newFromDate && !selectedToDate) {
-        searchParams.delete(TicketSearchParam.CreatedDate);
-      } else {
-        searchParams.set(TicketSearchParam.CreatedDate, `${newFromDate},${selectedToDate}`);
-      }
-      history.push({ search: searchParams.toString() });
+      updateSearchParams(newFromDate, selectedToDate, true);
     }
   };
 
   const onChangeToDate = (newDate: Date | null) => {
     const newToDate = newDate ? formatDateStringToISO(newDate) : '';
     if (hasValidYear(newToDate)) {
-      if (!selectedFromDate && !newToDate) {
-        searchParams.delete(TicketSearchParam.CreatedDate);
-      } else {
-        searchParams.set(TicketSearchParam.CreatedDate, `${selectedFromDate},${newToDate}`);
-      }
-      history.push({ search: searchParams.toString() });
+      updateSearchParams(newToDate, selectedFromDate, false);
     }
   };
 
