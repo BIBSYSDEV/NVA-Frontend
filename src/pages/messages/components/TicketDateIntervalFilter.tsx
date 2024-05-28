@@ -23,10 +23,13 @@ export const TicketDateIntervalFilter = () => {
   const selectedDatesParam = searchParams.get(TicketSearchParam.CreatedDate);
   const [selectedFromDate, selectedToDate] = selectedDatesParam ? selectedDatesParam.split(',') : ['', ''];
 
+  const hasValidYear = (date: string) => {
+    return date === '' || date.match(/^\d{4}-/); // Check if year has 4 digits or date is erased
+  };
+
   const onChangeFromDate = (newDate: Date | null) => {
     const newFromDate = newDate ? formatDateStringToISO(newDate) : '';
-    // check if year has 4 digits
-    if (newFromDate.match(/^\d{4}-/)) {
+    if (hasValidYear(newFromDate)) {
       if (!newFromDate && !selectedToDate) {
         searchParams.delete(TicketSearchParam.CreatedDate);
       } else {
@@ -38,7 +41,7 @@ export const TicketDateIntervalFilter = () => {
 
   const onChangeToDate = (newDate: Date | null) => {
     const newToDate = newDate ? formatDateStringToISO(newDate) : '';
-    if (newToDate.match(/^\d{4}-/)) {
+    if (hasValidYear(newToDate)) {
       if (!selectedFromDate && !newToDate) {
         searchParams.delete(TicketSearchParam.CreatedDate);
       } else {
