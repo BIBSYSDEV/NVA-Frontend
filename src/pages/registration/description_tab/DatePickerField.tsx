@@ -63,7 +63,6 @@ export const DatePickerField = () => {
           updateDateValues(newDate, yearOnly);
           setDate(newDate);
         }}
-        format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
         views={yearOnly ? ['year'] : ['year', 'month', 'day']}
         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
         slotProps={{

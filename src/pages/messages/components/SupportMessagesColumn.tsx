@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
+import { toDateString } from '../../../utils/date-helpers';
 import { StyledMessagesContainer, StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 
 interface SupportMessagesColumnProps {
@@ -37,7 +38,7 @@ export const SupportMessagesColumn = ({ ticket }: SupportMessagesColumnProps) =>
         lastMessage && (
           <StyledStatusMessageBox sx={{ bgcolor: 'generalSupportCase.main' }}>
             <Typography>{lastSender}</Typography>
-            <Typography>{new Date(lastMessage.createdDate).toLocaleDateString()}</Typography>
+            <Typography>{toDateString(lastMessage.createdDate)}</Typography>
             <TruncatableTypography lines={5} sx={{ gridColumn: '1/3' }}>
               {lastMessage.text}
             </TruncatableTypography>

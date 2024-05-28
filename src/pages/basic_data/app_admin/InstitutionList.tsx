@@ -16,6 +16,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { toDateString } from '../../../utils/date-helpers';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 
 interface InstitutionListProps {
@@ -47,7 +48,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
                 <Typography>{institution.doiPrefix}</Typography>
               </TableCell>
               <TableCell>
-                <Typography>{new Date(institution.createdDate).toLocaleDateString()}</Typography>
+                <Typography>{toDateString(institution.createdDate)}</Typography>
               </TableCell>
               <TableCell>
                 <Button

@@ -24,6 +24,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { toDateString } from '../../../utils/date-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 import { ticketColor } from './TicketListItem';
 
@@ -145,9 +146,7 @@ export const MessageItem = ({
               )}
             </span>
           </Tooltip>
-          <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-            {new Date(date).toLocaleDateString()}
-          </span>
+          <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>{toDateString(date)}</span>
         </Typography>
         {canDeleteMessage && onDelete && (
           <section>
