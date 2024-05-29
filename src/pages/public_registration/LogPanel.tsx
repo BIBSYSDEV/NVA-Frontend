@@ -3,9 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
+import { Avatar } from '../../components/Avatar';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
+import { toDateString } from '../../utils/date-helpers';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
 import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
@@ -16,14 +18,13 @@ interface LogItem {
   description: string;
   filesInfo?: TicketFilesInfo;
   type: TicketType;
+  finalizedBy?: string;
 }
 
 interface LogPanelProps {
   tickets: Ticket[];
   registration: Registration;
 }
-
-const tooltipDelay = 400;
 
 export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const { t } = useTranslation();
@@ -85,12 +86,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             }),
             filesInfo: getTicketFilesInfo(publishingTicket, registrationFiles),
             type: 'PublishingRequest',
+            finalizedBy: publishingTicket.finalizedBy,
           });
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.files_rejected'),
             type: 'PublishingRequest',
+            finalizedBy: publishingTicket.finalizedBy,
           });
         }
         break;
@@ -101,12 +104,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.doi_completed'),
             type: 'DoiRequest',
+            finalizedBy: ticket.finalizedBy,
           });
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.doi_closed'),
             type: 'DoiRequest',
+            finalizedBy: ticket.finalizedBy,
           });
         }
         break;
@@ -129,8 +134,8 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
       {registration && (
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
           <Typography>{t('common.created')}</Typography>
-          <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()} enterDelay={tooltipDelay}>
-            <Typography>{new Date(registration.createdDate).toLocaleDateString()}</Typography>
+          <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()}>
+            <Typography>{toDateString(registration.createdDate)}</Typography>
           </Tooltip>
           {organizationQuery.isPending || userQuery.isPending ? (
             <Skeleton sx={{ width: '4rem' }} />
@@ -149,9 +154,12 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           return (
             <StyledStatusMessageBox key={index} sx={{ bgcolor: ticketColor[logItem.type] }}>
               <Typography>{logItem.description}</Typography>
-              <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
-                <Typography>{modifiedDate.toLocaleDateString()}</Typography>
-              </Tooltip>
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <Tooltip title={modifiedDate.toLocaleTimeString()}>
+                  <Typography>{toDateString(modifiedDate)}</Typography>
+                </Tooltip>
+                {logItem.finalizedBy && <Avatar username={logItem.finalizedBy} />}
+              </Box>
               {logItem.filesInfo?.approvedFileNames && logItem.filesInfo.approvedFileNames.length > 0 && (
                 <Box
                   component="ul"
@@ -163,7 +171,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
                   }}>
                   {logItem.filesInfo.approvedFileNames.map((fileName, index) => (
                     <li key={index}>
-                      <Tooltip title={fileName} enterDelay={tooltipDelay}>
+                      <Tooltip title={fileName}>
                         <Typography
                           sx={{
                             whiteSpace: 'nowrap',

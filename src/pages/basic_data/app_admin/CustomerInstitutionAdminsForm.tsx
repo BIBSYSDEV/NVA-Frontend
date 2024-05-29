@@ -6,7 +6,7 @@ import { RoleName } from '../../../types/user.types';
 import { AddAdminDialog } from './AddAdminDialog';
 import { UserList } from './UserList';
 import { useQuery } from '@tanstack/react-query';
-import { fetchUsers } from '../../../api/roleApi';
+import { fetchUsersByCustomer } from '../../../api/roleApi';
 
 interface CustomerInstitutionAdminsFormProps {
   cristinInstitutionId: string;
@@ -26,7 +26,8 @@ export const CustomerInstitutionAdminsForm = ({
   const adminsQuery = useQuery({
     queryKey: ['institutionAdmins', customerInstitutionId],
     enabled: !!customerInstitutionId,
-    queryFn: () => (customerInstitutionId ? fetchUsers(customerInstitutionId, RoleName.InstitutionAdmin) : undefined),
+    queryFn: () =>
+      customerInstitutionId ? fetchUsersByCustomer(customerInstitutionId, RoleName.InstitutionAdmin) : undefined,
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 

@@ -7,6 +7,7 @@ import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { toDateString } from '../../../utils/date-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 import { ticketColor } from './TicketListItem';
 
@@ -87,9 +88,7 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
             </b>
           )}
         </span>
-        <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-          {new Date(date).toLocaleDateString()}
-        </span>
+        <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>{toDateString(date)}</span>
       </Typography>
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />

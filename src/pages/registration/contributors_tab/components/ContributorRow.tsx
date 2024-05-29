@@ -1,14 +1,16 @@
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ErrorIcon from '@mui/icons-material/Error';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
+import SearchIcon from '@mui/icons-material/Search';
 import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
   Button,
   Checkbox,
   IconButton,
-  MenuItem,
   Link as MuiLink,
+  MenuItem,
   TableCell,
   TableRow,
   TextField,
@@ -144,11 +146,6 @@ export const ContributorRow = ({
           )}
         </Field>
       </TableCell>
-      <TableCell width="1">
-        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-          <ContributorIndicator contributor={contributor} />
-        </Box>
-      </TableCell>
       <TableCell>
         <Box
           sx={{
@@ -156,8 +153,16 @@ export const ContributorRow = ({
             flexDirection: 'column',
             gap: '0.25rem',
             alignItems: 'start',
+            paddingY: '0.5rem',
           }}>
-          <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
+          {!contributor.identity.id && (
+            <Box sx={{ display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
+              <ErrorIcon color="warning" />
+              <Typography fontWeight="bold">{t('registration.contributors.contributor_is_unidentified')}</Typography>
+            </Box>
+          )}
+          <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+            <ContributorIndicator contributor={contributor} />
             {contributor.identity.id ? (
               <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                 {contributor.identity.name}
@@ -176,11 +181,11 @@ export const ContributorRow = ({
           {!contributor.identity.id && (
             <Button
               variant="outlined"
-              sx={{ textTransform: 'none' }}
+              sx={{ padding: '0.1rem 0.75rem' }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
                 contributor.identity.name
               )}
-              startIcon={<WarningIcon color="warning" />}
+              startIcon={<SearchIcon />}
               onClick={() => setOpenVerifyContributor(true)}>
               {t('registration.contributors.verify_contributor')}
             </Button>

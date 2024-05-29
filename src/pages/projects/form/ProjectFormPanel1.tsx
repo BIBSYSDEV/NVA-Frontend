@@ -87,7 +87,6 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 }}
                 value={field.value ? new Date(field.value) : null}
                 maxDate={values.endDate ? new Date(values.endDate) : undefined}
-                format="dd.MM.yyyy"
                 slotProps={{
                   textField: {
                     inputProps: { 'data-testid': dataTestId.registrationWizard.description.projectForm.startDateField },
@@ -113,7 +112,6 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 }}
                 value={field.value ? new Date(field.value) : null}
                 minDate={values.startDate ? new Date(values.startDate) : undefined}
-                format="dd.MM.yyyy"
                 slotProps={{
                   textField: {
                     inputProps: { 'data-testid': dataTestId.registrationWizard.description.projectForm.endDateField },

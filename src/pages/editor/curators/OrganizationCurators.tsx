@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResource } from '../../../api/commonApi';
-import { fetchUsers } from '../../../api/roleApi';
+import { fetchUsersByCustomer } from '../../../api/roleApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
@@ -52,7 +52,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsers(customerId, rolesWithAreaOfResponsibility) : undefined),
+    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, rolesWithAreaOfResponsibility) : undefined),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
