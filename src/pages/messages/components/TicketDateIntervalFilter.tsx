@@ -14,6 +14,10 @@ const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   },
 };
 
+const isEmptyOrStartsWithFourDigitYear = (date: string) => {
+  return date === '' || date.match(/^\d{4}-/);
+};
+
 export const TicketDateIntervalFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -23,33 +27,13 @@ export const TicketDateIntervalFilter = () => {
   const selectedDatesParam = searchParams.get(TicketSearchParam.CreatedDate);
   const [selectedFromDate, selectedToDate] = selectedDatesParam ? selectedDatesParam.split(',') : ['', ''];
 
-  const hasValidYear = (date: string) => {
-    return date === '' || date.match(/^\d{4}-/);
-  };
-
-  const updateSearchParams = (newDate: string, otherDate: string, isFromDate: boolean) => {
-    const dateParam = isFromDate ? `${newDate},${otherDate}` : `${otherDate},${newDate}`;
-
-    if (!newDate && !otherDate) {
-      searchParams.delete(TicketSearchParam.CreatedDate);
+  const updateSearchParams = (newFromDate: string, newToDate: string) => {
+    if (newFromDate || newToDate) {
+      searchParams.set(TicketSearchParam.CreatedDate, `${newFromDate},${newToDate}`);
     } else {
-      searchParams.set(TicketSearchParam.CreatedDate, dateParam);
+      searchParams.delete(TicketSearchParam.CreatedDate);
     }
     history.push({ search: searchParams.toString() });
-  };
-
-  const onChangeFromDate = (newDate: Date | null) => {
-    const newFromDate = newDate ? formatDateStringToISO(newDate) : '';
-    if (hasValidYear(newFromDate)) {
-      updateSearchParams(newFromDate, selectedToDate, true);
-    }
-  };
-
-  const onChangeToDate = (newDate: Date | null) => {
-    const newToDate = newDate ? formatDateStringToISO(newDate) : '';
-    if (hasValidYear(newToDate)) {
-      updateSearchParams(newToDate, selectedFromDate, false);
-    }
   };
 
   return (
@@ -62,7 +46,9 @@ export const TicketDateIntervalFilter = () => {
         maxDate={selectedToDate ? new Date(selectedToDate) : maxDate}
         onChange={(date, context) => {
           if (context.validationError !== 'invalidDate') {
-            onChangeFromDate(date);
+            if (isEmptyOrStartsWithFourDigitYear(date ? formatDateStringToISO(date) : '')) {
+              updateSearchParams(date ? formatDateStringToISO(date) : '', selectedToDate);
+            }
           }
         }}
       />
@@ -75,7 +61,9 @@ export const TicketDateIntervalFilter = () => {
         minDate={selectedFromDate ? new Date(selectedFromDate) : undefined}
         onChange={(date, context) => {
           if (context.validationError !== 'invalidDate') {
-            onChangeToDate(date);
+            if (isEmptyOrStartsWithFourDigitYear(date ? formatDateStringToISO(date) : '')) {
+              updateSearchParams(selectedFromDate, date ? formatDateStringToISO(date) : '');
+            }
           }
         }}
       />
