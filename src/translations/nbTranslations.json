@@ -1845,10 +1845,10 @@
     "sort_by_name_desc": "Navn Å-A",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
+    "sort_by_relevance": "Relevans",
     "sorted_by": "Sortert etter",
     "year_from": "Fra år",
-    "year_to": "Til år",
-    "sort_by_relevance": "Relevans"
+    "year_to": "Til år"
   },
   "tasks": {
     "all_nvi_results": "Alle NVI-resultater",
