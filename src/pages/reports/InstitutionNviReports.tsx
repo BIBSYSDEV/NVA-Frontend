@@ -17,10 +17,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviCandidates } from '../../api/hooks/useFetchNviCandidates';
+import { useFetchNviPeriod } from '../../api/hooks/useFetchNviPeriod';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { RootState } from '../../redux/store';
 import { OrganizationApprovalStatusDetail } from '../../types/nvi.types';
 import { Organization } from '../../types/organization.types';
+import { toDateString } from '../../utils/date-helpers';
 import { isValidUrl } from '../../utils/general-helpers';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { getLanguageString } from '../../utils/translation-helpers';
@@ -36,8 +38,8 @@ export const InstititutionNviReports = () => {
 
   const institution = organizationQuery.data;
 
+  const nviPeriodQuery = useFetchNviPeriod(selectedYear);
   const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all', year: selectedYear });
-
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
 
@@ -53,7 +55,7 @@ export const InstititutionNviReports = () => {
         select
         label={'Rapporteringsperiode'}
         value={selectedYear}
-        onChange={(event) => setSelectedYear(+event.target.value)}
+        onChange={(event) => setSelectedYear(+event.target.value)} // TODO: Set in URL
         sx={{ width: '10rem' }}>
         {nviYearFilterValues.map((year) => (
           <MenuItem key={year} value={year}>
@@ -61,6 +63,13 @@ export const InstititutionNviReports = () => {
           </MenuItem>
         ))}
       </TextField>
+
+      {/* TODO: Håndter manglende periode */}
+      {nviPeriodQuery.data && (
+        <Typography>
+          {toDateString(nviPeriodQuery.data.startDate)} - {toDateString(nviPeriodQuery.data.reportingDate)}
+        </Typography>
+      )}
 
       <TableContainer>
         <Table size="small">
@@ -101,13 +110,15 @@ const OrganizationTableRow = ({ organization, aggregations, level = 0 }: Organiz
     <>
       <TableRow>
         <TableCell sx={{ pl: `${1 + level * 1.5}rem`, py: '1rem' }}>{getLanguageString(organization.labels)}</TableCell>
-        <TableCell align="center">{thisAggregations?.status.New?.docCount ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.status.Pending?.docCount ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.status.Approved?.docCount ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.status.Rejected?.docCount ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.docCount ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.points.value.toFixed(2) ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.status.Dispute?.docCount ?? 0}</TableCell>
+        <TableCell align="center">{thisAggregations?.status.New?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{thisAggregations?.status.Pending?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{thisAggregations?.status.Approved?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{thisAggregations?.status.Rejected?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{thisAggregations?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">
+          {thisAggregations?.points.value.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0}
+        </TableCell>
+        <TableCell align="center">{thisAggregations?.status.Dispute?.docCount.toLocaleString() ?? 0}</TableCell>
         <TableCell>
           {hasSubUnits && level !== 0 && (
             <IconButton onClick={() => setExpanded(!expanded)}>

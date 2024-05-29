@@ -56,6 +56,13 @@ export const fetchNviPeriods = async () => {
   return fetchNviPeriodsResponse.data;
 };
 
+export const fetchNviPeriod = async (year: number) => {
+  const fetchNviPeriodsResponse = await authenticatedApiRequest2<NviPeriod>({
+    url: `${ScientificIndexApiPath.Period}/${year}`,
+  });
+  return fetchNviPeriodsResponse.data;
+};
+
 export const createNviPeriod = async (data: NviPeriod) => {
   const createNviPeriodResponse = await authenticatedApiRequest2<NviPeriod>({
     url: ScientificIndexApiPath.Period,
