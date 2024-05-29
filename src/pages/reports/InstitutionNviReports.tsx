@@ -25,11 +25,9 @@ export const InstititutionNviReports = () => {
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
 
-  const nviAggregations = (
-    nviQuery.data?.aggregations?.organizationApprovalStatuses[aggregationKey ?? ''] as
-      | OrganizationApprovalStatusDetail
-      | undefined
-  )?.organizations;
+  const nviAggregations = nviQuery.data?.aggregations?.organizationApprovalStatuses[aggregationKey ?? ''] as
+    | OrganizationApprovalStatusDetail
+    | undefined;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -58,7 +56,7 @@ export const InstititutionNviReports = () => {
 };
 interface OrganizationTableRowProps {
   organization: Organization;
-  aggregations: any;
+  aggregations: OrganizationApprovalStatusDetail | undefined;
   level?: number;
 }
 
@@ -66,7 +64,7 @@ const OrganizationTableRow = ({ organization, aggregations, level = 0 }: Organiz
   const [expanded, setExpanded] = useState(level === 0);
 
   const hasSubUnits = organization.hasPart && organization.hasPart.length > 0;
-  const thisAggregations = aggregations?.[organization.id];
+  const thisAggregations = aggregations?.organizations?.[organization.id];
 
   return (
     <>

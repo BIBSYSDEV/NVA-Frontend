@@ -235,7 +235,7 @@ export const fetchNviCandidates = async (results: number, from: number, query = 
   return getNviCandidates.data;
 };
 
-export enum NviCandidatesSearchParam {
+enum NviCandidatesSearchParam {
   Aggregation = 'aggregation',
   Offset = 'offset',
   Size = 'size',

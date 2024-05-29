@@ -37,7 +37,7 @@ interface AggregationCount {
 
 type NviAggregationStatus = NviCandidateStatus | 'Dispute';
 
-export interface OrganizationDetail extends AggregationCount {
+interface OrganizationDetail extends AggregationCount {
   dispute: AggregationCount;
   points: { value: number };
   status: { [status in NviAggregationStatus]?: AggregationCount };
