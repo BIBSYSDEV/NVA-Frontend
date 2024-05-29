@@ -1,5 +1,8 @@
-import { Box, Typography } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
@@ -26,6 +29,8 @@ export const InstititutionNviReports = () => {
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
+  const institution = organizationQuery.data;
+
   const allSubUnits = getAllChildOrganizations(organizationQuery.data ? [organizationQuery.data] : []);
 
   const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all' });
@@ -40,9 +45,8 @@ export const InstititutionNviReports = () => {
   )?.organizations;
 
   return (
-    <>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        {allSubUnits.map((subUnit) => {
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      {/* {allSubUnits.map((subUnit) => {
           const subUnitAggregation = nviAggregations?.[subUnit.id];
           return (
             <Box key={subUnit.id} sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr' }}>
@@ -56,8 +60,73 @@ export const InstititutionNviReports = () => {
               <Typography>Dispute: {subUnitAggregation?.status.Dispute?.docCount ?? 0}</Typography>
             </Box>
           );
-        })}
-      </Box>
+        })} */}
+      <TableContainer>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>Enhet</TableCell>
+              <TableCell>Kandidater</TableCell>
+              <TableCell>Sjekkes</TableCell>
+              <TableCell>Godkjent</TableCell>
+              <TableCell>Avvist</TableCell>
+              <TableCell>Totalt antall</TableCell>
+              <TableCell>Publiseringsindikator</TableCell>
+              <TableCell>Tvist</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* {allSubUnits.map((subUnit) => {
+              const subUnitAggregation = nviAggregations?.[subUnit.id];
+              return <OrganizationTableRow key={subUnit.id} organization={subUnit} aggregations={subUnitAggregation} />;
+            })} */}
+            {institution && (
+              <OrganizationTableRow key={institution.id} organization={institution} aggregations={nviAggregations} />
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
+  );
+};
+interface OrganizationTableRowProps {
+  organization: Organization;
+  aggregations: any;
+}
+
+const OrganizationTableRow = ({ organization, aggregations }: OrganizationTableRowProps) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const hasSubUnits = organization.hasPart && organization.hasPart.length > 0;
+  const thisAggregations = aggregations?.[organization.id];
+
+  return (
+    <>
+      <TableRow>
+        <TableCell>{getLanguageString(organization.labels)}</TableCell>
+        <TableCell>{thisAggregations?.status.New?.docCount ?? 0}</TableCell>
+        <TableCell>{thisAggregations?.status.Pending?.docCount ?? 0}</TableCell>
+        <TableCell>{thisAggregations?.status.Approved?.docCount ?? 0}</TableCell>
+        <TableCell>{thisAggregations?.status.Rejected?.docCount ?? 0}</TableCell>
+        <TableCell>{thisAggregations?.docCount ?? 0}</TableCell>
+        <TableCell>{thisAggregations?.points.value.toFixed(2) ?? 0}</TableCell>
+        <TableCell>{thisAggregations?.status.Dispute?.docCount ?? 0}</TableCell>
+        <TableCell>
+          {hasSubUnits && (
+            <IconButton onClick={() => setExpanded(!expanded)}>
+              {expanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          )}
+        </TableCell>
+      </TableRow>
+      {expanded && hasSubUnits && (
+        <>
+          {organization.hasPart?.map((subUnit) => (
+            <OrganizationTableRow key={subUnit.id} organization={subUnit} aggregations={aggregations} />
+          ))}
+        </>
+      )}
     </>
   );
 };
