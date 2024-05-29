@@ -272,6 +272,7 @@
     "test_environment": "Testmiljø",
     "title": "Tittel",
     "today": "I dag",
+    "total_number": "Totalt antall",
     "type": "Type",
     "unknown": "Ukjent",
     "update": "Oppdater",
@@ -1880,6 +1881,7 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
+        "Dispute": "Tvist",
         "New": "Kandidat",
         "Pending": "Kandidat",
         "Rejected": "Avvist"
