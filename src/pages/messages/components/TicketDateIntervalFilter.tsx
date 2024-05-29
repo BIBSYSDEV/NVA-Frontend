@@ -14,8 +14,8 @@ const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   },
 };
 
-const isEmptyOrStartsWithFourDigitYear = (date: string) => {
-  return date === '' || date.match(/^\d{4}-/);
+const startsWithFourDigitYear = (date: string) => {
+  return date.match(/^\d{4}-/);
 };
 
 export const TicketDateIntervalFilter = () => {
@@ -46,9 +46,8 @@ export const TicketDateIntervalFilter = () => {
         maxDate={selectedToDate ? new Date(selectedToDate) : maxDate}
         onChange={(date, context) => {
           if (context.validationError !== 'invalidDate') {
-            if (isEmptyOrStartsWithFourDigitYear(date ? formatDateStringToISO(date) : '')) {
-              updateSearchParams(date ? formatDateStringToISO(date) : '', selectedToDate);
-            }
+            const isoDate = date ? formatDateStringToISO(date) : '';
+            updateSearchParams(isoDate && startsWithFourDigitYear(isoDate) ? isoDate : '', selectedToDate);
           }
         }}
       />
@@ -61,9 +60,8 @@ export const TicketDateIntervalFilter = () => {
         minDate={selectedFromDate ? new Date(selectedFromDate) : undefined}
         onChange={(date, context) => {
           if (context.validationError !== 'invalidDate') {
-            if (isEmptyOrStartsWithFourDigitYear(date ? formatDateStringToISO(date) : '')) {
-              updateSearchParams(selectedFromDate, date ? formatDateStringToISO(date) : '');
-            }
+            const isoDate = date ? formatDateStringToISO(date) : '';
+            updateSearchParams(selectedFromDate, isoDate && startsWithFourDigitYear(isoDate) ? isoDate : '');
           }
         }}
       />
