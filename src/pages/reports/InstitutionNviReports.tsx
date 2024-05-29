@@ -1,6 +1,18 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -10,17 +22,21 @@ import { RootState } from '../../redux/store';
 import { OrganizationApprovalStatusDetail } from '../../types/nvi.types';
 import { Organization } from '../../types/organization.types';
 import { isValidUrl } from '../../utils/general-helpers';
+import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+
+const nviYearFilterValues = getNviYearFilterValues();
 
 export const InstititutionNviReports = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const [selectedYear, setSelectedYear] = useState(nviYearFilterValues[1]);
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId);
 
   const institution = organizationQuery.data;
 
-  const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all' });
+  const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all', year: selectedYear });
 
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
@@ -30,7 +46,22 @@ export const InstititutionNviReports = () => {
     | undefined;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Typography variant="h1">{t('search.reports.institution_nvi')}</Typography>
+
+      <TextField
+        select
+        label={'Rapporteringsperiode'}
+        value={selectedYear}
+        onChange={(event) => setSelectedYear(+event.target.value)}
+        sx={{ width: '10rem' }}>
+        {nviYearFilterValues.map((year) => (
+          <MenuItem key={year} value={year}>
+            {year}
+          </MenuItem>
+        ))}
+      </TextField>
+
       <TableContainer>
         <Table size="small">
           <TableHead>
