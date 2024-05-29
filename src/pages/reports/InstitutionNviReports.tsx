@@ -11,7 +11,6 @@ import { RootState } from '../../redux/store';
 import { OrganizationApprovalStatusDetail } from '../../types/nvi.types';
 import { Organization } from '../../types/organization.types';
 import { isValidUrl } from '../../utils/general-helpers';
-import { getAllChildOrganizations } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
 export const InstititutionNviReports = () => {
@@ -31,8 +30,6 @@ export const InstititutionNviReports = () => {
 
   const institution = organizationQuery.data;
 
-  const allSubUnits = getAllChildOrganizations(organizationQuery.data ? [organizationQuery.data] : []);
-
   const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all' });
 
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
@@ -46,21 +43,6 @@ export const InstititutionNviReports = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      {/* {allSubUnits.map((subUnit) => {
-          const subUnitAggregation = nviAggregations?.[subUnit.id];
-          return (
-            <Box key={subUnit.id} sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr' }}>
-              <Typography>{getLanguageString(subUnit.labels)}</Typography>
-              <Typography>New: {subUnitAggregation?.status?.New?.docCount ?? 0}</Typography>
-              <Typography>Pending: {subUnitAggregation?.status.Pending?.docCount ?? 0}</Typography>
-              <Typography>Approved: {subUnitAggregation?.status.Approved?.docCount ?? 0}</Typography>
-              <Typography>Rejected: {subUnitAggregation?.status.Rejected?.docCount ?? 0}</Typography>
-              <Typography>Totalt: {subUnitAggregation?.docCount ?? 0}</Typography>
-              <Typography>Poeng: {subUnitAggregation?.points.value.toFixed(2) ?? 0}</Typography>
-              <Typography>Dispute: {subUnitAggregation?.status.Dispute?.docCount ?? 0}</Typography>
-            </Box>
-          );
-        })} */}
       <TableContainer>
         <Table size="small">
           <TableHead>
@@ -77,10 +59,6 @@ export const InstititutionNviReports = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {allSubUnits.map((subUnit) => {
-              const subUnitAggregation = nviAggregations?.[subUnit.id];
-              return <OrganizationTableRow key={subUnit.id} organization={subUnit} aggregations={subUnitAggregation} />;
-            })} */}
             {institution && (
               <OrganizationTableRow key={institution.id} organization={institution} aggregations={nviAggregations} />
             )}
@@ -93,10 +71,11 @@ export const InstititutionNviReports = () => {
 interface OrganizationTableRowProps {
   organization: Organization;
   aggregations: any;
+  level?: number;
 }
 
-const OrganizationTableRow = ({ organization, aggregations }: OrganizationTableRowProps) => {
-  const [expanded, setExpanded] = useState(false);
+const OrganizationTableRow = ({ organization, aggregations, level = 0 }: OrganizationTableRowProps) => {
+  const [expanded, setExpanded] = useState(level === 0);
 
   const hasSubUnits = organization.hasPart && organization.hasPart.length > 0;
   const thisAggregations = aggregations?.[organization.id];
@@ -104,7 +83,7 @@ const OrganizationTableRow = ({ organization, aggregations }: OrganizationTableR
   return (
     <>
       <TableRow>
-        <TableCell>{getLanguageString(organization.labels)}</TableCell>
+        <TableCell sx={{ pl: `${1 + level * 1.5}rem` }}>{getLanguageString(organization.labels)}</TableCell>
         <TableCell>{thisAggregations?.status.New?.docCount ?? 0}</TableCell>
         <TableCell>{thisAggregations?.status.Pending?.docCount ?? 0}</TableCell>
         <TableCell>{thisAggregations?.status.Approved?.docCount ?? 0}</TableCell>
@@ -113,7 +92,7 @@ const OrganizationTableRow = ({ organization, aggregations }: OrganizationTableR
         <TableCell>{thisAggregations?.points.value.toFixed(2) ?? 0}</TableCell>
         <TableCell>{thisAggregations?.status.Dispute?.docCount ?? 0}</TableCell>
         <TableCell>
-          {hasSubUnits && (
+          {hasSubUnits && level !== 0 && (
             <IconButton onClick={() => setExpanded(!expanded)}>
               {expanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
@@ -123,7 +102,12 @@ const OrganizationTableRow = ({ organization, aggregations }: OrganizationTableR
       {expanded && hasSubUnits && (
         <>
           {organization.hasPart?.map((subUnit) => (
-            <OrganizationTableRow key={subUnit.id} organization={subUnit} aggregations={aggregations} />
+            <OrganizationTableRow
+              key={subUnit.id}
+              organization={subUnit}
+              aggregations={aggregations}
+              level={level + 1}
+            />
           ))}
         </>
       )}
