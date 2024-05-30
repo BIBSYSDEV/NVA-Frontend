@@ -23,7 +23,7 @@ export const NpiLevelTypography = ({ scientificValue, channelId, ...typographyPr
 
   const levelString = scientificValue ? ScientificValueMapper[scientificValue] : null;
   const year = channelId?.split('/').pop();
-  const yearString = year?.match(/^\d{4}$/) ? ` (${year}) ` : '';
+  const yearString = year?.match(/^\d{4}$/) ? ` (${year})` : '';
 
   return (
     <Typography {...typographyProps}>
