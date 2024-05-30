@@ -68,8 +68,8 @@ export const ContributorRow = ({
 
   return (
     <TableRow>
-      <TableCell width="1">
-        <Box sx={{ display: 'flex' }}>
+      <TableCell width="1" sx={{ verticalAlign: 'top' }}>
+        <Box sx={{ display: 'flex', gap: '0.2rem' }}>
           <TextField
             sx={{ width: '3.6rem' }}
             value={sequenceValue}
@@ -88,7 +88,7 @@ export const ContributorRow = ({
             <Tooltip title={t('common.move_down')}>
               <IconButton
                 size="small"
-                sx={{ minWidth: 'auto' }}
+                sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
                 onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
                 <ArrowDownwardIcon color="primary" />
               </IconButton>
@@ -98,7 +98,7 @@ export const ContributorRow = ({
             <Tooltip title={t('common.move_up')}>
               <IconButton
                 size="small"
-                sx={{ minWidth: 'auto' }}
+                sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
                 onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
                 <ArrowUpwardIcon color="primary" />
               </IconButton>
@@ -106,7 +106,7 @@ export const ContributorRow = ({
           )}
         </Box>
       </TableCell>
-      <TableCell align="left" width="1">
+      <TableCell align="left" width="1" sx={{ verticalAlign: 'top' }}>
         <Box sx={{ display: 'flex', alignItems: 'end' }}>
           {!contributorRoles.includes(contributor.role.type) && (
             <Tooltip title={t('registration.contributors.invalid_role')}>
@@ -118,7 +118,8 @@ export const ContributorRow = ({
               <TextField
                 {...field}
                 select
-                variant="standard"
+                variant="filled"
+                label={'Velg rolle'}
                 fullWidth
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
@@ -132,13 +133,14 @@ export const ContributorRow = ({
           </Field>
         </Box>
       </TableCell>
-      <TableCell align="center" width="1">
+      <TableCell align="center" width="1" sx={{ verticalAlign: 'top' }}>
         <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
           {({ field }: FieldProps<boolean>) => (
             <Tooltip title={t('registration.contributors.corresponding')}>
               <Checkbox
                 data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
                 checked={!!field.value}
+                sx={{ marginTop: '0.3rem' }}
                 {...field}
                 inputProps={{ 'aria-label': t('registration.contributors.corresponding') }}
               />
@@ -146,7 +148,7 @@ export const ContributorRow = ({
           )}
         </Field>
       </TableCell>
-      <TableCell>
+      <TableCell sx={{ verticalAlign: 'top' }}>
         <Box
           sx={{
             display: 'flex',
@@ -200,7 +202,7 @@ export const ContributorRow = ({
           </Button>
         </Box>
       </TableCell>
-      <TableCell sx={{ maxWidth: '25rem' }}>
+      <TableCell sx={{ maxWidth: '25rem', verticalAlign: 'top' }}>
         {contributor.identity && (
           <AffiliationsCell
             affiliations={contributor.affiliations}
