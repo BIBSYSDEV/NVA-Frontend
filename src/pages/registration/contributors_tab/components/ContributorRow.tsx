@@ -67,8 +67,8 @@ export const ContributorRow = ({
   };
 
   return (
-    <TableRow>
-      <TableCell width="1" sx={{ verticalAlign: 'top' }}>
+    <TableRow sx={{ td: { verticalAlign: 'top' } }}>
+      <TableCell width="1">
         <Box sx={{ display: 'flex', gap: '0.2rem' }}>
           <TextField
             sx={{ width: '3.6rem' }}
@@ -106,7 +106,7 @@ export const ContributorRow = ({
           )}
         </Box>
       </TableCell>
-      <TableCell align="left" width="1" sx={{ verticalAlign: 'top' }}>
+      <TableCell align="left" width="1">
         <Box sx={{ display: 'flex', alignItems: 'end' }}>
           {!contributorRoles.includes(contributor.role.type) && (
             <Tooltip title={t('registration.contributors.invalid_role')}>
@@ -119,7 +119,7 @@ export const ContributorRow = ({
                 {...field}
                 select
                 variant="filled"
-                label={'Velg rolle'}
+                label={t('common.number_short')}
                 fullWidth
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
@@ -133,7 +133,7 @@ export const ContributorRow = ({
           </Field>
         </Box>
       </TableCell>
-      <TableCell align="center" width="1" sx={{ verticalAlign: 'top' }}>
+      <TableCell align="center" width="1">
         <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
           {({ field }: FieldProps<boolean>) => (
             <Tooltip title={t('registration.contributors.corresponding')}>
@@ -148,7 +148,7 @@ export const ContributorRow = ({
           )}
         </Field>
       </TableCell>
-      <TableCell sx={{ verticalAlign: 'top' }}>
+      <TableCell>
         <Box
           sx={{
             display: 'flex',
@@ -202,7 +202,7 @@ export const ContributorRow = ({
           </Button>
         </Box>
       </TableCell>
-      <TableCell sx={{ maxWidth: '25rem', verticalAlign: 'top' }}>
+      <TableCell sx={{ maxWidth: '25rem' }}>
         {contributor.identity && (
           <AffiliationsCell
             affiliations={contributor.affiliations}
