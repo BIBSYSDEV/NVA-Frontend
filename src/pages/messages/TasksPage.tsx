@@ -363,8 +363,6 @@ const TasksPage = () => {
                   </StyledSearchModeButton>
                 </StyledTicketSearchFormGroup>
 
-                <>{console.log(nviAggregationsQuery.isSuccess)}</>
-
                 {nviAggregationsQuery.isSuccess && (
                   <Box sx={{ bgcolor: 'nvi.light', p: '0.5rem', mb: '1rem' }}>
                     <Typography id="progress-label">
