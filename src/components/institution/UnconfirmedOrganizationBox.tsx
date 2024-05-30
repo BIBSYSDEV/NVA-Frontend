@@ -6,7 +6,7 @@ import { DeleteIconButton } from '../../pages/messages/components/DeleteIconButt
 import { dataTestId } from '../../utils/dataTestIds';
 import { StyledOrganizationBox } from './OrganizationBox';
 
-interface UnconfirmedOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
+interface UnconfirmedOrganizationBoxProps {
   name: string;
   onIdentifyAffiliationClick: (name: string) => void;
   removeAffiliation?: () => void;
