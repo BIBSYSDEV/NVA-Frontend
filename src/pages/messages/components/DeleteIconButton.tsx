@@ -12,7 +12,7 @@ export const DeleteIconButton = ({ sx, tooltip, ...rest }: Props) => (
       sx={{
         bgcolor: 'primary.main',
         '&:hover': {
-          bgcolor: mainTheme.palette.primary.main,
+          bgcolor: 'primary.dark',
         },
         height: '1.5rem',
         width: '1.5rem',
