@@ -4,7 +4,7 @@ import { Box, BoxProps, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { DeleteIconButton } from '../../pages/messages/components/DeleteIconButton';
 import { dataTestId } from '../../utils/dataTestIds';
-import { organizationBoxStyle } from './OrganizationBox';
+import { StyledOrganizationBox } from './OrganizationBox';
 
 interface UnconfirmedOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
   name: string;
@@ -15,15 +15,14 @@ interface UnconfirmedOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
 export const UnconfirmedOrganizationBox = ({
   name,
   sx,
-  onIdentifyAffiliationClick: onIdentifyAffiliationClick,
+  onIdentifyAffiliationClick,
   removeAffiliation,
 }: UnconfirmedOrganizationBoxProps) => {
   const { t } = useTranslation();
 
   return (
-    <Box
+    <StyledOrganizationBox
       sx={{
-        ...organizationBoxStyle,
         ...sx,
       }}>
       <Box
@@ -54,6 +53,6 @@ export const UnconfirmedOrganizationBox = ({
           tooltip={t('registration.contributors.remove_affiliation')}
         />
       )}
-    </Box>
+    </StyledOrganizationBox>
   );
 };

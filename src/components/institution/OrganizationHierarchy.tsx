@@ -3,11 +3,11 @@ import { Organization } from '../../types/organization.types';
 import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
-interface OrganizationTreeProps extends Pick<BoxProps, 'sx'> {
+interface OrganizationHierarchyProps extends Pick<BoxProps, 'sx'> {
   organization: Organization;
 }
 
-export const OrganizationTitle = ({ organization }: OrganizationTreeProps) => {
+export const OrganizationHierarchy = ({ organization }: OrganizationHierarchyProps) => {
   const units = getOrganizationHierarchy(organization);
 
   return (

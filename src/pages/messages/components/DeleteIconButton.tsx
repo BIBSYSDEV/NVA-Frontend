@@ -1,13 +1,12 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, IconButtonProps, SxProps, Tooltip } from '@mui/material';
+import { IconButton, IconButtonProps, Tooltip } from '@mui/material';
 import { mainTheme } from '../../../themes/mainTheme';
 
 interface Props extends IconButtonProps {
-  iconSx?: SxProps | undefined;
   tooltip?: string;
 }
 
-export const DeleteIconButton = ({ sx, iconSx, tooltip, ...rest }: Props) => (
+export const DeleteIconButton = ({ sx, tooltip, ...rest }: Props) => (
   <Tooltip title={tooltip}>
     <IconButton
       sx={{
@@ -23,7 +22,6 @@ export const DeleteIconButton = ({ sx, iconSx, tooltip, ...rest }: Props) => (
       <DeleteIcon
         sx={{
           color: 'white',
-          ...iconSx,
         }}
         fontSize="small"
       />
