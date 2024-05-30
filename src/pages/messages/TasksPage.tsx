@@ -43,6 +43,7 @@ import { RegistrationLandingPage } from '../public_registration/RegistrationLand
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
+import { NviStatusPage } from './components/NviStatusPage';
 import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
 
@@ -76,6 +77,7 @@ const TasksPage = () => {
   const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
+  const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
   const isOnCorrectionListPage = location.pathname === UrlPathTemplate.TasksNviCorrectionList;
 
   const [page, setPage] = useState(1);
@@ -190,7 +192,7 @@ const TasksPage = () => {
   });
 
   const nviCandidatesQuery = useQuery({
-    enabled: isOnNviCandidatesPage,
+    enabled: isOnNviCandidatesPage || isOnNviStatusPage,
     queryKey: ['nviCandidates', rowsPerPage, page, nviListQuery],
     queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviListQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
@@ -216,7 +218,9 @@ const TasksPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={isOnTicketsPage || isOnNviCandidatesPage || isOnCorrectionListPage}
+        expanded={
+          isOnTicketsPage || isOnNviCandidatesPage || isOnNviStatusPage || isOnNviStatusPage || isOnCorrectionListPage
+        }
         minimizedMenu={
           <Link
             to={{
@@ -359,6 +363,36 @@ const TasksPage = () => {
                   </StyledSearchModeButton>
                 </StyledTicketSearchFormGroup>
 
+                {nviAggregationsQuery.isSuccess && (
+                  <Box sx={{ bgcolor: 'nvi.light', p: '0.5rem', mb: '1rem' }}>
+                    <Typography id="progress-label">
+                      {t('tasks.nvi.completed_count', {
+                        completed: nviCandidatesCompeted,
+                        total: nviCandidatesTotal,
+                      })}
+                    </Typography>
+                    <LinearProgress
+                      aria-labelledby="progress-label"
+                      variant="determinate"
+                      value={nviCompletedPercentage}
+                      sx={{
+                        my: '0.175rem',
+                        height: '0.75rem',
+                        bgcolor: 'white',
+                      }}
+                    />
+                    <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
+
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: '0.5rem' }}>
+                      <LinkButton
+                        isSelected={isOnNviStatusPage}
+                        to={isOnNviStatusPage ? UrlPathTemplate.TasksNvi : UrlPathTemplate.TasksNviStatus}>
+                        {t('search.reports.institution_nvi')}
+                      </LinkButton>
+                    </Box>
+                  </Box>
+                )}
+
                 <FormLabel component="legend" sx={{ fontWeight: 700 }}>
                   {t('tasks.status')}
                 </FormLabel>
@@ -407,28 +441,6 @@ const TasksPage = () => {
                       }
                     />
                   </Box>
-
-                  {nviAggregationsQuery.isSuccess && (
-                    <Box sx={{ bgcolor: 'secondary.main', p: '0.5rem' }}>
-                      <Typography id="progress-label">
-                        {t('tasks.nvi.completed_count', {
-                          completed: nviCandidatesCompeted,
-                          total: nviCandidatesTotal,
-                        })}
-                      </Typography>
-                      <LinearProgress
-                        aria-labelledby="progress-label"
-                        variant="determinate"
-                        value={nviCompletedPercentage}
-                        sx={{
-                          my: '0.175rem',
-                          height: '0.75rem',
-                          bgcolor: 'white',
-                        }}
-                      />
-                      <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
-                    </Box>
-                  )}
 
                   <Box sx={{ bgcolor: 'secondary.main', p: '0.5rem' }}>
                     <FormControlLabel
@@ -539,6 +551,9 @@ const TasksPage = () => {
               setPage={setPage}
               helmetTitle={t('common.nvi')}
             />
+          </PrivateRoute>
+          <PrivateRoute exact path={UrlPathTemplate.TasksNviStatus} isAuthorized={isNviCurator}>
+            <NviStatusPage />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviCandidate} isAuthorized={isNviCurator}>
             <NviCandidatePage />

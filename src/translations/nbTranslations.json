@@ -272,6 +272,7 @@
     "test_environment": "Testmiljø",
     "title": "Tittel",
     "today": "I dag",
+    "total_number": "Totalt antall",
     "type": "Type",
     "unknown": "Ukjent",
     "update": "Oppdater",
@@ -1821,6 +1822,7 @@
     "reports": {
       "clinical_treatment_studies": "Kliniske behandlingsstudier",
       "external_reports": "Rapport generert fra ekstern løsning",
+      "institution_nvi": "Status NVI-rapportering",
       "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapporter"
     },
@@ -1880,6 +1882,7 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
+        "Dispute": "Tvist",
         "New": "Kandidat",
         "Pending": "Kandidat",
         "Rejected": "Avvist"

@@ -235,6 +235,41 @@ export const fetchNviCandidates = async (results: number, from: number, query = 
   return getNviCandidates.data;
 };
 
+enum NviCandidatesSearchParam {
+  Aggregation = 'aggregation',
+  Offset = 'offset',
+  Size = 'size',
+  Year = 'year',
+}
+
+export interface FetcNviCandidatesParams {
+  [NviCandidatesSearchParam.Aggregation]?: 'all' | null;
+  [NviCandidatesSearchParam.Offset]?: number | null;
+  [NviCandidatesSearchParam.Size]?: number | null;
+  [NviCandidatesSearchParam.Year]?: number | string | null;
+}
+
+export const fetchNviAggregations = async (params: FetcNviCandidatesParams) => {
+  const searchParams = new URLSearchParams();
+  searchParams.set(NviCandidatesSearchParam.Size, params.size?.toString() || '10');
+  searchParams.set(NviCandidatesSearchParam.Offset, params.offset?.toString() || '0');
+
+  if (params.aggregation) {
+    searchParams.set(NviCandidatesSearchParam.Aggregation, params.aggregation);
+  }
+
+  if (params.year) {
+    searchParams.set(NviCandidatesSearchParam.Year, params.year.toString());
+  }
+
+  const paramsString = searchParams.toString();
+  const getNviCandidates = await authenticatedApiRequest2<NviCandidateSearchResponse>({
+    url: `${SearchApiPath.NviCandidate}?${paramsString}`,
+  });
+
+  return getNviCandidates.data;
+};
+
 export const fetchNviCandidate = async (identifier: string) => {
   if (!identifier) {
     return;
