@@ -21,10 +21,7 @@ export const UnconfirmedOrganizationBox = ({
   const { t } = useTranslation();
 
   return (
-    <StyledOrganizationBox
-      sx={{
-        ...sx,
-      }}>
+    <StyledOrganizationBox>
       <Box
         sx={{
           display: 'flex',
