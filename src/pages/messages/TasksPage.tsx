@@ -185,7 +185,7 @@ const TasksPage = () => {
   const nviListQuery = `${nviAggregationQuery}&filter=${nviStatusFilter}`;
 
   const nviAggregationsQuery = useQuery({
-    enabled: isOnNviCandidatesPage,
+    enabled: isOnNviCandidatesPage || isOnNviStatusPage,
     queryKey: ['nviCandidates', 1, 0, nviAggregationQuery],
     queryFn: () => fetchNviCandidates(1, 0, nviAggregationQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
@@ -363,6 +363,8 @@ const TasksPage = () => {
                   </StyledSearchModeButton>
                 </StyledTicketSearchFormGroup>
 
+                <>{console.log(nviAggregationsQuery.isSuccess)}</>
+
                 {nviAggregationsQuery.isSuccess && (
                   <Box sx={{ bgcolor: 'nvi.light', p: '0.5rem', mb: '1rem' }}>
                     <Typography id="progress-label">
@@ -405,7 +407,9 @@ const TasksPage = () => {
                       control={<StyledStatusRadio onChange={() => setNviStatusFilter('pending')} />}
                       slotProps={{ typography: { fontWeight: 700 } }}
                       label={
-                        nviPendingCount ? `${t('tasks.nvi.candidate')} (${nviPendingCount})` : t('tasks.nvi.candidate')
+                        nviPendingCount
+                          ? `${t('tasks.nvi.status.New')} (${nviPendingCount})`
+                          : t('tasks.nvi.status.New')
                       }
                     />
                     <FormControlLabel
@@ -427,7 +431,9 @@ const TasksPage = () => {
                       control={<StyledStatusRadio onChange={() => setNviStatusFilter('assigned')} />}
                       slotProps={{ typography: { fontWeight: 700 } }}
                       label={
-                        nviAssignedCount ? `${t('tasks.nvi.assigned')} (${nviAssignedCount})` : t('tasks.nvi.assigned')
+                        nviAssignedCount
+                          ? `${t('tasks.nvi.status.Pending')} (${nviAssignedCount})`
+                          : t('tasks.nvi.status.Pending')
                       }
                     />
                     <FormControlLabel
@@ -553,7 +559,7 @@ const TasksPage = () => {
             />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviStatus} isAuthorized={isNviCurator}>
-            <NviStatusPage />
+            <NviStatusPage activeYear={nviYearFilter} />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviCandidate} isAuthorized={isNviCurator}>
             <NviCandidatePage />

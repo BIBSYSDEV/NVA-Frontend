@@ -22,16 +22,19 @@ import { Organization } from '../../../types/organization.types';
 import { isValidUrl } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
-export const NviStatusPage = () => {
+interface NviStatusPageProps {
+  activeYear: number | string;
+}
+
+export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const selectedYear = '2024';
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId);
   const institution = organizationQuery.data;
 
   // const nviPeriodQuery = useFetchNviPeriod(selectedYear);
-  const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all', year: selectedYear });
+  const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all', year: activeYear });
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
 
