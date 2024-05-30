@@ -10,6 +10,7 @@ export const StyledOrganizationBox = styled(Box)({
   border: '1px solid',
   borderRadius: '4px',
   display: 'flex',
+  gap: '0.5rem',
   padding: '0.5rem',
   boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.30)',
   backgroundColor: 'white',
@@ -27,10 +28,7 @@ export const OrganizationBox = ({ unitUri, sx, removeAffiliation }: Organization
   return organizationQuery.isPending ? (
     <AffiliationSkeleton />
   ) : organizationQuery.data ? (
-    <StyledOrganizationBox
-      sx={{
-        ...sx,
-      }}>
+    <StyledOrganizationBox sx={sx}>
       <OrganizationHierarchy organization={organizationQuery.data} />
       {removeAffiliation && (
         <DeleteIconButton

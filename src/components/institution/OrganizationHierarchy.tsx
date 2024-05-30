@@ -1,9 +1,9 @@
-import { Box, BoxProps, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Organization } from '../../types/organization.types';
 import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 
-interface OrganizationHierarchyProps extends Pick<BoxProps, 'sx'> {
+interface OrganizationHierarchyProps {
   organization: Organization;
 }
 
