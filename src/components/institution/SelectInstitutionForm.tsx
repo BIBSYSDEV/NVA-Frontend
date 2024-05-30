@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
@@ -149,6 +150,9 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 />
               )}
             </Field>
+            <Typography variant="h3" component="h2" sx={{ marginTop: '1rem', fontWeight: 'normal' }}>
+              {t('common.select_unit')}
+            </Typography>
             {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
               <Field name={SelectOrganizationFormField.Subunit}>
                 {({ field }: FieldProps<Organization>) => (
@@ -177,8 +181,12 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 )}
               </Field>
             )}
-
-            <Box sx={{ display: 'flex', gap: '1rem' }}>
+            <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              {onClose && (
+                <Button onClick={onClose} data-testid={dataTestId.confirmDialog.cancelButton}>
+                  {t('common.cancel')}
+                </Button>
+              )}
               <LoadingButton
                 variant="contained"
                 type="submit"
@@ -187,12 +195,6 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 data-testid={dataTestId.registrationWizard.contributors.addSelectedAffiliationButton}>
                 {t('common.add')}
               </LoadingButton>
-
-              {onClose && (
-                <Button onClick={onClose} data-testid={dataTestId.confirmDialog.cancelButton}>
-                  {t('common.cancel')}
-                </Button>
-              )}
             </Box>
           </Box>
         </Form>
