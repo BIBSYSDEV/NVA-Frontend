@@ -34,7 +34,7 @@ export const UnconfirmedOrganizationBox = ({
         }}>
         <Box sx={{ display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
           <ErrorIcon color="warning" />
-          <Typography fontWeight="bold">{t('registration.contributors.institution_is_unidentified')}</Typography>
+          <Typography fontWeight="bold">{t('registration.contributors.affiliation_is_unidentified')}</Typography>
         </Box>
         <Typography>"{name}"</Typography>
         <Button

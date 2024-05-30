@@ -1131,7 +1131,7 @@
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "contributor_is_unidentified": "Bidragsyter er uidentifisert",
-      "institution_is_unidentified": "Institusjon er uidentifisert",
+      "affiliation_is_unidentified": "Tilknytning er uidentifisert",
       "corresponding": "Korresponderende",
       "department": "Enhet",
       "identity_status": {
