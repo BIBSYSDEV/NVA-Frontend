@@ -20,11 +20,11 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const selectedYearSinceParam = searchParams.get(ResultParam.PublicationYearSince) ?? null;
-  const selectedYearBeforeParam = searchParams.get(ResultParam.PublicationYearBefore) ?? null;
+  const selectedYearSinceParam = searchParams.get(ResultParam.PublicationYearSince);
+  const selectedYearBeforeParam = searchParams.get(ResultParam.PublicationYearBefore);
 
-  const selectedYearSinceDate = selectedYearSinceParam ? new Date(selectedYearSinceParam) : null;
-  const selectedYearBeforeDate = selectedYearBeforeParam ? new Date(selectedYearBeforeParam) : null;
+  const selectedYearSinceDate = selectedYearSinceParam ? new Date(selectedYearSinceParam) : undefined;
+  const selectedYearBeforeDate = selectedYearBeforeParam ? new Date(selectedYearBeforeParam) : undefined;
 
   const onChangeDate = (
     newDate: Date | null,
@@ -52,7 +52,7 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('search.year_from')}
-        value={selectedYearSinceDate}
+        value={selectedYearSinceDate ?? null}
         maxDate={
           selectedYearBeforeDate
             ? new Date(selectedYearBeforeDate.getFullYear(), 11, 31, 23, 59, 59, 999)
@@ -64,7 +64,7 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('search.year_to')}
-        value={selectedYearBeforeDate}
+        value={selectedYearBeforeDate ?? null}
         minDate={selectedYearSinceDate || undefined}
         maxDate={defaultMaxDate}
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearBefore)}
