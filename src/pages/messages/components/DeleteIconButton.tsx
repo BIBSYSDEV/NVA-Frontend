@@ -1,11 +1,11 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, IconButtonProps, Tooltip } from '@mui/material';
 
-interface Props extends IconButtonProps {
+interface DeleteIconButtonProps extends IconButtonProps {
   tooltip?: string;
 }
 
-export const DeleteIconButton = ({ sx, tooltip, ...rest }: Props) => (
+export const DeleteIconButton = ({ sx, tooltip, ...rest }: DeleteIconButtonProps) => (
   <Tooltip title={tooltip}>
     <IconButton
       sx={{
