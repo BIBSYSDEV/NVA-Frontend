@@ -1,6 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, IconButtonProps, Tooltip } from '@mui/material';
-import { mainTheme } from '../../../themes/mainTheme';
 
 interface Props extends IconButtonProps {
   tooltip?: string;
