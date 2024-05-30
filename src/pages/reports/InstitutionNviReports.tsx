@@ -17,28 +17,28 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviCandidates } from '../../api/hooks/useFetchNviCandidates';
-import { useFetchNviPeriod } from '../../api/hooks/useFetchNviPeriod';
+import { useFetchNviPeriods } from '../../api/hooks/useFetchNviPeriods';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { RootState } from '../../redux/store';
 import { OrganizationApprovalStatusDetail } from '../../types/nvi.types';
 import { Organization } from '../../types/organization.types';
 import { toDateString } from '../../utils/date-helpers';
 import { isValidUrl } from '../../utils/general-helpers';
-import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { getLanguageString } from '../../utils/translation-helpers';
-
-const nviYearFilterValues = getNviYearFilterValues();
 
 export const InstititutionNviReports = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const [selectedYear, setSelectedYear] = useState(nviYearFilterValues[1]);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString()); // TODO: Move to URL
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId);
 
   const institution = organizationQuery.data;
 
-  const nviPeriodQuery = useFetchNviPeriod(selectedYear);
+  const nviPeriodsQuery = useFetchNviPeriods();
+  const periods = nviPeriodsQuery.data?.periods ?? [];
+  const selectedPeriod = periods.find((period) => period.publishingYear === selectedYear);
+
   const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all', year: selectedYear });
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
@@ -55,19 +55,18 @@ export const InstititutionNviReports = () => {
         select
         label={'Rapporteringsperiode'}
         value={selectedYear}
-        onChange={(event) => setSelectedYear(+event.target.value)} // TODO: Set in URL
+        onChange={(event) => setSelectedYear(event.target.value)}
         sx={{ width: '10rem' }}>
-        {nviYearFilterValues.map((year) => (
-          <MenuItem key={year} value={year}>
-            {year}
+        {periods.map((period) => (
+          <MenuItem key={period.id} value={period.publishingYear}>
+            {period.publishingYear}
           </MenuItem>
         ))}
       </TextField>
 
-      {/* TODO: Håndter manglende periode */}
-      {nviPeriodQuery.data && (
+      {selectedPeriod && (
         <Typography>
-          {toDateString(nviPeriodQuery.data.startDate)} - {toDateString(nviPeriodQuery.data.reportingDate)}
+          {toDateString(selectedPeriod.startDate)} - {toDateString(selectedPeriod.reportingDate)}
         </Typography>
       )}
 

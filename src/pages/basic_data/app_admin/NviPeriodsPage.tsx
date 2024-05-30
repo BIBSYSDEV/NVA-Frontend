@@ -1,8 +1,7 @@
 import { Box, List, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchNviPeriods } from '../../../api/scientificIndexApi';
+import { useFetchNviPeriods } from '../../../api/hooks/useFetchNviPeriods';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchListItem } from '../../../components/styled/Wrappers';
@@ -15,11 +14,7 @@ export const NviPeriodsPage = () => {
 
   const [nviPeriodToEdit, setNviPeriodToEdit] = useState<NviPeriod | null>(null);
 
-  const nviPeriodsQuery = useQuery({
-    queryKey: ['nviPeriods'],
-    queryFn: fetchNviPeriods,
-    meta: { errorMessage: t('feedback.error.get_nvi_periods') },
-  });
+  const nviPeriodsQuery = useFetchNviPeriods();
 
   const sortedPeriods = nviPeriodsQuery.data?.periods.sort((a, b) => +b.publishingYear - +a.publishingYear) ?? [];
 

@@ -53,6 +53,7 @@ export const fetchNviPeriods = async () => {
     url: ScientificIndexApiPath.Period,
   });
 
+  fetchNviPeriodsResponse.data.periods.sort((a, b) => +b.publishingYear - +a.publishingYear);
   return fetchNviPeriodsResponse.data;
 };
 
