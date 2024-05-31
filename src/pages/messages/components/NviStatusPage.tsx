@@ -3,6 +3,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
   Box,
   IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -48,10 +49,10 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
         {t('search.reports.institution_nvi')}
       </Typography>
 
-      <TableContainer>
+      <TableContainer component={Paper} variant="outlined">
         <Table size="small">
           <TableHead>
-            <TableRow sx={{ whiteSpace: 'nowrap' }}>
+            <TableRow sx={{ whiteSpace: 'nowrap', bgcolor: '#FEFBF3' }}>
               <TableCell>{t('registration.contributors.department')}</TableCell>
               <TableCell>{t('tasks.nvi.status.New')}</TableCell>
               <TableCell>{t('tasks.nvi.status.Pending')}</TableCell>
@@ -77,7 +78,7 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
 };
 interface OrganizationTableRowProps {
   organization: Organization;
-  aggregations: OrganizationApprovalStatusDetail | undefined;
+  aggregations?: OrganizationApprovalStatusDetail;
   level?: number;
 }
 
@@ -90,7 +91,7 @@ const OrganizationTableRow = ({ organization, aggregations, level = 0 }: Organiz
 
   return (
     <>
-      <TableRow sx={{ bgcolor: level % 2 === 0 ? '#f6f1dc' : '#faf7eb' }}>
+      <TableRow sx={{ bgcolor: level % 2 === 0 ? undefined : '#FEFBF3' }}>
         <TableCell sx={{ pl: `${1 + level * 1.5}rem`, py: '1rem' }}>{getLanguageString(organization.labels)}</TableCell>
         <TableCell align="center">{thisAggregations?.status.New?.docCount.toLocaleString() ?? 0}</TableCell>
         <TableCell align="center">{thisAggregations?.status.Pending?.docCount.toLocaleString() ?? 0}</TableCell>
@@ -109,18 +110,11 @@ const OrganizationTableRow = ({ organization, aggregations, level = 0 }: Organiz
           )}
         </TableCell>
       </TableRow>
-      {expanded && hasSubUnits && (
-        <>
-          {organization.hasPart?.map((subUnit) => (
-            <OrganizationTableRow
-              key={subUnit.id}
-              organization={subUnit}
-              aggregations={aggregations}
-              level={level + 1}
-            />
-          ))}
-        </>
-      )}
+
+      {expanded &&
+        organization.hasPart?.map((subUnit) => (
+          <OrganizationTableRow key={subUnit.id} organization={subUnit} aggregations={aggregations} level={level + 1} />
+        ))}
     </>
   );
 };
