@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
-import { fetchUsers } from '../../api/roleApi';
+import { fetchUsersByCustomer } from '../../api/roleApi';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -45,7 +45,8 @@ export const EditorInstitution = () => {
   const institutionUsersQuery = useQuery({
     queryKey: ['institutionUsers', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsers(customerId, [RoleName.Editor, RoleName.InstitutionAdmin]) : undefined),
+    queryFn: () =>
+      customerId ? fetchUsersByCustomer(customerId, [RoleName.Editor, RoleName.InstitutionAdmin]) : undefined,
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 

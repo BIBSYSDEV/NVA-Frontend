@@ -48,7 +48,7 @@ export const CentralImportDuplicateSearch = ({
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>
-          <Typography variant="subtitle1" gutterBottom>
+          <Typography fontWeight={700} gutterBottom>
             {duplicateCandidatesSize === 0
               ? t('basic_data.central_import.duplicate_search_no_hits')
               : t('basic_data.central_import.duplicate_search_hits')}

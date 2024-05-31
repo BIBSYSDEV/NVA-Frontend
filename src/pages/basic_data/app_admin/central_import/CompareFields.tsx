@@ -1,13 +1,16 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { IconButton, TextField, TextFieldProps } from '@mui/material';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface CompareFieldsProps extends Pick<TextFieldProps, 'variant'> {
-  candidateLabel: string;
+  candidateLabel?: string;
   registrationLabel?: string;
   onOverwrite?: () => void;
-  candidateValue: string | undefined;
-  registrationValue: string | undefined;
+  candidateValue?: string;
+  registrationValue?: string;
+  renderCandidateValue?: ReactNode;
+  renderRegistrationValue?: ReactNode;
 }
 
 export const CompareFields = ({
@@ -15,6 +18,8 @@ export const CompareFields = ({
   registrationLabel = candidateLabel,
   candidateValue,
   registrationValue,
+  renderCandidateValue,
+  renderRegistrationValue,
   onOverwrite,
   variant = 'filled',
 }: CompareFieldsProps) => {
@@ -22,15 +27,17 @@ export const CompareFields = ({
 
   return (
     <>
-      <TextField
-        size="small"
-        variant={variant}
-        disabled
-        multiline
-        label={candidateLabel}
-        value={candidateValue}
-        InputLabelProps={{ shrink: true }}
-      />
+      {renderCandidateValue ?? (
+        <TextField
+          size="small"
+          variant={variant}
+          disabled
+          multiline
+          label={candidateLabel}
+          value={candidateValue}
+          InputLabelProps={{ shrink: true }}
+        />
+      )}
       {onOverwrite ? (
         <IconButton
           size="small"
@@ -44,15 +51,17 @@ export const CompareFields = ({
       ) : (
         <span />
       )}
-      <TextField
-        size="small"
-        variant={variant}
-        disabled
-        multiline
-        label={registrationLabel}
-        value={registrationValue}
-        InputLabelProps={{ shrink: true }}
-      />
+      {renderRegistrationValue ?? (
+        <TextField
+          size="small"
+          variant={variant}
+          disabled
+          multiline
+          label={registrationLabel}
+          value={registrationValue}
+          InputLabelProps={{ shrink: true }}
+        />
+      )}
     </>
   );
 };

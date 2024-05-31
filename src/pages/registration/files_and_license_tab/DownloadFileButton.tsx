@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { downloadPrivateFile2 } from '../../../api/fileApi';
+import { downloadImportCandidateFile, downloadPrivateFile2 } from '../../../api/fileApi';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { Registration } from '../../../types/registration.types';
 import { openFileInNewTab } from '../../../utils/registration-helpers';
@@ -21,10 +21,13 @@ export const DownloadFileButton = ({ file }: DownloadFileButtonProps) => {
 
   const downloadFileQuery = useQuery({
     enabled: downloadFile,
-    queryKey: ['downloadFile', values.identifier, file.identifier],
+    queryKey: ['downloadFile', values.type, values.identifier, file.identifier],
     queryFn: async () => {
-      const downloadFileResponse = await downloadPrivateFile2(values.identifier, file.identifier);
-      if (downloadFileResponse?.id) {
+      const downloadFileResponse =
+        values.type === 'Publication'
+          ? await downloadPrivateFile2(values.identifier, file.identifier)
+          : await downloadImportCandidateFile(values.identifier, file.identifier);
+      if (downloadFileResponse.id) {
         openFileInNewTab(downloadFileResponse.id);
       }
       setDownloadFile(false); // Ensure that a new URL is obtained every time, due to expiration

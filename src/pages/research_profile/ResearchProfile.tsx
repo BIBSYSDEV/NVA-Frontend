@@ -8,8 +8,8 @@ import {
   Divider,
   Grid,
   IconButton,
-  List,
   Link as MuiLink,
+  List,
   Typography,
 } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -20,11 +20,11 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { FetchResultsParams, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
-import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
@@ -170,7 +170,7 @@ const ResearchProfile = () => {
                   borderColor: 'primary.main',
                 }}>
                 <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(role.labels)} &bull;</Typography>
-                <AffiliationHierarchy key={organization} unitUri={organization} />
+                <AffiliationHierarchy unitUri={organization} />
               </Box>
             ))}
           </Box>

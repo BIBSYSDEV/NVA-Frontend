@@ -294,6 +294,7 @@ export enum ResultParam {
 export enum ResultSearchOrder {
   ModifiedDate = 'modifiedDate',
   PublicationDate = 'publicationDate',
+  Relevance = 'relevance',
 }
 
 export interface FetchResultsParams {

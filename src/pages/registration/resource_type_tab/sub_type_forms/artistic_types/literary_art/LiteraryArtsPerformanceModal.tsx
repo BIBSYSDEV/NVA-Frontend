@@ -159,7 +159,6 @@ export const LiteraryArtsPerformanceModal = ({
                         setFieldValue('publicationDate', emptyRegistrationDate);
                       }
                     }}
-                    format="dd.MM.yyyy"
                     views={['year', 'month', 'day']}
                     slotProps={{
                       textField: {

@@ -26,6 +26,7 @@ import { displayDate } from '../../../../utils/date-helpers';
 import { getMainRegistrationType } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
+import { CompareDoiField } from './CompareDoiField';
 import { CompareFields } from './CompareFields';
 import { CompareJournalFields } from './CompareJournalFields';
 
@@ -143,8 +144,14 @@ export const CentralImportCandidateMerge = () => {
           <CompareFields
             candidateLabel={t('common.doi')}
             variant="standard"
-            candidateValue={importCandidate.doi || importCandidate.entityDescription?.reference?.doi}
-            registrationValue={registration.doi || registration.entityDescription?.reference?.doi}
+            renderCandidateValue={
+              <CompareDoiField
+                doi={importCandidate?.doi ?? (importCandidate?.entityDescription?.reference?.doi || '')}
+              />
+            }
+            renderRegistrationValue={
+              <CompareDoiField doi={registration.doi || registration.entityDescription?.reference?.doi || ''} />
+            }
           />
 
           <CompareFields
@@ -172,36 +179,42 @@ export const CentralImportCandidateMerge = () => {
           <CompareFields
             candidateLabel={t('common.doi')}
             registrationLabel={t('registration.files_and_license.link_to_resource')}
-            onOverwrite={() => {
-              if (!importCandidate.entityDescription?.reference?.doi) {
-                return;
-              }
-              const currentAssociatedLinkIndex = values.associatedArtifacts.findIndex(
-                (artifact) => artifact.type === 'AssociatedLink'
-              );
+            onOverwrite={
+              !importCandidate.entityDescription?.reference?.doi ||
+              registration.doi ||
+              registration.entityDescription?.reference?.doi
+                ? undefined
+                : () => {
+                    const currentAssociatedLinkIndex = values.associatedArtifacts.findIndex(
+                      (artifact) => artifact.type === 'AssociatedLink'
+                    );
 
-              if (currentAssociatedLinkIndex !== undefined && currentAssociatedLinkIndex > -1) {
-                setFieldValue(
-                  `${FileFieldNames.AssociatedArtifacts}.${currentAssociatedLinkIndex}.id`,
-                  importCandidate.entityDescription.reference.doi
-                );
-              } else {
-                setFieldValue(FileFieldNames.AssociatedArtifacts, [
-                  ...(values.associatedArtifacts ?? []),
-                  {
-                    type: 'AssociatedLink',
-                    id: importCandidate.entityDescription.reference.doi,
-                  },
-                ]);
-              }
-            }}
+                    if (currentAssociatedLinkIndex !== undefined && currentAssociatedLinkIndex > -1) {
+                      setFieldValue(
+                        `${FileFieldNames.AssociatedArtifacts}.${currentAssociatedLinkIndex}.id`,
+                        importCandidate.entityDescription?.reference?.doi
+                      );
+                    } else {
+                      setFieldValue(FileFieldNames.AssociatedArtifacts, [
+                        ...(values.associatedArtifacts ?? []),
+                        {
+                          type: 'AssociatedLink',
+                          id: importCandidate.entityDescription?.reference?.doi,
+                        },
+                      ]);
+                    }
+                  }
+            }
             candidateValue={importCandidate.entityDescription?.reference?.doi}
             registrationValue={
+              registration.doi ||
+              registration.entityDescription?.reference?.doi ||
               (
                 values.associatedArtifacts.find((artifact) => artifact.type === 'AssociatedLink') as
                   | AssociatedLink
                   | undefined
-              )?.id ?? ''
+              )?.id ||
+              ''
             }
           />
 

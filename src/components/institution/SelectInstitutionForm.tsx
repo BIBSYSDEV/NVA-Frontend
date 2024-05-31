@@ -22,7 +22,7 @@ import { useDebounce } from '../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { OrganizationRenderOption } from '../OrganizationRenderOption';
-import { OrganizationTree } from './OrganizationTree';
+import { OrganizationBox } from './OrganizationBox';
 
 enum SelectOrganizationFormField {
   Unit = 'unit',
@@ -86,7 +86,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 <Field name={SelectOrganizationFormField.selectedSuggestedAffiliationId}>
                   {({ field }: FieldProps<string>) => (
                     <RadioGroup
-                      sx={{ gap: '0.25rem' }}
+                      sx={{ gap: '0.5rem' }}
                       {...field}
                       onChange={(event) => {
                         setSearchTerm('');
@@ -103,7 +103,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                           key={suggestedInstitution}
                           value={suggestedInstitution}
                           control={<Radio size="small" />}
-                          label={<OrganizationTree unitUri={suggestedInstitution} />}
+                          label={<OrganizationBox unitUri={suggestedInstitution} />}
                         />
                       ))}
                     </RadioGroup>

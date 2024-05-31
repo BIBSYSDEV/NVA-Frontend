@@ -10,10 +10,10 @@ import {
   FormControlLabel,
   FormHelperText,
   IconButton,
-  Link as MuiLink,
   ListItemIcon,
   ListItemText,
   MenuItem,
+  Link as MuiLink,
   Paper,
   Popover,
   Radio,
@@ -35,13 +35,14 @@ import { TruncatableTypography } from '../../../components/TruncatableTypography
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
-import { licenses, LicenseUri } from '../../../types/license.types';
+import { LicenseUri, licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
-import { administrativeAgreementId } from '../FilesAndLicensePanel';
 import { DownloadFileButton } from './DownloadFileButton';
+
+export const administrativeAgreementId = 'administrative-agreement';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -410,7 +411,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       label={t('registration.files_and_license.embargo')}
                       value={field.value ? new Date(field.value) : null}
                       onChange={(date) => setFieldValue(field.name, date ?? '')}
-                      format="dd.MM.yyyy"
                       maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
                       disabled={file.administrativeAgreement || disabled}
                       sx={{ minWidth: '15rem' }}

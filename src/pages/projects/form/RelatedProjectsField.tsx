@@ -6,11 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { searchForProjects } from '../../../api/cristinApi';
 import { AutocompleteProjectOption } from '../../../components/AutocompleteProjectOption';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
-import { CristinProject } from '../../../types/project.types';
+import { CristinProject, ProjectFieldName } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { ProjectChip } from '../../registration/description_tab/projects_field/ProjectChip';
-import { ProjectFieldName } from './ProjectFormDialog';
 
 export const RelatedProjectsField = () => {
   const { t } = useTranslation();

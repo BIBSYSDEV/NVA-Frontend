@@ -14,7 +14,7 @@ import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
-import { UserFormData, UserFormFieldName } from './UserFormDialog';
+import { UserFormData, UserFormFieldName } from './userFormHelpers';
 
 export const AffiliationFormSection = () => {
   const { t } = useTranslation();
@@ -94,7 +94,6 @@ export const AffiliationFormSection = () => {
                   label={t('common.end_date')}
                   value={field.value ? new Date(field.value) : null}
                   onChange={(date: any) => setFieldValue(field.name, date ?? '')}
-                  format="dd.MM.yyyy"
                   views={['year', 'month', 'day']}
                   minDate={
                     employments[employmentIndex].startDate

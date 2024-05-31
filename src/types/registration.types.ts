@@ -235,9 +235,8 @@ export interface RegistrationPreview {
   };
 }
 
-export interface Doi {
-  identifier: string; // NVA identifier
-  title: string;
+export interface DoiPreview {
+  entityDescription: EntityDescription;
 }
 
 export const emptyRegistration: Registration = {
@@ -307,4 +306,15 @@ export interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
   duplicateOf?: string;
   comment: string;
+}
+
+interface NpiSubjectSubdomain {
+  id: string;
+  name: string;
+}
+
+export interface NpiSubjectDomain {
+  id: string;
+  subjectArea: string;
+  subdomains: NpiSubjectSubdomain[];
 }
