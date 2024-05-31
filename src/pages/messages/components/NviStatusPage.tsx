@@ -32,7 +32,7 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
-  const organizationQuery = useFetchOrganization(user?.topOrgCristinId);
+  const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const institution = organizationQuery.data;
 
   const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all', year: activeYear });
