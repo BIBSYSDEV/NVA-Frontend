@@ -1,19 +1,15 @@
 import AddIcon from '@mui/icons-material/AddCircleOutline';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
-import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
 import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
-import { Modal } from '../../../../components/Modal';
-import { setNotification } from '../../../../redux/notificationSlice';
 import { Affiliation } from '../../../../types/contributor.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getDistinctContributorUnits } from '../../../../utils/institutions-helpers';
+import { AddAffiliationModal } from './AddAffiliationModal';
 
 interface AffiliationsCellProps {
   affiliations?: Affiliation[];
@@ -23,8 +19,7 @@ interface AffiliationsCellProps {
 
 export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName }: AffiliationsCellProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { setFieldValue, values } = useFormikContext<Registration>();
+  const { setFieldValue } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
 
@@ -32,44 +27,6 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
 
   const onIdentifyAffiliationClick = (affiliationString: string) => {
     setAffiliationToVerify(affiliationString);
-    toggleAffiliationModal();
-  };
-
-  const addAffiliation = (newAffiliationId: string) => {
-    if (!newAffiliationId) {
-      return;
-    }
-
-    // Avoid adding same unit twice
-    if (
-      affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === newAffiliationId)
-    ) {
-      dispatch(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
-      return;
-    }
-
-    const addedAffiliation: Affiliation = {
-      type: 'Organization',
-      id: newAffiliationId,
-    };
-
-    let updatedAffiliations = [...affiliations]; // Must spread affiliations in order to keep changes when switching tab
-    if (affiliationToVerify) {
-      // Verify affiliation
-      const affiliationIndex = updatedAffiliations.findIndex(
-        (affiliation) => affiliation.type === 'UnconfirmedOrganization' && affiliation.name === affiliationToVerify
-      );
-      updatedAffiliations[affiliationIndex] = addedAffiliation;
-    } else {
-      // Add new affiliation
-      if (updatedAffiliations) {
-        updatedAffiliations.push(addedAffiliation);
-      } else {
-        updatedAffiliations = [addedAffiliation];
-      }
-    }
-
-    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`, updatedAffiliations);
     toggleAffiliationModal();
   };
 
@@ -123,55 +80,15 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         onClick={toggleAffiliationModal}>
         {t('registration.contributors.add_affiliation')}
       </Button>
-
-      {/* Modal for adding affiliation */}
-      <Modal
-        open={openAffiliationModal}
-        onClose={() => {
-          setAffiliationToVerify('');
-          toggleAffiliationModal();
-        }}
-        maxWidth="md"
-        fullWidth={true}
-        headingText={t('registration.contributors.add_new_affiliation')}
-        dataTestId="affiliation-modal">
-        <>
-          <Trans
-            i18nKey="registration.contributors.add_new_affiliation_helper_text"
-            components={[<Typography paragraph />]}
-          />
-          <Box
-            sx={{
-              bgcolor: 'secondary.main',
-              borderRadius: '0.25rem',
-              padding: '0.5rem 0.75rem',
-              marginBottom: '2rem',
-            }}>
-            {' '}
-            <Typography>
-              {t('common.contributor')}: <b>{authorName}</b>
-            </Typography>
-          </Box>
-          {affiliationToVerify && (
-            <Typography paragraph>
-              {t('registration.contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
-            </Typography>
-          )}
-          <Typography variant="h3" component="h2" sx={{ marginBottom: '1rem', fontWeight: 'normal' }}>
-            {t('common.select_institution')}
-          </Typography>
-          <SelectInstitutionForm
-            onSubmit={addAffiliation}
-            onClose={toggleAffiliationModal}
-            suggestedInstitutions={getDistinctContributorUnits(values.entityDescription?.contributors ?? []).filter(
-              (suggestion) =>
-                !affiliations.some(
-                  (affiliation) => affiliation.type === 'Organization' && affiliation.id === suggestion
-                )
-            )}
-          />
-        </>
-      </Modal>
+      <AddAffiliationModal
+        openAffiliationModal={openAffiliationModal}
+        affiliationToVerify={affiliationToVerify}
+        setAffiliationToVerify={setAffiliationToVerify}
+        toggleAffiliationModal={toggleAffiliationModal}
+        authorName={authorName}
+        affiliations={affiliations}
+        baseFieldName={baseFieldName}
+      />
     </Box>
   );
 };

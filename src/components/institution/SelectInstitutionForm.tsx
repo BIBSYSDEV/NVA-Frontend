@@ -12,11 +12,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { OrganizationSearchParams, searchForOrganizations } from '../../api/cristinApi';
+import { useSearchForOrganizations } from '../../api/hooks/useSearchForOrganizations';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
@@ -44,135 +43,101 @@ const initialValuesOrganizationForm: OrganizationForm = {
 };
 
 interface SelectInstitutionFormProps {
-  onSubmit: (id: string) => void;
+  addAffiliation: (id: string) => void;
   onClose?: () => void;
   suggestedInstitutions: string[];
 }
 
-export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions }: SelectInstitutionFormProps) => {
+export const SelectInstitutionForm = ({
+  addAffiliation,
+  onClose,
+  suggestedInstitutions,
+}: SelectInstitutionFormProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
-
-  const organizationQueryParams: OrganizationSearchParams = {
-    query: debouncedQuery,
-    includeSubunits: true,
-  };
-  const organizationSearchQuery = useQuery({
-    enabled: !!debouncedQuery,
-    queryKey: ['organization', organizationQueryParams],
-    queryFn: () => searchForOrganizations(organizationQueryParams),
-    meta: { errorMessage: t('feedback.error.get_institutions') },
-  });
+  const organizationSearchQuery = useSearchForOrganizations(debouncedQuery);
 
   return (
     <Formik
       initialValues={initialValuesOrganizationForm}
       onSubmit={(values, { setSubmitting }) => {
         if (values.selectedSuggestedAffiliationId) {
-          onSubmit(values.selectedSuggestedAffiliationId);
+          addAffiliation(values.selectedSuggestedAffiliationId);
         } else if (values.subunit?.id) {
-          onSubmit(values.subunit.id);
+          addAffiliation(values.subunit.id);
         } else if (values.unit?.id) {
-          onSubmit(values.unit?.id);
+          addAffiliation(values.unit?.id);
         }
         setSubmitting(false);
       }}>
-      {({ isSubmitting, values, setFieldValue, resetForm }: FormikProps<OrganizationForm>) => (
-        <Form noValidate>
-          {suggestedInstitutions.length > 0 && (
-            <Paper elevation={4} sx={{ p: '1rem', maxHeight: '35vh', overflow: 'auto', mb: '1.5rem' }}>
-              <FormControl>
-                <FormLabel>{t('registration.contributors.suggested_affiliations')}</FormLabel>
-                <Field name={SelectOrganizationFormField.selectedSuggestedAffiliationId}>
-                  {({ field }: FieldProps<string>) => (
-                    <RadioGroup
-                      sx={{ gap: '0.5rem' }}
-                      {...field}
-                      onChange={(event) => {
-                        setSearchTerm('');
-                        resetForm();
-                        field.onChange(event);
-                      }}>
-                      {suggestedInstitutions.map((suggestedInstitution) => (
-                        <FormControlLabel
-                          sx={{
-                            '& .MuiFormControlLabel-label': {
-                              width: '100%',
-                            },
-                          }}
-                          key={suggestedInstitution}
-                          value={suggestedInstitution}
-                          control={<Radio size="small" />}
-                          label={<OrganizationBox unitUri={suggestedInstitution} />}
-                        />
-                      ))}
-                    </RadioGroup>
-                  )}
-                </Field>
-              </FormControl>
-            </Paper>
-          )}
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Field name={SelectOrganizationFormField.Unit}>
-              {({ field }: FieldProps<Organization>) => (
-                <Autocomplete
-                  {...field}
-                  options={organizationSearchQuery.data?.hits ?? []}
-                  inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
-                  getOptionLabel={(option) => getLanguageString(option.labels)}
-                  renderOption={(props, option) => (
-                    <OrganizationRenderOption key={option.id} props={props} option={option} />
-                  )}
-                  filterOptions={(options) => options}
-                  onInputChange={(_, value, reason) => {
-                    if (field.value) {
-                      setFieldValue(field.name, null);
-                    }
-                    if (reason !== 'reset') {
-                      setSearchTerm(value);
-                    }
-                  }}
-                  onChange={(_, value) => {
-                    resetForm();
-                    setFieldValue(field.name, value);
-                  }}
-                  loading={organizationSearchQuery.isPending}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      data-testid={dataTestId.organization.searchField}
-                      label={t('registration.contributors.search_for_institution')}
-                      variant="filled"
-                      fullWidth
-                    />
-                  )}
-                />
-              )}
-            </Field>
-            <Typography variant="h3" component="h2" sx={{ marginTop: '1rem', fontWeight: 'normal' }}>
-              {t('common.select_unit')}
-            </Typography>
-            {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
-              <Field name={SelectOrganizationFormField.Subunit}>
+      {({ isSubmitting, values, setFieldValue, resetForm }: FormikProps<OrganizationForm>) => {
+        console.log('values', values);
+        return (
+          <Form noValidate>
+            {suggestedInstitutions.length > 0 && (
+              <Paper elevation={4} sx={{ p: '1rem', maxHeight: '35vh', overflow: 'auto', mb: '1.5rem' }}>
+                <FormControl>
+                  <FormLabel>{t('registration.contributors.suggested_affiliations')}</FormLabel>
+                  <Field name={SelectOrganizationFormField.selectedSuggestedAffiliationId}>
+                    {({ field }: FieldProps<string>) => (
+                      <RadioGroup
+                        sx={{ gap: '0.5rem' }}
+                        {...field}
+                        onChange={(event) => {
+                          setSearchTerm('');
+                          resetForm();
+                          field.onChange(event);
+                        }}>
+                        {suggestedInstitutions.map((suggestedInstitution) => (
+                          <FormControlLabel
+                            sx={{
+                              '& .MuiFormControlLabel-label': {
+                                width: '100%',
+                              },
+                            }}
+                            key={suggestedInstitution}
+                            value={suggestedInstitution}
+                            control={<Radio size="small" />}
+                            label={<OrganizationBox unitUri={suggestedInstitution} />}
+                          />
+                        ))}
+                      </RadioGroup>
+                    )}
+                  </Field>
+                </FormControl>
+              </Paper>
+            )}
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Field name={SelectOrganizationFormField.Unit}>
                 {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
-                    options={getSortedSubUnits(values.unit?.hasPart)}
+                    {...field}
+                    options={organizationSearchQuery.data?.hits ?? []}
+                    inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
                     getOptionLabel={(option) => getLanguageString(option.labels)}
                     renderOption={(props, option) => (
                       <OrganizationRenderOption key={option.id} props={props} option={option} />
                     )}
-                    onChange={(_, value) => setFieldValue(field.name, value)}
-                    filterOptions={(options, state) =>
-                      options.filter((option) =>
-                        state.getOptionLabel(option).toLocaleLowerCase().includes(state.inputValue.toLocaleLowerCase())
-                      )
-                    }
+                    filterOptions={(options) => options}
+                    onInputChange={(_, value, reason) => {
+                      if (field.value) {
+                        setFieldValue(field.name, null);
+                      }
+                      if (reason !== 'reset') {
+                        setSearchTerm(value);
+                      }
+                    }}
+                    onChange={(_, value) => {
+                      resetForm();
+                      setFieldValue(field.name, value);
+                    }}
+                    loading={organizationSearchQuery.isPending}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        data-testid={dataTestId.organization.subSearchField}
-                        label={t('registration.contributors.department')}
+                        data-testid={dataTestId.organization.searchField}
+                        label={t('registration.contributors.search_for_institution')}
                         variant="filled"
                         fullWidth
                       />
@@ -180,26 +145,62 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                   />
                 )}
               </Field>
-            )}
-
-            <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-              {onClose && (
-                <Button onClick={onClose} data-testid={dataTestId.confirmDialog.cancelButton}>
-                  {t('common.cancel')}
-                </Button>
+              {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
+                <>
+                  <Typography variant="h3" component="h2" sx={{ marginTop: '1rem', fontWeight: 'normal' }}>
+                    {t('common.select_unit')}
+                  </Typography>
+                  <Field name={SelectOrganizationFormField.Subunit}>
+                    {({ field }: FieldProps<Organization>) => (
+                      <Autocomplete
+                        options={getSortedSubUnits(values.unit?.hasPart)}
+                        getOptionLabel={(option) => getLanguageString(option.labels)}
+                        renderOption={(props, option) => (
+                          <OrganizationRenderOption key={option.id} props={props} option={option} />
+                        )}
+                        onChange={(_, value) => setFieldValue(field.name, value)}
+                        filterOptions={(options, state) =>
+                          options.filter((option) =>
+                            state
+                              .getOptionLabel(option)
+                              .toLocaleLowerCase()
+                              .includes(state.inputValue.toLocaleLowerCase())
+                          )
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            data-testid={dataTestId.organization.subSearchField}
+                            label={t('registration.contributors.department')}
+                            variant="filled"
+                            fullWidth
+                          />
+                        )}
+                      />
+                    )}
+                  </Field>
+                </>
               )}
-              <LoadingButton
-                variant="contained"
-                type="submit"
-                loading={isSubmitting}
-                disabled={!values.unit && !values.selectedSuggestedAffiliationId}
-                data-testid={dataTestId.registrationWizard.contributors.addSelectedAffiliationButton}>
-                {t('common.add')}
-              </LoadingButton>
+
+              <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+                {onClose && (
+                  <Button onClick={onClose} data-testid={dataTestId.confirmDialog.cancelButton}>
+                    {t('common.cancel')}
+                  </Button>
+                )}
+                <LoadingButton
+                  variant="contained"
+                  type="submit"
+                  loading={isSubmitting}
+                  disabled={!values.unit && !values.selectedSuggestedAffiliationId}
+                  data-testid={dataTestId.registrationWizard.contributors.addSelectedAffiliationButton}>
+                  {t('common.add')}
+                </LoadingButton>
+              </Box>
             </Box>
-          </Box>
-        </Form>
-      )}
+          </Form>
+        );
+      }}
     </Formik>
   );
 };
