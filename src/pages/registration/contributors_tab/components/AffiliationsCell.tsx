@@ -1,13 +1,12 @@
-import AddIcon from '@mui/icons-material/AddCircle';
-import RemoveIcon from '@mui/icons-material/HighlightOff';
-import WarningIcon from '@mui/icons-material/Warning';
+import AddIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { OrganizationTree } from '../../../../components/institution/OrganizationTree';
+import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
 import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
+import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
 import { Modal } from '../../../../components/Modal';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { Affiliation } from '../../../../types/contributor.types';
@@ -24,13 +23,14 @@ interface AffiliationsCellProps {
 
 export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName }: AffiliationsCellProps) => {
   const { t } = useTranslation();
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   const { setFieldValue, values } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
+
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
-  const verifyAffiliationOnClick = (affiliationString: string) => {
+  const onIdentifyAffiliationClick = (affiliationString: string) => {
     setAffiliationToVerify(affiliationString);
     toggleAffiliationModal();
   };
@@ -44,7 +44,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
     if (
       affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === newAffiliationId)
     ) {
-      disptach(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
+      dispatch(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 
@@ -73,6 +73,12 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
     toggleAffiliationModal();
   };
 
+  const removeAffiliation = (index: number) =>
+    setFieldValue(
+      `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
+      affiliations.filter((_, thisIndex) => thisIndex !== index)
+    );
+
   return (
     <Box
       sx={{
@@ -92,38 +98,26 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
             width: '100%',
             gap: '0.25rem',
           }}>
-          {affiliation.type === 'Organization' && <OrganizationTree unitUri={affiliation.id} sx={{ width: '100%' }} />}
-          {affiliation.type === 'UnconfirmedOrganization' && (
-            <>
-              <Typography>"{affiliation.name}"</Typography>
-              <Button
-                variant="outlined"
-                sx={{ textTransform: 'none' }}
-                data-testid={dataTestId.registrationWizard.contributors.verifyAffiliationButton}
-                startIcon={<WarningIcon color="warning" />}
-                onClick={() => affiliation.name && verifyAffiliationOnClick(affiliation.name)}>
-                {t('registration.contributors.verify_affiliation')}
-              </Button>
-            </>
+          {affiliation.type === 'Organization' && (
+            <OrganizationBox
+              unitUri={affiliation.id}
+              removeAffiliation={() => removeAffiliation(index)}
+              sx={{ width: '100%' }}
+            />
           )}
-
-          <Button
-            color="primary"
-            size="small"
-            data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
-            onClick={() =>
-              setFieldValue(
-                `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
-                affiliations.filter((_, thisIndex) => thisIndex !== index)
-              )
-            }
-            startIcon={<RemoveIcon />}>
-            {t('registration.contributors.remove_affiliation')}
-          </Button>
+          {affiliation.type === 'UnconfirmedOrganization' && (
+            <UnconfirmedOrganizationBox
+              name={affiliation.name}
+              onIdentifyAffiliationClick={onIdentifyAffiliationClick}
+              removeAffiliation={() => removeAffiliation(index)}
+              sx={{ width: '100%' }}
+            />
+          )}
         </Box>
       ))}
       <Button
-        size="medium"
+        variant="outlined"
+        sx={{ padding: '0.1rem 0.75rem' }}
         data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
         startIcon={<AddIcon />}
         onClick={toggleAffiliationModal}>

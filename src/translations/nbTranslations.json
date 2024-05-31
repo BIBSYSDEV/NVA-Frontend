@@ -158,6 +158,7 @@
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
+    "affiliation": "Tilknytning",
     "cancel": "Avbryt",
     "category": "Kategori",
     "chosen_one": "{{count}} valgt",
@@ -1133,6 +1134,7 @@
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "contributor_is_unidentified": "Bidragsyter er uidentifisert",
+      "affiliation_is_unidentified": "Tilknytning er uidentifisert",
       "corresponding": "Korresponderende",
       "department": "Enhet",
       "identity_status": {
