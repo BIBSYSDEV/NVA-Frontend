@@ -57,6 +57,11 @@ const StyledStatusRadio = styled(Radio)({
   paddingBottom: '0.05rem',
 });
 
+const StyledNviStatusBox = styled(Box)({
+  padding: '0.5rem',
+  borderRadius: '0.25rem',
+});
+
 const nviYearFilterValues = getNviYearFilterValues();
 
 interface LocationState {
@@ -364,7 +369,7 @@ const TasksPage = () => {
                 </StyledTicketSearchFormGroup>
 
                 {nviAggregationsQuery.isSuccess && (
-                  <Box sx={{ bgcolor: 'nvi.light', p: '0.5rem', mb: '1rem' }}>
+                  <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', p: '0.5rem', mb: '1rem' }}>
                     <Typography id="progress-label">
                       {t('tasks.nvi.completed_count', {
                         completed: nviCandidatesCompeted,
@@ -390,7 +395,7 @@ const TasksPage = () => {
                         {t('search.reports.institution_nvi')}
                       </LinkButton>
                     </Box>
-                  </Box>
+                  </StyledNviStatusBox>
                 )}
 
                 <FormLabel component="legend" sx={{ fontWeight: 700 }}>
@@ -398,7 +403,7 @@ const TasksPage = () => {
                 </FormLabel>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                  <Box sx={{ bgcolor: 'nvi.light', p: '0.5rem' }}>
+                  <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
                     <FormControlLabel
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
                       checked={nviStatusFilter === 'pending'}
@@ -420,9 +425,9 @@ const TasksPage = () => {
                           : t('tasks.nvi.waiting_for_your_institution')
                       }
                     />
-                  </Box>
+                  </StyledNviStatusBox>
 
-                  <Box sx={{ bgcolor: 'nvi.light', p: '0.5rem' }}>
+                  <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
                     <FormControlLabel
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedRadio}
                       checked={nviStatusFilter === 'assigned'}
@@ -444,9 +449,9 @@ const TasksPage = () => {
                           : t('tasks.nvi.waiting_for_your_institution')
                       }
                     />
-                  </Box>
+                  </StyledNviStatusBox>
 
-                  <Box sx={{ bgcolor: 'secondary.main', p: '0.5rem' }}>
+                  <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
                     <FormControlLabel
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedRadio}
                       checked={nviStatusFilter === 'approved'}
@@ -468,9 +473,9 @@ const TasksPage = () => {
                           : t('tasks.nvi.waiting_for_other_institutions')
                       }
                     />
-                  </Box>
+                  </StyledNviStatusBox>
 
-                  <Box sx={{ bgcolor: 'secondary.main', p: '0.5rem' }}>
+                  <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
                     <FormControlLabel
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedRadio}
                       checked={nviStatusFilter === 'rejected'}
@@ -492,7 +497,7 @@ const TasksPage = () => {
                           : t('tasks.nvi.waiting_for_other_institutions')
                       }
                     />
-                  </Box>
+                  </StyledNviStatusBox>
                 </Box>
               </StyledTicketSearchFormGroup>
             </NavigationListAccordion>

@@ -38,7 +38,6 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
   const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all', year: activeYear });
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
-
   const nviAggregations = nviQuery.data?.aggregations?.organizationApprovalStatuses[aggregationKey ?? ''] as
     | OrganizationApprovalStatusDetail
     | undefined;
