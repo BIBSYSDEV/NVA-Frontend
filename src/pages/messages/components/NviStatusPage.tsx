@@ -41,7 +41,7 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
   return (
     <BackgroundDiv>
       <Typography variant="h1" gutterBottom>
-        {t('search.reports.institution_nvi')}
+        {t('tasks.nvi.institution_nvi_status')}
       </Typography>
 
       <TableContainer component={Paper} variant="outlined">

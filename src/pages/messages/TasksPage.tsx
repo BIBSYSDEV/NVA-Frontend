@@ -12,10 +12,11 @@ import {
   FormLabel,
   LinearProgress,
   MenuItem,
+  Link as MuiLink,
   Radio,
   Select,
-  styled,
   Typography,
+  styled,
 } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -23,14 +24,14 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { fetchCustomerTickets, fetchNviCandidates, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets, fetchNviCandidates } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
-import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
+import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -370,7 +371,7 @@ const TasksPage = () => {
 
                 {nviAggregationsQuery.isSuccess && (
                   <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', p: '0.5rem', mb: '1rem' }}>
-                    <Typography id="progress-label">
+                    <Typography id="progress-label" gutterBottom>
                       {t('tasks.nvi.completed_count', {
                         completed: nviCandidatesCompeted,
                         total: nviCandidatesTotal,
@@ -389,11 +390,13 @@ const TasksPage = () => {
                     <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
 
                     <Box sx={{ display: 'flex', justifyContent: 'center', mt: '0.5rem' }}>
-                      <LinkButton
-                        isSelected={isOnNviStatusPage}
-                        to={isOnNviStatusPage ? UrlPathTemplate.TasksNvi : UrlPathTemplate.TasksNviStatus}>
-                        {t('search.reports.institution_nvi')}
-                      </LinkButton>
+                      <MuiLink
+                        component={Link}
+                        to={isOnNviCandidatesPage ? UrlPathTemplate.TasksNviStatus : UrlPathTemplate.TasksNvi}>
+                        {isOnNviCandidatesPage
+                          ? t('tasks.nvi.show_reporting_status')
+                          : t('tasks.nvi.show_candidate_search')}
+                      </MuiLink>
                     </Box>
                   </StyledNviStatusBox>
                 )}

@@ -1825,7 +1825,6 @@
     "reports": {
       "clinical_treatment_studies": "Kliniske behandlingsstudier",
       "external_reports": "Rapport generert fra ekstern løsning",
-      "institution_nvi": "Status NVI-rapportering",
       "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapporter"
     },
@@ -1868,6 +1867,7 @@
       "delete_note": "Slett merknad",
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
       "exclude_subunits": "Ekskluder underenheter",
+      "institution_nvi_status": "Status NVI-rapportering",
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
@@ -1881,6 +1881,8 @@
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
       "save_note": "Lagre merknad",
+      "show_reporting_status": "Vis rapporteringsstatus",
+      "show_candidate_search": "Vis kandidatsøk",
       "show_subunits": "Vis underenheter",
       "status": {
         "Approved": "Godkjent",
