@@ -127,7 +127,8 @@
       "add_reporting_period": "Legg til rapporteringsperiode",
       "nvi_publication_year": "NVI publiseringsår",
       "period_year": "Publiseringsår",
-      "update_reporting_period": "Oppdater rapporteringsperiode"
+      "update_reporting_period": "Oppdater rapporteringsperiode",
+      "nvi_reporting_year": "NVI-rapporteringsår"
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",

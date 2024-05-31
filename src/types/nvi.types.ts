@@ -79,8 +79,10 @@ export interface NviCandidate {
   approvals: (Approval | FinalizedApproval | RejectedApproval)[];
   notes: Note[];
   period: {
-    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
+    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod' | 'UnopenedPeriod';
+    year?: string;
   };
+  status?: 'Reported';
 }
 
 export interface Note {
