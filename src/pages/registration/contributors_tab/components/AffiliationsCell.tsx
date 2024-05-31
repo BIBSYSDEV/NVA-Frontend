@@ -2,7 +2,7 @@ import AddIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
 import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
@@ -131,19 +131,35 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
           setAffiliationToVerify('');
           toggleAffiliationModal();
         }}
-        maxWidth="sm"
+        maxWidth="md"
         fullWidth={true}
-        headingText={t('common.select_institution')}
+        headingText={t('registration.contributors.add_new_affiliation')}
         dataTestId="affiliation-modal">
         <>
-          <Typography paragraph>
-            {t('common.name')}: <b>{authorName}</b>
-          </Typography>
+          <Trans
+            i18nKey="registration.contributors.add_new_affiliation_helper_text"
+            components={[<Typography paragraph />]}
+          />
+          <Box
+            sx={{
+              bgcolor: 'secondary.main',
+              borderRadius: '0.25rem',
+              padding: '0.5rem 0.75rem',
+              marginBottom: '2rem',
+            }}>
+            {' '}
+            <Typography>
+              {t('common.contributor')}: <b>{authorName}</b>
+            </Typography>
+          </Box>
           {affiliationToVerify && (
             <Typography paragraph>
               {t('registration.contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
             </Typography>
           )}
+          <Typography variant="h3" component="h2" sx={{ marginBottom: '1rem', fontWeight: 'normal' }}>
+            {t('common.select_institution')}
+          </Typography>
           <SelectInstitutionForm
             onSubmit={addAffiliation}
             onClose={toggleAffiliationModal}
