@@ -119,7 +119,7 @@ export const ContributorRow = ({
                 {...field}
                 select
                 variant="filled"
-                label={t('common.number_short')}
+                label={t('common.select_role')}
                 fullWidth
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
