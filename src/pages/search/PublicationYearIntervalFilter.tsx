@@ -33,7 +33,11 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
     if (newDate) {
       const year = newDate.getFullYear();
       if (year.toString().length === 4) {
-        searchParams.set(param, year.toString());
+        if (param === ResultParam.PublicationYearBefore) {
+          searchParams.set(param, (year + 1).toString());
+        } else {
+          searchParams.set(param, year.toString());
+        }
         searchParams.delete(ResultParam.From);
         history.push({ search: searchParams.toString() });
       }
@@ -55,7 +59,7 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
         value={selectedYearSinceDate ?? null}
         maxDate={
           selectedYearBeforeDate
-            ? new Date(selectedYearBeforeDate.getFullYear() - 1, 11, 31, 23, 59, 59, 999)
+            ? new Date(selectedYearBeforeDate.getFullYear(), 11, 31, 23, 59, 59, 999)
             : defaultMaxDate
         }
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearSince)}
@@ -64,10 +68,10 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('search.year_to')}
-        value={selectedYearBeforeDate ?? null}
-        minDate={
-          selectedYearSinceDate ? new Date(selectedYearSinceDate.getFullYear() + 1, 11, 31, 23, 59, 59, 999) : undefined
+        value={
+          selectedYearBeforeDate ? new Date(selectedYearBeforeDate.getFullYear() - 1, 11, 31, 23, 59, 59, 999) : null
         }
+        minDate={selectedYearSinceDate}
         maxDate={defaultMaxDate}
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearBefore)}
       />
