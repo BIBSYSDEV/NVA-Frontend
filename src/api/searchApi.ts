@@ -246,7 +246,7 @@ export interface FetcNviCandidatesParams {
   [NviCandidatesSearchParam.Aggregation]?: 'all' | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
   [NviCandidatesSearchParam.Size]?: number | null;
-  [NviCandidatesSearchParam.Year]?: number | string | null;
+  [NviCandidatesSearchParam.Year]?: number | null;
 }
 
 export const fetchNviAggregations = async (params: FetcNviCandidatesParams) => {

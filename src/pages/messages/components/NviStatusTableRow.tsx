@@ -16,25 +16,23 @@ interface NviStatusTableRowProps {
 export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: NviStatusTableRowProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(level === 0);
-
-  const hasSubUnits = organization.hasPart && organization.hasPart.length > 0;
-  const thisAggregations = aggregations?.organizations?.[organization.id];
+  const orgAggregations = aggregations?.organizations?.[organization.id];
 
   return (
     <>
       <TableRow sx={{ bgcolor: level % 2 === 0 ? undefined : '#FEFBF3' }}>
         <TableCell sx={{ pl: `${1 + level * 1.5}rem`, py: '1rem' }}>{getLanguageString(organization.labels)}</TableCell>
-        <TableCell align="center">{thisAggregations?.status.New?.docCount.toLocaleString() ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.status.Pending?.docCount.toLocaleString() ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.status.Approved?.docCount.toLocaleString() ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.status.Rejected?.docCount.toLocaleString() ?? 0}</TableCell>
-        <TableCell align="center">{thisAggregations?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{orgAggregations?.status.New?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{orgAggregations?.status.Pending?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{orgAggregations?.status.Approved?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{orgAggregations?.status.Rejected?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{orgAggregations?.docCount.toLocaleString() ?? 0}</TableCell>
         <TableCell align="center">
-          {thisAggregations?.points.value.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0}
+          {orgAggregations?.points.value.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0}
         </TableCell>
-        <TableCell align="center">{thisAggregations?.status.Dispute?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{orgAggregations?.status.Dispute?.docCount.toLocaleString() ?? 0}</TableCell>
         <TableCell>
-          {hasSubUnits && level !== 0 && (
+          {level !== 0 && organization.hasPart && organization.hasPart.length > 0 && (
             <IconButton onClick={() => setExpanded(!expanded)} title={t('tasks.nvi.show_subunits')}>
               {expanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>

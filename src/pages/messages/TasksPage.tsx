@@ -22,7 +22,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
 import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets, fetchNviCandidates } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -71,9 +71,7 @@ interface LocationState {
 
 const TasksPage = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-
-  const location = useLocation<LocationState | undefined>();
+  const history = useHistory<LocationState | undefined>();
   const user = useSelector((store: RootState) => store.user);
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;
@@ -82,11 +80,11 @@ const TasksPage = () => {
   const isNviCurator = !!user?.isNviCurator;
   const nvaUsername = user?.nvaUsername ?? '';
 
-  const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
-  const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
-  const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
-  const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
-  const isOnCorrectionListPage = location.pathname === UrlPathTemplate.TasksNviCorrectionList;
+  const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
+  const isOnTicketPage = history.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
+  const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
+  const isOnNviStatusPage = history.location.pathname === UrlPathTemplate.TasksNviStatus;
+  const isOnCorrectionListPage = history.location.pathname === UrlPathTemplate.TasksNviCorrectionList;
 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -98,7 +96,7 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
-  const searchParams = new URLSearchParams(location.search);
+  const searchParams = new URLSearchParams(history.location.search);
 
   const queryParam = searchParams.get(TicketSearchParam.Query);
 
@@ -233,14 +231,12 @@ const TasksPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={
-          isOnTicketsPage || isOnNviCandidatesPage || isOnNviStatusPage || isOnNviStatusPage || isOnCorrectionListPage
-        }
+        expanded={isOnTicketsPage || isOnNviCandidatesPage || isOnNviStatusPage || isOnCorrectionListPage}
         minimizedMenu={
           <Link
             to={{
               pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
-              search: location.state?.previousSearch,
+              search: history.location.state?.previousSearch,
             }}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
@@ -383,7 +379,7 @@ const TasksPage = () => {
                 </StyledTicketSearchFormGroup>
 
                 {nviAggregationsQuery.isSuccess && (
-                  <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', p: '0.5rem', mb: '1rem' }}>
+                  <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', mb: '1rem' }}>
                     <Typography id="progress-label" gutterBottom>
                       {t('tasks.nvi.completed_count', {
                         completed: nviCandidatesCompeted,

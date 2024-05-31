@@ -21,7 +21,7 @@ import { isValidUrl } from '../../../utils/general-helpers';
 import { NviStatusTableRow } from './NviStatusTableRow';
 
 interface NviStatusPageProps {
-  activeYear: number | string;
+  activeYear: number;
 }
 
 export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
