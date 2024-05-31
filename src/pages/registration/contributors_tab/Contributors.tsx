@@ -218,7 +218,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
                     </Tooltip>
                   </TableCell>
                   <TableCell>{t('common.name')}</TableCell>
-                  <TableCell>{t('common.institution')}</TableCell>
+                  <TableCell>{t('common.affiliation')}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
