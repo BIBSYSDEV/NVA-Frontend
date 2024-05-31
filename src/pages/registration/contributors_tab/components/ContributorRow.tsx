@@ -67,9 +67,9 @@ export const ContributorRow = ({
   };
 
   return (
-    <TableRow>
+    <TableRow sx={{ td: { verticalAlign: 'top' } }}>
       <TableCell width="1">
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', gap: '0.2rem' }}>
           <TextField
             sx={{ width: '3.6rem' }}
             value={sequenceValue}
@@ -88,7 +88,7 @@ export const ContributorRow = ({
             <Tooltip title={t('common.move_down')}>
               <IconButton
                 size="small"
-                sx={{ minWidth: 'auto' }}
+                sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
                 onClick={() => onMoveContributor(contributor.sequence + 1, contributor.sequence)}>
                 <ArrowDownwardIcon color="primary" />
               </IconButton>
@@ -98,7 +98,7 @@ export const ContributorRow = ({
             <Tooltip title={t('common.move_up')}>
               <IconButton
                 size="small"
-                sx={{ minWidth: 'auto' }}
+                sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
                 onClick={() => onMoveContributor(contributor.sequence - 1, contributor.sequence)}>
                 <ArrowUpwardIcon color="primary" />
               </IconButton>
@@ -118,7 +118,8 @@ export const ContributorRow = ({
               <TextField
                 {...field}
                 select
-                variant="standard"
+                variant="filled"
+                label={t('common.select_role')}
                 fullWidth
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
@@ -139,6 +140,7 @@ export const ContributorRow = ({
               <Checkbox
                 data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
                 checked={!!field.value}
+                sx={{ marginTop: '0.3rem' }}
                 {...field}
                 inputProps={{ 'aria-label': t('registration.contributors.corresponding') }}
               />
