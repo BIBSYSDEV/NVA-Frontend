@@ -1878,6 +1878,7 @@
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
       "save_note": "Lagre merknad",
+      "show_subunits": "Vis underenheter",
       "status": {
         "Approved": "Godkjent",
         "Dispute": "Tvist",

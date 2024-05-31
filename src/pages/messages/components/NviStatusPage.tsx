@@ -11,11 +11,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
+import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { OrganizationApprovalStatusDetail } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
@@ -33,7 +35,6 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId);
   const institution = organizationQuery.data;
 
-  // const nviPeriodQuery = useFetchNviPeriod(selectedYear);
   const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'all', year: activeYear });
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
@@ -43,14 +44,10 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
     | undefined;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Typography variant="h1">{t('search.reports.institution_nvi')}</Typography>
-
-      {/* {nviPeriodQuery.data && (
-        <Typography>
-          {toDateString(nviPeriodQuery.data.startDate)} - {toDateString(nviPeriodQuery.data.reportingDate)}
-        </Typography>
-      )} */}
+    <BackgroundDiv>
+      <Typography variant="h1" gutterBottom>
+        {t('search.reports.institution_nvi')}
+      </Typography>
 
       <TableContainer>
         <Table size="small">
@@ -64,7 +61,11 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
               <TableCell>{t('common.total_number')}</TableCell>
               <TableCell>{t('tasks.nvi.publication_points')}</TableCell>
               <TableCell>{t('tasks.nvi.status.Dispute')}</TableCell>
-              <TableCell />
+              <TableCell>
+                <Box component="span" sx={visuallyHidden}>
+                  {t('tasks.nvi.show_subunits')}
+                </Box>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -72,7 +73,7 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>
+    </BackgroundDiv>
   );
 };
 interface OrganizationTableRowProps {
@@ -82,6 +83,7 @@ interface OrganizationTableRowProps {
 }
 
 const OrganizationTableRow = ({ organization, aggregations, level = 0 }: OrganizationTableRowProps) => {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(level === 0);
 
   const hasSubUnits = organization.hasPart && organization.hasPart.length > 0;
@@ -89,7 +91,7 @@ const OrganizationTableRow = ({ organization, aggregations, level = 0 }: Organiz
 
   return (
     <>
-      <TableRow>
+      <TableRow sx={{ bgcolor: level % 2 === 0 ? '#f6f1dc' : '#faf7eb' }}>
         <TableCell sx={{ pl: `${1 + level * 1.5}rem`, py: '1rem' }}>{getLanguageString(organization.labels)}</TableCell>
         <TableCell align="center">{thisAggregations?.status.New?.docCount.toLocaleString() ?? 0}</TableCell>
         <TableCell align="center">{thisAggregations?.status.Pending?.docCount.toLocaleString() ?? 0}</TableCell>
@@ -102,7 +104,7 @@ const OrganizationTableRow = ({ organization, aggregations, level = 0 }: Organiz
         <TableCell align="center">{thisAggregations?.status.Dispute?.docCount.toLocaleString() ?? 0}</TableCell>
         <TableCell>
           {hasSubUnits && level !== 0 && (
-            <IconButton onClick={() => setExpanded(!expanded)}>
+            <IconButton onClick={() => setExpanded(!expanded)} title={t('tasks.nvi.show_subunits')}>
               {expanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           )}
