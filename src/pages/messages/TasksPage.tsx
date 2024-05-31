@@ -404,6 +404,7 @@ const TasksPage = () => {
 
                     <Box sx={{ display: 'flex', justifyContent: 'center', mt: '0.5rem' }}>
                       <MuiLink
+                        data-testid={dataTestId.tasksPage.nvi.toggleStatusLink}
                         component={Link}
                         to={isOnNviCandidatesPage ? UrlPathTemplate.TasksNviStatus : UrlPathTemplate.TasksNvi}>
                         {isOnNviCandidatesPage
