@@ -54,7 +54,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
   const registration = registrationQuery.data;
-
   const registrationId = registrationQuery.data?.id ?? '';
   const canHaveNviCandidate =
     registration?.status === RegistrationStatus.Published ||
