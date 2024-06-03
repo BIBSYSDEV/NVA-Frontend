@@ -1,4 +1,4 @@
-import { OpenInNew } from '@mui/icons-material';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Divider, Grid, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
@@ -77,7 +77,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva'}>
             <Typography>{t('footer.help_page')}</Typography>
-            <OpenInNew />
+            <OpenInNewIcon />
           </MuiLink>
           <Typography fontStyle={'italic'} marginBottom={2} gutterBottom>
             {t('registration.support.self_help.description')}

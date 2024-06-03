@@ -1,6 +1,6 @@
 import { Approval, Note, NviCandidate, NviPeriod, NviPeriodResponse, RejectedApproval } from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
-import { authenticatedApiRequest2 } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
 export type CreateNoteData = Pick<Note, 'text'>;
 
@@ -77,7 +77,7 @@ export const updateNviPeriod = async (data: NviPeriod) => {
 };
 
 export const fetchNviCandidateForRegistration = async (registrationId: string) => {
-  const fetchNviCandidateForRegistrationResponse = await authenticatedApiRequest2<NviCandidate>({
+  const fetchNviCandidateForRegistrationResponse = await apiRequest2<NviCandidate>({
     url: `${ScientificIndexApiPath.CandidateForRegistration}/${encodeURIComponent(registrationId)}`,
   });
 

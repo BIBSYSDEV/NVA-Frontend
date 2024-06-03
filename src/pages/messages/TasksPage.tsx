@@ -131,7 +131,7 @@ const TasksPage = () => {
   });
 
   const selectedTicketTypes = Object.entries(ticketTypes)
-    .filter(([_, selected]) => selected)
+    .filter(([, selected]) => selected)
     .map(([key]) => key);
 
   const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.OrganizationId) ? rowsPerPage : 0;

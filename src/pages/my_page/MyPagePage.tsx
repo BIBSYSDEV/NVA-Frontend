@@ -72,7 +72,7 @@ const MyPagePage = () => {
   const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
 
   const selectedTypesArray = Object.entries(selectedTypes)
-    .filter(([_, selected]) => selected)
+    .filter(([, selected]) => selected)
     .map(([key]) => key);
 
   const ticketSearchParams: FetchTicketsParams = {

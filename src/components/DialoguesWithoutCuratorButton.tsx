@@ -1,4 +1,4 @@
-import { ChatBubble } from '@mui/icons-material';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import { Badge, Box, Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -49,7 +49,7 @@ export const DialoguesWithoutCuratorButton = () => {
       variant={dialoguesWithoutCuratorSelected ? 'contained' : 'outlined'}
       color="primary"
       sx={{ textTransform: 'none' }}
-      startIcon={<ChatBubble />}
+      startIcon={<ChatBubbleIcon />}
       endIcon={<Badge badgeContent={unassignedNotificationsCount} sx={{ ml: '1rem' }} />}
       onClick={toggleDialoguesWithoutCurators}
       title={t('tasks.dialogues_without_curator')}
