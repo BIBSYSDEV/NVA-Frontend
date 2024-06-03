@@ -242,14 +242,14 @@ enum NviCandidatesSearchParam {
   Year = 'year',
 }
 
-export interface FetcNviCandidatesParams {
+export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Aggregation]?: 'all' | 'organizationApprovalStatuses' | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
   [NviCandidatesSearchParam.Size]?: number | null;
   [NviCandidatesSearchParam.Year]?: number | null;
 }
 
-export const fetchNviAggregations = async (params: FetcNviCandidatesParams) => {
+export const fetchNviAggregations = async (params: FetchNviCandidatesParams) => {
   const searchParams = new URLSearchParams();
   searchParams.set(NviCandidatesSearchParam.Size, params.size?.toString() || '10');
   searchParams.set(NviCandidatesSearchParam.Offset, params.offset?.toString() || '0');

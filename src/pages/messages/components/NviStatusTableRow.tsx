@@ -1,5 +1,5 @@
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IconButton, TableCell, TableRow } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -34,7 +34,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: Nvi
         <TableCell>
           {level !== 0 && organization.hasPart && organization.hasPart.length > 0 && (
             <IconButton onClick={() => setExpanded(!expanded)} title={t('tasks.nvi.show_subunits')}>
-              {expanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </IconButton>
           )}
         </TableCell>
