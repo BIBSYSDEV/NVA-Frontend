@@ -1,7 +1,7 @@
 import { Box, Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
-import { useNviCandidateQuery } from '../../api/hooks/useNviCandidateQuery';
+import { useFetchNviCandidateQuery } from '../../api/hooks/useFetchNviCandidateQuery';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import disciplines from '../../resources/disciplines.json';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
@@ -80,7 +80,7 @@ import { RegistrationSummary } from './RegistrationSummary';
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
   const { entityDescription, id, status } = registration;
-  const nviCandidateQuery = useNviCandidateQuery(id, status);
+  const nviCandidateQuery = useFetchNviCandidateQuery(id, status);
 
   const publicationContext = entityDescription?.reference?.publicationContext;
   const publicationInstance = entityDescription?.reference?.publicationInstance;
