@@ -13,7 +13,7 @@ import { styled } from '@mui/system';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { SearchForm } from '../../../components/SearchForm';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';

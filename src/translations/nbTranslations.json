@@ -126,6 +126,7 @@
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
       "nvi_publication_year": "NVI publiseringsår",
+      "nvi_reporting_year": "NVI-rapporteringsår",
       "period_year": "Publiseringsår",
       "update_reporting_period": "Oppdater rapporteringsperiode"
     },
@@ -211,7 +212,6 @@
     "none": "Ingen",
     "not_decided": "Ikke bestemt",
     "number_short": "Nr.",
-    "select_role": "Velg rolle",
     "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
@@ -253,6 +253,7 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
     "select_institution": "Velg institusjon",
+    "select_role": "Velg rolle",
     "select_unit": "Velg enhet",
     "send": "Send",
     "settings": "Innstillinger",
@@ -274,6 +275,7 @@
     "test_environment": "Testmiljø",
     "title": "Tittel",
     "today": "I dag",
+    "total_number": "Totalt antall",
     "type": "Type",
     "unknown": "Ukjent",
     "update": "Oppdater",
@@ -293,6 +295,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -364,11 +370,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1128,11 +1130,11 @@
       "add_new_contributor": "Legg til ny bidragsyter",
       "add_self_as_contributor": "Legg meg til som bidragsyter",
       "add_unverified_contributor": "Legg til en uidentifisert bidragsyter.",
+      "affiliation_is_unidentified": "Tilknytning er uidentifisert",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "contributor_is_unidentified": "Bidragsyter er uidentifisert",
-      "affiliation_is_unidentified": "Tilknytning er uidentifisert",
       "corresponding": "Korresponderende",
       "department": "Enhet",
       "identity_status": {
@@ -1862,12 +1864,11 @@
       "approval_status_count": "Sjekket ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<0>Sjekk om forskningsresultatet skal NVI-rapporteres.</0> <0>Skal forskningsresultatet rapporteres så velger du \"Godkjenn resultat\"</0>",
-      "assigned": "Sjekkes",
-      "candidate": "Kandidat",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "delete_note": "Slett merknad",
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
       "exclude_subunits": "Ekskluder underenheter",
+      "institution_nvi_status": "Status NVI-rapportering",
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
@@ -1881,10 +1882,14 @@
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
       "save_note": "Lagre merknad",
+      "show_candidate_search": "Vis kandidatsøk",
+      "show_reporting_status": "Vis rapporteringsstatus",
+      "show_subunits": "Vis underenheter",
       "status": {
         "Approved": "Godkjent",
+        "Dispute": "Tvist",
         "New": "Kandidat",
-        "Pending": "Kandidat",
+        "Pending": "Sjekkes",
         "Rejected": "Avvist"
       },
       "waiting_for_other_institutions": "Venter på andre institusjoner",

@@ -35,6 +35,22 @@ interface AggregationCount {
   docCount: number;
 }
 
+type NviAggregationStatus = NviCandidateStatus | 'Dispute';
+
+interface OrganizationDetail extends AggregationCount {
+  dispute: AggregationCount;
+  points: { value: number };
+  status: { [status in NviAggregationStatus]?: AggregationCount };
+}
+
+export interface OrganizationApprovalStatusDetail extends AggregationCount {
+  organizations: { [organizationId: string]: OrganizationDetail };
+}
+
+interface OrganizationApprovalStatuses extends AggregationCount {
+  [organizationId: string]: OrganizationApprovalStatusDetail | number;
+}
+
 export interface NviCandidateAggregations {
   approved: AggregationCount;
   approvedCollaboration: AggregationCount;
@@ -46,6 +62,7 @@ export interface NviCandidateAggregations {
   rejectedCollaboration: AggregationCount;
   completed: AggregationCount;
   totalCount: AggregationCount;
+  organizationApprovalStatuses: OrganizationApprovalStatuses;
 }
 
 export type NviCandidateSearchResponse = Omit<
@@ -79,8 +96,10 @@ export interface NviCandidate {
   approvals: (Approval | FinalizedApproval | RejectedApproval)[];
   notes: Note[];
   period: {
-    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
+    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod' | 'UnopenedPeriod';
+    year?: string;
   };
+  status?: 'Reported';
 }
 
 export interface Note {

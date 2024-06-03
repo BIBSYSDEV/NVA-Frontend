@@ -235,6 +235,41 @@ export const fetchNviCandidates = async (results: number, from: number, query = 
   return getNviCandidates.data;
 };
 
+enum NviCandidatesSearchParam {
+  Aggregation = 'aggregation',
+  Offset = 'offset',
+  Size = 'size',
+  Year = 'year',
+}
+
+export interface FetchNviCandidatesParams {
+  [NviCandidatesSearchParam.Aggregation]?: 'all' | 'organizationApprovalStatuses' | null;
+  [NviCandidatesSearchParam.Offset]?: number | null;
+  [NviCandidatesSearchParam.Size]?: number | null;
+  [NviCandidatesSearchParam.Year]?: number | null;
+}
+
+export const fetchNviAggregations = async (params: FetchNviCandidatesParams) => {
+  const searchParams = new URLSearchParams();
+  searchParams.set(NviCandidatesSearchParam.Size, params.size?.toString() || '10');
+  searchParams.set(NviCandidatesSearchParam.Offset, params.offset?.toString() || '0');
+
+  if (params.aggregation) {
+    searchParams.set(NviCandidatesSearchParam.Aggregation, params.aggregation);
+  }
+
+  if (params.year) {
+    searchParams.set(NviCandidatesSearchParam.Year, params.year.toString());
+  }
+
+  const paramsString = searchParams.toString();
+  const getNviCandidates = await authenticatedApiRequest2<NviCandidateSearchResponse>({
+    url: `${SearchApiPath.NviCandidate}?${paramsString}`,
+  });
+
+  return getNviCandidates.data;
+};
+
 export const fetchNviCandidate = async (identifier: string) => {
   if (!identifier) {
     return;
@@ -413,10 +448,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
   }
   if (params.publicationYearBefore) {
-    const beforeYearNumber = +params.publicationYearBefore;
-    if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
-      // Add one year, to include the "before" year as well
-      searchParams.set(ResultParam.PublicationYearBefore, (beforeYearNumber + 1).toString());
+    if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
+      searchParams.set(ResultParam.PublicationYearBefore, params.publicationYearBefore);
     }
   }
   if (params.publicationYearSince) {
