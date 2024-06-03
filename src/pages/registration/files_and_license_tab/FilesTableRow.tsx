@@ -411,7 +411,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       label={t('registration.files_and_license.embargo')}
                       value={field.value ? new Date(field.value) : null}
                       onChange={(date) => setFieldValue(field.name, date ?? '')}
-                      format="dd.MM.yyyy"
                       maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
                       disabled={file.administrativeAgreement || disabled}
                       sx={{ minWidth: '15rem' }}

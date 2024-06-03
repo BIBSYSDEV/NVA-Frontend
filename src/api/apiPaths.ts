@@ -31,7 +31,7 @@ export enum PublicationChannelApiPath {
 export enum PublicationsApiPath {
   Registration = '/publication',
   RegistrationsByOwner = '/publication/by-owner',
-  DoiLookup = '/doi-fetch',
+  DoiLookup = '/doi-fetch/preview',
   ImportCandidate = '/publication/import-candidate',
 }
 
@@ -49,7 +49,7 @@ export enum SearchApiPath {
   Registrations = '/search/resources',
   RegistrationsExport = '/search/resources/export',
   CustomerTickets = '/search/customer/tickets',
-  ImportCandidates = '/search/import-candidates2',
+  ImportCandidates = '/search/customer/import-candidates',
   NviCandidate = '/scientific-index/candidate',
 }
 
