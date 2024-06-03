@@ -15,6 +15,8 @@ interface PublicationDateIntervalFilterProps {
   datePickerProps?: Partial<DatePickerProps<Date>>;
 }
 
+const defaultMaxDate = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999);
+
 export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: PublicationDateIntervalFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -47,8 +49,6 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
       history.push({ search: searchParams.toString() });
     }
   };
-
-  const defaultMaxDate = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999);
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-evenly', gap: '1rem', ...boxProps?.sx }}>
