@@ -1882,8 +1882,8 @@
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
       "save_note": "Lagre merknad",
-      "show_reporting_status": "Vis rapporteringsstatus",
       "show_candidate_search": "Vis kandidatsøk",
+      "show_reporting_status": "Vis rapporteringsstatus",
       "show_subunits": "Vis underenheter",
       "status": {
         "Approved": "Godkjent",
