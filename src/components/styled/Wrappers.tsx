@@ -44,6 +44,7 @@ export const BackgroundDiv = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     padding: '0.5rem',
   },
+  maxWidth: '100vw',
 }));
 
 export const StyledGeneralInfo = styled('div')(({ theme }) => ({
