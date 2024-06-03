@@ -243,7 +243,7 @@ enum NviCandidatesSearchParam {
 }
 
 export interface FetcNviCandidatesParams {
-  [NviCandidatesSearchParam.Aggregation]?: 'all' | null;
+  [NviCandidatesSearchParam.Aggregation]?: 'all' | 'organizationApprovalStatuses' | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
   [NviCandidatesSearchParam.Size]?: number | null;
   [NviCandidatesSearchParam.Year]?: number | null;
