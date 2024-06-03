@@ -75,6 +75,8 @@
         "result_in_nva": "Resultat i NVA",
         "update_value": "Oppdater verdi"
       },
+      "missing_journal": "Mangler tidsskrift",
+      "missing_publisher": "Mangler utgiver",
       "not_applicable": "Mangelfull",
       "or_search_with": "eller søk med",
       "reset_search_values": "Tilbakestill verdier",
@@ -156,6 +158,7 @@
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
+    "affiliation": "Tilknytning",
     "cancel": "Avbryt",
     "category": "Kategori",
     "chosen_one": "{{count}} valgt",
@@ -208,6 +211,7 @@
     "none": "Ingen",
     "not_decided": "Ikke bestemt",
     "number_short": "Nr.",
+    "select_role": "Velg rolle",
     "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
@@ -1127,9 +1131,10 @@
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
+      "contributor_is_unidentified": "Bidragsyter er uidentifisert",
+      "affiliation_is_unidentified": "Tilknytning er uidentifisert",
       "corresponding": "Korresponderende",
       "department": "Enhet",
-      "identification": "Identifisering",
       "identity_status": {
         "confirmed_identity": "Identifisert",
         "confirmed_identity_without_affiliation": "Identifisert uten tilknytning",
@@ -1753,7 +1758,7 @@
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
       "resource_type": "Kategori",
-      "search_for_channel": "Søk etter globale kanaler på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
+      "search_for_channel": "Søk i ISSN-portalen på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
       "search_for_publisher_placeholder": "Søk etter navn",
@@ -1843,6 +1848,7 @@
     "sort_by_name_desc": "Navn Å-A",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
+    "sort_by_relevance": "Relevans",
     "sorted_by": "Sortert etter",
     "year_from": "Fra år",
     "year_to": "Til år"

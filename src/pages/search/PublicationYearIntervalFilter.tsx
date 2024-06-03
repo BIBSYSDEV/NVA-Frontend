@@ -52,7 +52,7 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('search.year_from')}
-        value={selectedYearSinceDate}
+        value={selectedYearSinceDate ?? null}
         maxDate={
           selectedYearBeforeDate
             ? new Date(selectedYearBeforeDate.getFullYear(), 11, 31, 23, 59, 59, 999)
@@ -64,7 +64,7 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('search.year_to')}
-        value={selectedYearBeforeDate}
+        value={selectedYearBeforeDate ?? null}
         minDate={selectedYearSinceDate}
         maxDate={defaultMaxDate}
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearBefore)}

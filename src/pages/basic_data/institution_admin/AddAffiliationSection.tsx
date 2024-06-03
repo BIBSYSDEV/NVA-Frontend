@@ -100,7 +100,6 @@ export const AddAffiliationSection = () => {
                   !touched && setFieldTouched(field.name, true, false);
                   setFieldValue(field.name, date ?? '');
                 }}
-                format="dd.MM.yyyy"
                 views={['year', 'month', 'day']}
                 minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
                 slotProps={{
