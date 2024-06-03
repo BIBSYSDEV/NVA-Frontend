@@ -60,7 +60,10 @@ export const NviCandidatePage = () => {
   if (hasOffset && nviQueryParams) {
     nviQueryParams.offset = Math.max(thisCandidateOffset - 1, 0);
   }
-  const navigateCandidateQuery = useFetchNviCandidates(nviQueryParams ?? {}, hasOffset && !!nviQueryParams);
+  const navigateCandidateQuery = useFetchNviCandidates({
+    enabled: hasOffset && !!nviQueryParams,
+    params: nviQueryParams ?? {},
+  });
 
   const nextCandidateIdentifier = navigateCandidateQuery.isSuccess
     ? navigateCandidateQuery.data.hits[isFirstCandidate ? 1 : 2]?.identifier

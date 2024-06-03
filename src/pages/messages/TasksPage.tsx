@@ -193,8 +193,9 @@ const TasksPage = () => {
 
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
-  const nviAggregationsQuery = useFetchNviCandidates(
-    {
+  const nviAggregationsQuery = useFetchNviCandidates({
+    enabled: isOnNviCandidatesPage || isOnNviStatusPage,
+    params: {
       size: 1,
       aggregation: 'all',
       year: nviYearFilter,
@@ -203,8 +204,7 @@ const TasksPage = () => {
       assignee: showOnlyMyTasks && nvaUsername ? nvaUsername : null,
       query: queryParam,
     },
-    isOnNviCandidatesPage || isOnNviStatusPage
-  );
+  });
 
   const listNviCandidatesParams = {
     size: rowsPerPage,
@@ -217,7 +217,10 @@ const TasksPage = () => {
     filter: nviStatusFilter,
   } satisfies FetchNviCandidatesParams;
 
-  const nviCandidatesQuery = useFetchNviCandidates(listNviCandidatesParams, isOnNviCandidatesPage || isOnNviStatusPage);
+  const nviCandidatesQuery = useFetchNviCandidates({
+    enabled: isOnNviCandidatesPage || isOnNviStatusPage,
+    params: listNviCandidatesParams,
+  });
 
   const nviAggregations = nviAggregationsQuery.data?.aggregations;
 
