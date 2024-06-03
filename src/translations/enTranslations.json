@@ -75,8 +75,8 @@
         "result_in_nva": "Result in NVA",
         "update_value": "Update value"
       },
-      "missing_journal": "",
-      "missing_publisher": "",
+      "missing_journal": "Missing journal",
+      "missing_publisher": "Missing publisher",
       "not_applicable": "Incomplete",
       "or_search_with": "or search with",
       "reset_search_values": "Reset values",
@@ -126,6 +126,7 @@
     "nvi": {
       "add_reporting_period": "Add reporting period",
       "nvi_publication_year": "NVI publication year",
+      "nvi_reporting_year": "",
       "period_year": "Publication year",
       "update_reporting_period": "Update reporting period"
     },
@@ -158,6 +159,7 @@
     "actions": "Actions",
     "add": "Add",
     "add_custom": "Add {{- name}}",
+    "affiliation": "Affiliation",
     "cancel": "Cancel",
     "category": "Category",
     "chosen_one": "{{count}} selected",
@@ -251,6 +253,7 @@
     "search_summary_other": "{{count}} results for \"{{searchTerm}}\"",
     "select": "Select",
     "select_institution": "Select institution",
+    "select_role": "Select role",
     "select_unit": "Select unit",
     "send": "Send",
     "settings": "Settings",
@@ -1126,12 +1129,13 @@
       "add_new_contributor": "Add new contributor",
       "add_self_as_contributor": "Add me as contributor",
       "add_unverified_contributor": "Add a non-verified contributor.",
+      "affiliation_is_unidentified": "Affiliation is unidentified",
       "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}}?",
       "contributor": "Contributor",
       "contributor_already_added": "Chosen contributor is already added",
+      "contributor_is_unidentified": "Contributor is unidentified",
       "corresponding": "Corresponding",
       "department": "Department",
-      "identification": "Identification",
       "identity_status": {
         "confirmed_identity": "Confirmed identity",
         "confirmed_identity_without_affiliation": "Confirmed identity without affiliation",
@@ -1755,7 +1759,7 @@
         "search_for_related_registrations_helper": "Choose from registrations published in NVA"
       },
       "resource_type": "Category",
-      "search_for_channel": "",
+      "search_for_channel": "Search the ISSN at <0><0></0></0> to ensure the values you register are correct.",
       "search_for_original_article": "Search for original article",
       "search_for_publisher": "Search for publisher",
       "search_for_publisher_placeholder": "Search by name",
@@ -1845,6 +1849,7 @@
     "sort_by_name_desc": "Name Å-A",
     "sort_by_published_date_asc": "Publication date (oldest first)",
     "sort_by_published_date_desc": "Publication date (newest first)",
+    "sort_by_relevance": "Relevance",
     "sorted_by": "Sorted by",
     "year_from": "From year",
     "year_to": "To year"
