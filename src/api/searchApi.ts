@@ -229,17 +229,6 @@ export const fetchEmployees = async (
   return getEmployees.data;
 };
 
-export const fetchNviCandidates = async (results: number, from: number, query = '') => {
-  const paginationQuery = `size=${results}&offset=${from}`;
-  const fullQuery = [query, paginationQuery].filter(Boolean).join('&');
-
-  const getNviCandidates = await authenticatedApiRequest2<NviCandidateSearchResponse>({
-    url: `${SearchApiPath.NviCandidate}?${fullQuery}`,
-  });
-
-  return getNviCandidates.data;
-};
-
 enum NviCandidatesSearchParam {
   Affiliations = 'affiliations',
   Aggregation = 'aggregation',
@@ -264,7 +253,7 @@ export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Year]?: number | null;
 }
 
-export const fetchNviAggregations = async (params: FetchNviCandidatesParams) => {
+export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   const searchParams = new URLSearchParams();
   searchParams.set(NviCandidatesSearchParam.Size, params.size?.toString() || '10');
   searchParams.set(NviCandidatesSearchParam.Offset, params.offset?.toString() || '0');

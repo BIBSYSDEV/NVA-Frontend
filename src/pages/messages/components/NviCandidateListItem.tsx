@@ -2,6 +2,7 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { FetchNviCandidatesParams } from '../../../api/searchApi';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { CandidateOffsetState, NviCandidateSearchHit } from '../../../types/nvi.types';
@@ -13,10 +14,14 @@ import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlP
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
   currentOffset: number;
-  nviListQuery: string;
+  nviListQueryParams: FetchNviCandidatesParams;
 }
 
-export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviListQuery }: NviCandidateListItemProps) => {
+export const NviCandidateListItem = ({
+  nviCandidate,
+  currentOffset,
+  nviListQueryParams,
+}: NviCandidateListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -36,7 +41,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviListQuery
 
   const candidateOffsetState: CandidateOffsetState = {
     currentOffset,
-    nviQuery: nviListQuery,
+    nviQueryParams: nviListQueryParams,
   };
 
   return (

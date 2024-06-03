@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { FetchNviCandidatesParams, fetchNviAggregations } from '../searchApi';
+import { FetchNviCandidatesParams, fetchNviCandidates } from '../searchApi';
 
 export const useFetchNviCandidates = (queryParams: FetchNviCandidatesParams, enabled = true) => {
   const { t } = useTranslation();
@@ -8,7 +8,7 @@ export const useFetchNviCandidates = (queryParams: FetchNviCandidatesParams, ena
   return useQuery({
     queryKey: ['nviCandidates', queryParams],
     enabled,
-    queryFn: () => fetchNviAggregations(queryParams),
+    queryFn: () => fetchNviCandidates(queryParams),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
   });
 };
