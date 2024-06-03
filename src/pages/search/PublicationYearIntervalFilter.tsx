@@ -48,7 +48,7 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
     }
   };
 
-  const defaultMaxDate = new Date();
+  const defaultMaxDate = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999);
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-evenly', gap: '1rem', ...boxProps?.sx }}>
