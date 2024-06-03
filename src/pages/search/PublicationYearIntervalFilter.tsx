@@ -15,6 +15,8 @@ interface PublicationDateIntervalFilterProps {
   datePickerProps?: Partial<DatePickerProps<Date>>;
 }
 
+const defaultMaxDate = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999);
+
 export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: PublicationDateIntervalFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -33,7 +35,11 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
     if (newDate) {
       const year = newDate.getFullYear();
       if (year.toString().length === 4) {
-        searchParams.set(param, year.toString());
+        if (param === ResultParam.PublicationYearBefore) {
+          searchParams.set(param, (year + 1).toString());
+        } else {
+          searchParams.set(param, year.toString());
+        }
         searchParams.delete(ResultParam.From);
         history.push({ search: searchParams.toString() });
       }
@@ -44,8 +50,6 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
     }
   };
 
-  const defaultMaxDate = new Date();
-
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-evenly', gap: '1rem', ...boxProps?.sx }}>
       <DatePicker
@@ -55,7 +59,7 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
         value={selectedYearSinceDate ?? null}
         maxDate={
           selectedYearBeforeDate
-            ? new Date(selectedYearBeforeDate.getFullYear(), 11, 31, 23, 59, 59, 999)
+            ? new Date(selectedYearBeforeDate.getFullYear() - 1, 11, 31, 23, 59, 59, 999)
             : defaultMaxDate
         }
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearSince)}
@@ -64,7 +68,9 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
         {...commonDatepickerProps}
         {...datePickerProps}
         label={t('search.year_to')}
-        value={selectedYearBeforeDate ?? null}
+        value={
+          selectedYearBeforeDate ? new Date(selectedYearBeforeDate.getFullYear() - 1, 11, 31, 23, 59, 59, 999) : null
+        }
         minDate={selectedYearSinceDate}
         maxDate={defaultMaxDate}
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearBefore)}

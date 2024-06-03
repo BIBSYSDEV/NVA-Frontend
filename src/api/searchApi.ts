@@ -413,10 +413,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
   }
   if (params.publicationYearBefore) {
-    const beforeYearNumber = +params.publicationYearBefore;
-    if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
-      // Add one year, to include the "before" year as well
-      searchParams.set(ResultParam.PublicationYearBefore, (beforeYearNumber + 1).toString());
+    if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
+      searchParams.set(ResultParam.PublicationYearBefore, params.publicationYearBefore);
     }
   }
   if (params.publicationYearSince) {
