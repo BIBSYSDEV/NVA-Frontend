@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { RegistrationStatus } from '../../types/registration.types';
 import { fetchNviCandidateForRegistration } from '../scientificIndexApi';
 
-export const useNviCandidateQuery = (registrationId: string, registrationStatus: RegistrationStatus) => {
+export const useFetchNviCandidateQuery = (registrationId: string, registrationStatus: RegistrationStatus) => {
   const canHaveNviCandidate =
     registrationStatus === RegistrationStatus.Published || registrationStatus === RegistrationStatus.PublishedMetadata;
 
