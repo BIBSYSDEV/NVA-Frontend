@@ -18,13 +18,14 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
+import { useFetchNviCandidates } from '../../api/hooks/useFetchNviCandidates';
 import { fetchUser } from '../../api/roleApi';
-import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets, fetchNviCandidates } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -197,20 +198,32 @@ const TasksPage = () => {
   )}${excludeSubunitsQuery}${nviAssigneeQuery}${nviSearchQuery}`;
   const nviListQuery = `${nviAggregationQuery}&filter=${nviStatusFilter}`;
 
-  const nviAggregationsQuery = useQuery({
-    enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    queryKey: ['nviCandidates', 1, 0, nviAggregationQuery],
-    queryFn: () => fetchNviCandidates(1, 0, nviAggregationQuery),
-    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
-  });
+  const nviAggregationsQuery = useFetchNviCandidates(
+    {
+      size: 1,
+      aggregation: 'all',
+      year: nviYearFilter,
+      affiliations: organizationScope,
+      excludeSubUnits: excludeSubunits,
+      assignee: showOnlyMyTasks && nvaUsername ? nvaUsername : null,
+      query: nviSearchQuery,
+    },
+    isOnNviCandidatesPage || isOnNviStatusPage
+  );
 
-  const nviCandidatesQuery = useQuery({
-    enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    queryKey: ['nviCandidates', rowsPerPage, page, nviListQuery],
-    queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviListQuery),
-    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
-    placeholderData: keepPreviousData,
-  });
+  const nviCandidatesQuery = useFetchNviCandidates(
+    {
+      size: rowsPerPage,
+      offset: (page - 1) * rowsPerPage,
+      year: nviYearFilter,
+      affiliations: organizationScope,
+      excludeSubUnits: excludeSubunits,
+      assignee: showOnlyMyTasks && nvaUsername ? nvaUsername : null,
+      query: nviSearchQuery,
+      filter: nviStatusFilter,
+    },
+    isOnNviCandidatesPage || isOnNviStatusPage
+  );
 
   const nviAggregations = nviAggregationsQuery.data?.aggregations;
 
