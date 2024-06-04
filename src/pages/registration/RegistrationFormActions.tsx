@@ -66,7 +66,7 @@ export const RegistrationFormActions = ({
       );
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (isLastTab) {
-        if (history.location.state?.backPath) {
+        if (history.location.state?.previousPath) {
           history.goBack();
         } else {
           history.push(getRegistrationLandingPagePath(values.identifier));

@@ -1,13 +1,22 @@
 import { FetchNviCandidatesParams } from '../api/searchApi';
+import { RegistrationTab } from './registration.types';
 
-export interface RegistrationFormLocationState {
-  backPath?: string;
+export interface PreviousPathLocationState {
+  previousPath?: string;
 }
 
-export interface NviCandidatePageLocationState {
+export type HighestTouchedTab = RegistrationTab | -1;
+export interface RegistrationFormLocationState extends PreviousPathLocationState {
+  highestValidatedTab?: HighestTouchedTab;
+}
+
+export interface TasksPageLocationState {
+  previousSearch?: string;
+}
+
+export interface NviCandidatePageLocationState extends TasksPageLocationState {
   candidateOffsetState?: {
     currentOffset: number;
     nviQueryParams: FetchNviCandidatesParams;
   };
-  previousSearch?: string;
 }

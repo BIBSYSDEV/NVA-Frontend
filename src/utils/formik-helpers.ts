@@ -1,6 +1,5 @@
 import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn, validateYupSchema, yupToFormErrors } from 'formik';
-import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import {
   AssociatedArtifact,
   AssociatedFile,
@@ -8,6 +7,7 @@ import {
   NullAssociatedArtifact,
 } from '../types/associatedArtifact.types';
 import { Contributor } from '../types/contributor.types';
+import { HighestTouchedTab } from '../types/locationState.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,

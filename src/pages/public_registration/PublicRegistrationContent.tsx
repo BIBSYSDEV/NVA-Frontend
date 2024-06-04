@@ -82,7 +82,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               component={RouterLink}
               to={{
                 pathname: getRegistrationWizardPath(identifier),
-                state: { backPath: window.location.pathname } satisfies RegistrationFormLocationState,
+                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
               }}>
               <EditIcon />
             </IconButton>
