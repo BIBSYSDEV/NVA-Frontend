@@ -12,6 +12,7 @@ import { updateRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
+import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -26,10 +27,6 @@ interface RegistrationFormActionsProps {
   validateForm: (values: Registration) => FormikErrors<Registration>;
   persistedRegistration: Registration;
   isNviCandidate: boolean;
-}
-
-interface RegistrationFormLocationState {
-  goBackTo?: string;
 }
 
 export const RegistrationFormActions = ({
@@ -69,7 +66,7 @@ export const RegistrationFormActions = ({
       );
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (isLastTab) {
-        if (history.location.state?.goBackTo) {
+        if (history.location.state?.backPath) {
           history.goBack();
         } else {
           history.push(getRegistrationLandingPagePath(values.identifier));
