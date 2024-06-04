@@ -14,7 +14,7 @@ import { NviCandidateListItem } from './NviCandidateListItem';
 
 interface NviCandidatesListProps {
   nviCandidatesQuery: UseQueryResult<NviCandidateSearchResponse, unknown>;
-  nviListQueryParams: FetchNviCandidatesParams;
+  nviQueryParams: FetchNviCandidatesParams;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -24,7 +24,7 @@ interface NviCandidatesListProps {
 
 export const NviCandidatesList = ({
   nviCandidatesQuery,
-  nviListQueryParams,
+  nviQueryParams,
   setRowsPerPage,
   rowsPerPage,
   setPage,
@@ -65,7 +65,7 @@ export const NviCandidatesList = ({
                     <ErrorBoundary key={nviCandidate.identifier}>
                       <NviCandidateListItem
                         nviCandidate={nviCandidate}
-                        nviListQueryParams={nviListQueryParams}
+                        nviQueryParams={nviQueryParams}
                         currentOffset={currentOffset}
                       />
                     </ErrorBoundary>
