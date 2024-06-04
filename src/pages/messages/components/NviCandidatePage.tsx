@@ -9,7 +9,7 @@ import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
-import { CandidateOffsetState } from '../../../types/nvi.types';
+import { NviCandidatePageLocationState } from '../../../types/locationState.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
@@ -19,11 +19,6 @@ import { PublicRegistrationContent } from '../../public_registration/PublicRegis
 import { NavigationIconButton } from './NavigationIconButton';
 import { NviApprovals } from './NviApprovals';
 import { NviCandidateActions } from './NviCandidateActions';
-
-interface NviCandidatePageLocationState {
-  candidateOffsetState?: CandidateOffsetState;
-  previousSearch: string;
-}
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
