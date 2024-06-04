@@ -1,11 +1,11 @@
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
-import { Box, Button, IconButton, Menu as MuiMenu, MenuItem, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, IconButton, MenuItem, Menu as MuiMenu, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getById } from '../../api/commonApi';
+import { fetchResource } from '../../api/commonApi';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -25,10 +25,11 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const institutionId = user?.topOrgCristinId ?? '';
 
   const organizationQuery = useQuery({
-    queryKey: [institutionId],
-    queryFn: () => getById<Organization>(institutionId),
+    enabled: !!institutionId,
+    queryKey: ['organization', institutionId],
+    queryFn: () => fetchResource<Organization>(institutionId),
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 

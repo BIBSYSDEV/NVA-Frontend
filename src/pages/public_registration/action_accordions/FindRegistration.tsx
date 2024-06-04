@@ -3,7 +3,7 @@ import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
@@ -58,7 +58,7 @@ export const FindRegistration = ({
           return option.entityDescription?.mainTitle ?? '';
         }}
         freeSolo
-        loading={duplicateRegistrationSearch.isLoading && debouncedSearch.length > 0}
+        loading={duplicateRegistrationSearch.isPending && debouncedSearch.length > 0}
         value={selectedRegistration}
         onChange={(_, newValue) => {
           if (typeof newValue === 'string') {

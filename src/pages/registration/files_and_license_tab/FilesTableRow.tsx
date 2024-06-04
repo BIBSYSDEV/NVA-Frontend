@@ -40,8 +40,9 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
-import { administrativeAgreementId } from '../FilesAndLicensePanel';
 import { DownloadFileButton } from './DownloadFileButton';
+
+export const administrativeAgreementId = 'administrative-agreement';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -88,9 +89,18 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
 
+  const [inactiveLicensesOpen, setInactiveLicensesOpen] = useState(false);
+  const activeLicenses = licenses.filter(
+    (license) => license.version === 4 || license.id === LicenseUri.CC0 || license.id === LicenseUri.RightsReserved
+  );
+  const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
+
   return (
     <>
-      <TableRow data-testid={dataTestId.registrationWizard.files.fileRow} sx={{ td: { pb: 0, borderBottom: 'unset' } }}>
+      <TableRow
+        data-testid={dataTestId.registrationWizard.files.fileRow}
+        title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
+        sx={{ bgcolor: disabled ? 'grey.400' : '', td: { pb: 0, borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: '13rem' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
         </TableCell>
@@ -230,24 +240,51 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 label={t('registration.files_and_license.conditions_for_using_file')}
                 required
                 onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
-                {licenses
-                  .filter((license) => license.version === 4 || !license.version)
-                  .map((license) => (
-                    <MenuItem
-                      data-testid={dataTestId.registrationWizard.files.licenseItem}
-                      key={license.id}
-                      value={license.id}
-                      divider
-                      dense
-                      sx={{ gap: '1rem' }}>
-                      <ListItemIcon>
-                        <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                      </ListItemIcon>
-                      <ListItemText>
-                        <Typography>{license.name}</Typography>
-                      </ListItemText>
-                    </MenuItem>
-                  ))}
+                {activeLicenses.map((license) => (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItem}
+                    key={license.id}
+                    value={license.id}
+                    divider
+                    dense
+                    sx={{ gap: '1rem' }}>
+                    <ListItemIcon>
+                      <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography>{license.name}</Typography>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
+                {!inactiveLicensesOpen && (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
+                    sx={{ display: 'flex', justifyContent: 'center' }}
+                    onClickCapture={(e) => {
+                      e.stopPropagation();
+                      setInactiveLicensesOpen(!inactiveLicensesOpen);
+                    }}>
+                    <Typography sx={{ fontStyle: 'italic' }}>
+                      {t('registration.files_and_license.show_all_older_versions')}
+                    </Typography>
+                  </MenuItem>
+                )}
+                {inactiveLicenses.map((license) => (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItem}
+                    key={license.id}
+                    value={license.id}
+                    divider
+                    dense
+                    sx={{ gap: '1rem', display: inactiveLicensesOpen ? 'flex' : 'none' }}>
+                    <ListItemIcon>
+                      <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography>{license.name}</Typography>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
               </TextField>
             )}
           </Field>
@@ -267,7 +304,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           )}
         </TableCell>
       </TableRow>
-      <TableRow>
+      <TableRow
+        sx={{ bgcolor: disabled ? 'grey.400' : '' }}
+        title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}>
         <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
           <Collapse in={openCollapsable}>
             <Box
@@ -314,6 +353,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
                 {canOverrideRrs && (
                   <FormControlLabel
+                    disabled={disabled}
                     label={
                       <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
                         {rrsPolicyLink}
@@ -371,7 +411,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       label={t('registration.files_and_license.embargo')}
                       value={field.value ? new Date(field.value) : null}
                       onChange={(date) => setFieldValue(field.name, date ?? '')}
-                      format="dd.MM.yyyy"
                       maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
                       disabled={file.administrativeAgreement || disabled}
                       sx={{ minWidth: '15rem' }}

@@ -110,7 +110,7 @@ export interface BaseRegistration {
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
-  readonly allowedOperations: RegistrationOperation[];
+  readonly allowedOperations?: RegistrationOperation[];
   readonly publicationNotes?: PublicationNote[];
   subjects: string[];
   projects: ResearchProject[];
@@ -221,6 +221,7 @@ export const emptyRegistrationDate: RegistrationDate = {
 };
 
 export interface RegistrationPreview {
+  abstract: string;
   contributors: Contributor[];
   identifier: string;
   id: string;
@@ -234,9 +235,8 @@ export interface RegistrationPreview {
   };
 }
 
-export interface Doi {
-  identifier: string; // NVA identifier
-  title: string;
+export interface DoiPreview {
+  entityDescription: EntityDescription;
 }
 
 export const emptyRegistration: Registration = {
@@ -280,7 +280,7 @@ export type AggregationFileKeyType = 'hasPublicFiles' | 'noFiles';
 
 export interface RegistrationAggregations {
   topLevelOrganization?: AggregationValue[];
-  type?: AggregationValue[];
+  type?: AggregationValue<PublicationInstanceType>[];
   fundingSource?: AggregationValue[];
   contributor?: AggregationValue[];
   publisher?: AggregationValue[];
@@ -306,4 +306,15 @@ export interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
   duplicateOf?: string;
   comment: string;
+}
+
+interface NpiSubjectSubdomain {
+  id: string;
+  name: string;
+}
+
+export interface NpiSubjectDomain {
+  id: string;
+  subjectArea: string;
+  subdomains: NpiSubjectSubdomain[];
 }

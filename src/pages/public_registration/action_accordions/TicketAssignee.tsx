@@ -48,7 +48,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
           await ticketMutation.mutateAsync(assignee);
         }
       }}
-      isUpdating={ticketMutation.isLoading}
+      isUpdating={ticketMutation.isPending}
       roleFilter={
         ticket.type === 'PublishingRequest'
           ? RoleName.PublishingCurator

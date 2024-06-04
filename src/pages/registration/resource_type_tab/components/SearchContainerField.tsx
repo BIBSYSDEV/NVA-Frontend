@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getById } from '../../../../api/commonApi';
+import { fetchResource } from '../../../../api/commonApi';
 import { fetchResults } from '../../../../api/searchApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -77,7 +77,7 @@ export const SearchContainerField = ({
             aria-labelledby={`${dataTestId}-label`}
             popupIcon={null}
             options={
-              query === debouncedQuery && !containerOptionsQuery.isLoading ? containerOptionsQuery.data?.hits ?? [] : []
+              query === debouncedQuery && !containerOptionsQuery.isPending ? containerOptionsQuery.data?.hits ?? [] : []
             }
             filterOptions={(options) => options}
             inputValue={query}
@@ -190,17 +190,17 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const seriesId = publicationContext.series?.id ?? '';
 
   const publisherQuery = useQuery({
-    queryKey: [publisherId],
+    queryKey: ['channel', publisherId],
     enabled: !!publisherId,
-    queryFn: () => getById<Publisher>(publisherId),
+    queryFn: () => fetchResource<Publisher>(publisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
 
   const seriesQuery = useQuery({
-    queryKey: [seriesId],
+    queryKey: ['channel', seriesId],
     enabled: !!seriesId,
-    queryFn: () => getById<Series>(seriesId),
+    queryFn: () => fetchResource<Series>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });

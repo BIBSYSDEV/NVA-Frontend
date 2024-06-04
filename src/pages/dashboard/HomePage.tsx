@@ -2,9 +2,9 @@ import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import {
   PersonSearchParameter,
   PersonSearchParams,
@@ -13,7 +13,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../api/searchApi';
+import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -42,15 +42,15 @@ enum SearchTypeValue {
 const HomePage = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const location = useLocation();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
 
-  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
-  const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
-  const projectIsSelected = paramsSearchType === SearchTypeValue.Project;
+  const isOnFilterPage = history.location.pathname === UrlPathTemplate.Home;
+  const resultIsSelected = isOnFilterPage && (!paramsSearchType || paramsSearchType === SearchTypeValue.Result);
+  const personIsSeleced = isOnFilterPage && paramsSearchType === SearchTypeValue.Person;
+  const projectIsSelected = isOnFilterPage && paramsSearchType === SearchTypeValue.Project;
 
   const rowsPerPage = Number(params.get(SearchParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]);
   const page = Number(params.get(SearchParam.Page) ?? 1);
@@ -87,12 +87,13 @@ const HomePage = () => {
     title: params.get(ResultParam.Title),
     topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
   };
+
   const registrationQuery = useQuery({
     enabled: resultIsSelected,
     queryKey: ['registrations', registrationsQueryConfig],
-    queryFn: () => fetchResults(registrationsQueryConfig),
+    queryFn: ({ signal }) => fetchResults(registrationsQueryConfig, signal),
     meta: { errorMessage: t('feedback.error.search') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const personSearchTerm = params.get(PersonSearchParameter.Name) ?? '.';
@@ -108,7 +109,7 @@ const HomePage = () => {
     queryKey: ['person', rowsPerPage, page, personQueryParams],
     queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
     meta: { errorMessage: t('feedback.error.search') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   const projectSearchTerm = params.get(ProjectSearchParameter.Query);
@@ -131,7 +132,7 @@ const HomePage = () => {
     queryKey: ['projects', rowsPerPage, page, projectQueryParams],
     queryFn: () => searchForProjects(rowsPerPage, page, projectQueryParams),
     meta: { errorMessage: t('feedback.error.project_search') },
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 
   return (

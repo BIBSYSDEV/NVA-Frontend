@@ -135,7 +135,7 @@ const RoleItem = ({ dataTestId, label, text }: IconLabelTextLineProps) => (
       gridTemplateColumns: 'auto 1fr',
       borderRadius: '1px',
     }}>
-    <Typography variant="h4" sx={{ gridArea: 'label', fontWeight: 'bold' }}>
+    <Typography variant="h4" sx={{ gridArea: 'label' }}>
       {label}
     </Typography>
     <Typography gutterBottom sx={{ gridArea: 'text' }}>

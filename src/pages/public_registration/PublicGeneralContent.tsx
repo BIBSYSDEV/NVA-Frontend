@@ -1,8 +1,9 @@
 import { Box, Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
+import { useFetchNviCandidateQuery } from '../../api/hooks/useFetchNviCandidateQuery';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
-import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
+import disciplines from '../../resources/disciplines.json';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import {
   BookPublicationContext,
@@ -34,9 +35,11 @@ import {
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
+import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import {
+  findParentSubject,
   isArtistic,
   isBook,
   isChapter,
@@ -76,7 +79,8 @@ import { RegistrationSummary } from './RegistrationSummary';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
-  const { entityDescription } = registration;
+  const { entityDescription, id, status } = registration;
+  const nviCandidateQuery = useFetchNviCandidateQuery(id, status);
 
   const publicationContext = entityDescription?.reference?.publicationContext;
   const publicationInstance = entityDescription?.reference?.publicationInstance;
@@ -93,13 +97,16 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     (identifier) => identifier.sourceName === 'Scopus'
   )?.value;
 
+  const isNviReported = nviCandidateQuery.isSuccess && nviCandidateQuery.data.status === 'Reported';
+  const reportedYear = nviCandidateQuery.data?.period.year;
+
   return (
     <StyledGeneralInfo>
       <div data-testid={dataTestId.registrationLandingPage.generalInfo}>
         <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.public_page.about_registration')}
         </Typography>
-        <Typography>{displayDate(entityDescription?.publicationDate)}</Typography>
+        <Typography>{`${displayDate(entityDescription?.publicationDate)}${isNviReported && reportedYear ? ` (${t('basic_data.nvi.nvi_reporting_year')}: ${reportedYear})` : ''}`}</Typography>
         {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
             {i18n.language === 'nob' ? language.nob : language.eng}
@@ -108,7 +115,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         {entityDescription?.npiSubjectHeading && (
           <Typography data-testid={dataTestId.registrationLandingPage.npi}>
             {t('registration.description.npi_disciplines')}:{' '}
-            {t(`disciplines.${entityDescription.npiSubjectHeading}` as any)}
+            {t(`disciplines.${entityDescription.npiSubjectHeading}` as any)} (
+            {t(`disciplines.${findParentSubject(disciplines, entityDescription.npiSubjectHeading)}` as any)})
           </Typography>
         )}
         {publicationInstance &&

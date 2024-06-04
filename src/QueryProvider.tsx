@@ -19,11 +19,11 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
       defaultOptions: {
         queries: {
           refetchOnWindowFocus: false,
-          retry: 2,
+          retry: 1,
         },
       },
       queryCache: new QueryCache({
-        onError: (error: any, query) => {
+        onError: (error, query) => {
           const queryErrorMessage = query.meta?.errorMessage;
           const handleError = query.meta?.handleError;
           if (handleError && typeof handleError === 'function') {
@@ -31,18 +31,13 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
             return;
           }
 
-          if (!queryErrorMessage) {
+          if (queryErrorMessage === false) {
             return;
           }
 
           let errorMessage = typeof queryErrorMessage === 'string' ? queryErrorMessage : '';
           if (!errorMessage) {
-            if (typeof error?.response?.data?.detail === 'string') {
-              errorMessage = error.response.data.detail;
-            }
-            if (!errorMessage) {
-              errorMessage = t('feedback.error.an_error_occurred');
-            }
+            errorMessage = t('feedback.error.an_error_occurred');
           }
           dispatch(setNotification({ message: errorMessage, variant: 'error' }));
         },

@@ -1,5 +1,6 @@
 import { SearchResponse, SearchResponse2 } from '../../types/common.types';
 import { ImportCandidateSummary } from '../../types/importCandidate.types';
+import { JournalType } from '../../types/publicationFieldNames';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { mockImportCandidate } from './mockImportCandidate';
@@ -20,7 +21,7 @@ export const mockSearchResults: SearchResponse2<Registration, RegistrationAggreg
     mockRegistration,
   ],
   aggregations: {
-    type: [{ id: 'asd', key: 'AcademicArticle', count: 3 }],
+    type: [{ id: 'asd', key: JournalType.AcademicArticle, count: 3 }],
     fundingSource: [],
     topLevelOrganization: [],
   },

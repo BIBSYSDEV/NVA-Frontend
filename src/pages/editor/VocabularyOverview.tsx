@@ -41,7 +41,7 @@ export const VocabularyOverview = () => {
       </Typography>
       <Typography>{t('editor.vocabulary_description')}</Typography>
 
-      {vocabularyQuery.isLoading ? (
+      {vocabularyQuery.isPending ? (
         <CircularProgress aria-labelledby="vocabulary-label" />
       ) : (
         vocabularyQuery.data?.vocabularies

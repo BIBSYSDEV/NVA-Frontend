@@ -7,12 +7,11 @@ import { useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { FundingSourceField } from '../../../components/FundingSourceField';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
-import { ProjectFunding, emptyProjectFunding } from '../../../types/project.types';
+import { ProjectFieldName, ProjectFunding, emptyProjectFunding } from '../../../types/project.types';
 import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { API_URL } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { fundingSourceIsNfr, getNfrProjectUrl } from '../../registration/description_tab/projects_field/projectHelpers';
-import { ProjectFieldName } from './ProjectFormDialog';
 
 interface FundingsFieldProps {
   currentFundings: ProjectFunding[];

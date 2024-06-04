@@ -50,8 +50,10 @@ export const AreaOfResponsibilitySelector = () => {
   const organizations = organizationQuery.data ?? [];
   const organizationOptions = buildOrganizationOptions(organizations);
 
-  const selectedAreaIdsFromUrl = searchParams.get(TicketSearchParam.ViewingScope)?.split(',');
-  const selectedOrganizations = organizationOptions.filter((org) => selectedAreaIdsFromUrl?.includes(org.id));
+  const selectedAreaIdsFromUrl = searchParams.get(TicketSearchParam.OrganizationId)?.split(',');
+  const selectedOrganizations = organizationOptions.filter(
+    (org) => org.identifier && selectedAreaIdsFromUrl?.includes(org.identifier)
+  );
 
   const onlyOneAreaOfResponsibilitySelectable = organizationOptions.length === 1;
 
@@ -79,8 +81,8 @@ export const AreaOfResponsibilitySelector = () => {
       value={selectedOrganizations}
       disableCloseOnSelect
       disableClearable
-      disabled={organizationQuery.isLoading}
-      loading={organizationQuery.isLoading}
+      disabled={organizationQuery.isPending}
+      loading={organizationQuery.isPending}
       getOptionLabel={(option) => getLanguageString(option.labels)}
       renderTags={(values) => (
         <Chip
@@ -91,21 +93,21 @@ export const AreaOfResponsibilitySelector = () => {
           variant="filled"
           data-testid={dataTestId.registrationWizard.resourceType.journalChip}
           onDelete={() => {
-            searchParams.delete(TicketSearchParam.ViewingScope);
+            searchParams.delete(TicketSearchParam.OrganizationId);
             history.push({ search: searchParams.toString() });
           }}
         />
       )}
       onChange={(_, values) => {
         if (values.length) {
-          searchParams.set(TicketSearchParam.ViewingScope, values.map((org) => org.id).join(','));
+          searchParams.set(TicketSearchParam.OrganizationId, values.map((org) => org.identifier).join(','));
         } else {
-          searchParams.delete(TicketSearchParam.ViewingScope);
+          searchParams.delete(TicketSearchParam.OrganizationId);
         }
         history.push({ search: searchParams.toString() });
       }}
       renderOption={(props, option, { selected }) => (
-        <li {...props} key={option.id}>
+        <li {...props} key={option.identifier}>
           <Checkbox sx={{ ml: `${option.level}rem`, mr: '0.5rem' }} checked={selected} size="small" />
           {getLanguageString(option.labels)}
         </li>

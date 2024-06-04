@@ -21,7 +21,6 @@ export const isSuccessStatus = (status: number) => status >= 200 && status <= 29
 
 export enum LocalStorageKey {
   AppUpdateTime = 'appUpdateTime',
-  AmplifyRedirect = 'amplifySignInRedirect',
   Beta = 'beta',
   EnvironmentBanner = 'environmentBanner',
   ShowTagline = 'showTagline',

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { searchForPublishers } from '../../../api/publicationChannelApi';
+import { fetchPublisher, searchForPublishers } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Publisher } from '../../../types/registration.types';
@@ -30,7 +30,7 @@ export const PublisherFilter = () => {
   const selectedPublisherQuery = useQuery({
     enabled: !!publisherParam,
     queryKey: [publisherParam],
-    queryFn: () => searchForPublishers(publisherParam ?? '', '2023'),
+    queryFn: () => (publisherParam ? fetchPublisher(publisherParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
   });
@@ -45,25 +45,21 @@ export const PublisherFilter = () => {
     history.push({ search: searchParams.toString() });
   };
 
-  const isFetching = publisherParam ? selectedPublisherQuery.isLoading : publisherOptionsQuery.isFetching;
+  const isFetching = publisherParam ? selectedPublisherQuery.isPending : publisherOptionsQuery.isFetching;
 
   return (
     <Autocomplete
       size="small"
       sx={{ minWidth: '15rem' }}
-      value={publisherParam && selectedPublisherQuery.data?.hits[0] ? selectedPublisherQuery.data.hits[0] : null}
+      value={publisherParam && selectedPublisherQuery.data ? selectedPublisherQuery.data : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       options={
-        debouncedQuery && publisherQuery === debouncedQuery && !publisherOptionsQuery.isLoading ? publisherList : []
+        debouncedQuery && publisherQuery === debouncedQuery && !publisherOptionsQuery.isPending ? publisherList : []
       }
       filterOptions={(options) => options}
       inputValue={publisherQuery}
-      onInputChange={(_, newInputValue) => {
-        setPublisherQuery(newInputValue);
-      }}
-      onChange={(_, newValue) => {
-        handleChange(newValue);
-      }}
+      onInputChange={(_, newInputValue) => setPublisherQuery(newInputValue)}
+      onChange={(_, newValue) => handleChange(newValue)}
       blurOnSelect
       disableClearable={!publisherQuery}
       loading={isFetching}

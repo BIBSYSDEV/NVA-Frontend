@@ -16,6 +16,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { toDateString } from '../../../utils/date-helpers';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 
 interface InstitutionListProps {
@@ -41,20 +42,20 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
           {institutions.map((institution) => (
             <TableRow key={institution.id}>
               <TableCell>
-                <Typography>{institution.displayName}</Typography>
+                <Typography>{institution.displayName ?? institution.id}</Typography>
               </TableCell>
               <TableCell>
                 <Typography>{institution.doiPrefix}</Typography>
               </TableCell>
               <TableCell>
-                <Typography>{new Date(institution.createdDate).toLocaleDateString()}</Typography>
+                <Typography>{toDateString(institution.createdDate)}</Typography>
               </TableCell>
               <TableCell>
                 <Button
                   variant="outlined"
                   startIcon={<EditIcon />}
                   component={RouterLink}
-                  data-testid={dataTestId.basicData.customers.editInstitutionButton(institution.displayName)}
+                  data-testid={dataTestId.basicData.customers.editInstitutionButton(institution.id)}
                   to={getAdminInstitutionPath(institution.id)}>
                   <Typography>{t('common.edit')}</Typography>
                 </Button>

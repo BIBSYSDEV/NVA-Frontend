@@ -23,13 +23,11 @@ import { useQuery } from '@tanstack/react-query';
 import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { getById } from '../../api/commonApi';
+import { fetchResource } from '../../api/commonApi';
 import { fetchRegistration } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
-import { setNotification } from '../../redux/notificationSlice';
 import {
   AudioVisualPublication,
   Award,
@@ -65,6 +63,7 @@ import {
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { ContextPublisher, Journal, Publisher, Series } from '../../types/registration.types';
+import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
@@ -118,7 +117,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
       ) : fetchedPublisher ? (
         <>
           <Typography>{fetchedPublisher.name}</Typography>
-          <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} />
+          <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} channelId={fetchedPublisher.id} />
           {fetchedPublisher.sameAs && (
             <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
               {t('registration.public_page.find_in_channel_registry')}
@@ -192,7 +191,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   const journalQuery = useQuery({
     enabled: !!id,
     queryKey: ['channel', id],
-    queryFn: () => getById<Journal | Series>(id),
+    queryFn: () => fetchResource<Journal | Series>(id),
     retry: 1,
     meta: {
       errorMessage: false,
@@ -213,12 +212,12 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   const journalBackupQuery = useQuery({
     enabled: journalQuery.isError && !!alternativeJournalId,
     queryKey: ['channel', alternativeJournalId],
-    queryFn: () => getById<Journal | Series>(alternativeJournalId),
+    queryFn: () => fetchResource<Journal | Series>(alternativeJournalId),
     retry: 1,
     meta: { errorMessage },
   });
 
-  const isLoadingJournal = (!!id && journalQuery.isLoading) || (journalQuery.isError && journalBackupQuery.isLoading);
+  const isLoadingJournal = (!!id && journalQuery.isPending) || (journalQuery.isError && journalBackupQuery.isPending);
   const journal = journalQuery.data ?? journalBackupQuery.data;
 
   return isLoadingJournal ? (
@@ -234,7 +233,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
           .filter((issn) => issn)
           .join(', ')}
       </Typography>
-      <NpiLevelTypography scientificValue={journal.scientificValue} />
+      <NpiLevelTypography scientificValue={journal.scientificValue} channelId={journal.id} />
       {journal.sameAs && (
         <Typography component={Link} href={journal.sameAs} target="_blank">
           {t('registration.public_page.find_in_channel_registry')}
@@ -303,7 +302,6 @@ interface PublicOutputRowProps {
 }
 
 const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
@@ -315,13 +313,7 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
     enabled: !!exhibitionCatalogIdentifier,
     queryKey: ['registration', exhibitionCatalogIdentifier],
     queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
-    onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.get_registration'),
-          variant: 'error',
-        })
-      ),
+    meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
   const nameString = exhibitionCatalogIdentifier
@@ -454,9 +446,7 @@ const PublicExhibitionMentionInPublicationDialogContent = ({
         {t('common.date')}
       </Typography>
       <Typography paragraph>
-        {exhibitionMentionInPublication.date?.value
-          ? new Date(exhibitionMentionInPublication.date.value).toLocaleDateString()
-          : '-'}
+        {exhibitionMentionInPublication.date?.value ? toDateString(exhibitionMentionInPublication.date.value) : '-'}
       </Typography>
       <Typography variant="h3" gutterBottom>
         {t('registration.resource_type.other_publisher_isbn_etc')}
@@ -505,9 +495,7 @@ const PublicExhibitionOtherPresentationDialogContent = ({
         {t('common.date')}
       </Typography>
       <Typography paragraph>
-        {exhibitionOtherPresentation.date?.value
-          ? new Date(exhibitionOtherPresentation.date.value).toLocaleDateString()
-          : '-'}
+        {exhibitionOtherPresentation.date?.value ? toDateString(exhibitionOtherPresentation.date.value) : '-'}
       </Typography>
     </DialogContent>
   );
@@ -534,7 +522,7 @@ const PublicCompetitionDialogContent = ({ competition }: { competition: Competit
       <Typography variant="h3">{t('registration.resource_type.artistic.competition_rank')}</Typography>
       <Typography paragraph>{competition.description}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
-      <Typography>{new Date(competition.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(competition.date.value)}</Typography>
     </DialogContent>
   );
 };
@@ -566,7 +554,7 @@ const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication
       <Typography variant="h3">{t('registration.resource_type.issue')}</Typography>
       <Typography paragraph>{mention.issue}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
-      <Typography>{new Date(mention.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(mention.date.value)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.other_publisher_isbn_etc')}</Typography>
       <Typography paragraph>{mention.otherInformation}</Typography>
     </DialogContent>
@@ -598,7 +586,7 @@ const PublicBroadcastDialogContent = ({ broadcast }: { broadcast: Broadcast }) =
       <Typography variant="h3">{t('common.publisher')}</Typography>
       <Typography paragraph>{broadcast.publisher.name}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
-      <Typography>{new Date(broadcast.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(broadcast.date.value)}</Typography>
     </DialogContent>
   );
 };
@@ -612,7 +600,7 @@ const PublicCinematicReleaseDialogContent = ({ cinematicRelease }: { cinematicRe
       <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{cinematicRelease.place.label}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.premiere_date')}</Typography>
-      <Typography>{new Date(cinematicRelease.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(cinematicRelease.date.value)}</Typography>
     </DialogContent>
   );
 };
@@ -634,7 +622,7 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
         </>
       )}
       <Typography variant="h3">{t('registration.resource_type.artistic.premiere_date')}</Typography>
-      <Typography>{new Date(otherRelease.date.value).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(otherRelease.date.value)}</Typography>
     </DialogContent>
   );
 };
@@ -741,7 +729,7 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
 
       <Typography variant="h3">{t('common.date')}</Typography>
       {time.type === 'Instant' ? (
-        <Typography paragraph>{new Date(time.value).toLocaleDateString()}</Typography>
+        <Typography paragraph>{toDateString(time.value)}</Typography>
       ) : (
         <Typography paragraph>{getPeriodString(time.from, time.to)}</Typography>
       )}
@@ -890,11 +878,13 @@ const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performan
       <Typography paragraph>{performance.place.label}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography paragraph>
-        {new Date(
-          +performance.publicationDate.year,
-          +performance.publicationDate.month,
-          +performance.publicationDate.day
-        ).toLocaleDateString()}
+        {toDateString(
+          new Date(
+            +performance.publicationDate.year,
+            +performance.publicationDate.month,
+            +performance.publicationDate.day
+          )
+        )}
       </Typography>
     </DialogContent>
   );

@@ -1,8 +1,19 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogProps,
+  DialogTitle,
+  Link as MuiLink,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { CreatePublisherPayload, createPublisher } from '../../../../api/publicationChannelApi';
@@ -60,6 +71,13 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
         onSubmit={async (values) => await publisherMutation.mutateAsync(values)}>
         <Form>
           <DialogContent>
+            <Typography paragraph>
+              <Trans t={t} i18nKey="registration.resource_type.search_for_channel">
+                <MuiLink href="https://portal.issn.org" target="_blank" rel="noopener noreferrer">
+                  https://portal.issn.org
+                </MuiLink>
+              </Trans>
+            </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <Field name="name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -68,7 +86,7 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
                     variant="filled"
                     required
                     label={t('common.name')}
-                    disabled={publisherMutation.isLoading}
+                    disabled={publisherMutation.isPending}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -81,7 +99,7 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
                     variant="filled"
                     required
                     label={t('common.link')}
-                    disabled={publisherMutation.isLoading}
+                    disabled={publisherMutation.isPending}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -95,7 +113,7 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
                     variant="filled"
                     label={t('registration.resource_type.isbn_prefix')}
                     inputProps={{ maxLength: 13 }}
-                    disabled={publisherMutation.isLoading}
+                    disabled={publisherMutation.isPending}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -104,10 +122,10 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
             </Box>
           </DialogContent>
           <DialogActions>
-            <Button onClick={closeDialog} disabled={publisherMutation.isLoading}>
+            <Button onClick={closeDialog} disabled={publisherMutation.isPending}>
               {t('common.cancel')}
             </Button>
-            <LoadingButton variant="contained" loading={publisherMutation.isLoading} type="submit">
+            <LoadingButton variant="contained" loading={publisherMutation.isPending} type="submit">
               {t('common.save')}
             </LoadingButton>
           </DialogActions>

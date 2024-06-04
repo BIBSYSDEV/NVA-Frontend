@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
+import { toDateString } from '../../../utils/date-helpers';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 
 interface CompletedPublishingRequestStatusBoxProps {
@@ -17,7 +18,7 @@ export const CompletedPublishingRequestStatusBox = ({ ticket }: CompletedPublish
   return (
     <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
       <Typography>{t('my_page.messages.files_published', { count: ticket.approvedFiles.length })}</Typography>
-      <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>
+      <Typography>{toDateString(ticket.modifiedDate)}</Typography>
     </StyledStatusMessageBox>
   );
 };

@@ -4,26 +4,32 @@ import i18n from '../translations/i18n';
 export enum LicenseUri {
   CC_BY_4 = 'https://creativecommons.org/licenses/by/4.0',
   CC_BY_3 = 'https://creativecommons.org/licenses/by/3.0',
+  CC_BY_2_5 = 'https://creativecommons.org/licenses/by/2.5',
   CC_BY_2 = 'https://creativecommons.org/licenses/by/2.0',
   CC_BY_1 = 'https://creativecommons.org/licenses/by/1.0',
   CC_BY_SA_4 = 'https://creativecommons.org/licenses/by-sa/4.0',
   CC_BY_SA_3 = 'https://creativecommons.org/licenses/by-sa/3.0',
+  CC_BY_SA_2_5 = 'https://creativecommons.org/licenses/by-sa/2.5',
   CC_BY_SA_2 = 'https://creativecommons.org/licenses/by-sa/2.0',
   CC_BY_SA_1 = 'https://creativecommons.org/licenses/by-sa/1.0',
   CC_BY_ND_4 = 'https://creativecommons.org/licenses/by-nd/4.0',
   CC_BY_ND_3 = 'https://creativecommons.org/licenses/by-nd/3.0',
+  CC_BY_ND_2_5 = 'https://creativecommons.org/licenses/by-nd/2.5',
   CC_BY_ND_2 = 'https://creativecommons.org/licenses/by-nd/2.0',
   CC_BY_ND_1 = 'https://creativecommons.org/licenses/by-nd/1.0',
   CC_BY_NC_4 = 'https://creativecommons.org/licenses/by-nc/4.0',
   CC_BY_NC_3 = 'https://creativecommons.org/licenses/by-nc/3.0',
+  CC_BY_NC_2_5 = 'https://creativecommons.org/licenses/by-nc/2.5',
   CC_BY_NC_2 = 'https://creativecommons.org/licenses/by-nc/2.0',
   CC_BY_NC_1 = 'https://creativecommons.org/licenses/by-nc/1.0',
   CC_BY_NC_SA_4 = 'https://creativecommons.org/licenses/by-nc-sa/4.0',
   CC_BY_NC_SA_3 = 'https://creativecommons.org/licenses/by-nc-sa/3.0',
+  CC_BY_NC_SA_2_5 = 'https://creativecommons.org/licenses/by-nc-sa/2.5',
   CC_BY_NC_SA_2 = 'https://creativecommons.org/licenses/by-nc-sa/2.0',
   CC_BY_NC_SA_1 = 'https://creativecommons.org/licenses/by-nc-sa/1.0',
   CC_BY_NC_ND_4 = 'https://creativecommons.org/licenses/by-nc-nd/4.0',
   CC_BY_NC_ND_3 = 'https://creativecommons.org/licenses/by-nc-nd/3.0',
+  CC_BY_NC_ND_2_5 = 'https://creativecommons.org/licenses/by-nc-nd/2.5',
   CC_BY_NC_ND_2 = 'https://creativecommons.org/licenses/by-nc-nd/2.0',
   CC_BY_ND_NC_1 = 'https://creativecommons.org/licenses/by-nd-nc/1.0',
   CC0 = 'https://creativecommons.org/publicdomain/zero/1.0',
@@ -36,7 +42,7 @@ interface LicenseInfo {
   description: string;
   logo: string;
   link: string;
-  version?: 1 | 2 | 3 | 4;
+  version?: 1 | 2 | 2.5 | 3 | 4;
 }
 
 export const licenses: LicenseInfo[] = [
@@ -55,6 +61,14 @@ export const licenses: LicenseInfo[] = [
     link: i18n.t('licenses.links.cc_by', { version: '3.0' }),
     logo: LicenseImages.ccByLogo,
     version: 3,
+  },
+  {
+    id: LicenseUri.CC_BY_2_5,
+    name: i18n.t('licenses.labels.cc_by', { version: '2.5' }),
+    description: i18n.t('licenses.description.cc_by'),
+    link: i18n.t('licenses.links.cc_by', { version: '2.5' }),
+    logo: LicenseImages.ccByLogo,
+    version: 2.5,
   },
   {
     id: LicenseUri.CC_BY_2,
@@ -89,6 +103,14 @@ export const licenses: LicenseInfo[] = [
     version: 3,
   },
   {
+    id: LicenseUri.CC_BY_SA_2_5,
+    name: i18n.t('licenses.labels.cc_by_sa', { version: '2.5' }),
+    description: i18n.t('licenses.description.cc_by_sa'),
+    link: i18n.t('licenses.links.cc_by_sa', { version: '2.5' }),
+    logo: LicenseImages.ccBySaLogo,
+    version: 2.5,
+  },
+  {
     id: LicenseUri.CC_BY_SA_2,
     name: i18n.t('licenses.labels.cc_by_sa', { version: '2.0' }),
     description: i18n.t('licenses.description.cc_by_sa'),
@@ -119,6 +141,14 @@ export const licenses: LicenseInfo[] = [
     link: i18n.t('licenses.links.cc_by_nd', { version: '3.0' }),
     logo: LicenseImages.ccByNdLogo,
     version: 3,
+  },
+  {
+    id: LicenseUri.CC_BY_ND_2_5,
+    name: i18n.t('licenses.labels.cc_by_nd', { version: '2.5' }),
+    description: i18n.t('licenses.description.cc_by_nd'),
+    link: i18n.t('licenses.links.cc_by_nd', { version: '2.5' }),
+    logo: LicenseImages.ccByNdLogo,
+    version: 2.5,
   },
   {
     id: LicenseUri.CC_BY_ND_2,
@@ -153,6 +183,14 @@ export const licenses: LicenseInfo[] = [
     version: 3,
   },
   {
+    id: LicenseUri.CC_BY_NC_2_5,
+    name: i18n.t('licenses.labels.cc_by_nc', { version: '2.5' }),
+    description: i18n.t('licenses.description.cc_by_nc'),
+    link: i18n.t('licenses.links.cc_by_nc', { version: '2.5' }),
+    logo: LicenseImages.ccByNcLogo,
+    version: 2.5,
+  },
+  {
     id: LicenseUri.CC_BY_NC_2,
     name: i18n.t('licenses.labels.cc_by_nc', { version: '2.0' }),
     description: i18n.t('licenses.description.cc_by_nc'),
@@ -185,6 +223,14 @@ export const licenses: LicenseInfo[] = [
     version: 3,
   },
   {
+    id: LicenseUri.CC_BY_NC_SA_2_5,
+    name: i18n.t('licenses.labels.cc_by_nc_sa', { version: '2.5' }),
+    description: i18n.t('licenses.description.cc_by_nc_sa'),
+    link: i18n.t('licenses.links.cc_by_nc_sa', { version: '2.5' }),
+    logo: LicenseImages.ccByNcSaLogo,
+    version: 2.5,
+  },
+  {
     id: LicenseUri.CC_BY_NC_SA_2,
     name: i18n.t('licenses.labels.cc_by_nc_sa', { version: '2.0' }),
     description: i18n.t('licenses.description.cc_by_nc_sa'),
@@ -215,6 +261,14 @@ export const licenses: LicenseInfo[] = [
     link: i18n.t('licenses.links.cc_by_nc_nd', { version: '3.0' }),
     logo: LicenseImages.ccByNcNdLogo,
     version: 3,
+  },
+  {
+    id: LicenseUri.CC_BY_NC_ND_2_5,
+    name: i18n.t('licenses.labels.cc_by_nc_nd', { version: '2.5' }),
+    description: i18n.t('licenses.description.cc_by_nc_nd'),
+    link: i18n.t('licenses.links.cc_by_nc_nd', { version: '2.5' }),
+    logo: LicenseImages.ccByNcNdLogo,
+    version: 2.5,
   },
   {
     id: LicenseUri.CC_BY_NC_ND_2,

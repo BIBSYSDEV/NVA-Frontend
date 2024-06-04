@@ -34,7 +34,7 @@ export const MyProjects = () => {
       <Typography variant="h2" gutterBottom>
         {t('my_page.my_profile.my_projects')}
       </Typography>
-      {projectsQuery.isLoading ? (
+      {projectsQuery.isPending ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projects && projects.length > 0 ? (
         <ListPagination

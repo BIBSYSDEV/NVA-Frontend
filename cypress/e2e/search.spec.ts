@@ -28,8 +28,7 @@ describe('Search', () => {
 
   it('The user should see a result-list when searching', () => {
     const searchTerm = 'test';
-    cy.get(`[data-testid=${dataTestId.startPage.searchField}] input`).type(searchTerm);
-    cy.get(`[data-testid=${dataTestId.startPage.searchButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.startPage.searchField}] input`).type(`${searchTerm}{enter}`);
     cy.url().should('include', `query=${searchTerm}`);
     cy.injectAxe();
     cy.checkA11y(null, undefined, a11yLogErrors);

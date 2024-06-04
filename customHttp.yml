@@ -1,0 +1,18 @@
+# file added for AWS amplify, setting security headers. See https://docs.aws.amazon.com/amplify/latest/userguide/custom-headers.html#example-security-headers
+# https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js is added for MATH-jax support
+# font-src is added for MATH-jax support
+# script-src unsafe-inline is added because this is an SPA and won't work without it.
+# style-src unsafe-inline is added because of MUI and Styled components.
+customHeaders:
+  - pattern: '**'
+    headers:
+      - key: 'Strict-Transport-Security'
+        value: 'max-age=31536000; includeSubDomains'
+      - key: 'X-Frame-Options'
+        value: 'SAMEORIGIN'
+      - key: 'X-XSS-Protection'
+        value: '1; mode=block'
+      - key: 'X-Content-Type-Options'
+        value: 'nosniff'
+      - key: 'Content-Security-Policy'
+        value: "default-src 'self'; img-src 'self' * data: blob:; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js; style-src 'self' 'unsafe-inline' static:; connect-src *.s3.eu-west-1.amazonaws.com *.datacite.org datacite.org doi.org orcid.org *.amazoncognito.com cognito-idp.eu-west-1.amazonaws.com/ *.nva.aws.unit.no api.nva.unit.no data:; font-src 'self' cdn.jsdelivr.net data:; frame-src 'self' rapport-dv.uhad.no view.officeapps.live.com *.s3.eu-west-1.amazonaws.com data:; object-src *.s3.eu-west-1.amazonaws.com data:"

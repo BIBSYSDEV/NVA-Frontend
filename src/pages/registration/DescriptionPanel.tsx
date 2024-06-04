@@ -8,29 +8,11 @@ import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { registrationLanguageOptions } from '../../utils/registration-helpers';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
-
-export const languageOptions = [
-  getLanguageByIso6393Code('eng'),
-  getLanguageByIso6393Code('nob'),
-  getLanguageByIso6393Code('nno'),
-  getLanguageByIso6393Code('dan'),
-  getLanguageByIso6393Code('fin'),
-  getLanguageByIso6393Code('fra'),
-  getLanguageByIso6393Code('isl'),
-  getLanguageByIso6393Code('ita'),
-  getLanguageByIso6393Code('nld'),
-  getLanguageByIso6393Code('por'),
-  getLanguageByIso6393Code('rus'),
-  getLanguageByIso6393Code('sme'),
-  getLanguageByIso6393Code('spa'),
-  getLanguageByIso6393Code('swe'),
-  getLanguageByIso6393Code('deu'),
-  getLanguageByIso6393Code('mis'),
-];
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
@@ -203,13 +185,13 @@ export const DescriptionPanel = () => {
               placeholder={t('registration.description.primary_language')}
               select
               variant="filled">
-              {!languageOptions.some((language) => language.uri === field.value) && (
+              {!registrationLanguageOptions.some((language) => language.uri === field.value) && (
                 // Show if Registration has a language that's currently not supported
                 <MenuItem value={field.value} disabled>
                   {i18n.language === 'nob' ? getLanguageByIso6393Code('und').nob : getLanguageByIso6393Code('und').eng}
                 </MenuItem>
               )}
-              {languageOptions.map(({ uri, nob, eng }) => (
+              {registrationLanguageOptions.map(({ uri, nob, eng }) => (
                 <MenuItem value={uri} key={uri} data-testid={`registration-language-${uri}`}>
                   {i18n.language === 'nob' ? nob : eng}
                 </MenuItem>

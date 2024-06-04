@@ -69,7 +69,7 @@ const CategoriesWithFilesForCustomer = ({ customer }: CategoriesWithFilesForCust
         <LoadingButton
           variant="contained"
           onClick={() => customerMutation.mutate()}
-          loading={customerMutation.isLoading}>
+          loading={customerMutation.isPending}>
           {t('common.save')}
         </LoadingButton>
       </Box>

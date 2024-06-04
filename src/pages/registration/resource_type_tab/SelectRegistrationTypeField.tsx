@@ -8,13 +8,6 @@ import { useSelector } from 'react-redux';
 import { CategorySelector } from '../../../components/CategorySelector';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { RootState } from '../../../redux/store';
-import {
-  PublicationType,
-  ResearchDataType,
-  ResourceFieldNames,
-  contextTypeBaseFieldName,
-  instanceTypeBaseFieldName,
-} from '../../../types/publicationFieldNames';
 import { emptyArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
 import { emptyBookPublicationInstance } from '../../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../../types/publication_types/chapterRegistration.types';
@@ -43,6 +36,13 @@ import {
   emptyResearchDataPublicationContext,
   emptyResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
+import {
+  contextTypeBaseFieldName,
+  instanceTypeBaseFieldName,
+  PublicationType,
+  ResearchDataType,
+  ResourceFieldNames,
+} from '../../../types/publicationFieldNames';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {

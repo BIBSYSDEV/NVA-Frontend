@@ -190,7 +190,10 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                   <IconButton
                     onClick={() => remove(index)}
                     data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
-                    title={t('registration.description.funding.remove_funding')}>
+                    title={t('registration.description.funding.remove_funding')}
+                    sx={{
+                      width: 'fit-content',
+                    }}>
                     <CancelIcon color="primary" />
                   </IconButton>
                 </Box>

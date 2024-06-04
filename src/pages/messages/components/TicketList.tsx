@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
+import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { DialoguesWithoutCuratorButton } from '../../../components/DialoguesWithoutCuratorButton';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -14,14 +15,15 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
-import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
+import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
-  ticketsQuery: UseQueryResult<TicketSearchResponse>;
+  ticketsQuery: UseQueryResult<CustomerTicketSearchResponse>;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -62,13 +64,14 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <title>{title}</title>
       </Helmet>
 
-      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
+      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
         <Grid item xs={16} md={5} lg={4}>
           <TicketStatusFilter />
         </Grid>
         <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
+
         {isOnTasksPage && (
           <>
             <Grid item xs={16} md={5} lg={4}>
@@ -84,9 +87,17 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             </Grid>
           </>
         )}
+
+        <Grid item xs={16} md={6} lg={5}>
+          <TicketDateIntervalFilter />
+        </Grid>
+
+        <Grid item>
+          <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
+        </Grid>
       </Grid>
 
-      {ticketsQuery.isLoading ? (
+      {ticketsQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>
@@ -94,7 +105,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             <Typography>{t('my_page.messages.no_messages')}</Typography>
           ) : (
             <ListPagination
-              count={ticketsQuery.data?.size ?? 0}
+              count={ticketsQuery.data?.totalHits ?? 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={(newPage) => setPage(newPage)}

@@ -39,7 +39,7 @@ export const RegistrationFormActions = ({
   const history = useHistory();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { values, setTouched } = useFormikContext<Registration>();
+  const { values, setTouched, resetForm } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
@@ -68,7 +68,11 @@ export const RegistrationFormActions = ({
         history.push(getRegistrationLandingPagePath(values.identifier));
       } else {
         const newErrors = validateForm(updateRegistrationResponse.data);
-        setTouched(setNestedObjectValues(newErrors, true));
+        resetForm({
+          values: updateRegistrationResponse.data,
+          errors: newErrors,
+          touched: setNestedObjectValues(newErrors, true),
+        });
       }
     }
     setIsSaving(false);

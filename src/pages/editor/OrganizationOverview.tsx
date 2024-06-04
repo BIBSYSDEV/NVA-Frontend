@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getById } from '../../api/commonApi';
+import { fetchResource } from '../../api/commonApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../components/OrganizationRenderOption';
 import { RootState } from '../../redux/store';
@@ -32,11 +32,11 @@ export const OrganizationOverview = () => {
   const [searchId, setSearchId] = useState('');
 
   const organizationQuery = useQuery({
-    queryKey: [organizationId],
+    queryKey: ['organization', organizationId],
     enabled: !!organizationId,
-    queryFn: organizationId ? () => getById<Organization>(organizationId) : undefined,
+    queryFn: organizationId ? () => fetchResource<Organization>(organizationId) : undefined,
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
@@ -57,7 +57,7 @@ export const OrganizationOverview = () => {
         </Trans>
       </Typography>
 
-      {organizationQuery.isLoading ? (
+      {organizationQuery.isPending ? (
         <ListSkeleton height={100} minWidth={100} />
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

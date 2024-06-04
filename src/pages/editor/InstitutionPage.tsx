@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
-import { getById } from '../../api/commonApi';
+import { fetchResource } from '../../api/commonApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
@@ -18,15 +18,15 @@ import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { CategoriesWithFiles } from './CategoriesWithFiles';
 import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
-import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
 import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
-import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
+import { OrganizationCurators } from './curators/OrganizationCurators';
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
@@ -37,10 +37,11 @@ const InstitutionPage = () => {
   const institutionId = user?.topOrgCristinId ?? '';
 
   const organizationQuery = useQuery({
-    queryKey: [institutionId],
-    queryFn: () => getById<Organization>(institutionId),
+    enabled: !!institutionId,
+    queryKey: ['organization', institutionId],
+    queryFn: () => fetchResource<Organization>(institutionId),
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
@@ -70,14 +71,18 @@ const InstitutionPage = () => {
               to={UrlPathTemplate.InstitutionOverviewPage}>
               {t('editor.institution.institution_profile')}
             </LinkButton>
-
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.InstitutionOrganizationOverview}
               data-testid={dataTestId.editor.organizationOverviewLinkButton}
               to={UrlPathTemplate.InstitutionOrganizationOverview}>
               {t('editor.organization_overview')}
             </LinkButton>
-
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.InstitutionCuratorsOverview}
+              data-testid={dataTestId.editor.curatorsOverviewLinkButton}
+              to={UrlPathTemplate.InstitutionCuratorsOverview}>
+              {t('editor.curators.curators')}
+            </LinkButton>
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.InstitutionDoi}
               data-testid={dataTestId.editor.doiLinkButton}
@@ -90,14 +95,12 @@ const InstitutionPage = () => {
               to={UrlPathTemplate.InstitutionPublishStrategyOverview}>
               {t('editor.publish_strategy.publish_strategy')}
             </LinkButton>
-
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.InstitutionVocabularyOverview}
               data-testid={dataTestId.editor.vocabularyOverviewLinkButton}
               to={UrlPathTemplate.InstitutionVocabularyOverview}>
               {t('editor.vocabulary')}
             </LinkButton>
-
             <LinkButton
               isSelected={currentPath === UrlPathTemplate.InstitutionCategoriesOverview}
               data-testid={dataTestId.editor.categoriesLinkButton}
@@ -110,22 +113,15 @@ const InstitutionPage = () => {
           <NavigationListAccordion
             dataTestId={dataTestId.editor.settingsAccordion}
             title={t('common.settings')}
-            startIcon={
-              <GavelIcon
-                sx={{
-                  bgcolor: 'white',
-                  padding: '0.1rem',
-                }}
-              />
-            }
+            startIcon={<GavelIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
             accordionPath={UrlPathTemplate.InstitutionSettings}
             defaultPath={UrlPathTemplate.InstitutionCurators}>
             <NavigationList>
               <LinkButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
-                data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
+                data-testid={dataTestId.editor.curatorsSettingsLinkButton}
                 to={UrlPathTemplate.InstitutionCurators}>
-                {t('editor.curators.areas_of_responsibility')}
+                {t('editor.curators.administer_curators')}
               </LinkButton>
               <LinkButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategy}
@@ -187,12 +183,12 @@ const InstitutionPage = () => {
             component={EditorInstitution}
             isAuthorized={hasCustomer}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionCurators}
-            component={EditorCurators}
-            isAuthorized={isEditor}
-          />
+          <PrivateRoute exact path={UrlPathTemplate.InstitutionCuratorsOverview} isAuthorized={hasCustomer}>
+            <OrganizationCurators heading={t('editor.curators.curators')} />
+          </PrivateRoute>
+          <PrivateRoute exact path={UrlPathTemplate.InstitutionCurators} isAuthorized={isEditor}>
+            <OrganizationCurators heading={t('editor.curators.administer_curators')} canEditUsers />
+          </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.InstitutionDoi} component={EditorDoi} isAuthorized={hasCustomer} />
           <PrivateRoute
             exact

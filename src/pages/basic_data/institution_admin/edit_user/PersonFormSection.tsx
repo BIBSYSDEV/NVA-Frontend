@@ -6,7 +6,7 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { Employment } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { convertToFlatCristinPerson, isActiveEmployment } from '../../../../utils/user-helpers';
-import { UserFormData } from './UserFormDialog';
+import { UserFormData } from './userFormHelpers';
 
 interface PersonFormSectionProps {
   externalEmployments: Employment[];

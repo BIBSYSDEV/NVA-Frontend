@@ -7,6 +7,7 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { NviPeriod } from '../../../types/nvi.types';
+import { toDateString } from '../../../utils/date-helpers';
 import { UpsertNviPeriodDialog } from './UpsertNviPeriodDialog';
 
 export const NviPeriodsPage = () => {
@@ -24,7 +25,7 @@ export const NviPeriodsPage = () => {
 
   return (
     <Box component="section">
-      {nviPeriodsQuery.isLoading ? (
+      {nviPeriodsQuery.isPending ? (
         <ListSkeleton height={100} minWidth={100} />
       ) : sortedPeriods.length === 0 ? (
         <Typography>{t('common.no_hits')}</Typography>
@@ -32,14 +33,10 @@ export const NviPeriodsPage = () => {
         <List disablePadding>
           {sortedPeriods.map((nviPeriod) => {
             const startDateString = nviPeriod.startDate
-              ? `${new Date(nviPeriod.startDate).toLocaleDateString()} (${new Date(
-                  nviPeriod.startDate
-                ).toLocaleTimeString()})`
+              ? `${toDateString(nviPeriod.startDate)} (${new Date(nviPeriod.startDate).toLocaleTimeString()})`
               : '?';
             const endDateString = nviPeriod.reportingDate
-              ? `${new Date(nviPeriod.reportingDate).toLocaleDateString()} (${new Date(
-                  nviPeriod.reportingDate
-                ).toLocaleTimeString()})`
+              ? `${toDateString(nviPeriod.reportingDate)} (${new Date(nviPeriod.reportingDate).toLocaleTimeString()})`
               : '?';
 
             return (

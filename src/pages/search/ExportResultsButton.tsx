@@ -1,10 +1,10 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import { LoadingButton } from '@mui/lab';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { fetchRegistrationsExport } from '../../api/searchApi';
-import { setNotification } from '../../redux/notificationSlice';
+import { API_URL } from '../../utils/constants';
+import { SearchApiPath } from '../../api/apiPaths';
+import { Button } from '@mui/material';
+import { dataTestId } from '../../utils/dataTestIds';
+import { useEffect, useState } from 'react';
 
 interface ExportResultsButtonProps {
   searchParams: URLSearchParams;
@@ -12,34 +12,20 @@ interface ExportResultsButtonProps {
 
 export const ExportResultsButton = ({ searchParams }: ExportResultsButtonProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const [isClicked, setIsClicked] = useState(false);
 
-  const [isLoadingExport, setIsLoadingExport] = useState(false);
+  useEffect(() => setIsClicked(false), [searchParams]);
 
   return (
-    <LoadingButton
-      variant="outlined"
-      loadingPosition="center"
-      loading={isLoadingExport}
+    <Button
+      href={`${API_URL.slice(0, -1)}${SearchApiPath.RegistrationsExport}?${searchParams.toString()}`}
+      onClick={() => setIsClicked(true)}
       title={t('search.export')}
-      onClick={async () => {
-        setIsLoadingExport(true);
-        try {
-          const fetchExportData = await fetchRegistrationsExport(searchParams);
-          // Force UTF-8 for excel with '\uFEFF': https://stackoverflow.com/a/42466254
-          const blob = new Blob(['\uFEFF', fetchExportData], { type: 'text/csv' });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.download = 'result-export.csv';
-          link.href = url;
-          link.click();
-        } catch {
-          dispatch(setNotification({ message: t('feedback.error.get_registrations_export'), variant: 'error' }));
-        } finally {
-          setIsLoadingExport(false);
-        }
-      }}>
+      data-testid={dataTestId.startPage.advancedSearch.downloadResultsButton}
+      variant="outlined"
+      disabled={isClicked}
+      download>
       <FileDownloadOutlinedIcon />
-    </LoadingButton>
+    </Button>
   );
 };

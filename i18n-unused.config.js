@@ -6,7 +6,9 @@ module.exports = {
   excludeKey: [
     '_one',
     '_other',
+    'basic_data.central_import.collaboration_type.',
     'disciplines.',
+    'editor.curators.role.',
     'licenses.labels.',
     'my_page.messages.ticket_types.',
     'my_page.messages.types.',

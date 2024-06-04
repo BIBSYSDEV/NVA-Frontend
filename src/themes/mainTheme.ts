@@ -1,6 +1,5 @@
-import { PaletteColorOptions, SxProps, createTheme } from '@mui/material';
+import { createTheme, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
-import { enUS as pickersEnUs, nbNO as pickersNbNo } from '@mui/x-date-pickers/locales';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
@@ -32,7 +31,6 @@ enum Color {
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
-const pickersLocale = i18n.language === 'eng' ? pickersEnUs : pickersNbNo;
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -100,8 +98,9 @@ export const mainTheme = createTheme(
         light: Color.InfoLight,
       },
       grey: {
-        400: '#d9d9d9',
-        500: '#A1A1A1',
+        300: '#EEEEEE',
+        400: '#DDDDDD',
+        500: '#CCCCCC',
       },
       registration: {
         main: Color.Registration,
@@ -151,7 +150,7 @@ export const mainTheme = createTheme(
       },
       h4: {
         fontSize: '0.9rem',
-        fontWeight: 400,
+        fontWeight: 600,
       },
       overline: {
         fontSize: '0.75rem',
@@ -282,7 +281,7 @@ export const mainTheme = createTheme(
           showLastButton: true,
         },
       },
-      MuiTooltip: { defaultProps: { arrow: true } },
+      MuiTooltip: { defaultProps: { arrow: true, enterDelay: 400 } },
       MuiTypography: {
         defaultProps: {
           color: 'textPrimary',
@@ -331,7 +330,6 @@ export const mainTheme = createTheme(
       },
     },
   },
-  pickersLocale,
   coreLocale
 );
 

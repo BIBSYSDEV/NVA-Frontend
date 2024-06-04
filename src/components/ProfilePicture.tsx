@@ -17,7 +17,7 @@ export const ProfilePicture = ({ personId, fullName, isPublicPage = false, sx }:
 
   return (
     <Box sx={{ height: '2.5rem ', aspectRatio: '1/1', borderRadius: '50%', ...sx }}>
-      {profilePictureQuery.isLoading ? (
+      {profilePictureQuery.isPending ? (
         <Skeleton variant="circular" sx={{ height: '100%' }} />
       ) : profilePictureQuery.isSuccess ? (
         <Box

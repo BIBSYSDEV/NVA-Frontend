@@ -49,6 +49,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
   rboInstitution: false,
   rightsRetentionStrategy: { type: CustomerRrsType.NullRightsRetentionStrategy, id: '' },
   allowFileUploadForTypes: allPublicationInstanceTypes,
+  generalSupportEnabled: true,
 };
 
 export const mockCustomerInstitutions: CustomerList = {

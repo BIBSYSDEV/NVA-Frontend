@@ -47,6 +47,7 @@ export const RightsRetentionStrategySettings = () => {
 
       {customer && (
         <Formik
+          enableReinitialize
           initialValues={customer}
           onSubmit={async (values) => await updateRightsRetentionStrategy.mutateAsync(values)}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => {

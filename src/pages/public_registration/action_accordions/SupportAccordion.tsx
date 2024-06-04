@@ -57,13 +57,14 @@ export const SupportAccordion = ({
   };
 
   const isPendingSupportTicket = supportTicket?.status === 'New' || supportTicket?.status === 'Pending';
+  const ownerHasReadTicket = supportTicket?.viewedBy.includes(supportTicket?.owner);
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{ bgcolor: 'generalSupportCase.light' }}
       elevation={3}
-      defaultExpanded={isRegistrationWizard || isPendingSupportTicket}>
+      defaultExpanded={isRegistrationWizard || isPendingSupportTicket || !ownerHasReadTicket}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
         {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
@@ -82,7 +83,7 @@ export const SupportAccordion = ({
                     width: 'fit-content',
                     bgcolor: 'white',
                   }}
-                  loading={ticketMutation.isLoading}
+                  loading={ticketMutation.isPending}
                   variant="outlined"
                   onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
                   {t('my_page.messages.mark_as_completed')}

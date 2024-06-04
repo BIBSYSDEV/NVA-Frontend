@@ -85,7 +85,7 @@ export const CentralImportCandidateForm = () => {
 
   return (
     <Box sx={{ justifySelf: 'center', width: '100%', maxWidth: (theme) => theme.breakpoints.values.lg }}>
-      {importCandidateQuery.isLoading ? (
+      {importCandidateQuery.isPending ? (
         <PageSpinner aria-label={t('common.result')} />
       ) : importCandidate ? (
         <>

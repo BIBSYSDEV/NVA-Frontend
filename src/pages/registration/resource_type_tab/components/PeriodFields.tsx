@@ -27,7 +27,6 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
               !touched && setFieldTouched(field.name, true, false);
               setFieldValue(field.name, date ?? '');
             }}
-            format="dd.MM.yyyy"
             views={['year', 'month', 'day']}
             maxDate={toValue ? new Date(toValue) : maxDate}
             slotProps={{
@@ -52,7 +51,6 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
               !touched && setFieldTouched(field.name, true, false);
               setFieldValue(field.name, date ?? '');
             }}
-            format="dd.MM.yyyy"
             views={['year', 'month', 'day']}
             minDate={fromValue ? new Date(fromValue) : undefined}
             maxDate={maxDate}

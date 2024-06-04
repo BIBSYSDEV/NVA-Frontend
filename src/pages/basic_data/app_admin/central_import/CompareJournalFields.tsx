@@ -46,7 +46,7 @@ export const CompareJournalFields = ({ importCandidate }: CompareJournalFieldsPr
         onOverwrite={() =>
           setFieldValue(
             ResourceFieldNames.PagesFrom,
-            journalCandidate.entityDescription?.reference?.publicationInstance.issue
+            journalCandidate.entityDescription?.reference?.publicationInstance.pages?.begin ?? ''
           )
         }
         candidateValue={journalCandidate.entityDescription?.reference?.publicationInstance.pages?.begin ?? ''}

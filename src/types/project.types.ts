@@ -155,3 +155,19 @@ export const emptyProject: SaveCristinProject = {
   relatedProjects: [],
   funding: [],
 };
+
+export enum ProjectFieldName {
+  Title = 'title',
+  Categories = 'projectCategories',
+  CoordinatingInstitution = 'coordinatingInstitution',
+  Contributors = 'contributors',
+  Funding = 'funding',
+  StartDate = 'startDate',
+  EndDate = 'endDate',
+  AcademicSummaryNo = 'academicSummary.no',
+  PopularScientificSummaryNo = 'popularScientificSummary.no',
+  AcademicSummaryEn = 'academicSummary.en',
+  PopularScientificSummaryEn = 'popularScientificSummary.en',
+  Keywords = 'keywords',
+  RelatedProjects = 'relatedProjects',
+}

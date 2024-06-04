@@ -110,7 +110,6 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    format="yyyy"
                     views={['year']}
                     slotProps={{
                       textField: {

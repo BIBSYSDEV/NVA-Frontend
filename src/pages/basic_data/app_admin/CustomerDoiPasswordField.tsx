@@ -49,7 +49,7 @@ export const CustomerDoiPasswordField = ({ doiAgentId, disabled }: CustomerDoiPa
         disabled={disabled}
         sx={{ height: 'fit-content', minWidth: '7rem', alignSelf: 'center' }}
         variant="outlined"
-        loading={doiAgentQuery.isLoading && showPasswordInputModal}
+        loading={doiAgentQuery.isPending && showPasswordInputModal}
         onClick={() => setShowPasswordInputModal(true)}>
         {t('basic_data.institutions.doi_password')}
       </LoadingButton>

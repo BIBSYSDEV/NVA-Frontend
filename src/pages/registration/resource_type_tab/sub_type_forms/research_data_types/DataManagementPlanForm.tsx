@@ -66,7 +66,7 @@ export const DataManagementPlanForm = () => {
                 setSearchQuery('');
               }}
               blurOnSelect
-              loading={searchOptionsQuery.isLoading}
+              loading={searchOptionsQuery.isPending}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
               renderOption={(props, option, state) => (

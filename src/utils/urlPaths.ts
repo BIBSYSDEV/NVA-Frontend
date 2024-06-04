@@ -16,6 +16,7 @@ export enum UrlPathTemplate {
   Home = '/',
   Institution = '/institution',
   InstitutionCurators = '/institution/settings/curators',
+  InstitutionCuratorsOverview = '/institution/overview/curators',
   InstitutionDoi = '/institution/overview/doi',
   InstitutionOverviewPage = '/institution/overview/institution',
   InstitutionSupport = '/institution/settings/support',
@@ -56,12 +57,14 @@ export enum UrlPathTemplate {
   ReportsInternationalCooperation = '/reports/international-cooperation',
   ReportsNvi = '/reports/nvi',
   Search = '/search',
+  SignedOut = '/signed-out',
   Tasks = '/tasks',
   TasksDialogue = '/tasks/dialogue',
   TasksDialogueRegistration = '/tasks/dialogue/:identifier',
   TasksNvi = '/tasks/nvi',
   TasksNviCandidate = '/tasks/nvi/:identifier',
   TasksNviCorrectionList = '/tasks/correction-list',
+  TasksNviStatus = '/tasks/nvi/status',
   Wildcard = '*',
 }
 

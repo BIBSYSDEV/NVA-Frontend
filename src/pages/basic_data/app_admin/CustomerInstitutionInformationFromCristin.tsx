@@ -18,7 +18,7 @@ export const CustomerInstitutionInformationFromCristin = ({
     queryFn: cristinId ? () => fetchOrganization(cristinId) : undefined,
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const customerInformation = organizationQuery.data;

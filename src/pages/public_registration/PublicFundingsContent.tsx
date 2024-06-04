@@ -30,7 +30,7 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
     queryFn: fetchFundingSources,
     meta: { errorMessage: t('feedback.error.get_funding_sources') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
@@ -51,7 +51,7 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
             {fundings.map((funding) => (
               <TableRow key={funding.source + funding.identifier}>
                 <TableCell>
-                  {fundingSourcesQuery.isLoading ? (
+                  {fundingSourcesQuery.isPending ? (
                     <Skeleton />
                   ) : (
                     <Typography>

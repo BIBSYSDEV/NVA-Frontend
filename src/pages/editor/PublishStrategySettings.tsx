@@ -68,11 +68,11 @@ export const PublishStrategySettings = () => {
               <PublishStrategyButton
                 focusRipple
                 disabled={
-                  updateRightsRetentionStrategy.isLoading ||
+                  updateRightsRetentionStrategy.isPending ||
                   currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'
                 }
                 isSelected={
-                  !updateRightsRetentionStrategy.isLoading &&
+                  !updateRightsRetentionStrategy.isPending &&
                   currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'
                 }
                 data-testid={dataTestId.editor.workflowRegistratorPublishesAll}
@@ -101,7 +101,7 @@ export const PublishStrategySettings = () => {
                   </Typography>
                 </Box>
               </PublishStrategyButton>
-              {updateRightsRetentionStrategy.isLoading &&
+              {updateRightsRetentionStrategy.isPending &&
                 customer.publicationWorkflow !== 'RegistratorPublishesMetadataAndFiles' && (
                   <CircularProgress aria-labelledby="publish-strategy-label" />
                 )}
@@ -111,11 +111,11 @@ export const PublishStrategySettings = () => {
               <PublishStrategyButton
                 focusRipple
                 disabled={
-                  updateRightsRetentionStrategy.isLoading ||
+                  updateRightsRetentionStrategy.isPending ||
                   currentPublishStrategy === 'RegistratorPublishesMetadataOnly'
                 }
                 isSelected={
-                  !updateRightsRetentionStrategy.isLoading &&
+                  !updateRightsRetentionStrategy.isPending &&
                   currentPublishStrategy === 'RegistratorPublishesMetadataOnly'
                 }
                 data-testid={dataTestId.editor.workflowRegistratorPublishesMetadata}
@@ -144,7 +144,7 @@ export const PublishStrategySettings = () => {
                   </Typography>
                 </Box>
               </PublishStrategyButton>
-              {updateRightsRetentionStrategy.isLoading &&
+              {updateRightsRetentionStrategy.isPending &&
                 customer.publicationWorkflow !== 'RegistratorPublishesMetadataOnly' && (
                   <CircularProgress aria-labelledby="publish-strategy-label" />
                 )}

@@ -20,7 +20,7 @@ export const FundingSourceFilter = () => {
     queryFn: fetchFundingSources,
     meta: { errorMessage: t('feedback.error.get_funding_sources') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
@@ -53,7 +53,7 @@ export const FundingSourceFilter = () => {
       data-testid={dataTestId.startPage.advancedSearch.fundingSourceField}
       renderInput={(params) => (
         <AutocompleteTextField
-          isLoading={fundingSourcesQuery.isLoading}
+          isLoading={fundingSourcesQuery.isPending}
           {...params}
           variant="outlined"
           placeholder={t('search.search_for_funder')}

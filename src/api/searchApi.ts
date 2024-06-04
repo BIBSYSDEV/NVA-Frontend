@@ -1,8 +1,18 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
-import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
+import {
+  CollaborationType,
+  ImportCandidateAggregations,
+  ImportCandidateStatus,
+  ImportCandidateSummary,
+} from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
-import { CustomerTicketSearchResponse, TicketSearchResponse } from '../types/publication_types/ticket.types';
-import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
+import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
+import {
+  AggregationFileKeyType,
+  PublicationInstanceType,
+  Registration,
+  RegistrationAggregations,
+} from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
@@ -10,61 +20,40 @@ import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 export enum TicketSearchParam {
   Aggregation = 'aggregation',
   Assignee = 'assignee',
+  CreatedDate = 'createdDate',
   ExcludeSubUnits = 'excludeSubUnits',
   From = 'from',
   OrderBy = 'orderBy',
   Owner = 'owner',
+  PublicationType = 'publicationType',
   Query = 'query',
   Results = 'results',
   Role = 'role',
   SortOrder = 'sortOrder',
   Status = 'status',
+  Type = 'type',
   ViewedByNot = 'viewedByNot',
-  ViewingScope = 'viewingScope',
+  OrganizationId = 'organizationId',
 }
 
 export interface FetchTicketsParams {
   [TicketSearchParam.Aggregation]?: 'all' | null;
   [TicketSearchParam.Assignee]?: string | null;
+  [TicketSearchParam.CreatedDate]?: string | null;
   [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
   [TicketSearchParam.From]?: number | null;
   [TicketSearchParam.OrderBy]?: 'createdDate' | null;
   [TicketSearchParam.Owner]?: string | null;
+  [TicketSearchParam.PublicationType]?: string | null;
   [TicketSearchParam.Query]?: string | null;
   [TicketSearchParam.Results]?: number | null;
   [TicketSearchParam.Role]?: 'creator';
   [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
   [TicketSearchParam.Status]?: string | null;
+  [TicketSearchParam.Type]?: string | null;
   [TicketSearchParam.ViewedByNot]?: string | null;
-  [TicketSearchParam.ViewingScope]?: string | null;
+  [TicketSearchParam.OrganizationId]?: string | null;
 }
-
-export const fetchTickets = async (params: FetchTicketsParams) => {
-  const searchParams = new URLSearchParams();
-  if (params.query) {
-    searchParams.set(TicketSearchParam.Query, params.query);
-  }
-  if (params.role) {
-    searchParams.set(TicketSearchParam.Role, params.role);
-  }
-  if (params.viewingScope) {
-    searchParams.set(TicketSearchParam.ViewingScope, params.viewingScope);
-  }
-  if (params.excludeSubUnits) {
-    searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
-  }
-
-  searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
-  searchParams.set(TicketSearchParam.Results, (params.results ?? 10).toString());
-  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'createdDate');
-  searchParams.set(TicketSearchParam.SortOrder, params.sortOrder || 'desc');
-
-  const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
-    url: `${SearchApiPath.Tickets}?${searchParams.toString()}`,
-  });
-
-  return getTickets.data;
-};
 
 export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
   const searchParams = new URLSearchParams();
@@ -73,8 +62,44 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
     searchParams.set(TicketSearchParam.Aggregation, params.aggregation);
   }
 
+  if (params.assignee) {
+    searchParams.set(TicketSearchParam.Assignee, params.assignee);
+  }
+
+  if (params.createdDate) {
+    searchParams.set(TicketSearchParam.CreatedDate, params.createdDate);
+  }
+
+  if (params.excludeSubUnits) {
+    searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
+  }
+
+  if (params.organizationId) {
+    searchParams.set(TicketSearchParam.OrganizationId, params.organizationId);
+  }
+
   if (params.owner) {
     searchParams.set(TicketSearchParam.Owner, params.owner);
+  }
+
+  if (params.publicationType) {
+    searchParams.set(TicketSearchParam.PublicationType, params.publicationType);
+  }
+
+  if (params.query) {
+    searchParams.set(TicketSearchParam.Query, params.query);
+  }
+
+  if (params.role) {
+    searchParams.set(TicketSearchParam.Role, params.role);
+  }
+
+  if (params.status) {
+    searchParams.set(TicketSearchParam.Status, params.status);
+  }
+
+  if (params.type) {
+    searchParams.set(TicketSearchParam.Type, params.type);
   }
 
   if (params.viewedByNot) {
@@ -94,35 +119,85 @@ export const fetchCustomerTickets = async (params: FetchTicketsParams) => {
 };
 
 export type SortOrder = 'desc' | 'asc';
-export type ImportCandidateOrderBy = 'createdDate' | 'importStatus.modifiedDate';
+export type ImportCandidateOrderBy = 'createdDate';
 
-export interface FetchImportCandidatesParams {
-  query?: string;
-  orderBy?: ImportCandidateOrderBy;
-  sortOrder?: SortOrder;
+export enum ImportCandidatesSearchParam {
+  Aggregation = 'aggregation',
+  CollaborationType = 'collaborationType',
+  Files = 'files',
+  From = 'from',
+  Identifier = 'id',
+  ImportStatus = 'importStatus',
+  OrderBy = 'orderBy',
+  PublicationYear = 'publicationYear',
+  Query = 'query',
+  Size = 'size',
+  SortOrder = 'sortOrder',
+  TopLevelOrganization = 'topLevelOrganization',
+  Type = 'type',
 }
 
-export const fetchImportCandidates = async (
-  results: number,
-  from: number,
-  { query, orderBy, sortOrder }: FetchImportCandidatesParams
-) => {
-  const params = new URLSearchParams();
-  params.set('results', results.toString());
-  params.set('from', from.toString());
-  if (query) {
-    params.set('query', query);
+export interface FetchImportCandidatesParams {
+  [ImportCandidatesSearchParam.Aggregation]?: 'all' | null;
+  [ImportCandidatesSearchParam.CollaborationType]?: CollaborationType | null;
+  [ImportCandidatesSearchParam.Files]?: AggregationFileKeyType | null;
+  [ImportCandidatesSearchParam.From]?: number | null;
+  [ImportCandidatesSearchParam.Identifier]?: string | null;
+  [ImportCandidatesSearchParam.ImportStatus]?: ImportCandidateStatus | null;
+  [ImportCandidatesSearchParam.OrderBy]?: ImportCandidateOrderBy | null;
+  [ImportCandidatesSearchParam.PublicationYear]?: number | null;
+  [ImportCandidatesSearchParam.Query]?: string | null;
+  [ImportCandidatesSearchParam.Size]?: number | null;
+  [ImportCandidatesSearchParam.SortOrder]?: SortOrder | null;
+  [ImportCandidatesSearchParam.TopLevelOrganization]?: string | null;
+  [ImportCandidatesSearchParam.Type]?: PublicationInstanceType | null;
+}
+
+export const fetchImportCandidates = async (params: FetchImportCandidatesParams) => {
+  const searchParams = new URLSearchParams();
+
+  searchParams.set(ImportCandidatesSearchParam.Size, (params.size ?? 10).toString());
+  searchParams.set(ImportCandidatesSearchParam.From, (params.from ?? 0).toString());
+
+  if (params.aggregation) {
+    searchParams.set(ImportCandidatesSearchParam.Aggregation, params.aggregation);
   }
-  if (orderBy) {
-    params.set('orderBy', orderBy);
+  if (params.collaborationType) {
+    searchParams.set(ImportCandidatesSearchParam.CollaborationType, params.collaborationType);
   }
-  if (sortOrder) {
-    params.set('sortOrder', sortOrder);
+  if (params.files) {
+    searchParams.set(ImportCandidatesSearchParam.Files, params.files);
   }
-  const paramsString = params.toString();
+  if (params.id) {
+    searchParams.set(ImportCandidatesSearchParam.Identifier, params.id);
+  }
+  if (params.importStatus) {
+    searchParams.set(ImportCandidatesSearchParam.ImportStatus, params.importStatus);
+  }
+  if (params.orderBy) {
+    searchParams.set(ImportCandidatesSearchParam.OrderBy, params.orderBy);
+  }
+  if (params.publicationYear) {
+    const yearString = params.publicationYear.toString();
+    searchParams.set(ImportCandidatesSearchParam.PublicationYear, `${yearString},${yearString}`);
+  }
+  if (params.query) {
+    searchParams.set(ImportCandidatesSearchParam.Query, params.query);
+  }
+  if (params.sortOrder) {
+    searchParams.set(ImportCandidatesSearchParam.SortOrder, params.sortOrder);
+  }
+  if (params.topLevelOrganization) {
+    searchParams.set(ImportCandidatesSearchParam.TopLevelOrganization, params.topLevelOrganization);
+  }
+  if (params.type) {
+    searchParams.set(ImportCandidatesSearchParam.Type, params.type);
+  }
+
+  const paramsString = searchParams.toString();
 
   const getImportCandidates = await authenticatedApiRequest2<
-    SearchResponse<ImportCandidateSummary, ImportCandidateAggregations>
+    SearchResponse2<ImportCandidateSummary, ImportCandidateAggregations>
   >({
     url: `${SearchApiPath.ImportCandidates}?${paramsString}`,
   });
@@ -155,6 +230,41 @@ export const fetchNviCandidates = async (results: number, from: number, query = 
 
   const getNviCandidates = await authenticatedApiRequest2<NviCandidateSearchResponse>({
     url: `${SearchApiPath.NviCandidate}?${fullQuery}`,
+  });
+
+  return getNviCandidates.data;
+};
+
+enum NviCandidatesSearchParam {
+  Aggregation = 'aggregation',
+  Offset = 'offset',
+  Size = 'size',
+  Year = 'year',
+}
+
+export interface FetchNviCandidatesParams {
+  [NviCandidatesSearchParam.Aggregation]?: 'all' | 'organizationApprovalStatuses' | null;
+  [NviCandidatesSearchParam.Offset]?: number | null;
+  [NviCandidatesSearchParam.Size]?: number | null;
+  [NviCandidatesSearchParam.Year]?: number | null;
+}
+
+export const fetchNviAggregations = async (params: FetchNviCandidatesParams) => {
+  const searchParams = new URLSearchParams();
+  searchParams.set(NviCandidatesSearchParam.Size, params.size?.toString() || '10');
+  searchParams.set(NviCandidatesSearchParam.Offset, params.offset?.toString() || '0');
+
+  if (params.aggregation) {
+    searchParams.set(NviCandidatesSearchParam.Aggregation, params.aggregation);
+  }
+
+  if (params.year) {
+    searchParams.set(NviCandidatesSearchParam.Year, params.year.toString());
+  }
+
+  const paramsString = searchParams.toString();
+  const getNviCandidates = await authenticatedApiRequest2<NviCandidateSearchResponse>({
+    url: `${SearchApiPath.NviCandidate}?${paramsString}`,
   });
 
   return getNviCandidates.data;
@@ -219,6 +329,7 @@ export enum ResultParam {
 export enum ResultSearchOrder {
   ModifiedDate = 'modifiedDate',
   PublicationDate = 'publicationDate',
+  Relevance = 'relevance',
 }
 
 export interface FetchResultsParams {
@@ -337,10 +448,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
   }
   if (params.publicationYearBefore) {
-    const beforeYearNumber = +params.publicationYearBefore;
-    if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
-      // Add one year, to include the "before" year as well
-      searchParams.set(ResultParam.PublicationYearBefore, (beforeYearNumber + 1).toString());
+    if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
+      searchParams.set(ResultParam.PublicationYearBefore, params.publicationYearBefore);
     }
   }
   if (params.publicationYearSince) {
@@ -394,13 +503,4 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   });
 
   return getResults.data;
-};
-
-export const fetchRegistrationsExport = async (searchParams: URLSearchParams) => {
-  searchParams.set(ResultParam.From, '0');
-  searchParams.set(ResultParam.Results, '400');
-  const url = `${SearchApiPath.Registrations}?${searchParams.toString()}`;
-
-  const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
-  return fetchExport.data;
 };

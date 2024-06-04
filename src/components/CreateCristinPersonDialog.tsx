@@ -15,10 +15,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { createCristinPerson } from '../api/cristinApi';
-import { emptyUser } from '../pages/basic_data/institution_admin/AddEmployeePage';
 import { setNotification } from '../redux/notificationSlice';
 import { setPartialUser } from '../redux/userSlice';
-import { CreateCristinPerson, FlatCristinPerson, User } from '../types/user.types';
+import { CreateCristinPerson, FlatCristinPerson, User, emptyPerson } from '../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../utils/constants';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { convertToFlatCristinPerson } from '../utils/user-helpers';
@@ -65,7 +64,7 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
       <DialogTitle>{t('authorization.your_user_profile')}</DialogTitle>
       <Formik
         initialValues={{
-          ...emptyUser,
+          ...emptyPerson,
           nationalId: user.nationalIdNumber,
           firstName: user.givenName,
           lastName: user.familyName,

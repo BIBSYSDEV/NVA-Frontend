@@ -2,11 +2,13 @@ import { Autocomplete, Box, Checkbox, Chip, FormControlLabel, Skeleton } from '@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { OrganizationSearchParams, fetchOrganization, searchForOrganizations } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
+import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -22,28 +24,39 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
+  const user = useSelector((store: RootState) => store.user);
   const params = new URLSearchParams(history.location.search);
   const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
   const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
   const [showUnitSelection, setShowUnitSelection] = useState(false);
   const toggleShowUnitSelection = () => setShowUnitSelection(!showUnitSelection);
 
+  const organizationQuery = useQuery({
+    enabled: !!user?.topOrgCristinId,
+    queryKey: ['organization', user?.topOrgCristinId],
+    queryFn: user ? () => fetchOrganization(user.topOrgCristinId ?? '') : undefined,
+    meta: { errorMessage: t('feedback.error.get_institution') },
+    staleTime: Infinity,
+    gcTime: 1_800_000, // 30 minutes
+  });
+  const userOrganization = organizationQuery.data;
+
   const topLevelOrganizationQuery = useQuery({
-    queryKey: [topLevelOrganizationId],
     enabled: !!topLevelOrganizationId,
+    queryKey: ['organization', topLevelOrganizationId],
     queryFn: () => fetchOrganization(topLevelOrganizationId ?? ''),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const subUnitQuery = useQuery({
-    queryKey: [unitId],
     enabled: !!unitId,
+    queryKey: ['organization', unitId],
     queryFn: () => fetchOrganization(unitId ?? ''),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const organizationQueryParams: OrganizationSearchParams = {
@@ -56,7 +69,8 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
     meta: { errorMessage: t('feedback.error.get_institutions') },
   });
 
-  const options = organizationSearchQuery.data?.hits ?? [];
+  const defaultOptions = userOrganization ? [userOrganization] : [];
+  const options = organizationSearchQuery.data?.hits ?? defaultOptions;
 
   const isLoading = topLevelOrganizationQuery.isFetching || organizationSearchQuery.isFetching;
 
@@ -134,7 +148,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         onClick={toggleShowUnitSelection}
         label={
           unitId ? (
-            subUnitQuery.isLoading ? (
+            subUnitQuery.isPending ? (
               <Skeleton sx={{ minWidth: '10rem' }} />
             ) : (
               getLanguageString(subUnitQuery.data?.labels)

@@ -40,6 +40,7 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
     type: CustomerRrsType;
     id: string;
   };
+  generalSupportEnabled: boolean;
   allowFileUploadForTypes: PublicationInstanceType[];
 }
 
@@ -113,6 +114,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   rboInstitution: false,
   rightsRetentionStrategy: { type: CustomerRrsType.NullRightsRetentionStrategy, id: '' },
   allowFileUploadForTypes: allPublicationInstanceTypes,
+  generalSupportEnabled: true,
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {

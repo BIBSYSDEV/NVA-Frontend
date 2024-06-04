@@ -3,9 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { fetchPositions } from '../../../api/cristinApi';
-import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
@@ -23,21 +21,24 @@ export const PositionField = ({
   includeDisabledPositions = false,
 }: PositionFieldProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const positionsQuery = useQuery({
     queryKey: ['positions', includeDisabledPositions],
     queryFn: () => fetchPositions(includeDisabledPositions),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_positions'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_positions') },
     staleTime: Infinity,
-    cacheTime: 900_000, // 15 minutes
+    gcTime: 900_000, // 15 minutes
   });
 
   const sortedPositions = useMemo(
     () =>
-      [...(positionsQuery.data?.positions ?? [])].sort((a, b) =>
-        getLanguageString(a.labels).toLowerCase() > getLanguageString(b.labels).toLowerCase() ? 1 : -1
-      ),
+      [...(positionsQuery.data?.positions ?? [])].sort((a, b) => {
+        if (a.enabled === b.enabled) {
+          return getLanguageString(a.labels).toLowerCase() > getLanguageString(b.labels).toLowerCase() ? 1 : -1;
+        } else {
+          return +b.enabled - +a.enabled;
+        }
+      }),
     [positionsQuery.data?.positions]
   );
 
@@ -70,7 +71,7 @@ export const PositionField = ({
           onChange={(_, value) => setFieldValue(field.name, value?.id ?? '')}
           getOptionLabel={(option) => getLanguageString(option.labels)}
           fullWidth
-          loading={positionsQuery.isLoading}
+          loading={positionsQuery.isPending}
           renderInput={(params) => (
             <TextField
               type="search"

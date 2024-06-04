@@ -5,6 +5,7 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useTranslation } from 'react-i18next';
 import {
   CristinProject,
+  ProjectFieldName,
   ProjectOrganization,
   SaveCristinProject,
   emptyProjectContributor,
@@ -13,7 +14,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
-import { ProjectFieldName } from './ProjectFormDialog';
 import { ProjectFundingsField } from './ProjectFunding';
 
 interface ProjectFormPanel1Props {
@@ -87,7 +87,6 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 }}
                 value={field.value ? new Date(field.value) : null}
                 maxDate={values.endDate ? new Date(values.endDate) : undefined}
-                format="dd.MM.yyyy"
                 slotProps={{
                   textField: {
                     inputProps: { 'data-testid': dataTestId.registrationWizard.description.projectForm.startDateField },
@@ -113,7 +112,6 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 }}
                 value={field.value ? new Date(field.value) : null}
                 minDate={values.startDate ? new Date(values.startDate) : undefined}
-                format="dd.MM.yyyy"
                 slotProps={{
                   textField: {
                     inputProps: { 'data-testid': dataTestId.registrationWizard.description.projectForm.endDateField },

@@ -1,5 +1,5 @@
 import { AggregationValue, LanguageString } from './common.types';
-import { Keywords } from './keywords.types';
+import { Keywords, KeywordsOld } from './keywords.types';
 
 export enum RoleName {
   AppAdmin = 'App-admin',
@@ -127,7 +127,7 @@ export interface CristinPerson extends CreateCristinPerson {
     no?: string;
     en?: string;
   };
-  keywords?: Keywords[];
+  keywords?: KeywordsOld[];
 }
 
 export interface PersonAggregations {
@@ -150,7 +150,7 @@ export interface FlatCristinPerson {
     no?: string | null;
     en?: string | null;
   };
-  keywords?: Keywords[];
+  keywords?: (Keywords | KeywordsOld)[];
   nvi?: NviVerification;
   contactDetails?: CristinPersonContactDetails;
 }
@@ -197,4 +197,17 @@ export const emptyNviVerification: NviVerification = {
   verifiedBy: {
     id: '',
   },
+};
+
+export const emptyPerson: FlatCristinPerson = {
+  nationalId: '',
+  firstName: '',
+  lastName: '',
+  id: '',
+  cristinIdentifier: '',
+  affiliations: [],
+  employments: [],
+  background: {},
+  keywords: [],
+  nvi: emptyNviVerification,
 };

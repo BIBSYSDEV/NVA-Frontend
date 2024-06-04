@@ -50,13 +50,14 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
           sortOrder: 'asc',
           label: t('search.sort_by_published_date_asc'),
         },
+        { orderBy: ResultSearchOrder.Relevance, sortOrder: 'desc', label: t('search.sort_by_relevance') },
       ]}
     />
   );
 
   return (
     <section>
-      {registrationQuery.isLoading ? (
+      {registrationQuery.isPending ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
         <>

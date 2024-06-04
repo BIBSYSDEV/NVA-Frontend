@@ -55,7 +55,7 @@ export const SearchRelatedResultField = () => {
               setRelatedRegistrationsQuery('');
             }}
             blurOnSelect
-            loading={relatedRegistrationsOptionsQuery.isLoading}
+            loading={relatedRegistrationsOptionsQuery.isPending}
             filterOptions={(options) => options}
             getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
             renderOption={(props, option, state) => (

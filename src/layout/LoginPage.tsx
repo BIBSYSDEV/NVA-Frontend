@@ -21,7 +21,6 @@ const LoginPage = () => {
   const redirectPath = location.state?.previousPath ?? UrlPathTemplate.Home;
 
   localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
-  localStorage.setItem(LocalStorageKey.AmplifyRedirect, 'true');
   handleLogin();
   return null;
 };

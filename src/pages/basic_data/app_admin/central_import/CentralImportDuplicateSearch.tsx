@@ -2,7 +2,7 @@ import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } fro
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchResults, FetchResultsParams } from '../../../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../../../api/searchApi';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
@@ -44,11 +44,11 @@ export const CentralImportDuplicateSearch = ({
 
   return (
     <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 1rem' }, mt: '1rem' }}>
-      {duplicateCandidatesQuery.isLoading ? (
+      {duplicateCandidatesQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>
-          <Typography variant="subtitle1" gutterBottom>
+          <Typography fontWeight={700} gutterBottom>
             {duplicateCandidatesSize === 0
               ? t('basic_data.central_import.duplicate_search_no_hits')
               : t('basic_data.central_import.duplicate_search_hits')}

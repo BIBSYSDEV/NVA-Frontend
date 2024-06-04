@@ -28,22 +28,6 @@ import { CreateProjectStartPage } from './CreateProjectStartPage';
 import { ProjectFormPanel1 } from './ProjectFormPanel1';
 import { ProjectFormPanel2 } from './ProjectFormPanel2';
 
-export enum ProjectFieldName {
-  Title = 'title',
-  Categories = 'projectCategories',
-  CoordinatingInstitution = 'coordinatingInstitution',
-  Contributors = 'contributors',
-  Funding = 'funding',
-  StartDate = 'startDate',
-  EndDate = 'endDate',
-  AcademicSummaryNo = 'academicSummary.no',
-  PopularScientificSummaryNo = 'popularScientificSummary.no',
-  AcademicSummaryEn = 'academicSummary.en',
-  PopularScientificSummaryEn = 'popularScientificSummary.en',
-  Keywords = 'keywords',
-  RelatedProjects = 'relatedProjects',
-}
-
 interface ProjectFormDialogProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
   onCreateProject?: (project: CristinProject) => void | Promise<unknown>;

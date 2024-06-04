@@ -3,8 +3,8 @@ import { getFullName } from '../utils/user-helpers';
 import { RoleApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
-interface CreateUserPayload extends Pick<InstitutionUser, 'roles' | 'viewingScope'> {
-  nationalIdentityNumber: string;
+export interface CreateUserPayload extends Pick<InstitutionUser, 'roles' | 'viewingScope'> {
+  cristinIdentifier: string;
   customerId: string;
 }
 
@@ -49,7 +49,7 @@ export const fetchUser = async (username: string) => {
   return userResponse.data;
 };
 
-export const fetchUsers = async (customerId: string, role: RoleName | RoleName[]) => {
+export const fetchUsersByCustomer = async (customerId: string, role?: RoleName | RoleName[]) => {
   const searchParams = new URLSearchParams();
 
   if (customerId) {

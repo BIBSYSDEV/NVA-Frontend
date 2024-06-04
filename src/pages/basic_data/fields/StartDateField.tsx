@@ -23,7 +23,6 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false, dataTestI
             !touched && setFieldTouched(field.name, true, false);
             setFieldValue(field.name, date ?? '');
           }}
-          format="dd.MM.yyyy"
           views={['year', 'month', 'day']}
           maxDate={maxDate}
           slotProps={{

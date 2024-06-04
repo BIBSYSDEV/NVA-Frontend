@@ -49,7 +49,7 @@ export const OrganizationScope = ({
     queryFn: () => fetchOrganization(topOrgCristinId),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000,
+    gcTime: 1_800_000,
   });
 
   const organizationOptions = organizationQuery.data
@@ -99,7 +99,7 @@ export const OrganizationScope = ({
                 toggleDialog();
               }
             }}
-            disabled={organizationQuery.isLoading}
+            disabled={organizationQuery.isPending}
             sx={{ mt: '1rem' }}
             renderInput={(params) => <TextField {...params} label={t('common.search')} />}
           />

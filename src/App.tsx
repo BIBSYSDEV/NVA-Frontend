@@ -22,7 +22,7 @@ import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
-import { getDateFnsLocale } from './utils/date-helpers';
+import { getDateFnsLocale, getDatePickerLocaleText } from './utils/date-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
 
@@ -107,7 +107,11 @@ export const App = () => {
                 mb: '0.5rem',
               }}>
               <ErrorBoundary>
-                <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={getDateFnsLocale(i18n.language)}>
+                <LocalizationProvider
+                  dateAdapter={AdapterDateFns}
+                  adapterLocale={getDateFnsLocale(i18n.language)}
+                  dateFormats={{ keyboardDate: 'dd.MM.yyyy' }}
+                  localeText={getDatePickerLocaleText(i18n.language)}>
                   <AppRoutes />
                 </LocalizationProvider>
               </ErrorBoundary>

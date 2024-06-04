@@ -20,12 +20,7 @@ const userSlice = createSlice({
       const feideId = getStringValue(action.payload['custom:feideId']);
       const rolesString = getStringValue(action.payload['custom:roles']);
       const allowedCustomersString = getStringValue(action.payload['custom:allowedCustomers']);
-
-      const roleItems = rolesString.split(',').map((roleItem) => roleItem.split('@') as [RoleName, string]);
-      const roles = roleItems.flatMap(([role, thisCustomerId]) =>
-        !thisCustomerId || thisCustomerId === customerId ? [role] : []
-      );
-
+      const roles = rolesString.split(',') as RoleName[];
       const allowedCustomers = allowedCustomersString.split(',').filter((customer) => customer);
 
       const user: User = {

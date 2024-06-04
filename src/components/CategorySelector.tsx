@@ -54,6 +54,7 @@ const registrationRows: RegistrationRowConfig[] = [
 
 interface CategorySelectorProps {
   selectedCategories: PublicationInstanceType[];
+  setSelectedCategories?: (categories: PublicationInstanceType[]) => void;
   onCategoryClick?: (category: PublicationInstanceType) => void;
   disabledCategories?: DisabledCategory[];
 }
@@ -62,10 +63,12 @@ export const CategorySelector = ({
   disabledCategories,
   onCategoryClick,
   selectedCategories,
+  setSelectedCategories,
 }: CategorySelectorProps) => {
   const { t } = useTranslation();
 
   const [searchValue, setSearchValue] = useState('');
+  const highlightNviCategories = nviApplicableTypes.every((category) => selectedCategories.includes(category));
 
   const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
     const lowerCaseSearchValue = searchValue.toLowerCase();
@@ -93,19 +96,44 @@ export const CategorySelector = ({
           InputProps={{ endAdornment: <SearchIcon /> }}
           onChange={(event) => setSearchValue(event.target.value)}
         />
-        <Box
-          sx={{
-            display: 'flex',
-            gap: '0.5rem',
-            alignItems: 'center',
-          }}>
-          <FilterVintageIcon
+        {setSelectedCategories ? (
+          <Chip
+            icon={
+              <FilterVintageIcon
+                color="primary"
+                titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+                fontSize="small"
+              />
+            }
             color="primary"
-            titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-            fontSize="small"
+            title={t('registration.resource_type.nvi.select_all_nvi_categories')}
+            onClick={() => {
+              if (!highlightNviCategories) {
+                setSelectedCategories([...selectedCategories, ...nviApplicableTypes]);
+              } else {
+                const newCategories = selectedCategories.filter((category) => !nviApplicableTypes.includes(category));
+                setSelectedCategories(newCategories);
+              }
+            }}
+            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeNviHighlightChipButton}
+            variant={highlightNviCategories ? 'filled' : 'outlined'}
+            label={t('registration.resource_type.nvi.can_give_publication_points')}
           />
-          <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
-        </Box>
+        ) : (
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '0.5rem',
+              alignItems: 'center',
+            }}>
+            <FilterVintageIcon
+              color="primary"
+              titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+              fontSize="small"
+            />
+            <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
+          </Box>
+        )}
       </Box>
       <Box
         sx={{
