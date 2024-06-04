@@ -17,6 +17,7 @@ import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration } from '../../utils/registration-helpers';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 
 interface RegistrationFormActionsProps {
@@ -64,8 +65,7 @@ export const RegistrationFormActions = ({
       );
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (isLastTab) {
-        history.goBack();
-        // history.push(getRegistrationLandingPagePath(values.identifier));
+        history.push(getRegistrationLandingPagePath(values.identifier));
       } else {
         const newErrors = validateForm(updateRegistrationResponse.data);
         resetForm({
