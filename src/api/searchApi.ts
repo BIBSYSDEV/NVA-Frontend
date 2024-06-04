@@ -243,7 +243,7 @@ enum NviCandidatesSearchParam {
 
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;
-  [NviCandidatesSearchParam.Aggregation]?: 'all' | 'organizationApprovalStatuses' | null;
+  [NviCandidatesSearchParam.Aggregation]?: 'all' | keyof NviCandidateAggregations | null;
   [NviCandidatesSearchParam.Assignee]?: string | null;
   [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
   [NviCandidatesSearchParam.Filter]?: keyof NviCandidateAggregations | null;
