@@ -28,6 +28,10 @@ interface RegistrationFormActionsProps {
   isNviCandidate: boolean;
 }
 
+interface RegistrationFormLocationState {
+  goBackTo?: string;
+}
+
 export const RegistrationFormActions = ({
   tabNumber,
   setTabNumber,
@@ -36,7 +40,7 @@ export const RegistrationFormActions = ({
   isNviCandidate,
 }: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const history = useHistory<RegistrationFormLocationState>();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { values, setTouched, resetForm } = useFormikContext<Registration>();
@@ -65,7 +69,11 @@ export const RegistrationFormActions = ({
       );
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (isLastTab) {
-        history.push(getRegistrationLandingPagePath(values.identifier));
+        if (history.location.state?.goBackTo) {
+          history.goBack();
+        } else {
+          history.push(getRegistrationLandingPagePath(values.identifier));
+        }
       } else {
         const newErrors = validateForm(updateRegistrationResponse.data);
         resetForm({
