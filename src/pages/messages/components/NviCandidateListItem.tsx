@@ -59,7 +59,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviQueryPara
             component={Link}
             to={{
               pathname: getNviCandidatePath(nviCandidate.identifier),
-              state: candidateOffsetState,
+              state: { candidateOffsetState, previousSearch: window.location.search },
             }}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>

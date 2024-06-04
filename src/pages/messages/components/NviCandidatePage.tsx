@@ -20,9 +20,14 @@ import { NavigationIconButton } from './NavigationIconButton';
 import { NviApprovals } from './NviApprovals';
 import { NviCandidateActions } from './NviCandidateActions';
 
+interface NviCandidatePageLocationState {
+  candidateOffsetState?: CandidateOffsetState;
+  previousSearch: string;
+}
+
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
-  const location = useLocation<CandidateOffsetState | undefined>();
+  const location = useLocation<NviCandidatePageLocationState>();
   const { identifier } = useParams<IdentifierParams>();
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
@@ -51,8 +56,8 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const nviQueryParams = location.state?.nviQueryParams;
-  const thisCandidateOffset = location.state?.currentOffset;
+  const nviQueryParams = location.state?.candidateOffsetState?.nviQueryParams;
+  const thisCandidateOffset = location.state?.candidateOffsetState?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
   const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
@@ -71,19 +76,25 @@ export const NviCandidatePage = () => {
   const previousCandidateIdentifier =
     navigateCandidateQuery.isSuccess && !isFirstCandidate ? navigateCandidateQuery.data.hits[0]?.identifier : null;
 
-  const nextCandidateState: CandidateOffsetState | undefined =
+  const nextCandidateState: NviCandidatePageLocationState | undefined =
     hasOffset && nviQueryParams
       ? {
-          currentOffset: thisCandidateOffset + 1,
-          nviQueryParams,
+          ...location.state,
+          candidateOffsetState: {
+            currentOffset: thisCandidateOffset + 1,
+            nviQueryParams,
+          },
         }
       : undefined;
 
-  const previousCandidateState: CandidateOffsetState | undefined =
+  const previousCandidateState: NviCandidatePageLocationState | undefined =
     hasOffset && nviQueryParams
       ? {
-          currentOffset: thisCandidateOffset - 1,
-          nviQueryParams,
+          ...location.state,
+          candidateOffsetState: {
+            currentOffset: thisCandidateOffset - 1,
+            nviQueryParams,
+          },
         }
       : undefined;
 
