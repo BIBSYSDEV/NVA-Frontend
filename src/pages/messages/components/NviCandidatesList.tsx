@@ -86,6 +86,7 @@ export const NviCandidatesList = ({
           sx={{ maxWidth: '20rem' }}
         />
         <Select
+          data-testid={dataTestId.tasksPage.nvi.yearSelect}
           size="small"
           inputProps={{ 'aria-label': t('common.year') }}
           value={nviYearFilter}
