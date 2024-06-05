@@ -1,15 +1,14 @@
-import React from 'react';
+import { MenuItem, Select, Typography } from '@mui/material';
+import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { TFuncKey } from 'i18next';
-import { MenuItem, Select, Typography } from '@mui/material';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { ProjectStatus } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface FilterItem {
   statusValue: ProjectStatus | '';
-  i18nKey: TFuncKey;
+  i18nKey: ParseKeys;
 }
 
 const statusFilters: FilterItem[] = [
