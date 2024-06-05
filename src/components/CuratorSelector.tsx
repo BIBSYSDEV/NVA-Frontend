@@ -32,7 +32,8 @@ export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, ...pro
   const curatorOptions = (curatorsQuery.data ?? []).sort((a, b) =>
     a.username === user?.nvaUsername ? -1 : b.username === user?.nvaUsername ? 1 : 0
   );
-  const selectedCurator = curatorOptions.find((curator) => curator.username === selectedUsername) ?? null;
+  const selectedCurator =
+    (selectedUsername && curatorOptions.find((curator) => curator.username === selectedUsername)) || null;
 
   const CuratorAvatar = (curator: InstitutionUser | null) => (
     <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: 'inherit', bgcolor: 'primary.main' }}>

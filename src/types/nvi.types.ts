@@ -54,7 +54,7 @@ interface OrganizationApprovalStatuses extends AggregationCount {
 
 export type NviCandidateSearchStatus = keyof NviCandidateAggregations;
 
-export interface NviCandidateAggregations {
+interface NviCandidateAggregations {
   approved: AggregationCount;
   approvedCollaboration: AggregationCount;
   assigned: AggregationCount;
