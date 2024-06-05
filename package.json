@@ -70,7 +70,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "^3.12.39",
     "@tanstack/eslint-plugin-query": "^5.32.1",
-    "@tanstack/react-query-devtools": "^5.40.0",
+    "@tanstack/react-query-devtools": "^5.40.1",
     "@types/isbn-utils": "^1.1.6",
     "@types/jest": "^29.5.12",
     "@types/react": "^18.3.3",
