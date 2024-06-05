@@ -10,10 +10,8 @@ import {
   FormControlLabel,
   FormLabel,
   LinearProgress,
-  MenuItem,
   Link as MuiLink,
   Radio,
-  Select,
   Typography,
   styled,
 } from '@mui/material';
@@ -42,7 +40,6 @@ import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -68,8 +65,6 @@ const StyledNviStatusBox = styled(Box)({
   padding: '0.5rem',
   borderRadius: '0.25rem',
 });
-
-const nviYearFilterValues = getNviYearFilterValues();
 
 interface LocationState {
   previousSearch: string;
@@ -185,7 +180,7 @@ const TasksPage = () => {
   const nviStatusParam = searchParams.get(NviCandidatesSearchParam.Filter);
   const nviStatusFilter = (nviStatusParam ?? 'pending') as keyof NviCandidateAggregations;
   const nviYearParam = searchParams.get(NviCandidatesSearchParam.Year);
-  const nviYearFilter = nviYearParam ? +nviYearParam : nviYearFilterValues[1];
+  const nviYearFilter = nviYearParam ? +nviYearParam : new Date().getFullYear();
 
   const updateQueryParam = (queryKey: NviCandidatesSearchParam, value: string) => {
     searchParams.set(queryKey, value);
@@ -357,19 +352,6 @@ const TasksPage = () => {
               }}
               dataTestId={dataTestId.tasksPage.nviAccordion}>
               <StyledTicketSearchFormGroup>
-                <Select
-                  size="small"
-                  inputProps={{ 'aria-label': t('common.year') }}
-                  value={nviYearFilter}
-                  onChange={(event) => updateQueryParam(NviCandidatesSearchParam.Year, event.target.value.toString())}
-                  sx={{ width: 'fit-content', alignSelf: 'center', mb: '0.5rem' }}>
-                  {nviYearFilterValues.map((year) => (
-                    <MenuItem key={year} value={year}>
-                      {year}
-                    </MenuItem>
-                  ))}
-                </Select>
-
                 {nviAggregationsQuery.isSuccess && (
                   <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', mb: '1rem' }}>
                     <Typography id="progress-label" gutterBottom>
