@@ -10,7 +10,7 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
-import { NviCandidateSearchResponse } from '../../../types/nvi.types';
+import { NviCandidateSearchResponse, NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getNviYearFilterValues } from '../../../utils/nviHelpers';
@@ -61,7 +61,28 @@ export const NviCandidatesList = ({
         }}>
         <SearchForm placeholder={t('tasks.search_placeholder')} sx={{ gridColumn: '1/3' }} />
 
-        <CuratorSelector roleFilter={[RoleName.NviCurator]} sx={{ maxWidth: '20rem' }} />
+        <CuratorSelector
+          selectedUsername={searchParams.get(NviCandidatesSearchParam.Assignee)}
+          onChange={(curator) => {
+            if (curator) {
+              searchParams.set(NviCandidatesSearchParam.Assignee, curator.username);
+
+              const currentStatusFilter = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus;
+              if (
+                !currentStatusFilter ||
+                currentStatusFilter === 'pending' ||
+                currentStatusFilter === 'pendingCollaboration'
+              ) {
+                searchParams.set(NviCandidatesSearchParam.Filter, 'assigned' satisfies NviCandidateSearchStatus);
+              }
+            } else {
+              searchParams.delete(NviCandidatesSearchParam.Assignee);
+            }
+            history.push({ search: searchParams.toString() });
+          }}
+          roleFilter={[RoleName.NviCurator]}
+          sx={{ maxWidth: '20rem' }}
+        />
         <Select
           size="small"
           inputProps={{ 'aria-label': t('common.year') }}

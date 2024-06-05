@@ -37,7 +37,7 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { NviCandidateAggregations } from '../../types/nvi.types';
+import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -178,7 +178,7 @@ const TasksPage = () => {
 
   // NVI data
   const nviStatusParam = searchParams.get(NviCandidatesSearchParam.Filter);
-  const nviStatusFilter = (nviStatusParam ?? 'pending') as keyof NviCandidateAggregations;
+  const nviStatusFilter = (nviStatusParam ?? 'pending') as NviCandidateSearchStatus;
   const nviYearParam = searchParams.get(NviCandidatesSearchParam.Year);
   const nviYearFilter = nviYearParam ? +nviYearParam : new Date().getFullYear();
 

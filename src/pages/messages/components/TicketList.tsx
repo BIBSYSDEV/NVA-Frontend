@@ -3,7 +3,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
@@ -33,8 +33,8 @@ interface TicketListProps {
 
 export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
+  const history = useHistory();
+  const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
 
@@ -58,6 +58,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
     />
   );
 
+  const searchParams = new URLSearchParams(history.location.search);
+
   return (
     <section>
       <Helmet>
@@ -79,6 +81,15 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             </Grid>
             <Grid item xs={16} md={5} lg={4}>
               <CuratorSelector
+                selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
+                onChange={(curator) => {
+                  if (curator) {
+                    searchParams.set(TicketSearchParam.Assignee, curator.username);
+                  } else {
+                    searchParams.delete(TicketSearchParam.Assignee);
+                  }
+                  history.push({ search: searchParams.toString() });
+                }}
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />
             </Grid>

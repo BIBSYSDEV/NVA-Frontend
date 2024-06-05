@@ -7,8 +7,8 @@ import {
 } from '../types/importCandidate.types';
 import {
   NviCandidate,
-  NviCandidateAggregations,
   NviCandidateSearchResponse,
+  NviCandidateSearchStatus,
   ScientificIndexStatuses,
 } from '../types/nvi.types';
 import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
@@ -243,10 +243,10 @@ export enum NviCandidatesSearchParam {
 
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;
-  [NviCandidatesSearchParam.Aggregation]?: 'all' | keyof NviCandidateAggregations | null;
+  [NviCandidatesSearchParam.Aggregation]?: 'all' | NviCandidateSearchStatus | null;
   [NviCandidatesSearchParam.Assignee]?: string | null;
   [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
-  [NviCandidatesSearchParam.Filter]?: keyof NviCandidateAggregations | null;
+  [NviCandidatesSearchParam.Filter]?: NviCandidateSearchStatus | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
   [NviCandidatesSearchParam.Query]?: string | null;
   [NviCandidatesSearchParam.Size]?: number | null;

@@ -2,9 +2,7 @@ import { Autocomplete, AutocompleteProps, Avatar, Box, Typography } from '@mui/m
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { fetchUsersByCustomer } from '../api/roleApi';
-import { TicketSearchParam } from '../api/searchApi';
 import { RootState } from '../redux/store';
 import { InstitutionUser, RoleName } from '../types/user.types';
 import { dataTestId } from '../utils/dataTestIds';
@@ -14,15 +12,14 @@ import { AutocompleteTextField } from './AutocompleteTextField';
 
 interface CuratorSelectorProps extends Pick<AutocompleteProps<unknown, undefined, undefined, undefined>, 'sx'> {
   roleFilter: RoleName[];
+  selectedUsername: string | null;
+  onChange: (curator: InstitutionUser | null) => void;
 }
 
-export const CuratorSelector = ({ roleFilter, ...props }: CuratorSelectorProps) => {
+export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, ...props }: CuratorSelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
-
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
 
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId, roleFilter],
@@ -35,17 +32,13 @@ export const CuratorSelector = ({ roleFilter, ...props }: CuratorSelectorProps) 
   const curatorOptions = (curatorsQuery.data ?? []).sort((a, b) =>
     a.username === user?.nvaUsername ? -1 : b.username === user?.nvaUsername ? 1 : 0
   );
+  const selectedCurator = curatorOptions.find((curator) => curator.username === selectedUsername) ?? null;
 
-  const selectedCurator =
-    curatorOptions.find((curator) => curator.username === searchParams.get(TicketSearchParam.Assignee)) ?? null;
-
-  const CuratorAvatar = (curator: InstitutionUser | null) => {
-    return (
-      <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: 'inherit', bgcolor: 'primary.main' }}>
-        {getInitials(getFullName(curator?.givenName, curator?.familyName))}
-      </Avatar>
-    );
-  };
+  const CuratorAvatar = (curator: InstitutionUser | null) => (
+    <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: 'inherit', bgcolor: 'primary.main' }}>
+      {getInitials(getFullName(curator?.givenName, curator?.familyName))}
+    </Avatar>
+  );
 
   return (
     <Autocomplete
@@ -57,14 +50,7 @@ export const CuratorSelector = ({ roleFilter, ...props }: CuratorSelectorProps) 
       loading={curatorsQuery.isPending}
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
       isOptionEqualToValue={(option, value) => option.username === value?.username}
-      onChange={(_, value) => {
-        if (value) {
-          searchParams.set(TicketSearchParam.Assignee, value.username);
-        } else {
-          searchParams.delete(TicketSearchParam.Assignee);
-        }
-        history.push({ search: searchParams.toString() });
-      }}
+      onChange={(_, value) => onChange(value)}
       renderOption={(props, curator) => (
         <li {...props} key={curator.username}>
           <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
