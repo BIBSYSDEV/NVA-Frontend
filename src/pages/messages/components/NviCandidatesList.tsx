@@ -51,11 +51,11 @@ export const NviCandidatesList = ({
         <title>{helmetTitle}</title>
       </Helmet>
 
-      <Box sx={{ mb: '1rem', mx: { xs: '0.5rem', md: 0, display: 'grid', gap: '1rem' } }}>
+      <Box sx={{ mb: '1rem', mx: { xs: '0.5rem', md: 0, display: 'flex', flexDirection: 'column', gap: '1rem' } }}>
         <SearchForm placeholder={t('tasks.search_placeholder')} />
 
         <Box sx={{ display: 'flex', gap: '1rem' }}>
-          <CuratorSelector roleFilter={[RoleName.NviCurator]} sx={{ maxWidth: '20rem' }} />
+          <CuratorSelector roleFilter={[RoleName.NviCurator]} sx={{ flex: '0 20rem' }} />
           <Select
             size="small"
             inputProps={{ 'aria-label': t('common.year') }}
@@ -64,7 +64,7 @@ export const NviCandidatesList = ({
               searchParams.set(NviCandidatesSearchParam.Year, event.target.value.toString());
               history.push({ search: searchParams.toString() });
             }}
-            sx={{ width: 'fit-content', alignSelf: 'center', mb: '0.5rem' }}>
+            sx={{ ml: 'auto' }}>
             {nviYearFilterValues.map((year) => (
               <MenuItem key={year} value={year}>
                 {year}
