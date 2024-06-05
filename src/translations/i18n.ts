@@ -17,7 +17,6 @@ i18n.use(LanguageDetector).init({
     },
   },
   returnNull: true,
-  pluralSeparator: '|',
   contextSeparator: '|',
   fallbackLng: 'nob',
   returnEmptyString: false,
