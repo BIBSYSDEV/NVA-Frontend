@@ -150,7 +150,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                 setVisibleVocabularies([...visibleVocabularies, vocabulary]);
                 setNewVocabularyAnchor(null);
               }}>
-              {t<any>(vocabularyConfig[vocabulary].i18nKey)}
+              {t(vocabularyConfig[vocabulary].i18nKey) as string}
             </MenuItem>
           ))}
         </Menu>

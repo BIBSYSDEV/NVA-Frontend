@@ -57,7 +57,7 @@ export const ProjectStatusFilter = () => {
         variant="filled">
         {statusFilters.map((filter) => (
           <MenuItem key={filter.i18nKey} value={filter.statusValue}>
-            {t<any>(filter.i18nKey)}
+            {t(filter.i18nKey) as string}
           </MenuItem>
         ))}
       </Select>

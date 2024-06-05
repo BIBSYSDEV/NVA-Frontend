@@ -48,7 +48,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
             data-testid={dataTestId.startPage.advancedSearch.advancedFieldSelect}>
             {registrationFilters.map((filter) => (
               <MenuItem key={filter.i18nKey} value={filter.field}>
-                {t<any>(filter.i18nKey)}
+                {t(filter.i18nKey) as string}
               </MenuItem>
             ))}
           </TextField>
