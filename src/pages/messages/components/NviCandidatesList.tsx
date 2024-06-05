@@ -51,27 +51,31 @@ export const NviCandidatesList = ({
         <title>{helmetTitle}</title>
       </Helmet>
 
-      <Box sx={{ mb: '1rem', mx: { xs: '0.5rem', md: 0, display: 'flex', flexDirection: 'column', gap: '1rem' } }}>
-        <SearchForm placeholder={t('tasks.search_placeholder')} />
+      <Box
+        sx={{
+          mb: '1rem',
+          mx: { xs: '0.5rem', md: 0 },
+          display: 'grid',
+          gridTemplateColumns: '1fr auto',
+          gap: '1rem',
+        }}>
+        <SearchForm placeholder={t('tasks.search_placeholder')} sx={{ gridColumn: '1/3' }} />
 
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
-          <CuratorSelector roleFilter={[RoleName.NviCurator]} sx={{ flex: '0 20rem' }} />
-          <Select
-            size="small"
-            inputProps={{ 'aria-label': t('common.year') }}
-            value={nviYearFilter}
-            onChange={(event) => {
-              searchParams.set(NviCandidatesSearchParam.Year, event.target.value.toString());
-              history.push({ search: searchParams.toString() });
-            }}
-            sx={{ ml: 'auto' }}>
-            {nviYearFilterValues.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
-        </Box>
+        <CuratorSelector roleFilter={[RoleName.NviCurator]} sx={{ maxWidth: '20rem' }} />
+        <Select
+          size="small"
+          inputProps={{ 'aria-label': t('common.year') }}
+          value={nviYearFilter}
+          onChange={(event) => {
+            searchParams.set(NviCandidatesSearchParam.Year, event.target.value.toString());
+            history.push({ search: searchParams.toString() });
+          }}>
+          {nviYearFilterValues.map((year) => (
+            <MenuItem key={year} value={year}>
+              {year}
+            </MenuItem>
+          ))}
+        </Select>
       </Box>
 
       {nviCandidatesQuery.isPending ? (
