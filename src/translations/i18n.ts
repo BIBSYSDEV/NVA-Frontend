@@ -16,7 +16,6 @@ i18n.use(LanguageDetector).init({
       translation: nnTranslations,
     },
   },
-  returnNull: true,
   contextSeparator: '|',
   fallbackLng: 'nob',
   returnEmptyString: false,
