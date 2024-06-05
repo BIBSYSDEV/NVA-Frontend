@@ -41,12 +41,9 @@ export const NviCandidatesList = ({
         <title>{helmetTitle}</title>
       </Helmet>
 
-      <Box sx={{ mb: '1rem' }}>
+      <Box sx={{ mb: '1rem', mx: { xs: '0.5rem', md: 0, display: 'grid', gap: '1rem' } }}>
         <SearchForm placeholder={t('tasks.search_placeholder')} />
-      </Box>
-
-      <Box sx={{ mb: '1rem' }}>
-        <CuratorSelector roleFilter={[RoleName.NviCurator]} />
+        <CuratorSelector roleFilter={[RoleName.NviCurator]} sx={{ maxWidth: '20rem' }} />
       </Box>
 
       {nviCandidatesQuery.isPending ? (
