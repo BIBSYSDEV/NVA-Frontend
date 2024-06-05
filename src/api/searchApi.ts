@@ -229,7 +229,7 @@ export const fetchEmployees = async (
   return getEmployees.data;
 };
 
-enum NviCandidatesSearchParam {
+export enum NviCandidatesSearchParam {
   Affiliations = 'affiliations',
   Aggregation = 'aggregation',
   Assignee = 'assignee',

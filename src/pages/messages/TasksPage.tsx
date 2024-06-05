@@ -27,6 +27,7 @@ import { fetchUser } from '../../api/roleApi';
 import {
   FetchNviCandidatesParams,
   FetchTicketsParams,
+  NviCandidatesSearchParam,
   TicketSearchParam,
   fetchCustomerTickets,
 } from '../../api/searchApi';
@@ -181,7 +182,13 @@ const TasksPage = () => {
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   // NVI data
-  const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
+  const nviStatusFilter = (searchParams.get(NviCandidatesSearchParam.Filter) ??
+    'pending') as keyof NviCandidateAggregations;
+
+  const updateQueryParam = (queryKey: NviCandidatesSearchParam, value: string) => {
+    searchParams.set(queryKey, value);
+    history.push({ search: searchParams.toString() });
+  };
 
   const openCandidatesView = () => {
     if (!isOnNviCandidatesPage) {
@@ -405,8 +412,13 @@ const TasksPage = () => {
                     <FormControlLabel
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
                       checked={nviStatusFilter === 'pending'}
+                      disabled={!!assigneeParam}
                       onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('pending')} />}
+                      control={
+                        <StyledStatusRadio
+                          onChange={() => updateQueryParam(NviCandidatesSearchParam.Filter, 'pending')}
+                        />
+                      }
                       slotProps={{ typography: { fontWeight: 700 } }}
                       label={
                         nviPendingCount
@@ -417,8 +429,13 @@ const TasksPage = () => {
                     <FormControlLabel
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCollaborationRadio}
                       checked={nviStatusFilter === 'pendingCollaboration'}
+                      disabled={!!assigneeParam}
                       onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('pendingCollaboration')} />}
+                      control={
+                        <StyledStatusRadio
+                          onChange={() => updateQueryParam(NviCandidatesSearchParam.Filter, 'pendingCollaboration')}
+                        />
+                      }
                       label={
                         nviPendingCount
                           ? `${t('tasks.nvi.waiting_for_your_institution')} (${nviPendingCollaborationCount})`
@@ -432,7 +449,11 @@ const TasksPage = () => {
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedRadio}
                       checked={nviStatusFilter === 'assigned'}
                       onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('assigned')} />}
+                      control={
+                        <StyledStatusRadio
+                          onChange={() => updateQueryParam(NviCandidatesSearchParam.Filter, 'assigned')}
+                        />
+                      }
                       slotProps={{ typography: { fontWeight: 700 } }}
                       label={
                         nviAssignedCount
@@ -444,7 +465,11 @@ const TasksPage = () => {
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedCollaborationRadio}
                       checked={nviStatusFilter === 'assignedCollaboration'}
                       onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('assignedCollaboration')} />}
+                      control={
+                        <StyledStatusRadio
+                          onChange={() => updateQueryParam(NviCandidatesSearchParam.Filter, 'assignedCollaboration')}
+                        />
+                      }
                       label={
                         nviAssignedCollaborationCount
                           ? `${t('tasks.nvi.waiting_for_your_institution')} (${nviAssignedCollaborationCount})`
@@ -458,7 +483,11 @@ const TasksPage = () => {
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedRadio}
                       checked={nviStatusFilter === 'approved'}
                       onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('approved')} />}
+                      control={
+                        <StyledStatusRadio
+                          onChange={() => updateQueryParam(NviCandidatesSearchParam.Filter, 'approved')}
+                        />
+                      }
                       slotProps={{ typography: { fontWeight: 700 } }}
                       label={
                         nviApprovedCount
@@ -470,7 +499,11 @@ const TasksPage = () => {
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCollaborationRadio}
                       checked={nviStatusFilter === 'approvedCollaboration'}
                       onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('approvedCollaboration')} />}
+                      control={
+                        <StyledStatusRadio
+                          onChange={() => updateQueryParam(NviCandidatesSearchParam.Filter, 'approvedCollaboration')}
+                        />
+                      }
                       label={
                         nviApprovedCollaborationCount
                           ? `${t('tasks.nvi.waiting_for_other_institutions')} (${nviApprovedCollaborationCount})`
@@ -484,7 +517,11 @@ const TasksPage = () => {
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedRadio}
                       checked={nviStatusFilter === 'rejected'}
                       onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('rejected')} />}
+                      control={
+                        <StyledStatusRadio
+                          onChange={() => updateQueryParam(NviCandidatesSearchParam.Filter, 'rejected')}
+                        />
+                      }
                       slotProps={{ typography: { fontWeight: 700 } }}
                       label={
                         nviRejectedCount
@@ -496,7 +533,11 @@ const TasksPage = () => {
                       data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCollaborationRadio}
                       checked={nviStatusFilter === 'rejectedCollaboration'}
                       onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('rejectedCollaboration')} />}
+                      control={
+                        <StyledStatusRadio
+                          onChange={() => updateQueryParam(NviCandidatesSearchParam.Filter, 'rejectedCollaboration')}
+                        />
+                      }
                       label={
                         nviRejectedCollaborationCount
                           ? `${t('tasks.nvi.waiting_for_other_institutions')} (${nviRejectedCollaborationCount})`
