@@ -67,7 +67,9 @@ export const NviCandidatesList = ({
             if (curator) {
               searchParams.set(NviCandidatesSearchParam.Assignee, curator.username);
 
-              const currentStatusFilter = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus;
+              const currentStatusFilter = searchParams.get(
+                NviCandidatesSearchParam.Filter
+              ) as NviCandidateSearchStatus | null;
               if (
                 !currentStatusFilter ||
                 currentStatusFilter === 'pending' ||
