@@ -2,7 +2,6 @@ import AdjustIcon from '@mui/icons-material/Adjust';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import RuleIcon from '@mui/icons-material/Rule';
 import {
   Badge,
@@ -105,6 +104,7 @@ const TasksPage = () => {
   const searchParams = new URLSearchParams(history.location.search);
 
   const queryParam = searchParams.get(TicketSearchParam.Query);
+  const assigneeParam = searchParams.get(TicketSearchParam.Assignee);
 
   const [excludeSubunits, setExcludeSubunits] = useState(false);
 
@@ -118,8 +118,6 @@ const TasksPage = () => {
       setOrganizationScope(institutionUserQuery.data.viewingScope.includedUnits);
     }
   }, [institutionUserQuery.data?.viewingScope.includedUnits]);
-
-  const [showOnlyMyTasks, setShowOnlyMyTasks] = useState(false);
 
   // Tickets/dialogue data
   const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
@@ -193,27 +191,27 @@ const TasksPage = () => {
 
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
+  const commonNviParams = {
+    affiliations: organizationScope,
+    excludeSubUnits: excludeSubunits,
+    assignee: assigneeParam,
+    query: queryParam,
+    year: nviYearFilter,
+  } satisfies FetchNviCandidatesParams;
+
   const nviAggregationsQuery = useFetchNviCandidates({
     enabled: isOnNviCandidatesPage || isOnNviStatusPage,
     params: {
+      ...commonNviParams,
       size: 1,
       aggregation: 'all',
-      year: nviYearFilter,
-      affiliations: organizationScope,
-      excludeSubUnits: excludeSubunits,
-      assignee: showOnlyMyTasks && nvaUsername ? nvaUsername : null,
-      query: queryParam,
     },
   });
 
   const listNviCandidatesParams = {
+    ...commonNviParams,
     size: rowsPerPage,
     offset: (page - 1) * rowsPerPage,
-    year: nviYearFilter,
-    affiliations: organizationScope,
-    excludeSubUnits: excludeSubunits,
-    assignee: showOnlyMyTasks && nvaUsername ? nvaUsername : null,
-    query: queryParam,
     filter: nviStatusFilter,
   } satisfies FetchNviCandidatesParams;
 
@@ -364,29 +362,6 @@ const TasksPage = () => {
                     </MenuItem>
                   ))}
                 </Select>
-
-                <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
-                  <StyledSearchModeButton
-                    data-testid={dataTestId.tasksPage.searchMode.myTasksButton}
-                    isSelected={showOnlyMyTasks}
-                    startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                    onClick={() => {
-                      setShowOnlyMyTasks(true);
-                      openCandidatesView();
-                    }}>
-                    {t('tasks.my_nvi_results')}
-                  </StyledSearchModeButton>
-                  <StyledSearchModeButton
-                    data-testid={dataTestId.tasksPage.searchMode.allTasksButton}
-                    isSelected={!showOnlyMyTasks}
-                    startIcon={!showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                    onClick={() => {
-                      setShowOnlyMyTasks(false);
-                      openCandidatesView();
-                    }}>
-                    {t('tasks.all_nvi_results')}
-                  </StyledSearchModeButton>
-                </StyledTicketSearchFormGroup>
 
                 {nviAggregationsQuery.isSuccess && (
                   <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', mb: '1rem' }}>

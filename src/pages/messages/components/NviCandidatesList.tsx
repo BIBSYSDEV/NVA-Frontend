@@ -1,14 +1,16 @@
-import { List, Typography } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { FetchNviCandidatesParams } from '../../../api/searchApi';
+import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { NviCandidateSearchResponse } from '../../../types/nvi.types';
+import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { NviCandidateListItem } from './NviCandidateListItem';
 
@@ -39,7 +41,13 @@ export const NviCandidatesList = ({
         <title>{helmetTitle}</title>
       </Helmet>
 
-      <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
+      <Box sx={{ mb: '1rem' }}>
+        <SearchForm placeholder={t('tasks.search_placeholder')} />
+      </Box>
+
+      <Box sx={{ mb: '1rem' }}>
+        <CuratorSelector roleFilter={[RoleName.NviCurator]} />
+      </Box>
 
       {nviCandidatesQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />

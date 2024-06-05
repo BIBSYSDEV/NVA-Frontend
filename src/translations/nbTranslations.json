@@ -1856,10 +1856,8 @@
     "year_to": "Til år"
   },
   "tasks": {
-    "all_nvi_results": "Alle NVI-resultater",
     "correction_list": "Retteliste",
     "dialogues_without_curator": "Dialoger uten kurator",
-    "my_nvi_results": "Mine NVI-resultater",
     "nvi": {
       "approval_status_count": "Sjekket ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
