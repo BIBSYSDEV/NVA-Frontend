@@ -182,8 +182,10 @@ const TasksPage = () => {
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   // NVI data
-  const nviStatusFilter = (searchParams.get(NviCandidatesSearchParam.Filter) ??
-    'pending') as keyof NviCandidateAggregations;
+  const nviStatusParam = searchParams.get(NviCandidatesSearchParam.Filter);
+  const nviStatusFilter = (nviStatusParam ?? 'pending') as keyof NviCandidateAggregations;
+  const nviYearParam = searchParams.get(NviCandidatesSearchParam.Year);
+  const nviYearFilter = nviYearParam ? +nviYearParam : nviYearFilterValues[1];
 
   const updateQueryParam = (queryKey: NviCandidatesSearchParam, value: string) => {
     searchParams.set(queryKey, value);
@@ -195,8 +197,6 @@ const TasksPage = () => {
       history.push(UrlPathTemplate.TasksNvi);
     }
   };
-
-  const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
   const commonNviParams = {
     affiliations: organizationScope,
@@ -361,7 +361,7 @@ const TasksPage = () => {
                   size="small"
                   inputProps={{ 'aria-label': t('common.year') }}
                   value={nviYearFilter}
-                  onChange={(event) => setNviYearFilter(+event.target.value)}
+                  onChange={(event) => updateQueryParam(NviCandidatesSearchParam.Year, event.target.value.toString())}
                   sx={{ width: 'fit-content', alignSelf: 'center', mb: '0.5rem' }}>
                   {nviYearFilterValues.map((year) => (
                     <MenuItem key={year} value={year}>
