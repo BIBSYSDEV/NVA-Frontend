@@ -18,7 +18,7 @@ interface LogItem {
   description: string;
   filesInfo?: TicketFilesInfo;
   type: TicketType;
-  actionBy?: string;
+  actionBy?: string[];
 }
 
 interface LogPanelProps {
@@ -87,14 +87,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             }),
             filesInfo: filesInfo,
             type: 'PublishingRequest',
-            actionBy: publishingTicket.finalizedBy,
+            actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.files_rejected'),
             type: 'PublishingRequest',
-            actionBy: publishingTicket.finalizedBy,
+            actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
         } else if (ticket.status === 'Pending' || ticket.status === 'New') {
           logs.push({
@@ -115,14 +115,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.doi_completed'),
             type: 'DoiRequest',
-            actionBy: ticket.finalizedBy,
+            actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.doi_closed'),
             type: 'DoiRequest',
-            actionBy: ticket.finalizedBy,
+            actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
         }
         break;
@@ -169,7 +169,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
                 <Tooltip title={modifiedDate.toLocaleTimeString()}>
                   <Typography>{toDateString(modifiedDate)}</Typography>
                 </Tooltip>
-                {logItem.actionBy && <Avatar username={logItem.actionBy} />}
+                {logItem.actionBy && logItem.actionBy.map((username) => <Avatar username={username} />)}
               </Box>
               {logItem.filesInfo?.approvedFilenames && logItem.filesInfo.approvedFilenames.length > 0 && (
                 <FilenamesList filenames={logItem.filesInfo?.approvedFilenames} />
@@ -260,7 +260,10 @@ function getTicketFilesInfo(ticket: PublishingTicket, registrationFiles: Associa
   };
 }
 
-function getUploadedBy(ticket: PublishingTicket, registrationFiles: AssociatedFile[]): string {
+function getUploadedBy(ticket: PublishingTicket, registrationFiles: AssociatedFile[]): string[] {
   const ticketFiles = registrationFiles.filter((file) => ticket.filesForApproval.includes(file.identifier));
-  return ticketFiles.find((file) => file.uploadDetails)?.uploadDetails?.uploadedBy ?? '';
+  const usernames = ticketFiles
+    .flatMap((file) => (file.uploadDetails ? [file.uploadDetails] : []))
+    .map((details) => details.uploadedBy);
+  return [...new Set(usernames)];
 }
