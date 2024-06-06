@@ -209,7 +209,7 @@ const FilenamesList = ({ filenames }: FilenamesProps) => {
         color: 'black',
       }}>
       {filenames.map((filename, index) => (
-        <li key={index}>
+        <li key={`${filename}-${index}`}>
           <Tooltip title={filename}>
             <Typography
               sx={{
