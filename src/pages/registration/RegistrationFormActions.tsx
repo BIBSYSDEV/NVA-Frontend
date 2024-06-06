@@ -65,19 +65,20 @@ export const RegistrationFormActions = ({
         updateRegistrationResponse.data
       );
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
+
+      const newErrors = validateForm(updateRegistrationResponse.data);
+      resetForm({
+        values: updateRegistrationResponse.data,
+        errors: newErrors,
+        touched: setNestedObjectValues(newErrors, true),
+      });
+
       if (isLastTab) {
         if (history.location.state?.previousPath) {
           history.goBack();
         } else {
           history.push(getRegistrationLandingPagePath(values.identifier));
         }
-      } else {
-        const newErrors = validateForm(updateRegistrationResponse.data);
-        resetForm({
-          values: updateRegistrationResponse.data,
-          errors: newErrors,
-          touched: setNestedObjectValues(newErrors, true),
-        });
       }
     }
     setIsSaving(false);
