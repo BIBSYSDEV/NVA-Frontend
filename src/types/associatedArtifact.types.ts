@@ -31,6 +31,13 @@ export interface AssociatedFile {
   license: string | null;
   legalNote?: string;
   rightsRetentionStrategy: FileRrs;
+  uploadDetails?: UploadDetails;
+}
+
+export interface UploadDetails {
+  type: 'UploadDetails';
+  uploadedBy: string;
+  uploadedDate: string;
 }
 
 export const emptyFile: AssociatedFile = {
