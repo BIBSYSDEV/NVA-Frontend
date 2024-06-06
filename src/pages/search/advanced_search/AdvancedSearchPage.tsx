@@ -23,6 +23,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { ExportResultsButton } from '../ExportResultsButton';
 import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
+import { FilesStatusSelect } from './FilesStatusSelect';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
@@ -61,6 +62,7 @@ export const AdvancedSearchPage = () => {
   const resultSearchQueryConfig: FetchResultsParams = {
     categoryShould,
     contributorName: params.get(ResultParam.ContributorName),
+    files: params.get(ResultParam.Files),
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
@@ -146,6 +148,13 @@ export const AdvancedSearchPage = () => {
               label={t('search.advanced_search.reported')}
             />
           </Grid>
+
+          {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+
+          <Grid item>
+            <StyledTypography fontWeight="bold">{t('registration.files_and_license.files')}</StyledTypography>
+            <FilesStatusSelect />
+          </Grid>
         </Grid>
 
         {gridRowDivider}
@@ -205,6 +214,7 @@ export const AdvancedSearchPage = () => {
             />
           </Grid>
         </Grid>
+
         <Grid container item xs={12} sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }}>
           <Button variant="outlined" onClick={() => history.push(history.location.pathname)}>
             {t('search.reset_selection')}
