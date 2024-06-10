@@ -184,11 +184,11 @@ export const SelectInstitutionForm = ({
                           />
                         )}
                       />
-                      {values[SelectOrganizationFormField.Unit]?.hasPart?.map((organization) => (
+                      {values.unit?.hasPart?.map((organization) => (
                         <OrganizationAccordion
                           key={organization.id}
                           organization={organization}
-                          searchId={values[SelectOrganizationFormField.Subunit]?.id ?? ''}
+                          searchId={values.subunit?.id ?? ''}
                           selectedId={selectedSubunitId}
                           setSelectedId={setSelectedSubunitId}
                         />
