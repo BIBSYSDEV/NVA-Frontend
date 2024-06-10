@@ -23,7 +23,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { ExportResultsButton } from '../ExportResultsButton';
 import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
-import { FilesStatusSelect } from './FilesStatusSelect';
+import { FileStatusSelect } from './FileStatusSelect';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
@@ -153,7 +153,7 @@ export const AdvancedSearchPage = () => {
 
           <Grid item>
             <StyledTypography fontWeight="bold">{t('registration.files_and_license.files')}</StyledTypography>
-            <FilesStatusSelect />
+            <FileStatusSelect />
           </Grid>
         </Grid>
 
