@@ -678,6 +678,8 @@
       "files_published_other": "{{count}} filer publisert",
       "files_published_unknown": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
+      "files_uploaded_one": "{{count}} fil lastet opp",
+      "files_uploaded_other": "{{count}} filer lastet opp",
       "general_support_pending": "Venter på oppfølging",
       "get_curator_support": "Få hjelp av kurator",
       "mark_as_completed": "Sett til ferdig",

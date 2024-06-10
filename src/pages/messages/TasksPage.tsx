@@ -203,11 +203,7 @@ const TasksPage = () => {
 
   const nviAggregationsQuery = useFetchNviCandidates({
     enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    params: {
-      ...commonNviParams,
-      size: 1,
-      aggregation: 'all',
-    },
+    params: { ...commonNviParams, size: 1, aggregation: 'all' },
   });
 
   const listNviCandidatesParams = {
