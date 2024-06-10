@@ -94,7 +94,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
               />
             </Grid>
             <Grid item xs={16} md={6} lg={5}>
-              <AreaOfResponsibilitySelector />
+              <AreaOfResponsibilitySelector paramName={TicketSearchParam.OrganizationId} />
             </Grid>
           </>
         )}

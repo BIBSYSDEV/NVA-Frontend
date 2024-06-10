@@ -193,9 +193,10 @@ const TasksPage = () => {
     }
   };
 
+  const affiliationsParam = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',');
+
   const commonNviParams = {
-    affiliations: organizationScope,
-    excludeSubUnits: excludeSubunits,
+    affiliations: affiliationsParam,
     assignee: assigneeParam,
     query: queryParam,
     year: nviYearFilter,

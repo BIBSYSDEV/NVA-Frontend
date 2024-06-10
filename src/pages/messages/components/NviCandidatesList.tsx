@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { FetchNviCandidatesParams, NviCandidatesSearchParam } from '../../../api/searchApi';
+import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
@@ -55,51 +56,57 @@ export const NviCandidatesList = ({
         sx={{
           mb: '1rem',
           mx: { xs: '0.5rem', md: 0 },
-          display: 'grid',
-          gridTemplateColumns: '1fr auto',
+          display: 'flex',
+          flexDirection: 'column',
           gap: '1rem',
         }}>
-        <SearchForm placeholder={t('tasks.search_placeholder')} sx={{ gridColumn: '1/3' }} />
+        <SearchForm placeholder={t('tasks.search_placeholder')} />
 
-        <CuratorSelector
-          selectedUsername={searchParams.get(NviCandidatesSearchParam.Assignee)}
-          onChange={(curator) => {
-            if (curator) {
-              searchParams.set(NviCandidatesSearchParam.Assignee, curator.username);
+        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <CuratorSelector
+            selectedUsername={searchParams.get(NviCandidatesSearchParam.Assignee)}
+            onChange={(curator) => {
+              if (curator) {
+                searchParams.set(NviCandidatesSearchParam.Assignee, curator.username);
 
-              const currentStatusFilter = searchParams.get(
-                NviCandidatesSearchParam.Filter
-              ) as NviCandidateSearchStatus | null;
-              if (
-                !currentStatusFilter ||
-                currentStatusFilter === 'pending' ||
-                currentStatusFilter === 'pendingCollaboration'
-              ) {
-                searchParams.set(NviCandidatesSearchParam.Filter, 'assigned' satisfies NviCandidateSearchStatus);
+                const currentStatusFilter = searchParams.get(
+                  NviCandidatesSearchParam.Filter
+                ) as NviCandidateSearchStatus | null;
+                if (
+                  !currentStatusFilter ||
+                  currentStatusFilter === 'pending' ||
+                  currentStatusFilter === 'pendingCollaboration'
+                ) {
+                  searchParams.set(NviCandidatesSearchParam.Filter, 'assigned' satisfies NviCandidateSearchStatus);
+                }
+              } else {
+                searchParams.delete(NviCandidatesSearchParam.Assignee);
               }
-            } else {
-              searchParams.delete(NviCandidatesSearchParam.Assignee);
-            }
-            history.push({ search: searchParams.toString() });
-          }}
-          roleFilter={[RoleName.NviCurator]}
-          sx={{ maxWidth: '20rem' }}
-        />
-        <Select
-          data-testid={dataTestId.tasksPage.nvi.yearSelect}
-          size="small"
-          inputProps={{ 'aria-label': t('common.year') }}
-          value={nviYearFilter}
-          onChange={(event) => {
-            searchParams.set(NviCandidatesSearchParam.Year, event.target.value.toString());
-            history.push({ search: searchParams.toString() });
-          }}>
-          {nviYearFilterValues.map((year) => (
-            <MenuItem key={year} value={year}>
-              {year}
-            </MenuItem>
-          ))}
-        </Select>
+              history.push({ search: searchParams.toString() });
+            }}
+            roleFilter={[RoleName.NviCurator]}
+            sx={{ flex: '0 20rem' }}
+          />
+
+          <AreaOfResponsibilitySelector sx={{ flex: '0 20rem' }} paramName={NviCandidatesSearchParam.Affiliations} />
+
+          <Select
+            sx={{ ml: 'auto' }}
+            data-testid={dataTestId.tasksPage.nvi.yearSelect}
+            size="small"
+            inputProps={{ 'aria-label': t('common.year') }}
+            value={nviYearFilter}
+            onChange={(event) => {
+              searchParams.set(NviCandidatesSearchParam.Year, event.target.value.toString());
+              history.push({ search: searchParams.toString() });
+            }}>
+            {nviYearFilterValues.map((year) => (
+              <MenuItem key={year} value={year}>
+                {year}
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
       </Box>
 
       {nviCandidatesQuery.isPending ? (
