@@ -177,8 +177,8 @@ const TasksPage = () => {
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
   // NVI data
-  const nviStatusParam = searchParams.get(NviCandidatesSearchParam.Filter);
-  const nviStatusFilter = (nviStatusParam ?? 'pending') as NviCandidateSearchStatus;
+  const nviStatusParam = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus | null;
+  const nviStatusFilter = nviStatusParam ?? 'pending';
   const nviYearParam = searchParams.get(NviCandidatesSearchParam.Year);
   const nviYearFilter = nviYearParam ? +nviYearParam : new Date().getFullYear();
 
