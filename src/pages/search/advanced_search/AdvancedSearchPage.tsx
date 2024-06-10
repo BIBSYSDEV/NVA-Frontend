@@ -101,7 +101,7 @@ export const AdvancedSearchPage = () => {
 
   return (
     <Grid container rowGap={2}>
-      <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', sm: 0 } }}>
+      <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
         <Typography variant="h2">{t('search.advanced_search.advanced_search')}</Typography>
         <Grid item xs={12}>
           <StyledTypography fontWeight="bold">{t('search.advanced_search.title_search')}</StyledTypography>
