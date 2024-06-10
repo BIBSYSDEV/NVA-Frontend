@@ -14,6 +14,7 @@ export const NviReports = () => {
   return (
     <StyledReportIframe
       title={t('common.nvi')}
+      allow="fullscreen"
       src="https://rapport-dv.uhad.no/t/DUCT/views/nettsider_2022_14_04_v2/NVI2011-2022?%3Aembed=y"
     />
   );

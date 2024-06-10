@@ -7,6 +7,7 @@ export const InternationalCooperationReports = () => {
   return (
     <StyledReportIframe
       title={t('search.reports.international_cooperation')}
+      allow="fullscreen"
       src="https://rapport-dv.uhad.no/t/DUCT/views/NVI_samarbeid_int_final/Internasjonaltsamarbeid?:embed=y"
     />
   );
