@@ -2,8 +2,9 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
+import { dataTestId } from '../../../utils/dataTestIds';
 
-enum FileStatses {
+enum FileStatus {
   hasPublicFiles = 'hasPublicFiles',
   noFiles = 'noFiles',
 }
@@ -30,6 +31,7 @@ export const FilesStatusSelect = () => {
     <FormControl sx={{ minWidth: '8rem' }} size="small">
       <InputLabel id="file-status-select-label">{t('registration.files_and_license.files')}</InputLabel>
       <Select
+        data-testid={dataTestId.startPage.advancedSearch.fileStatusSelect}
         labelId="file-status-select-label"
         value={selectedParam}
         label={t('registration.files_and_license.files')}
@@ -37,8 +39,8 @@ export const FilesStatusSelect = () => {
         <MenuItem value="">
           <em>{t('common.select')}</em>
         </MenuItem>
-        <MenuItem value={FileStatses.noFiles}>{t('search.no_files')}</MenuItem>
-        <MenuItem value={FileStatses.hasPublicFiles}>{t('search.has_files')}</MenuItem>
+        <MenuItem value={FileStatus.noFiles}>{t('search.no_files')}</MenuItem>
+        <MenuItem value={FileStatus.hasPublicFiles}>{t('search.has_files')}</MenuItem>
       </Select>
     </FormControl>
   );
