@@ -1,3 +1,4 @@
+import { FetchNviCandidatesParams } from '../api/searchApi';
 import { LanguageString, SearchResponse } from './common.types';
 import { PublicationInstanceType, RegistrationDate } from './registration.types';
 
@@ -122,5 +123,5 @@ export interface NviPeriodResponse {
 
 export interface CandidateOffsetState {
   currentOffset: number;
-  nviQuery: string;
+  nviQueryParams: FetchNviCandidatesParams;
 }

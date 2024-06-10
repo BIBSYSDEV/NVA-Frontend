@@ -18,13 +18,19 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
+import { useFetchNviCandidates } from '../../api/hooks/useFetchNviCandidates';
 import { fetchUser } from '../../api/roleApi';
-import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets, fetchNviCandidates } from '../../api/searchApi';
+import {
+  FetchNviCandidatesParams,
+  FetchTicketsParams,
+  TicketSearchParam,
+  fetchCustomerTickets,
+} from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -101,7 +107,6 @@ const TasksPage = () => {
   const queryParam = searchParams.get(TicketSearchParam.Query);
 
   const [excludeSubunits, setExcludeSubunits] = useState(false);
-  const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : '';
 
   const [organizationScope, setOrganizationScope] = useState(
     institutionUserQuery.data?.viewingScope.includedUnits ?? []
@@ -188,28 +193,33 @@ const TasksPage = () => {
 
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
-  const nviSearchQuery = queryParam ? `&query=${queryParam}` : '';
-
-  const nviAssigneeQuery = showOnlyMyTasks && nvaUsername ? `&assignee=${nvaUsername}` : '';
-
-  const nviAggregationQuery = `year=${nviYearFilter}&affiliations=${organizationScope.join(
-    ','
-  )}${excludeSubunitsQuery}${nviAssigneeQuery}${nviSearchQuery}`;
-  const nviListQuery = `${nviAggregationQuery}&filter=${nviStatusFilter}`;
-
-  const nviAggregationsQuery = useQuery({
+  const nviAggregationsQuery = useFetchNviCandidates({
     enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    queryKey: ['nviCandidates', 1, 0, nviAggregationQuery],
-    queryFn: () => fetchNviCandidates(1, 0, nviAggregationQuery),
-    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
+    params: {
+      size: 1,
+      aggregation: 'all',
+      year: nviYearFilter,
+      affiliations: organizationScope,
+      excludeSubUnits: excludeSubunits,
+      assignee: showOnlyMyTasks && nvaUsername ? nvaUsername : null,
+      query: queryParam,
+    },
   });
 
-  const nviCandidatesQuery = useQuery({
+  const listNviCandidatesParams = {
+    size: rowsPerPage,
+    offset: (page - 1) * rowsPerPage,
+    year: nviYearFilter,
+    affiliations: organizationScope,
+    excludeSubUnits: excludeSubunits,
+    assignee: showOnlyMyTasks && nvaUsername ? nvaUsername : null,
+    query: queryParam,
+    filter: nviStatusFilter,
+  } satisfies FetchNviCandidatesParams;
+
+  const nviCandidatesQuery = useFetchNviCandidates({
     enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    queryKey: ['nviCandidates', rowsPerPage, page, nviListQuery],
-    queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviListQuery),
-    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
-    placeholderData: keepPreviousData,
+    params: listNviCandidatesParams,
   });
 
   const nviAggregations = nviAggregationsQuery.data?.aggregations;
@@ -574,7 +584,7 @@ const TasksPage = () => {
           <PrivateRoute exact path={UrlPathTemplate.TasksNvi} isAuthorized={isNviCurator}>
             <NviCandidatesList
               nviCandidatesQuery={nviCandidatesQuery}
-              nviListQuery={nviListQuery}
+              nviQueryParams={listNviCandidatesParams}
               rowsPerPage={rowsPerPage}
               setRowsPerPage={setRowsPerPage}
               page={page}

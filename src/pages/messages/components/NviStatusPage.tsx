@@ -31,7 +31,9 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const institution = organizationQuery.data;
 
-  const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'organizationApprovalStatuses', year: activeYear });
+  const nviQuery = useFetchNviCandidates({
+    params: { size: 1, aggregation: 'organizationApprovalStatuses', year: activeYear },
+  });
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
   const nviAggregations = nviQuery.data?.aggregations?.organizationApprovalStatuses[aggregationKey ?? ''] as
