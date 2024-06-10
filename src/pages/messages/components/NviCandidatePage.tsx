@@ -71,26 +71,26 @@ export const NviCandidatePage = () => {
   const previousCandidateIdentifier =
     navigateCandidateQuery.isSuccess && !isFirstCandidate ? navigateCandidateQuery.data.hits[0]?.identifier : null;
 
-  const nextCandidateState: NviCandidatePageLocationState | undefined =
+  const nextCandidateState =
     hasOffset && nviQueryParams
-      ? {
+      ? ({
           ...location.state,
           candidateOffsetState: {
             currentOffset: thisCandidateOffset + 1,
             nviQueryParams,
           },
-        }
+        } satisfies NviCandidatePageLocationState)
       : undefined;
 
-  const previousCandidateState: NviCandidatePageLocationState | undefined =
+  const previousCandidateState =
     hasOffset && nviQueryParams
-      ? {
+      ? ({
           ...location.state,
           candidateOffsetState: {
             currentOffset: thisCandidateOffset - 1,
             nviQueryParams,
           },
-        }
+        } satisfies NviCandidatePageLocationState)
       : undefined;
 
   if (nviCandidateQuery.error?.response?.status === 401) {
