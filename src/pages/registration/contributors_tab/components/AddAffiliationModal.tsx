@@ -83,40 +83,37 @@ export const AddAffiliationModal = ({
       fullWidth={true}
       headingText={t('registration.contributors.add_new_affiliation')}
       dataTestId="affiliation-modal">
-      <>
-        <Trans
-          i18nKey="registration.contributors.add_new_affiliation_helper_text"
-          components={[<Typography paragraph />]}
-        />
-        <Box
-          sx={{
-            bgcolor: 'secondary.main',
-            borderRadius: '0.25rem',
-            padding: '0.5rem 0.75rem',
-            marginBottom: '2rem',
-          }}>
-          {' '}
-          <Typography>
-            {t('common.contributor')}: <b>{authorName}</b>
-          </Typography>
-        </Box>
-        {affiliationToVerify && (
-          <Typography paragraph>
-            {t('registration.contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
-          </Typography>
-        )}
-        <Typography variant="h3" component="h2" sx={{ marginBottom: '1rem', fontWeight: 'normal' }}>
-          {t('common.select_institution')}
+      <Trans
+        i18nKey="registration.contributors.add_new_affiliation_helper_text"
+        components={[<Typography paragraph />]}
+      />
+      <Box
+        sx={{
+          bgcolor: 'secondary.main',
+          borderRadius: '0.25rem',
+          padding: '0.5rem 0.75rem',
+          marginBottom: '2rem',
+        }}>
+        <Typography>
+          {t('common.contributor')}: <b>{authorName}</b>
         </Typography>
-        <SelectInstitutionForm
-          addAffiliation={addAffiliation}
-          onClose={toggleAffiliationModal}
-          suggestedInstitutions={getDistinctContributorUnits(values.entityDescription?.contributors ?? []).filter(
-            (suggestion) =>
-              !affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === suggestion)
-          )}
-        />
-      </>
+      </Box>
+      {affiliationToVerify && (
+        <Typography paragraph>
+          {t('registration.contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
+        </Typography>
+      )}
+      <Typography variant="h3" component="h2" sx={{ marginBottom: '1rem', fontWeight: 'normal' }}>
+        {t('common.select_institution')}
+      </Typography>
+      <SelectInstitutionForm
+        addAffiliation={addAffiliation}
+        onClose={toggleAffiliationModal}
+        suggestedInstitutions={getDistinctContributorUnits(values.entityDescription?.contributors ?? []).filter(
+          (suggestion) =>
+            !affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === suggestion)
+        )}
+      />
     </Modal>
   );
 };

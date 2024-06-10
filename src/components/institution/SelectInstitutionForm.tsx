@@ -81,7 +81,7 @@ export const SelectInstitutionForm = ({
           {suggestedInstitutions.length > 0 && (
             <Paper elevation={4} sx={{ p: '1rem', maxHeight: '35vh', overflow: 'auto', mb: '1.5rem' }}>
               <FormControl>
-                <FormLabel>{t('registration.contributors.suggested_affiliations')}</FormLabel>
+                <FormLabel sx={{ mb: '0.5rem' }}>{t('registration.contributors.suggested_affiliations')}</FormLabel>
                 <Field name={SelectOrganizationFormField.selectedSuggestedAffiliationId}>
                   {({ field }: FieldProps<string>) => (
                     <RadioGroup
@@ -150,7 +150,7 @@ export const SelectInstitutionForm = ({
             </Field>
             {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <Typography variant="h3" component="h2" sx={{ marginTop: '1rem', fontWeight: 'normal' }}>
+                <Typography variant="h3" sx={{ marginTop: '1rem', fontWeight: 'normal' }}>
                   {t('common.select_unit')}
                 </Typography>
                 <Field name={SelectOrganizationFormField.Subunit}>
