@@ -23,6 +23,7 @@ export const FileStatusSelect = () => {
       history.push({ search: searchParams.toString() });
     } else {
       searchParams.delete(ResultParam.Files);
+      searchParams.delete(ResultParam.From);
       history.push({ search: searchParams.toString() });
     }
   };
