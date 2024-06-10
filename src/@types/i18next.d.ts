@@ -5,7 +5,7 @@ import nbTranslations from '../translations/nbTranslations.json';
 
 declare module 'i18next' {
   interface CustomTypeOptions {
-    contextSeparator: '|';
+    contextSeparator: '__';
     resources: {
       translation: typeof nbTranslations;
     };
