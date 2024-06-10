@@ -28,8 +28,12 @@ export const FilesStatusSelect = () => {
 
   return (
     <FormControl sx={{ minWidth: '8rem' }} size="small">
-      <InputLabel>{t('registration.files_and_license.files')}</InputLabel>
-      <Select value={selectedParam} label={t('registration.files_and_license.files')} onChange={handleChange}>
+      <InputLabel id="file-status-select-label">{t('registration.files_and_license.files')}</InputLabel>
+      <Select
+        labelId="file-status-select-label"
+        value={selectedParam}
+        label={t('registration.files_and_license.files')}
+        onChange={handleChange}>
         <MenuItem value="">
           <em>{t('common.select')}</em>
         </MenuItem>
