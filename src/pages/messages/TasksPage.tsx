@@ -16,7 +16,7 @@ import {
   styled,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
@@ -49,7 +49,6 @@ import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { NviStatusPage } from './components/NviStatusPage';
-import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
 
 export const StyledSearchModeButton = styled(LinkButton)({
@@ -98,19 +97,6 @@ const TasksPage = () => {
 
   const queryParam = searchParams.get(TicketSearchParam.Query);
   const assigneeParam = searchParams.get(TicketSearchParam.Assignee);
-
-  const [excludeSubunits, setExcludeSubunits] = useState(false);
-
-  const [organizationScope, setOrganizationScope] = useState(
-    institutionUserQuery.data?.viewingScope.includedUnits ?? []
-  );
-
-  useEffect(() => {
-    // Must populate the state after the request is done
-    if (institutionUserQuery.data?.viewingScope.includedUnits) {
-      setOrganizationScope(institutionUserQuery.data.viewingScope.includedUnits);
-    }
-  }, [institutionUserQuery.data?.viewingScope.includedUnits]);
 
   // Tickets/dialogue data
   const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
@@ -190,9 +176,10 @@ const TasksPage = () => {
     }
   };
 
+  const affiliationsParam = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',');
+
   const commonNviParams = {
-    affiliations: organizationScope,
-    excludeSubUnits: excludeSubunits,
+    affiliations: affiliationsParam,
     assignee: assigneeParam,
     query: queryParam,
     year: nviYearFilter,
@@ -247,16 +234,6 @@ const TasksPage = () => {
           </Link>
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
-
-        {!isOnTicketsPage && (
-          <OrganizationScope
-            organizationScope={organizationScope}
-            setOrganizationScope={setOrganizationScope}
-            excludeSubunits={excludeSubunits}
-            setExcludeSubunits={setExcludeSubunits}
-            hide={isOnCorrectionListPage}
-          />
-        )}
 
         {isTicketCurator && (
           <NavigationListAccordion
