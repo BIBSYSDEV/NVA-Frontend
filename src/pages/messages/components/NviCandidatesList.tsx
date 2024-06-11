@@ -86,10 +86,10 @@ export const NviCandidatesList = ({
               history.push({ search: searchParams.toString() });
             }}
             roleFilter={[RoleName.NviCurator]}
-            sx={{ flex: '0 20rem' }}
+            sx={{ flex: '1 15rem' }}
           />
 
-          <AreaOfResponsibilitySelector sx={{ flex: '0 20rem' }} paramName={NviCandidatesSearchParam.Affiliations} />
+          <AreaOfResponsibilitySelector sx={{ flex: '1 15rem' }} paramName={NviCandidatesSearchParam.Affiliations} />
 
           <Select
             sx={{ ml: 'auto' }}
