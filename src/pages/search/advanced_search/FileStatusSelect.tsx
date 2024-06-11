@@ -34,6 +34,7 @@ export const FileStatusSelect = () => {
       data-testid={dataTestId.startPage.advancedSearch.fileStatusSelect}
       labelId="file-status-select-label"
       value={selectedParam}
+      displayEmpty
       onChange={handleChange}>
       <MenuItem value={''}>{t('common.show_all')}</MenuItem>
       <MenuItem value={FileStatus.noFiles}>{t('registration.files_and_license.registration_without_file')}</MenuItem>
