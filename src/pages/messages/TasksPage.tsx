@@ -218,23 +218,27 @@ const TasksPage = () => {
           </NavigationListAccordion>
         )}
 
-        {isNviCurator && <NviMenuContent />}
+        {isNviCurator && (
+          <>
+            <NviMenuContent />
 
-        <NavigationListAccordion
-          title={t('tasks.correction_list')}
-          startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
-          accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-          dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
-          <NavigationList>
-            <StyledSearchModeButton
-              sx={{ mx: '1rem', mb: '1rem' }}
-              data-testid={dataTestId.tasksPage.correctionList.correctionListRadioButton}
-              isSelected={isOnCorrectionListPage}
-              startIcon={<RadioButtonCheckedIcon />}>
-              {t('tasks.correction_list')}
-            </StyledSearchModeButton>
-          </NavigationList>
-        </NavigationListAccordion>
+            <NavigationListAccordion
+              title={t('tasks.correction_list')}
+              startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
+              accordionPath={UrlPathTemplate.TasksNviCorrectionList}
+              dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
+              <NavigationList>
+                <StyledSearchModeButton
+                  sx={{ mx: '1rem', mb: '1rem' }}
+                  data-testid={dataTestId.tasksPage.correctionList.correctionListRadioButton}
+                  isSelected={isOnCorrectionListPage}
+                  startIcon={<RadioButtonCheckedIcon />}>
+                  {t('tasks.correction_list')}
+                </StyledSearchModeButton>
+              </NavigationList>
+            </NavigationListAccordion>
+          </>
+        )}
       </SideMenu>
 
       <ErrorBoundary>
