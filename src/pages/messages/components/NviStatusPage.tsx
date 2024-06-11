@@ -21,7 +21,7 @@ import { isValidUrl } from '../../../utils/general-helpers';
 import { NviStatusTableRow } from './NviStatusTableRow';
 
 interface NviStatusPageProps {
-  activeYear: number;
+  activeYear?: number;
 }
 
 export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
@@ -32,7 +32,7 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
   const institution = organizationQuery.data;
 
   const nviQuery = useFetchNviCandidates({
-    params: { size: 1, aggregation: 'organizationApprovalStatuses', year: activeYear },
+    params: { size: 1, aggregation: 'organizationApprovalStatuses', year: activeYear ?? 2023 },
   });
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
