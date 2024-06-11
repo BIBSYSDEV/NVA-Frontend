@@ -18,14 +18,13 @@ export const FileStatusSelect = () => {
   const handleChange = (event: SelectChangeEvent) => {
     const newValue = event.target.value;
 
-    if (newValue !== '') {
+    if (newValue) {
       searchParams.set(ResultParam.Files, newValue);
-      history.push({ search: searchParams.toString() });
     } else {
       searchParams.delete(ResultParam.Files);
       searchParams.delete(ResultParam.From);
-      history.push({ search: searchParams.toString() });
     }
+    history.push({ search: searchParams.toString() });
   };
 
   return (
@@ -38,7 +37,7 @@ export const FileStatusSelect = () => {
         label={t('registration.files_and_license.files')}
         onChange={handleChange}>
         <MenuItem value="">
-          <em>{t('common.select')}</em>
+          <i>{t('common.select')}</i>
         </MenuItem>
         <MenuItem value={FileStatus.noFiles}>{t('registration.files_and_license.registration_with_file')}</MenuItem>
         <MenuItem value={FileStatus.hasPublicFiles}>
