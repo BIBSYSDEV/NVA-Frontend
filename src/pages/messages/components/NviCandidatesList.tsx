@@ -77,8 +77,15 @@ export const NviCandidatesList = () => {
             sx={{ flex: '1 15rem' }}
           />
 
-          {/* TODO: Handle pagination reset here aswell :/ */}
-          <AreaOfResponsibilitySelector sx={{ flex: '1 15rem' }} paramName={NviCandidatesSearchParam.Affiliations} />
+          <AreaOfResponsibilitySelector
+            sx={{ flex: '1 15rem' }}
+            paramName={NviCandidatesSearchParam.Affiliations}
+            resetPagination={() => {
+              if (nviParams.offset) {
+                searchParams.delete(NviCandidatesSearchParam.Offset);
+              }
+            }}
+          />
 
           <Select
             sx={{ ml: 'auto' }}
