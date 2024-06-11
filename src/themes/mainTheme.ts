@@ -1,4 +1,4 @@
-import { PaletteColorOptions, SxProps, createTheme } from '@mui/material';
+import { createTheme, PaletteColorOptions, SxProps } from '@mui/material';
 import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
 import i18n from '../translations/i18n';
 
@@ -20,7 +20,6 @@ enum Color {
   DoiRequest = '#FFAA8E',
   DoiRequestLight = '#FFE2DA',
   GeneralSupportCase = '#7E9DCC',
-  GeneralSupportCaseLight = '#C2D3EA',
   Registration = '#DAC48E',
   Person = '#B3D6D9',
   Project = '#E48F8F',
@@ -124,7 +123,7 @@ export const mainTheme = createTheme(
       },
       generalSupportCase: {
         main: Color.GeneralSupportCase,
-        light: Color.GeneralSupportCaseLight,
+        light: Color.InfoLight,
       },
       nvi: {
         main: Color.NviMain,
@@ -281,7 +280,7 @@ export const mainTheme = createTheme(
           showLastButton: true,
         },
       },
-      MuiTooltip: { defaultProps: { arrow: true } },
+      MuiTooltip: { defaultProps: { arrow: true, enterDelay: 400 } },
       MuiTypography: {
         defaultProps: {
           color: 'textPrimary',

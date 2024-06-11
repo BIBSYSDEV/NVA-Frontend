@@ -4,6 +4,22 @@ import { toDateString } from './date-helpers';
 
 export const isValidUrl = (value: string) => Yup.string().url().isValidSync(value);
 
+export const doiUrlBase = 'https://doi.org/';
+const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+)\\b'); // https://stackoverflow.com/a/10324802
+
+export const makeDoiUrl = (doiInput: string) => {
+  let doiUrl = doiInput.trim();
+
+  if (!isValidUrl(doiUrl)) {
+    const regexMatch = doiRegExp.exec(doiUrl);
+    if (regexMatch && regexMatch.length > 0) {
+      doiUrl = `${doiUrlBase}${regexMatch[0]}`;
+    }
+  }
+
+  return doiUrl;
+};
+
 export const getPeriodString = (from: string | undefined, to: string | undefined) => {
   const fromDate = from ? toDateString(from) : '';
   const toDate = to ? toDateString(to) : '';

@@ -1,6 +1,11 @@
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
-import { Doi, MyRegistrationsResponse, Registration, UnpublishPublicationRequest } from '../types/registration.types';
+import {
+  DoiPreview,
+  MyRegistrationsResponse,
+  Registration,
+  UnpublishPublicationRequest,
+} from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 import { userIsAuthenticated } from './authApi';
@@ -30,14 +35,21 @@ export const unpublishRegistration = async (
   });
 
 export const getRegistrationByDoi = async (doiUrl: string) => {
-  const getRegistrationByDoiResponse = await authenticatedApiRequest2<Doi>({
-    url: `${PublicationsApiPath.DoiLookup}/`,
+  const getRegistrationByDoiResponse = await authenticatedApiRequest2<DoiPreview>({
+    url: PublicationsApiPath.DoiLookup,
     data: { doiUrl },
     method: 'POST',
   });
 
   return getRegistrationByDoiResponse.data;
 };
+
+export const createRegistrationFromDoi = async (doiPreview: Partial<DoiPreview>) =>
+  await authenticatedApiRequest2<Registration>({
+    url: PublicationsApiPath.Registration,
+    method: 'POST',
+    data: doiPreview,
+  });
 
 export const deleteRegistration = async (identifier: string) =>
   await authenticatedApiRequest({

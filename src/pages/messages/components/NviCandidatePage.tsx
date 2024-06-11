@@ -3,8 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
+import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { fetchRegistration } from '../../../api/registrationApi';
-import { fetchNviCandidate, fetchNviCandidates } from '../../../api/searchApi';
+import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
@@ -50,22 +51,18 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const nviListQuery = location.state?.nviQuery;
+  const nviQueryParams = location.state?.nviQueryParams;
   const thisCandidateOffset = location.state?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
-  const navigateCandidateSearchOffset = hasOffset ? Math.max(thisCandidateOffset - 1, 0) : null;
   const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
 
-  const navigateCandidateQuery = useQuery({
-    enabled: hasOffset,
-    queryKey: ['navigateCandidates', 3, navigateCandidateSearchOffset, nviListQuery],
-    queryFn:
-      navigateCandidateSearchOffset !== null
-        ? () => fetchNviCandidates(3, navigateCandidateSearchOffset, nviListQuery)
-        : undefined,
-    meta: { errorMessage: false },
-    retry: false,
+  if (hasOffset && nviQueryParams) {
+    nviQueryParams.offset = Math.max(thisCandidateOffset - 1, 0);
+  }
+  const navigateCandidateQuery = useFetchNviCandidates({
+    enabled: hasOffset && !!nviQueryParams,
+    params: nviQueryParams ?? {},
   });
 
   const nextCandidateIdentifier = navigateCandidateQuery.isSuccess
@@ -75,18 +72,18 @@ export const NviCandidatePage = () => {
     navigateCandidateQuery.isSuccess && !isFirstCandidate ? navigateCandidateQuery.data.hits[0]?.identifier : null;
 
   const nextCandidateState: CandidateOffsetState | undefined =
-    hasOffset && nviListQuery
+    hasOffset && nviQueryParams
       ? {
           currentOffset: thisCandidateOffset + 1,
-          nviQuery: nviListQuery,
+          nviQueryParams,
         }
       : undefined;
 
   const previousCandidateState: CandidateOffsetState | undefined =
-    hasOffset && nviListQuery
+    hasOffset && nviQueryParams
       ? {
           currentOffset: thisCandidateOffset - 1,
-          nviQuery: nviListQuery,
+          nviQueryParams,
         }
       : undefined;
 

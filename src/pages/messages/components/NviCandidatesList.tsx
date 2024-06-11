@@ -3,6 +3,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { FetchNviCandidatesParams } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
@@ -13,7 +14,7 @@ import { NviCandidateListItem } from './NviCandidateListItem';
 
 interface NviCandidatesListProps {
   nviCandidatesQuery: UseQueryResult<NviCandidateSearchResponse, unknown>;
-  nviListQuery: string;
+  nviQueryParams: FetchNviCandidatesParams;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -23,7 +24,7 @@ interface NviCandidatesListProps {
 
 export const NviCandidatesList = ({
   nviCandidatesQuery,
-  nviListQuery,
+  nviQueryParams,
   setRowsPerPage,
   rowsPerPage,
   setPage,
@@ -64,7 +65,7 @@ export const NviCandidatesList = ({
                     <ErrorBoundary key={nviCandidate.identifier}>
                       <NviCandidateListItem
                         nviCandidate={nviCandidate}
-                        nviListQuery={nviListQuery}
+                        nviQueryParams={nviQueryParams}
                         currentOffset={currentOffset}
                       />
                     </ErrorBoundary>

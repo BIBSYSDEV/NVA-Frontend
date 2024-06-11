@@ -15,16 +15,20 @@ const ScientificValueMapper: ScientificValueMapperType = {
 
 interface NpiLevelTypographyProps extends TypographyProps {
   scientificValue?: ScientificValue;
+  channelId?: string;
 }
 
-export const NpiLevelTypography = ({ scientificValue, ...typographyProps }: NpiLevelTypographyProps) => {
+export const NpiLevelTypography = ({ scientificValue, channelId, ...typographyProps }: NpiLevelTypographyProps) => {
   const { t } = useTranslation();
 
   const levelString = scientificValue ? ScientificValueMapper[scientificValue] : null;
+  const year = channelId?.split('/').pop();
+  const yearString = year?.match(/^\d{4}$/) ? ` (${year})` : '';
 
   return (
     <Typography {...typographyProps}>
-      {t('registration.resource_type.level')}: {levelString ?? t('common.not_decided')}
+      {t('registration.resource_type.level')}
+      {yearString}: {levelString ?? t('common.not_decided')}
     </Typography>
   );
 };

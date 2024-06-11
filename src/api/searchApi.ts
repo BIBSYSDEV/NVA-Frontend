@@ -5,7 +5,12 @@ import {
   ImportCandidateStatus,
   ImportCandidateSummary,
 } from '../types/importCandidate.types';
-import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
+import {
+  NviCandidate,
+  NviCandidateAggregations,
+  NviCandidateSearchResponse,
+  ScientificIndexStatuses,
+} from '../types/nvi.types';
 import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
 import {
   AggregationFileKeyType,
@@ -224,12 +229,60 @@ export const fetchEmployees = async (
   return getEmployees.data;
 };
 
-export const fetchNviCandidates = async (results: number, from: number, query = '') => {
-  const paginationQuery = `size=${results}&offset=${from}`;
-  const fullQuery = [query, paginationQuery].filter(Boolean).join('&');
+enum NviCandidatesSearchParam {
+  Affiliations = 'affiliations',
+  Aggregation = 'aggregation',
+  Assignee = 'assignee',
+  ExcludeSubUnits = 'excludeSubUnits',
+  Filter = 'filter',
+  Offset = 'offset',
+  Query = 'query',
+  Size = 'size',
+  Year = 'year',
+}
 
+export interface FetchNviCandidatesParams {
+  [NviCandidatesSearchParam.Affiliations]?: string[] | null;
+  [NviCandidatesSearchParam.Aggregation]?: 'all' | keyof NviCandidateAggregations | null;
+  [NviCandidatesSearchParam.Assignee]?: string | null;
+  [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
+  [NviCandidatesSearchParam.Filter]?: keyof NviCandidateAggregations | null;
+  [NviCandidatesSearchParam.Offset]?: number | null;
+  [NviCandidatesSearchParam.Query]?: string | null;
+  [NviCandidatesSearchParam.Size]?: number | null;
+  [NviCandidatesSearchParam.Year]?: number | null;
+}
+
+export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
+  const searchParams = new URLSearchParams();
+  searchParams.set(NviCandidatesSearchParam.Size, params.size?.toString() || '10');
+  searchParams.set(NviCandidatesSearchParam.Offset, params.offset?.toString() || '0');
+
+  if (params.affiliations && params.affiliations.length > 0) {
+    searchParams.set(NviCandidatesSearchParam.Affiliations, params.affiliations.join(','));
+  }
+  if (params.aggregation) {
+    searchParams.set(NviCandidatesSearchParam.Aggregation, params.aggregation);
+  }
+  if (params.assignee) {
+    searchParams.set(NviCandidatesSearchParam.Assignee, params.assignee);
+  }
+  if (params.excludeSubUnits === true || params.excludeSubUnits === false) {
+    searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, params.excludeSubUnits.toString());
+  }
+  if (params.filter) {
+    searchParams.set(NviCandidatesSearchParam.Filter, params.filter);
+  }
+  if (params.query) {
+    searchParams.set(NviCandidatesSearchParam.Query, params.query);
+  }
+  if (params.year) {
+    searchParams.set(NviCandidatesSearchParam.Year, params.year.toString());
+  }
+
+  const paramsString = searchParams.toString();
   const getNviCandidates = await authenticatedApiRequest2<NviCandidateSearchResponse>({
-    url: `${SearchApiPath.NviCandidate}?${fullQuery}`,
+    url: `${SearchApiPath.NviCandidate}?${paramsString}`,
   });
 
   return getNviCandidates.data;
@@ -294,6 +347,7 @@ export enum ResultParam {
 export enum ResultSearchOrder {
   ModifiedDate = 'modifiedDate',
   PublicationDate = 'publicationDate',
+  Relevance = 'relevance',
 }
 
 export interface FetchResultsParams {
@@ -412,10 +466,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
   }
   if (params.publicationYearBefore) {
-    const beforeYearNumber = +params.publicationYearBefore;
-    if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
-      // Add one year, to include the "before" year as well
-      searchParams.set(ResultParam.PublicationYearBefore, (beforeYearNumber + 1).toString());
+    if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
+      searchParams.set(ResultParam.PublicationYearBefore, params.publicationYearBefore);
     }
   }
   if (params.publicationYearSince) {

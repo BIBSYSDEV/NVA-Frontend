@@ -603,6 +603,7 @@ export const dataTestId = {
         rejectedRadio: 'rejected-radio',
         rejectedCollaborationRadio: 'rejected-collaboration-radio',
       },
+      toggleStatusLink: 'toggle-status-button',
     },
     nviAccordion: 'nvi-accordion',
     userDialogAccordion: 'user-dialog-accordion',

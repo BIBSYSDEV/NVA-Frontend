@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchUsers } from '../api/roleApi';
+import { fetchUsersByCustomer } from '../api/roleApi';
 import { TicketSearchParam } from '../api/searchApi';
 import { RootState } from '../redux/store';
 import { InstitutionUser, RoleName } from '../types/user.types';
@@ -27,7 +27,7 @@ export const CuratorSelector = ({ roleFilter }: CuratorSelectorProps) => {
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId, roleFilter],
     enabled: !!customerId,
-    queryFn: () => fetchUsers(customerId, roleFilter),
+    queryFn: () => fetchUsersByCustomer(customerId, roleFilter),
     meta: { errorMessage: t('feedback.error.get_curators_for_institution') },
   });
 

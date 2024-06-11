@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
+import { Avatar } from '../../components/Avatar';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
@@ -17,14 +18,13 @@ interface LogItem {
   description: string;
   filesInfo?: TicketFilesInfo;
   type: TicketType;
+  actionBy?: string[];
 }
 
 interface LogPanelProps {
   tickets: Ticket[];
   registration: Registration;
 }
-
-const tooltipDelay = 400;
 
 export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const { t } = useTranslation();
@@ -78,20 +78,33 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     switch (ticket.type) {
       case 'PublishingRequest': {
         const publishingTicket = ticket as PublishingTicket;
+        const filesInfo = getTicketFilesInfo(publishingTicket, registrationFiles);
         if (ticket.status === 'Completed' && publishingTicket.approvedFiles.length > 0) {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.files_published', {
               count: publishingTicket.approvedFiles.length,
             }),
-            filesInfo: getTicketFilesInfo(publishingTicket, registrationFiles),
+            filesInfo: filesInfo,
             type: 'PublishingRequest',
+            actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.files_rejected'),
             type: 'PublishingRequest',
+            actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
+          });
+        } else if (ticket.status === 'Pending' || ticket.status === 'New') {
+          logs.push({
+            modifiedDate: ticket.modifiedDate,
+            description: t('my_page.messages.files_uploaded', {
+              count: publishingTicket.filesForApproval.length,
+            }),
+            filesInfo: filesInfo,
+            type: 'PublishingRequest',
+            actionBy: getUploadedBy(publishingTicket, registrationFiles),
           });
         }
         break;
@@ -102,12 +115,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.doi_completed'),
             type: 'DoiRequest',
+            actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
             description: t('my_page.messages.doi_closed'),
             type: 'DoiRequest',
+            actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
         }
         break;
@@ -130,7 +145,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
       {registration && (
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
           <Typography>{t('common.created')}</Typography>
-          <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()} enterDelay={tooltipDelay}>
+          <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()}>
             <Typography>{toDateString(registration.createdDate)}</Typography>
           </Tooltip>
           {organizationQuery.isPending || userQuery.isPending ? (
@@ -150,35 +165,17 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           return (
             <StyledStatusMessageBox key={index} sx={{ bgcolor: ticketColor[logItem.type] }}>
               <Typography>{logItem.description}</Typography>
-              <Tooltip title={modifiedDate.toLocaleTimeString()} enterDelay={tooltipDelay}>
-                <Typography>{toDateString(modifiedDate)}</Typography>
-              </Tooltip>
-              {logItem.filesInfo?.approvedFileNames && logItem.filesInfo.approvedFileNames.length > 0 && (
-                <Box
-                  component="ul"
-                  sx={{
-                    gridColumn: '1/3',
-                    m: '0',
-                    p: 'inherit',
-                    color: 'black',
-                  }}>
-                  {logItem.filesInfo.approvedFileNames.map((fileName, index) => (
-                    <li key={index}>
-                      <Tooltip title={fileName} enterDelay={tooltipDelay}>
-                        <Typography
-                          sx={{
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            width: 'fit-content',
-                            maxWidth: '100%',
-                          }}>
-                          {fileName}
-                        </Typography>
-                      </Tooltip>
-                    </li>
-                  ))}
-                </Box>
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <Tooltip title={modifiedDate.toLocaleTimeString()}>
+                  <Typography>{toDateString(modifiedDate)}</Typography>
+                </Tooltip>
+                {logItem.actionBy && logItem.actionBy.map((username) => <Avatar username={username} />)}
+              </Box>
+              {logItem.filesInfo?.approvedFilenames && logItem.filesInfo.approvedFilenames.length > 0 && (
+                <FilenamesList filenames={logItem.filesInfo?.approvedFilenames} />
+              )}
+              {logItem.filesInfo?.filenamesForApproval && logItem.filesInfo.filenamesForApproval.length > 0 && (
+                <FilenamesList filenames={logItem.filesInfo?.filenamesForApproval} />
               )}
               {logItem.filesInfo && logItem.filesInfo.numberOfUnpublishableFiles > 0 && (
                 <Typography sx={{ gridColumn: '1/3', fontStyle: 'italic' }}>
@@ -197,8 +194,43 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   );
 };
 
+interface FilenamesProps {
+  filenames: string[];
+}
+
+const FilenamesList = ({ filenames }: FilenamesProps) => {
+  return (
+    <Box
+      component="ul"
+      sx={{
+        gridColumn: '1/3',
+        m: '0',
+        p: 'inherit',
+        color: 'black',
+      }}>
+      {filenames.map((filename, index) => (
+        <li key={`${filename}-${index}`}>
+          <Tooltip title={filename}>
+            <Typography
+              sx={{
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                width: 'fit-content',
+                maxWidth: '100%',
+              }}>
+              {filename}
+            </Typography>
+          </Tooltip>
+        </li>
+      ))}
+    </Box>
+  );
+};
+
 interface TicketFilesInfo {
-  approvedFileNames: string[];
+  approvedFilenames: string[];
+  filenamesForApproval: string[];
   numberOfUnpublishableFiles: number;
   numberOfDeletedFiles: number;
 }
@@ -206,6 +238,10 @@ interface TicketFilesInfo {
 function getTicketFilesInfo(ticket: PublishingTicket, registrationFiles: AssociatedFile[]): TicketFilesInfo {
   const publishedFilesOnTicket = registrationFiles.filter(
     (file) => file.type === 'PublishedFile' && ticket.approvedFiles.includes(file.identifier)
+  );
+
+  const filesForApprovalOnTicket = registrationFiles.filter((file) =>
+    ticket.filesForApproval.includes(file.identifier)
   );
 
   const unpublishedFilesOnTicket = registrationFiles.filter(
@@ -217,8 +253,17 @@ function getTicketFilesInfo(ticket: PublishingTicket, registrationFiles: Associa
   );
 
   return {
-    approvedFileNames: publishedFilesOnTicket.map((file) => file.name),
+    approvedFilenames: publishedFilesOnTicket.map((file) => file.name),
+    filenamesForApproval: filesForApprovalOnTicket.map((file) => file.name),
     numberOfUnpublishableFiles: unpublishedFilesOnTicket.length,
     numberOfDeletedFiles: deletedFilesOnTicket.length,
   };
+}
+
+function getUploadedBy(ticket: PublishingTicket, registrationFiles: AssociatedFile[]): string[] {
+  const ticketFiles = registrationFiles.filter((file) => ticket.filesForApproval.includes(file.identifier));
+  const usernames = ticketFiles
+    .flatMap((file) => (file.uploadDetails ? [file.uploadDetails] : []))
+    .map((details) => details.uploadedBy);
+  return [...new Set(usernames)];
 }
