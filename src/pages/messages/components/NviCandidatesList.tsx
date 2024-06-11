@@ -54,6 +54,9 @@ export const NviCandidatesList = () => {
             onChange={(curator) => {
               if (curator) {
                 searchParams.set(NviCandidatesSearchParam.Assignee, curator.username);
+                if (nviParams.offset) {
+                  searchParams.delete(NviCandidatesSearchParam.Offset);
+                }
 
                 const currentStatusFilter = searchParams.get(
                   NviCandidatesSearchParam.Filter
@@ -74,6 +77,7 @@ export const NviCandidatesList = () => {
             sx={{ flex: '1 15rem' }}
           />
 
+          {/* TODO: Handle pagination reset here aswell :/ */}
           <AreaOfResponsibilitySelector sx={{ flex: '1 15rem' }} paramName={NviCandidatesSearchParam.Affiliations} />
 
           <Select
@@ -84,6 +88,9 @@ export const NviCandidatesList = () => {
             value={nviParams.year}
             onChange={(event) => {
               searchParams.set(NviCandidatesSearchParam.Year, event.target.value.toString());
+              if (nviParams.offset) {
+                searchParams.delete(NviCandidatesSearchParam.Offset);
+              }
               history.push({ search: searchParams.toString() });
             }}>
             {nviYearFilterValues.map((year) => (

@@ -44,6 +44,9 @@ export const NviMenuContent = () => {
 
   const setNviStatusParam = (newStatusFilter: NviCandidateSearchStatus) => {
     searchParams.set(NviCandidatesSearchParam.Filter, newStatusFilter);
+    if (nviParams.offset) {
+      searchParams.delete(NviCandidatesSearchParam.Offset);
+    }
     history.push({ search: searchParams.toString() });
   };
 
