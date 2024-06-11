@@ -18,21 +18,20 @@ import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { OrganizationApprovalStatusDetail } from '../../../types/nvi.types';
 import { isValidUrl } from '../../../utils/general-helpers';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from './NviStatusTableRow';
 
-interface NviStatusPageProps {
-  activeYear?: number;
-}
-
-export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
+export const NviStatusPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const institution = organizationQuery.data;
 
+  const { year } = useNviCandidatesParams();
+
   const nviQuery = useFetchNviCandidates({
-    params: { size: 1, aggregation: 'organizationApprovalStatuses', year: activeYear ?? 2023 },
+    params: { size: 1, aggregation: 'organizationApprovalStatuses', year },
   });
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));

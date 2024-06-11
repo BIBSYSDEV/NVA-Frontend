@@ -108,7 +108,10 @@ export const NviMenuContent = () => {
               <MuiLink
                 data-testid={dataTestId.tasksPage.nvi.toggleStatusLink}
                 component={Link}
-                to={isOnNviCandidatesPage ? UrlPathTemplate.TasksNviStatus : UrlPathTemplate.TasksNvi}>
+                to={{
+                  pathname: isOnNviCandidatesPage ? UrlPathTemplate.TasksNviStatus : UrlPathTemplate.TasksNvi,
+                  search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+                }}>
                 {isOnNviCandidatesPage ? t('tasks.nvi.show_reporting_status') : t('tasks.nvi.show_candidate_search')}
               </MuiLink>
             </Box>
