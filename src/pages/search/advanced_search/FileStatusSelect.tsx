@@ -33,7 +33,6 @@ export const FileStatusSelect = () => {
       size="small"
       data-testid={dataTestId.startPage.advancedSearch.fileStatusSelect}
       labelId="file-status-select-label"
-      displayEmpty
       value={selectedParam}
       onChange={handleChange}>
       <MenuItem value={''}>{t('common.show_all')}</MenuItem>
