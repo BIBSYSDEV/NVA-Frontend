@@ -7,10 +7,11 @@ import { updateTicket } from '../../../api/registrationApi';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
+import { TasksPageLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
-import { emptyRegistration, Registration } from '../../../types/registration.types';
+import { Registration, emptyRegistration } from '../../../types/registration.types';
 import { getInitials, getTimePeriodString } from '../../../utils/general-helpers';
-import { getMyMessagesRegistrationPath, getTasksRegistrationPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
@@ -74,7 +75,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
               : window.location.pathname === UrlPathTemplate.MyPageMyMessages
                 ? getMyMessagesRegistrationPath(identifier)
                 : '',
-          state: { previousSearch: window.location.search },
+          state: { previousSearch: window.location.search } satisfies TasksPageLocationState,
         }}
         onClick={() => {
           if (!viewedByUser) {
