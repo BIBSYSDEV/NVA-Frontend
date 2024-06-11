@@ -1,15 +1,19 @@
-import { List, Typography } from '@mui/material';
+import { Box, List, MenuItem, Select, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { FetchNviCandidatesParams } from '../../../api/searchApi';
+import { useHistory } from 'react-router-dom';
+import { FetchNviCandidatesParams, NviCandidatesSearchParam } from '../../../api/searchApi';
+import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
-import { NviCandidateSearchResponse } from '../../../types/nvi.types';
+import { NviCandidateSearchResponse, NviCandidateSearchStatus } from '../../../types/nvi.types';
+import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getNviYearFilterValues } from '../../../utils/nviHelpers';
 import { NviCandidateListItem } from './NviCandidateListItem';
 
 interface NviCandidatesListProps {
@@ -22,6 +26,9 @@ interface NviCandidatesListProps {
   helmetTitle: string;
 }
 
+const nviYearFilterValues = getNviYearFilterValues();
+const thisYear = nviYearFilterValues[1];
+
 export const NviCandidatesList = ({
   nviCandidatesQuery,
   nviQueryParams,
@@ -32,6 +39,12 @@ export const NviCandidatesList = ({
   helmetTitle,
 }: NviCandidatesListProps) => {
   const { t } = useTranslation();
+  const history = useHistory();
+
+  const searchParams = new URLSearchParams(history.location.search);
+
+  const nviYearParam = searchParams.get(NviCandidatesSearchParam.Year);
+  const nviYearFilter = nviYearParam ? +nviYearParam : thisYear;
 
   return (
     <section>
@@ -39,7 +52,56 @@ export const NviCandidatesList = ({
         <title>{helmetTitle}</title>
       </Helmet>
 
-      <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
+      <Box
+        sx={{
+          mb: '1rem',
+          mx: { xs: '0.5rem', md: 0 },
+          display: 'grid',
+          gridTemplateColumns: '1fr auto',
+          gap: '1rem',
+        }}>
+        <SearchForm placeholder={t('tasks.search_placeholder')} sx={{ gridColumn: '1/3' }} />
+
+        <CuratorSelector
+          selectedUsername={searchParams.get(NviCandidatesSearchParam.Assignee)}
+          onChange={(curator) => {
+            if (curator) {
+              searchParams.set(NviCandidatesSearchParam.Assignee, curator.username);
+
+              const currentStatusFilter = searchParams.get(
+                NviCandidatesSearchParam.Filter
+              ) as NviCandidateSearchStatus | null;
+              if (
+                !currentStatusFilter ||
+                currentStatusFilter === 'pending' ||
+                currentStatusFilter === 'pendingCollaboration'
+              ) {
+                searchParams.set(NviCandidatesSearchParam.Filter, 'assigned' satisfies NviCandidateSearchStatus);
+              }
+            } else {
+              searchParams.delete(NviCandidatesSearchParam.Assignee);
+            }
+            history.push({ search: searchParams.toString() });
+          }}
+          roleFilter={[RoleName.NviCurator]}
+          sx={{ maxWidth: '20rem' }}
+        />
+        <Select
+          data-testid={dataTestId.tasksPage.nvi.yearSelect}
+          size="small"
+          inputProps={{ 'aria-label': t('common.year') }}
+          value={nviYearFilter}
+          onChange={(event) => {
+            searchParams.set(NviCandidatesSearchParam.Year, event.target.value.toString());
+            history.push({ search: searchParams.toString() });
+          }}>
+          {nviYearFilterValues.map((year) => (
+            <MenuItem key={year} value={year}>
+              {year}
+            </MenuItem>
+          ))}
+        </Select>
+      </Box>
 
       {nviCandidatesQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
