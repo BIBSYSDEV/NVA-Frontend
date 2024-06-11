@@ -37,6 +37,7 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
+import { TasksPageLocationState } from '../../types/locationState.types';
 import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -66,13 +67,9 @@ const StyledNviStatusBox = styled(Box)({
   borderRadius: '0.25rem',
 });
 
-interface LocationState {
-  previousSearch: string;
-}
-
 const TasksPage = () => {
   const { t } = useTranslation();
-  const history = useHistory<LocationState | undefined>();
+  const history = useHistory<TasksPageLocationState>();
   const user = useSelector((store: RootState) => store.user);
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;

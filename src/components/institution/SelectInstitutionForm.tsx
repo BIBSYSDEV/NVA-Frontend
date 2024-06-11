@@ -10,17 +10,18 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { OrganizationSearchParams, searchForOrganizations } from '../../api/cristinApi';
+import { useSearchForOrganizations } from '../../api/hooks/useSearchForOrganizations';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { OrganizationAccordion } from '../OrganizationAccordion';
 import { OrganizationRenderOption } from '../OrganizationRenderOption';
 import { OrganizationBox } from './OrganizationBox';
 
@@ -43,37 +44,35 @@ const initialValuesOrganizationForm: OrganizationForm = {
 };
 
 interface SelectInstitutionFormProps {
-  onSubmit: (id: string) => void;
+  addAffiliation: (id: string) => void;
   onClose?: () => void;
   suggestedInstitutions: string[];
 }
 
-export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions }: SelectInstitutionFormProps) => {
+export const SelectInstitutionForm = ({
+  addAffiliation,
+  onClose,
+  suggestedInstitutions,
+}: SelectInstitutionFormProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const debouncedQuery = useDebounce(searchTerm);
+  const [selectedSubunitId, setSelectedSubunitId] = useState('');
 
-  const organizationQueryParams: OrganizationSearchParams = {
-    query: debouncedQuery,
-    includeSubunits: true,
-  };
-  const organizationSearchQuery = useQuery({
-    enabled: !!debouncedQuery,
-    queryKey: ['organization', organizationQueryParams],
-    queryFn: () => searchForOrganizations(organizationQueryParams),
-    meta: { errorMessage: t('feedback.error.get_institutions') },
-  });
+  const debouncedQuery = useDebounce(searchTerm);
+  const organizationSearchQuery = useSearchForOrganizations(debouncedQuery);
 
   return (
     <Formik
       initialValues={initialValuesOrganizationForm}
       onSubmit={(values, { setSubmitting }) => {
         if (values.selectedSuggestedAffiliationId) {
-          onSubmit(values.selectedSuggestedAffiliationId);
+          addAffiliation(values.selectedSuggestedAffiliationId);
         } else if (values.subunit?.id) {
-          onSubmit(values.subunit.id);
+          addAffiliation(values.subunit.id);
+        } else if (selectedSubunitId) {
+          addAffiliation(selectedSubunitId);
         } else if (values.unit?.id) {
-          onSubmit(values.unit?.id);
+          addAffiliation(values.unit?.id);
         }
         setSubmitting(false);
       }}>
@@ -82,7 +81,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
           {suggestedInstitutions.length > 0 && (
             <Paper elevation={4} sx={{ p: '1rem', maxHeight: '35vh', overflow: 'auto', mb: '1.5rem' }}>
               <FormControl>
-                <FormLabel>{t('registration.contributors.suggested_affiliations')}</FormLabel>
+                <FormLabel sx={{ mb: '0.5rem' }}>{t('registration.contributors.suggested_affiliations')}</FormLabel>
                 <Field name={SelectOrganizationFormField.selectedSuggestedAffiliationId}>
                   {({ field }: FieldProps<string>) => (
                     <RadioGroup
@@ -150,35 +149,61 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
               )}
             </Field>
             {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
-              <Field name={SelectOrganizationFormField.Subunit}>
-                {({ field }: FieldProps<Organization>) => (
-                  <Autocomplete
-                    options={getSortedSubUnits(values.unit?.hasPart)}
-                    getOptionLabel={(option) => getLanguageString(option.labels)}
-                    renderOption={(props, option) => (
-                      <OrganizationRenderOption key={option.id} props={props} option={option} />
-                    )}
-                    onChange={(_, value) => setFieldValue(field.name, value)}
-                    filterOptions={(options, state) =>
-                      options.filter((option) =>
-                        state.getOptionLabel(option).toLocaleLowerCase().includes(state.inputValue.toLocaleLowerCase())
-                      )
-                    }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        data-testid={dataTestId.organization.subSearchField}
-                        label={t('registration.contributors.department')}
-                        variant="filled"
-                        fullWidth
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <Typography variant="h3" sx={{ marginTop: '1rem', fontWeight: 'normal' }}>
+                  {t('common.select_unit')}
+                </Typography>
+                <Field name={SelectOrganizationFormField.Subunit}>
+                  {({ field }: FieldProps<Organization>) => (
+                    <>
+                      <Autocomplete
+                        options={getSortedSubUnits(values.unit?.hasPart)}
+                        getOptionLabel={(option) => getLanguageString(option.labels)}
+                        renderOption={(props, option) => (
+                          <OrganizationRenderOption key={option.id} props={props} option={option} />
+                        )}
+                        onChange={(_, value) => {
+                          setFieldValue(field.name, value);
+                          setSelectedSubunitId(value?.id ?? '');
+                        }}
+                        filterOptions={(options, state) =>
+                          options.filter((option) =>
+                            state
+                              .getOptionLabel(option)
+                              .toLocaleLowerCase()
+                              .includes(state.inputValue.toLocaleLowerCase())
+                          )
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            data-testid={dataTestId.organization.subSearchField}
+                            label={t('registration.contributors.department')}
+                            variant="filled"
+                            fullWidth
+                          />
+                        )}
                       />
-                    )}
-                  />
-                )}
-              </Field>
+                      {values.unit?.hasPart?.map((organization) => (
+                        <OrganizationAccordion
+                          key={organization.id}
+                          organization={organization}
+                          searchId={values.subunit?.id ?? ''}
+                          selectedId={selectedSubunitId}
+                          setSelectedId={setSelectedSubunitId}
+                        />
+                      ))}
+                    </>
+                  )}
+                </Field>
+              </Box>
             )}
-
-            <Box sx={{ display: 'flex', gap: '1rem' }}>
+            <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              {onClose && (
+                <Button onClick={onClose} data-testid={dataTestId.confirmDialog.cancelButton}>
+                  {t('common.cancel')}
+                </Button>
+              )}
               <LoadingButton
                 variant="contained"
                 type="submit"
@@ -187,12 +212,6 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 data-testid={dataTestId.registrationWizard.contributors.addSelectedAffiliationButton}>
                 {t('common.add')}
               </LoadingButton>
-
-              {onClose && (
-                <Button onClick={onClose} data-testid={dataTestId.confirmDialog.cancelButton}>
-                  {t('common.cancel')}
-                </Button>
-              )}
             </Box>
           </Box>
         </Form>

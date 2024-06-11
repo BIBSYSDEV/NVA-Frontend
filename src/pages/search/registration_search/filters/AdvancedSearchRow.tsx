@@ -1,14 +1,14 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import { Box, IconButton, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
-import { TFuncKey } from 'i18next';
+import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { ResultParam } from '../../../../api/searchApi';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface FilterItem {
   field: string;
-  i18nKey: TFuncKey;
+  i18nKey: ParseKeys;
 }
 
 const registrationFilters: FilterItem[] = [
@@ -48,7 +48,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
             data-testid={dataTestId.startPage.advancedSearch.advancedFieldSelect}>
             {registrationFilters.map((filter) => (
               <MenuItem key={filter.i18nKey} value={filter.field}>
-                {t<any>(filter.i18nKey)}
+                {t(filter.i18nKey) as string}
               </MenuItem>
             ))}
           </TextField>

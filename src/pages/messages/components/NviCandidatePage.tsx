@@ -9,7 +9,7 @@ import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
-import { CandidateOffsetState } from '../../../types/nvi.types';
+import { NviCandidatePageLocationState } from '../../../types/locationState.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
@@ -22,7 +22,7 @@ import { NviCandidateActions } from './NviCandidateActions';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
-  const location = useLocation<CandidateOffsetState | undefined>();
+  const location = useLocation<NviCandidatePageLocationState>();
   const { identifier } = useParams<IdentifierParams>();
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
@@ -51,8 +51,8 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const nviQueryParams = location.state?.nviQueryParams;
-  const thisCandidateOffset = location.state?.currentOffset;
+  const nviQueryParams = location.state?.candidateOffsetState?.nviQueryParams;
+  const thisCandidateOffset = location.state?.candidateOffsetState?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
   const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
@@ -71,20 +71,26 @@ export const NviCandidatePage = () => {
   const previousCandidateIdentifier =
     navigateCandidateQuery.isSuccess && !isFirstCandidate ? navigateCandidateQuery.data.hits[0]?.identifier : null;
 
-  const nextCandidateState: CandidateOffsetState | undefined =
+  const nextCandidateState =
     hasOffset && nviQueryParams
-      ? {
-          currentOffset: thisCandidateOffset + 1,
-          nviQueryParams,
-        }
+      ? ({
+          ...location.state,
+          candidateOffsetState: {
+            currentOffset: thisCandidateOffset + 1,
+            nviQueryParams,
+          },
+        } satisfies NviCandidatePageLocationState)
       : undefined;
 
-  const previousCandidateState: CandidateOffsetState | undefined =
+  const previousCandidateState =
     hasOffset && nviQueryParams
-      ? {
-          currentOffset: thisCandidateOffset - 1,
-          nviQueryParams,
-        }
+      ? ({
+          ...location.state,
+          candidateOffsetState: {
+            currentOffset: thisCandidateOffset - 1,
+            nviQueryParams,
+          },
+        } satisfies NviCandidatePageLocationState)
       : undefined;
 
   if (nviCandidateQuery.error?.response?.status === 401) {
