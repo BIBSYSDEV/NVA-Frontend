@@ -9,17 +9,16 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
-import { FetchNviCandidatesParams, NviCandidatesSearchParam } from '../../../api/searchApi';
+import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
 import { TasksPageLocationState } from '../../../types/locationState.types';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 const StyledStatusRadio = styled(Radio)({
@@ -40,12 +39,8 @@ export const NviMenuContent = () => {
   const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = history.location.pathname === UrlPathTemplate.TasksNviStatus;
 
-  const queryParam = searchParams.get(NviCandidatesSearchParam.Query);
-  const assigneeParam = searchParams.get(NviCandidatesSearchParam.Assignee);
-  const nviStatusParam = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus | null;
-  const nviStatusFilter = nviStatusParam ?? 'pending';
-  const nviYearParam = searchParams.get(NviCandidatesSearchParam.Year);
-  const nviYearFilter = nviYearParam ? +nviYearParam : new Date().getFullYear();
+  const nviParams = useNviCandidatesParams();
+  const nviStatusFilter = nviParams.filter ?? 'pending';
 
   const setNviStatusParam = (newStatusFilter: NviCandidateSearchStatus) => {
     searchParams.set(NviCandidatesSearchParam.Filter, newStatusFilter);
@@ -58,35 +53,9 @@ export const NviMenuContent = () => {
     }
   };
 
-  const affiliationsParam = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',');
-
-  const commonNviParams = {
-    affiliations: affiliationsParam,
-    assignee: assigneeParam,
-    query: queryParam,
-    year: nviYearFilter,
-  } satisfies FetchNviCandidatesParams;
-
   const nviAggregationsQuery = useFetchNviCandidates({
     enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    params: { ...commonNviParams, size: 1, aggregation: 'all' },
-  });
-
-  const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-
-  const sizeParam = searchParams.get(NviCandidatesSearchParam.Size);
-  const sizeValue = sizeParam ? +sizeParam : rowsPerPage;
-
-  const listNviCandidatesParams = {
-    ...commonNviParams,
-    size: sizeValue,
-    offset: (page - 1) * sizeValue,
-    filter: nviStatusFilter,
-  } satisfies FetchNviCandidatesParams;
-
-  const nviCandidatesQuery = useFetchNviCandidates({
-    params: listNviCandidatesParams,
+    params: { ...nviParams, filter: null, size: 1, aggregation: 'all' },
   });
 
   const nviAggregations = nviAggregationsQuery.data?.aggregations;
@@ -110,11 +79,6 @@ export const NviMenuContent = () => {
       title={t('common.nvi')}
       startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
       accordionPath={UrlPathTemplate.TasksNvi}
-      onClick={() => {
-        if (!isOnNviCandidatesPage) {
-          setPage(1);
-        }
-      }}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
       <StyledTicketSearchFormGroup>
         {nviAggregationsQuery.isSuccess && (
@@ -157,7 +121,7 @@ export const NviMenuContent = () => {
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
               checked={nviStatusFilter === 'pending'}
-              disabled={!!assigneeParam}
+              disabled={!!nviParams.assignee}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('pending')} />}
               slotProps={{ typography: { fontWeight: 700 } }}
@@ -166,7 +130,7 @@ export const NviMenuContent = () => {
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCollaborationRadio}
               checked={nviStatusFilter === 'pendingCollaboration'}
-              disabled={!!assigneeParam}
+              disabled={!!nviParams.assignee}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('pendingCollaboration')} />}
               label={

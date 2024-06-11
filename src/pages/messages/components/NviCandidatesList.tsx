@@ -1,56 +1,41 @@
 import { Box, List, MenuItem, Select, Typography } from '@mui/material';
-import { UseQueryResult } from '@tanstack/react-query';
-import { Dispatch, SetStateAction } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { FetchNviCandidatesParams, NviCandidatesSearchParam } from '../../../api/searchApi';
+import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
+import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
-import { NviCandidateSearchResponse, NviCandidateSearchStatus } from '../../../types/nvi.types';
+import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviYearFilterValues } from '../../../utils/nviHelpers';
 import { NviCandidateListItem } from './NviCandidateListItem';
 
-interface NviCandidatesListProps {
-  nviCandidatesQuery: UseQueryResult<NviCandidateSearchResponse, unknown>;
-  nviQueryParams: FetchNviCandidatesParams;
-  setRowsPerPage: Dispatch<SetStateAction<number>>;
-  rowsPerPage: number;
-  setPage: Dispatch<SetStateAction<number>>;
-  page: number;
-  helmetTitle: string;
-}
-
 const nviYearFilterValues = getNviYearFilterValues();
-const thisYear = nviYearFilterValues[1];
 
-export const NviCandidatesList = ({
-  nviCandidatesQuery,
-  nviQueryParams,
-  setRowsPerPage,
-  rowsPerPage,
-  setPage,
-  page,
-  helmetTitle,
-}: NviCandidatesListProps) => {
+export const NviCandidatesList = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const nviParams = useNviCandidatesParams();
 
   const searchParams = new URLSearchParams(history.location.search);
 
-  const nviYearParam = searchParams.get(NviCandidatesSearchParam.Year);
-  const nviYearFilter = nviYearParam ? +nviYearParam : thisYear;
+  const nviCandidatesQuery = useFetchNviCandidates({
+    params: { ...nviParams, filter: nviParams.filter ?? 'pending' },
+  });
+
+  const page = Math.floor(nviParams.offset / nviParams.size) + 1;
 
   return (
     <section>
       <Helmet>
-        <title>{helmetTitle}</title>
+        <title>{t('common.nvi')}</title>
       </Helmet>
 
       <Box
@@ -65,7 +50,7 @@ export const NviCandidatesList = ({
 
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <CuratorSelector
-            selectedUsername={searchParams.get(NviCandidatesSearchParam.Assignee)}
+            selectedUsername={nviParams.assignee}
             onChange={(curator) => {
               if (curator) {
                 searchParams.set(NviCandidatesSearchParam.Assignee, curator.username);
@@ -96,7 +81,7 @@ export const NviCandidatesList = ({
             data-testid={dataTestId.tasksPage.nvi.yearSelect}
             size="small"
             inputProps={{ 'aria-label': t('common.year') }}
-            value={nviYearFilter}
+            value={nviParams.year}
             onChange={(event) => {
               searchParams.set(NviCandidatesSearchParam.Year, event.target.value.toString());
               history.push({ search: searchParams.toString() });
@@ -119,22 +104,26 @@ export const NviCandidatesList = ({
           ) : (
             <ListPagination
               count={nviCandidatesQuery.data?.totalHits ?? 0}
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={nviParams.size}
               page={page}
-              onPageChange={(newPage) => setPage(newPage)}
+              onPageChange={(newPage) => {
+                searchParams.set(NviCandidatesSearchParam.Offset, ((newPage - 1) * nviParams.size).toString());
+                history.push({ search: searchParams.toString() });
+              }}
               onRowsPerPageChange={(newRowsPerPage) => {
-                setRowsPerPage(newRowsPerPage);
-                setPage(1);
+                searchParams.set(NviCandidatesSearchParam.Size, newRowsPerPage.toString());
+                searchParams.delete(NviCandidatesSearchParam.Offset);
+                history.push({ search: searchParams.toString() });
               }}
               maxHits={10_000}>
               <List data-testid={dataTestId.tasksPage.nvi.candidatesList} disablePadding sx={{ mb: '0.5rem' }}>
                 {nviCandidatesQuery.data?.hits.map((nviCandidate, index) => {
-                  const currentOffset = (page - 1) * rowsPerPage + index;
+                  const currentOffset = (page - 1) * nviParams.size + index;
                   return (
                     <ErrorBoundary key={nviCandidate.identifier}>
                       <NviCandidateListItem
                         nviCandidate={nviCandidate}
-                        nviQueryParams={nviQueryParams}
+                        nviQueryParams={nviParams}
                         currentOffset={currentOffset}
                       />
                     </ErrorBoundary>

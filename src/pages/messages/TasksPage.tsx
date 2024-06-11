@@ -267,15 +267,7 @@ const TasksPage = () => {
           />
 
           <PrivateRoute exact path={UrlPathTemplate.TasksNvi} isAuthorized={isNviCurator}>
-            <NviCandidatesList
-              nviCandidatesQuery={nviCandidatesQuery}
-              nviQueryParams={listNviCandidatesParams}
-              rowsPerPage={rowsPerPage}
-              setRowsPerPage={setRowsPerPage}
-              page={page}
-              setPage={setPage}
-              helmetTitle={t('common.nvi')}
-            />
+            <NviCandidatesList />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviStatus} isAuthorized={isNviCurator}>
             <NviStatusPage />
