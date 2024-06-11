@@ -15,6 +15,7 @@ import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers';
 import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
@@ -28,12 +29,6 @@ import { RegistrationFormActions } from './RegistrationFormActions';
 import { RegistrationFormStepper } from './RegistrationFormStepper';
 import { ResourceTypePanel } from './ResourceTypePanel';
 
-export type HighestTouchedTab = RegistrationTab | -1;
-
-export interface RegistrationLocationState {
-  highestValidatedTab?: HighestTouchedTab;
-}
-
 interface RegistrationFormProps {
   identifier: string;
 }
@@ -45,7 +40,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
 
   const highestValidatedTab =
-    useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+    useLocation<RegistrationFormLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
   const registrationQuery = useQuery({
     enabled: !!identifier,

@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import { FetchNviCandidatesParams } from '../../../api/searchApi';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { CandidateOffsetState, NviCandidateSearchHit } from '../../../types/nvi.types';
+import { NviCandidatePageLocationState } from '../../../types/locationState.types';
+import { NviCandidateSearchHit } from '../../../types/nvi.types';
 import { displayDate } from '../../../utils/date-helpers';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -35,10 +36,10 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviQueryPara
 
   const myApproval = nviCandidate.approvals.find((approval) => approval.institutionId === user?.topOrgCristinId);
 
-  const candidateOffsetState: CandidateOffsetState = {
-    currentOffset,
-    nviQueryParams,
-  };
+  const candidateLinkState = {
+    candidateOffsetState: { currentOffset, nviQueryParams },
+    previousSearch: window.location.search,
+  } satisfies NviCandidatePageLocationState;
 
   return (
     <SearchListItem
@@ -59,7 +60,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviQueryPara
             component={Link}
             to={{
               pathname: getNviCandidatePath(nviCandidate.identifier),
-              state: candidateOffsetState,
+              state: candidateLinkState,
             }}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>
