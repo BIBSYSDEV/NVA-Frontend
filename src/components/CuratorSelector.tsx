@@ -14,10 +14,10 @@ interface CuratorSelectorProps {
   roleFilter: RoleName[];
   selectedUsername: string | null;
   onChange: (curator: InstitutionUser | null) => void;
-  sx: SxProps;
+  sx?: SxProps;
 }
 
-export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, ...props }: CuratorSelectorProps) => {
+export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, sx }: CuratorSelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
@@ -44,7 +44,7 @@ export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, ...pro
 
   return (
     <Autocomplete
-      {...props}
+      sx={sx}
       options={curatorOptions}
       value={selectedCurator}
       autoHighlight
