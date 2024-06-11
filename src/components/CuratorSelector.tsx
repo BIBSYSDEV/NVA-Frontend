@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteProps, Avatar, Box, Typography } from '@mui/material';
+import { Autocomplete, Avatar, Box, SxProps, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -10,10 +10,11 @@ import { getInitials } from '../utils/general-helpers';
 import { getFullName } from '../utils/user-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
 
-interface CuratorSelectorProps extends Pick<AutocompleteProps<unknown, undefined, undefined, undefined>, 'sx'> {
+interface CuratorSelectorProps {
   roleFilter: RoleName[];
   selectedUsername: string | null;
   onChange: (curator: InstitutionUser | null) => void;
+  sx: SxProps;
 }
 
 export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, ...props }: CuratorSelectorProps) => {

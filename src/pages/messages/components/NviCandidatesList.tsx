@@ -27,6 +27,7 @@ interface NviCandidatesListProps {
 }
 
 const nviYearFilterValues = getNviYearFilterValues();
+const thisYear = nviYearFilterValues[1];
 
 export const NviCandidatesList = ({
   nviCandidatesQuery,
@@ -43,7 +44,7 @@ export const NviCandidatesList = ({
   const searchParams = new URLSearchParams(history.location.search);
 
   const nviYearParam = searchParams.get(NviCandidatesSearchParam.Year);
-  const nviYearFilter = nviYearParam ? +nviYearParam : nviYearFilterValues[1];
+  const nviYearFilter = nviYearParam ? +nviYearParam : thisYear;
 
   return (
     <section>
