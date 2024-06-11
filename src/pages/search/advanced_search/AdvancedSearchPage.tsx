@@ -152,7 +152,9 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <StyledTypography fontWeight="bold">{t('registration.files_and_license.files')}</StyledTypography>
+            <StyledTypography id="file-status-select-label" fontWeight="bold">
+              {t('registration.files_and_license.files')}
+            </StyledTypography>
             <FileStatusSelect />
           </Grid>
         </Grid>

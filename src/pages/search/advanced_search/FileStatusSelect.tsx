@@ -1,4 +1,5 @@
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
@@ -7,18 +8,20 @@ import { dataTestId } from '../../../utils/dataTestIds';
 enum FileStatus {
   hasPublicFiles = 'hasPublicFiles',
   noFiles = 'noFiles',
+  showAll = 'showAll',
 }
 
 export const FileStatusSelect = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const selectedParam = searchParams.get(ResultParam.Files) ?? '';
+  const selectedParam = searchParams.get(ResultParam.Files) ?? FileStatus.showAll;
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
     const newValue = event.target.value;
 
-    if (newValue) {
+    if (newValue !== FileStatus.showAll) {
       searchParams.set(ResultParam.Files, newValue);
     } else {
       searchParams.delete(ResultParam.Files);
@@ -28,22 +31,23 @@ export const FileStatusSelect = () => {
   };
 
   return (
-    <FormControl sx={{ minWidth: '10rem' }} size="small">
-      <InputLabel id="file-status-select-label">{t('registration.files_and_license.files')}</InputLabel>
-      <Select
-        data-testid={dataTestId.startPage.advancedSearch.fileStatusSelect}
-        labelId="file-status-select-label"
-        value={selectedParam}
-        label={t('registration.files_and_license.files')}
-        onChange={handleChange}>
-        <MenuItem value="">
-          <i>{t('common.select')}</i>
-        </MenuItem>
-        <MenuItem value={FileStatus.noFiles}>{t('registration.files_and_license.registration_with_file')}</MenuItem>
-        <MenuItem value={FileStatus.hasPublicFiles}>
-          {t('registration.files_and_license.registration_without_file')}
-        </MenuItem>
-      </Select>
-    </FormControl>
+    <Select
+      sx={{ minWidth: '10rem' }}
+      size="small"
+      role="combobox"
+      data-testid={dataTestId.startPage.advancedSearch.fileStatusSelect}
+      SelectDisplayProps={{ 'aria-labelledby': 'file-status-select-label' }}
+      aria-expanded={isOpen}
+      onOpen={() => setIsOpen(true)}
+      onClose={() => setIsOpen(false)}
+      defaultValue={FileStatus.showAll}
+      value={selectedParam}
+      onChange={handleChange}>
+      <MenuItem value={FileStatus.showAll}>{t('common.show_all')}</MenuItem>
+      <MenuItem value={FileStatus.noFiles}>{t('registration.files_and_license.registration_without_file')}</MenuItem>
+      <MenuItem value={FileStatus.hasPublicFiles}>
+        {t('registration.files_and_license.registration_with_file')}
+      </MenuItem>
+    </Select>
   );
 };
