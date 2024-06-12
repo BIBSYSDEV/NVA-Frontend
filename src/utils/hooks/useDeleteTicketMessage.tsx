@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { deleteTicketMessage } from '../../api/registrationApi';
 import { setNotification } from '../../redux/notificationSlice';
 
-export const useDeleteMessage = (ticketId: string, refetchData?: () => void) => {
+export const useDeleteTicketMessage = (ticketId: string, refetchData?: () => void) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 

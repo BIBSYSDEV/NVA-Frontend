@@ -23,7 +23,7 @@ import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
-import { useDeleteMessage } from '../../../utils/hooks/useDeleteMessage';
+import { useDeleteTicketMessage } from '../../../utils/hooks/useDeleteTicketMessage';
 import { getFullName, truncateName } from '../../../utils/user-helpers';
 import { ticketColor } from './TicketListItem';
 
@@ -37,7 +37,7 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
   const messages = ticket.messages ?? [];
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user) ?? undefined;
-  const deleteTicketMessageMutation = useDeleteMessage(ticket.id, refetchData);
+  const deleteTicketMessageMutation = useDeleteTicketMessage(ticket.id, refetchData);
 
   return (
     <ErrorBoundary>
