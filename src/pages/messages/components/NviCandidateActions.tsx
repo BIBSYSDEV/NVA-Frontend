@@ -148,7 +148,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         <AssigneeSelector
           assignee={myApproval?.assignee}
           canSetAssignee={myApproval?.status === 'New' || myApproval?.status === 'Pending'}
-          onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
+          onSelectAssignee={async (assignee) => await assigneeMutation.mutateAsync(assignee)}
           isUpdating={assigneeMutation.isPending}
           roleFilter={RoleName.NviCurator}
           iconBackgroundColor="nvi.main"

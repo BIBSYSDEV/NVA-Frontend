@@ -6,7 +6,7 @@ import {
   IconButton,
   ListItemIcon,
   ListItemText,
-  Menu as MuiMenu,
+  Menu,
   MenuItem,
   Skeleton,
   Tooltip,
@@ -148,7 +148,7 @@ export const MessageItem = ({
               onClick={handleClickMenuAnchor}>
               <MoreVertIcon fontSize="inherit" />
             </IconButton>
-            <MuiMenu
+            <Menu
               anchorEl={anchorEl}
               keepMounted
               open={open}
@@ -169,7 +169,7 @@ export const MessageItem = ({
                 </ListItemIcon>
                 <ListItemText>{t('common.delete')}</ListItemText>
               </MenuItem>
-            </MuiMenu>
+            </Menu>
           </section>
         )}
       </Box>
