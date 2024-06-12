@@ -243,7 +243,7 @@ export const NviMenuContent = () => {
               control={<StyledStatusRadio onChange={() => setNviStatusParam('dispute')} />}
               slotProps={{ typography: { fontWeight: 700 } }}
               label={
-                nviRejectedCount
+                nviDisputeCount
                   ? `${t('tasks.nvi.status.Dispute')} (${nviDisputeCount})`
                   : t('tasks.nvi.status.Dispute')
               }
