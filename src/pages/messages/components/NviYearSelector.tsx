@@ -17,7 +17,6 @@ export const NviYearSelector = (props: Partial<SelectProps>) => {
 
   return (
     <Select
-      {...props}
       data-testid={dataTestId.tasksPage.nvi.yearSelect}
       size="small"
       inputProps={{ 'aria-label': t('common.year') }}
@@ -29,7 +28,8 @@ export const NviYearSelector = (props: Partial<SelectProps>) => {
           searchParams.delete(NviCandidatesSearchParam.Offset);
         }
         history.push({ search: searchParams.toString() });
-      }}>
+      }}
+      {...props}>
       {nviYearFilterValues.map((year) => (
         <MenuItem key={year} value={year}>
           {year}
