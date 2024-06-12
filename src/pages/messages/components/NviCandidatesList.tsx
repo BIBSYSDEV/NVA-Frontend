@@ -3,13 +3,14 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
-import { NviCandidatesSearchParam } from '../../../api/searchApi';
+import { NviCandidateOrderBy, NviCandidatesSearchParam, SortOrder } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
+import { SortSelector } from '../../../components/SortSelector';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -127,8 +128,30 @@ export const NviCandidatesList = () => {
                 searchParams.delete(NviCandidatesSearchParam.Offset);
                 history.push({ search: searchParams.toString() });
               }}
-              maxHits={10_000}>
-              <List data-testid={dataTestId.tasksPage.nvi.candidatesList} disablePadding sx={{ mb: '0.5rem' }}>
+              maxHits={10_000}
+              showPaginationTop
+              sortingComponent={
+                <SortSelector
+                  sortKey={NviCandidatesSearchParam.SortOrder}
+                  orderKey={NviCandidatesSearchParam.OrderBy}
+                  aria-label={t('search.sort_by')}
+                  size="small"
+                  variant="standard"
+                  options={[
+                    {
+                      orderBy: 'createdDate' satisfies NviCandidateOrderBy,
+                      sortOrder: 'desc' satisfies SortOrder,
+                      label: t('common.sort_newest_first'),
+                    },
+                    {
+                      orderBy: 'createdDate' satisfies NviCandidateOrderBy,
+                      sortOrder: 'asc' satisfies SortOrder,
+                      label: t('common.sort_oldest_first'),
+                    },
+                  ]}
+                />
+              }>
+              <List data-testid={dataTestId.tasksPage.nvi.candidatesList}>
                 {nviCandidatesQuery.data?.hits.map((nviCandidate, index) => {
                   const currentOffset = (page - 1) * nviParams.size + index;
                   return (
