@@ -71,6 +71,7 @@ export const NviMenuContent = () => {
   const nviApprovedCollaborationCount = nviAggregations?.approvedCollaboration.docCount.toLocaleString();
   const nviRejectedCount = nviAggregations?.rejected.docCount.toLocaleString();
   const nviRejectedCollaborationCount = nviAggregations?.rejectedCollaboration.docCount.toLocaleString();
+  const nviDisputeCount = nviAggregations?.dispute.docCount.toLocaleString();
 
   const nviCandidatesTotal = nviAggregations?.totalCount.docCount ?? 0;
   const nviCandidatesCompeted = nviAggregations?.completed.docCount ?? 0;
@@ -230,6 +231,21 @@ export const NviMenuContent = () => {
                 nviRejectedCollaborationCount
                   ? `${t('tasks.nvi.waiting_for_other_institutions')} (${nviRejectedCollaborationCount})`
                   : t('tasks.nvi.waiting_for_other_institutions')
+              }
+            />
+          </StyledNviStatusBox>
+
+          <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
+            <FormControlLabel
+              data-testid={dataTestId.tasksPage.nvi.statusFilter.disputeRadio}
+              checked={nviParams.filter === 'dispute'}
+              onClick={openCandidatesView}
+              control={<StyledStatusRadio onChange={() => setNviStatusParam('dispute')} />}
+              slotProps={{ typography: { fontWeight: 700 } }}
+              label={
+                nviRejectedCount
+                  ? `${t('tasks.nvi.status.Dispute')} (${nviDisputeCount})`
+                  : t('tasks.nvi.status.Dispute')
               }
             />
           </StyledNviStatusBox>
