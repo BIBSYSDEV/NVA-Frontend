@@ -12,19 +12,18 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { MouseEvent, ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteTicketMessage } from '../../../api/registrationApi';
 import { fetchUser } from '../../../api/roleApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
+import { useDeleteMessage } from '../../../utils/hooks/useDeleteMessage';
 import { getFullName, truncateName } from '../../../utils/user-helpers';
 import { ticketColor } from './TicketListItem';
 
@@ -39,15 +38,7 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user) ?? undefined;
-
-  const deleteSupportMessageMutation = useMutation({
-    mutationFn: (messageId: string) => deleteTicketMessage(ticket.id, messageId),
-    onSuccess: () => {
-      dispatch(setNotification({ message: t('feedback.success.delete_message'), variant: 'success' }));
-      refetchData && refetchData();
-    },
-    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_message'), variant: 'error' })),
-  });
+  const deleteTicketMessageMutation = useDeleteMessage(ticket.id, dispatch, refetchData);
 
   return (
     <ErrorBoundary>
@@ -69,8 +60,8 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
             username={message.sender}
             canDeleteMessage={user && (canDeleteMessage || user.nvaUsername === message.sender)}
             backgroundColor={ticketColor[ticket.type]}
-            onDelete={() => deleteSupportMessageMutation.mutateAsync(message.identifier)}
-            isDeleting={deleteSupportMessageMutation.isPending}
+            onDelete={() => deleteTicketMessageMutation.mutateAsync(message.identifier)}
+            isDeleting={deleteTicketMessageMutation.isPending}
             confirmDialogTitle={t('my_page.messages.delete_message')}
             confirmDialogContent={t('my_page.messages.delete_message_description')}
           />
@@ -133,7 +124,7 @@ export const MessageItem = ({
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
         <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           <Tooltip title={senderName ? senderName : t('common.unknown')}>
-            <span>
+            <span style={{ marginRight: '0.5rem' }}>
               {senderQuery.isPending ? (
                 <Skeleton sx={{ width: '8rem' }} />
               ) : (
