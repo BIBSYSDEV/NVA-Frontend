@@ -6,6 +6,7 @@ import {
   LinearProgress,
   Link as MuiLink,
   Radio,
+  Skeleton,
   Typography,
   styled,
 } from '@mui/material';
@@ -83,39 +84,48 @@ export const NviMenuContent = () => {
       accordionPath={UrlPathTemplate.TasksNvi}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
       <StyledTicketSearchFormGroup>
-        {nviAggregationsQuery.isSuccess && (
-          <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', mb: '1rem' }}>
-            <Typography id="progress-label" gutterBottom>
-              {t('tasks.nvi.completed_count', {
-                completed: nviCandidatesCompeted,
-                total: nviCandidatesTotal,
-              })}
-            </Typography>
-            <LinearProgress
-              aria-labelledby="progress-label"
-              variant="determinate"
-              value={nviCompletedPercentage}
-              sx={{
-                my: '0.175rem',
-                height: '0.75rem',
-                bgcolor: 'white',
-              }}
-            />
-            <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
+        <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', mb: '1rem' }}>
+          {nviAggregationsQuery.isPending ? (
+            <>
+              <Skeleton sx={{ maxWidth: '10rem' }} />
+              <Skeleton />
+              <Skeleton sx={{ maxWidth: '2rem', mx: 'auto' }} />
+              <Skeleton sx={{ maxWidth: '8rem', mx: 'auto' }} />
+            </>
+          ) : (
+            <>
+              <Typography id="progress-label" gutterBottom>
+                {t('tasks.nvi.completed_count', {
+                  completed: nviCandidatesCompeted,
+                  total: nviCandidatesTotal,
+                })}
+              </Typography>
+              <LinearProgress
+                aria-labelledby="progress-label"
+                variant="determinate"
+                value={nviCompletedPercentage}
+                sx={{
+                  my: '0.175rem',
+                  height: '0.75rem',
+                  bgcolor: 'white',
+                }}
+              />
+              <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: '0.5rem' }}>
-              <MuiLink
-                data-testid={dataTestId.tasksPage.nvi.toggleStatusLink}
-                component={Link}
-                to={{
-                  pathname: isOnNviCandidatesPage ? UrlPathTemplate.TasksNviStatus : UrlPathTemplate.TasksNvi,
-                  search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
-                }}>
-                {isOnNviCandidatesPage ? t('tasks.nvi.show_reporting_status') : t('tasks.nvi.show_candidate_search')}
-              </MuiLink>
-            </Box>
-          </StyledNviStatusBox>
-        )}
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: '0.5rem' }}>
+                <MuiLink
+                  data-testid={dataTestId.tasksPage.nvi.toggleStatusLink}
+                  component={Link}
+                  to={{
+                    pathname: isOnNviCandidatesPage ? UrlPathTemplate.TasksNviStatus : UrlPathTemplate.TasksNvi,
+                    search: `?${NviCandidatesSearchParam.Year}=${nviParams.year}`,
+                  }}>
+                  {isOnNviCandidatesPage ? t('tasks.nvi.show_reporting_status') : t('tasks.nvi.show_candidate_search')}
+                </MuiLink>
+              </Box>
+            </>
+          )}
+        </StyledNviStatusBox>
 
         <FormLabel component="legend" sx={{ fontWeight: 700 }}>
           {t('tasks.status')}
