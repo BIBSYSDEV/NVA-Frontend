@@ -1142,6 +1142,7 @@
       "contributor_is_unidentified": "Bidragsyter er uidentifisert",
       "corresponding": "Korresponderende",
       "department": "Enhet",
+      "edit_affiliation": "Rediger tilknytning",
       "identity_status": {
         "confirmed_identity": "Identifisert",
         "confirmed_identity_without_affiliation": "Identifisert uten tilknytning",
