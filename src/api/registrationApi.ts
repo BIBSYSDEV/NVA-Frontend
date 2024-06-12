@@ -70,7 +70,9 @@ export const deleteTicketMessage = (ticketId: string, messageId: string) => {
     method: 'DELETE',
   })
     .then(() => true)
-    .catch(() => false);
+    .catch((error) => {
+      throw error;
+    });
 };
 
 export const createTicket = async (registrationId: string, type: TicketType, returnCreatedTicket = false) => {
