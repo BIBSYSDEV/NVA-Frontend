@@ -40,7 +40,6 @@ export const NviMenuContent = () => {
   const isOnNviStatusPage = history.location.pathname === UrlPathTemplate.TasksNviStatus;
 
   const nviParams = useNviCandidatesParams();
-  const nviStatusFilter = nviParams.filter ?? 'pending';
 
   const setNviStatusParam = (newStatusFilter: NviCandidateSearchStatus) => {
     searchParams.set(NviCandidatesSearchParam.Filter, newStatusFilter);
@@ -126,7 +125,7 @@ export const NviMenuContent = () => {
           <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
-              checked={nviStatusFilter === 'pending'}
+              checked={nviParams.filter === 'pending'}
               disabled={!!nviParams.assignee}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('pending')} />}
@@ -135,7 +134,7 @@ export const NviMenuContent = () => {
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCollaborationRadio}
-              checked={nviStatusFilter === 'pendingCollaboration'}
+              checked={nviParams.filter === 'pendingCollaboration'}
               disabled={!!nviParams.assignee}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('pendingCollaboration')} />}
@@ -150,7 +149,7 @@ export const NviMenuContent = () => {
           <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedRadio}
-              checked={nviStatusFilter === 'assigned'}
+              checked={nviParams.filter === 'assigned'}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('assigned')} />}
               slotProps={{ typography: { fontWeight: 700 } }}
@@ -162,7 +161,7 @@ export const NviMenuContent = () => {
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedCollaborationRadio}
-              checked={nviStatusFilter === 'assignedCollaboration'}
+              checked={nviParams.filter === 'assignedCollaboration'}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('assignedCollaboration')} />}
               label={
@@ -176,7 +175,7 @@ export const NviMenuContent = () => {
           <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedRadio}
-              checked={nviStatusFilter === 'approved'}
+              checked={nviParams.filter === 'approved'}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('approved')} />}
               slotProps={{ typography: { fontWeight: 700 } }}
@@ -188,7 +187,7 @@ export const NviMenuContent = () => {
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCollaborationRadio}
-              checked={nviStatusFilter === 'approvedCollaboration'}
+              checked={nviParams.filter === 'approvedCollaboration'}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('approvedCollaboration')} />}
               label={
@@ -202,7 +201,7 @@ export const NviMenuContent = () => {
           <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedRadio}
-              checked={nviStatusFilter === 'rejected'}
+              checked={nviParams.filter === 'rejected'}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('rejected')} />}
               slotProps={{ typography: { fontWeight: 700 } }}
@@ -214,7 +213,7 @@ export const NviMenuContent = () => {
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCollaborationRadio}
-              checked={nviStatusFilter === 'rejectedCollaboration'}
+              checked={nviParams.filter === 'rejectedCollaboration'}
               onClick={openCandidatesView}
               control={<StyledStatusRadio onChange={() => setNviStatusParam('rejectedCollaboration')} />}
               label={

@@ -12,7 +12,7 @@ export const useNviCandidatesParams = () => {
   const affiliations = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',') ?? null;
   const aggregation = searchParams.get(NviCandidatesSearchParam.Aggregation) as 'all' | NviCandidateSearchStatus | null;
   const assignee = searchParams.get(NviCandidatesSearchParam.Assignee);
-  const filter = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus | null;
+  const filter = (searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus | null) ?? 'pending';
   const offset = (searchParams.get(NviCandidatesSearchParam.Offset) as number | null) ?? 0;
   const query = searchParams.get(NviCandidatesSearchParam.Query);
   const size = (searchParams.get(NviCandidatesSearchParam.Size) as number | null) ?? ROWS_PER_PAGE_OPTIONS[0];

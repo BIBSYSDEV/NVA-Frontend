@@ -26,9 +26,7 @@ export const NviCandidatesList = () => {
 
   const searchParams = new URLSearchParams(history.location.search);
 
-  const nviCandidatesQuery = useFetchNviCandidates({
-    params: { ...nviParams, filter: nviParams.filter ?? 'pending' },
-  });
+  const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams });
 
   const page = Math.floor(nviParams.offset / nviParams.size) + 1;
 
