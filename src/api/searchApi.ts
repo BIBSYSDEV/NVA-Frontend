@@ -265,12 +265,6 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   searchParams.set(NviCandidatesSearchParam.Size, params.size?.toString() || '10');
   searchParams.set(NviCandidatesSearchParam.Offset, params.offset?.toString() || '0');
 
-  if (params.orderBy) {
-    searchParams.set(NviCandidatesSearchParam.OrderBy, params.orderBy);
-  }
-  if (params.sortOrder) {
-    searchParams.set(NviCandidatesSearchParam.SortOrder, params.sortOrder);
-  }
   if (params.affiliations && params.affiliations.length > 0) {
     searchParams.set(NviCandidatesSearchParam.Affiliations, params.affiliations.join(','));
   }
@@ -291,6 +285,12 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   }
   if (params.year) {
     searchParams.set(NviCandidatesSearchParam.Year, params.year.toString());
+  }
+  if (params.orderBy) {
+    searchParams.set(NviCandidatesSearchParam.OrderBy, params.orderBy);
+  }
+  if (params.sortOrder) {
+    searchParams.set(NviCandidatesSearchParam.SortOrder, params.sortOrder);
   }
 
   const paramsString = searchParams.toString();
