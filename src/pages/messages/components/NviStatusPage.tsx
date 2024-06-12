@@ -20,6 +20,7 @@ import { OrganizationApprovalStatusDetail } from '../../../types/nvi.types';
 import { isValidUrl } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from './NviStatusTableRow';
+import { NviYearSelector } from './NviYearSelector';
 
 export const NviStatusPage = () => {
   const { t } = useTranslation();
@@ -40,10 +41,10 @@ export const NviStatusPage = () => {
     | undefined;
 
   return (
-    <BackgroundDiv>
-      <Typography variant="h1" gutterBottom>
-        {t('tasks.nvi.institution_nvi_status')}
-      </Typography>
+    <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'start' }}>
+      <Typography variant="h1">{t('tasks.nvi.institution_nvi_status')}</Typography>
+
+      <NviYearSelector />
 
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">

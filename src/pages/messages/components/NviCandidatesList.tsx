@@ -83,7 +83,7 @@ export const NviCandidatesList = () => {
             }}
           />
 
-          <NviYearSelector />
+          <NviYearSelector sx={{ ml: 'auto' }} />
         </Box>
       </Box>
 
