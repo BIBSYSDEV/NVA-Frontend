@@ -1,11 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
 import { deleteTicketMessage } from '../../api/registrationApi';
 import { setNotification } from '../../redux/notificationSlice';
 
-export const useDeleteMessage = (ticketId: string, dispatch: Dispatch, refetchData?: () => void) => {
+export const useDeleteMessage = (ticketId: string, refetchData?: () => void) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   return useMutation({
     mutationFn: (messageId: string) => deleteTicketMessage(ticketId, messageId),

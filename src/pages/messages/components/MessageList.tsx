@@ -15,7 +15,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { MouseEvent, ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { fetchUser } from '../../../api/roleApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -36,9 +36,8 @@ interface MessageListProps {
 export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
   const messages = ticket.messages ?? [];
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user) ?? undefined;
-  const deleteTicketMessageMutation = useDeleteMessage(ticket.id, dispatch, refetchData);
+  const deleteTicketMessageMutation = useDeleteMessage(ticket.id, refetchData);
 
   return (
     <ErrorBoundary>
