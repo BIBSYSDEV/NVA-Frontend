@@ -172,6 +172,7 @@ export const dataTestId = {
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
+      fileStatusSelect: 'file-status-select',
       fundingSourceField: 'funding-source-field',
       journalField: 'journal-field',
       publicationLanguageField: 'publication-language-field',

@@ -51,7 +51,7 @@ export const AddAffiliationSection = () => {
                   {...field}
                   {...params}
                   required
-                  label={t('common.institution')}
+                  label={t('registration.contributors.department')}
                   variant="filled"
                   fullWidth
                   error={touched && !!error}
