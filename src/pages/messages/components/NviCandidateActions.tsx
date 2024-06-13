@@ -25,6 +25,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { MessageItem } from './MessageList';
 import { NviCandidateRejectionDialog } from './NviCandidateRejectionDialog';
+import { NviNoteMenu } from './NviNoteMenu';
 
 interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
@@ -191,11 +192,13 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     date={note.date}
                     username={note.username}
                     backgroundColor="nvi.main"
-                    canDeleteMessage={user ? user.isNviCurator || user.nvaUsername === note.username : undefined}
-                    onDelete={deleteFunction}
-                    isDeleting={isDeleting}
-                    confirmDialogTitle={t('tasks.nvi.delete_note')}
-                    confirmDialogContent={t('tasks.nvi.delete_note_description')}
+                    messageMenu={
+                      <NviNoteMenu
+                        onDelete={deleteFunction}
+                        isDeleting={isDeleting}
+                        canDeleteMessage={user ? user.isNviCurator || user.nvaUsername === note.username : undefined}
+                      />
+                    }
                   />
                 </ErrorBoundary>
               );

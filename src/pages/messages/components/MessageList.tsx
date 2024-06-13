@@ -1,23 +1,9 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {
-  Box,
-  Divider,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Skeleton,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Box, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { MouseEvent, ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchUser } from '../../../api/roleApi';
-import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
@@ -25,6 +11,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { useDeleteTicketMessage } from '../../../utils/hooks/useDeleteTicketMessage';
 import { getFullName, truncateName } from '../../../utils/user-helpers';
+import { MessageMenu } from './MessageMenu';
 import { ticketColor } from './TicketListItem';
 
 interface MessageListProps {
@@ -35,7 +22,6 @@ interface MessageListProps {
 
 export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
   const messages = ticket.messages ?? [];
-  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user) ?? undefined;
   const deleteTicketMessageMutation = useDeleteTicketMessage(ticket.id, refetchData);
 
@@ -57,12 +43,14 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
             text={message.text}
             date={message.createdDate}
             username={message.sender}
-            canDeleteMessage={user && (canDeleteMessage || user.nvaUsername === message.sender)}
             backgroundColor={ticketColor[ticket.type]}
-            onDelete={() => deleteTicketMessageMutation.mutateAsync(message.identifier)}
-            isDeleting={deleteTicketMessageMutation.isPending}
-            confirmDialogTitle={t('my_page.messages.delete_message')}
-            confirmDialogContent={t('my_page.messages.delete_message_description')}
+            messageMenu={
+              <MessageMenu
+                onDelete={() => deleteTicketMessageMutation.mutateAsync(message.identifier)}
+                isDeleting={deleteTicketMessageMutation.isPending}
+                canDeleteMessage={user && (canDeleteMessage || user.nvaUsername === message.sender)}
+              />
+            }
           />
         ))}
       </Box>
@@ -75,32 +63,11 @@ interface MessageItemProps {
   date: string;
   username: string;
   backgroundColor: string;
-  canDeleteMessage?: boolean;
-  onDelete?: () => Promise<void>;
-  isDeleting?: boolean;
-  confirmDialogTitle?: string;
-  confirmDialogContent?: string;
+  messageMenu?: ReactNode;
 }
 
-export const MessageItem = ({
-  text,
-  date,
-  username,
-  backgroundColor,
-  canDeleteMessage = false,
-  onDelete,
-  isDeleting,
-  confirmDialogContent,
-  confirmDialogTitle,
-}: MessageItemProps) => {
+export const MessageItem = ({ text, date, username, backgroundColor, messageMenu }: MessageItemProps) => {
   const { t } = useTranslation();
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const senderQuery = useQuery({
     queryKey: [username],
@@ -135,43 +102,7 @@ export const MessageItem = ({
           </Tooltip>
           <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>{toDateString(date)}</span>
         </Typography>
-        {canDeleteMessage && onDelete && (
-          <section>
-            <IconButton
-              aria-controls={open ? 'basic-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.messageOptionsButton}
-              aria-label={t('common.delete')}
-              size="small"
-              sx={{ alignSelf: 'end' }}
-              onClick={handleClickMenuAnchor}>
-              <MoreVertIcon fontSize="inherit" />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              keepMounted
-              open={open}
-              onClose={() => setAnchorEl(null)}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}>
-              <MenuItem
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteMessageButton}
-                disabled={!text}
-                onClick={() => {
-                  setShowConfirmDialog(true);
-                  setAnchorEl(null);
-                }}>
-                <ListItemIcon>
-                  <DeleteIcon />
-                </ListItemIcon>
-                <ListItemText>{t('common.delete')}</ListItemText>
-              </MenuItem>
-            </Menu>
-          </section>
-        )}
+        {messageMenu}
       </Box>
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
@@ -181,20 +112,6 @@ export const MessageItem = ({
         component={typeof text === 'string' ? Typography : 'div'}>
         {text ? text : <i>{t('my_page.messages.message_deleted')}</i>}
       </Box>
-
-      {onDelete && confirmDialogContent && confirmDialogTitle && (
-        <ConfirmDialog
-          open={showConfirmDialog}
-          title={confirmDialogTitle}
-          onAccept={async () => {
-            await onDelete();
-            setShowConfirmDialog(false);
-          }}
-          isLoading={isDeleting}
-          onCancel={() => setShowConfirmDialog(false)}>
-          <Typography>{confirmDialogContent}</Typography>
-        </ConfirmDialog>
-      )}
     </Box>
   );
 };
