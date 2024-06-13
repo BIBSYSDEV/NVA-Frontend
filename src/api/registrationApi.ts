@@ -64,15 +64,11 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
     data: { message },
   });
 
-export const deleteTicketMessage = (ticketId: string, messageId: string) => {
-  return authenticatedApiRequest2({
+export const deleteTicketMessage = async (ticketId: string, messageId: string) => {
+  await authenticatedApiRequest2({
     url: `${ticketId}/message/${messageId}`,
     method: 'DELETE',
-  })
-    .then(() => true)
-    .catch((error) => {
-      throw error;
-    });
+  });
 };
 
 export const createTicket = async (registrationId: string, type: TicketType, returnCreatedTicket = false) => {

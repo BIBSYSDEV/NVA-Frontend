@@ -76,7 +76,7 @@ interface MessageItemProps {
   username: string;
   backgroundColor: string;
   canDeleteMessage?: boolean;
-  onDelete?: () => Promise<boolean>;
+  onDelete?: () => Promise<void>;
   isDeleting?: boolean;
   confirmDialogTitle?: string;
   confirmDialogContent?: string;
@@ -142,7 +142,7 @@ export const MessageItem = ({
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.messageOptionsButton}
-              aria-label="delete"
+              aria-label={t('common.delete')}
               size="small"
               sx={{ alignSelf: 'end' }}
               onClick={handleClickMenuAnchor}>
@@ -187,10 +187,8 @@ export const MessageItem = ({
           open={showConfirmDialog}
           title={confirmDialogTitle}
           onAccept={async () => {
-            const result = await onDelete();
-            if (result) {
-              setShowConfirmDialog(false);
-            }
+            await onDelete();
+            setShowConfirmDialog(false);
           }}
           isLoading={isDeleting}
           onCancel={() => setShowConfirmDialog(false)}>

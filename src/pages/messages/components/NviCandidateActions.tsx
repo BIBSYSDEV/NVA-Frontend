@@ -42,7 +42,7 @@ interface NviCandidateActionsProps {
 export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviCandidateActionsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const user = useSelector((store: RootState) => store.user) ?? undefined;
+  const user = useSelector((store: RootState) => store.user);
   const candidateIdentifier = getIdentifierFromId(nviCandidate.id);
 
   const [hasSelectedRejectCandidate, setHasSelectedRejectCandidate] = useState(false);
@@ -169,7 +169,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               gap: '0.25rem',
             }}>
             {sortedNotes.map((note) => {
-              let deleteFunction: (() => Promise<any>) | undefined = undefined;
+              let deleteFunction: (() => Promise<void>) | undefined = undefined;
               const noteIdentifier = note.identifier;
 
               if (user?.nvaUsername && note.username === user.nvaUsername) {
@@ -191,7 +191,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     date={note.date}
                     username={note.username}
                     backgroundColor="nvi.main"
-                    canDeleteMessage={user && (user.isNviCurator || user.nvaUsername === note.username)}
+                    canDeleteMessage={user ? user.isNviCurator || user.nvaUsername === note.username : undefined}
                     onDelete={deleteFunction}
                     isDeleting={isDeleting}
                     confirmDialogTitle={t('tasks.nvi.delete_note')}
