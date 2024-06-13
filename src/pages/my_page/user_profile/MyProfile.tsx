@@ -203,7 +203,7 @@ export const MyProfile = () => {
                       <TextField
                         value={getIdentifierFromId(personId ?? '')}
                         disabled
-                        label={t('common.id')}
+                        label={t('common.person_id')}
                         size="small"
                         variant="filled"
                       />
