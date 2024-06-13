@@ -597,6 +597,7 @@ export const dataTestId = {
         approvedCollaborationRadio: 'approved-collaboration-radio',
         assignedRadio: 'assigned-radio',
         assignedCollaborationRadio: 'assigned-collaboration-radio',
+        disputeRadio: 'dispute-radio',
         pendingRadio: 'pending-radio',
         pendingCollaborationRadio: 'pending-collaboration-radio',
         rejectedRadio: 'rejected-radio',
