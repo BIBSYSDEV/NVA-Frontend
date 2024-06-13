@@ -15,6 +15,7 @@ import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { NviCandidateListItem } from './NviCandidateListItem';
+import { NviSortSelector } from './NviSortSelector';
 import { NviYearSelector } from './NviYearSelector';
 
 export const NviCandidatesList = () => {
@@ -107,8 +108,10 @@ export const NviCandidatesList = () => {
                 searchParams.delete(NviCandidatesSearchParam.Offset);
                 history.push({ search: searchParams.toString() });
               }}
-              maxHits={10_000}>
-              <List data-testid={dataTestId.tasksPage.nvi.candidatesList} disablePadding sx={{ mb: '0.5rem' }}>
+              maxHits={10_000}
+              showPaginationTop
+              sortingComponent={<NviSortSelector />}>
+              <List data-testid={dataTestId.tasksPage.nvi.candidatesList}>
                 {nviCandidatesQuery.data?.hits.map((nviCandidate, index) => {
                   const currentOffset = (page - 1) * nviParams.size + index;
                   return (
