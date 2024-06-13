@@ -136,11 +136,7 @@ export const NviCandidatesList = () => {
                   const currentOffset = (page - 1) * nviParams.size + index;
                   return (
                     <ErrorBoundary key={nviCandidate.identifier}>
-                      <NviCandidateListItem
-                        nviCandidate={nviCandidate}
-                        nviQueryParams={nviParams}
-                        currentOffset={currentOffset}
-                      />
+                      <NviCandidateListItem nviCandidate={nviCandidate} currentOffset={currentOffset} />
                     </ErrorBoundary>
                   );
                 })}
