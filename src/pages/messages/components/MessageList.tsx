@@ -22,7 +22,7 @@ interface MessageListProps {
 
 export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
   const messages = ticket.messages ?? [];
-  const user = useSelector((store: RootState) => store.user) ?? undefined;
+  const user = useSelector((store: RootState) => store.user);
   const deleteTicketMessageMutation = useDeleteTicketMessage(ticket.id, refetchData);
 
   return (
@@ -48,7 +48,7 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
               <MessageMenu
                 onDelete={() => deleteTicketMessageMutation.mutateAsync(message.identifier)}
                 isDeleting={deleteTicketMessageMutation.isPending}
-                canDeleteMessage={user && (canDeleteMessage || user.nvaUsername === message.sender)}
+                canDeleteMessage={!!user && (canDeleteMessage || user.nvaUsername === message.sender)}
               />
             }
           />
