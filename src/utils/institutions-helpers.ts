@@ -26,6 +26,24 @@ export const getOrganizationHierarchy = (unit?: Organization, result: Organizati
   return getOrganizationHierarchy(unit.partOf[0], [unit, ...result]);
 };
 
+export const findAncestor = (organization: Organization): Organization => {
+  if (organization.partOf && organization.partOf.length > 0) {
+    return findAncestor(organization.partOf[0]);
+  }
+  return organization;
+};
+
+export const findDescendantWithId = (organization: Organization, id: string) => {
+  let descendant = null;
+
+  if (organization.hasPart) {
+    descendant = getAllChildOrganizations(organization.hasPart).find((des) => des.id === id) || null;
+    console.log('descendant', descendant);
+  }
+
+  return descendant;
+};
+
 export const getSortedSubUnits = (subUnits: Organization[] = []) => {
   const units = getAllChildOrganizations(subUnits);
   return units.sort((a, b) => (getLanguageString(a.labels) < getLanguageString(b.labels) ? -1 : 1));

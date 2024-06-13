@@ -107,8 +107,8 @@ export const AddAffiliationModal = ({
         {t('common.select_institution')}
       </Typography>
       <SelectInstitutionForm
-        addAffiliation={addAffiliation}
-        onClose={toggleAffiliationModal}
+        saveAffiliation={addAffiliation}
+        onCancel={toggleAffiliationModal}
         suggestedInstitutions={getDistinctContributorUnits(values.entityDescription?.contributors ?? []).filter(
           (suggestion) =>
             !affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === suggestion)

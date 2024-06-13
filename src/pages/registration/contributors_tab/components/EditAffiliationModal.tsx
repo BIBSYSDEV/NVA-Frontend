@@ -1,0 +1,100 @@
+import { Box, Typography } from '@mui/material';
+import { useFormikContext } from 'formik';
+import { Trans, useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { EditInstitutionForm } from '../../../../components/institution/EditInstitutionForm';
+import { Modal } from '../../../../components/Modal';
+import { setNotification } from '../../../../redux/notificationSlice';
+import { Affiliation } from '../../../../types/contributor.types';
+import { Organization } from '../../../../types/organization.types';
+import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
+import { Registration } from '../../../../types/registration.types';
+
+interface EditAffiliationModalProps {
+  affiliationModalIsOpen: boolean;
+  toggleAffiliationModal: () => void;
+  affiliationToEdit: Organization;
+  baseFieldName: string; // TODO: This can be imported instead
+  authorName?: string;
+  affiliations?: Affiliation[];
+}
+
+export const EditAffiliationModal = ({
+  affiliationModalIsOpen,
+  toggleAffiliationModal,
+  affiliationToEdit,
+  authorName,
+  affiliations = [],
+  baseFieldName,
+}: EditAffiliationModalProps) => {
+  const { t } = useTranslation();
+  const { setFieldValue } = useFormikContext<Registration>();
+  const dispatch = useDispatch();
+
+  const editAffiliation = (newAffiliationId: string) => {
+    if (!newAffiliationId) {
+      return;
+    }
+
+    const affiliationToChangeIndex = affiliations.findIndex(
+      (a) => a.type === 'Organization' && a.id === affiliationToEdit.id
+    );
+
+    if (affiliationToChangeIndex < 0) {
+      return;
+    }
+
+    // If user tries to change it into already existing affiliation
+    if (
+      affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === newAffiliationId)
+    ) {
+      dispatch(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
+      return;
+    }
+
+    const newAffiliation: Affiliation = {
+      type: 'Organization',
+      id: newAffiliationId,
+    };
+
+    const updatedAffiliations = [...affiliations];
+
+    // Replace old affiliation
+    updatedAffiliations[affiliationToChangeIndex] = newAffiliation;
+
+    setFieldValue(`${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`, updatedAffiliations);
+    toggleAffiliationModal();
+  };
+
+  return (
+    <Modal
+      open={affiliationModalIsOpen}
+      onClose={() => {
+        toggleAffiliationModal();
+      }}
+      maxWidth="md"
+      fullWidth={true}
+      headingText={t('registration.contributors.edit_affiliation')}
+      dataTestId="edit-affiliation-modal">
+      <Trans i18nKey="registration.contributors.edit_affiliation_helper_text" components={[<Typography paragraph />]} />
+      {authorName && (
+        <Box
+          sx={{
+            bgcolor: 'secondary.main',
+            borderRadius: '0.25rem',
+            padding: '0.5rem 0.75rem',
+            marginBottom: '2rem',
+          }}>
+          <Typography>
+            {t('common.contributor')}: <b>{authorName}</b>
+          </Typography>
+        </Box>
+      )}
+      <EditInstitutionForm
+        affiliationToEdit={affiliationToEdit}
+        editAffiliation={editAffiliation}
+        onClose={toggleAffiliationModal}
+      />
+    </Modal>
+  );
+};
