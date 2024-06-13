@@ -19,6 +19,7 @@ import { RootState } from '../../../redux/store';
 import { OrganizationApprovalStatusDetail } from '../../../types/nvi.types';
 import { isValidUrl } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { ExportNviButton } from './ExportNviButton';
 import { NviStatusTableRow } from './NviStatusTableRow';
 import { NviYearSelector } from './NviYearSelector';
 
@@ -41,10 +42,13 @@ export const NviStatusPage = () => {
     | undefined;
 
   return (
-    <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'start' }}>
+    <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Typography variant="h1">{t('tasks.nvi.institution_nvi_status')}</Typography>
 
-      <NviYearSelector />
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <NviYearSelector />
+        <ExportNviButton year={year} />
+      </Box>
 
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
