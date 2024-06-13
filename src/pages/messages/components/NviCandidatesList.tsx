@@ -1,4 +1,4 @@
-import { Box, List, MenuItem, Select, Typography } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -14,11 +14,9 @@ import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { getNviYearFilterValues } from '../../../utils/nviHelpers';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
-
-const nviYearFilterValues = getNviYearFilterValues();
+import { NviYearSelector } from './NviYearSelector';
 
 export const NviCandidatesList = () => {
   const { t } = useTranslation();
@@ -86,25 +84,7 @@ export const NviCandidatesList = () => {
             }}
           />
 
-          <Select
-            sx={{ ml: 'auto' }}
-            data-testid={dataTestId.tasksPage.nvi.yearSelect}
-            size="small"
-            inputProps={{ 'aria-label': t('common.year') }}
-            value={nviParams.year}
-            onChange={(event) => {
-              searchParams.set(NviCandidatesSearchParam.Year, event.target.value.toString());
-              if (nviParams.offset) {
-                searchParams.delete(NviCandidatesSearchParam.Offset);
-              }
-              history.push({ search: searchParams.toString() });
-            }}>
-            {nviYearFilterValues.map((year) => (
-              <MenuItem key={year} value={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
+          <NviYearSelector sx={{ ml: 'auto' }} />
         </Box>
       </Box>
 
