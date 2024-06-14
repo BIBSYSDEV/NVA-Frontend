@@ -297,6 +297,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -368,11 +372,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1129,10 +1129,10 @@
     "citation_points_to": "Siteringen viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
-      "add_new_affiliation": "Legg til ny tilknytning",
-      "add_new_affiliation_helper_text": "<0>Det er kun institusjoner som forskningen er gjennomført i samarbeid med som skal legges til som tilknytning til bidragsyteren.</0> <0>Legg til tilknytning til bidragsyteren ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører bidragsyteren flere forskjellige enheter under samme institusjon så må du legge til dette som ny tilknytning.</0>",
       "add_contributor": "Legg til bidragsyter",
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
+      "add_new_affiliation": "Legg til ny tilknytning",
+      "add_new_affiliation_helper_text": "<0>Det er kun institusjoner som forskningen er gjennomført i samarbeid med som skal legges til som tilknytning til bidragsyteren.</0> <0>Legg til tilknytning til bidragsyteren ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører bidragsyteren flere forskjellige enheter under samme institusjon så må du legge til dette som ny tilknytning.</0>",
       "add_new_contributor": "Legg til ny bidragsyter",
       "add_self_as_contributor": "Legg meg til som bidragsyter",
       "add_unverified_contributor": "Legg til en uidentifisert bidragsyter.",
