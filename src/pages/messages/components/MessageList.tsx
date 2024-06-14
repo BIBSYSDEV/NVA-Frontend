@@ -17,7 +17,7 @@ import { ticketColor } from './TicketListItem';
 interface MessageListProps {
   ticket: Ticket;
   refetchData?: () => void;
-  canDeleteMessage?: boolean;
+  canDeleteMessage: boolean;
 }
 
 export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
@@ -44,11 +44,11 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
             date={message.createdDate}
             username={message.sender}
             backgroundColor={ticketColor[ticket.type]}
-            messageMenu={
+            menuElement={
               <MessageMenu
                 onDelete={() => deleteTicketMessageMutation.mutateAsync(message.identifier)}
                 isDeleting={deleteTicketMessageMutation.isPending}
-                canDeleteMessage={!!user && (canDeleteMessage || user.nvaUsername === message.sender)}
+                canDeleteMessage={!!message.text && !!user && (canDeleteMessage || user.nvaUsername === message.sender)}
               />
             }
           />
@@ -63,10 +63,10 @@ interface MessageItemProps {
   date: string;
   username: string;
   backgroundColor: string;
-  messageMenu?: ReactNode;
+  menuElement?: ReactNode;
 }
 
-export const MessageItem = ({ text, date, username, backgroundColor, messageMenu }: MessageItemProps) => {
+export const MessageItem = ({ text, date, username, backgroundColor, menuElement }: MessageItemProps) => {
   const { t } = useTranslation();
 
   const senderQuery = useQuery({
@@ -102,7 +102,7 @@ export const MessageItem = ({ text, date, username, backgroundColor, messageMenu
           </Tooltip>
           <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>{toDateString(date)}</span>
         </Typography>
-        {messageMenu}
+        {menuElement}
       </Box>
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />

@@ -9,10 +9,10 @@ import { dataTestId } from '../../../utils/dataTestIds';
 interface MessageMenuProps {
   onDelete: () => Promise<void>;
   isDeleting: boolean;
-  canDeleteMessage?: boolean;
+  canDeleteMessage: boolean;
 }
 
-export const MessageMenu = ({ onDelete, isDeleting }: MessageMenuProps) => {
+export const MessageMenu = ({ onDelete, isDeleting, canDeleteMessage }: MessageMenuProps) => {
   const { t } = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,6 +47,7 @@ export const MessageMenu = ({ onDelete, isDeleting }: MessageMenuProps) => {
           }}>
           <MenuItem
             data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteMessageButton}
+            disabled={!canDeleteMessage}
             onClick={() => {
               setShowConfirmDialog(true);
               setAnchorEl(null);
