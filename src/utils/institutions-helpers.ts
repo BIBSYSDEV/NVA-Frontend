@@ -38,7 +38,6 @@ export const findDescendantWithId = (organization: Organization, id: string) => 
 
   if (organization.hasPart) {
     descendant = getAllChildOrganizations(organization.hasPart).find((des) => des.id === id) || null;
-    console.log('descendant', descendant);
   }
 
   return descendant;
