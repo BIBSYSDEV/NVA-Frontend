@@ -513,6 +513,7 @@
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
       "get_nvi_periods": "Kunne ikke hente NVI-perioder",
       "get_orcid": "Kunne ikke hente data fra ORCID",
+      "get_organization": "Kunne ikke hente informasjon om organisasjon",
       "get_person": "Kunne ikke hente person",
       "get_positions": "Kunne ikke hente stillinger",
       "get_project": "Kunne ikke hente prosjekt",

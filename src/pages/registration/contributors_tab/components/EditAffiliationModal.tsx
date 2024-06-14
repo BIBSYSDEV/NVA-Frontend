@@ -2,13 +2,16 @@ import { Box, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { EditInstitutionForm } from '../../../../components/institution/EditInstitutionForm';
+import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
+import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
+import { SelectInstitutionSkeleton } from '../../../../components/institution/SelectInstitutionSkeleton';
 import { Modal } from '../../../../components/Modal';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { Affiliation } from '../../../../types/contributor.types';
 import { Organization } from '../../../../types/organization.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
+import { findAncestor, findDescendantWithId } from '../../../../utils/institutions-helpers';
 
 interface EditAffiliationModalProps {
   affiliationModalIsOpen: boolean;
@@ -30,6 +33,8 @@ export const EditAffiliationModal = ({
   const { t } = useTranslation();
   const { setFieldValue } = useFormikContext<Registration>();
   const dispatch = useDispatch();
+  const institution = findAncestor(affiliationToEdit);
+  const institutionQuery = useFetchOrganization(institution.id);
 
   const editAffiliation = (newAffiliationId: string) => {
     if (!newAffiliationId) {
@@ -90,11 +95,24 @@ export const EditAffiliationModal = ({
           </Typography>
         </Box>
       )}
-      <EditInstitutionForm
-        affiliationToEdit={affiliationToEdit}
-        editAffiliation={editAffiliation}
-        onClose={toggleAffiliationModal}
-      />
+      {institutionQuery.isPending ? (
+        <SelectInstitutionSkeleton />
+      ) : institutionQuery.data ? (
+        <SelectInstitutionForm
+          saveAffiliation={editAffiliation}
+          onCancel={toggleAffiliationModal}
+          initialValues={{
+            unit: institutionQuery.data,
+            subunit:
+              affiliationToEdit.id !== institutionQuery.data.id
+                ? findDescendantWithId(institutionQuery.data, affiliationToEdit.id)
+                : null,
+            selectedSuggestedAffiliationId: '',
+          }}
+        />
+      ) : (
+        <Typography sx={{ fontStyle: 'italic' }}>[{t('feedback.error.get_organization')}]</Typography>
+      )}
     </Modal>
   );
 };
