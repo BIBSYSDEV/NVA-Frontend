@@ -26,9 +26,10 @@ function buildOrganizationOption(org: Organization, level: number): Organization
 
 interface AreaOfResponsibilitySelectorProps extends Pick<BaseTextFieldProps, 'sx'> {
   paramName: string;
+  resetPagination: () => void;
 }
 
-export const AreaOfResponsibilitySelector = ({ sx, paramName }: AreaOfResponsibilitySelectorProps) => {
+export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }: AreaOfResponsibilitySelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const nvaUsername = user?.nvaUsername ?? '';
@@ -99,6 +100,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName }: AreaOfResponsibi
           data-testid={dataTestId.registrationWizard.resourceType.journalChip}
           onDelete={() => {
             searchParams.delete(paramName);
+            resetPagination();
             history.push({ search: searchParams.toString() });
           }}
         />
@@ -109,6 +111,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName }: AreaOfResponsibi
         } else {
           searchParams.delete(paramName);
         }
+        resetPagination();
         history.push({ search: searchParams.toString() });
       }}
       renderOption={(props, option, { selected }) => (

@@ -58,6 +58,7 @@ interface NviCandidateAggregations {
   approvedCollaboration: AggregationCount;
   assigned: AggregationCount;
   assignedCollaboration: AggregationCount;
+  dispute: AggregationCount;
   pending: AggregationCount;
   pendingCollaboration: AggregationCount;
   rejected: AggregationCount;

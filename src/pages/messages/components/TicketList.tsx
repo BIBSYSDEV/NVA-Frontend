@@ -94,7 +94,14 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
               />
             </Grid>
             <Grid item xs={16} md={6} lg={5}>
-              <AreaOfResponsibilitySelector paramName={TicketSearchParam.OrganizationId} />
+              <AreaOfResponsibilitySelector
+                paramName={TicketSearchParam.OrganizationId}
+                resetPagination={() => {
+                  if (page !== 1) {
+                    setPage(1);
+                  }
+                }}
+              />
             </Grid>
           </>
         )}

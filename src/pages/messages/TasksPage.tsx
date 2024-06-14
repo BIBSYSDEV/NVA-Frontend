@@ -1,34 +1,15 @@
-import AdjustIcon from '@mui/icons-material/Adjust';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RuleIcon from '@mui/icons-material/Rule';
-import {
-  Badge,
-  Box,
-  Button,
-  FormControlLabel,
-  FormLabel,
-  LinearProgress,
-  Link as MuiLink,
-  Radio,
-  Typography,
-  styled,
-} from '@mui/material';
+import { Badge, Button, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
-import { useFetchNviCandidates } from '../../api/hooks/useFetchNviCandidates';
 import { fetchUser } from '../../api/roleApi';
-import {
-  FetchNviCandidatesParams,
-  FetchTicketsParams,
-  NviCandidatesSearchParam,
-  TicketSearchParam,
-  fetchCustomerTickets,
-} from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -38,7 +19,6 @@ import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefau
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { TasksPageLocationState } from '../../types/locationState.types';
-import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -48,22 +28,13 @@ import { RegistrationLandingPage } from '../public_registration/RegistrationLand
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
 import { NviCorrectionList } from './components/NviCorrectionList';
+import { NviMenuContent } from './components/NviMenuContent';
 import { NviStatusPage } from './components/NviStatusPage';
 import { TicketList } from './components/TicketList';
 
 export const StyledSearchModeButton = styled(LinkButton)({
   borderRadius: '1.5rem',
   textTransform: 'none',
-});
-
-const StyledStatusRadio = styled(Radio)({
-  paddingTop: '0.05rem',
-  paddingBottom: '0.05rem',
-});
-
-const StyledNviStatusBox = styled(Box)({
-  padding: '0.5rem',
-  borderRadius: '0.25rem',
 });
 
 const TasksPage = () => {
@@ -95,9 +66,6 @@ const TasksPage = () => {
 
   const searchParams = new URLSearchParams(history.location.search);
 
-  const queryParam = searchParams.get(TicketSearchParam.Query);
-  const assigneeParam = searchParams.get(TicketSearchParam.Assignee);
-
   // Tickets/dialogue data
   const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
 
@@ -111,17 +79,17 @@ const TasksPage = () => {
     .filter(([, selected]) => selected)
     .map(([key]) => key);
 
-  const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.OrganizationId) ? rowsPerPage : 0;
+  const organizationIdParam = searchParams.get(TicketSearchParam.OrganizationId);
 
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
-    results: numberOfResultsGivenViewingScope,
+    results: rowsPerPage,
     from: (page - 1) * rowsPerPage,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
-    organizationId: searchParams.get(TicketSearchParam.OrganizationId),
-    excludeSubUnits: true,
+    organizationId: organizationIdParam,
+    excludeSubUnits: organizationIdParam ? true : undefined,
     assignee: searchParams.get(TicketSearchParam.Assignee),
     status: searchParams.get(TicketSearchParam.Status),
     type: selectedTicketTypes.join(','),
@@ -158,65 +126,6 @@ const TasksPage = () => {
   const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
   const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
-
-  // NVI data
-  const nviStatusParam = searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus | null;
-  const nviStatusFilter = nviStatusParam ?? 'pending';
-  const nviYearParam = searchParams.get(NviCandidatesSearchParam.Year);
-  const nviYearFilter = nviYearParam ? +nviYearParam : new Date().getFullYear();
-
-  const setNviStatusParam = (newStatusFilter: NviCandidateSearchStatus) => {
-    searchParams.set(NviCandidatesSearchParam.Filter, newStatusFilter);
-    history.push({ search: searchParams.toString() });
-  };
-
-  const openCandidatesView = () => {
-    if (!isOnNviCandidatesPage) {
-      history.push(UrlPathTemplate.TasksNvi);
-    }
-  };
-
-  const affiliationsParam = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',');
-
-  const commonNviParams = {
-    affiliations: affiliationsParam,
-    assignee: assigneeParam,
-    query: queryParam,
-    year: nviYearFilter,
-  } satisfies FetchNviCandidatesParams;
-
-  const nviAggregationsQuery = useFetchNviCandidates({
-    enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    params: { ...commonNviParams, size: 1, aggregation: 'all' },
-  });
-
-  const listNviCandidatesParams = {
-    ...commonNviParams,
-    size: rowsPerPage,
-    offset: (page - 1) * rowsPerPage,
-    filter: nviStatusFilter,
-  } satisfies FetchNviCandidatesParams;
-
-  const nviCandidatesQuery = useFetchNviCandidates({
-    enabled: isOnNviCandidatesPage || isOnNviStatusPage,
-    params: listNviCandidatesParams,
-  });
-
-  const nviAggregations = nviAggregationsQuery.data?.aggregations;
-
-  const nviPendingCount = nviAggregations?.pending.docCount.toLocaleString();
-  const nviPendingCollaborationCount = nviAggregations?.pendingCollaboration.docCount.toLocaleString();
-  const nviAssignedCount = nviAggregations?.assigned.docCount.toLocaleString();
-  const nviAssignedCollaborationCount = nviAggregations?.assignedCollaboration.docCount.toLocaleString();
-  const nviApprovedCount = nviAggregations?.approved.docCount.toLocaleString();
-  const nviApprovedCollaborationCount = nviAggregations?.approvedCollaboration.docCount.toLocaleString();
-  const nviRejectedCount = nviAggregations?.rejected.docCount.toLocaleString();
-  const nviRejectedCollaborationCount = nviAggregations?.rejectedCollaboration.docCount.toLocaleString();
-
-  const nviCandidatesTotal = nviAggregations?.totalCount.docCount ?? 0;
-  const nviCandidatesCompeted = nviAggregations?.completed.docCount ?? 0;
-  const nviCompletedPercentage =
-    nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompeted / nviCandidatesTotal) * 100) : 100;
 
   return (
     <StyledPageWithSideMenu>
@@ -311,163 +220,7 @@ const TasksPage = () => {
 
         {isNviCurator && (
           <>
-            <NavigationListAccordion
-              title={t('common.nvi')}
-              startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
-              accordionPath={UrlPathTemplate.TasksNvi}
-              onClick={() => {
-                if (!isOnNviCandidatesPage) {
-                  setPage(1);
-                }
-              }}
-              dataTestId={dataTestId.tasksPage.nviAccordion}>
-              <StyledTicketSearchFormGroup>
-                {nviAggregationsQuery.isSuccess && (
-                  <StyledNviStatusBox sx={{ bgcolor: 'nvi.light', mb: '1rem' }}>
-                    <Typography id="progress-label" gutterBottom>
-                      {t('tasks.nvi.completed_count', {
-                        completed: nviCandidatesCompeted,
-                        total: nviCandidatesTotal,
-                      })}
-                    </Typography>
-                    <LinearProgress
-                      aria-labelledby="progress-label"
-                      variant="determinate"
-                      value={nviCompletedPercentage}
-                      sx={{
-                        my: '0.175rem',
-                        height: '0.75rem',
-                        bgcolor: 'white',
-                      }}
-                    />
-                    <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
-
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: '0.5rem' }}>
-                      <MuiLink
-                        data-testid={dataTestId.tasksPage.nvi.toggleStatusLink}
-                        component={Link}
-                        to={isOnNviCandidatesPage ? UrlPathTemplate.TasksNviStatus : UrlPathTemplate.TasksNvi}>
-                        {isOnNviCandidatesPage
-                          ? t('tasks.nvi.show_reporting_status')
-                          : t('tasks.nvi.show_candidate_search')}
-                      </MuiLink>
-                    </Box>
-                  </StyledNviStatusBox>
-                )}
-
-                <FormLabel component="legend" sx={{ fontWeight: 700 }}>
-                  {t('tasks.status')}
-                </FormLabel>
-
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                  <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
-                    <FormControlLabel
-                      data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
-                      checked={nviStatusFilter === 'pending'}
-                      disabled={!!assigneeParam}
-                      onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusParam('pending')} />}
-                      slotProps={{ typography: { fontWeight: 700 } }}
-                      label={
-                        nviPendingCount
-                          ? `${t('tasks.nvi.status.New')} (${nviPendingCount})`
-                          : t('tasks.nvi.status.New')
-                      }
-                    />
-                    <FormControlLabel
-                      data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCollaborationRadio}
-                      checked={nviStatusFilter === 'pendingCollaboration'}
-                      disabled={!!assigneeParam}
-                      onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusParam('pendingCollaboration')} />}
-                      label={
-                        nviPendingCount
-                          ? `${t('tasks.nvi.waiting_for_your_institution')} (${nviPendingCollaborationCount})`
-                          : t('tasks.nvi.waiting_for_your_institution')
-                      }
-                    />
-                  </StyledNviStatusBox>
-
-                  <StyledNviStatusBox sx={{ bgcolor: 'nvi.light' }}>
-                    <FormControlLabel
-                      data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedRadio}
-                      checked={nviStatusFilter === 'assigned'}
-                      onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusParam('assigned')} />}
-                      slotProps={{ typography: { fontWeight: 700 } }}
-                      label={
-                        nviAssignedCount
-                          ? `${t('tasks.nvi.status.Pending')} (${nviAssignedCount})`
-                          : t('tasks.nvi.status.Pending')
-                      }
-                    />
-                    <FormControlLabel
-                      data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedCollaborationRadio}
-                      checked={nviStatusFilter === 'assignedCollaboration'}
-                      onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusParam('assignedCollaboration')} />}
-                      label={
-                        nviAssignedCollaborationCount
-                          ? `${t('tasks.nvi.waiting_for_your_institution')} (${nviAssignedCollaborationCount})`
-                          : t('tasks.nvi.waiting_for_your_institution')
-                      }
-                    />
-                  </StyledNviStatusBox>
-
-                  <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
-                    <FormControlLabel
-                      data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedRadio}
-                      checked={nviStatusFilter === 'approved'}
-                      onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusParam('approved')} />}
-                      slotProps={{ typography: { fontWeight: 700 } }}
-                      label={
-                        nviApprovedCount
-                          ? `${t('tasks.nvi.status.Approved')} (${nviApprovedCount})`
-                          : t('tasks.nvi.status.Approved')
-                      }
-                    />
-                    <FormControlLabel
-                      data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCollaborationRadio}
-                      checked={nviStatusFilter === 'approvedCollaboration'}
-                      onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusParam('approvedCollaboration')} />}
-                      label={
-                        nviApprovedCollaborationCount
-                          ? `${t('tasks.nvi.waiting_for_other_institutions')} (${nviApprovedCollaborationCount})`
-                          : t('tasks.nvi.waiting_for_other_institutions')
-                      }
-                    />
-                  </StyledNviStatusBox>
-
-                  <StyledNviStatusBox sx={{ bgcolor: 'secondary.main' }}>
-                    <FormControlLabel
-                      data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedRadio}
-                      checked={nviStatusFilter === 'rejected'}
-                      onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusParam('rejected')} />}
-                      slotProps={{ typography: { fontWeight: 700 } }}
-                      label={
-                        nviRejectedCount
-                          ? `${t('tasks.nvi.status.Rejected')} (${nviRejectedCount})`
-                          : t('tasks.nvi.status.Rejected')
-                      }
-                    />
-                    <FormControlLabel
-                      data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCollaborationRadio}
-                      checked={nviStatusFilter === 'rejectedCollaboration'}
-                      onClick={openCandidatesView}
-                      control={<StyledStatusRadio onChange={() => setNviStatusParam('rejectedCollaboration')} />}
-                      label={
-                        nviRejectedCollaborationCount
-                          ? `${t('tasks.nvi.waiting_for_other_institutions')} (${nviRejectedCollaborationCount})`
-                          : t('tasks.nvi.waiting_for_other_institutions')
-                      }
-                    />
-                  </StyledNviStatusBox>
-                </Box>
-              </StyledTicketSearchFormGroup>
-            </NavigationListAccordion>
+            <NviMenuContent />
 
             <NavigationListAccordion
               title={t('tasks.correction_list')}
@@ -518,18 +271,10 @@ const TasksPage = () => {
           />
 
           <PrivateRoute exact path={UrlPathTemplate.TasksNvi} isAuthorized={isNviCurator}>
-            <NviCandidatesList
-              nviCandidatesQuery={nviCandidatesQuery}
-              nviQueryParams={listNviCandidatesParams}
-              rowsPerPage={rowsPerPage}
-              setRowsPerPage={setRowsPerPage}
-              page={page}
-              setPage={setPage}
-              helmetTitle={t('common.nvi')}
-            />
+            <NviCandidatesList />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviStatus} isAuthorized={isNviCurator}>
-            <NviStatusPage activeYear={nviYearFilter} />
+            <NviStatusPage />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviCandidate} isAuthorized={isNviCurator}>
             <NviCandidatePage />
