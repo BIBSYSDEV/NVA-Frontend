@@ -114,6 +114,9 @@ export const SelectInstitutionForm = ({
             </Paper>
           )}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <Typography variant="h3" sx={{ fontWeight: 'normal' }}>
+              {t('common.select_institution')}
+            </Typography>
             <Field name={SelectOrganizationFormField.Unit}>
               {({ field }: FieldProps<Organization>) => (
                 <Autocomplete
