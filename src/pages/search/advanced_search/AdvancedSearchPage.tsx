@@ -23,6 +23,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { ExportResultsButton } from '../ExportResultsButton';
 import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
+import { FileStatusSelect } from './FileStatusSelect';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
@@ -61,6 +62,7 @@ export const AdvancedSearchPage = () => {
   const resultSearchQueryConfig: FetchResultsParams = {
     categoryShould,
     contributorName: params.get(ResultParam.ContributorName),
+    files: params.get(ResultParam.Files),
     from: Number(params.get(ResultParam.From) ?? 0),
     fundingIdentifier: params.get(ResultParam.FundingIdentifier),
     fundingSource: params.get(ResultParam.FundingSource),
@@ -99,7 +101,7 @@ export const AdvancedSearchPage = () => {
 
   return (
     <Grid container rowGap={2}>
-      <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', sm: 0 } }}>
+      <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
         <Typography variant="h2">{t('search.advanced_search.advanced_search')}</Typography>
         <Grid item xs={12}>
           <StyledTypography fontWeight="bold">{t('search.advanced_search.title_search')}</StyledTypography>
@@ -145,6 +147,15 @@ export const AdvancedSearchPage = () => {
               checked={params.get(ResultParam.ScientificIndexStatus) === ScientificIndexStatuses.Reported}
               label={t('search.advanced_search.reported')}
             />
+          </Grid>
+
+          {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+
+          <Grid item>
+            <StyledTypography id="file-status-select-label" fontWeight="bold">
+              {t('registration.files_and_license.files')}
+            </StyledTypography>
+            <FileStatusSelect />
           </Grid>
         </Grid>
 
@@ -205,6 +216,7 @@ export const AdvancedSearchPage = () => {
             />
           </Grid>
         </Grid>
+
         <Grid container item xs={12} sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }}>
           <Button variant="outlined" onClick={() => history.push(history.location.pathname)}>
             {t('search.reset_selection')}

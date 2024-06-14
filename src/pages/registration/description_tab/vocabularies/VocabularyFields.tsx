@@ -2,7 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import { TFuncKey } from 'i18next';
+import { ParseKeys } from 'i18next';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
@@ -18,7 +18,7 @@ import { VocabularyComponentProps } from './VocabularyAutocomplete';
 interface VocabularyConfig {
   [key: string]: {
     baseId: string;
-    i18nKey: TFuncKey;
+    i18nKey: ParseKeys;
     component: (props: VocabularyComponentProps) => JSX.Element;
   };
 }
@@ -150,7 +150,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                 setVisibleVocabularies([...visibleVocabularies, vocabulary]);
                 setNewVocabularyAnchor(null);
               }}>
-              {t<any>(vocabularyConfig[vocabulary].i18nKey)}
+              {t(vocabularyConfig[vocabulary].i18nKey) as string}
             </MenuItem>
           ))}
         </Menu>

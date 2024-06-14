@@ -18,20 +18,22 @@ import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { OrganizationApprovalStatusDetail } from '../../../types/nvi.types';
 import { isValidUrl } from '../../../utils/general-helpers';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from './NviStatusTableRow';
+import { NviYearSelector } from './NviYearSelector';
 
-interface NviStatusPageProps {
-  activeYear: number;
-}
-
-export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
+export const NviStatusPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
   const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const institution = organizationQuery.data;
 
-  const nviQuery = useFetchNviCandidates({ size: 1, aggregation: 'organizationApprovalStatuses', year: activeYear });
+  const { year } = useNviCandidatesParams();
+
+  const nviQuery = useFetchNviCandidates({
+    params: { size: 1, aggregation: 'organizationApprovalStatuses', year },
+  });
   const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
   const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
   const nviAggregations = nviQuery.data?.aggregations?.organizationApprovalStatuses[aggregationKey ?? ''] as
@@ -39,10 +41,10 @@ export const NviStatusPage = ({ activeYear }: NviStatusPageProps) => {
     | undefined;
 
   return (
-    <BackgroundDiv>
-      <Typography variant="h1" gutterBottom>
-        {t('tasks.nvi.institution_nvi_status')}
-      </Typography>
+    <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'start' }}>
+      <Typography variant="h1">{t('tasks.nvi.institution_nvi_status')}</Typography>
+
+      <NviYearSelector />
 
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">

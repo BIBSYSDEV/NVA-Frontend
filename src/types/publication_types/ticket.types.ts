@@ -62,7 +62,7 @@ type TicketPublication = Pick<
 
 export interface PublishingTicket extends Ticket {
   approvedFiles: string[];
-  filesForApproval: AssociatedFile[];
+  filesForApproval: string[];
   workflow: PublishStrategy;
 }
 
