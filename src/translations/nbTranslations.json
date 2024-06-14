@@ -191,7 +191,7 @@
     "funding": "Finansiering",
     "help": "Hjelp",
     "id": "ID",
-    "importedFrom": "Importert fra",
+    "imported_from": "Importert fra {{source}}",
     "initials": "Initialer",
     "institution": "Institusjon",
     "institutions": "Institusjoner",

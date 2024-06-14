@@ -82,7 +82,7 @@ interface RegistrationPublisher {
 type ImportSource = 'Brage' | 'Cristin' | 'Scopus';
 
 interface AdditionalIdentifier {
-  sourceName: Omit<ImportSource, 'Brage'>;
+  sourceName: ImportSource;
   value: string;
 }
 

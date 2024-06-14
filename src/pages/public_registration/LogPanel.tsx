@@ -55,11 +55,11 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const logs: LogItem[] = [];
 
   if (isImported) {
-    registration.importDetails?.map((importDetail) => {
+    registration.importDetails?.forEach((importDetail) => {
       const registrationImported: LogItem = {
         modifiedDate: importDetail.importDate,
-        title: `${t('common.importedFrom')} ${importDetail.source}`,
-        description: `${organizationAcronym}`,
+        title: t('common.imported_from', { source: importDetail.source }),
+        description: organizationAcronym,
         type: 'PublishingRequest',
       };
       logs.push(registrationImported);
