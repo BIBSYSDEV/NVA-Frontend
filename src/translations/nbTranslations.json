@@ -226,6 +226,7 @@
     "pagination_rows_per_page": "Antall resultater per side:",
     "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
     "person": "Person",
+    "person_id": "Person-ID",
     "place": "Sted",
     "previous": "Forrige",
     "project_status": "Prosjektstatus",
@@ -296,10 +297,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -371,7 +368,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1866,10 +1867,8 @@
     "year_to": "Til år"
   },
   "tasks": {
-    "all_nvi_results": "Alle NVI-resultater",
     "correction_list": "Retteliste",
     "dialogues_without_curator": "Dialoger uten kurator",
-    "my_nvi_results": "Mine NVI-resultater",
     "nvi": {
       "approval_status_count": "Sjekket ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",

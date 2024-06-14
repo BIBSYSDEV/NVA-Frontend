@@ -2,11 +2,12 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FetchNviCandidatesParams } from '../../../api/searchApi';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { CandidateOffsetState, NviCandidateSearchHit } from '../../../types/nvi.types';
+import { NviCandidatePageLocationState } from '../../../types/locationState.types';
+import { NviCandidateSearchHit } from '../../../types/nvi.types';
 import { displayDate } from '../../../utils/date-helpers';
+import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
@@ -14,12 +15,12 @@ import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlP
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
   currentOffset: number;
-  nviQueryParams: FetchNviCandidatesParams;
 }
 
-export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviQueryParams }: NviCandidateListItemProps) => {
+export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandidateListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const nviParams = useNviCandidatesParams();
 
   const focusedContributors = nviCandidate.publicationDetails.contributors.slice(0, 5);
   const countRestContributors = nviCandidate.publicationDetails.contributors.length - focusedContributors.length;
@@ -35,10 +36,10 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviQueryPara
 
   const myApproval = nviCandidate.approvals.find((approval) => approval.institutionId === user?.topOrgCristinId);
 
-  const candidateOffsetState: CandidateOffsetState = {
-    currentOffset,
-    nviQueryParams,
-  };
+  const candidateLinkState = {
+    candidateOffsetState: { currentOffset, nviQueryParams: nviParams },
+    previousSearch: window.location.search,
+  } satisfies NviCandidatePageLocationState;
 
   return (
     <SearchListItem
@@ -59,7 +60,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviQueryPara
             component={Link}
             to={{
               pathname: getNviCandidatePath(nviCandidate.identifier),
-              state: candidateOffsetState,
+              state: candidateLinkState,
             }}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>

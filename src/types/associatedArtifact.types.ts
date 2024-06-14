@@ -34,7 +34,7 @@ export interface AssociatedFile {
   uploadDetails?: UploadDetails;
 }
 
-export interface UploadDetails {
+interface UploadDetails {
   type: 'UploadDetails';
   uploadedBy: string;
   uploadedDate: string;

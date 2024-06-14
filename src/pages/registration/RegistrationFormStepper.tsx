@@ -4,10 +4,10 @@ import { useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
+import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTabErrors, getTouchedTabFields } from '../../utils/formik-helpers';
-import { RegistrationLocationState } from './RegistrationForm';
 
 interface RegistrationFormStepperProps {
   setTabNumber: (newTab: RegistrationTab) => void;
@@ -18,7 +18,7 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
   const { t } = useTranslation();
   const { errors, touched, values, setTouched } = useFormikContext<Registration>();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const locationState = useLocation<RegistrationLocationState>().state;
+  const locationState = useLocation<RegistrationFormLocationState>().state;
   const maxVisitedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
   const valuesRef = useRef(values);

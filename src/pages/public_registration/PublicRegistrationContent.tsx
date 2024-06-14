@@ -11,6 +11,7 @@ import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
@@ -79,7 +80,10 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}
               component={RouterLink}
-              to={getRegistrationWizardPath(identifier)}>
+              to={{
+                pathname: getRegistrationWizardPath(identifier),
+                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
+              }}>
               <EditIcon />
             </IconButton>
           </Tooltip>

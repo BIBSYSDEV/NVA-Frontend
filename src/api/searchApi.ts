@@ -7,8 +7,8 @@ import {
 } from '../types/importCandidate.types';
 import {
   NviCandidate,
-  NviCandidateAggregations,
   NviCandidateSearchResponse,
+  NviCandidateSearchStatus,
   ScientificIndexStatuses,
 } from '../types/nvi.types';
 import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
@@ -229,32 +229,39 @@ export const fetchEmployees = async (
   return getEmployees.data;
 };
 
-enum NviCandidatesSearchParam {
+export enum NviCandidatesSearchParam {
   Affiliations = 'affiliations',
   Aggregation = 'aggregation',
   Assignee = 'assignee',
   ExcludeSubUnits = 'excludeSubUnits',
   Filter = 'filter',
   Offset = 'offset',
+  OrderBy = 'orderBy',
   Query = 'query',
   Size = 'size',
+  SortOrder = 'sortOrder',
   Year = 'year',
 }
 
+export type NviCandidateOrderBy = 'createdDate';
+
 export interface FetchNviCandidatesParams {
   [NviCandidatesSearchParam.Affiliations]?: string[] | null;
-  [NviCandidatesSearchParam.Aggregation]?: 'all' | keyof NviCandidateAggregations | null;
+  [NviCandidatesSearchParam.Aggregation]?: 'all' | NviCandidateSearchStatus | null;
   [NviCandidatesSearchParam.Assignee]?: string | null;
   [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
-  [NviCandidatesSearchParam.Filter]?: keyof NviCandidateAggregations | null;
+  [NviCandidatesSearchParam.Filter]?: NviCandidateSearchStatus | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
+  [NviCandidatesSearchParam.OrderBy]?: NviCandidateOrderBy | null;
   [NviCandidatesSearchParam.Query]?: string | null;
   [NviCandidatesSearchParam.Size]?: number | null;
+  [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
 }
 
 export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   const searchParams = new URLSearchParams();
+
   searchParams.set(NviCandidatesSearchParam.Size, params.size?.toString() || '10');
   searchParams.set(NviCandidatesSearchParam.Offset, params.offset?.toString() || '0');
 
@@ -278,6 +285,12 @@ export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   }
   if (params.year) {
     searchParams.set(NviCandidatesSearchParam.Year, params.year.toString());
+  }
+  if (params.orderBy) {
+    searchParams.set(NviCandidatesSearchParam.OrderBy, params.orderBy);
+  }
+  if (params.sortOrder) {
+    searchParams.set(NviCandidatesSearchParam.SortOrder, params.sortOrder);
   }
 
   const paramsString = searchParams.toString();

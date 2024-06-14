@@ -1,4 +1,3 @@
-import { FetchNviCandidatesParams } from '../api/searchApi';
 import { LanguageString, SearchResponse } from './common.types';
 import { PublicationInstanceType, RegistrationDate } from './registration.types';
 
@@ -52,11 +51,14 @@ interface OrganizationApprovalStatuses extends AggregationCount {
   [organizationId: string]: OrganizationApprovalStatusDetail | number;
 }
 
-export interface NviCandidateAggregations {
+export type NviCandidateSearchStatus = keyof NviCandidateAggregations;
+
+interface NviCandidateAggregations {
   approved: AggregationCount;
   approvedCollaboration: AggregationCount;
   assigned: AggregationCount;
   assignedCollaboration: AggregationCount;
+  dispute: AggregationCount;
   pending: AggregationCount;
   pendingCollaboration: AggregationCount;
   rejected: AggregationCount;
@@ -119,9 +121,4 @@ export interface NviPeriod {
 
 export interface NviPeriodResponse {
   periods: NviPeriod[];
-}
-
-export interface CandidateOffsetState {
-  currentOffset: number;
-  nviQueryParams: FetchNviCandidatesParams;
 }

@@ -16,6 +16,7 @@ i18n.use(LanguageDetector).init({
       translation: nnTranslations,
     },
   },
+  contextSeparator: '__',
   fallbackLng: 'nob',
   returnEmptyString: false,
   supportedLngs: ['nob', 'eng', 'nno'],
