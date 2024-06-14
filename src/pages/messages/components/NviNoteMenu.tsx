@@ -29,7 +29,7 @@ export const NviNoteMenu = ({ onDelete, isDeleting, canDeleteMessage }: NviNoteM
           aria-controls={open ? 'basic-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.messageOptionsButton}
+          data-testid={dataTestId.tasksPage.nvi.noteOptionsButton}
           aria-label={t('common.delete')}
           size="small"
           sx={{ alignSelf: 'end' }}
@@ -46,7 +46,7 @@ export const NviNoteMenu = ({ onDelete, isDeleting, canDeleteMessage }: NviNoteM
             horizontal: 'left',
           }}>
           <MenuItem
-            data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteMessageButton}
+            data-testid={dataTestId.tasksPage.nvi.deleteNoteButton}
             disabled={!canDeleteMessage}
             onClick={() => {
               setShowConfirmDialog(true);

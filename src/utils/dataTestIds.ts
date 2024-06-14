@@ -587,7 +587,9 @@ export const dataTestId = {
     nvi: {
       approveButton: 'approve-button',
       candidatesList: 'nvi-candidates-list',
+      deleteNoteButton: 'delete-note-button',
       nextCandidateButton: 'next-candidate-button',
+      noteOptionsButton: 'note-options-button',
       previousCandidateButton: 'previous-nvi-candidate-button',
       rejectButton: 'reject-button',
       rejectionModalCancelButton: 'rejection-modal-cancel-button',
