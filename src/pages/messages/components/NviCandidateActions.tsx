@@ -193,11 +193,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     username={note.username}
                     backgroundColor="nvi.main"
                     menuElement={
-                      <NviNoteMenu
-                        onDelete={deleteFunction}
-                        isDeleting={isDeleting}
-                        canDeleteMessage={!!user && (user.isNviCurator || user.nvaUsername === note.username)}
-                      />
+                      !!user &&
+                      user.nvaUsername === note.username && (
+                        <NviNoteMenu onDelete={deleteFunction} isDeleting={isDeleting} />
+                      )
                     }
                   />
                 </ErrorBoundary>

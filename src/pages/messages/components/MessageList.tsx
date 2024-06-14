@@ -45,11 +45,14 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
             username={message.sender}
             backgroundColor={ticketColor[ticket.type]}
             menuElement={
-              <MessageMenu
-                onDelete={() => deleteTicketMessageMutation.mutateAsync(message.identifier)}
-                isDeleting={deleteTicketMessageMutation.isPending}
-                canDeleteMessage={!!message.text && !!user && (canDeleteMessage || user.nvaUsername === message.sender)}
-              />
+              !!user &&
+              (canDeleteMessage || user.nvaUsername === message.sender) && (
+                <MessageMenu
+                  onDelete={() => deleteTicketMessageMutation.mutateAsync(message.identifier)}
+                  isDeleting={deleteTicketMessageMutation.isPending}
+                  canDeleteMessage={!!message.text}
+                />
+              )
             }
           />
         ))}

@@ -9,10 +9,9 @@ import { dataTestId } from '../../../utils/dataTestIds';
 interface NviNoteMenuProps {
   onDelete: (() => Promise<void>) | undefined;
   isDeleting: boolean;
-  canDeleteMessage: boolean;
 }
 
-export const NviNoteMenu = ({ onDelete, isDeleting, canDeleteMessage }: NviNoteMenuProps) => {
+export const NviNoteMenu = ({ onDelete, isDeleting }: NviNoteMenuProps) => {
   const { t } = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,7 +46,6 @@ export const NviNoteMenu = ({ onDelete, isDeleting, canDeleteMessage }: NviNoteM
           }}>
           <MenuItem
             data-testid={dataTestId.tasksPage.nvi.deleteNoteButton}
-            disabled={!canDeleteMessage}
             onClick={() => {
               setShowConfirmDialog(true);
               setAnchorEl(null);
