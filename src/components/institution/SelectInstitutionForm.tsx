@@ -167,13 +167,10 @@ export const SelectInstitutionForm = ({
                           setSelectedSubunitId(value?.id ?? '');
                         }}
                         filterOptions={(options, state) =>
-                          options.filter(
-                            (option) =>
-                              state
-                                .getOptionLabel(option)
-                                .toLocaleLowerCase()
-                                .includes(state.inputValue.toLocaleLowerCase()) ||
-                              option.labels['en']?.toLocaleLowerCase().includes(state.inputValue.toLocaleLowerCase())
+                          options.filter((option) =>
+                            Object.values(option.labels).some((label) =>
+                              label.toLowerCase().includes(state.inputValue.toLowerCase())
+                            )
                           )
                         }
                         renderInput={(params) => (
