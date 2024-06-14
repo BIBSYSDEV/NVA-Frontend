@@ -79,17 +79,17 @@ const TasksPage = () => {
     .filter(([, selected]) => selected)
     .map(([key]) => key);
 
-  const numberOfResultsGivenViewingScope = searchParams.get(TicketSearchParam.OrganizationId) ? rowsPerPage : 0;
+  const organizationIdParam = searchParams.get(TicketSearchParam.OrganizationId);
 
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
-    results: numberOfResultsGivenViewingScope,
+    results: rowsPerPage,
     from: (page - 1) * rowsPerPage,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
-    organizationId: searchParams.get(TicketSearchParam.OrganizationId),
-    excludeSubUnits: true,
+    organizationId: organizationIdParam,
+    excludeSubUnits: organizationIdParam ? true : undefined,
     assignee: searchParams.get(TicketSearchParam.Assignee),
     status: searchParams.get(TicketSearchParam.Status),
     type: selectedTicketTypes.join(','),
