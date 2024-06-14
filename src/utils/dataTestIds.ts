@@ -225,9 +225,7 @@ export const dataTestId = {
     doiMessageField: 'request-doi-message',
     doiOriginalLink: 'doi-original-link',
     editButton: 'button-edit-registration',
-    emailButton: 'email-button',
     externalLinksAccordion: 'external-links-accordion',
-    facebookButton: 'facebook-button',
     file: 'file',
     fileEmbargoDate: 'file-embargo-date',
     fileName: 'file-name',
@@ -242,7 +240,6 @@ export const dataTestId = {
     handleLink: 'handle-link',
     keywords: 'public-registration-keywords',
     license: 'public-registration-license',
-    linkedInButton: 'linkedin-button',
     noLinkOrFilesWarning: 'no-link-or-files-warning-typhography',
     npi: 'public-registration-npi',
     openFileButton: 'open-file-button',
@@ -282,7 +279,6 @@ export const dataTestId = {
       tabPanelTasks: 'tab-panel-tasks',
     },
     title: 'public-registration-title',
-    twitterButton: 'twitter-button',
   },
   registrationWizard: {
     contributors: {

@@ -25,7 +25,6 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
-import { ShareOptions } from './ShareOptions';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
@@ -268,8 +267,6 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
           </LandingPageAccordion>
         )}
-
-        <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
       </BackgroundDiv>
     </Paper>
   );
