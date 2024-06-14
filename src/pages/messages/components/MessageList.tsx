@@ -17,7 +17,7 @@ import { ticketColor } from './TicketListItem';
 interface MessageListProps {
   ticket: Ticket;
   refetchData?: () => void;
-  canDeleteMessage: boolean;
+  canDeleteMessage?: boolean;
 }
 
 export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
