@@ -9,16 +9,16 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
+import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
-import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { RootState } from '../../redux/store';
-import { TasksPageLocationState } from '../../types/locationState.types';
+import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -39,7 +39,7 @@ export const StyledSearchModeButton = styled(LinkButton)({
 
 const TasksPage = () => {
   const { t } = useTranslation();
-  const history = useHistory<TasksPageLocationState>();
+  const history = useHistory<PreviousSearchLocationState>();
   const user = useSelector((store: RootState) => store.user);
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;
