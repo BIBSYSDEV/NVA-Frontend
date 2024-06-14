@@ -1,21 +1,20 @@
-import { Box, Skeleton, Tooltip, Typography } from '@mui/material';
+import { Box, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
-import { fetchUser } from '../../api/roleApi';
 import { Avatar } from '../../components/Avatar';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
 import { toDateString } from '../../utils/date-helpers';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
-import { getFullName } from '../../utils/user-helpers';
 import { StyledStatusMessageBox } from '../messages/components/PublishingRequestMessagesColumn';
 import { ticketColor } from '../messages/components/TicketListItem';
 
 interface LogItem {
   modifiedDate: string;
-  description: string;
+  title: string;
+  description?: string;
   filesInfo?: TicketFilesInfo;
   type: TicketType;
   actionBy?: string[];
@@ -28,6 +27,9 @@ interface LogPanelProps {
 
 export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const { t } = useTranslation();
+
+  const isImported = !!registration.importDetails?.length;
+
   const resourceOwnerAffiliationId = registration.resourceOwner.ownerAffiliation;
   const resourceOwnerId = registration.resourceOwner.owner;
 
@@ -44,22 +46,39 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     staleTime: Infinity,
     gcTime: 1_800_000, // 30 minutes
   });
-
-  const userQuery = useQuery({
-    enabled: !!resourceOwnerId,
-    queryKey: ['user', resourceOwnerId],
-    queryFn: resourceOwnerId ? () => fetchUser(resourceOwnerId) : undefined,
-    retry: 0,
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
+  const organizationAcronym = organizationQuery.isPending
+    ? ''
+    : organizationQuery.data
+      ? organizationQuery.data?.acronym
+      : t('common.unknown');
 
   const logs: LogItem[] = [];
+
+  if (isImported) {
+    registration.importDetails?.forEach((importDetail) => {
+      const registrationImported: LogItem = {
+        modifiedDate: importDetail.importDate,
+        title: t('common.imported_from', { source: importDetail.source }),
+        description: organizationAcronym,
+        type: 'PublishingRequest',
+      };
+      logs.push(registrationImported);
+    });
+  } else {
+    const registrationCreated: LogItem = {
+      modifiedDate: registration.createdDate,
+      title: t('common.created'),
+      description: organizationAcronym,
+      type: 'PublishingRequest',
+      actionBy: [resourceOwnerId],
+    };
+    logs.push(registrationCreated);
+  }
 
   if (registration.publishedDate) {
     const registrationPublished: LogItem = {
       modifiedDate: registration.publishedDate,
-      description: t('registration.status.PUBLISHED_METADATA'),
+      title: t('registration.status.PUBLISHED_METADATA'),
       type: 'PublishingRequest',
     };
     logs.push(registrationPublished);
@@ -68,7 +87,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   if (registration.publishedDate && registration.publishedDate < registration.modifiedDate) {
     const registrationLastModified: LogItem = {
       modifiedDate: registration.modifiedDate,
-      description: t('common.last_modified'),
+      title: t('common.last_modified'),
       type: 'PublishingRequest',
     };
     logs.push(registrationLastModified);
@@ -82,7 +101,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
         if (ticket.status === 'Completed' && publishingTicket.approvedFiles.length > 0) {
           logs.push({
             modifiedDate: ticket.modifiedDate,
-            description: t('my_page.messages.files_published', {
+            title: t('my_page.messages.files_published', {
               count: publishingTicket.approvedFiles.length,
             }),
             filesInfo: filesInfo,
@@ -92,14 +111,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
-            description: t('my_page.messages.files_rejected'),
+            title: t('my_page.messages.files_rejected'),
             type: 'PublishingRequest',
             actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
         } else if (ticket.status === 'Pending' || ticket.status === 'New') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
-            description: t('my_page.messages.files_uploaded', {
+            title: t('my_page.messages.files_uploaded', {
               count: publishingTicket.filesForApproval.length,
             }),
             filesInfo: filesInfo,
@@ -113,14 +132,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
         if (ticket.status === 'Completed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
-            description: t('my_page.messages.doi_completed'),
+            title: t('my_page.messages.doi_completed'),
             type: 'DoiRequest',
             actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
         } else if (ticket.status === 'Closed') {
           logs.push({
             modifiedDate: ticket.modifiedDate,
-            description: t('my_page.messages.doi_closed'),
+            title: t('my_page.messages.doi_closed'),
             type: 'DoiRequest',
             actionBy: ticket.finalizedBy ? [ticket.finalizedBy] : [],
           });
@@ -142,35 +161,20 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
           </Typography>
         </StyledStatusMessageBox>
       )}
-      {registration && (
-        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-          <Typography>{t('common.created')}</Typography>
-          <Tooltip title={new Date(registration.createdDate).toLocaleTimeString()}>
-            <Typography>{toDateString(registration.createdDate)}</Typography>
-          </Tooltip>
-          {organizationQuery.isPending || userQuery.isPending ? (
-            <Skeleton sx={{ width: '4rem' }} />
-          ) : (
-            <Typography>
-              {organizationQuery.data ? organizationQuery.data?.acronym : t('common.unknown')}
-              {userQuery.data ? `, ${getFullName(userQuery.data.givenName, userQuery.data.familyName)}` : ''}
-            </Typography>
-          )}
-        </StyledStatusMessageBox>
-      )}
       {logs
         .sort((a, b) => new Date(a.modifiedDate).getTime() - new Date(b.modifiedDate).getTime())
         .map((logItem, index) => {
           const modifiedDate = new Date(logItem.modifiedDate);
           return (
             <StyledStatusMessageBox key={index} sx={{ bgcolor: ticketColor[logItem.type] }}>
-              <Typography>{logItem.description}</Typography>
+              <Typography>{logItem.title}</Typography>
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <Tooltip title={modifiedDate.toLocaleTimeString()}>
                   <Typography>{toDateString(modifiedDate)}</Typography>
                 </Tooltip>
                 {logItem.actionBy && logItem.actionBy.map((username) => <Avatar username={username} />)}
               </Box>
+              {logItem.description && <Typography>{logItem.description}</Typography>}
               {logItem.filesInfo?.approvedFilenames && logItem.filesInfo.approvedFilenames.length > 0 && (
                 <FilenamesList filenames={logItem.filesInfo?.approvedFilenames} />
               )}
