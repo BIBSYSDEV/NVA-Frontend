@@ -4,19 +4,17 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { RootState } from '../../redux/store';
+import { PreviousPathLocationState } from '../../types/locationState.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getCurrentPath } from '../../utils/general-helpers';
 import { useAuthentication } from '../../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { PreviousPathState } from '../LoginPage';
 import { Menu } from './Menu';
 
 export const LoginButton = () => {
   const user = useSelector((state: RootState) => state.user);
   const { t } = useTranslation();
   const { handleLogout } = useAuthentication();
-
-  const previousPathState: PreviousPathState = { previousPath: getCurrentPath() };
 
   return user ? (
     <Menu handleLogout={handleLogout} />
@@ -28,7 +26,10 @@ export const LoginButton = () => {
       sx={{ borderRadius: '1rem', flexDirection: 'row !important', height: 'fit-content', alignSelf: 'center' }}
       data-testid={dataTestId.header.logInButton}
       component={RouterLink}
-      to={{ pathname: UrlPathTemplate.Login, state: previousPathState }}>
+      to={{
+        pathname: UrlPathTemplate.Login,
+        state: { previousPath: getCurrentPath() } satisfies PreviousPathLocationState,
+      }}>
       {t('authorization.login')}
     </Button>
   );

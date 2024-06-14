@@ -3,14 +3,14 @@ import { ResourcesConfig } from 'aws-amplify';
 export const authOptions: ResourcesConfig = {
   Auth: {
     Cognito: {
-      userPoolClientId: process.env.REACT_APP_AWS_USER_POOLS_WEB_CLIENT_ID ?? '',
-      userPoolId: process.env.REACT_APP_AWS_USER_POOLS_ID ?? '',
+      userPoolClientId: import.meta.env.VITE_AWS_USER_POOLS_WEB_CLIENT_ID ?? '',
+      userPoolId: import.meta.env.VITE_AWS_USER_POOLS_ID ?? '',
       loginWith: {
         oauth: {
-          domain: process.env.REACT_APP_DOMAIN ?? '',
+          domain: import.meta.env.VITE_DOMAIN ?? '',
           scopes: ['openid', 'https://api.nva.unit.no/scopes/frontend', 'aws.cognito.signin.user.admin'],
-          redirectSignIn: [process.env.REACT_APP_REDIRECT_SIGN_IN ?? ''],
-          redirectSignOut: [process.env.REACT_APP_REDIRECT_SIGN_OUT ?? ''],
+          redirectSignIn: [import.meta.env.VITE_REDIRECT_SIGN_IN ?? ''],
+          redirectSignOut: [import.meta.env.VITE_REDIRECT_SIGN_OUT ?? ''],
           responseType: 'code',
         },
       },

@@ -1,6 +1,5 @@
 import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn, validateYupSchema, yupToFormErrors } from 'formik';
-import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import {
   AssociatedArtifact,
   AssociatedFile,
@@ -8,6 +7,7 @@ import {
   NullAssociatedArtifact,
 } from '../types/associatedArtifact.types';
 import { Contributor } from '../types/contributor.types';
+import { HighestTouchedTab } from '../types/locationState.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -152,7 +152,7 @@ const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown
     mainTitle: true,
     tags: true,
   },
-  fundings: fundings.map((_) => ({
+  fundings: fundings.map(() => ({
     source: true,
     id: true,
     identifier: true,
@@ -409,7 +409,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
 
 const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<unknown> => ({
   entityDescription: {
-    contributors: contributors.map((_) => ({
+    contributors: contributors.map(() => ({
       correspondingAuthor: true,
       sequence: true,
     })),

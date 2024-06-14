@@ -1,11 +1,11 @@
-export const USE_MOCK_DATA = process.env.REACT_APP_USE_MOCK === 'true';
+export const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK === 'true';
 export const ROWS_PER_PAGE_OPTIONS = [10, 25, 50, 100];
 export const DEBOUNCE_INTERVAL_INPUT = 1000;
 
-export const ORCID_BASE_URL = process.env.REACT_APP_ORCID_BASE_URL;
+export const ORCID_BASE_URL = import.meta.env.VITE_ORCID_BASE_URL;
 export const ORCID_USER_INFO_URL = `${ORCID_BASE_URL}/oauth/userinfo`;
 
-const apiHostEnv = process.env.REACT_APP_API_HOST;
+const apiHostEnv = import.meta.env.VITE_API_HOST;
 const apiHostUrlObject = apiHostEnv
   ? apiHostEnv.startsWith('http')
     ? new URL(apiHostEnv.replace('http://', 'https://'))

@@ -5,7 +5,12 @@ import {
   ImportCandidateStatus,
   ImportCandidateSummary,
 } from '../types/importCandidate.types';
-import { NviCandidate, NviCandidateSearchResponse, ScientificIndexStatuses } from '../types/nvi.types';
+import {
+  NviCandidate,
+  NviCandidateSearchResponse,
+  NviCandidateSearchStatus,
+  ScientificIndexStatuses,
+} from '../types/nvi.types';
 import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.types';
 import {
   AggregationFileKeyType,
@@ -224,42 +229,68 @@ export const fetchEmployees = async (
   return getEmployees.data;
 };
 
-export const fetchNviCandidates = async (results: number, from: number, query = '') => {
-  const paginationQuery = `size=${results}&offset=${from}`;
-  const fullQuery = [query, paginationQuery].filter(Boolean).join('&');
-
-  const getNviCandidates = await authenticatedApiRequest2<NviCandidateSearchResponse>({
-    url: `${SearchApiPath.NviCandidate}?${fullQuery}`,
-  });
-
-  return getNviCandidates.data;
-};
-
-enum NviCandidatesSearchParam {
+export enum NviCandidatesSearchParam {
+  Affiliations = 'affiliations',
   Aggregation = 'aggregation',
+  Assignee = 'assignee',
+  ExcludeSubUnits = 'excludeSubUnits',
+  Filter = 'filter',
   Offset = 'offset',
+  OrderBy = 'orderBy',
+  Query = 'query',
   Size = 'size',
+  SortOrder = 'sortOrder',
   Year = 'year',
 }
 
+export type NviCandidateOrderBy = 'createdDate';
+
 export interface FetchNviCandidatesParams {
-  [NviCandidatesSearchParam.Aggregation]?: 'all' | 'organizationApprovalStatuses' | null;
+  [NviCandidatesSearchParam.Affiliations]?: string[] | null;
+  [NviCandidatesSearchParam.Aggregation]?: 'all' | NviCandidateSearchStatus | null;
+  [NviCandidatesSearchParam.Assignee]?: string | null;
+  [NviCandidatesSearchParam.ExcludeSubUnits]?: boolean | null;
+  [NviCandidatesSearchParam.Filter]?: NviCandidateSearchStatus | null;
   [NviCandidatesSearchParam.Offset]?: number | null;
+  [NviCandidatesSearchParam.OrderBy]?: NviCandidateOrderBy | null;
+  [NviCandidatesSearchParam.Query]?: string | null;
   [NviCandidatesSearchParam.Size]?: number | null;
+  [NviCandidatesSearchParam.SortOrder]?: SortOrder | null;
   [NviCandidatesSearchParam.Year]?: number | null;
 }
 
-export const fetchNviAggregations = async (params: FetchNviCandidatesParams) => {
+export const fetchNviCandidates = async (params: FetchNviCandidatesParams) => {
   const searchParams = new URLSearchParams();
+
   searchParams.set(NviCandidatesSearchParam.Size, params.size?.toString() || '10');
   searchParams.set(NviCandidatesSearchParam.Offset, params.offset?.toString() || '0');
 
+  if (params.affiliations && params.affiliations.length > 0) {
+    searchParams.set(NviCandidatesSearchParam.Affiliations, params.affiliations.join(','));
+  }
   if (params.aggregation) {
     searchParams.set(NviCandidatesSearchParam.Aggregation, params.aggregation);
   }
-
+  if (params.assignee) {
+    searchParams.set(NviCandidatesSearchParam.Assignee, params.assignee);
+  }
+  if (params.excludeSubUnits === true || params.excludeSubUnits === false) {
+    searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, params.excludeSubUnits.toString());
+  }
+  if (params.filter) {
+    searchParams.set(NviCandidatesSearchParam.Filter, params.filter);
+  }
+  if (params.query) {
+    searchParams.set(NviCandidatesSearchParam.Query, params.query);
+  }
   if (params.year) {
     searchParams.set(NviCandidatesSearchParam.Year, params.year.toString());
+  }
+  if (params.orderBy) {
+    searchParams.set(NviCandidatesSearchParam.OrderBy, params.orderBy);
+  }
+  if (params.sortOrder) {
+    searchParams.set(NviCandidatesSearchParam.SortOrder, params.sortOrder);
   }
 
   const paramsString = searchParams.toString();
