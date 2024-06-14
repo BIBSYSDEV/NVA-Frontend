@@ -13,7 +13,7 @@
     "start:mock:win": "set VITE_USE_MOCK=true&& npm start",
     "start:mock:unix": "export VITE_USE_MOCK=true && npm start",
     "test": "cypress run",
-    "test:cypress": "start-server-and-test start:mock:unix http://localhost:3000 test",
+    "test:cypress": "start-server-and-test start http://localhost:3000 test",
     "unused-i18n-keys": "i18n-unused display-unused"
   },
   "browserslist": {
