@@ -17,7 +17,7 @@ interface EditAffiliationModalProps {
   affiliationModalIsOpen: boolean;
   toggleAffiliationModal: () => void;
   affiliationToEdit: Organization;
-  baseFieldName: string; // TODO: This can be imported instead
+  baseFieldName: string;
   authorName?: string;
   affiliations?: Affiliation[];
 }
@@ -78,9 +78,8 @@ export const EditAffiliationModal = ({
         toggleAffiliationModal();
       }}
       maxWidth="md"
-      fullWidth={true}
-      headingText={t('registration.contributors.edit_affiliation')}
-      dataTestId="edit-affiliation-modal">
+      fullWidth
+      headingText={t('registration.contributors.edit_affiliation')}>
       <Trans i18nKey="registration.contributors.edit_affiliation_helper_text" components={[<Typography paragraph />]} />
       {authorName && (
         <Box
