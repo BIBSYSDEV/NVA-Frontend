@@ -1,14 +1,13 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { ResultSearchOrder } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { SortSelector } from '../../../components/SortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { SearchPageProps } from '../SearchPage';
 import { RegistrationSearchResults } from './RegistrationSearchResults';
+import { RegistrationSortSelector } from './RegistrationSortSelector';
 
 export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
@@ -27,44 +26,6 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
     history.push({ search: params.toString() });
   };
 
-  const sortingComponent = (
-    <SortSelector
-      sortKey="sort"
-      orderKey="order"
-      aria-label={t('search.sort_by')}
-      size="small"
-      variant="standard"
-      options={[
-        {
-          orderBy: ResultSearchOrder.ModifiedDate,
-          sortOrder: 'desc',
-          label: t('search.sort_by_modified_date'),
-        },
-        {
-          orderBy: ResultSearchOrder.PublicationDate,
-          sortOrder: 'desc',
-          label: t('search.sort_by_published_date_desc'),
-        },
-        {
-          orderBy: ResultSearchOrder.PublicationDate,
-          sortOrder: 'asc',
-          label: t('search.sort_by_published_date_asc'),
-        },
-        {
-          orderBy: ResultSearchOrder.Title,
-          sortOrder: 'asc',
-          label: t('search.sort_alphabetically_desc'),
-        },
-        {
-          orderBy: ResultSearchOrder.Title,
-          sortOrder: 'desc',
-          label: t('search.sort_alphabetically_asc'),
-        },
-        { orderBy: ResultSearchOrder.Relevance, sortOrder: 'desc', label: t('search.sort_by_relevance') },
-      ]}
-    />
-  );
-
   return (
     <section>
       {registrationQuery.isPending ? (
@@ -79,7 +40,7 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
             onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
             maxHits={10_000}
             showPaginationTop
-            sortingComponent={sortingComponent}>
+            sortingComponent={<RegistrationSortSelector />}>
             <RegistrationSearchResults searchResult={registrationQuery.data.hits} />
           </ListPagination>
         </>
