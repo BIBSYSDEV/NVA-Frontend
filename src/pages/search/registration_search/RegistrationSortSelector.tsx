@@ -13,6 +13,7 @@ export const RegistrationSortSelector = () => {
       size="small"
       variant="standard"
       options={[
+        { orderBy: ResultSearchOrder.Relevance, sortOrder: 'desc', label: t('search.sort_by_relevance') },
         {
           orderBy: ResultSearchOrder.ModifiedDate,
           sortOrder: 'desc',
@@ -38,7 +39,6 @@ export const RegistrationSortSelector = () => {
           sortOrder: 'desc',
           label: t('search.sort_alphabetically_asc'),
         },
-        { orderBy: ResultSearchOrder.Relevance, sortOrder: 'desc', label: t('search.sort_by_relevance') },
       ]}
     />
   );
