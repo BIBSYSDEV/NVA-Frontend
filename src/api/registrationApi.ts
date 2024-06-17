@@ -65,7 +65,7 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
   });
 
 export const deleteTicketMessage = async (ticketId: string, messageId: string) => {
-  await authenticatedApiRequest2({
+  return await authenticatedApiRequest2({
     url: `${ticketId}/message/${messageId}`,
     method: 'DELETE',
   });

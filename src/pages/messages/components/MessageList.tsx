@@ -9,7 +9,6 @@ import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
-import { useDeleteTicketMessage } from '../../../utils/hooks/useDeleteTicketMessage';
 import { getFullName, truncateName } from '../../../utils/user-helpers';
 import { MessageMenu } from './MessageMenu';
 import { ticketColor } from './TicketListItem';
@@ -23,7 +22,6 @@ interface MessageListProps {
 export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
   const messages = ticket.messages ?? [];
   const user = useSelector((store: RootState) => store.user);
-  const deleteTicketMessageMutation = useDeleteTicketMessage(ticket.id, refetchData);
 
   return (
     <ErrorBoundary>
@@ -48,9 +46,10 @@ export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: Mes
               !!user &&
               (canDeleteMessage || user.nvaUsername === message.sender) && (
                 <MessageMenu
-                  onDelete={() => deleteTicketMessageMutation.mutateAsync(message.identifier)}
-                  isDeleting={deleteTicketMessageMutation.isPending}
+                  ticketId={ticket.id}
+                  refetchData={refetchData}
                   canDeleteMessage={!!message.text}
+                  messageIdentifier={message.identifier}
                 />
               )
             }

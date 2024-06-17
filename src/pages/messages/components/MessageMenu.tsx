@@ -5,18 +5,21 @@ import { MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useDeleteTicketMessage } from '../../../utils/hooks/useDeleteTicketMessage';
 
 interface MessageMenuProps {
-  onDelete: () => Promise<void>;
-  isDeleting: boolean;
   canDeleteMessage: boolean;
+  ticketId: string;
+  messageIdentifier: string;
+  refetchData?: () => void;
 }
 
-export const MessageMenu = ({ onDelete, isDeleting, canDeleteMessage }: MessageMenuProps) => {
+export const MessageMenu = ({ ticketId, messageIdentifier, refetchData, canDeleteMessage }: MessageMenuProps) => {
   const { t } = useTranslation();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const deleteTicketMessageMutation = useDeleteTicketMessage(ticketId, refetchData);
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -64,10 +67,10 @@ export const MessageMenu = ({ onDelete, isDeleting, canDeleteMessage }: MessageM
         open={showConfirmDialog}
         title={t('my_page.messages.delete_message')}
         onAccept={async () => {
-          await onDelete();
+          await deleteTicketMessageMutation.mutateAsync(messageIdentifier);
           setShowConfirmDialog(false);
         }}
-        isLoading={isDeleting}
+        isLoading={deleteTicketMessageMutation.isPending}
         onCancel={() => setShowConfirmDialog(false)}>
         <Typography>{t('my_page.messages.delete_message_description')}</Typography>
       </ConfirmDialog>
