@@ -361,6 +361,7 @@ export enum ResultSearchOrder {
   ModifiedDate = 'modifiedDate',
   PublicationDate = 'publicationDate',
   Relevance = 'relevance',
+  Title = 'title',
 }
 
 export interface FetchResultsParams {

@@ -50,6 +50,16 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
           sortOrder: 'asc',
           label: t('search.sort_by_published_date_asc'),
         },
+        {
+          orderBy: ResultSearchOrder.Title,
+          sortOrder: 'asc',
+          label: t('search.sort_alphabetically_desc'),
+        },
+        {
+          orderBy: ResultSearchOrder.Title,
+          sortOrder: 'desc',
+          label: t('search.sort_alphabetically_asc'),
+        },
         { orderBy: ResultSearchOrder.Relevance, sortOrder: 'desc', label: t('search.sort_by_relevance') },
       ]}
     />
