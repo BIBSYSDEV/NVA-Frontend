@@ -10,11 +10,11 @@ export interface RegistrationFormLocationState extends PreviousPathLocationState
   highestValidatedTab?: HighestTouchedTab;
 }
 
-export interface TasksPageLocationState {
+export interface PreviousSearchLocationState {
   previousSearch?: string;
 }
 
-export interface NviCandidatePageLocationState extends TasksPageLocationState {
+export interface NviCandidatePageLocationState extends PreviousSearchLocationState {
   candidateOffsetState?: {
     currentOffset: number;
     nviQueryParams: FetchNviCandidatesParams;

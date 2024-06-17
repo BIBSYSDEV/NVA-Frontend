@@ -16,7 +16,7 @@ import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates'
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
-import { TasksPageLocationState } from '../../../types/locationState.types';
+import { PreviousSearchLocationState } from '../../../types/locationState.types';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -34,7 +34,7 @@ const StyledNviStatusBox = styled(Box)({
 
 export const NviMenuContent = () => {
   const { t } = useTranslation();
-  const history = useHistory<TasksPageLocationState>();
+  const history = useHistory<PreviousSearchLocationState>();
   const searchParams = new URLSearchParams(history.location.search);
 
   const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
