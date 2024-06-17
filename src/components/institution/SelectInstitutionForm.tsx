@@ -168,10 +168,9 @@ export const SelectInstitutionForm = ({
                         }}
                         filterOptions={(options, state) =>
                           options.filter((option) =>
-                            state
-                              .getOptionLabel(option)
-                              .toLocaleLowerCase()
-                              .includes(state.inputValue.toLocaleLowerCase())
+                            Object.values(option.labels).some((label) =>
+                              label.toLowerCase().includes(state.inputValue.toLowerCase())
+                            )
                           )
                         }
                         renderInput={(params) => (
