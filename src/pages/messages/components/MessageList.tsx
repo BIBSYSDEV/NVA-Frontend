@@ -9,7 +9,7 @@ import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
-import { getFullName, truncateName } from '../../../utils/user-helpers';
+import { getFullName } from '../../../utils/user-helpers';
 import { MessageMenu } from './MessageMenu';
 import { ticketColor } from './TicketListItem';
 
@@ -89,20 +89,28 @@ export const MessageItem = ({ text, date, username, backgroundColor, menuElement
         display: 'flex',
         flexDirection: 'column',
       }}>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
-        <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-          <Tooltip title={senderName ? senderName : t('common.unknown')}>
-            <span style={{ marginRight: '0.5rem' }}>
-              {senderQuery.isPending ? (
-                <Skeleton sx={{ width: '8rem' }} />
-              ) : (
-                <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
-                  {senderName ? truncateName(senderName, 20) : <i>{t('common.unknown')}</i>}
-                </b>
-              )}
-            </span>
-          </Tooltip>
-          <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>{toDateString(date)}</span>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center' }}>
+        <Tooltip title={senderName ? senderName : t('common.unknown')}>
+          <Typography
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}
+            sx={{
+              fontWeight: 'bold',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '100%',
+            }}>
+            {senderQuery.isPending ? (
+              <Skeleton sx={{ width: '8rem' }} />
+            ) : senderName ? (
+              senderName
+            ) : (
+              <i>{t('common.unknown')}</i>
+            )}
+          </Typography>
+        </Tooltip>
+        <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
+          {toDateString(date)}
         </Typography>
         {menuElement}
       </Box>

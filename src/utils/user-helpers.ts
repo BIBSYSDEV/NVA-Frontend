@@ -106,7 +106,3 @@ export const getUsername = (person?: CristinPerson | null, topOrgCristinId?: str
 
   return `${personCristinIdentifier}@${topOrgCristinIdentifier}`;
 };
-
-export const truncateName = (name: string, maxLength: number): string => {
-  return name.length > maxLength ? name.slice(0, maxLength) + '...' : name;
-};
