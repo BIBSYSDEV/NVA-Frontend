@@ -19,6 +19,7 @@ import {
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
+import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
@@ -42,7 +43,7 @@ const BasicDataPage = () => {
   const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const isInternalImporter = !!user?.customerId && user.isInternalImporter;
-  const location = useLocation();
+  const location = useLocation<PreviousSearchLocationState>();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
@@ -57,7 +58,11 @@ const BasicDataPage = () => {
         aria-labelledby="basic-data-title"
         expanded={expandedMenu}
         minimizedMenu={
-          <Link to={UrlPathTemplate.BasicDataCentralImport}>
+          <Link
+            to={{
+              pathname: UrlPathTemplate.BasicDataCentralImport,
+              search: location.state?.previousSearch,
+            }}>
             <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
               <BusinessCenterIcon />
             </StyledMinimizedMenuButton>
