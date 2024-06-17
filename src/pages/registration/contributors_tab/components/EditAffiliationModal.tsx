@@ -11,7 +11,7 @@ import { Affiliation } from '../../../../types/contributor.types';
 import { Organization } from '../../../../types/organization.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { findAncestor, findDescendantWithId } from '../../../../utils/institutions-helpers';
+import { findDescendantWithId, getTopLevelOrganization } from '../../../../utils/institutions-helpers';
 
 interface EditAffiliationModalProps {
   affiliationModalIsOpen: boolean;
@@ -33,7 +33,7 @@ export const EditAffiliationModal = ({
   const { t } = useTranslation();
   const { setFieldValue } = useFormikContext<Registration>();
   const dispatch = useDispatch();
-  const institution = findAncestor(affiliationToEdit);
+  const institution = getTopLevelOrganization(affiliationToEdit);
   const institutionQuery = useFetchOrganization(institution.id);
 
   const editAffiliation = (newAffiliationId: string) => {

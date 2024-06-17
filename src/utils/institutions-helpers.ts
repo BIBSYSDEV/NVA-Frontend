@@ -26,13 +26,6 @@ export const getOrganizationHierarchy = (unit?: Organization, result: Organizati
   return getOrganizationHierarchy(unit.partOf[0], [unit, ...result]);
 };
 
-export const findAncestor = (organization: Organization): Organization => {
-  if (organization.partOf && organization.partOf.length > 0) {
-    return findAncestor(organization.partOf[0]);
-  }
-  return organization;
-};
-
 export const findDescendantWithId = (organization: Organization, id: string) => {
   let descendant = null;
 
@@ -67,6 +60,5 @@ export const sortCustomerInstitutions = <T extends SimpleCustomerInstitution>(cu
 export const getUnitTopLevelCode = (id = '') => {
   const identifier = id.split('/').pop() ?? '';
   const levelIdentifiers = identifier ? identifier.split('.') : [];
-  const topLevel = levelIdentifiers.length > 0 ? levelIdentifiers[0] : null;
-  return topLevel;
+  return levelIdentifiers.length > 0 ? levelIdentifiers[0] : null;
 };
