@@ -368,6 +368,7 @@ export const dataTestId = {
       licenseModal: 'license-modal',
       linkToResourceField: 'link-to-resource-field',
       removeFileButton: 'button-remove-file',
+      selectStatusField: 'uploaded-file-select-status',
       selectLicenseField: 'uploaded-file-select-license',
       version: 'version-radios',
       versionHelpButton: 'version-help-button',

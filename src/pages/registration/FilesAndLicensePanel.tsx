@@ -22,7 +22,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { AssociatedFile, AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
-import { LicenseUri, licenses } from '../../types/license.types';
+import { licenses, LicenseUri } from '../../types/license.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -42,10 +42,10 @@ import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
-import { HelperTextModal } from './HelperTextModal';
+import { administrativeAgreementId, FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { FileUploader } from './files_and_license_tab/FileUploader';
-import { FilesTableRow, administrativeAgreementId } from './files_and_license_tab/FilesTableRow';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
+import { HelperTextModal } from './HelperTextModal';
 import { DoiField } from './resource_type_tab/components/DoiField';
 
 interface FilesAndLicensePanelProps {
@@ -56,6 +56,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
+
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
@@ -63,6 +64,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
+
   const filesToPublish = files.filter((file) => !file.administrativeAgreement);
   const filesNotToPublish = files.filter((file) => file.administrativeAgreement);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
@@ -75,6 +77,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     associatedArtifacts.length === 1 && associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
   const filesRef = useRef(files);
+
   useEffect(() => {
     filesRef.current = files;
   }, [files]);
@@ -175,7 +178,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         <TableCell>{t('common.file')}</TableCell>
                         <TableCell>{t('registration.files_and_license.size')}</TableCell>
                         <TableCell id={administrativeAgreementId}>
-                          {t('registration.files_and_license.administrative_agreement')}
+                          {t('registration.files_and_license.status')}
                         </TableCell>
                         {showFileVersion && (
                           <TableCell>

@@ -1,7 +1,9 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import {
   Box,
   Checkbox,
@@ -10,10 +12,10 @@ import {
   FormControlLabel,
   FormHelperText,
   IconButton,
+  Link as MuiLink,
   ListItemIcon,
   ListItemText,
   MenuItem,
-  Link as MuiLink,
   Paper,
   Popover,
   Radio,
@@ -27,15 +29,15 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
-import { LicenseUri, licenses } from '../../../types/license.types';
+import { licenses, LicenseUri } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -52,6 +54,18 @@ interface FilesTableRowProps {
   disabled: boolean;
 }
 
+interface FileStatus {
+  id: number;
+  label: string;
+  icon: ReactNode;
+  value: string;
+}
+
+const fileStatuses: FileStatus[] = [
+  { id: 1, label: 'Til publisering', icon: <UploadFileOutlinedIcon />, value: 'UnpublishedFile' },
+  { id: 2, label: 'Arkivert', icon: <Inventory2OutlinedIcon />, value: 'UnpublishableFile' },
+];
+
 export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion, disabled }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
@@ -61,7 +75,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
-  const administrativeAgreementFieldName = `${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`;
   const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
@@ -136,29 +149,47 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         <TableCell>{prettyBytes(file.size)}</TableCell>
 
         <TableCell>
-          <Field name={administrativeAgreementFieldName}>
-            {({ field }: FieldProps) => (
-              <Tooltip title={t('registration.files_and_license.administrative_contract')}>
-                <Checkbox
-                  {...field}
-                  data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
-                  checked={field.value}
-                  disabled={disabled}
-                  inputProps={{
-                    'aria-labelledby': administrativeAgreementId,
-                  }}
-                  onChange={(event) => {
-                    const newAssociatedFileType: AssociatedFileType =
-                      field.value === true ? 'UnpublishedFile' : 'UnpublishableFile';
-                    setFieldValue(fileTypeFieldName, newAssociatedFileType);
-
-                    field.onChange(event);
-                    setFieldValue(publisherVersionFieldName, null);
-                    setFieldValue(licenseFieldName, null);
-                    setFieldValue(embargoFieldName, null);
-                  }}
-                />
-              </Tooltip>
+          <Field name={fileTypeFieldName}>
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <TextField
+                id={field.name}
+                data-testid={dataTestId.registrationWizard.files.selectStatusField}
+                label={t('registration.files_and_license.file_status')}
+                value={field.value}
+                SelectProps={{
+                  renderValue: (option) => {
+                    const status = fileStatuses.find((fileStatus) => option === fileStatus.value);
+                    return status ? (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        {status.icon}
+                        <span>{status.label}</span>
+                      </Box>
+                    ) : null;
+                  },
+                }}
+                onChange={({ target: { value } }) => setFieldValue(field.name, value)}
+                variant="filled"
+                disabled={disabled}
+                error={!!error && touched}
+                helperText={<ErrorMessage name={'hei'} />}
+                sx={{ minWidth: '10rem' }}
+                select
+                required>
+                {fileStatuses.map((val) => (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItem}
+                    key={'key'}
+                    value={val.value}
+                    divider
+                    dense
+                    sx={{ gap: '1rem' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      {val.icon}
+                      <span>{val.label}</span>
+                    </Box>
+                  </MenuItem>
+                ))}
+              </TextField>
             )}
           </Field>
         </TableCell>
