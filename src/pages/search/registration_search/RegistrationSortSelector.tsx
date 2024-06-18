@@ -31,12 +31,12 @@ export const RegistrationSortSelector = () => {
     {
       orderBy: ResultSearchOrder.Title,
       sortOrder: 'asc',
-      label: t('search.sort_alphabetically_desc'),
+      label: t('search.sort_alphabetically_asc'),
     },
     {
       orderBy: ResultSearchOrder.Title,
       sortOrder: 'desc',
-      label: t('search.sort_alphabetically_asc'),
+      label: t('search.sort_alphabetically_desc'),
     },
   ];
 
