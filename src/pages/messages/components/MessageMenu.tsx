@@ -26,42 +26,40 @@ export const MessageMenu = ({ ticketId, messageIdentifier, refetchData, canDelet
   };
 
   return (
-    <>
-      <section>
-        <IconButton
-          aria-controls={open ? 'basic-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.messageOptionsButton}
-          aria-label={t('common.delete')}
-          size="small"
-          sx={{ alignSelf: 'end' }}
-          onClick={handleClickMenuAnchor}>
-          <MoreVertIcon fontSize="inherit" />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          keepMounted
-          open={open}
-          onClose={() => setAnchorEl(null)}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+    <section>
+      <IconButton
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        data-testid={dataTestId.registrationLandingPage.tasksPanel.messageOptionsButton}
+        aria-label={t('common.delete')}
+        size="small"
+        sx={{ alignSelf: 'end' }}
+        onClick={handleClickMenuAnchor}>
+        <MoreVertIcon fontSize="inherit" />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={() => setAnchorEl(null)}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}>
+        <MenuItem
+          data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteMessageButton}
+          disabled={!canDeleteMessage}
+          onClick={() => {
+            setShowConfirmDialog(true);
+            setAnchorEl(null);
           }}>
-          <MenuItem
-            data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteMessageButton}
-            disabled={!canDeleteMessage}
-            onClick={() => {
-              setShowConfirmDialog(true);
-              setAnchorEl(null);
-            }}>
-            <ListItemIcon>
-              <DeleteIcon />
-            </ListItemIcon>
-            <ListItemText>{t('common.delete')}</ListItemText>
-          </MenuItem>
-        </Menu>
-      </section>
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText>{t('common.delete')}</ListItemText>
+        </MenuItem>
+      </Menu>
 
       <ConfirmDialog
         open={showConfirmDialog}
@@ -74,6 +72,6 @@ export const MessageMenu = ({ ticketId, messageIdentifier, refetchData, canDelet
         onCancel={() => setShowConfirmDialog(false)}>
         <Typography>{t('my_page.messages.delete_message_description')}</Typography>
       </ConfirmDialog>
-    </>
+    </section>
   );
 };
