@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { ResultSearchOrder } from '../../../api/searchApi';
+import { ResultParam, ResultSearchOrder } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SortSelector } from '../../../components/SortSelector';
@@ -29,8 +29,9 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
 
   const sortingComponent = (
     <SortSelector
-      sortKey="sort"
-      orderKey="order"
+      sortKey={ResultParam.Sort}
+      orderKey={ResultParam.Order}
+      paginationKey={ResultParam.From}
       aria-label={t('search.sort_by')}
       size="small"
       variant="standard"
