@@ -490,6 +490,7 @@
       "create_series": "Kunne ikke opprette serie",
       "create_user": "Kunne ikke opprette person",
       "delete_draft_registrations": "Kunne ikke slette alle kladdene",
+      "delete_message": "Kunne ikke slette meldingen",
       "delete_note": "Kunne ikke slette merknad",
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
@@ -569,6 +570,7 @@
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
       "delete_draft_registrations": "Alle kladdene ble slettet",
+      "delete_message": "Meldingen ble slettet",
       "delete_note": "Merknaden ble slettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
@@ -675,6 +677,8 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statuser",
+      "delete_message": "Slette melding",
+      "delete_message_description": "Er du sikker på at du vil slette meldingen?",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -687,6 +691,7 @@
       "general_support_pending": "Venter på oppfølging",
       "get_curator_support": "Få hjelp av kurator",
       "mark_as_completed": "Sett til ferdig",
+      "message_deleted": "Meldingen er slettet",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Avvist",
