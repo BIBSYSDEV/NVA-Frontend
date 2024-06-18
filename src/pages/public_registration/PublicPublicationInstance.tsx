@@ -98,7 +98,7 @@ export const PublicPublicationInstanceChapter = ({
   return pagesInterval ? <Typography>{pagesInterval}</Typography> : null;
 };
 
-const otherArtisticTypes = [
+const otherArtisticSubtypes = [
   DesignType.Other,
   ArchitectureType.Other,
   PerformingArtType.Other,
@@ -131,7 +131,7 @@ export const PublicPublicationInstanceArtistic = ({
                 : '';
 
   const typeString = subtype?.type
-    ? otherArtisticTypes.includes(subtype.type) && subtype.description
+    ? otherArtisticSubtypes.includes(subtype.type) && subtype.description
       ? subtype.description
       : t(`${i18nTypeBase}${subtype.type}` as any)
     : '';
