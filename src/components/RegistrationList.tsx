@@ -14,7 +14,11 @@ import { PreviousPathLocationState } from '../types/locationState.types';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
-import { getTitleString, groupContributors, userCanDeleteRegistration } from '../utils/registration-helpers';
+import {
+  getContributorsWithPrimaryRole,
+  getTitleString,
+  userCanDeleteRegistration,
+} from '../utils/registration-helpers';
 import {
   UrlPathTemplate,
   getRegistrationLandingPagePath,
@@ -72,7 +76,7 @@ export const RegistrationListItemContent = ({
   const contributors = entityDescription?.contributors ?? [];
 
   const primaryContributors = registrationType
-    ? groupContributors(contributors, registrationType).primaryContributors
+    ? getContributorsWithPrimaryRole(contributors, registrationType)
     : contributors;
 
   const focusedContributors = primaryContributors.slice(0, 5);

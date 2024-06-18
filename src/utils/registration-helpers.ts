@@ -576,12 +576,20 @@ export const contributorConfig: ContributorConfig = {
   },
 };
 
-export const groupContributors = (contributors: Contributor[], registrationType: PublicationInstanceType) => {
-  const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
-  const primaryContributors = contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
-  const secondaryContributors = contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
+export const getContributorsWithPrimaryRole = (
+  contributors: Contributor[],
+  registrationType: PublicationInstanceType
+) => {
+  const { primaryRoles } = contributorConfig[registrationType];
+  return contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
+};
 
-  return { primaryContributors, secondaryContributors };
+export const getContributorsWithSecondaryRole = (
+  contributors: Contributor[],
+  registrationType: PublicationInstanceType
+) => {
+  const { secondaryRoles } = contributorConfig[registrationType];
+  return contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
 };
 
 export const getOutputName = (item: OutputItem): string => {
