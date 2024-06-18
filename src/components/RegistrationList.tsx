@@ -14,7 +14,7 @@ import { PreviousPathLocationState } from '../types/locationState.types';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
-import { getTitleString, userCanDeleteRegistration } from '../utils/registration-helpers';
+import { getTitleString, groupContributors, userCanDeleteRegistration } from '../utils/registration-helpers';
 import {
   UrlPathTemplate,
   getRegistrationLandingPagePath,
@@ -68,13 +68,17 @@ export const RegistrationListItemContent = ({
   const userCristinId = user?.cristinId ?? '';
   const mutationKey = ['person-preferences', userCristinId];
 
+  const registrationType = entityDescription?.reference?.publicationInstance?.type;
   const contributors = entityDescription?.contributors ?? [];
-  const focusedContributors = contributors.slice(0, 5);
-  const countRestContributors = contributors.length - focusedContributors.length;
 
-  const typeString = entityDescription?.reference?.publicationInstance?.type
-    ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
-    : '';
+  const primaryContributors = registrationType
+    ? groupContributors(contributors, registrationType).primaryContributors
+    : contributors;
+
+  const focusedContributors = primaryContributors.slice(0, 5);
+  const countRestContributors = primaryContributors.length - focusedContributors.length;
+
+  const typeString = registrationType ? t(`registration.publication_types.${registrationType}`) : '';
 
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
