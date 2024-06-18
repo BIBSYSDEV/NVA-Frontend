@@ -515,6 +515,7 @@
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
       "get_nvi_periods": "Kunne ikke hente NVI-perioder",
       "get_orcid": "Kunne ikke hente data fra ORCID",
+      "get_organization": "Kunne ikke hente informasjon om organisasjon",
       "get_person": "Kunne ikke hente person",
       "get_positions": "Kunne ikke hente stillinger",
       "get_project": "Kunne ikke hente prosjekt",
@@ -1144,6 +1145,8 @@
       "contributor_is_unidentified": "Bidragsyter er uidentifisert",
       "corresponding": "Korresponderende",
       "department": "Enhet",
+      "edit_affiliation": "Endre tilknytning",
+      "edit_affiliation_helper_text": "<0>Det er kun institusjoner som forskningen er gjennomført i samarbeid med som skal legges til som tilknytning til bidragsyteren.</0> <0>Hvis tilknytningen ikke er korrekt, så endre tilknytninger ved å skrive inn korrekt insitusjon eller enhet i tekstfeltene</0>",
       "identity_status": {
         "confirmed_identity": "Identifisert",
         "confirmed_identity_without_affiliation": "Identifisert uten tilknytning",
