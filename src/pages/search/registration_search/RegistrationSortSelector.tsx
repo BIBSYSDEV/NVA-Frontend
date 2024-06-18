@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { ResultSearchOrder, SortOrder } from '../../../api/searchApi';
+import { ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
 import { SortSelector } from '../../../components/SortSelector';
 
 interface SortOption {
@@ -42,8 +42,8 @@ export const RegistrationSortSelector = () => {
 
   return (
     <SortSelector
-      sortKey="sort"
-      orderKey="order"
+      sortKey={ResultParam.Sort}
+      orderKey={ResultParam.Order}
       aria-label={t('search.sort_by')}
       size="small"
       variant="standard"
