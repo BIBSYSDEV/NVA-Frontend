@@ -1301,6 +1301,7 @@
       "license": "Lisens",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
+      "mark_for_publish": "Merk for publisering",
       "mark_if_funder_requires_rrs": "Om denne publikasjonen er finansiert av en aktør som pålegger deg å følge RRS (ref. Plan S), så markerer du det her.",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "no_files_or_links_present_in_this_registration": "Det er ikke lagt til fil eller lenke for registreringen",

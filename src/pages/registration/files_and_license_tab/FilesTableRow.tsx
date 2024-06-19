@@ -33,7 +33,7 @@ import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
 import { licenses, LicenseUri } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
@@ -42,7 +42,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
 import { DownloadFileButton } from './DownloadFileButton';
 
-export const administrativeAgreementId = 'administrative-agreement';
+export const markForPublishId = 'mark-for-publish';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -69,7 +69,6 @@ export const FilesTableRow = ({
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
-  const administrativeAgreementFieldName = `${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`;
   const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
@@ -144,29 +143,25 @@ export const FilesTableRow = ({
         <TableCell sx={{ minWidth: archived ? '5.5rem' : '' }}>{prettyBytes(file.size)}</TableCell>
 
         <TableCell>
-          <Field name={administrativeAgreementFieldName}>
+          <Field name={fileTypeFieldName}>
             {({ field }: FieldProps) => (
-              <Tooltip title={t('registration.files_and_license.administrative_contract')}>
-                <Checkbox
-                  {...field}
-                  data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
-                  checked={field.value}
-                  disabled={disabled}
-                  inputProps={{
-                    'aria-labelledby': administrativeAgreementId,
-                  }}
-                  onChange={(event) => {
-                    const newAssociatedFileType: AssociatedFileType =
-                      field.value === true ? 'UnpublishedFile' : 'UnpublishableFile';
-                    setFieldValue(fileTypeFieldName, newAssociatedFileType);
-
-                    field.onChange(event);
-                    setFieldValue(publisherVersionFieldName, null);
-                    setFieldValue(licenseFieldName, null);
-                    setFieldValue(embargoFieldName, null);
-                  }}
-                />
-              </Tooltip>
+              <Checkbox
+                {...field}
+                data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
+                checked={field.value === 'UnpublishedFile'}
+                disabled={disabled}
+                inputProps={{
+                  'aria-labelledby': markForPublishId,
+                }}
+                onChange={(event, checked) => {
+                  console.log('checked', checked);
+                  if (!checked) {
+                    setFieldValue(fileTypeFieldName, 'UnpublishableFile');
+                  } else {
+                    setFieldValue(fileTypeFieldName, 'UnpublishedFile');
+                  }
+                }}
+              />
             )}
           </Field>
         </TableCell>

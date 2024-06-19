@@ -25,7 +25,7 @@ import {
   isTypeWithFileVersionField,
   userCanUnpublishRegistration,
 } from '../../utils/registration-helpers';
-import { administrativeAgreementId, FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
 
 interface FileListProps {
@@ -85,9 +85,7 @@ export const FileList = ({ title, files, uppy, remove, name, archived }: FileLis
               <TableCell>{t('common.name')}</TableCell>
               <TableCell>{t('common.file')}</TableCell>
               <TableCell>{t('registration.files_and_license.size')}</TableCell>
-              <TableCell id={administrativeAgreementId}>
-                {t('registration.files_and_license.administrative_agreement')}
-              </TableCell>
+              <TableCell id={markForPublishId}>{t('registration.files_and_license.mark_for_publish')}</TableCell>
               {showFileVersion && !archived && (
                 <TableCell>
                   <Box

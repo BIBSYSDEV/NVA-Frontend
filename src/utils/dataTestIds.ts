@@ -357,6 +357,7 @@ export const dataTestId = {
     },
     files: {
       addFilesOrLinksButton: 'add-files-or-links-button',
+      toPublishCheckbox: 'to-publish-checkbox',
       administrativeAgreement: 'administrative-agreement-checkbox',
       embargoDateField: 'embargo-date-field',
       expandFileRowButton: 'expand-file-row-button',
