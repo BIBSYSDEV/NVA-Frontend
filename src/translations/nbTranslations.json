@@ -298,10 +298,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -373,7 +369,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1858,8 +1858,10 @@
     "sector": "Sektor",
     "select_one_or_more_categories": "Velg en eller flere kategorier",
     "sort_by": "Sorter etter",
-    "sort_by_last_name_asc": "Etternavn A-Å",
-    "sort_by_last_name_desc": "Etternavn Å-A",
+    "sort_alphabetically_asc": "Tittel (A-Å)",
+    "sort_alphabetically_desc": "Tittel (Å-A)",
+    "sort_by_last_name_asc": "Etternavn (A-Å)",
+    "sort_by_last_name_desc": "Etternavn (Å-A)",
     "sort_by_modified_date": "Sist endret",
     "sort_by_name_asc": "Navn A-Å",
     "sort_by_name_desc": "Navn Å-A",
