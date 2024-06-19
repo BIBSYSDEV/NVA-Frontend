@@ -674,6 +674,7 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statuser",
+      "created_in_nva": "Opprettet i NVA",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -686,6 +687,7 @@
       "general_support_pending": "Venter på oppfølging",
       "get_curator_support": "Få hjelp av kurator",
       "mark_as_completed": "Sett til ferdig",
+      "metadata_published_in_nva": "Metadata publisert i NVA",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Avvist",
