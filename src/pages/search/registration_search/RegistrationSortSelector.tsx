@@ -44,6 +44,7 @@ export const RegistrationSortSelector = () => {
     <SortSelector
       sortKey={ResultParam.Sort}
       orderKey={ResultParam.Order}
+      paginationKey={ResultParam.From}
       aria-label={t('search.sort_by')}
       size="small"
       variant="standard"
