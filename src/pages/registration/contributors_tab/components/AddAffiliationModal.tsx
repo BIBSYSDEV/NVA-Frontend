@@ -103,12 +103,9 @@ export const AddAffiliationModal = ({
           {t('registration.contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
         </Typography>
       )}
-      <Typography variant="h3" sx={{ marginBottom: '1rem', fontWeight: 'normal' }}>
-        {t('common.select_institution')}
-      </Typography>
       <SelectInstitutionForm
-        addAffiliation={addAffiliation}
-        onClose={toggleAffiliationModal}
+        saveAffiliation={addAffiliation}
+        onCancel={toggleAffiliationModal}
         suggestedInstitutions={getDistinctContributorUnits(values.entityDescription?.contributors ?? []).filter(
           (suggestion) =>
             !affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === suggestion)

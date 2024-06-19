@@ -19,11 +19,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import {
-  UpdateTicketData,
   addTicketMessage,
   createDraftDoi,
   createTicket,
   updateTicket,
+  UpdateTicketData,
 } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
@@ -258,7 +258,7 @@ export const DoiRequestAccordion = ({
         {isPendingDoiRequest && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {messages.length > 0 ? (
-              <TicketMessageList ticket={doiRequestTicket} />
+              <TicketMessageList ticket={doiRequestTicket} canDeleteMessage={userIsCurator} refetchData={refetchData} />
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}
