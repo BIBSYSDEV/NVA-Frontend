@@ -167,6 +167,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   uppy={uppy}
                   remove={remove}
                   name={name}
+                  archived
                 />
               )}
               <Paper elevation={5} component={BackgroundDiv}>

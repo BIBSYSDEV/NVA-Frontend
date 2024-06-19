@@ -37,7 +37,7 @@ interface FileListProps {
   archived?: boolean;
 }
 
-export const FileList = ({ title, files, uppy, remove, name }: FileListProps) => {
+export const FileList = ({ title, files, uppy, remove, name, archived }: FileListProps) => {
   const { t } = useTranslation();
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
@@ -88,7 +88,7 @@ export const FileList = ({ title, files, uppy, remove, name }: FileListProps) =>
               <TableCell id={administrativeAgreementId}>
                 {t('registration.files_and_license.administrative_agreement')}
               </TableCell>
-              {showFileVersion && (
+              {showFileVersion && !archived && (
                 <TableCell>
                   <Box
                     sx={{
@@ -170,43 +170,45 @@ export const FileList = ({ title, files, uppy, remove, name }: FileListProps) =>
                   </Box>
                 </TableCell>
               )}
-              <TableCell>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '0.5rem',
-                    alignItems: 'center',
-                  }}>
-                  {t('registration.files_and_license.license')}
-                  <HelperTextModal
-                    modalTitle={t('registration.files_and_license.licenses')}
-                    modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
-                    buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
-                    <Typography paragraph>{t('registration.files_and_license.file_and_license_info')}</Typography>
-                    {licenses
-                      .filter(
-                        (license) =>
-                          license.version === 4 ||
-                          license.id === LicenseUri.CC0 ||
-                          license.id === LicenseUri.RightsReserved
-                      )
-                      .map((license) => (
-                        <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-                          <Typography variant="h3" gutterBottom>
-                            {license.name}
-                          </Typography>
-                          <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-                          <Typography paragraph>{license.description}</Typography>
-                          {license.link && (
-                            <Link href={license.link} target="blank">
-                              {license.link}
-                            </Link>
-                          )}
-                        </Box>
-                      ))}
-                  </HelperTextModal>
-                </Box>
-              </TableCell>
+              {!archived && (
+                <TableCell>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: '0.5rem',
+                      alignItems: 'center',
+                    }}>
+                    {t('registration.files_and_license.license')}
+                    <HelperTextModal
+                      modalTitle={t('registration.files_and_license.licenses')}
+                      modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
+                      buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
+                      <Typography paragraph>{t('registration.files_and_license.file_and_license_info')}</Typography>
+                      {licenses
+                        .filter(
+                          (license) =>
+                            license.version === 4 ||
+                            license.id === LicenseUri.CC0 ||
+                            license.id === LicenseUri.RightsReserved
+                        )
+                        .map((license) => (
+                          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+                            <Typography variant="h3" gutterBottom>
+                              {license.name}
+                            </Typography>
+                            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
+                            <Typography paragraph>{license.description}</Typography>
+                            {license.link && (
+                              <Link href={license.link} target="blank">
+                                {license.link}
+                              </Link>
+                            )}
+                          </Box>
+                        ))}
+                    </HelperTextModal>
+                  </Box>
+                </TableCell>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -224,6 +226,7 @@ export const FileList = ({ title, files, uppy, remove, name }: FileListProps) =>
                   key={file.identifier}
                   file={file}
                   disabled={!canEditFile(file)}
+                  archived={archived}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                     const remainingFiles = uppy
