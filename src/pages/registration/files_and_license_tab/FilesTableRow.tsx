@@ -1,11 +1,7 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import NoSimOutlinedIcon from '@mui/icons-material/NoSimOutlined';
-import TaskOutlinedIcon from '@mui/icons-material/TaskOutlined';
-import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import {
   Box,
   Checkbox,
@@ -31,13 +27,13 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
 import { licenses, LicenseUri } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
@@ -57,20 +53,6 @@ interface FilesTableRowProps {
   archived?: boolean;
 }
 
-interface FileStatus {
-  id: number;
-  label: string;
-  icon: ReactNode;
-  value: string;
-}
-
-const fileStatuses: FileStatus[] = [
-  { id: 1, label: 'Til publisering', icon: <UploadFileOutlinedIcon />, value: 'UnpublishedFile' },
-  { id: 2, label: 'Arkivert', icon: <Inventory2OutlinedIcon />, value: 'UnpublishableFile' },
-  { id: 3, label: 'Publisert', icon: <TaskOutlinedIcon />, value: 'PublishedFile' },
-  { id: 4, label: 'Avvist', icon: <NoSimOutlinedIcon />, value: 'UnpublishableFile' },
-];
-
 export const FilesTableRow = ({
   file,
   removeFile,
@@ -86,9 +68,8 @@ export const FilesTableRow = ({
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
 
-  console.log('file', file);
-
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
+  const administrativeAgreementFieldName = `${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`;
   const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
@@ -127,8 +108,8 @@ export const FilesTableRow = ({
       <TableRow
         data-testid={dataTestId.registrationWizard.files.fileRow}
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
-        sx={{ bgcolor: disabled ? 'grey.400' : '', td: { pb: 0, borderBottom: 'unset' } }}>
-        <TableCell sx={{ width: '70%' }}>
+        sx={{ bgcolor: disabled ? 'grey.400' : '', td: !archived ? { pb: 0, borderBottom: 'unset' } : '' }}>
+        <TableCell sx={{ minWidth: '13rem', maxWidth: archived ? '20rem' : '' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
         </TableCell>
 
@@ -160,54 +141,33 @@ export const FilesTableRow = ({
           </Box>
         </TableCell>
 
-        <TableCell>{prettyBytes(file.size)}</TableCell>
+        <TableCell sx={{ minWidth: archived ? '5.5rem' : '' }}>{prettyBytes(file.size)}</TableCell>
 
         <TableCell>
-          <Field name={fileTypeFieldName}>
-            {({ field, meta: { error, touched } }: FieldProps<string>) => {
-              console.log('field', field);
-              console.log('error', error);
-              console.log('touched', touched);
-              return (
-                <TextField
-                  id={field.name}
-                  data-testid={dataTestId.registrationWizard.files.selectStatusField}
-                  label={t('registration.files_and_license.file_status')}
-                  value={field.value}
-                  SelectProps={{
-                    renderValue: (option) => {
-                      const status = fileStatuses.find((fileStatus) => option === fileStatus.value);
-                      return status ? (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          {status.icon}
-                          <span>{status.label}</span>
-                        </Box>
-                      ) : null;
-                    },
-                  }}
-                  onChange={({ target: { value } }) => setFieldValue(field.name, value)}
-                  variant="filled"
+          <Field name={administrativeAgreementFieldName}>
+            {({ field }: FieldProps) => (
+              <Tooltip title={t('registration.files_and_license.administrative_contract')}>
+                <Checkbox
+                  {...field}
+                  data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
+                  checked={field.value}
                   disabled={disabled}
-                  sx={{ minWidth: '10rem' }}
-                  select
-                  required>
-                  {fileStatuses.map((val) => (
-                    <MenuItem
-                      data-testid={dataTestId.registrationWizard.files.licenseItem}
-                      key={val.id}
-                      value={val.value}
-                      divider
-                      dense
-                      sx={{ gap: '1rem' }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', my: '0.5rem' }}>
-                        {val.icon}
-                        <span>{val.label}</span>
-                      </Box>
-                    </MenuItem>
-                  ))}
-                </TextField>
-              );
-            }}
+                  inputProps={{
+                    'aria-labelledby': administrativeAgreementId,
+                  }}
+                  onChange={(event) => {
+                    const newAssociatedFileType: AssociatedFileType =
+                      field.value === true ? 'UnpublishedFile' : 'UnpublishableFile';
+                    setFieldValue(fileTypeFieldName, newAssociatedFileType);
+
+                    field.onChange(event);
+                    setFieldValue(publisherVersionFieldName, null);
+                    setFieldValue(licenseFieldName, null);
+                    setFieldValue(embargoFieldName, null);
+                  }}
+                />
+              </Tooltip>
+            )}
           </Field>
         </TableCell>
 

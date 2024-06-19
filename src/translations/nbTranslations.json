@@ -490,6 +490,7 @@
       "create_series": "Kunne ikke opprette serie",
       "create_user": "Kunne ikke opprette person",
       "delete_draft_registrations": "Kunne ikke slette alle kladdene",
+      "delete_message": "Kunne ikke slette meldingen",
       "delete_note": "Kunne ikke slette merknad",
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
@@ -515,6 +516,7 @@
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
       "get_nvi_periods": "Kunne ikke hente NVI-perioder",
       "get_orcid": "Kunne ikke hente data fra ORCID",
+      "get_organization": "Kunne ikke hente informasjon om organisasjon",
       "get_person": "Kunne ikke hente person",
       "get_positions": "Kunne ikke hente stillinger",
       "get_project": "Kunne ikke hente prosjekt",
@@ -568,6 +570,7 @@
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
       "delete_draft_registrations": "Alle kladdene ble slettet",
+      "delete_message": "Meldingen ble slettet",
       "delete_note": "Merknaden ble slettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
@@ -674,6 +677,8 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statuser",
+      "delete_message": "Slette melding",
+      "delete_message_description": "Er du sikker på at du vil slette meldingen?",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -686,6 +691,7 @@
       "general_support_pending": "Venter på oppfølging",
       "get_curator_support": "Få hjelp av kurator",
       "mark_as_completed": "Sett til ferdig",
+      "message_deleted": "Meldingen er slettet",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Avvist",
@@ -1144,6 +1150,8 @@
       "contributor_is_unidentified": "Bidragsyter er uidentifisert",
       "corresponding": "Korresponderende",
       "department": "Enhet",
+      "edit_affiliation": "Endre tilknytning",
+      "edit_affiliation_helper_text": "<0>Det er kun institusjoner som forskningen er gjennomført i samarbeid med som skal legges til som tilknytning til bidragsyteren.</0> <0>Hvis tilknytningen ikke er korrekt, så endre tilknytninger ved å skrive inn korrekt insitusjon eller enhet i tekstfeltene</0>",
       "identity_status": {
         "confirmed_identity": "Identifisert",
         "confirmed_identity_without_affiliation": "Identifisert uten tilknytning",
@@ -1309,8 +1317,6 @@
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
       "show_all_older_versions": "Vis alle tidligere versjoner",
       "size": "Størrelse",
-      "status": "Status",
-      "file_status": "Filstatus",
       "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
       "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
       "version_embargo_helper_text": "<0>Embargo/utsatt publiseringsdato</0>: De fleste forlag vil kreve at du ikke offentliggjør publisert versjon av artikkelen før det har gått en viss tid. Dato for tillatt offentliggjøring er normalt spesifisert i en forfatteravtale. I noen tilfeller kan også akseptert versjon være underlagt krav om utsatt publiseringsdato.",
