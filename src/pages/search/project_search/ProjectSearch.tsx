@@ -29,6 +29,7 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
     <SortSelector
       orderKey="orderBy"
       sortKey="sort"
+      paginationKey="page"
       aria-label={t('search.sort_by')}
       size="small"
       variant="standard"

@@ -29,6 +29,7 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
     <SortSelector
       orderKey="orderBy"
       sortKey="sort"
+      paginationKey="page"
       aria-label={t('search.sort_by')}
       size="small"
       variant="standard"

@@ -57,6 +57,7 @@ export const CentralImportPage = () => {
             <SortSelector
               sortKey={ImportCandidatesSearchParam.SortOrder}
               orderKey={ImportCandidatesSearchParam.OrderBy}
+              paginationKey={ImportCandidatesSearchParam.From}
               aria-label={t('search.sort_by')}
               size="small"
               variant="standard"
