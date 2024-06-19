@@ -1,11 +1,13 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Box, Button, List, TextField, Typography } from '@mui/material';
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { DegreeRegistration } from '../../../../../types/publication_types/degreeRegistration.types';
+import { emptyUnconfirmedDocument } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { PublisherField } from '../../components/PublisherField';
 import { SearchRelatedResultField } from '../../components/SearchRelatedResultField';
@@ -79,6 +81,13 @@ export const PhdForm = () => {
               </Box>
             );
           })}
+          <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
+            {({ push }: FieldArrayRenderProps) => (
+              <Button onClick={() => push(emptyUnconfirmedDocument)} startIcon={<AddCircleOutlineIcon />}>
+                {t('common.add')}
+              </Button>
+            )}
+          </FieldArray>
 
           <ConfirmDialog
             open={indexToRemove !== null}

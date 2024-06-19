@@ -308,6 +308,11 @@ export interface UnconfirmedDocument {
   text: string;
 }
 
+export const emptyUnconfirmedDocument: UnconfirmedDocument = {
+  type: 'UnconfirmedDocument',
+  text: '',
+};
+
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
 
 export interface UnpublishPublicationRequest {
