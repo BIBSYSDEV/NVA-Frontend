@@ -1139,7 +1139,7 @@
       "add_contributor": "Legg til bidragsyter",
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
       "add_new_affiliation": "Legg til ny tilknytning",
-      "add_new_affiliation_helper_text": "<0>Det er kun institusjoner som forskningen er gjennomført i samarbeid med som skal legges til som tilknytning til bidragsyteren.</0> <0>Legg til tilknytning til bidragsyteren ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører bidragsyteren flere forskjellige enheter under samme institusjon så må du legge til dette som ny tilknytning.</0>",
+      "add_new_affiliation_helper_text": "<0>Bare institusjoner som forskningen er gjennomført i samarbeid med, skal legges til som tilknytning til bidragsyteren.</0> <0>Legg til tilknytning til bidragsyteren ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører bidragsyteren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
       "add_new_contributor": "Legg til ny bidragsyter",
       "add_self_as_contributor": "Legg meg til som bidragsyter",
       "add_unverified_contributor": "Legg til en uidentifisert bidragsyter.",
@@ -1151,7 +1151,7 @@
       "corresponding": "Korresponderende",
       "department": "Enhet",
       "edit_affiliation": "Endre tilknytning",
-      "edit_affiliation_helper_text": "<0>Det er kun institusjoner som forskningen er gjennomført i samarbeid med som skal legges til som tilknytning til bidragsyteren.</0> <0>Hvis tilknytningen ikke er korrekt, så endre tilknytninger ved å skrive inn korrekt insitusjon eller enhet i tekstfeltene</0>",
+      "edit_affiliation_helper_text": "<0>Bare institusjoner som forskningen er gjennomført i samarbeid med, skal legges til som tilknytning til bidragsyteren.</0> <0>Hvis tilknytningen ikke er korrekt, endre tilknytninger ved å skrive inn korrekt institusjon eller enhet i tekstfeltene.</0>",
       "identity_status": {
         "confirmed_identity": "Identifisert",
         "confirmed_identity_without_affiliation": "Identifisert uten tilknytning",
