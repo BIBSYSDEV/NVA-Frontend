@@ -171,7 +171,6 @@
     "contributor": "Bidragsyter",
     "country": "Land",
     "create": "Opprett",
-    "created": "Opprettet",
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskrivelse",
@@ -677,6 +676,7 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statuser",
+      "created_in_nva": "Opprettet i NVA",
       "delete_message": "Slette melding",
       "delete_message_description": "Er du sikker på at du vil slette meldingen?",
       "doi_closed": "DOI avvist",
@@ -692,6 +692,7 @@
       "get_curator_support": "Få hjelp av kurator",
       "mark_as_completed": "Sett til ferdig",
       "message_deleted": "Meldingen er slettet",
+      "metadata_published_in_nva": "Metadata publisert i NVA",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Avvist",

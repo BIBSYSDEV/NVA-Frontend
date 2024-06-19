@@ -54,6 +54,17 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
 
   const logs: LogItem[] = [];
 
+  if (registration.createdDate) {
+    const registrationCreated: LogItem = {
+      modifiedDate: registration.createdDate,
+      title: t('my_page.messages.created_in_nva'),
+      description: organizationAcronym,
+      type: 'PublishingRequest',
+      actionBy: [resourceOwnerId],
+    };
+    logs.push(registrationCreated);
+  }
+
   if (isImported) {
     registration.importDetails?.forEach((importDetail) => {
       const registrationImported: LogItem = {
@@ -64,21 +75,12 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
       };
       logs.push(registrationImported);
     });
-  } else {
-    const registrationCreated: LogItem = {
-      modifiedDate: registration.createdDate,
-      title: t('common.created'),
-      description: organizationAcronym,
-      type: 'PublishingRequest',
-      actionBy: [resourceOwnerId],
-    };
-    logs.push(registrationCreated);
   }
 
-  if (registration.publishedDate) {
+  if (registration.publishedDate && registration.publishedDate >= registration.createdDate) {
     const registrationPublished: LogItem = {
       modifiedDate: registration.publishedDate,
-      title: t('registration.status.PUBLISHED_METADATA'),
+      title: t('my_page.messages.metadata_published_in_nva'),
       type: 'PublishingRequest',
     };
     logs.push(registrationPublished);
