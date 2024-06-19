@@ -30,7 +30,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: Nvi
         <TableCell align="center">
           {orgAggregations?.points.value.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0}
         </TableCell>
-        <TableCell align="center">{orgAggregations?.status.Dispute?.docCount.toLocaleString() ?? 0}</TableCell>
+        <TableCell align="center">{orgAggregations?.dispute?.docCount.toLocaleString() ?? 0}</TableCell>
         <TableCell>
           {level !== 0 && organization.hasPart && organization.hasPart.length > 0 && (
             <IconButton onClick={() => setExpanded(!expanded)} title={t('tasks.nvi.show_subunits')}>

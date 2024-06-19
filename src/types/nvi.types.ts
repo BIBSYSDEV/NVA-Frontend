@@ -35,7 +35,7 @@ interface AggregationCount {
   docCount: number;
 }
 
-type NviAggregationStatus = NviCandidateStatus | 'Dispute';
+type NviAggregationStatus = NviCandidateStatus;
 
 interface OrganizationDetail extends AggregationCount {
   dispute: AggregationCount;
