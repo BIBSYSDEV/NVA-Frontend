@@ -361,6 +361,7 @@ export enum ResultSearchOrder {
   ModifiedDate = 'modifiedDate',
   PublicationDate = 'publicationDate',
   Relevance = 'relevance',
+  Title = 'title',
 }
 
 export interface FetchResultsParams {
@@ -525,7 +526,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
   searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
-  searchParams.set(ResultParam.Order, params.order ?? 'modifiedDate');
+  searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
   const getResults = await apiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
