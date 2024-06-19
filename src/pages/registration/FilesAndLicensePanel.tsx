@@ -40,7 +40,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
-
   const publishedFiles = files.filter((file) => file.type === 'PublishedFile');
   const filesToPublish = files.filter((file) => file.type === 'UnpublishedFile');
   const filesNotToPublish = files.filter((file) => file.type === 'UnpublishableFile');
@@ -142,16 +141,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   disabled={!canEditFiles}
                 />
               )}
-
-              {publishedFiles.length > 0 && (
-                <FileList
-                  title={t('registration.files_and_license.published_files')}
-                  files={publishedFiles}
-                  uppy={uppy}
-                  remove={remove}
-                  name={name}
-                />
-              )}
               {filesToPublish.length > 0 && (
                 <FileList
                   title={t('registration.files_and_license.files_to_publish')}
@@ -169,6 +158,15 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   remove={remove}
                   name={name}
                   archived
+                />
+              )}
+              {publishedFiles.length > 0 && (
+                <FileList
+                  title={t('registration.files_and_license.published_files')}
+                  files={publishedFiles}
+                  uppy={uppy}
+                  remove={remove}
+                  name={name}
                 />
               )}
               <Paper elevation={5} component={BackgroundDiv}>
