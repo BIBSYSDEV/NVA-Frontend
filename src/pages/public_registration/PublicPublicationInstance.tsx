@@ -3,7 +3,15 @@ import { hyphenate } from 'isbn3';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../translations/i18n';
 import { ArtisticType } from '../../types/publicationFieldNames';
-import { ArtisticPublicationInstance, DesignType } from '../../types/publication_types/artisticRegistration.types';
+import {
+  ArchitectureType,
+  ArtisticPublicationInstance,
+  DesignType,
+  LiteraryArtsType,
+  MovingPictureType,
+  PerformingArtType,
+  VisualArtType,
+} from '../../types/publication_types/artisticRegistration.types';
 import { BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
@@ -90,6 +98,15 @@ export const PublicPublicationInstanceChapter = ({
   return pagesInterval ? <Typography>{pagesInterval}</Typography> : null;
 };
 
+const otherArtisticSubtypes = [
+  DesignType.Other,
+  ArchitectureType.Other,
+  PerformingArtType.Other,
+  MovingPictureType.Other,
+  VisualArtType.Other,
+  LiteraryArtsType.Other,
+];
+
 export const PublicPublicationInstanceArtistic = ({
   publicationInstance,
 }: {
@@ -114,7 +131,7 @@ export const PublicPublicationInstanceArtistic = ({
                 : '';
 
   const typeString = subtype?.type
-    ? subtype.type === DesignType.Other && subtype.description
+    ? otherArtisticSubtypes.includes(subtype.type) && subtype.description
       ? subtype.description
       : t(`${i18nTypeBase}${subtype.type}` as any)
     : '';
