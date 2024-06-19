@@ -33,11 +33,11 @@ interface FileListProps {
   files: AssociatedFile[];
   uppy: Uppy;
   remove: (index: number) => any;
-  name: string;
+  baseFieldName: string;
   archived?: boolean;
 }
 
-export const FileList = ({ title, files, uppy, remove, name, archived }: FileListProps) => {
+export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }: FileListProps) => {
   const { t } = useTranslation();
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
@@ -226,7 +226,6 @@ export const FileList = ({ title, files, uppy, remove, name, archived }: FileLis
                   key={file.identifier}
                   file={file}
                   disabled={!canEditFile(file)}
-                  archived={archived}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                     const remainingFiles = uppy
@@ -237,10 +236,10 @@ export const FileList = ({ title, files, uppy, remove, name, archived }: FileLis
 
                     if (associatedArtifactsBeforeRemoval === 1) {
                       // Ensure field is set to touched even if it's empty
-                      setFieldTouched(name);
+                      setFieldTouched(baseFieldName);
                     }
                   }}
-                  baseFieldName={`${name}[${associatedFileIndex}]`}
+                  baseFieldName={`${baseFieldName}[${associatedFileIndex}]`}
                   showFileVersion={showFileVersion}
                 />
               );

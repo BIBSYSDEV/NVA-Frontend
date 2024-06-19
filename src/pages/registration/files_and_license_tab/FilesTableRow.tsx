@@ -50,17 +50,9 @@ interface FilesTableRowProps {
   baseFieldName: string;
   showFileVersion: boolean;
   disabled: boolean;
-  archived?: boolean;
 }
 
-export const FilesTableRow = ({
-  file,
-  removeFile,
-  baseFieldName,
-  showFileVersion,
-  disabled,
-  archived = false,
-}: FilesTableRowProps) => {
+export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion, disabled }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
   const customer = useSelector((state: RootState) => state.customer);
@@ -75,6 +67,8 @@ export const FilesTableRow = ({
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
+
+  const isArchived = file.type === 'UnpublishableFile';
 
   const isAcceptedFile = file.publisherVersion === FileVersion.Accepted;
   const rrsStrategy = file.rightsRetentionStrategy.configuredType ?? customer?.rightsRetentionStrategy.type;
@@ -108,8 +102,8 @@ export const FilesTableRow = ({
       <TableRow
         data-testid={dataTestId.registrationWizard.files.fileRow}
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
-        sx={{ bgcolor: disabled ? 'grey.400' : '', td: !archived ? { pb: 0, borderBottom: 'unset' } : '' }}>
-        <TableCell sx={{ minWidth: '13rem', maxWidth: archived ? '20rem' : '' }}>
+        sx={{ bgcolor: disabled ? 'grey.400' : '', td: !isArchived ? { pb: 0, borderBottom: 'unset' } : '' }}>
+        <TableCell sx={{ minWidth: '13rem', maxWidth: isArchived ? '20rem' : '' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
         </TableCell>
 
@@ -141,7 +135,7 @@ export const FilesTableRow = ({
           </Box>
         </TableCell>
 
-        <TableCell sx={{ minWidth: archived ? '5.5rem' : '' }}>{prettyBytes(file.size)}</TableCell>
+        <TableCell sx={{ minWidth: isArchived ? '5.5rem' : '' }}>{prettyBytes(file.size)}</TableCell>
 
         <TableCell>
           <Field name={administrativeAgreementFieldName}>
@@ -171,7 +165,7 @@ export const FilesTableRow = ({
           </Field>
         </TableCell>
 
-        {showFileVersion && !archived && (
+        {showFileVersion && !isArchived && (
           <TableCell>
             <Field name={publisherVersionFieldName}>
               {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
@@ -220,7 +214,7 @@ export const FilesTableRow = ({
             </Field>
           </TableCell>
         )}
-        {!archived && (
+        {!isArchived && (
           <TableCell>
             <Field name={licenseFieldName}>
               {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -313,7 +307,7 @@ export const FilesTableRow = ({
           </TableCell>
         )}
       </TableRow>
-      {!archived && (
+      {!isArchived && (
         <TableRow
           sx={{ bgcolor: disabled ? 'grey.400' : '' }}
           title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}>
