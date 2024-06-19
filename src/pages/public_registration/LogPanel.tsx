@@ -57,7 +57,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   if (registration.createdDate) {
     const registrationCreated: LogItem = {
       modifiedDate: registration.createdDate,
-      title: t('common.created'),
+      title: t('my_page.messages.created_in_nva'),
       description: organizationAcronym,
       type: 'PublishingRequest',
       actionBy: [resourceOwnerId],
