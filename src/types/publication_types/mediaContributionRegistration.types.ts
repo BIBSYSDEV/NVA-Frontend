@@ -74,7 +74,7 @@ export interface MediaContributionPeriodicalPublicationContext extends Omit<Jour
 }
 
 export interface MediaContributionPeriodicalPublicationInstance
-  extends Omit<JournalPublicationInstance, 'type' | 'corrigendumFor' | 'peerReviewed'> {
+  extends Omit<JournalPublicationInstance, 'type' | 'corrigendumFor'> {
   type: MediaType.MediaFeatureArticle | MediaType.MediaReaderOpinion | '';
 }
 
