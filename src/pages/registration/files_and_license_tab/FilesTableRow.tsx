@@ -3,6 +3,8 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import NoSimOutlinedIcon from '@mui/icons-material/NoSimOutlined';
+import TaskOutlinedIcon from '@mui/icons-material/TaskOutlined';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import {
   Box,
@@ -52,6 +54,7 @@ interface FilesTableRowProps {
   baseFieldName: string;
   showFileVersion: boolean;
   disabled: boolean;
+  archived?: boolean;
 }
 
 interface FileStatus {
@@ -64,15 +67,26 @@ interface FileStatus {
 const fileStatuses: FileStatus[] = [
   { id: 1, label: 'Til publisering', icon: <UploadFileOutlinedIcon />, value: 'UnpublishedFile' },
   { id: 2, label: 'Arkivert', icon: <Inventory2OutlinedIcon />, value: 'UnpublishableFile' },
+  { id: 3, label: 'Publisert', icon: <TaskOutlinedIcon />, value: 'PublishedFile' },
+  { id: 4, label: 'Avvist', icon: <NoSimOutlinedIcon />, value: 'UnpublishableFile' },
 ];
 
-export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion, disabled }: FilesTableRowProps) => {
+export const FilesTableRow = ({
+  file,
+  removeFile,
+  baseFieldName,
+  showFileVersion,
+  disabled,
+  archived = false,
+}: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
   const customer = useSelector((state: RootState) => state.customer);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
+
+  console.log('file', file);
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
   const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
@@ -114,7 +128,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         data-testid={dataTestId.registrationWizard.files.fileRow}
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
         sx={{ bgcolor: disabled ? 'grey.400' : '', td: { pb: 0, borderBottom: 'unset' } }}>
-        <TableCell sx={{ minWidth: '13rem' }}>
+        <TableCell sx={{ width: '70%' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
         </TableCell>
 
@@ -150,51 +164,54 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
         <TableCell>
           <Field name={fileTypeFieldName}>
-            {({ field, meta: { error, touched } }: FieldProps<string>) => (
-              <TextField
-                id={field.name}
-                data-testid={dataTestId.registrationWizard.files.selectStatusField}
-                label={t('registration.files_and_license.file_status')}
-                value={field.value}
-                SelectProps={{
-                  renderValue: (option) => {
-                    const status = fileStatuses.find((fileStatus) => option === fileStatus.value);
-                    return status ? (
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        {status.icon}
-                        <span>{status.label}</span>
+            {({ field, meta: { error, touched } }: FieldProps<string>) => {
+              console.log('field', field);
+              console.log('error', error);
+              console.log('touched', touched);
+              return (
+                <TextField
+                  id={field.name}
+                  data-testid={dataTestId.registrationWizard.files.selectStatusField}
+                  label={t('registration.files_and_license.file_status')}
+                  value={field.value}
+                  SelectProps={{
+                    renderValue: (option) => {
+                      const status = fileStatuses.find((fileStatus) => option === fileStatus.value);
+                      return status ? (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          {status.icon}
+                          <span>{status.label}</span>
+                        </Box>
+                      ) : null;
+                    },
+                  }}
+                  onChange={({ target: { value } }) => setFieldValue(field.name, value)}
+                  variant="filled"
+                  disabled={disabled}
+                  sx={{ minWidth: '10rem' }}
+                  select
+                  required>
+                  {fileStatuses.map((val) => (
+                    <MenuItem
+                      data-testid={dataTestId.registrationWizard.files.licenseItem}
+                      key={val.id}
+                      value={val.value}
+                      divider
+                      dense
+                      sx={{ gap: '1rem' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', my: '0.5rem' }}>
+                        {val.icon}
+                        <span>{val.label}</span>
                       </Box>
-                    ) : null;
-                  },
-                }}
-                onChange={({ target: { value } }) => setFieldValue(field.name, value)}
-                variant="filled"
-                disabled={disabled}
-                error={!!error && touched}
-                helperText={<ErrorMessage name={'hei'} />}
-                sx={{ minWidth: '10rem' }}
-                select
-                required>
-                {fileStatuses.map((val) => (
-                  <MenuItem
-                    data-testid={dataTestId.registrationWizard.files.licenseItem}
-                    key={'key'}
-                    value={val.value}
-                    divider
-                    dense
-                    sx={{ gap: '1rem' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      {val.icon}
-                      <span>{val.label}</span>
-                    </Box>
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              );
+            }}
           </Field>
         </TableCell>
 
-        {showFileVersion && (
+        {showFileVersion && !archived && (
           <TableCell>
             <Field name={publisherVersionFieldName}>
               {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
@@ -243,251 +260,254 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             </Field>
           </TableCell>
         )}
-
-        <TableCell>
-          <Field name={licenseFieldName}>
-            {({ field, meta: { error, touched } }: FieldProps<string>) => (
-              <TextField
-                id={field.name}
-                data-testid={dataTestId.registrationWizard.files.selectLicenseField}
-                sx={{ minWidth: '15rem' }}
-                select
-                disabled={disabled}
-                SelectProps={{
-                  renderValue: (option) => {
-                    const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
-                    return selectedLicense ? (
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
-                        <span>{selectedLicense.name}</span>
-                      </Box>
-                    ) : null;
-                  },
-                }}
-                variant="filled"
-                value={licenses.find((license) => equalUris(license.id, field.value))?.id ?? ''}
-                error={!!error && touched}
-                helperText={<ErrorMessage name={field.name} />}
-                label={t('registration.files_and_license.conditions_for_using_file')}
-                required
-                onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
-                {activeLicenses.map((license) => (
-                  <MenuItem
-                    data-testid={dataTestId.registrationWizard.files.licenseItem}
-                    key={license.id}
-                    value={license.id}
-                    divider
-                    dense
-                    sx={{ gap: '1rem' }}>
-                    <ListItemIcon>
-                      <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Typography>{license.name}</Typography>
-                    </ListItemText>
-                  </MenuItem>
-                ))}
-                {!inactiveLicensesOpen && (
-                  <MenuItem
-                    data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
-                    sx={{ display: 'flex', justifyContent: 'center' }}
-                    onClickCapture={(e) => {
-                      e.stopPropagation();
-                      setInactiveLicensesOpen(!inactiveLicensesOpen);
-                    }}>
-                    <Typography sx={{ fontStyle: 'italic' }}>
-                      {t('registration.files_and_license.show_all_older_versions')}
-                    </Typography>
-                  </MenuItem>
-                )}
-                {inactiveLicenses.map((license) => (
-                  <MenuItem
-                    data-testid={dataTestId.registrationWizard.files.licenseItem}
-                    key={license.id}
-                    value={license.id}
-                    divider
-                    dense
-                    sx={{ gap: '1rem', display: inactiveLicensesOpen ? 'flex' : 'none' }}>
-                    <ListItemIcon>
-                      <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Typography>{license.name}</Typography>
-                    </ListItemText>
-                  </MenuItem>
-                ))}
-              </TextField>
+        {!archived && (
+          <TableCell>
+            <Field name={licenseFieldName}>
+              {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                <TextField
+                  id={field.name}
+                  data-testid={dataTestId.registrationWizard.files.selectLicenseField}
+                  sx={{ minWidth: '15rem' }}
+                  select
+                  disabled={disabled}
+                  SelectProps={{
+                    renderValue: (option) => {
+                      const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
+                      return selectedLicense ? (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
+                          <span>{selectedLicense.name}</span>
+                        </Box>
+                      ) : null;
+                    },
+                  }}
+                  variant="filled"
+                  value={licenses.find((license) => equalUris(license.id, field.value))?.id ?? ''}
+                  error={!!error && touched}
+                  helperText={<ErrorMessage name={field.name} />}
+                  label={t('registration.files_and_license.conditions_for_using_file')}
+                  required
+                  onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
+                  {activeLicenses.map((license) => (
+                    <MenuItem
+                      data-testid={dataTestId.registrationWizard.files.licenseItem}
+                      key={license.id}
+                      value={license.id}
+                      divider
+                      dense
+                      sx={{ gap: '1rem' }}>
+                      <ListItemIcon>
+                        <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <Typography>{license.name}</Typography>
+                      </ListItemText>
+                    </MenuItem>
+                  ))}
+                  {!inactiveLicensesOpen && (
+                    <MenuItem
+                      data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
+                      sx={{ display: 'flex', justifyContent: 'center' }}
+                      onClickCapture={(e) => {
+                        e.stopPropagation();
+                        setInactiveLicensesOpen(!inactiveLicensesOpen);
+                      }}>
+                      <Typography sx={{ fontStyle: 'italic' }}>
+                        {t('registration.files_and_license.show_all_older_versions')}
+                      </Typography>
+                    </MenuItem>
+                  )}
+                  {inactiveLicenses.map((license) => (
+                    <MenuItem
+                      data-testid={dataTestId.registrationWizard.files.licenseItem}
+                      key={license.id}
+                      value={license.id}
+                      divider
+                      dense
+                      sx={{ gap: '1rem', display: inactiveLicensesOpen ? 'flex' : 'none' }}>
+                      <ListItemIcon>
+                        <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                      </ListItemIcon>
+                      <ListItemText>
+                        <Typography>{license.name}</Typography>
+                      </ListItemText>
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            </Field>
+            {fileHasCustomerRrs && (
+              <Typography>
+                <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
+                  {rrsPolicyLink}
+                </Trans>
+              </Typography>
             )}
-          </Field>
-          {fileHasCustomerRrs && (
-            <Typography>
-              <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
-                {rrsPolicyLink}
-              </Trans>
-            </Typography>
-          )}
-          {fileHasOverriddenRrs && (
-            <Typography>
-              <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
-                {rrsPolicyLink}
-              </Trans>
-            </Typography>
-          )}
-        </TableCell>
+            {fileHasOverriddenRrs && (
+              <Typography>
+                <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
+                  {rrsPolicyLink}
+                </Trans>
+              </Typography>
+            )}
+          </TableCell>
+        )}
       </TableRow>
-      <TableRow
-        sx={{ bgcolor: disabled ? 'grey.400' : '' }}
-        title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}>
-        <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
-          <Collapse in={openCollapsable}>
-            <Box
-              sx={{
-                m: '1rem 1rem 0 1rem',
-                display: 'grid',
-                gridTemplateColumns: '1fr auto',
-                gap: '2rem',
-              }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                {isAcceptedFile && isNullRrs && (
-                  <FormControlLabel
-                    label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
-                    control={
-                      <Checkbox
-                        checked={fileHasFunderRrs}
-                        onChange={() => {
-                          if (fileHasFunderRrs) {
-                            const nullRrsValue: FileRrs = {
-                              type: 'NullRightsRetentionStrategy',
-                              configuredType: rrsStrategy,
-                            };
-                            setFieldValue(rrsFieldName, nullRrsValue);
-                            setFieldValue(licenseFieldName, null);
-                          } else {
-                            const newRrsValue: FileRrs = {
-                              type: 'FunderRightsRetentionStrategy',
-                              configuredType: rrsStrategy,
-                            };
-                            setFieldValue(rrsFieldName, newRrsValue);
-                            setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                          }
-                        }}
-                      />
-                    }
-                  />
-                )}
+      {!archived && (
+        <TableRow
+          sx={{ bgcolor: disabled ? 'grey.400' : '' }}
+          title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}>
+          <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
+            <Collapse in={openCollapsable}>
+              <Box
+                sx={{
+                  m: '1rem 1rem 0 1rem',
+                  display: 'grid',
+                  gridTemplateColumns: '1fr auto',
+                  gap: '2rem',
+                }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {isAcceptedFile && isNullRrs && (
+                    <FormControlLabel
+                      label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
+                      control={
+                        <Checkbox
+                          checked={fileHasFunderRrs}
+                          onChange={() => {
+                            if (fileHasFunderRrs) {
+                              const nullRrsValue: FileRrs = {
+                                type: 'NullRightsRetentionStrategy',
+                                configuredType: rrsStrategy,
+                              };
+                              setFieldValue(rrsFieldName, nullRrsValue);
+                              setFieldValue(licenseFieldName, null);
+                            } else {
+                              const newRrsValue: FileRrs = {
+                                type: 'FunderRightsRetentionStrategy',
+                                configuredType: rrsStrategy,
+                              };
+                              setFieldValue(rrsFieldName, newRrsValue);
+                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                            }
+                          }}
+                        />
+                      }
+                    />
+                  )}
 
-                {fileHasCustomerRrs && isCustomerRrs && (
-                  <Typography>
-                    {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
-                  </Typography>
-                )}
+                  {fileHasCustomerRrs && isCustomerRrs && (
+                    <Typography>
+                      {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
+                    </Typography>
+                  )}
 
-                {canOverrideRrs && (
-                  <FormControlLabel
-                    disabled={disabled}
-                    label={
-                      <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
-                        {rrsPolicyLink}
-                      </Trans>
-                    }
-                    control={
-                      <Checkbox
-                        checked={!fileHasOverriddenRrs}
-                        onChange={() => {
-                          if (fileHasOverriddenRrs) {
-                            const customerRrsValue: FileRrs = {
-                              type: 'CustomerRightsRetentionStrategy',
-                              configuredType: rrsStrategy,
-                            };
-                            setFieldValue(rrsFieldName, customerRrsValue);
-                            setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                          } else {
-                            const overriddenRrsValue: FileRrs = {
-                              type: 'OverriddenRightsRetentionStrategy',
-                              configuredType: rrsStrategy,
-                            };
-                            setFieldValue(rrsFieldName, overriddenRrsValue);
-                            setFieldValue(licenseFieldName, null);
-                          }
-                        }}
-                      />
-                    }
-                  />
-                )}
+                  {canOverrideRrs && (
+                    <FormControlLabel
+                      disabled={disabled}
+                      label={
+                        <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
+                          {rrsPolicyLink}
+                        </Trans>
+                      }
+                      control={
+                        <Checkbox
+                          checked={!fileHasOverriddenRrs}
+                          onChange={() => {
+                            if (fileHasOverriddenRrs) {
+                              const customerRrsValue: FileRrs = {
+                                type: 'CustomerRightsRetentionStrategy',
+                                configuredType: rrsStrategy,
+                              };
+                              setFieldValue(rrsFieldName, customerRrsValue);
+                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                            } else {
+                              const overriddenRrsValue: FileRrs = {
+                                type: 'OverriddenRightsRetentionStrategy',
+                                configuredType: rrsStrategy,
+                              };
+                              setFieldValue(rrsFieldName, overriddenRrsValue);
+                              setFieldValue(licenseFieldName, null);
+                            }
+                          }}
+                        />
+                      }
+                    />
+                  )}
 
-                {user?.isPublishingCurator && (
-                  <Field name={legalNoteFieldName}>
-                    {({ field }: FieldProps<string>) => (
-                      <TextField
+                  {user?.isPublishingCurator && (
+                    <Field name={legalNoteFieldName}>
+                      {({ field }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          value={field.value ?? ''}
+                          data-testid={dataTestId.registrationWizard.files.legalNoteField}
+                          variant="filled"
+                          fullWidth
+                          label={t('registration.files_and_license.legal_note')}
+                          multiline
+                          disabled={disabled}
+                          helperText={<ErrorMessage name={field.name} />}
+                        />
+                      )}
+                    </Field>
+                  )}
+                </Box>
+
+                <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'end' }}>
+                  <Field name={embargoFieldName}>
+                    {({ field, meta: { error, touched } }: FieldProps) => (
+                      <DatePicker
                         {...field}
-                        value={field.value ?? ''}
-                        data-testid={dataTestId.registrationWizard.files.legalNoteField}
-                        variant="filled"
-                        fullWidth
-                        label={t('registration.files_and_license.legal_note')}
-                        multiline
-                        disabled={disabled}
-                        helperText={<ErrorMessage name={field.name} />}
+                        label={t('registration.files_and_license.embargo')}
+                        value={field.value ? new Date(field.value) : null}
+                        onChange={(date) => setFieldValue(field.name, date ?? '')}
+                        maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                        disabled={file.administrativeAgreement || disabled}
+                        sx={{ minWidth: '15rem' }}
+                        slotProps={{
+                          textField: {
+                            inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
+                            variant: 'filled',
+                            onBlur: () => !touched && setFieldTouched(field.name),
+                            error: !!error && touched,
+                            helperText: <ErrorMessage name={field.name} />,
+                          },
+                        }}
                       />
                     )}
                   </Field>
-                )}
-              </Box>
 
-              <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'end' }}>
-                <Field name={embargoFieldName}>
-                  {({ field, meta: { error, touched } }: FieldProps) => (
-                    <DatePicker
-                      {...field}
-                      label={t('registration.files_and_license.embargo')}
-                      value={field.value ? new Date(field.value) : null}
-                      onChange={(date) => setFieldValue(field.name, date ?? '')}
-                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                      disabled={file.administrativeAgreement || disabled}
-                      sx={{ minWidth: '15rem' }}
-                      slotProps={{
-                        textField: {
-                          inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
-                          variant: 'filled',
-                          onBlur: () => !touched && setFieldTouched(field.name),
-                          error: !!error && touched,
-                          helperText: <ErrorMessage name={field.name} />,
-                        },
-                      }}
-                    />
-                  )}
-                </Field>
-
-                <Tooltip title={t('common.help')}>
-                  <IconButton onClick={(event) => setEmbargoPopperAnchorEl(event.currentTarget)}>
-                    <HelpOutlineIcon />
-                  </IconButton>
-                </Tooltip>
-                <Popover
-                  open={!!embargoPopperAnchorEl}
-                  anchorEl={embargoPopperAnchorEl}
-                  onClose={() => setEmbargoPopperAnchorEl(null)}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}>
-                  <Paper sx={{ p: '1rem' }}>
-                    <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
-                  </Paper>
-                </Popover>
+                  <Tooltip title={t('common.help')}>
+                    <IconButton onClick={(event) => setEmbargoPopperAnchorEl(event.currentTarget)}>
+                      <HelpOutlineIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Popover
+                    open={!!embargoPopperAnchorEl}
+                    anchorEl={embargoPopperAnchorEl}
+                    onClose={() => setEmbargoPopperAnchorEl(null)}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}>
+                    <Paper sx={{ p: '1rem' }}>
+                      <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
+                    </Paper>
+                  </Popover>
+                </Box>
               </Box>
+            </Collapse>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+              <IconButton
+                onClick={() => setOpenCollapsable(!openCollapsable)}
+                size="small"
+                data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
+                {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
             </Box>
-          </Collapse>
-          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-            <IconButton
-              onClick={() => setOpenCollapsable(!openCollapsable)}
-              size="small"
-              data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
-              {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </Box>
-        </TableCell>
-      </TableRow>
+          </TableCell>
+        </TableRow>
+      )}
     </>
   );
 };
