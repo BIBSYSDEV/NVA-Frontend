@@ -1285,7 +1285,7 @@
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "files": "Filer",
       "files_are_not_published": "Filer publiseres ikke",
-      "files_to_publish": "Filer til publisering",
+      "files_to_publish": "Venter på publisering",
       "files_awaits_approval_one": "{{count}} fil og valgt lisens venter på å bli verifisert",
       "files_awaits_approval_other": "{{count}} filer og valgte lisenser venter på å bli verifisert",
       "files_awaits_approval_unknown": "Venter på verifisering av fil(er)",
