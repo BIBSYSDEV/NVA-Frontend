@@ -27,31 +27,28 @@ export const associatedFileValidationSchema = Yup.object({
   type: Yup.string(),
 
   // File validation
-  administrativeAgreement: Yup.boolean().nullable(),
   embargoDate: Yup.date()
     .nullable()
-    .when(['type', 'administrativeAgreement'], ([type, administrativeAgreement], schema) =>
-      associatedArtifactIsFile({ type }) && administrativeAgreement === false
+    .when(['type'], ([type], schema) =>
+      associatedArtifactIsFile({ type }) && type !== 'UnpublishableFile'
         ? schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid)
         : schema
     ),
   publisherVersion: Yup.string()
     .nullable()
-    .when(
-      ['type', 'administrativeAgreement', '$publicationInstanceType'],
-      ([type, administrativeAgreement, publicationInstanceType], schema) =>
-        associatedArtifactIsFile({ type }) &&
-        administrativeAgreement === false &&
-        isTypeWithFileVersionField(publicationInstanceType)
-          ? schema
-              .required(associatedArtifactErrorMessage.fileVersionRequired)
-              .oneOf([FileVersion.Published, FileVersion.Accepted], associatedArtifactErrorMessage.fileVersionRequired)
-          : schema
+    .when(['type', '$publicationInstanceType'], ([type, publicationInstanceType], schema) =>
+      associatedArtifactIsFile({ type }) &&
+      type !== 'UnpublishableFile' &&
+      isTypeWithFileVersionField(publicationInstanceType)
+        ? schema
+            .required(associatedArtifactErrorMessage.fileVersionRequired)
+            .oneOf([FileVersion.Published, FileVersion.Accepted], associatedArtifactErrorMessage.fileVersionRequired)
+        : schema
     ),
   license: Yup.string()
     .nullable()
-    .when(['type', 'administrativeAgreement'], ([type, administrativeAgreement], schema) =>
-      associatedArtifactIsFile({ type }) && administrativeAgreement === false
+    .when(['type'], ([type], schema) =>
+      associatedArtifactIsFile({ type }) && type !== 'UnpublishableFile'
         ? schema.required(associatedArtifactErrorMessage.licenseRequired)
         : schema
     ),

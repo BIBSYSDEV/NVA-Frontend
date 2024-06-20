@@ -25,7 +25,6 @@ export interface AssociatedFile {
   name: string;
   size: number;
   mimeType?: string;
-  administrativeAgreement: boolean;
   publisherVersion: FileVersion | null;
   embargoDate: Date | null;
   license: string | null;
@@ -46,7 +45,6 @@ export const emptyFile: AssociatedFile = {
   name: '',
   size: 0,
   mimeType: '',
-  administrativeAgreement: false,
   publisherVersion: null,
   embargoDate: null,
   license: '',

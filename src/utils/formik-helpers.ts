@@ -8,6 +8,9 @@ import {
 } from '../types/associatedArtifact.types';
 import { Contributor } from '../types/contributor.types';
 import { HighestTouchedTab } from '../types/locationState.types';
+import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
+import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
+import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -19,9 +22,6 @@ import {
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
-import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
-import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
-import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import { Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
 import { registrationValidationSchema } from './validation/registration/registrationValidation';
@@ -114,8 +114,7 @@ const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] =
 
       if (associatedArtifactIsFile(artifact)) {
         const file = artifact as AssociatedFile;
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`);
-        if (!file.administrativeAgreement) {
+        if (file.type !== 'UnpublishableFile') {
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);
@@ -420,7 +419,6 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
   associatedArtifacts: associatedArtifacts.map((artifact) => {
     if (associatedArtifactIsFile(artifact)) {
       const touched: FormikTouched<AssociatedFile> = {
-        administrativeAgreement: true,
         publisherVersion: true,
         embargoDate: true,
         license: true,
