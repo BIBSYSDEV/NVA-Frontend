@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedLink, FileType, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -40,9 +40,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
-  const publishedFiles = files.filter((file) => file.type === 'PublishedFile');
-  const filesToPublish = files.filter((file) => file.type === 'UnpublishedFile');
-  const filesNotToPublish = files.filter((file) => file.type === 'UnpublishableFile');
+  const publishedFiles = files.filter((file) => file.type === FileType.PublishedFile);
+  const filesToPublish = files.filter((file) => file.type === FileType.UnpublishedFile);
+  const filesNotToPublish = files.filter((file) => file.type === FileType.UnpublishableFile);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
     associatedLinkIndex >= 0 &&

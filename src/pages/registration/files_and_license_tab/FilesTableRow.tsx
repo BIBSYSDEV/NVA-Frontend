@@ -33,7 +33,7 @@ import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, AssociatedFileType, FileRrs, FileVersion } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, FileRrs, FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
 import { licenses, LicenseUri } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
@@ -42,7 +42,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
 import { DownloadFileButton } from './DownloadFileButton';
 
-export const administrativeAgreementId = 'administrative-agreement';
+export const markForPublishId = 'mark-for-publish';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -61,14 +61,13 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
-  const administrativeAgreementFieldName = `${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`;
   const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
-  const isArchived = file.type === 'UnpublishableFile';
+  const isArchived = file.type === FileType.UnpublishableFile;
 
   const isAcceptedFile = file.publisherVersion === FileVersion.Accepted;
   const rrsStrategy = file.rightsRetentionStrategy.configuredType ?? customer?.rightsRetentionStrategy.type;
@@ -138,29 +137,24 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         <TableCell sx={{ minWidth: isArchived ? '5.5rem' : '' }}>{prettyBytes(file.size)}</TableCell>
 
         <TableCell>
-          <Field name={administrativeAgreementFieldName}>
+          <Field name={fileTypeFieldName}>
             {({ field }: FieldProps) => (
-              <Tooltip title={t('registration.files_and_license.administrative_contract')}>
-                <Checkbox
-                  {...field}
-                  data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
-                  checked={field.value}
-                  disabled={disabled}
-                  inputProps={{
-                    'aria-labelledby': administrativeAgreementId,
-                  }}
-                  onChange={(event) => {
-                    const newAssociatedFileType: AssociatedFileType =
-                      field.value === true ? 'UnpublishedFile' : 'UnpublishableFile';
-                    setFieldValue(fileTypeFieldName, newAssociatedFileType);
-
-                    field.onChange(event);
-                    setFieldValue(publisherVersionFieldName, null);
-                    setFieldValue(licenseFieldName, null);
-                    setFieldValue(embargoFieldName, null);
-                  }}
-                />
-              </Tooltip>
+              <Checkbox
+                {...field}
+                data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
+                checked={field.value === FileType.UnpublishedFile}
+                disabled={disabled}
+                inputProps={{
+                  'aria-labelledby': markForPublishId,
+                }}
+                onChange={(event, checked) => {
+                  if (!checked) {
+                    setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
+                  } else {
+                    setFieldValue(fileTypeFieldName, FileType.UnpublishedFile);
+                  }
+                }}
+              />
             )}
           </Field>
         </TableCell>
@@ -169,10 +163,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           <TableCell>
             <Field name={publisherVersionFieldName}>
               {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
-                <FormControl
-                  data-testid={dataTestId.registrationWizard.files.version}
-                  required
-                  disabled={file.administrativeAgreement || disabled}>
+                <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
                   <RadioGroup
                     {...field}
                     row
@@ -416,7 +407,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                         value={field.value ? new Date(field.value) : null}
                         onChange={(date) => setFieldValue(field.name, date ?? '')}
                         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                        disabled={file.administrativeAgreement || disabled}
+                        disabled={disabled}
                         sx={{ minWidth: '15rem' }}
                         slotProps={{
                           textField: {

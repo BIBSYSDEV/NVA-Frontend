@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
@@ -92,7 +92,7 @@ export const FileRow = ({
         gap: '0.5rem 0.75rem',
         alignItems: 'center',
         marginBottom: '2rem',
-        opacity: registrationMetadataIsPublished && file.type === 'UnpublishedFile' ? 0.6 : 1,
+        opacity: registrationMetadataIsPublished && file.type === FileType.UnpublishedFile ? 0.6 : 1,
       }}>
       <Typography
         data-testid={dataTestId.registrationLandingPage.fileName}

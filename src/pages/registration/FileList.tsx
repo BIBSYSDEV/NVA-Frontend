@@ -14,7 +14,7 @@ import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { AssociatedFile, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedFile, FileType, Uppy } from '../../types/associatedArtifact.types';
 import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -25,7 +25,7 @@ import {
   isTypeWithFileVersionField,
   userCanUnpublishRegistration,
 } from '../../utils/registration-helpers';
-import { administrativeAgreementId, FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
 
 interface FileListProps {
@@ -63,7 +63,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
       return !!user?.isInternalImporter;
     }
 
-    if (file.type === 'PublishedFile') {
+    if (file.type === FileType.PublishedFile) {
       return userCanUnpublishRegistration(values) ?? false;
     }
 
@@ -85,9 +85,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
               <TableCell>{t('common.name')}</TableCell>
               <TableCell>{t('common.file')}</TableCell>
               <TableCell>{t('registration.files_and_license.size')}</TableCell>
-              <TableCell id={administrativeAgreementId}>
-                {t('registration.files_and_license.administrative_agreement')}
-              </TableCell>
+              <TableCell id={markForPublishId}>{t('registration.files_and_license.mark_for_publish')}</TableCell>
               {showFileVersion && !archived && (
                 <TableCell>
                   <Box

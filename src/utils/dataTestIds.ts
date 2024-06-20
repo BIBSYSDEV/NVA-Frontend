@@ -359,7 +359,6 @@ export const dataTestId = {
     },
     files: {
       addFilesOrLinksButton: 'add-files-or-links-button',
-      administrativeAgreement: 'administrative-agreement-checkbox',
       embargoDateField: 'embargo-date-field',
       expandFileRowButton: 'expand-file-row-button',
       fileRow: 'uploaded-file-row',
@@ -371,6 +370,7 @@ export const dataTestId = {
       linkToResourceField: 'link-to-resource-field',
       removeFileButton: 'button-remove-file',
       selectLicenseField: 'uploaded-file-select-license',
+      toPublishCheckbox: 'to-publish-checkbox',
       version: 'version-radios',
       versionHelpButton: 'version-help-button',
       versionModal: 'version-modal',

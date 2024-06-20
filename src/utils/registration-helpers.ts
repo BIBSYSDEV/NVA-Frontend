@@ -3,24 +3,9 @@ import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
-import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
+import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '../types/associatedArtifact.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
-import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-  allPublicationInstanceTypes,
-} from '../types/publicationFieldNames';
 import {
   AudioVisualPublication,
   Award,
@@ -46,6 +31,21 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import {
+  allPublicationInstanceTypes,
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+} from '../types/publicationFieldNames';
 import {
   Journal,
   NpiSubjectDomain,
@@ -665,7 +665,10 @@ export const hyphenateIsrc = (isrc: string) =>
 export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;
 
 export const associatedArtifactIsFile = ({ type }: { type: string }) =>
-  type === 'File' || type === 'UnpublishedFile' || type === 'PublishedFile' || type === 'UnpublishableFile';
+  type === 'File' ||
+  type === FileType.UnpublishedFile ||
+  type === FileType.PublishedFile ||
+  type === FileType.UnpublishableFile;
 
 export const associatedArtifactIsLink = ({ type }: { type: string }) => type === 'AssociatedLink';
 
