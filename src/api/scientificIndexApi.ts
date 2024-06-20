@@ -95,7 +95,6 @@ export const fetchNviCandidateForRegistration = async (registrationId: string) =
 export const fetchNviInstitutionStatus = async (year: number) => {
   const fetchNviStatusResponse = await authenticatedApiRequest2<NviInstitutionStatusResponse>({
     url: `${ScientificIndexApiPath.InstitutionReport}/${year}`,
-    method: 'GET',
   });
   return fetchNviStatusResponse.data;
 };
