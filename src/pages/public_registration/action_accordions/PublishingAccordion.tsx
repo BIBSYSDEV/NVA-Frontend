@@ -20,24 +20,24 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
+import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
-import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { FileType, Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getFirstErrorTab, getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers';
 import { userCanPublishRegistration } from '../../../utils/registration-helpers';
-import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
-import { DeletePublication } from './DeletePublication';
 import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
+import { DeletePublication } from './DeletePublication';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -67,7 +67,9 @@ export const PublishingAccordion = ({
   const customer = useSelector((store: RootState) => store.customer);
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
-  const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
+  const registrationHasFile = registration.associatedArtifacts.some(
+    (artifact) => artifact.type === FileType.PublishedFile
+  );
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
   const userCanPublish = userCanPublishRegistration(registration);
 
@@ -154,7 +156,7 @@ export const PublishingAccordion = ({
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const filesAwaitingApproval = registration.associatedArtifacts.filter(
-    (artifact) => artifact.type === 'UnpublishedFile'
+    (artifact) => artifact.type === FileType.UnpublishedFile
   ).length;
   const hasUnpublishedFiles = filesAwaitingApproval > 0;
 

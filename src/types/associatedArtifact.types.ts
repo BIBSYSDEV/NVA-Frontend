@@ -1,7 +1,8 @@
 import { Uppy as UppyType } from '@uppy/core';
 import { CustomerRrsType } from './customerInstitution.types';
+import { FileType } from './registration.types';
 
-export type AssociatedFileType = 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
+export type AssociatedFileType = FileType.PublishedFile | FileType.UnpublishedFile | FileType.UnpublishableFile;
 
 type FileRrsType =
   | 'NullRightsRetentionStrategy'
@@ -40,7 +41,7 @@ interface UploadDetails {
 }
 
 export const emptyFile: AssociatedFile = {
-  type: 'UnpublishedFile',
+  type: FileType.UnpublishedFile,
   identifier: '',
   name: '',
   size: 0,

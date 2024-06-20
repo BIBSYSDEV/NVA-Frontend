@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { FileVersion } from '../../../types/associatedArtifact.types';
+import { FileType } from '../../../types/registration.types';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
@@ -30,7 +31,7 @@ export const associatedFileValidationSchema = Yup.object({
   embargoDate: Yup.date()
     .nullable()
     .when(['type'], ([type], schema) =>
-      associatedArtifactIsFile({ type }) && type !== 'UnpublishableFile'
+      associatedArtifactIsFile({ type }) && type !== FileType.UnpublishableFile
         ? schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid)
         : schema
     ),
@@ -38,7 +39,7 @@ export const associatedFileValidationSchema = Yup.object({
     .nullable()
     .when(['type', '$publicationInstanceType'], ([type, publicationInstanceType], schema) =>
       associatedArtifactIsFile({ type }) &&
-      type !== 'UnpublishableFile' &&
+      type !== FileType.UnpublishableFile &&
       isTypeWithFileVersionField(publicationInstanceType)
         ? schema
             .required(associatedArtifactErrorMessage.fileVersionRequired)
@@ -48,7 +49,7 @@ export const associatedFileValidationSchema = Yup.object({
   license: Yup.string()
     .nullable()
     .when(['type'], ([type], schema) =>
-      associatedArtifactIsFile({ type }) && type !== 'UnpublishableFile'
+      associatedArtifactIsFile({ type }) && type !== FileType.UnpublishableFile
         ? schema.required(associatedArtifactErrorMessage.licenseRequired)
         : schema
     ),

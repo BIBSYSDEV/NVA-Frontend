@@ -22,7 +22,7 @@ import {
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
-import { Funding, Registration, RegistrationTab } from '../types/registration.types';
+import { FileType, Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
 import { registrationValidationSchema } from './validation/registration/registrationValidation';
 
@@ -114,7 +114,7 @@ const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] =
 
       if (associatedArtifactIsFile(artifact)) {
         const file = artifact as AssociatedFile;
-        if (file.type !== 'UnpublishableFile') {
+        if (file.type !== FileType.UnpublishableFile) {
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);

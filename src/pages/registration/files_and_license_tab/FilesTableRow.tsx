@@ -37,7 +37,7 @@ import { AssociatedFile, FileRrs, FileVersion } from '../../../types/associatedA
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
 import { licenses, LicenseUri } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
-import { Registration } from '../../../types/registration.types';
+import { FileType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
 import { DownloadFileButton } from './DownloadFileButton';
@@ -67,7 +67,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
-  const isArchived = file.type === 'UnpublishableFile';
+  const isArchived = file.type === FileType.UnpublishableFile;
 
   const isAcceptedFile = file.publisherVersion === FileVersion.Accepted;
   const rrsStrategy = file.rightsRetentionStrategy.configuredType ?? customer?.rightsRetentionStrategy.type;
@@ -142,16 +142,16 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               <Checkbox
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
-                checked={field.value === 'UnpublishedFile'}
+                checked={field.value === FileType.UnpublishedFile}
                 disabled={disabled}
                 inputProps={{
                   'aria-labelledby': markForPublishId,
                 }}
                 onChange={(event, checked) => {
                   if (!checked) {
-                    setFieldValue(fileTypeFieldName, 'UnpublishableFile');
+                    setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
                   } else {
-                    setFieldValue(fileTypeFieldName, 'UnpublishedFile');
+                    setFieldValue(fileTypeFieldName, FileType.UnpublishedFile);
                   }
                 }}
               />

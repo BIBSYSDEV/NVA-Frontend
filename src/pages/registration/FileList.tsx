@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { AssociatedFile, Uppy } from '../../types/associatedArtifact.types';
 import { licenses, LicenseUri } from '../../types/license.types';
-import { Registration } from '../../types/registration.types';
+import { FileType, Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,
@@ -63,7 +63,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
       return !!user?.isInternalImporter;
     }
 
-    if (file.type === 'PublishedFile') {
+    if (file.type === FileType.PublishedFile) {
       return userCanUnpublishRegistration(values) ?? false;
     }
 

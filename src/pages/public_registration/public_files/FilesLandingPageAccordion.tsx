@@ -1,9 +1,9 @@
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../../../components/PageWithSideMenu';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
-import { RegistrationStatus } from '../../../types/registration.types';
+import { LinkButton } from '../../../components/PageWithSideMenu';
+import { FileType, RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   getAssociatedFiles,
@@ -22,8 +22,8 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const userIsRegistrationAdmin = userCanEditRegistration(registration);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const publishedFiles = associatedFiles.filter((file) => file.type === 'PublishedFile');
-  const unpublishedFiles = associatedFiles.filter((file) => file.type === 'UnpublishedFile');
+  const publishedFiles = associatedFiles.filter((file) => file.type === FileType.PublishedFile);
+  const unpublishedFiles = associatedFiles.filter((file) => file.type === FileType.UnpublishedFile);
   const publishableFilesLength = publishedFiles.length + unpublishedFiles.length;
 
   const filesToShow = userIsRegistrationAdmin ? [...publishedFiles, ...unpublishedFiles] : publishedFiles;
