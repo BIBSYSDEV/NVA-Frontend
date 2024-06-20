@@ -3,7 +3,7 @@ import { ContributorRole } from '../../types/contributor.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { TicketCollection } from '../../types/publication_types/ticket.types';
 import { JournalType } from '../../types/publicationFieldNames';
-import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
+import { FileType, PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockUser } from './mock_feide_user';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 
@@ -24,7 +24,7 @@ export const mockRegistration: JournalRegistration = {
   publisher: { id: mockCustomerInstitution.id },
   associatedArtifacts: [
     {
-      type: 'UnpublishedFile',
+      type: FileType.UnpublishedFile,
       identifier: '3214324',
       name: 'filename.pdf',
       size: 10,
