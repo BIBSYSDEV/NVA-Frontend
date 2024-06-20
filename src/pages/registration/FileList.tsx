@@ -14,9 +14,9 @@ import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { AssociatedFile, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedFile, FileType, Uppy } from '../../types/associatedArtifact.types';
 import { licenses, LicenseUri } from '../../types/license.types';
-import { FileType, Registration } from '../../types/registration.types';
+import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,

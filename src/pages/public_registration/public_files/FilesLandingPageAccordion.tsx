@@ -3,7 +3,8 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { LinkButton } from '../../../components/PageWithSideMenu';
-import { FileType, RegistrationStatus } from '../../../types/registration.types';
+import { FileType } from '../../../types/associatedArtifact.types';
+import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   getAssociatedFiles,

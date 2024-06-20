@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
-import { FileVersion } from '../../../types/associatedArtifact.types';
-import { FileType } from '../../../types/registration.types';
+import { FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,

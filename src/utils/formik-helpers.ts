@@ -4,6 +4,7 @@ import {
   AssociatedArtifact,
   AssociatedFile,
   AssociatedLink,
+  FileType,
   NullAssociatedArtifact,
 } from '../types/associatedArtifact.types';
 import { Contributor } from '../types/contributor.types';
@@ -22,7 +23,7 @@ import {
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
-import { FileType, Funding, Registration, RegistrationTab } from '../types/registration.types';
+import { Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
 import { registrationValidationSchema } from './validation/registration/registrationValidation';
 

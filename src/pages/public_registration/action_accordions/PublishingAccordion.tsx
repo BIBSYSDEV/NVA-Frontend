@@ -24,8 +24,9 @@ import { createTicket, updateTicket, UpdateTicketData } from '../../../api/regis
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
+import { FileType } from '../../../types/associatedArtifact.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
-import { FileType, Registration, RegistrationStatus } from '../../../types/registration.types';
+import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';

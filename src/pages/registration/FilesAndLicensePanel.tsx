@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedLink, FileType, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
-import { FileType, Registration } from '../../types/registration.types';
+import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsLink,

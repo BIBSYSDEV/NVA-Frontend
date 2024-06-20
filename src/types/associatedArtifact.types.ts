@@ -1,8 +1,5 @@
 import { Uppy as UppyType } from '@uppy/core';
 import { CustomerRrsType } from './customerInstitution.types';
-import { FileType } from './registration.types';
-
-export type AssociatedFileType = FileType.PublishedFile | FileType.UnpublishedFile | FileType.UnpublishableFile;
 
 type FileRrsType =
   | 'NullRightsRetentionStrategy'
@@ -20,8 +17,14 @@ export enum FileVersion {
   Accepted = 'AcceptedVersion',
 }
 
+export enum FileType {
+  UnpublishedFile = 'UnpublishedFile',
+  UnpublishableFile = 'UnpublishableFile',
+  PublishedFile = 'PublishedFile',
+}
+
 export interface AssociatedFile {
-  type: AssociatedFileType;
+  type: FileType;
   identifier: string;
   name: string;
   size: number;

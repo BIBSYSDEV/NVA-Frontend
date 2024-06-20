@@ -47,12 +47,6 @@ export enum RegistrationTab {
   FilesAndLicenses = 3,
 }
 
-export enum FileType {
-  UnpublishedFile = 'UnpublishedFile',
-  UnpublishableFile = 'UnpublishableFile',
-  PublishedFile = 'PublishedFile',
-}
-
 export type ScientificValue = 'Unassigned' | 'LevelZero' | 'LevelOne' | 'LevelTwo';
 
 interface PublicationChannel {
