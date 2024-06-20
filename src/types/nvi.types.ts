@@ -41,12 +41,8 @@ interface OrganizationDetail extends AggregationCount {
   status: { [status in NviCandidateStatus]?: AggregationCount };
 }
 
-export interface OrganizationApprovalStatusDetail extends AggregationCount {
-  organizations: { [organizationId: string]: OrganizationDetail };
-}
-
-interface OrganizationApprovalStatuses extends AggregationCount {
-  [organizationId: string]: OrganizationApprovalStatusDetail | number;
+export interface NviInstitutionStatusResponse {
+  [organizationId: string]: OrganizationDetail;
 }
 
 export type NviCandidateSearchStatus = keyof NviCandidateAggregations;
@@ -63,7 +59,6 @@ interface NviCandidateAggregations {
   rejectedCollaboration: AggregationCount;
   completed: AggregationCount;
   totalCount: AggregationCount;
-  organizationApprovalStatuses: OrganizationApprovalStatuses;
 }
 
 export type NviCandidateSearchResponse = Omit<

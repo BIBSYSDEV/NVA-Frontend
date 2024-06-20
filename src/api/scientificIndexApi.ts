@@ -1,4 +1,12 @@
-import { Approval, Note, NviCandidate, NviPeriod, NviPeriodResponse, RejectedApproval } from '../types/nvi.types';
+import {
+  Approval,
+  Note,
+  NviCandidate,
+  NviInstitutionStatusResponse,
+  NviPeriod,
+  NviPeriodResponse,
+  RejectedApproval,
+} from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
@@ -82,4 +90,12 @@ export const fetchNviCandidateForRegistration = async (registrationId: string) =
   });
 
   return fetchNviCandidateForRegistrationResponse.data;
+};
+
+export const fetchNviInstitutionStatus = async (year: number) => {
+  const updateNviPeriodResponse = await authenticatedApiRequest2<NviInstitutionStatusResponse>({
+    url: `${ScientificIndexApiPath.InstitutionReport}/${year}`,
+    method: 'GET',
+  });
+  return updateNviPeriodResponse.data;
 };

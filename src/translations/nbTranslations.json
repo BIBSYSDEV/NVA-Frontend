@@ -514,6 +514,7 @@
       "get_nvi_candidate": "Kunne ikke hente NVI-kandidat",
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
       "get_nvi_periods": "Kunne ikke hente NVI-perioder",
+      "get_nvi_status": "Kunne ikke hente NVI-rapporteringsstatus",
       "get_orcid": "Kunne ikke hente data fra ORCID",
       "get_organization": "Kunne ikke hente informasjon om organisasjon",
       "get_person": "Kunne ikke hente person",

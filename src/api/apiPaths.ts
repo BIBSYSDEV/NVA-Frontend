@@ -64,5 +64,6 @@ export enum PersonPreferencesApiPath {
 export enum ScientificIndexApiPath {
   Candidate = '/scientific-index/candidate',
   CandidateForRegistration = '/scientific-index/candidate/publication',
+  InstitutionReport = '/scientific-index/institution-report',
   Period = '/scientific-index/period',
 }
