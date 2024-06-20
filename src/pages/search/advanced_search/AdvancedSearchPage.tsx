@@ -50,8 +50,7 @@ const gridRowDivider = (
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const showFilterDivider = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
-  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
 
   const params = new URLSearchParams(history.location.search);
 
@@ -124,21 +123,21 @@ export const AdvancedSearchPage = () => {
             <PublicationYearIntervalFilter />
           </Grid>
 
-          {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
             <StyledTypography>{t('common.category')}</StyledTypography>
             <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
           </Grid>
 
-          {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
             <StyledTypography>{t('common.language')}</StyledTypography>
             <LanguageFilter />
           </Grid>
 
-          {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
             <StyledTypography>{t('common.nvi')}</StyledTypography>
@@ -151,7 +150,7 @@ export const AdvancedSearchPage = () => {
             />
           </Grid>
 
-          {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
             <StyledTypography id="file-status-select-label">
@@ -169,7 +168,7 @@ export const AdvancedSearchPage = () => {
             <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
           </Grid>
 
-          {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
             <StyledTypography>{t('common.institution')}</StyledTypography>
@@ -218,7 +217,7 @@ export const AdvancedSearchPage = () => {
             />
           </Grid>
 
-          {showFilterDivider && <StyledDivider orientation="vertical" flexItem />}
+          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
             <StyledTypography>{t('registration.resource_type.course_code')}</StyledTypography>
