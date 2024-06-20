@@ -61,9 +61,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     retry: false,
     meta: { errorMessage: false },
   });
-
   const isNviCandidate =
-    nviCandidateQuery.isSuccess && nviCandidateQuery.data.approvals.some((status) => status.status !== 'Pending');
+    nviCandidateQuery.data?.period.status === 'OpenPeriod' &&
+    nviCandidateQuery.data.approvals.some((status) => status.status !== 'Pending');
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
