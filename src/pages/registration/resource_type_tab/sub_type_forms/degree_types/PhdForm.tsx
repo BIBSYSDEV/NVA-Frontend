@@ -33,76 +33,85 @@ export const PhdForm = () => {
       <IsbnAndPages />
       <SeriesFields />
 
-      <Typography variant="h2">{t('registration.resource_type.related_results')}</Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Typography variant="h2">{t('registration.resource_type.related_results')}</Typography>
 
-      <SearchRelatedResultField />
+        <SearchRelatedResultField />
 
-      {related && related.length > 0 && (
-        <List disablePadding>
-          {related.map((document, index) => {
-            if (document.type === 'UnconfirmedDocument') {
-              return null;
-            }
-            return (
-              <RelatedResourceRow
-                key={document.identifier}
-                uri={document.identifier}
-                removeRelatedResource={() => removeRelatedItem(index)}
-              />
-            );
-          })}
-
-          {related?.map((relation, index) => {
-            if (relation.type === 'ConfirmedDocument') {
-              return null;
-            }
-            return (
-              <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'center', gap: '1rem', mb: '0.5rem' }}>
-                <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
-                  {({ field }: FieldProps<string>) => (
-                    <TextField
-                      {...field}
-                      label={t('registration.resource_type.related_result')}
-                      variant="filled"
-                      multiline
-                      fullWidth
-                    />
-                  )}
-                </Field>
-                <Button
-                  size="small"
-                  variant="outlined"
-                  color="error"
-                  data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
-                  onClick={() => setIndexToRemove(index)}
-                  startIcon={<RemoveCircleOutlineIcon />}>
-                  {t('registration.resource_type.research_data.remove_relation')}
-                </Button>
-              </Box>
-            );
-          })}
-          <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
-            {({ push }: FieldArrayRenderProps) => (
-              <Button onClick={() => push(emptyUnconfirmedDocument)} startIcon={<AddCircleOutlineIcon />}>
-                {t('common.add')}
-              </Button>
-            )}
-          </FieldArray>
-
-          <ConfirmDialog
-            open={indexToRemove !== null}
-            title={t('registration.resource_type.research_data.remove_relation')}
-            onAccept={() => {
-              if (indexToRemove !== null) {
-                removeRelatedItem(indexToRemove);
-                setIndexToRemove(null);
+        {related && related.length > 0 && (
+          <List disablePadding>
+            {related.map((document, index) => {
+              if (document.type === 'UnconfirmedDocument') {
+                return null;
               }
-            }}
-            onCancel={() => setIndexToRemove(null)}>
-            <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
-          </ConfirmDialog>
-        </List>
-      )}
+              return (
+                <RelatedResourceRow
+                  key={document.identifier}
+                  uri={document.identifier}
+                  removeRelatedResource={() => removeRelatedItem(index)}
+                />
+              );
+            })}
+
+            {related?.map((relation, index) => {
+              if (relation.type === 'ConfirmedDocument') {
+                return null;
+              }
+              return (
+                <Box
+                  key={index}
+                  component="li"
+                  sx={{ display: 'flex', alignItems: 'center', gap: '1rem', mb: '0.5rem' }}>
+                  <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
+                    {({ field }: FieldProps<string>) => (
+                      <TextField
+                        {...field}
+                        label={t('registration.resource_type.related_result')}
+                        variant="filled"
+                        multiline
+                        fullWidth
+                      />
+                    )}
+                  </Field>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="error"
+                    data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
+                    onClick={() => setIndexToRemove(index)}
+                    startIcon={<RemoveCircleOutlineIcon />}>
+                    {t('registration.resource_type.research_data.remove_relation')}
+                  </Button>
+                </Box>
+              );
+            })}
+          </List>
+        )}
+
+        <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
+          {({ push }: FieldArrayRenderProps) => (
+            <Button
+              onClick={() => push(emptyUnconfirmedDocument)}
+              startIcon={<AddCircleOutlineIcon />}
+              sx={{ alignSelf: 'start' }}>
+              {t('common.add')}
+            </Button>
+          )}
+        </FieldArray>
+
+        <ConfirmDialog
+          open={indexToRemove !== null}
+          title={t('registration.resource_type.research_data.remove_relation')}
+          onAccept={() => {
+            if (indexToRemove !== null) {
+              removeRelatedItem(indexToRemove);
+              setIndexToRemove(null);
+            }
+          }}
+          onCancel={() => setIndexToRemove(null)}>
+          <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
+        </ConfirmDialog>
+      </Box>
     </>
   );
 };
