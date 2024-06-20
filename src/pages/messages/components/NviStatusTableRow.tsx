@@ -3,20 +3,20 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IconButton, TableCell, TableRow } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { OrganizationApprovalStatusDetail } from '../../../types/nvi.types';
+import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
 import { Organization } from '../../../types/organization.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface NviStatusTableRowProps {
   organization: Organization;
-  aggregations?: OrganizationApprovalStatusDetail;
+  aggregations?: NviInstitutionStatusResponse;
   level?: number;
 }
 
 export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: NviStatusTableRowProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(level === 0);
-  const orgAggregations = aggregations?.organizations?.[organization.id];
+  const orgAggregations = aggregations?.[organization.id];
 
   return (
     <>
