@@ -148,7 +148,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   'aria-labelledby': markForPublishId,
                 }}
                 onChange={(event, checked) => {
-                  console.log('checked', checked);
                   if (!checked) {
                     setFieldValue(fileTypeFieldName, 'UnpublishableFile');
                   } else {
