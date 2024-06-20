@@ -221,7 +221,11 @@ export const AdvancedSearchPage = () => {
 
           <Grid item>
             <StyledTypography>{t('registration.resource_type.course_code')}</StyledTypography>
-            <SearchForm paramName={ResultParam.Course} placeholder={t('search.search_for_course_code')} />
+            <SearchForm
+              dataTestId={dataTestId.startPage.advancedSearch.courseField}
+              paramName={ResultParam.Course}
+              placeholder={t('search.search_for_course_code')}
+            />
           </Grid>
         </Grid>
 

@@ -168,10 +168,11 @@ export const dataTestId = {
   startPage: {
     advancedSearch: {
       activateFilterButton: 'activate-filter-button',
-      downloadResultsButton: 'download-results-button',
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
       advancedValueField: 'advanced-value-field',
+      courseField: 'course-field',
+      downloadResultsButton: 'download-results-button',
       fileStatusSelect: 'file-status-select',
       fundingSourceField: 'funding-source-field',
       journalField: 'journal-field',
