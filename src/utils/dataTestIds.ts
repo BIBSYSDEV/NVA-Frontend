@@ -404,6 +404,7 @@ export const dataTestId = {
       addOtherButton: 'add-other-button',
       addPerformanceButton: 'add-performance-button',
       addPublicationMentionButton: 'add-publication-mention-button',
+      addRelatedButton: 'add-related-button',
       addBookButton: 'add-book-button',
       addConcertShowButton: 'add-concert-show-button',
       addAudioVideoPublicationButton: 'add-audio-video-publication-button',

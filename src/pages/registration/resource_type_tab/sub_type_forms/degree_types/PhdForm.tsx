@@ -61,7 +61,13 @@ export const PhdForm = () => {
                 <Box
                   key={index}
                   component="li"
-                  sx={{ display: 'flex', alignItems: 'center', gap: '1rem', mb: '0.5rem' }}>
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: 'center',
+                    gap: '0.25rem 1rem',
+                    mb: '0.5rem',
+                  }}>
                   <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
                     {({ field }: FieldProps<string>) => (
                       <TextField
@@ -91,6 +97,7 @@ export const PhdForm = () => {
         <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
           {({ push }: FieldArrayRenderProps) => (
             <Button
+              data-testid={dataTestId.registrationWizard.resourceType.addRelatedButton}
               onClick={() => push(emptyUnconfirmedDocument)}
               startIcon={<AddCircleOutlineIcon />}
               sx={{ alignSelf: 'start' }}>

@@ -27,7 +27,13 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : (
-        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: 'center',
+            gap: '0.25rem 1rem',
+          }}>
           {isInternalRegistration ? (
             <Link
               data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationLink(
