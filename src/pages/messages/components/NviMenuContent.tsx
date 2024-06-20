@@ -52,7 +52,7 @@ export const NviMenuContent = () => {
 
   const openCandidatesView = () => {
     if (!isOnNviCandidatesPage) {
-      history.push(UrlPathTemplate.TasksNvi);
+      history.push({ pathname: UrlPathTemplate.TasksNvi, search: searchParams.toString() });
     }
   };
 

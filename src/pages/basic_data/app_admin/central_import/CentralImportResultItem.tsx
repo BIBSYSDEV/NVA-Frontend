@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ContributorIndicators } from '../../../../components/ContributorIndicators';
 import { SearchListItem } from '../../../../components/styled/Wrappers';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
+import { PreviousSearchLocationState } from '../../../../types/locationState.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId, getTimePeriodString } from '../../../../utils/general-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
@@ -44,7 +45,12 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
           </Typography>
         )}
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-          <MuiLink component={Link} to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
+          <MuiLink
+            component={Link}
+            to={{
+              pathname: getImportCandidatePath(getIdentifierFromId(importCandidate.id)),
+              state: { previousSearch: location.search } satisfies PreviousSearchLocationState,
+            }}>
             {getTitleString(importCandidate.mainTitle)}
           </MuiLink>
         </Typography>

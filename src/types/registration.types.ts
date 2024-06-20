@@ -79,9 +79,16 @@ interface RegistrationPublisher {
   id: string;
 }
 
+type ImportSource = 'Brage' | 'Cristin' | 'Scopus';
+
 interface AdditionalIdentifier {
-  sourceName: 'Cristin' | 'Scopus';
+  sourceName: ImportSource;
   value: string;
+}
+
+interface ImportDetail {
+  importDate: string;
+  source: ImportSource;
 }
 
 type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
@@ -112,6 +119,7 @@ export interface BaseRegistration {
   readonly duplicateOf?: string;
   readonly allowedOperations?: RegistrationOperation[];
   readonly publicationNotes?: PublicationNote[];
+  readonly importDetails?: ImportDetail[];
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
@@ -299,6 +307,11 @@ export interface UnconfirmedDocument {
   type: 'UnconfirmedDocument';
   text: string;
 }
+
+export const emptyUnconfirmedDocument: UnconfirmedDocument = {
+  type: 'UnconfirmedDocument',
+  text: '',
+};
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
 

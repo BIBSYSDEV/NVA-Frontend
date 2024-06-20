@@ -183,11 +183,12 @@ export const mainTheme = createTheme(
     components: {
       MuiAutocomplete: {
         styleOverrides: {
+          inputRoot: {
+            gap: '0rem 0.5rem',
+          },
           tag: {
-            margin: '0.5rem 0',
-            '&:not(:last-child)': {
-              marginRight: '0.5rem',
-            },
+            marginTop: '0.4rem',
+            marginBottom: '0.4rem',
           },
         },
       },

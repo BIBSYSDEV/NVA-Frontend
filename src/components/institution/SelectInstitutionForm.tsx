@@ -44,35 +44,37 @@ const initialValuesOrganizationForm: OrganizationForm = {
 };
 
 interface SelectInstitutionFormProps {
-  addAffiliation: (id: string) => void;
-  onClose?: () => void;
-  suggestedInstitutions: string[];
+  saveAffiliation: (id: string) => void;
+  onCancel?: () => void;
+  suggestedInstitutions?: string[];
+  initialValues?: OrganizationForm;
 }
 
 export const SelectInstitutionForm = ({
-  addAffiliation,
-  onClose,
-  suggestedInstitutions,
+  saveAffiliation,
+  onCancel,
+  suggestedInstitutions = [],
+  initialValues = initialValuesOrganizationForm,
 }: SelectInstitutionFormProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSubunitId, setSelectedSubunitId] = useState('');
+  const [selectedSubunitId, setSelectedSubunitId] = useState(initialValues?.subunit?.id || '');
 
   const debouncedQuery = useDebounce(searchTerm);
   const organizationSearchQuery = useSearchForOrganizations(debouncedQuery);
 
   return (
     <Formik
-      initialValues={initialValuesOrganizationForm}
+      initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
         if (values.selectedSuggestedAffiliationId) {
-          addAffiliation(values.selectedSuggestedAffiliationId);
+          saveAffiliation(values.selectedSuggestedAffiliationId);
         } else if (values.subunit?.id) {
-          addAffiliation(values.subunit.id);
+          saveAffiliation(values.subunit.id);
         } else if (selectedSubunitId) {
-          addAffiliation(selectedSubunitId);
+          saveAffiliation(selectedSubunitId);
         } else if (values.unit?.id) {
-          addAffiliation(values.unit?.id);
+          saveAffiliation(values.unit?.id);
         }
         setSubmitting(false);
       }}>
@@ -112,6 +114,9 @@ export const SelectInstitutionForm = ({
             </Paper>
           )}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <Typography variant="h3" sx={{ fontWeight: 'normal' }}>
+              {t('common.select_institution')}
+            </Typography>
             <Field name={SelectOrganizationFormField.Unit}>
               {({ field }: FieldProps<Organization>) => (
                 <Autocomplete
@@ -132,8 +137,12 @@ export const SelectInstitutionForm = ({
                     }
                   }}
                   onChange={(_, value) => {
-                    resetForm();
+                    resetForm({
+                      values: initialValuesOrganizationForm,
+                    });
+
                     setFieldValue(field.name, value);
+                    setSelectedSubunitId('');
                   }}
                   loading={organizationSearchQuery.isPending}
                   renderInput={(params) => (
@@ -157,6 +166,7 @@ export const SelectInstitutionForm = ({
                   {({ field }: FieldProps<Organization>) => (
                     <>
                       <Autocomplete
+                        value={field.value}
                         options={getSortedSubUnits(values.unit?.hasPart)}
                         getOptionLabel={(option) => getLanguageString(option.labels)}
                         renderOption={(props, option) => (
@@ -168,10 +178,9 @@ export const SelectInstitutionForm = ({
                         }}
                         filterOptions={(options, state) =>
                           options.filter((option) =>
-                            state
-                              .getOptionLabel(option)
-                              .toLocaleLowerCase()
-                              .includes(state.inputValue.toLocaleLowerCase())
+                            Object.values(option.labels).some((label) =>
+                              label.toLowerCase().includes(state.inputValue.toLowerCase())
+                            )
                           )
                         }
                         renderInput={(params) => (
@@ -199,8 +208,8 @@ export const SelectInstitutionForm = ({
               </Box>
             )}
             <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-              {onClose && (
-                <Button onClick={onClose} data-testid={dataTestId.confirmDialog.cancelButton}>
+              {onCancel && (
+                <Button onClick={onCancel} data-testid={dataTestId.confirmDialog.cancelButton}>
                   {t('common.cancel')}
                 </Button>
               )}

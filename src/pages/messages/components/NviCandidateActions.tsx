@@ -25,6 +25,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { MessageItem } from './MessageList';
 import { NviCandidateRejectionDialog } from './NviCandidateRejectionDialog';
+import { NviNoteMenu } from './NviNoteMenu';
 
 interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
@@ -148,7 +149,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         <AssigneeSelector
           assignee={myApproval?.assignee}
           canSetAssignee={myApproval?.status === 'New' || myApproval?.status === 'Pending'}
-          onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
+          onSelectAssignee={async (assignee) => await assigneeMutation.mutateAsync(assignee)}
           isUpdating={assigneeMutation.isPending}
           roleFilter={RoleName.NviCurator}
           iconBackgroundColor="nvi.main"
@@ -169,14 +170,14 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               gap: '0.25rem',
             }}>
             {sortedNotes.map((note) => {
-              let deleteFunction: (() => void) | undefined = undefined;
+              let deleteFunction: (() => Promise<void>) | undefined = undefined;
               const noteIdentifier = note.identifier;
 
               if (user?.nvaUsername && note.username === user.nvaUsername) {
                 if (note.type === 'FinalizedNote') {
-                  deleteFunction = () => statusMutation.mutate({ status: 'Pending' });
+                  deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
                 } else if (note.type === 'GeneralNote' && noteIdentifier) {
-                  deleteFunction = () => deleteNoteMutation.mutate(noteIdentifier);
+                  deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
                 }
               }
 
@@ -191,8 +192,12 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     date={note.date}
                     username={note.username}
                     backgroundColor="nvi.main"
-                    onDelete={deleteFunction}
-                    isDeleting={isDeleting}
+                    menuElement={
+                      !!user &&
+                      user.nvaUsername === note.username && (
+                        <NviNoteMenu onDelete={deleteFunction} isDeleting={isDeleting} />
+                      )
+                    }
                   />
                 </ErrorBoundary>
               );

@@ -58,8 +58,12 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
           {affiliation.type === 'Organization' && (
             <OrganizationBox
               unitUri={affiliation.id}
+              authorName={authorName}
+              affiliations={affiliations}
+              baseFieldName={baseFieldName}
               removeAffiliation={() => removeAffiliation(index)}
               sx={{ width: '100%' }}
+              canEdit
             />
           )}
           {affiliation.type === 'UnconfirmedOrganization' && (
