@@ -7,8 +7,8 @@ import {
   Link as MuiLink,
   Radio,
   Skeleton,
-  Typography,
   styled,
+  Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
