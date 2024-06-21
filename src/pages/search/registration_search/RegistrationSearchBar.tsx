@@ -89,7 +89,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
       validateOnChange={false}
       validateOnBlur={false}
       onSubmit={(values: SearchTermProperties) => {
-        searchParams.set(ResultParam.From, '0');
+        searchParams.delete(ResultParam.From);
 
         if (values.searchTerm) {
           if (isValidIsbn(values.searchTerm)) {

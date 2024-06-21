@@ -9,6 +9,7 @@ export const NviSortSelector = () => {
     <SortSelector
       sortKey={NviCandidatesSearchParam.SortOrder}
       orderKey={NviCandidatesSearchParam.OrderBy}
+      paginationKey={NviCandidatesSearchParam.Offset}
       aria-label={t('search.sort_by')}
       size="small"
       variant="standard"

@@ -38,6 +38,7 @@ export const OrganizationAccordion = ({
 
   const allSubunits = getAllChildOrganizations(organization.hasPart);
 
+  // Starts as expanded if the organization or one of its children are selected manually
   const [isExpanded, setIsExpanded] = useState(
     foundBySelect || allSubunits.some((subunit) => subunit.id === selectedId)
   );
@@ -47,7 +48,13 @@ export const OrganizationAccordion = ({
     return null;
   }
 
-  const expanded = isExpanded || (!!searchId && !includeAllSubunits);
+  let expanded = isExpanded || (!!searchId && !includeAllSubunits);
+
+  // Close all expanded when searches are reset
+  if (!searchId && !selectedId) {
+    expanded = false;
+  }
+
   const subunitsCount = organization.hasPart?.length ?? 0;
 
   return (

@@ -12,12 +12,10 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
+import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { OrganizationApprovalStatusDetail } from '../../../types/nvi.types';
-import { isValidUrl } from '../../../utils/general-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { NviStatusTableRow } from './NviStatusTableRow';
 import { NviYearSelector } from './NviYearSelector';
@@ -31,14 +29,7 @@ export const NviStatusPage = () => {
 
   const { year } = useNviCandidatesParams();
 
-  const nviQuery = useFetchNviCandidates({
-    params: { size: 1, aggregation: 'organizationApprovalStatuses', year },
-  });
-  const aggregationKeys = Object.keys(nviQuery.data?.aggregations?.organizationApprovalStatuses ?? {});
-  const aggregationKey = aggregationKeys.find((key) => isValidUrl(key));
-  const nviAggregations = nviQuery.data?.aggregations?.organizationApprovalStatuses[aggregationKey ?? ''] as
-    | OrganizationApprovalStatusDetail
-    | undefined;
+  const nviStatusQuery = useFetchNviInstitutionStatus(year);
 
   return (
     <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'start' }}>
@@ -66,7 +57,7 @@ export const NviStatusPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {institution && <NviStatusTableRow organization={institution} aggregations={nviAggregations} />}
+            {institution && <NviStatusTableRow organization={institution} aggregations={nviStatusQuery.data} />}
           </TableBody>
         </Table>
       </TableContainer>
