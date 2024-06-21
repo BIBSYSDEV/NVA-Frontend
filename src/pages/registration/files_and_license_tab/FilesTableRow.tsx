@@ -104,21 +104,22 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
         sx={{ bgcolor: disabled ? 'grey.400' : '', td: !isArchived ? { pb: 0, borderBottom: 'unset' } : '' }}>
         <TableCell sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem' }}>
-          <InsertDriveFileOutlinedIcon />
+          <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
           <Box
             sx={{
               paddingBottom: '1rem',
             }}>
-            <TruncatableTypography sx={{ fontWeight: 'bold' }}>{file.name}</TruncatableTypography>
-            <Typography>{prettyBytes(file.size)}</Typography>
+            <TruncatableTypography sx={{ fontWeight: 'bold', color: disabled ? 'grey.600' : '' }}>
+              {file.name}
+            </TruncatableTypography>
+            <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
           </Box>
-          <DownloadFileButton file={file} />
+          <DownloadFileButton file={file} greyTones={disabled} />
           <DeleteIconButton
             data-testid={dataTestId.registrationWizard.files.deleteFile}
             onClick={disabled ? undefined : toggleOpenConfirmDialog}
             tooltip={t('registration.files_and_license.remove_file')}
             disabled={disabled}
-            sx={{ mt: '0.25rem' }}
           />
           <ConfirmDialog
             open={openConfirmDialog}
