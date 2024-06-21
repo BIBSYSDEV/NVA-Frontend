@@ -59,6 +59,8 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
     const { t, children } = this.props;
     const { error } = this.state;
 
+    console.log('Error boundary', this.state);
+
     switch (error) {
       case ErrorType.None:
         return children;
@@ -82,6 +84,8 @@ export class BasicErrorBoundary extends Component<PropsWithChildren<unknown>> {
   render() {
     const { children } = this.props;
     const { hasError } = this.state;
+
+    console.log('Most basic error boundary', this.state);
 
     return hasError ? <ErrorMessage errorMessage={nbTranslations.common.error_occurred} /> : children;
   }
