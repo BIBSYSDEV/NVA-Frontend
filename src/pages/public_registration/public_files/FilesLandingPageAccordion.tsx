@@ -1,12 +1,13 @@
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { LinkButton } from '../../../components/PageWithSideMenu';
+import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { FileType } from '../../../types/associatedArtifact.types';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
+  associatedArtifactIsNullArtifact,
   getAssociatedFiles,
   isTypeWithFileVersionField,
   userCanEditRegistration,
@@ -37,6 +38,11 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     registration.status === RegistrationStatus.Published ||
     registration.status === RegistrationStatus.PublishedMetadata;
 
+  const showLinkToUploadNewFiles =
+    userIsRegistrationAdmin &&
+    publishableFilesLength === 0 &&
+    !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact);
+
   return publishableFilesLength > 0 ||
     (userIsRegistrationAdmin && associatedFiles.length > 0) ||
     (userIsRegistrationAdmin && registration.associatedArtifacts.length === 0) ? (
@@ -62,7 +68,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           )}
         </Box>
       }>
-      {registration.associatedArtifacts.length === 0 && (
+      {showLinkToUploadNewFiles && (
         <Box
           sx={{
             display: 'flex',
