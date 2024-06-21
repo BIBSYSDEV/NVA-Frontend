@@ -7,6 +7,21 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '..
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+  allPublicationInstanceTypes,
+} from '../types/publicationFieldNames';
+import {
   AudioVisualPublication,
   Award,
   Broadcast,
@@ -31,21 +46,6 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import {
-  allPublicationInstanceTypes,
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-} from '../types/publicationFieldNames';
 import {
   Journal,
   NpiSubjectDomain,
@@ -87,9 +87,6 @@ export const isJournal = (instanceType: any) => Object.values(JournalType).inclu
 export const isBook = (instanceType: any) => Object.values(BookType).includes(instanceType);
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
-
-const protectedDegreeTypes = [DegreeType.Bachelor, DegreeType.Master, DegreeType.Phd, DegreeType.Other];
-export const isDegreeWithProtectedFiles = (instanceType: any) => protectedDegreeTypes.includes(instanceType);
 
 export const isReport = (instanceType: any) => Object.values(ReportType).includes(instanceType);
 
@@ -710,7 +707,7 @@ export const getDisabledCategories = (
   const disabledCategories: DisabledCategory[] = [];
 
   if (!user?.isThesisCurator) {
-    protectedDegreeTypes.forEach((type) => {
+    Object.values(DegreeType).forEach((type) => {
       disabledCategories.push({ type, text: t('registration.resource_type.protected_degree_type') });
     });
   }
