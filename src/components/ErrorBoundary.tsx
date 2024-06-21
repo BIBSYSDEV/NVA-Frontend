@@ -16,6 +16,7 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
   state = { error: ErrorType.None };
 
   static getDerivedStateFromError(error: any) {
+    console.log('ERROR', error);
     return /Loading chunk [\d]+ failed/.test(error) ? { error: ErrorType.Chunk } : { error: ErrorType.Other };
   }
 
