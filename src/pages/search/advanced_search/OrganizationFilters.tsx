@@ -92,7 +92,6 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         display: 'flex',
         gap: '0.5rem 1rem',
         flexDirection: { xs: 'column', lg: 'row' },
-        width: '100%',
         alignItems: { xs: 'start', lg: 'center' },
       }}>
       <Autocomplete

@@ -12,10 +12,11 @@ interface SortSelectorOption {
 interface SortSelectorProps extends Pick<TextFieldProps, 'sx' | 'variant' | 'size' | 'label' | 'aria-label'> {
   orderKey: string;
   options: SortSelectorOption[];
+  paginationKey: string;
   sortKey: string;
 }
 
-export const SortSelector = ({ orderKey, options, sortKey, ...textFieldProps }: SortSelectorProps) => {
+export const SortSelector = ({ orderKey, options, paginationKey, sortKey, ...textFieldProps }: SortSelectorProps) => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
@@ -39,6 +40,7 @@ export const SortSelector = ({ orderKey, options, sortKey, ...textFieldProps }: 
         const value = event.target.value as unknown as SortSelectorOption;
         params.set(orderKey, value.orderBy);
         params.set(sortKey, value.sortOrder);
+        params.delete(paginationKey);
         history.push({ search: params.toString() });
       }}>
       {options.map((option) => (

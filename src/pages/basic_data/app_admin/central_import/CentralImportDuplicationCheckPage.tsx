@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { fetchImportCandidate, fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { FetchImportCandidatesParams, fetchImportCandidates } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
@@ -13,6 +13,7 @@ import { RegistrationListItemContent } from '../../../../components/Registration
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
+import { PreviousSearchLocationState } from '../../../../types/locationState.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import {
@@ -30,6 +31,7 @@ import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const location = useLocation<PreviousSearchLocationState>();
   const { identifier } = useParams<IdentifierParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
   const [registrationIdentifier, setRegistrationIdentifier] = useState('');
@@ -223,7 +225,11 @@ export const CentralImportDuplicationCheckPage = () => {
           )}
 
           <Divider sx={{ my: '1rem' }} />
-          <Link to={UrlPathTemplate.BasicDataCentralImport}>
+          <Link
+            to={{
+              pathname: UrlPathTemplate.BasicDataCentralImport,
+              search: location.state?.previousSearch,
+            }}>
             <Button size="small" fullWidth variant="outlined">
               {t('common.cancel')}
             </Button>

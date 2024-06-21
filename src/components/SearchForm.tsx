@@ -7,9 +7,10 @@ import { SearchParam } from '../utils/searchHelpers';
 
 interface SearchFormProps extends Pick<BoxProps, 'sx'>, Pick<TextFieldProps, 'label' | 'placeholder'> {
   paramName?: string;
+  dataTestId?: string;
 }
 
-export const SearchForm = ({ sx, label, placeholder, paramName = 'query' }: SearchFormProps) => {
+export const SearchForm = ({ sx, label, placeholder, dataTestId, paramName = 'query' }: SearchFormProps) => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
   const currentSearchTerm = searchParams.get(paramName) ?? '';
@@ -42,6 +43,7 @@ export const SearchForm = ({ sx, label, placeholder, paramName = 'query' }: Sear
         history.push({ search: searchParams.toString() });
       }}>
       <SearchTextField
+        dataTestId={dataTestId}
         name={paramName}
         label={label}
         placeholder={placeholder}

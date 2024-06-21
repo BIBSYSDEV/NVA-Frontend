@@ -48,6 +48,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
     <SortSelector
       orderKey={TicketSearchParam.OrderBy}
       sortKey={TicketSearchParam.SortOrder}
+      paginationKey={TicketSearchParam.From}
       aria-label={t('search.sort_by')}
       size="small"
       variant="standard"

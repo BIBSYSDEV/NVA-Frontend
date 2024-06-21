@@ -3,7 +3,7 @@ import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
-import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
+import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '../types/associatedArtifact.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
@@ -87,9 +87,6 @@ export const isJournal = (instanceType: any) => Object.values(JournalType).inclu
 export const isBook = (instanceType: any) => Object.values(BookType).includes(instanceType);
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
-
-const protectedDegreeTypes = [DegreeType.Bachelor, DegreeType.Master, DegreeType.Phd, DegreeType.Other];
-export const isDegreeWithProtectedFiles = (instanceType: any) => protectedDegreeTypes.includes(instanceType);
 
 export const isReport = (instanceType: any) => Object.values(ReportType).includes(instanceType);
 
@@ -576,12 +573,20 @@ export const contributorConfig: ContributorConfig = {
   },
 };
 
-export const groupContributors = (contributors: Contributor[], registrationType: PublicationInstanceType) => {
-  const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
-  const primaryContributors = contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
-  const secondaryContributors = contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
+export const getContributorsWithPrimaryRole = (
+  contributors: Contributor[],
+  registrationType: PublicationInstanceType
+) => {
+  const { primaryRoles } = contributorConfig[registrationType];
+  return contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
+};
 
-  return { primaryContributors, secondaryContributors };
+export const getContributorsWithSecondaryRole = (
+  contributors: Contributor[],
+  registrationType: PublicationInstanceType
+) => {
+  const { secondaryRoles } = contributorConfig[registrationType];
+  return contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
 };
 
 export const getOutputName = (item: OutputItem): string => {
@@ -657,7 +662,10 @@ export const hyphenateIsrc = (isrc: string) =>
 export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;
 
 export const associatedArtifactIsFile = ({ type }: { type: string }) =>
-  type === 'File' || type === 'UnpublishedFile' || type === 'PublishedFile' || type === 'UnpublishableFile';
+  type === 'File' ||
+  type === FileType.UnpublishedFile ||
+  type === FileType.PublishedFile ||
+  type === FileType.UnpublishableFile;
 
 export const associatedArtifactIsLink = ({ type }: { type: string }) => type === 'AssociatedLink';
 
@@ -699,7 +707,7 @@ export const getDisabledCategories = (
   const disabledCategories: DisabledCategory[] = [];
 
   if (!user?.isThesisCurator) {
-    protectedDegreeTypes.forEach((type) => {
+    Object.values(DegreeType).forEach((type) => {
       disabledCategories.push({ type, text: t('registration.resource_type.protected_degree_type') });
     });
   }

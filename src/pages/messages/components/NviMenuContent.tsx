@@ -7,8 +7,8 @@ import {
   Link as MuiLink,
   Radio,
   Skeleton,
-  Typography,
   styled,
+  Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
@@ -16,7 +16,7 @@ import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates'
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
-import { TasksPageLocationState } from '../../../types/locationState.types';
+import { PreviousSearchLocationState } from '../../../types/locationState.types';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -34,7 +34,7 @@ const StyledNviStatusBox = styled(Box)({
 
 export const NviMenuContent = () => {
   const { t } = useTranslation();
-  const history = useHistory<TasksPageLocationState>();
+  const history = useHistory<PreviousSearchLocationState>();
   const searchParams = new URLSearchParams(history.location.search);
 
   const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
@@ -52,7 +52,7 @@ export const NviMenuContent = () => {
 
   const openCandidatesView = () => {
     if (!isOnNviCandidatesPage) {
-      history.push(UrlPathTemplate.TasksNvi);
+      history.push({ pathname: UrlPathTemplate.TasksNvi, search: searchParams.toString() });
     }
   };
 
