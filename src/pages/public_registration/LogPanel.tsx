@@ -69,7 +69,14 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     registration.importDetails?.forEach((importDetail) => {
       const registrationImported: LogItem = {
         modifiedDate: importDetail.importDate,
-        title: t('common.imported_from', { source: importDetail.source }),
+        title: importDetail.importSource.archive
+          ? t('my_page.messages.imported_from_source_and_archive', {
+              source: importDetail.importSource.source,
+              archive: importDetail.importSource.archive,
+            })
+          : t('my_page.messages.imported_from_source', {
+              source: importDetail.importSource.source,
+            }),
         description: organizationAcronym,
         type: 'PublishingRequest',
       };
