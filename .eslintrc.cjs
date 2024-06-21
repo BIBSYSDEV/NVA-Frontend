@@ -18,7 +18,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-key': 'off', // TODO: Violations of this rule should be resolved, so we can implement this rule
     'react/no-children-prop': 'off', // TODO: Violations of this rule should be resolved, so we can implement this rule
-    'no-console': 'off',
+    'no-console': 'warn',
     'no-debugger': 'warn',
   },
 };

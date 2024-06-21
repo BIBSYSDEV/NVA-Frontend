@@ -48,8 +48,6 @@ const TasksPage = () => {
   const isNviCurator = !!user?.isNviCurator;
   const nvaUsername = user?.nvaUsername ?? '';
 
-  console.log('NY VERSJON TASKS PAGE 2');
-
   const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = history.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
   const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;

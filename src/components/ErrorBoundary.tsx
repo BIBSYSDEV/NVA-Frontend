@@ -16,18 +16,6 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
   state = { error: ErrorType.None };
 
   static getDerivedStateFromError(error: any) {
-    console.log('ERROR', error);
-
-    if (error instanceof Error) {
-      console.log('ErrorBoundary error:', error);
-    } else if (typeof error === 'object') {
-      console.log('ErrorBoundary object:', error);
-    } else if (typeof error === 'string') {
-      console.log('ErrorBoundary string:', error);
-    } else {
-      console.log('ErrorBoundary ??:', error);
-    }
-
     return /TypeError: error loading dynamically imported module/.test(error)
       ? { error: ErrorType.Chunk }
       : { error: ErrorType.Other };
@@ -72,8 +60,6 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
     const { t, children } = this.props;
     const { error } = this.state;
 
-    console.log('Error boundary', this.state);
-
     switch (error) {
       case ErrorType.None:
         return children;
@@ -97,8 +83,6 @@ export class BasicErrorBoundary extends Component<PropsWithChildren<unknown>> {
   render() {
     const { children } = this.props;
     const { hasError } = this.state;
-
-    console.log('Most basic error boundary', this.state);
 
     return hasError ? <ErrorMessage errorMessage={nbTranslations.common.error_occurred} /> : children;
   }
