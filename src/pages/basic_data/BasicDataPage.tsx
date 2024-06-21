@@ -60,6 +60,7 @@ const BasicDataPage = () => {
         minimizedMenu={
           <Link
             to={{
+              // TODO: Ensure this points to something sensible when on import pages
               pathname: UrlPathTemplate.BasicDataCentralImport,
               search: location.state?.previousSearch,
             }}>
