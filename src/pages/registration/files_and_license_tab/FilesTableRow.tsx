@@ -102,13 +102,13 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
       <TableRow
         data-testid={dataTestId.registrationWizard.files.fileRow}
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
-        sx={{ bgcolor: disabled ? 'grey.400' : '', td: !isArchived ? { pb: 0, borderBottom: 'unset' } : '' }}>
+        sx={{
+          bgcolor: disabled ? 'grey.400' : '',
+          td: !isArchived ? { borderBottom: 'unset', verticalAlign: 'top' } : { verticalAlign: 'top' },
+        }}>
         <TableCell sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem' }}>
           <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
-          <Box
-            sx={{
-              paddingBottom: '1rem',
-            }}>
+          <Box>
             <TruncatableTypography sx={{ fontWeight: 'bold', color: disabled ? 'grey.600' : '' }}>
               {file.name}
             </TruncatableTypography>
@@ -135,28 +135,29 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           </ConfirmDialog>
         </TableCell>
         <TableCell>
-          <Field name={fileTypeFieldName}>
-            {({ field }: FieldProps) => (
-              <Checkbox
-                {...field}
-                data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
-                checked={field.value === FileType.UnpublishedFile}
-                disabled={disabled}
-                inputProps={{
-                  'aria-labelledby': markForPublishId,
-                }}
-                onChange={(event, checked) => {
-                  if (!checked) {
-                    setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
-                  } else {
-                    setFieldValue(fileTypeFieldName, FileType.UnpublishedFile);
-                  }
-                }}
-              />
-            )}
-          </Field>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Field name={fileTypeFieldName}>
+              {({ field }: FieldProps) => (
+                <Checkbox
+                  {...field}
+                  data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
+                  checked={field.value === FileType.UnpublishedFile || field.value === FileType.PublishedFile}
+                  disabled={disabled}
+                  inputProps={{
+                    'aria-labelledby': markForPublishId,
+                  }}
+                  onChange={(event, checked) => {
+                    if (!checked) {
+                      setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
+                    } else {
+                      setFieldValue(fileTypeFieldName, FileType.UnpublishedFile);
+                    }
+                  }}
+                />
+              )}
+            </Field>
+          </Box>
         </TableCell>
-
         {showFileVersion && !isArchived && (
           <TableCell>
             <Field name={publisherVersionFieldName}>
@@ -189,12 +190,12 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     <FormControlLabel
                       value={FileVersion.Accepted}
                       control={<Radio />}
-                      label={t('registration.files_and_license.accepted')}
+                      label={t('registration.files_and_license.accepted_version')}
                     />
                     <FormControlLabel
                       value={FileVersion.Published}
                       control={<Radio />}
-                      label={t('registration.files_and_license.published')}
+                      label={t('registration.files_and_license.published_version')}
                     />
                   </RadioGroup>
                   {error && touched && <FormHelperText error>{error}</FormHelperText>}
@@ -293,6 +294,16 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 </Trans>
               </Typography>
             )}
+          </TableCell>
+        )}
+        {!isArchived && (
+          <TableCell>
+            <IconButton
+              onClick={() => setOpenCollapsable(!openCollapsable)}
+              size="small"
+              data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
+              {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
           </TableCell>
         )}
       </TableRow>
@@ -440,14 +451,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 </Box>
               </Box>
             </Collapse>
-            <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-              <IconButton
-                onClick={() => setOpenCollapsable(!openCollapsable)}
-                size="small"
-                data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
-                {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </IconButton>
-            </Box>
           </TableCell>
         </TableRow>
       )}

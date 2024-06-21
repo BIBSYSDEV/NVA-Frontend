@@ -215,6 +215,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                   </Box>
                 </TableCell>
               )}
+              {!archived && <TableCell />}
             </TableRow>
           </TableHead>
           <TableBody>
