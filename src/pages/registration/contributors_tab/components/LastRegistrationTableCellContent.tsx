@@ -27,7 +27,7 @@ export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationT
     registrationsQuery.data?.hits && registrationsQuery.data.hits.length > 0 ? registrationsQuery.data.hits[0] : null;
   const totalHits = registrationsQuery.data?.totalHits ?? 0;
 
-  return registrationsQuery.isLoading ? (
+  return registrationsQuery.isPending ? (
     <Skeleton />
   ) : registration ? (
     <>

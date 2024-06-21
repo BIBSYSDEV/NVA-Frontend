@@ -1,21 +1,27 @@
-import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
+import { Box, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { fetchUser } from '../../../api/roleApi';
-import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { toDateString } from '../../../utils/date-helpers';
 import { getFullName } from '../../../utils/user-helpers';
+import { MessageMenu } from './MessageMenu';
 import { ticketColor } from './TicketListItem';
 
 interface MessageListProps {
   ticket: Ticket;
+  refetchData?: () => void;
+  canDeleteMessage?: boolean;
 }
 
-export const TicketMessageList = ({ ticket }: MessageListProps) => {
+export const TicketMessageList = ({ ticket, refetchData, canDeleteMessage }: MessageListProps) => {
   const messages = ticket.messages ?? [];
+  const user = useSelector((store: RootState) => store.user);
 
   return (
     <ErrorBoundary>
@@ -36,6 +42,17 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
             date={message.createdDate}
             username={message.sender}
             backgroundColor={ticketColor[ticket.type]}
+            menuElement={
+              !!user &&
+              (canDeleteMessage || user.nvaUsername === message.sender) && (
+                <MessageMenu
+                  ticketId={ticket.id}
+                  refetchData={refetchData}
+                  canDeleteMessage={!!message.text}
+                  messageIdentifier={message.identifier}
+                />
+              )
+            }
           />
         ))}
       </Box>
@@ -48,14 +65,11 @@ interface MessageItemProps {
   date: string;
   username: string;
   backgroundColor: string;
-  onDelete?: () => void;
-  isDeleting?: boolean;
+  menuElement?: ReactNode;
 }
 
-export const MessageItem = ({ text, date, username, backgroundColor, onDelete, isDeleting }: MessageItemProps) => {
+export const MessageItem = ({ text, date, username, backgroundColor, menuElement }: MessageItemProps) => {
   const { t } = useTranslation();
-  const [expanded, setExpanded] = useState(false);
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const senderQuery = useQuery({
     queryKey: [username],
@@ -72,55 +86,42 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
         bgcolor: backgroundColor,
         p: '0.5rem',
         borderRadius: '4px',
-        cursor: onDelete && !expanded ? 'pointer' : 'auto',
         display: 'flex',
         flexDirection: 'column',
-      }}
-      onClick={() => setExpanded(true)}>
-      <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-        <span>
-          {senderQuery.isLoading ? (
-            <Skeleton sx={{ width: '8rem' }} />
-          ) : (
-            <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
-              {senderName ? senderName : <i>{t('common.unknown')}</i>}
-            </b>
-          )}
-        </span>
-        <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-          {new Date(date).toLocaleDateString()}
-        </span>
-      </Typography>
+      }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center' }}>
+        <Tooltip title={senderName ? senderName : t('common.unknown')}>
+          <Typography
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}
+            sx={{
+              fontWeight: 'bold',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '100%',
+            }}>
+            {senderQuery.isPending ? (
+              <Skeleton sx={{ width: '8rem' }} />
+            ) : senderName ? (
+              senderName
+            ) : (
+              <i>{t('common.unknown')}</i>
+            )}
+          </Typography>
+        </Tooltip>
+        <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
+          {toDateString(date)}
+        </Typography>
+        {menuElement}
+      </Box>
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
       <Box
         data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
         component={typeof text === 'string' ? Typography : 'div'}>
-        {text}
+        {text ? text : <i>{t('my_page.messages.message_deleted')}</i>}
       </Box>
-
-      {expanded && onDelete && (
-        <>
-          <Button
-            size="small"
-            disabled={showConfirmDialog}
-            variant="outlined"
-            sx={{ mt: '0.25rem', alignSelf: 'center' }}
-            onClick={() => setShowConfirmDialog(true)}>
-            {t('common.delete')}
-          </Button>
-
-          <ConfirmDialog
-            open={showConfirmDialog}
-            title={t('tasks.nvi.delete_note')}
-            onAccept={onDelete}
-            isLoading={isDeleting}
-            onCancel={() => setShowConfirmDialog(false)}>
-            <Typography>{t('tasks.nvi.delete_note_description')}</Typography>
-          </ConfirmDialog>
-        </>
-      )}
     </Box>
   );
 };

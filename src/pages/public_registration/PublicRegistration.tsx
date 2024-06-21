@@ -3,11 +3,8 @@ import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 import { StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { PreviousPathLocationState } from '../../types/locationState.types';
 import { RegistrationLandingPage } from './RegistrationLandingPage';
-
-export interface PreviousPathLocationState {
-  previousPath?: string;
-}
 
 const PublicRegistration = () => {
   const { t } = useTranslation();

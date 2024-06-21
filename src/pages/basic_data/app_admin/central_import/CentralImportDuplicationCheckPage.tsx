@@ -3,9 +3,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { fetchImportCandidate, fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
-import { fetchImportCandidates } from '../../../../api/searchApi';
+import { FetchImportCandidatesParams, fetchImportCandidates } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
@@ -13,6 +13,7 @@ import { RegistrationListItemContent } from '../../../../components/Registration
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
+import { PreviousSearchLocationState } from '../../../../types/locationState.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import {
@@ -30,14 +31,20 @@ import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const location = useLocation<PreviousSearchLocationState>();
   const { identifier } = useParams<IdentifierParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
   const [registrationIdentifier, setRegistrationIdentifier] = useState('');
   const [showNotApplicableDialog, setShowNotApplicableDialog] = useState(false);
 
+  const importCandidatesParams: FetchImportCandidatesParams = {
+    from: 0,
+    size: 1,
+    id: identifier,
+  };
   const importCandidateSearchQuery = useQuery({
-    queryKey: ['importCandidateSearch', identifier],
-    queryFn: () => fetchImportCandidates(1, 0, { query: `id:"${identifier}"` }),
+    queryKey: ['importCandidateSearch', importCandidatesParams],
+    queryFn: () => fetchImportCandidates(importCandidatesParams),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
   const importCandidateSearchResult = importCandidateSearchQuery.data?.hits[0];
@@ -63,10 +70,11 @@ export const CentralImportDuplicationCheckPage = () => {
       ),
   });
 
+  const importedRegistrationId = importCandidate?.importStatus.nvaPublicationId ?? '';
   const importedRegistrationQuery = useQuery({
-    enabled:
-      importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importCandidate.importStatus.nvaPublicationId,
-    queryFn: () => fetchRegistration(getIdentifierFromId(importCandidate?.importStatus.nvaPublicationId ?? '')),
+    queryKey: ['registration', importedRegistrationId],
+    enabled: importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importedRegistrationId,
+    queryFn: () => fetchRegistration(getIdentifierFromId(importedRegistrationId)),
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
@@ -93,7 +101,7 @@ export const CentralImportDuplicationCheckPage = () => {
         gap: '1rem',
       }}>
       <BackgroundDiv>
-        {importCandidateSearchQuery.isLoading || importCandidateQuery.isLoading ? (
+        {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
         ) : importCandidateSearchResult && importCandidate ? (
           <>
@@ -104,7 +112,7 @@ export const CentralImportDuplicationCheckPage = () => {
 
             {importCandidate.importStatus.candidateStatus !== 'IMPORTED' ? (
               <>
-                <Typography variant="h3" sx={{ mt: '1rem' }}>
+                <Typography variant="h2" sx={{ mt: '1rem' }}>
                   {t('basic_data.central_import.search_for_duplicates')}:
                 </Typography>
                 <DuplicateSearchFilterForm
@@ -217,7 +225,11 @@ export const CentralImportDuplicationCheckPage = () => {
           )}
 
           <Divider sx={{ my: '1rem' }} />
-          <Link to={UrlPathTemplate.BasicDataCentralImport}>
+          <Link
+            to={{
+              pathname: UrlPathTemplate.BasicDataCentralImport,
+              search: location.state?.previousSearch,
+            }}>
             <Button size="small" fullWidth variant="outlined">
               {t('common.cancel')}
             </Button>

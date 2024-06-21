@@ -1,4 +1,4 @@
-import { UnconfirmedOrganization } from './common.types';
+import { AggregationValue, UnconfirmedOrganization } from './common.types';
 import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
 import { ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
@@ -12,7 +12,7 @@ import { MapPublicationInstance } from './publication_types/otherRegistration.ty
 import { PresentationPublicationInstance } from './publication_types/presentationRegistration.types';
 import { ReportPublicationInstance } from './publication_types/reportRegistration.types';
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
-import { Journal, Publisher, Registration } from './registration.types';
+import { Journal, Publisher, Registration, RegistrationAggregations } from './registration.types';
 
 export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
 
@@ -29,13 +29,12 @@ export interface ImportCandidate extends Registration {
   importStatus: ImportStatus;
 }
 
-interface ImportCandidateStatusBucket {
-  key: ImportCandidateStatus;
-  docCount: number;
-}
+export type CollaborationType = 'Collaborative' | 'NonCollaborative';
 
-export interface ImportCandidateAggregations {
-  'importStatus.candidateStatus': { buckets: ImportCandidateStatusBucket[] };
+export interface ImportCandidateAggregations
+  extends Pick<RegistrationAggregations, 'type' | 'topLevelOrganization' | 'files'> {
+  importStatus?: AggregationValue<ImportCandidateStatus>[];
+  collaborationType?: AggregationValue<CollaborationType>[];
 }
 
 export interface ImportCandidateSummary {
@@ -50,8 +49,8 @@ export interface ImportCandidateSummary {
   totalContributors: number;
   totalVerifiedContributors: number;
   organizations: (Pick<Organization, 'type' | 'id' | 'labels'> | UnconfirmedOrganization)[];
-  publisher: Pick<Publisher, 'id' | 'name'>;
-  journal: Pick<Journal, 'id'>;
+  publisher?: Partial<Publisher>;
+  journal?: Partial<Journal>;
   publicationInstance: PublicationInstance;
   contributors: Contributor[];
   printIssn?: string;

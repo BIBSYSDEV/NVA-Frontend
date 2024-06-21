@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { PageSpinner } from './components/PageSpinner';
+import NotFound from './pages/errorpages/NotFound';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
@@ -13,7 +14,6 @@ const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
-const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
@@ -21,6 +21,7 @@ const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
+const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 
 export const AppRoutes = () => {
   const { t } = useTranslation();
@@ -56,6 +57,7 @@ export const AppRoutes = () => {
         <Route exact path={UrlPathTemplate.Projects} component={ProjectsPage} />
         <Route exact path={UrlPathTemplate.Login} component={LoginPage} />
         <Route exact path={UrlPathTemplate.Logout} component={Logout} />
+        <Route path={UrlPathTemplate.SignedOut} component={SignedOutPage} />
 
         {/* LoggedInRoute */}
         <PrivateRoute path={UrlPathTemplate.MyPage} component={MyPagePage} isAuthorized={isAuthenticated} />

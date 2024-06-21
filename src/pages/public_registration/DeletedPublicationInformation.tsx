@@ -48,7 +48,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
           {registration.duplicateOf && (
             <Box
               aria-live="polite"
-              aria-busy={originalRegistrationQuery.isLoading}
+              aria-busy={originalRegistrationQuery.isPending}
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -56,7 +56,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
                 padding: '1rem',
                 my: '1rem',
               }}>
-              {originalRegistrationQuery.isLoading ? (
+              {originalRegistrationQuery.isPending ? (
                 <PageSpinner aria-label={t('registration.citation_points_to')} />
               ) : (
                 <Typography>

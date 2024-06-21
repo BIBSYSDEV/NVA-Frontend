@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { fetchUser, fetchUsers } from '../api/roleApi';
+import { fetchUser, fetchUsersByCustomer } from '../api/roleApi';
 import { StyledBaseContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
 import { RootState } from '../redux/store';
 import { RoleName } from '../types/user.types';
@@ -39,7 +39,7 @@ export const AssigneeSelector = ({
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId, roleFilter],
     enabled: showCuratorSearch && !!customerId,
-    queryFn: () => fetchUsers(customerId, roleFilter),
+    queryFn: () => fetchUsersByCustomer(customerId, roleFilter),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
@@ -55,7 +55,7 @@ export const AssigneeSelector = ({
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
-  const isLoading = isUpdating || curatorsQuery.isLoading || assigneeQuery.isFetching;
+  const isLoading = isUpdating || curatorsQuery.isPending || assigneeQuery.isFetching;
 
   const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
   const assigneeInitials = getInitials(assigneeName);
@@ -80,7 +80,7 @@ export const AssigneeSelector = ({
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
       isOptionEqualToValue={(option, value) => option.username === value?.username}
       value={assigneeQuery.data ?? null}
-      loading={isUpdating || curatorsQuery.isLoading}
+      loading={isUpdating || curatorsQuery.isPending}
       renderInput={(params) => (
         <AutocompleteTextField
           data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeSearchField}

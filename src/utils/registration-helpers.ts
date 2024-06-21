@@ -1,10 +1,26 @@
 import { TFunction } from 'i18next';
+import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
-import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
+import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '../types/associatedArtifact.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
+import {
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+  allPublicationInstanceTypes,
+} from '../types/publicationFieldNames';
 import {
   AudioVisualPublication,
   Award,
@@ -31,22 +47,8 @@ import {
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import {
-  allPublicationInstanceTypes,
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-} from '../types/publicationFieldNames';
-import {
   Journal,
+  NpiSubjectDomain,
   PublicationInstanceType,
   Publisher,
   Registration,
@@ -85,9 +87,6 @@ export const isJournal = (instanceType: any) => Object.values(JournalType).inclu
 export const isBook = (instanceType: any) => Object.values(BookType).includes(instanceType);
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
-
-const protectedDegreeTypes = [DegreeType.Bachelor, DegreeType.Master, DegreeType.Phd, DegreeType.Other];
-export const isDegreeWithProtectedFiles = (instanceType: any) => protectedDegreeTypes.includes(instanceType);
 
 export const isReport = (instanceType: any) => Object.values(ReportType).includes(instanceType);
 
@@ -257,27 +256,27 @@ export const contributorConfig: ContributorConfig = {
   },
   // Book
   [BookType.AcademicMonograph]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.NonFictionMonograph]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.PopularScienceMonograph]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Textbook]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Encyclopedia]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.ExhibitionCatalog]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Anthology]: {
@@ -286,27 +285,27 @@ export const contributorConfig: ContributorConfig = {
   },
   // Report
   [ReportType.Research]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.Policy]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.WorkingPaper]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.BookOfAbstracts]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.ConferenceReport]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [ReportType.Report]: {
-    primaryRoles: [ContributorRole.Creator],
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Degree
@@ -496,7 +495,12 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [],
   },
   [MediaType.MediaInterview]: {
-    primaryRoles: [ContributorRole.Journalist, ContributorRole.InterviewSubject, ContributorRole.Other],
+    primaryRoles: [
+      ContributorRole.Journalist,
+      ContributorRole.InterviewSubject,
+      ContributorRole.Creator,
+      ContributorRole.Other,
+    ],
     secondaryRoles: [],
   },
   [MediaType.MediaBlogPost]: {
@@ -569,12 +573,20 @@ export const contributorConfig: ContributorConfig = {
   },
 };
 
-export const groupContributors = (contributors: Contributor[], registrationType: PublicationInstanceType) => {
-  const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
-  const primaryContributors = contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
-  const secondaryContributors = contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
+export const getContributorsWithPrimaryRole = (
+  contributors: Contributor[],
+  registrationType: PublicationInstanceType
+) => {
+  const { primaryRoles } = contributorConfig[registrationType];
+  return contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
+};
 
-  return { primaryContributors, secondaryContributors };
+export const getContributorsWithSecondaryRole = (
+  contributors: Contributor[],
+  registrationType: PublicationInstanceType
+) => {
+  const { secondaryRoles } = contributorConfig[registrationType];
+  return contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
 };
 
 export const getOutputName = (item: OutputItem): string => {
@@ -633,16 +645,16 @@ export const getOutputName = (item: OutputItem): string => {
 };
 
 export const userCanEditRegistration = (registration: Registration) =>
-  registration.allowedOperations.includes('update');
+  registration.allowedOperations?.includes('update');
 
 export const userCanUnpublishRegistration = (registration: Registration) =>
-  registration.allowedOperations.includes('unpublish');
+  registration.allowedOperations?.includes('unpublish');
 
 export const userCanPublishRegistration = (registration: Registration) =>
-  registration.allowedOperations.includes('ticket/publish');
+  registration.allowedOperations?.includes('ticket/publish');
 
 export const userCanDeleteRegistration = (registration: Registration) =>
-  registration.allowedOperations.includes('delete');
+  registration.allowedOperations?.includes('delete');
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
@@ -650,7 +662,10 @@ export const hyphenateIsrc = (isrc: string) =>
 export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;
 
 export const associatedArtifactIsFile = ({ type }: { type: string }) =>
-  type === 'File' || type === 'UnpublishedFile' || type === 'PublishedFile' || type === 'UnpublishableFile';
+  type === 'File' ||
+  type === FileType.UnpublishedFile ||
+  type === FileType.PublishedFile ||
+  type === FileType.UnpublishableFile;
 
 export const associatedArtifactIsLink = ({ type }: { type: string }) => type === 'AssociatedLink';
 
@@ -692,7 +707,7 @@ export const getDisabledCategories = (
   const disabledCategories: DisabledCategory[] = [];
 
   if (!user?.isThesisCurator) {
-    protectedDegreeTypes.forEach((type) => {
+    Object.values(DegreeType).forEach((type) => {
       disabledCategories.push({ type, text: t('registration.resource_type.protected_degree_type') });
     });
   }
@@ -709,3 +724,29 @@ export const getDisabledCategories = (
 
   return disabledCategories;
 };
+
+export const findParentSubject = (disciplines: NpiSubjectDomain[], npiSubjectHeadingId: string) => {
+  const parent = disciplines.find((domain) =>
+    domain.subdomains.some((subdomain) => subdomain.id === npiSubjectHeadingId)
+  );
+  return parent ? parent.id : null;
+};
+
+export const registrationLanguageOptions = [
+  getLanguageByIso6393Code('eng'),
+  getLanguageByIso6393Code('nob'),
+  getLanguageByIso6393Code('nno'),
+  getLanguageByIso6393Code('dan'),
+  getLanguageByIso6393Code('fin'),
+  getLanguageByIso6393Code('fra'),
+  getLanguageByIso6393Code('isl'),
+  getLanguageByIso6393Code('ita'),
+  getLanguageByIso6393Code('nld'),
+  getLanguageByIso6393Code('por'),
+  getLanguageByIso6393Code('rus'),
+  getLanguageByIso6393Code('sme'),
+  getLanguageByIso6393Code('spa'),
+  getLanguageByIso6393Code('swe'),
+  getLanguageByIso6393Code('deu'),
+  getLanguageByIso6393Code('mis'),
+];

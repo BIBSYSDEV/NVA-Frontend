@@ -44,6 +44,7 @@ export const BackgroundDiv = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     padding: '0.5rem',
   },
+  maxWidth: '100vw',
 }));
 
 export const StyledGeneralInfo = styled('div')(({ theme }) => ({
@@ -63,6 +64,7 @@ export const SearchListItem = styled(ListItem)(({ theme }) => ({
   borderLeft: '1.25rem solid',
   flexDirection: 'column',
   alignItems: 'start',
+  background: 'white',
 }));
 
 export const StyledStatusCheckbox = styled(Checkbox)({

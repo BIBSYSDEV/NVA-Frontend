@@ -6,9 +6,9 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { RootState } from '../../../redux/store';
-import { FlatCristinPerson } from '../../../types/user.types';
+import { FlatCristinPerson, emptyPerson } from '../../../types/user.types';
 import { SearchForCristinPerson } from '../SearchForCristinPerson';
-import { AddEmployeeData, emptyUser } from './AddEmployeePage';
+import { AddEmployeeData } from './AddEmployeePage';
 
 export const FindPersonPanel = () => {
   const { t } = useTranslation();
@@ -21,7 +21,7 @@ export const FindPersonPanel = () => {
   const userTopLevelOrg = user?.topOrgCristinId ?? '';
 
   const setSelectedPerson = useCallback(
-    (person?: FlatCristinPerson) => setFieldValue('person', person ? person : emptyUser),
+    (person?: FlatCristinPerson) => setFieldValue('person', person ? person : emptyPerson),
     [setFieldValue]
   );
 

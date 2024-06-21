@@ -31,7 +31,7 @@ export enum PublicationChannelApiPath {
 export enum PublicationsApiPath {
   Registration = '/publication',
   RegistrationsByOwner = '/publication/by-owner',
-  DoiLookup = '/doi-fetch',
+  DoiLookup = '/doi-fetch/preview',
   ImportCandidate = '/publication/import-candidate',
 }
 
@@ -47,9 +47,9 @@ export enum RoleApiPath {
 
 export enum SearchApiPath {
   Registrations = '/search/resources',
-  Tickets = '/search/tickets',
+  RegistrationsExport = '/search/resources/export',
   CustomerTickets = '/search/customer/tickets',
-  ImportCandidates = '/search/import-candidates',
+  ImportCandidates = '/search/customer/import-candidates',
   NviCandidate = '/scientific-index/candidate',
 }
 
@@ -64,5 +64,6 @@ export enum PersonPreferencesApiPath {
 export enum ScientificIndexApiPath {
   Candidate = '/scientific-index/candidate',
   CandidateForRegistration = '/scientific-index/candidate/publication',
+  InstitutionReport = '/scientific-index/institution-report',
   Period = '/scientific-index/period',
 }

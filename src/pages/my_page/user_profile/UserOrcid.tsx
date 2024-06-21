@@ -62,9 +62,9 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   const cristinPersonQuery = useQuery({
     enabled: !!userCristinId,
-    queryKey: [userCristinId],
+    queryKey: ['person', userCristinId],
     queryFn: () => fetchPerson(userCristinId),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
   const fetchCristinPersonRef = useRef(cristinPersonQuery.refetch);
   const cristinPerson = cristinPersonQuery.data;
@@ -143,7 +143,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <div>
-      {cristinPersonQuery.isLoading ? (
+      {cristinPersonQuery.isPending ? (
         <CircularProgress aria-labelledby="orcid-label" />
       ) : isAddingOrcid ? (
         <Skeleton width="20rem" />
@@ -195,7 +195,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         <LinkButton
           endIcon={<img src={orcidIcon} height="20" alt="" />}
           data-testid="button-create-connect-orcid"
-          href={`${ORCID_BASE_URL}/signin?oauth&client_id=${process.env.REACT_APP_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`}
+          href={`${ORCID_BASE_URL}/signin?oauth&client_id=${import.meta.env.VITE_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`}
           size="small">
           {t('my_page.my_profile.orcid.connect_orcid')}
         </LinkButton>

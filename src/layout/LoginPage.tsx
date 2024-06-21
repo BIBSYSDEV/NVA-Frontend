@@ -1,17 +1,14 @@
 import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import { RootState } from '../redux/store';
+import { PreviousPathLocationState } from '../types/locationState.types';
 import { LocalStorageKey } from '../utils/constants';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
-export interface PreviousPathState {
-  previousPath?: string;
-}
-
 const LoginPage = () => {
   const user = useSelector((store: RootState) => store.user);
-  const location = useLocation<PreviousPathState>();
+  const location = useLocation<PreviousPathLocationState>();
   const { handleLogin } = useAuthentication();
 
   if (user) {
@@ -21,7 +18,6 @@ const LoginPage = () => {
   const redirectPath = location.state?.previousPath ?? UrlPathTemplate.Home;
 
   localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
-  localStorage.setItem(LocalStorageKey.AmplifyRedirect, 'true');
   handleLogin();
   return null;
 };

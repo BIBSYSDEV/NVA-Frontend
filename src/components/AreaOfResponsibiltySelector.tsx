@@ -1,11 +1,10 @@
-import { Autocomplete, Checkbox, Chip, TextField } from '@mui/material';
+import { Autocomplete, BaseTextFieldProps, Checkbox, Chip, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchOrganizations } from '../api/cristinApi';
 import { fetchUser } from '../api/roleApi';
-import { TicketSearchParam } from '../api/searchApi';
 import { RootState } from '../redux/store';
 import { Organization } from '../types/organization.types';
 import { dataTestId } from '../utils/dataTestIds';
@@ -25,7 +24,12 @@ function buildOrganizationOption(org: Organization, level: number): Organization
   return [option, ...subOptions];
 }
 
-export const AreaOfResponsibilitySelector = () => {
+interface AreaOfResponsibilitySelectorProps extends Pick<BaseTextFieldProps, 'sx'> {
+  paramName: string;
+  resetPagination: () => void;
+}
+
+export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }: AreaOfResponsibilitySelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const nvaUsername = user?.nvaUsername ?? '';
@@ -50,7 +54,7 @@ export const AreaOfResponsibilitySelector = () => {
   const organizations = organizationQuery.data ?? [];
   const organizationOptions = buildOrganizationOptions(organizations);
 
-  const selectedAreaIdsFromUrl = searchParams.get(TicketSearchParam.OrganizationId)?.split(',');
+  const selectedAreaIdsFromUrl = searchParams.get(paramName)?.split(',');
   const selectedOrganizations = organizationOptions.filter(
     (org) => org.identifier && selectedAreaIdsFromUrl?.includes(org.identifier)
   );
@@ -59,6 +63,7 @@ export const AreaOfResponsibilitySelector = () => {
 
   return onlyOneAreaOfResponsibilitySelectable ? (
     <TextField
+      sx={sx}
       size="small"
       fullWidth
       disabled
@@ -75,14 +80,15 @@ export const AreaOfResponsibilitySelector = () => {
     />
   ) : (
     <Autocomplete
+      sx={sx}
       multiple
       autoHighlight
       options={organizationOptions}
       value={selectedOrganizations}
       disableCloseOnSelect
       disableClearable
-      disabled={organizationQuery.isLoading}
-      loading={organizationQuery.isLoading}
+      disabled={organizationQuery.isPending}
+      loading={organizationQuery.isPending}
       getOptionLabel={(option) => getLanguageString(option.labels)}
       renderTags={(values) => (
         <Chip
@@ -93,17 +99,19 @@ export const AreaOfResponsibilitySelector = () => {
           variant="filled"
           data-testid={dataTestId.registrationWizard.resourceType.journalChip}
           onDelete={() => {
-            searchParams.delete(TicketSearchParam.OrganizationId);
+            searchParams.delete(paramName);
+            resetPagination();
             history.push({ search: searchParams.toString() });
           }}
         />
       )}
       onChange={(_, values) => {
         if (values.length) {
-          searchParams.set(TicketSearchParam.OrganizationId, values.map((org) => org.identifier).join(','));
+          searchParams.set(paramName, values.map((org) => org.identifier).join(','));
         } else {
-          searchParams.delete(TicketSearchParam.OrganizationId);
+          searchParams.delete(paramName);
         }
+        resetPagination();
         history.push({ search: searchParams.toString() });
       }}
       renderOption={(props, option, { selected }) => (

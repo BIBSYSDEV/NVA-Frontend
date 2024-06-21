@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getById } from '../../api/commonApi';
-import { fetchUsers } from '../../api/roleApi';
+import { fetchResource } from '../../api/commonApi';
+import { fetchUsersByCustomer } from '../../api/roleApi';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -35,17 +35,18 @@ export const EditorInstitution = () => {
 
   const organizationQuery = useQuery({
     enabled: !!institutionId,
-    queryKey: [institutionId],
-    queryFn: () => getById<Organization>(institutionId),
+    queryKey: ['organization', institutionId],
+    queryFn: () => fetchResource<Organization>(institutionId),
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
   const institutionUsersQuery = useQuery({
     queryKey: ['institutionUsers', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsers(customerId, [RoleName.Editor, RoleName.InstitutionAdmin]) : undefined),
+    queryFn: () =>
+      customerId ? fetchUsersByCustomer(customerId, [RoleName.Editor, RoleName.InstitutionAdmin]) : undefined,
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
@@ -161,7 +162,7 @@ export const EditorInstitution = () => {
             </Link>
           </Grid>
 
-          {institutionUsersQuery.isLoading ? (
+          {institutionUsersQuery.isPending ? (
             <PageSpinner />
           ) : (
             institutionUsers && (

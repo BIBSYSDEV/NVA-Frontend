@@ -24,6 +24,7 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
+import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -45,7 +46,7 @@ import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
-  const location = useLocation();
+  const location = useLocation<PreviousSearchLocationState>();
   const searchParams = new URLSearchParams(location.search);
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
@@ -72,12 +73,14 @@ const MyPagePage = () => {
   const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
 
   const selectedTypesArray = Object.entries(selectedTypes)
-    .filter(([_, selected]) => selected)
+    .filter(([, selected]) => selected)
     .map(([key]) => key);
 
   const ticketSearchParams: FetchTicketsParams = {
+    aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
     results: rowsPerPage,
+    createdDate: searchParams.get(TicketSearchParam.CreatedDate),
     from: apiPage * rowsPerPage,
     owner: user?.nvaUsername,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
@@ -85,6 +88,7 @@ const MyPagePage = () => {
     status: searchParams.get(TicketSearchParam.Status),
     viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
     type: selectedTypesArray.join(','),
+    publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
 
   const ticketsQuery = useQuery({
@@ -132,7 +136,9 @@ const MyPagePage = () => {
       <SideMenu
         expanded={expandMenu}
         minimizedMenu={
-          <Link to={UrlPathTemplate.MyPageMyMessages} onClick={() => ticketsQuery.refetch()}>
+          <Link
+            to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: location.state?.previousSearch }}
+            onClick={() => ticketsQuery.refetch()}>
             <StyledMinimizedMenuButton title={t('my_page.my_page')}>
               <FavoriteBorderIcon />
             </StyledMinimizedMenuButton>

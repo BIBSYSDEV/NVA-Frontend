@@ -35,11 +35,24 @@ interface AggregationCount {
   docCount: number;
 }
 
-export interface NviCandidateAggregations {
+interface OrganizationDetail extends AggregationCount {
+  dispute: AggregationCount;
+  points: { value: number };
+  status: { [status in NviCandidateStatus]?: AggregationCount };
+}
+
+export interface NviInstitutionStatusResponse {
+  [organizationId: string]: OrganizationDetail;
+}
+
+export type NviCandidateSearchStatus = keyof NviCandidateAggregations;
+
+interface NviCandidateAggregations {
   approved: AggregationCount;
   approvedCollaboration: AggregationCount;
   assigned: AggregationCount;
   assignedCollaboration: AggregationCount;
+  dispute: AggregationCount;
   pending: AggregationCount;
   pendingCollaboration: AggregationCount;
   rejected: AggregationCount;
@@ -79,8 +92,10 @@ export interface NviCandidate {
   approvals: (Approval | FinalizedApproval | RejectedApproval)[];
   notes: Note[];
   period: {
-    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
+    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod' | 'UnopenedPeriod';
+    year?: string;
   };
+  status?: 'Reported';
 }
 
 export interface Note {
@@ -99,9 +114,4 @@ export interface NviPeriod {
 
 export interface NviPeriodResponse {
   periods: NviPeriod[];
-}
-
-export interface CandidateOffsetState {
-  currentOffset: number;
-  nviQuery: string;
 }

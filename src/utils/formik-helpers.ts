@@ -1,13 +1,17 @@
 import deepmerge from 'deepmerge';
-import { FormikErrors, FormikTouched, getIn } from 'formik';
-import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
+import { FormikErrors, FormikTouched, getIn, validateYupSchema, yupToFormErrors } from 'formik';
 import {
   AssociatedArtifact,
   AssociatedFile,
   AssociatedLink,
+  FileType,
   NullAssociatedArtifact,
 } from '../types/associatedArtifact.types';
 import { Contributor } from '../types/contributor.types';
+import { HighestTouchedTab } from '../types/locationState.types';
+import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
+import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
+import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -19,11 +23,9 @@ import {
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
-import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
-import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
-import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import { Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
+import { registrationValidationSchema } from './validation/registration/registrationValidation';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -73,7 +75,7 @@ export const getTabErrors = (
   return tabErrors;
 };
 
-export const getFirstErrorTab = (tabErrors?: TabErrors) =>
+export const getFirstErrorTab = (tabErrors: TabErrors | null) =>
   tabErrors
     ? tabErrors[RegistrationTab.Description].length > 0
       ? RegistrationTab.Description
@@ -113,8 +115,7 @@ const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] =
 
       if (associatedArtifactIsFile(artifact)) {
         const file = artifact as AssociatedFile;
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`);
-        if (!file.administrativeAgreement) {
+        if (file.type !== FileType.UnpublishableFile) {
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);
@@ -151,7 +152,7 @@ const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown
     mainTitle: true,
     tags: true,
   },
-  fundings: fundings.map((_) => ({
+  fundings: fundings.map(() => ({
     source: true,
     id: true,
     identifier: true,
@@ -408,7 +409,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
 
 const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched<unknown> => ({
   entityDescription: {
-    contributors: contributors.map((_) => ({
+    contributors: contributors.map(() => ({
       correspondingAuthor: true,
       sequence: true,
     })),
@@ -419,7 +420,6 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
   associatedArtifacts: associatedArtifacts.map((artifact) => {
     if (associatedArtifactIsFile(artifact)) {
       const touched: FormikTouched<AssociatedFile> = {
-        administrativeAgreement: true,
         publisherVersion: true,
         embargoDate: true,
         license: true,
@@ -453,4 +453,18 @@ export const getTouchedTabFields = (
   }
   const mergedFields = deepmerge.all(fieldsToTouchOnMount);
   return mergedFields;
+};
+
+export const validateRegistrationForm = (registration: Registration): FormikErrors<Registration> => {
+  const publicationInstance = registration.entityDescription?.reference?.publicationInstance;
+
+  try {
+    validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
+      publicationInstanceType: publicationInstance?.type ?? '',
+      publicationStatus: registration?.status,
+    });
+  } catch (err) {
+    return yupToFormErrors(err);
+  }
+  return {};
 };

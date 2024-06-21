@@ -11,6 +11,7 @@ import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
@@ -24,7 +25,6 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
-import { ShareOptions } from './ShareOptions';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
@@ -79,7 +79,10 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}
               component={RouterLink}
-              to={getRegistrationWizardPath(identifier)}>
+              to={{
+                pathname: getRegistrationWizardPath(identifier),
+                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
+              }}>
               <EditIcon />
             </IconButton>
           </Tooltip>
@@ -264,8 +267,6 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
           </LandingPageAccordion>
         )}
-
-        <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
       </BackgroundDiv>
     </Paper>
   );

@@ -16,29 +16,29 @@ import {
   Typography,
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { validateYupSchema, yupToFormErrors } from 'formik';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
+import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
+import { FileType } from '../../../types/associatedArtifact.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
-import { userCanPublishRegistration, userCanUnpublishRegistration } from '../../../utils/registration-helpers';
-import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
-import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
+import { toDateString } from '../../../utils/date-helpers';
+import { getFirstErrorTab, getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers';
+import { userCanPublishRegistration } from '../../../utils/registration-helpers';
+import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
-import { DeletePublication } from './DeletePublication';
 import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
+import { DeletePublication } from './DeletePublication';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -68,11 +68,15 @@ export const PublishingAccordion = ({
   const customer = useSelector((store: RootState) => store.customer);
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
-  const [registrationIsValid, setRegistrationIsValid] = useState(false);
-  const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
+  const registrationHasFile = registration.associatedArtifacts.some(
+    (artifact) => artifact.type === FileType.PublishedFile
+  );
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
   const userCanPublish = userCanPublishRegistration(registration);
-  const userCanUnpublish = userCanUnpublishRegistration(registration);
+
+  const formErrors = validateRegistrationForm(registration);
+  const registrationIsValid = Object.keys(formErrors).length === 0;
+  const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
 
   const lastPublishingRequest = publishingRequestTickets.at(-1);
 
@@ -115,23 +119,6 @@ export const PublishingAccordion = ({
       ),
   });
 
-  const [tabErrors, setTabErrors] = useState<TabErrors>();
-  useEffect(() => {
-    const publicationInstance = registration.entityDescription?.reference?.publicationInstance;
-
-    try {
-      validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
-        publicationInstanceType: publicationInstance?.type ?? '',
-        publicationStatus: registration.status,
-      });
-      setRegistrationIsValid(true);
-    } catch (error) {
-      const formErrors = yupToFormErrors(error);
-      const customErrors = getTabErrors(registration, formErrors);
-      setTabErrors(customErrors);
-    }
-  }, [registration]);
-
   const firstErrorTab = Math.max(getFirstErrorTab(tabErrors), 0);
 
   const onClickPublish = async () => {
@@ -170,7 +157,7 @@ export const PublishingAccordion = ({
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const filesAwaitingApproval = registration.associatedArtifacts.filter(
-    (artifact) => artifact.type === 'UnpublishedFile'
+    (artifact) => artifact.type === FileType.UnpublishedFile
   ).length;
   const hasUnpublishedFiles = filesAwaitingApproval > 0;
 
@@ -243,9 +230,7 @@ export const PublishingAccordion = ({
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mb: '0.5rem' }}>
             <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
               <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
-              {registration.publishedDate && (
-                <Typography>{new Date(registration.publishedDate).toLocaleDateString()}</Typography>
-              )}
+              {registration.publishedDate && <Typography>{toDateString(registration.publishedDate)}</Typography>}
             </StyledStatusMessageBox>
             {completedTickets.map((ticket) => (
               <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket} />
@@ -403,9 +388,7 @@ export const PublishingAccordion = ({
             <MessageForm confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)} />
           </Box>
         )}
-        {userCanUnpublish && registration.status === RegistrationStatus.Published && (
-          <DeletePublication registration={registration} />
-        )}
+        {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
       </AccordionDetails>
     </Accordion>
   );

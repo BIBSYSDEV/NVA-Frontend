@@ -5,11 +5,14 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { BookType, ChapterType, ReportType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
+import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { nviApplicableTypes } from '../../../../utils/registration-helpers';
+import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 
-const anthologyChapterTypes: string[] = [
+const generalChapterTypes: string[] = [
   ChapterType.AcademicChapter,
   ChapterType.NonFictionChapter,
   ChapterType.PopularScienceChapter,
@@ -19,11 +22,14 @@ const anthologyChapterTypes: string[] = [
   ChapterType.ExhibitionCatalogChapter,
 ];
 
+const generalChapterParentTypes = [...Object.values(BookType), ...Object.values(ReportType)];
+
 export const ChapterForm = () => {
   const { t } = useTranslation();
 
   const { values } = useFormikContext<ChapterRegistration>();
   const instanceType = values.entityDescription.reference?.publicationInstance.type ?? '';
+  const isNviApplicable = nviApplicableTypes.includes(instanceType as PublicationInstanceType);
 
   return (
     <>
@@ -31,7 +37,7 @@ export const ChapterForm = () => {
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           <InfoIcon color="primary" />
           <Typography variant="body1" gutterBottom>
-            {anthologyChapterTypes.includes(instanceType)
+            {generalChapterTypes.includes(instanceType)
               ? t('registration.resource_type.chapter.info_anthology')
               : instanceType === ChapterType.ConferenceAbstract
                 ? t('registration.resource_type.chapter.info_book_of_abstracts')
@@ -41,10 +47,10 @@ export const ChapterForm = () => {
           </Typography>
         </Box>
 
-        {anthologyChapterTypes.includes(instanceType) ? (
+        {generalChapterTypes.includes(instanceType) ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.PublicationContextId}
-            searchSubtypes={[BookType.Anthology]}
+            searchSubtypes={generalChapterParentTypes}
             label={t('registration.resource_type.chapter.published_in')}
             placeholder={t('registration.resource_type.chapter.search_for_anthology')}
             dataTestId={dataTestId.registrationWizard.resourceType.partOfField}
@@ -73,6 +79,8 @@ export const ChapterForm = () => {
           />
         ) : null}
       </div>
+
+      <NpiDisciplineField required={isNviApplicable} />
 
       <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
         <Field name={ResourceFieldNames.PagesFrom}>
@@ -108,7 +116,7 @@ export const ChapterForm = () => {
         </Field>
       </Box>
 
-      {instanceType === ChapterType.AcademicChapter ? <NviValidation registration={values} /> : null}
+      {isNviApplicable ? <NviValidation registration={values} /> : null}
     </>
   );
 };

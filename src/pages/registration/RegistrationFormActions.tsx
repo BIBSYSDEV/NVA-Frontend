@@ -12,6 +12,7 @@ import { updateRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
+import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -36,10 +37,10 @@ export const RegistrationFormActions = ({
   isNviCandidate,
 }: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const history = useHistory<RegistrationFormLocationState>();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { values, setTouched } = useFormikContext<Registration>();
+  const { values, setTouched, resetForm } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
@@ -64,11 +65,20 @@ export const RegistrationFormActions = ({
         updateRegistrationResponse.data
       );
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
+
+      const newErrors = validateForm(updateRegistrationResponse.data);
+      resetForm({
+        values: updateRegistrationResponse.data,
+        errors: newErrors,
+        touched: setNestedObjectValues(newErrors, true),
+      });
+
       if (isLastTab) {
-        history.push(getRegistrationLandingPagePath(values.identifier));
-      } else {
-        const newErrors = validateForm(updateRegistrationResponse.data);
-        setTouched(setNestedObjectValues(newErrors, true));
+        if (history.location.state?.previousPath) {
+          history.goBack();
+        } else {
+          history.push(getRegistrationLandingPagePath(values.identifier));
+        }
       }
     }
     setIsSaving(false);

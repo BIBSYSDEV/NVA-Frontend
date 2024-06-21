@@ -8,13 +8,17 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { updatePromotedPublications } from '../api/preferencesApi';
-import { PreviousPathLocationState } from '../pages/public_registration/PublicRegistration';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
+import { PreviousPathLocationState } from '../types/locationState.types';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
-import { getTitleString, userCanDeleteRegistration } from '../utils/registration-helpers';
+import {
+  getContributorsWithPrimaryRole,
+  getTitleString,
+  userCanDeleteRegistration,
+} from '../utils/registration-helpers';
 import {
   UrlPathTemplate,
   getRegistrationLandingPagePath,
@@ -68,13 +72,17 @@ export const RegistrationListItemContent = ({
   const userCristinId = user?.cristinId ?? '';
   const mutationKey = ['person-preferences', userCristinId];
 
+  const registrationType = entityDescription?.reference?.publicationInstance?.type;
   const contributors = entityDescription?.contributors ?? [];
-  const focusedContributors = contributors.slice(0, 5);
-  const countRestContributors = contributors.length - focusedContributors.length;
 
-  const typeString = entityDescription?.reference?.publicationInstance?.type
-    ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
-    : '';
+  const primaryContributors = registrationType
+    ? getContributorsWithPrimaryRole(contributors, registrationType)
+    : contributors;
+
+  const focusedContributors = primaryContributors.slice(0, 5);
+  const countRestContributors = primaryContributors.length - focusedContributors.length;
+
+  const typeString = registrationType ? t(`registration.publication_types.${registrationType}`) : '';
 
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
@@ -94,8 +102,6 @@ export const RegistrationListItemContent = ({
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.update_promoted_publication'), variant: 'error' })),
   });
-
-  const linkLocationState: PreviousPathLocationState = { previousPath: `${location.pathname}${location.search}` };
 
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
@@ -128,7 +134,7 @@ export const RegistrationListItemContent = ({
               component={Link}
               to={{
                 pathname: getRegistrationLandingPagePath(identifier),
-                state: linkLocationState,
+                state: { previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState,
               }}>
               {getTitleString(entityDescription?.mainTitle)}
             </MuiLink>

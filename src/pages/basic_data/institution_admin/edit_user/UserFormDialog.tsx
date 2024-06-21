@@ -14,8 +14,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import * as Yup from 'yup';
-import { getById } from '../../../../api/commonApi';
+import { fetchProtectedResource } from '../../../../api/commonApi';
 import { updateCristinPerson } from '../../../../api/cristinApi';
 import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
@@ -23,32 +22,17 @@ import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { CristinPerson, Employment, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { getValueByKey } from '../../../../utils/user-helpers';
-import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
+import { getUsername, getValueByKey } from '../../../../utils/user-helpers';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
 import { TasksFormSection, rolesWithAreaOfResponsibility } from './TasksFormSection';
-
-export enum UserFormFieldName {
-  Employments = 'person.employments',
-  Roles = 'user.roles',
-  ViewingScope = 'user.viewingScope.includedUnits',
-}
-
-const validationSchema = Yup.object().shape({
-  person: personDataValidationSchema,
-});
+import { UserFormData, UserFormFieldName, validationSchema } from './userFormHelpers';
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
   existingPerson: CristinPerson | string;
   existingUser?: InstitutionUser;
   onClose: () => void;
-}
-
-export interface UserFormData {
-  person?: CristinPerson;
-  user?: InstitutionUser;
 }
 
 export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: UserFormDialogProps) => {
@@ -64,7 +48,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   const personQuery = useQuery({
     enabled: open && !existingPersonObject && !!personId,
     queryKey: [personId],
-    queryFn: () => getById<CristinPerson>(personId),
+    queryFn: () => fetchProtectedResource<CristinPerson>(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
   const person = existingPersonObject ?? personQuery.data;
@@ -84,9 +68,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     }
   });
 
-  const personCristinIdentifier = getValueByKey('CristinIdentifier', person?.identifiers);
-  const username =
-    personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
+  const username = getUsername(person, topOrgCristinId);
 
   const institutionUserQuery = useQuery({
     enabled: open && !existingUser && !!username,
@@ -122,7 +104,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         return await createUser({
           customerId,
           roles: user.roles,
-          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', person?.identifiers),
+          cristinIdentifier: getValueByKey('CristinIdentifier', person?.identifiers),
           viewingScope: user.viewingScope,
         });
       }
@@ -170,7 +152,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => (
           <Form noValidate>
             <DialogContent sx={{ minHeight: '30vh' }}>
-              {(!values.person && personQuery.isLoading) || (!values.user && institutionUserQuery.isLoading) ? (
+              {(!values.person && personQuery.isPending) || (!values.user && institutionUserQuery.isPending) ? (
                 <PageSpinner aria-labelledby="edit-user-heading" />
               ) : !values.person ? (
                 <Typography>{t('feedback.error.get_person')}</Typography>

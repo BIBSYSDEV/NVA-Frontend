@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getRegistrationDate } from '../../../utils/date-helpers';
 
 export const DatePickerField = () => {
   const { t } = useTranslation();
@@ -17,22 +18,10 @@ export const DatePickerField = () => {
     setFieldTouched,
   } = useFormikContext<Registration>();
 
-  const dateData = entityDescription?.publicationDate ?? { year: '', month: '', day: '' };
+  const dateData = entityDescription?.publicationDate;
 
-  const { year, month, day } = dateData;
-
-  const yearInt = parseInt(year);
-  const monthInt = parseInt(month);
-  const dayInt = parseInt(day);
-
-  const [date, setDate] = useState<Date | null>(
-    !isNaN(yearInt)
-      ? !isNaN(monthInt)
-        ? new Date(yearInt, monthInt - 1, !isNaN(dayInt) ? dayInt : 1, 12, 0, 0)
-        : new Date(yearInt, 0, 1, 12, 0, 0)
-      : null
-  );
-  const [yearOnly, setYearOnly] = useState(!!year && !month);
+  const [date, setDate] = useState(getRegistrationDate(dateData));
+  const [yearOnly, setYearOnly] = useState(!!dateData?.year && !dateData?.month);
 
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
     const updatedDate: RegistrationDate = {
@@ -63,7 +52,6 @@ export const DatePickerField = () => {
           updateDateValues(newDate, yearOnly);
           setDate(newDate);
         }}
-        format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
         views={yearOnly ? ['year'] : ['year', 'month', 'day']}
         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
         slotProps={{
@@ -78,7 +66,7 @@ export const DatePickerField = () => {
         }}
       />
       <FormControlLabel
-        sx={{ alignSelf: 'start', mt: '0.4rem' }} // Center field regardless of error state of published date field
+        sx={{ alignSelf: 'start', mt: '0.4rem', width: 'fit-content' }} // Center field regardless of error state of published date field
         control={
           <Checkbox
             checked={yearOnly}

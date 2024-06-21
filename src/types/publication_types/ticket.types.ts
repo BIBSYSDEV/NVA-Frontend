@@ -41,6 +41,8 @@ export interface Ticket extends BaseTicket {
   owner: string;
   viewedBy: string[];
   messages: Message[];
+  finalizedBy?: string;
+  finalizedDate?: string;
 }
 
 export interface ExpandedTicket extends BaseTicket {
@@ -59,8 +61,8 @@ type TicketPublication = Pick<
   };
 
 export interface PublishingTicket extends Ticket {
-  approvedFiles: AssociatedFile[];
-  filesForApproval: AssociatedFile[];
+  approvedFiles: string[];
+  filesForApproval: string[];
   workflow: PublishStrategy;
 }
 

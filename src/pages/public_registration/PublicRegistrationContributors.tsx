@@ -10,7 +10,11 @@ import { Contributor } from '../../types/contributor.types';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
-import { contributorConfig, groupContributors } from '../../utils/registration-helpers';
+import {
+  contributorConfig,
+  getContributorsWithPrimaryRole,
+  getContributorsWithSecondaryRole,
+} from '../../utils/registration-helpers';
 import { getResearchProfilePath } from '../../utils/urlPaths';
 
 interface PublicRegistrationContributorsProps {
@@ -23,7 +27,8 @@ export const PublicRegistrationContributors = ({
   registrationType,
 }: PublicRegistrationContributorsProps) => {
   const { t } = useTranslation();
-  const { primaryContributors, secondaryContributors } = groupContributors(contributors, registrationType);
+  const primaryContributors = getContributorsWithPrimaryRole(contributors, registrationType);
+  const secondaryContributors = getContributorsWithSecondaryRole(contributors, registrationType);
 
   const [showAll, setShowAll] = useState(primaryContributors.length === 0);
   const toggleShowAll = () => setShowAll(!showAll);

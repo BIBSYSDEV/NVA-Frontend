@@ -1,10 +1,8 @@
-import { Autocomplete, Avatar, Box, Typography } from '@mui/material';
+import { Autocomplete, Avatar, Box, SxProps, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { fetchUsers } from '../api/roleApi';
-import { TicketSearchParam } from '../api/searchApi';
+import { fetchUsersByCustomer } from '../api/roleApi';
 import { RootState } from '../redux/store';
 import { InstitutionUser, RoleName } from '../types/user.types';
 import { dataTestId } from '../utils/dataTestIds';
@@ -14,20 +12,20 @@ import { AutocompleteTextField } from './AutocompleteTextField';
 
 interface CuratorSelectorProps {
   roleFilter: RoleName[];
+  selectedUsername: string | null;
+  onChange: (curator: InstitutionUser | null) => void;
+  sx?: SxProps;
 }
 
-export const CuratorSelector = ({ roleFilter }: CuratorSelectorProps) => {
+export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, sx }: CuratorSelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
 
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
-
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId, roleFilter],
     enabled: !!customerId,
-    queryFn: () => fetchUsers(customerId, roleFilter),
+    queryFn: () => fetchUsersByCustomer(customerId, roleFilter),
     meta: { errorMessage: t('feedback.error.get_curators_for_institution') },
   });
 
@@ -35,35 +33,26 @@ export const CuratorSelector = ({ roleFilter }: CuratorSelectorProps) => {
   const curatorOptions = (curatorsQuery.data ?? []).sort((a, b) =>
     a.username === user?.nvaUsername ? -1 : b.username === user?.nvaUsername ? 1 : 0
   );
-
   const selectedCurator =
-    curatorOptions.find((curator) => curator.username === searchParams.get(TicketSearchParam.Assignee)) ?? null;
+    (selectedUsername && curatorOptions.find((curator) => curator.username === selectedUsername)) || null;
 
-  const CuratorAvatar = (curator: InstitutionUser | null) => {
-    return (
-      <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: 'inherit', bgcolor: 'primary.main' }}>
-        {getInitials(getFullName(curator?.givenName, curator?.familyName))}
-      </Avatar>
-    );
-  };
+  const CuratorAvatar = (curator: InstitutionUser | null) => (
+    <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: 'inherit', bgcolor: 'primary.main' }}>
+      {getInitials(getFullName(curator?.givenName, curator?.familyName))}
+    </Avatar>
+  );
 
   return (
     <Autocomplete
+      sx={sx}
       options={curatorOptions}
       value={selectedCurator}
       autoHighlight
-      disabled={curatorsQuery.isLoading}
-      loading={curatorsQuery.isLoading}
+      disabled={curatorsQuery.isPending}
+      loading={curatorsQuery.isPending}
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
       isOptionEqualToValue={(option, value) => option.username === value?.username}
-      onChange={(_, value) => {
-        if (value) {
-          searchParams.set(TicketSearchParam.Assignee, value.username);
-        } else {
-          searchParams.delete(TicketSearchParam.Assignee);
-        }
-        history.push({ search: searchParams.toString() });
-      }}
+      onChange={(_, value) => onChange(value)}
       renderOption={(props, curator) => (
         <li {...props} key={curator.username}>
           <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
@@ -79,7 +68,7 @@ export const CuratorSelector = ({ roleFilter }: CuratorSelectorProps) => {
           variant="outlined"
           size="small"
           label={t('my_page.roles.curator')}
-          isLoading={curatorsQuery.isLoading}
+          isLoading={curatorsQuery.isPending}
           placeholder={t('common.search')}
           InputProps={{
             ...params.InputProps,

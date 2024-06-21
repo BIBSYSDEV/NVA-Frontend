@@ -3,9 +3,10 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
+import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { DialoguesWithoutCuratorButton } from '../../../components/DialoguesWithoutCuratorButton';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -18,6 +19,7 @@ import { CustomerTicketSearchResponse } from '../../../types/publication_types/t
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
@@ -31,8 +33,8 @@ interface TicketListProps {
 
 export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
+  const history = useHistory();
+  const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
 
@@ -46,6 +48,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
     <SortSelector
       orderKey={TicketSearchParam.OrderBy}
       sortKey={TicketSearchParam.SortOrder}
+      paginationKey={TicketSearchParam.From}
       aria-label={t('search.sort_by')}
       size="small"
       variant="standard"
@@ -56,19 +59,22 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
     />
   );
 
+  const searchParams = new URLSearchParams(history.location.search);
+
   return (
     <section>
       <Helmet>
         <title>{title}</title>
       </Helmet>
 
-      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
+      <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
         <Grid item xs={16} md={5} lg={4}>
           <TicketStatusFilter />
         </Grid>
         <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
+
         {isOnTasksPage && (
           <>
             <Grid item xs={16} md={5} lg={4}>
@@ -76,17 +82,41 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             </Grid>
             <Grid item xs={16} md={5} lg={4}>
               <CuratorSelector
+                selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
+                onChange={(curator) => {
+                  if (curator) {
+                    searchParams.set(TicketSearchParam.Assignee, curator.username);
+                  } else {
+                    searchParams.delete(TicketSearchParam.Assignee);
+                  }
+                  history.push({ search: searchParams.toString() });
+                }}
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />
             </Grid>
             <Grid item xs={16} md={6} lg={5}>
-              <AreaOfResponsibilitySelector />
+              <AreaOfResponsibilitySelector
+                paramName={TicketSearchParam.OrganizationId}
+                resetPagination={() => {
+                  if (page !== 1) {
+                    setPage(1);
+                  }
+                }}
+              />
             </Grid>
           </>
         )}
+
+        <Grid item xs={16} md={6} lg={5}>
+          <TicketDateIntervalFilter />
+        </Grid>
+
+        <Grid item>
+          <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
+        </Grid>
       </Grid>
 
-      {ticketsQuery.isLoading ? (
+      {ticketsQuery.isPending ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>

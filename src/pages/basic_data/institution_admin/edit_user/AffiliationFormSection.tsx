@@ -14,7 +14,7 @@ import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
-import { UserFormData, UserFormFieldName } from './UserFormDialog';
+import { UserFormData, UserFormFieldName } from './userFormHelpers';
 
 export const AffiliationFormSection = () => {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const AffiliationFormSection = () => {
     queryFn: () => fetchPositions(true),
     meta: { errorMessage: t('feedback.error.get_positions') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const employmentBaseFieldName = `${UserFormFieldName.Employments}[${employmentIndex}]`;
@@ -55,7 +55,7 @@ export const AffiliationFormSection = () => {
           <Box display={{ display: 'flex', gap: '1rem' }}>
             <PositionField
               fieldName={`${employmentBaseFieldName}.type`}
-              disabled={isSubmitting || positionsQuery.isLoading}
+              disabled={isSubmitting || positionsQuery.isPending}
               includeDisabledPositions
             />
 
@@ -94,7 +94,6 @@ export const AffiliationFormSection = () => {
                   label={t('common.end_date')}
                   value={field.value ? new Date(field.value) : null}
                   onChange={(date: any) => setFieldValue(field.name, date ?? '')}
-                  format="dd.MM.yyyy"
                   views={['year', 'month', 'day']}
                   minDate={
                     employments[employmentIndex].startDate

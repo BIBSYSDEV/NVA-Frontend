@@ -1,8 +1,6 @@
 import { Uppy as UppyType } from '@uppy/core';
 import { CustomerRrsType } from './customerInstitution.types';
 
-export type AssociatedFileType = 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
-
 type FileRrsType =
   | 'NullRightsRetentionStrategy'
   | 'FunderRightsRetentionStrategy'
@@ -19,27 +17,38 @@ export enum FileVersion {
   Accepted = 'AcceptedVersion',
 }
 
+export enum FileType {
+  UnpublishedFile = 'UnpublishedFile',
+  UnpublishableFile = 'UnpublishableFile',
+  PublishedFile = 'PublishedFile',
+}
+
 export interface AssociatedFile {
-  type: AssociatedFileType;
+  type: FileType;
   identifier: string;
   name: string;
   size: number;
   mimeType?: string;
-  administrativeAgreement: boolean;
   publisherVersion: FileVersion | null;
   embargoDate: Date | null;
   license: string | null;
   legalNote?: string;
   rightsRetentionStrategy: FileRrs;
+  uploadDetails?: UploadDetails;
+}
+
+interface UploadDetails {
+  type: 'UploadDetails';
+  uploadedBy: string;
+  uploadedDate: string;
 }
 
 export const emptyFile: AssociatedFile = {
-  type: 'UnpublishedFile',
+  type: FileType.UnpublishedFile,
   identifier: '',
   name: '',
   size: 0,
   mimeType: '',
-  administrativeAgreement: false,
   publisherVersion: null,
   embargoDate: null,
   license: '',

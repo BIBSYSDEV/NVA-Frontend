@@ -133,7 +133,6 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    format="dd.MM.yyyy"
                     slotProps={{
                       textField: {
                         inputProps: {

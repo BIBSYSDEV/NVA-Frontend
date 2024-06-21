@@ -2,10 +2,9 @@ import { Box, Button, DialogActions, DialogContent, Divider, Typography } from '
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
-import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { NfrProject, SaveCristinProject, emptyProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -19,7 +18,6 @@ interface CreateProjectStartPageProps {
 
 export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProjectStartPageProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
 
@@ -27,9 +25,9 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
     enabled: !!topOrgCristinId,
     queryKey: [topOrgCristinId],
     queryFn: () => fetchOrganization(topOrgCristinId),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_institution'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
+    gcTime: 1_800_000, // 30 minutes
   });
 
   const [selectedNfrProject, setSelectedNfrProject] = useState<NfrProject | null>(null);
@@ -90,7 +88,7 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
         <Button
           data-testid={dataTestId.registrationWizard.description.projectForm.startCreateProjectButton}
           variant="contained"
-          disabled={currentInstitutionQuery.isLoading || (!emptyProjectSelected && !selectedNfrProject)}
+          disabled={currentInstitutionQuery.isPending || (!emptyProjectSelected && !selectedNfrProject)}
           onClick={() => {
             const coordinatingInstitution = currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution;
             if (emptyProjectSelected) {

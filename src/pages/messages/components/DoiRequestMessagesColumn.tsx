@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ExpandedTicket, Ticket } from '../../../types/publication_types/ticket.types';
+import { toDateString } from '../../../utils/date-helpers';
 import { StyledMessagesContainer, StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 
 interface DoiRequestMessagesColumnProps {
@@ -23,7 +24,7 @@ export const DoiRequestMessagesColumn = ({ ticket }: DoiRequestMessagesColumnPro
           ) : ticket.status === 'Closed' ? (
             <Typography>{t('my_page.messages.doi_closed')}</Typography>
           ) : null}
-          {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
+          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
         </StyledStatusMessageBox>
       )}
     </StyledMessagesContainer>

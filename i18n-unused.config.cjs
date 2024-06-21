@@ -2,10 +2,11 @@ module.exports = {
   localesPath: 'src/translations',
   localeNameResolver: (fileName) => fileName === 'nbTranslations.json',
   srcPath: 'src',
-  translationKeyMatcher: /t\([`"'].*[`"'][\),]|(i18nKey(: )[`"'].*?[`"'])|(i18nKey=[`"'].*?[`"'])/g,
+  translationKeyMatcher: /t\([`"'].*[`"'][),]|(i18nKey(: )[`"'].*?[`"'])|(i18nKey=[`"'].*?[`"'])/g,
   excludeKey: [
     '_one',
     '_other',
+    'basic_data.central_import.collaboration_type.',
     'disciplines.',
     'editor.curators.role.',
     'licenses.labels.',
@@ -34,5 +35,5 @@ module.exports = {
     'registration.status.',
     'tasks.nvi.status.',
   ],
-  translationContextSeparator: null,
+  translationContextSeparator: '__',
 };

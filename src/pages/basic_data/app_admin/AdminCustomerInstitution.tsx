@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchUsers } from '../../../api/roleApi';
+import { fetchUsersByCustomer } from '../../../api/roleApi';
 import { PageHeader } from '../../../components/PageHeader';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { CustomerInstitution } from '../../../types/customerInstitution.types';
@@ -24,7 +24,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
   const adminsQuery = useQuery({
     queryKey: ['institutionAdmins', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsers(customerId, RoleName.InstitutionAdmin) : undefined),
+    queryFn: () => (customerId ? fetchUsersByCustomer(customerId, RoleName.InstitutionAdmin) : undefined),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
@@ -36,7 +36,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
         {editMode ? t('basic_data.institutions.edit_institution') : t('basic_data.institutions.add_institution')}
       </PageHeader>
 
-      {isLoadingCustomerInstitution || adminsQuery.isLoading ? (
+      {isLoadingCustomerInstitution || adminsQuery.isPending ? (
         <PageSpinner aria-labelledby="admin-institution-label" />
       ) : (
         <>

@@ -16,7 +16,7 @@ import {
   FlatCristinPerson,
   RoleName,
   emptyEmployment,
-  emptyNviVerification,
+  emptyPerson,
 } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
@@ -33,21 +33,8 @@ export interface AddEmployeeData {
   viewingScopes: string[];
 }
 
-export const emptyUser: FlatCristinPerson = {
-  nationalId: '',
-  firstName: '',
-  lastName: '',
-  id: '',
-  cristinIdentifier: '',
-  affiliations: [],
-  employments: [],
-  background: {},
-  keywords: [],
-  nvi: emptyNviVerification,
-};
-
 const initialValues: AddEmployeeData = {
-  person: emptyUser,
+  person: emptyPerson,
   affiliation: emptyEmployment,
   roles: [RoleName.Creator],
   viewingScopes: [],
@@ -101,7 +88,7 @@ export const AddEmployeePage = () => {
     if (personId && nationalId) {
       // Create NVA User with roles
       const createUserResponse = await createUser({
-        nationalIdentityNumber: nationalId,
+        cristinIdentifier: values.person.cristinIdentifier,
         customerId,
         roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
         viewingScope: {

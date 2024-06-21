@@ -29,6 +29,7 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
     <SortSelector
       orderKey="orderBy"
       sortKey="sort"
+      paginationKey="page"
       aria-label={t('search.sort_by')}
       size="small"
       variant="standard"
@@ -49,7 +50,7 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {personQuery.isLoading ? (
+      {personQuery.isPending ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.length > 0 ? (
         <div>
