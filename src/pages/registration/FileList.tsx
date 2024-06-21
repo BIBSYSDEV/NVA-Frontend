@@ -70,6 +70,12 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
     return true;
   }
 
+  const tableCellStyling = {
+    pt: '0.75rem',
+    pb: '0.25rem',
+    lineHeight: '1.1rem',
+  };
+
   return (
     <Box
       sx={{
@@ -77,17 +83,19 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
         flexDirection: 'column',
         gap: '1rem',
       }}>
-      <Typography variant="h3">{title}</Typography>
+      <Typography component="h3" variant="h4">
+        {title}
+      </Typography>
       <TableContainer component={Paper} elevation={3} sx={{ mb: '2rem', width: '100%' }}>
         <Table>
-          <TableHead>
+          <TableHead sx={{ bgcolor: 'white' }}>
             <TableRow>
-              <TableCell>{t('common.name')}</TableCell>
-              <TableCell>{t('common.file')}</TableCell>
-              <TableCell>{t('registration.files_and_license.size')}</TableCell>
-              <TableCell id={markForPublishId}>{t('registration.files_and_license.mark_for_publish')}</TableCell>
+              <TableCell sx={tableCellStyling}>{t('common.name')}</TableCell>
+              <TableCell id={markForPublishId} sx={tableCellStyling}>
+                {t('registration.files_and_license.mark_for_publish')}
+              </TableCell>
               {showFileVersion && !archived && (
-                <TableCell>
+                <TableCell sx={tableCellStyling}>
                   <Box
                     sx={{
                       display: 'flex',
@@ -169,7 +177,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                 </TableCell>
               )}
               {!archived && (
-                <TableCell>
+                <TableCell sx={tableCellStyling}>
                   <Box
                     sx={{
                       display: 'flex',

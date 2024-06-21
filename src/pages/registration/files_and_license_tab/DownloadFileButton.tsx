@@ -1,4 +1,4 @@
-import AttachFileIcon from '@mui/icons-material/AttachFile';
+import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import { CircularProgress, IconButton, Tooltip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
@@ -41,8 +41,8 @@ export const DownloadFileButton = ({ file }: DownloadFileButtonProps) => {
     <CircularProgress size="1.5rem" />
   ) : (
     <Tooltip title={t('registration.files_and_license.open_file')}>
-      <IconButton size="small" onClick={() => setDownloadFile(true)}>
-        <AttachFileIcon color="primary" />
+      <IconButton size="small" style={{ height: '2rem' }} onClick={() => setDownloadFile(true)}>
+        <OpenInNewOutlinedIcon color="primary" />
       </IconButton>
     </Tooltip>
   );

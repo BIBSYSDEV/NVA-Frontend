@@ -1,5 +1,5 @@
-import CancelIcon from '@mui/icons-material/Cancel';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
@@ -40,6 +40,7 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
+import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
 export const markForPublishId = 'mark-for-publish';
@@ -102,40 +103,36 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         data-testid={dataTestId.registrationWizard.files.fileRow}
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
         sx={{ bgcolor: disabled ? 'grey.400' : '', td: !isArchived ? { pb: 0, borderBottom: 'unset' } : '' }}>
-        <TableCell sx={{ minWidth: '13rem', maxWidth: isArchived ? '20rem' : '' }}>
-          <TruncatableTypography>{file.name}</TruncatableTypography>
-        </TableCell>
-
-        <TableCell>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <DownloadFileButton file={file} />
-
-            {!disabled && (
-              <>
-                <Tooltip title={t('registration.files_and_license.remove_file')}>
-                  <IconButton size="small" onClick={toggleOpenConfirmDialog}>
-                    <CancelIcon color="primary" />
-                  </IconButton>
-                </Tooltip>
-                <ConfirmDialog
-                  open={openConfirmDialog}
-                  title={t('registration.files_and_license.remove_file')}
-                  onAccept={() => {
-                    removeFile();
-                    toggleOpenConfirmDialog();
-                  }}
-                  onCancel={toggleOpenConfirmDialog}>
-                  <Typography>
-                    {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
-                  </Typography>
-                </ConfirmDialog>
-              </>
-            )}
+        <TableCell sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem' }}>
+          <InsertDriveFileOutlinedIcon />
+          <Box
+            sx={{
+              paddingBottom: '1rem',
+            }}>
+            <TruncatableTypography sx={{ fontWeight: 'bold' }}>{file.name}</TruncatableTypography>
+            <Typography>{prettyBytes(file.size)}</Typography>
           </Box>
+          <DownloadFileButton file={file} />
+          <DeleteIconButton
+            data-testid={dataTestId.registrationWizard.files.deleteFile}
+            onClick={disabled ? undefined : toggleOpenConfirmDialog}
+            tooltip={t('registration.files_and_license.remove_file')}
+            disabled={disabled}
+            sx={{ mt: '0.25rem' }}
+          />
+          <ConfirmDialog
+            open={openConfirmDialog}
+            title={t('registration.files_and_license.remove_file')}
+            onAccept={() => {
+              removeFile();
+              toggleOpenConfirmDialog();
+            }}
+            onCancel={toggleOpenConfirmDialog}>
+            <Typography>
+              {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
+            </Typography>
+          </ConfirmDialog>
         </TableCell>
-
-        <TableCell sx={{ minWidth: isArchived ? '5.5rem' : '' }}>{prettyBytes(file.size)}</TableCell>
-
         <TableCell>
           <Field name={fileTypeFieldName}>
             {({ field }: FieldProps) => (
