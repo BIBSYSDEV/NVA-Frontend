@@ -190,12 +190,20 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                     <FormControlLabel
                       value={FileVersion.Accepted}
                       control={<Radio />}
-                      label={t('registration.files_and_license.accepted_version')}
+                      label={
+                        <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
+                          {t('registration.files_and_license.accepted_version')}
+                        </Typography>
+                      }
                     />
                     <FormControlLabel
                       value={FileVersion.Published}
                       control={<Radio />}
-                      label={t('registration.files_and_license.published_version')}
+                      label={
+                        <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
+                          {t('registration.files_and_license.published_version')}
+                        </Typography>
+                      }
                     />
                   </RadioGroup>
                   {error && touched && <FormHelperText error>{error}</FormHelperText>}
