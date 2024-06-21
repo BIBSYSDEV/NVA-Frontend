@@ -15,18 +15,18 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { AssociatedFile, FileType, Uppy } from '../../types/associatedArtifact.types';
-import { licenses, LicenseUri } from '../../types/license.types';
+import { LicenseUri, licenses } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,
-  isDegreeWithProtectedFiles,
+  isDegree,
   isEmbargoed,
   isTypeWithFileVersionField,
   userCanUnpublishRegistration,
 } from '../../utils/registration-helpers';
-import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
+import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
 
 interface FileListProps {
   title: string;
@@ -46,7 +46,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
   const customer = useSelector((store: RootState) => store.customer);
 
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
-  const isProtectedDegree = isDegreeWithProtectedFiles(publicationInstanceType);
+  const isProtectedDegree = isDegree(publicationInstanceType);
   const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
   const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
 
