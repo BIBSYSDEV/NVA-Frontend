@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../api/cristinApi';
 import { Avatar } from '../../components/Avatar';
-import { AssociatedFile } from '../../types/associatedArtifact.types';
+import { AssociatedFile, FileType } from '../../types/associatedArtifact.types';
 import { PublishingTicket, Ticket, TicketType } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
 import { toDateString } from '../../utils/date-helpers';
@@ -35,7 +35,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
 
   const registrationFiles = getAssociatedFiles(registration.associatedArtifacts);
   const numberOfArchivedFilesOnRegistration = registrationFiles.filter(
-    (file) => file.type === 'UnpublishableFile'
+    (file) => file.type === FileType.UnpublishableFile
   ).length;
 
   const organizationQuery = useQuery({
@@ -54,20 +54,10 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
 
   const logs: LogItem[] = [];
 
-  if (isImported) {
-    registration.importDetails?.forEach((importDetail) => {
-      const registrationImported: LogItem = {
-        modifiedDate: importDetail.importDate,
-        title: t('common.imported_from', { source: importDetail.source }),
-        description: organizationAcronym,
-        type: 'PublishingRequest',
-      };
-      logs.push(registrationImported);
-    });
-  } else {
+  if (registration.createdDate) {
     const registrationCreated: LogItem = {
       modifiedDate: registration.createdDate,
-      title: t('common.created'),
+      title: t('my_page.messages.created_in_nva'),
       description: organizationAcronym,
       type: 'PublishingRequest',
       actionBy: [resourceOwnerId],
@@ -75,10 +65,29 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
     logs.push(registrationCreated);
   }
 
-  if (registration.publishedDate) {
+  if (isImported) {
+    registration.importDetails?.forEach((importDetail) => {
+      const registrationImported: LogItem = {
+        modifiedDate: importDetail.importDate,
+        title: importDetail.importSource.archive
+          ? t('my_page.messages.imported_from_source_and_archive', {
+              source: importDetail.importSource.source,
+              archive: importDetail.importSource.archive,
+            })
+          : t('my_page.messages.imported_from_source', {
+              source: importDetail.importSource.source,
+            }),
+        description: organizationAcronym,
+        type: 'PublishingRequest',
+      };
+      logs.push(registrationImported);
+    });
+  }
+
+  if (registration.publishedDate && registration.publishedDate >= registration.createdDate) {
     const registrationPublished: LogItem = {
       modifiedDate: registration.publishedDate,
-      title: t('registration.status.PUBLISHED_METADATA'),
+      title: t('my_page.messages.metadata_published_in_nva'),
       type: 'PublishingRequest',
     };
     logs.push(registrationPublished);
@@ -241,7 +250,7 @@ interface TicketFilesInfo {
 
 function getTicketFilesInfo(ticket: PublishingTicket, registrationFiles: AssociatedFile[]): TicketFilesInfo {
   const publishedFilesOnTicket = registrationFiles.filter(
-    (file) => file.type === 'PublishedFile' && ticket.approvedFiles.includes(file.identifier)
+    (file) => file.type === FileType.PublishedFile && ticket.approvedFiles.includes(file.identifier)
   );
 
   const filesForApprovalOnTicket = registrationFiles.filter((file) =>
@@ -249,7 +258,7 @@ function getTicketFilesInfo(ticket: PublishingTicket, registrationFiles: Associa
   );
 
   const unpublishedFilesOnTicket = registrationFiles.filter(
-    (file) => file.type === 'UnpublishableFile' && ticket.approvedFiles.includes(file.identifier)
+    (file) => file.type === FileType.UnpublishableFile && ticket.approvedFiles.includes(file.identifier)
   );
 
   const deletedFilesOnTicket = ticket.approvedFiles.filter(

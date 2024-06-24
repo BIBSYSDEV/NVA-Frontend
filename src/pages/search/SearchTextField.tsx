@@ -2,20 +2,21 @@ import ClearIcon from '@mui/icons-material/Clear';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, OutlinedTextFieldProps, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { dataTestId } from '../../utils/dataTestIds';
+import { dataTestId as dataTestIdFile } from '../../utils/dataTestIds';
 
 interface SearchTextFieldProps extends Omit<OutlinedTextFieldProps, 'variant'> {
   clearValue?: () => void;
+  dataTestId?: string;
 }
 
-export const SearchTextField = ({ clearValue, ...props }: SearchTextFieldProps) => {
+export const SearchTextField = ({ clearValue, dataTestId, ...props }: SearchTextFieldProps) => {
   const { t } = useTranslation();
   return (
     <>
       <TextField
         {...props}
         type="search"
-        data-testid={dataTestId.startPage.searchField}
+        data-testid={dataTestId ?? dataTestIdFile.startPage.searchField}
         fullWidth
         variant="outlined"
         size="small"

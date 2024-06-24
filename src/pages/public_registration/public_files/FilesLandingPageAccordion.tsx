@@ -3,9 +3,11 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../../../components/PageWithSideMenu';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
+import { FileType } from '../../../types/associatedArtifact.types';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
+  associatedArtifactIsNullArtifact,
   getAssociatedFiles,
   isTypeWithFileVersionField,
   userCanEditRegistration,
@@ -22,8 +24,8 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const userIsRegistrationAdmin = userCanEditRegistration(registration);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const publishedFiles = associatedFiles.filter((file) => file.type === 'PublishedFile');
-  const unpublishedFiles = associatedFiles.filter((file) => file.type === 'UnpublishedFile');
+  const publishedFiles = associatedFiles.filter((file) => file.type === FileType.PublishedFile);
+  const unpublishedFiles = associatedFiles.filter((file) => file.type === FileType.UnpublishedFile);
   const publishableFilesLength = publishedFiles.length + unpublishedFiles.length;
 
   const filesToShow = userIsRegistrationAdmin ? [...publishedFiles, ...unpublishedFiles] : publishedFiles;
@@ -35,6 +37,11 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const registrationMetadataIsPublished =
     registration.status === RegistrationStatus.Published ||
     registration.status === RegistrationStatus.PublishedMetadata;
+
+  const showLinkToUploadNewFiles =
+    userIsRegistrationAdmin &&
+    publishableFilesLength === 0 &&
+    !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
   return publishableFilesLength > 0 ||
     (userIsRegistrationAdmin && associatedFiles.length > 0) ||
@@ -61,7 +68,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           )}
         </Box>
       }>
-      {registration.associatedArtifacts.length === 0 && (
+      {showLinkToUploadNewFiles && (
         <Box
           sx={{
             display: 'flex',

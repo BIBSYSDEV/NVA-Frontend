@@ -1,4 +1,4 @@
-import { FileVersion } from '../../types/associatedArtifact.types';
+import { FileType, FileVersion } from '../../types/associatedArtifact.types';
 import { ContributorRole } from '../../types/contributor.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { TicketCollection } from '../../types/publication_types/ticket.types';
@@ -24,12 +24,11 @@ export const mockRegistration: JournalRegistration = {
   publisher: { id: mockCustomerInstitution.id },
   associatedArtifacts: [
     {
-      type: 'UnpublishedFile',
+      type: FileType.UnpublishedFile,
       identifier: '3214324',
       name: 'filename.pdf',
       size: 10,
       mimeType: '',
-      administrativeAgreement: false,
       publisherVersion: FileVersion.Published,
       embargoDate: null,
       license: null,

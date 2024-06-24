@@ -83,7 +83,6 @@ export const DescriptionPanel = () => {
               variant="filled"
               fullWidth
               multiline
-              rows="4"
               label={t('registration.description.abstract')}
             />
           )}
@@ -99,7 +98,6 @@ export const DescriptionPanel = () => {
                   variant="filled"
                   fullWidth
                   multiline
-                  rows="4"
                   label={t('registration.description.alternative_abstract')}
                 />
               ) : null}
@@ -124,7 +122,6 @@ export const DescriptionPanel = () => {
             data-testid={dataTestId.registrationWizard.description.descriptionField}
             label={t('registration.description.description_of_content')}
             multiline
-            rows="4"
             fullWidth
             variant="filled"
           />
