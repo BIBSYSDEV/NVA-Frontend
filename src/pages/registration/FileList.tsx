@@ -2,6 +2,7 @@ import {
   Box,
   Link,
   Paper,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -27,6 +28,12 @@ import {
 } from '../../utils/registration-helpers';
 import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
+
+const StyledTableCell = styled(TableCell)({
+  pt: '0.75rem',
+  pb: '0.25rem',
+  lineHeight: '1.1rem',
+});
 
 interface FileListProps {
   title: string;
@@ -70,12 +77,6 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
     return true;
   }
 
-  const tableCellStyling = {
-    pt: '0.75rem',
-    pb: '0.25rem',
-    lineHeight: '1.1rem',
-  };
-
   return (
     <Box
       sx={{
@@ -90,12 +91,12 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
         <Table>
           <TableHead sx={{ bgcolor: 'white' }}>
             <TableRow>
-              <TableCell sx={tableCellStyling}>{t('common.name')}</TableCell>
-              <TableCell id={markForPublishId} sx={tableCellStyling}>
+              <StyledTableCell>{t('common.name')}</StyledTableCell>
+              <StyledTableCell id={markForPublishId}>
                 {t('registration.files_and_license.mark_for_publish')}
-              </TableCell>
+              </StyledTableCell>
               {showFileVersion && !archived && (
-                <TableCell sx={tableCellStyling}>
+                <StyledTableCell>
                   <Box
                     sx={{
                       display: 'flex',
@@ -174,10 +175,10 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                       )}
                     </HelperTextModal>
                   </Box>
-                </TableCell>
+                </StyledTableCell>
               )}
               {!archived && (
-                <TableCell sx={tableCellStyling}>
+                <StyledTableCell>
                   <Box
                     sx={{
                       display: 'flex',
@@ -213,7 +214,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                         ))}
                     </HelperTextModal>
                   </Box>
-                </TableCell>
+                </StyledTableCell>
               )}
               {!archived && <TableCell />}
             </TableRow>
