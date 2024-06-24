@@ -108,13 +108,15 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         }}>
         <TableCell sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem' }}>
           <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
-          <Box>
+          <Box sx={{ minWidth: '10rem', bgcolor: 'pink' }}>
             <TruncatableTypography sx={{ fontWeight: 'bold', color: disabled ? 'grey.600' : '' }}>
               {file.name}
             </TruncatableTypography>
             <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
           </Box>
-          <DownloadFileButton file={file} greyTones={disabled} />
+          <Box sx={{ minWidth: '1.5rem' }}>
+            <DownloadFileButton file={file} greyTones={disabled} />
+          </Box>
           <DeleteIconButton
             data-testid={dataTestId.registrationWizard.files.deleteFile}
             onClick={disabled ? undefined : toggleOpenConfirmDialog}
