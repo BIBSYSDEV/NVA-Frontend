@@ -58,7 +58,7 @@ export const FileRow = ({
         dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
       } else {
         if (previewFile) {
-          setPreviewFileUrl(downloadFileResponse.id);
+          setPreviewFileUrl(downloadFileResponse.shortenedVersion);
         } else {
           openFileInNewTab(downloadFileResponse.id);
         }
