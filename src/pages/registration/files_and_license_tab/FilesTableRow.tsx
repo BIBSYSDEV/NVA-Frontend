@@ -104,7 +104,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
         sx={{
           bgcolor: disabled ? 'grey.400' : '',
-          td: !isArchived ? { borderBottom: 'unset', verticalAlign: 'top' } : { verticalAlign: 'top' },
+          td: { verticalAlign: 'top', borderBottom: !isArchived ? 'unset' : '' },
         }}>
         <TableCell sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem' }}>
           <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
