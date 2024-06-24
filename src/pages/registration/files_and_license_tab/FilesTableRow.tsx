@@ -108,7 +108,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         }}>
         <TableCell sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem' }}>
           <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
-          <Box sx={{ minWidth: '10rem', bgcolor: 'pink' }}>
+          <Box sx={{ minWidth: '10rem' }}>
             <TruncatableTypography sx={{ fontWeight: 'bold', color: disabled ? 'grey.600' : '' }}>
               {file.name}
             </TruncatableTypography>
