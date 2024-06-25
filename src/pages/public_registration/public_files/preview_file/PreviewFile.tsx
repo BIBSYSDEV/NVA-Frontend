@@ -5,8 +5,13 @@ import { PreviewPdf } from './PreviewPdf';
 import { PreviewUnavailable } from './PreviewUnavailable';
 
 export interface CommonPreviewProps {
-  url: string;
+  url: DownloadUrl;
   altText?: string;
+}
+
+export interface DownloadUrl {
+  id: string;
+  shortenedVersion: string;
 }
 
 interface PreviewFileProps extends CommonPreviewProps {

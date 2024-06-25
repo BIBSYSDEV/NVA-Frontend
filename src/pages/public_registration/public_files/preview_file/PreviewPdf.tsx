@@ -12,7 +12,7 @@ export const PreviewPdf = ({ url, altText, ...props }: CommonPreviewProps) => {
       data-testid={dataTestId.registrationLandingPage.filePreview}
       component="object"
       type="application/pdf"
-      data={url}
+      data={url.id}
       {...props}
       title={altText}
       onLoad={() => setSuccessfullyLoadedPdf(true)}

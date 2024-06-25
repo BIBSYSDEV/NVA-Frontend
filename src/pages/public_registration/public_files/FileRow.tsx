@@ -46,7 +46,7 @@ export const FileRow = ({
   const user = useSelector((store: RootState) => store.user);
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
-  const [previewFileUrl, setPreviewFileUrl] = useState('');
+  const [previewFileUrl, setPreviewFileUrl] = useState<{ shortenedVersion: string; id: string } | null>(null);
 
   const handleDownload = useCallback(
     async (previewFile = false) => {
@@ -58,7 +58,7 @@ export const FileRow = ({
         dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
       } else {
         if (previewFile) {
-          setPreviewFileUrl(downloadFileResponse.shortenedVersion);
+          setPreviewFileUrl(downloadFileResponse);
         } else {
           openFileInNewTab(downloadFileResponse.id);
         }
