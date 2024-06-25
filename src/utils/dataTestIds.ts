@@ -360,6 +360,7 @@ export const dataTestId = {
     },
     files: {
       addFilesOrLinksButton: 'add-files-or-links-button',
+      deleteFile: 'delete-file-button',
       embargoDateField: 'embargo-date-field',
       expandFileRowButton: 'expand-file-row-button',
       fileRow: 'uploaded-file-row',
