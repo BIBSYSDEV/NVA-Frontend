@@ -64,7 +64,10 @@ export const SelectRegistrationTypeField = () => {
 
   const closeSelectType = () => setOpenSelectType(false);
 
+  console.log('values', values);
+
   const updateRegistrationData = (newInstanceType: PublicationInstanceType) => {
+    console.log('newInstanceType', newInstanceType);
     if (newInstanceType !== currentInstanceType) {
       const newContextType = getMainRegistrationType(newInstanceType);
       const oldContextType = values.entityDescription?.reference?.publicationContext?.type;
@@ -72,16 +75,22 @@ export const SelectRegistrationTypeField = () => {
 
       switch (newContextType) {
         case PublicationType.PublicationInJournal:
-          contextTypeIsChanged &&
+          if (contextTypeIsChanged) {
+            // If we move between category groups we reset all fields
             setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
-          setFieldValue(
-            instanceTypeBaseFieldName,
-            { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
-            false
-          );
+            setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
+          } else {
+            // If we move between different categories in the same group with the same fields, we keep the info in the fields
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
           break;
         case PublicationType.Book:
-          contextTypeIsChanged &&
+          if (contextTypeIsChanged) {
+            // If we move between category groups we reset all fields
             setFieldValue(
               contextTypeBaseFieldName,
               {
@@ -91,10 +100,19 @@ export const SelectRegistrationTypeField = () => {
               },
               false
             );
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
+            setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
+          } else {
+            // If we move between different categories in the same group with the same fields, we keep the info in the fields
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
           break;
         case PublicationType.Report:
-          contextTypeIsChanged &&
+          if (contextTypeIsChanged) {
+            // If we move between category groups we reset all fields
             setFieldValue(
               contextTypeBaseFieldName,
               {
@@ -104,7 +122,19 @@ export const SelectRegistrationTypeField = () => {
               },
               false
             );
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyReportPublicationInstance, type: newInstanceType }, false);
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...emptyReportPublicationInstance, type: newInstanceType },
+              false
+            );
+          } else {
+            // If we move between different categories in the same group with the same fields, we keep the info in the fields
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
           break;
         case PublicationType.Degree:
           contextTypeIsChanged &&
@@ -121,20 +151,41 @@ export const SelectRegistrationTypeField = () => {
           setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
           break;
         case PublicationType.Anthology:
-          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Anthology }, false);
-          setFieldValue(
-            instanceTypeBaseFieldName,
-            { ...emptyChapterPublicationInstance, type: newInstanceType },
-            false
-          );
+          if (contextTypeIsChanged) {
+            // If we move between category groups we reset all fields
+            setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Anthology }, false);
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...emptyChapterPublicationInstance, type: newInstanceType },
+              false
+            );
+          } else {
+            // If we move between different categories in the same group with the same fields, we keep the info in the fields
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
           break;
         case PublicationType.Presentation:
-          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
-          setFieldValue(
-            instanceTypeBaseFieldName,
-            { ...emptyPresentationPublicationInstance, type: newInstanceType },
-            false
-          );
+          if (contextTypeIsChanged) {
+            // If we move between category groups we reset all fields
+            setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...emptyPresentationPublicationInstance, type: newInstanceType },
+              false
+            );
+          } else {
+            setFieldValue(
+              // If we move between different categories in the same group with the same fields, we keep the info in the fields
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
+
           break;
         case PublicationType.Artistic:
           contextTypeIsChanged &&
@@ -147,8 +198,8 @@ export const SelectRegistrationTypeField = () => {
           break;
         case PublicationType.MediaContribution:
           if (isPeriodicalMediaContribution(newInstanceType)) {
-            setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
             if (!isPeriodicalMediaContribution(currentInstanceType)) {
+              setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
               setFieldValue(
                 instanceTypeBaseFieldName,
                 {
