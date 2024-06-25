@@ -67,7 +67,7 @@ export const SelectRegistrationTypeField = () => {
   const updateRegistrationData = (newInstanceType: PublicationInstanceType) => {
     if (newInstanceType !== currentInstanceType) {
       const newContextType = getMainRegistrationType(newInstanceType);
-      const oldContextType = getMainRegistrationType(currentInstanceType);
+      const oldContextType = values.entityDescription?.reference?.publicationContext?.type;
       const contextTypeIsChanged = newContextType !== oldContextType;
 
       switch (newContextType) {
