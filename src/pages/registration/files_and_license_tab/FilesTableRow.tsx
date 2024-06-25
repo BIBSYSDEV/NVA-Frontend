@@ -325,7 +325,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             <Collapse in={openCollapsable}>
               <Box
                 sx={{
-                  m: '1rem 1rem 0 1rem',
+                  m: '1rem',
                   display: 'grid',
                   gridTemplateColumns: '1fr auto',
                   gap: '2rem',
