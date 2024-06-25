@@ -64,10 +64,7 @@ export const SelectRegistrationTypeField = () => {
 
   const closeSelectType = () => setOpenSelectType(false);
 
-  console.log('values', values);
-
   const updateRegistrationData = (newInstanceType: PublicationInstanceType) => {
-    console.log('newInstanceType', newInstanceType);
     if (newInstanceType !== currentInstanceType) {
       const newContextType = getMainRegistrationType(newInstanceType);
       const oldContextType = values.entityDescription?.reference?.publicationContext?.type;
