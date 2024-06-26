@@ -91,7 +91,9 @@ export const DescriptionPanel = () => {
                 <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
                   {registrationWithSameName.entityDescription!.mainTitle}
                 </Typography>
-                <OpenInNewOutlinedIcon sx={{ cursor: 'pointer' }} />
+                <OpenInNewOutlinedIcon
+                  sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }}
+                />
               </Box>
             </Link>
           </Box>
