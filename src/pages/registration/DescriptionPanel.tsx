@@ -83,6 +83,7 @@ export const DescriptionPanel = () => {
             <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
             <Link
               target="_blank"
+              data-testid={dataTestId.registrationLandingPage.duplicateRegistrationSearchLink}
               to={{
                 pathname: UrlPathTemplate.Home,
                 search: `?query=${encodeURIComponent(registrationWithSameName.entityDescription!.mainTitle)}`,
