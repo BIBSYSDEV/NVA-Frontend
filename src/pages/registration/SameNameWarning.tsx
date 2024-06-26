@@ -7,9 +7,10 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface SameNameWarningProps {
   name: string;
+  id: string;
 }
 
-export const SameNameWarning = ({ name }: SameNameWarningProps) => {
+export const SameNameWarning = ({ name, id }: SameNameWarningProps) => {
   const { t } = useTranslation();
   return (
     <Box
@@ -28,10 +29,7 @@ export const SameNameWarning = ({ name }: SameNameWarningProps) => {
       <Link
         target="_blank"
         data-testid={dataTestId.registrationLandingPage.duplicateRegistrationSearchLink}
-        to={{
-          pathname: UrlPathTemplate.Home,
-          search: `?query=${encodeURIComponent(name)}`,
-        }}>
+        to={`${UrlPathTemplate.RegistrationNew}/${id}`}>
         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
           <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>{name}</Typography>
           <OpenInNewOutlinedIcon sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }} />
