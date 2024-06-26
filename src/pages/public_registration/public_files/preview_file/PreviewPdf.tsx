@@ -4,7 +4,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { CommonPreviewProps } from './PreviewFile';
 import { PreviewUnavailable } from './PreviewUnavailable';
 
-const browserDoesNotSupportingOnLoad = (): boolean => {
+const browserDoesNotSupportOnLoad = (): boolean => {
   return isSafariBrowser();
 };
 
@@ -13,7 +13,7 @@ const isSafariBrowser = (): boolean => {
 };
 
 export const PreviewPdf = ({ url, altText, ...props }: CommonPreviewProps) => {
-  const [successfullyLoadedPdf, setSuccessfullyLoadedPdf] = useState(browserDoesNotSupportingOnLoad());
+  const [successfullyLoadedPdf, setSuccessfullyLoadedPdf] = useState(browserDoesNotSupportOnLoad());
 
   return (
     <Box
