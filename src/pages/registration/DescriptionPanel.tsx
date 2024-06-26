@@ -1,12 +1,10 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ErrorIcon from '@mui/icons-material/Error';
-import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import { Autocomplete, Box, Button, CircularProgress, Divider, MenuItem, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, CircularProgress, Divider, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { useDuplicateTitleSearch } from '../../api/hooks/useDuplicateTitleSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
@@ -14,11 +12,11 @@ import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { registrationLanguageOptions } from '../../utils/registration-helpers';
-import { UrlPathTemplate } from '../../utils/urlPaths';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
+import { SameNameWarning } from './SameNameWarning';
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
@@ -67,39 +65,8 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        {registrationWithSameName && (
-          <Box
-            sx={{
-              bgcolor: 'secondary.light',
-              width: '100%',
-              padding: '0.75rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.5rem',
-            }}>
-            <Box sx={{ bgcolor: 'primary.light', color: 'white', p: '0.5rem', borderRadius: '0.25rem' }}>
-              {t('registration.description.duplicate_title_warning')}
-            </Box>
-            <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
-            <Link
-              target="_blank"
-              data-testid={dataTestId.registrationLandingPage.duplicateRegistrationSearchLink}
-              to={{
-                pathname: UrlPathTemplate.Home,
-                search: registrationWithSameName.entityDescription?.mainTitle
-                  ? `?query=${encodeURIComponent(registrationWithSameName.entityDescription.mainTitle)}`
-                  : '',
-              }}>
-              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
-                  {registrationWithSameName.entityDescription?.mainTitle}
-                </Typography>
-                <OpenInNewOutlinedIcon
-                  sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }}
-                />
-              </Box>
-            </Link>
-          </Box>
+        {registrationWithSameName && registrationWithSameName.entityDescription?.mainTitle && (
+          <SameNameWarning name={registrationWithSameName.entityDescription?.mainTitle} />
         )}
         <Field name={DescriptionFieldNames.AlternativeTitles}>
           {({ field }: FieldProps<string>) => (
