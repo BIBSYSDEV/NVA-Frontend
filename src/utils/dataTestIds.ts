@@ -263,6 +263,7 @@ export const dataTestId = {
       createDoiButton: 'button-create-doi',
       deleteMessageButton: 'delete-message-button',
       doiRequestAccordion: 'doi-request-accordion',
+      duplicateRegistrationLink: 'duplicate-registration-link',
       messageOptionsButton: 'message-options-button',
       messageSender: 'message-author',
       messageText: 'message-text',

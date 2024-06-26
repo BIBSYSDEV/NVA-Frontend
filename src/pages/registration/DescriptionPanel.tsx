@@ -23,12 +23,7 @@ export const DescriptionPanel = () => {
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
-
-  const titleSearch = useDuplicateTitleSearch(debouncedTitle);
-  const registrationsWithSimilarName = titleSearch.data?.hits ?? [];
-  const registrationWithSameName = registrationsWithSimilarName.find(
-    (reg) => reg.entityDescription?.mainTitle.toLowerCase() === debouncedTitle.toLowerCase()
-  );
+  const { titleSearchPending, registrationWithSameName } = useDuplicateTitleSearch(debouncedTitle);
 
   return (
     <InputContainerBox>
@@ -54,7 +49,7 @@ export const DescriptionPanel = () => {
               fullWidth
               label={t('common.title')}
               InputProps={{
-                endAdornment: titleSearch.isPending ? (
+                endAdornment: titleSearchPending ? (
                   <CircularProgress size={20} />
                 ) : registrationWithSameName ? (
                   <ErrorIcon color="warning" />

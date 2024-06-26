@@ -2,6 +2,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import WarningIcon from '@mui/icons-material/Warning';
 import { LoadingButton } from '@mui/lab';
@@ -19,7 +20,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link, Link as RouterLink } from 'react-router-dom';
+import { useDuplicateTitleSearch } from '../../../api/hooks/useDuplicateTitleSearch';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -66,6 +68,10 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
+
+  const { titleSearchPending, registrationWithSameName } = useDuplicateTitleSearch(
+    registration.entityDescription?.mainTitle || ''
+  );
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const registrationHasFile = registration.associatedArtifacts.some(
@@ -266,6 +272,32 @@ export const PublishingAccordion = ({
               {t('registration.public_page.tasks_panel.reload')}
             </LoadingButton>
           </>
+        )}
+        {registrationWithSameName && (
+          <Box>
+            <Typography paragraph>
+              {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
+            </Typography>
+            <Link
+              target="_blank"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.duplicateRegistrationLink}
+              to={`${UrlPathTemplate.RegistrationNew}/${registrationWithSameName.identifier}`}>
+              <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem' }}>
+                <Typography sx={{ textDecoration: 'underline', cursor: 'pointer', color: 'primary.light' }}>
+                  {registrationWithSameName.entityDescription?.mainTitle}
+                </Typography>
+                <OpenInNewOutlinedIcon
+                  sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }}
+                />
+              </Box>
+            </Link>
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.duplicate_title_description_details"
+              components={[<Typography paragraph />]}
+            />
+            <Divider sx={{ bgcolor: 'grey.400', mb: '0.5rem' }} />
+          </Box>
         )}
 
         {/* Tell user what they can publish */}

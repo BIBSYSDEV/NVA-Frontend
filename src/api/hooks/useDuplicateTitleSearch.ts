@@ -9,9 +9,16 @@ export const useDuplicateTitleSearch = (title: string) => {
     title: title,
   };
 
-  return useQuery({
+  const titleSearch = useQuery({
     queryKey: ['registrations', searchConfig],
     queryFn: () => fetchResults(searchConfig),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
+
+  const registrationsWithSimilarName = titleSearch.data?.hits ?? [];
+  const registrationWithSameName = registrationsWithSimilarName.find(
+    (reg) => reg.entityDescription?.mainTitle.toLowerCase() === title.toLowerCase()
+  );
+
+  return { titleSearchPending: titleSearch.isPending, registrationWithSameName: registrationWithSameName };
 };
