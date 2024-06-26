@@ -4,8 +4,16 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { CommonPreviewProps } from './PreviewFile';
 import { PreviewUnavailable } from './PreviewUnavailable';
 
+const browserDoesNotSupportingOnLoad = (): boolean => {
+  return isSafariBrowser();
+};
+
+const isSafariBrowser = (): boolean => {
+  return navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
+};
+
 export const PreviewPdf = ({ url, altText, ...props }: CommonPreviewProps) => {
-  const [successfullyLoadedPdf, setSuccessfullyLoadedPdf] = useState(false);
+  const [successfullyLoadedPdf, setSuccessfullyLoadedPdf] = useState(browserDoesNotSupportingOnLoad());
 
   return (
     <Box
