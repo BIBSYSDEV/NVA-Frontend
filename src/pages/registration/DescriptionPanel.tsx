@@ -65,7 +65,7 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        {registrationWithSameName && registrationWithSameName.entityDescription?.mainTitle && (
+        {registrationWithSameName?.entityDescription?.mainTitle && (
           <SameNameWarning name={registrationWithSameName.entityDescription?.mainTitle} />
         )}
         <Field name={DescriptionFieldNames.AlternativeTitles}>
