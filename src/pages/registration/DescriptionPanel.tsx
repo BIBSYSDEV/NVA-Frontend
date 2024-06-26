@@ -1,10 +1,12 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ErrorIcon from '@mui/icons-material/Error';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import { Autocomplete, Box, Button, Divider, MenuItem, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, CircularProgress, Divider, MenuItem, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { useDuplicateTitleSearch } from '../../api/hooks/useDuplicateTitleSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
@@ -12,6 +14,7 @@ import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { registrationLanguageOptions } from '../../utils/registration-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
@@ -52,6 +55,13 @@ export const DescriptionPanel = () => {
               }}
               fullWidth
               label={t('common.title')}
+              InputProps={{
+                endAdornment: titleSearch.isPending ? (
+                  <CircularProgress size={20} />
+                ) : registrationWithSameName ? (
+                  <ErrorIcon color="warning" />
+                ) : undefined,
+              }}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
             />
@@ -71,12 +81,19 @@ export const DescriptionPanel = () => {
               {t('registration.description.duplicate_title_warning')}
             </Box>
             <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
-            <Box sx={{ display: 'flex', gap: '0.5rem', cursor: 'pointer' }}>
-              <Typography sx={{ textDecoration: 'underline' }}>
-                {registrationWithSameName.entityDescription!.mainTitle}
-              </Typography>
-              <OpenInNewOutlinedIcon />
-            </Box>
+            <Link
+              target="_blank"
+              to={{
+                pathname: UrlPathTemplate.Home,
+                search: `?query=${encodeURIComponent(registrationWithSameName.entityDescription!.mainTitle)}`,
+              }}>
+              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
+                  {registrationWithSameName.entityDescription!.mainTitle}
+                </Typography>
+                <OpenInNewOutlinedIcon sx={{ cursor: 'pointer' }} />
+              </Box>
+            </Link>
           </Box>
         )}
         <Field name={DescriptionFieldNames.AlternativeTitles}>
