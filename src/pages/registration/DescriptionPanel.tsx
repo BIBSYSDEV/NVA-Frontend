@@ -86,11 +86,13 @@ export const DescriptionPanel = () => {
               data-testid={dataTestId.registrationLandingPage.duplicateRegistrationSearchLink}
               to={{
                 pathname: UrlPathTemplate.Home,
-                search: `?query=${encodeURIComponent(registrationWithSameName.entityDescription!.mainTitle)}`,
+                search: registrationWithSameName.entityDescription?.mainTitle
+                  ? `?query=${encodeURIComponent(registrationWithSameName.entityDescription.mainTitle)}`
+                  : '',
               }}>
               <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                 <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>
-                  {registrationWithSameName.entityDescription!.mainTitle}
+                  {registrationWithSameName.entityDescription?.mainTitle}
                 </Typography>
                 <OpenInNewOutlinedIcon
                   sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }}
