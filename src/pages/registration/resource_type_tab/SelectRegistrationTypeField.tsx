@@ -16,6 +16,7 @@ import {
   emptyExhibitionPublicationContext,
   emptyExhibitionPublicationInstance,
 } from '../../../types/publication_types/exhibitionContent.types';
+import { emptyJournalPublicationInstance } from '../../../types/publication_types/journalRegistration.types';
 import {
   emptyMediaContributionPeriodicalPublicationContext,
   emptyMediaContributionPeriodicalPublicationInstance,
@@ -75,7 +76,11 @@ export const SelectRegistrationTypeField = () => {
           if (contextTypeIsChanged) {
             // If we move between category groups we reset all fields
             setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
-            setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...emptyJournalPublicationInstance, type: newInstanceType },
+              false
+            );
           } else {
             // If we move between different categories in the same group with the same fields, we keep the info in the fields
             setFieldValue(
@@ -87,7 +92,6 @@ export const SelectRegistrationTypeField = () => {
           break;
         case PublicationType.Book:
           if (contextTypeIsChanged) {
-            // If we move between category groups we reset all fields
             setFieldValue(
               contextTypeBaseFieldName,
               {
@@ -99,7 +103,6 @@ export const SelectRegistrationTypeField = () => {
             );
             setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
           } else {
-            // If we move between different categories in the same group with the same fields, we keep the info in the fields
             setFieldValue(
               instanceTypeBaseFieldName,
               { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
@@ -109,7 +112,6 @@ export const SelectRegistrationTypeField = () => {
           break;
         case PublicationType.Report:
           if (contextTypeIsChanged) {
-            // If we move between category groups we reset all fields
             setFieldValue(
               contextTypeBaseFieldName,
               {
@@ -125,7 +127,6 @@ export const SelectRegistrationTypeField = () => {
               false
             );
           } else {
-            // If we move between different categories in the same group with the same fields, we keep the info in the fields
             setFieldValue(
               instanceTypeBaseFieldName,
               { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
@@ -149,7 +150,6 @@ export const SelectRegistrationTypeField = () => {
           break;
         case PublicationType.Anthology:
           if (contextTypeIsChanged) {
-            // If we move between category groups we reset all fields
             setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Anthology }, false);
             setFieldValue(
               instanceTypeBaseFieldName,
@@ -157,7 +157,6 @@ export const SelectRegistrationTypeField = () => {
               false
             );
           } else {
-            // If we move between different categories in the same group with the same fields, we keep the info in the fields
             setFieldValue(
               instanceTypeBaseFieldName,
               { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
@@ -167,7 +166,6 @@ export const SelectRegistrationTypeField = () => {
           break;
         case PublicationType.Presentation:
           if (contextTypeIsChanged) {
-            // If we move between category groups we reset all fields
             setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
             setFieldValue(
               instanceTypeBaseFieldName,
@@ -176,7 +174,6 @@ export const SelectRegistrationTypeField = () => {
             );
           } else {
             setFieldValue(
-              // If we move between different categories in the same group with the same fields, we keep the info in the fields
               instanceTypeBaseFieldName,
               { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
               false
