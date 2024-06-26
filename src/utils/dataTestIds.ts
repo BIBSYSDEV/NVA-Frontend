@@ -225,6 +225,7 @@ export const dataTestId = {
     doiLink: 'doi-link',
     doiMessageField: 'request-doi-message',
     doiOriginalLink: 'doi-original-link',
+    duplicateRegistrationSearchLink: 'duplicate-registration-search-link',
     editButton: 'button-edit-registration',
     externalLinksAccordion: 'external-links-accordion',
     file: 'file',

@@ -1,22 +1,34 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Autocomplete, Box, Button, Divider, MenuItem, TextField } from '@mui/material';
+import ErrorIcon from '@mui/icons-material/Error';
+import { Autocomplete, Box, Button, CircularProgress, Divider, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { getLanguageByIso6393Code } from 'nva-language';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDuplicateTitleSearch } from '../../api/hooks/useDuplicateTitleSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useDebounce } from '../../utils/hooks/useDebounce';
 import { registrationLanguageOptions } from '../../utils/registration-helpers';
 import { DatePickerField } from './description_tab/DatePickerField';
-import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
+import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
+import { SameNameWarning } from './SameNameWarning';
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
   const { values, setFieldValue } = useFormikContext<Registration>();
+  const [title, setTitle] = useState('');
+  const debouncedTitle = useDebounce(title);
+
+  const titleSearch = useDuplicateTitleSearch(debouncedTitle);
+  const registrationsWithSimilarName = titleSearch.data?.hits ?? [];
+  const registrationWithSameName = registrationsWithSimilarName.find(
+    (reg) => reg.entityDescription?.mainTitle.toLowerCase() === debouncedTitle.toLowerCase()
+  );
 
   return (
     <InputContainerBox>
@@ -35,13 +47,27 @@ export const DescriptionPanel = () => {
               required
               data-testid={dataTestId.registrationWizard.description.titleField}
               variant="filled"
+              onChange={(event) => {
+                setTitle(event.target.value);
+                field.onChange(event);
+              }}
               fullWidth
               label={t('common.title')}
+              InputProps={{
+                endAdornment: titleSearch.isPending ? (
+                  <CircularProgress size={20} />
+                ) : registrationWithSameName ? (
+                  <ErrorIcon color="warning" />
+                ) : undefined,
+              }}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
             />
           )}
         </Field>
+        {registrationWithSameName?.entityDescription?.mainTitle && (
+          <SameNameWarning name={registrationWithSameName.entityDescription?.mainTitle} />
+        )}
         <Field name={DescriptionFieldNames.AlternativeTitles}>
           {({ field }: FieldProps<string>) => (
             <>
