@@ -24,7 +24,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { equalUris } from '../../../utils/general-helpers';
 import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
-import { PreviewFile } from './preview_file/PreviewFile';
+import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
   file: AssociatedFile;
@@ -46,7 +46,7 @@ export const FileRow = ({
   const user = useSelector((store: RootState) => store.user);
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
-  const [previewFileUrl, setPreviewFileUrl] = useState<{ shortenedVersion: string; id: string } | null>(null);
+  const [previewFileUrl, setPreviewFileUrl] = useState<DownloadUrl | null>(null);
 
   const handleDownload = useCallback(
     async (previewFile = false) => {
