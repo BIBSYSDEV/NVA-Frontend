@@ -193,9 +193,8 @@ export const PublishingAccordion = ({
   const handleRejectPublishFileRequest = async (message: string) => {
     if (lastPublishingRequest) {
       setIsLoading(LoadingState.RejectPublishingRequest);
-      await ticketMutation.mutateAsync({ status: 'Closed' });
       await addMessage(lastPublishingRequest.id, message);
-      refetchData();
+      await ticketMutation.mutateAsync({ status: 'Closed' });
       setIsLoading(LoadingState.None);
       setOpenRejectionDialog(false);
     }
