@@ -223,7 +223,7 @@ export const PublishingAccordion = ({
             registration.status !== RegistrationStatus.Deleted &&
             ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         </Typography>
-        {(!registrationIsValid || showDuplicateWarning) && !unpublishedOrDeleted && (
+        {(!registrationIsValid || (showDuplicateWarning && !published)) && !unpublishedOrDeleted && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
             <ErrorIcon color="warning" sx={{ ml: '0.5rem' }} />
           </Tooltip>
