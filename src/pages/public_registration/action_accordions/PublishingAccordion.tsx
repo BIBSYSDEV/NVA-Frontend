@@ -12,7 +12,12 @@ import {
   AccordionSummary,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
+  TextField,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -69,6 +74,8 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
+  const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState('');
 
   const { titleSearchPending, registrationWithSameName, hasSamePublicationYear, hasSameCategory } =
     useDuplicateTitleSearch(
@@ -206,6 +213,16 @@ export const PublishingAccordion = ({
     registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
 
   const published = registration.status === RegistrationStatus.Published;
+
+  const handleRejectPublishFileRequest = async (message: string) => {
+    if (lastPublishingRequest) {
+      setIsLoading(LoadingState.RejectPublishingRequest);
+      await addMessage(lastPublishingRequest.id, message);
+      await ticketMutation.mutateAsync({ status: 'Closed' });
+      setIsLoading(LoadingState.None);
+      setOpenRejectionDialog(false);
+    }
+  };
 
   return (
     <Accordion
@@ -357,11 +374,14 @@ export const PublishingAccordion = ({
         )}
 
         {isPublishedRegistration && hasClosedTicket && (
-          <Trans
-            t={t}
-            i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
-            components={[<Typography paragraph />]}
-          />
+          <>
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
+              components={[<Typography paragraph />]}
+            />
+            <TicketMessageList ticket={lastPublishingRequest} />
+          </>
         )}
 
         {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
@@ -422,11 +442,55 @@ export const PublishingAccordion = ({
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
               startIcon={<CloseIcon />}
-              onClick={() => ticketMutation.mutate({ status: 'Closed' })}
+              onClick={() => setOpenRejectionDialog(true)}
               loading={isLoading === LoadingState.RejectPublishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.reject_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
+
+            <Dialog open={openRejectionDialog} onClose={() => setOpenRejectionDialog(false)}>
+              <DialogTitle fontWeight="bold">{t('registration.public_page.reject_publish_request')}</DialogTitle>
+              <DialogContent>
+                <Trans
+                  i18nKey="registration.public_page.reject_publish_request_description"
+                  components={[<Typography paragraph />]}
+                />
+                <TextField
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectionMessageTextField}
+                  inputProps={{ maxLength: 160 }}
+                  variant="filled"
+                  multiline
+                  minRows={3}
+                  maxRows={Infinity}
+                  fullWidth
+                  required
+                  label={t('registration.public_page.reason_for_rejection')}
+                  FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+                  helperText={`${rejectionReason.length}/160`}
+                  value={rejectionReason}
+                  onChange={(event) => setRejectionReason(event.target.value)}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.cancelRejectionButton}
+                  onClick={() => setOpenRejectionDialog(false)}>
+                  {t('common.cancel')}
+                </Button>
+                <LoadingButton
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.rejectionDialogConfirmButton}
+                  disabled={!rejectionReason}
+                  loading={isLoading === LoadingState.RejectPublishingRequest}
+                  variant="contained"
+                  onClick={() =>
+                    handleRejectPublishFileRequest(
+                      `${t('registration.public_page.reason_for_rejection')}: ${rejectionReason}`
+                    )
+                  }>
+                  {t('common.reject')}
+                </LoadingButton>
+              </DialogActions>
+            </Dialog>
           </Box>
         )}
 
