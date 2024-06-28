@@ -89,7 +89,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <Typography component={'h3'} variant="h2">
+      <Typography component="h2" variant="h3">
         {t('registration.files_and_license.files')}
       </Typography>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (

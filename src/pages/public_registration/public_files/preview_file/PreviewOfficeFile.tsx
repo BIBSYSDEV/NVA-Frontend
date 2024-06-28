@@ -3,7 +3,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { CommonPreviewProps } from './PreviewFile';
 
 export const PreviewOfficeFile = ({ url, altText, ...props }: CommonPreviewProps) => {
-  const officeViewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
+  const officeViewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url.shortenedVersion)}`;
 
   return (
     <Box
