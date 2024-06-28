@@ -30,7 +30,7 @@ export const DuplicateWarningModal = ({
       maxWidth="xs"
       fullWidth={true}
       headingText={t('registration.public_page.duplicate_warning_modal.headline')}
-      dataTestId="affiliation-modal">
+      dataTestId={dataTestId.registrationLandingPage.duplicateRegistrationModal.duplicationModal}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <Typography>{t('registration.public_page.duplicate_warning_modal.publication_already_exists')}</Typography>
         {duplicateId && (

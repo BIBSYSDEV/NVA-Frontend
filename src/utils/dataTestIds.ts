@@ -284,6 +284,7 @@ export const dataTestId = {
       tabPanelTasks: 'tab-panel-tasks',
     },
     duplicateRegistrationModal: {
+      duplicationModal: 'duplication-modal',
       duplicateRegistrationLink: 'duplicate-registration-modal-link',
       duplicateRegistrationNoButton: 'duplicate-registration-no-button',
       duplicateRegistrationYesButton: 'duplicate-registration-yes-button',
