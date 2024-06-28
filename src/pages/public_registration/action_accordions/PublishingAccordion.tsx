@@ -80,7 +80,6 @@ export const PublishingAccordion = ({
   const showDuplicateWarning = registrationWithSameName && hasSamePublicationYear && hasSameCategory;
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
-  const [ignoreDuplicateWarning, setIgnoreDuplicateWarning] = useState(false);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
   const registrationHasFile = registration.associatedArtifacts.some(
     (artifact) => artifact.type === FileType.PublishedFile
@@ -135,8 +134,8 @@ export const PublishingAccordion = ({
 
   const firstErrorTab = Math.max(getFirstErrorTab(tabErrors), 0);
 
-  const onClickPublish = async () => {
-    if (showDuplicateWarning && !ignoreDuplicateWarning) {
+  const onClickPublish = async (showDuplicateWarningIgnored = false) => {
+    if (showDuplicateWarning && !showDuplicateWarningIgnored) {
       setDisplayDuplicateWarningModal(true);
     } else {
       setIsLoading(LoadingState.CreatePublishingRequest);
@@ -169,8 +168,8 @@ export const PublishingAccordion = ({
   };
 
   const onConfirmNotDuplicate = () => {
-    setIgnoreDuplicateWarning(true);
-    onClickPublish();
+    onClickPublish(true);
+    setDisplayDuplicateWarningModal(false);
   };
 
   const registratorPublishesMetadataAndFiles =
@@ -205,6 +204,8 @@ export const PublishingAccordion = ({
 
   const unpublishedOrDeleted =
     registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
+
+  const published = registration.status === RegistrationStatus.Published;
 
   return (
     <Accordion
@@ -292,7 +293,7 @@ export const PublishingAccordion = ({
             </LoadingButton>
           </>
         )}
-        {showDuplicateWarning && (
+        {showDuplicateWarning && !unpublishedOrDeleted && !published && (
           <Box>
             <Typography paragraph>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
@@ -349,7 +350,7 @@ export const PublishingAccordion = ({
             variant="contained"
             color="info"
             fullWidth
-            onClick={onClickPublish}
+            onClick={() => onClickPublish()}
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest || titleSearchPending}>
             {t('registration.public_page.tasks_panel.publish_registration')}
           </LoadingButton>
