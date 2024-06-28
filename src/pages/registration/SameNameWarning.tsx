@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { dataTestId } from '../../utils/dataTestIds';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 interface SameNameWarningProps {
   name: string;
@@ -28,8 +28,8 @@ export const SameNameWarning = ({ name, id }: SameNameWarningProps) => {
       <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
       <Link
         target="_blank"
-        data-testid={dataTestId.registrationLandingPage.duplicateRegistrationSearchLink}
-        to={`${UrlPathTemplate.RegistrationNew}/${id}`}>
+        data-testid={dataTestId.registrationLandingPage.duplicateRegistrationLink}
+        to={getRegistrationLandingPagePath(id)}>
         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
           <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>{name}</Typography>
           <OpenInNewOutlinedIcon sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }} />
