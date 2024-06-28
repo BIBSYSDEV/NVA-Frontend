@@ -1,10 +1,10 @@
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
+import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import WarningIcon from '@mui/icons-material/Warning';
 import { LoadingButton } from '@mui/lab';
 import {
   Accordion,
@@ -41,6 +41,7 @@ import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
 import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { DeletePublication } from './DeletePublication';
+import { DuplicateWarningModal } from './DuplicateWarningModal';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -69,11 +70,18 @@ export const PublishingAccordion = ({
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
 
-  const { titleSearchPending, registrationWithSameName } = useDuplicateTitleSearch(
-    registration.entityDescription?.mainTitle || ''
-  );
+  const { titleSearchPending, registrationWithSameName, hasSamePublicationYear, hasSameCategory } =
+    useDuplicateTitleSearch(
+      registration.entityDescription?.mainTitle || '',
+      registration.entityDescription?.publicationDate?.year || undefined,
+      registration.entityDescription?.reference?.publicationContext.type || undefined
+    );
+
+  const showDuplicateWarning = registrationWithSameName && hasSamePublicationYear && hasSameCategory;
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
+  const [ignoreDuplicateWarning, setIgnoreDuplicateWarning] = useState(false);
+  const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
   const registrationHasFile = registration.associatedArtifacts.some(
     (artifact) => artifact.type === FileType.PublishedFile
   );
@@ -128,32 +136,41 @@ export const PublishingAccordion = ({
   const firstErrorTab = Math.max(getFirstErrorTab(tabErrors), 0);
 
   const onClickPublish = async () => {
-    setIsLoading(LoadingState.CreatePublishingRequest);
-    const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
-    if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
-      dispatch(
-        setNotification({
-          message: t('feedback.error.create_publishing_request'),
-          variant: 'error',
-        })
-      );
-    } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      userCanPublish
-        ? dispatch(
-            setNotification({
-              message: t('feedback.success.publish_as_curator'),
-              variant: 'success',
-            })
-          )
-        : dispatch(
-            setNotification({
-              message: t('feedback.success.create_publishing_request'),
-              variant: 'success',
-            })
-          );
-      refetchData();
+    if (showDuplicateWarning && !ignoreDuplicateWarning) {
+      setDisplayDuplicateWarningModal(true);
+    } else {
+      setIsLoading(LoadingState.CreatePublishingRequest);
+      const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
+      if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
+        dispatch(
+          setNotification({
+            message: t('feedback.error.create_publishing_request'),
+            variant: 'error',
+          })
+        );
+      } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
+        userCanPublish
+          ? dispatch(
+              setNotification({
+                message: t('feedback.success.publish_as_curator'),
+                variant: 'success',
+              })
+            )
+          : dispatch(
+              setNotification({
+                message: t('feedback.success.create_publishing_request'),
+                variant: 'success',
+              })
+            );
+        refetchData();
+      }
+      setIsLoading(LoadingState.None);
     }
-    setIsLoading(LoadingState.None);
+  };
+
+  const onConfirmNotDuplicate = () => {
+    setIgnoreDuplicateWarning(true);
+    onClickPublish();
   };
 
   const registratorPublishesMetadataAndFiles =
@@ -195,17 +212,19 @@ export const PublishingAccordion = ({
       sx={{ bgcolor: 'publishingRequest.light' }}
       elevation={3}
       defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus}>
-      <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {registration.status === RegistrationStatus.Unpublished || registration.status === RegistrationStatus.Deleted
-          ? t(`registration.status.${registration.status}`)
-          : t('registration.public_page.publication')}
-        {lastPublishingRequest &&
-          registration.status !== RegistrationStatus.Unpublished &&
-          registration.status !== RegistrationStatus.Deleted &&
-          ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
-        {!registrationIsValid && !unpublishedOrDeleted && (
+      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
+        <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
+          {registration.status === RegistrationStatus.Unpublished || registration.status === RegistrationStatus.Deleted
+            ? t(`registration.status.${registration.status}`)
+            : t('registration.public_page.publication')}
+          {lastPublishingRequest &&
+            registration.status !== RegistrationStatus.Unpublished &&
+            registration.status !== RegistrationStatus.Deleted &&
+            ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
+        </Typography>
+        {(!registrationIsValid || showDuplicateWarning) && !unpublishedOrDeleted && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
-            <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
+            <ErrorIcon color="warning" sx={{ ml: '0.5rem' }} />
           </Tooltip>
         )}
       </AccordionSummary>
@@ -273,7 +292,7 @@ export const PublishingAccordion = ({
             </LoadingButton>
           </>
         )}
-        {registrationWithSameName && (
+        {showDuplicateWarning && (
           <Box>
             <Typography paragraph>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
@@ -324,14 +343,14 @@ export const PublishingAccordion = ({
 
         {isDraftRegistration && !lastPublishingRequest && (
           <LoadingButton
-            disabled={isLoading !== LoadingState.None || !registrationIsValid}
+            disabled={isLoading !== LoadingState.None || !registrationIsValid || titleSearchPending}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
             sx={{ mt: '1rem' }}
             variant="contained"
             color="info"
             fullWidth
             onClick={onClickPublish}
-            loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
+            loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest || titleSearchPending}>
             {t('registration.public_page.tasks_panel.publish_registration')}
           </LoadingButton>
         )}
@@ -421,6 +440,12 @@ export const PublishingAccordion = ({
           </Box>
         )}
         {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
+        <DuplicateWarningModal
+          isOpen={displayDuplicateWarningModal}
+          toggleModal={() => setDisplayDuplicateWarningModal(!displayDuplicateWarningModal)}
+          duplicateId={registrationWithSameName?.identifier}
+          onConfirmNotDuplicate={onConfirmNotDuplicate}
+        />
       </AccordionDetails>
     </Accordion>
   );

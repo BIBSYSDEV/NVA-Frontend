@@ -27,7 +27,7 @@ export const SameNameWarning = ({ name }: SameNameWarningProps) => {
       <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
       <Link
         target="_blank"
-        data-testid={dataTestId.registrationLandingPage.duplicateRegistrationSearchLink}
+        data-testid={dataTestId.registrationLandingPage.duplicateRegistrationLink}
         to={{
           pathname: UrlPathTemplate.Home,
           search: `?query=${encodeURIComponent(name)}`,
