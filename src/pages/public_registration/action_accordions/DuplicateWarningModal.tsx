@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Modal } from '../../../components/Modal';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 
 interface DuplicateWarningModalProps {
   isOpen: boolean;
@@ -41,7 +41,7 @@ export const DuplicateWarningModal = ({
             <Link
               target="_blank"
               data-testid={dataTestId.registrationLandingPage.duplicateRegistrationModal.duplicateRegistrationLink}
-              to={`${UrlPathTemplate.RegistrationNew}/${duplicateId}`}>
+              to={getRegistrationLandingPagePath(duplicateId)}>
               <Box sx={{ gap: '0.25rem', display: 'inline-flex', mr: '0.25rem' }}>
                 <Typography
                   sx={{ display: 'inline', textDecoration: 'underline', cursor: 'pointer', color: 'primary.light' }}>

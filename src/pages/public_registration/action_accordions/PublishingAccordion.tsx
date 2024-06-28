@@ -34,7 +34,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getFirstErrorTab, getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers';
 import { userCanPublishRegistration } from '../../../utils/registration-helpers';
-import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
@@ -301,7 +301,7 @@ export const PublishingAccordion = ({
             <Link
               target="_blank"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.duplicateRegistrationLink}
-              to={`${UrlPathTemplate.RegistrationNew}/${registrationWithSameName.identifier}`}>
+              to={getRegistrationLandingPagePath(registrationWithSameName.identifier)}>
               <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem' }}>
                 <Typography sx={{ textDecoration: 'underline', cursor: 'pointer', color: 'primary.light' }}>
                   {registrationWithSameName.entityDescription?.mainTitle}
