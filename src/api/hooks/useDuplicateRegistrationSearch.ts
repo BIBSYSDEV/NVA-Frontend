@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchResults, FetchResultsParams } from '../searchApi';
 
-export const useDuplicateTitleSearch = (title: string, publishedYear?: string, publicationContext?: string) => {
+export const useDuplicateRegistrationSearch = (title: string, publishedYear?: string, publicationContext?: string) => {
   const { t } = useTranslation();
 
   const searchConfig: FetchResultsParams = {
@@ -16,26 +16,24 @@ export const useDuplicateTitleSearch = (title: string, publishedYear?: string, p
   });
 
   const registrationsWithSimilarName = titleSearch.data?.hits ?? [];
-  const registrationWithSameName = registrationsWithSimilarName.find(
+
+  let registrationWithSameName = registrationsWithSimilarName.find(
     (reg) => reg.entityDescription?.mainTitle.toLowerCase() === title.toLowerCase()
   );
-  let hasSamePublicationYear = false;
-  let hasSamePublicationContext = false;
 
-  if (registrationWithSameName) {
-    hasSamePublicationYear =
-      registrationWithSameName.entityDescription?.publicationDate?.year === publishedYear || false;
+  if (publishedYear && registrationWithSameName?.entityDescription?.publicationDate?.year !== publishedYear) {
+    registrationWithSameName = undefined;
+  }
 
-    hasSamePublicationContext =
-      (publicationContext &&
-        registrationWithSameName.entityDescription?.reference?.publicationContext.type === publicationContext) ||
-      false;
+  if (
+    publicationContext &&
+    registrationWithSameName?.entityDescription?.reference?.publicationContext.type !== publicationContext
+  ) {
+    registrationWithSameName = undefined;
   }
 
   return {
     titleSearchPending: titleSearch.isPending,
     registrationWithSameName: registrationWithSameName,
-    hasSamePublicationYear: hasSamePublicationYear,
-    hasSameCategory: hasSamePublicationContext,
   };
 };

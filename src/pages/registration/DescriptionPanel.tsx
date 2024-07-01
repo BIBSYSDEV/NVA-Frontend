@@ -5,7 +5,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDuplicateTitleSearch } from '../../api/hooks/useDuplicateTitleSearch';
+import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegistrationSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -23,7 +23,7 @@ export const DescriptionPanel = () => {
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
-  const { titleSearchPending, registrationWithSameName } = useDuplicateTitleSearch(debouncedTitle);
+  const { titleSearchPending, registrationWithSameName } = useDuplicateRegistrationSearch(debouncedTitle);
 
   return (
     <InputContainerBox>

@@ -26,7 +26,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Link as RouterLink } from 'react-router-dom';
-import { useDuplicateTitleSearch } from '../../../api/hooks/useDuplicateTitleSearch';
+import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -77,14 +77,11 @@ export const PublishingAccordion = ({
   const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
 
-  const { titleSearchPending, registrationWithSameName, hasSamePublicationYear, hasSameCategory } =
-    useDuplicateTitleSearch(
-      registration.entityDescription?.mainTitle || '',
-      registration.entityDescription?.publicationDate?.year || undefined,
-      registration.entityDescription?.reference?.publicationContext.type || undefined
-    );
-
-  const showDuplicateWarning = registrationWithSameName && hasSamePublicationYear && hasSameCategory;
+  const { titleSearchPending, registrationWithSameName } = useDuplicateRegistrationSearch(
+    registration.entityDescription?.mainTitle || '',
+    registration.entityDescription?.publicationDate?.year,
+    registration.entityDescription?.reference?.publicationContext.type
+  );
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
@@ -142,7 +139,7 @@ export const PublishingAccordion = ({
   const firstErrorTab = Math.max(getFirstErrorTab(tabErrors), 0);
 
   const onClickPublish = async (showDuplicateWarningIgnored = false) => {
-    if (showDuplicateWarning && !showDuplicateWarningIgnored) {
+    if (registrationWithSameName && !showDuplicateWarningIgnored) {
       setDisplayDuplicateWarningModal(true);
     } else {
       setIsLoading(LoadingState.CreatePublishingRequest);
@@ -224,6 +221,8 @@ export const PublishingAccordion = ({
     }
   };
 
+  const toggleDuplicateWarningModal = () => setDisplayDuplicateWarningModal(!displayDuplicateWarningModal);
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
@@ -240,7 +239,7 @@ export const PublishingAccordion = ({
             registration.status !== RegistrationStatus.Deleted &&
             ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         </Typography>
-        {(!registrationIsValid || (showDuplicateWarning && !published)) && !unpublishedOrDeleted && (
+        {(!registrationIsValid || (registrationWithSameName && !published)) && !unpublishedOrDeleted && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
             <ErrorIcon color="warning" sx={{ ml: '0.5rem' }} />
           </Tooltip>
@@ -310,7 +309,7 @@ export const PublishingAccordion = ({
             </LoadingButton>
           </>
         )}
-        {showDuplicateWarning && !unpublishedOrDeleted && !published && (
+        {registrationWithSameName && !unpublishedOrDeleted && !published && (
           <Box>
             <Typography paragraph>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
@@ -507,7 +506,7 @@ export const PublishingAccordion = ({
         {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
         <DuplicateWarningModal
           isOpen={displayDuplicateWarningModal}
-          toggleModal={() => setDisplayDuplicateWarningModal(!displayDuplicateWarningModal)}
+          toggleModal={toggleDuplicateWarningModal}
           duplicateId={registrationWithSameName?.identifier}
           onConfirmNotDuplicate={onConfirmNotDuplicate}
         />

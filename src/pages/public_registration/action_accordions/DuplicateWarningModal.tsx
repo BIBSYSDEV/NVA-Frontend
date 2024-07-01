@@ -36,7 +36,7 @@ export const DuplicateWarningModal = ({
         {duplicateId && (
           <Box>
             <Typography sx={{ display: 'inline' }}>
-              {t('registration.public_page.duplicate_warning_modal.dont_create_duplicates_check_that')}
+              {`${t('registration.public_page.duplicate_warning_modal.dont_create_duplicates')} ${t('registration.public_page.duplicate_warning_modal.check_if')}`}
             </Typography>
             <Link
               target="_blank"
