@@ -24,6 +24,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
@@ -61,6 +62,8 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
+
+  const useMobileView = useMediaQuery('(max-width:1075px)');
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
   const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
@@ -316,12 +319,14 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         )}
         <TableCell sx={{ width: columnWidths.iconColumn + '%' }}>
           {!isArchived && (
-            <IconButton
-              onClick={() => setOpenCollapsable(!openCollapsable)}
-              size="small"
-              data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
-              {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <IconButton
+                onClick={() => setOpenCollapsable(!openCollapsable)}
+                size="small"
+                data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
+                {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            </Box>
           )}
         </TableCell>
       </TableRow>

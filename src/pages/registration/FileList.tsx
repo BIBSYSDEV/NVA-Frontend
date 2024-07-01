@@ -30,10 +30,10 @@ import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTa
 import { HelperTextModal } from './HelperTextModal';
 
 export const columnWidthsWhenNotArchived = {
-  nameColumn: 37,
+  nameColumn: 35,
   publishColumn: 9,
   versionColumn: 24,
-  licenseColumn: 25,
+  licenseColumn: 27,
   iconColumn: 5,
 };
 
