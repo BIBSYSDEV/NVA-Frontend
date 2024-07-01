@@ -176,6 +176,8 @@ export const PublishingAccordion = ({
     setDisplayDuplicateWarningModal(false);
   };
 
+  const toggleDuplicateWarningModal = () => setDisplayDuplicateWarningModal(!displayDuplicateWarningModal);
+
   const registratorPublishesMetadataAndFiles =
     lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataAndFiles';
   const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
@@ -206,10 +208,10 @@ export const PublishingAccordion = ({
 
   const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const unpublishedOrDeleted =
+  const isUnpublishedOrDeleted =
     registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
-
-  const published = registration.status === RegistrationStatus.Published;
+  const isPublished = registration.status === RegistrationStatus.Published;
+  const showRegistrationWithSameNameWarningIcon = registrationWithSameName && !isPublished;
 
   const handleRejectPublishFileRequest = async (message: string) => {
     if (lastPublishingRequest) {
@@ -221,8 +223,6 @@ export const PublishingAccordion = ({
     }
   };
 
-  const toggleDuplicateWarningModal = () => setDisplayDuplicateWarningModal(!displayDuplicateWarningModal);
-
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
@@ -231,7 +231,7 @@ export const PublishingAccordion = ({
       defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
-          {registration.status === RegistrationStatus.Unpublished || registration.status === RegistrationStatus.Deleted
+          {isUnpublishedOrDeleted
             ? t(`registration.status.${registration.status}`)
             : t('registration.public_page.publication')}
           {lastPublishingRequest &&
@@ -239,8 +239,13 @@ export const PublishingAccordion = ({
             registration.status !== RegistrationStatus.Deleted &&
             ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         </Typography>
-        {(!registrationIsValid || (registrationWithSameName && !published)) && !unpublishedOrDeleted && (
-          <Tooltip title={t('registration.public_page.validation_errors')}>
+        {(!registrationIsValid || showRegistrationWithSameNameWarningIcon) && !isUnpublishedOrDeleted && (
+          <Tooltip
+            title={
+              showRegistrationWithSameNameWarningIcon
+                ? t('registration.public_page.hasRegistrationWithSameName')
+                : t('registration.public_page.validation_errors')
+            }>
             <ErrorIcon color="warning" sx={{ ml: '0.5rem' }} />
           </Tooltip>
         )}
@@ -248,7 +253,7 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {tabErrors && !unpublishedOrDeleted && (
+        {tabErrors && !isUnpublishedOrDeleted && (
           <>
             <Typography>{t('registration.public_page.error_description')}</Typography>
             <ErrorList tabErrors={tabErrors} />
@@ -309,7 +314,7 @@ export const PublishingAccordion = ({
             </LoadingButton>
           </>
         )}
-        {registrationWithSameName && !unpublishedOrDeleted && !published && (
+        {registrationWithSameName && !isUnpublishedOrDeleted && !isPublished && (
           <Box>
             <Typography paragraph>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}

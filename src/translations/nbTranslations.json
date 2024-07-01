@@ -1416,7 +1416,8 @@
         "contact_registrator_to_change": "Er det feil eller mangler i publikasjonen som er registrert må du kontakte registrator eller bidragsyter i registreringen for å endre den. Du kan ikke publisere det samme resultatet på nytt i NVA.",
         "confirm_not_duplicate": "Kan du bekrefte at dette ikke er en duplikat?"
       },
-      "validation_errors": "Valideringsfeil"
+      "validation_errors": "Valideringsfeil",
+      "hasRegistrationWithSameName": "Potensiell duplikat"
     },
     "publication_types": {
       "AcademicArticle": "Vitenskapelig artikkel",
