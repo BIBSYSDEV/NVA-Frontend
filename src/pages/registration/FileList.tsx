@@ -16,7 +16,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { AssociatedFile, FileType, Uppy } from '../../types/associatedArtifact.types';
-import { LicenseUri, licenses } from '../../types/license.types';
+import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
@@ -26,8 +26,24 @@ import {
   isTypeWithFileVersionField,
   userCanUnpublishRegistration,
 } from '../../utils/registration-helpers';
-import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
+import { HelperTextModal } from './HelperTextModal';
+
+export const columnWidthsWhenNotArchived = {
+  nameColumn: 37,
+  publishColumn: 9,
+  versionColumn: 24,
+  licenseColumn: 25,
+  iconColumn: 5,
+};
+
+export const columnWidthsWhenArchived = {
+  nameColumn: columnWidthsWhenNotArchived.nameColumn,
+  publishColumn: columnWidthsWhenNotArchived.publishColumn,
+  versionColumn: 0,
+  licenseColumn: 0,
+  iconColumn: 100 - columnWidthsWhenNotArchived.nameColumn - columnWidthsWhenNotArchived.publishColumn,
+};
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -77,6 +93,8 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
     return true;
   }
 
+  const columnWidths = archived ? columnWidthsWhenArchived : columnWidthsWhenNotArchived;
+
   return (
     <Box
       sx={{
@@ -88,15 +106,15 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
         {title}
       </Typography>
       <TableContainer component={Paper} elevation={3} sx={{ mb: '2rem', width: '100%' }}>
-        <Table>
+        <Table sx={{ tableLayout: 'fixed', width: '100%' }}>
           <TableHead sx={{ bgcolor: 'white' }}>
             <TableRow>
-              <StyledTableCell>{t('common.name')}</StyledTableCell>
-              <StyledTableCell id={markForPublishId}>
+              <StyledTableCell sx={{ width: columnWidths.nameColumn + '%' }}>{t('common.name')}</StyledTableCell>
+              <StyledTableCell id={markForPublishId} sx={{ width: columnWidths.publishColumn + '%' }}>
                 {t('registration.files_and_license.mark_for_publish')}
               </StyledTableCell>
               {showFileVersion && !archived && (
-                <StyledTableCell>
+                <StyledTableCell sx={{ width: columnWidths.versionColumn + '%' }}>
                   <Box
                     sx={{
                       display: 'flex',
@@ -178,7 +196,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                 </StyledTableCell>
               )}
               {!archived && (
-                <StyledTableCell>
+                <StyledTableCell sx={{ width: columnWidths.licenseColumn + '%' }}>
                   <Box
                     sx={{
                       display: 'flex',
@@ -216,7 +234,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                   </Box>
                 </StyledTableCell>
               )}
-              {!archived && <TableCell />}
+              <TableCell sx={{ width: columnWidths.iconColumn + '%' }} />
             </TableRow>
           </TableHead>
           <TableBody>
