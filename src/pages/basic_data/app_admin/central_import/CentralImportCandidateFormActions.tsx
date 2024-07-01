@@ -4,11 +4,10 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { IdentifierParams, getImportCandidatePath } from '../../../../utils/urlPaths';
 
 interface CentralImportCandidateFormActionsProps {
   tabNumber: RegistrationTab;
@@ -20,7 +19,7 @@ export const CentralImportCandidateFormActions = ({
   setTabNumber,
 }: CentralImportCandidateFormActionsProps) => {
   const { t } = useTranslation();
-  const { identifier } = useParams<IdentifierParams>();
+  const history = useHistory();
   const { isValid, isSubmitting } = useFormikContext<ImportCandidate>();
 
   const isFirstTab = tabNumber === RegistrationTab.Description;
@@ -53,9 +52,9 @@ export const CentralImportCandidateFormActions = ({
       )}
 
       <Box sx={{ gridArea: 'next', display: 'flex', alignItems: 'center', justifyContent: 'end', gap: '2rem' }}>
-        <Link to={getImportCandidatePath(identifier)}>
-          <Button size="small">{t('common.cancel')}</Button>
-        </Link>
+        <Button size="small" onClick={() => history.goBack()}>
+          {t('common.cancel')}
+        </Button>
 
         {isLastTab ? (
           <LoadingButton

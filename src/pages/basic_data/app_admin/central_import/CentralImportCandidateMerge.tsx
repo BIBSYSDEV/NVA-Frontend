@@ -111,7 +111,7 @@ export const CentralImportCandidateMerge = () => {
         await importCandidateMutation.mutateAsync();
         await registrationQuery.refetch();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
-        history.push(getRegistrationWizardPath(registrationIdentifier));
+        history.push(getRegistrationWizardPath(registrationIdentifier)); // TODO: How find way back, including search state?
       }}>
       {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (
         <Box

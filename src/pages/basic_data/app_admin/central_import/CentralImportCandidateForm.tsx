@@ -19,7 +19,7 @@ import { RegistrationTab } from '../../../../types/registration.types';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { createUppy } from '../../../../utils/uppy/uppy-config';
-import { IdentifierParams, UrlPathTemplate, getImportCandidatePath } from '../../../../utils/urlPaths';
+import { IdentifierParams, getImportCandidatePath } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
 import { ContributorsPanel } from '../../../registration/ContributorsPanel';
 import { DescriptionPanel } from '../../../registration/DescriptionPanel';
@@ -54,7 +54,7 @@ export const CentralImportCandidateForm = () => {
           variant: 'success',
         })
       );
-      history.push(UrlPathTemplate.BasicDataCentralImport);
+      history.goBack();
     },
     onError: () =>
       dispatch(
