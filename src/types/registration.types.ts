@@ -79,9 +79,11 @@ interface RegistrationPublisher {
   id: string;
 }
 
-type ImportSourceName = 'Brage' | 'Cristin' | 'Scopus';
+type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier';
+type ImportSourceName = 'Cristin' | 'Scopus';
 
 interface AdditionalIdentifier {
+  type: AdditionalIdentifierType;
   sourceName: ImportSourceName;
   value: string;
 }
