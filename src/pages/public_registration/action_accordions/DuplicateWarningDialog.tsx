@@ -1,8 +1,8 @@
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import { Box, Button, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Modal } from '../../../components/Modal';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 
@@ -13,7 +13,7 @@ interface DuplicateWarningModalProps {
   duplicateId?: string;
 }
 
-export const DuplicateWarningModal = ({
+export const DuplicateWarningDialog = ({
   isOpen,
   toggleModal,
   duplicateId,
@@ -22,13 +22,12 @@ export const DuplicateWarningModal = ({
   const { t } = useTranslation();
 
   return (
-    <Modal
+    <ConfirmDialog
       open={isOpen}
-      onClose={toggleModal}
-      maxWidth="xs"
-      fullWidth
-      headingText={t('registration.public_page.duplicate_warning_modal.headline')}
-      dataTestId={dataTestId.registrationLandingPage.duplicateRegistrationModal.duplicationModal}>
+      title={t('registration.public_page.duplicate_warning_modal.headline')}
+      onAccept={onConfirmNotDuplicate}
+      onCancel={toggleModal}
+      dialogDataTestId={dataTestId.registrationLandingPage.duplicateRegistrationModal.duplicationModal}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <Typography>{t('registration.public_page.duplicate_warning_modal.publication_already_exists')}</Typography>
         {duplicateId && (
@@ -65,18 +64,7 @@ export const DuplicateWarningModal = ({
         <Typography sx={{ display: 'inline', textAlign: 'center' }}>
           {t('registration.public_page.duplicate_warning_modal.confirm_not_duplicate')}
         </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
-          <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={toggleModal}>
-            {t('common.no')}
-          </Button>
-          <Button
-            data-testid={dataTestId.confirmDialog.acceptButton}
-            variant="outlined"
-            onClick={onConfirmNotDuplicate}>
-            {t('common.yes')}
-          </Button>
-        </Box>
       </Box>
-    </Modal>
+    </ConfirmDialog>
   );
 };

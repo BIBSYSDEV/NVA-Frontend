@@ -46,7 +46,7 @@ import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
 import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { DeletePublication } from './DeletePublication';
-import { DuplicateWarningModal } from './DuplicateWarningModal';
+import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -505,7 +505,7 @@ export const PublishingAccordion = ({
           </Box>
         )}
         {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
-        <DuplicateWarningModal
+        <DuplicateWarningDialog
           isOpen={displayDuplicateWarningModal}
           toggleModal={toggleDuplicateWarningModal}
           duplicateId={duplicateRegistration?.identifier}
