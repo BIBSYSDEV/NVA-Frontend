@@ -77,7 +77,7 @@ export const PublishingAccordion = ({
   const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
 
-  const { titleSearchPending, registrationWithSameName } = useDuplicateRegistrationSearch(
+  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(
     registration.entityDescription?.mainTitle || '',
     registration.entityDescription?.publicationDate?.year,
     registration.entityDescription?.reference?.publicationContext.type
@@ -138,42 +138,38 @@ export const PublishingAccordion = ({
 
   const firstErrorTab = Math.max(getFirstErrorTab(tabErrors), 0);
 
-  const onClickPublish = async (showDuplicateWarningIgnored = false) => {
-    if (registrationWithSameName && !showDuplicateWarningIgnored) {
-      setDisplayDuplicateWarningModal(true);
-    } else {
-      setIsLoading(LoadingState.CreatePublishingRequest);
-      const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
-      if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
-        dispatch(
-          setNotification({
-            message: t('feedback.error.create_publishing_request'),
-            variant: 'error',
-          })
-        );
-      } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-        userCanPublish
-          ? dispatch(
-              setNotification({
-                message: t('feedback.success.publish_as_curator'),
-                variant: 'success',
-              })
-            )
-          : dispatch(
-              setNotification({
-                message: t('feedback.success.create_publishing_request'),
-                variant: 'success',
-              })
-            );
-        refetchData();
-      }
-      setIsLoading(LoadingState.None);
+  const publishRegistration = async () => {
+    setIsLoading(LoadingState.CreatePublishingRequest);
+    const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
+    if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
+      dispatch(
+        setNotification({
+          message: t('feedback.error.create_publishing_request'),
+          variant: 'error',
+        })
+      );
+    } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
+      userCanPublish
+        ? dispatch(
+            setNotification({
+              message: t('feedback.success.publish_as_curator'),
+              variant: 'success',
+            })
+          )
+        : dispatch(
+            setNotification({
+              message: t('feedback.success.create_publishing_request'),
+              variant: 'success',
+            })
+          );
+      refetchData();
     }
+    setIsLoading(LoadingState.None);
   };
 
   const onConfirmNotDuplicate = () => {
-    onClickPublish(true);
-    setDisplayDuplicateWarningModal(false);
+    publishRegistration();
+    toggleDuplicateWarningModal();
   };
 
   const toggleDuplicateWarningModal = () => setDisplayDuplicateWarningModal(!displayDuplicateWarningModal);
@@ -211,7 +207,7 @@ export const PublishingAccordion = ({
   const isUnpublishedOrDeleted =
     registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
   const isPublished = registration.status === RegistrationStatus.Published;
-  const showRegistrationWithSameNameWarningIcon = registrationWithSameName && !isPublished;
+  const showRegistrationWithSameNameWarningIcon = duplicateRegistration && !isPublished;
 
   const handleRejectPublishFileRequest = async (message: string) => {
     if (lastPublishingRequest) {
@@ -243,7 +239,7 @@ export const PublishingAccordion = ({
           <Tooltip
             title={
               showRegistrationWithSameNameWarningIcon
-                ? t('registration.public_page.hasRegistrationWithSameName')
+                ? t('registration.public_page.potential_duplicate')
                 : t('registration.public_page.validation_errors')
             }>
             <ErrorIcon color="warning" sx={{ ml: '0.5rem' }} />
@@ -314,7 +310,7 @@ export const PublishingAccordion = ({
             </LoadingButton>
           </>
         )}
-        {registrationWithSameName && !isUnpublishedOrDeleted && !isPublished && (
+        {registrationIsValid && duplicateRegistration && !isUnpublishedOrDeleted && !isPublished && (
           <Box>
             <Typography paragraph>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
@@ -322,10 +318,10 @@ export const PublishingAccordion = ({
             <Link
               target="_blank"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.duplicateRegistrationLink}
-              to={getRegistrationLandingPagePath(registrationWithSameName.identifier)}>
+              to={getRegistrationLandingPagePath(duplicateRegistration.identifier)}>
               <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem' }}>
                 <Typography sx={{ textDecoration: 'underline', cursor: 'pointer', color: 'primary.light' }}>
-                  {registrationWithSameName.entityDescription?.mainTitle}
+                  {duplicateRegistration.entityDescription?.mainTitle}
                 </Typography>
                 <OpenInNewOutlinedIcon
                   sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }}
@@ -371,7 +367,7 @@ export const PublishingAccordion = ({
             variant="contained"
             color="info"
             fullWidth
-            onClick={() => onClickPublish()}
+            onClick={duplicateRegistration ? toggleDuplicateWarningModal : publishRegistration}
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest || titleSearchPending}>
             {t('registration.public_page.tasks_panel.publish_registration')}
           </LoadingButton>
@@ -512,7 +508,7 @@ export const PublishingAccordion = ({
         <DuplicateWarningModal
           isOpen={displayDuplicateWarningModal}
           toggleModal={toggleDuplicateWarningModal}
-          duplicateId={registrationWithSameName?.identifier}
+          duplicateId={duplicateRegistration?.identifier}
           onConfirmNotDuplicate={onConfirmNotDuplicate}
         />
       </AccordionDetails>

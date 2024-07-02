@@ -23,7 +23,7 @@ export const DescriptionPanel = () => {
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
-  const { titleSearchPending, registrationWithSameName } = useDuplicateRegistrationSearch(debouncedTitle);
+  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(debouncedTitle);
 
   return (
     <InputContainerBox>
@@ -51,7 +51,7 @@ export const DescriptionPanel = () => {
               InputProps={{
                 endAdornment: titleSearchPending ? (
                   <CircularProgress size={20} />
-                ) : registrationWithSameName ? (
+                ) : duplicateRegistration ? (
                   <ErrorIcon color="warning" />
                 ) : undefined,
               }}
@@ -60,10 +60,10 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        {registrationWithSameName?.entityDescription?.mainTitle && (
+        {duplicateRegistration?.entityDescription?.mainTitle && (
           <SameNameWarning
-            name={registrationWithSameName.entityDescription?.mainTitle}
-            id={registrationWithSameName.identifier}
+            name={duplicateRegistration.entityDescription?.mainTitle}
+            id={duplicateRegistration.identifier}
           />
         )}
         <Field name={DescriptionFieldNames.AlternativeTitles}>

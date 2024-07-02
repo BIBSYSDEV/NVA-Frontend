@@ -1,5 +1,5 @@
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Modal } from '../../../components/Modal';
@@ -10,7 +10,7 @@ interface DuplicateWarningModalProps {
   isOpen: boolean;
   toggleModal: () => void;
   onConfirmNotDuplicate: () => void;
-  duplicateId: string | undefined;
+  duplicateId?: string;
 }
 
 export const DuplicateWarningModal = ({
@@ -24,44 +24,37 @@ export const DuplicateWarningModal = ({
   return (
     <Modal
       open={isOpen}
-      onClose={() => {
-        toggleModal();
-      }}
+      onClose={toggleModal}
       maxWidth="xs"
-      fullWidth={true}
+      fullWidth
       headingText={t('registration.public_page.duplicate_warning_modal.headline')}
       dataTestId={dataTestId.registrationLandingPage.duplicateRegistrationModal.duplicationModal}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <Typography>{t('registration.public_page.duplicate_warning_modal.publication_already_exists')}</Typography>
         {duplicateId && (
-          <Box>
-            <Typography sx={{ display: 'inline' }}>
+          <div>
+            <Typography sx={{ display: 'inline', mr: '0.25rem' }}>
               {`${t('registration.public_page.duplicate_warning_modal.dont_create_duplicates')} ${t('registration.public_page.duplicate_warning_modal.check_if')}`}
             </Typography>
-            <Link
+            <MuiLink
+              component={Link}
               target="_blank"
               data-testid={dataTestId.registrationLandingPage.duplicateRegistrationModal.duplicateRegistrationLink}
-              to={getRegistrationLandingPagePath(duplicateId)}>
-              <Box sx={{ gap: '0.25rem', display: 'inline-flex', mr: '0.25rem' }}>
-                <Typography
-                  sx={{ display: 'inline', textDecoration: 'underline', cursor: 'pointer', color: 'primary.light' }}>
-                  {t('registration.public_page.duplicate_warning_modal.this_publication')}
-                </Typography>
-                <OpenInNewOutlinedIcon
-                  sx={{
-                    cursor: 'pointer',
-                    color: 'primary.main',
-                    height: '1.3rem',
-                    width: '1.3rem',
-                    display: 'inline',
-                  }}
-                />
-              </Box>
-            </Link>
+              to={getRegistrationLandingPagePath(duplicateId)}
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                mr: '0.25rem',
+                color: 'primary.light',
+              }}>
+              {t('registration.public_page.duplicate_warning_modal.this_publication')}
+              <OpenInNewOutlinedIcon fontSize="small" />
+            </MuiLink>
             <Typography sx={{ display: 'inline' }}>
               {t('registration.public_page.duplicate_warning_modal.is_the_same_that_you_have_registered')}
             </Typography>
-          </Box>
+          </div>
         )}
         <Typography sx={{ display: 'inline' }}>
           {t('registration.public_page.duplicate_warning_modal.if_same_press_no_in_box')}
@@ -73,14 +66,11 @@ export const DuplicateWarningModal = ({
           {t('registration.public_page.duplicate_warning_modal.confirm_not_duplicate')}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
-          <Button
-            data-testid={dataTestId.registrationLandingPage.duplicateRegistrationModal.duplicateRegistrationNoButton}
-            variant="text"
-            onClick={toggleModal}>
+          <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={toggleModal}>
             {t('common.no')}
           </Button>
           <Button
-            data-testid={dataTestId.registrationLandingPage.duplicateRegistrationModal.duplicateRegistrationYesButton}
+            data-testid={dataTestId.confirmDialog.acceptButton}
             variant="outlined"
             onClick={onConfirmNotDuplicate}>
             {t('common.yes')}

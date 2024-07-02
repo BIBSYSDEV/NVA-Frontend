@@ -289,8 +289,6 @@ export const dataTestId = {
     duplicateRegistrationModal: {
       duplicationModal: 'duplication-modal',
       duplicateRegistrationLink: 'duplicate-registration-modal-link',
-      duplicateRegistrationNoButton: 'duplicate-registration-no-button',
-      duplicateRegistrationYesButton: 'duplicate-registration-yes-button',
     },
     title: 'public-registration-title',
   },

@@ -1410,14 +1410,14 @@
         "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel, år og kategori som din registrering.",
         "dont_create_duplicates": "Du skal ikke opprette duplikater i NVA.",
         "check_if": "Sjekk om",
-        "this_publication": " denne publikasjonen ",
+        "this_publication": "denne publikasjonen",
         "is_the_same_that_you_have_registered": "er det samme resultatet som du har registrert.",
         "if_same_press_no_in_box": "Om dette er samme resultat som din registrering, må du trykke 'NEI' i denne boksen for å unngå å publisere.",
         "contact_registrator_to_change": "Er det feil eller mangler i publikasjonen som er registrert må du kontakte registrator eller bidragsyter i registreringen for å endre den. Du kan ikke publisere det samme resultatet på nytt i NVA.",
         "confirm_not_duplicate": "Kan du bekrefte at dette ikke er en duplikat?"
       },
       "validation_errors": "Valideringsfeil",
-      "hasRegistrationWithSameName": "Potensiell duplikat"
+      "potential_duplicate": "Potensiell duplikat"
     },
     "publication_types": {
       "AcademicArticle": "Vitenskapelig artikkel",

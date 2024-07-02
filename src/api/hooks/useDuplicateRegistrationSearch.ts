@@ -16,24 +16,26 @@ export const useDuplicateRegistrationSearch = (title: string, publishedYear?: st
   });
 
   const registrationsWithSimilarName = titleSearch.data?.hits ?? [];
+  const duplicateRegistration = registrationsWithSimilarName.find((reg) => {
+    const hasSameName = reg.entityDescription?.mainTitle.toLowerCase() === title.toLowerCase();
 
-  let registrationWithSameName = registrationsWithSimilarName.find(
-    (reg) => reg.entityDescription?.mainTitle.toLowerCase() === title.toLowerCase()
-  );
+    if (!hasSameName) {
+      return false;
+    }
 
-  if (publishedYear && registrationWithSameName?.entityDescription?.publicationDate?.year !== publishedYear) {
-    registrationWithSameName = undefined;
-  }
+    if (publishedYear && reg?.entityDescription?.publicationDate?.year !== publishedYear) {
+      return false;
+    }
 
-  if (
-    publicationContext &&
-    registrationWithSameName?.entityDescription?.reference?.publicationContext.type !== publicationContext
-  ) {
-    registrationWithSameName = undefined;
-  }
+    if (publicationContext && reg?.entityDescription?.reference?.publicationContext.type !== publicationContext) {
+      return false;
+    }
+
+    return true;
+  });
 
   return {
     titleSearchPending: titleSearch.isPending,
-    registrationWithSameName: registrationWithSameName,
+    duplicateRegistration: duplicateRegistration,
   };
 };
