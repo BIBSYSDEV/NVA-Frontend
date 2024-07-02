@@ -264,6 +264,7 @@ export const dataTestId = {
       createDoiButton: 'button-create-doi',
       deleteMessageButton: 'delete-message-button',
       doiRequestAccordion: 'doi-request-accordion',
+      duplicateRegistrationLink: 'duplicate-registration-link',
       messageOptionsButton: 'message-options-button',
       messageSender: 'message-author',
       messageText: 'message-text',
@@ -284,6 +285,10 @@ export const dataTestId = {
       supportAccordion: 'support-accordion',
       tabPanelLog: 'tab-panel-log',
       tabPanelTasks: 'tab-panel-tasks',
+    },
+    duplicateRegistrationModal: {
+      duplicationModal: 'duplication-modal',
+      duplicateRegistrationLink: 'duplicate-registration-modal-link',
     },
     title: 'public-registration-title',
   },
