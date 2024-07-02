@@ -24,6 +24,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
@@ -41,6 +42,7 @@ import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
+import { columnWidthsWhenArchived, columnWidthsWhenNotArchived } from '../FileList';
 import { DownloadFileButton } from './DownloadFileButton';
 
 export const markForPublishId = 'mark-for-publish';
@@ -60,6 +62,8 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
+
+  const useMobileView = useMediaQuery('(max-width:1075px)');
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
   const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
@@ -97,6 +101,8 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   );
   const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
 
+  const columnWidths = isArchived ? columnWidthsWhenArchived : columnWidthsWhenNotArchived;
+
   return (
     <>
       <TableRow
@@ -106,7 +112,12 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           bgcolor: disabled ? 'grey.400' : '',
           td: { verticalAlign: 'top', borderBottom: !isArchived ? 'unset' : '' },
         }}>
-        <TableCell sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem' }}>
+        <TableCell
+          sx={{
+            display: 'flex',
+            gap: '0.75rem',
+            minWidth: columnWidths.nameColumn + '%',
+          }}>
           <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
           <Box sx={{ minWidth: '10rem' }}>
             <TruncatableTypography sx={{ fontWeight: 'bold', color: disabled ? 'grey.600' : '' }}>
@@ -136,7 +147,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             </Typography>
           </ConfirmDialog>
         </TableCell>
-        <TableCell>
+        <TableCell sx={{ width: columnWidths.publishColumn + '%' }}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Field name={fileTypeFieldName}>
               {({ field }: FieldProps) => (
@@ -161,7 +172,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           </Box>
         </TableCell>
         {showFileVersion && !isArchived && (
-          <TableCell>
+          <TableCell sx={{ width: columnWidths.versionColumn + '%' }}>
             <Field name={publisherVersionFieldName}>
               {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                 <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
@@ -215,7 +226,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           </TableCell>
         )}
         {!isArchived && (
-          <TableCell>
+          <TableCell sx={{ width: columnWidths.licenseColumn + '%' }}>
             <Field name={licenseFieldName}>
               {({ field, meta: { error, touched } }: FieldProps<string>) => (
                 <TextField
@@ -306,16 +317,18 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             )}
           </TableCell>
         )}
-        {!isArchived && (
-          <TableCell>
-            <IconButton
-              onClick={() => setOpenCollapsable(!openCollapsable)}
-              size="small"
-              data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
-              {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-        )}
+        <TableCell sx={{ width: columnWidths.iconColumn + '%' }}>
+          {!isArchived && (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <IconButton
+                onClick={() => setOpenCollapsable(!openCollapsable)}
+                size="small"
+                data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
+                {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            </Box>
+          )}
+        </TableCell>
       </TableRow>
       {!isArchived && (
         <TableRow
