@@ -1,4 +1,4 @@
-import { SearchResponse } from '../types/common.types';
+import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import { Journal, Publisher, Series } from '../types/registration.types';
 import { getYearQuery } from '../utils/registration-helpers';
 import { PublicationChannelApiPath } from './apiPaths';
@@ -97,13 +97,14 @@ export const searchForPublishers = async (query: string, year: string) => {
   return searchForPublishersResponse.data;
 };
 
-export const searchForJournals = async (query: string, year: string) => {
-  const searchForJournalsResponse = await apiRequest2<SearchResponse<Journal>>({
+export const searchForJournals = async (query: string, year: string, size: number) => {
+  const searchForJournalsResponse = await apiRequest2<SearchResponse2<Journal>>({
     url: PublicationChannelApiPath.Journal,
     method: 'GET',
     params: {
       query,
       year: getYearQuery(year),
+      size,
     },
   });
 

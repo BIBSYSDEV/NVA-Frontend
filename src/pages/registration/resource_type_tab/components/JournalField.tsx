@@ -1,5 +1,6 @@
-import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { LoadingButton } from '@mui/lab';
+import { Autocomplete, Box, Button, Chip, Paper, styled } from '@mui/material';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -59,12 +60,14 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
 
   const [query, setQuery] = useState(!journalId ? reference?.publicationContext.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
+  const [searchSize, setSearchSize] = useState(10);
 
   const journalOptionsQuery = useQuery({
-    queryKey: ['journalSearch', debouncedQuery, year],
+    queryKey: ['journalSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForJournals(debouncedQuery, year),
+    queryFn: () => searchForJournals(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
+    placeholderData: keepPreviousData,
   });
 
   // Fetch Journals with matching ISSN
@@ -79,7 +82,8 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     queryFn: () =>
       searchForJournals(
         reference?.publicationContext.printIssn ?? reference?.publicationContext.onlineIssn ?? '',
-        year
+        year,
+        1
       ),
     meta: { errorMessage: t('feedback.error.get_journals') },
   });
@@ -101,6 +105,8 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     staleTime: Infinity,
   });
 
+  const options = debouncedQuery && query === debouncedQuery ? journalOptionsQuery.data?.hits ?? [] : [];
+
   return (
     <StyledChannelContainerBox>
       <Field name={ResourceFieldNames.PublicationContextId}>
@@ -112,11 +118,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             data-testid={journalFieldTestId}
             aria-labelledby={`${journalFieldTestId}-label`}
             popupIcon={null}
-            options={
-              debouncedQuery && query === debouncedQuery && !journalOptionsQuery.isPending
-                ? journalOptionsQuery.data?.hits ?? []
-                : []
-            }
+            options={options}
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
@@ -147,6 +149,52 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
+            open
+            PaperComponent={({ children, ...paperProps }) => {
+              const hasMoreHits =
+                journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize;
+              return (
+                <Paper {...paperProps}>
+                  {children}
+                  {hasMoreHits && (
+                    <LoadingButton
+                      sx={{ mt: '0.5rem' }}
+                      loading={journalOptionsQuery.isFetching && !journalOptionsQuery.isPending}
+                      onClick={() => setSearchSize(searchSize + 10)}>
+                      {t('common.show_more')}
+                    </LoadingButton>
+                  )}
+                </Paper>
+              );
+            }}
+            // ListboxComponent={({ children, ...listboxProps }, loff) => {
+            //   console.log(listboxProps, loff);
+
+            //   const hasMoreHits =
+            //     journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize;
+            //   return (
+            //     <ul {...listboxProps}>
+            //       {children}
+            //       {hasMoreHits && (
+            //         <li>
+            //           <LoadingButton
+            //             sx={{ mt: '0.5rem' }}
+            //             loading={journalOptionsQuery.isFetching && !journalOptionsQuery.isPending}
+            //             onClick={() => setSearchSize(searchSize + 10)}>
+            //             Vis flere
+            //           </LoadingButton>
+            //         </li>
+            //       )}
+            //     </ul>
+            //   );
+            // }}
+            // ListboxComponent={(listboxProps) => (
+            //   <CustomListboxComponent
+            //     {...listboxProps}
+            //     hasMore={!!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize}
+            //     onFetchMore={() => setSearchSize(searchSize + 10)}
+            //   />
+            // )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
@@ -194,3 +242,63 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     </StyledChannelContainerBox>
   );
 };
+
+// const ListboxComponent = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLElement>>(
+//   function ListboxComponent(props, ref) {
+//     const { children, ...other } = props;
+
+//     return (
+//       <div ref={ref}>
+//         <VariableSizeList
+//           itemData={itemData}
+//           height={getHeight() + 2 * LISTBOX_PADDING}
+//           width="100%"
+//           ref={gridRef}
+//           outerElementType={OuterElementType}
+//           innerElementType="ul"
+//           itemSize={(index) => getChildSize(itemData[index])}
+//           overscanCount={5}
+//           itemCount={itemCount}>
+//           {renderRow}
+//         </VariableSizeList>
+//       </div>
+//     );
+//   }
+// );
+
+// // interface CustomListboxComponentProps {
+// //   hasMore: boolean;
+// //   onFetchMore: () => void;
+// //   children: ReactNode;
+// // }
+// // const CustomListboxComponent = forwardRef<HTMLAttributes<HTMLElement>, CustomListboxComponentProps>(
+// //   function ListboxComponent(props, ref) {
+// //     const { children, hasMore, onFetchMore, ...other } = props;
+
+// //     return (
+// //       // <Paper {...other} ref={ref}>
+// //       <ul {...other} ref={ref}>
+// //         {children}
+// //         {hasMore && (
+// //           <li style={{ justifyContent: 'center' }}>
+// //             <Button onClick={onFetchMore}>Load more</Button>
+// //           </li>
+// //         )}
+// //       </ul>
+// //       // </Paper>
+// //     );
+// //   }
+// // );
+
+// // const ListboxComponent = React.forwardRef<
+// //   HTMLDivElement,
+// //   React.HTMLAttributes<HTMLElement>
+// // >(function ListboxComponent(props, ref) {
+// //   const { children, ...other } = props;
+// //   const itemData: React.ReactElement[] = [];
+// //   (children as React.ReactElement[]).forEach(
+// //     (item: React.ReactElement & { children?: React.ReactElement[] }) => {
+// //       itemData.push(item);
+// //       itemData.push(...(item.children || []));
+// //     },
+// //   );
