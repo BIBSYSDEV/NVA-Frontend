@@ -1,3 +1,4 @@
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Button, Chip, Paper, styled } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -149,52 +150,24 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
-            open
-            PaperComponent={({ children, ...paperProps }) => {
+            PaperComponent={({ children, ...props }) => {
               const hasMoreHits =
                 journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize;
               return (
-                <Paper {...paperProps}>
+                <Paper {...props}>
                   {children}
                   {hasMoreHits && (
                     <LoadingButton
-                      sx={{ mt: '0.5rem' }}
+                      sx={{ m: '0.5rem' }}
+                      endIcon={<ExpandMore />}
                       loading={journalOptionsQuery.isFetching && !journalOptionsQuery.isPending}
-                      onClick={() => setSearchSize(searchSize + 10)}>
+                      onClick={() => setSearchSize(searchSize + 5)}>
                       {t('common.show_more')}
                     </LoadingButton>
                   )}
                 </Paper>
               );
             }}
-            // ListboxComponent={({ children, ...listboxProps }, loff) => {
-            //   console.log(listboxProps, loff);
-
-            //   const hasMoreHits =
-            //     journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize;
-            //   return (
-            //     <ul {...listboxProps}>
-            //       {children}
-            //       {hasMoreHits && (
-            //         <li>
-            //           <LoadingButton
-            //             sx={{ mt: '0.5rem' }}
-            //             loading={journalOptionsQuery.isFetching && !journalOptionsQuery.isPending}
-            //             onClick={() => setSearchSize(searchSize + 10)}>
-            //             Vis flere
-            //           </LoadingButton>
-            //         </li>
-            //       )}
-            //     </ul>
-            //   );
-            // }}
-            // ListboxComponent={(listboxProps) => (
-            //   <CustomListboxComponent
-            //     {...listboxProps}
-            //     hasMore={!!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize}
-            //     onFetchMore={() => setSearchSize(searchSize + 10)}
-            //   />
-            // )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
@@ -242,63 +215,3 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     </StyledChannelContainerBox>
   );
 };
-
-// const ListboxComponent = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLElement>>(
-//   function ListboxComponent(props, ref) {
-//     const { children, ...other } = props;
-
-//     return (
-//       <div ref={ref}>
-//         <VariableSizeList
-//           itemData={itemData}
-//           height={getHeight() + 2 * LISTBOX_PADDING}
-//           width="100%"
-//           ref={gridRef}
-//           outerElementType={OuterElementType}
-//           innerElementType="ul"
-//           itemSize={(index) => getChildSize(itemData[index])}
-//           overscanCount={5}
-//           itemCount={itemCount}>
-//           {renderRow}
-//         </VariableSizeList>
-//       </div>
-//     );
-//   }
-// );
-
-// // interface CustomListboxComponentProps {
-// //   hasMore: boolean;
-// //   onFetchMore: () => void;
-// //   children: ReactNode;
-// // }
-// // const CustomListboxComponent = forwardRef<HTMLAttributes<HTMLElement>, CustomListboxComponentProps>(
-// //   function ListboxComponent(props, ref) {
-// //     const { children, hasMore, onFetchMore, ...other } = props;
-
-// //     return (
-// //       // <Paper {...other} ref={ref}>
-// //       <ul {...other} ref={ref}>
-// //         {children}
-// //         {hasMore && (
-// //           <li style={{ justifyContent: 'center' }}>
-// //             <Button onClick={onFetchMore}>Load more</Button>
-// //           </li>
-// //         )}
-// //       </ul>
-// //       // </Paper>
-// //     );
-// //   }
-// // );
-
-// // const ListboxComponent = React.forwardRef<
-// //   HTMLDivElement,
-// //   React.HTMLAttributes<HTMLElement>
-// // >(function ListboxComponent(props, ref) {
-// //   const { children, ...other } = props;
-// //   const itemData: React.ReactElement[] = [];
-// //   (children as React.ReactElement[]).forEach(
-// //     (item: React.ReactElement & { children?: React.ReactElement[] }) => {
-// //       itemData.push(item);
-// //       itemData.push(...(item.children || []));
-// //     },
-// //   );
