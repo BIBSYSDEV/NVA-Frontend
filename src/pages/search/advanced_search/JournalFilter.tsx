@@ -5,10 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
+import { AutocompletePaper } from '../../../components/AutocompletePaper';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+
+const defaultSearchSize = 5;
 
 export const JournalFilter = () => {
   const { t } = useTranslation();
@@ -17,11 +20,12 @@ export const JournalFilter = () => {
   const journalParam = searchParams.get(ResultParam.Journal);
   const [journalQuery, setJournalQuery] = useState('');
   const debouncedQuery = useDebounce(journalQuery);
+  const [searchSize, setSearchSize] = useState(defaultSearchSize);
 
   const journalOptionsQuery = useQuery({
-    queryKey: ['journalSearch', debouncedQuery],
+    queryKey: ['journalSearch', debouncedQuery, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === journalQuery,
-    queryFn: () => searchForJournals(debouncedQuery, '2023'),
+    queryFn: () => searchForJournals(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
   });
 
@@ -29,7 +33,7 @@ export const JournalFilter = () => {
 
   const selectedJournalQuery = useQuery({
     enabled: !!journalParam,
-    queryKey: [journalParam],
+    queryKey: ['journalSearch', journalParam],
     queryFn: () => (journalParam ? fetchJournal(journalParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
@@ -66,6 +70,14 @@ export const JournalFilter = () => {
         <li {...props} key={option.id}>
           <Typography>{option.name}</Typography>
         </li>
+      )}
+      PaperComponent={(props) => (
+        <AutocompletePaper
+          {...props}
+          hasMoreHits={!!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize}
+          onShowMoreHits={() => setSearchSize(searchSize + defaultSearchSize)}
+          isLoadingMoreHits={journalOptionsQuery.isFetching && !journalOptionsQuery.isPending}
+        />
       )}
       data-testid={dataTestId.startPage.advancedSearch.journalField}
       renderInput={(params) => (
