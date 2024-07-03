@@ -49,6 +49,8 @@ export const StyledCreateChannelButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+const defaultSearchSize = 5;
+
 export const JournalField = ({ confirmedContextType, unconfirmedContextType }: JournalFieldProps) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
@@ -61,7 +63,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
 
   const [query, setQuery] = useState(!journalId ? reference?.publicationContext.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [searchSize, setSearchSize] = useState(10);
+  const [searchSize, setSearchSize] = useState(defaultSearchSize);
 
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, year, searchSize],
@@ -161,7 +163,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                       sx={{ m: '0.5rem' }}
                       endIcon={<ExpandMore />}
                       loading={journalOptionsQuery.isFetching && !journalOptionsQuery.isPending}
-                      onClick={() => setSearchSize(searchSize + 5)}>
+                      onClick={() => setSearchSize(searchSize + defaultSearchSize)}>
                       {t('common.show_more')}
                     </LoadingButton>
                   )}
