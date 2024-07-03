@@ -1408,10 +1408,7 @@
       "duplicate_warning_modal": {
         "headline": "Resultatet kan være en duplikat",
         "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel og år som din registrering.",
-        "dont_create_duplicates": "Du skal ikke opprette duplikater i NVA.",
-        "check_if": "Sjekk om",
-        "this_publication": "denne publikasjonen",
-        "is_the_same_that_you_have_registered": "er det samme resultatet som du har registrert.",
+        "check_duplicate": "Du skal ikke opprette duplikater i NVA. Sjekk om <0>denne publikasjonen <0></0></0> er det samme resultatet som du har registrert.",
         "if_same_press_no_in_box": "Om dette er samme resultat som din registrering, må du trykke 'NEI' i denne boksen for å unngå å publisere.",
         "contact_registrator_to_change": "Er det feil eller mangler i publikasjonen som er registrert må du kontakte registrator eller bidragsyter i registreringen for å endre den. Du kan ikke publisere det samme resultatet på nytt i NVA.",
         "confirm_not_duplicate": "Kan du bekrefte at dette ikke er en duplikat?"
