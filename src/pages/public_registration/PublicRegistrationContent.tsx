@@ -100,7 +100,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         <PublicGeneralContent registration={registration} />
 
         {(registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
-          <Box sx={{ mb: '0.5rem', textAlign: 'center' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: '0.5rem' }}>
             <Typography
               sx={{
                 py: '0.3rem',
@@ -109,15 +109,6 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
                 color: 'primary.contrastText',
               }}>
               {t('registration.public_page.result_not_published')}
-            </Typography>
-            <Typography
-              sx={{
-                py: '0.3rem',
-                px: { xs: '2rem', sm: '3rem' },
-                bgcolor: 'primary.light',
-                color: 'primary.contrastText',
-              }}>
-              {t('registration.public_page.contact_curator_if_you_need_assistance')}
             </Typography>
           </Box>
         )}

@@ -115,26 +115,14 @@ export const RegistrationListItemContent = ({
 
           {ticketView &&
             (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
-              <Box sx={{ mb: '0.5rem', textAlign: 'center' }}>
-                <Typography
-                  sx={{
-                    py: '0.3rem',
-                    px: { xs: '2rem', sm: '3rem' },
-                    bgcolor: 'primary.light',
-                    color: 'primary.contrastText',
-                  }}>
-                  {t('registration.public_page.result_not_published')}
-                </Typography>
-                <Typography
-                  sx={{
-                    py: '0.3rem',
-                    px: { xs: '2rem', sm: '3rem' },
-                    bgcolor: 'primary.light',
-                    color: 'primary.contrastText',
-                  }}>
-                  {t('registration.public_page.contact_curator_if_you_need_assistance')}
-                </Typography>
-              </Box>
+              <Typography
+                sx={{
+                  p: '0.1rem 0.75rem',
+                  bgcolor: 'primary.light',
+                  color: 'primary.contrastText',
+                }}>
+                {t('registration.public_page.result_not_published')}
+              </Typography>
             )}
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>

@@ -676,6 +676,7 @@
   "my_page": {
     "messages": {
       "all_ticket_types": "Alle statuser",
+      "contact_curator_if_you_need_assistance": "Kontakt kurator hvis du trenger hjelp med registreringen",
       "created_in_nva": "Opprettet i NVA",
       "delete_message": "Slette melding",
       "delete_message_description": "Er du sikker på at du vil slette meldingen?",
@@ -1353,7 +1354,6 @@
       "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
       "cristin_id": "Cristin-ID",
-      "contact_curator_if_you_need_assistance": "Trenger du hjelp med registreringen? Kontakt kurator ved å sende melding i det blå feltet som heter \"Kuratorstøtte\"",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
