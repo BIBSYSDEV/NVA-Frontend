@@ -2,7 +2,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,15 +20,15 @@ import {
   userCanDeleteRegistration,
 } from '../utils/registration-helpers';
 import {
-  UrlPathTemplate,
   getRegistrationLandingPagePath,
   getRegistrationWizardPath,
   getResearchProfilePath,
+  UrlPathTemplate,
 } from '../utils/urlPaths';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
-import { TruncatableTypography } from './TruncatableTypography';
 import { SearchListItem } from './styled/Wrappers';
+import { TruncatableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   registrations: Registration[];
@@ -115,14 +115,26 @@ export const RegistrationListItemContent = ({
 
           {ticketView &&
             (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
-              <Typography
-                sx={{
-                  p: '0.1rem 0.75rem',
-                  bgcolor: 'primary.light',
-                  color: 'primary.contrastText',
-                }}>
-                {t('registration.public_page.result_not_published')}
-              </Typography>
+              <Box sx={{ mb: '0.5rem', textAlign: 'center' }}>
+                <Typography
+                  sx={{
+                    py: '0.3rem',
+                    px: { xs: '2rem', sm: '3rem' },
+                    bgcolor: 'primary.light',
+                    color: 'primary.contrastText',
+                  }}>
+                  {t('registration.public_page.result_not_published')}
+                </Typography>
+                <Typography
+                  sx={{
+                    py: '0.3rem',
+                    px: { xs: '2rem', sm: '3rem' },
+                    bgcolor: 'primary.light',
+                    color: 'primary.contrastText',
+                  }}>
+                  {t('registration.public_page.contact_curator_if_you_need_assistance')}
+                </Typography>
+              </Box>
             )}
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>

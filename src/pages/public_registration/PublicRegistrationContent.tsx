@@ -5,12 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { FetchResultsParams, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
-import { TruncatableTypography } from '../../components/TruncatableTypography';
-import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
@@ -19,17 +19,17 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
 import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
+import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
+import { ListExternalRelations } from './public_links/ListExternalRelations';
+import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
+import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
+import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
 import { PublicFundingsContent } from './PublicFundingsContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
-import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
-import { ListExternalRelations } from './public_links/ListExternalRelations';
-import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
-import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
-import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -100,7 +100,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         <PublicGeneralContent registration={registration} />
 
         {(registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
-          <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: '0.5rem' }}>
+          <Box sx={{ mb: '0.5rem', textAlign: 'center' }}>
             <Typography
               sx={{
                 py: '0.3rem',
@@ -109,6 +109,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
                 color: 'primary.contrastText',
               }}>
               {t('registration.public_page.result_not_published')}
+            </Typography>
+            <Typography
+              sx={{
+                py: '0.3rem',
+                px: { xs: '2rem', sm: '3rem' },
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+              }}>
+              {t('registration.public_page.contact_curator_if_you_need_assistance')}
             </Typography>
           </Box>
         )}
