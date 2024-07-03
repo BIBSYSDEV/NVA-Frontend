@@ -1384,6 +1384,8 @@
         "assign_curator": "Sett kurator",
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
+        "duplicate_title_description_introduction": "Denne registreringen har samme tittel og år som følgende publikasjon:",
+        "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om resultatet som allerede er publisert er det samme som resultatet du har registrert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det. Ikke registrer og publiser et nytt resultat med endringen siden begge resultatene blir tilgjengelig i NVA.</0>",
         "files_will_soon_be_published": "Fil(er) vil være tilgjengelig for andre om kort tid. Vent litt før du oppdaterer siden på nytt for å se status.",
         "has_rejected_files_publishing_request": "<0>Beskrivelse (metadata) er publisert og offentlig tilgjengelig.</0><0>Kurator har avvist filen, og den er fjernet fra visningen av forskningsresultatet.</0>",
         "has_reserved_doi": "Du har reservert en DOI til denne registreringen. Den kan deles med de som ønsker å sitere dette resultatet. Når registreringen blir publisert og blir offentlig tilgjengelig, må en kurator validere metadata før DOI blir offentlig tilgjengelig.",
@@ -1403,7 +1405,16 @@
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig."
       },
-      "validation_errors": "Valideringsfeil"
+      "duplicate_warning_modal": {
+        "headline": "Resultatet kan være en duplikat",
+        "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel og år som din registrering.",
+        "check_duplicate": "Du skal ikke opprette duplikater i NVA. Sjekk om <0>denne publikasjonen <0></0></0> er det samme resultatet som du har registrert.",
+        "if_same_press_no_in_box": "Om dette er samme resultat som din registrering, må du trykke 'NEI' i denne boksen for å unngå å publisere.",
+        "contact_registrator_to_change": "Er det feil eller mangler i publikasjonen som er registrert må du kontakte registrator eller bidragsyter i registreringen for å endre den. Du kan ikke publisere det samme resultatet på nytt i NVA.",
+        "confirm_not_duplicate": "Kan du bekrefte at dette ikke er en duplikat?"
+      },
+      "validation_errors": "Valideringsfeil",
+      "potential_duplicate": "Potensiell duplikat"
     },
     "publication_types": {
       "AcademicArticle": "Vitenskapelig artikkel",

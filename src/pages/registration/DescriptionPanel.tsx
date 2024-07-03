@@ -5,7 +5,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDuplicateTitleSearch } from '../../api/hooks/useDuplicateTitleSearch';
+import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegistrationSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -23,12 +23,7 @@ export const DescriptionPanel = () => {
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
-
-  const titleSearch = useDuplicateTitleSearch(debouncedTitle);
-  const registrationsWithSimilarName = titleSearch.data?.hits ?? [];
-  const registrationWithSameName = registrationsWithSimilarName.find(
-    (reg) => reg.entityDescription?.mainTitle.toLowerCase() === debouncedTitle.toLowerCase()
-  );
+  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(debouncedTitle);
 
   return (
     <InputContainerBox>
@@ -54,9 +49,9 @@ export const DescriptionPanel = () => {
               fullWidth
               label={t('common.title')}
               InputProps={{
-                endAdornment: titleSearch.isPending ? (
+                endAdornment: titleSearchPending ? (
                   <CircularProgress size={20} />
-                ) : registrationWithSameName ? (
+                ) : duplicateRegistration ? (
                   <ErrorIcon color="warning" />
                 ) : undefined,
               }}
@@ -65,10 +60,10 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        {registrationWithSameName?.entityDescription?.mainTitle && (
+        {duplicateRegistration?.entityDescription?.mainTitle && (
           <SameNameWarning
-            name={registrationWithSameName.entityDescription?.mainTitle}
-            id={registrationWithSameName.identifier}
+            name={duplicateRegistration.entityDescription?.mainTitle}
+            id={duplicateRegistration.identifier}
           />
         )}
         <Field name={DescriptionFieldNames.AlternativeTitles}>
