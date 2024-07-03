@@ -53,13 +53,9 @@ export const DuplicateWarningDialog = ({
             />
           </Typography>
         )}
-        <Typography sx={{ display: 'inline' }}>
-          {t('registration.public_page.duplicate_warning_modal.if_same_press_no_in_box')}
-        </Typography>
-        <Typography sx={{ display: 'inline' }}>
-          {t('registration.public_page.duplicate_warning_modal.contact_registrator_to_change')}
-        </Typography>
-        <Typography sx={{ display: 'inline', textAlign: 'center' }}>
+        <Typography>{t('registration.public_page.duplicate_warning_modal.if_same_press_no_in_box')}</Typography>
+        <Typography>{t('registration.public_page.duplicate_warning_modal.contact_registrator_to_change')}</Typography>
+        <Typography sx={{ textAlign: 'center' }}>
           {t('registration.public_page.duplicate_warning_modal.confirm_not_duplicate')}
         </Typography>
       </Box>
