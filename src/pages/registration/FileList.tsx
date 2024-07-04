@@ -2,6 +2,7 @@ import {
   Box,
   Link,
   Paper,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -27,6 +28,12 @@ import {
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
+
+const StyledTableCell = styled(TableCell)({
+  pt: '0.75rem',
+  pb: '0.25rem',
+  lineHeight: '1.1rem',
+});
 
 interface FileListProps {
   title: string;
@@ -77,17 +84,19 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
         flexDirection: 'column',
         gap: '1rem',
       }}>
-      <Typography variant="h3">{title}</Typography>
+      <Typography component="h3" variant="h4">
+        {title}
+      </Typography>
       <TableContainer component={Paper} elevation={3} sx={{ mb: '2rem', width: '100%' }}>
         <Table>
-          <TableHead>
+          <TableHead sx={{ bgcolor: 'white' }}>
             <TableRow>
-              <TableCell>{t('common.name')}</TableCell>
-              <TableCell>{t('common.file')}</TableCell>
-              <TableCell>{t('registration.files_and_license.size')}</TableCell>
-              <TableCell id={markForPublishId}>{t('registration.files_and_license.mark_for_publish')}</TableCell>
+              <StyledTableCell>{t('common.name')}</StyledTableCell>
+              <StyledTableCell id={markForPublishId}>
+                {t('registration.files_and_license.mark_for_publish')}
+              </StyledTableCell>
               {showFileVersion && !archived && (
-                <TableCell>
+                <StyledTableCell>
                   <Box
                     sx={{
                       display: 'flex',
@@ -166,10 +175,10 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                       )}
                     </HelperTextModal>
                   </Box>
-                </TableCell>
+                </StyledTableCell>
               )}
               {!archived && (
-                <TableCell>
+                <StyledTableCell>
                   <Box
                     sx={{
                       display: 'flex',
@@ -205,8 +214,9 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                         ))}
                     </HelperTextModal>
                   </Box>
-                </TableCell>
+                </StyledTableCell>
               )}
+              {!archived && <TableCell />}
             </TableRow>
           </TableHead>
           <TableBody>

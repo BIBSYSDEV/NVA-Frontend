@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useFetchNviCandidateQuery } from '../../api/hooks/useFetchNviCandidateQuery';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import disciplines from '../../resources/disciplines.json';
+import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import {
   BookPublicationContext,
@@ -35,7 +36,6 @@ import {
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
-import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import {
@@ -91,10 +91,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 
   const cristinIdentifier = registration.additionalIdentifiers?.find(
-    (identifier) => identifier.sourceName === 'Cristin'
+    (identifier) => identifier.type === 'CristinIdentifier' || identifier.sourceName === 'Cristin'
   )?.value;
   const scopusIdentifier = registration.additionalIdentifiers?.find(
-    (identifier) => identifier.sourceName === 'Scopus'
+    (identifier) => identifier.type === 'ScopusIdentifier' || identifier.sourceName === 'Scopus'
   )?.value;
 
   const isNviReported = nviCandidateQuery.isSuccess && nviCandidateQuery.data.status === 'Reported';

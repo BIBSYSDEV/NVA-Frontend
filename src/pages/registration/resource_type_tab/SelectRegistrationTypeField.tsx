@@ -68,19 +68,30 @@ export const SelectRegistrationTypeField = () => {
   const updateRegistrationData = (newInstanceType: PublicationInstanceType) => {
     if (newInstanceType !== currentInstanceType) {
       const newContextType = getMainRegistrationType(newInstanceType);
-      const newMainType = newContextType !== values.entityDescription?.reference?.publicationContext?.type;
+      const oldContextType = values.entityDescription?.reference?.publicationContext?.type;
+      const contextTypeIsChanged = newContextType !== oldContextType;
+
       switch (newContextType) {
         case PublicationType.PublicationInJournal:
-          newMainType &&
+          if (contextTypeIsChanged) {
+            // If we move between category groups we reset all fields
             setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
-          setFieldValue(
-            instanceTypeBaseFieldName,
-            { ...emptyJournalPublicationInstance, type: newInstanceType },
-            false
-          );
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...emptyJournalPublicationInstance, type: newInstanceType },
+              false
+            );
+          } else {
+            // If we move between different categories in the same group with the same fields, we keep the info in the fields
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
           break;
         case PublicationType.Book:
-          newMainType &&
+          if (contextTypeIsChanged) {
             setFieldValue(
               contextTypeBaseFieldName,
               {
@@ -90,10 +101,17 @@ export const SelectRegistrationTypeField = () => {
               },
               false
             );
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
+            setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
+          } else {
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
           break;
         case PublicationType.Report:
-          newMainType &&
+          if (contextTypeIsChanged) {
             setFieldValue(
               contextTypeBaseFieldName,
               {
@@ -103,10 +121,21 @@ export const SelectRegistrationTypeField = () => {
               },
               false
             );
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyReportPublicationInstance, type: newInstanceType }, false);
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...emptyReportPublicationInstance, type: newInstanceType },
+              false
+            );
+          } else {
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
           break;
         case PublicationType.Degree:
-          newMainType &&
+          contextTypeIsChanged &&
             setFieldValue(
               contextTypeBaseFieldName,
               {
@@ -120,23 +149,41 @@ export const SelectRegistrationTypeField = () => {
           setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
           break;
         case PublicationType.Anthology:
-          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Anthology }, false);
-          setFieldValue(
-            instanceTypeBaseFieldName,
-            { ...emptyChapterPublicationInstance, type: newInstanceType },
-            false
-          );
+          if (contextTypeIsChanged) {
+            setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Anthology }, false);
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...emptyChapterPublicationInstance, type: newInstanceType },
+              false
+            );
+          } else {
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
           break;
         case PublicationType.Presentation:
-          newMainType && setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
-          setFieldValue(
-            instanceTypeBaseFieldName,
-            { ...emptyPresentationPublicationInstance, type: newInstanceType },
-            false
-          );
+          if (contextTypeIsChanged) {
+            setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...emptyPresentationPublicationInstance, type: newInstanceType },
+              false
+            );
+          } else {
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              { ...values.entityDescription?.reference?.publicationInstance, type: newInstanceType },
+              false
+            );
+          }
+
           break;
         case PublicationType.Artistic:
-          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
+          contextTypeIsChanged &&
+            setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
           setFieldValue(
             instanceTypeBaseFieldName,
             { ...emptyArtisticPublicationInstance, type: newInstanceType },
@@ -145,8 +192,8 @@ export const SelectRegistrationTypeField = () => {
           break;
         case PublicationType.MediaContribution:
           if (isPeriodicalMediaContribution(newInstanceType)) {
-            setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
             if (!isPeriodicalMediaContribution(currentInstanceType)) {
+              setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
               setFieldValue(
                 instanceTypeBaseFieldName,
                 {
@@ -175,7 +222,7 @@ export const SelectRegistrationTypeField = () => {
           }
           break;
         case PublicationType.ResearchData:
-          newMainType && setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
+          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
           setFieldValue(
             instanceTypeBaseFieldName,
             { ...emptyResearchDataPublicationInstance, type: newInstanceType },
@@ -183,11 +230,11 @@ export const SelectRegistrationTypeField = () => {
           );
           break;
         case PublicationType.ExhibitionContent:
-          newMainType && setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);
+          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);
           setFieldValue(instanceTypeBaseFieldName, emptyExhibitionPublicationInstance, false);
           break;
         case PublicationType.GeographicalContent:
-          newMainType && setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
+          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }

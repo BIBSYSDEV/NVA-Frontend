@@ -1,9 +1,10 @@
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
+import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import WarningIcon from '@mui/icons-material/Warning';
 import { LoadingButton } from '@mui/lab';
 import {
   Accordion,
@@ -11,7 +12,12 @@ import {
   AccordionSummary,
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
+  TextField,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -19,7 +25,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link, Link as RouterLink } from 'react-router-dom';
+import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -32,13 +39,14 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getFirstErrorTab, getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers';
 import { userCanPublishRegistration } from '../../../utils/registration-helpers';
-import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
 import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { DeletePublication } from './DeletePublication';
+import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -66,8 +74,16 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
+  const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState('');
+
+  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(
+    registration.entityDescription?.mainTitle || '',
+    registration.entityDescription?.publicationDate?.year
+  );
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
+  const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
   const registrationHasFile = registration.associatedArtifacts.some(
     (artifact) => artifact.type === FileType.PublishedFile
   );
@@ -121,7 +137,7 @@ export const PublishingAccordion = ({
 
   const firstErrorTab = Math.max(getFirstErrorTab(tabErrors), 0);
 
-  const onClickPublish = async () => {
+  const publishRegistration = async () => {
     setIsLoading(LoadingState.CreatePublishingRequest);
     const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
@@ -149,6 +165,13 @@ export const PublishingAccordion = ({
     }
     setIsLoading(LoadingState.None);
   };
+
+  const onConfirmNotDuplicate = () => {
+    publishRegistration();
+    toggleDuplicateWarningModal();
+  };
+
+  const toggleDuplicateWarningModal = () => setDisplayDuplicateWarningModal(!displayDuplicateWarningModal);
 
   const registratorPublishesMetadataAndFiles =
     lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataAndFiles';
@@ -180,33 +203,52 @@ export const PublishingAccordion = ({
 
   const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const unpublishedOrDeleted =
+  const isUnpublishedOrDeleted =
     registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
+  const isPublished = registration.status === RegistrationStatus.Published;
+  const showRegistrationWithSameNameWarningIcon = duplicateRegistration && !isPublished;
+
+  const handleRejectPublishFileRequest = async (message: string) => {
+    if (lastPublishingRequest) {
+      setIsLoading(LoadingState.RejectPublishingRequest);
+      await addMessage(lastPublishingRequest.id, message);
+      await ticketMutation.mutateAsync({ status: 'Closed' });
+      setIsLoading(LoadingState.None);
+      setOpenRejectionDialog(false);
+    }
+  };
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       sx={{ bgcolor: 'publishingRequest.light' }}
       elevation={3}
-      defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus}>
-      <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {registration.status === RegistrationStatus.Unpublished || registration.status === RegistrationStatus.Deleted
-          ? t(`registration.status.${registration.status}`)
-          : t('registration.public_page.publication')}
-        {lastPublishingRequest &&
-          registration.status !== RegistrationStatus.Unpublished &&
-          registration.status !== RegistrationStatus.Deleted &&
-          ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
-        {!registrationIsValid && !unpublishedOrDeleted && (
-          <Tooltip title={t('registration.public_page.validation_errors')}>
-            <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
+      defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
+        <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
+          {isUnpublishedOrDeleted
+            ? t(`registration.status.${registration.status}`)
+            : t('registration.public_page.publication')}
+          {lastPublishingRequest &&
+            registration.status !== RegistrationStatus.Unpublished &&
+            registration.status !== RegistrationStatus.Deleted &&
+            ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
+        </Typography>
+        {(!registrationIsValid || showRegistrationWithSameNameWarningIcon) && !isUnpublishedOrDeleted && (
+          <Tooltip
+            title={
+              showRegistrationWithSameNameWarningIcon
+                ? t('registration.public_page.potential_duplicate')
+                : t('registration.public_page.validation_errors')
+            }>
+            <ErrorIcon color="warning" sx={{ ml: '0.5rem' }} />
           </Tooltip>
         )}
       </AccordionSummary>
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {tabErrors && !unpublishedOrDeleted && (
+        {tabErrors && !isUnpublishedOrDeleted && (
           <>
             <Typography>{t('registration.public_page.error_description')}</Typography>
             <ErrorList tabErrors={tabErrors} />
@@ -267,6 +309,32 @@ export const PublishingAccordion = ({
             </LoadingButton>
           </>
         )}
+        {registrationIsValid && duplicateRegistration && !isUnpublishedOrDeleted && !isPublished && (
+          <Box>
+            <Typography paragraph>
+              {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
+            </Typography>
+            <Link
+              target="_blank"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.duplicateRegistrationLink}
+              to={getRegistrationLandingPagePath(duplicateRegistration.identifier)}>
+              <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem' }}>
+                <Typography sx={{ textDecoration: 'underline', cursor: 'pointer', color: 'primary.light' }}>
+                  {duplicateRegistration.entityDescription?.mainTitle}
+                </Typography>
+                <OpenInNewOutlinedIcon
+                  sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }}
+                />
+              </Box>
+            </Link>
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.duplicate_title_description_details"
+              components={[<Typography paragraph />]}
+            />
+            <Divider sx={{ bgcolor: 'grey.400', mb: '0.5rem' }} />
+          </Box>
+        )}
 
         {/* Tell user what they can publish */}
         {!lastPublishingRequest && isDraftRegistration && registrationIsValid && (
@@ -292,24 +360,27 @@ export const PublishingAccordion = ({
 
         {isDraftRegistration && !lastPublishingRequest && (
           <LoadingButton
-            disabled={isLoading !== LoadingState.None || !registrationIsValid}
+            disabled={isLoading !== LoadingState.None || !registrationIsValid || titleSearchPending}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
             sx={{ mt: '1rem' }}
             variant="contained"
             color="info"
             fullWidth
-            onClick={onClickPublish}
-            loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
+            onClick={duplicateRegistration ? toggleDuplicateWarningModal : publishRegistration}
+            loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest || titleSearchPending}>
             {t('registration.public_page.tasks_panel.publish_registration')}
           </LoadingButton>
         )}
 
         {isPublishedRegistration && hasClosedTicket && (
-          <Trans
-            t={t}
-            i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
-            components={[<Typography paragraph />]}
-          />
+          <>
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
+              components={[<Typography paragraph />]}
+            />
+            <TicketMessageList ticket={lastPublishingRequest} />
+          </>
         )}
 
         {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
@@ -370,11 +441,55 @@ export const PublishingAccordion = ({
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
               startIcon={<CloseIcon />}
-              onClick={() => ticketMutation.mutate({ status: 'Closed' })}
+              onClick={() => setOpenRejectionDialog(true)}
               loading={isLoading === LoadingState.RejectPublishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.reject_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
+
+            <Dialog open={openRejectionDialog} onClose={() => setOpenRejectionDialog(false)}>
+              <DialogTitle fontWeight="bold">{t('registration.public_page.reject_publish_request')}</DialogTitle>
+              <DialogContent>
+                <Trans
+                  i18nKey="registration.public_page.reject_publish_request_description"
+                  components={[<Typography paragraph />]}
+                />
+                <TextField
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectionMessageTextField}
+                  inputProps={{ maxLength: 160 }}
+                  variant="filled"
+                  multiline
+                  minRows={3}
+                  maxRows={Infinity}
+                  fullWidth
+                  required
+                  label={t('registration.public_page.reason_for_rejection')}
+                  FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+                  helperText={`${rejectionReason.length}/160`}
+                  value={rejectionReason}
+                  onChange={(event) => setRejectionReason(event.target.value)}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.cancelRejectionButton}
+                  onClick={() => setOpenRejectionDialog(false)}>
+                  {t('common.cancel')}
+                </Button>
+                <LoadingButton
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.rejectionDialogConfirmButton}
+                  disabled={!rejectionReason}
+                  loading={isLoading === LoadingState.RejectPublishingRequest}
+                  variant="contained"
+                  onClick={() =>
+                    handleRejectPublishFileRequest(
+                      `${t('registration.public_page.reason_for_rejection')}: ${rejectionReason}`
+                    )
+                  }>
+                  {t('common.reject')}
+                </LoadingButton>
+              </DialogActions>
+            </Dialog>
           </Box>
         )}
 
@@ -389,6 +504,12 @@ export const PublishingAccordion = ({
           </Box>
         )}
         {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
+        <DuplicateWarningDialog
+          isOpen={displayDuplicateWarningModal}
+          toggleModal={toggleDuplicateWarningModal}
+          duplicateId={duplicateRegistration?.identifier}
+          onConfirmNotDuplicate={onConfirmNotDuplicate}
+        />
       </AccordionDetails>
     </Accordion>
   );
