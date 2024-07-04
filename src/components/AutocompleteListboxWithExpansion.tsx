@@ -18,13 +18,15 @@ export const AutocompleteListboxWithExpansion = forwardRef<HTMLUListElement, Aut
       <ul {...other} ref={ref}>
         {children}
         {hasMoreHits && (
-          <LoadingButton
-            sx={{ m: '0.5rem' }}
-            endIcon={<ExpandMore />}
-            loading={isLoadingMoreHits}
-            onClick={onShowMoreHits}>
-            {t('common.show_more')}
-          </LoadingButton>
+          <li>
+            <LoadingButton
+              sx={{ m: '0.5rem' }}
+              endIcon={<ExpandMore />}
+              loading={isLoadingMoreHits}
+              onClick={onShowMoreHits}>
+              {t('common.show_more')}
+            </LoadingButton>
+          </li>
         )}
       </ul>
     );

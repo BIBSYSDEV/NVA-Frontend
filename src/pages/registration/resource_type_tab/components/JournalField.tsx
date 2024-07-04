@@ -154,6 +154,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
+            open
             ListboxComponent={AutocompleteListboxWithExpansion}
             ListboxProps={
               {
