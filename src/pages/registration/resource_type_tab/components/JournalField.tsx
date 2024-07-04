@@ -3,7 +3,7 @@ import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { forwardRef, useEffect, useState } from 'react';
+import { HTMLProps, forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { searchForJournals } from '../../../../api/publicationChannelApi';
@@ -152,10 +152,10 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
-            ListboxComponent={CustomListboxComponent}
+            ListboxComponent={ListboxComponentWithExpansion}
             ListboxProps={
               {
-                hasMoreHits: true,
+                hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
                 onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
                 isLoadingMoreHits: journalOptionsQuery.isFetching && !journalOptionsQuery.isPending,
               } as any
@@ -208,14 +208,14 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   );
 };
 
-interface CustomProps {
+interface ListboxComponentWithExpansionProps extends HTMLProps<HTMLUListElement> {
   hasMoreHits?: boolean;
   onShowMoreHits?: () => void;
   isLoadingMoreHits?: boolean;
 }
 
-const CustomListboxComponent = forwardRef<HTMLUListElement, React.HTMLProps<HTMLUListElement> & CustomProps>(
-  function CustomListboxComponent(props, ref) {
+const ListboxComponentWithExpansion = forwardRef<HTMLUListElement, ListboxComponentWithExpansionProps>(
+  function ListboxComponentWithExpansion(props, ref) {
     const { children, hasMoreHits, onShowMoreHits, isLoadingMoreHits, ...other } = props;
     const { t } = useTranslation();
 
