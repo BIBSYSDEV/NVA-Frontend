@@ -223,7 +223,7 @@ export const PublishingAccordion = ({
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       sx={{ bgcolor: 'publishingRequest.light' }}
       elevation={3}
-      defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus}>
+      defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
           {isUnpublishedOrDeleted
