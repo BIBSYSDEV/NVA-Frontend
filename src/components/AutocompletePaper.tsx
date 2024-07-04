@@ -3,7 +3,7 @@ import { LoadingButton } from '@mui/lab';
 import { HTMLProps, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface AutocompleteListboxWithExpansionProps extends HTMLProps<HTMLUListElement> {
+export interface AutocompleteListboxWithExpansionProps extends HTMLProps<HTMLUListElement> {
   hasMoreHits?: boolean;
   onShowMoreHits?: () => void;
   isLoadingMoreHits?: boolean;

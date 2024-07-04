@@ -5,7 +5,10 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { searchForJournals } from '../../../../api/publicationChannelApi';
-import { AutocompleteListboxWithExpansion } from '../../../../components/AutocompletePaper';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../../components/AutocompletePaper';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
@@ -157,7 +160,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                 hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
                 onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
                 isLoadingMoreHits: journalOptionsQuery.isFetching && !journalOptionsQuery.isPending,
-              } as any
+              } satisfies AutocompleteListboxWithExpansionProps as any
             }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (

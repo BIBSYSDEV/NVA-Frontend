@@ -5,7 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
-import { AutocompleteListboxWithExpansion } from '../../../components/AutocompletePaper';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../components/AutocompletePaper';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -78,7 +81,7 @@ export const JournalFilter = () => {
           hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
           onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
           isLoadingMoreHits: journalOptionsQuery.isFetching && !journalOptionsQuery.isPending,
-        } as any
+        } satisfies AutocompleteListboxWithExpansionProps as any
       }
       data-testid={dataTestId.startPage.advancedSearch.journalField}
       renderInput={(params) => (
