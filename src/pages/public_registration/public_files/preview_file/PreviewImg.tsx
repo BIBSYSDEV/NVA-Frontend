@@ -7,7 +7,7 @@ export const PreviewImg = ({ url, altText, ...props }: CommonPreviewProps) => (
     data-testid={dataTestId.registrationLandingPage.filePreview}
     component="img"
     sx={{ maxWidth: '100%', maxHeight: '25rem' }}
-    src={url}
+    src={url.id}
     alt={altText}
     {...props}
   />

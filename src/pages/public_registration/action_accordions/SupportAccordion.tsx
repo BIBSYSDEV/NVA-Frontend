@@ -70,6 +70,7 @@ export const SupportAccordion = ({
         {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>
         {isRegistrationWizard && <Typography>{t('registration.curator_support_info')}</Typography>}
         {supportTicket && (
           <>

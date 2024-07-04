@@ -5,8 +5,13 @@ import { PreviewPdf } from './PreviewPdf';
 import { PreviewUnavailable } from './PreviewUnavailable';
 
 export interface CommonPreviewProps {
-  url: string;
+  url: DownloadUrl;
   altText?: string;
+}
+
+export interface DownloadUrl {
+  id: string;
+  shortenedVersion: string;
 }
 
 interface PreviewFileProps extends CommonPreviewProps {
@@ -19,7 +24,6 @@ const isPdf = (mimeType: string) => mimeType === 'application/pdf';
 
 export const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
   const mimeType = file.mimeType?.toLowerCase() ?? '';
-
   return isPdf(mimeType) ? (
     <PreviewPdf url={url} altText={file.name} {...props} />
   ) : isImage(mimeType) ? (
