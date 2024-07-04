@@ -1,12 +1,11 @@
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { HTMLProps, forwardRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { searchForJournals } from '../../../../api/publicationChannelApi';
+import { AutocompleteListboxWithExpansion } from '../../../../components/AutocompletePaper';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
@@ -152,7 +151,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
-            ListboxComponent={ListboxComponentWithExpansion}
+            ListboxComponent={AutocompleteListboxWithExpansion}
             ListboxProps={
               {
                 hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
@@ -207,31 +206,3 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     </StyledChannelContainerBox>
   );
 };
-
-interface ListboxComponentWithExpansionProps extends HTMLProps<HTMLUListElement> {
-  hasMoreHits?: boolean;
-  onShowMoreHits?: () => void;
-  isLoadingMoreHits?: boolean;
-}
-
-const ListboxComponentWithExpansion = forwardRef<HTMLUListElement, ListboxComponentWithExpansionProps>(
-  function ListboxComponentWithExpansion(props, ref) {
-    const { children, hasMoreHits, onShowMoreHits, isLoadingMoreHits, ...other } = props;
-    const { t } = useTranslation();
-
-    return (
-      <ul {...other} ref={ref}>
-        {children}
-        {hasMoreHits && (
-          <LoadingButton
-            sx={{ m: '0.5rem' }}
-            endIcon={<ExpandMore />}
-            loading={isLoadingMoreHits}
-            onClick={onShowMoreHits}>
-            {t('common.show_more')}
-          </LoadingButton>
-        )}
-      </ul>
-    );
-  }
-);

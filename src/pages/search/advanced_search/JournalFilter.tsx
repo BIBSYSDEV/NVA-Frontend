@@ -1,11 +1,11 @@
 import { Autocomplete, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
-import { AutocompletePaper } from '../../../components/AutocompletePaper';
+import { AutocompleteListboxWithExpansion } from '../../../components/AutocompletePaper';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -27,6 +27,7 @@ export const JournalFilter = () => {
     enabled: debouncedQuery.length > 3 && debouncedQuery === journalQuery,
     queryFn: () => searchForJournals(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
+    placeholderData: keepPreviousData,
   });
 
   const journalList = journalOptionsQuery.data?.hits ?? [];
@@ -71,14 +72,14 @@ export const JournalFilter = () => {
           <Typography>{option.name}</Typography>
         </li>
       )}
-      PaperComponent={(props) => (
-        <AutocompletePaper
-          {...props}
-          hasMoreHits={!!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize}
-          onShowMoreHits={() => setSearchSize(searchSize + defaultSearchSize)}
-          isLoadingMoreHits={journalOptionsQuery.isFetching && !journalOptionsQuery.isPending}
-        />
-      )}
+      ListboxComponent={AutocompleteListboxWithExpansion}
+      ListboxProps={
+        {
+          hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
+          onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+          isLoadingMoreHits: journalOptionsQuery.isFetching && !journalOptionsQuery.isPending,
+        } as any
+      }
       data-testid={dataTestId.startPage.advancedSearch.journalField}
       renderInput={(params) => (
         <AutocompleteTextField
