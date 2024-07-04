@@ -1,11 +1,12 @@
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { searchForJournals } from '../../../../api/publicationChannelApi';
-import { AutocompletePaper } from '../../../../components/AutocompletePaper';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
@@ -151,14 +152,14 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
-            PaperComponent={(props) => (
-              <AutocompletePaper
-                {...props}
-                hasMoreHits={!!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize}
-                onShowMoreHits={() => setSearchSize(searchSize + defaultSearchSize)}
-                isLoadingMoreHits={journalOptionsQuery.isFetching && !journalOptionsQuery.isPending}
-              />
-            )}
+            ListboxComponent={CustomListboxComponent}
+            ListboxProps={
+              {
+                hasMoreHits: true,
+                onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+                isLoadingMoreHits: journalOptionsQuery.isFetching && !journalOptionsQuery.isPending,
+              } as any
+            }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
@@ -206,3 +207,31 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     </StyledChannelContainerBox>
   );
 };
+
+interface CustomProps {
+  hasMoreHits?: boolean;
+  onShowMoreHits?: () => void;
+  isLoadingMoreHits?: boolean;
+}
+
+const CustomListboxComponent = forwardRef<HTMLUListElement, React.HTMLProps<HTMLUListElement> & CustomProps>(
+  function CustomListboxComponent(props, ref) {
+    const { children, hasMoreHits, onShowMoreHits, isLoadingMoreHits, ...other } = props;
+    const { t } = useTranslation();
+
+    return (
+      <ul {...other} ref={ref}>
+        {children}
+        {hasMoreHits && (
+          <LoadingButton
+            sx={{ m: '0.5rem' }}
+            endIcon={<ExpandMore />}
+            loading={isLoadingMoreHits}
+            onClick={onShowMoreHits}>
+            {t('common.show_more')}
+          </LoadingButton>
+        )}
+      </ul>
+    );
+  }
+);
