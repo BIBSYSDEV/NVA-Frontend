@@ -2,7 +2,7 @@ import { Box, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useFetchUser } from '../../../api/hooks/useFetchUser';
+import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { StyledTruncatableTypography } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
@@ -80,7 +80,7 @@ export const MessageItem = ({
 }: MessageItemProps) => {
   const { t } = useTranslation();
 
-  const senderQuery = useFetchUser(username);
+  const senderQuery = useFetchUserQuery(username);
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   return (
