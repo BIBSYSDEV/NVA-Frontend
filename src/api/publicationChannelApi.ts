@@ -71,13 +71,14 @@ export const fetchSeries = async (identifier: string) => {
   return fetchSeriesResponse.data;
 };
 
-export const searchForSeries = async (query: string, year: string) => {
+export const searchForSeries = async (query: string, year: string, size: number) => {
   const searchForSeriesResponse = await apiRequest2<SearchResponse2<Series>>({
     url: PublicationChannelApiPath.Series,
     method: 'GET',
     params: {
       query,
       year: getYearQuery(year),
+      size,
     },
   });
 

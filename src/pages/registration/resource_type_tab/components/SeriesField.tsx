@@ -1,10 +1,14 @@
 import { Autocomplete, Chip } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { searchForSeries } from '../../../../api/publicationChannelApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
@@ -17,6 +21,7 @@ import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
+const defaultSearchSize = 5;
 
 export const SeriesField = () => {
   const { t } = useTranslation();
@@ -30,12 +35,14 @@ export const SeriesField = () => {
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
+  const [searchSize, setSearchSize] = useState(defaultSearchSize);
 
   const seriesOptionsQuery = useQuery({
-    queryKey: ['seriesSearch', debouncedQuery, year],
+    queryKey: ['seriesSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForSeries(debouncedQuery, year),
+    queryFn: () => searchForSeries(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_series') },
+    placeholderData: keepPreviousData,
   });
 
   useEffect(() => {
@@ -105,6 +112,14 @@ export const SeriesField = () => {
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
+            ListboxComponent={AutocompleteListboxWithExpansion}
+            ListboxProps={
+              {
+                hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
+                onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+                isLoadingMoreHits: seriesOptionsQuery.isFetching && !seriesOptionsQuery.isPending,
+              } satisfies AutocompleteListboxWithExpansionProps as any
+            }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip

@@ -1,14 +1,20 @@
 import { Autocomplete, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { fetchSeries, searchForSeries } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Series } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+
+const defaultSearchSize = 5;
 
 export const SeriesFilter = () => {
   const { t } = useTranslation();
@@ -17,12 +23,14 @@ export const SeriesFilter = () => {
   const seriesParam = searchParams.get(ResultParam.Series);
   const [seriesQuery, setSeriesQuery] = useState('');
   const debouncedQuery = useDebounce(seriesQuery);
+  const [searchSize, setSearchSize] = useState(defaultSearchSize);
 
   const seriesOptionsQuery = useQuery({
-    queryKey: ['seriesSearch', debouncedQuery],
+    queryKey: ['seriesSearch', debouncedQuery, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === seriesQuery,
-    queryFn: () => searchForSeries(debouncedQuery, '2023'),
+    queryFn: () => searchForSeries(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_series') },
+    placeholderData: keepPreviousData,
   });
 
   const seriesList = seriesOptionsQuery.data?.hits ?? [];
@@ -67,6 +75,14 @@ export const SeriesFilter = () => {
           <Typography>{option.name}</Typography>
         </li>
       )}
+      ListboxComponent={AutocompleteListboxWithExpansion}
+      ListboxProps={
+        {
+          hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
+          onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+          isLoadingMoreHits: seriesOptionsQuery.isFetching && !seriesOptionsQuery.isPending,
+        } satisfies AutocompleteListboxWithExpansionProps as any
+      }
       data-testid={dataTestId.startPage.advancedSearch.seriesField}
       renderInput={(params) => (
         <AutocompleteTextField
