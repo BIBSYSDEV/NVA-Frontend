@@ -442,7 +442,7 @@ export const PublishingAccordion = ({
                 search: '?tab=' + RegistrationTab.FilesAndLicenses,
                 state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
               }}>
-              {t('registration.public_page.tasks_panel.edit_registration_button')}
+              {t('registration.edit_registration')}
             </Button>
 
             <Trans

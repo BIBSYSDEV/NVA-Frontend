@@ -1394,7 +1394,6 @@
         "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
         "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om resultatet som allerede er publisert er det samme som resultatet du har registrert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det. Ikke registrer og publiser et nytt resultat med endringen siden begge resultatene blir tilgjengelig i NVA.</0>",
         "duplicate_title_description_introduction": "Denne registreringen har samme tittel og år som følgende publikasjon:",
-        "edit_registration_button": "Rediger registreringen",
         "edit_publishing_request_description": "Er det noen av filene til publiseringen som ikke skal publiseres så kan du endre publiseringsstatus på disse ved å redigere registreringen.",
         "files_will_soon_be_published": "Fil(er) vil være tilgjengelig for andre om kort tid. Vent litt før du oppdaterer siden på nytt for å se status.",
         "has_rejected_files_publishing_request": "<0>Beskrivelse (metadata) er publisert og offentlig tilgjengelig.</0><0>Kurator har avvist filen, og den er fjernet fra visningen av forskningsresultatet.</0>",
