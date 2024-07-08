@@ -1,9 +1,8 @@
 import { Box, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { fetchUser } from '../../../api/roleApi';
+import { useFetchUser } from '../../../api/hooks/useFetchUser';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
@@ -71,12 +70,7 @@ interface MessageItemProps {
 export const MessageItem = ({ text, date, username, backgroundColor, menuElement }: MessageItemProps) => {
   const { t } = useTranslation();
 
-  const senderQuery = useQuery({
-    queryKey: [username],
-    queryFn: () => fetchUser(username),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
-
+  const senderQuery = useFetchUser(username);
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   return (
