@@ -20,7 +20,7 @@ export const AutocompleteListboxWithExpansion = forwardRef<HTMLUListElement, Aut
         {hasMoreHits && (
           <li>
             <LoadingButton
-              sx={{ m: '0.5rem' }}
+              sx={{ mt: '0.5rem', width: '100%' }}
               endIcon={<ExpandMore />}
               loading={isLoadingMoreHits}
               onClick={onShowMoreHits}>

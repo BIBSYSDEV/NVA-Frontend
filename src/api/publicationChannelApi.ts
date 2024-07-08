@@ -1,4 +1,4 @@
-import { SearchResponse, SearchResponse2 } from '../types/common.types';
+import { SearchResponse2 } from '../types/common.types';
 import { Journal, Publisher, Series } from '../types/registration.types';
 import { getYearQuery } from '../utils/registration-helpers';
 import { PublicationChannelApiPath } from './apiPaths';
@@ -72,7 +72,7 @@ export const fetchSeries = async (identifier: string) => {
 };
 
 export const searchForSeries = async (query: string, year: string) => {
-  const searchForSeriesResponse = await apiRequest2<SearchResponse<Series>>({
+  const searchForSeriesResponse = await apiRequest2<SearchResponse2<Series>>({
     url: PublicationChannelApiPath.Series,
     method: 'GET',
     params: {
@@ -84,13 +84,14 @@ export const searchForSeries = async (query: string, year: string) => {
   return searchForSeriesResponse.data;
 };
 
-export const searchForPublishers = async (query: string, year: string) => {
-  const searchForPublishersResponse = await apiRequest2<SearchResponse<Publisher>>({
+export const searchForPublishers = async (query: string, year: string, size: number) => {
+  const searchForPublishersResponse = await apiRequest2<SearchResponse2<Publisher>>({
     url: PublicationChannelApiPath.Publisher,
     method: 'GET',
     params: {
       query,
       year: getYearQuery(year),
+      size,
     },
   });
 
