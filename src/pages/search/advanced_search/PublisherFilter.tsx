@@ -37,7 +37,7 @@ export const PublisherFilter = () => {
 
   const selectedPublisherQuery = useQuery({
     enabled: !!publisherParam,
-    queryKey: [publisherParam],
+    queryKey: ['channel', publisherParam],
     queryFn: () => (publisherParam ? fetchPublisher(publisherParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,

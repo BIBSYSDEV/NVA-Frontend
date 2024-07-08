@@ -37,7 +37,7 @@ export const JournalFilter = () => {
 
   const selectedJournalQuery = useQuery({
     enabled: !!journalParam,
-    queryKey: ['journalSearch', journalParam],
+    queryKey: ['channel', journalParam],
     queryFn: () => (journalParam ? fetchJournal(journalParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
