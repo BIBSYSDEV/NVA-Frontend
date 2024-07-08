@@ -1,14 +1,20 @@
 import { Autocomplete, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { fetchPublisher, searchForPublishers } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+
+const defaultSearchSize = 5;
 
 export const PublisherFilter = () => {
   const { t } = useTranslation();
@@ -17,12 +23,14 @@ export const PublisherFilter = () => {
   const publisherParam = searchParams.get(ResultParam.Publisher);
   const [publisherQuery, setPublisherQuery] = useState('');
   const debouncedQuery = useDebounce(publisherQuery);
+  const [searchSize, setSearchSize] = useState(defaultSearchSize);
 
   const publisherOptionsQuery = useQuery({
-    queryKey: ['publisherSearch', debouncedQuery],
+    queryKey: ['publisherSearch', debouncedQuery, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === publisherQuery,
-    queryFn: () => searchForPublishers(debouncedQuery, '2023'),
+    queryFn: () => searchForPublishers(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_publishers') },
+    placeholderData: keepPreviousData,
   });
 
   const publisherList = publisherOptionsQuery.data?.hits ?? [];
@@ -69,6 +77,14 @@ export const PublisherFilter = () => {
           <Typography>{option.name}</Typography>
         </li>
       )}
+      ListboxComponent={AutocompleteListboxWithExpansion}
+      ListboxProps={
+        {
+          hasMoreHits: !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
+          onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+          isLoadingMoreHits: publisherOptionsQuery.isFetching && !publisherOptionsQuery.isPending,
+        } satisfies AutocompleteListboxWithExpansionProps as any
+      }
       data-testid={dataTestId.startPage.advancedSearch.publisherField}
       renderInput={(params) => (
         <AutocompleteTextField
