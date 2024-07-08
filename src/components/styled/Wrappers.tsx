@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormGroup, ListItem } from '@mui/material';
+import { Box, Checkbox, FormGroup, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const StyledRightAlignedWrapper = styled(Box)({
@@ -74,4 +74,10 @@ export const StyledStatusCheckbox = styled(Checkbox)({
 
 export const StyledTicketSearchFormGroup = styled(FormGroup)({
   margin: '1rem',
+});
+
+export const StyledTruncatableTypography = styled(Typography)({
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
 });
