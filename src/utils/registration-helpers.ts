@@ -123,26 +123,23 @@ export const userIsValidImporter = (user: User | null, registration?: Registrati
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear().toString();
 
-const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?: string | null) => {
-  const issnString =
-    printIssn || onlineIssn
+const getChannelMetadataString = (discontinued?: string, onlineIssn?: string | null, printIssn?: string | null) => {
+  const metadataString =
+    discontinued || printIssn || onlineIssn
       ? [
+          discontinued ? `${i18n.t('common.discontinued')}: ${discontinued}` : '',
           printIssn ? `${i18n.t('registration.resource_type.print_issn')}: ${printIssn}` : '',
           onlineIssn ? `${i18n.t('registration.resource_type.online_issn')}: ${onlineIssn}` : '',
         ]
-          .filter((issn) => issn)
+          .filter((value) => value)
           .join(', ')
       : '';
-  return issnString;
+  return metadataString;
 };
 
-export const getPublicationChannelString = (publicationChannel: Journal | Series | Publisher) => {
-  if (publicationChannel.type === 'Publisher') {
-    return publicationChannel.name;
-  } else {
-    const issnString = getPublicationChannelIssnString(publicationChannel.onlineIssn, publicationChannel.printIssn);
-    return issnString ? `${publicationChannel.name} (${issnString})` : publicationChannel.name;
-  }
+export const getPublicationChannelString = (channel: Journal | Series | Publisher) => {
+  const channelMetadata = getChannelMetadataString(channel.discontinued, channel.onlineIssn, channel.printIssn);
+  return channelMetadata ? `${channel.name} (${channelMetadata})` : channel.name;
 };
 
 // Ensure Registration has correct type values, etc
