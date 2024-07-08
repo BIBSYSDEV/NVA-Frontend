@@ -50,7 +50,7 @@ export interface InstitutionUser {
   familyName?: string;
   givenName?: string;
   institution: string;
-  institutionCristinId: string;
+  institutionCristinId?: string;
   roles: UserRole[];
   username: string;
   cristinId?: string;
