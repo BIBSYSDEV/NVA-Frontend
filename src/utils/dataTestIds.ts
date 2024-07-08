@@ -273,6 +273,7 @@ export const dataTestId = {
       publishButton: 'button-publish-registration',
       publishingRequestAcceptButton: 'publishing-request-accept-button',
       publishingRequestAccordion: 'publishing-request-accordion',
+      publishingRequestEditButton: 'publishing-request-edit-button',
       publishingRequestRejectButton: 'publishing-request-reject-button',
       publishingRequestRejectionMessageTextField: 'publishing-request-rejection-message-textfield',
       refreshDoiRequestButton: 'refresh-doi-button',
