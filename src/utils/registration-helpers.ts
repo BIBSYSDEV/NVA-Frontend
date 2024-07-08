@@ -131,7 +131,7 @@ const getChannelMetadataString = (discontinued?: string, onlineIssn?: string | n
           printIssn ? `${i18n.t('registration.resource_type.print_issn')}: ${printIssn}` : '',
           onlineIssn ? `${i18n.t('registration.resource_type.online_issn')}: ${onlineIssn}` : '',
         ]
-          .filter((value) => value)
+          .filter(Boolean)
           .join(', ')
       : '';
   return metadataString;
