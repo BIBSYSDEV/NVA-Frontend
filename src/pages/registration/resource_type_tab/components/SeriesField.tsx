@@ -4,7 +4,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { searchForSeries } from '../../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, searchForSeries } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
@@ -21,7 +21,6 @@ import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
-const defaultSearchSize = 5;
 
 export const SeriesField = () => {
   const { t } = useTranslation();
@@ -35,7 +34,7 @@ export const SeriesField = () => {
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [searchSize, setSearchSize] = useState(defaultSearchSize);
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
   const seriesOptionsQuery = useQuery({
     queryKey: ['seriesSearch', debouncedQuery, year, searchSize],
@@ -116,7 +115,7 @@ export const SeriesField = () => {
             ListboxProps={
               {
                 hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
-                onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+                onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
                 isLoadingMoreHits: seriesOptionsQuery.isFetching && !seriesOptionsQuery.isPending,
               } satisfies AutocompleteListboxWithExpansionProps as any
             }

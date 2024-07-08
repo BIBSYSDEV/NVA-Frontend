@@ -4,7 +4,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { searchForPublishers } from '../../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, searchForPublishers } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
@@ -21,7 +21,6 @@ import { PublicationChannelOption } from './PublicationChannelOption';
 import { PublisherFormDialog } from './PublisherFormDialog';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
-const defaultSearchSize = 5;
 
 export const PublisherField = () => {
   const { t } = useTranslation();
@@ -35,7 +34,7 @@ export const PublisherField = () => {
 
   const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [searchSize, setSearchSize] = useState(defaultSearchSize);
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
   const publisherOptionsQuery = useQuery({
     queryKey: ['publisherSearch', debouncedQuery, year, searchSize],
@@ -120,7 +119,7 @@ export const PublisherField = () => {
               {
                 hasMoreHits:
                   !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
-                onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+                onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
                 isLoadingMoreHits: publisherOptionsQuery.isFetching && !publisherOptionsQuery.isPending,
               } satisfies AutocompleteListboxWithExpansionProps as any
             }

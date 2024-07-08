@@ -3,7 +3,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { fetchSeries, searchForSeries } from '../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, fetchSeries, searchForSeries } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -14,8 +14,6 @@ import { Series } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
-const defaultSearchSize = 5;
-
 export const SeriesFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -23,7 +21,7 @@ export const SeriesFilter = () => {
   const seriesParam = searchParams.get(ResultParam.Series);
   const [seriesQuery, setSeriesQuery] = useState('');
   const debouncedQuery = useDebounce(seriesQuery);
-  const [searchSize, setSearchSize] = useState(defaultSearchSize);
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
   const seriesOptionsQuery = useQuery({
     queryKey: ['seriesSearch', debouncedQuery, searchSize],
@@ -79,7 +77,7 @@ export const SeriesFilter = () => {
       ListboxProps={
         {
           hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
-          onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+          onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
           isLoadingMoreHits: seriesOptionsQuery.isFetching && !seriesOptionsQuery.isPending,
         } satisfies AutocompleteListboxWithExpansionProps as any
       }

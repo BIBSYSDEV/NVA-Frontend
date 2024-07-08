@@ -3,7 +3,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -14,8 +14,6 @@ import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
-const defaultSearchSize = 5;
-
 export const JournalFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -23,7 +21,7 @@ export const JournalFilter = () => {
   const journalParam = searchParams.get(ResultParam.Journal);
   const [journalQuery, setJournalQuery] = useState('');
   const debouncedQuery = useDebounce(journalQuery);
-  const [searchSize, setSearchSize] = useState(defaultSearchSize);
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, searchSize],
@@ -79,7 +77,7 @@ export const JournalFilter = () => {
       ListboxProps={
         {
           hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
-          onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+          onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
           isLoadingMoreHits: journalOptionsQuery.isFetching && !journalOptionsQuery.isPending,
         } satisfies AutocompleteListboxWithExpansionProps as any
       }

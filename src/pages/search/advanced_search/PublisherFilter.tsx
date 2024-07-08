@@ -3,7 +3,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { fetchPublisher, searchForPublishers } from '../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, fetchPublisher, searchForPublishers } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -14,8 +14,6 @@ import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
-const defaultSearchSize = 5;
-
 export const PublisherFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -23,7 +21,7 @@ export const PublisherFilter = () => {
   const publisherParam = searchParams.get(ResultParam.Publisher);
   const [publisherQuery, setPublisherQuery] = useState('');
   const debouncedQuery = useDebounce(publisherQuery);
-  const [searchSize, setSearchSize] = useState(defaultSearchSize);
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
   const publisherOptionsQuery = useQuery({
     queryKey: ['publisherSearch', debouncedQuery, searchSize],
@@ -81,7 +79,7 @@ export const PublisherFilter = () => {
       ListboxProps={
         {
           hasMoreHits: !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
-          onShowMoreHits: () => setSearchSize(searchSize + defaultSearchSize),
+          onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
           isLoadingMoreHits: publisherOptionsQuery.isFetching && !publisherOptionsQuery.isPending,
         } satisfies AutocompleteListboxWithExpansionProps as any
       }
