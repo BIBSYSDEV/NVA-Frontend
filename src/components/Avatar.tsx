@@ -1,6 +1,6 @@
 import { Avatar as MuiAvatar, AvatarProps as MuiAvatarProps, Tooltip } from '@mui/material';
+import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
 import { getInitials } from '../utils/general-helpers';
-import { useFetchUserQuery } from '../utils/hooks/useFetchUserQuery';
 import { getFullName } from '../utils/user-helpers';
 
 interface AvatarProps extends Pick<MuiAvatarProps, 'sx'> {
@@ -8,8 +8,8 @@ interface AvatarProps extends Pick<MuiAvatarProps, 'sx'> {
 }
 
 export const Avatar = ({ username, sx }: AvatarProps) => {
-  const user = useFetchUserQuery(username).data;
-  const fullName = getFullName(user?.givenName, user?.familyName);
+  const userQuery = useFetchUserQuery(username, { retry: 0, staleTime: Infinity, gcTime: 1_800_000 });
+  const fullName = getFullName(userQuery.data?.givenName, userQuery.data?.familyName);
   const initials = getInitials(fullName);
 
   return (

@@ -192,6 +192,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     date={note.date}
                     username={note.username}
                     backgroundColor="nvi.main"
+                    showOrganization
                     menuElement={
                       !!user &&
                       user.nvaUsername === note.username && (
