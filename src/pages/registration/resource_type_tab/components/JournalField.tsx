@@ -80,7 +80,6 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
       }
     },
   });
-  const journalOptions = journalOptionsQuery.data?.hits ?? [];
 
   // Fetch Journals with matching ISSN
   const journalsByIssnQuery = useQuery({
@@ -117,6 +116,8 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     staleTime: Infinity,
   });
 
+  const options = journalOptionsQuery.data?.hits ?? [];
+
   return (
     <StyledChannelContainerBox>
       <Field name={ResourceFieldNames.PublicationContextId}>
@@ -128,7 +129,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             data-testid={journalFieldTestId}
             aria-labelledby={`${journalFieldTestId}-label`}
             popupIcon={null}
-            options={journalOptions}
+            options={options}
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
@@ -164,7 +165,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
               {
                 hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
                 onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > journalOptions.length,
+                isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
               } satisfies AutocompleteListboxWithExpansionProps as any
             }
             renderTags={(value, getTagProps) =>
