@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -65,12 +65,20 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const debouncedQuery = useDebounce(query);
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
+  // Reset search size when query changes
+  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
+
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForJournals(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
-    placeholderData: keepPreviousData,
+    placeholderData: (data, query) => {
+      // Keep previous data if query is similar to previous query
+      if (debouncedQuery && query?.queryKey.includes(debouncedQuery)) {
+        return data;
+      }
+    },
   });
 
   // Fetch Journals with matching ISSN
@@ -108,7 +116,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     staleTime: Infinity,
   });
 
-  const options = debouncedQuery && query === debouncedQuery ? journalOptionsQuery.data?.hits ?? [] : [];
+  const options = journalOptionsQuery.data?.hits ?? [];
 
   return (
     <StyledChannelContainerBox>
@@ -157,7 +165,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
               {
                 hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
                 onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                isLoadingMoreHits: journalOptionsQuery.isFetching && !journalOptionsQuery.isPending,
+                isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
               } satisfies AutocompleteListboxWithExpansionProps as any
             }
             renderTags={(value, getTagProps) =>
