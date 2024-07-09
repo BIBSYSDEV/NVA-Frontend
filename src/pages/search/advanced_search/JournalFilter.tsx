@@ -1,6 +1,6 @@
 import { Autocomplete } from '@mui/material';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { defaultChannelSearchSize, fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
@@ -24,15 +24,23 @@ export const JournalFilter = () => {
   const debouncedQuery = useDebounce(journalQuery);
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
+  // Reset search size when query changes
+  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
+
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === journalQuery,
     queryFn: () => searchForJournals(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
-    placeholderData: keepPreviousData,
+    placeholderData: (data, query) => {
+      // Keep previous data if query is similar to previous query
+      if (debouncedQuery && query?.queryKey.includes(debouncedQuery)) {
+        return data;
+      }
+    },
   });
 
-  const journalList = journalOptionsQuery.data?.hits ?? [];
+  const options = journalOptionsQuery.data?.hits ?? [];
 
   const selectedJournalQuery = useQuery({
     enabled: !!journalParam,
@@ -60,7 +68,7 @@ export const JournalFilter = () => {
       sx={{ minWidth: '15rem' }}
       value={journalParam && selectedJournalQuery.data ? selectedJournalQuery.data : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      options={debouncedQuery && journalQuery === debouncedQuery && !journalOptionsQuery.isPending ? journalList : []}
+      options={options}
       filterOptions={(options) => options}
       inputValue={journalQuery}
       onInputChange={(_, newInputValue) => setJournalQuery(newInputValue)}
@@ -77,7 +85,7 @@ export const JournalFilter = () => {
         {
           hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
           onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-          isLoadingMoreHits: journalOptionsQuery.isFetching && !journalOptionsQuery.isPending,
+          isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
         } satisfies AutocompleteListboxWithExpansionProps as any
       }
       data-testid={dataTestId.startPage.advancedSearch.journalField}

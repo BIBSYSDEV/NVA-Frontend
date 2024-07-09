@@ -1,5 +1,5 @@
 import { Autocomplete, Chip } from '@mui/material';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,13 +36,23 @@ export const PublisherField = () => {
   const debouncedQuery = useDebounce(query);
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
+  // Reset search size when query changes
+  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
+
   const publisherOptionsQuery = useQuery({
     queryKey: ['publisherSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForPublishers(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_publishers') },
-    placeholderData: keepPreviousData,
+    placeholderData: (data, query) => {
+      // Keep previous data if query is similar to previous query
+      if (debouncedQuery && query?.queryKey.includes(debouncedQuery)) {
+        return data;
+      }
+    },
   });
+
+  const options = publisherOptionsQuery.data?.hits ?? [];
 
   useEffect(() => {
     if (
@@ -75,11 +85,7 @@ export const PublisherField = () => {
             data-testid={publisherFieldTestId}
             aria-labelledby={`${publisherFieldTestId}-label`}
             popupIcon={null}
-            options={
-              debouncedQuery && query === debouncedQuery && !publisherOptionsQuery.isPending
-                ? publisherOptionsQuery.data?.hits ?? []
-                : []
-            }
+            options={options}
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
@@ -120,7 +126,7 @@ export const PublisherField = () => {
                 hasMoreHits:
                   !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
                 onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                isLoadingMoreHits: publisherOptionsQuery.isFetching && !publisherOptionsQuery.isPending,
+                isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
               } satisfies AutocompleteListboxWithExpansionProps as any
             }
             renderTags={(value, getTagProps) =>
