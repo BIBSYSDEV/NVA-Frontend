@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { fetchResource } from '../../api/commonApi';
-import { fetchCustomerTickets } from '../../api/searchApi';
+import { fetchCustomerTickets, TicketSearchParam } from '../../api/searchApi';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -192,7 +192,14 @@ export const Header = () => {
                   color="inherit"
                   data-testid={dataTestId.header.myPageLink}
                   isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
-                  to={myPageTasksCount === 0 ? UrlPathTemplate.MyPage : UrlPathTemplate.MyPageMyMessages}
+                  to={
+                    myPageTasksCount === 0
+                      ? UrlPathTemplate.MyPage
+                      : {
+                          pathname: UrlPathTemplate.MyPageMyMessages,
+                          search: `?${TicketSearchParam.ViewedByNot}=${user.nvaUsername}`,
+                        }
+                  }
                   startIcon={
                     <Badge badgeContent={myPageTasksCount}>
                       <FavoriteBorderIcon fontSize="small" />

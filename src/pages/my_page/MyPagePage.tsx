@@ -8,7 +8,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
+import { Link, Redirect, Switch, useHistory, useLocation } from 'react-router-dom';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
@@ -47,6 +47,7 @@ import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 const MyPagePage = () => {
   const { t } = useTranslation();
   const location = useLocation<PreviousSearchLocationState>();
+  const history = useHistory<PreviousSearchLocationState>();
   const searchParams = new URLSearchParams(location.search);
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
@@ -70,11 +71,11 @@ const MyPagePage = () => {
     publishingRequest: true,
   });
 
-  const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
-
   const selectedTypesArray = Object.entries(selectedTypes)
     .filter(([, selected]) => selected)
     .map(([key]) => key);
+
+  const viewedByNot = searchParams.get(TicketSearchParam.ViewedByNot);
 
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
@@ -86,13 +87,14 @@ const MyPagePage = () => {
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     status: searchParams.get(TicketSearchParam.Status),
-    viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
+    viewedByNot,
     type: selectedTypesArray.join(','),
     publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
 
+  const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
   const ticketsQuery = useQuery({
-    enabled: !!user?.isCreator,
+    enabled: isOnDialoguePage && !!user?.isCreator,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchCustomerTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
@@ -100,7 +102,6 @@ const MyPagePage = () => {
 
   const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
 
-  const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
   const notificationsQuery = useQuery({
     enabled: isOnDialoguePage && !!user?.isCreator && !!dialogueNotificationsParams.owner,
     queryKey: ['dialogueNotifications', dialogueNotificationsParams],
@@ -206,10 +207,17 @@ const MyPagePage = () => {
             <StyledTicketSearchFormGroup>
               <Button
                 data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-                sx={{ width: 'fit-content', background: filterUnreadOnly ? undefined : 'white', textTransform: 'none' }}
-                variant={filterUnreadOnly ? 'contained' : 'outlined'}
+                sx={{ width: 'fit-content', background: viewedByNot ? undefined : 'white', textTransform: 'none' }}
+                variant={viewedByNot ? 'contained' : 'outlined'}
                 startIcon={<MarkEmailUnreadIcon />}
-                onClick={() => setFilterUnreadOnly(!filterUnreadOnly)}>
+                onClick={() => {
+                  if (viewedByNot) {
+                    searchParams.delete(TicketSearchParam.ViewedByNot);
+                  } else if (user.nvaUsername) {
+                    searchParams.set(TicketSearchParam.ViewedByNot, user.nvaUsername);
+                  }
+                  history.push({ search: searchParams.toString() });
+                }}>
                 {t('tasks.unread')}
               </Button>
             </StyledTicketSearchFormGroup>
