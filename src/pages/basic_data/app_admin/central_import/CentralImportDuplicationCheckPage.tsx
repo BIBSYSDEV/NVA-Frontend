@@ -219,7 +219,7 @@ export const CentralImportDuplicationCheckPage = () => {
                   setShowNotApplicableDialog(false);
                 }}
                 title={t('basic_data.central_import.not_applicable')}
-                textFieldLabel={t('tasks.nvi.note')}
+                textFieldLabel={t('common.message')}
               />
             </>
           )}

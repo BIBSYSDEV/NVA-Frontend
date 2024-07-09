@@ -32,8 +32,9 @@ import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
+import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
-import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { Registration, RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
@@ -223,7 +224,7 @@ export const PublishingAccordion = ({
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       sx={{ bgcolor: 'publishingRequest.light' }}
       elevation={3}
-      defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus}>
+      defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
           {isUnpublishedOrDeleted
@@ -429,6 +430,20 @@ export const PublishingAccordion = ({
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
               {t('registration.public_page.approve_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
+            <Typography>{t('registration.public_page.tasks_panel.edit_publishing_request_description')}</Typography>
+            <Button
+              sx={{ bgcolor: 'white', mb: '0.5rem' }}
+              variant="outlined"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
+              endIcon={<EditIcon fontSize="large" />}
+              component={RouterLink}
+              to={{
+                pathname: getRegistrationWizardPath(registration.identifier),
+                search: '?tab=' + RegistrationTab.FilesAndLicenses,
+                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
+              }}>
+              {t('registration.edit_registration')}
+            </Button>
 
             <Trans
               t={t}

@@ -57,6 +57,7 @@ interface PublicationChannel {
   printIssn?: string;
   sameAs: string;
   scientificValue: ScientificValue;
+  discontinued?: string;
 }
 
 export interface Journal extends PublicationChannel {
