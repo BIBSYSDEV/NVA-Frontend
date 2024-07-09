@@ -15,6 +15,7 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -44,12 +45,7 @@ export const PublisherField = () => {
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForPublishers(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_publishers') },
-    placeholderData: (data, query) => {
-      // Keep previous data if query is similar to previous query
-      if (debouncedQuery && query?.queryKey.includes(debouncedQuery)) {
-        return data;
-      }
-    },
+    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
 
   const options = publisherOptionsQuery.data?.hits ?? [];

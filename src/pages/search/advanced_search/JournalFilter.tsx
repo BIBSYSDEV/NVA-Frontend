@@ -13,6 +13,7 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 export const JournalFilter = () => {
@@ -32,12 +33,7 @@ export const JournalFilter = () => {
     enabled: debouncedQuery.length > 3 && debouncedQuery === journalQuery,
     queryFn: () => searchForJournals(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
-    placeholderData: (data, query) => {
-      // Keep previous data if query is similar to previous query
-      if (debouncedQuery && query?.queryKey.includes(debouncedQuery)) {
-        return data;
-      }
-    },
+    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
 
   const options = journalOptionsQuery.data?.hits ?? [];

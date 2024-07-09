@@ -13,6 +13,7 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 export const PublisherFilter = () => {
@@ -32,12 +33,7 @@ export const PublisherFilter = () => {
     enabled: debouncedQuery.length > 3 && debouncedQuery === publisherQuery,
     queryFn: () => searchForPublishers(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_publishers') },
-    placeholderData: (data, query) => {
-      // Keep previous data if query is similar to previous query
-      if (debouncedQuery && query?.queryKey.includes(debouncedQuery)) {
-        return data;
-      }
-    },
+    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
 
   const options = publisherOptionsQuery.data?.hits ?? [];

@@ -18,6 +18,7 @@ import {
 import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -73,12 +74,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForJournals(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
-    placeholderData: (data, query) => {
-      // Keep previous data if query is similar to previous query
-      if (debouncedQuery && query?.queryKey.includes(debouncedQuery)) {
-        return data;
-      }
-    },
+    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
 
   // Fetch Journals with matching ISSN
