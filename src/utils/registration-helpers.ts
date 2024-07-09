@@ -674,6 +674,10 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
+export const isTypeWithRrs = (publicationInstanceType?: string) =>
+  publicationInstanceType === JournalType.AcademicArticle ||
+  publicationInstanceType === JournalType.AcademicLiteratureReview;
+
 export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   isJournal(publicationInstanceType) || isBook(publicationInstanceType) || isChapter(publicationInstanceType);
 

@@ -10,10 +10,10 @@ import {
   FormControlLabel,
   FormHelperText,
   IconButton,
-  Link as MuiLink,
   ListItemIcon,
   ListItemText,
   MenuItem,
+  Link as MuiLink,
   Paper,
   Popover,
   Radio,
@@ -50,10 +50,18 @@ interface FilesTableRowProps {
   removeFile: () => void;
   baseFieldName: string;
   showFileVersion: boolean;
+  showRrs: boolean;
   disabled: boolean;
 }
 
-export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion, disabled }: FilesTableRowProps) => {
+export const FilesTableRow = ({
+  file,
+  removeFile,
+  baseFieldName,
+  showFileVersion,
+  showRrs,
+  disabled,
+}: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
   const customer = useSelector((state: RootState) => state.customer);
@@ -173,20 +181,22 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       const fileVersion = event.target.value as FileVersion;
                       setFieldValue(field.name, fileVersion);
 
-                      if (fileVersion === FileVersion.Published) {
-                        const nullRrsValue: FileRrs = {
-                          type: 'NullRightsRetentionStrategy',
-                          configuredType: rrsStrategy,
-                        };
-                        setFieldValue(rrsFieldName, nullRrsValue);
-                        setFieldValue(licenseFieldName, null);
-                      } else if (isCustomerRrs || isOverridableRrs) {
-                        const customerRrsValue: FileRrs = {
-                          type: 'CustomerRightsRetentionStrategy',
-                          configuredType: rrsStrategy,
-                        };
-                        setFieldValue(rrsFieldName, customerRrsValue);
-                        setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                      if (showRrs) {
+                        if (fileVersion === FileVersion.Published) {
+                          const nullRrsValue: FileRrs = {
+                            type: 'NullRightsRetentionStrategy',
+                            configuredType: rrsStrategy,
+                          };
+                          setFieldValue(rrsFieldName, nullRrsValue);
+                          setFieldValue(licenseFieldName, null);
+                        } else if (isCustomerRrs || isOverridableRrs) {
+                          const customerRrsValue: FileRrs = {
+                            type: 'CustomerRightsRetentionStrategy',
+                            configuredType: rrsStrategy,
+                          };
+                          setFieldValue(rrsFieldName, customerRrsValue);
+                          setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                        }
                       }
                     }}>
                     <FormControlLabel
@@ -290,19 +300,23 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 </TextField>
               )}
             </Field>
-            {fileHasCustomerRrs && (
-              <Typography>
-                <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
-                  {rrsPolicyLink}
-                </Trans>
-              </Typography>
-            )}
-            {fileHasOverriddenRrs && (
-              <Typography>
-                <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
-                  {rrsPolicyLink}
-                </Trans>
-              </Typography>
+            {showRrs && (
+              <>
+                {fileHasCustomerRrs && (
+                  <Typography>
+                    <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
+                      {rrsPolicyLink}
+                    </Trans>
+                  </Typography>
+                )}
+                {fileHasOverriddenRrs && (
+                  <Typography>
+                    <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
+                      {rrsPolicyLink}
+                    </Trans>
+                  </Typography>
+                )}
+              </>
             )}
           </TableCell>
         )}
@@ -331,71 +345,75 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   gap: '2rem',
                 }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  {isAcceptedFile && isNullRrs && (
-                    <FormControlLabel
-                      label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
-                      control={
-                        <Checkbox
-                          checked={fileHasFunderRrs}
-                          onChange={() => {
-                            if (fileHasFunderRrs) {
-                              const nullRrsValue: FileRrs = {
-                                type: 'NullRightsRetentionStrategy',
-                                configuredType: rrsStrategy,
-                              };
-                              setFieldValue(rrsFieldName, nullRrsValue);
-                              setFieldValue(licenseFieldName, null);
-                            } else {
-                              const newRrsValue: FileRrs = {
-                                type: 'FunderRightsRetentionStrategy',
-                                configuredType: rrsStrategy,
-                              };
-                              setFieldValue(rrsFieldName, newRrsValue);
-                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                            }
-                          }}
+                  {showRrs && (
+                    <>
+                      {isAcceptedFile && isNullRrs && (
+                        <FormControlLabel
+                          label={t('registration.files_and_license.mark_if_funder_requires_rrs')}
+                          control={
+                            <Checkbox
+                              checked={fileHasFunderRrs}
+                              onChange={() => {
+                                if (fileHasFunderRrs) {
+                                  const nullRrsValue: FileRrs = {
+                                    type: 'NullRightsRetentionStrategy',
+                                    configuredType: rrsStrategy,
+                                  };
+                                  setFieldValue(rrsFieldName, nullRrsValue);
+                                  setFieldValue(licenseFieldName, null);
+                                } else {
+                                  const newRrsValue: FileRrs = {
+                                    type: 'FunderRightsRetentionStrategy',
+                                    configuredType: rrsStrategy,
+                                  };
+                                  setFieldValue(rrsFieldName, newRrsValue);
+                                  setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                                }
+                              }}
+                            />
+                          }
                         />
-                      }
-                    />
-                  )}
+                      )}
 
-                  {fileHasCustomerRrs && isCustomerRrs && (
-                    <Typography>
-                      {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
-                    </Typography>
-                  )}
+                      {fileHasCustomerRrs && isCustomerRrs && (
+                        <Typography>
+                          {t('registration.files_and_license.institution_rights_policy_opt_out_instructions')}
+                        </Typography>
+                      )}
 
-                  {canOverrideRrs && (
-                    <FormControlLabel
-                      disabled={disabled}
-                      label={
-                        <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
-                          {rrsPolicyLink}
-                        </Trans>
-                      }
-                      control={
-                        <Checkbox
-                          checked={!fileHasOverriddenRrs}
-                          onChange={() => {
-                            if (fileHasOverriddenRrs) {
-                              const customerRrsValue: FileRrs = {
-                                type: 'CustomerRightsRetentionStrategy',
-                                configuredType: rrsStrategy,
-                              };
-                              setFieldValue(rrsFieldName, customerRrsValue);
-                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                            } else {
-                              const overriddenRrsValue: FileRrs = {
-                                type: 'OverriddenRightsRetentionStrategy',
-                                configuredType: rrsStrategy,
-                              };
-                              setFieldValue(rrsFieldName, overriddenRrsValue);
-                              setFieldValue(licenseFieldName, null);
-                            }
-                          }}
+                      {canOverrideRrs && (
+                        <FormControlLabel
+                          disabled={disabled}
+                          label={
+                            <Trans t={t} i18nKey="registration.files_and_license.follow_institution_rights_policy">
+                              {rrsPolicyLink}
+                            </Trans>
+                          }
+                          control={
+                            <Checkbox
+                              checked={!fileHasOverriddenRrs}
+                              onChange={() => {
+                                if (fileHasOverriddenRrs) {
+                                  const customerRrsValue: FileRrs = {
+                                    type: 'CustomerRightsRetentionStrategy',
+                                    configuredType: rrsStrategy,
+                                  };
+                                  setFieldValue(rrsFieldName, customerRrsValue);
+                                  setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                                } else {
+                                  const overriddenRrsValue: FileRrs = {
+                                    type: 'OverriddenRightsRetentionStrategy',
+                                    configuredType: rrsStrategy,
+                                  };
+                                  setFieldValue(rrsFieldName, overriddenRrsValue);
+                                  setFieldValue(licenseFieldName, null);
+                                }
+                              }}
+                            />
+                          }
                         />
-                      }
-                    />
+                      )}
+                    </>
                   )}
 
                   {user?.isPublishingCurator && (
