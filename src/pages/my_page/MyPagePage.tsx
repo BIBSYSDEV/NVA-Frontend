@@ -8,7 +8,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
@@ -46,9 +46,8 @@ import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
-  const location = useLocation<PreviousSearchLocationState>();
   const history = useHistory<PreviousSearchLocationState>();
-  const searchParams = new URLSearchParams(location.search);
+  const searchParams = new URLSearchParams(history.location.search);
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
   const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
@@ -92,7 +91,7 @@ const MyPagePage = () => {
     publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
 
-  const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
+  const isOnDialoguePage = history.location.pathname === UrlPathTemplate.MyPageMyMessages;
   const ticketsQuery = useQuery({
     enabled: isOnDialoguePage && !!user?.isCreator,
     queryKey: ['tickets', ticketSearchParams],
@@ -124,13 +123,13 @@ const MyPagePage = () => {
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
-  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
 
   // Hide menu when opening a ticket on Messages path
   const expandMenu =
-    !location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
-    location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+    !history.location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
+    history.location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
 
   return (
     <StyledPageWithSideMenu>
@@ -138,7 +137,7 @@ const MyPagePage = () => {
         expanded={expandMenu}
         minimizedMenu={
           <Link
-            to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: location.state?.previousSearch }}
+            to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: history.location.state?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
             <StyledMinimizedMenuButton title={t('my_page.my_page')}>
               <FavoriteBorderIcon />
