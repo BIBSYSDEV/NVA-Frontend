@@ -74,7 +74,7 @@ const MyPagePage = () => {
     .filter(([, selected]) => selected)
     .map(([key]) => key);
 
-  const viewedByNot = searchParams.get(TicketSearchParam.ViewedByNot);
+  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot);
 
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
@@ -86,7 +86,7 @@ const MyPagePage = () => {
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     status: searchParams.get(TicketSearchParam.Status),
-    viewedByNot,
+    viewedByNot: viewedByNotParam,
     type: selectedTypesArray.join(','),
     publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
@@ -206,11 +206,11 @@ const MyPagePage = () => {
             <StyledTicketSearchFormGroup>
               <Button
                 data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-                sx={{ width: 'fit-content', background: viewedByNot ? undefined : 'white', textTransform: 'none' }}
-                variant={viewedByNot ? 'contained' : 'outlined'}
+                sx={{ width: 'fit-content', background: viewedByNotParam ? undefined : 'white', textTransform: 'none' }}
+                variant={viewedByNotParam ? 'contained' : 'outlined'}
                 startIcon={<MarkEmailUnreadIcon />}
                 onClick={() => {
-                  if (viewedByNot) {
+                  if (viewedByNotParam) {
                     searchParams.delete(TicketSearchParam.ViewedByNot);
                   } else if (user.nvaUsername) {
                     searchParams.set(TicketSearchParam.ViewedByNot, user.nvaUsername);
