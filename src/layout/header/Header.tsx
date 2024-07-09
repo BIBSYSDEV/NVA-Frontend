@@ -67,6 +67,7 @@ export const Header = () => {
     queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
     meta: { errorMessage: false },
   });
+  const myPageTasksCount = dialogueNotificationsQuery.data?.totalHits ?? 0;
 
   const taskNotificationsQuery = useQuery({
     enabled: isTicketCurator,
@@ -191,9 +192,9 @@ export const Header = () => {
                   color="inherit"
                   data-testid={dataTestId.header.myPageLink}
                   isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
-                  to={UrlPathTemplate.MyPage}
+                  to={myPageTasksCount === 0 ? UrlPathTemplate.MyPage : UrlPathTemplate.MyPageMyMessages}
                   startIcon={
-                    <Badge badgeContent={dialogueNotificationsQuery.data?.totalHits}>
+                    <Badge badgeContent={myPageTasksCount}>
                       <FavoriteBorderIcon fontSize="small" />
                     </Badge>
                   }>
