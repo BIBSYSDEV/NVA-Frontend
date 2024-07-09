@@ -1,7 +1,7 @@
 import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { defaultChannelSearchSize, searchForJournals } from '../../../../api/publicationChannelApi';
@@ -65,15 +65,8 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const debouncedQuery = useDebounce(query);
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
-  const searchSizeRef = useRef(searchSize);
-  useEffect(() => {
-    searchSizeRef.current = searchSize;
-  }, [searchSize]);
-  useEffect(() => {
-    if (searchSizeRef.current > defaultChannelSearchSize) {
-      setSearchSize(defaultChannelSearchSize);
-    }
-  }, [debouncedQuery]);
+  // Reset search size when query changes
+  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, year, searchSize],
@@ -81,11 +74,13 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     queryFn: () => searchForJournals(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
     placeholderData: (data, query) => {
-      if (query?.queryKey.includes(debouncedQuery)) {
+      // Keep previous data if query is similar to previous query
+      if (debouncedQuery && query?.queryKey.includes(debouncedQuery)) {
         return data;
       }
     },
   });
+  const journalOptions = journalOptionsQuery.data?.hits ?? [];
 
   // Fetch Journals with matching ISSN
   const journalsByIssnQuery = useQuery({
@@ -133,7 +128,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             data-testid={journalFieldTestId}
             aria-labelledby={`${journalFieldTestId}-label`}
             popupIcon={null}
-            options={journalOptionsQuery.data?.hits ?? []}
+            options={journalOptions}
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
@@ -169,10 +164,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
               {
                 hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
                 onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                isLoadingMoreHits:
-                  journalOptionsQuery.isFetching &&
-                  journalOptionsQuery.data?.hits &&
-                  searchSize > journalOptionsQuery.data.hits.length,
+                isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > journalOptions.length,
               } satisfies AutocompleteListboxWithExpansionProps as any
             }
             renderTags={(value, getTagProps) =>
