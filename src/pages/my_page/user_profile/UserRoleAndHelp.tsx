@@ -1,9 +1,8 @@
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { fetchUser } from '../../../api/roleApi';
+import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -13,15 +12,8 @@ import { UserRoles } from './UserRoles';
 export const UserRoleAndHelp = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const username = user?.nvaUsername ?? '';
 
-  const nvaUserQuery = useQuery({
-    enabled: !!username,
-    queryKey: [username],
-    queryFn: () => fetchUser(username),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
-
+  const nvaUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
   const nvaUser = nvaUserQuery.data;
 
   return (

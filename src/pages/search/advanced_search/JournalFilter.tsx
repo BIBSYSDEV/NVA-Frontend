@@ -1,4 +1,4 @@
-import { Autocomplete, Typography } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,7 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 export const JournalFilter = () => {
   const { t } = useTranslation();
@@ -68,10 +69,8 @@ export const JournalFilter = () => {
       disableClearable={!journalQuery}
       loading={isFetching}
       getOptionLabel={(option) => option.name}
-      renderOption={(props, option) => (
-        <li {...props} key={option.id}>
-          <Typography>{option.name}</Typography>
-        </li>
+      renderOption={(props, option, state) => (
+        <PublicationChannelOption key={option.id} props={props} option={option} state={state} hideScientificLevel />
       )}
       ListboxComponent={AutocompleteListboxWithExpansion}
       ListboxProps={
