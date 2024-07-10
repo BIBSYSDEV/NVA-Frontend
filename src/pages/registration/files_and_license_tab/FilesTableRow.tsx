@@ -47,9 +47,7 @@ import { DownloadFileButton } from './DownloadFileButton';
 export const markForPublishId = 'mark-for-publish';
 
 const VerticalAlignedTableCell = (props: TableCellProps) => (
-  <TableCell style={{ verticalAlign: 'middle' }} {...props}>
-    {props.children}
-  </TableCell>
+  <TableCell style={{ verticalAlign: 'middle' }} {...props} />
 );
 
 interface FilesTableRowProps {
