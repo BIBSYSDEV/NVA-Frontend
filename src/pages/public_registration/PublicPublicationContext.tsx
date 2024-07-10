@@ -106,6 +106,10 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
     t('feedback.error.get_publisher')
   );
 
+  const publisherName = fetchedPublisher?.discontinued
+    ? `${fetchedPublisher.name} (${t('common.discontinued')}: ${fetchedPublisher.discontinued})`
+    : fetchedPublisher?.name;
+
   return publisher?.id || publisher?.name ? (
     <>
       <Typography variant="h3" component="p">
@@ -116,7 +120,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
         <ListSkeleton height={20} />
       ) : fetchedPublisher ? (
         <>
-          <Typography>{fetchedPublisher.name}</Typography>
+          <Typography>{publisherName}</Typography>
           <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} channelId={fetchedPublisher.id} />
           {fetchedPublisher.sameAs && (
             <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
@@ -220,11 +224,15 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   const isLoadingJournal = (!!id && journalQuery.isPending) || (journalQuery.isError && journalBackupQuery.isPending);
   const journal = journalQuery.data ?? journalBackupQuery.data;
 
+  const journalName = journal?.discontinued
+    ? `${journal.name} (${t('common.discontinued')}: ${journal.discontinued})`
+    : journal?.name;
+
   return isLoadingJournal ? (
     <ListSkeleton height={20} />
   ) : !journal ? null : (
     <>
-      <Typography>{journal.name}</Typography>
+      <Typography>{journalName}</Typography>
       <Typography>
         {[
           journal.printIssn ? `${t('registration.resource_type.print_issn')}: ${journal.printIssn}` : '',
