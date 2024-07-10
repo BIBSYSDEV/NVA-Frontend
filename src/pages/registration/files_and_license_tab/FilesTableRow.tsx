@@ -52,6 +52,7 @@ interface FilesTableRowProps {
   showFileVersion: boolean;
   showRrs: boolean;
   disabled: boolean;
+  archived?: boolean;
 }
 
 export const FilesTableRow = ({
@@ -61,6 +62,7 @@ export const FilesTableRow = ({
   showFileVersion,
   showRrs,
   disabled,
+  archived,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
@@ -75,8 +77,6 @@ export const FilesTableRow = ({
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
-
-  const isArchived = file.type === FileType.UnpublishableFile;
 
   const isAcceptedFile = file.publisherVersion === FileVersion.Accepted;
   const rrsStrategy = file.rightsRetentionStrategy.configuredType ?? customer?.rightsRetentionStrategy.type;
@@ -112,7 +112,7 @@ export const FilesTableRow = ({
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
         sx={{
           bgcolor: disabled ? 'grey.400' : '',
-          td: { verticalAlign: 'top', borderBottom: !isArchived ? 'unset' : '' },
+          td: { verticalAlign: 'top', borderBottom: !archived ? 'unset' : '' },
         }}>
         <TableCell sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem' }}>
           <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
@@ -156,7 +156,7 @@ export const FilesTableRow = ({
                   inputProps={{
                     'aria-labelledby': markForPublishId,
                   }}
-                  onChange={(event, checked) => {
+                  onChange={(_, checked) => {
                     if (!checked) {
                       setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
                     } else {
@@ -168,170 +168,171 @@ export const FilesTableRow = ({
             </Field>
           </Box>
         </TableCell>
-        {showFileVersion && !isArchived && (
-          <TableCell>
-            <Field name={publisherVersionFieldName}>
-              {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
-                <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
-                  <RadioGroup
-                    {...field}
-                    row
-                    sx={{ flexWrap: 'nowrap' }}
-                    onChange={(event) => {
-                      const fileVersion = event.target.value as FileVersion;
-                      setFieldValue(field.name, fileVersion);
+        {!archived && (
+          <>
+            {showFileVersion && (
+              <TableCell>
+                <Field name={publisherVersionFieldName}>
+                  {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
+                    <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
+                      <RadioGroup
+                        {...field}
+                        row
+                        sx={{ flexWrap: 'nowrap' }}
+                        onChange={(event) => {
+                          const fileVersion = event.target.value as FileVersion;
+                          setFieldValue(field.name, fileVersion);
 
-                      if (showRrs) {
-                        if (fileVersion === FileVersion.Published) {
-                          const nullRrsValue: FileRrs = {
-                            type: 'NullRightsRetentionStrategy',
-                            configuredType: rrsStrategy,
-                          };
-                          setFieldValue(rrsFieldName, nullRrsValue);
-                          setFieldValue(licenseFieldName, null);
-                        } else if (isCustomerRrs || isOverridableRrs) {
-                          const customerRrsValue: FileRrs = {
-                            type: 'CustomerRightsRetentionStrategy',
-                            configuredType: rrsStrategy,
-                          };
-                          setFieldValue(rrsFieldName, customerRrsValue);
-                          setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                        }
-                      }
-                    }}>
-                    <FormControlLabel
-                      value={FileVersion.Accepted}
-                      control={<Radio />}
-                      label={
-                        <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
-                          {t('registration.files_and_license.accepted_version')}
-                        </Typography>
-                      }
-                    />
-                    <FormControlLabel
-                      value={FileVersion.Published}
-                      control={<Radio />}
-                      label={
-                        <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
-                          {t('registration.files_and_license.published_version')}
-                        </Typography>
-                      }
-                    />
-                  </RadioGroup>
-                  {error && touched && <FormHelperText error>{error}</FormHelperText>}
-                </FormControl>
-              )}
-            </Field>
-          </TableCell>
-        )}
-        {!isArchived && (
-          <TableCell>
-            <Field name={licenseFieldName}>
-              {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                <TextField
-                  id={field.name}
-                  data-testid={dataTestId.registrationWizard.files.selectLicenseField}
-                  sx={{ minWidth: '15rem' }}
-                  select
-                  disabled={disabled}
-                  SelectProps={{
-                    renderValue: (option) => {
-                      const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
-                      return selectedLicense ? (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
-                          <span>{selectedLicense.name}</span>
-                        </Box>
-                      ) : null;
-                    },
-                  }}
-                  variant="filled"
-                  value={licenses.find((license) => equalUris(license.id, field.value))?.id ?? ''}
-                  error={!!error && touched}
-                  helperText={<ErrorMessage name={field.name} />}
-                  label={t('registration.files_and_license.conditions_for_using_file')}
-                  required
-                  onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
-                  {activeLicenses.map((license) => (
-                    <MenuItem
-                      data-testid={dataTestId.registrationWizard.files.licenseItem}
-                      key={license.id}
-                      value={license.id}
-                      divider
-                      dense
-                      sx={{ gap: '1rem' }}>
-                      <ListItemIcon>
-                        <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                      </ListItemIcon>
-                      <ListItemText>
-                        <Typography>{license.name}</Typography>
-                      </ListItemText>
-                    </MenuItem>
-                  ))}
-                  {!inactiveLicensesOpen && (
-                    <MenuItem
-                      data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
-                      sx={{ display: 'flex', justifyContent: 'center' }}
-                      onClickCapture={(e) => {
-                        e.stopPropagation();
-                        setInactiveLicensesOpen(!inactiveLicensesOpen);
-                      }}>
-                      <Typography sx={{ fontStyle: 'italic' }}>
-                        {t('registration.files_and_license.show_all_older_versions')}
-                      </Typography>
-                    </MenuItem>
+                          if (showRrs) {
+                            if (fileVersion === FileVersion.Published) {
+                              const nullRrsValue: FileRrs = {
+                                type: 'NullRightsRetentionStrategy',
+                                configuredType: rrsStrategy,
+                              };
+                              setFieldValue(rrsFieldName, nullRrsValue);
+                              setFieldValue(licenseFieldName, null);
+                            } else if (isCustomerRrs || isOverridableRrs) {
+                              const customerRrsValue: FileRrs = {
+                                type: 'CustomerRightsRetentionStrategy',
+                                configuredType: rrsStrategy,
+                              };
+                              setFieldValue(rrsFieldName, customerRrsValue);
+                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                            }
+                          }
+                        }}>
+                        <FormControlLabel
+                          value={FileVersion.Accepted}
+                          control={<Radio />}
+                          label={
+                            <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
+                              {t('registration.files_and_license.accepted_version')}
+                            </Typography>
+                          }
+                        />
+                        <FormControlLabel
+                          value={FileVersion.Published}
+                          control={<Radio />}
+                          label={
+                            <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
+                              {t('registration.files_and_license.published_version')}
+                            </Typography>
+                          }
+                        />
+                      </RadioGroup>
+                      {error && touched && <FormHelperText error>{error}</FormHelperText>}
+                    </FormControl>
                   )}
-                  {inactiveLicenses.map((license) => (
-                    <MenuItem
-                      data-testid={dataTestId.registrationWizard.files.licenseItem}
-                      key={license.id}
-                      value={license.id}
-                      divider
-                      dense
-                      sx={{ gap: '1rem', display: inactiveLicensesOpen ? 'flex' : 'none' }}>
-                      <ListItemIcon>
-                        <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                      </ListItemIcon>
-                      <ListItemText>
-                        <Typography>{license.name}</Typography>
-                      </ListItemText>
-                    </MenuItem>
-                  ))}
-                </TextField>
-              )}
-            </Field>
-            {showRrs && (
-              <>
-                {fileHasCustomerRrs && (
-                  <Typography>
-                    <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
-                      {rrsPolicyLink}
-                    </Trans>
-                  </Typography>
-                )}
-                {fileHasOverriddenRrs && (
-                  <Typography>
-                    <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
-                      {rrsPolicyLink}
-                    </Trans>
-                  </Typography>
-                )}
-              </>
+                </Field>
+              </TableCell>
             )}
-          </TableCell>
-        )}
-        {!isArchived && (
-          <TableCell>
-            <IconButton
-              onClick={() => setOpenCollapsable(!openCollapsable)}
-              size="small"
-              data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
-              {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
+            <TableCell>
+              <Field name={licenseFieldName}>
+                {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                  <TextField
+                    id={field.name}
+                    data-testid={dataTestId.registrationWizard.files.selectLicenseField}
+                    sx={{ minWidth: '15rem' }}
+                    select
+                    disabled={disabled}
+                    SelectProps={{
+                      renderValue: (option) => {
+                        const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
+                        return selectedLicense ? (
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
+                            <span>{selectedLicense.name}</span>
+                          </Box>
+                        ) : null;
+                      },
+                    }}
+                    variant="filled"
+                    value={licenses.find((license) => equalUris(license.id, field.value))?.id ?? ''}
+                    error={!!error && touched}
+                    helperText={<ErrorMessage name={field.name} />}
+                    label={t('registration.files_and_license.conditions_for_using_file')}
+                    required
+                    onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
+                    {activeLicenses.map((license) => (
+                      <MenuItem
+                        data-testid={dataTestId.registrationWizard.files.licenseItem}
+                        key={license.id}
+                        value={license.id}
+                        divider
+                        dense
+                        sx={{ gap: '1rem' }}>
+                        <ListItemIcon>
+                          <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                        </ListItemIcon>
+                        <ListItemText>
+                          <Typography>{license.name}</Typography>
+                        </ListItemText>
+                      </MenuItem>
+                    ))}
+                    {!inactiveLicensesOpen && (
+                      <MenuItem
+                        data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
+                        sx={{ display: 'flex', justifyContent: 'center' }}
+                        onClickCapture={(e) => {
+                          e.stopPropagation();
+                          setInactiveLicensesOpen(!inactiveLicensesOpen);
+                        }}>
+                        <Typography sx={{ fontStyle: 'italic' }}>
+                          {t('registration.files_and_license.show_all_older_versions')}
+                        </Typography>
+                      </MenuItem>
+                    )}
+                    {inactiveLicenses.map((license) => (
+                      <MenuItem
+                        data-testid={dataTestId.registrationWizard.files.licenseItem}
+                        key={license.id}
+                        value={license.id}
+                        divider
+                        dense
+                        sx={{ gap: '1rem', display: inactiveLicensesOpen ? 'flex' : 'none' }}>
+                        <ListItemIcon>
+                          <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                        </ListItemIcon>
+                        <ListItemText>
+                          <Typography>{license.name}</Typography>
+                        </ListItemText>
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              </Field>
+              {showRrs && (
+                <>
+                  {fileHasCustomerRrs && (
+                    <Typography>
+                      <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
+                        {rrsPolicyLink}
+                      </Trans>
+                    </Typography>
+                  )}
+                  {fileHasOverriddenRrs && (
+                    <Typography>
+                      <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
+                        {rrsPolicyLink}
+                      </Trans>
+                    </Typography>
+                  )}
+                </>
+              )}
+            </TableCell>
+
+            <TableCell>
+              <IconButton
+                onClick={() => setOpenCollapsable(!openCollapsable)}
+                size="small"
+                data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
+                {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+              </IconButton>
+            </TableCell>
+          </>
         )}
       </TableRow>
-      {!isArchived && (
+      {!archived && (
         <TableRow
           sx={{ bgcolor: disabled ? 'grey.400' : '' }}
           title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}>
