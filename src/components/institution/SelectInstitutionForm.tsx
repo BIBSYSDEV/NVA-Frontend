@@ -113,53 +113,56 @@ export const SelectInstitutionForm = ({
               </FormControl>
             </Paper>
           )}
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Typography variant="h3" sx={{ fontWeight: 'normal' }}>
-              {t('common.select_institution')}
-            </Typography>
-            <Field name={SelectOrganizationFormField.Unit}>
-              {({ field }: FieldProps<Organization>) => (
-                <Autocomplete
-                  {...field}
-                  options={organizationSearchQuery.data?.hits ?? []}
-                  inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
-                  getOptionLabel={(option) => getLanguageString(option.labels)}
-                  renderOption={(props, option) => (
-                    <OrganizationRenderOption key={option.id} props={props} option={option} />
-                  )}
-                  filterOptions={(options) => options}
-                  onInputChange={(_, value, reason) => {
-                    if (field.value) {
-                      setFieldValue(field.name, null);
-                    }
-                    if (reason !== 'reset') {
-                      setSearchTerm(value);
-                    }
-                  }}
-                  onChange={(_, value) => {
-                    resetForm({
-                      values: initialValuesOrganizationForm,
-                    });
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <Typography variant="h3" sx={{ fontWeight: 'normal' }}>
+                {t('common.select_institution')}
+              </Typography>
+              <Field name={SelectOrganizationFormField.Unit}>
+                {({ field }: FieldProps<Organization>) => (
+                  <Autocomplete
+                    {...field}
+                    options={organizationSearchQuery.data?.hits ?? []}
+                    inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
+                    getOptionLabel={(option) => getLanguageString(option.labels)}
+                    renderOption={(props, option) => (
+                      <OrganizationRenderOption key={option.id} props={props} option={option} />
+                    )}
+                    filterOptions={(options) => options}
+                    onInputChange={(_, value, reason) => {
+                      if (field.value) {
+                        setFieldValue(field.name, null);
+                      }
+                      if (reason !== 'reset') {
+                        setSearchTerm(value);
+                      }
+                    }}
+                    onChange={(_, value) => {
+                      resetForm({
+                        values: initialValuesOrganizationForm,
+                      });
 
-                    setFieldValue(field.name, value);
-                    setSelectedSubunitId('');
-                  }}
-                  loading={organizationSearchQuery.isPending}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      data-testid={dataTestId.organization.searchField}
-                      label={t('registration.contributors.search_for_institution')}
-                      variant="filled"
-                      fullWidth
-                    />
-                  )}
-                />
-              )}
-            </Field>
+                      setFieldValue(field.name, value);
+                      setSelectedSubunitId('');
+                    }}
+                    loading={organizationSearchQuery.isPending}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        data-testid={dataTestId.organization.searchField}
+                        label={t('registration.contributors.search_for_institution')}
+                        variant="filled"
+                        fullWidth
+                      />
+                    )}
+                  />
+                )}
+              </Field>
+            </Box>
+
             {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <Typography variant="h3" sx={{ marginTop: '1rem', fontWeight: 'normal' }}>
+                <Typography variant="h3" sx={{ fontWeight: 'normal' }}>
                   {t('common.select_unit')}
                 </Typography>
                 <Field name={SelectOrganizationFormField.Subunit}>
@@ -207,6 +210,7 @@ export const SelectInstitutionForm = ({
                 </Field>
               </Box>
             )}
+
             <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
               {onCancel && (
                 <Button onClick={onCancel} data-testid={dataTestId.confirmDialog.cancelButton}>
