@@ -39,7 +39,7 @@ export const TicketStatusFilter = () => {
         onChange={handleChange}
         displayEmpty
         renderValue={(selected: TicketStatus[]) => {
-          if (selected.length === ticketStatusValues.length || selectedStatuses.length === 0) {
+          if (selected.length === ticketStatusValues.length || selected.length === 0) {
             return t('my_page.messages.all_ticket_types');
           } else {
             return selected.map((value) => t(`my_page.messages.ticket_types.${value}`)).join(', ');
