@@ -5,12 +5,13 @@ import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus, ticketStatusValues } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
 
+const labelId = 'status-filter-select';
+
 export const TicketStatusFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const selectedStatuses = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
-    ticketStatusValues) as TicketStatus[];
+  const selectedStatuses = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const newSelectedStatuses = event.target.value as TicketStatus[];
@@ -26,21 +27,24 @@ export const TicketStatusFilter = () => {
 
   return (
     <FormControl variant="outlined" size="small" sx={{ width: '100%' }}>
-      <InputLabel id={'status-filter-select'}>{t('tasks.status')}</InputLabel>
+      <InputLabel id={labelId} shrink>
+        {t('tasks.status')}
+      </InputLabel>
       <Select
-        labelId={'status-filter-select'}
+        labelId={labelId}
+        label={t('tasks.status')}
         data-testid={dataTestId.myPage.myMessages.ticketStatusField}
         multiple
         value={selectedStatuses}
         onChange={handleChange}
+        displayEmpty
         renderValue={(selected: TicketStatus[]) => {
-          if (selected.length === ticketStatusValues.length) {
+          if (selected.length === ticketStatusValues.length || selectedStatuses.length === 0) {
             return t('my_page.messages.all_ticket_types');
           } else {
             return selected.map((value) => t(`my_page.messages.ticket_types.${value}`)).join(', ');
           }
-        }}
-        label={t('tasks.status')}>
+        }}>
         {ticketStatusValues.map((status) => (
           <MenuItem sx={{ height: '2.5rem' }} key={status} value={status}>
             <Checkbox checked={selectedStatuses.includes(status)} />
