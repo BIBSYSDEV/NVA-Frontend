@@ -1,5 +1,6 @@
-import { FetchTicketsParams, ResultParam } from '../api/searchApi';
+import { Query } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
+import { FetchTicketsParams, ResultParam } from '../api/searchApi';
 import { AggregationFileKeyType } from '../types/registration.types';
 
 export enum SearchParam {
@@ -144,3 +145,14 @@ export const getDialogueNotificationsParams = (username?: string): FetchTicketsP
   owner: username,
   viewedByNot: username,
 });
+
+export const keepSimilarPreviousData = <T>(
+  previousData: T | undefined,
+  query: Query<T, Error, T, (string | number)[]> | undefined,
+  searchTerm: string
+) => {
+  // Keep previous data if query has the same search term
+  if (searchTerm && query?.queryKey.includes(searchTerm)) {
+    return previousData;
+  }
+};

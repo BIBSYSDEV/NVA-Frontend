@@ -1,8 +1,8 @@
 import { Box, Link, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { fetchRegistration } from '../../../api/registrationApi';
-import { fetchUser } from '../../../api/roleApi';
 import { ProfilePicture } from '../../../components/ProfilePicture';
 import { PublicationNote, Registration } from '../../../types/registration.types';
 import { toDateString } from '../../../utils/date-helpers';
@@ -30,12 +30,7 @@ export const DeletedRegistrationInformation = ({
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const senderQuery = useQuery({
-    enabled: !!unpublishingNote.createdBy,
-    queryKey: [unpublishingNote.createdBy],
-    queryFn: () => fetchUser(unpublishingNote.createdBy ?? ''),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
+  const senderQuery = useFetchUserQuery(unpublishingNote.createdBy ?? '');
 
   const person = senderQuery.data;
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);

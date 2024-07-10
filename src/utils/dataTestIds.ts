@@ -100,7 +100,7 @@ export const dataTestId = {
     personRegisterLink: 'person-register-link',
     personRegisterSearchBar: 'person-register-search-bar',
   },
-  common: { pagination: 'pagination', save: 'save', cancel: 'cancel' },
+  common: { cancel: 'cancel', pagination: 'pagination', save: 'save', showMoreButton: 'show-more-button' },
   confirmDialog: {
     acceptButton: 'accept-button',
     cancelButton: 'cancel-button',
@@ -273,6 +273,7 @@ export const dataTestId = {
       publishButton: 'button-publish-registration',
       publishingRequestAcceptButton: 'publishing-request-accept-button',
       publishingRequestAccordion: 'publishing-request-accordion',
+      publishingRequestEditButton: 'publishing-request-edit-button',
       publishingRequestRejectButton: 'publishing-request-reject-button',
       publishingRequestRejectionMessageTextField: 'publishing-request-rejection-message-textfield',
       refreshDoiRequestButton: 'refresh-doi-button',
