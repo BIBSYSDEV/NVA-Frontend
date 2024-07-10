@@ -16,7 +16,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { AssociatedFile, FileType, Uppy } from '../../types/associatedArtifact.types';
-import { LicenseUri, licenses } from '../../types/license.types';
+import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
@@ -24,6 +24,7 @@ import {
   isDegree,
   isEmbargoed,
   isTypeWithFileVersionField,
+  isTypeWithRrs,
   userCanUnpublishRegistration,
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
@@ -249,6 +250,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                   }}
                   baseFieldName={`${baseFieldName}[${associatedFileIndex}]`}
                   showFileVersion={showFileVersion}
+                  showRrs={isTypeWithRrs(publicationInstanceType)}
                 />
               );
             })}
