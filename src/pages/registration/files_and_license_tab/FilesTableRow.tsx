@@ -144,29 +144,27 @@ export const FilesTableRow = ({
             </Typography>
           </ConfirmDialog>
         </TableCell>
-        <TableCell>
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Field name={fileTypeFieldName}>
-              {({ field }: FieldProps) => (
-                <Checkbox
-                  {...field}
-                  data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
-                  checked={field.value === FileType.UnpublishedFile || field.value === FileType.PublishedFile}
-                  disabled={disabled}
-                  inputProps={{
-                    'aria-labelledby': markForPublishId,
-                  }}
-                  onChange={(_, checked) => {
-                    if (!checked) {
-                      setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
-                    } else {
-                      setFieldValue(fileTypeFieldName, FileType.UnpublishedFile);
-                    }
-                  }}
-                />
-              )}
-            </Field>
-          </Box>
+        <TableCell align="center">
+          <Field name={fileTypeFieldName}>
+            {({ field }: FieldProps) => (
+              <Checkbox
+                {...field}
+                data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
+                checked={field.value === FileType.UnpublishedFile || field.value === FileType.PublishedFile}
+                disabled={disabled}
+                inputProps={{
+                  'aria-labelledby': markForPublishId,
+                }}
+                onChange={(_, checked) => {
+                  if (!checked) {
+                    setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
+                  } else {
+                    setFieldValue(fileTypeFieldName, FileType.UnpublishedFile);
+                  }
+                }}
+              />
+            )}
+          </Field>
         </TableCell>
         {!archived && (
           <>
