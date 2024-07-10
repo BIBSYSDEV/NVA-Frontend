@@ -19,6 +19,7 @@ import {
   Radio,
   RadioGroup,
   TableCell,
+  TableCellProps,
   TableRow,
   TextField,
   Tooltip,
@@ -44,6 +45,12 @@ import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
 export const markForPublishId = 'mark-for-publish';
+
+const VerticalAlignedTableCell = (props: TableCellProps) => (
+  <TableCell style={{ verticalAlign: 'middle' }} {...props}>
+    {props.children}
+  </TableCell>
+);
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -114,37 +121,39 @@ export const FilesTableRow = ({
           bgcolor: disabled ? 'grey.400' : '',
           td: { verticalAlign: 'top', borderBottom: !archived ? 'unset' : '' },
         }}>
-        <TableCell sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem' }}>
-          <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
-          <Box sx={{ minWidth: '10rem' }}>
-            <TruncatableTypography sx={{ fontWeight: 'bold', color: disabled ? 'grey.600' : '' }}>
-              {file.name}
-            </TruncatableTypography>
-            <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
+        <VerticalAlignedTableCell>
+          <Box sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem', alignItems: 'center' }}>
+            <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
+            <Box sx={{ minWidth: '10rem' }}>
+              <TruncatableTypography sx={{ fontWeight: 'bold', color: disabled ? 'grey.600' : '' }}>
+                {file.name}
+              </TruncatableTypography>
+              <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
+            </Box>
+            <Box sx={{ minWidth: '1.5rem' }}>
+              <DownloadFileButton file={file} greyTones={disabled} />
+            </Box>
+            <DeleteIconButton
+              data-testid={dataTestId.registrationWizard.files.deleteFile}
+              onClick={disabled ? undefined : toggleOpenConfirmDialog}
+              tooltip={t('registration.files_and_license.remove_file')}
+              disabled={disabled}
+            />
+            <ConfirmDialog
+              open={openConfirmDialog}
+              title={t('registration.files_and_license.remove_file')}
+              onAccept={() => {
+                removeFile();
+                toggleOpenConfirmDialog();
+              }}
+              onCancel={toggleOpenConfirmDialog}>
+              <Typography>
+                {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
+              </Typography>
+            </ConfirmDialog>
           </Box>
-          <Box sx={{ minWidth: '1.5rem' }}>
-            <DownloadFileButton file={file} greyTones={disabled} />
-          </Box>
-          <DeleteIconButton
-            data-testid={dataTestId.registrationWizard.files.deleteFile}
-            onClick={disabled ? undefined : toggleOpenConfirmDialog}
-            tooltip={t('registration.files_and_license.remove_file')}
-            disabled={disabled}
-          />
-          <ConfirmDialog
-            open={openConfirmDialog}
-            title={t('registration.files_and_license.remove_file')}
-            onAccept={() => {
-              removeFile();
-              toggleOpenConfirmDialog();
-            }}
-            onCancel={toggleOpenConfirmDialog}>
-            <Typography>
-              {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
-            </Typography>
-          </ConfirmDialog>
-        </TableCell>
-        <TableCell align="center">
+        </VerticalAlignedTableCell>
+        <VerticalAlignedTableCell>
           <Field name={fileTypeFieldName}>
             {({ field }: FieldProps) => (
               <Checkbox
@@ -165,11 +174,11 @@ export const FilesTableRow = ({
               />
             )}
           </Field>
-        </TableCell>
+        </VerticalAlignedTableCell>
         {!archived && (
           <>
             {showFileVersion && (
-              <TableCell>
+              <VerticalAlignedTableCell>
                 <Field name={publisherVersionFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                     <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
@@ -222,9 +231,9 @@ export const FilesTableRow = ({
                     </FormControl>
                   )}
                 </Field>
-              </TableCell>
+              </VerticalAlignedTableCell>
             )}
-            <TableCell>
+            <VerticalAlignedTableCell>
               <Field name={licenseFieldName}>
                 {({ field, meta: { error, touched } }: FieldProps<string>) => (
                   <TextField
@@ -317,16 +326,15 @@ export const FilesTableRow = ({
                   )}
                 </>
               )}
-            </TableCell>
+            </VerticalAlignedTableCell>
 
-            <TableCell>
+            <VerticalAlignedTableCell>
               <IconButton
                 onClick={() => setOpenCollapsable(!openCollapsable)}
-                size="small"
                 data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
                 {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
               </IconButton>
-            </TableCell>
+            </VerticalAlignedTableCell>
           </>
         )}
       </TableRow>
