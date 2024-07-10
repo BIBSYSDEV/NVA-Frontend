@@ -9,6 +9,8 @@ interface TicketListDefaultValuesWrapperProps {
   children: ReactNode;
 }
 
+const defaultStatusFilterItems: TicketStatus[] = ['New', 'Pending'];
+
 export const TicketListDefaultValuesWrapper = ({ children }: TicketListDefaultValuesWrapperProps) => {
   const user = useSelector((store: RootState) => store.user);
   const nvaUsername = user?.nvaUsername ?? '';
@@ -21,10 +23,12 @@ export const TicketListDefaultValuesWrapper = ({ children }: TicketListDefaultVa
     }
 
     const searchParams = new URLSearchParams(history.location.search);
-    searchParams.set(TicketSearchParam.Assignee, nvaUsername);
-    searchParams.set(TicketSearchParam.Status, 'Pending' as TicketStatus);
+    if (nvaUsername) {
+      searchParams.set(TicketSearchParam.Assignee, nvaUsername);
+    }
+    searchParams.set(TicketSearchParam.Status, defaultStatusFilterItems.join(','));
     history.push({ search: searchParams.toString() });
   }, [history, nvaUsername]);
 
-  return <>{children}</>;
+  return children;
 };
