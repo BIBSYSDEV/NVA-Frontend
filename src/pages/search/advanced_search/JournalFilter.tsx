@@ -1,14 +1,19 @@
 import { Autocomplete } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 export const JournalFilter = () => {
@@ -18,19 +23,24 @@ export const JournalFilter = () => {
   const journalParam = searchParams.get(ResultParam.Journal);
   const [journalQuery, setJournalQuery] = useState('');
   const debouncedQuery = useDebounce(journalQuery);
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
+
+  // Reset search size when query changes
+  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
   const journalOptionsQuery = useQuery({
-    queryKey: ['journalSearch', debouncedQuery],
+    queryKey: ['journalSearch', debouncedQuery, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === journalQuery,
-    queryFn: () => searchForJournals(debouncedQuery, '2023'),
+    queryFn: () => searchForJournals(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
+    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
 
-  const journalList = journalOptionsQuery.data?.hits ?? [];
+  const options = journalOptionsQuery.data?.hits ?? [];
 
   const selectedJournalQuery = useQuery({
     enabled: !!journalParam,
-    queryKey: [journalParam],
+    queryKey: ['channel', journalParam],
     queryFn: () => (journalParam ? fetchJournal(journalParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
@@ -54,7 +64,7 @@ export const JournalFilter = () => {
       sx={{ minWidth: '15rem' }}
       value={journalParam && selectedJournalQuery.data ? selectedJournalQuery.data : null}
       isOptionEqualToValue={(option, value) => option.id === value.id}
-      options={debouncedQuery && journalQuery === debouncedQuery && !journalOptionsQuery.isPending ? journalList : []}
+      options={options}
       filterOptions={(options) => options}
       inputValue={journalQuery}
       onInputChange={(_, newInputValue) => setJournalQuery(newInputValue)}
@@ -66,6 +76,14 @@ export const JournalFilter = () => {
       renderOption={(props, option, state) => (
         <PublicationChannelOption key={option.id} props={props} option={option} state={state} hideScientificLevel />
       )}
+      ListboxComponent={AutocompleteListboxWithExpansion}
+      ListboxProps={
+        {
+          hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
+          onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+          isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
+        } satisfies AutocompleteListboxWithExpansionProps as any
+      }
       data-testid={dataTestId.startPage.advancedSearch.journalField}
       renderInput={(params) => (
         <AutocompleteTextField

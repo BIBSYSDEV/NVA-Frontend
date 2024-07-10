@@ -4,7 +4,11 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { searchForJournals } from '../../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, searchForJournals } from '../../../../api/publicationChannelApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
@@ -14,6 +18,7 @@ import {
 import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -59,12 +64,17 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
 
   const [query, setQuery] = useState(!journalId ? reference?.publicationContext.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
+
+  // Reset search size when query changes
+  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
   const journalOptionsQuery = useQuery({
-    queryKey: ['journalSearch', debouncedQuery, year],
+    queryKey: ['journalSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForJournals(debouncedQuery, year),
+    queryFn: () => searchForJournals(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
+    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
 
   // Fetch Journals with matching ISSN
@@ -79,7 +89,8 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     queryFn: () =>
       searchForJournals(
         reference?.publicationContext.printIssn ?? reference?.publicationContext.onlineIssn ?? '',
-        year
+        year,
+        1
       ),
     meta: { errorMessage: t('feedback.error.get_journals') },
   });
@@ -101,6 +112,8 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     staleTime: Infinity,
   });
 
+  const options = journalOptionsQuery.data?.hits ?? [];
+
   return (
     <StyledChannelContainerBox>
       <Field name={ResourceFieldNames.PublicationContextId}>
@@ -112,11 +125,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             data-testid={journalFieldTestId}
             aria-labelledby={`${journalFieldTestId}-label`}
             popupIcon={null}
-            options={
-              debouncedQuery && query === debouncedQuery && !journalOptionsQuery.isPending
-                ? journalOptionsQuery.data?.hits ?? []
-                : []
-            }
+            options={options}
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
@@ -147,6 +156,14 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
+            ListboxComponent={AutocompleteListboxWithExpansion}
+            ListboxProps={
+              {
+                hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
+                onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+                isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
+              } satisfies AutocompleteListboxWithExpansionProps as any
+            }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
