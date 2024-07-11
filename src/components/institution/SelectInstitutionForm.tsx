@@ -125,7 +125,7 @@ export const SelectInstitutionForm = ({
                     options={organizationSearchQuery.data?.hits ?? []}
                     inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
                     getOptionLabel={(option) => getLanguageString(option.labels)}
-                    renderOption={(props, option) => (
+                    renderOption={({ key, ...props }, option) => (
                       <OrganizationRenderOption key={option.id} props={props} option={option} />
                     )}
                     filterOptions={(options) => options}
@@ -172,7 +172,7 @@ export const SelectInstitutionForm = ({
                         value={field.value}
                         options={getSortedSubUnits(values.unit?.hasPart)}
                         getOptionLabel={(option) => getLanguageString(option.labels)}
-                        renderOption={(props, option) => (
+                        renderOption={({ key, ...props }, option) => (
                           <OrganizationRenderOption key={option.id} props={props} option={option} />
                         )}
                         onChange={(_, value) => {

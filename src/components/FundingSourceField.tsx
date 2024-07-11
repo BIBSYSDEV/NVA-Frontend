@@ -37,7 +37,7 @@ export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
               return identifier.includes(filter) || names.some((name) => name.includes(filter));
             });
           }}
-          renderOption={(props, option) => (
+          renderOption={({ key, ...props }, option) => (
             <li {...props} key={option.identifier}>
               {getLanguageString(option.name)}
             </li>

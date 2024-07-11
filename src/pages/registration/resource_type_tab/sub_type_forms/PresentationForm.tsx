@@ -90,8 +90,8 @@ export const PresentationForm = () => {
             onChange={(_, value) => setFieldValue(field.name, value?.code)}
             isOptionEqualToValue={(option, value) => option.code === value.code}
             getOptionLabel={(option) => option.label}
-            renderOption={(props, option) => (
-              <li {...props}>
+            renderOption={({ key, ...props }, option) => (
+              <li {...props} key={option.code}>
                 <Box
                   component="img"
                   sx={{ mr: '1rem' }}
