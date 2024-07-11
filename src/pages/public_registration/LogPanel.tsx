@@ -57,7 +57,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   if (registration.createdDate) {
     const registrationCreated: LogItem = {
       modifiedDate: registration.createdDate,
-      title: t('my_page.messages.created_in_nva'),
+      title: t('log.created_in_nva'),
       description: organizationAcronym,
       type: 'PublishingRequest',
       actionBy: [resourceOwnerId],
@@ -87,7 +87,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   if (registration.publishedDate && registration.publishedDate >= registration.createdDate) {
     const registrationPublished: LogItem = {
       modifiedDate: registration.publishedDate,
-      title: t('my_page.messages.metadata_published_in_nva'),
+      title: t('log.metadata_published_in_nva'),
       type: 'PublishingRequest',
     };
     logs.push(registrationPublished);

@@ -38,11 +38,11 @@ function generateTitleFromPublishingTicket(ticket: PublishingTicket, t: TFunctio
 
 function generateTitleFromDoiTicket(ticket: Ticket, t: TFunction) {
   if (ticket.status === 'Completed') {
-    return t('my_page.messages.doi_completed');
+    return t('log.titles.doi_given');
   }
 
   if (ticket.status === 'Closed') {
-    return t('my_page.messages.doi_closed');
+    return t('log.titles.doi_rejected');
   }
 
   return '';
