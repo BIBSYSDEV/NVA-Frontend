@@ -1,5 +1,6 @@
 import { TFunction } from 'i18next';
 import { generateImportLogEntries } from './importEntryGenerator';
+import { generateRegistrationLogEntries } from './registrationEntryGenerator';
 import { generateTicketLogEntries } from './ticketEntryGenerator';
 import { getArchivedFiles } from '../registration-helpers';
 import { Log, LogEntry } from '../../types/log.types';
@@ -9,9 +10,10 @@ import { Registration } from '../../types/registration.types';
 function generateLog(registration: Registration, tickets: Ticket[], t: TFunction): Log {
   const importLogEntries = generateImportLogEntries(registration.importDetails ?? [], t);
   const ticketLogEntries = generateTicketLogEntries(tickets, registration, t);
+  const registrationEntries = generateRegistrationLogEntries(registration, t);
 
   return {
-    entries: sortByDateAsc([...importLogEntries, ...ticketLogEntries]),
+    entries: sortByDateAsc([...importLogEntries, ...ticketLogEntries, ...registrationEntries]),
     metadataUpdated: registration.modifiedDate,
     numberOfArchivedFiles: getArchivedFiles(registration.associatedArtifacts).length,
   };
