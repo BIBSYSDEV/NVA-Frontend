@@ -77,13 +77,23 @@ export const ProjectsField = () => {
                 value={(field.value ?? []) as any[]}
                 renderTags={(value: ResearchProject[], getTagProps) =>
                   value.map((option, index) => (
-                    <ProjectChip {...getTagProps({ index })} key={index} id={option.id} fallbackName={option.name} />
+                    <ProjectChip
+                      {...getTagProps({ index })}
+                      key={option.id}
+                      id={option.id}
+                      fallbackName={option.name}
+                    />
                   ))
                 }
                 getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
                 loading={projectsQuery.isFetching}
-                renderOption={(props, option: CristinProject, state) => (
-                  <AutocompleteProjectOption project={option} inputValue={state.inputValue} {...props} />
+                renderOption={({ key, ...props }, option: CristinProject, state) => (
+                  <AutocompleteProjectOption
+                    key={option.id}
+                    project={option}
+                    inputValue={state.inputValue}
+                    props={props}
+                  />
                 )}
                 renderInput={(params) => (
                   <AutocompleteTextField

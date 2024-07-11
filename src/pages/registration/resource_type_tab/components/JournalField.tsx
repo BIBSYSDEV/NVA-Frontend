@@ -153,8 +153,8 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             }}
             loading={journalOptionsQuery.isFetching || journalQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={(props, option, state) => (
-              <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
+            renderOption={({ key, ...props }, option, state) => (
+              <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
             ListboxComponent={AutocompleteListboxWithExpansion}
             ListboxProps={
@@ -165,17 +165,14 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
               } satisfies AutocompleteListboxWithExpansionProps as any
             }
             renderTags={(value, getTagProps) =>
-              value.map((option, index) => {
-                const { key, ...rest } = getTagProps({ index });
-                return (
-                  <Chip
-                    key={key}
-                    {...rest}
-                    data-testid={dataTestId.registrationWizard.resourceType.journalChip}
-                    label={<PublicationChannelChipLabel value={option} />}
-                  />
-                );
-              })
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  key={option.identifier}
+                  data-testid={dataTestId.registrationWizard.resourceType.journalChip}
+                  label={<PublicationChannelChipLabel value={option} />}
+                />
+              ))
             }
             renderInput={(params) => (
               <AutocompleteTextField

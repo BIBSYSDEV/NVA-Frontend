@@ -100,8 +100,8 @@ export const SearchContainerField = ({
             }}
             loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
             getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-            renderOption={(props, option, state) => (
-              <li {...props}>
+            renderOption={({ key, ...props }, option, state) => (
+              <li {...props} key={option.identifier}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring
@@ -121,31 +121,26 @@ export const SearchContainerField = ({
               </li>
             )}
             renderTags={(value, getTagProps) =>
-              value.map((option, index) => {
-                const { key, ...rest } = getTagProps({ index });
-                return (
-                  <Chip
-                    key={key}
-                    {...rest}
-                    data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
-                    label={
-                      <>
-                        <Typography variant="subtitle1">
-                          {getTitleString(option.entityDescription?.mainTitle)}
-                        </Typography>
-                        {descriptionToShow === 'year-and-contributors' ? (
-                          <YearAndContributorsText
-                            date={option.entityDescription?.publicationDate}
-                            contributors={option.entityDescription?.contributors ?? []}
-                          />
-                        ) : (
-                          <ContainerAndLevelText registration={option} />
-                        )}
-                      </>
-                    }
-                  />
-                );
-              })
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  key={option.identifier}
+                  data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
+                  label={
+                    <>
+                      <Typography variant="subtitle1">{getTitleString(option.entityDescription?.mainTitle)}</Typography>
+                      {descriptionToShow === 'year-and-contributors' ? (
+                        <YearAndContributorsText
+                          date={option.entityDescription?.publicationDate}
+                          contributors={option.entityDescription?.contributors ?? []}
+                        />
+                      ) : (
+                        <ContainerAndLevelText registration={option} />
+                      )}
+                    </>
+                  }
+                />
+              ))
             }
             renderInput={(params) => (
               <AutocompleteTextField
