@@ -16,7 +16,6 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
     'react/react-in-jsx-scope': 'off',
-    'react/no-children-prop': 'off', // TODO: Violations of this rule should be resolved, so we can implement this rule
     'no-console': 'warn',
     'no-debugger': 'warn',
   },
