@@ -73,7 +73,7 @@ export const JournalFilter = () => {
       disableClearable={!journalQuery}
       loading={isFetching}
       getOptionLabel={(option) => option.name}
-      renderOption={({ key, ...props }, option, state) => (
+      renderOption={(props, option, state) => (
         <PublicationChannelOption
           key={option.identifier}
           props={props}

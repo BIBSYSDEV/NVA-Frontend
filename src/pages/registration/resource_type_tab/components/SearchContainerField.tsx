@@ -100,7 +100,7 @@ export const SearchContainerField = ({
             }}
             loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
             getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-            renderOption={({ key, ...props }, option, state) => (
+            renderOption={(props, option, state) => (
               <li {...props} key={option.identifier}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">

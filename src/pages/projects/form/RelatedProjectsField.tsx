@@ -61,7 +61,7 @@ export const RelatedProjectsField = () => {
           }
           getOptionDisabled={(option) => field.value.some((project) => project === option.id)}
           loading={projectsQuery.isFetching}
-          renderOption={({ key, ...props }, option: CristinProject, state) => (
+          renderOption={(props, option: CristinProject, state) => (
             <AutocompleteProjectOption key={option.id} project={option} inputValue={state.inputValue} props={props} />
           )}
           renderInput={(params) => (

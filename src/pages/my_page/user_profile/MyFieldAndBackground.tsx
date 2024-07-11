@@ -119,7 +119,7 @@ export const MyFieldAndBackground = () => {
                       getOptionDisabled={(option) =>
                         field.value.some((keyword) => keyword.identifier === option.identifier)
                       }
-                      renderOption={({ key, ...props }, option) => (
+                      renderOption={(props, option) => (
                         <li {...props} key={option.identifier}>
                           <Typography>{getLanguageString(option.labels)}</Typography>
                         </li>

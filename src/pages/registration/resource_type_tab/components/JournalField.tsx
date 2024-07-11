@@ -153,7 +153,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             }}
             loading={journalOptionsQuery.isFetching || journalQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={({ key, ...props }, option, state) => (
+            renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
             ListboxComponent={AutocompleteListboxWithExpansion}

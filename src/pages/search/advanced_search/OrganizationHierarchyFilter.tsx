@@ -74,9 +74,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
             options={allSubUnits}
             inputMode="search"
             getOptionLabel={(option) => getLanguageString(option.labels)}
-            renderOption={({ key, ...props }, option) => (
-              <OrganizationRenderOption key={option.id} props={props} option={option} />
-            )}
+            renderOption={(props, option) => <OrganizationRenderOption key={option.id} props={props} option={option} />}
             filterOptions={(options, state) =>
               options.filter(
                 (option) =>

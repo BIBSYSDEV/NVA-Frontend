@@ -127,9 +127,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         disabled={topLevelOrganizationQuery.isFetching}
         value={topLevelOrganizationQuery.data ?? null}
         loading={isLoading}
-        renderOption={({ key, ...props }, option) => (
-          <OrganizationRenderOption key={option.id} props={props} option={option} />
-        )}
+        renderOption={(props, option) => <OrganizationRenderOption key={option.id} props={props} option={option} />}
         renderInput={(params) => (
           <AutocompleteTextField
             {...params}

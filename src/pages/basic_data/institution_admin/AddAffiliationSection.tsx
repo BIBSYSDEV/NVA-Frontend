@@ -40,7 +40,7 @@ export const AddAffiliationSection = () => {
               value={organizationOptions.find((option) => option.id === field.value) ?? null}
               options={organizationOptions}
               getOptionLabel={(option) => getLanguageString(option.labels)}
-              renderOption={({ key, ...props }, option) => (
+              renderOption={(props, option) => (
                 <OrganizationRenderOption key={option.id} props={props} option={option} />
               )}
               loading={isLoadingCurrentOrganization}

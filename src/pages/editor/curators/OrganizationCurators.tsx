@@ -103,7 +103,7 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
                 options={allSubUnits}
                 inputMode="search"
                 getOptionLabel={(option) => getLanguageString(option.labels)}
-                renderOption={({ key, ...props }, option) => (
+                renderOption={(props, option) => (
                   <OrganizationRenderOption key={option.id} props={props} option={option} />
                 )}
                 filterOptions={(options, state) =>

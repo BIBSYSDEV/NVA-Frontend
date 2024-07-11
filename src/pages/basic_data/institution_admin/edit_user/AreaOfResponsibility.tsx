@@ -64,9 +64,7 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
           data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
           options={options}
           getOptionLabel={(option) => getLanguageString(option.labels)}
-          renderOption={({ key, ...props }, option) => (
-            <OrganizationRenderOption key={option.id} props={props} option={option} />
-          )}
+          renderOption={(props, option) => <OrganizationRenderOption key={option.id} props={props} option={option} />}
           disabled={isSubmitting}
           onChange={(_, value) => {
             if (value) {
