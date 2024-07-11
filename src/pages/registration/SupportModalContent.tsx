@@ -99,7 +99,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
           <Trans
             t={t}
             i18nKey="registration.support.curator_help.description"
-            components={[<Typography paragraph />]}
+            components={[<Typography paragraph key="1" />]}
           />
           <MessageForm
             confirmAction={async (message) => {

@@ -38,7 +38,10 @@ export const ProjectsField = () => {
         <HelperTextModal
           modalTitle={t('project.project')}
           modalDataTestId={dataTestId.registrationWizard.description.projectModal}>
-          <Trans i18nKey="registration.description.project_helper_text" components={[<Typography paragraph />]} />
+          <Trans
+            i18nKey="registration.description.project_helper_text"
+            components={[<Typography key="1" paragraph />]}
+          />
         </HelperTextModal>
       </Box>
       <Box sx={{ display: 'grid', alignItems: 'center', gridTemplateColumns: '4fr 1fr', gap: '0.5rem' }}>
@@ -105,7 +108,7 @@ export const ProjectsField = () => {
                   modalDataTestId={dataTestId.registrationWizard.description.createProjectModal}>
                   <Trans
                     i18nKey="registration.description.create_project_helper_text"
-                    components={[<Typography paragraph />]}
+                    components={[<Typography key="1" paragraph />]}
                   />
                 </HelperTextModal>
               </Box>

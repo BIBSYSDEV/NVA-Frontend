@@ -331,7 +331,7 @@ export const PublishingAccordion = ({
             <Trans
               t={t}
               i18nKey="registration.public_page.tasks_panel.duplicate_title_description_details"
-              components={[<Typography paragraph />]}
+              components={[<Typography paragraph key="1" />]}
             />
             <Divider sx={{ bgcolor: 'grey.400', mb: '0.5rem' }} />
           </Box>
@@ -378,7 +378,7 @@ export const PublishingAccordion = ({
             <Trans
               t={t}
               i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
-              components={[<Typography paragraph />]}
+              components={[<Typography paragraph key="1" />]}
             />
             <TicketMessageList ticket={lastPublishingRequest} />
           </>
@@ -388,7 +388,7 @@ export const PublishingAccordion = ({
           <Trans
             t={t}
             i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files"
-            components={[<Typography paragraph />]}
+            components={[<Typography paragraph key="1" />]}
           />
         )}
 
@@ -407,7 +407,7 @@ export const PublishingAccordion = ({
               <Trans
                 t={t}
                 i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
-                components={[<Typography paragraph />]}
+                components={[<Typography paragraph key="1" />]}
               />
             )}
           </Box>
@@ -418,7 +418,7 @@ export const PublishingAccordion = ({
             <Trans
               t={t}
               i18nKey="registration.public_page.tasks_panel.approve_publishing_request_description"
-              components={[<Typography />]}
+              components={[<Typography key="1" />]}
             />
             <LoadingButton
               sx={{ bgcolor: 'white', mb: '0.5rem' }}
@@ -449,7 +449,7 @@ export const PublishingAccordion = ({
               t={t}
               i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
               values={{ count: filesAwaitingApproval }}
-              components={[<Typography />]}
+              components={[<Typography key="1" />]}
             />
             <LoadingButton
               sx={{ bgcolor: 'white' }}
@@ -467,7 +467,7 @@ export const PublishingAccordion = ({
               <DialogContent>
                 <Trans
                   i18nKey="registration.public_page.reject_publish_request_description"
-                  components={[<Typography paragraph />]}
+                  components={[<Typography paragraph key="1" />]}
                 />
                 <TextField
                   data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectionMessageTextField}

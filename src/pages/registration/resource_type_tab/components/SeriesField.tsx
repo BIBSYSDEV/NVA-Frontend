@@ -122,13 +122,17 @@ export const SeriesField = () => {
               } satisfies AutocompleteListboxWithExpansionProps as any
             }
             renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip
-                  {...getTagProps({ index })}
-                  data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
-                  label={<PublicationChannelChipLabel value={option} />}
-                />
-              ))
+              value.map((option, index) => {
+                const { key, ...rest } = getTagProps({ index });
+                return (
+                  <Chip
+                    key={index}
+                    {...rest}
+                    data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
+                    label={<PublicationChannelChipLabel value={option} />}
+                  />
+                );
+              })
             }
             renderInput={(params) => (
               <AutocompleteTextField
