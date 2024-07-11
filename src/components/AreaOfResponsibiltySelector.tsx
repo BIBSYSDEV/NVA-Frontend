@@ -107,7 +107,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
         resetPagination();
         history.push({ search: searchParams.toString() });
       }}
-      renderOption={(props, option, { selected }) => (
+      renderOption={({ key, ...props }, option, { selected }) => (
         <li {...props} key={option.id}>
           <Checkbox sx={{ ml: `${option.level}rem`, mr: '0.5rem' }} checked={selected} size="small" />
           {getLanguageString(option.labels)}

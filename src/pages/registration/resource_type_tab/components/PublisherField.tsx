@@ -113,7 +113,7 @@ export const PublisherField = () => {
             }}
             loading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={(props, option, state) => (
+            renderOption={({ key, ...props }, option, state) => (
               <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
             ListboxComponent={AutocompleteListboxWithExpansion}

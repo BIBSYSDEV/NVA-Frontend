@@ -33,7 +33,7 @@ export const NfrProjectSearch = ({ onSelectProject, errorMessage, ...textFieldPr
       filterOptions={(options) => options}
       onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
       getOptionLabel={(option) => getLanguageString(option.labels)}
-      renderOption={(props, option) => {
+      renderOption={({ key, ...props }, option) => {
         const projectName = getLanguageString(option.labels);
         const period = getPeriodString(option.activeFrom, option.activeTo);
         const manager = option.lead ? `${t('project.project_manager')}: ${option.lead}` : '';
