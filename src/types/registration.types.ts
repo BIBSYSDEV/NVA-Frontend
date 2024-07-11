@@ -89,7 +89,7 @@ interface AdditionalIdentifier {
   value: string;
 }
 
-interface ImportDetail {
+export interface ImportDetail {
   importDate: string;
   importSource: ImportSource;
 }

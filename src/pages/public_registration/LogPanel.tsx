@@ -70,11 +70,11 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
       const registrationImported: LogItem = {
         modifiedDate: importDetail.importDate,
         title: importDetail.importSource.archive
-          ? t('my_page.messages.imported_from_source_and_archive', {
+          ? t('log.imported_from_source_and_archive', {
               source: importDetail.importSource.source,
               archive: importDetail.importSource.archive,
             })
-          : t('my_page.messages.imported_from_source', {
+          : t('log.imported_from_source', {
               source: importDetail.importSource.source,
             }),
         description: organizationAcronym,

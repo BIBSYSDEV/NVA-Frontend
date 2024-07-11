@@ -664,12 +664,29 @@
     }
   },
   "log": {
+    "archived_file": "Arkivert fil",
     "archived_file_one": "{{count}} fil arkivert i etterkant",
     "archived_file_other": "{{count}} filer arkivert i etterkant",
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_file_one": "{{count}} fil slettet i etterkant",
-    "deleted_file_other": "{{count}} filer slettet i etterkant"
+    "deleted_file_other": "{{count}} filer slettet i etterkant",
+    "imported_from_source": "Importert fra {{source}}",
+    "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
+    "titles": {
+      "created": "Opprettet",
+      "doi_given": "DOI tildelt",
+      "doi_rejected": "DOI avvist",
+      "imported": "Importert",
+      "files_published_one": "{{count}} fil publisert",
+      "files_published_other": "{{count}} filer publisert",
+      "files_rejected": "Fil(er) avvist",
+      "files_uploaded_one": "{{count}} fil lastet opp",
+      "files_uploaded_other": "{{count}} filer lastet opp",
+      "metadata_published": "Metadata publisert",
+      "metadata_updated": "Metadata oppdatert"
+    },
+    "unknown_filename": "Ukjent filnavn"
   },
   "my_page": {
     "messages": {
@@ -689,8 +706,6 @@
       "files_uploaded_other": "{{count}} filer lastet opp",
       "general_support_pending": "Venter på oppfølging",
       "get_curator_support": "Få hjelp av kurator",
-      "imported_from_source": "Importert fra {{source}}",
-      "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
       "mark_as_completed": "Sett til ferdig",
       "message_deleted": "Meldingen er slettet",
       "metadata_published_in_nva": "Metadata publisert i NVA",
