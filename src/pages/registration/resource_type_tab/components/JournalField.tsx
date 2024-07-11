@@ -165,17 +165,14 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
               } satisfies AutocompleteListboxWithExpansionProps as any
             }
             renderTags={(value, getTagProps) =>
-              value.map((option, index) => {
-                const { key, ...rest } = getTagProps({ index });
-                return (
-                  <Chip
-                    key={key}
-                    {...rest}
-                    data-testid={dataTestId.registrationWizard.resourceType.journalChip}
-                    label={<PublicationChannelChipLabel value={option} />}
-                  />
-                );
-              })
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  key={option.identifier}
+                  data-testid={dataTestId.registrationWizard.resourceType.journalChip}
+                  label={<PublicationChannelChipLabel value={option} />}
+                />
+              ))
             }
             renderInput={(params) => (
               <AutocompleteTextField

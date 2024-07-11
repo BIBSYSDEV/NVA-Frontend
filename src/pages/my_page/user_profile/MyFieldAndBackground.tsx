@@ -126,7 +126,11 @@ export const MyFieldAndBackground = () => {
                       )}
                       renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.labels)} />
+                          <Chip
+                            {...getTagProps({ index })}
+                            key={option.identifier}
+                            label={getLanguageString(option.labels)}
+                          />
                         ))
                       }
                       filterOptions={(options) => options}

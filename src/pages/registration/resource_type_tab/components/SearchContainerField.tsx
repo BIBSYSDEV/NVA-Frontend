@@ -121,31 +121,26 @@ export const SearchContainerField = ({
               </li>
             )}
             renderTags={(value, getTagProps) =>
-              value.map((option, index) => {
-                const { key, ...rest } = getTagProps({ index });
-                return (
-                  <Chip
-                    key={key}
-                    {...rest}
-                    data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
-                    label={
-                      <>
-                        <Typography variant="subtitle1">
-                          {getTitleString(option.entityDescription?.mainTitle)}
-                        </Typography>
-                        {descriptionToShow === 'year-and-contributors' ? (
-                          <YearAndContributorsText
-                            date={option.entityDescription?.publicationDate}
-                            contributors={option.entityDescription?.contributors ?? []}
-                          />
-                        ) : (
-                          <ContainerAndLevelText registration={option} />
-                        )}
-                      </>
-                    }
-                  />
-                );
-              })
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  key={option.identifier}
+                  data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
+                  label={
+                    <>
+                      <Typography variant="subtitle1">{getTitleString(option.entityDescription?.mainTitle)}</Typography>
+                      {descriptionToShow === 'year-and-contributors' ? (
+                        <YearAndContributorsText
+                          date={option.entityDescription?.publicationDate}
+                          contributors={option.entityDescription?.contributors ?? []}
+                        />
+                      ) : (
+                        <ContainerAndLevelText registration={option} />
+                      )}
+                    </>
+                  }
+                />
+              ))
             }
             renderInput={(params) => (
               <AutocompleteTextField

@@ -53,7 +53,7 @@ export const RelatedProjectsField = () => {
             value.map((option, index) => (
               <ProjectChip
                 {...getTagProps({ index })}
-                key={option}
+                key={index}
                 id={option}
                 fallbackName={option.split('/').pop() ?? ''}
               />
