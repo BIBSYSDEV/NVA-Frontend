@@ -29,8 +29,10 @@ export const ShowRelatedDocuments = ({ related }: ShowRelatedDocumentsProps) => 
 
       {unconfirmedDocuments.length > 0 && (
         <List disablePadding>
-          {unconfirmedDocuments.map((text) => (
-            <ListItem disableGutters>{text}</ListItem>
+          {unconfirmedDocuments.map((text, index) => (
+            <ListItem key={index} disableGutters>
+              {text}
+            </ListItem>
           ))}
         </List>
       )}

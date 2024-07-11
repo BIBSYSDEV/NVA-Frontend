@@ -181,7 +181,7 @@ export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
                 <Tooltip title={modifiedDate.toLocaleTimeString()}>
                   <Typography>{toDateString(modifiedDate)}</Typography>
                 </Tooltip>
-                {logItem.actionBy && logItem.actionBy.map((username) => <Avatar username={username} />)}
+                {logItem.actionBy && logItem.actionBy.map((username) => <Avatar key={username} username={username} />)}
               </Box>
               {logItem.description && <Typography>{logItem.description}</Typography>}
               {logItem.filesInfo?.approvedFilenames && logItem.filesInfo.approvedFilenames.length > 0 && (
