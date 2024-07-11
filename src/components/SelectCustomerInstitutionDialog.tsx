@@ -98,7 +98,7 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
           renderOption={(props, option) => {
             const organization = organizations && organizations.find((org) => org.id === option.cristinId);
             return organization ? (
-              <OrganizationRenderOption key={option.id} props={props} option={organization} />
+              <OrganizationRenderOption key={organization.id} props={props} option={organization} />
             ) : (
               <li {...props} key={option.id}>
                 <Typography fontWeight="bold">{option.displayName}</Typography>
