@@ -26,10 +26,8 @@ export const TicketStatusFilter = () => {
   };
 
   return (
-    <FormControl variant="outlined" size="small" sx={{ width: '100%' }}>
-      <InputLabel id={labelId} shrink>
-        {t('tasks.status')}
-      </InputLabel>
+    <FormControl size="small" sx={{ width: '100%' }}>
+      <InputLabel id={labelId}>{t('tasks.status')}</InputLabel>
       <Select
         labelId={labelId}
         label={t('tasks.status')}
@@ -37,9 +35,8 @@ export const TicketStatusFilter = () => {
         multiple
         value={selectedStatuses}
         onChange={handleChange}
-        displayEmpty
         renderValue={(selected: TicketStatus[]) => {
-          if (selected.length === ticketStatusValues.length || selected.length === 0) {
+          if (selected.length === ticketStatusValues.length) {
             return t('my_page.messages.all_ticket_types');
           } else {
             return selected.map((value) => t(`my_page.messages.ticket_types.${value}`)).join(', ');
