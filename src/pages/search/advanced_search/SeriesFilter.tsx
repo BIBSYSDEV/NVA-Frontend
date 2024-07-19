@@ -73,8 +73,14 @@ export const SeriesFilter = () => {
       disableClearable={!seriesQuery}
       loading={isFetching}
       getOptionLabel={(option) => option.name}
-      renderOption={(props, option, state) => (
-        <PublicationChannelOption key={option.id} props={props} option={option} state={state} hideScientificLevel />
+      renderOption={({ key, ...props }, option, state) => (
+        <PublicationChannelOption
+          key={option.identifier}
+          props={props}
+          option={option}
+          state={state}
+          hideScientificLevel
+        />
       )}
       ListboxComponent={AutocompleteListboxWithExpansion}
       ListboxProps={

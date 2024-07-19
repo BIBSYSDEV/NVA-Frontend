@@ -110,8 +110,8 @@ export const SeriesField = () => {
             }}
             loading={seriesOptionsQuery.isFetching || seriesQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={(props, option, state) => (
-              <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
+            renderOption={({ key, ...props }, option, state) => (
+              <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
             ListboxComponent={AutocompleteListboxWithExpansion}
             ListboxProps={
@@ -125,6 +125,7 @@ export const SeriesField = () => {
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
+                  key={option.identifier}
                   data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
                   label={<PublicationChannelChipLabel value={option} />}
                 />

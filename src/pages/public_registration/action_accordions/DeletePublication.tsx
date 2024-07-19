@@ -94,7 +94,11 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
                 </Button>
               </>
             ) : (
-              <Trans t={t} i18nKey="unpublish_actions.unpublish_not_allowed" components={[<Typography paragraph />]} />
+              <Trans
+                t={t}
+                i18nKey="unpublish_actions.unpublish_not_allowed"
+                components={[<Typography paragraph key="1" />]}
+              />
             )}
           </>
         )}

@@ -1,4 +1,4 @@
-import { Box, Chip, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, Chip, MenuItem, Select } from '@mui/material';
 import { Language } from 'nva-language';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -45,32 +45,28 @@ export const LanguageFilter = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', minWidth: '15rem' }}>
-      <FormControl>
-        <InputLabel id="language-select-label" sx={{ lineHeight: '0.75' }}>
-          {t('registration.description.primary_language')}
-        </InputLabel>
-        <Select
-          labelId="language-select-label"
-          multiple
-          size="small"
-          open={open}
-          onOpen={toggleOpenOptions}
-          onClose={toggleOpenOptions}
-          value={languageParam}
-          data-testid={dataTestId.startPage.advancedSearch.publicationLanguageField}
-          onChange={(event) => {
-            updateSelectedLanguages(event.target.value as string[]);
-            toggleOpenOptions();
-          }}
-          renderValue={() => t('search.advanced_search.choose_one_or_more')}
-          variant="outlined">
-          {registrationLanguageOptions.map(({ uri, iso6393Code, nob, eng }) => (
-            <MenuItem value={iso6393Code} key={uri} data-testid={`publication-language-${uri}`}>
-              {i18n.language === 'nob' ? nob : eng}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Select
+        labelId="language-select-label"
+        multiple
+        size="small"
+        open={open}
+        onOpen={toggleOpenOptions}
+        onClose={toggleOpenOptions}
+        value={languageParam}
+        data-testid={dataTestId.startPage.advancedSearch.publicationLanguageField}
+        onChange={(event) => {
+          updateSelectedLanguages(event.target.value as string[]);
+          toggleOpenOptions();
+        }}
+        displayEmpty
+        renderValue={() => t('search.advanced_search.choose_one_or_more')}
+        variant="outlined">
+        {registrationLanguageOptions.map(({ uri, iso6393Code, nob, eng }) => (
+          <MenuItem value={iso6393Code} key={uri} data-testid={`publication-language-${uri}`}>
+            {i18n.language === 'nob' ? nob : eng}
+          </MenuItem>
+        ))}
+      </Select>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', maxWidth: { lg: '25rem' } }}>
         {selectedLanguages.map((language) => (
           <Chip

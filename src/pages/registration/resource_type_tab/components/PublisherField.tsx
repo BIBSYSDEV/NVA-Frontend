@@ -113,8 +113,8 @@ export const PublisherField = () => {
             }}
             loading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={(props, option, state) => (
-              <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
+            renderOption={({ key, ...props }, option, state) => (
+              <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
             ListboxComponent={AutocompleteListboxWithExpansion}
             ListboxProps={
@@ -129,6 +129,7 @@ export const PublisherField = () => {
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
+                  key={option.identifier}
                   data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
                   label={<PublicationChannelChipLabel value={option} />}
                 />

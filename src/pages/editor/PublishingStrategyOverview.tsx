@@ -97,7 +97,10 @@ export const PublishingStrategyOverview = () => {
             <Typography variant="h3">{t('editor.retention_strategy.rrs')}</Typography>
             {isRrs || isOverridableRrs ? (
               <>
-                <Trans i18nKey="editor.retention_strategy.customer_has_rrs_text" components={[<Typography />]} />
+                <Trans
+                  i18nKey="editor.retention_strategy.customer_has_rrs_text"
+                  components={[<Typography key="1" />]}
+                />
 
                 <Typography variant="h3">{t('editor.retention_strategy.rrs_info_page')}</Typography>
 
@@ -110,18 +113,18 @@ export const PublishingStrategyOverview = () => {
                   <Trans
                     i18nKey="editor.retention_strategy.creator_can_override_rrs_text"
                     components={[
-                      <Typography>
+                      <Typography key="1">
                         <Link href={coalitionSUrl} target="_blank" rel="noopener noreferrer" />
                       </Typography>,
-                      <Typography />,
+                      <Typography key="2" />,
                     ]}
                   />
                 ) : (
                   <Trans
                     i18nKey="editor.retention_strategy.curator_can_override_rrs_text"
                     components={[
-                      <Typography />,
-                      <Typography>
+                      <Typography key="1" />,
+                      <Typography key="2">
                         <Link href={coalitionSUrl} target="_blank" rel="noopener noreferrer" />
                       </Typography>,
                     ]}
@@ -132,8 +135,8 @@ export const PublishingStrategyOverview = () => {
               <Trans
                 i18nKey="editor.retention_strategy.customer_has_no_rrs"
                 components={[
-                  <Typography />,
-                  <Typography>
+                  <Typography key="1" />,
+                  <Typography key="2">
                     <Link href={coalitionSUrl} target="_blank" rel="noopener noreferrer" />
                   </Typography>,
                 ]}
