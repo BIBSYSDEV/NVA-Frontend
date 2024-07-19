@@ -8,7 +8,7 @@ export const LogEntry = ({ title, type, modifiedDate, actions }: LogEntryType) =
     <Box
       sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', p: '0.5rem', bgcolor: logBackgroundColor[type] }}>
       <LogHeader title={title} type={type} modifiedDate={modifiedDate} />
-      {actions && actions.map((action) => <LogAction {...action} />)}
+      {actions && actions.map((action, index) => <LogAction {...action} key={index} />)}
     </Box>
   );
 };

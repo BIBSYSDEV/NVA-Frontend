@@ -11,7 +11,7 @@ export const LogActionActor = ({ actor, organization }: Pick<LogActionType, 'act
   return (
     <>
       <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.5rem', alignItems: 'center' }}>
-        {!!actor && <Avatar username={actor} sx={{ height: '1.5rem', width: '1.5rem' }} />}
+        {!!actor && <Avatar key={actor} username={actor} sx={{ height: '1.5rem', width: '1.5rem' }} />}
         <Tooltip title={fullName}>
           <Typography noWrap overflow="hidden">
             {fullName}
