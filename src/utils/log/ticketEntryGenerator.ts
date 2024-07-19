@@ -7,7 +7,9 @@ import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
 
 export function generateTicketLogEntries(tickets: Ticket[], registration: Registration, t: TFunction): LogEntry[] {
-  return tickets.map((ticket) => generateTicketLogEntry(ticket, registration, t));
+  return tickets
+    .filter((ticket) => ticket.type === 'PublishingRequest' || ticket.type === 'DoiRequest')
+    .map((ticket) => generateTicketLogEntry(ticket, registration, t));
 }
 
 function generateTicketLogEntry(ticket: Ticket, registration: Registration, t: TFunction): LogEntry {

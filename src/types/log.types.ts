@@ -7,7 +7,7 @@ export interface Log {
 }
 
 export interface LogEntry {
-  type: TicketType | 'import';
+  type: TicketType | 'Import' | 'Created' | 'MetadataPublished';
   title: string;
   modifiedDate: string;
   actions: LogAction[];
@@ -21,6 +21,6 @@ export interface LogAction {
 
 export interface LogActionItem {
   description: string;
-  date: string;
+  date?: string;
   icon?: 'file' | 'deletedFile' | 'archivedFile';
 }

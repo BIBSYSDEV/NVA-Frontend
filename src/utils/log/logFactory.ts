@@ -7,7 +7,7 @@ import { Log, LogEntry } from '../../types/log.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
 
-function generateLog(registration: Registration, tickets: Ticket[], t: TFunction): Log {
+export function generateLog(registration: Registration, tickets: Ticket[], t: TFunction): Log {
   const importLogEntries = generateImportLogEntries(registration.importDetails ?? [], t);
   const ticketLogEntries = generateTicketLogEntries(tickets, registration, t);
   const registrationEntries = generateRegistrationLogEntries(registration, t);

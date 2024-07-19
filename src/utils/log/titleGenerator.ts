@@ -30,7 +30,7 @@ function generateTitleFromPublishingTicket(ticket: PublishingTicket, t: TFunctio
   }
 
   if (ticket.status === 'New' || ticket.status === 'Pending') {
-    return t('my_page.messages.files_uploaded', { count: ticket.filesForApproval.length });
+    return t('log.titles.files_uploaded', { count: ticket.filesForApproval.length });
   }
 
   return '';
@@ -43,6 +43,10 @@ function generateTitleFromDoiTicket(ticket: Ticket, t: TFunction) {
 
   if (ticket.status === 'Closed') {
     return t('log.titles.doi_rejected');
+  }
+
+  if (ticket.status === 'New' || ticket.status === 'Pending') {
+    return t('log.titles.doi_requested');
   }
 
   return '';

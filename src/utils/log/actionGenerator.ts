@@ -14,7 +14,7 @@ export function generateActionsFromTicket(
       return generateActionsFromPublishingTicket(ticket as PublishingTicket, filesOnRegistration, t);
     }
     case 'DoiRequest': {
-      return generateActionsFromDoiTicket(ticket, t);
+      return generateActionsFromDoiTicket(ticket);
     }
     case 'GeneralSupportCase':
     default: {
@@ -23,13 +23,17 @@ export function generateActionsFromTicket(
   }
 }
 
-function generateActionsFromDoiTicket(ticket: Ticket, t: TFunction): LogAction[] {
+function generateActionsFromDoiTicket(ticket: Ticket): LogAction[] {
   if (ticket.status === 'Completed') {
-    return [generateGenericAction(ticket.finalizedBy ?? '', t('my_page.messages.doi_completed'), ticket.modifiedDate)];
+    return [generateActionWithoutItems(ticket.finalizedBy ?? '')];
   }
 
   if (ticket.status === 'Closed') {
-    return [generateGenericAction(ticket.finalizedBy ?? '', t('my_page.messages.doi_closed'), ticket.modifiedDate)];
+    return [generateActionWithoutItems(ticket.finalizedBy ?? '')];
+  }
+
+  if (ticket.status === 'New' || ticket.status === 'Pending') {
+    return [generateActionWithoutItems(ticket.owner ?? '')];
   }
 
   return [];
@@ -45,11 +49,11 @@ function generateActionsFromPublishingTicket(
       return generateActionsForApprovedFiles(ticket, filesOnRegistration, t);
     }
 
-    return [generateGenericAction('', t('log.titles.metadata_updated'), ticket.modifiedDate)];
+    return [generateActionWithoutItems('')];
   }
 
   if (ticket.status === 'Closed') {
-    return [generateGenericAction(ticket.finalizedBy ?? '', t('log.titles.files_rejected'), ticket.modifiedDate)];
+    return [generateActionWithoutItems(ticket.finalizedBy ?? '')];
   }
 
   if (ticket.status === 'New' || ticket.status === 'Pending') {
@@ -70,17 +74,15 @@ function generateActionsForApprovedFiles(
     .map((file) => {
       return {
         description: file.name,
-        date: ticket.finalizedDate ?? '',
         icon: 'file',
       };
     });
 
   const archivedFilesItems: LogActionItem[] = getArchivedFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
-    .map(() => {
+    .map((file) => {
       return {
-        description: t('log.archived_file'),
-        date: '',
+        description: file.name,
         icon: 'archivedFile',
       };
     });
@@ -90,7 +92,6 @@ function generateActionsForApprovedFiles(
     .map(() => {
       return {
         description: t('log.unknown_filename'),
-        date: '',
         icon: 'deletedFile',
       };
     });
@@ -141,14 +142,9 @@ function groupFilesByUser(files: AssociatedFile[]) {
   return map;
 }
 
-function generateGenericAction(actor: string, description: string, date: string): LogAction {
+function generateActionWithoutItems(actor: string): LogAction {
   return {
     actor: actor,
-    items: [
-      {
-        description: description,
-        date: date,
-      },
-    ],
+    items: [],
   };
 }
