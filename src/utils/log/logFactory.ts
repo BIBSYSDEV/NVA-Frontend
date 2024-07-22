@@ -10,10 +10,10 @@ import { Registration } from '../../types/registration.types';
 export function generateLog(registration: Registration, tickets: Ticket[], t: TFunction): Log {
   const importLogEntries = generateImportLogEntries(registration.importDetails ?? [], t);
   const ticketLogEntries = generateTicketLogEntries(tickets, registration, t);
-  const registrationEntries = generateRegistrationLogEntries(registration, t);
+  const registrationLogEntries = generateRegistrationLogEntries(registration, t);
 
   return {
-    entries: sortByDateAsc([...importLogEntries, ...ticketLogEntries, ...registrationEntries]),
+    entries: sortByDateAsc([...importLogEntries, ...ticketLogEntries, ...registrationLogEntries]),
     metadataUpdated: registration.modifiedDate,
     numberOfArchivedFiles: getArchivedFiles(registration.associatedArtifacts).length,
   };

@@ -8,7 +8,7 @@ export const LogAction = ({ actor, organization, items }: LogActionType) => {
     <>
       <Divider sx={{ bgcolor: 'primary.main' }} />
       <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '0.5rem' }}>
-        <LogActionActor actor={actor} organization={organization} />
+        {(!!actor || !!organization) && <LogActionActor actor={actor} organization={organization} />}
         {items && items.map((item, index) => <LogActionItem {...item} key={index} />)}
       </Box>
     </>

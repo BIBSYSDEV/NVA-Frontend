@@ -40,7 +40,6 @@ function generatePublishedEntry(registration: Registration, t: TFunction): LogEn
     modifiedDate: registration.publishedDate,
     actions: [
       {
-        ...generateActorAndOrganizationBasedOnImport(registration),
         items: [
           {
             description: t('log.metadata_published_in_nva'),
@@ -68,5 +67,7 @@ function generateActorAndOrganizationBasedOnImport(registration: Registration) {
 
 // TODO: Burde man sette granularitet til minutt?
 function registrationCreatedByImport(registration: Registration) {
-  return registration.importDetails?.some((importDetail) => importDetail.importDate === registration.createdDate);
+  return (
+    registration.importDetails?.some((importDetail) => importDetail.importDate === registration.createdDate) ?? false
+  );
 }
