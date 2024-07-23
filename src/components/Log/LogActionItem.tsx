@@ -1,6 +1,6 @@
 import {
   CloseOutlined,
-  DoDisturbOutlined,
+  DoNotDisturbOutlined,
   InsertDriveFileOutlined,
   InsertPageBreakOutlined,
 } from '@mui/icons-material';
@@ -46,7 +46,7 @@ const LogActionItemIcon = ({ icon }: Pick<LogActionItemType, 'icon'>) => {
     case 'deletedFile':
       return <CloseOutlined color="primary" />;
     case 'rejectedFile':
-      return <DoDisturbOutlined color="primary" />;
+      return <DoNotDisturbOutlined color="primary" />;
     default:
       return;
   }
