@@ -1398,6 +1398,8 @@
         "has_rejected_files_publishing_request": "<0>Beskrivelse (metadata) er publisert og offentlig tilgjengelig.</0><0>Kurator har avvist filen, og den er fjernet fra visningen av forskningsresultatet.</0>",
         "has_reserved_doi": "Du har reservert en DOI til denne registreringen. Den kan deles med de som ønsker å sitere dette resultatet. Når registreringen blir publisert og blir offentlig tilgjengelig, må en kurator validere metadata før DOI blir offentlig tilgjengelig.",
         "metadata_published_waiting_for_files": "<0>Beskrivelse av (metadata) er publisert og synlig for andre, men kurator må godkjenne filene som er lastet opp før de blir synlige.</0><0>Du får beskjed når fil(er) og valgt lisens er godkjent av kurator og er offentlig tilgjengelig. Statusen er alltid synlig på Min Side.</0>",
+        "no_published_files_on_registration": "Ingen publiserte filer på resultatet",
+        "no_published_files_on_registration_description": "<0>Resultatet har ingen publiserte filer.</0><0>Sjekk med registrator om det er korrekt at resultatet ikke skal ha publiserte filer i NVA.</0><0>Ønsker du å tildele DOI på resultat uten fil?</0>",
         "publish_registration": "Publiser registrering",
         "published_registration": "Registreringen er publisert.",
         "registration_is_published": "Forskningsresultatet er publisert og offentlig tilgjengelig i NVA.",
