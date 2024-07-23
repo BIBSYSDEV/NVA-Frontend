@@ -1,4 +1,9 @@
-import { CloseOutlined, InsertDriveFileOutlined, InsertPageBreakOutlined } from '@mui/icons-material';
+import {
+  CloseOutlined,
+  DoDisturbOutlined,
+  InsertDriveFileOutlined,
+  InsertPageBreakOutlined,
+} from '@mui/icons-material';
 import { Box, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LogActionItem as LogActionItemType } from '../../types/log.types';
@@ -33,14 +38,16 @@ export const LogActionItem = ({ description, date, icon }: LogActionItemType) =>
 };
 
 const LogActionItemIcon = ({ icon }: Pick<LogActionItemType, 'icon'>) => {
-  if (icon === 'file') {
-    return <InsertDriveFileOutlined color="primary" />;
+  switch (icon) {
+    case 'file':
+      return <InsertDriveFileOutlined color="primary" />;
+    case 'archivedFile':
+      return <InsertPageBreakOutlined color="primary" />;
+    case 'deletedFile':
+      return <CloseOutlined color="primary" />;
+    case 'rejectedFile':
+      return <DoDisturbOutlined color="primary" />;
+    default:
+      return;
   }
-  if (icon === 'archivedFile') {
-    return <InsertPageBreakOutlined color="primary" />;
-  }
-  if (icon === 'deletedFile') {
-    return <CloseOutlined color="primary" />;
-  }
-  return;
 };

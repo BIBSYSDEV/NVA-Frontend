@@ -1,5 +1,5 @@
 import { TFunction } from 'i18next';
-import { getArchivedFiles, getPublishedFiles } from '../registration-helpers';
+import { getPublishedFiles, getUnpublishableFiles } from '../registration-helpers';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { LogAction, LogActionItem } from '../../types/log.types';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
@@ -53,7 +53,7 @@ function generateActionsFromPublishingTicket(
   }
 
   if (ticket.status === 'Closed') {
-    return [generateActionWithoutItems(ticket.finalizedBy ?? '')];
+    return generateActionForRejectedFiles(ticket, filesOnRegistration);
   }
 
   if (ticket.status === 'New' || ticket.status === 'Pending') {
@@ -78,7 +78,7 @@ function generateActionsForApprovedFiles(
       };
     });
 
-  const archivedFilesItems: LogActionItem[] = getArchivedFiles(filesOnRegistration)
+  const archivedFilesItems: LogActionItem[] = getUnpublishableFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
     .map((file) => {
       return {
@@ -100,6 +100,24 @@ function generateActionsForApprovedFiles(
     {
       actor: ticket.finalizedBy ?? '',
       items: [...publishedFilesItems, ...archivedFilesItems, ...deletedFilesItems],
+    },
+  ];
+}
+
+function generateActionForRejectedFiles(ticket: PublishingTicket, filesOnRegistration: AssociatedFile[]): LogAction[] {
+  const rejectedFiles = filesOnRegistration.filter((file) => ticket.filesForApproval.includes(file.identifier));
+
+  const rejectedFileItems: LogActionItem[] = rejectedFiles.map((file) => {
+    return {
+      description: file.name,
+      icon: 'rejectedFile',
+    };
+  });
+
+  return [
+    {
+      actor: ticket.finalizedBy ?? '',
+      items: rejectedFileItems,
     },
   ];
 }

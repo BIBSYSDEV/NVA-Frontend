@@ -26,7 +26,7 @@ function generateTitleFromPublishingTicket(ticket: PublishingTicket, t: TFunctio
   }
 
   if (ticket.status === 'Closed') {
-    return t('log.titles.files_rejected');
+    return t('log.titles.files_rejected', { count: ticket.filesForApproval.length });
   }
 
   if (ticket.status === 'New' || ticket.status === 'Pending') {

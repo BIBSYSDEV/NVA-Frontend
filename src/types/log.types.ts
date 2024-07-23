@@ -22,5 +22,5 @@ export interface LogAction {
 export interface LogActionItem {
   description: string;
   date?: string;
-  icon?: 'file' | 'deletedFile' | 'archivedFile';
+  icon?: 'file' | 'deletedFile' | 'archivedFile' | 'rejectedFile';
 }
