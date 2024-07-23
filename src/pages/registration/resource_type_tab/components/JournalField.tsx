@@ -62,7 +62,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const [showJournalForm, setShowJournalForm] = useState(false);
   const toggleJournalForm = () => setShowJournalForm(!showJournalForm);
 
-  const [query, setQuery] = useState(!journalId ? reference?.publicationContext.title ?? '' : '');
+  const [query, setQuery] = useState(!journalId ? (reference?.publicationContext.title ?? '') : '');
   const debouncedQuery = useDebounce(query);
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 

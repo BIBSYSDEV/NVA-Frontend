@@ -33,7 +33,7 @@ export const SeriesField = () => {
   const [showSeriesForm, setShowSeriesForm] = useState(false);
   const toggleSeriesForm = () => setShowSeriesForm(!showSeriesForm);
 
-  const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
+  const [query, setQuery] = useState(!series?.id ? (series?.title ?? '') : '');
   const debouncedQuery = useDebounce(query);
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 

@@ -33,7 +33,7 @@ export const PublisherField = () => {
   const [showPublisherForm, setShowPublisherForm] = useState(false);
   const togglePublisherForm = () => setShowPublisherForm(!showPublisherForm);
 
-  const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
+  const [query, setQuery] = useState(!publisher?.id ? (publisher?.name ?? '') : '');
   const debouncedQuery = useDebounce(query);
   const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
 
