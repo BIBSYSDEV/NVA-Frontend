@@ -25,6 +25,7 @@ import {
   updateTicket,
   UpdateTicketData,
 } from '../../../api/registrationApi';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -32,11 +33,10 @@ import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getAssociatedFiles } from '../../../utils/registration-helpers';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
-import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { getAssociatedFiles } from '../../../utils/registration-helpers';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
