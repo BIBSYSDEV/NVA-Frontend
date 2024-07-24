@@ -19,7 +19,7 @@ export const LogActionItem = ({ description, date, icon }: LogActionItemType) =>
         <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
           {itemIsFile ? (
             <Tooltip title={description}>
-              <Typography noWrap overflow="hidden">
+              <Typography sx={{ fontStyle: icon === 'deletedFile' ? 'italic' : '' }} noWrap overflow="hidden">
                 {description}
               </Typography>
             </Tooltip>

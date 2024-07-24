@@ -1,7 +1,7 @@
 import { Box, Divider } from '@mui/material';
+import { LogActionActor } from './LogActionActor';
 import { LogActionItem } from './LogActionItem';
 import { LogAction as LogActionType } from '../../types/log.types';
-import { LogActionActor } from './LogActionActor';
 
 export const LogAction = ({ actor, organization, items }: LogActionType) => {
   return (
