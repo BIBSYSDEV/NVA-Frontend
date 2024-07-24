@@ -17,11 +17,15 @@ export const LogActionItem = ({ description, date, icon }: LogActionItemType) =>
       <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.5rem', alignItems: 'center' }}>
         {icon && <LogActionItemIcon icon={icon} />}
         <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
-          <Tooltip title={description}>
-            <Typography noWrap={itemIsFile} overflow="hidden">
-              {description}
-            </Typography>
-          </Tooltip>
+          {itemIsFile ? (
+            <Tooltip title={description}>
+              <Typography noWrap overflow="hidden">
+                {description}
+              </Typography>
+            </Tooltip>
+          ) : (
+            <Typography>{description}</Typography>
+          )}
           {icon === 'deletedFile' && <Typography fontSize="x-small">{t('log.deleted_afterwards')}</Typography>}
           {icon === 'archivedFile' && <Typography fontSize="x-small">{t('log.archived_afterwards')}</Typography>}
         </Box>
