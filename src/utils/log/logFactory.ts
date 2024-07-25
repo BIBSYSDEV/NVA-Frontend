@@ -9,16 +9,27 @@ import { Registration } from '../../types/registration.types';
 
 export function generateLog(registration: Registration, tickets: Ticket[], t: TFunction): Log {
   const importLogEntries = generateImportLogEntries(registration.importDetails ?? [], t);
+  const registrationLogEntries = generateRegistrationLogEntries(registration, tickets, t);
   const ticketLogEntries = generateTicketLogEntries(tickets, registration, t);
-  const registrationLogEntries = generateRegistrationLogEntries(registration, t);
+
+  const entries = [...importLogEntries, ...registrationLogEntries, ...ticketLogEntries];
 
   return {
-    entries: sortByDateAsc([...importLogEntries, ...ticketLogEntries, ...registrationLogEntries]),
+    entries: entries.sort(sortByModifiedDateAndThenMetadataPublished),
     metadataUpdated: registration.modifiedDate,
     numberOfArchivedFiles: getArchivedFiles(registration.associatedArtifacts, tickets).length,
   };
 }
 
-function sortByDateAsc(entries: LogEntry[]) {
-  return entries.sort((a, b) => new Date(a.modifiedDate).getTime() - new Date(b.modifiedDate).getTime());
-}
+const sortByModifiedDateAndThenMetadataPublished = (a: LogEntry, b: LogEntry) => {
+  const aDate = new Date(a.modifiedDate);
+  const bDate = new Date(b.modifiedDate);
+
+  if (bDate < aDate) return 1;
+  if (bDate > aDate) return -1;
+  else {
+    if (b.type === 'MetadataPublished') return 1;
+    if (a.type === 'MetadataPublished') return -1;
+    return 0;
+  }
+};
