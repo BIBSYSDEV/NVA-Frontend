@@ -39,6 +39,7 @@ function generateMetadataPublishedEntry(
     };
   }
 
+  // If there is no publishing tickets, we still might have a publishedDate, for example when there is an import
   if (registration.publishedDate) {
     return {
       type: 'MetadataPublished',
@@ -48,7 +49,7 @@ function generateMetadataPublishedEntry(
         {
           items: [
             {
-              description: t('log.metadata_published'),
+              description: t('log.metadata_published_in_nva'),
               date: registration.publishedDate,
             },
           ],
