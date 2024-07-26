@@ -49,7 +49,7 @@ function generateActionsFromPublishingTicket(
       return generateActionsForApprovedFiles(ticket, filesOnRegistration, t);
     }
 
-    return [generateActionWithoutItems('')];
+    return [generateActionWithoutItems(ticket.owner)];
   }
 
   if (ticket.status === 'Closed') {
