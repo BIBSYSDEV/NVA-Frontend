@@ -272,11 +272,7 @@ export const DoiRequestAccordion = ({
               <Trans
                 t={t}
                 i18nKey="registration.public_page.tasks_panel.no_published_files_on_registration_description"
-                components={[
-                  <Typography paragraph key="1" />,
-                  <Typography paragraph key="2" />,
-                  <Typography paragraph key="3" />,
-                ]}
+                components={[<Typography paragraph key="1" />]}
               />
             </ConfirmDialog>
           </Box>
