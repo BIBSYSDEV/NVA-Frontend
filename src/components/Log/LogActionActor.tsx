@@ -1,4 +1,4 @@
-import { Box, Tooltip, Typography } from '@mui/material';
+import { Box, Skeleton, Tooltip, Typography } from '@mui/material';
 import { Avatar } from '../Avatar';
 import { Organization } from '../Organization';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
@@ -12,11 +12,15 @@ export const LogActionActor = ({ actor, organization }: Pick<LogActionType, 'act
     <>
       <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.5rem', alignItems: 'center' }}>
         {!!actor && <Avatar key={actor} username={actor} sx={{ height: '1.5rem', width: '1.5rem' }} />}
-        <Tooltip title={fullName}>
-          <Typography noWrap overflow="hidden">
-            {fullName}
-          </Typography>
-        </Tooltip>
+        {userQuery.isLoading ? (
+          <Skeleton sx={{ width: '6rem' }} />
+        ) : (
+          <Tooltip title={fullName}>
+            <Typography noWrap overflow="hidden">
+              {fullName}
+            </Typography>
+          </Tooltip>
+        )}
       </Box>
       <Organization
         id={organization ?? userQuery.data?.institutionCristinId ?? ''}
