@@ -142,6 +142,10 @@ export const DoiRequestAccordion = ({
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
   const messages = doiRequestTicket?.messages ?? [];
 
+  const publishedFilesOnRegistration = getAssociatedFiles(registration.associatedArtifacts).filter(
+    (file) => file.type === 'PublishedFile'
+  );
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
@@ -240,10 +244,10 @@ export const DoiRequestAccordion = ({
               data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
               endIcon={<CheckIcon />}
               onClick={() => {
-                if (getAssociatedFiles(registration.associatedArtifacts).length == 0) {
-                  toggleConfirmDialogAssignDoi();
-                } else {
+                if (publishedFilesOnRegistration.length > 0) {
                   ticketMutation.mutate({ status: 'Completed' });
+                } else {
+                  toggleConfirmDialogAssignDoi();
                 }
               }}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
