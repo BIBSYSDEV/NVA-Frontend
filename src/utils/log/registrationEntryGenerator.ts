@@ -23,17 +23,12 @@ function generateMetadataPublishedEntry(
     // Assumption: Regardless of ticket status, if there exists publishing ticket(s), the first will be metadata published
     return {
       type: 'MetadataPublished',
-      title: t('log.titles.metadata_published'),
+      title: t('log.titles.metadata_published_in_nva'),
       modifiedDate: firstPublishingTicket.createdDate,
       actions: [
         {
           actor: firstPublishingTicket.owner,
-          items: [
-            {
-              description: t('log.metadata_published_in_nva'),
-              date: firstPublishingTicket.createdDate,
-            },
-          ],
+          items: [],
         },
       ],
     };
@@ -45,16 +40,7 @@ function generateMetadataPublishedEntry(
       type: 'MetadataPublished',
       title: t('log.titles.metadata_published'),
       modifiedDate: registration.publishedDate,
-      actions: [
-        {
-          items: [
-            {
-              description: t('log.metadata_published_in_nva'),
-              date: registration.publishedDate,
-            },
-          ],
-        },
-      ],
+      actions: [],
     };
   }
 }
@@ -62,17 +48,12 @@ function generateMetadataPublishedEntry(
 function generateCreatedEntry(registration: Registration, t: TFunction): LogEntry {
   return {
     type: 'Created',
-    title: t('log.titles.created'),
+    title: t('log.titles.created_in_nva'),
     modifiedDate: registration.createdDate,
     actions: [
       {
         ...generateActorAndOrganizationBasedOnImport(registration),
-        items: [
-          {
-            description: t('log.created_in_nva'),
-            date: registration.createdDate,
-          },
-        ],
+        items: [],
       },
     ],
   };

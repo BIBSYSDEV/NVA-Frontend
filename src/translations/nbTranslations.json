@@ -666,16 +666,14 @@
     "archived_afterwards": "Arkivert i etterkant",
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
-    "created_in_nva": "Opprettet i NVA",
     "deleted_afterwards": "Slettet i etterkant",
     "imported_from_source": "Importert fra {{source}}",
     "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert: ",
-    "metadata_published_in_nva": "Metadata publisert i NVA",
     "number_of_archivedFiles_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "number_of_archivedFiles_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "titles": {
-      "created": "Opprettet",
+      "created_in_nva": "Opprettet i NVA",
       "doi_given": "DOI tildelt",
       "doi_rejected": "DOI avvist",
       "doi_requested": "Etterspurt DOI",
@@ -687,6 +685,7 @@
       "files_uploaded_one": "Fil lastet opp",
       "files_uploaded_other": "Filer lastet opp",
       "metadata_published": "Metadata publisert",
+      "metadata_published_in_nva": "Metadata publisert i NVA",
       "metadata_updated": "Metadata oppdatert"
     },
     "unknown_filename": "Ukjent filnavn"
