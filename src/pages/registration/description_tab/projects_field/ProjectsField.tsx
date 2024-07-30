@@ -1,4 +1,4 @@
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
@@ -34,7 +34,7 @@ export const ProjectsField = () => {
     <>
       <Divider />
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography variant="h2">{t('project.project')}</Typography>
+        <Typography variant="h2">{t('registration.description.project_association')}</Typography>
         <HelperTextModal
           modalTitle={t('project.project')}
           modalDataTestId={dataTestId.registrationWizard.description.projectModal}>
@@ -44,7 +44,8 @@ export const ProjectsField = () => {
           />
         </HelperTextModal>
       </Box>
-      <Box sx={{ display: 'grid', alignItems: 'center', gridTemplateColumns: '4fr 1fr', gap: '0.5rem' }}>
+      <Typography gutterBottom>{t('registration.description.add_project_helper_text')}</Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Field name={DescriptionFieldNames.Projects}>
           {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => (
             <>
@@ -104,6 +105,15 @@ export const ProjectsField = () => {
                     showSearchIcon={field.value.length === 0}
                   />
                 )}
+              />
+
+              <Trans
+                i18nKey="registration.description.new_project_helper_text"
+                components={[
+                  <Typography key="2">
+                    <span style={{ fontWeight: 'bold' }} />
+                  </Typography>,
+                ]}
               />
 
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
