@@ -80,6 +80,7 @@ function generateActionsForApprovedFiles(
 
   const archivedFilesItems: LogActionItem[] = getUnpublishableFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
+    .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => {
       return {
         description: file.name,
