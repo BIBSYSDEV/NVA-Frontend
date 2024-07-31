@@ -19,7 +19,7 @@ function generateMetadataPublishedEntry(
   t: TFunction
 ): LogEntry | undefined {
   const firstPublishingTicket = tickets.filter((ticket) => ticket.type === 'PublishingRequest')[0];
-  if (firstPublishingTicket) {
+  if (firstPublishingTicket && !registrationIsCreatedByImport(registration)) {
     // Assumption: Regardless of ticket status, if there exists publishing ticket(s), the first will be metadata published
     return {
       type: 'MetadataPublished',
@@ -60,7 +60,7 @@ function generateCreatedEntry(registration: Registration, t: TFunction): LogEntr
 }
 
 function generateActorAndOrganizationBasedOnImport(registration: Registration) {
-  if (registrationCreatedByImport(registration)) {
+  if (registrationIsCreatedByImport(registration)) {
     return {
       actor: undefined,
       organization: `${CristinApiPath.Organization}/20754.0.0.0`,
@@ -74,7 +74,7 @@ function generateActorAndOrganizationBasedOnImport(registration: Registration) {
 }
 
 // TODO: Burde man sette granularitet til minutt?
-function registrationCreatedByImport(registration: Registration) {
+function registrationIsCreatedByImport(registration: Registration) {
   return (
     registration.importDetails?.some((importDetail) => importDetail.importDate === registration.createdDate) ?? false
   );
