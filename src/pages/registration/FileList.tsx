@@ -14,6 +14,7 @@ import {
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useFileTableColumnWidths } from '../../api/hooks/useFileTableColumnWidths';
 import { RootState } from '../../redux/store';
 import { AssociatedFile, FileType, Uppy } from '../../types/associatedArtifact.types';
 import { licenses, LicenseUri } from '../../types/license.types';
@@ -27,8 +28,8 @@ import {
   isTypeWithRrs,
   userCanUnpublishRegistration,
 } from '../../utils/registration-helpers';
-import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
+import { HelperTextModal } from './HelperTextModal';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -52,6 +53,9 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
 
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
+  const columnWidths = useFileTableColumnWidths(archived);
+
+  console.log('columnWidths', columnWidths);
 
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const isProtectedDegree = isDegree(publicationInstanceType);
@@ -89,17 +93,17 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
         {title}
       </Typography>
       <TableContainer component={Paper} elevation={3} sx={{ mb: '2rem', width: '100%' }}>
-        <Table>
-          <TableHead sx={{ bgcolor: 'white' }}>
+        <Table sx={{ tableLayout: 'fixed', width: '100%' }}>
+          <TableHead sx={{ bgcolor: 'white', display: { md: 'table-header-group', xs: 'none' } }}>
             <TableRow>
-              <StyledTableCell>{t('common.name')}</StyledTableCell>
-              <StyledTableCell id={markForPublishId}>
+              <StyledTableCell sx={{ width: columnWidths.nameColumn + '%' }}>{t('common.name')}</StyledTableCell>
+              <StyledTableCell id={markForPublishId} sx={{ width: columnWidths.publishColumn + '%' }}>
                 {t('registration.files_and_license.mark_for_publish')}
               </StyledTableCell>
               {!archived && (
                 <>
                   {showFileVersion && (
-                    <StyledTableCell>
+                    <StyledTableCell sx={{ width: columnWidths.versionColumn + '%' }}>
                       <Box
                         sx={{
                           display: 'flex',
@@ -180,8 +184,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                       </Box>
                     </StyledTableCell>
                   )}
-
-                  <StyledTableCell>
+                  <StyledTableCell sx={{ width: columnWidths.licenseColumn + '%' }}>
                     <Box
                       sx={{
                         display: 'flex',
@@ -218,12 +221,13 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                       </HelperTextModal>
                     </Box>
                   </StyledTableCell>
-                  <TableCell />
+                  <TableCell sx={{ width: columnWidths.iconColumn + '%' }} />
                 </>
               )}
+              <StyledTableCell sx={{ width: columnWidths.iconColumn + '%' }} />
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ display: { xs: 'block', md: 'table-row-group' } }}>
             {files.map((file) => {
               const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
                 if (associatedArtifactIsFile(artifact)) {
