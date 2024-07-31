@@ -5,9 +5,12 @@ export const useFileTableColumnWidths = (archived = false) => {
   const mediumWidth = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
   const mobileWidth = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
+  console.log('mediumWidth', mediumWidth);
+  console.log('mobileWidth', mobileWidth);
+
   const columnWidthsWhenNotArchived = () => {
     if (mobileWidth) {
-      return { nameColumn: 35, publishColumn: 13, versionColumn: 15, licenseColumn: 32, iconColumn: 5 };
+      return { nameColumn: 100, publishColumn: 100, versionColumn: 100, licenseColumn: 100, iconColumn: 100 };
     } else if (mediumWidth) {
       return { nameColumn: 35, publishColumn: 13, versionColumn: 15, licenseColumn: 32, iconColumn: 5 };
     }
@@ -23,7 +26,7 @@ export const useFileTableColumnWidths = (archived = false) => {
         publishColumn: columnWidths.publishColumn,
         versionColumn: 0,
         licenseColumn: 0,
-        iconColumn: 100 - columnWidths.nameColumn - columnWidths.publishColumn,
+        iconColumn: 100,
       };
     } else if (mediumWidth) {
       return {

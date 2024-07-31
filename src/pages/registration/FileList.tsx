@@ -91,7 +91,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
       </Typography>
       <TableContainer component={Paper} elevation={3} sx={{ mb: '2rem', width: '100%' }}>
         <Table sx={{ tableLayout: 'fixed', width: '100%' }}>
-          <TableHead sx={{ bgcolor: 'white' }}>
+          <TableHead sx={{ bgcolor: 'white', display: { md: 'table-header-group', xs: 'none' } }}>
             <TableRow>
               <StyledTableCell sx={{ width: columnWidths.nameColumn + '%' }}>{t('common.name')}</StyledTableCell>
               <StyledTableCell id={markForPublishId} sx={{ width: columnWidths.publishColumn + '%' }}>
@@ -221,7 +221,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
               <TableCell sx={{ width: columnWidths.iconColumn + '%' }} />
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody sx={{ display: { xs: 'block', md: 'table-row-group' } }}>
             {files.map((file) => {
               const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
                 if (associatedArtifactIsFile(artifact)) {
