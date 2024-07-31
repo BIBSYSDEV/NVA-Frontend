@@ -108,12 +108,14 @@ function generateActionsForApprovedFiles(
 function generateActionForRejectedFiles(ticket: PublishingTicket, filesOnRegistration: AssociatedFile[]): LogAction[] {
   const rejectedFiles = filesOnRegistration.filter((file) => ticket.filesForApproval.includes(file.identifier));
 
-  const rejectedFileItems: LogActionItem[] = rejectedFiles.map((file) => {
-    return {
-      description: file.name,
-      icon: 'rejectedFile',
-    };
-  });
+  const rejectedFileItems: LogActionItem[] = rejectedFiles
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((file) => {
+      return {
+        description: file.name,
+        icon: 'rejectedFile',
+      };
+    });
 
   return [
     {
