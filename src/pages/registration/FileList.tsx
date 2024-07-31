@@ -19,6 +19,7 @@ import { AssociatedFile, FileType, Uppy } from '../../types/associatedArtifact.t
 import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useFileTableColumnWidths } from '../../utils/hooks/useFileTableColumnWidths';
 import {
   associatedArtifactIsFile,
   isDegree,
@@ -28,22 +29,6 @@ import {
 } from '../../utils/registration-helpers';
 import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
 import { HelperTextModal } from './HelperTextModal';
-
-export const columnWidthsWhenNotArchived = {
-  nameColumn: 35,
-  publishColumn: 9,
-  versionColumn: 24,
-  licenseColumn: 27,
-  iconColumn: 5,
-};
-
-export const columnWidthsWhenArchived = {
-  nameColumn: columnWidthsWhenNotArchived.nameColumn,
-  publishColumn: columnWidthsWhenNotArchived.publishColumn,
-  versionColumn: 0,
-  licenseColumn: 0,
-  iconColumn: 100 - columnWidthsWhenNotArchived.nameColumn - columnWidthsWhenNotArchived.publishColumn,
-};
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -67,6 +52,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
 
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
+  const columnWidths = useFileTableColumnWidths(archived);
 
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const isProtectedDegree = isDegree(publicationInstanceType);
@@ -92,8 +78,6 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
 
     return true;
   }
-
-  const columnWidths = archived ? columnWidthsWhenArchived : columnWidthsWhenNotArchived;
 
   return (
     <Box

@@ -24,7 +24,6 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
@@ -41,8 +40,8 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
+import { useFileTableColumnWidths } from '../../../utils/hooks/useFileTableColumnWidths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
-import { columnWidthsWhenArchived, columnWidthsWhenNotArchived } from '../FileList';
 import { DownloadFileButton } from './DownloadFileButton';
 
 export const markForPublishId = 'mark-for-publish';
@@ -63,8 +62,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
 
-  const useMobileView = useMediaQuery('(max-width:1075px)');
-
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
   const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
@@ -73,6 +70,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const rrsFieldName = `${baseFieldName}.${SpecificFileFieldNames.RightsRetentionStrategy}`;
 
   const isArchived = file.type === FileType.UnpublishableFile;
+  const columnWidths = useFileTableColumnWidths(isArchived);
 
   const isAcceptedFile = file.publisherVersion === FileVersion.Accepted;
   const rrsStrategy = file.rightsRetentionStrategy.configuredType ?? customer?.rightsRetentionStrategy.type;
@@ -101,8 +99,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   );
   const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
 
-  const columnWidths = isArchived ? columnWidthsWhenArchived : columnWidthsWhenNotArchived;
-
   return (
     <>
       <TableRow
@@ -114,6 +110,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         }}>
         <TableCell
           sx={{
+            px: { lg: '16px', md: '8px' },
             display: 'flex',
             gap: '0.75rem',
             minWidth: columnWidths.nameColumn + '%',
@@ -147,7 +144,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             </Typography>
           </ConfirmDialog>
         </TableCell>
-        <TableCell sx={{ width: columnWidths.publishColumn + '%' }}>
+        <TableCell sx={{ width: columnWidths.publishColumn + '%', px: { lg: '16px', md: '8px' } }}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Field name={fileTypeFieldName}>
               {({ field }: FieldProps) => (
@@ -172,14 +169,14 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           </Box>
         </TableCell>
         {showFileVersion && !isArchived && (
-          <TableCell sx={{ width: columnWidths.versionColumn + '%' }}>
+          <TableCell sx={{ width: columnWidths.versionColumn + '%', px: { lg: '16px', md: '8px' } }}>
             <Field name={publisherVersionFieldName}>
               {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                 <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
                   <RadioGroup
                     {...field}
                     row
-                    sx={{ flexWrap: 'nowrap' }}
+                    sx={{ flexWrap: 'nowrap', flexDirection: { lg: 'row', md: 'column' } }}
                     onChange={(event) => {
                       const fileVersion = event.target.value as FileVersion;
                       setFieldValue(field.name, fileVersion);
@@ -226,7 +223,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           </TableCell>
         )}
         {!isArchived && (
-          <TableCell sx={{ width: columnWidths.licenseColumn + '%' }}>
+          <TableCell sx={{ width: columnWidths.licenseColumn + '%', px: { lg: '16px', md: '8px' } }}>
             <Field name={licenseFieldName}>
               {({ field, meta: { error, touched } }: FieldProps<string>) => (
                 <TextField
@@ -317,7 +314,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             )}
           </TableCell>
         )}
-        <TableCell sx={{ width: columnWidths.iconColumn + '%' }}>
+        <TableCell sx={{ width: columnWidths.iconColumn + '%', px: { lg: '16px', md: '8px' } }}>
           {!isArchived && (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <IconButton
