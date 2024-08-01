@@ -1,4 +1,5 @@
 import { TFunction } from 'i18next';
+import { SiktIdentifier } from '../constants';
 import { CristinApiPath } from '../../api/apiPaths';
 import { LogEntry } from '../../types/log.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
@@ -63,7 +64,7 @@ function generateActorAndOrganizationBasedOnImport(registration: Registration) {
   if (registrationIsCreatedByImport(registration)) {
     return {
       actor: undefined,
-      organization: `${CristinApiPath.Organization}/20754.0.0.0`,
+      organization: `${CristinApiPath.Organization}/${SiktIdentifier}`,
     };
   }
 

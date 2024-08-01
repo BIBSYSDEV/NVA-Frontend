@@ -1,5 +1,6 @@
 import { ImportDetail } from '../../types/registration.types';
 import { TFunction } from 'i18next';
+import { SiktIdentifier } from '../constants';
 import { LogEntry } from '../../types/log.types';
 import { CristinApiPath } from '../../api/apiPaths';
 
@@ -23,7 +24,7 @@ function generateImportLogEntry(importDetail: ImportDetail, t: TFunction): LogEn
     modifiedDate: importDetail.importDate,
     actions: [
       {
-        organization: `${CristinApiPath.Organization}/20754.0.0.0`, // SIKT
+        organization: `${CristinApiPath.Organization}/${SiktIdentifier}`,
         items: [
           {
             description: importDescription,
