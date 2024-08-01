@@ -8,6 +8,7 @@ import {
 import { Avatar as AvatarMui, Box, Tooltip, Typography } from '@mui/material';
 import { LogEntry as LogEntryType } from '../../types/log.types';
 import { toDateString } from '../../utils/date-helpers';
+import { useTranslation } from 'react-i18next';
 
 export const LogHeader = ({ title, type, modifiedDate }: Pick<LogEntryType, 'title' | 'type' | 'modifiedDate'>) => {
   const date = new Date(modifiedDate);
@@ -25,10 +26,9 @@ export const LogHeader = ({ title, type, modifiedDate }: Pick<LogEntryType, 'tit
 };
 
 const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
+  const { t } = useTranslation();
   return (
-    <AvatarMui
-      sx={{ mr: '0.5rem', bgcolor: iconBackgroundColor[type] }}
-      alt={'RegistrationLog entry icon type ' + type}>
+    <AvatarMui sx={{ mr: '0.5rem', bgcolor: iconBackgroundColor[type] }} alt={t('log.header_icon', { type: type })}>
       {type === 'PublishingRequest' ? (
         <InsertDriveFileOutlined color="primary" />
       ) : type === 'DoiRequest' ? (

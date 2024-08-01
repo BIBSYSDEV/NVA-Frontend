@@ -667,6 +667,7 @@
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
+    "header_icon": "Log header icon {{type}}",
     "imported_from_source": "Importert fra {{source}}",
     "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert: ",
