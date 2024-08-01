@@ -26,7 +26,9 @@ export const LogHeader = ({ title, type, modifiedDate }: Pick<LogEntryType, 'tit
 
 const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
   return (
-    <AvatarMui sx={{ mr: '0.5rem', bgcolor: iconBackgroundColor[type] }} alt={'Log entry icon type ' + type}>
+    <AvatarMui
+      sx={{ mr: '0.5rem', bgcolor: iconBackgroundColor[type] }}
+      alt={'RegistrationLog entry icon type ' + type}>
       {type === 'PublishingRequest' ? (
         <InsertDriveFileOutlined color="primary" />
       ) : type === 'DoiRequest' ? (

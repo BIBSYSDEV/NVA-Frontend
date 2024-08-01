@@ -8,7 +8,7 @@ interface LogProps {
   log: LogType;
 }
 
-export const Log = ({ log }: LogProps) => {
+export const RegistrationLog = ({ log }: LogProps) => {
   return (
     <>
       <MetaDataLUpdatedEntry metadataUpdated={log.metadataUpdated} />
