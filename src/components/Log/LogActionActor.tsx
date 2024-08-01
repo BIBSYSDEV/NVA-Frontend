@@ -1,6 +1,6 @@
 import { Box, Skeleton, Tooltip, Typography } from '@mui/material';
 import { Avatar } from '../Avatar';
-import { Organization } from '../Organization';
+import { OrganizationNameAndIcon } from '../OrganizationNameAndIcon';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { LogAction as LogActionType } from '../../types/log.types';
 import { getFullName } from '../../utils/user-helpers';
@@ -22,7 +22,7 @@ export const LogActionActor = ({ actor, organization }: Pick<LogActionType, 'act
           </Tooltip>
         )}
       </Box>
-      <Organization
+      <OrganizationNameAndIcon
         id={organization ?? userQuery.data?.institutionCristinId ?? ''}
         acronym
         sx={{ justifyContent: 'flex-end' }}

@@ -4,12 +4,12 @@ import { useFetchOrganization } from '../api/hooks/useFetchOrganization';
 import { getLanguageString } from '../utils/translation-helpers';
 import { useTranslation } from 'react-i18next';
 
-interface OrganizationProps extends Pick<BoxProps, 'sx'> {
+interface OrganizationNameAndIconProps extends Pick<BoxProps, 'sx'> {
   id: string;
   acronym?: boolean;
 }
 
-export const Organization = ({ id, acronym = false, sx }: OrganizationProps) => {
+export const OrganizationNameAndIcon = ({ id, acronym = false, sx }: OrganizationNameAndIconProps) => {
   const { t } = useTranslation();
   const organizationQuery = useFetchOrganization(id);
   const orgName = getLanguageString(organizationQuery.data?.labels);
