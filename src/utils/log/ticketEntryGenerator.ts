@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next';
-import { generateActionsFromTicket } from './actionGenerator';
-import { generateTitleFromTicket } from './titleGenerator';
+import { generateDoiRequestLogEntry } from './doiRequestGenerator';
+import { generatePublishingRequestLogEntry } from './publishingRequestGenerator';
 import { getAssociatedFiles } from '../registration-helpers';
 import { LogEntry } from '../../types/log.types';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
@@ -8,20 +8,26 @@ import { Registration } from '../../types/registration.types';
 
 export function generateTicketLogEntries(tickets: Ticket[], registration: Registration, t: TFunction): LogEntry[] {
   return tickets
-    .filter((ticket) => ticket.type === 'PublishingRequest' || ticket.type === 'DoiRequest')
     .filter(onlyPublishingRequestsWithFiles)
-    .map((ticket) => generateTicketLogEntry(ticket, registration, t));
+    .map((ticket) => generateTicketLogEntry(ticket, registration, t))
+    .filter((entry) => entry !== undefined);
 }
 
-function generateTicketLogEntry(ticket: Ticket, registration: Registration, t: TFunction): LogEntry {
+function generateTicketLogEntry(ticket: Ticket, registration: Registration, t: TFunction): LogEntry | undefined {
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
 
-  return {
-    type: ticket.type,
-    title: generateTitleFromTicket(ticket, t),
-    modifiedDate: ticket.modifiedDate,
-    actions: generateActionsFromTicket(ticket, associatedFiles, t),
-  };
+  switch (ticket.type) {
+    case 'PublishingRequest': {
+      return generatePublishingRequestLogEntry(ticket as PublishingTicket, associatedFiles, t);
+    }
+    case 'DoiRequest': {
+      return generateDoiRequestLogEntry(ticket, t);
+    }
+    case 'GeneralSupportCase':
+    default: {
+      return undefined;
+    }
+  }
 }
 
 // NB: Will interfere with tickets with only metadata updates if they are added in the future.

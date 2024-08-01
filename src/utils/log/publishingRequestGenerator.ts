@@ -1,73 +1,40 @@
 import { TFunction } from 'i18next';
 import { getPublishedFiles, getUnpublishableFiles } from '../registration-helpers';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
-import { LogAction, LogActionItem } from '../../types/log.types';
-import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
+import { LogAction, LogActionItem, LogEntry } from '../../types/log.types';
+import { PublishingTicket } from '../../types/publication_types/ticket.types';
 
-export function generateActionsFromTicket(
-  ticket: Ticket,
+export function generatePublishingRequestLogEntry(
+  ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
   t: TFunction
-): LogAction[] {
-  switch (ticket.type) {
-    case 'PublishingRequest': {
-      return generateActionsFromPublishingTicket(ticket as PublishingTicket, filesOnRegistration, t);
+): LogEntry | undefined {
+  switch (ticket.status) {
+    case 'Completed': {
+      if (ticket.approvedFiles.length > 0) {
+        return generatePublishedFilesLogEntry(ticket, filesOnRegistration, t);
+      }
+      return generateMetadataUpdatedLogEntry(ticket, t);
     }
-    case 'DoiRequest': {
-      return generateActionsFromDoiTicket(ticket);
+    case 'Closed': {
+      return generateRejectedFilesLogEntry(ticket, filesOnRegistration, t);
     }
-    case 'GeneralSupportCase':
+    case 'New':
+    case 'Pending': {
+      return generateFilesUploadedLogEntry(ticket, filesOnRegistration, t);
+    }
+    case 'NotApplicable':
     default: {
-      return [];
+      return undefined;
     }
   }
 }
 
-function generateActionsFromDoiTicket(ticket: Ticket): LogAction[] {
-  if (ticket.status === 'Completed') {
-    return [generateActionWithoutItems(ticket.finalizedBy ?? '')];
-  }
-
-  if (ticket.status === 'Closed') {
-    return [generateActionWithoutItems(ticket.finalizedBy ?? '')];
-  }
-
-  if (ticket.status === 'New' || ticket.status === 'Pending') {
-    return [generateActionWithoutItems(ticket.owner ?? '')];
-  }
-
-  return [];
-}
-
-function generateActionsFromPublishingTicket(
+function generatePublishedFilesLogEntry(
   ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
   t: TFunction
-): LogAction[] {
-  if (ticket.status === 'Completed') {
-    if (ticket.approvedFiles.length > 0) {
-      return generateActionsForApprovedFiles(ticket, filesOnRegistration, t);
-    }
-
-    return [generateActionWithoutItems(ticket.owner)];
-  }
-
-  if (ticket.status === 'Closed') {
-    return generateActionForRejectedFiles(ticket, filesOnRegistration);
-  }
-
-  if (ticket.status === 'New' || ticket.status === 'Pending') {
-    return generateActionsForUploadedFiles(ticket, filesOnRegistration);
-  }
-
-  return [];
-}
-
-function generateActionsForApprovedFiles(
-  ticket: PublishingTicket,
-  filesOnRegistration: AssociatedFile[],
-  t: TFunction
-): LogAction[] {
+): LogEntry {
   const publishedFilesItems: LogActionItem[] = getPublishedFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
     .sort((a, b) => a.name.localeCompare(b.name))
@@ -97,15 +64,38 @@ function generateActionsForApprovedFiles(
       };
     });
 
-  return [
-    {
-      actor: ticket.finalizedBy ?? '',
-      items: [...publishedFilesItems, ...archivedFilesItems, ...deletedFilesItems],
-    },
-  ];
+  return {
+    type: 'PublishingRequest',
+    title: t('log.titles.files_published', { count: ticket.approvedFiles.length }),
+    modifiedDate: ticket.finalizedDate ?? '',
+    actions: [
+      {
+        actor: ticket.finalizedBy ?? '',
+        items: [...publishedFilesItems, ...archivedFilesItems, ...deletedFilesItems],
+      },
+    ],
+  };
 }
 
-function generateActionForRejectedFiles(ticket: PublishingTicket, filesOnRegistration: AssociatedFile[]): LogAction[] {
+function generateMetadataUpdatedLogEntry(ticket: PublishingTicket, t: TFunction): LogEntry {
+  return {
+    type: 'PublishingRequest',
+    title: t('log.titles.metadata_updated'),
+    modifiedDate: ticket.modifiedDate,
+    actions: [
+      {
+        actor: ticket.owner,
+        items: [],
+      },
+    ],
+  };
+}
+
+function generateRejectedFilesLogEntry(
+  ticket: PublishingTicket,
+  filesOnRegistration: AssociatedFile[],
+  t: TFunction
+): LogEntry {
   const rejectedFiles = filesOnRegistration.filter((file) => ticket.filesForApproval.includes(file.identifier));
 
   const rejectedFileItems: LogActionItem[] = rejectedFiles
@@ -117,15 +107,24 @@ function generateActionForRejectedFiles(ticket: PublishingTicket, filesOnRegistr
       };
     });
 
-  return [
-    {
-      actor: ticket.finalizedBy ?? '',
-      items: rejectedFileItems,
-    },
-  ];
+  return {
+    type: 'PublishingRequest',
+    title: t('log.titles.files_rejected', { count: ticket.filesForApproval.length }),
+    modifiedDate: ticket.finalizedDate ?? '',
+    actions: [
+      {
+        actor: ticket.finalizedBy ?? '',
+        items: rejectedFileItems,
+      },
+    ],
+  };
 }
 
-function generateActionsForUploadedFiles(ticket: PublishingTicket, filesOnRegistration: AssociatedFile[]): LogAction[] {
+function generateFilesUploadedLogEntry(
+  ticket: PublishingTicket,
+  filesOnRegistration: AssociatedFile[],
+  t: TFunction
+): LogEntry {
   const filesForApproval = filesOnRegistration.filter((file) => ticket.filesForApproval.includes(file.identifier));
   const filesByUser = groupFilesByUser(filesForApproval);
 
@@ -146,7 +145,12 @@ function generateActionsForUploadedFiles(ticket: PublishingTicket, filesOnRegist
     });
   });
 
-  return logActions;
+  return {
+    type: 'PublishingRequest',
+    title: t('log.titles.files_uploaded', { count: ticket.filesForApproval.length }),
+    modifiedDate: ticket.modifiedDate,
+    actions: logActions,
+  };
 }
 
 function groupFilesByUser(files: AssociatedFile[]) {
@@ -161,11 +165,4 @@ function groupFilesByUser(files: AssociatedFile[]) {
     }
   });
   return map;
-}
-
-function generateActionWithoutItems(actor: string): LogAction {
-  return {
-    actor: actor,
-    items: [],
-  };
 }
