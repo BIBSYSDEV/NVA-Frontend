@@ -21,9 +21,8 @@ export const OrganizationNameAndIcon = ({ id, acronym = false, sx }: Organizatio
         color="primary"
         sx={{
           mr: '0.3rem',
-          height: '1.3rem',
-          width: '1.3rem',
-          fontSize: '0.7rem',
+          height: '1rem',
+          width: '1rem',
         }}
       />
       {organizationQuery.isLoading ? (
