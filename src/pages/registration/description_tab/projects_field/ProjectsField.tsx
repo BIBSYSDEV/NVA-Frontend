@@ -13,7 +13,6 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
 import { HelperTextModal } from '../../HelperTextModal';
-import { ProjectChip } from './ProjectChip';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
@@ -58,7 +57,6 @@ export const ProjectsField = () => {
                 getOptionLabel={(option) => option.title}
                 onInputChange={(_, newInputValue, reason) => {
                   if (reason !== 'reset') {
-                    // Autocomplete triggers "reset" events after input change when it's controlled. Ignore these.
                     setSearchTerm(newInputValue);
                   }
                 }}
@@ -70,22 +68,13 @@ export const ProjectsField = () => {
                     id: projectValue.id,
                     name:
                       'title' in projectValue ? projectValue.title : 'name' in projectValue ? projectValue.name : '',
+                    grants: 'grants' in projectValue ? projectValue.grants : undefined,
                   }));
                   setFieldValue(field.name, projectsToPersist);
                 }}
                 popupIcon={null}
                 multiple
                 value={(field.value ?? []) as any[]}
-                renderTags={(value: ResearchProject[], getTagProps) =>
-                  value.map((option, index) => (
-                    <ProjectChip
-                      {...getTagProps({ index })}
-                      key={option.id}
-                      id={option.id}
-                      fallbackName={option.name}
-                    />
-                  ))
-                }
                 getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
                 loading={projectsQuery.isFetching}
                 renderOption={({ key, ...props }, option: CristinProject, state) => (
@@ -106,6 +95,15 @@ export const ProjectsField = () => {
                   />
                 )}
               />
+
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {field.value.map((project) => (
+                  <Box key={project.id} sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography>{project.name}</Typography>
+                    {project.grants?.map((grant) => <Typography key={grant.id}>{grant.type}</Typography>)}
+                  </Box>
+                ))}
+              </Box>
 
               <Trans
                 i18nKey="registration.description.new_project_helper_text"

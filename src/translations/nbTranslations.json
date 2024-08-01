@@ -1260,6 +1260,7 @@
         "funding_name": "Tilskuddsnavn",
         "funding_sum": "Sum",
         "funding_without_project": "Finansiering uten prosjekt",
+        "funding_without_project_description": "<0>Mottar forskningen finansiering som ikke er tilknyttet et prosjekt så trykk på \"Legg til ny finansiering\" og deretter søk etter finansiør.</0> <0>Ikke registrer finsiering som er tilknyttet et prosjekt. Finansiering tilknyttet prosjekt legges til når du legger til prosjekt lengre opp på siden. Hvis ikke informasjonen om finansiering vises så må dette registreres på prosjektet i NVA.</0>",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
         "remove_funding": "Fjern finansiering"

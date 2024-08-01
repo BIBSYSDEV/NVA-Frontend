@@ -40,6 +40,11 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
         </HelperTextModal>
       </Box>
 
+      <Trans
+        i18nKey="registration.description.funding.funding_without_project_description"
+        components={[<Typography gutterBottom key="1" />]}
+      />
+
       <FieldArray name={DescriptionFieldNames.Fundings}>
         {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: '1rem', md: '0.5rem' } }}>
