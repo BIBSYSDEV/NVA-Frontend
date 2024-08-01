@@ -4,7 +4,7 @@ import {
   InsertDriveFileOutlined,
   InsertPageBreakOutlined,
 } from '@mui/icons-material';
-import { Box, Tooltip, Typography } from '@mui/material';
+import { Box, SvgIconProps, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LogActionItem as LogActionItemType } from '../../types/log.types';
 import { toDateString } from '../../utils/date-helpers';
@@ -42,15 +42,16 @@ export const LogActionItem = ({ description, date, fileIcon }: LogActionItemType
 };
 
 const LogActionItemIcon = ({ fileIcon }: Pick<LogActionItemType, 'fileIcon'>) => {
+  const iconProps: SvgIconProps = { color: 'primary', sx: { height: '1rem', width: '1rem' } };
   switch (fileIcon) {
     case 'file':
-      return <InsertDriveFileOutlined color="primary" />;
+      return <InsertDriveFileOutlined {...iconProps} />;
     case 'archivedFile':
-      return <InsertPageBreakOutlined color="primary" />;
+      return <InsertPageBreakOutlined {...iconProps} />;
     case 'deletedFile':
-      return <CloseOutlined color="primary" />;
+      return <CloseOutlined {...iconProps} />;
     case 'rejectedFile':
-      return <DoNotDisturbOutlined color="primary" />;
+      return <DoNotDisturbOutlined {...iconProps} />;
     default:
       return;
   }
