@@ -41,7 +41,7 @@ function generatePublishedFilesLogEntry(
     .map((file) => {
       return {
         description: file.name,
-        icon: 'file',
+        fileIcon: 'file',
       };
     });
 
@@ -51,7 +51,7 @@ function generatePublishedFilesLogEntry(
     .map((file) => {
       return {
         description: file.name,
-        icon: 'archivedFile',
+        fileIcon: 'archivedFile',
       };
     });
 
@@ -60,7 +60,7 @@ function generatePublishedFilesLogEntry(
     .map(() => {
       return {
         description: t('log.unknown_filename'),
-        icon: 'deletedFile',
+        fileIcon: 'deletedFile',
       };
     });
 
@@ -103,7 +103,7 @@ function generateRejectedFilesLogEntry(
     .map((file) => {
       return {
         description: file.name,
-        icon: 'rejectedFile',
+        fileIcon: 'rejectedFile',
       };
     });
 
@@ -136,7 +136,7 @@ function generateFilesUploadedLogEntry(
       logActionItems.push({
         description: file.name,
         date: file.uploadDetails?.uploadedDate ?? '',
-        icon: 'file',
+        fileIcon: 'file',
       });
     });
     logActions.push({
