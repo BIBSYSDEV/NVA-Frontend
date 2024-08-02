@@ -1,6 +1,5 @@
 import {
   Box,
-  Link,
   Paper,
   styled,
   Table,
@@ -12,29 +11,34 @@ import {
   Typography,
 } from '@mui/material';
 import { useFormikContext } from 'formik';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, FileType, Uppy } from '../../../types/associatedArtifact.types';
-import { licenses, LicenseUri } from '../../../types/license.types';
 import { Registration } from '../../../types/registration.types';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { useFileTableColumnWidths } from '../../../utils/hooks/useFileTableColumnWidths';
 import {
-  associatedArtifactIsFile,
   isDegree,
   isEmbargoed,
+  isSameFile,
   isTypeWithFileVersionField,
   isTypeWithRrs,
   userCanUnpublishRegistration,
 } from '../../../utils/registration-helpers';
-import { HelperTextModal } from '../HelperTextModal';
 import { FilesTableRow, markForPublishId } from './FilesTableRow';
+import { LicenseHelperModal } from './LicenseHelperModal';
+import { VersionHelperModal } from './VersionHelperModal';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
   pb: '0.25rem',
   lineHeight: '1.1rem',
+});
+
+const CenteredBox = styled(Box)({
+  display: 'flex',
+  gap: '0.5rem',
+  alignItems: 'center',
 });
 
 interface FileListProps {
@@ -49,15 +53,15 @@ export const FileTable = ({ files, uppy, remove, baseFieldName, archived }: File
   const { t } = useTranslation();
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
-  const columnWidths = useFileTableColumnWidths(archived);
 
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
 
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const isProtectedDegree = isDegree(publicationInstanceType);
-  const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
   const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
+
+  const columnWidths = useFileTableColumnWidths(archived, showFileVersion);
 
   function canEditFile(file: AssociatedFile) {
     if (isProtectedDegree && isEmbargoed(file.embargoDate)) {
@@ -82,7 +86,7 @@ export const FileTable = ({ files, uppy, remove, baseFieldName, archived }: File
   return (
     <TableContainer component={Paper} elevation={3} sx={{ mb: '2rem', width: '100%' }}>
       <Table sx={{ tableLayout: 'fixed', width: '100%' }}>
-        <TableHead sx={{ bgcolor: 'white' }}>
+        <TableHead sx={{ bgcolor: 'primary.contrastText' }}>
           <TableRow>
             <StyledTableCell sx={{ width: columnWidths.nameColumn + '%' }}>{t('common.name')}</StyledTableCell>
             <StyledTableCell id={markForPublishId} sx={{ width: columnWidths.publishColumn + '%' }}>
@@ -92,138 +96,29 @@ export const FileTable = ({ files, uppy, remove, baseFieldName, archived }: File
               <>
                 {showFileVersion && (
                   <StyledTableCell sx={{ width: columnWidths.versionColumn + '%' }}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                      }}>
+                    <CenteredBox>
                       <Box sx={{ display: 'flex' }}>
                         {t('common.version')}
                         <Typography color="error">*</Typography>
                       </Box>
-                      <HelperTextModal
-                        modalTitle={t('common.version')}
-                        modalDataTestId={dataTestId.registrationWizard.files.versionModal}
-                        buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
-                        {registratorPublishesMetadataOnly ? (
-                          <>
-                            <Typography paragraph>
-                              {t('registration.files_and_license.version_helper_text_metadata_only')}
-                            </Typography>
-                            <Typography paragraph>
-                              <Trans
-                                i18nKey="registration.files_and_license.version_accepted_helper_text_metadata_only"
-                                components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                              />
-                            </Typography>
-                            <Typography paragraph>
-                              <Trans
-                                i18nKey="registration.files_and_license.version_published_helper_text_metadata_only"
-                                components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                              />
-                            </Typography>
-                            <Typography paragraph>
-                              <Trans
-                                i18nKey="registration.files_and_license.version_publishing_agreement_helper_text_metadata_only"
-                                components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                              />
-                            </Typography>
-                          </>
-                        ) : (
-                          <>
-                            <Trans
-                              i18nKey="registration.files_and_license.version_helper_text"
-                              components={[
-                                <Typography paragraph key="1" />,
-                                <Typography paragraph key="2">
-                                  <Box component="span" sx={{ textDecoration: 'underline' }} />
-                                </Typography>,
-                              ]}
-                            />
-
-                            <Typography paragraph>
-                              <Trans
-                                i18nKey="registration.files_and_license.version_accepted_helper_text"
-                                components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                              />
-                            </Typography>
-                            <Typography paragraph>
-                              <Trans
-                                i18nKey="registration.files_and_license.version_published_helper_text"
-                                components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                              />
-                            </Typography>
-                            <Typography paragraph>
-                              <Trans
-                                i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
-                                components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                              />
-                            </Typography>
-                            <Typography paragraph>
-                              <Trans
-                                i18nKey="registration.files_and_license.version_embargo_helper_text"
-                                components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
-                              />
-                            </Typography>
-                          </>
-                        )}
-                      </HelperTextModal>
-                    </Box>
+                      <VersionHelperModal />
+                    </CenteredBox>
                   </StyledTableCell>
                 )}
-
                 <StyledTableCell sx={{ width: columnWidths.licenseColumn + '%' }}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      gap: '0.5rem',
-                      alignItems: 'center',
-                    }}>
+                  <CenteredBox>
                     {t('registration.files_and_license.license')}
-                    <HelperTextModal
-                      modalTitle={t('registration.files_and_license.licenses')}
-                      modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
-                      buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
-                      <Typography paragraph>{t('registration.files_and_license.file_and_license_info')}</Typography>
-                      {licenses
-                        .filter(
-                          (license) =>
-                            license.version === 4 ||
-                            license.id === LicenseUri.CC0 ||
-                            license.id === LicenseUri.RightsReserved
-                        )
-                        .map((license) => (
-                          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-                            <Typography variant="h3" gutterBottom>
-                              {license.name}
-                            </Typography>
-                            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-                            <Typography paragraph>{license.description}</Typography>
-                            {license.link && (
-                              <Link href={license.link} target="blank">
-                                {license.link}
-                              </Link>
-                            )}
-                          </Box>
-                        ))}
-                    </HelperTextModal>
-                  </Box>
+                    <LicenseHelperModal />
+                  </CenteredBox>
                 </StyledTableCell>
               </>
             )}
-            <TableCell sx={{ width: columnWidths.iconColumn + '%' }} />
+            <StyledTableCell sx={{ width: columnWidths.iconColumn + '%' }} />
           </TableRow>
         </TableHead>
         <TableBody>
           {files.map((file) => {
-            const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
-              if (associatedArtifactIsFile(artifact)) {
-                const associatedFile = artifact as AssociatedFile;
-                return associatedFile.identifier === file.identifier;
-              }
-              return false;
-            });
+            const associatedFileIndex = associatedArtifacts.findIndex((artifact) => isSameFile(artifact, file));
 
             return (
               <FilesTableRow
