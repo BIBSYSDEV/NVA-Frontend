@@ -77,8 +77,6 @@ function generateActorAndOrganizationBasedOnImport(registration: Registration) {
 
 function registrationIsCreatedByImport(registration: Registration) {
   return (
-    registration.importDetails?.some((importDetail) =>
-      isEqualToTheSecond(new Date(importDetail.importDate), new Date(registration.createdDate))
-    ) ?? false
+    registration.importDetails?.some((importDetail) => importDetail.importDate === registration.createdDate) ?? false
   );
 }

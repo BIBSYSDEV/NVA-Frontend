@@ -74,7 +74,3 @@ export const getCurrentPath = () => {
     return pathname;
   }
 };
-
-export const getSecondsSinceEpoch = (date: Date) => Math.floor(date.getTime() / 1000);
-
-export const isEqualToTheSecond = (a: Date, b: Date) => getSecondsSinceEpoch(a) === getSecondsSinceEpoch(b);
