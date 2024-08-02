@@ -25,8 +25,8 @@ const MetaDataLUpdatedEntry = ({ metadataUpdated }: Pick<LogType, 'metadataUpdat
   const lastUpdated = new Date(metadataUpdated);
 
   return (
-    <Box sx={{ display: 'flex', px: '0.5rem' }}>
-      <Typography align="center" color="grey.700">
+    <Box sx={{ display: 'flex', justifyContent: 'center', px: '0.5rem' }}>
+      <Typography color="grey.700">
         {t('log.metadata_last_updated')}
         <Tooltip title={lastUpdated.toLocaleTimeString()}>
           <span>{toDateString(lastUpdated)}</span>
