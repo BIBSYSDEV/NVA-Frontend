@@ -4,7 +4,6 @@ import { CristinApiPath } from '../../api/apiPaths';
 import { LogEntry } from '../../types/log.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
-import { isEqualToTheSecond } from '../general-helpers';
 
 export function generateRegistrationLogEntries(
   registration: Registration,
