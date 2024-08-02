@@ -10,10 +10,10 @@ import {
   FormControlLabel,
   FormHelperText,
   IconButton,
+  Link as MuiLink,
   ListItemIcon,
   ListItemText,
   MenuItem,
-  Link as MuiLink,
   Paper,
   Popover,
   Radio,
@@ -41,8 +41,9 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
+import { useFileTableColumnWidths } from '../../../utils/hooks/useFileTableColumnWidths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
-import { DownloadFileButton } from './DownloadFileButton';
+import { DownloadFileButton } from '../files_and_license_tab/DownloadFileButton';
 
 export const markForPublishId = 'mark-for-publish';
 
@@ -75,6 +76,9 @@ export const FilesTableRow = ({
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
+  const columnWidths = useFileTableColumnWidths(archived);
+
+  console.log('columnWidths', columnWidths);
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
   const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
@@ -119,7 +123,7 @@ export const FilesTableRow = ({
           bgcolor: disabled ? 'grey.400' : '',
           td: { verticalAlign: 'top', borderBottom: !archived ? 'unset' : '' },
         }}>
-        <VerticalAlignedTableCell>
+        <VerticalAlignedTableCell sx={{ minWidth: columnWidths.nameColumn + '%' }}>
           <Box sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem', alignItems: 'center' }}>
             <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
             <Box sx={{ minWidth: '10rem' }}>
@@ -151,7 +155,7 @@ export const FilesTableRow = ({
             </ConfirmDialog>
           </Box>
         </VerticalAlignedTableCell>
-        <VerticalAlignedTableCell>
+        <VerticalAlignedTableCell sx={{ width: columnWidths.publishColumn + '%' }}>
           <Field name={fileTypeFieldName}>
             {({ field }: FieldProps) => (
               <Checkbox
@@ -176,14 +180,14 @@ export const FilesTableRow = ({
         {!archived && (
           <>
             {showFileVersion && (
-              <VerticalAlignedTableCell>
+              <VerticalAlignedTableCell sx={{ width: columnWidths.versionColumn + '%' }}>
                 <Field name={publisherVersionFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                     <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
                       <RadioGroup
                         {...field}
                         row
-                        sx={{ flexWrap: 'nowrap' }}
+                        sx={{ flexWrap: 'nowrap', flexDirection: { lg: 'row', md: 'column' } }}
                         onChange={(event) => {
                           const fileVersion = event.target.value as FileVersion;
                           setFieldValue(field.name, fileVersion);
@@ -231,7 +235,7 @@ export const FilesTableRow = ({
                 </Field>
               </VerticalAlignedTableCell>
             )}
-            <VerticalAlignedTableCell>
+            <VerticalAlignedTableCell sx={{ width: columnWidths.licenseColumn + '%' }}>
               <Field name={licenseFieldName}>
                 {({ field, meta: { error, touched } }: FieldProps<string>) => (
                   <TextField
@@ -325,16 +329,17 @@ export const FilesTableRow = ({
                 </>
               )}
             </VerticalAlignedTableCell>
-
-            <VerticalAlignedTableCell>
-              <IconButton
-                onClick={() => setOpenCollapsable(!openCollapsable)}
-                data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
-                {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </IconButton>
-            </VerticalAlignedTableCell>
           </>
         )}
+        <VerticalAlignedTableCell sx={{ width: columnWidths.iconColumn + '%' }}>
+          {!archived && (
+            <IconButton
+              onClick={() => setOpenCollapsable(!openCollapsable)}
+              data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
+              {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          )}
+        </VerticalAlignedTableCell>
       </TableRow>
       {!archived && (
         <TableRow
