@@ -122,19 +122,19 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                               <Typography paragraph>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_accepted_helper_text_metadata_only"
-                                  components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
                               <Typography paragraph>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_published_helper_text_metadata_only"
-                                  components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
                               <Typography paragraph>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_publishing_agreement_helper_text_metadata_only"
-                                  components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
                             </>
@@ -143,8 +143,8 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                               <Trans
                                 i18nKey="registration.files_and_license.version_helper_text"
                                 components={[
-                                  <Typography paragraph />,
-                                  <Typography paragraph>
+                                  <Typography paragraph key="1" />,
+                                  <Typography paragraph key="2">
                                     <Box component="span" sx={{ textDecoration: 'underline' }} />
                                   </Typography>,
                                 ]}
@@ -153,25 +153,25 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                               <Typography paragraph>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_accepted_helper_text"
-                                  components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
                               <Typography paragraph>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_published_helper_text"
-                                  components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
                               <Typography paragraph>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
-                                  components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
                               <Typography paragraph>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_embargo_helper_text"
-                                  components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                  components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
                             </>

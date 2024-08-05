@@ -37,6 +37,7 @@ export const DuplicateWarningDialog = ({
               i18nKey="registration.public_page.duplicate_warning_modal.check_duplicate"
               components={[
                 <MuiLink
+                  key="1"
                   component={Link}
                   target="_blank"
                   data-testid={dataTestId.registrationLandingPage.duplicateRegistrationModal.duplicateRegistrationLink}

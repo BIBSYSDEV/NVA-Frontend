@@ -83,13 +83,13 @@ interface RegistrationPublisher {
 type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier';
 type ImportSourceName = 'Cristin' | 'Scopus';
 
-interface AdditionalIdentifier {
+export interface AdditionalIdentifier {
   type: AdditionalIdentifierType;
   sourceName: ImportSourceName;
   value: string;
 }
 
-interface ImportDetail {
+export interface ImportDetail {
   importDate: string;
   importSource: ImportSource;
 }

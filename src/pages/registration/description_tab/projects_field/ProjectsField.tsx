@@ -38,7 +38,10 @@ export const ProjectsField = () => {
         <HelperTextModal
           modalTitle={t('project.project')}
           modalDataTestId={dataTestId.registrationWizard.description.projectModal}>
-          <Trans i18nKey="registration.description.project_helper_text" components={[<Typography paragraph />]} />
+          <Trans
+            i18nKey="registration.description.project_helper_text"
+            components={[<Typography key="1" paragraph />]}
+          />
         </HelperTextModal>
       </Box>
       <Box sx={{ display: 'grid', alignItems: 'center', gridTemplateColumns: '4fr 1fr', gap: '0.5rem' }}>
@@ -74,13 +77,23 @@ export const ProjectsField = () => {
                 value={(field.value ?? []) as any[]}
                 renderTags={(value: ResearchProject[], getTagProps) =>
                   value.map((option, index) => (
-                    <ProjectChip {...getTagProps({ index })} key={index} id={option.id} fallbackName={option.name} />
+                    <ProjectChip
+                      {...getTagProps({ index })}
+                      key={option.id}
+                      id={option.id}
+                      fallbackName={option.name}
+                    />
                   ))
                 }
                 getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
                 loading={projectsQuery.isFetching}
-                renderOption={(props, option: CristinProject, state) => (
-                  <AutocompleteProjectOption project={option} inputValue={state.inputValue} {...props} />
+                renderOption={({ key, ...props }, option: CristinProject, state) => (
+                  <AutocompleteProjectOption
+                    key={option.id}
+                    project={option}
+                    inputValue={state.inputValue}
+                    props={props}
+                  />
                 )}
                 renderInput={(params) => (
                   <AutocompleteTextField
@@ -105,7 +118,7 @@ export const ProjectsField = () => {
                   modalDataTestId={dataTestId.registrationWizard.description.createProjectModal}>
                   <Trans
                     i18nKey="registration.description.create_project_helper_text"
-                    components={[<Typography paragraph />]}
+                    components={[<Typography key="1" paragraph />]}
                   />
                 </HelperTextModal>
               </Box>

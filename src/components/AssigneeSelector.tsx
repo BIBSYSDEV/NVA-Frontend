@@ -59,7 +59,7 @@ export const AssigneeSelector = ({
   return showCuratorSearch ? (
     <Autocomplete
       options={curatorOptions}
-      renderOption={(props, option) => (
+      renderOption={({ key, ...props }, option) => (
         <li {...props} key={option.username}>
           {getFullName(option.givenName, option.familyName)}
         </li>

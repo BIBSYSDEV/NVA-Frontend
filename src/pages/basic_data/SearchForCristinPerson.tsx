@@ -89,7 +89,7 @@ export const SearchForCristinPerson = ({
           }}
           onInputChange={(_, value) => setSearchQuery(value)}
           loading={isLoadingSearchByNin || isLoadingSearchByName}
-          renderOption={(props, option) => (
+          renderOption={({ key, ...props }, option) => (
             <li {...props} key={option.id}>
               <Box sx={{ display: 'flex', flexDirection: 'column' }} data-testid={`person-option-${option.id}`}>
                 <Typography variant="subtitle1">
