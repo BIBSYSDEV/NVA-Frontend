@@ -22,6 +22,7 @@ export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
+  Import: 'grey.300',
 };
 
 interface TicketListItemProps {

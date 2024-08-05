@@ -10,12 +10,11 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { fetchResource } from '../../api/commonApi';
-import { fetchCustomerTickets } from '../../api/searchApi';
+import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
+import { fetchCustomerTickets, TicketSearchParam } from '../../api/searchApi';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
-import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
@@ -31,17 +30,9 @@ export const Header = () => {
   const currentPath = location.pathname.replace(/\/$/, '').toLowerCase(); // Remove trailing slash
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
-  const institutionId = user?.topOrgCristinId ?? '';
   const hasCustomer = !!user?.customerId;
 
-  const organizationQuery = useQuery({
-    enabled: !!institutionId,
-    queryKey: ['organization', institutionId],
-    queryFn: () => fetchResource<Organization>(institutionId),
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-    meta: { errorMessage: t('feedback.error.get_institution') },
-  });
+  const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const organization = organizationQuery.data;
 
   const [customer] = useFetch<CustomerInstitution>({
@@ -67,6 +58,7 @@ export const Header = () => {
     queryFn: () => fetchCustomerTickets(dialogueNotificationsParams),
     meta: { errorMessage: false },
   });
+  const dialogueNotificationsCount = dialogueNotificationsQuery.data?.totalHits ?? 0;
 
   const taskNotificationsQuery = useQuery({
     enabled: isTicketCurator,
@@ -191,9 +183,16 @@ export const Header = () => {
                   color="inherit"
                   data-testid={dataTestId.header.myPageLink}
                   isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
-                  to={UrlPathTemplate.MyPage}
+                  to={
+                    dialogueNotificationsCount === 0
+                      ? UrlPathTemplate.MyPage
+                      : {
+                          pathname: UrlPathTemplate.MyPageMyMessages,
+                          search: `?${TicketSearchParam.ViewedByNot}=${user.nvaUsername}`,
+                        }
+                  }
                   startIcon={
-                    <Badge badgeContent={dialogueNotificationsQuery.data?.totalHits}>
+                    <Badge badgeContent={dialogueNotificationsCount}>
                       <FavoriteBorderIcon fontSize="small" />
                     </Badge>
                   }>

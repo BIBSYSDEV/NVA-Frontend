@@ -4,7 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { fetchUser, fetchUsersByCustomer } from '../api/roleApi';
+import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
+import { fetchUsersByCustomer } from '../api/roleApi';
 import { StyledBaseContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
 import { RootState } from '../redux/store';
 import { RoleName } from '../types/user.types';
@@ -48,12 +49,7 @@ export const AssigneeSelector = ({
     a.username === user?.nvaUsername ? -1 : b.username === user?.nvaUsername ? 1 : 0
   );
 
-  const assigneeQuery = useQuery({
-    enabled: !!assignee,
-    queryKey: [assignee],
-    queryFn: () => (assignee ? fetchUser(assignee) : undefined),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
+  const assigneeQuery = useFetchUserQuery(assignee ?? '');
 
   const isLoading = isUpdating || curatorsQuery.isPending || assigneeQuery.isFetching;
 
@@ -63,7 +59,7 @@ export const AssigneeSelector = ({
   return showCuratorSearch ? (
     <Autocomplete
       options={curatorOptions}
-      renderOption={(props, option) => (
+      renderOption={({ key, ...props }, option) => (
         <li {...props} key={option.username}>
           {getFullName(option.givenName, option.familyName)}
         </li>

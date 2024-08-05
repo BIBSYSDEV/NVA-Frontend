@@ -52,7 +52,7 @@ const ResearchProfile = () => {
   const currentCristinId = user?.cristinId ?? '';
   const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
   const personId = isPublicPage
-    ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
+    ? (new URLSearchParams(history.location.search).get('id') ?? '') // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
 
   const personIdNumber = getIdentifierFromId(personId);

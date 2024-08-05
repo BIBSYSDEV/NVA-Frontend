@@ -36,6 +36,7 @@ import {
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
 import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
+import { AdditionalIdentifier } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import {
@@ -77,6 +78,16 @@ import {
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
 
+const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: AdditionalIdentifier): number => {
+  if (a.sourceName === 'Cristin') {
+    return -1;
+  }
+  if (b.sourceName === 'Cristin') {
+    return 1;
+  }
+  return 0;
+};
+
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
   const { entityDescription, id, status } = registration;
@@ -90,11 +101,12 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 
-  const cristinIdentifier = registration.additionalIdentifiers?.find(
-    (identifier) => identifier.sourceName === 'Cristin'
-  )?.value;
+  const cristinIdentifier = registration.additionalIdentifiers
+    ?.filter((identifier) => identifier.type === 'CristinIdentifier' || identifier.sourceName === 'Cristin')
+    .sort((a, b) => prioritiseIdentifiersFromCristin(a, b))
+    .shift()?.value;
   const scopusIdentifier = registration.additionalIdentifiers?.find(
-    (identifier) => identifier.sourceName === 'Scopus'
+    (identifier) => identifier.type === 'ScopusIdentifier' || identifier.sourceName === 'Scopus'
   )?.value;
 
   const isNviReported = nviCandidateQuery.isSuccess && nviCandidateQuery.data.status === 'Reported';

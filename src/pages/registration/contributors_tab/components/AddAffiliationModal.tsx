@@ -85,7 +85,7 @@ export const AddAffiliationModal = ({
       dataTestId="affiliation-modal">
       <Trans
         i18nKey="registration.contributors.add_new_affiliation_helper_text"
-        components={[<Typography paragraph />]}
+        components={[<Typography paragraph key="1" />]}
       />
       <Box
         sx={{

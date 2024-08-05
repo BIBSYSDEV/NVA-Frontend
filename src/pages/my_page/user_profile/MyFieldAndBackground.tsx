@@ -119,14 +119,18 @@ export const MyFieldAndBackground = () => {
                       getOptionDisabled={(option) =>
                         field.value.some((keyword) => keyword.identifier === option.identifier)
                       }
-                      renderOption={(props, option) => (
+                      renderOption={({ key, ...props }, option) => (
                         <li {...props} key={option.identifier}>
                           <Typography>{getLanguageString(option.labels)}</Typography>
                         </li>
                       )}
                       renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.labels)} />
+                          <Chip
+                            {...getTagProps({ index })}
+                            key={option.identifier}
+                            label={getLanguageString(option.labels)}
+                          />
                         ))
                       }
                       filterOptions={(options) => options}

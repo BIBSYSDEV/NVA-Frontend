@@ -56,6 +56,7 @@ import {
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -123,26 +124,23 @@ export const userIsValidImporter = (user: User | null, registration?: Registrati
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear().toString();
 
-const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?: string | null) => {
-  const issnString =
-    printIssn || onlineIssn
+const getChannelMetadataString = (discontinued?: string, onlineIssn?: string | null, printIssn?: string | null) => {
+  const metadataString =
+    discontinued || printIssn || onlineIssn
       ? [
+          discontinued ? `${i18n.t('common.discontinued')}: ${discontinued}` : '',
           printIssn ? `${i18n.t('registration.resource_type.print_issn')}: ${printIssn}` : '',
           onlineIssn ? `${i18n.t('registration.resource_type.online_issn')}: ${onlineIssn}` : '',
         ]
-          .filter((issn) => issn)
+          .filter(Boolean)
           .join(', ')
       : '';
-  return issnString;
+  return metadataString;
 };
 
-export const getPublicationChannelString = (publicationChannel: Journal | Series | Publisher) => {
-  if (publicationChannel.type === 'Publisher') {
-    return publicationChannel.name;
-  } else {
-    const issnString = getPublicationChannelIssnString(publicationChannel.onlineIssn, publicationChannel.printIssn);
-    return issnString ? `${publicationChannel.name} (${issnString})` : publicationChannel.name;
-  }
+export const getPublicationChannelString = (channel: Journal | Series | Publisher) => {
+  const channelMetadata = getChannelMetadataString(channel.discontinued, channel.onlineIssn, channel.printIssn);
+  return channelMetadata ? `${channel.name} (${channelMetadata})` : channel.name;
 };
 
 // Ensure Registration has correct type values, etc
@@ -677,9 +675,33 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
-export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+export const getPublishedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.PublishedFile);
+
+export const getUnpublishableFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.UnpublishableFile);
+
+export const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
+  const rejectedFileIdentifiers = tickets
+    .filter((ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Closed')
+    .flatMap((ticket) => (ticket as PublishingTicket).filesForApproval);
+
+  return getAssociatedFiles(associatedArtifacts).filter((file) => rejectedFileIdentifiers.includes(file.identifier));
+};
+
+export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
+  const rejectedFileIdentifiers = getRejectedFiles(associatedArtifacts, tickets).map((file) => file.identifier);
+  return getAssociatedFiles(associatedArtifacts).filter(
+    (file) => file.type === 'UnpublishableFile' && !rejectedFileIdentifiers.includes(file.identifier)
+  );
+};
+
+export const isTypeWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
+
+export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+  isJournal(publicationInstanceType) || isBook(publicationInstanceType) || isChapter(publicationInstanceType);
 
 export const isEmbargoed = (embargoDate: Date | null) => {
   if (!embargoDate) {

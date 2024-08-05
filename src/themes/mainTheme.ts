@@ -6,6 +6,7 @@ import i18n from '../translations/i18n';
 enum Color {
   Black = '#222',
   CentralImportMain = '#D9D9D9',
+  CentralImportLight = '#EFEEED',
   ErrorMain = '#AC0303',
   PrimaryMain = '#0F0035',
   SecondaryLight = '#F9F4E6',
@@ -112,6 +113,7 @@ export const mainTheme = createTheme(
       },
       centralImport: {
         main: Color.CentralImportMain,
+        light: Color.CentralImportLight,
       },
       publishingRequest: {
         main: Color.PublishingRequest,

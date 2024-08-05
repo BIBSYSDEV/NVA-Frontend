@@ -107,7 +107,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
           </>
         )}
 
-        <Grid item xs={16} md={6} lg={5}>
+        <Grid item>
           <TicketDateIntervalFilter />
         </Grid>
 

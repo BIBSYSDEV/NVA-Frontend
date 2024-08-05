@@ -26,3 +26,5 @@ export enum LocalStorageKey {
   ShowTagline = 'showTagline',
   RedirectPath = 'redirectPath',
 }
+
+export const SiktIdentifier = '20754.0.0.0';

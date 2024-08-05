@@ -8,15 +8,15 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
-import { fetchUser } from '../../api/roleApi';
-import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
+import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
+import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
-import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
+import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -46,7 +46,6 @@ const TasksPage = () => {
   const isPublishingCurator = !!user?.isPublishingCurator;
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
   const isNviCurator = !!user?.isNviCurator;
-  const nvaUsername = user?.nvaUsername ?? '';
 
   const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = history.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
@@ -57,12 +56,7 @@ const TasksPage = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const institutionUserQuery = useQuery({
-    enabled: !!nvaUsername,
-    queryKey: ['user', nvaUsername],
-    queryFn: () => fetchUser(nvaUsername),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
+  const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
 
   const searchParams = new URLSearchParams(history.location.search);
 

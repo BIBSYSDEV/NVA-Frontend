@@ -4,13 +4,18 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { searchForPublishers } from '../../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, searchForPublishers } from '../../../../api/publicationChannelApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -28,15 +33,22 @@ export const PublisherField = () => {
   const [showPublisherForm, setShowPublisherForm] = useState(false);
   const togglePublisherForm = () => setShowPublisherForm(!showPublisherForm);
 
-  const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
+  const [query, setQuery] = useState(!publisher?.id ? (publisher?.name ?? '') : '');
   const debouncedQuery = useDebounce(query);
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
+
+  // Reset search size when query changes
+  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
   const publisherOptionsQuery = useQuery({
-    queryKey: ['publisherSearch', debouncedQuery, year],
+    queryKey: ['publisherSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForPublishers(debouncedQuery, year),
+    queryFn: () => searchForPublishers(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_publishers') },
+    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
+
+  const options = publisherOptionsQuery.data?.hits ?? [];
 
   useEffect(() => {
     if (
@@ -69,11 +81,7 @@ export const PublisherField = () => {
             data-testid={publisherFieldTestId}
             aria-labelledby={`${publisherFieldTestId}-label`}
             popupIcon={null}
-            options={
-              debouncedQuery && query === debouncedQuery && !publisherOptionsQuery.isPending
-                ? publisherOptionsQuery.data?.hits ?? []
-                : []
-            }
+            options={options}
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
@@ -105,13 +113,23 @@ export const PublisherField = () => {
             }}
             loading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={(props, option, state) => (
-              <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
+            renderOption={({ key, ...props }, option, state) => (
+              <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
+            ListboxComponent={AutocompleteListboxWithExpansion}
+            ListboxProps={
+              {
+                hasMoreHits:
+                  !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
+                onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+                isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
+              } satisfies AutocompleteListboxWithExpansionProps as any
+            }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
+                  key={option.identifier}
                   data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
                   label={<PublicationChannelChipLabel value={option} />}
                 />

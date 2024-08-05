@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import {
   addTicketMessage,
@@ -25,6 +25,7 @@ import {
   updateTicket,
   UpdateTicketData,
 } from '../../../api/registrationApi';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -32,6 +33,7 @@ import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getAssociatedFiles } from '../../../utils/registration-helpers';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -67,6 +69,8 @@ export const DoiRequestAccordion = ({
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
+  const [showConfirmDialogAssignDoi, setShowConfirmDialogAssignDoi] = useState(false);
+  const toggleConfirmDialogAssignDoi = () => setShowConfirmDialogAssignDoi((open) => !open);
 
   const ticketMutation = useMutation({
     mutationFn: doiRequestTicket
@@ -138,12 +142,16 @@ export const DoiRequestAccordion = ({
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
   const messages = doiRequestTicket?.messages ?? [];
 
+  const publishedFilesOnRegistration = getAssociatedFiles(registration.associatedArtifacts).filter(
+    (file) => file.type === 'PublishedFile'
+  );
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
       sx={{ bgcolor: 'doiRequest.light' }}
       elevation={3}
-      defaultExpanded={waitingForRemovalOfDoi || isPendingDoiRequest}>
+      defaultExpanded={waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi')}
         {doiRequestTicket && ` - ${t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)}`}
@@ -230,17 +238,21 @@ export const DoiRequestAccordion = ({
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <Typography>{t('registration.public_page.tasks_panel.assign_doi_about')}</Typography>
-            <LoadingButton
+            <Button
               sx={{ bgcolor: 'white' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
               endIcon={<CheckIcon />}
-              loadingPosition="end"
-              onClick={() => ticketMutation.mutate({ status: 'Completed' })}
-              loading={isLoading === LoadingState.ApproveDoi}
+              onClick={() => {
+                if (publishedFilesOnRegistration.length > 0) {
+                  ticketMutation.mutate({ status: 'Completed' });
+                } else {
+                  toggleConfirmDialogAssignDoi();
+                }
+              }}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.tasks_panel.assign_doi')}
-            </LoadingButton>
+            </Button>
             <LoadingButton
               sx={{ bgcolor: 'white' }}
               variant="outlined"
@@ -252,6 +264,21 @@ export const DoiRequestAccordion = ({
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.reject_doi')}
             </LoadingButton>
+            <ConfirmDialog
+              open={showConfirmDialogAssignDoi}
+              title={t('registration.public_page.tasks_panel.no_published_files_on_registration')}
+              onAccept={async () => {
+                await ticketMutation.mutateAsync({ status: 'Completed' });
+                toggleConfirmDialogAssignDoi();
+              }}
+              isLoading={isLoadingData || ticketMutation.isPending}
+              onCancel={() => toggleConfirmDialogAssignDoi()}>
+              <Trans
+                t={t}
+                i18nKey="registration.public_page.tasks_panel.no_published_files_on_registration_description"
+                components={[<Typography paragraph key="1" />]}
+              />
+            </ConfirmDialog>
           </Box>
         )}
 

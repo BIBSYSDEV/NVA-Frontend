@@ -95,15 +95,13 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
           loading={isLoadingCustomers}
           onChange={(_, value) => setSelectedCustomer(value)}
           isOptionEqualToValue={(option, value) => option.id === value.id}
-          renderOption={(props, option) => {
+          renderOption={({ key, ...props }, option) => {
             const organization = organizations && organizations.find((org) => org.id === option.cristinId);
             return organization ? (
               <OrganizationRenderOption key={organization.id} props={props} option={organization} />
             ) : (
-              <li {...props}>
-                <Typography fontWeight="bold" key={option.id}>
-                  {option.displayName}
-                </Typography>
+              <li {...props} key={option.id}>
+                <Typography fontWeight="bold">{option.displayName}</Typography>
               </li>
             );
           }}

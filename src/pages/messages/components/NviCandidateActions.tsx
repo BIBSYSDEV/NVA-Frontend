@@ -81,8 +81,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         queryClient.setQueryData(nviCandidateQueryKey, deleteNoteResponse);
       }
     },
-    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.delete_note'), variant: 'success' })),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_note'), variant: 'error' })),
+    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.delete_message'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_message'), variant: 'error' })),
   });
 
   const myApproval = nviCandidate?.approvals.find((status) => status.institutionId === user?.topOrgCristinId);
@@ -192,6 +192,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     date={note.date}
                     username={note.username}
                     backgroundColor="nvi.main"
+                    showOrganization
                     menuElement={
                       !!user &&
                       user.nvaUsername === note.username && (
@@ -208,7 +209,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         {myApproval?.status !== 'Approved' && (
           <>
             <Typography fontWeight="bold">{t('tasks.nvi.nvi_status')}</Typography>
-            <Trans i18nKey="tasks.nvi.approve_nvi_candidate_description" components={[<Typography paragraph />]} />
+            <Trans
+              i18nKey="tasks.nvi.approve_nvi_candidate_description"
+              components={[<Typography paragraph key="1" />]}
+            />
             <LoadingButton
               data-testid={dataTestId.tasksPage.nvi.approveButton}
               variant="outlined"
@@ -226,7 +230,6 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {myApproval?.status !== 'Rejected' && (
           <>
-            <Typography paragraph>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
             <Button
               data-testid={dataTestId.tasksPage.nvi.rejectButton}
               variant="outlined"
@@ -255,7 +258,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         <MessageForm
           confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
-          fieldLabel={t('tasks.nvi.note')}
+          fieldLabel={t('common.message')}
           buttonTitle={t('tasks.nvi.save_note')}
         />
       </Box>
