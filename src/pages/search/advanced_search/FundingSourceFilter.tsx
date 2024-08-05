@@ -45,7 +45,7 @@ export const FundingSourceFilter = () => {
       }}
       options={fundingSourcesList}
       getOptionLabel={(option) => getLanguageString(option.name)}
-      renderOption={(props, option) => (
+      renderOption={({ key, ...props }, option) => (
         <li {...props} key={option.identifier}>
           {getLanguageString(option.name)}
         </li>

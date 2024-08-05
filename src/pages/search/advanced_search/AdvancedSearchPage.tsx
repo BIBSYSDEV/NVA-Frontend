@@ -133,7 +133,7 @@ export const AdvancedSearchPage = () => {
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <StyledTypography>{t('common.language')}</StyledTypography>
+            <StyledTypography id="language-select-label">{t('common.language')}</StyledTypography>
             <LanguageFilter />
           </Grid>
 

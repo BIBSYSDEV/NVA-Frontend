@@ -5,12 +5,13 @@ import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus, ticketStatusValues } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
 
+const labelId = 'status-filter-select';
+
 export const TicketStatusFilter = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const selectedStatuses = (searchParams.get(TicketSearchParam.Status)?.split(',') ??
-    ticketStatusValues) as TicketStatus[];
+  const selectedStatuses = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const newSelectedStatuses = event.target.value as TicketStatus[];
@@ -25,10 +26,11 @@ export const TicketStatusFilter = () => {
   };
 
   return (
-    <FormControl variant="outlined" size="small" sx={{ width: '100%' }}>
-      <InputLabel id={'status-filter-select'}>{t('tasks.status')}</InputLabel>
+    <FormControl size="small" sx={{ width: '100%' }}>
+      <InputLabel id={labelId}>{t('tasks.status')}</InputLabel>
       <Select
-        labelId={'status-filter-select'}
+        labelId={labelId}
+        label={t('tasks.status')}
         data-testid={dataTestId.myPage.myMessages.ticketStatusField}
         multiple
         value={selectedStatuses}
@@ -39,8 +41,7 @@ export const TicketStatusFilter = () => {
           } else {
             return selected.map((value) => t(`my_page.messages.ticket_types.${value}`)).join(', ');
           }
-        }}
-        label={t('tasks.status')}>
+        }}>
         {ticketStatusValues.map((status) => (
           <MenuItem sx={{ height: '2.5rem' }} key={status} value={status}>
             <Checkbox checked={selectedStatuses.includes(status)} />

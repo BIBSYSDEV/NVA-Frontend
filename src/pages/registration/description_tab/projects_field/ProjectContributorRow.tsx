@@ -151,8 +151,9 @@ export const ProjectContributorRow = ({
               setSearchTerm('');
             }}
             loading={personQuery.isFetching}
-            renderOption={(props, option) => {
-              const orgId = option.affiliations.length > 0 ? option.affiliations[0].organization ?? '' : '';
+            renderOption={({ key, ...props }, option) => {
+              const orgId = option.affiliations.length > 0 ? (option.affiliations[0].organization ?? '') : '';
+
               return (
                 <li {...props} key={option.id}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>

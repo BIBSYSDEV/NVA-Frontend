@@ -83,7 +83,7 @@ export const DatasetForm = () => {
               loading={relatedRegistrationsOptionsQuery.isPending}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-              renderOption={(props, option, state) => (
+              renderOption={({ key, ...props }, option, state) => (
                 <li {...props} key={option.identifier}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">
@@ -144,7 +144,7 @@ export const DatasetForm = () => {
               loading={relatedDmpOptionsQuery.isPending}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-              renderOption={(props, option, state) => (
+              renderOption={({ key, ...props }, option, state) => (
                 <li {...props} key={option.identifier}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { OrganizationSearchParams, fetchOrganization, searchForOrganizations } from '../../../api/cristinApi';
+import { fetchOrganization, OrganizationSearchParams, searchForOrganizations } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
@@ -13,6 +13,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
+import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 
 interface OrganizationFiltersProps {
   topLevelOrganizationId: string | null;
@@ -31,14 +32,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const [showUnitSelection, setShowUnitSelection] = useState(false);
   const toggleShowUnitSelection = () => setShowUnitSelection(!showUnitSelection);
 
-  const organizationQuery = useQuery({
-    enabled: !!user?.topOrgCristinId,
-    queryKey: ['organization', user?.topOrgCristinId],
-    queryFn: user ? () => fetchOrganization(user.topOrgCristinId ?? '') : undefined,
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
+  const organizationQuery = useFetchOrganization(user?.topOrgCristinId ?? '');
   const userOrganization = organizationQuery.data;
 
   const topLevelOrganizationQuery = useQuery({
@@ -127,7 +121,9 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         disabled={topLevelOrganizationQuery.isFetching}
         value={topLevelOrganizationQuery.data ?? null}
         loading={isLoading}
-        renderOption={(props, option) => <OrganizationRenderOption key={option.id} props={props} option={option} />}
+        renderOption={({ key, ...props }, option) => (
+          <OrganizationRenderOption key={option.id} props={props} option={option} />
+        )}
         renderInput={(params) => (
           <AutocompleteTextField
             {...params}
