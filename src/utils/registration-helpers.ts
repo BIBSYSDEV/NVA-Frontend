@@ -56,6 +56,7 @@ import {
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -673,6 +674,27 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
+
+export const getPublishedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.PublishedFile);
+
+export const getUnpublishableFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.UnpublishableFile);
+
+export const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
+  const rejectedFileIdentifiers = tickets
+    .filter((ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Closed')
+    .flatMap((ticket) => (ticket as PublishingTicket).filesForApproval);
+
+  return getAssociatedFiles(associatedArtifacts).filter((file) => rejectedFileIdentifiers.includes(file.identifier));
+};
+
+export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
+  const rejectedFileIdentifiers = getRejectedFiles(associatedArtifacts, tickets).map((file) => file.identifier);
+  return getAssociatedFiles(associatedArtifacts).filter(
+    (file) => file.type === 'UnpublishableFile' && !rejectedFileIdentifiers.includes(file.identifier)
+  );
+};
 
 export const isTypeWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
