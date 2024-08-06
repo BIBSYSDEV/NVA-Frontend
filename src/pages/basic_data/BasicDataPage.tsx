@@ -53,12 +53,13 @@ const BasicDataPage = () => {
     location.pathname === UrlPathTemplate.BasicDataCentralImport ||
     !location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
-  const isCreatingNewResult =
-    history.location.pathname.startsWith('/basic-data/central-import/') && history.location.pathname.endsWith('/edit');
-  const isMergingResult =
-    history.location.pathname.startsWith('/basic-data/central-import/') &&
-    history.location.pathname.includes('/merge/');
-  const simpleGoBack = isCreatingNewResult || isMergingResult;
+  const centralImportIsSelected = currentPath.startsWith(UrlPathTemplate.BasicDataCentralImport);
+
+  const simpleGoBack =
+    centralImportIsSelected &&
+    (currentPath.endsWith(UrlPathTemplate.BasicDataCentralImportCandidateWizard.split('/')[-1]) ||
+      (centralImportIsSelected &&
+        currentPath.includes(UrlPathTemplate.BasicDataCentralImportCandidateMerge.split('/')[4])));
 
   return (
     <StyledPageWithSideMenu>
