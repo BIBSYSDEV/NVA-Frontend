@@ -37,6 +37,10 @@ export type CandidateStatusFilter = {
   [key in ImportCandidateStatus]: boolean;
 };
 
+const isOnEditOrMergeImportCandidate = (path: string) =>
+  path.endsWith(UrlPathTemplate.BasicDataCentralImportCandidateWizard.split('/').pop() as string) ||
+  path.includes(UrlPathTemplate.BasicDataCentralImportCandidateMerge.split('/')[4]);
+
 const BasicDataPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -48,18 +52,10 @@ const BasicDataPage = () => {
 
   const newCustomerIsSelected =
     currentPath === UrlPathTemplate.BasicDataInstitutions && history.location.search === '?id=new';
-
-  const expandedMenu =
-    history.location.pathname === UrlPathTemplate.BasicDataCentralImport ||
-    !history.location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
-
   const centralImportIsSelected = currentPath.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
-  const simpleGoBack =
-    centralImportIsSelected &&
-    (currentPath.endsWith(UrlPathTemplate.BasicDataCentralImportCandidateWizard.split('/')[-1]) ||
-      (centralImportIsSelected &&
-        currentPath.includes(UrlPathTemplate.BasicDataCentralImportCandidateMerge.split('/')[4])));
+  const expandedMenu = currentPath === UrlPathTemplate.BasicDataCentralImport || !centralImportIsSelected;
+  const simpleGoBack = centralImportIsSelected && isOnEditOrMergeImportCandidate(currentPath);
 
   return (
     <StyledPageWithSideMenu>
