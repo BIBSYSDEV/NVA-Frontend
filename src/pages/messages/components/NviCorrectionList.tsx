@@ -7,7 +7,7 @@ import { fetchResults, FetchResultsParams, ResultParam } from '../../../api/sear
 import { allPublicationInstanceTypes } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
-import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter'; // TODO: circular dependancy
+import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 
 export type CorrectionListId = '1' | '2';

@@ -2,7 +2,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import { Button, ButtonProps } from '@mui/material';
 
-interface SelectableButtonProps extends ButtonProps {
+interface TicketTypeFilterButtonProps extends ButtonProps {
   isSelected: boolean;
   showCheckbox?: boolean;
 }
@@ -13,7 +13,7 @@ export const TicketTypeFilterButton = ({
   children,
   startIcon,
   ...rest
-}: SelectableButtonProps) => (
+}: TicketTypeFilterButtonProps) => (
   <Button
     {...rest}
     startIcon={showCheckbox ? isSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon /> : startIcon}
