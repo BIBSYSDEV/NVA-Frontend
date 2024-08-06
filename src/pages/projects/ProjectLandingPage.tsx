@@ -68,12 +68,14 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
                 </IconButton>
               )}
             </Tooltip>
-            <ProjectFormDialog
-              open={openEditProject}
-              currentProject={project}
-              onClose={() => setOpenEditProject(false)}
-              refetchData={refetchProject}
-            />
+            {!betaEnabled && (
+              <ProjectFormDialog
+                open={openEditProject}
+                currentProject={project}
+                onClose={() => setOpenEditProject(false)}
+                refetchData={refetchProject}
+              />
+            )}
           </>
         )}
       </StyledPaperHeader>

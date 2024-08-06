@@ -11,9 +11,6 @@ const ProjectsPage = () => {
   const projectId = new URLSearchParams(location.search).get('id') ?? '';
   const projectQuery = useFetchProject(projectId);
 
-  console.log('projectId', projectId);
-  console.log('projectQuery.data', projectQuery.data);
-
   return (
     <StyledPageContent>
       {projectQuery.isPending ? (
