@@ -5,7 +5,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import {
   fetchImportCandidate,
   fetchRegistration,
@@ -260,9 +260,7 @@ export const CentralImportCandidateMerge = () => {
             )}
 
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
-            <Link to={getImportCandidatePath(candidateIdentifier)}>
-              <Button>{t('common.cancel')}</Button>
-            </Link>
+            <Button onClick={() => history.goBack()}>{t('common.cancel')}</Button>
             <LoadingButton
               type="submit"
               variant="contained"

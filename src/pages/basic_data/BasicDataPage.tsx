@@ -6,7 +6,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
+import { Link, Redirect, Switch, useHistory, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -19,7 +19,7 @@ import {
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
-import { PreviousSearchLocationState } from '../../types/locationState.types';
+import { BasicDataLocationState } from '../../types/locationState.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
@@ -43,7 +43,8 @@ const BasicDataPage = () => {
   const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const isInternalImporter = !!user?.customerId && user.isInternalImporter;
-  const location = useLocation<PreviousSearchLocationState>();
+  const location = useLocation<BasicDataLocationState>();
+  const history = useHistory<BasicDataLocationState>();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
@@ -52,22 +53,35 @@ const BasicDataPage = () => {
     location.pathname === UrlPathTemplate.BasicDataCentralImport ||
     !location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
+  const isCreatingNewResult =
+    history.location.pathname.startsWith('/basic-data/central-import/') && history.location.pathname.endsWith('/edit');
+  const isMergingResult =
+    history.location.pathname.startsWith('/basic-data/central-import/') &&
+    history.location.pathname.includes('/merge/');
+  const simpleGoBack = isCreatingNewResult || isMergingResult;
+
   return (
     <StyledPageWithSideMenu>
       <SideMenu
         aria-labelledby="basic-data-title"
         expanded={expandedMenu}
         minimizedMenu={
-          <Link
-            to={{
-              // TODO: Ensure this points to something sensible when on import pages
-              pathname: UrlPathTemplate.BasicDataCentralImport,
-              search: location.state?.previousSearch,
-            }}>
-            <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
+          simpleGoBack ? (
+            <StyledMinimizedMenuButton title={t('basic_data.basic_data')} onClick={() => history.goBack()}>
               <BusinessCenterIcon />
             </StyledMinimizedMenuButton>
-          </Link>
+          ) : (
+            <Link
+              to={{
+                // TODO: Ensure this points to something sensible when on import pages
+                pathname: UrlPathTemplate.BasicDataCentralImport,
+                search: location.state?.previousSearch,
+              }}>
+              <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
+                <BusinessCenterIcon />
+              </StyledMinimizedMenuButton>
+            </Link>
+          )
         }>
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
         {user?.isInstitutionAdmin && (
