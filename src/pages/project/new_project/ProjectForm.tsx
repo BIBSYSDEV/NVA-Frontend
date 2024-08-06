@@ -33,7 +33,7 @@ export interface InitialProjectFormData {
   suggestedProjectManager?: string;
 }
 
-const ProjectForm = ({ identifier, currentProject, refetchData, onClose, onCreateProject }: ProjectFormDialogProps) => {
+const ProjectForm = ({ identifier, currentProject, refetchData, onClose }: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const projectQuery = useFetchProject(identifier);
