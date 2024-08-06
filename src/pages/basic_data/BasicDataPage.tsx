@@ -6,7 +6,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -43,15 +43,15 @@ const BasicDataPage = () => {
   const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const isInternalImporter = !!user?.customerId && user.isInternalImporter;
-  const location = useLocation<BasicDataLocationState>();
   const history = useHistory<BasicDataLocationState>();
-  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
+  const newCustomerIsSelected =
+    currentPath === UrlPathTemplate.BasicDataInstitutions && history.location.search === '?id=new';
 
   const expandedMenu =
-    location.pathname === UrlPathTemplate.BasicDataCentralImport ||
-    !location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
+    history.location.pathname === UrlPathTemplate.BasicDataCentralImport ||
+    !history.location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
   const centralImportIsSelected = currentPath.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
@@ -74,9 +74,8 @@ const BasicDataPage = () => {
           ) : (
             <Link
               to={{
-                // TODO: Ensure this points to something sensible when on import pages
                 pathname: UrlPathTemplate.BasicDataCentralImport,
-                search: location.state?.previousSearch,
+                search: history.location.state?.previousSearch,
               }}>
               <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
                 <BusinessCenterIcon />
