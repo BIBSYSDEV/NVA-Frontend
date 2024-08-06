@@ -7,6 +7,8 @@ import StartEmptyProject from './StartEmptyProject';
 const EditProject = () => {
   const { t } = useTranslation();
 
+  console.log('edit project');
+
   return (
     <StyledPageContent>
       <PageHeader>{t('project.create_project')}</PageHeader>
@@ -17,7 +19,7 @@ const EditProject = () => {
           flexDirection: 'column',
           gap: '2rem',
         }}>
-        <StartEmptyProject />
+        <StartEmptyProject onClose={() => {}} />
       </Box>
     </StyledPageContent>
   );

@@ -77,7 +77,7 @@ export const AppRoutes = () => {
           isAuthorized={isCreator}
         />
         <PrivateRoute exact path={UrlPathTemplate.ProjectWizard} component={EditProject} isAuthorized={isCreator} />
-        <PrivateRoute exact path={UrlPathTemplate.ProjectNew} component={EditProject} isAuthorized={isCreator} />
+        <PrivateRoute exact path={UrlPathTemplate.Project} component={EditProject} isAuthorized={isCreator} />
 
         {/* CuratorRoutes */}
         <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator || isNviCurator} />
