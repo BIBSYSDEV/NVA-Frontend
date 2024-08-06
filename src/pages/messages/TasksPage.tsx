@@ -1,6 +1,5 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RuleIcon from '@mui/icons-material/Rule';
 import { Badge, Button, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -10,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -27,7 +27,7 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
-import { NviCorrectionList } from './components/NviCorrectionList';
+import { CorrectionListId, NviCorrectionList, nviCorrectionListQueryKey } from './components/NviCorrectionList';
 import { NviMenuContent } from './components/NviMenuContent';
 import { NviStatusPage } from './components/NviStatusPage';
 import { TicketList } from './components/TicketList';
@@ -222,13 +222,31 @@ const TasksPage = () => {
               accordionPath={UrlPathTemplate.TasksNviCorrectionList}
               dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
               <NavigationList>
-                <StyledSearchModeButton
-                  sx={{ mx: '1rem', mb: '1rem' }}
-                  data-testid={dataTestId.tasksPage.correctionList.correctionListRadioButton}
-                  isSelected={isOnCorrectionListPage}
-                  startIcon={<RadioButtonCheckedIcon />}>
+                <Button
+                  // sx={{ mx: '1rem', mb: '1rem' }}
+                  // data-testid={dataTestId.tasksPage.correctionList.correctionListRadioButton}
+                  // isSelected={isOnCorrectionListPage}
+                  // startIcon={<RadioButtonCheckedIcon />}
+                  onClick={() => history.push({ search: '' })}>
                   {t('tasks.correction_list')}
-                </StyledSearchModeButton>
+                </Button>
+
+                <BetaFunctionality>
+                  <Button
+                    onClick={() =>
+                      history.push({
+                        search: `?${nviCorrectionListQueryKey}=${'1' satisfies CorrectionListId}`,
+                      })
+                    }>
+                    Tellende kategorier i ikke-tellende kanaler
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      history.push({ search: `?${nviCorrectionListQueryKey}=${'2' satisfies CorrectionListId}` })
+                    }>
+                    Ikke-tellende kategorier i tellende kanaler
+                  </Button>
+                </BetaFunctionality>
               </NavigationList>
             </NavigationListAccordion>
           </>
