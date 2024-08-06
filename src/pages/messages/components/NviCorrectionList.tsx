@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { fetchResults, FetchResultsParams, ResultParam } from '../../../api/searchApi';
@@ -12,17 +13,20 @@ import { RegistrationSearch } from '../../search/registration_search/Registratio
 export type CorrectionListId = '1' | '2'; // TODO: better with enum?
 
 type CorrectionListSearchConfig = {
-  [key in CorrectionListId]: FetchResultsParams;
+  [key in CorrectionListId]: { searchConfig: FetchResultsParams; i18nKey: ParseKeys };
 };
 
-const searchConfig: CorrectionListSearchConfig = {
+const correctionListConfig: CorrectionListSearchConfig = {
   '1': {
-    categoryShould: nviApplicableTypes,
-    scientificValue: ScientificValueLevels.LevelZero,
+    i18nKey: 'tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel',
+    searchConfig: { categoryShould: nviApplicableTypes, scientificValue: ScientificValueLevels.LevelZero },
   },
   '2': {
-    categoryShould: allPublicationInstanceTypes.filter((type) => !nviApplicableTypes.includes(type)),
-    scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+    i18nKey: 'tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel',
+    searchConfig: {
+      categoryShould: allPublicationInstanceTypes.filter((type) => !nviApplicableTypes.includes(type)),
+      scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+    },
   },
 };
 
@@ -33,10 +37,10 @@ export const NviCorrectionList = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
-  const listConfig = listId && searchConfig[listId];
+  const listConfig = listId && correctionListConfig[listId];
 
   const fetchParams: FetchResultsParams = {
-    ...listConfig,
+    ...listConfig?.searchConfig,
     from: Number(searchParams.get(ResultParam.From) ?? 0),
     results: Number(searchParams.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
   };
@@ -51,11 +55,7 @@ export const NviCorrectionList = () => {
   return (
     <section>
       <Typography variant="h1" gutterBottom>
-        {listId === '1'
-          ? t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')
-          : listId === '2'
-            ? t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')
-            : t('tasks.nvi.correction_list_type.correction_list_duct')}
+        {listConfig ? t(listConfig.i18nKey) : t('tasks.nvi.correction_list_type.correction_list_duct')}
       </Typography>
 
       {listConfig ? (
