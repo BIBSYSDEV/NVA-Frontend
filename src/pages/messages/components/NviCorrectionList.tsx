@@ -10,10 +10,13 @@ import { nviApplicableTypes } from '../../../utils/registration-helpers';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter'; // TODO: circular dependancy
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 
-export type CorrectionListId = '1' | '2'; // TODO: better with enum?
+export type CorrectionListId = '1' | '2';
 
 type CorrectionListSearchConfig = {
-  [key in CorrectionListId]: { searchConfig: FetchResultsParams; i18nKey: ParseKeys };
+  [key in CorrectionListId]: {
+    i18nKey: ParseKeys;
+    searchConfig: FetchResultsParams;
+  };
 };
 
 const correctionListConfig: CorrectionListSearchConfig = {
