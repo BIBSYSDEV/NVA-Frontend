@@ -1,7 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
-import { fetchProject } from '../../api/cristinApi';
+import { useFetchProject } from '../../api/hooks/useFetchProject';
 import { PageSpinner } from '../../components/PageSpinner';
 import { StyledPageContent } from '../../components/styled/Wrappers';
 import { ProjectLandingPage } from './ProjectLandingPage';
@@ -10,13 +9,10 @@ const ProjectsPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const projectId = new URLSearchParams(location.search).get('id') ?? '';
+  const projectQuery = useFetchProject(projectId);
 
-  const projectQuery = useQuery({
-    enabled: !!projectId,
-    queryKey: ['project', projectId],
-    queryFn: () => fetchProject(projectId),
-    meta: { errorMessage: t('feedback.error.get_project') },
-  });
+  console.log('projectId', projectId);
+  console.log('projectQuery.data', projectQuery.data);
 
   return (
     <StyledPageContent>
