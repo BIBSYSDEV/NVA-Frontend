@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -8,7 +9,7 @@ import { nviApplicableTypes } from '../../../utils/registration-helpers';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter'; // TODO: circular dependancy
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 
-export type CorrectionListId = '1' | '2';
+export type CorrectionListId = '1' | '2'; // TODO: better with enum?
 
 type CorrectionListSearchConfig = {
   [key in CorrectionListId]: FetchResultsParams;
@@ -47,16 +48,26 @@ export const NviCorrectionList = () => {
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  if (!listConfig) {
-    return (
-      <iframe
-        style={{ border: 'none', height: '80vh' }}
-        title={t('tasks.correction_list')}
-        width="100%"
-        src="https://rapport-dv.uhad.no/t/DUCT/views/Ryddelister_2023/Rettelister2023?%3Aembed=y"
-      />
-    );
-  }
+  return (
+    <section>
+      <Typography variant="h1" gutterBottom>
+        {listId === '1'
+          ? t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')
+          : listId === '2'
+            ? t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')
+            : t('tasks.nvi.correction_list_type.correction_list_duct')}
+      </Typography>
 
-  return <RegistrationSearch registrationQuery={registrationQuery} />;
+      {listConfig ? (
+        <RegistrationSearch registrationQuery={registrationQuery} />
+      ) : (
+        <iframe
+          style={{ border: 'none', height: '80vh' }}
+          title={t('tasks.nvi.correction_list_type.correction_list_duct')}
+          width="100%"
+          src="https://rapport-dv.uhad.no/t/DUCT/views/Ryddelister_2023/Rettelister2023?%3Aembed=y"
+        />
+      )}
+    </section>
+  );
 };

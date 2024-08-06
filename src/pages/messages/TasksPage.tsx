@@ -1,7 +1,7 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import RuleIcon from '@mui/icons-material/Rule';
-import { Badge, Button, styled } from '@mui/material';
+import { Badge, Box, Button, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,13 @@ import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import {
+  LinkButton,
+  NavigationList,
+  SelectableButton,
+  SideNavHeader,
+  StyledPageWithSideMenu,
+} from '../../components/PageWithSideMenu';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
@@ -223,33 +229,32 @@ const TasksPage = () => {
               accordionPath={UrlPathTemplate.TasksNviCorrectionList}
               dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
               <NavigationList>
-                <Button
-                  // sx={{ mx: '1rem', mb: '1rem' }}
-                  // data-testid={dataTestId.tasksPage.correctionList.correctionListRadioButton}
-                  // isSelected={isOnCorrectionListPage}
-                  // startIcon={<RadioButtonCheckedIcon />}
-                  onClick={() => history.push({ search: '' })}>
-                  {t('tasks.correction_list')}
-                </Button>
+                <SelectableButton
+                  isSelected={!selectedNviList}
+                  onClick={() => history.push({ search: '' })}
+                  sx={{ mb: '1rem' }}>
+                  {t('tasks.nvi.correction_list_type.correction_list_duct')}
+                </SelectableButton>
 
                 <BetaFunctionality>
-                  <TicketTypeFilterButton
-                    color="primary"
-                    isSelected={selectedNviList === '1'}
-                    onClick={() =>
-                      history.push({
-                        search: `?${nviCorrectionListQueryKey}=${'1' satisfies CorrectionListId}`,
-                      })
-                    }>
-                    Tellende kategorier i ikke-tellende kanaler
-                  </TicketTypeFilterButton>
-                  <TicketTypeFilterButton
-                    isSelected={selectedNviList === '2'}
-                    onClick={() =>
-                      history.push({ search: `?${nviCorrectionListQueryKey}=${'2' satisfies CorrectionListId}` })
-                    }>
-                    Ikke-tellende kategorier i tellende kanaler
-                  </TicketTypeFilterButton>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <SelectableButton
+                      isSelected={selectedNviList === '1'}
+                      onClick={() =>
+                        history.push({
+                          search: `?${nviCorrectionListQueryKey}=${'1' satisfies CorrectionListId}`,
+                        })
+                      }>
+                      {t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')}
+                    </SelectableButton>
+                    <SelectableButton
+                      isSelected={selectedNviList === '2'}
+                      onClick={() =>
+                        history.push({ search: `?${nviCorrectionListQueryKey}=${'2' satisfies CorrectionListId}` })
+                      }>
+                      {t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')}
+                    </SelectableButton>
+                  </Box>
                 </BetaFunctionality>
               </NavigationList>
             </NavigationListAccordion>
