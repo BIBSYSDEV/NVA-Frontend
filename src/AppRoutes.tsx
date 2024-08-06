@@ -13,6 +13,7 @@ const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
+const CreateProject = lazy(() => import('./pages/project/new_project/CreateProject'));
 const EditProject = lazy(() => import('./pages/project/new_project/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
@@ -77,7 +78,7 @@ export const AppRoutes = () => {
           isAuthorized={isCreator}
         />
         <PrivateRoute exact path={UrlPathTemplate.ProjectWizard} component={EditProject} isAuthorized={isCreator} />
-        <PrivateRoute exact path={UrlPathTemplate.Project} component={EditProject} isAuthorized={isCreator} />
+        <PrivateRoute exact path={UrlPathTemplate.Project} component={CreateProject} isAuthorized={isCreator} />
 
         {/* CuratorRoutes */}
         <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator || isNviCurator} />
