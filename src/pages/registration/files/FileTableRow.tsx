@@ -1,23 +1,18 @@
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
   Box,
   Checkbox,
   Collapse,
-  FormControl,
   FormControlLabel,
-  FormHelperText,
   IconButton,
+  Link as MuiLink,
   ListItemIcon,
   ListItemText,
   MenuItem,
-  Link as MuiLink,
   Paper,
   Popover,
-  Radio,
-  RadioGroup,
   TableCell,
   TableCellProps,
   TableRow,
@@ -27,12 +22,9 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
-import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, FileRrs, FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
@@ -41,8 +33,17 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
-import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
-import { DownloadFileButton } from './DownloadFileButton';
+import { useFileTableColumnWidths } from '../../../utils/hooks/useFileTableColumnWidths';
+import {
+  isDegree,
+  isEmbargoed,
+  isTypeWithFileVersionField,
+  isTypeWithRrs,
+  userCanUnpublishRegistration,
+} from '../../../utils/registration-helpers';
+import { FileInfo } from './FileInfo';
+import { PublishCheck } from './PublishCheck';
+import { VersionRadio } from './VersionRadio';
 
 export const markForPublishId = 'mark-for-publish';
 
@@ -54,30 +55,20 @@ interface FilesTableRowProps {
   file: AssociatedFile;
   removeFile: () => void;
   baseFieldName: string;
-  showFileVersion: boolean;
-  showRrs: boolean;
-  disabled: boolean;
   archived?: boolean;
 }
 
-export const FilesTableRow = ({
-  file,
-  removeFile,
-  baseFieldName,
-  showFileVersion,
-  showRrs,
-  disabled,
-  archived,
-}: FilesTableRowProps) => {
+export const FileTableRow = ({ file, removeFile, baseFieldName, archived }: FilesTableRowProps) => {
   const { t } = useTranslation();
+  const { values } = useFormikContext<Registration>();
   const user = useSelector((state: RootState) => state.user);
   const customer = useSelector((state: RootState) => state.customer);
-  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
-  const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
-  const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
 
-  const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
-  const publisherVersionFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`;
+  const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
+  const columnWidths = useFileTableColumnWidths(archived);
+
+  console.log('columnWidths', columnWidths);
+
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
   const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
@@ -110,128 +101,54 @@ export const FilesTableRow = ({
   );
   const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
 
+  const publicationInstanceType = values.entityDescription?.reference?.publicationInstance?.type;
+  const isProtectedDegree = isDegree(publicationInstanceType);
+
+  function canEditFile(file: AssociatedFile) {
+    if (isProtectedDegree && isEmbargoed(file.embargoDate)) {
+      return !!user?.isEmbargoThesisCurator;
+    }
+
+    if (isProtectedDegree) {
+      return !!user?.isThesisCurator;
+    }
+
+    if (values.type === 'ImportCandidate') {
+      return !!user?.isInternalImporter;
+    }
+
+    if (file.type === FileType.PublishedFile) {
+      return userCanUnpublishRegistration(values) ?? false;
+    }
+
+    return true;
+  }
+
+  const disabled = !canEditFile(file);
+
+  const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
+  const showRrs = isTypeWithRrs(publicationInstanceType);
+
   return (
     <>
       <TableRow
         data-testid={dataTestId.registrationWizard.files.fileRow}
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
-        sx={{
-          bgcolor: disabled ? 'grey.400' : '',
-          td: { verticalAlign: 'top', borderBottom: !archived ? 'unset' : '' },
-        }}>
-        <VerticalAlignedTableCell>
-          <Box sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem', alignItems: 'center' }}>
-            <InsertDriveFileOutlinedIcon sx={{ color: disabled ? 'grey.600' : '' }} />
-            <Box sx={{ minWidth: '10rem' }}>
-              <TruncatableTypography sx={{ fontWeight: 'bold', color: disabled ? 'grey.600' : '' }}>
-                {file.name}
-              </TruncatableTypography>
-              <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
-            </Box>
-            <Box sx={{ minWidth: '1.5rem' }}>
-              <DownloadFileButton file={file} greyTones={disabled} />
-            </Box>
-            <DeleteIconButton
-              data-testid={dataTestId.registrationWizard.files.deleteFile}
-              onClick={disabled ? undefined : toggleOpenConfirmDialog}
-              tooltip={t('registration.files_and_license.remove_file')}
-              disabled={disabled}
-            />
-            <ConfirmDialog
-              open={openConfirmDialog}
-              title={t('registration.files_and_license.remove_file')}
-              onAccept={() => {
-                removeFile();
-                toggleOpenConfirmDialog();
-              }}
-              onCancel={toggleOpenConfirmDialog}>
-              <Typography>
-                {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
-              </Typography>
-            </ConfirmDialog>
-          </Box>
+        sx={{ bgcolor: disabled ? 'grey.400' : '' }}>
+        <VerticalAlignedTableCell sx={{ minWidth: columnWidths.nameColumn + '%' }}>
+          <FileInfo disabled={disabled} file={file} removeFile={removeFile} />
         </VerticalAlignedTableCell>
-        <VerticalAlignedTableCell>
-          <Field name={fileTypeFieldName}>
-            {({ field }: FieldProps) => (
-              <Checkbox
-                {...field}
-                data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
-                checked={field.value === FileType.UnpublishedFile || field.value === FileType.PublishedFile}
-                disabled={disabled}
-                inputProps={{
-                  'aria-labelledby': markForPublishId,
-                }}
-                onChange={(_, checked) => {
-                  if (!checked) {
-                    setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
-                  } else {
-                    setFieldValue(fileTypeFieldName, FileType.UnpublishedFile);
-                  }
-                }}
-              />
-            )}
-          </Field>
+        <VerticalAlignedTableCell sx={{ width: columnWidths.publishColumn + '%' }}>
+          <PublishCheck disabled={disabled} baseFieldName={baseFieldName} />
         </VerticalAlignedTableCell>
         {!archived && (
           <>
             {showFileVersion && (
-              <VerticalAlignedTableCell>
-                <Field name={publisherVersionFieldName}>
-                  {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
-                    <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
-                      <RadioGroup
-                        {...field}
-                        row
-                        sx={{ flexWrap: 'nowrap' }}
-                        onChange={(event) => {
-                          const fileVersion = event.target.value as FileVersion;
-                          setFieldValue(field.name, fileVersion);
-
-                          if (showRrs) {
-                            if (fileVersion === FileVersion.Published) {
-                              const nullRrsValue: FileRrs = {
-                                type: 'NullRightsRetentionStrategy',
-                                configuredType: rrsStrategy,
-                              };
-                              setFieldValue(rrsFieldName, nullRrsValue);
-                              setFieldValue(licenseFieldName, null);
-                            } else if (isCustomerRrs || isOverridableRrs) {
-                              const customerRrsValue: FileRrs = {
-                                type: 'CustomerRightsRetentionStrategy',
-                                configuredType: rrsStrategy,
-                              };
-                              setFieldValue(rrsFieldName, customerRrsValue);
-                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
-                            }
-                          }
-                        }}>
-                        <FormControlLabel
-                          value={FileVersion.Accepted}
-                          control={<Radio />}
-                          label={
-                            <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
-                              {t('registration.files_and_license.accepted_version')}
-                            </Typography>
-                          }
-                        />
-                        <FormControlLabel
-                          value={FileVersion.Published}
-                          control={<Radio />}
-                          label={
-                            <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
-                              {t('registration.files_and_license.published_version')}
-                            </Typography>
-                          }
-                        />
-                      </RadioGroup>
-                      {error && touched && <FormHelperText error>{error}</FormHelperText>}
-                    </FormControl>
-                  )}
-                </Field>
+              <VerticalAlignedTableCell sx={{ width: columnWidths.versionColumn + '%' }}>
+                <VersionRadio disabled={disabled} baseFieldName={baseFieldName} rrsStrategy={rrsStrategy} />
               </VerticalAlignedTableCell>
             )}
-            <VerticalAlignedTableCell>
+            <VerticalAlignedTableCell sx={{ width: columnWidths.licenseColumn + '%' }}>
               <Field name={licenseFieldName}>
                 {({ field, meta: { error, touched } }: FieldProps<string>) => (
                   <TextField
@@ -325,16 +242,17 @@ export const FilesTableRow = ({
                 </>
               )}
             </VerticalAlignedTableCell>
-
-            <VerticalAlignedTableCell>
-              <IconButton
-                onClick={() => setOpenCollapsable(!openCollapsable)}
-                data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
-                {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </IconButton>
-            </VerticalAlignedTableCell>
           </>
         )}
+        <VerticalAlignedTableCell sx={{ width: columnWidths.iconColumn + '%' }}>
+          {!archived && (
+            <IconButton
+              onClick={() => setOpenCollapsable(!openCollapsable)}
+              data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
+              {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          )}
+        </VerticalAlignedTableCell>
       </TableRow>
       {!archived && (
         <TableRow
