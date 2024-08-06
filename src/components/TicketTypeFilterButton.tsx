@@ -7,7 +7,7 @@ interface SelectableButtonProps extends ButtonProps {
   showCheckbox?: boolean;
 }
 
-export const SelectableButton = ({
+export const TicketTypeFilterButton = ({
   isSelected,
   showCheckbox = false,
   children,

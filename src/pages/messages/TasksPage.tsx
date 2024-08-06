@@ -13,9 +13,9 @@ import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
+import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
@@ -60,7 +60,6 @@ const TasksPage = () => {
 
   const searchParams = new URLSearchParams(history.location.search);
 
-  // Tickets/dialogue data
   const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
 
   const [ticketTypes, setTicketTypes] = useState({
@@ -121,6 +120,8 @@ const TasksPage = () => {
   const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
+  const selectedNviList = searchParams.get(nviCorrectionListQueryKey);
+
   return (
     <StyledPageWithSideMenu>
       <SideMenu
@@ -166,7 +167,7 @@ const TasksPage = () => {
 
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               {isPublishingCurator && (
-                <SelectableButton
+                <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                   endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   showCheckbox
@@ -176,11 +177,11 @@ const TasksPage = () => {
                   {ticketTypes.publishingRequest && publishingRequestCount
                     ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                     : t('my_page.messages.types.PublishingRequest')}
-                </SelectableButton>
+                </TicketTypeFilterButton>
               )}
 
               {isDoiCurator && (
-                <SelectableButton
+                <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                   endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
@@ -190,11 +191,11 @@ const TasksPage = () => {
                   {ticketTypes.doiRequest && doiRequestCount
                     ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                     : t('my_page.messages.types.DoiRequest')}
-                </SelectableButton>
+                </TicketTypeFilterButton>
               )}
 
               {isSupportCurator && (
-                <SelectableButton
+                <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                   endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
@@ -206,7 +207,7 @@ const TasksPage = () => {
                   {ticketTypes.generalSupportCase && generalSupportCaseCount
                     ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                     : t('my_page.messages.types.GeneralSupportCase')}
-                </SelectableButton>
+                </TicketTypeFilterButton>
               )}
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>
@@ -232,20 +233,23 @@ const TasksPage = () => {
                 </Button>
 
                 <BetaFunctionality>
-                  <Button
+                  <TicketTypeFilterButton
+                    color="primary"
+                    isSelected={selectedNviList === '1'}
                     onClick={() =>
                       history.push({
                         search: `?${nviCorrectionListQueryKey}=${'1' satisfies CorrectionListId}`,
                       })
                     }>
                     Tellende kategorier i ikke-tellende kanaler
-                  </Button>
-                  <Button
+                  </TicketTypeFilterButton>
+                  <TicketTypeFilterButton
+                    isSelected={selectedNviList === '2'}
                     onClick={() =>
                       history.push({ search: `?${nviCorrectionListQueryKey}=${'2' satisfies CorrectionListId}` })
                     }>
                     Ikke-tellende kategorier i tellende kanaler
-                  </Button>
+                  </TicketTypeFilterButton>
                 </BetaFunctionality>
               </NavigationList>
             </NavigationListAccordion>
