@@ -27,6 +27,9 @@ export const getProjectPeriod = (project?: CristinProject) => {
   return dateInterval;
 };
 
+export const isProjectManager = (contributor: ProjectContributor) =>
+  contributor.roles.some((role) => role.type === 'ProjectManager');
+
 export const getProjectManagers = (contributors: ProjectContributor[]) =>
   contributors.filter((contributor) => contributor.roles.some((role) => role.type === 'ProjectManager'));
 
