@@ -12,7 +12,7 @@ export interface ResearchProject {
   type: 'ResearchProject';
   id: string;
   name: string;
-  grants?: Grant[];
+  grants?: ProjectFunding[];
   approvals?: Approval[];
 }
 
