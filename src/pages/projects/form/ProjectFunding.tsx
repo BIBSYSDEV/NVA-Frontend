@@ -127,7 +127,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
               data-testid={dataTestId.registrationWizard.description.addFundingButton}
               startIcon={<AddIcon />}
               onClick={() => push(emptyProjectFunding)}>
-              {t('common.add')}
+              {t('common.add_custom', { name: t('common.funding').toLowerCase() })}
             </Button>
           </Box>
         )}
