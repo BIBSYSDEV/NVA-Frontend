@@ -83,7 +83,7 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
           startIcon={<AddCircleOutlineIcon />}
           disabled={isSubmitting}
           onClick={() => setAddAreaOfResponsibility(true)}>
-          {t('common.add_custom', { name: t('editor.curators.area_of_responsibility').toLowerCase() })}
+          {t('common.add_custom', { name: t('editor.curators.area_of_responsibility').toLocaleLowerCase() })}
         </Button>
       )}
     </section>

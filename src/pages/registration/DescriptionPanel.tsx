@@ -84,7 +84,9 @@ export const DescriptionPanel = () => {
                   startIcon={<AddCircleOutlineIcon />}
                   disabled={!values.entityDescription?.mainTitle}
                   onClick={() => setFieldValue(field.name, '')}>
-                  {t('common.add_custom', { name: t('registration.description.alternative_title').toLowerCase() })}
+                  {t('common.add_custom', {
+                    name: t('registration.description.alternative_title').toLocaleLowerCase(),
+                  })}
                 </Button>
               )}
             </>
@@ -131,7 +133,9 @@ export const DescriptionPanel = () => {
                   startIcon={<AddCircleOutlineIcon />}
                   disabled={!values.entityDescription?.abstract}
                   onClick={() => setFieldValue(field.name, '')}>
-                  {t('common.add_custom', { name: t('registration.description.alternative_abstract').toLowerCase() })}
+                  {t('common.add_custom', {
+                    name: t('registration.description.alternative_abstract').toLocaleLowerCase(),
+                  })}
                 </Button>
               )}
             </>

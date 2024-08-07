@@ -204,7 +204,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
               data-testid={dataTestId.registrationWizard.description.addFundingButton}
               startIcon={<AddIcon />}
               onClick={() => push(emptyFunding)}>
-              {t('common.add_custom', { name: t('common.funding').toLowerCase() })}
+              {t('common.add_custom', { name: t('common.funding').toLocaleLowerCase() })}
             </Button>
           </Box>
         )}
