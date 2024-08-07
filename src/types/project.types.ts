@@ -76,6 +76,14 @@ export const emptyProjectFunding: ProjectFunding = {
   labels: {},
 };
 
+interface EmptyProjectContributorRole extends Omit<ProjectContributorRole, 'affiliation'> {
+  affiliation: { type: 'Organization' };
+}
+
+export interface EmptyProjectContributor extends Omit<ProjectContributor, 'roles'> {
+  roles: EmptyProjectContributorRole[];
+}
+
 export interface SaveCristinProject {
   type: 'Project';
   title: string;
@@ -137,9 +145,9 @@ export interface NfrProject {
   activeTo: string;
 }
 
-export const emptyProjectContributor: ProjectContributor = {
+export const emptyProjectContributor: EmptyProjectContributor = {
   identity: { type: 'Person', id: '', firstName: '', lastName: '' },
-  roles: [],
+  roles: [{ type: 'ProjectParticipant', affiliation: { type: 'Organization' } }],
 };
 
 export const emptyProject: SaveCristinProject = {

@@ -1,7 +1,7 @@
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Field, FieldProps, FormikErrors, useFormikContext } from 'formik';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../../../../api/apiRequest';
@@ -26,9 +26,9 @@ import { OrganizationSearchField } from '../../../basic_data/app_admin/Organizat
 import { projectContributorToCristinPerson } from './projectHelpers';
 
 enum ProjectContributorFieldName {
-  Type = 'type',
+  Type = 'roles[0].type',
   Identity = 'identity',
-  Affiliation = 'affiliation',
+  Affiliation = 'roles[0].affiliation',
 }
 
 interface ProjectContributorRowProps {
@@ -100,9 +100,8 @@ export const ProjectContributorRow = ({
     setIsLoadingDefaultOptions(false);
   };
 
-  const contributorErrors = errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>;
-
-  const isRekProjectManager = isRekProject && contributor?.type === 'ProjectManager';
+  const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
+  const isRekProjectManager = isRekProject && contributor?.roles?.some((role) => role.type === 'ProjectManager');
 
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr auto' }, gap: '0.25rem 0.75rem' }}>
@@ -195,6 +194,7 @@ export const ProjectContributorRow = ({
                 id: institution?.id ?? '',
                 labels: institution?.labels ?? {},
               };
+              setFieldTouched(`${field.name}.id`);
               setFieldValue(field.name, selectedCoordinatingInstitution);
             }}
             fieldInputProps={{
@@ -204,12 +204,13 @@ export const ProjectContributorRow = ({
               },
             }}
             errorMessage={
-              touched.contributors?.[contributorIndex]?.affiliation?.id && !!contributorErrors?.affiliation?.id
-                ? contributorErrors?.affiliation?.id
+              touched.contributors?.[contributorIndex]?.roles?.[0]?.affiliation?.id &&
+              contributorErrors?.roles?.[0].affiliation?.id
+                ? contributorErrors?.roles?.[0].affiliation?.id
                 : ''
             }
             isLoadingDefaultOptions={isLoadingDefaultOptions}
-            defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value.id)}
+            defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value?.id)}
             selectedValue={field.value}
             customDataTestId={dataTestId.registrationWizard.description.projectForm.contributorAffiliationField}
           />
