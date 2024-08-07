@@ -205,6 +205,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
             })}
           </Box>
         )}
+
         {myApproval?.status !== 'Approved' && (
           <>
             <Trans
@@ -225,6 +226,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
             </LoadingButton>
           </>
         )}
+
         {myApproval?.status !== 'Rejected' && (
           <>
             <Typography paragraph>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
