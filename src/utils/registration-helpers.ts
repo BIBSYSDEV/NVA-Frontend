@@ -46,6 +46,7 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
 import {
   Journal,
   NpiSubjectDomain,
@@ -56,7 +57,6 @@ import {
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
-import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -681,7 +681,7 @@ export const getPublishedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 export const getUnpublishableFiles = (associatedArtifacts: AssociatedArtifact[]) =>
   getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.UnpublishableFile);
 
-export const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
+const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
   const rejectedFileIdentifiers = tickets
     .filter((ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Closed')
     .flatMap((ticket) => (ticket as PublishingTicket).filesForApproval);
