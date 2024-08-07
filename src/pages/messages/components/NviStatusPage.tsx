@@ -17,6 +17,7 @@ import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { ExportNviButton } from './ExportNviButton';
 import { NviStatusTableRow } from './NviStatusTableRow';
 import { NviYearSelector } from './NviYearSelector';
 
@@ -32,10 +33,13 @@ export const NviStatusPage = () => {
   const nviStatusQuery = useFetchNviInstitutionStatus(year);
 
   return (
-    <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'start' }}>
+    <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Typography variant="h1">{t('tasks.nvi.institution_nvi_status')}</Typography>
 
-      <NviYearSelector />
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <NviYearSelector />
+        <ExportNviButton year={year} />
+      </Box>
 
       <TableContainer component={Paper} variant="outlined">
         <Table size="small">
