@@ -211,6 +211,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
             <Trans
               i18nKey="tasks.nvi.approve_nvi_candidate_description"
               components={[<Typography paragraph key="1" />]}
+              values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
             />
             <LoadingButton
               data-testid={dataTestId.tasksPage.nvi.approveButton}
@@ -229,7 +230,9 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {myApproval?.status !== 'Rejected' && (
           <>
-            <Typography paragraph>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
+            <Typography paragraph>
+              {t('tasks.nvi.reject_nvi_candidate_description', { buttonText: t('tasks.nvi.reject_nvi_candidate') })}
+            </Typography>
             <Button
               data-testid={dataTestId.tasksPage.nvi.rejectButton}
               variant="outlined"
