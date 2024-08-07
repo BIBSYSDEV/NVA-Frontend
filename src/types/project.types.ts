@@ -145,9 +145,15 @@ export interface NfrProject {
   activeTo: string;
 }
 
-export const emptyProjectContributor: EmptyProjectContributor = {
+export const emptyAffiliation: ProjectOrganization = {
+  type: 'Organization',
+  id: '',
+  labels: { no: '' },
+};
+
+export const emptyProjectContributor: ProjectContributor = {
   identity: { type: 'Person', id: '', firstName: '', lastName: '' },
-  roles: [{ type: 'ProjectParticipant', affiliation: { type: 'Organization' } }],
+  roles: [{ type: 'ProjectParticipant', affiliation: emptyAffiliation }],
 };
 
 export const emptyProject: SaveCristinProject = {
@@ -156,7 +162,12 @@ export const emptyProject: SaveCristinProject = {
   language: 'http://lexvo.org/id/iso639-3/nob',
   startDate: '',
   endDate: '',
-  contributors: [{ ...emptyProjectContributor, roles: [] }],
+  contributors: [
+    {
+      ...emptyProjectContributor,
+      roles: [{ type: 'ProjectManager', affiliation: emptyAffiliation }],
+    },
+  ],
   coordinatingInstitution: {
     type: 'Organization',
     id: '',
