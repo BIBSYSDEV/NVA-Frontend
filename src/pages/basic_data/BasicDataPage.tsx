@@ -139,7 +139,7 @@ const BasicDataPage = () => {
                 isSelected={currentPath === UrlPathTemplate.BasicDataNviNew}
                 selectedColor="nvi.main"
                 to={UrlPathTemplate.BasicDataNviNew}
-                title={t('common.add')}
+                title={t('basic_data.nvi.add_reporting_period')}
               />
             </NavigationListAccordion>
           </>

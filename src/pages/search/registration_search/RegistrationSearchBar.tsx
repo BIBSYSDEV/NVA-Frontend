@@ -176,7 +176,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
                         size="small"
                         color="primary"
-                        title={t('common.add')}
+                        title={t('common.add_custom', { name: t('common.filter').toLocaleLowerCase() })}
                         data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
                         onClick={() => {
                           const newPropertyFilter: PropertySearch = {
