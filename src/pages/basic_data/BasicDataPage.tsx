@@ -129,7 +129,7 @@ const BasicDataPage = () => {
               dataTestId={dataTestId.basicData.nviPeriodsLink}>
               <NavigationList>
                 <LinkButton isSelected={currentPath === UrlPathTemplate.BasicDataNvi} to={UrlPathTemplate.BasicDataNvi}>
-                  {t('common.nvi')}
+                  {t('basic_data.nvi.reporting_periods')}
                 </LinkButton>
               </NavigationList>
 
