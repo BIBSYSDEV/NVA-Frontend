@@ -1,15 +1,17 @@
-import { Box, Chip, Link, Typography } from '@mui/material';
+import { Box, Chip, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { getResearchProfilePath } from '../../utils/urlPaths';
 import { getValueByKey } from '../../utils/user-helpers';
 import {
   fundingSourceIsNfr,
   getNfrProjectUrl,
   getProjectCoordinatingInstitutionName,
-  getProjectManagerName,
+  getProjectManagers,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
 
@@ -21,6 +23,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
   const { t } = useTranslation();
   const projectPeriodString = getProjectPeriod(project);
   const projectStatusString = t(`project.status.${project.status}`);
+  const projectManager = getProjectManagers(project.contributors)?.[0];
 
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
@@ -30,7 +33,15 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography variant="overline">{t('project.coordinating_institution')}</Typography>
         <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
         <Typography variant="overline">{t('project.project_manager')}</Typography>
-        <Typography>{getProjectManagerName(project) ?? '-'}</Typography>
+        <Typography>
+          {projectManager ? (
+            <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+              {projectManager.identity.firstName} {projectManager.identity.lastName}
+            </MuiLink>
+          ) : (
+            '-'
+          )}
+        </Typography>
         <Typography variant="overline">{t('project.period')}</Typography>
         <Typography>{projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}</Typography>
       </div>
@@ -46,9 +57,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             return (
               <Typography key={index}>
                 {fundingSourceIsNfr(funding.source) && funding.identifier ? (
-                  <Link href={getNfrProjectUrl(funding.identifier)} target="_blank" rel="noopener noreferrer">
+                  <MuiLink href={getNfrProjectUrl(funding.identifier)} target="_blank" rel="noopener noreferrer">
                     {fundingText}
-                  </Link>
+                  </MuiLink>
                 ) : (
                   fundingText
                 )}
