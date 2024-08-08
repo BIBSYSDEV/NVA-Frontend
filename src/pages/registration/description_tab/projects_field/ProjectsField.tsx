@@ -19,6 +19,7 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { fundingSourceIsNfr, getNfrProjectUrl } from './projectHelpers';
 import { getProjectPath } from '../../../../utils/urlPaths';
+import { ListSkeleton } from '../../../../components/ListSkeleton';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
@@ -196,15 +197,23 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Typography fontWeight="bold">{t('project.project').toUpperCase()}</Typography>
         <Box sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem', height: '100%' }}>
-          <div>
-            <Typography fontWeight="bold">{t('common.title')}:</Typography>
-            <Box sx={{ display: 'flex', gap: '2rem' }}>
-              <Link href={getProjectPath(project?.id ?? '')} target="_blank" rel="noopener noreferrer">
-                {project?.title}
-              </Link>
-              <OpenInNewIcon fontSize="small" />
-            </Box>
-          </div>
+          {project ? (
+            <div>
+              <Typography fontWeight="bold">{t('common.title')}:</Typography>
+              <Box sx={{ display: 'flex', gap: '2rem' }}>
+                <Link
+                  data-testid={dataTestId.registrationWizard.description.projectLink(project?.id)}
+                  href={getProjectPath(project?.id ?? '')}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  {project?.title}
+                </Link>
+                <OpenInNewIcon fontSize="small" />
+              </Box>
+            </div>
+          ) : (
+            <ListSkeleton />
+          )}
           <div>
             <Typography fontWeight="bold">{t('project.coordinating_institution')}:</Typography>
             {project?.coordinatingInstitution && (
@@ -213,6 +222,7 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
           </div>
         </Box>
       </Box>
+
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Typography fontWeight="bold">{t('common.funding').toUpperCase()}</Typography>
         {project?.funding?.length ? (
@@ -229,7 +239,11 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
                 {funding.identifier &&
                   (fundingSourceIsNfr(funding.source) ? (
                     <Box sx={{ display: 'flex', gap: '2rem', height: 'fit-content' }}>
-                      <Link href={getNfrProjectUrl(funding.identifier)} target="_blank" rel="noopener noreferrer">
+                      <Link
+                        data-testid={dataTestId.registrationWizard.description.nfrProjectLink(funding.identifier)}
+                        href={getNfrProjectUrl(funding.identifier)}
+                        target="_blank"
+                        rel="noopener noreferrer">
                         {funding.identifier}
                       </Link>
                       <OpenInNewIcon fontSize="small" />
