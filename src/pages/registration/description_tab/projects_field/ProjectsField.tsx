@@ -195,7 +195,7 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
       }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Typography fontWeight="bold">{t('project.project').toUpperCase()}</Typography>
-        <Box sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '0.5rem', height: '100%' }}>
+        <Box sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem', height: '100%' }}>
           <div>
             <Typography fontWeight="bold">{t('common.title')}:</Typography>
             <Box sx={{ display: 'flex', gap: '2rem' }}>
@@ -219,7 +219,7 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
           project.funding.map((funding) => (
             <Box
               key={funding.identifier}
-              sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '0.5rem', height: '100%' }}>
+              sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem', height: '100%' }}>
               <div>
                 <Typography fontWeight="bold">{t('registration.description.funding.funder')}:</Typography>
                 <Typography>{getLanguageString(funding.labels)}</Typography>
