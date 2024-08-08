@@ -1133,6 +1133,7 @@
     "popular_science_summary_norwegian": "$t(project.popular_science_summary) (norsk)",
     "project": "Prosjekt",
     "project_category": "Prosjektkategori",
+    "project_id": "Prosjekt-ID",
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
@@ -1148,8 +1149,7 @@
       "CONCLUDED": "Avsluttet",
       "NOTSTARTED": "Ikke startet"
     },
-    "summary": "Sammendrag",
-    "project_id": "Prosjekt-ID"
+    "summary": "Sammendrag"
   },
   "registration": {
     "citation_points_to": "Siteringen viser til",
