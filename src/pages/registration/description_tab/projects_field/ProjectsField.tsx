@@ -212,7 +212,7 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
               </Box>
             </div>
           ) : (
-            <ListSkeleton />
+            <ListSkeleton arrayLength={1} minWidth={20} height={20} />
           )}
           <div>
             <Typography fontWeight="bold">{t('project.coordinating_institution')}:</Typography>
