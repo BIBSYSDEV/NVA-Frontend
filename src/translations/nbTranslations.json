@@ -1133,6 +1133,7 @@
     "popular_science_summary_norwegian": "$t(project.popular_science_summary) (norsk)",
     "project": "Prosjekt",
     "project_category": "Prosjektkategori",
+    "project_has_no_funding": "Prosjektet har ingen finansiering",
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",

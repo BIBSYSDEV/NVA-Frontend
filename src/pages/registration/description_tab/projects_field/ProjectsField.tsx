@@ -199,8 +199,12 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
             gap: '0.5rem',
             height: '100%',
           }}>
-          <Typography sx={{ gridColumn: '1' }}>{t('common.title')}</Typography>
-          <Typography sx={{ gridColumn: '1' }}>{t('project.coordinating_institution')}</Typography>
+          <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
+            {t('common.title')}:
+          </Typography>
+          <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
+            {t('project.coordinating_institution')}:
+          </Typography>
           <Box sx={{ gridColumn: '2', gridRow: '1', display: 'flex', gap: '2rem' }}>
             <Link href={getProjectPath(project?.id ?? '')} target="_blank" rel="noopener noreferrer">
               {project?.title}
@@ -220,7 +224,7 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
           )}
         </Box>
       </Box>
-      <div>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Typography fontWeight="bold">{t('common.funding').toUpperCase()}</Typography>
         {project?.funding && project.funding.length > 0 ? (
           project.funding.map((funding) => (
@@ -233,8 +237,16 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
                 gap: '0.5rem',
                 height: '100%',
               }}>
-              <Typography sx={{ gridColumn: '1' }}>{t('registration.description.funding.funder')}</Typography>
-              <Typography sx={{ gridColumn: '1' }}>{t('project.grant_id')}</Typography>
+              <Typography
+                fontWeight="bold"
+                sx={{
+                  gridColumn: '1',
+                }}>
+                {t('registration.description.funding.funder')}:
+              </Typography>
+              <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
+                {t('project.grant_id')}:
+              </Typography>
               <Typography sx={{ gridColumn: '2', gridRow: '1' }}>{getLanguageString(funding.labels)}</Typography>
               {funding.identifier ? (
                 fundingSourceIsNfr(funding.source) ? (
@@ -253,9 +265,9 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
             </Box>
           ))
         ) : (
-          <Typography fontStyle="italic">Projektet har ingen finansiering</Typography>
+          <Typography fontStyle="italic">{t('project.project_has_no_funding')}</Typography>
         )}
-      </div>
+      </Box>
       <IconButton
         sx={{ minWidth: '36px', minHeight: '36px' }}
         size="small"
