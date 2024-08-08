@@ -281,7 +281,7 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
         color="primary"
         onClick={() => removeProject(projectIdentifier)}
         title={t('common.remove')}
-        data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
+        data-testid={dataTestId.registrationWizard.description.removeProjectButton}>
         <CancelIcon />
       </IconButton>
     </Box>

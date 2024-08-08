@@ -346,6 +346,7 @@ export const dataTestId = {
         projectCategoryField: 'project-category-field',
         relatedProjectsSearchField: 'related-projects-search-form',
         removeContributorButton: 'remove-contributor-button',
+
         roleField: 'project-participant-role-field',
         scentificSummaryEnglishField: 'scientific-summary-english-field',
         scentificSummaryNorwegianField: 'scientific-summary-norwegian-field',
@@ -363,6 +364,7 @@ export const dataTestId = {
       alternativeTitleField: 'registration-alternative-title-field',
       descriptionField: 'registration-description-field',
       languageField: 'registration-language-field',
+      removeProjectButton: 'remove-project-button',
       tagField: 'registration-tag-field',
       titleField: 'registration-title-field',
       vocabularyMenuItem: (vocabulary: string) => `vocabulary-menu-item-${vocabulary}`,
