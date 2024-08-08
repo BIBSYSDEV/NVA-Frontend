@@ -12,14 +12,8 @@ export interface ResearchProject {
   type: 'ResearchProject';
   id: string;
   name: string;
-  grants?: ProjectFunding[];
+  funding?: ProjectFunding[];
   approvals?: Approval[];
-}
-
-interface Grant {
-  type: 'Grant';
-  id: string;
-  source: string;
 }
 
 interface Approval {

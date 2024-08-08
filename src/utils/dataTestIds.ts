@@ -346,7 +346,6 @@ export const dataTestId = {
         projectCategoryField: 'project-category-field',
         relatedProjectsSearchField: 'related-projects-search-form',
         removeContributorButton: 'remove-contributor-button',
-
         roleField: 'project-participant-role-field',
         scentificSummaryEnglishField: 'scientific-summary-english-field',
         scentificSummaryNorwegianField: 'scientific-summary-norwegian-field',
