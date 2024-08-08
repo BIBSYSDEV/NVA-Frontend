@@ -14,7 +14,6 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
 import { HelperTextModal } from '../../HelperTextModal';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { fundingSourceIsNfr, getNfrProjectUrl } from './projectHelpers';
@@ -54,10 +53,8 @@ export const ProjectsField = () => {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Field name={DescriptionFieldNames.Projects}>
           {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => {
-            const removeProject = (projectIdentifier: string) => {
-              const updatedProjects = field.value.filter(
-                (project) => getIdentifierFromId(project.id) !== projectIdentifier
-              );
+            const removeProject = (projectId: string) => {
+              const updatedProjects = field.value.filter((project) => project.id !== projectId);
               setFieldValue(field.name, updatedProjects);
             };
 
