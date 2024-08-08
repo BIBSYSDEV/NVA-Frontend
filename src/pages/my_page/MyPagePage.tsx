@@ -329,7 +329,7 @@ const MyPagePage = () => {
             {betaEnabled ? (
               <LinkCreateButton
                 data-testid={dataTestId.myPage.createProjectButton}
-                to={UrlPathTemplate.Project}
+                to={UrlPathTemplate.ProjectsNew}
                 title={t('project.create_project')}
               />
             ) : (

@@ -53,9 +53,7 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
                 <IconButton
                   data-testid={dataTestId.projectLandingPage.editProjectButton}
                   component={RouterLink}
-                  to={{
-                    pathname: getEditProjectPath(project.id),
-                  }}
+                  to={getEditProjectPath(project.id)}
                   sx={{ ml: 'auto', color: 'inherit' }}>
                   <EditIcon />
                 </IconButton>
