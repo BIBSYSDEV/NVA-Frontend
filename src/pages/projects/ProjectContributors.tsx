@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ProjectContributor } from '../../types/project.types';
+import { ProjectContributor, ProjectContributorType } from '../../types/project.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 import {
   getProjectManagers,
@@ -48,7 +48,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
 
 interface ContributorListProps {
   contributors: ProjectContributor[];
-  projectRole: 'ProjectManager' | 'ProjectParticipant';
+  projectRole: ProjectContributorType;
 }
 
 const ContributorList = ({ contributors, projectRole }: ContributorListProps) => (
@@ -63,7 +63,7 @@ const ContributorList = ({ contributors, projectRole }: ContributorListProps) =>
         <Typography variant="subtitle1" component="p">
           {contributor.identity.firstName} {contributor.identity.lastName}
         </Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {contributor.roles.map((contributorRole, j) => {
             if (contributorRole.type === projectRole) {
               return (

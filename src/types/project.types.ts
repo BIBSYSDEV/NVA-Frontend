@@ -48,7 +48,7 @@ export interface ProjectContributorIdentity {
 
 export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 
-export interface ProjectContributorRole {
+interface ProjectContributorRole {
   type: ProjectContributorType;
   affiliation: ProjectOrganization;
 }
@@ -75,14 +75,6 @@ export const emptyProjectFunding: ProjectFunding = {
   source: '',
   labels: {},
 };
-
-interface EmptyProjectContributorRole extends Omit<ProjectContributorRole, 'affiliation'> {
-  affiliation: { type: 'Organization' };
-}
-
-export interface EmptyProjectContributor extends Omit<ProjectContributor, 'roles'> {
-  roles: EmptyProjectContributorRole[];
-}
 
 export interface SaveCristinProject {
   type: 'Project';
@@ -148,7 +140,7 @@ export interface NfrProject {
 export const emptyAffiliation: ProjectOrganization = {
   type: 'Organization',
   id: '',
-  labels: { no: '' },
+  labels: {},
 };
 
 export const emptyProjectContributor: ProjectContributor = {
@@ -168,11 +160,7 @@ export const emptyProject: SaveCristinProject = {
       roles: [{ type: 'ProjectManager', affiliation: emptyAffiliation }],
     },
   ],
-  coordinatingInstitution: {
-    type: 'Organization',
-    id: '',
-    labels: {},
-  },
+  coordinatingInstitution: emptyAffiliation,
   academicSummary: {},
   popularScientificSummary: {},
   projectCategories: [],

@@ -7,9 +7,7 @@ export const getProjectCoordinatingInstitutionName = (project?: CristinProject) 
   project ? getLanguageString(project.coordinatingInstitution.labels) : '';
 
 export const getProjectManagerName = (project?: CristinProject) => {
-  const projectManager = project?.contributors.find((contributor) =>
-    contributor.roles.some((role) => role.type === 'ProjectManager')
-  );
+  const projectManager = project?.contributors.find((contributor) => isProjectManager(contributor));
   return projectManager ? `${projectManager.identity.firstName} ${projectManager.identity.lastName}` : '';
 };
 
@@ -31,7 +29,7 @@ export const isProjectManager = (contributor: ProjectContributor) =>
   contributor.roles.some((role) => role.type === 'ProjectManager');
 
 export const getProjectManagers = (contributors: ProjectContributor[]) =>
-  contributors.filter((contributor) => contributor.roles.some((role) => role.type === 'ProjectManager'));
+  contributors.filter((contributor) => isProjectManager(contributor));
 
 export const getProjectParticipants = (contributors: ProjectContributor[]) =>
   contributors.filter((contributor) => contributor.roles.some((role) => role.type === 'ProjectParticipant'));

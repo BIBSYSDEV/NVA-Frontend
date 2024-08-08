@@ -23,7 +23,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { getTopLevelOrganization, getUnitTopLevelCode } from '../../../../utils/institutions-helpers';
 import { getFullCristinName, getValueByKey } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
-import { projectContributorToCristinPerson } from './projectHelpers';
+import { isProjectManager, projectContributorToCristinPerson } from './projectHelpers';
 
 enum ProjectContributorFieldName {
   Type = 'roles[0].type',
@@ -101,7 +101,7 @@ export const ProjectContributorRow = ({
   };
 
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
-  const isRekProjectManager = isRekProject && contributor?.roles?.some((role) => role.type === 'ProjectManager');
+  const isRekProjectManager = isRekProject && contributor && isProjectManager(contributor);
 
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr auto' }, gap: '0.25rem 0.75rem' }}>
