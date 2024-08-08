@@ -195,76 +195,47 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
       }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Typography fontWeight="bold">{t('project.project').toUpperCase()}</Typography>
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateRows: 'auto auto',
-            gap: '0.5rem',
-            height: '100%',
-          }}>
+        <Box sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '0.5rem', height: '100%' }}>
           <div>
-            <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
-              {t('common.title')}:
-            </Typography>
-            <Box sx={{ gridColumn: '2', gridRow: '1', display: 'flex', gap: '2rem' }}>
+            <Typography fontWeight="bold">{t('common.title')}:</Typography>
+            <Box sx={{ display: 'flex', gap: '2rem' }}>
               <Link href={getProjectPath(project?.id ?? '')} target="_blank" rel="noopener noreferrer">
                 {project?.title}
               </Link>
-              <OpenInNewIcon fontSize="small" sx={{ justifySelf: 'center', alignSelf: 'center' }} />
+              <OpenInNewIcon fontSize="small" />
             </Box>
           </div>
           <div>
-            <Typography fontWeight="bold" sx={{ gridColumn: '1', height: 'fit-content' }}>
-              {t('project.coordinating_institution')}:
-            </Typography>
+            <Typography fontWeight="bold">{t('project.coordinating_institution')}:</Typography>
             {project?.coordinatingInstitution && (
-              <Typography
-                sx={{
-                  gridColumn: '2',
-                  gridRow: '2',
-                }}>
-                {getLanguageString(project?.coordinatingInstitution.labels)}
-              </Typography>
+              <Typography>{getLanguageString(project?.coordinatingInstitution.labels)}</Typography>
             )}
           </div>
         </Box>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Typography fontWeight="bold">{t('common.funding').toUpperCase()}</Typography>
-        {project?.funding && project.funding.length > 0 ? (
+        {project?.funding?.length ? (
           project.funding.map((funding) => (
             <Box
               key={funding.identifier}
-              sx={{
-                display: 'grid',
-                gridTemplateRows: 'auto auto',
-                gap: '0.5rem',
-                height: '100%',
-              }}>
+              sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '0.5rem', height: '100%' }}>
               <div>
-                <Typography
-                  fontWeight="bold"
-                  sx={{
-                    gridColumn: '1',
-                  }}>
-                  {t('registration.description.funding.funder')}:
-                </Typography>
-                <Typography sx={{ gridColumn: '2', gridRow: '1' }}>{getLanguageString(funding.labels)}</Typography>
+                <Typography fontWeight="bold">{t('registration.description.funding.funder')}:</Typography>
+                <Typography>{getLanguageString(funding.labels)}</Typography>
               </div>
               <div>
-                <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
-                  {t('project.grant_id')}:
-                </Typography>
+                <Typography fontWeight="bold">{t('project.grant_id')}:</Typography>
                 {funding.identifier &&
                   (fundingSourceIsNfr(funding.source) ? (
-                    <Box sx={{ gridColumn: '2', gridRow: '2', display: 'flex', gap: '2rem', height: 'fit-content' }}>
+                    <Box sx={{ display: 'flex', gap: '2rem', height: 'fit-content' }}>
                       <Link href={getNfrProjectUrl(funding.identifier)} target="_blank" rel="noopener noreferrer">
                         {funding.identifier}
                       </Link>
-                      <OpenInNewIcon fontSize="small" sx={{ justifySelf: 'center' }} />
+                      <OpenInNewIcon fontSize="small" />
                     </Box>
                   ) : (
-                    <Typography sx={{ gridColumn: '2', gridRow: '2' }}>{funding.identifier}</Typography>
+                    <Typography>{funding.identifier}</Typography>
                   ))}
               </div>
             </Box>
@@ -274,7 +245,6 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
         )}
       </Box>
       <IconButton
-        sx={{ minWidth: '36px', minHeight: '36px' }}
         size="small"
         color="primary"
         onClick={() => removeProject(projectIdentifier)}
