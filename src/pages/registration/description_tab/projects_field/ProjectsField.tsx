@@ -1,5 +1,3 @@
-// src/pages/registration/description_tab/projects_field/ProjectsField.tsx
-
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Autocomplete, Box, Button, Divider, IconButton, Link, Typography } from '@mui/material';
@@ -115,7 +113,7 @@ export const ProjectsField = () => {
                 <Trans
                   i18nKey="registration.description.new_project_helper_text"
                   components={[
-                    <Typography key="2">
+                    <Typography key="1">
                       <span style={{ fontWeight: 'bold' }} />
                     </Typography>,
                   ]}
