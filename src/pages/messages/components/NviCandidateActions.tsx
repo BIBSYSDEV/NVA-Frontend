@@ -208,10 +208,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {myApproval?.status !== 'Approved' && (
           <>
-            <Typography fontWeight="bold">{t('tasks.nvi.nvi_status')}</Typography>
             <Trans
               i18nKey="tasks.nvi.approve_nvi_candidate_description"
               components={[<Typography paragraph key="1" />]}
+              values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
             />
             <LoadingButton
               data-testid={dataTestId.tasksPage.nvi.approveButton}
@@ -230,6 +230,9 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {myApproval?.status !== 'Rejected' && (
           <>
+            <Typography paragraph>
+              {t('tasks.nvi.reject_nvi_candidate_description', { buttonText: t('tasks.nvi.reject_nvi_candidate') })}
+            </Typography>
             <Button
               data-testid={dataTestId.tasksPage.nvi.rejectButton}
               variant="outlined"
@@ -256,6 +259,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           </>
         )}
 
+        <Typography variant="h2" gutterBottom>
+          {t('common.message')}
+        </Typography>
+        <Typography gutterBottom>{t('tasks.nvi.message_description')}</Typography>
         <MessageForm
           confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
           fieldLabel={t('common.message')}
