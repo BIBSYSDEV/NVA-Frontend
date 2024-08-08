@@ -195,14 +195,14 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
           sx={{
             display: 'grid',
             gridTemplateColumns: 'auto auto',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateRows: 'auto auto',
             gap: '0.5rem',
             height: '100%',
           }}>
           <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
             {t('common.title')}:
           </Typography>
-          <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
+          <Typography fontWeight="bold" sx={{ gridColumn: '1', height: 'fit-content' }}>
             {t('project.coordinating_institution')}:
           </Typography>
           <Box sx={{ gridColumn: '2', gridRow: '1', display: 'flex', gap: '2rem' }}>
@@ -232,8 +232,8 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
               key={funding.identifier}
               sx={{
                 display: 'grid',
-                gridTemplateColumns: 'auto auto',
-                gridTemplateRows: '1fr 1fr',
+                gridTemplateColumns: 'auto 1fr',
+                gridTemplateRows: '1fr auto',
                 gap: '0.5rem',
                 height: '100%',
               }}>
