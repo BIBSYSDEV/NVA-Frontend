@@ -4,6 +4,7 @@ import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { getValueByKey } from '../../utils/user-helpers';
 import {
   fundingSourceIsNfr,
   getNfrProjectUrl,
@@ -24,6 +25,8 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
       <div>
+        <Typography variant="overline">{t('project.project_id')}</Typography>
+        <Typography>{getValueByKey('CristinIdentifier', project.identifiers)}</Typography>
         <Typography variant="overline">{t('project.coordinating_institution')}</Typography>
         <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
         <Typography variant="overline">{t('project.project_manager')}</Typography>

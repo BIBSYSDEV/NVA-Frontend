@@ -87,7 +87,7 @@ export interface SaveCristinProject {
 
 export interface CristinProject extends SaveCristinProject {
   id: string;
-  identifier: ProjectIdentifier[];
+  identifiers: ProjectIdentifier[];
   status: ProjectStatus;
   alternativeTitles: LanguageString[];
   coordinatingInstitution: ProjectOrganization;
