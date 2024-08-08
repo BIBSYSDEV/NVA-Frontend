@@ -140,7 +140,7 @@ const BasicDataPage = () => {
               dataTestId={dataTestId.basicData.nviPeriodsLink}>
               <NavigationList>
                 <LinkButton isSelected={currentPath === UrlPathTemplate.BasicDataNvi} to={UrlPathTemplate.BasicDataNvi}>
-                  {t('common.nvi')}
+                  {t('basic_data.nvi.reporting_periods')}
                 </LinkButton>
               </NavigationList>
 
@@ -150,7 +150,7 @@ const BasicDataPage = () => {
                 isSelected={currentPath === UrlPathTemplate.BasicDataNviNew}
                 selectedColor="nvi.main"
                 to={UrlPathTemplate.BasicDataNviNew}
-                title={t('common.add')}
+                title={t('basic_data.nvi.add_reporting_period')}
               />
             </NavigationListAccordion>
           </>

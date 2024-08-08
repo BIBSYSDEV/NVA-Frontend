@@ -223,7 +223,7 @@ export const SelectInstitutionForm = ({
                 loading={isSubmitting}
                 disabled={!values.unit && !values.selectedSuggestedAffiliationId}
                 data-testid={dataTestId.registrationWizard.contributors.addSelectedAffiliationButton}>
-                {t('common.add')}
+                {t('registration.contributors.add_affiliation')}
               </LoadingButton>
             </Box>
           </Box>

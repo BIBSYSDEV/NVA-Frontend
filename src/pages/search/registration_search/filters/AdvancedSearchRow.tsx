@@ -72,7 +72,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
         size="small"
         color="primary"
         onClick={removeFilter}
-        title={t('common.remove')}
+        title={t('search.remove_filter')}
         data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
         <ClearIcon />
       </IconButton>
