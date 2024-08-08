@@ -1912,7 +1912,7 @@
     "correction_list": "Retteliste",
     "dialogues_without_curator": "Dialoger uten kurator",
     "nvi": {
-      "approval_status_count": "Sjekket ({{checked}} av {{total}})",
+      "approval_status_count": "Kontrollert ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<0>Sjekk om forskningsresultatet skal NVI-rapporteres.</0> <0>Skal forskningsresultatet rapporteres så velger du \"Godkjenn resultat\".</0>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
