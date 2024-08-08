@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { searchForProjects } from '../../../../api/cristinApi';
+import { fetchProject, searchForProjects } from '../../../../api/cristinApi';
 import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
@@ -152,11 +152,7 @@ export const ProjectsField = () => {
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {field.value.map((project) => (
-                    <ProjectItem
-                      key={project.id}
-                      projectIdentifier={getIdentifierFromId(project.id)}
-                      removeProject={removeProject}
-                    />
+                    <ProjectItem key={project.id} projectId={project.id} removeProject={removeProject} />
                   ))}
                 </Box>
               </>
@@ -169,19 +165,19 @@ export const ProjectsField = () => {
 };
 
 interface ProjectItemProps {
-  projectIdentifier: string;
+  projectId: string;
   removeProject: (projectId: string) => void;
 }
 
-const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => {
+const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
   const { t } = useTranslation();
   const projectQuery = useQuery({
-    enabled: !!projectIdentifier,
-    queryKey: ['project', projectIdentifier],
-    queryFn: () => searchForProjects(1, 1, { query: projectIdentifier }),
+    enabled: !!projectId,
+    queryKey: ['project', projectId],
+    queryFn: () => fetchProject(projectId),
   });
 
-  const project = projectQuery.data?.hits[0];
+  const project = projectQuery.data;
 
   return (
     <Box
@@ -261,7 +257,7 @@ const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => 
       <IconButton
         size="small"
         color="primary"
-        onClick={() => removeProject(projectIdentifier)}
+        onClick={() => removeProject(projectId)}
         title={t('common.remove')}
         data-testid={dataTestId.registrationWizard.description.removeProjectButton}>
         <CancelIcon />
