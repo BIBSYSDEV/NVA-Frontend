@@ -42,14 +42,21 @@ export interface ProjectContributorIdentity {
 
 export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 
-export interface ProjectContributor {
+interface ProjectContributorRole {
   type: ProjectContributorType;
   affiliation: ProjectOrganization;
+}
+export interface ProjectContributor {
   identity: ProjectContributorIdentity;
+  roles: ProjectContributorRole[];
 }
 
-interface ProjectCreator extends Omit<ProjectContributor, 'type'> {
+export interface CreatorRole extends Omit<ProjectContributorRole, 'type'> {
   type: 'ProjectCreator';
+}
+
+interface ProjectCreator extends Omit<ProjectContributor, 'roles'> {
+  roles: [CreatorRole];
 }
 
 export interface ProjectFunding extends Pick<Funding, 'identifier' | 'source' | 'labels'> {
@@ -124,10 +131,15 @@ export interface NfrProject {
   activeTo: string;
 }
 
+export const emptyAffiliation: ProjectOrganization = {
+  type: 'Organization',
+  id: '',
+  labels: {},
+};
+
 export const emptyProjectContributor: ProjectContributor = {
-  type: 'ProjectParticipant',
   identity: { type: 'Person', id: '', firstName: '', lastName: '' },
-  affiliation: { type: 'Organization', id: '', labels: {} },
+  roles: [{ type: 'ProjectParticipant', affiliation: emptyAffiliation }],
 };
 
 export const emptyProject: SaveCristinProject = {
@@ -136,12 +148,13 @@ export const emptyProject: SaveCristinProject = {
   language: 'http://lexvo.org/id/iso639-3/nob',
   startDate: '',
   endDate: '',
-  contributors: [{ ...emptyProjectContributor, type: 'ProjectManager' }],
-  coordinatingInstitution: {
-    type: 'Organization',
-    id: '',
-    labels: {},
-  },
+  contributors: [
+    {
+      ...emptyProjectContributor,
+      roles: [{ type: 'ProjectManager', affiliation: emptyAffiliation }],
+    },
+  ],
+  coordinatingInstitution: emptyAffiliation,
   academicSummary: {},
   popularScientificSummary: {},
   projectCategories: [],

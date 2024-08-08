@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ProjectContributor } from '../../types/project.types';
+import { ProjectContributor, ProjectContributorType } from '../../types/project.types';
 import { getLanguageString } from '../../utils/translation-helpers';
 import {
   getProjectManagers,
@@ -31,13 +31,13 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
           {projectManagers.length > 0 && (
             <div>
               <Typography variant="h3">{t('project.project_manager')}</Typography>
-              <ContributorList contributors={projectManagers} />
+              <ContributorList contributors={projectManagers} projectRole="ProjectManager" />
             </div>
           )}
           {projectParticipants.length > 0 && (
             <div>
               <Typography variant="h3">{t('project.project_participants')}</Typography>
-              <ContributorList contributors={projectParticipants} />
+              <ContributorList contributors={projectParticipants} projectRole="ProjectParticipant" />
             </div>
           )}
         </>
@@ -48,9 +48,10 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
 
 interface ContributorListProps {
   contributors: ProjectContributor[];
+  projectRole: ProjectContributorType;
 }
 
-const ContributorList = ({ contributors }: ContributorListProps) => (
+const ContributorList = ({ contributors, projectRole }: ContributorListProps) => (
   <Box
     sx={{
       display: 'grid',
@@ -62,7 +63,18 @@ const ContributorList = ({ contributors }: ContributorListProps) => (
         <Typography variant="subtitle1" component="p">
           {contributor.identity.firstName} {contributor.identity.lastName}
         </Typography>
-        <Typography variant="body2">{getLanguageString(contributor.affiliation?.labels)}</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          {contributor.roles.map((contributorRole, j) => {
+            if (contributorRole.type === projectRole) {
+              return (
+                <Typography variant="body2" key={j}>
+                  {getLanguageString(contributorRole.affiliation.labels)}
+                </Typography>
+              );
+            }
+            return null;
+          })}
+        </Box>
       </div>
     ))}
   </Box>
