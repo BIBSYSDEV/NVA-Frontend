@@ -55,8 +55,10 @@ export const ProjectsField = () => {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Field name={DescriptionFieldNames.Projects}>
           {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => {
-            const removeProject = (projectId: string) => {
-              const updatedProjects = field.value.filter((project) => project.id !== projectId);
+            const removeProject = (projectIdentifier: string) => {
+              const updatedProjects = field.value.filter(
+                (project) => getIdentifierFromId(project.id) !== projectIdentifier
+              );
               setFieldValue(field.name, updatedProjects);
             };
 
@@ -151,7 +153,11 @@ export const ProjectsField = () => {
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {field.value.map((project) => (
-                    <ProjectItem key={project.id} projectId={project.id} removeProject={removeProject} />
+                    <ProjectItem
+                      key={project.id}
+                      projectIdentifier={getIdentifierFromId(project.id)}
+                      removeProject={removeProject}
+                    />
                   ))}
                 </Box>
               </>
@@ -164,13 +170,12 @@ export const ProjectsField = () => {
 };
 
 interface ProjectItemProps {
-  projectId: string;
+  projectIdentifier: string;
   removeProject: (projectId: string) => void;
 }
 
-const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
+const ProjectItem = ({ projectIdentifier, removeProject }: ProjectItemProps) => {
   const { t } = useTranslation();
-  const projectIdentifier = getIdentifierFromId(projectId);
   const projectQuery = useQuery({
     enabled: !!projectIdentifier,
     queryKey: ['project', projectIdentifier],
@@ -183,45 +188,47 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr auto',
+        gridTemplateColumns: { sm: '1fr', md: '1fr 1fr auto' },
         gap: '1rem',
         bgcolor: 'secondary.light',
-        p: '0.5rem',
-        border: '1px solid',
+        p: '1rem',
+        border: '1px solid lightgray',
+        borderRadius: '8px',
       }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Typography fontWeight="bold">{t('project.project').toUpperCase()}</Typography>
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: 'auto auto',
             gridTemplateRows: 'auto auto',
             gap: '0.5rem',
             height: '100%',
           }}>
-          <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
-            {t('common.title')}:
-          </Typography>
-          <Typography fontWeight="bold" sx={{ gridColumn: '1', height: 'fit-content' }}>
-            {t('project.coordinating_institution')}:
-          </Typography>
-          <Box sx={{ gridColumn: '2', gridRow: '1', display: 'flex', gap: '2rem' }}>
-            <Link href={getProjectPath(project?.id ?? '')} target="_blank" rel="noopener noreferrer">
-              {project?.title}
-            </Link>
-            <OpenInNewIcon fontSize="small" sx={{ justifySelf: 'center', alignSelf: 'center' }} />
-          </Box>
-          {project?.coordinatingInstitution ? (
-            <Typography
-              sx={{
-                gridColumn: '2',
-                gridRow: '2',
-              }}>
-              {getLanguageString(project?.coordinatingInstitution.labels)}
+          <div>
+            <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
+              {t('common.title')}:
             </Typography>
-          ) : (
-            '-'
-          )}
+            <Box sx={{ gridColumn: '2', gridRow: '1', display: 'flex', gap: '2rem' }}>
+              <Link href={getProjectPath(project?.id ?? '')} target="_blank" rel="noopener noreferrer">
+                {project?.title}
+              </Link>
+              <OpenInNewIcon fontSize="small" sx={{ justifySelf: 'center', alignSelf: 'center' }} />
+            </Box>
+          </div>
+          <div>
+            <Typography fontWeight="bold" sx={{ gridColumn: '1', height: 'fit-content' }}>
+              {t('project.coordinating_institution')}:
+            </Typography>
+            {project?.coordinatingInstitution && (
+              <Typography
+                sx={{
+                  gridColumn: '2',
+                  gridRow: '2',
+                }}>
+                {getLanguageString(project?.coordinatingInstitution.labels)}
+              </Typography>
+            )}
+          </div>
         </Box>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -232,36 +239,36 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
               key={funding.identifier}
               sx={{
                 display: 'grid',
-                gridTemplateColumns: 'auto 1fr',
-                gridTemplateRows: '1fr auto',
+                gridTemplateRows: 'auto auto',
                 gap: '0.5rem',
                 height: '100%',
               }}>
-              <Typography
-                fontWeight="bold"
-                sx={{
-                  gridColumn: '1',
-                }}>
-                {t('registration.description.funding.funder')}:
-              </Typography>
-              <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
-                {t('project.grant_id')}:
-              </Typography>
-              <Typography sx={{ gridColumn: '2', gridRow: '1' }}>{getLanguageString(funding.labels)}</Typography>
-              {funding.identifier ? (
-                fundingSourceIsNfr(funding.source) ? (
-                  <Box sx={{ gridColumn: '2', gridRow: '2', display: 'flex', gap: '2rem', height: 'fit-content' }}>
-                    <Link href={getNfrProjectUrl(funding.identifier)} target="_blank" rel="noopener noreferrer">
-                      {funding.identifier}
-                    </Link>
-                    <OpenInNewIcon fontSize="small" sx={{ justifySelf: 'center' }} />
-                  </Box>
-                ) : (
-                  <Typography sx={{ gridColumn: '2', gridRow: '2' }}>{funding.identifier}</Typography>
-                )
-              ) : (
-                '-'
-              )}
+              <div>
+                <Typography
+                  fontWeight="bold"
+                  sx={{
+                    gridColumn: '1',
+                  }}>
+                  {t('registration.description.funding.funder')}:
+                </Typography>
+                <Typography sx={{ gridColumn: '2', gridRow: '1' }}>{getLanguageString(funding.labels)}</Typography>
+              </div>
+              <div>
+                <Typography fontWeight="bold" sx={{ gridColumn: '1' }}>
+                  {t('project.grant_id')}:
+                </Typography>
+                {funding.identifier &&
+                  (fundingSourceIsNfr(funding.source) ? (
+                    <Box sx={{ gridColumn: '2', gridRow: '2', display: 'flex', gap: '2rem', height: 'fit-content' }}>
+                      <Link href={getNfrProjectUrl(funding.identifier)} target="_blank" rel="noopener noreferrer">
+                        {funding.identifier}
+                      </Link>
+                      <OpenInNewIcon fontSize="small" sx={{ justifySelf: 'center' }} />
+                    </Box>
+                  ) : (
+                    <Typography sx={{ gridColumn: '2', gridRow: '2' }}>{funding.identifier}</Typography>
+                  ))}
+              </div>
             </Box>
           ))
         ) : (
@@ -272,7 +279,7 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
         sx={{ minWidth: '36px', minHeight: '36px' }}
         size="small"
         color="primary"
-        onClick={() => removeProject(projectId)}
+        onClick={() => removeProject(projectIdentifier)}
         title={t('common.remove')}
         data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
         <CancelIcon />
