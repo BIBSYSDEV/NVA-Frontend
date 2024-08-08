@@ -6,6 +6,7 @@ import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { hasCuratorRole } from '../../../utils/user-helpers';
 import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/ViewingScopeChip';
 import { UserRoles } from './UserRoles';
 
@@ -18,7 +19,7 @@ export const UserRoleAndHelp = () => {
 
   return (
     <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {nvaUser?.viewingScope && (
+      {nvaUser?.viewingScope && hasCuratorRole(user) && (
         <div>
           <Typography gutterBottom fontWeight="bold">
             {t('editor.curators.area_of_responsibility')}
