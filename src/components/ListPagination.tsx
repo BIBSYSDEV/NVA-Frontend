@@ -16,8 +16,8 @@ export const ListPagination = ({
   page,
   onPageChange,
   onRowsPerPageChange,
-  showPaginationTop,
   sortingComponent,
+  showPaginationTop = !!sortingComponent,
   maxHits,
   rowsPerPageOptions,
 }: ListPaginationProps) => {
