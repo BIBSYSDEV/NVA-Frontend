@@ -21,7 +21,7 @@ export const mockJournalsSearch: SearchResponse<Journal> = {
       identifier: 'J0UR-N4L-NUMB3R-2',
       name: 'Journal number 2',
       sameAs: 'http://www.journal2.com/',
-      scientificValue: 'LevelOne',
+      scientificValue: 'LevelTwo',
       onlineIssn: '2222-2222',
     },
     {
@@ -30,7 +30,7 @@ export const mockJournalsSearch: SearchResponse<Journal> = {
       identifier: 'J0UR-N4L-NUMB3R-3',
       name: 'Journal number 3',
       sameAs: 'http://www.journal3.com/',
-      scientificValue: 'LevelOne',
+      scientificValue: 'LevelZero',
       onlineIssn: '3333-3333',
       printIssn: '3333-3334',
     },

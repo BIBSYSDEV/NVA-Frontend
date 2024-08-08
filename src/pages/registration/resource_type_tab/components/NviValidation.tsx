@@ -26,22 +26,31 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
   const isNviApplicableBookMonograph = instanceType === BookType.AcademicMonograph;
   const isNviApplicableChapterArticle = instanceType === ChapterType.AcademicChapter;
 
-  return isNviApplicableJournalArticle || isNviApplicableBookMonograph || isNviApplicableChapterArticle ? (
-    <>
-      {isNviApplicableJournalArticle ? (
-        <NviValidationJournalArticle registration={registration as JournalRegistration} />
-      ) : isNviApplicableBookMonograph ? (
-        <NviValidationBookMonograph registration={registration as BookRegistration} />
-      ) : isNviApplicableChapterArticle ? (
-        <NviValidationChapterArticle registration={registration as ChapterRegistration} />
-      ) : null}
-    </>
-  ) : null;
+  if (isNviApplicableJournalArticle) {
+    const journalRegistration = registration as JournalRegistration;
+    const journalId = journalRegistration.entityDescription.reference?.publicationContext.id;
+    if (journalId) {
+      return <NviValidationJournalArticle journalId={journalId} />;
+    }
+  } else if (isNviApplicableBookMonograph) {
+    const bookRegistration = registration as BookRegistration;
+    const publisherId = bookRegistration.entityDescription.reference?.publicationContext.publisher?.id;
+    const seriesId = bookRegistration.entityDescription.reference?.publicationContext.series?.id;
+    if (publisherId || seriesId) {
+      return <NviValidationBookMonograph publisherId={publisherId ?? ''} seriesId={seriesId ?? ''} />;
+    }
+  } else if (isNviApplicableChapterArticle) {
+    const chapterRegistration = registration as ChapterRegistration;
+    const containerId = chapterRegistration.entityDescription.reference?.publicationContext.id;
+    if (containerId) {
+      return <NviValidationChapterArticle containerId={containerId} />;
+    }
+  }
+  return null;
 };
 
-const NviValidationJournalArticle = ({ registration }: { registration: JournalRegistration }) => {
+const NviValidationJournalArticle = ({ journalId }: { journalId: string }) => {
   const { t } = useTranslation();
-  const journalId = registration.entityDescription.reference?.publicationContext.id ?? '';
 
   const journalQuery = useQuery({
     queryKey: ['channel', journalId],
@@ -51,19 +60,13 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
     staleTime: Infinity,
   });
 
-  if (!journalId) {
-    return null;
-  }
-
   const journalScientificValue = journalQuery.data?.scientificValue;
 
   return <NviStatus scientificValue={journalScientificValue} />;
 };
 
-const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
+const NviValidationBookMonograph = ({ publisherId, seriesId }: { publisherId: string; seriesId: string }) => {
   const { t } = useTranslation();
-  const publisherId = registration.entityDescription.reference?.publicationContext.publisher?.id ?? '';
-  const seriesId = registration.entityDescription.reference?.publicationContext.series?.id ?? '';
 
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],
@@ -81,10 +84,6 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
     staleTime: Infinity,
   });
 
-  if (!publisherId && !seriesId) {
-    return null;
-  }
-
   const publisherScientificValue = publisherQuery.data?.scientificValue;
   const seriesScientificValue = seriesQuery.data?.scientificValue;
 
@@ -99,9 +98,8 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
   );
 };
 
-const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
+const NviValidationChapterArticle = ({ containerId }: { containerId: string }) => {
   const { t } = useTranslation();
-  const containerId = registration.entityDescription.reference?.publicationContext.id ?? '';
 
   const containerQuery = useQuery({
     queryKey: ['registration', containerId],
@@ -128,10 +126,6 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
-
-  if (!containerId) {
-    return null;
-  }
 
   const publisherScientificValue = publisherQuery.data?.scientificValue;
   const seriesScientificValue = seriesQuery.data?.scientificValue;
