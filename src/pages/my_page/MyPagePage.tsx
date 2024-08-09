@@ -271,7 +271,7 @@ const MyPagePage = () => {
             accordionPath={UrlPathTemplate.MyPageRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
-            <NavigationList>
+            <NavigationList component="div">
               <StyledTicketSearchFormGroup>
                 <FormControlLabel
                   data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}

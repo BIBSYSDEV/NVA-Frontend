@@ -228,7 +228,7 @@ const TasksPage = () => {
               startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
               accordionPath={UrlPathTemplate.TasksNviCorrectionList}
               dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
-              <NavigationList>
+              <NavigationList component="div">
                 <SelectableButton
                   isSelected={!selectedNviList}
                   onClick={() => history.push({ search: '' })}
