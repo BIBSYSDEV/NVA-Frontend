@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
-import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
+import { FetchTicketsParams, ResultParam, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
@@ -240,18 +240,24 @@ const TasksPage = () => {
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <SelectableButton
                       isSelected={selectedNviList === '1'}
-                      onClick={() =>
-                        history.push({
-                          search: `?${nviCorrectionListQueryKey}=${'1' satisfies CorrectionListId}`,
-                        })
-                      }>
+                      onClick={() => {
+                        if (selectedNviList !== '1') {
+                          searchParams.set(nviCorrectionListQueryKey, '1' satisfies CorrectionListId);
+                          searchParams.delete(ResultParam.From);
+                          history.push({ search: searchParams.toString() });
+                        }
+                      }}>
                       {t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')}
                     </SelectableButton>
                     <SelectableButton
                       isSelected={selectedNviList === '2'}
-                      onClick={() =>
-                        history.push({ search: `?${nviCorrectionListQueryKey}=${'2' satisfies CorrectionListId}` })
-                      }>
+                      onClick={() => {
+                        if (selectedNviList !== '2') {
+                          searchParams.set(nviCorrectionListQueryKey, '2' satisfies CorrectionListId);
+                          searchParams.delete(ResultParam.From);
+                          history.push({ search: searchParams.toString() });
+                        }
+                      }}>
                       {t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')}
                     </SelectableButton>
                   </Box>

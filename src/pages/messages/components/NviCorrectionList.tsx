@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { fetchResults, FetchResultsParams, ResultParam } from '../../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
 import { allPublicationInstanceTypes } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
@@ -47,6 +47,8 @@ export const NviCorrectionList = () => {
     from: Number(searchParams.get(ResultParam.From) ?? 0),
     results: Number(searchParams.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     publicationYearSince: (new Date().getFullYear() - 1).toString(),
+    order: searchParams.get(ResultParam.Order) as ResultSearchOrder | null,
+    sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
   };
 
   const registrationQuery = useQuery({
