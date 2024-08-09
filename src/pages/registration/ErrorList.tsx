@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RegistrationTab } from '../../types/registration.types';
 import { TabErrors } from '../../utils/formik-helpers';
@@ -11,7 +11,7 @@ export const ErrorList = ({ tabErrors }: ErrorSummaryProps) => {
   const { t } = useTranslation();
 
   return (
-    <dl data-testid="error-list">
+    <Box component="dl" sx={{ my: '0.5rem' }}>
       <ErrorListGroup
         heading={t('registration.heading.description')}
         errorMessages={tabErrors[RegistrationTab.Description]}
@@ -28,7 +28,7 @@ export const ErrorList = ({ tabErrors }: ErrorSummaryProps) => {
         heading={t('registration.heading.files_and_license')}
         errorMessages={tabErrors[RegistrationTab.FilesAndLicenses]}
       />
-    </dl>
+    </Box>
   );
 };
 
