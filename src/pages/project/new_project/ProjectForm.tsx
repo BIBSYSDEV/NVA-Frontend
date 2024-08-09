@@ -1,11 +1,11 @@
 import { Box } from '@mui/material';
-import { Form, Formik, FormikProps } from 'formik';
+import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageHeader } from '../../../components/PageHeader';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { SkipLink } from '../../../components/SkipLink';
-import { CristinProject, ProjectTab, SaveCristinProject } from '../../../types/project.types';
+import { CristinProject, ProjectTab } from '../../../types/project.types';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { InitialProjectFormData } from '../../projects/form/ProjectFormDialog';
 import { ProjectConnectionsForm } from './ProjectConnectionsForm';
@@ -21,7 +21,7 @@ interface ProjectFormProps {
 export const ProjectForm = ({ project }: ProjectFormProps) => {
   const { t } = useTranslation();
   const [tabNumber, setTabNumber] = useState(ProjectTab.Description);
-  const [initialValues, setInitialValues] = useState<InitialProjectFormData>({ project: project });
+  const [initialValues] = useState<InitialProjectFormData>({ project: project });
 
   return (
     <>
@@ -30,8 +30,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
         initialValues={initialValues.project!}
         validationSchema={basicProjectValidationSchema}
         onSubmit={() => {}}>
-        {({ isSubmitting, errors, setTouched, touched, values }: FormikProps<SaveCristinProject>) => {
-          console.log('values--', values);
+        {() => {
           return (
             <Form noValidate>
               <PageHeader variant="h1">{project.title}</PageHeader>

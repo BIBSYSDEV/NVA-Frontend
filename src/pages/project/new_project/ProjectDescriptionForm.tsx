@@ -24,7 +24,7 @@ interface ProjectDescriptionFormProps {
 
 export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
-  const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
   const thisIsRekProject = isRekProject(project);
 
   return (
