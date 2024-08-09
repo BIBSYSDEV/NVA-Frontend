@@ -98,7 +98,7 @@ export const SupportAccordion = ({
               </LoadingButton>
             )}
 
-            {tabErrors && (
+            {isOnTasksPage && tabErrors && (
               <div>
                 <Typography>{t('registration.public_page.error_description')}</Typography>
                 <ErrorList tabErrors={tabErrors} />
