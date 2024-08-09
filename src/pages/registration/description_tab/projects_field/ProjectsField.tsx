@@ -185,27 +185,31 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Typography fontWeight="bold">{t('project.project').toUpperCase()}</Typography>
         <Box sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem', height: '100%' }}>
-          {project ? (
-            <div>
-              <Typography fontWeight="bold">{t('common.title')}:</Typography>
-              <Box sx={{ display: 'flex', gap: '2rem' }}>
-                <Link
-                  data-testid={dataTestId.registrationWizard.description.projectLink(project?.id)}
-                  href={getProjectPath(project?.id ?? '')}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  {project?.title}
-                </Link>
-                <OpenInNewIcon fontSize="small" />
-              </Box>
-            </div>
-          ) : (
-            <ListSkeleton arrayLength={1} minWidth={20} height={20} />
-          )}
+          <div>
+            <Typography fontWeight="bold">{t('common.title')}:</Typography>
+            <Box sx={{ display: 'flex', gap: '2rem' }}>
+              {project ? (
+                <>
+                  <Link
+                    data-testid={dataTestId.registrationWizard.description.projectLink(project?.id)}
+                    href={getProjectPath(project?.id ?? '')}
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    {project?.title}
+                  </Link>
+                  <OpenInNewIcon fontSize="small" />
+                </>
+              ) : (
+                <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+              )}
+            </Box>
+          </div>
           <div>
             <Typography fontWeight="bold">{t('project.coordinating_institution')}:</Typography>
-            {project?.coordinatingInstitution && (
+            {project?.coordinatingInstitution ? (
               <Typography>{getLanguageString(project?.coordinatingInstitution.labels)}</Typography>
+            ) : (
+              <ListSkeleton arrayLength={1} minWidth={20} height={20} />
             )}
           </div>
         </Box>
@@ -224,8 +228,8 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
               </div>
               <div>
                 <Typography fontWeight="bold">{t('project.grant_id')}:</Typography>
-                {funding.identifier &&
-                  (fundingSourceIsNfr(funding.source) ? (
+                {funding.identifier ? (
+                  fundingSourceIsNfr(funding.source) ? (
                     <Box sx={{ display: 'flex', gap: '2rem', height: 'fit-content' }}>
                       <Link
                         data-testid={dataTestId.registrationWizard.description.nfrProjectLink(funding.identifier)}
@@ -238,7 +242,10 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
                     </Box>
                   ) : (
                     <Typography>{funding.identifier}</Typography>
-                  ))}
+                  )
+                ) : (
+                  <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+                )}
               </div>
             </Box>
           ))
