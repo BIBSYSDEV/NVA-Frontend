@@ -25,7 +25,6 @@ interface SupportAccordionProps {
   userIsCurator: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   refetchData: () => void;
-  isRegistrationWizard?: boolean;
 }
 
 export const SupportAccordion = ({
@@ -34,7 +33,6 @@ export const SupportAccordion = ({
   userIsCurator,
   addMessage,
   refetchData,
-  isRegistrationWizard = false,
 }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -73,14 +71,14 @@ export const SupportAccordion = ({
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{ bgcolor: 'generalSupportCase.light' }}
       elevation={3}
-      defaultExpanded={isRegistrationWizard || isPendingSupportTicket || !ownerHasReadTicket}>
+      defaultExpanded={isPendingSupportTicket || !ownerHasReadTicket}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
         {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {!isOnTasksPage && <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>}
-        {isRegistrationWizard && <Typography>{t('registration.curator_support_info')}</Typography>}
+
         {supportTicket && (
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
