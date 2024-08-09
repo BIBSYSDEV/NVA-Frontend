@@ -46,6 +46,7 @@ export const NviCorrectionList = () => {
     ...listConfig?.searchConfig,
     from: Number(searchParams.get(ResultParam.From) ?? 0),
     results: Number(searchParams.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    publicationYearSince: (new Date().getFullYear() - 1).toString(),
   };
 
   const registrationQuery = useQuery({
