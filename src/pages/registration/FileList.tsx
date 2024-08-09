@@ -25,7 +25,7 @@ import {
   isEmbargoed,
   isTypeWithFileVersionField,
   isTypeWithRrs,
-  userCanUnpublishRegistration,
+  userCanEditPublishedFile,
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
@@ -72,7 +72,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
     }
 
     if (file.type === FileType.PublishedFile) {
-      return userCanUnpublishRegistration(values) ?? false;
+      return userCanEditPublishedFile(values);
     }
 
     return true;
