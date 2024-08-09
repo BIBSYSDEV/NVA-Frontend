@@ -1376,7 +1376,7 @@
         "if_same_press_no_in_box": "Om dette er samme resultat som din registrering, må du trykke 'NEI' i denne boksen for å unngå å publisere.",
         "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel og år som din registrering."
       },
-      "error_description": "For å publisere må du rette følgende feil:",
+      "error_description": "Følgende feil må rettes opp før publisering av resultat:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",

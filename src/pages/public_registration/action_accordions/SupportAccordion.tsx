@@ -1,9 +1,11 @@
+import EditIcon from '@mui/icons-material/Edit';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { LoadingButton } from '@mui/lab';
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -11,8 +13,10 @@ import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { getFirstErrorTab, getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers';
+import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
+import { ErrorList } from '../../registration/ErrorList';
 import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {
@@ -56,6 +60,10 @@ export const SupportAccordion = ({
     }
   };
 
+  const formErrors = validateRegistrationForm(registration);
+  const registrationIsValid = Object.keys(formErrors).length === 0;
+  const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
+
   const isPendingSupportTicket = supportTicket?.status === 'New' || supportTicket?.status === 'Pending';
   const ownerHasReadTicket = supportTicket?.viewedBy.includes(supportTicket?.owner);
   const isOnTasksPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
@@ -79,7 +87,7 @@ export const SupportAccordion = ({
             {userIsCurator && isOnTasksPage && supportTicket.status !== 'Completed' && (
               <LoadingButton
                 sx={{
-                  alignSelf: 'end',
+                  alignSelf: 'center',
                   width: 'fit-content',
                   bgcolor: 'white',
                 }}
@@ -89,6 +97,23 @@ export const SupportAccordion = ({
                 {t('my_page.messages.mark_as_completed')}
               </LoadingButton>
             )}
+
+            {tabErrors && (
+              <div>
+                <Typography>{t('registration.public_page.error_description')}</Typography>
+                <ErrorList tabErrors={tabErrors} />
+                <Button
+                  variant="outlined"
+                  component={Link}
+                  size="small"
+                  to={`${getRegistrationWizardPath(registration.identifier)}?tab=${Math.max(getFirstErrorTab(tabErrors), 0)}`}
+                  endIcon={<EditIcon />}
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
+                  {t('registration.public_page.go_back_to_wizard')}
+                </Button>
+              </div>
+            )}
+
             {supportTicket.messages.length > 0 && (
               <TicketMessageList ticket={supportTicket} refetchData={refetchData} canDeleteMessage={userIsCurator} />
             )}
