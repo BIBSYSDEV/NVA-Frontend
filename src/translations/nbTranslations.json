@@ -1111,6 +1111,9 @@
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "form": {
+      "title_and_description": "Tittel og beskrivelse",
+      "keywords": "Nøkkelord",
+      "date": "Dato",
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "related_projects": "Relaterte prosjekt",
