@@ -63,10 +63,6 @@ export const ActionPanelContent = ({
 
   const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const isInRegistrationWizard =
-    window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
-  const canDeleteRegistration = userCanDeleteRegistration(registration) && isInRegistrationWizard;
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const draftRegistrationMutation = useMutation({
@@ -97,37 +93,34 @@ export const ActionPanelContent = ({
 
   return (
     <>
-      {!isInRegistrationWizard && (
-        <>
-          {(canCreateTickets || publishingRequestTickets.length > 0) && (
-            <ErrorBoundary>
-              <PublishingAccordion
-                refetchData={refetchData}
-                isLoadingData={isLoadingData}
-                registration={registration}
-                publishingRequestTickets={publishingRequestTickets}
-                addMessage={addMessage}
-              />
-            </ErrorBoundary>
-          )}
-          {(canCreateTickets || doiRequestTicket) && (
-            <ErrorBoundary>
-              {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
-                <DoiRequestAccordion
-                  refetchData={refetchData}
-                  isLoadingData={isLoadingData}
-                  registration={registration}
-                  doiRequestTicket={doiRequestTicket}
-                  userIsCurator={!!user?.isDoiCurator && canBeCuratorForThisCustomer}
-                  addMessage={addMessage}
-                />
-              )}
-            </ErrorBoundary>
-          )}
-        </>
+      {(canCreateTickets || publishingRequestTickets.length > 0) && (
+        <ErrorBoundary>
+          <PublishingAccordion
+            refetchData={refetchData}
+            isLoadingData={isLoadingData}
+            registration={registration}
+            publishingRequestTickets={publishingRequestTickets}
+            addMessage={addMessage}
+          />
+        </ErrorBoundary>
       )}
 
-      {(canCreateTickets || currentSupportTicket || isInRegistrationWizard) && (
+      {(canCreateTickets || doiRequestTicket) && (
+        <ErrorBoundary>
+          {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
+            <DoiRequestAccordion
+              refetchData={refetchData}
+              isLoadingData={isLoadingData}
+              registration={registration}
+              doiRequestTicket={doiRequestTicket}
+              userIsCurator={!!user?.isDoiCurator && canBeCuratorForThisCustomer}
+              addMessage={addMessage}
+            />
+          )}
+        </ErrorBoundary>
+      )}
+
+      {(canCreateTickets || currentSupportTicket) && (
         <ErrorBoundary>
           <SupportAccordion
             userIsCurator={!!user?.isSupportCurator && canBeCuratorForThisCustomer}
@@ -135,12 +128,11 @@ export const ActionPanelContent = ({
             supportTicket={currentSupportTicket}
             addMessage={addMessage}
             refetchData={refetchData}
-            isRegistrationWizard={isInRegistrationWizard}
           />
         </ErrorBoundary>
       )}
 
-      {canDeleteRegistration && (
+      {userCanDeleteRegistration(registration) && (
         <Box sx={{ m: '0.5rem', mt: '1rem' }}>
           <Button sx={{ bgcolor: 'white' }} fullWidth variant="outlined" onClick={() => setShowDeleteModal(true)}>
             {t('common.delete')}
