@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material';
 import { ParseKeys } from 'i18next';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
@@ -59,7 +60,11 @@ export const NviCorrectionList = () => {
 
   return (
     <section>
-      <Typography variant="h1" gutterBottom>
+      <Helmet>
+        <title>{t('tasks.correction_list')}</title>
+      </Helmet>
+
+      <Typography variant="h1" gutterBottom sx={{ mx: { xs: '0.25rem', md: 0 } }}>
         {listConfig ? t(listConfig.i18nKey) : t('tasks.nvi.correction_list_type.correction_list_duct')}
       </Typography>
 

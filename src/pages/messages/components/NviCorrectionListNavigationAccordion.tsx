@@ -35,6 +35,7 @@ export const NviCorrectionListNavigationAccordion = () => {
         <BetaFunctionality>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <SelectableButton
+              data-testid={dataTestId.tasksPage.correctionList.applicableCategoriesWithNonApplicableChannelButton}
               isSelected={selectedNviList === 'ApplicableCategoriesWithNonApplicableChannel'}
               onClick={() => {
                 if (selectedNviList !== 'ApplicableCategoriesWithNonApplicableChannel') {
@@ -49,6 +50,7 @@ export const NviCorrectionListNavigationAccordion = () => {
               {t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')}
             </SelectableButton>
             <SelectableButton
+              data-testid={dataTestId.tasksPage.correctionList.nonApplicableCategoriesWithApplicableChannelButton}
               isSelected={selectedNviList === 'NonApplicableCategoriesWithApplicableChannel'}
               onClick={() => {
                 if (selectedNviList !== 'NonApplicableCategoriesWithApplicableChannel') {
