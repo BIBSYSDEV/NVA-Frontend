@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
+import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
+import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
@@ -50,12 +50,7 @@ export const NviCorrectionList = () => {
     sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
   };
 
-  const registrationQuery = useQuery({
-    enabled: !!listConfig,
-    queryKey: ['registrations', fetchParams],
-    queryFn: ({ signal }) => fetchResults(fetchParams, signal),
-    meta: { errorMessage: t('feedback.error.search') },
-  });
+  const registrationQuery = useRegistrationSearch({ enabled: !!listConfig, params: fetchParams });
 
   return (
     <section>
