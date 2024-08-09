@@ -13,13 +13,13 @@ import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
-  LinkButton,
   LinkCreateButton,
   NavigationList,
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { ProfilePicture } from '../../components/ProfilePicture';
+import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
@@ -155,45 +155,45 @@ const MyPagePage = () => {
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
           <NavigationList>
             <Typography>{t('my_page.public_research_profile')}</Typography>
-            <LinkButton
+            <SelectableButton
               data-testid={dataTestId.myPage.researchProfileLink}
               isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
               to={UrlPathTemplate.MyPageResearchProfile}>
               {fullName}
-            </LinkButton>
+            </SelectableButton>
             <Typography>{t('my_page.my_profile.edit_research_profile')}</Typography>
-            <LinkButton
+            <SelectableButton
               data-testid={dataTestId.myPage.myProfileLink}
               isSelected={currentPath === UrlPathTemplate.MyPagePersonalia}
               to={UrlPathTemplate.MyPagePersonalia}>
               {t('my_page.my_profile.heading.personalia')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
               isSelected={currentPath === UrlPathTemplate.MyPageFieldAndBackground}
               to={UrlPathTemplate.MyPageFieldAndBackground}>
               {t('my_page.my_profile.field_and_background.field_and_background')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.myPage.myResultsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageResults}
               to={UrlPathTemplate.MyPageResults}>
               {t('my_page.my_profile.results')}
-            </LinkButton>
+            </SelectableButton>
 
-            <LinkButton
+            <SelectableButton
               data-testid={dataTestId.myPage.myProjectsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
               to={UrlPathTemplate.MyPageMyProjects}>
               {t('my_page.my_profile.projects')}
-            </LinkButton>
+            </SelectableButton>
             <Typography>{t('my_page.my_profile.overview_and_settings')}</Typography>
-            <LinkButton
+            <SelectableButton
               data-testid={dataTestId.myPage.userRolesAndHelpLink}
               isSelected={currentPath === UrlPathTemplate.MyPageUserRoleAndHelp}
               to={UrlPathTemplate.MyPageUserRoleAndHelp}>
               {t('my_page.my_profile.user_role_and_help.user_role_and_help')}
-            </LinkButton>
+            </SelectableButton>
           </NavigationList>
         </NavigationListAccordion>
 

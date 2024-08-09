@@ -16,7 +16,8 @@ import {
 import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -176,30 +177,30 @@ const HomePage = () => {
           accordionPath={UrlPathTemplate.Reports}
           dataTestId={dataTestId.startPage.reportsAccordion}>
           <NavigationList>
-            <LinkButton
+            <SelectableButton
               data-testid={dataTestId.startPage.reportsOverviewButton}
               isSelected={currentPath === UrlPathTemplate.Reports}
               to={UrlPathTemplate.Reports}>
               {t('common.overview')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.startPage.reportsNviButton}
               isSelected={currentPath === UrlPathTemplate.ReportsNvi}
               to={UrlPathTemplate.ReportsNvi}>
               {t('common.nvi')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.startPage.reportsInternationalWorkButton}
               isSelected={currentPath === UrlPathTemplate.ReportsInternationalCooperation}
               to={UrlPathTemplate.ReportsInternationalCooperation}>
               {t('search.reports.international_cooperation')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               data-testid={dataTestId.startPage.reportsClinicalTreatmentStudiesButton}
               isSelected={currentPath === UrlPathTemplate.ReportsClinicalTreatmentStudies}
               to={UrlPathTemplate.ReportsClinicalTreatmentStudies}>
               {t('search.reports.clinical_treatment_studies')}
-            </LinkButton>
+            </SelectableButton>
           </NavigationList>
         </NavigationListAccordion>
       </SideMenu>
