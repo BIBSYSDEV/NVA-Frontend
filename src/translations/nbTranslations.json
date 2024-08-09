@@ -128,6 +128,7 @@
       "nvi_publication_year": "NVI publiseringsår",
       "nvi_reporting_year": "NVI-rapporteringsår",
       "period_year": "Publiseringsår",
+      "reporting_periods": "Rapporteringsperioder",
       "update_reporting_period": "Oppdater rapporteringsperiode"
     },
     "person_register": {
@@ -295,10 +296,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -370,7 +367,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -600,7 +601,7 @@
       "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
       "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
-      "employments_missing_data": "Alle ansettelser må ha stilling og startdato",
+      "employments_missing_data": "Minst en ansettelse mangler stilling eller startdato",
       "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_email": "Ugyldig epost",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
@@ -1407,7 +1408,7 @@
         "assign_curator": "Sett kurator",
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
-        "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om resultatet som allerede er publisert er det samme som resultatet du har registrert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det. Ikke registrer og publiser et nytt resultat med endringen siden begge resultatene blir tilgjengelig i NVA.</0>",
+        "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om din registrering tilsvarer det som alt er publisert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det.</0>",
         "duplicate_title_description_introduction": "Denne registreringen har samme tittel og år som følgende publikasjon:",
         "edit_publishing_request_description": "Er det noen av filene til publiseringen som ikke skal publiseres så kan du endre publiseringsstatus på disse ved å redigere registreringen.",
         "files_will_soon_be_published": "Fil(er) vil være tilgjengelig for andre om kort tid. Vent litt før du oppdaterer siden på nytt for å se status.",
@@ -1912,9 +1913,9 @@
     "correction_list": "Retteliste",
     "dialogues_without_curator": "Dialoger uten kurator",
     "nvi": {
-      "approval_status_count": "Sjekket ({{checked}} av {{total}})",
+      "approval_status_count": "Kontrollert ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
-      "approve_nvi_candidate_description": "<0>Sjekk om forskningsresultatet skal NVI-rapporteres.</0> <0>Skal forskningsresultatet rapporteres så velger du \"Godkjenn resultat\".</0>",
+      "approve_nvi_candidate_description": "<0>Som kurator kan du godkjenne eller avvise om forskningsresultatet skal NVI-rapporteres.</0> <0>Skal forskningsresultatet rapporteres så velger du \"{{buttonText}}\".</0>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
         "correction_list_duct": "Retteliste (DUCT)",
@@ -1925,12 +1926,13 @@
       "delete_note_description": "Er du sikker på at du vil slette denne meldingen?",
       "exclude_subunits": "Ekskluder underenheter",
       "institution_nvi_status": "Status NVI-rapportering",
+      "message_description": "Trenger du avklaring, ta kontakt med andre NVI-kuratorer via meldingsfeltet.",
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
-      "nvi_status": "NVI-status",
       "previous_candidate": "Gå til forrige kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
+      "reject_nvi_candidate_description": "Skal forskningsresultatet ikke NVI-rapporteres velg \"{{buttonText}}\".",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
       "reject_nvi_candidate_modal_text": "Vennligst oppgi en detaljert begrunnelse på hvorfor du avviser. Begrunnelsen må inneholde minst 10 tegn.",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",

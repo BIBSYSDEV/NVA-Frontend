@@ -7,11 +7,8 @@ export const getProjectCoordinatingInstitutionName = (project?: CristinProject) 
   project ? getLanguageString(project.coordinatingInstitution.labels) : '';
 
 export const getProjectManagerName = (project?: CristinProject) => {
-  const projectManager = project?.contributors.find((contributor) => contributor.type === 'ProjectManager');
-  const projectManagerName = projectManager
-    ? `${projectManager.identity.firstName} ${projectManager.identity.lastName}`
-    : '';
-  return projectManagerName;
+  const projectManager = project?.contributors.find((contributor) => isProjectManager(contributor));
+  return projectManager ? `${projectManager.identity.firstName} ${projectManager.identity.lastName}` : '';
 };
 
 export const getProjectPeriod = (project?: CristinProject) => {
@@ -28,11 +25,14 @@ export const getProjectPeriod = (project?: CristinProject) => {
   return dateInterval;
 };
 
+export const isProjectManager = (contributor: ProjectContributor) =>
+  contributor.roles.some((role) => role.type === 'ProjectManager');
+
 export const getProjectManagers = (contributors: ProjectContributor[]) =>
-  contributors.filter((contributor) => contributor.type === 'ProjectManager');
+  contributors.filter((contributor) => isProjectManager(contributor));
 
 export const getProjectParticipants = (contributors: ProjectContributor[]) =>
-  contributors.filter((contributor) => contributor.type === 'ProjectParticipant');
+  contributors.filter((contributor) => contributor.roles.some((role) => role.type === 'ProjectParticipant'));
 
 export const getNfrProjectUrl = (identifier: string) => {
   const splittedIdentifier = identifier ? identifier.split('/') : []; // Some identifiers have a slash for some reason, eg: project 558223

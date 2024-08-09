@@ -38,10 +38,14 @@ const basicProjectErrorMessage = {
   }),
 };
 
-const contributorValidationSchema = Yup.object().shape({
+const roleValidationSchema = Yup.object().shape({
   type: Yup.string().required(basicProjectErrorMessage.roleRequired),
-  identity: Yup.object().shape({ id: Yup.string().required(basicProjectErrorMessage.personRequired) }),
   affiliation: Yup.object().shape({ id: Yup.string().required(basicProjectErrorMessage.institutionRequired) }),
+});
+
+const contributorValidationSchema = Yup.object().shape({
+  identity: Yup.object().shape({ id: Yup.string().required(basicProjectErrorMessage.personRequired) }),
+  roles: Yup.array().of(roleValidationSchema),
 });
 
 export const basicProjectValidationSchema = Yup.object<YupShape<SaveCristinProject>>().shape({
