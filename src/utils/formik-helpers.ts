@@ -9,6 +9,8 @@ import {
 } from '../types/associatedArtifact.types';
 import { Contributor } from '../types/contributor.types';
 import { HighestTouchedTab } from '../types/locationState.types';
+import { CristinProject } from '../types/project.types';
+import { ProjectDescriptionFieldNames } from '../types/projectFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
 import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
 import { MapRegistration } from '../types/publication_types/otherRegistration.types';
@@ -34,11 +36,11 @@ export interface TabErrors {
   [RegistrationTab.FilesAndLicenses]: string[];
 }
 
-const getErrorMessages = (
-  fieldNames: string[],
-  errors: FormikErrors<Registration>,
-  touched?: FormikTouched<Registration>
-) => {
+export interface ProjectTabErrors {
+  [RegistrationTab.Description]: string[];
+}
+
+const getErrorMessages = <T>(fieldNames: string[], errors: FormikErrors<T>, touched?: FormikTouched<T>) => {
   if (!Object.keys(errors).length || !fieldNames.length) {
     return [];
   }
@@ -52,8 +54,7 @@ const getErrorMessages = (
   const errorMessages = errorFieldNames.map((errorFieldName) => getIn(errors, errorFieldName));
   // Keep only messages with type string, since they cannot be displayed properly otherwise
   const filteredErrorMessages = errorMessages.filter((errorMessage) => typeof errorMessage === 'string');
-  const uniqueErrorMessages = [...new Set(filteredErrorMessages)];
-  return uniqueErrorMessages;
+  return [...new Set(filteredErrorMessages)];
 };
 
 export const getTabErrors = (
@@ -70,6 +71,18 @@ export const getTabErrors = (
       touched
     ),
     [RegistrationTab.FilesAndLicenses]: getErrorMessages(getAllFileFields(values.associatedArtifacts), errors, touched),
+  };
+
+  return tabErrors;
+};
+
+export const getProjectTabErrors = (errors: FormikErrors<CristinProject>, touched?: FormikTouched<CristinProject>) => {
+  const tabErrors: ProjectTabErrors = {
+    [RegistrationTab.Description]: getErrorMessages<CristinProject>(
+      Object.values(ProjectDescriptionFieldNames),
+      errors,
+      touched
+    ),
   };
 
   return tabErrors;

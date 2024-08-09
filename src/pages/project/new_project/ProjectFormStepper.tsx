@@ -1,8 +1,11 @@
 import { Step, StepButton, StepLabel, Stepper } from '@mui/material';
+import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ProjectTab } from '../../../types/project.types';
+import { CristinProject, ProjectTab } from '../../../types/project.types';
+import { RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getProjectTabErrors } from '../../../utils/formik-helpers';
 
 interface ProjectFormStepperProps {
   setTabNumber: (newTab: ProjectTab) => void;
@@ -11,8 +14,14 @@ interface ProjectFormStepperProps {
 
 export const ProjectFormStepper = ({ tabNumber, setTabNumber }: ProjectFormStepperProps) => {
   const { t } = useTranslation();
-  const error = false;
+  const { errors, touched } = useFormikContext<CristinProject>();
   const [maxVisitedTab, setMaxVisitedTab] = useState(ProjectTab.Description);
+
+  const tabErrors = getProjectTabErrors(errors, touched);
+  const descriptionTabHasError = tabErrors[RegistrationTab.Description].length > 0;
+  const detailTabHasError = false;
+  const contributorTabHasError = false;
+  const connectionTabHasError = false;
 
   const onClickStep = (stepNumber: ProjectTab) => {
     setTabNumber(stepNumber);
@@ -27,7 +36,9 @@ export const ProjectFormStepper = ({ tabNumber, setTabNumber }: ProjectFormStepp
         <StepButton
           data-testid={dataTestId.projectWizard.stepper.projectDescriptionStepButton}
           onClick={() => onClickStep(ProjectTab.Description)}>
-          <StepLabel error={error} data-testid={error ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
+          <StepLabel
+            error={descriptionTabHasError}
+            data-testid={descriptionTabHasError ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
             {t('project.heading.description')}
           </StepLabel>
         </StepButton>
@@ -36,7 +47,9 @@ export const ProjectFormStepper = ({ tabNumber, setTabNumber }: ProjectFormStepp
         <StepButton
           data-testid={dataTestId.projectWizard.stepper.projectDetailsStepButton}
           onClick={() => onClickStep(ProjectTab.Details)}>
-          <StepLabel error={error} data-testid={error ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
+          <StepLabel
+            error={detailTabHasError}
+            data-testid={detailTabHasError ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
             {t('project.heading.details')}
           </StepLabel>
         </StepButton>
@@ -45,7 +58,9 @@ export const ProjectFormStepper = ({ tabNumber, setTabNumber }: ProjectFormStepp
         <StepButton
           data-testid={dataTestId.projectWizard.stepper.projectContributorsStepButton}
           onClick={() => onClickStep(ProjectTab.Contributors)}>
-          <StepLabel error={error} data-testid={error ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
+          <StepLabel
+            error={contributorTabHasError}
+            data-testid={contributorTabHasError ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
             {t('project.heading.project_participants')}
           </StepLabel>
         </StepButton>
@@ -54,7 +69,9 @@ export const ProjectFormStepper = ({ tabNumber, setTabNumber }: ProjectFormStepp
         <StepButton
           data-testid={dataTestId.projectWizard.stepper.projectConnectionsStepButton}
           onClick={() => onClickStep(ProjectTab.Connections)}>
-          <StepLabel error={error} data-testid={error ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
+          <StepLabel
+            error={connectionTabHasError}
+            data-testid={connectionTabHasError ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
             {t('project.heading.connections')}
           </StepLabel>
         </StepButton>
