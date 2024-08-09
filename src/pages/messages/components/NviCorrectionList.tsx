@@ -16,18 +16,21 @@ export type CorrectionListId =
 type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
     i18nKey: ParseKeys;
-    searchConfig: FetchResultsParams;
+    queryParams: FetchResultsParams;
   };
 };
 
 const correctionListConfig: CorrectionListSearchConfig = {
   ApplicableCategoriesWithNonApplicableChannel: {
     i18nKey: 'tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel',
-    searchConfig: { categoryShould: nviApplicableTypes, scientificValue: ScientificValueLevels.LevelZero },
+    queryParams: {
+      categoryShould: nviApplicableTypes,
+      scientificValue: ScientificValueLevels.LevelZero,
+    },
   },
   NonApplicableCategoriesWithApplicableChannel: {
     i18nKey: 'tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel',
-    searchConfig: {
+    queryParams: {
       categoryNot: nviApplicableTypes,
       scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
     },
@@ -44,7 +47,7 @@ export const NviCorrectionList = () => {
   const listConfig = listId && correctionListConfig[listId];
 
   const fetchParams: FetchResultsParams = {
-    ...listConfig?.searchConfig,
+    ...listConfig?.queryParams,
     from: Number(searchParams.get(ResultParam.From) ?? 0),
     results: Number(searchParams.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     publicationYearSince: (new Date().getFullYear() - 1).toString(),
