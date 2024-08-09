@@ -4,7 +4,6 @@ import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
-import { allPublicationInstanceTypes } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
@@ -27,7 +26,7 @@ const correctionListConfig: CorrectionListSearchConfig = {
   '2': {
     i18nKey: 'tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel',
     searchConfig: {
-      categoryShould: allPublicationInstanceTypes.filter((type) => !nviApplicableTypes.includes(type)),
+      categoryNot: nviApplicableTypes,
       scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
     },
   },
