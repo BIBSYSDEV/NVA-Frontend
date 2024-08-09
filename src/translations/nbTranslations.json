@@ -1134,6 +1134,7 @@
     "popular_science_summary_norwegian": "$t(project.popular_science_summary) (norsk)",
     "project": "Prosjekt",
     "project_category": "Prosjektkategori",
+    "project_has_no_funding": "Prosjektet har ingen finansiering",
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
@@ -1261,6 +1262,7 @@
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
+      "add_project_helper_text": "Søk opp og velg prosjektet i søkefeltet for å knytte resultatet til et prosjekt som allerede er registrert i NVA.",
       "alternative_abstract": "Alternativt sammendrag",
       "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
@@ -1275,6 +1277,8 @@
         "funding_id": "Tilskudds-ID",
         "funding_name": "Tilskuddsnavn",
         "funding_sum": "Sum",
+        "funding_without_project": "Finansiering uten prosjekt",
+        "funding_without_project_description": "<0>Mottar forskningen finansiering som ikke er tilknyttet et prosjekt så trykk på \"Legg til ny finansiering\" og deretter søk etter finansiør.</0> <0>Ikke registrer finsiering som er tilknyttet et prosjekt. Finansiering tilknyttet prosjekt legges til når du legger til prosjekt lengre opp på siden. Hvis ikke informasjonen om finansiering vises så må dette registreres på prosjektet i NVA.</0>",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
         "remove_funding": "Fjern finansiering"
@@ -1283,6 +1287,7 @@
       "hrcs_categories": "HRCS-kategorier",
       "keywords": "Nøkkelord",
       "keywords_helper": "Skill nøkkelord med komma eller enter",
+      "new_project_helper_text": "<0><0>Finner du ikke prosjektet?</0> Opprett nytt prosjekt i NVA</0>",
       "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
       "primary_language": "Hovedspråk for innhold",
       "project_association": "Prosjekttilknytning",
