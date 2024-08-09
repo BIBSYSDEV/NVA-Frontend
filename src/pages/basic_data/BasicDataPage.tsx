@@ -10,12 +10,12 @@ import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
-  LinkButton,
   LinkCreateButton,
   NavigationList,
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
+import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
@@ -87,12 +87,12 @@ const BasicDataPage = () => {
             accordionPath={UrlPathTemplate.BasicDataPersonRegister}
             dataTestId={dataTestId.basicData.personRegisterAccordion}>
             <NavigationList>
-              <LinkButton
+              <SelectableButton
                 data-testid={dataTestId.basicData.personRegisterLink}
                 isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
                 to={UrlPathTemplate.BasicDataPersonRegister}>
                 {t('basic_data.person_register.person_register')}
-              </LinkButton>
+              </SelectableButton>
             </NavigationList>
 
             <Divider sx={{ mt: '0.5rem' }} />
@@ -116,12 +116,12 @@ const BasicDataPage = () => {
               accordionPath={UrlPathTemplate.BasicDataInstitutions}
               dataTestId={dataTestId.basicData.institutionsAccordion}>
               <NavigationList>
-                <LinkButton
+                <SelectableButton
                   data-testid={dataTestId.basicData.adminInstitutionsLink}
                   isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
                   to={UrlPathTemplate.BasicDataInstitutions}>
                   {t('common.institutions')}
-                </LinkButton>
+                </SelectableButton>
               </NavigationList>
               <Divider sx={{ mt: '0.5rem' }} />
               <LinkCreateButton
@@ -139,9 +139,11 @@ const BasicDataPage = () => {
               accordionPath={UrlPathTemplate.BasicDataNvi}
               dataTestId={dataTestId.basicData.nviPeriodsLink}>
               <NavigationList>
-                <LinkButton isSelected={currentPath === UrlPathTemplate.BasicDataNvi} to={UrlPathTemplate.BasicDataNvi}>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.BasicDataNvi}
+                  to={UrlPathTemplate.BasicDataNvi}>
                   {t('basic_data.nvi.reporting_periods')}
-                </LinkButton>
+                </SelectableButton>
               </NavigationList>
 
               <Divider sx={{ mt: '0.5rem' }} />

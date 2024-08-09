@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import { fetchResource } from '../../api/commonApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import NotFound from '../../pages/errorpages/NotFound';
@@ -65,48 +66,48 @@ const InstitutionPage = () => {
           accordionPath={UrlPathTemplate.InstitutionOverview}
           defaultPath={UrlPathTemplate.InstitutionOverviewPage}>
           <NavigationList>
-            <LinkButton
+            <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionOverviewPage}
               data-testid={dataTestId.editor.institutionsNameLinkButton}
               to={UrlPathTemplate.InstitutionOverviewPage}>
               {t('editor.institution.institution_profile')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionOrganizationOverview}
               data-testid={dataTestId.editor.organizationOverviewLinkButton}
               to={UrlPathTemplate.InstitutionOrganizationOverview}>
               {t('editor.organization_overview')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionCuratorsOverview}
               data-testid={dataTestId.editor.curatorsOverviewLinkButton}
               to={UrlPathTemplate.InstitutionCuratorsOverview}>
               {t('editor.curators.curators')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionDoi}
               data-testid={dataTestId.editor.doiLinkButton}
               to={UrlPathTemplate.InstitutionDoi}>
               {t('common.doi_long')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategyOverview}
               data-testid={dataTestId.editor.publishStrategyOverviewLinkButton}
               to={UrlPathTemplate.InstitutionPublishStrategyOverview}>
               {t('editor.publish_strategy.publish_strategy')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionVocabularyOverview}
               data-testid={dataTestId.editor.vocabularyOverviewLinkButton}
               to={UrlPathTemplate.InstitutionVocabularyOverview}>
               {t('editor.vocabulary')}
-            </LinkButton>
-            <LinkButton
+            </SelectableButton>
+            <SelectableButton
               isSelected={currentPath === UrlPathTemplate.InstitutionCategoriesOverview}
               data-testid={dataTestId.editor.categoriesLinkButton}
               to={UrlPathTemplate.InstitutionCategoriesOverview}>
               {t('editor.categories_with_files')}
-            </LinkButton>
+            </SelectableButton>
           </NavigationList>
         </NavigationListAccordion>
         {isEditor && (
@@ -117,36 +118,36 @@ const InstitutionPage = () => {
             accordionPath={UrlPathTemplate.InstitutionSettings}
             defaultPath={UrlPathTemplate.InstitutionCurators}>
             <NavigationList>
-              <LinkButton
+              <SelectableButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
                 data-testid={dataTestId.editor.curatorsSettingsLinkButton}
                 to={UrlPathTemplate.InstitutionCurators}>
                 {t('editor.curators.administer_curators')}
-              </LinkButton>
-              <LinkButton
+              </SelectableButton>
+              <SelectableButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategy}
                 data-testid={dataTestId.editor.publishStrategyLinkButton}
                 to={UrlPathTemplate.InstitutionPublishStrategy}>
                 {t('editor.publish_strategy.publish_strategy')}
-              </LinkButton>
-              <LinkButton
+              </SelectableButton>
+              <SelectableButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionVocabulary}
                 data-testid={dataTestId.editor.vocabularyLinkButton}
                 to={UrlPathTemplate.InstitutionVocabulary}>
                 {t('editor.vocabulary')}
-              </LinkButton>
-              <LinkButton
+              </SelectableButton>
+              <SelectableButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionCategories}
                 data-testid={dataTestId.editor.categoriesLinkButton}
                 to={UrlPathTemplate.InstitutionCategories}>
                 {t('editor.categories_with_files')}
-              </LinkButton>
-              <LinkButton
+              </SelectableButton>
+              <SelectableButton
                 isSelected={currentPath === UrlPathTemplate.InstitutionSupport}
                 data-testid={dataTestId.editor.supportLinkButton}
                 to={UrlPathTemplate.InstitutionSupport}>
                 {t('editor.institution.change_institution_support')}
-              </LinkButton>
+              </SelectableButton>
             </NavigationList>
           </NavigationListAccordion>
         )}

@@ -12,7 +12,7 @@ import { FetchTicketsParams, ResultParam, TicketSearchParam, fetchCustomerTicket
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
@@ -33,9 +33,8 @@ import { NviMenuContent } from './components/NviMenuContent';
 import { NviStatusPage } from './components/NviStatusPage';
 import { TicketList } from './components/TicketList';
 
-export const StyledSearchModeButton = styled(LinkButton)({
+export const StyledSearchModeButton = styled(SelectableButton)({
   borderRadius: '1.5rem',
-  textTransform: 'none',
 });
 
 const TasksPage = () => {
