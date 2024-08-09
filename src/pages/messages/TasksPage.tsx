@@ -12,13 +12,8 @@ import { FetchTicketsParams, ResultParam, TicketSearchParam, fetchCustomerTicket
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import {
-  LinkButton,
-  NavigationList,
-  SelectableButton,
-  SideNavHeader,
-  StyledPageWithSideMenu,
-} from '../../components/PageWithSideMenu';
+import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
