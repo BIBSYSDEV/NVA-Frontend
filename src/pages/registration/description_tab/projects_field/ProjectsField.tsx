@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { fetchProject, searchForProjects } from '../../../../api/cristinApi';
+import { searchForProjects } from '../../../../api/cristinApi';
 import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
@@ -19,6 +19,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { fundingSourceIsNfr, getNfrProjectUrl } from './projectHelpers';
 import { getProjectPath } from '../../../../utils/urlPaths';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
+import { useFetchProjectQuery } from '../../../../utils/hooks/useFetchProjectQuery';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
@@ -168,13 +169,7 @@ interface ProjectItemProps {
 
 const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
   const { t } = useTranslation();
-  const projectQuery = useQuery({
-    enabled: !!projectId,
-    queryKey: ['project', projectId],
-    queryFn: () => fetchProject(projectId),
-  });
-
-  const project = projectQuery.data;
+  const project = useFetchProjectQuery(projectId);
 
   return (
     <Box
