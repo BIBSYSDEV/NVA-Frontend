@@ -58,6 +58,7 @@ export const SupportAccordion = ({
 
   const isPendingSupportTicket = supportTicket?.status === 'New' || supportTicket?.status === 'Pending';
   const ownerHasReadTicket = supportTicket?.viewedBy.includes(supportTicket?.owner);
+  const isOnTasksPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   return (
     <Accordion
@@ -70,26 +71,24 @@ export const SupportAccordion = ({
         {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>
+        {!isOnTasksPage && <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>}
         {isRegistrationWizard && <Typography>{t('registration.curator_support_info')}</Typography>}
         {supportTicket && (
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
-            {userIsCurator &&
-              window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) &&
-              supportTicket.status !== 'Completed' && (
-                <LoadingButton
-                  sx={{
-                    alignSelf: 'end',
-                    width: 'fit-content',
-                    bgcolor: 'white',
-                  }}
-                  loading={ticketMutation.isPending}
-                  variant="outlined"
-                  onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
-                  {t('my_page.messages.mark_as_completed')}
-                </LoadingButton>
-              )}
+            {userIsCurator && isOnTasksPage && supportTicket.status !== 'Completed' && (
+              <LoadingButton
+                sx={{
+                  alignSelf: 'end',
+                  width: 'fit-content',
+                  bgcolor: 'white',
+                }}
+                loading={ticketMutation.isPending}
+                variant="outlined"
+                onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
+                {t('my_page.messages.mark_as_completed')}
+              </LoadingButton>
+            )}
             {supportTicket.messages.length > 0 && (
               <TicketMessageList ticket={supportTicket} refetchData={refetchData} canDeleteMessage={userIsCurator} />
             )}
