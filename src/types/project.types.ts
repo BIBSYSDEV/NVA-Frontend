@@ -3,6 +3,13 @@ import { AggregationValue, LanguageString } from './common.types';
 import { Organization } from './organization.types';
 import { Funding } from './registration.types';
 
+export enum ProjectTab {
+  Description = 0,
+  Details = 1,
+  Contributors = 2,
+  Connections = 3,
+}
+
 export interface TypedLabel {
   type: string;
   label: LanguageString;

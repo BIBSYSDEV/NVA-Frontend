@@ -296,10 +296,10 @@ export const searchForProjects = async (results: number, page: number, params?: 
 };
 
 export const fetchProject = async (projectId: string) => {
-  const fetchProjectRespone = await apiRequest2<CristinProject>({
+  const fetchProjectResponse = await apiRequest2<CristinProject>({
     url: projectId,
   });
-  return fetchProjectRespone.data;
+  return fetchProjectResponse.data;
 };
 
 export const uploadProfilePicture = async (cristinId: string, base64String: string) =>

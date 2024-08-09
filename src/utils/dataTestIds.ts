@@ -215,6 +215,15 @@ export const dataTestId = {
     resultsAccordion: 'results-accordion',
     scientificSummaryAccordion: 'scientific-summary-accordion',
   },
+  projectWizard: {
+    stepper: {
+      projectDescriptionStepButton: 'nav-tabpanel-project-description',
+      projectDetailsStepButton: 'nav-tabpanel-project-details',
+      projectErrorStep: 'project-error-tab',
+      projectContributorsStepButton: 'nav-tabpanel-project-contributors',
+      projectConnectionsStepButton: 'nav-tabpanel-project-connections',
+    },
+  },
   registrationLandingPage: {
     abstractAccordion: 'abstract-accordion',
     addLinkOrFilesButton: 'add-link-or-files-button',
