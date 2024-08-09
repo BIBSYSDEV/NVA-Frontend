@@ -35,10 +35,13 @@ export const NviCorrectionListNavigationAccordion = () => {
         <BetaFunctionality>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <SelectableButton
-              isSelected={selectedNviList === '1'}
+              isSelected={selectedNviList === 'ApplicableCategoriesWithNonApplicableChannel'}
               onClick={() => {
-                if (selectedNviList !== '1') {
-                  searchParams.set(nviCorrectionListQueryKey, '1' satisfies CorrectionListId);
+                if (selectedNviList !== 'ApplicableCategoriesWithNonApplicableChannel') {
+                  searchParams.set(
+                    nviCorrectionListQueryKey,
+                    'ApplicableCategoriesWithNonApplicableChannel' satisfies CorrectionListId
+                  );
                   searchParams.delete(ResultParam.From);
                   history.push({ search: searchParams.toString() });
                 }
@@ -46,10 +49,13 @@ export const NviCorrectionListNavigationAccordion = () => {
               {t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')}
             </SelectableButton>
             <SelectableButton
-              isSelected={selectedNviList === '2'}
+              isSelected={selectedNviList === 'NonApplicableCategoriesWithApplicableChannel'}
               onClick={() => {
-                if (selectedNviList !== '2') {
-                  searchParams.set(nviCorrectionListQueryKey, '2' satisfies CorrectionListId);
+                if (selectedNviList !== 'NonApplicableCategoriesWithApplicableChannel') {
+                  searchParams.set(
+                    nviCorrectionListQueryKey,
+                    'NonApplicableCategoriesWithApplicableChannel' satisfies CorrectionListId
+                  );
                   searchParams.delete(ResultParam.From);
                   history.push({ search: searchParams.toString() });
                 }

@@ -9,7 +9,9 @@ import { nviApplicableTypes } from '../../../utils/registration-helpers';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 
-export type CorrectionListId = '1' | '2';
+export type CorrectionListId =
+  | 'ApplicableCategoriesWithNonApplicableChannel'
+  | 'NonApplicableCategoriesWithApplicableChannel';
 
 type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
@@ -19,11 +21,11 @@ type CorrectionListSearchConfig = {
 };
 
 const correctionListConfig: CorrectionListSearchConfig = {
-  '1': {
+  ApplicableCategoriesWithNonApplicableChannel: {
     i18nKey: 'tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel',
     searchConfig: { categoryShould: nviApplicableTypes, scientificValue: ScientificValueLevels.LevelZero },
   },
-  '2': {
+  NonApplicableCategoriesWithApplicableChannel: {
     i18nKey: 'tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel',
     searchConfig: {
       categoryNot: nviApplicableTypes,
