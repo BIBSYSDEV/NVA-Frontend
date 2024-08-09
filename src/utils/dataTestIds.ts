@@ -587,8 +587,10 @@ export const dataTestId = {
   tasksPage: {
     areaOfResponsibilitySelector: 'area-of-responsibility-selector',
     correctionList: {
+      applicableCategoriesWithNonApplicableChannelButton: 'applicable-categories-with-non-applicable-channel-button',
       correctionListAccordion: 'correction-list-accordion',
       correctionListRadioButton: 'correction-list-radio-button',
+      nonApplicableCategoriesWithApplicableChannelButton: 'non-applicable-categories-with-applicable-channel-button',
     },
     curatorSelector: 'curator-selector',
     dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',

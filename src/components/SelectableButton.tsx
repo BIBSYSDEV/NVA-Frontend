@@ -1,35 +1,21 @@
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import { Button, ButtonProps } from '@mui/material';
+import { Link, LinkProps } from 'react-router-dom';
 
-interface SelectableButtonProps extends ButtonProps {
-  isSelected: boolean;
-  showCheckbox?: boolean;
+interface SelectableButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
+  isSelected?: boolean;
 }
 
-export const SelectableButton = ({
-  isSelected,
-  showCheckbox = false,
-  children,
-  startIcon,
-  ...rest
-}: SelectableButtonProps) => (
+export const SelectableButton = ({ isSelected, sx, ...rest }: SelectableButtonProps) => (
   <Button
-    {...rest}
-    startIcon={showCheckbox ? isSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon /> : startIcon}
-    variant={isSelected ? 'contained' : 'outlined'}
     sx={{
-      justifyContent: 'start',
-      color: 'common.black',
-      bgcolor: isSelected ? undefined : 'background.default',
-      borderColor: `${rest.color}.main`,
       textTransform: 'none',
-
-      '.MuiButton-endIcon': {
-        ml: 'auto',
-        mr: '0.5rem',
-      },
-    }}>
-    {children}
-  </Button>
+      bgcolor: isSelected ? 'primary.main' : 'background.default',
+      justifyContent: 'start',
+      boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.20)',
+      ...sx,
+    }}
+    variant={isSelected ? 'contained' : 'outlined'}
+    LinkComponent={rest.to ? Link : undefined}
+    {...rest}
+  />
 );

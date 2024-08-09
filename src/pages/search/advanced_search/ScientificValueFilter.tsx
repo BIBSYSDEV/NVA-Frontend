@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 
-enum ScientificValueLevels {
+export enum ScientificValueLevels {
   LevelZero = 'Unassigned,LevelZero',
   LevelOne = 'LevelOne',
   LevelTwo = 'LevelTwo',

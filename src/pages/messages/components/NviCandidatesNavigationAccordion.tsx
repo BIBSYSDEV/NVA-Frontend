@@ -32,7 +32,7 @@ const StyledNviStatusBox = styled(Box)({
   borderRadius: '0.25rem',
 });
 
-export const NviMenuContent = () => {
+export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
   const history = useHistory<PreviousSearchLocationState>();
   const searchParams = new URLSearchParams(history.location.search);
