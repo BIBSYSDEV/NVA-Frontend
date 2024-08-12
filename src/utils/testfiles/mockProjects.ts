@@ -4,7 +4,7 @@ import { CristinProject } from '../../types/project.types';
 export const mockProject: CristinProject = {
   id: 'https://api.dev.nva.aws.unit.no/cristin/project/1',
   type: 'Project',
-  identifier: [
+  identifiers: [
     {
       type: 'CristinIdentifier',
       value: '1',
@@ -125,7 +125,7 @@ const mockProjects: CristinProject[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414343',
     type: 'Project',
-    identifier: [
+    identifiers: [
       {
         type: 'CristinIdentifier',
         value: '414343',
@@ -203,7 +203,7 @@ const mockProjects: CristinProject[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414392',
     type: 'Project',
-    identifier: [
+    identifiers: [
       {
         type: 'CristinIdentifier',
         value: '414392',
@@ -281,7 +281,7 @@ const mockProjects: CristinProject[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414451',
     type: 'Project',
-    identifier: [
+    identifiers: [
       {
         type: 'CristinIdentifier',
         value: '414451',
@@ -399,7 +399,7 @@ const mockProjects: CristinProject[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414803',
     type: 'Project',
-    identifier: [
+    identifiers: [
       {
         type: 'CristinIdentifier',
         value: '414803',

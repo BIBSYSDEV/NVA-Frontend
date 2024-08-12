@@ -51,6 +51,10 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
     staleTime: Infinity,
   });
 
+  if (!journalId) {
+    return null;
+  }
+
   const journalScientificValue = journalQuery.data?.scientificValue;
 
   return <NviStatus scientificValue={journalScientificValue} />;
@@ -77,6 +81,10 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
     staleTime: Infinity,
   });
 
+  if (!publisherId && !seriesId) {
+    return null;
+  }
+
   const publisherScientificValue = publisherQuery.data?.scientificValue;
   const seriesScientificValue = seriesQuery.data?.scientificValue;
 
@@ -96,7 +104,7 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
   const containerId = registration.entityDescription.reference?.publicationContext.id ?? '';
 
   const containerQuery = useQuery({
-    queryKey: [containerId],
+    queryKey: ['registration', containerId],
     enabled: !!containerId,
     queryFn: () => fetchProtectedResource<BookRegistration>(containerId),
     meta: { errorMessage: t('feedback.error.get_registration') },
@@ -120,6 +128,10 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
+
+  if (!containerId) {
+    return null;
+  }
 
   const publisherScientificValue = publisherQuery.data?.scientificValue;
   const seriesScientificValue = seriesQuery.data?.scientificValue;

@@ -1112,6 +1112,9 @@
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "form": {
+      "title_and_description": "Tittel og beskrivelse",
+      "keywords": "Nøkkelord",
+      "date": "Dato",
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "related_projects": "Relaterte prosjekt",
@@ -1120,6 +1123,12 @@
       "search_for_person": "Søk etter person",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt."
+    },
+    "heading": {
+      "description": "$t(common.description)",
+      "details": "Detaljer",
+      "project_participants": "Prosjektdeltakere",
+      "connections": "Koblinger"
     },
     "grant_id": "Tilskudds-ID",
     "keywords": "Nøkkelord",
@@ -1134,6 +1143,7 @@
     "popular_science_summary_norwegian": "$t(project.popular_science_summary) (norsk)",
     "project": "Prosjekt",
     "project_category": "Prosjektkategori",
+    "project_id": "Prosjekt-ID",
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",

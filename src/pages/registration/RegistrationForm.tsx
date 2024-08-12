@@ -17,7 +17,7 @@ import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
-import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers';
+import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
