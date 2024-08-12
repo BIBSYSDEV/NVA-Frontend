@@ -255,6 +255,7 @@ const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
       </Box>
       <IconButton
         size="small"
+        sx={{ alignSelf: 'center' }}
         color="primary"
         onClick={() => removeProject(projectId)}
         title={t('common.remove')}
