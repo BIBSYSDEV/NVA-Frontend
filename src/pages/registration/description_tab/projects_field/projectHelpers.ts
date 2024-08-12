@@ -6,11 +6,6 @@ import { getLanguageString } from '../../../../utils/translation-helpers';
 export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
   project ? getLanguageString(project.coordinatingInstitution.labels) : '';
 
-export const getProjectManagerName = (project?: CristinProject) => {
-  const projectManager = project?.contributors.find((contributor) => isProjectManager(contributor));
-  return projectManager ? `${projectManager.identity.firstName} ${projectManager.identity.lastName}` : '';
-};
-
 export const getProjectPeriod = (project?: CristinProject) => {
   if (!project) {
     return '';

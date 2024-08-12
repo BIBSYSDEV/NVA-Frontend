@@ -207,6 +207,16 @@ export const dataTestId = {
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
   },
+  projectForm: {
+    startDateField: 'project-start-date-field',
+    endDateField: 'project-end-date-field',
+    keywordsField: 'keywords-field',
+    popularScienceSummaryEnglishField: 'popular-science-summary-english-field',
+    popularScienceSummaryNorwegianField: 'popular-science-summary-norwegian-field',
+    scientificSummaryEnglishField: 'scientific-summary-english-field',
+    scientificSummaryNorwegianField: 'scientific-summary-norwegian-field',
+    titleField: 'project-title-field',
+  },
   projectLandingPage: {
     editProjectButton: 'edit-project-button',
     generalInfoBox: 'general-info',
@@ -214,6 +224,15 @@ export const dataTestId = {
     relatedProjectsAccordion: 'related-projects-accordion',
     resultsAccordion: 'results-accordion',
     scientificSummaryAccordion: 'scientific-summary-accordion',
+  },
+  projectWizard: {
+    stepper: {
+      projectDescriptionStepButton: 'nav-tabpanel-project-description',
+      projectDetailsStepButton: 'nav-tabpanel-project-details',
+      projectErrorStep: 'project-error-tab',
+      projectContributorsStepButton: 'nav-tabpanel-project-contributors',
+      projectConnectionsStepButton: 'nav-tabpanel-project-connections',
+    },
   },
   registrationLandingPage: {
     abstractAccordion: 'abstract-accordion',

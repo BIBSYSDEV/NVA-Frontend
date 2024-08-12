@@ -326,7 +326,9 @@ export const AudioVisualPublicationModal = ({
                       onClick={() => push(emptyMusicTrack)}
                       startIcon={<AddIcon />}
                       data-testid={dataTestId.registrationWizard.resourceType.audioVideoAddTrack}>
-                      {t('common.add')} {t('registration.resource_type.artistic.content_track').toLocaleLowerCase()}
+                      {t('common.add_custom', {
+                        name: t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
+                      })}
                     </Button>
                     {!!touched.trackList && typeof errors.trackList === 'string' && (
                       <FormHelperText error>

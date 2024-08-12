@@ -237,7 +237,7 @@ export const AddCuratorForm = ({
               disabled={
                 (!dirty && addedViewingScopes.length === 0) || (!('username' in values) && values.roles.length === 1)
               }>
-              {t('common.add')}
+              {t('editor.curators.add_curator')}
             </LoadingButton>
           </DialogActions>
         </Form>

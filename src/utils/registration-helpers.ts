@@ -643,16 +643,19 @@ export const getOutputName = (item: OutputItem): string => {
 };
 
 export const userCanEditRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('update');
+  registration.allowedOperations?.includes('update') ?? false;
 
 export const userCanUnpublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('unpublish');
+  registration.allowedOperations?.includes('unpublish') ?? false;
 
 export const userCanPublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('ticket/publish');
+  registration.allowedOperations?.includes('ticket/publish') ?? false;
 
 export const userCanDeleteRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('delete');
+  registration.allowedOperations?.includes('delete') ?? false;
+
+export const userCanEditPublishedFile = (registration: Registration) =>
+  registration.allowedOperations?.includes('update-including-files') ?? false;
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
