@@ -248,25 +248,11 @@ export const PublishingAccordion = ({
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
         {tabErrors && !isUnpublishedOrDeleted && (
-          <>
-            <RegistrationErrorActions
-              tabErrors={tabErrors}
-              registrationIdentifier={registration.identifier}
-              sx={{ mb: lastPublishingRequest ? '1rem' : undefined }}
-            />
-            {/* <Typography>{t('registration.public_page.error_description')}</Typography>
-            <ErrorList tabErrors={tabErrors} />
-            <Button
-              variant="outlined"
-              component={RouterLink}
-              size="small"
-              sx={{ mb: lastPublishingRequest ? '1rem' : undefined }}
-              to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
-              endIcon={<EditIcon />}
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
-              {t('registration.public_page.go_back_to_wizard')}
-            </Button> */}
-          </>
+          <RegistrationErrorActions
+            tabErrors={tabErrors}
+            registrationIdentifier={registration.identifier}
+            sx={{ mb: lastPublishingRequest ? '1rem' : undefined }}
+          />
         )}
 
         {/* Show approval history */}
