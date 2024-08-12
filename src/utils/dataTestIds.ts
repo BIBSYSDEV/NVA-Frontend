@@ -207,6 +207,16 @@ export const dataTestId = {
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
   },
+  projectForm: {
+    startDateField: 'project-start-date-field',
+    endDateField: 'project-end-date-field',
+    keywordsField: 'keywords-field',
+    popularScienceSummaryEnglishField: 'popular-science-summary-english-field',
+    popularScienceSummaryNorwegianField: 'popular-science-summary-norwegian-field',
+    scientificSummaryEnglishField: 'scientific-summary-english-field',
+    scientificSummaryNorwegianField: 'scientific-summary-norwegian-field',
+    titleField: 'project-title-field',
+  },
   projectLandingPage: {
     editProjectButton: 'edit-project-button',
     generalInfoBox: 'general-info',

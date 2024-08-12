@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { CristinProject, ProjectTab } from '../../../types/project.types';
 import { RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getProjectTabErrors } from '../../../utils/formik-helpers';
+import { getProjectTabErrors } from '../../../utils/formik-helpers/project-form-helpers';
 
 interface ProjectFormStepperProps {
   setTabNumber: (newTab: ProjectTab) => void;

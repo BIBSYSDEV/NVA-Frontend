@@ -36,7 +36,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField
                 {...field}
-                data-testid={dataTestId.registrationWizard.description.projectForm.titleField}
+                data-testid={dataTestId.projectForm.titleField}
                 label={t('common.title')}
                 disabled={thisIsRekProject}
                 required
@@ -56,7 +56,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                 fullWidth
                 multiline
                 rows="4"
-                data-testid={dataTestId.registrationWizard.description.projectForm.scentificSummaryNorwegianField}
+                data-testid={dataTestId.projectForm.scientificSummaryNorwegianField}
                 label={t('project.scientific_summary_norwegian')}
               />
             )}
@@ -70,7 +70,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                 fullWidth
                 multiline
                 rows="4"
-                data-testid={dataTestId.registrationWizard.description.projectForm.scentificSummaryEnglishField}
+                data-testid={dataTestId.projectForm.scientificSummaryEnglishField}
                 label={t('project.scientific_summary_english')}
               />
             )}
@@ -84,7 +84,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                 fullWidth
                 multiline
                 rows="3"
-                data-testid={dataTestId.registrationWizard.description.projectForm.popularScienceSummaryNorwegianField}
+                data-testid={dataTestId.projectForm.popularScienceSummaryNorwegianField}
                 label={t('project.popular_science_summary_norwegian')}
               />
             )}
@@ -98,7 +98,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                 fullWidth
                 multiline
                 rows="3"
-                data-testid={dataTestId.registrationWizard.description.projectForm.popularScienceSummaryEnglishField}
+                data-testid={dataTestId.projectForm.popularScienceSummaryEnglishField}
                 label={t('project.popular_science_summary_english')}
               />
             )}
@@ -111,7 +111,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
               <Autocomplete
                 options={cristinKeywords}
                 multiple
-                data-testid={dataTestId.registrationWizard.description.projectForm.keywordsField}
+                data-testid={dataTestId.projectForm.keywordsField}
                 getOptionLabel={(option) => getLanguageString(option.label)}
                 isOptionEqualToValue={(option, value) => option.type === value.type}
                 value={field.value}
@@ -140,7 +140,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                   slotProps={{
                     textField: {
                       inputProps: {
-                        'data-testid': dataTestId.registrationWizard.description.projectForm.startDateField,
+                        'data-testid': dataTestId.projectForm.startDateField,
                       },
                       variant: 'filled',
                       onBlur: () => !touched && setFieldTouched(field.name),
@@ -166,7 +166,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                   minDate={values.startDate ? new Date(values.startDate) : undefined}
                   slotProps={{
                     textField: {
-                      inputProps: { 'data-testid': dataTestId.registrationWizard.description.projectForm.endDateField },
+                      inputProps: { 'data-testid': dataTestId.projectForm.endDateField },
                       variant: 'filled',
                       required: true,
                       error: touched && !!error,

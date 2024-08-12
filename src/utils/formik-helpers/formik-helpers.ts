@@ -6,14 +6,12 @@ import {
   AssociatedLink,
   FileType,
   NullAssociatedArtifact,
-} from '../types/associatedArtifact.types';
-import { Contributor } from '../types/contributor.types';
-import { HighestTouchedTab } from '../types/locationState.types';
-import { CristinProject } from '../types/project.types';
-import { ProjectDescriptionFieldNames } from '../types/projectFieldNames';
-import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
-import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
-import { MapRegistration } from '../types/publication_types/otherRegistration.types';
+} from '../../types/associatedArtifact.types';
+import { Contributor } from '../../types/contributor.types';
+import { HighestTouchedTab } from '../../types/locationState.types';
+import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
+import { ExhibitionRegistration } from '../../types/publication_types/exhibitionContent.types';
+import { MapRegistration } from '../../types/publication_types/otherRegistration.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -24,10 +22,10 @@ import {
   SpecificFileFieldNames,
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
-} from '../types/publicationFieldNames';
-import { Funding, Registration, RegistrationTab } from '../types/registration.types';
-import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
-import { registrationValidationSchema } from './validation/registration/registrationValidation';
+} from '../../types/publicationFieldNames';
+import { Funding, Registration, RegistrationTab } from '../../types/registration.types';
+import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from '../registration-helpers';
+import { registrationValidationSchema } from '../validation/registration/registrationValidation';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -36,11 +34,7 @@ export interface TabErrors {
   [RegistrationTab.FilesAndLicenses]: string[];
 }
 
-export interface ProjectTabErrors {
-  [RegistrationTab.Description]: string[];
-}
-
-const getErrorMessages = <T>(fieldNames: string[], errors: FormikErrors<T>, touched?: FormikTouched<T>) => {
+export const getErrorMessages = <T>(fieldNames: string[], errors: FormikErrors<T>, touched?: FormikTouched<T>) => {
   if (!Object.keys(errors).length || !fieldNames.length) {
     return [];
   }
@@ -71,18 +65,6 @@ export const getTabErrors = (
       touched
     ),
     [RegistrationTab.FilesAndLicenses]: getErrorMessages(getAllFileFields(values.associatedArtifacts), errors, touched),
-  };
-
-  return tabErrors;
-};
-
-export const getProjectTabErrors = (errors: FormikErrors<CristinProject>, touched?: FormikTouched<CristinProject>) => {
-  const tabErrors: ProjectTabErrors = {
-    [RegistrationTab.Description]: getErrorMessages<CristinProject>(
-      Object.values(ProjectDescriptionFieldNames),
-      errors,
-      touched
-    ),
   };
 
   return tabErrors;
