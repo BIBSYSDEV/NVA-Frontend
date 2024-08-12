@@ -5,10 +5,10 @@ import {
   InsertDriveFileOutlined,
   LocalOfferOutlined,
 } from '@mui/icons-material';
-import { Avatar as AvatarMui, Box, Tooltip, Typography } from '@mui/material';
-import { LogEntry as LogEntryType } from '../../types/log.types';
-import { toDateString } from '../../utils/date-helpers';
+import { Avatar as AvatarMui, Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { LogEntry as LogEntryType } from '../../types/log.types';
+import { toDateStringWithTime } from '../../utils/date-helpers';
 
 export const LogHeader = ({ title, type, modifiedDate }: Pick<LogEntryType, 'title' | 'type' | 'modifiedDate'>) => {
   const date = new Date(modifiedDate);
@@ -17,9 +17,7 @@ export const LogHeader = ({ title, type, modifiedDate }: Pick<LogEntryType, 'tit
       <LogHeaderIcon type={type} />
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography fontWeight={900}>{title.toUpperCase()}</Typography>
-        <Tooltip title={date.toLocaleTimeString()}>
-          <Typography>{toDateString(date)}</Typography>
-        </Tooltip>
+        <Typography>{toDateStringWithTime(date)}</Typography>
       </Box>
     </Box>
   );
