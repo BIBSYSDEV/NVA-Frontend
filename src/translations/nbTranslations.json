@@ -1270,7 +1270,7 @@
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, spesielt viktig for blant annet kunstnerisk resultat",
       "duplicate_title_warning": "Det finnes en registrering i NVA med samme tittel. Vennligst avbryt registreringen dersom det er det samme resultatet som du prøver å registrere, slik at du ikke oppretter duplikater.",
-      "duplicate_publication_date_warning": "Den mulige duplikaten i NVA har også samme publikasjonsdato. Vennligst avbryt registreringen dersom det er det samme resultatet.",
+      "duplicate_publication_date_warning": "Det finnes alt en publikasjon med samme tittel som er publisert dette året",
       "funding": {
         "funder": "Finansiør",
         "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",

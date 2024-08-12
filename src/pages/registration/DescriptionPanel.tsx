@@ -62,8 +62,8 @@ export const DescriptionPanel = () => {
         </Field>
         {duplicateRegistration && (
           <DuplicateWarning
-            name={duplicateRegistration?.entityDescription?.mainTitle}
-            id={duplicateRegistration?.identifier}
+            name={duplicateRegistration.entityDescription?.mainTitle}
+            identifier={duplicateRegistration.identifier}
             warning={t('registration.description.duplicate_title_warning')}
           />
         )}
@@ -223,16 +223,17 @@ export const DescriptionPanel = () => {
           )}
         </Field>
       </Box>
-      {registrationsHaveSamePublicationDate(
-        duplicateRegistration?.entityDescription?.publicationDate,
-        values.entityDescription?.publicationDate
-      ) && (
-        <DuplicateWarning
-          name={duplicateRegistration!.entityDescription?.mainTitle}
-          id={duplicateRegistration!.identifier}
-          warning={t('registration.description.duplicate_publication_date_warning')}
-        />
-      )}
+      {duplicateRegistration &&
+        registrationsHaveSamePublicationDate(
+          duplicateRegistration?.entityDescription?.publicationDate,
+          values.entityDescription?.publicationDate
+        ) && (
+          <DuplicateWarning
+            name={duplicateRegistration.entityDescription?.mainTitle}
+            identifier={duplicateRegistration.identifier}
+            warning={t('registration.description.duplicate_publication_date_warning')}
+          />
+        )}
       <ProjectsField />
       <Divider />
       <RegistrationFunding currentFundings={values.fundings} />
