@@ -7,12 +7,12 @@ import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { updateRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
-import { RegistrationFormLocationState } from '../../types/locationState.types';
+import { PreviousPathLocationState, RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -20,6 +20,7 @@ import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
+import CancelEditButton from '../../components/CancelEditButton';
 
 interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
@@ -41,6 +42,10 @@ export const RegistrationFormActions = ({
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { values, setTouched, resetForm } = useFormikContext<Registration>();
+  const location = useLocation<PreviousPathLocationState>();
+  const previousPath = location.state?.previousPath;
+
+  console.log(previousPath);
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
@@ -135,6 +140,11 @@ export const RegistrationFormActions = ({
           onClick={toggleSupportModal}>
           {t('my_page.messages.get_curator_support')}
         </Button>
+        <CancelEditButton
+          previousPathState={previousPath}
+          sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'center' }}
+        />
+
         {!isLastTab ? (
           <Box
             sx={{
@@ -167,14 +177,16 @@ export const RegistrationFormActions = ({
             </Tooltip>
           </Box>
         ) : (
-          <LoadingButton
-            variant="contained"
-            loading={isSaving}
-            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-            onClick={handleSaveClick}
-            sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
-            {t('common.save_and_view')}
-          </LoadingButton>
+          <>
+            <LoadingButton
+              variant="contained"
+              loading={isSaving}
+              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+              onClick={handleSaveClick}
+              sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
+              {t('common.save_and_view')}
+            </LoadingButton>
+          </>
         )}
       </Box>
 
