@@ -1,6 +1,5 @@
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Autocomplete, Box, Button, Divider, IconButton, Link, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
@@ -14,12 +13,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
 import { HelperTextModal } from '../../HelperTextModal';
-import { getLanguageString } from '../../../../utils/translation-helpers';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { fundingSourceIsNfr, getNfrProjectUrl } from './projectHelpers';
-import { getProjectPath } from '../../../../utils/urlPaths';
-import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { useFetchProjectQuery } from '../../../../utils/hooks/useFetchProjectQuery';
+import { ProjectItem } from './ProjectItem';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
@@ -159,109 +153,5 @@ export const ProjectsField = () => {
         </Field>
       </Box>
     </>
-  );
-};
-
-interface ProjectItemProps {
-  projectId: string;
-  removeProject: (projectId: string) => void;
-}
-
-const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
-  const { t } = useTranslation();
-  const project = useFetchProjectQuery(projectId);
-
-  return (
-    <Box
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: { sm: '1fr', md: '1fr 1fr auto' },
-        gap: '1rem',
-        bgcolor: 'secondary.light',
-        p: '1rem',
-        border: '1px solid lightgray',
-        borderRadius: '8px',
-      }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <Typography fontWeight="bold">{t('project.project').toUpperCase()}</Typography>
-        <Box sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem', height: '100%' }}>
-          <div>
-            <Typography fontWeight="bold">{t('common.title')}:</Typography>
-            <Box sx={{ display: 'flex', gap: '2rem' }}>
-              {project ? (
-                <>
-                  <Link
-                    data-testid={dataTestId.registrationWizard.description.projectLink(project?.id)}
-                    href={getProjectPath(project?.id ?? '')}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    {project?.title}
-                  </Link>
-                  <OpenInNewIcon fontSize="small" />
-                </>
-              ) : (
-                <ListSkeleton arrayLength={1} minWidth={20} height={20} />
-              )}
-            </Box>
-          </div>
-          <div>
-            <Typography fontWeight="bold">{t('project.coordinating_institution')}:</Typography>
-            {project?.coordinatingInstitution ? (
-              <Typography>{getLanguageString(project?.coordinatingInstitution.labels)}</Typography>
-            ) : (
-              <ListSkeleton arrayLength={1} minWidth={20} height={20} />
-            )}
-          </div>
-        </Box>
-      </Box>
-
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <Typography fontWeight="bold">{t('common.funding').toUpperCase()}</Typography>
-        {project?.funding?.length ? (
-          project.funding.map((funding) => (
-            <Box
-              key={funding.identifier}
-              sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem', height: '100%' }}>
-              <div>
-                <Typography fontWeight="bold">{t('registration.description.funding.funder')}:</Typography>
-                <Typography>{getLanguageString(funding.labels)}</Typography>
-              </div>
-              <div>
-                <Typography fontWeight="bold">{t('project.grant_id')}:</Typography>
-                {funding.identifier ? (
-                  fundingSourceIsNfr(funding.source) ? (
-                    <Box sx={{ display: 'flex', gap: '2rem', height: 'fit-content' }}>
-                      <Link
-                        data-testid={dataTestId.registrationWizard.description.nfrProjectLink(funding.identifier)}
-                        href={getNfrProjectUrl(funding.identifier)}
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        {funding.identifier}
-                      </Link>
-                      <OpenInNewIcon fontSize="small" />
-                    </Box>
-                  ) : (
-                    <Typography>{funding.identifier}</Typography>
-                  )
-                ) : (
-                  <ListSkeleton arrayLength={1} minWidth={20} height={20} />
-                )}
-              </div>
-            </Box>
-          ))
-        ) : (
-          <Typography fontStyle="italic">{t('project.project_has_no_funding')}</Typography>
-        )}
-      </Box>
-      <IconButton
-        size="small"
-        sx={{ alignSelf: 'center' }}
-        color="primary"
-        onClick={() => removeProject(projectId)}
-        title={t('common.remove')}
-        data-testid={dataTestId.registrationWizard.description.removeProjectButton}>
-        <CancelIcon />
-      </IconButton>
-    </Box>
   );
 };
