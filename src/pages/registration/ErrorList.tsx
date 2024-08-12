@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RegistrationTab } from '../../types/registration.types';
-import { TabErrors } from '../../utils/formik-helpers';
+import { TabErrors } from '../../utils/formik-helpers/formik-helpers';
 
 interface ErrorSummaryProps {
   tabErrors: TabErrors;
