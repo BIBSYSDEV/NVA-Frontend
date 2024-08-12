@@ -7,21 +7,6 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '..
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-  allPublicationInstanceTypes,
-} from '../types/publicationFieldNames';
-import {
   AudioVisualPublication,
   Award,
   Broadcast,
@@ -48,11 +33,27 @@ import { JournalRegistration } from '../types/publication_types/journalRegistrat
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
 import {
+  allPublicationInstanceTypes,
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+} from '../types/publicationFieldNames';
+import {
   Journal,
   NpiSubjectDomain,
   PublicationInstanceType,
   Publisher,
   Registration,
+  RegistrationDate,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -775,3 +776,24 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('deu'),
   getLanguageByIso6393Code('mis'),
 ];
+
+export const registrationsHaveSamePublicationDate = (
+  duplicatePublicationDate: RegistrationDate | undefined,
+  publicationDate: RegistrationDate | undefined
+) => {
+  if (!duplicatePublicationDate || !publicationDate) {
+    return false;
+  }
+  let isSame = duplicatePublicationDate.year === publicationDate.year;
+
+  if (
+    (duplicatePublicationDate.month || publicationDate.month) &&
+    duplicatePublicationDate.month !== publicationDate.month
+  ) {
+    isSame = false;
+  }
+  if ((duplicatePublicationDate.day || publicationDate.day) && duplicatePublicationDate.day !== publicationDate.day) {
+    isSame = false;
+  }
+  return isSame;
+};
