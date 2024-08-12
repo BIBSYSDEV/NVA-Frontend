@@ -25,6 +25,8 @@ export const DescriptionPanel = () => {
   const debouncedTitle = useDebounce(title);
   const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(debouncedTitle);
 
+  console.log('build');
+
   return (
     <InputContainerBox>
       <Box
