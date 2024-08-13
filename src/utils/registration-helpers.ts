@@ -53,7 +53,6 @@ import {
   PublicationInstanceType,
   Publisher,
   Registration,
-  RegistrationDate,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -777,23 +776,36 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
-export const registrationsHaveSamePublicationDate = (
-  duplicatePublicationDate: RegistrationDate | undefined,
-  publicationDate: RegistrationDate | undefined
-) => {
-  if (!duplicatePublicationDate || !publicationDate) {
+export const registrationsHaveSamePublicationDate = (reg1: Registration, reg2: Registration) => {
+  if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
     return false;
   }
-  let isSame = duplicatePublicationDate.year === publicationDate.year;
+  let isSame = reg1.entityDescription?.publicationDate.year === reg2.entityDescription?.publicationDate.year;
 
   if (
-    (duplicatePublicationDate.month || publicationDate.month) &&
-    duplicatePublicationDate.month !== publicationDate.month
+    (reg1.entityDescription?.publicationDate.month || reg2.entityDescription?.publicationDate.month) &&
+    reg1.entityDescription?.publicationDate.month !== reg2.entityDescription?.publicationDate.month
   ) {
     isSame = false;
   }
-  if ((duplicatePublicationDate.day || publicationDate.day) && duplicatePublicationDate.day !== publicationDate.day) {
+  if (
+    (reg1.entityDescription?.publicationDate.day || reg2.entityDescription?.publicationDate.day) &&
+    reg1.entityDescription?.publicationDate.day !== reg2.entityDescription?.publicationDate.day
+  ) {
     isSame = false;
   }
   return isSame;
+};
+
+export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registration) => {
+  if (
+    reg1.entityDescription?.reference?.publicationInstance?.type &&
+    reg2.entityDescription?.reference?.publicationInstance?.type
+  ) {
+    return (
+      reg1.entityDescription?.reference?.publicationInstance?.type ===
+      reg2.entityDescription?.reference?.publicationInstance?.type
+    );
+  }
+  return false;
 };
