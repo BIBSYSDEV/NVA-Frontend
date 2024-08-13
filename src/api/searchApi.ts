@@ -368,7 +368,7 @@ export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
-  [ResultParam.CategoryNot]?: PublicationInstanceType | null;
+  [ResultParam.CategoryNot]?: PublicationInstanceType | PublicationInstanceType[] | null;
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
@@ -423,7 +423,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.Category, params.category);
   }
   if (params.categoryNot) {
-    searchParams.set(ResultParam.CategoryNot, params.categoryNot);
+    const paramValue = Array.isArray(params.categoryNot) ? params.categoryNot.join(',') : params.categoryNot;
+    searchParams.set(ResultParam.CategoryNot, paramValue);
   }
   if (params.categoryShould && params.categoryShould.length > 0) {
     searchParams.set(ResultParam.CategoryShould, params.categoryShould.join(','));

@@ -1,19 +1,16 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import RuleIcon from '@mui/icons-material/Rule';
-import { Badge, Box, Button, styled } from '@mui/material';
+import { Badge, Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
-import { FetchTicketsParams, ResultParam, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { SelectableButton } from '../../components/SelectableButton';
+import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
@@ -28,14 +25,11 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
-import { CorrectionListId, NviCorrectionList, nviCorrectionListQueryKey } from './components/NviCorrectionList';
-import { NviMenuContent } from './components/NviMenuContent';
+import { NviCandidatesNavigationAccordion } from './components/NviCandidatesNavigationAccordion';
+import { NviCorrectionList } from './components/NviCorrectionList';
+import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
 import { NviStatusPage } from './components/NviStatusPage';
 import { TicketList } from './components/TicketList';
-
-export const StyledSearchModeButton = styled(SelectableButton)({
-  borderRadius: '1.5rem',
-});
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -119,8 +113,6 @@ const TasksPage = () => {
   const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
   const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
   const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
-
-  const selectedNviList = searchParams.get(nviCorrectionListQueryKey);
 
   return (
     <StyledPageWithSideMenu>
@@ -215,49 +207,8 @@ const TasksPage = () => {
 
         {isNviCurator && (
           <>
-            <NviMenuContent />
-
-            <NavigationListAccordion
-              title={t('tasks.correction_list')}
-              startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
-              accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-              dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
-              <NavigationList component="div">
-                <SelectableButton
-                  isSelected={!selectedNviList}
-                  onClick={() => history.push({ search: '' })}
-                  sx={{ mb: '1rem' }}>
-                  {t('tasks.nvi.correction_list_type.correction_list_duct')}
-                </SelectableButton>
-
-                <BetaFunctionality>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <SelectableButton
-                      isSelected={selectedNviList === '1'}
-                      onClick={() => {
-                        if (selectedNviList !== '1') {
-                          searchParams.set(nviCorrectionListQueryKey, '1' satisfies CorrectionListId);
-                          searchParams.delete(ResultParam.From);
-                          history.push({ search: searchParams.toString() });
-                        }
-                      }}>
-                      {t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')}
-                    </SelectableButton>
-                    <SelectableButton
-                      isSelected={selectedNviList === '2'}
-                      onClick={() => {
-                        if (selectedNviList !== '2') {
-                          searchParams.set(nviCorrectionListQueryKey, '2' satisfies CorrectionListId);
-                          searchParams.delete(ResultParam.From);
-                          history.push({ search: searchParams.toString() });
-                        }
-                      }}>
-                      {t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')}
-                    </SelectableButton>
-                  </Box>
-                </BetaFunctionality>
-              </NavigationList>
-            </NavigationListAccordion>
+            <NviCandidatesNavigationAccordion />
+            <NviCorrectionListNavigationAccordion />
           </>
         )}
       </SideMenu>
