@@ -19,7 +19,6 @@ export interface ResearchProject {
   type: 'ResearchProject';
   id: string;
   name: string;
-  funding?: ProjectFunding[];
   approvals?: Approval[];
 }
 
@@ -53,6 +52,7 @@ interface ProjectContributorRole {
   type: ProjectContributorType;
   affiliation: ProjectOrganization;
 }
+
 export interface ProjectContributor {
   identity: ProjectContributorIdentity;
   roles: ProjectContributorRole[];
