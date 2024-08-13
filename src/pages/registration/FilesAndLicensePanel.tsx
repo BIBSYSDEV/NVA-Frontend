@@ -122,105 +122,111 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
       <FieldArray name={FileFieldNames.AssociatedArtifacts}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
-            {customer &&
-            publicationInstanceType &&
-            !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
-              <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
-            ) : (
-              <FileUploader
-                uppy={uppy}
-                addFile={(file) => {
-                  const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(associatedArtifactIsNullArtifact);
-                  if (nullAssociatedArtifactIndex > -1) {
-                    remove(nullAssociatedArtifactIndex);
-                  }
-                  push(file);
-                }}
-                disabled={!canEditFiles}
-              />
-            )}
-            {filesToPublish.length > 0 && (
-              <FileList
-                title={t('registration.files_and_license.files_to_publish')}
-                files={filesToPublish}
-                uppy={uppy}
-                remove={remove}
-                baseFieldName={name}
-              />
-            )}
-            {filesNotToPublish.length > 0 && (
-              <FileList
-                title={t('registration.files_and_license.files_are_not_published')}
-                files={filesNotToPublish}
-                uppy={uppy}
-                remove={remove}
-                baseFieldName={name}
-                archived
-              />
-            )}
-            {publishedFiles.length > 0 && (
-              <FileList
-                title={t('registration.files_and_license.published_files')}
-                files={publishedFiles}
-                uppy={uppy}
-                remove={remove}
-                baseFieldName={name}
-              />
-            )}
-            <Paper elevation={5} component={BackgroundDiv}>
-              <Typography variant="h2" paragraph>
-                {t('common.link')}
-              </Typography>
-              {originalDoi ? (
-                <DoiField canEditDoi={canEditFiles} />
-              ) : (
-                <TextField
-                  fullWidth
-                  variant="filled"
-                  label={t('registration.files_and_license.link_to_resource')}
-                  disabled={!canEditFiles}
-                  value={
-                    associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
-                  }
-                  error={associatedLinkHasError}
-                  helperText={
-                    associatedLinkHasError
-                      ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
-                      : null
-                  }
-                  data-testid={dataTestId.registrationWizard.files.linkToResourceField}
-                  onChange={(event) => {
-                    const inputValue = event.target.value;
-                    if (inputValue) {
-                      if (associatedLinkIndex < 0) {
-                        const newAssociatedLink: AssociatedLink = {
-                          type: 'AssociatedLink',
-                          id: inputValue,
-                        };
-                        push(newAssociatedLink);
-                        const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
-                          associatedArtifactIsNullArtifact
-                        );
-                        if (nullAssociatedArtifactIndex > -1) {
-                          remove(nullAssociatedArtifactIndex);
+            {!isNullAssociatedArtifact && (
+              <>
+                {customer &&
+                publicationInstanceType &&
+                !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
+                  <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
+                ) : (
+                  <FileUploader
+                    uppy={uppy}
+                    addFile={(file) => {
+                      const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
+                        associatedArtifactIsNullArtifact
+                      );
+                      if (nullAssociatedArtifactIndex > -1) {
+                        remove(nullAssociatedArtifactIndex);
+                      }
+                      push(file);
+                    }}
+                    disabled={!canEditFiles}
+                  />
+                )}
+                {filesToPublish.length > 0 && (
+                  <FileList
+                    title={t('registration.files_and_license.files_to_publish')}
+                    files={filesToPublish}
+                    uppy={uppy}
+                    remove={remove}
+                    baseFieldName={name}
+                  />
+                )}
+                {filesNotToPublish.length > 0 && (
+                  <FileList
+                    title={t('registration.files_and_license.files_are_not_published')}
+                    files={filesNotToPublish}
+                    uppy={uppy}
+                    remove={remove}
+                    baseFieldName={name}
+                    archived
+                  />
+                )}
+                {publishedFiles.length > 0 && (
+                  <FileList
+                    title={t('registration.files_and_license.published_files')}
+                    files={publishedFiles}
+                    uppy={uppy}
+                    remove={remove}
+                    baseFieldName={name}
+                  />
+                )}
+                <Paper elevation={5} component={BackgroundDiv}>
+                  <Typography variant="h2" paragraph>
+                    {t('common.link')}
+                  </Typography>
+                  {originalDoi ? (
+                    <DoiField canEditDoi={canEditFiles} />
+                  ) : (
+                    <TextField
+                      fullWidth
+                      variant="filled"
+                      label={t('registration.files_and_license.link_to_resource')}
+                      disabled={!canEditFiles}
+                      value={
+                        associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
+                      }
+                      error={associatedLinkHasError}
+                      helperText={
+                        associatedLinkHasError
+                          ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
+                          : null
+                      }
+                      data-testid={dataTestId.registrationWizard.files.linkToResourceField}
+                      onChange={(event) => {
+                        const inputValue = event.target.value;
+                        if (inputValue) {
+                          if (associatedLinkIndex < 0) {
+                            const newAssociatedLink: AssociatedLink = {
+                              type: 'AssociatedLink',
+                              id: inputValue,
+                            };
+                            push(newAssociatedLink);
+                            const nullAssociatedArtifactIndex = associatedArtifacts.findIndex(
+                              associatedArtifactIsNullArtifact
+                            );
+                            if (nullAssociatedArtifactIndex > -1) {
+                              remove(nullAssociatedArtifactIndex);
+                            }
+                          } else {
+                            const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
+                            setFieldValue(fieldName, inputValue);
+                            setFieldTouched(fieldName);
+                          }
+                        } else {
+                          const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                          remove(associatedLinkIndex);
+                          if (associatedArtifactsBeforeRemoval === 1) {
+                            // Ensure field is set to touched even if it's empty
+                            setFieldTouched(name);
+                          }
                         }
-                      } else {
-                        const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
-                        setFieldValue(fieldName, inputValue);
-                        setFieldTouched(fieldName);
-                      }
-                    } else {
-                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                      remove(associatedLinkIndex);
-                      if (associatedArtifactsBeforeRemoval === 1) {
-                        // Ensure field is set to touched even if it's empty
-                        setFieldTouched(name);
-                      }
-                    }
-                  }}
-                />
-              )}
-            </Paper>
+                      }}
+                    />
+                  )}
+                </Paper>
+              </>
+            )}
 
             {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && (
               <Paper elevation={5} component={BackgroundDiv}>
