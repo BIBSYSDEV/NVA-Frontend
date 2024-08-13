@@ -11,12 +11,12 @@ import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
-import { registrationLanguageOptions } from '../../utils/registration-helpers';
+import { registrationLanguageOptions, registrationsHaveSamePublicationDate } from '../../utils/registration-helpers';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
-import { SameNameWarning } from './SameNameWarning';
+import { DuplicateWarning } from './DuplicateWarning';
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
@@ -60,10 +60,11 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        {duplicateRegistration?.entityDescription?.mainTitle && (
-          <SameNameWarning
+        {duplicateRegistration && (
+          <DuplicateWarning
             name={duplicateRegistration.entityDescription?.mainTitle}
-            id={duplicateRegistration.identifier}
+            identifier={duplicateRegistration.identifier}
+            warning={t('registration.description.duplicate_title_warning')}
           />
         )}
         <Field name={DescriptionFieldNames.AlternativeTitles}>
@@ -155,7 +156,6 @@ export const DescriptionPanel = () => {
           />
         )}
       </Field>
-
       <Field name={DescriptionFieldNames.Tags}>
         {({ field }: FieldProps) => (
           <Autocomplete
@@ -187,9 +187,7 @@ export const DescriptionPanel = () => {
           />
         )}
       </Field>
-
       <VocabularyBase />
-
       <Box
         sx={{
           display: 'grid',
@@ -225,7 +223,17 @@ export const DescriptionPanel = () => {
           )}
         </Field>
       </Box>
-
+      {duplicateRegistration &&
+        registrationsHaveSamePublicationDate(
+          duplicateRegistration?.entityDescription?.publicationDate,
+          values.entityDescription?.publicationDate
+        ) && (
+          <DuplicateWarning
+            name={duplicateRegistration.entityDescription?.mainTitle}
+            identifier={duplicateRegistration.identifier}
+            warning={t('registration.description.duplicate_publication_date_warning')}
+          />
+        )}
       <ProjectsField />
       <Divider />
       <RegistrationFunding currentFundings={values.fundings} />
