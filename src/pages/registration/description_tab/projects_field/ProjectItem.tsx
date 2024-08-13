@@ -20,7 +20,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
   const { t } = useTranslation();
   const projectQyery = useFetchProjectQuery(projectId);
   const project = projectQyery.data;
-  const isFetching = !projectQyery.isFetching;
+  const isFetching = projectQyery.isFetching;
 
   return (
     <Box
