@@ -4,21 +4,23 @@ import { Box, IconButton, Link, Typography } from '@mui/material';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getProjectPath } from '../../../../utils/urlPaths';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { fundingSourceIsNfr, getNfrProjectUrl } from './projectHelpers';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { ListSkeleton } from '../../../../components/ListSkeleton';
 
 interface ProjectItemProps {
   projectId: string;
   removeProject: (projectId: string) => void;
 }
 
+const StyledListSkeleton = () => <ListSkeleton arrayLength={1} minWidth={20} height={20} />;
+
 export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
   const { t } = useTranslation();
   const projectQyery = useFetchProjectQuery(projectId);
   const project = projectQyery.data;
-  const isFetching = projectQyery.isFetching;
+  const isFetching = !projectQyery.isFetching;
 
   return (
     <Box
@@ -33,12 +35,12 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
       }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Typography fontWeight="bold">{t('project.project').toUpperCase()}</Typography>
-        <Box sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem', height: '100%' }}>
+        <Box sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem' }}>
           <div>
             <Typography fontWeight="bold">{t('common.title')}:</Typography>
             <Box sx={{ display: 'flex', gap: '2rem' }}>
               {isFetching ? (
-                <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+                <StyledListSkeleton />
               ) : project ? (
                 <>
                   <Link
@@ -58,7 +60,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
           <div>
             <Typography fontWeight="bold">{t('project.coordinating_institution')}:</Typography>
             {isFetching ? (
-              <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+              <StyledListSkeleton />
             ) : project?.coordinatingInstitution ? (
               <Typography>{getLanguageString(project?.coordinatingInstitution.labels)}</Typography>
             ) : (
@@ -77,16 +79,12 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
               sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem', height: '100%' }}>
               <div>
                 <Typography fontWeight="bold">{t('registration.description.funding.funder')}:</Typography>
-                {isFetching ? (
-                  <ListSkeleton arrayLength={1} minWidth={20} height={20} />
-                ) : (
-                  <Typography>{getLanguageString(funding.labels)}</Typography>
-                )}
+                {isFetching ? <StyledListSkeleton /> : <Typography>{getLanguageString(funding.labels)}</Typography>}
               </div>
               <div>
                 <Typography fontWeight="bold">{t('project.grant_id')}:</Typography>
                 {isFetching ? (
-                  <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+                  <StyledListSkeleton />
                 ) : funding.identifier ? (
                   fundingSourceIsNfr(funding.source) ? (
                     <Box sx={{ display: 'flex', gap: '2rem', height: 'fit-content' }}>
