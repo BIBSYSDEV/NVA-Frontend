@@ -1,8 +1,8 @@
 import { TFunction } from 'i18next';
-import { getPublishedFiles, getUnpublishableFiles } from '../registration-helpers';
 import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { LogAction, LogActionItem, LogEntry } from '../../types/log.types';
 import { PublishingTicket } from '../../types/publication_types/ticket.types';
+import { getPublishedFiles, getUnpublishableFiles } from '../registration-helpers';
 
 export function generatePublishingRequestLogEntry(
   ticket: PublishingTicket,
@@ -148,7 +148,7 @@ function generateFilesUploadedLogEntry(
   return {
     type: 'PublishingRequest',
     title: t('log.titles.files_uploaded', { count: ticket.filesForApproval.length }),
-    modifiedDate: ticket.modifiedDate,
+    modifiedDate: ticket.createdDate,
     actions: logActions,
   };
 }
