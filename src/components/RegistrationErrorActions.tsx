@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ErrorList } from '../pages/registration/ErrorList';
 import { dataTestId } from '../utils/dataTestIds';
-import { getFirstErrorTab, TabErrors } from '../utils/formik-helpers';
+import { getFirstErrorTab, TabErrors } from '../utils/formik-helpers/formik-helpers';
 import { getRegistrationWizardPath } from '../utils/urlPaths';
 
 interface RegistrationErrorActionsProps extends BoxProps {
