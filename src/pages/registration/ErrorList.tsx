@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RegistrationTab } from '../../types/registration.types';
 import { TabErrors } from '../../utils/formik-helpers/formik-helpers';
@@ -11,7 +11,7 @@ export const ErrorList = ({ tabErrors }: ErrorSummaryProps) => {
   const { t } = useTranslation();
 
   return (
-    <dl data-testid="error-list">
+    <Box component="ul" sx={{ my: '0.5rem', px: 0, listStyleType: 'none' }}>
       <ErrorListGroup
         heading={t('registration.heading.description')}
         errorMessages={tabErrors[RegistrationTab.Description]}
@@ -28,7 +28,7 @@ export const ErrorList = ({ tabErrors }: ErrorSummaryProps) => {
         heading={t('registration.heading.files_and_license')}
         errorMessages={tabErrors[RegistrationTab.FilesAndLicenses]}
       />
-    </dl>
+    </Box>
   );
 };
 
@@ -37,16 +37,21 @@ interface ErrorListProps {
   errorMessages: string[];
 }
 
-const ErrorListGroup = ({ heading, errorMessages }: ErrorListProps) =>
-  errorMessages.length > 0 ? (
-    <>
-      <dt>
-        <Typography sx={{ fontWeight: 500 }}>{heading}:</Typography>
-      </dt>
-      {errorMessages.map((errorMessage) => (
-        <dd key={errorMessage}>
-          <Typography>{errorMessage}</Typography>
-        </dd>
-      ))}
-    </>
-  ) : null;
+const ErrorListGroup = ({ heading, errorMessages }: ErrorListProps) => {
+  if (errorMessages.length === 0) {
+    return null;
+  }
+
+  return (
+    <li>
+      <Typography sx={{ fontWeight: 500 }}>{heading}:</Typography>
+      <ul style={{ listStyleType: 'disc' }}>
+        {errorMessages.map((errorMessage) => (
+          <li key={errorMessage}>
+            <Typography>{errorMessage}</Typography>
+          </li>
+        ))}
+      </ul>
+    </li>
+  );
+};

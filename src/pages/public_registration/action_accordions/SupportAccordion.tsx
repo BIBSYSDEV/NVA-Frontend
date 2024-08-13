@@ -6,11 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
+import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -21,7 +23,6 @@ interface SupportAccordionProps {
   userIsCurator: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   refetchData: () => void;
-  isRegistrationWizard?: boolean;
 }
 
 export const SupportAccordion = ({
@@ -30,7 +31,6 @@ export const SupportAccordion = ({
   userIsCurator,
   addMessage,
   refetchData,
-  isRegistrationWizard = false,
 }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -56,40 +56,48 @@ export const SupportAccordion = ({
     }
   };
 
+  const formErrors = validateRegistrationForm(registration);
+  const registrationIsValid = Object.keys(formErrors).length === 0;
+  const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
+
   const isPendingSupportTicket = supportTicket?.status === 'New' || supportTicket?.status === 'Pending';
   const ownerHasReadTicket = supportTicket?.viewedBy.includes(supportTicket?.owner);
+  const isOnTasksPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{ bgcolor: 'generalSupportCase.light' }}
       elevation={3}
-      defaultExpanded={isRegistrationWizard || isPendingSupportTicket || !ownerHasReadTicket}>
+      defaultExpanded={isPendingSupportTicket || !ownerHasReadTicket}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
         {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>
-        {isRegistrationWizard && <Typography>{t('registration.curator_support_info')}</Typography>}
+        {!isOnTasksPage && <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>}
+
         {supportTicket && (
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
-            {userIsCurator &&
-              window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) &&
-              supportTicket.status !== 'Completed' && (
-                <LoadingButton
-                  sx={{
-                    alignSelf: 'end',
-                    width: 'fit-content',
-                    bgcolor: 'white',
-                  }}
-                  loading={ticketMutation.isPending}
-                  variant="outlined"
-                  onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
-                  {t('my_page.messages.mark_as_completed')}
-                </LoadingButton>
-              )}
+            {userIsCurator && isOnTasksPage && supportTicket.status !== 'Completed' && (
+              <LoadingButton
+                sx={{
+                  alignSelf: 'center',
+                  width: 'fit-content',
+                  bgcolor: 'white',
+                }}
+                loading={ticketMutation.isPending}
+                variant="outlined"
+                onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
+                {t('my_page.messages.mark_as_completed')}
+              </LoadingButton>
+            )}
+
+            {isOnTasksPage && tabErrors && (
+              <RegistrationErrorActions tabErrors={tabErrors} registrationIdentifier={registration.identifier} />
+            )}
+
             {supportTicket.messages.length > 0 && (
               <TicketMessageList ticket={supportTicket} refetchData={refetchData} canDeleteMessage={userIsCurator} />
             )}
