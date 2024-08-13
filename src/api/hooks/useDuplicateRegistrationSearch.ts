@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchResults, FetchResultsParams } from '../searchApi';
 
-export const useDuplicateRegistrationSearch = (title: string, publishedYear?: string) => {
+export const useDuplicateRegistrationSearch = (title: string, publishedYear?: string, category?: string) => {
   const { t } = useTranslation();
 
   const searchConfig: FetchResultsParams = {
@@ -24,6 +24,10 @@ export const useDuplicateRegistrationSearch = (title: string, publishedYear?: st
     }
 
     if (publishedYear && reg?.entityDescription?.publicationDate?.year !== publishedYear) {
+      return false;
+    }
+
+    if (category && reg.entityDescription?.reference?.publicationInstance?.type !== category) {
       return false;
     }
 
