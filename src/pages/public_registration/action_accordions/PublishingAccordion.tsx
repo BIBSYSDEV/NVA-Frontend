@@ -504,7 +504,10 @@ export const PublishingAccordion = ({
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}
-            <MessageForm confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)} />
+            <MessageForm
+              confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)}
+              hideRequiredAsterisk
+            />
           </Box>
         )}
         {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
