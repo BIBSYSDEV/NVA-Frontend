@@ -16,7 +16,9 @@ interface ProjectItemProps {
 
 export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
   const { t } = useTranslation();
-  const project = useFetchProjectQuery(projectId);
+  const projectQyery = useFetchProjectQuery(projectId);
+  const project = projectQyery.data;
+  const isFetching = projectQyery.isFetching;
 
   return (
     <Box
@@ -35,7 +37,9 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
           <div>
             <Typography fontWeight="bold">{t('common.title')}:</Typography>
             <Box sx={{ display: 'flex', gap: '2rem' }}>
-              {project ? (
+              {isFetching ? (
+                <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+              ) : project ? (
                 <>
                   <Link
                     data-testid={dataTestId.registrationWizard.description.projectLink(project?.id)}
@@ -47,16 +51,18 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
                   <OpenInNewIcon fontSize="small" />
                 </>
               ) : (
-                <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+                <Typography>-</Typography>
               )}
             </Box>
           </div>
           <div>
             <Typography fontWeight="bold">{t('project.coordinating_institution')}:</Typography>
-            {project?.coordinatingInstitution ? (
+            {isFetching ? (
+              <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+            ) : project?.coordinatingInstitution ? (
               <Typography>{getLanguageString(project?.coordinatingInstitution.labels)}</Typography>
             ) : (
-              <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+              <Typography>-</Typography>
             )}
           </div>
         </Box>
@@ -71,11 +77,17 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
               sx={{ display: 'grid', gridTemplateRows: 'auto auto', gap: '1rem', height: '100%' }}>
               <div>
                 <Typography fontWeight="bold">{t('registration.description.funding.funder')}:</Typography>
-                <Typography>{getLanguageString(funding.labels)}</Typography>
+                {isFetching ? (
+                  <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+                ) : (
+                  <Typography>{getLanguageString(funding.labels)}</Typography>
+                )}
               </div>
               <div>
                 <Typography fontWeight="bold">{t('project.grant_id')}:</Typography>
-                {funding.identifier ? (
+                {isFetching ? (
+                  <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+                ) : funding.identifier ? (
                   fundingSourceIsNfr(funding.source) ? (
                     <Box sx={{ display: 'flex', gap: '2rem', height: 'fit-content' }}>
                       <Link
@@ -91,7 +103,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
                     <Typography>{funding.identifier}</Typography>
                   )
                 ) : (
-                  <ListSkeleton arrayLength={1} minWidth={20} height={20} />
+                  <Typography>-</Typography>
                 )}
               </div>
             </Box>
