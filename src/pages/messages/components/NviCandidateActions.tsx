@@ -259,10 +259,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           </>
         )}
 
-        <Typography variant="h2" gutterBottom>
-          {t('common.message')}
-        </Typography>
-        <Typography gutterBottom>{t('tasks.nvi.message_description')}</Typography>
+        <Typography paragraph>{t('tasks.nvi.message_description')}</Typography>
         <MessageForm
           confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
           fieldLabel={t('common.message')}
