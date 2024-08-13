@@ -18,9 +18,9 @@ const StyledListSkeleton = () => <ListSkeleton arrayLength={1} minWidth={20} hei
 
 export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
   const { t } = useTranslation();
-  const projectQyery = useFetchProjectQuery(projectId);
-  const project = projectQyery.data;
-  const isFetching = projectQyery.isFetching;
+  const projectQuery = useFetchProjectQuery(projectId);
+  const project = projectQuery.data;
+  const isFetching = projectQuery.isFetching;
 
   return (
     <Box
