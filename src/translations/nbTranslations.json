@@ -274,6 +274,7 @@
     "start_page": "Startside",
     "tasks": "Oppgaver",
     "test_environment": "Testmiljø",
+    "time_string": "{{date}}, kl. {{time}}",
     "title": "Tittel",
     "today": "I dag",
     "total_number": "Totalt antall",
@@ -671,7 +672,7 @@
     "header_icon": "Log header icon {{type}}",
     "imported_from_source": "Importert fra {{source}}",
     "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
-    "metadata_last_updated": "Metadata sist oppdatert: ",
+    "metadata_last_updated": "Metadata sist oppdatert:",
     "number_of_archivedFiles_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "number_of_archivedFiles_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "titles": {
