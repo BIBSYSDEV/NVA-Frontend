@@ -25,7 +25,7 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { LocalStorageKey, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
@@ -122,6 +122,8 @@ const MyPagePage = () => {
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.count;
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
+
+  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
 
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
@@ -324,13 +326,21 @@ const MyPagePage = () => {
             <Typography sx={{ margin: '1rem' }}>
               {t('my_page.my_profile.list_contains_all_registration_you_have_created')}
             </Typography>
-            <LinkCreateButton
-              data-testid={dataTestId.myPage.createProjectButton}
-              isSelected={showCreateProject}
-              selectedColor="project.main"
-              onClick={() => setShowCreateProject(true)}
-              title={t('project.create_project')}
-            />
+            {betaEnabled ? (
+              <LinkCreateButton
+                data-testid={dataTestId.myPage.createProjectButton}
+                to={UrlPathTemplate.ProjectsNew}
+                title={t('project.create_project')}
+              />
+            ) : (
+              <LinkCreateButton
+                data-testid={dataTestId.myPage.createProjectButton}
+                isSelected={showCreateProject}
+                selectedColor="project.main"
+                onClick={() => setShowCreateProject(true)}
+                title={t('project.create_project')}
+              />
+            )}
           </NavigationListAccordion>,
         ]}
       </SideMenu>

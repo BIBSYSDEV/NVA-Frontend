@@ -6,12 +6,12 @@ import {
   AssociatedLink,
   FileType,
   NullAssociatedArtifact,
-} from '../types/associatedArtifact.types';
-import { Contributor } from '../types/contributor.types';
-import { HighestTouchedTab } from '../types/locationState.types';
-import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
-import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
-import { MapRegistration } from '../types/publication_types/otherRegistration.types';
+} from '../../types/associatedArtifact.types';
+import { Contributor } from '../../types/contributor.types';
+import { HighestTouchedTab } from '../../types/locationState.types';
+import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
+import { ExhibitionRegistration } from '../../types/publication_types/exhibitionContent.types';
+import { MapRegistration } from '../../types/publication_types/otherRegistration.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -22,10 +22,10 @@ import {
   SpecificFileFieldNames,
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
-} from '../types/publicationFieldNames';
-import { Funding, Registration, RegistrationTab } from '../types/registration.types';
-import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
-import { registrationValidationSchema } from './validation/registration/registrationValidation';
+} from '../../types/publicationFieldNames';
+import { Funding, Registration, RegistrationTab } from '../../types/registration.types';
+import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from '../registration-helpers';
+import { registrationValidationSchema } from '../validation/registration/registrationValidation';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -34,11 +34,7 @@ export interface TabErrors {
   [RegistrationTab.FilesAndLicenses]: string[];
 }
 
-const getErrorMessages = (
-  fieldNames: string[],
-  errors: FormikErrors<Registration>,
-  touched?: FormikTouched<Registration>
-) => {
+export const getErrorMessages = <T>(fieldNames: string[], errors: FormikErrors<T>, touched?: FormikTouched<T>) => {
   if (!Object.keys(errors).length || !fieldNames.length) {
     return [];
   }
@@ -52,8 +48,7 @@ const getErrorMessages = (
   const errorMessages = errorFieldNames.map((errorFieldName) => getIn(errors, errorFieldName));
   // Keep only messages with type string, since they cannot be displayed properly otherwise
   const filteredErrorMessages = errorMessages.filter((errorMessage) => typeof errorMessage === 'string');
-  const uniqueErrorMessages = [...new Set(filteredErrorMessages)];
-  return uniqueErrorMessages;
+  return [...new Set(filteredErrorMessages)];
 };
 
 export const getTabErrors = (
