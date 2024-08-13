@@ -1,7 +1,9 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ProjectContributor } from '../../types/project.types';
+import { Link } from 'react-router-dom';
+import { ProjectContributor, ProjectContributorType } from '../../types/project.types';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { getResearchProfilePath } from '../../utils/urlPaths';
 import {
   getProjectManagers,
   getProjectParticipants,
@@ -30,14 +32,18 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
         <>
           {projectManagers.length > 0 && (
             <div>
-              <Typography variant="h3">{t('project.project_manager')}</Typography>
-              <ContributorList contributors={projectManagers} />
+              <Typography variant="h3" gutterBottom>
+                {t('project.project_manager')}
+              </Typography>
+              <ContributorList contributors={projectManagers} projectRole="ProjectManager" />
             </div>
           )}
           {projectParticipants.length > 0 && (
             <div>
-              <Typography variant="h3">{t('project.project_participants')}</Typography>
-              <ContributorList contributors={projectParticipants} />
+              <Typography variant="h3" gutterBottom>
+                {t('project.project_participants')}
+              </Typography>
+              <ContributorList contributors={projectParticipants} projectRole="ProjectParticipant" />
             </div>
           )}
         </>
@@ -48,9 +54,10 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
 
 interface ContributorListProps {
   contributors: ProjectContributor[];
+  projectRole: ProjectContributorType;
 }
 
-const ContributorList = ({ contributors }: ContributorListProps) => (
+const ContributorList = ({ contributors, projectRole }: ContributorListProps) => (
   <Box
     sx={{
       display: 'grid',
@@ -60,9 +67,22 @@ const ContributorList = ({ contributors }: ContributorListProps) => (
     {contributors.map((contributor, index) => (
       <div key={index}>
         <Typography variant="subtitle1" component="p">
-          {contributor.identity.firstName} {contributor.identity.lastName}
+          <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+            {contributor.identity.firstName} {contributor.identity.lastName}
+          </MuiLink>
         </Typography>
-        <Typography variant="body2">{getLanguageString(contributor.affiliation?.labels)}</Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          {contributor.roles.map((contributorRole, j) => {
+            if (contributorRole.type === projectRole) {
+              return (
+                <Typography variant="body2" key={j}>
+                  {getLanguageString(contributorRole.affiliation.labels)}
+                </Typography>
+              );
+            }
+            return null;
+          })}
+        </Box>
       </div>
     ))}
   </Box>

@@ -75,12 +75,6 @@ interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
 }
 
-const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler';
-export const getChannelRegisterJournalUrl = (id: string) =>
-  `${channelRegisterBaseUrl}/KanalTidsskriftInfo.action?id=${id}`;
-export const getChannelRegisterPublisherUrl = (id: string) =>
-  `${channelRegisterBaseUrl}/KanalForlagInfo.action?id=${id}`;
-
 export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
   const { t } = useTranslation();
 

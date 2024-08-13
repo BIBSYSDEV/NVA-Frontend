@@ -289,7 +289,10 @@ export const DoiRequestAccordion = ({
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}
-            <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
+            <MessageForm
+              confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)}
+              hideRequiredAsterisk
+            />
           </Box>
         )}
       </AccordionDetails>

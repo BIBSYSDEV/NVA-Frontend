@@ -4,20 +4,23 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { StyledPaperHeader } from '../../components/PageWithSideMenu';
-import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { Link as RouterLink } from 'react-router-dom';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
+import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
 import { CristinProject } from '../../types/project.types';
+import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getEditProjectPath } from '../../utils/urlPaths';
 import { canEditProject } from '../registration/description_tab/projects_field/projectHelpers';
+import { ProjectFormDialog } from './form/ProjectFormDialog';
 import { ProjectContributors } from './ProjectContributors';
 import { ProjectGeneralInfo } from './ProjectGeneralInfo';
 import { ProjectResultsAccordion } from './ProjectResultsAccordion';
 import { ProjectSummary } from './ProjectSummary';
 import { RelatedProjects } from './RelatedProjects';
-import { ProjectFormDialog } from './form/ProjectFormDialog';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
@@ -29,6 +32,8 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
   const user = useSelector((store: RootState) => store.user);
   const userCanEditProject = canEditProject(user, project);
   const [openEditProject, setOpenEditProject] = useState(false);
+
+  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
 
   return (
     <Paper elevation={0}>
@@ -44,19 +49,31 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
         {userCanEditProject && (
           <>
             <Tooltip title={t('project.edit_project')}>
-              <IconButton
-                data-testid={dataTestId.projectLandingPage.editProjectButton}
-                onClick={() => setOpenEditProject(true)}
-                sx={{ ml: 'auto', color: 'inherit' }}>
-                <EditIcon />
-              </IconButton>
+              {betaEnabled ? (
+                <IconButton
+                  data-testid={dataTestId.projectLandingPage.editProjectButton}
+                  component={RouterLink}
+                  to={getEditProjectPath(project.id)}
+                  sx={{ ml: 'auto', color: 'inherit' }}>
+                  <EditIcon />
+                </IconButton>
+              ) : (
+                <IconButton
+                  data-testid={dataTestId.projectLandingPage.editProjectButton}
+                  onClick={() => setOpenEditProject(true)}
+                  sx={{ ml: 'auto', color: 'inherit' }}>
+                  <EditIcon />
+                </IconButton>
+              )}
             </Tooltip>
-            <ProjectFormDialog
-              open={openEditProject}
-              currentProject={project}
-              onClose={() => setOpenEditProject(false)}
-              refetchData={refetchProject}
-            />
+            {!betaEnabled && (
+              <ProjectFormDialog
+                open={openEditProject}
+                currentProject={project}
+                onClose={() => setOpenEditProject(false)}
+                refetchData={refetchProject}
+              />
+            )}
           </>
         )}
       </StyledPaperHeader>
