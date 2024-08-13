@@ -50,7 +50,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
                     rel="noopener noreferrer">
                     {project?.title}
                   </Link>
-                  <OpenInNewIcon fontSize="small" />
+                  <OpenInNewIcon fontSize="small" sx={{ alignSelf: 'center' }} />
                 </>
               ) : (
                 <Typography>-</Typography>
