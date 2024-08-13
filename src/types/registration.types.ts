@@ -99,7 +99,13 @@ interface ImportSource {
   archive?: string;
 }
 
-type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
+type RegistrationOperation =
+  | 'update'
+  | 'delete'
+  | 'unpublish'
+  | 'ticket/publish'
+  | 'terminate'
+  | 'update-including-files';
 
 export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';

@@ -39,7 +39,7 @@ import { Registration, RegistrationStatus, RegistrationTab } from '../../../type
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
-import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers';
+import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
 import { userCanPublishRegistration } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';

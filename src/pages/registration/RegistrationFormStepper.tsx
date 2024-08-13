@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getTabErrors, getTouchedTabFields } from '../../utils/formik-helpers';
+import { getTabErrors, getTouchedTabFields } from '../../utils/formik-helpers/formik-helpers';
 
 interface RegistrationFormStepperProps {
   setTabNumber: (newTab: RegistrationTab) => void;
