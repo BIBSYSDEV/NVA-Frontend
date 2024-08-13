@@ -17,13 +17,14 @@ import {
   userCanEditRegistration,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
-import {
-  getChannelRegisterJournalUrl,
-  getChannelRegisterPublisherUrl,
-} from '../public_registration/PublicPublicationContext';
+
 import { FileList } from './FileList';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { DoiField } from './resource_type_tab/components/DoiField';
+
+const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler';
+const getChannelRegisterJournalUrl = (pid: string) => `${channelRegisterBaseUrl}/KanalTidsskriftInfo.action?pid=${pid}`;
+const getChannelRegisterPublisherUrl = (pid: string) => `${channelRegisterBaseUrl}/KanalForlagInfo.action?pid=${pid}`;
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
