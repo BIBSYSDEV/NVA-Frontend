@@ -1,29 +1,22 @@
-import { Button, SxProps } from '@mui/material';
-import { useHistory } from 'react-router-dom';
+import { Button, ButtonProps, SxProps } from '@mui/material';
+import { Link, LinkProps } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-interface CancelEditButtonProps {
-  previousPathState?: string;
+interface CancelEditButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
   sx: SxProps;
 }
 
-const CancelEditButton = ({ previousPathState, sx }: CancelEditButtonProps) => {
+export const CancelEditButton = ({ sx, ...rest }: CancelEditButtonProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-
-  const checkAndGoBack = () => {
-    if (previousPathState) {
-      history.push(previousPathState);
-    } else {
-      history.push('/');
-    }
-  };
 
   return (
-    <Button onClick={checkAndGoBack} color="primary" sx={sx}>
+    <Button LinkComponent={Link} {...rest} color="primary" sx={sx}>
       {t('common.cancel')}
     </Button>
   );
 };
 
-export default CancelEditButton;
+//TODO: Create own link for navigating to wizard, using prevPath and prevSearch URL-states
+//TODO: Test on cetral import early
+//TODO: Use this link in combination with all buttons that lead to registration wizard.
+//TODO: CentralImport, TasksPage, ResultRegistration, NewResult, RegistrationLandingPage, FixInWizard

@@ -18,9 +18,9 @@ import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration } from '../../utils/registration-helpers';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { getRegistrationLandingPagePath, UrlPathTemplate } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
-import CancelEditButton from '../../components/CancelEditButton';
+import { CancelEditButton } from '../../components/CancelEditButton';
 
 interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
@@ -141,7 +141,7 @@ export const RegistrationFormActions = ({
           {t('my_page.messages.get_curator_support')}
         </Button>
         <CancelEditButton
-          previousPathState={previousPath}
+          to={previousPath ?? UrlPathTemplate.Home}
           sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'center' }}
         />
 
