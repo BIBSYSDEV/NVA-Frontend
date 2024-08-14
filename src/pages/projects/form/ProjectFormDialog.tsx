@@ -97,11 +97,11 @@ export const ProjectFormDialog = ({
 
   return (
     <Dialog
-      maxWidth="md"
+      maxWidth="lg"
       fullWidth
       onClose={toggleShowConfirmCloseDialog}
       open={open}
-      PaperProps={{ sx: { bgcolor: 'info.light' } }}
+      PaperProps={{ sx: { bgcolor: 'secondary.main' } }}
       transitionDuration={0}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
       <ErrorBoundary>
