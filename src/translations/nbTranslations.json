@@ -170,6 +170,9 @@
     "close": "Lukk",
     "close_forever": "Lukk og ikke vis igjen",
     "contributor": "Bidragsyter",
+    "contributors": {
+      "add_duplicate_affiliation": "Tilknytningen er allerede lagt til"
+    },
     "country": "Land",
     "create": "Opprett",
     "date": "Dato",
@@ -1108,6 +1111,10 @@
     }
   },
   "project": {
+    "affiliation_modal": {
+      "edit_affiliation": "Endre tilknytning",
+      "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>"
+    },
     "close_view": "Lukk visning",
     "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
     "coordinating_institution": "Koordinerende institusjon",
@@ -1168,7 +1175,6 @@
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
       "add_contributor": "Legg til bidragsyter",
-      "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
       "add_new_affiliation": "Legg til ny tilknytning",
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som forskningen er gjennomført i samarbeid med, skal legges til som tilknytning til bidragsyteren.</0> <0>Legg til tilknytning til bidragsyteren ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører bidragsyteren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
       "add_new_contributor": "Legg til ny bidragsyter",

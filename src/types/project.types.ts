@@ -55,7 +55,7 @@ export interface ProjectContributorIdentity {
 
 export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 
-interface ProjectContributorRole {
+export interface ProjectContributorRole {
   type: ProjectContributorType;
   affiliation: ProjectOrganization;
 }
@@ -197,5 +197,5 @@ export enum ProjectFieldName {
 export enum ProjectContributorFieldName {
   Type = 'roles[0].type',
   Identity = 'identity',
-  Affiliation = 'roles[0].affiliation',
+  Roles = 'roles',
 }
