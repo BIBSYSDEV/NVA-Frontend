@@ -20,25 +20,19 @@ import {
   isProjectManager,
   projectContributorToCristinPerson,
 } from '../../registration/description_tab/projects_field/projectHelpers';
+import { ProjectOrganizationBox } from '../ProjectOrganizationBox';
 
 interface ContributorRowProps {
   contributorIndex: number;
   isRekProject: boolean;
   baseFieldName: string;
-  contributor?: ProjectContributor;
+  contributor: ProjectContributor;
   removeContributor?: () => void;
 }
 
-export const ContributorRow = ({
-  contributorIndex,
-  isRekProject,
-  baseFieldName,
-  contributor,
-  removeContributor,
-}: ContributorRowProps) => {
+export const ContributorRow = ({ contributorIndex, isRekProject, baseFieldName, contributor }: ContributorRowProps) => {
   const { t } = useTranslation();
   const { errors, touched, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
-  const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -48,20 +42,16 @@ export const ContributorRow = ({
   const isRekProjectManager = isRekProject && contributor && isProjectManager(contributor);
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
 
-  //const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
-  //const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
-
-  //const fetchSuggestedInstitutions = async (affiliationIds: string[])
-
   return (
     <TableRow sx={{ td: { verticalAlign: 'top' } }}>
-      <TableCell align="left">
+      <TableCell align="left" width={'1'}>
         <Box sx={{ display: 'flex', alignItems: 'end' }}>
           <Field name={`${baseFieldName}.${ProjectFieldName.RoleType}`}>
             {({ field }: FieldProps<ProjectContributorType>) => (
               <TextField
                 data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
                 label={t('common.role')}
+                sx={{ width: '10rem' }}
                 value={
                   field.value === 'ProjectManager'
                     ? t('project.project_manager')
@@ -77,12 +67,13 @@ export const ContributorRow = ({
           </Field>
         </Box>
       </TableCell>
-      <TableCell>
+      <TableCell width={'1'}>
         <Field name={`${baseFieldName}.${ProjectContributorFieldName.Identity}`}>
           {({ field }: FieldProps<ProjectContributorIdentity>) => (
             <Autocomplete
               options={personSearchResult}
               disabled={isRekProjectManager}
+              sx={{ width: '20rem' }}
               inputMode="search"
               getOptionLabel={(option) => getFullCristinName(option.names)}
               filterOptions={(options) => options}
@@ -140,6 +131,21 @@ export const ContributorRow = ({
             />
           )}
         </Field>
+      </TableCell>
+      <TableCell>
+        {contributor.roles.map((role) => (
+          <ProjectOrganizationBox
+            key={role.affiliation.id}
+            unitUri={role.affiliation.id}
+            authorName={`${contributor.identity.firstName} ${contributor.identity.lastName}`}
+            contributorRoles={contributor.roles}
+            baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
+            removeAffiliation={() => {
+              console.log('TODO: remove affiliation');
+            }}
+            sx={{ width: '100%' }}
+          />
+        ))}
       </TableCell>
     </TableRow>
   );

@@ -24,7 +24,7 @@ export const ProjectContributors = ({ currentProject }: ProjectContributorsProps
   return (
     <>
       <FieldArray name={ProjectFieldName.Contributors}>
-        {({ name, push, remove }: FieldArrayRenderProps) => (
+        {({ name, remove }: FieldArrayRenderProps) => (
           <ListPagination
             count={contributors.length}
             rowsPerPage={rowsPerPage}
@@ -47,20 +47,12 @@ export const ProjectContributors = ({ currentProject }: ProjectContributorsProps
                 </TableHead>
                 <TableBody>
                   {contributors.map((contributor, index) => {
-                    const thisContributor =
-                      contributor.identity.id &&
-                      currentProject?.contributors[index] &&
-                      contributor.identity.id === currentProject.contributors[index].identity.id
-                        ? currentProject.contributors[index]
-                        : undefined;
-                    console.log('thisContributor', thisContributor);
-                    console.log('contributor', contributor);
                     return (
                       <ContributorRow
                         key={index}
                         contributorIndex={index}
                         baseFieldName={`${name}[${index}]`}
-                        contributor={thisContributor}
+                        contributor={contributor}
                         removeContributor={isProjectManager(contributor) ? undefined : () => remove(index)}
                         isRekProject={thisIsRekProject}
                       />
