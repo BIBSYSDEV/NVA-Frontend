@@ -11,8 +11,10 @@ interface UseFetchUserQueryProps {
 export const useFetchUserQuery = (username: string, queryProps: UseFetchUserQueryProps = {}) => {
   const { t } = useTranslation();
 
+  const isValidUsernameFormat = !!username && username.includes('@') && Number.isInteger(username.split('@')[0]);
+
   return useQuery({
-    enabled: !!username,
+    enabled: !!isValidUsernameFormat,
     queryKey: ['user', username],
     queryFn: () => fetchUser(username),
     meta: { errorMessage: t('feedback.error.get_person') },

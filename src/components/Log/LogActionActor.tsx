@@ -1,9 +1,9 @@
 import { Box, Skeleton, Tooltip, Typography } from '@mui/material';
-import { Avatar } from '../Avatar';
-import { OrganizationNameAndIcon } from '../OrganizationNameAndIcon';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { LogAction as LogActionType } from '../../types/log.types';
 import { getFullName } from '../../utils/user-helpers';
+import { Avatar } from '../Avatar';
+import { OrganizationNameAndIcon } from '../OrganizationNameAndIcon';
 
 export const LogActionActor = ({ actor, organization }: Pick<LogActionType, 'actor' | 'organization'>) => {
   const userQuery = useFetchUserQuery(actor ?? '', { retry: 0, staleTime: Infinity, gcTime: 1_800_000 });
