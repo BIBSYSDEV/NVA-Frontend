@@ -34,9 +34,9 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
         border: '1px solid lightgray',
         borderRadius: '8px',
       }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', height: '100%' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography fontWeight="bold">{t('project.project').toUpperCase()}</Typography>
-        <Box sx={{ display: 'grid', gridTemplateRows: '1fr auto', gap: '1rem' }}>
+        <Box sx={{ display: 'grid', gridTemplateRows: '1fr auto', gap: '1rem', height: '100%' }}>
           <div>
             <Typography fontWeight="bold">{t('common.title')}:</Typography>
             <Box sx={{ display: 'flex', gap: '2rem' }}>
@@ -71,7 +71,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
         </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography fontWeight="bold">{t('common.funding').toUpperCase()}</Typography>
         {project?.funding?.length ? (
           project.funding.map((funding) => (
