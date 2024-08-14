@@ -14,6 +14,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 import { isProjectManager, isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { ProjectContributors } from './ProjectContributors';
 import { ProjectFundingsField } from './ProjectFunding';
 
 interface ProjectFormPanel1Props {
@@ -26,6 +27,8 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
   const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
 
   const thisIsRekProject = isRekProject(currentProject);
+
+  console.log('values', values);
 
   return (
     <>
@@ -139,6 +142,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
         {suggestedProjectManager && (
           <Typography>{t('project.project_manager_from_nfr', { name: suggestedProjectManager })}</Typography>
         )}
+        <ProjectContributors currentProject={currentProject} />
         <FieldArray name={ProjectFieldName.Contributors}>
           {({ name, push, remove }: FieldArrayRenderProps) => (
             <>
