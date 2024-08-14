@@ -4,7 +4,7 @@ import { RegistrationTab } from '../../types/registration.types';
 import { ProjectDescriptionFieldNames } from '../projectFieldNames';
 import { getErrorMessages } from './formik-helpers';
 
-export interface ProjectTabErrors {
+interface ProjectTabErrors {
   [RegistrationTab.Description]: string[];
 }
 

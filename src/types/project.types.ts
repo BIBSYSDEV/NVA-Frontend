@@ -64,7 +64,7 @@ export interface ProjectContributor {
   roles: ProjectContributorRole[];
 }
 
-export interface CreatorRole extends Omit<ProjectContributorRole, 'type'> {
+interface CreatorRole extends Omit<ProjectContributorRole, 'type'> {
   type: 'ProjectCreator';
 }
 
@@ -144,7 +144,7 @@ export interface NfrProject {
   activeTo: string;
 }
 
-export const emptyAffiliation: ProjectOrganization = {
+const emptyAffiliation: ProjectOrganization = {
   type: 'Organization',
   id: '',
   labels: {},
