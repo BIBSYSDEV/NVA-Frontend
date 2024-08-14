@@ -80,8 +80,8 @@ interface RegistrationPublisher {
   id: string;
 }
 
-type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier';
-type ImportSourceName = 'Cristin' | 'Scopus';
+type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier' | 'HandleIdentifier';
+type ImportSourceName = 'Cristin' | 'Scopus' | 'handle';
 
 export interface AdditionalIdentifier {
   type: AdditionalIdentifierType;
@@ -99,7 +99,13 @@ interface ImportSource {
   archive?: string;
 }
 
-type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
+type RegistrationOperation =
+  | 'update'
+  | 'delete'
+  | 'unpublish'
+  | 'ticket/publish'
+  | 'terminate'
+  | 'update-including-files';
 
 export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';

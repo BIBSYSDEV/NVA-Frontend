@@ -56,54 +56,58 @@ export const AssigneeSelector = ({
   const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
   const assigneeInitials = getInitials(assigneeName);
 
-  return showCuratorSearch ? (
-    <Autocomplete
-      options={curatorOptions}
-      renderOption={({ key, ...props }, option) => (
-        <li {...props} key={option.username}>
-          {getFullName(option.givenName, option.familyName)}
-        </li>
-      )}
-      disabled={isLoading}
-      onChange={async (_, value) => {
-        try {
-          await onSelectAssignee(value?.username ?? '');
-        } finally {
-          setShowCuratorSearch(false);
-        }
-      }}
-      onBlur={() => setShowCuratorSearch(false)}
-      getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
-      isOptionEqualToValue={(option, value) => option.username === value?.username}
-      value={assigneeQuery.data ?? null}
-      loading={isUpdating || curatorsQuery.isPending}
-      renderInput={(params) => (
-        <AutocompleteTextField
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeSearchField}
-          {...params}
-          label={t('my_page.roles.curator')}
-          isLoading={isLoading}
-          placeholder={t('common.search')}
-          showSearchIcon
+  return (
+    <Box sx={{ mb: '0.5rem' }}>
+      {showCuratorSearch ? (
+        <Autocomplete
+          options={curatorOptions}
+          renderOption={({ key, ...props }, option) => (
+            <li {...props} key={option.username}>
+              {getFullName(option.givenName, option.familyName)}
+            </li>
+          )}
+          disabled={isLoading}
+          onChange={async (_, value) => {
+            try {
+              await onSelectAssignee(value?.username ?? '');
+            } finally {
+              setShowCuratorSearch(false);
+            }
+          }}
+          onBlur={() => setShowCuratorSearch(false)}
+          getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
+          isOptionEqualToValue={(option, value) => option.username === value?.username}
+          value={assigneeQuery.data ?? null}
+          loading={isUpdating || curatorsQuery.isPending}
+          renderInput={(params) => (
+            <AutocompleteTextField
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeSearchField}
+              {...params}
+              label={t('my_page.roles.curator')}
+              isLoading={isLoading}
+              placeholder={t('common.search')}
+              showSearchIcon
+            />
+          )}
         />
-      )}
-    />
-  ) : (
-    <Box sx={{ height: '1.75rem', display: 'flex', gap: '0.5rem', mb: '0.5rem' }}>
-      <Tooltip title={`${t('my_page.roles.curator')}: ${assignee ? assigneeName : t('common.none')}`}>
-        <StyledBaseContributorIndicator
-          sx={{ bgcolor: iconBackgroundColor }}
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
-          {assignee ? assigneeInitials : ''}
-        </StyledBaseContributorIndicator>
-      </Tooltip>
-      {canSetAssignee && (
-        <IconButton
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeButton}
-          title={t('registration.public_page.tasks_panel.assign_curator')}
-          onClick={() => setShowCuratorSearch(true)}>
-          <MoreHorizIcon />
-        </IconButton>
+      ) : (
+        <Box sx={{ height: '1.75rem', display: 'flex', gap: '0.5rem' }}>
+          <Tooltip title={`${t('my_page.roles.curator')}: ${assignee ? assigneeName : t('common.none')}`}>
+            <StyledBaseContributorIndicator
+              sx={{ bgcolor: iconBackgroundColor }}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
+              {assignee ? assigneeInitials : ''}
+            </StyledBaseContributorIndicator>
+          </Tooltip>
+          {canSetAssignee && (
+            <IconButton
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeButton}
+              title={t('registration.public_page.tasks_panel.assign_curator')}
+              onClick={() => setShowCuratorSearch(true)}>
+              <MoreHorizIcon />
+            </IconButton>
+          )}
+        </Box>
       )}
     </Box>
   );

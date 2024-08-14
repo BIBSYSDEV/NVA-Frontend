@@ -1,15 +1,15 @@
-import { Divider, Link, Skeleton, Typography } from '@mui/material';
+import { Divider, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { fetchProject } from '../../api/cristinApi';
 import { ResearchProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getProjectPath } from '../../utils/urlPaths';
+import { getProjectPath, getResearchProfilePath } from '../../utils/urlPaths';
 import {
   getProjectCoordinatingInstitutionName,
-  getProjectManagerName,
+  getProjectManagers,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
 
@@ -67,6 +67,7 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
   });
   const fetchedProject = projectQuery.data;
   const projectTitle = fetchedProject?.title ?? project.name;
+  const projectManager = getProjectManagers(fetchedProject?.contributors ?? [])?.[0];
 
   return (
     <StyledProjectGridRow sx={{ ':not(:last-of-type)': { mb: '1rem' } }}>
@@ -79,9 +80,9 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
           data-testid={dataTestId.registrationLandingPage.projectTitle}
           sx={{ fontWeight: 500 }}>
           {fetchedProject?.id ? (
-            <Link component={RouterLink} to={getProjectPath(fetchedProject.id)}>
+            <MuiLink component={Link} to={getProjectPath(fetchedProject.id)}>
               {projectTitle}
-            </Link>
+            </MuiLink>
           ) : (
             projectTitle
           )}
@@ -97,7 +98,9 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
       {projectQuery.isPending ? (
         <Skeleton />
       ) : (
-        <Typography variant="body1">{getProjectManagerName(fetchedProject)}</Typography>
+        <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+          {projectManager.identity.firstName} {projectManager.identity.lastName}
+        </MuiLink>
       )}
       <Divider component="span" orientation="vertical" />
       {projectQuery.isPending ? (

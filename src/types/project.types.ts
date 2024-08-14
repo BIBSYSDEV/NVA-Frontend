@@ -3,6 +3,13 @@ import { AggregationValue, LanguageString } from './common.types';
 import { Organization } from './organization.types';
 import { Funding } from './registration.types';
 
+export enum ProjectTab {
+  Description = 0,
+  Details = 1,
+  Contributors = 2,
+  Connections = 3,
+}
+
 export interface TypedLabel {
   type: string;
   label: LanguageString;
@@ -57,7 +64,7 @@ export interface ProjectContributor {
   roles: ProjectContributorRole[];
 }
 
-export interface CreatorRole extends Omit<ProjectContributorRole, 'type'> {
+interface CreatorRole extends Omit<ProjectContributorRole, 'type'> {
   type: 'ProjectCreator';
 }
 
@@ -94,7 +101,7 @@ export interface SaveCristinProject {
 
 export interface CristinProject extends SaveCristinProject {
   id: string;
-  identifier: ProjectIdentifier[];
+  identifiers: ProjectIdentifier[];
   status: ProjectStatus;
   alternativeTitles: LanguageString[];
   coordinatingInstitution: ProjectOrganization;
@@ -137,7 +144,7 @@ export interface NfrProject {
   activeTo: string;
 }
 
-export const emptyAffiliation: ProjectOrganization = {
+const emptyAffiliation: ProjectOrganization = {
   type: 'Organization',
   id: '',
   labels: {},

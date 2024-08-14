@@ -7,21 +7,6 @@ import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '..
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-  allPublicationInstanceTypes,
-} from '../types/publicationFieldNames';
-import {
   AudioVisualPublication,
   Award,
   Broadcast,
@@ -48,11 +33,27 @@ import { JournalRegistration } from '../types/publication_types/journalRegistrat
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
 import {
+  allPublicationInstanceTypes,
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+} from '../types/publicationFieldNames';
+import {
   Journal,
   NpiSubjectDomain,
   PublicationInstanceType,
   Publisher,
   Registration,
+  RegistrationDate,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -643,16 +644,19 @@ export const getOutputName = (item: OutputItem): string => {
 };
 
 export const userCanEditRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('update');
+  registration.allowedOperations?.includes('update') ?? false;
 
 export const userCanUnpublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('unpublish');
+  registration.allowedOperations?.includes('unpublish') ?? false;
 
 export const userCanPublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('ticket/publish');
+  registration.allowedOperations?.includes('ticket/publish') ?? false;
 
 export const userCanDeleteRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('delete');
+  registration.allowedOperations?.includes('delete') ?? false;
+
+export const userCanEditPublishedFile = (registration: Registration) =>
+  registration.allowedOperations?.includes('update-including-files') ?? false;
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
@@ -772,3 +776,24 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('deu'),
   getLanguageByIso6393Code('mis'),
 ];
+
+export const registrationsHaveSamePublicationDate = (
+  duplicatePublicationDate: RegistrationDate | undefined,
+  publicationDate: RegistrationDate | undefined
+) => {
+  if (!duplicatePublicationDate || !publicationDate) {
+    return false;
+  }
+  let isSame = duplicatePublicationDate.year === publicationDate.year;
+
+  if (
+    (duplicatePublicationDate.month || publicationDate.month) &&
+    duplicatePublicationDate.month !== publicationDate.month
+  ) {
+    isSame = false;
+  }
+  if ((duplicatePublicationDate.day || publicationDate.day) && duplicatePublicationDate.day !== publicationDate.day) {
+    isSame = false;
+  }
+  return isSame;
+};
