@@ -1,4 +1,4 @@
-import { TFunction } from 'i18next';
+import { t, TFunction } from 'i18next';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
@@ -796,4 +796,12 @@ export const registrationsHaveSamePublicationDate = (
     isSame = false;
   }
   return isSame;
+};
+
+export const getIssnValuesString = (context: Partial<Pick<Journal, 'onlineIssn' | 'printIssn'>>) => {
+  const issnValues = [
+    context.printIssn ? `${t('registration.resource_type.print_issn')}: ${context.printIssn}` : '',
+    context.onlineIssn ? `${t('registration.resource_type.online_issn')}: ${context.onlineIssn}` : '',
+  ].filter(Boolean);
+  return issnValues.join(', ');
 };
