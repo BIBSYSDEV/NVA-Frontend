@@ -117,7 +117,7 @@ export const ProjectsField = () => {
                     data-testid={dataTestId.registrationWizard.description.createProjectButton}
                     onClick={() => setOpenNewProjectDialog(true)}
                     startIcon={<AddIcon />}>
-                    {t('project.create_project')}
+                    {t('project.create_new_project')}
                   </Button>
                   <HelperTextModal
                     modalTitle={t('project.create_project')}

@@ -1109,6 +1109,7 @@
     "close_view": "Lukk visning",
     "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
     "coordinating_institution": "Koordinerende institusjon",
+    "create_new_project": "Opprett nytt prosjekt",
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "form": {

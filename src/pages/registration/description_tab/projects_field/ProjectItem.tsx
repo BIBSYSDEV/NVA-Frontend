@@ -47,7 +47,7 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
                   sx={{ display: 'flex', gap: '1rem' }}
                   component={Link}
                   data-testid={dataTestId.registrationWizard.description.projectLink(project?.id)}
-                  to={getProjectPath(project?.id ?? '')}
+                  to={getProjectPath(project.id)}
                   target="_blank"
                   rel="noopener noreferrer">
                   {project.title}
