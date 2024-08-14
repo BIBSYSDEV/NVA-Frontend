@@ -6,7 +6,7 @@ import { BookPublicationContext } from '../../types/publication_types/bookRegist
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
-import { PublicPublisher } from './PublicPublicationContext';
+import { PublicPublisher, PublicSeries } from './PublicPublicationContext';
 
 interface ChapterPublisherInfoProps {
   publicationContext: ChapterPublicationContext;
@@ -39,6 +39,8 @@ export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInf
         </Box>
       )}
       <PublicPublisher publisher={publisherPublicationContext.publisher} />
+
+      {publisherPublicationContext.series?.id && <PublicSeries publicationContext={publisherPublicationContext} />}
     </>
   ) : null;
 };
