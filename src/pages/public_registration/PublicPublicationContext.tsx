@@ -166,7 +166,10 @@ export const PublicSeries = ({
       {series.id ? (
         <PublicJournalContent id={series.id} errorMessage={t('feedback.error.get_series')} />
       ) : (
-        <Typography>{series.title}</Typography>
+        <>
+          <Typography>{series.title}</Typography>
+          <Typography>{getIssnValuesString(series)}</Typography>
+        </>
       )}
       {seriesNumber && (
         <Typography>
