@@ -14,7 +14,14 @@ export const LogActionItem = ({ description, date, fileIcon }: LogActionItemType
   const itemIsFile = !!fileIcon;
   return (
     <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.5rem', alignItems: 'center' }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: 'auto 1fr',
+          columnGap: '0.5rem',
+          alignItems: 'center',
+          gridColumn: date ? undefined : 'span 2',
+        }}>
         {fileIcon && <LogActionItemIcon fileIcon={fileIcon} />}
         <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
           {itemIsFile ? (
