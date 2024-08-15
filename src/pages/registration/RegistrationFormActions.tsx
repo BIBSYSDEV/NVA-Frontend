@@ -20,7 +20,6 @@ import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath, UrlPathTemplate } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
-import { CancelEditButton } from '../../components/CancelEditButton';
 
 interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
@@ -45,8 +44,6 @@ export const RegistrationFormActions = ({
   const location = useLocation<PreviousPathLocationState>();
   const previousPath = location.state?.previousPath;
 
-  console.log(previousPath);
-
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
   const [isSaving, setIsSaving] = useState(false);
@@ -54,6 +51,14 @@ export const RegistrationFormActions = ({
 
   const isFirstTab = tabNumber === RegistrationTab.Description;
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
+
+  const cancelEdit = () => {
+    if (history.location.state?.previousPath) {
+      history.goBack();
+    } else {
+      history.push(UrlPathTemplate.Home);
+    }
+  };
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
@@ -140,10 +145,13 @@ export const RegistrationFormActions = ({
           onClick={toggleSupportModal}>
           {t('my_page.messages.get_curator_support')}
         </Button>
-        <CancelEditButton
-          to={previousPath ?? UrlPathTemplate.Home}
-          sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'center' }}
-        />
+        <Button
+          onClick={cancelEdit}
+          color="primary"
+          sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'center' }}>
+          {' '}
+          {t('common.cancel')}
+        </Button>
 
         {!isLastTab ? (
           <Box
