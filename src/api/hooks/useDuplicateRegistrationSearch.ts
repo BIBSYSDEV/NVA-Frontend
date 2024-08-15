@@ -14,8 +14,10 @@ export const useDuplicateRegistrationSearch = (
     title: title,
   };
 
+  const enabled = !!title;
+
   const titleSearch = useQuery({
-    enabled: !!title,
+    enabled: enabled,
     queryKey: ['registrations', searchConfig],
     queryFn: () => fetchResults(searchConfig),
     meta: { errorMessage: t('feedback.error.get_registrations') },
@@ -46,7 +48,7 @@ export const useDuplicateRegistrationSearch = (
   });
 
   return {
-    titleSearchPending: titleSearch.isPending,
+    titleSearchPending: enabled && titleSearch.isPending,
     duplicateRegistration: duplicateRegistration,
   };
 };
