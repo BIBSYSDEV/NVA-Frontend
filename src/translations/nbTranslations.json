@@ -1723,6 +1723,9 @@
       "create_series": "Opprett serie",
       "date_from": "Dato fra",
       "date_to": "Dato til",
+      "duplicate_category_warning": "Det finnes alt en publikasjon med {{sameFields}} som er publisert med denne kategorien. Hvis dette er det samme resultatet som du prøver å registrere, må du avbryte registreringen slik at du ikke oppretter duplikater.",
+      "same_title_and_date": "samme tittel og år",
+      "same_title": "samme tittel",
       "exhibition_production": {
         "add_exhibition_basic": "Legg til visningssted",
         "add_exhibition_catalog": "Legg til utstillingskatalog",

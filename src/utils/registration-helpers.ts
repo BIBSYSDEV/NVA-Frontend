@@ -53,7 +53,6 @@ import {
   PublicationInstanceType,
   Publisher,
   Registration,
-  RegistrationDate,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -777,25 +776,25 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
-export const registrationsHaveSamePublicationDate = (
-  duplicatePublicationDate: RegistrationDate | undefined,
-  publicationDate: RegistrationDate | undefined
-) => {
-  if (!duplicatePublicationDate || !publicationDate) {
+export const registrationsHaveSamePublicationYear = (reg1: Registration, reg2: Registration) => {
+  if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
     return false;
   }
-  let isSame = duplicatePublicationDate.year === publicationDate.year;
 
+  return reg1.entityDescription.publicationDate.year === reg2.entityDescription.publicationDate.year;
+};
+
+export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registration) => {
   if (
-    (duplicatePublicationDate.month || publicationDate.month) &&
-    duplicatePublicationDate.month !== publicationDate.month
+    reg1.entityDescription?.reference?.publicationInstance?.type &&
+    reg2.entityDescription?.reference?.publicationInstance?.type
   ) {
-    isSame = false;
+    return (
+      reg1.entityDescription.reference.publicationInstance.type ===
+      reg2.entityDescription.reference.publicationInstance.type
+    );
   }
-  if ((duplicatePublicationDate.day || publicationDate.day) && duplicatePublicationDate.day !== publicationDate.day) {
-    isSame = false;
-  }
-  return isSame;
+  return false;
 };
 
 export const getIssnValuesString = (context: Partial<Pick<Journal, 'onlineIssn' | 'printIssn'>>) => {
