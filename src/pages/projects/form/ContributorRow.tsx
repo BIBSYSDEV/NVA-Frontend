@@ -1,4 +1,5 @@
-import { Autocomplete, Box, TableCell, TableRow, TextField, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/AddCircleOutline';
+import { Autocomplete, Box, Button, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,11 +16,12 @@ import {
 } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
+import { getFullCristinName, getFullName, getValueByKey } from '../../../utils/user-helpers';
 import {
   isProjectManager,
   projectContributorToCristinPerson,
 } from '../../registration/description_tab/projects_field/projectHelpers';
+import { ProjectAddAffiliationModal } from '../ProjectAddAffiliationModal';
 import { ProjectOrganizationBox } from '../ProjectOrganizationBox';
 
 interface ContributorRowProps {
@@ -33,6 +35,7 @@ interface ContributorRowProps {
 export const ContributorRow = ({ contributorIndex, isRekProject, baseFieldName, contributor }: ContributorRowProps) => {
   const { t } = useTranslation();
   const { errors, touched, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
+  const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -41,6 +44,8 @@ export const ContributorRow = ({ contributorIndex, isRekProject, baseFieldName, 
 
   const isRekProjectManager = isRekProject && contributor && isProjectManager(contributor);
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
+
+  const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   return (
     <TableRow sx={{ td: { verticalAlign: 'top' } }}>
@@ -133,20 +138,39 @@ export const ContributorRow = ({ contributorIndex, isRekProject, baseFieldName, 
         </Field>
       </TableCell>
       <TableCell>
-        {contributor.roles.map((role) => (
-          <ProjectOrganizationBox
-            key={role.affiliation.id}
-            unitUri={role.affiliation.id}
-            authorName={`${contributor.identity.firstName} ${contributor.identity.lastName}`}
-            contributorRoles={contributor.roles}
-            baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
-            removeAffiliation={() => {
-              console.log('TODO: remove affiliation');
-            }}
-            sx={{ width: '100%' }}
-          />
-        ))}
+        {contributor.roles.map((role, index) => {
+          if (!role.affiliation.id) {
+            return (
+              <Button
+                key={index}
+                variant="outlined"
+                sx={{ padding: '0.1rem 0.75rem' }}
+                data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
+                startIcon={<AddIcon />}
+                onClick={toggleAffiliationModal}>
+                {t('project.add_affiliation')}
+              </Button>
+            );
+          }
+          return (
+            <ProjectOrganizationBox
+              key={role.affiliation.id}
+              unitUri={role.affiliation.id}
+              authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+              contributorRoles={contributor.roles}
+              baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
+              sx={{ width: '100%' }}
+            />
+          );
+        })}
       </TableCell>
+      <ProjectAddAffiliationModal
+        openAffiliationModal={openAffiliationModal}
+        toggleAffiliationModal={toggleAffiliationModal}
+        authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+        baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
+        contributorRoles={contributor.roles}
+      />
     </TableRow>
   );
 };

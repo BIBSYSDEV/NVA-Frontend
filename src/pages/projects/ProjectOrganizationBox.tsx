@@ -7,14 +7,12 @@ import { StyledOrganizationBox } from '../../components/institution/Organization
 import { OrganizationHierarchy } from '../../components/institution/OrganizationHierarchy';
 import { ProjectContributorRole } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { DeleteIconButton } from '../messages/components/DeleteIconButton';
 import { EditIconButton } from '../messages/components/EditIconButton';
 import { ProjectEditAffiliationModal } from './ProjectEditAffiliationModal';
 
 interface ProjectOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
   baseFieldName: string;
   authorName: string;
-  removeAffiliation: () => void;
   unitUri: string;
   contributorRoles: ProjectContributorRole[];
 }
@@ -23,7 +21,6 @@ export const ProjectOrganizationBox = ({
   unitUri,
   authorName,
   baseFieldName,
-  removeAffiliation,
   contributorRoles,
   sx,
 }: ProjectOrganizationBoxProps) => {
@@ -54,13 +51,6 @@ export const ProjectOrganizationBox = ({
             contributorRoles={contributorRoles}
           />
         </>
-      )}
-      {removeAffiliation && (
-        <DeleteIconButton
-          data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
-          onClick={removeAffiliation}
-          tooltip={t('registration.contributors.remove_affiliation')}
-        />
       )}
     </StyledOrganizationBox>
   ) : (

@@ -28,8 +28,6 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
 
   const thisIsRekProject = isRekProject(currentProject);
 
-  console.log('values', values);
-
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '1rem' }}>

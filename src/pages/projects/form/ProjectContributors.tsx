@@ -1,11 +1,13 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListPagination } from '../../../components/ListPagination';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
-import { CristinProject, ProjectFieldName } from '../../../types/project.types';
+import { CristinProject, emptyProjectContributor, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { isProjectManager, isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ContributorRow } from './ContributorRow';
 
@@ -24,44 +26,54 @@ export const ProjectContributors = ({ currentProject }: ProjectContributorsProps
   return (
     <>
       <FieldArray name={ProjectFieldName.Contributors}>
-        {({ name, remove }: FieldArrayRenderProps) => (
-          <ListPagination
-            count={contributors.length}
-            rowsPerPage={rowsPerPage}
-            page={currentPage}
-            onPageChange={(newPage) => setCurrentPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setCurrentPage(1);
-            }}
-            alternativePaginationText={t('common.number_of_rows_per_page')}>
-            <TableContainer sx={{ mb: '0.5rem' }} component={Paper}>
-              <Table size="small" sx={alternatingTableRowColor}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>{t('common.role')}</TableCell>
-                    <TableCell>{t('common.name')}</TableCell>
-                    <TableCell>{t('common.affiliation')}</TableCell>
-                    <TableCell>{t('common.clear')}</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {contributors.map((contributor, index) => {
-                    return (
-                      <ContributorRow
-                        key={index}
-                        contributorIndex={index}
-                        baseFieldName={`${name}[${index}]`}
-                        contributor={contributor}
-                        removeContributor={isProjectManager(contributor) ? undefined : () => remove(index)}
-                        isRekProject={thisIsRekProject}
-                      />
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </ListPagination>
+        {({ name, remove, push }: FieldArrayRenderProps) => (
+          <>
+            <Button
+              sx={{ marginBottom: '1rem', borderRadius: '1rem', width: '17rem' }}
+              onClick={() => push(emptyProjectContributor)}
+              variant="contained"
+              startIcon={<AddIcon />}
+              data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
+              {t('project.add_project_contributor')}
+            </Button>
+            <ListPagination
+              count={contributors.length}
+              rowsPerPage={rowsPerPage}
+              page={currentPage}
+              onPageChange={(newPage) => setCurrentPage(newPage)}
+              onRowsPerPageChange={(newRowsPerPage) => {
+                setRowsPerPage(newRowsPerPage);
+                setCurrentPage(1);
+              }}
+              alternativePaginationText={t('common.number_of_rows_per_page')}>
+              <TableContainer sx={{ mb: '0.5rem' }} component={Paper}>
+                <Table size="small" sx={alternatingTableRowColor}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{t('common.role')}</TableCell>
+                      <TableCell>{t('common.name')}</TableCell>
+                      <TableCell>{t('common.affiliation')}</TableCell>
+                      <TableCell>{t('common.clear')}</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {contributors.map((contributor, index) => {
+                      return (
+                        <ContributorRow
+                          key={index}
+                          contributorIndex={index}
+                          baseFieldName={`${name}[${index}]`}
+                          contributor={contributor}
+                          removeContributor={isProjectManager(contributor) ? undefined : () => remove(index)}
+                          isRekProject={thisIsRekProject}
+                        />
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </ListPagination>
+          </>
         )}
       </FieldArray>
     </>
