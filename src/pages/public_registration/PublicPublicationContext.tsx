@@ -123,7 +123,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
           )}
         </>
       ) : (
-        <Typography>{publisher.name}</Typography>
+        <Typography gutterBottom>{publisher.name}</Typography>
       )}
     </>
   ) : null;
