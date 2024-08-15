@@ -350,6 +350,7 @@ export const dataTestId = {
       fundingLinkButton: 'funding-link-button',
       fundingNfrProjectSearchField: 'funding-nfr-project-search-field',
       fundingRemoveButton: 'funding-remove-button',
+      nfrProjectLink: (id: string) => `nfr-project-link-${id}`,
       nfrProjectSearchField: 'nfr-project-search-field',
       projectForm: {
         addParticipantButton: 'add-participant-button',
@@ -374,6 +375,7 @@ export const dataTestId = {
         startWithEmptyProjectButton: 'start-with-empty-project-button',
         titleField: 'project-title-field',
       },
+      projectLink: (id: string) => `project-link-${id}`,
       projectModal: 'project-modal',
       projectSearchField: 'project-search-field',
       projectSearchOption: (id: string) => `project-option-${id}`,
@@ -382,6 +384,7 @@ export const dataTestId = {
       alternativeTitleField: 'registration-alternative-title-field',
       descriptionField: 'registration-description-field',
       languageField: 'registration-language-field',
+      removeProjectButton: 'remove-project-button',
       tagField: 'registration-tag-field',
       titleField: 'registration-title-field',
       vocabularyMenuItem: (vocabulary: string) => `vocabulary-menu-item-${vocabulary}`,

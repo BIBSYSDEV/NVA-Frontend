@@ -19,14 +19,7 @@ export interface ResearchProject {
   type: 'ResearchProject';
   id: string;
   name: string;
-  grants?: Grant[];
   approvals?: Approval[];
-}
-
-interface Grant {
-  type: 'Grant';
-  id: string;
-  source: string;
 }
 
 interface Approval {
@@ -59,6 +52,7 @@ interface ProjectContributorRole {
   type: ProjectContributorType;
   affiliation: ProjectOrganization;
 }
+
 export interface ProjectContributor {
   identity: ProjectContributorIdentity;
   roles: ProjectContributorRole[];
