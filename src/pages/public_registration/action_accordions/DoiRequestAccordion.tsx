@@ -151,6 +151,13 @@ export const DoiRequestAccordion = ({
     (file) => file.type === 'PublishedFile'
   );
 
+  const hasReservedDoi = !doiRequestTicket && registration.doi;
+  const status = doiRequestTicket
+    ? t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)
+    : hasReservedDoi
+      ? t('registration.public_page.tasks_panel.reserved')
+      : '';
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
@@ -159,14 +166,14 @@ export const DoiRequestAccordion = ({
       defaultExpanded={waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi')}
-        {doiRequestTicket && ` - ${t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)}`}
+        {status && ` - ${status}`}
       </AccordionSummary>
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
 
         {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} />}
 
-        {!doiRequestTicket && registration.doi && (
+        {hasReservedDoi && (
           <Trans
             t={t}
             i18nKey="registration.public_page.tasks_panel.has_reserved_doi"
