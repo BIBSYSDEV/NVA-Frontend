@@ -7,12 +7,12 @@ import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { updateRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
-import { PreviousPathLocationState, RegistrationFormLocationState } from '../../types/locationState.types';
+import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -41,8 +41,6 @@ export const RegistrationFormActions = ({
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { values, setTouched, resetForm } = useFormikContext<Registration>();
-  const location = useLocation<PreviousPathLocationState>();
-  const previousPath = location.state?.previousPath;
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
