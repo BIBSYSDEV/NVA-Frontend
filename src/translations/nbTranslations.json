@@ -1425,6 +1425,7 @@
         "assign_curator": "Sett kurator",
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
+        "draft_doi_description": "<0>En reservert DOI gjør at du (og de du deler DOI med) kan sitere forskningsresultatet i andre arbeid før det publiseres.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om din registrering tilsvarer det som alt er publisert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det.</0>",
         "duplicate_title_description_introduction": "Denne registreringen har samme tittel og år som følgende publikasjon:",
         "edit_publishing_request_description": "Er det noen av filene til publiseringen som ikke skal publiseres så kan du endre publiseringsstatus på disse ved å redigere registreringen.",
