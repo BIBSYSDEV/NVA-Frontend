@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchPerson } from '../../../api/hooks/useFetchPerson';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import {
   ProjectContributor,
@@ -17,6 +18,7 @@ import {
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getFullCristinName, getFullName, getValueByKey } from '../../../utils/user-helpers';
+import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import {
   isProjectManager,
   projectContributorToCristinPerson,
@@ -32,10 +34,17 @@ interface ContributorRowProps {
   removeContributor?: () => void;
 }
 
-export const ContributorRow = ({ contributorIndex, isRekProject, baseFieldName, contributor }: ContributorRowProps) => {
+export const ContributorRow = ({
+  contributorIndex,
+  isRekProject,
+  baseFieldName,
+  contributor,
+  removeContributor,
+}: ContributorRowProps) => {
   const { t } = useTranslation();
   const { errors, touched, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
+  const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -163,6 +172,32 @@ export const ContributorRow = ({ contributorIndex, isRekProject, baseFieldName, 
             />
           );
         })}
+      </TableCell>
+      <TableCell sx={{ width: '3rem', textAlign: 'center', paddingTop: '1rem' }}>
+        <DeleteIconButton
+          data-testid={dataTestId.registrationWizard.description.projectForm.removeContributorButton}
+          onClick={() => setShowConfirmRemoveContributor(true)}
+          tooltip={t('project.form.remove_participant')}
+          disabled={!removeContributor}
+        />
+        {!!removeContributor && (
+          <ConfirmDialog
+            open={showConfirmRemoveContributor}
+            onAccept={() => {
+              removeContributor();
+              setShowConfirmRemoveContributor(false);
+            }}
+            title={t('project.form.remove_participant')}
+            onCancel={() => setShowConfirmRemoveContributor(false)}>
+            <Typography>
+              {t('project.form.remove_participant_text', {
+                name:
+                  getFullName(contributor?.identity?.firstName, contributor?.identity?.lastName) ??
+                  t('project.project_participant').toLocaleLowerCase(),
+              })}
+            </Typography>
+          </ConfirmDialog>
+        )}
       </TableCell>
       <ProjectAddAffiliationModal
         openAffiliationModal={openAffiliationModal}
