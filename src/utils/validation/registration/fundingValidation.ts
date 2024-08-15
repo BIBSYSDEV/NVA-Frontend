@@ -43,12 +43,12 @@ export const fundingValidationSchema = Yup.object({
     fundingSourceIsNfr(source)
       ? schema.optional()
       : schema.shape({
-          currency: Yup.string().defined(),
+          currency: Yup.string().optional(),
           amount: Yup.number()
             .transform((value, originalValue) => (/\s/.test(originalValue) ? NaN : value))
             .typeError(fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
             .min(0, fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
-            .required(fundingErrorMessage.fundingAmountMustBeAPositiveNumber),
+            .optional(),
         })
   ),
 });
