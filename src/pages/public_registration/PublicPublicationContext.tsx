@@ -66,7 +66,7 @@ import { ContextPublisher, Journal, Publisher, Series } from '../../types/regist
 import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
+import { getIssnValuesString, getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import { RegistrationSummary } from './RegistrationSummary';
@@ -74,12 +74,6 @@ import { RegistrationSummary } from './RegistrationSummary';
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
 }
-
-const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler';
-export const getChannelRegisterJournalUrl = (id: string) =>
-  `${channelRegisterBaseUrl}/KanalTidsskriftInfo.action?id=${id}`;
-export const getChannelRegisterPublisherUrl = (id: string) =>
-  `${channelRegisterBaseUrl}/KanalForlagInfo.action?id=${id}`;
 
 export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
   const { t } = useTranslation();
@@ -92,7 +86,10 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
       {publicationContext.id ? (
         <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback.error.get_journal')} />
       ) : (
-        <Typography>{publicationContext.title}</Typography>
+        <>
+          <Typography>{publicationContext.title}</Typography>
+          <Typography>{getIssnValuesString(publicationContext)}</Typography>
+        </>
       )}
     </>
   ) : null;
@@ -129,7 +126,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
           )}
         </>
       ) : (
-        <Typography>{publisher.name}</Typography>
+        <Typography gutterBottom>{publisher.name}</Typography>
       )}
     </>
   ) : null;
@@ -169,7 +166,10 @@ export const PublicSeries = ({
       {series.id ? (
         <PublicJournalContent id={series.id} errorMessage={t('feedback.error.get_series')} />
       ) : (
-        <Typography>{series.title}</Typography>
+        <>
+          <Typography>{series.title}</Typography>
+          <Typography>{getIssnValuesString(series)}</Typography>
+        </>
       )}
       {seriesNumber && (
         <Typography>
@@ -233,14 +233,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   ) : !journal ? null : (
     <>
       <Typography>{journalName}</Typography>
-      <Typography>
-        {[
-          journal.printIssn ? `${t('registration.resource_type.print_issn')}: ${journal.printIssn}` : '',
-          journal.onlineIssn ? `${t('registration.resource_type.online_issn')}: ${journal.onlineIssn}` : '',
-        ]
-          .filter((issn) => issn)
-          .join(', ')}
-      </Typography>
+      <Typography>{getIssnValuesString(journal)}</Typography>
       <NpiLevelTypography scientificValue={journal.scientificValue} channelId={journal.id} />
       {journal.sameAs && (
         <Typography component={Link} href={journal.sameAs} target="_blank">

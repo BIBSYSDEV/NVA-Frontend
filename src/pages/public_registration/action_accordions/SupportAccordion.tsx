@@ -104,6 +104,7 @@ export const SupportAccordion = ({
           </>
         )}
         <MessageForm
+          hideRequiredAsterisk
           confirmAction={async (message) => {
             if (message) {
               if (supportTicket) {

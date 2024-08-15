@@ -80,6 +80,7 @@ export const PublishingAccordion = ({
 
   const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(
     registration.entityDescription?.mainTitle || '',
+    registration.identifier,
     registration.entityDescription?.publicationDate?.year,
     registration.entityDescription?.reference?.publicationInstance?.type
   );
@@ -505,7 +506,10 @@ export const PublishingAccordion = ({
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}
-            <MessageForm confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)} />
+            <MessageForm
+              confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)}
+              hideRequiredAsterisk
+            />
           </Box>
         )}
         {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}

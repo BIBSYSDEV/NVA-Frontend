@@ -1,6 +1,7 @@
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LaunchIcon from '@mui/icons-material/Launch';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
@@ -11,6 +12,7 @@ import {
   Box,
   Button,
   DialogActions,
+  Link as MuiLink,
   TextField,
   Typography,
 } from '@mui/material';
@@ -194,16 +196,35 @@ export const DoiRequestAccordion = ({
               </LoadingButton>
             )}
             {isDraftRegistration && (
-              <LoadingButton
-                variant="outlined"
-                endIcon={<LocalOfferIcon />}
-                loadingPosition="end"
-                loading={isLoadingData || isLoading === LoadingState.DraftDoi}
-                disabled={isLoading !== LoadingState.None}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
-                onClick={addDraftDoi}>
-                {t('registration.public_page.reserve_doi')}
-              </LoadingButton>
+              <>
+                <Trans
+                  t={t}
+                  i18nKey="registration.public_page.tasks_panel.draft_doi_description"
+                  values={{ buttonText: t('registration.public_page.reserve_doi') }}
+                  components={[
+                    <Typography paragraph key="1" />,
+                    <Typography paragraph key="2">
+                      <MuiLink
+                        href="https://sikt.no/tjenester/doi"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                        <LaunchIcon fontSize="small" />
+                      </MuiLink>
+                    </Typography>,
+                  ]}
+                />
+                <LoadingButton
+                  variant="outlined"
+                  endIcon={<LocalOfferIcon />}
+                  loadingPosition="end"
+                  loading={isLoadingData || isLoading === LoadingState.DraftDoi}
+                  disabled={isLoading !== LoadingState.None}
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
+                  onClick={addDraftDoi}>
+                  {t('registration.public_page.reserve_doi')}
+                </LoadingButton>
+              </>
             )}
 
             <Modal
@@ -289,7 +310,10 @@ export const DoiRequestAccordion = ({
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}
-            <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
+            <MessageForm
+              confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)}
+              hideRequiredAsterisk
+            />
           </Box>
         )}
       </AccordionDetails>

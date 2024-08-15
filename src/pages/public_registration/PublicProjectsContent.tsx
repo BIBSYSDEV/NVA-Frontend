@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { fetchProject } from '../../api/cristinApi';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ResearchProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getProjectPath, getResearchProfilePath } from '../../utils/urlPaths';
@@ -46,7 +47,9 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
       </StyledProjectGridRow>
 
       {projects.map((project) => (
-        <ProjectRow key={project.id} project={project} />
+        <ErrorBoundary key={project.id}>
+          <ProjectRow project={project} />
+        </ErrorBoundary>
       ))}
     </>
   );
@@ -67,7 +70,8 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
   });
   const fetchedProject = projectQuery.data;
   const projectTitle = fetchedProject?.title ?? project.name;
-  const projectManager = getProjectManagers(fetchedProject?.contributors ?? [])?.[0];
+  const projectManagers = getProjectManagers(fetchedProject?.contributors ?? []);
+  const projectManager = projectManagers.length > 0 ? projectManagers[0] : null;
 
   return (
     <StyledProjectGridRow sx={{ ':not(:last-of-type)': { mb: '1rem' } }}>
@@ -98,9 +102,11 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
       {projectQuery.isPending ? (
         <Skeleton />
       ) : (
-        <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
-          {projectManager.identity.firstName} {projectManager.identity.lastName}
-        </MuiLink>
+        projectManager && (
+          <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+            {projectManager.identity.firstName} {projectManager.identity.lastName}
+          </MuiLink>
+        )
       )}
       <Divider component="span" orientation="vertical" />
       {projectQuery.isPending ? (
