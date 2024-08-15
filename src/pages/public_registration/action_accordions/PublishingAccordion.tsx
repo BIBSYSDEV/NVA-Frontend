@@ -84,8 +84,6 @@ export const PublishingAccordion = ({
     registration.entityDescription?.publicationDate?.year
   );
 
-  console.log(titleSearchPending);
-
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
   const registrationHasFile = registration.associatedArtifacts.some(
@@ -219,8 +217,6 @@ export const PublishingAccordion = ({
       setOpenRejectionDialog(false);
     }
   };
-
-  console.log(isLoading);
 
   return (
     <Accordion
