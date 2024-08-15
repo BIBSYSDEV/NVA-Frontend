@@ -37,7 +37,10 @@ export const ResourceTypePanel = () => {
   const { values } = useFormikContext<Registration>();
   const instanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
   const mainType = getMainRegistrationType(instanceType);
-  const { duplicateRegistration } = useDuplicateRegistrationSearch(values.entityDescription?.mainTitle || '');
+  const { duplicateRegistration } = useDuplicateRegistrationSearch(
+    values.entityDescription?.mainTitle || '',
+    values.identifier
+  );
 
   return (
     <InputContainerBox>

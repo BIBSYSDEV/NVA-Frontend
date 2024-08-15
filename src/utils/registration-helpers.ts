@@ -780,21 +780,27 @@ export const registrationsHaveSamePublicationDate = (reg1: Registration, reg2: R
   if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
     return false;
   }
-  let isSame = reg1.entityDescription?.publicationDate.year === reg2.entityDescription?.publicationDate.year;
+
+  if (reg1.entityDescription.publicationDate.year !== reg2.entityDescription.publicationDate.year) {
+    return false;
+  }
 
   if (
-    (reg1.entityDescription?.publicationDate.month || reg2.entityDescription?.publicationDate.month) &&
-    reg1.entityDescription?.publicationDate.month !== reg2.entityDescription?.publicationDate.month
+    // Sometimes month or day can be an empty string, and then the comparison of '' and undefined will falsely say that they are not the same
+    (reg1.entityDescription.publicationDate.month || reg2.entityDescription.publicationDate.month) &&
+    reg1.entityDescription.publicationDate.month !== reg2.entityDescription.publicationDate.month
   ) {
-    isSame = false;
+    return false;
   }
+
   if (
-    (reg1.entityDescription?.publicationDate.day || reg2.entityDescription?.publicationDate.day) &&
-    reg1.entityDescription?.publicationDate.day !== reg2.entityDescription?.publicationDate.day
+    (reg1.entityDescription.publicationDate.day || reg2.entityDescription.publicationDate.day) &&
+    reg1.entityDescription.publicationDate.day !== reg2.entityDescription.publicationDate.day
   ) {
-    isSame = false;
+    return false;
   }
-  return isSame;
+
+  return true;
 };
 
 export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registration) => {
@@ -803,8 +809,8 @@ export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registra
     reg2.entityDescription?.reference?.publicationInstance?.type
   ) {
     return (
-      reg1.entityDescription?.reference?.publicationInstance?.type ===
-      reg2.entityDescription?.reference?.publicationInstance?.type
+      reg1.entityDescription.reference.publicationInstance.type ===
+      reg2.entityDescription.reference.publicationInstance.type
     );
   }
   return false;

@@ -80,6 +80,7 @@ export const PublishingAccordion = ({
 
   const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(
     registration.entityDescription?.mainTitle || '',
+    registration.identifier,
     registration.entityDescription?.publicationDate?.year
   );
 
