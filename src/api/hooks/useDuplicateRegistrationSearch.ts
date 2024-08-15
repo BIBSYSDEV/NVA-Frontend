@@ -2,19 +2,17 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchResults, FetchResultsParams } from '../searchApi';
 
-export const useDuplicateRegistrationSearch = (
-  title: string | undefined,
-  identifier?: string,
-  publishedYear?: string
-) => {
+export const useDuplicateRegistrationSearch = (title?: string, identifier?: string, publishedYear?: string) => {
   const { t } = useTranslation();
 
   const searchConfig: FetchResultsParams = {
     title: title,
   };
 
+  const enabled = !!title;
+
   const titleSearch = useQuery({
-    enabled: !!title,
+    enabled: enabled,
     queryKey: ['registrations', searchConfig],
     queryFn: () => fetchResults(searchConfig),
     meta: { errorMessage: t('feedback.error.get_registrations') },
@@ -41,7 +39,7 @@ export const useDuplicateRegistrationSearch = (
   });
 
   return {
-    titleSearchPending: titleSearch.isPending,
+    titleSearchPending: enabled && titleSearch.isPending,
     duplicateRegistration: duplicateRegistration,
   };
 };
