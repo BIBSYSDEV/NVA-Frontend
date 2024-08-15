@@ -29,6 +29,7 @@ import { Link, Link as RouterLink } from 'react-router-dom';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
+import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
@@ -38,12 +39,11 @@ import { Registration, RegistrationStatus, RegistrationTab } from '../../../type
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
-import { getFirstErrorTab, getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
+import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
 import { userCanPublishRegistration } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
-import { ErrorList } from '../../registration/ErrorList';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
 import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
 import { DeletePublication } from './DeletePublication';
@@ -135,8 +135,6 @@ export const PublishingAccordion = ({
         })
       ),
   });
-
-  const firstErrorTab = Math.max(getFirstErrorTab(tabErrors), 0);
 
   const publishRegistration = async () => {
     setIsLoading(LoadingState.CreatePublishingRequest);
@@ -250,20 +248,11 @@ export const PublishingAccordion = ({
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
         {tabErrors && !isUnpublishedOrDeleted && (
-          <>
-            <Typography>{t('registration.public_page.error_description')}</Typography>
-            <ErrorList tabErrors={tabErrors} />
-            <Button
-              variant="outlined"
-              component={RouterLink}
-              size="small"
-              sx={{ mb: lastPublishingRequest ? '1rem' : undefined }}
-              to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
-              endIcon={<EditIcon />}
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
-              {t('registration.public_page.go_back_to_wizard')}
-            </Button>
-          </>
+          <RegistrationErrorActions
+            tabErrors={tabErrors}
+            registrationIdentifier={registration.identifier}
+            sx={{ mb: lastPublishingRequest ? '1rem' : undefined }}
+          />
         )}
 
         {/* Show approval history */}
@@ -515,7 +504,10 @@ export const PublishingAccordion = ({
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}
-            <MessageForm confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)} />
+            <MessageForm
+              confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)}
+              hideRequiredAsterisk
+            />
           </Box>
         )}
         {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}

@@ -80,8 +80,8 @@ interface RegistrationPublisher {
   id: string;
 }
 
-type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier';
-type ImportSourceName = 'Cristin' | 'Scopus';
+type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier' | 'HandleIdentifier';
+type ImportSourceName = 'Cristin' | 'Scopus' | 'handle';
 
 export interface AdditionalIdentifier {
   type: AdditionalIdentifierType;

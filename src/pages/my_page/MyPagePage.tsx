@@ -20,9 +20,9 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { ProfilePicture } from '../../components/ProfilePicture';
-import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { LocalStorageKey, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -224,7 +224,7 @@ const MyPagePage = () => {
             </StyledTicketSearchFormGroup>
 
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
-              <SelectableButton
+              <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 endIcon={<Badge badgeContent={unreadPublishingCount} />}
                 showCheckbox
@@ -236,9 +236,9 @@ const MyPagePage = () => {
                 {selectedTypes.publishingRequest && publishingRequestCount
                   ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                   : t('my_page.messages.types.PublishingRequest')}
-              </SelectableButton>
+              </TicketTypeFilterButton>
 
-              <SelectableButton
+              <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                 endIcon={<Badge badgeContent={unreadDoiCount} />}
                 showCheckbox
@@ -248,9 +248,9 @@ const MyPagePage = () => {
                 {selectedTypes.doiRequest && doiRequestCount
                   ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                   : t('my_page.messages.types.DoiRequest')}
-              </SelectableButton>
+              </TicketTypeFilterButton>
 
-              <SelectableButton
+              <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                 endIcon={<Badge badgeContent={unreadGeneralSupportCount} />}
                 showCheckbox
@@ -262,7 +262,7 @@ const MyPagePage = () => {
                 {selectedTypes.generalSupportCase && generalSupportCaseCount
                   ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                   : t('my_page.messages.types.GeneralSupportCase')}
-              </SelectableButton>
+              </TicketTypeFilterButton>
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>,
 
@@ -273,7 +273,7 @@ const MyPagePage = () => {
             accordionPath={UrlPathTemplate.MyPageRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
-            <NavigationList>
+            <NavigationList component="div">
               <StyledTicketSearchFormGroup>
                 <FormControlLabel
                   data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}

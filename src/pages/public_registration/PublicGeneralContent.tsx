@@ -55,6 +55,7 @@ import {
 } from '../../utils/registration-helpers';
 import { ChapterPublisherInfo } from './ChapterPublisherInfo';
 import { PublicDoi } from './PublicDoi';
+import { PublicHandles } from './PublicHandles';
 import {
   PublicJournal,
   PublicOutputs,
@@ -184,20 +185,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             />
           ) : null)}
         <PublicDoi registration={registration} />
-        {registration.handle && (
-          <>
-            <Typography variant="overline">{t('registration.public_page.handle')}</Typography>
-            <Typography>
-              <Link
-                data-testid={dataTestId.registrationLandingPage.handleLink}
-                href={registration.handle}
-                target="_blank"
-                rel="noopener noreferrer">
-                {registration.handle}
-              </Link>
-            </Typography>
-          </>
-        )}
+        <PublicHandles registration={registration} />
+
         {(cristinIdentifier || scopusIdentifier) && (
           <Box sx={{ display: 'flex', columnGap: '2rem', flexWrap: 'wrap' }}>
             {cristinIdentifier && (
