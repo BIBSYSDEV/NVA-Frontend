@@ -1391,7 +1391,7 @@
         "contact_registrator_to_change": "Er det feil eller mangler i publikasjonen som er registrert må du kontakte registrator eller bidragsyter i registreringen for å endre den. Du kan ikke publisere det samme resultatet på nytt i NVA.",
         "headline": "Resultatet kan være en duplikat",
         "if_same_press_no_in_box": "Om dette er samme resultat som din registrering, må du trykke 'NEI' i denne boksen for å unngå å publisere.",
-        "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel og år som din registrering."
+        "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel, år og kategori som din registrering."
       },
       "error_description": "Følgende feil må rettes opp før publisering av resultat:",
       "find_in_channel_registry": "Finn i kanalregisteret",
