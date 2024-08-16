@@ -64,16 +64,12 @@ export const ProjectEditAffiliationModal = ({
       labels: labels,
     };
 
-    console.log('newAffiliation', newAffiliation);
-
     const newContributorRoles = [...contributorRoles];
 
     newContributorRoles[roleToChangeIndex] = {
       ...contributorRoles[roleToChangeIndex],
       affiliation: newAffiliation,
     };
-
-    console.log('newContributorRoles', newContributorRoles);
 
     setFieldValue(baseFieldName, newContributorRoles);
     toggleAffiliationModal();

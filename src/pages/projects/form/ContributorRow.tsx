@@ -52,9 +52,8 @@ export const ContributorRow = ({
   const personSearchResult = personQuery.data?.hits ?? [];
 
   const isRekProjectManager = isRekProject && contributor && isProjectManager(contributor);
-  const hasEmptyRole = contributor.roles.some((role) => !role.affiliation.id);
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
-  const affiliationError = contributorErrors?.roles[0]?.affiliation.id;
+  const affiliationError = contributorErrors?.roles?.[0]?.affiliation.id;
   const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
@@ -147,37 +146,36 @@ export const ContributorRow = ({
         </Field>
       </TableCell>
       <TableCell>
-        {!hasEmptyRole ? (
-          contributor.roles.map((role) => {
-            return (
-              <ProjectOrganizationBox
-                key={role.affiliation.id}
-                unitUri={role.affiliation.id}
-                authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
-                contributorRoles={contributor.roles}
-                baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
-                sx={{ width: '100%' }}
-              />
-            );
-          })
-        ) : (
-          <>
-            <Button
-              variant="outlined"
-              sx={{ padding: '0.1rem 0.75rem' }}
-              data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
-              startIcon={<AddIcon />}
-              color={affiliationFieldTouched && affiliationError ? 'error' : 'inherit'}
-              onClick={toggleAffiliationModal}>
-              {t('project.add_affiliation')}
-            </Button>
-            {affiliationFieldTouched && affiliationError && (
-              <Typography sx={{ color: 'error.main', marginTop: '0.25rem', letterSpacing: '0.03333em' }}>
-                {affiliationError}
-              </Typography>
-            )}
-          </>
-        )}
+        <>
+          {contributor.roles
+            .filter((role) => role.affiliation.id)
+            .map((role) => {
+              return (
+                <ProjectOrganizationBox
+                  key={role.affiliation.id}
+                  unitUri={role.affiliation.id}
+                  authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+                  contributorRoles={contributor.roles}
+                  baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
+                  sx={{ width: '100%', marginBottom: '0.5rem' }}
+                />
+              );
+            })}
+          <Button
+            variant="outlined"
+            sx={{ padding: '0.1rem 0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}
+            data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
+            startIcon={<AddIcon />}
+            color={affiliationFieldTouched && affiliationError ? 'error' : 'inherit'}
+            onClick={toggleAffiliationModal}>
+            {t('project.add_affiliation')}
+          </Button>
+          {affiliationFieldTouched && affiliationError && (
+            <Typography sx={{ color: 'error.main', marginTop: '0.25rem', letterSpacing: '0.03333em' }}>
+              {affiliationError}
+            </Typography>
+          )}
+        </>
       </TableCell>
       <TableCell sx={{ width: '3rem', textAlign: 'center', paddingTop: '1rem' }}>
         <DeleteIconButton

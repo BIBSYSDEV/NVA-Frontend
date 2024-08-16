@@ -33,14 +33,6 @@ export const ProjectAddAffiliationModal = ({
       return;
     }
 
-    const emptyRoleIndex = contributorRoles.findIndex(
-      (role) => role.affiliation.type === 'Organization' && role.affiliation.id === ''
-    );
-
-    if (emptyRoleIndex < 0) {
-      return;
-    }
-
     // Avoid adding same unit twice
     if (
       contributorRoles.some(
@@ -51,6 +43,10 @@ export const ProjectAddAffiliationModal = ({
       return;
     }
 
+    const emptyRoleIndex = contributorRoles.findIndex(
+      (role) => role.affiliation.type === 'Organization' && role.affiliation.id === ''
+    );
+
     const newAffiliation: ProjectOrganization = {
       type: 'Organization',
       id: newAffiliationId,
@@ -59,10 +55,17 @@ export const ProjectAddAffiliationModal = ({
 
     const newContributorRoles = [...contributorRoles];
 
-    newContributorRoles[emptyRoleIndex] = {
-      ...contributorRoles[emptyRoleIndex],
-      affiliation: newAffiliation,
-    };
+    if (emptyRoleIndex < 0) {
+      newContributorRoles.push({
+        type: 'ProjectParticipant',
+        affiliation: newAffiliation,
+      });
+    } else {
+      newContributorRoles[emptyRoleIndex] = {
+        ...contributorRoles[emptyRoleIndex],
+        affiliation: newAffiliation,
+      };
+    }
 
     setFieldValue(baseFieldName, newContributorRoles);
     toggleAffiliationModal();
