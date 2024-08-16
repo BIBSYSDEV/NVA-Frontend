@@ -52,8 +52,10 @@ export const ContributorRow = ({
   const personSearchResult = personQuery.data?.hits ?? [];
 
   const isRekProjectManager = isRekProject && contributor && isProjectManager(contributor);
-  const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
   const hasEmptyRole = contributor.roles.some((role) => !role.affiliation.id);
+  const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
+  const affiliationError = contributorErrors?.roles[0]?.affiliation.id;
+  const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
@@ -106,9 +108,6 @@ export const ContributorRow = ({
                   lastName: getValueByKey('LastName', selectedPerson?.names),
                 };
                 setFieldValue(field.name, selectedContributorIdentity);
-                //if (selectedPerson?.affiliations) {
-                //fetchSuggestedInstitutions(selectedPerson.affiliations.map((affiliation) => affiliation.organization));
-                //}
                 setSearchTerm('');
               }}
               loading={personQuery.isFetching}
@@ -148,16 +147,7 @@ export const ContributorRow = ({
         </Field>
       </TableCell>
       <TableCell>
-        {hasEmptyRole ? (
-          <Button
-            variant="outlined"
-            sx={{ padding: '0.1rem 0.75rem' }}
-            data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
-            startIcon={<AddIcon />}
-            onClick={toggleAffiliationModal}>
-            {t('project.add_affiliation')}
-          </Button>
-        ) : (
+        {!hasEmptyRole ? (
           contributor.roles.map((role) => {
             return (
               <ProjectOrganizationBox
@@ -170,6 +160,23 @@ export const ContributorRow = ({
               />
             );
           })
+        ) : (
+          <>
+            <Button
+              variant="outlined"
+              sx={{ padding: '0.1rem 0.75rem' }}
+              data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
+              startIcon={<AddIcon />}
+              color={affiliationFieldTouched && affiliationError ? 'error' : 'inherit'}
+              onClick={toggleAffiliationModal}>
+              {t('project.add_affiliation')}
+            </Button>
+            {affiliationFieldTouched && affiliationError && (
+              <Typography sx={{ color: 'error.main', marginTop: '0.25rem', letterSpacing: '0.03333em' }}>
+                {affiliationError}
+              </Typography>
+            )}
+          </>
         )}
       </TableCell>
       <TableCell sx={{ width: '3rem', textAlign: 'center', paddingTop: '1rem' }}>
