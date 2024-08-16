@@ -72,8 +72,6 @@ export const EditAffiliationModal = ({
     toggleAffiliationModal();
   };
 
-  console.log('test');
-
   return (
     <Modal
       open={affiliationModalIsOpen}
