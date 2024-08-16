@@ -55,8 +55,20 @@ export const ContributorRow = ({
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
   const affiliationError = contributorErrors?.roles?.[0]?.affiliation.id;
   const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
+  const baseFieldRoles = `${baseFieldName}.${ProjectContributorFieldName.Roles}`;
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
+
+  const removeAffiliation = (affiliationId: string) => {
+    const roleToRemoveIndex = contributor.roles.findIndex((role) => role.affiliation.id === affiliationId);
+    if (contributor.roles.length === 1 || contributor.roles[roleToRemoveIndex].type === 'ProjectManager') {
+      return;
+    }
+    const newRoles = [...contributor.roles];
+    newRoles.splice(roleToRemoveIndex, 1);
+
+    setFieldValue(baseFieldRoles, newRoles);
+  };
 
   return (
     <TableRow sx={{ td: { verticalAlign: 'top' } }}>
@@ -148,19 +160,22 @@ export const ContributorRow = ({
       <TableCell>
         <>
           {contributor.roles
-            .filter((role) => role.affiliation.id)
-            .map((role) => {
-              return (
-                <ProjectOrganizationBox
-                  key={role.affiliation.id}
-                  unitUri={role.affiliation.id}
-                  authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
-                  contributorRoles={contributor.roles}
-                  baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
-                  sx={{ width: '100%', marginBottom: '0.5rem' }}
-                />
-              );
-            })}
+            .filter((r) => r.affiliation.id)
+            .map((role) => (
+              <ProjectOrganizationBox
+                key={role.affiliation.id}
+                unitUri={role.affiliation.id}
+                authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+                contributorRoles={contributor.roles}
+                baseFieldName={baseFieldRoles}
+                sx={{ width: '100%', marginBottom: '0.5rem' }}
+                removeAffiliation={
+                  contributor.roles.length === 1 || role.type === 'ProjectManager'
+                    ? undefined
+                    : () => removeAffiliation(role.affiliation.id)
+                }
+              />
+            ))}
           <Button
             variant="outlined"
             sx={{ padding: '0.1rem 0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}
@@ -207,7 +222,7 @@ export const ContributorRow = ({
         openAffiliationModal={openAffiliationModal}
         toggleAffiliationModal={toggleAffiliationModal}
         authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
-        baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
+        baseFieldName={baseFieldRoles}
         contributorRoles={contributor.roles}
       />
     </TableRow>

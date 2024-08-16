@@ -1114,6 +1114,7 @@
     "add_project_contributor": "Legg til prosjektdeltaker",
     "add_affiliation": "Legg til tilknytning",
     "affiliation_modal": {
+      "delete_affiliation": "Fjern tilknytning",
       "edit_affiliation": "Endre tilknytning",
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>"
     },
