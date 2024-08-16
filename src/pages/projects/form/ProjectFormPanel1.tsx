@@ -1,19 +1,16 @@
-import AddCircleIcon from '@mui/icons-material/AddCircleOutline';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import {
   CristinProject,
-  emptyProjectContributor,
   ProjectFieldName,
   ProjectOrganization,
   SaveCristinProject,
 } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
-import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
-import { isProjectManager, isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectContributors } from './ProjectContributors';
 import { ProjectFundingsField } from './ProjectFunding';
 
@@ -127,54 +124,8 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
           </Field>
         </Box>
       </Box>
-
-      <Typography variant="h3" gutterBottom>
-        {t('project.project_participants')}
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          rowGap: { xs: '1.25rem', sm: '0.5rem' },
-        }}>
-        {suggestedProjectManager && (
-          <Typography>{t('project.project_manager_from_nfr', { name: suggestedProjectManager })}</Typography>
-        )}
-        <ProjectContributors currentProject={currentProject} />
-        <FieldArray name={ProjectFieldName.Contributors}>
-          {({ name, push, remove }: FieldArrayRenderProps) => (
-            <>
-              {values.contributors.map((contributor, index) => {
-                const thisContributor =
-                  contributor.identity.id &&
-                  currentProject?.contributors[index] &&
-                  contributor.identity.id === currentProject.contributors[index].identity.id
-                    ? currentProject.contributors[index]
-                    : undefined;
-                return (
-                  <ProjectContributorRow
-                    key={index}
-                    contributorIndex={index}
-                    baseFieldName={`${name}[${index}]`}
-                    contributor={thisContributor}
-                    removeContributor={isProjectManager(contributor) ? undefined : () => remove(index)}
-                    isRekProject={thisIsRekProject}
-                  />
-                );
-              })}
-              <Button
-                startIcon={<AddCircleIcon />}
-                onClick={() => push(emptyProjectContributor)}
-                sx={{ width: 'fit-content' }}
-                data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
-                {t('common.add')}
-              </Button>
-            </>
-          )}
-        </FieldArray>
-
-        <ProjectFundingsField currentFundings={values.funding} />
-      </Box>
+      <ProjectContributors currentProject={currentProject} suggestedProjectManager={suggestedProjectManager} />
+      <ProjectFundingsField currentFundings={values.funding} />
     </>
   );
 };

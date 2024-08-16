@@ -1,5 +1,15 @@
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,18 +23,28 @@ import { ContributorRow } from './ContributorRow';
 
 interface ProjectContributorsProps {
   currentProject?: CristinProject;
+  suggestedProjectManager?: string;
 }
 
-export const ProjectContributors = ({ currentProject }: ProjectContributorsProps) => {
+export const ProjectContributors = ({ currentProject, suggestedProjectManager }: ProjectContributorsProps) => {
   const { t } = useTranslation();
-  const { values } = useFormikContext<CristinProject>();
-  const { contributors } = values;
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
+  const { values } = useFormikContext<CristinProject>();
+  const { contributors } = values;
+  const contributorsToShow = contributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
   const thisIsRekProject = isRekProject(currentProject);
 
   return (
     <>
+      <Typography variant="h3" gutterBottom sx={{ marginTop: '2rem', marginBottom: '1rem' }}>
+        {t('project.project_participants')}
+      </Typography>
+      {suggestedProjectManager && (
+        <Typography sx={{ marginBottom: '1rem' }}>
+          {t('project.project_manager_from_nfr', { name: suggestedProjectManager })}
+        </Typography>
+      )}
       <FieldArray name={ProjectFieldName.Contributors}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
@@ -57,14 +77,15 @@ export const ProjectContributors = ({ currentProject }: ProjectContributorsProps
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {contributors.map((contributor, index) => {
+                    {contributorsToShow.map((contributor) => {
+                      const contributorIndex = contributors.findIndex((c) => c.identity.id === contributor.identity.id);
                       return (
                         <ContributorRow
-                          key={index}
-                          contributorIndex={index}
-                          baseFieldName={`${name}[${index}]`}
+                          key={contributor.identity.id}
+                          contributorIndex={contributorIndex}
+                          baseFieldName={`${name}[${contributorIndex}]`}
                           contributor={contributor}
-                          removeContributor={isProjectManager(contributor) ? undefined : () => remove(index)}
+                          removeContributor={isProjectManager(contributor) ? undefined : () => remove(contributorIndex)}
                           isRekProject={thisIsRekProject}
                         />
                       );
