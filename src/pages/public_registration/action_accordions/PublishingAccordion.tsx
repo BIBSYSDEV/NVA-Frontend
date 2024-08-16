@@ -81,7 +81,8 @@ export const PublishingAccordion = ({
   const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(
     registration.entityDescription?.mainTitle || '',
     registration.identifier,
-    registration.entityDescription?.publicationDate?.year
+    registration.entityDescription?.publicationDate?.year,
+    registration.entityDescription?.reference?.publicationInstance?.type
   );
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
