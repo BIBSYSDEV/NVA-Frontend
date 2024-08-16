@@ -1,4 +1,4 @@
-import { TFunction } from 'i18next';
+import { t, TFunction } from 'i18next';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
@@ -53,7 +53,6 @@ import {
   PublicationInstanceType,
   Publisher,
   Registration,
-  RegistrationDate,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -187,7 +186,7 @@ export const getFormattedRegistration = (registration: Registration) => {
           ...presentationRegistration.entityDescription.reference,
           publicationContext: {
             ...presentationRegistration.entityDescription.reference.publicationContext,
-            time: time?.from && time.to ? { ...time, type: 'Period' } : null,
+            time: time?.from || time?.to ? { ...time, type: 'Period' } : null,
             agent: agent?.name ? { ...agent, type: 'UnconfirmedOrganization' } : null,
             place: place?.label || place?.country ? { ...place, type: 'UnconfirmedPlace' } : null,
           },
@@ -777,23 +776,31 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
-export const registrationsHaveSamePublicationDate = (
-  duplicatePublicationDate: RegistrationDate | undefined,
-  publicationDate: RegistrationDate | undefined
-) => {
-  if (!duplicatePublicationDate || !publicationDate) {
+export const registrationsHaveSamePublicationYear = (reg1: Registration, reg2: Registration) => {
+  if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
     return false;
   }
-  let isSame = duplicatePublicationDate.year === publicationDate.year;
 
+  return reg1.entityDescription.publicationDate.year === reg2.entityDescription.publicationDate.year;
+};
+
+export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registration) => {
   if (
-    (duplicatePublicationDate.month || publicationDate.month) &&
-    duplicatePublicationDate.month !== publicationDate.month
+    reg1.entityDescription?.reference?.publicationInstance?.type &&
+    reg2.entityDescription?.reference?.publicationInstance?.type
   ) {
-    isSame = false;
+    return (
+      reg1.entityDescription.reference.publicationInstance.type ===
+      reg2.entityDescription.reference.publicationInstance.type
+    );
   }
-  if ((duplicatePublicationDate.day || publicationDate.day) && duplicatePublicationDate.day !== publicationDate.day) {
-    isSame = false;
-  }
-  return isSame;
+  return false;
+};
+
+export const getIssnValuesString = (context: Partial<Pick<Journal, 'onlineIssn' | 'printIssn'>>) => {
+  const issnValues = [
+    context.printIssn ? `${t('registration.resource_type.print_issn')}: ${context.printIssn}` : '',
+    context.onlineIssn ? `${t('registration.resource_type.online_issn')}: ${context.onlineIssn}` : '',
+  ].filter(Boolean);
+  return issnValues.join(', ');
 };

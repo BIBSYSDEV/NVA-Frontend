@@ -11,7 +11,7 @@ import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
-import { registrationLanguageOptions, registrationsHaveSamePublicationDate } from '../../utils/registration-helpers';
+import { registrationLanguageOptions, registrationsHaveSamePublicationYear } from '../../utils/registration-helpers';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
@@ -23,7 +23,10 @@ export const DescriptionPanel = () => {
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
-  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(debouncedTitle);
+  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(
+    debouncedTitle || values.entityDescription?.mainTitle,
+    values.identifier
+  );
 
   return (
     <InputContainerBox>
@@ -223,17 +226,13 @@ export const DescriptionPanel = () => {
           )}
         </Field>
       </Box>
-      {duplicateRegistration &&
-        registrationsHaveSamePublicationDate(
-          duplicateRegistration?.entityDescription?.publicationDate,
-          values.entityDescription?.publicationDate
-        ) && (
-          <DuplicateWarning
-            name={duplicateRegistration.entityDescription?.mainTitle}
-            identifier={duplicateRegistration.identifier}
-            warning={t('registration.description.duplicate_publication_date_warning')}
-          />
-        )}
+      {duplicateRegistration && registrationsHaveSamePublicationYear(duplicateRegistration, values) && (
+        <DuplicateWarning
+          name={duplicateRegistration.entityDescription?.mainTitle}
+          identifier={duplicateRegistration.identifier}
+          warning={t('registration.description.duplicate_publication_date_warning')}
+        />
+      )}
       <ProjectsField />
       <Divider />
       <RegistrationFunding currentFundings={values.fundings} />

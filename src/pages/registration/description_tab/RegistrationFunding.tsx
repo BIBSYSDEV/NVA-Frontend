@@ -8,7 +8,7 @@ import { VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { FundingSourceField } from '../../../components/FundingSourceField';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
-import { Funding, emptyFunding } from '../../../types/registration.types';
+import { emptyFunding, Funding } from '../../../types/registration.types';
 import { API_URL } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -29,7 +29,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
   return (
     <div>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography variant="h2">{t('common.funding')}</Typography>
+        <Typography variant="h2">{t('registration.description.funding.funding_without_project')}</Typography>
         <HelperTextModal
           modalTitle={t('common.funding')}
           modalDataTestId={dataTestId.registrationWizard.description.fundingModal}>
@@ -39,6 +39,11 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
           />
         </HelperTextModal>
       </Box>
+
+      <Trans
+        i18nKey="registration.description.funding.funding_without_project_description"
+        components={[<Typography gutterBottom key="1" />]}
+      />
 
       <FieldArray name={DescriptionFieldNames.Fundings}>
         {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
