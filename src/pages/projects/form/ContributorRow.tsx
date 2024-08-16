@@ -53,6 +53,7 @@ export const ContributorRow = ({
 
   const isRekProjectManager = isRekProject && contributor && isProjectManager(contributor);
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
+  const hasEmptyRole = contributor.roles.some((role) => !role.affiliation.id);
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
@@ -147,31 +148,29 @@ export const ContributorRow = ({
         </Field>
       </TableCell>
       <TableCell>
-        {contributor.roles.map((role, index) => {
-          if (!role.affiliation.id) {
+        {hasEmptyRole ? (
+          <Button
+            variant="outlined"
+            sx={{ padding: '0.1rem 0.75rem' }}
+            data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
+            startIcon={<AddIcon />}
+            onClick={toggleAffiliationModal}>
+            {t('project.add_affiliation')}
+          </Button>
+        ) : (
+          contributor.roles.map((role) => {
             return (
-              <Button
-                key={index}
-                variant="outlined"
-                sx={{ padding: '0.1rem 0.75rem' }}
-                data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
-                startIcon={<AddIcon />}
-                onClick={toggleAffiliationModal}>
-                {t('project.add_affiliation')}
-              </Button>
+              <ProjectOrganizationBox
+                key={role.affiliation.id}
+                unitUri={role.affiliation.id}
+                authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+                contributorRoles={contributor.roles}
+                baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
+                sx={{ width: '100%' }}
+              />
             );
-          }
-          return (
-            <ProjectOrganizationBox
-              key={role.affiliation.id}
-              unitUri={role.affiliation.id}
-              authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
-              contributorRoles={contributor.roles}
-              baseFieldName={`${baseFieldName}.${ProjectContributorFieldName.Roles}`}
-              sx={{ width: '100%' }}
-            />
-          );
-        })}
+          })
+        )}
       </TableCell>
       <TableCell sx={{ width: '3rem', textAlign: 'center', paddingTop: '1rem' }}>
         <DeleteIconButton
