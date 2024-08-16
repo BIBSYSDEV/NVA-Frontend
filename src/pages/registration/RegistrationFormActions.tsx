@@ -147,7 +147,6 @@ export const RegistrationFormActions = ({
           onClick={cancelEdit}
           color="primary"
           sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'center' }}>
-          {' '}
           {t('common.cancel')}
         </Button>
 
