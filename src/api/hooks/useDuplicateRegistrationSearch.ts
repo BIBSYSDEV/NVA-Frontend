@@ -5,7 +5,7 @@ import { fetchResults, FetchResultsParams } from '../searchApi';
 export const useDuplicateRegistrationSearch = (
   title: string | undefined,
   identifier?: string,
-  publishedYear?: string
+  publishedYear?: string,
   category?: string
 ) => {
   const { t } = useTranslation();
