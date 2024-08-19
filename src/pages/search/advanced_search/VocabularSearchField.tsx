@@ -38,9 +38,9 @@ export const VocabularSearchField = () => {
       }}
       onChange={(_, value) => {
         if (value) {
-          searchParams.set('vocabulary', value.id);
+          searchParams.set(ResultParam.Vocabulary, value.id);
         } else {
-          searchParams.delete('vocabulary');
+          searchParams.delete(ResultParam.Vocabulary);
         }
         history.push({ search: searchParams.toString() });
       }}
