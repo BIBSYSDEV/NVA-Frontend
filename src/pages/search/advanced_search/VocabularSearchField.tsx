@@ -1,8 +1,9 @@
-import { Autocomplete, Typography } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { HrcsActivityOption } from '../../../components/HrcsActivityAutocompleteOption';
 import { hrcsCategories } from '../../../resources/vocabularies/hrcsCategories';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -26,16 +27,7 @@ export const VocabularSearchField = () => {
     <Autocomplete
       options={options}
       value={selectedValue}
-      renderOption={({ key, ...props }, option) => {
-        const indentsCount = option.cristinIdentifier.split('.').length - 1;
-        return (
-          <li {...props} key={option.id}>
-            <Typography sx={{ pl: `${indentsCount * 1.5}rem`, fontWeight: indentsCount === 0 ? 500 : 400 }}>
-              {getLanguageString(option.label)}
-            </Typography>
-          </li>
-        );
-      }}
+      renderOption={({ key, ...props }, option) => <HrcsActivityOption key={option.id} props={props} option={option} />}
       onChange={(_, value) => {
         if (value) {
           searchParams.set(ResultParam.Vocabulary, value.id);
