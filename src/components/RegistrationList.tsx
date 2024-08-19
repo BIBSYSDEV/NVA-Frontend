@@ -91,8 +91,6 @@ export const RegistrationListItemContent = ({
 
   const isMutating = useIsMutating({ mutationKey }) > 0;
 
-  console.log('test');
-
   const mutatePromotedPublications = useMutation({
     mutationKey,
     mutationFn: (newPromotedPublications: string[]) =>
