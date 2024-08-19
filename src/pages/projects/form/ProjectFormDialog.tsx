@@ -97,11 +97,11 @@ export const ProjectFormDialog = ({
 
   return (
     <Dialog
-      maxWidth="md"
+      maxWidth="lg"
       fullWidth
       onClose={toggleShowConfirmCloseDialog}
       open={open}
-      PaperProps={{ sx: { bgcolor: 'info.light' } }}
+      PaperProps={{ sx: { bgcolor: 'secondary.main' } }}
       transitionDuration={0}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
       <ErrorBoundary>
@@ -130,10 +130,13 @@ export const ProjectFormDialog = ({
                 coordinatingInstitution: {
                   id: true,
                 },
-                contributors: values.contributors.map(() => ({
-                  type: true,
+                contributors: values.contributors.map((contributor) => ({
                   identity: { id: true },
-                  affiliation: { id: true },
+                  roles: contributor.roles.map(() => ({
+                    affiliation: {
+                      id: true,
+                    },
+                  })),
                 })),
                 funding: values.funding.map(() => ({
                   source: true,
