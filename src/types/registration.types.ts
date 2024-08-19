@@ -287,6 +287,7 @@ export interface ContextSeries {
   title?: string;
   onlineIssn?: string;
   printIssn?: string;
+  issn?: string;
 }
 
 export interface ContextPublisher {

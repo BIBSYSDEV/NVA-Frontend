@@ -48,6 +48,7 @@ import {
   ResearchDataType,
 } from '../types/publicationFieldNames';
 import {
+  ContextSeries,
   Journal,
   NpiSubjectDomain,
   PublicationInstanceType,
@@ -797,10 +798,11 @@ export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registra
   return false;
 };
 
-export const getIssnValuesString = (context: Partial<Pick<Journal, 'onlineIssn' | 'printIssn'>>) => {
+export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'onlineIssn' | 'printIssn' | 'issn'>>) => {
   const issnValues = [
     context.printIssn ? `${t('registration.resource_type.print_issn')}: ${context.printIssn}` : '',
     context.onlineIssn ? `${t('registration.resource_type.online_issn')}: ${context.onlineIssn}` : '',
+    context.issn ? `${t('registration.resource_type.issn')}: ${context.issn}` : '',
   ].filter(Boolean);
   return issnValues.join(', ');
 };
