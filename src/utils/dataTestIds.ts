@@ -188,6 +188,7 @@ export const dataTestId = {
       },
       searchButton: 'search-button',
       seriesField: 'series-field',
+      vocabularyField: 'vocabulary-field',
     },
     advancedSearchAccordion: 'advanced-search-accordion',
     filterAccordion: 'filter-accordion',

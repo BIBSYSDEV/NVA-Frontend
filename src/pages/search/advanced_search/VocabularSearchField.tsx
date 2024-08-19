@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { hrcsCategories } from '../../../resources/vocabularies/hrcsCategories';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { hrcsActivityOptions } from '../../registration/description_tab/vocabularies/HrcsActivityInput';
 
@@ -55,6 +56,7 @@ export const VocabularSearchField = () => {
       size="small"
       renderInput={(params) => (
         <AutocompleteTextField
+          data-testid={dataTestId.startPage.advancedSearch.vocabularyField}
           {...params}
           placeholder={t('search.select_vocabulary')}
           variant="outlined"
