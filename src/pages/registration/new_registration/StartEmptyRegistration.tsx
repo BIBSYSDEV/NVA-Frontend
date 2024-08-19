@@ -27,7 +27,10 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
       dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
-      history.push(getRegistrationWizardPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
+      history.push(getRegistrationWizardPath(createRegistrationResponse.data.identifier), {
+        highestValidatedTab: -1,
+        previousPath: history.location.pathname,
+      });
     }
   };
 

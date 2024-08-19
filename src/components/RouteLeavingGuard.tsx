@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
 import { ConfirmDialog } from './ConfirmDialog';
+import { PreviousPathLocationState } from '../types/locationState.types';
 
 interface RouteLeavingGuardProps {
   modalDescription: string;
@@ -30,8 +31,13 @@ export const RouteLeavingGuard = ({
 
   useEffect(() => {
     if (confirmedNavigation && nextPath) {
-      if (history.location.state) {
-        history.goBack();
+      const state = history.location.state as PreviousPathLocationState;
+      if (state?.previousPath) {
+        if (state.previousPath === nextPath) {
+          history.goBack();
+        } else {
+          history.push(nextPath);
+        }
       } else {
         history.push(nextPath);
       }
