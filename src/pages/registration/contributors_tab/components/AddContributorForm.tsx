@@ -28,7 +28,7 @@ import { RootState } from '../../../../redux/store';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
-import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { CristinPersonTableRow } from './AddContributorTableRow';
@@ -135,7 +135,6 @@ export const AddContributorForm = ({
               <caption style={visuallyHidden}>{t('search.persons')}</caption>
               <TableHead>
                 <TableRow>
-                  <TableCell width="10%">{t('registration.contributors.select_all')}</TableCell>
                   <TableCell width="20%">{t('common.person')}</TableCell>
                   <TableCell width="45%">{t('my_page.my_profile.heading.affiliations')}</TableCell>
                   <TableCell width="25%">{t('common.result_registrations')}</TableCell>
