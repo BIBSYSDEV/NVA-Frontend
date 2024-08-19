@@ -328,7 +328,6 @@ export const dataTestId = {
       searchField: 'search-field',
       selectAffiliationForContributor: 'select-affiliation-for-contributor',
       selectContributorType: 'select-contributor-type',
-      selectEverythingForContributor: 'select-everything-from-person',
       selectPersonForContributor: 'select-person-for-contributor',
       selectUserButton: 'select-user-button',
       unverifiedAuthor: (initials: string) => `unverified-author-${initials}`,
