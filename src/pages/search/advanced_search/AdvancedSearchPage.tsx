@@ -82,6 +82,7 @@ export const AdvancedSearchPage = () => {
     title: params.get(ResultParam.Title),
     excludeSubunits,
     unit: unitId ?? topLevelOrganizationId,
+    vocabulary: params.get(ResultParam.Vocabulary),
   };
 
   const resultSearchQuery = useQuery({

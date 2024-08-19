@@ -1,5 +1,7 @@
 import { Autocomplete, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { hrcsCategories } from '../../../resources/vocabularies/hrcsCategories';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -11,10 +13,18 @@ const options = [...hrcsCategories.categories, ...hrcsActivityOptions];
 
 export const VocabularSearchField = () => {
   const { t } = useTranslation();
+  const history = useHistory();
+  const searchParams = new URLSearchParams(history.location.search);
+
+  const selectedVocabularyId = searchParams.get(ResultParam.Vocabulary);
+  const selectedValue = selectedVocabularyId
+    ? (options.find((option) => option.id === selectedVocabularyId) ?? null)
+    : null;
 
   return (
     <Autocomplete
       options={options}
+      value={selectedValue}
       renderOption={({ key, ...props }, option) => {
         const indentsCount = option.cristinIdentifier.split('.').length - 1;
         return (
@@ -24,6 +34,14 @@ export const VocabularSearchField = () => {
             </Typography>
           </li>
         );
+      }}
+      onChange={(_, value) => {
+        if (value) {
+          searchParams.set('vocabulary', value.id);
+        } else {
+          searchParams.delete('vocabulary');
+        }
+        history.push({ search: searchParams.toString() });
       }}
       getOptionLabel={(option) => getLanguageString(option.label)}
       groupBy={(option) =>
