@@ -23,8 +23,8 @@ export const getRegistrationDate = (date: Omit<RegistrationDate, 'type'> | undef
     return null;
   }
   const year = date.year.padStart(4, '0'); // Values are padded to handle (erronuous) dates like year=2 etc.
-  const month = (date?.month ?? '1').padStart(2, '0');
-  const day = (date?.day ?? '1').padStart(2, '0');
+  const month = (date?.month ? date.month : '1').padStart(2, '0');
+  const day = (date?.day ? date.day : '1').padStart(2, '0');
 
   return new Date(`${year}-${month}-${day}T12:00:00.000Z`);
 };
