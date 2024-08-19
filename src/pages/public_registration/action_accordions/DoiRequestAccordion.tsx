@@ -74,6 +74,9 @@ export const DoiRequestAccordion = ({
   const [showConfirmDialogAssignDoi, setShowConfirmDialogAssignDoi] = useState(false);
   const toggleConfirmDialogAssignDoi = () => setShowConfirmDialogAssignDoi((open) => !open);
 
+  const [openReserveDoiDialog, setOpenReserveDoiDialog] = useState(false);
+  const toggleReserveDoiDialog = () => setOpenReserveDoiDialog((open) => !open);
+
   const ticketMutation = useMutation({
     mutationFn: doiRequestTicket
       ? (newTicketData: UpdateTicketData) => {
@@ -148,6 +151,13 @@ export const DoiRequestAccordion = ({
     (file) => file.type === 'PublishedFile'
   );
 
+  const hasReservedDoi = !doiRequestTicket && registration.doi;
+  const status = doiRequestTicket
+    ? t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)
+    : hasReservedDoi
+      ? t('registration.public_page.tasks_panel.reserved')
+      : '';
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
@@ -156,15 +166,19 @@ export const DoiRequestAccordion = ({
       defaultExpanded={waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi')}
-        {doiRequestTicket && ` - ${t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)}`}
+        {status && ` - ${status}`}
       </AccordionSummary>
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
 
         {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} />}
 
-        {!doiRequestTicket && registration.doi && (
-          <Typography paragraph>{t('registration.public_page.tasks_panel.has_reserved_doi')}</Typography>
+        {hasReservedDoi && (
+          <Trans
+            t={t}
+            i18nKey="registration.public_page.tasks_panel.has_reserved_doi"
+            components={[<Typography paragraph key="1" />]}
+          />
         )}
 
         {waitingForRemovalOfDoi && (
@@ -214,16 +228,30 @@ export const DoiRequestAccordion = ({
                     </Typography>,
                   ]}
                 />
-                <LoadingButton
+
+                <Button
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
+                  sx={{ bgcolor: 'white' }}
+                  size="small"
+                  fullWidth
                   variant="outlined"
                   endIcon={<LocalOfferIcon />}
-                  loadingPosition="end"
-                  loading={isLoadingData || isLoading === LoadingState.DraftDoi}
                   disabled={isLoading !== LoadingState.None}
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
-                  onClick={addDraftDoi}>
+                  onClick={toggleReserveDoiDialog}>
                   {t('registration.public_page.reserve_doi')}
-                </LoadingButton>
+                </Button>
+
+                <ConfirmDialog
+                  open={openReserveDoiDialog}
+                  title={t('registration.public_page.reserve_doi')}
+                  onAccept={addDraftDoi}
+                  onCancel={toggleReserveDoiDialog}>
+                  <Trans
+                    t={t}
+                    i18nKey="registration.public_page.tasks_panel.reserve_doi_confirmation"
+                    components={[<Typography paragraph key="1" />, <Typography paragraph key="2" fontWeight={700} />]}
+                  />
+                </ConfirmDialog>
               </>
             )}
 
