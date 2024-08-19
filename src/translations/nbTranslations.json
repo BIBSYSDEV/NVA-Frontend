@@ -301,6 +301,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -372,11 +376,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1111,12 +1111,12 @@
     }
   },
   "project": {
-    "add_project_contributor": "Legg til prosjektdeltaker",
     "add_affiliation": "Legg til tilknytning",
+    "add_project_contributor": "Legg til prosjektdeltaker",
     "affiliation_modal": {
+      "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
       "delete_affiliation": "Fjern tilknytning",
-      "edit_affiliation": "Endre tilknytning",
-      "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>"
+      "edit_affiliation": "Endre tilknytning"
     },
     "close_view": "Lukk visning",
     "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
@@ -1125,25 +1125,25 @@
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "form": {
-      "title_and_description": "Tittel og beskrivelse",
-      "keywords": "Nøkkelord",
       "date": "Dato",
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
+      "keywords": "Nøkkelord",
       "related_projects": "Relaterte prosjekt",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
       "search_for_person": "Søk etter person",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
-      "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt."
-    },
-    "heading": {
-      "description": "$t(common.description)",
-      "details": "Detaljer",
-      "project_participants": "Prosjektdeltakere",
-      "connections": "Koblinger"
+      "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt.",
+      "title_and_description": "Tittel og beskrivelse"
     },
     "grant_id": "Tilskudds-ID",
+    "heading": {
+      "connections": "Koblinger",
+      "description": "$t(common.description)",
+      "details": "Detaljer",
+      "project_participants": "Prosjektdeltakere"
+    },
     "keywords": "Nøkkelord",
     "no_participants": "Ingen registrerte deltakere.",
     "no_related_projects": "Ingen relaterte prosjekt.",
@@ -1281,8 +1281,8 @@
     "delete_registration": "Avpubliser forskningsresultat",
     "description": {
       "abstract": "Sammendrag",
-      "add_vocabulary": "Legg til vokabular",
       "add_project_helper_text": "Søk opp og velg prosjektet i søkefeltet for å knytte resultatet til et prosjekt som allerede er registrert i NVA.",
+      "add_vocabulary": "Legg til vokabular",
       "alternative_abstract": "Alternativt sammendrag",
       "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
@@ -1290,8 +1290,8 @@
       "create_project_helper_text": "<0>Forskeren definerer selv sine prosjekter.</0> <0>Et prosjekt må ha en tittel, en prosjektleder, en koordinerende institusjon, en start- og sluttdato. Et prosjekt kan ha prosjektdeltakere, finansiørerer, godkjenninger eller forskningsresultat.</0> <0>Om du har en NFR finansiering så kan du etablere et prosjekt med den som utgangspunkt. Da starter du med å søker du opp din NFR finansiering, den blir lagt til prosjektet og alle obligatoriske felt er ferdig utfylt, foruten prosjektleder som må søkes opp og bekreftes.</0> <0>(Det planlegges tilsvarende funksjonalitet med utgangspunkt i en REK-godkjenning. Alle prosjekter som skal være del av KBS-rapporteringen må ha en REK-godkjenning som identifiserer prosjektet som en klinisk behandlingsstudie.)</0>",
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, spesielt viktig for blant annet kunstnerisk resultat",
-      "duplicate_title_warning": "Det finnes en registrering i NVA med samme tittel. Vennligst avbryt registreringen dersom det er det samme resultatet som du prøver å registrere, slik at du ikke oppretter duplikater.",
       "duplicate_publication_date_warning": "Det finnes alt en publikasjon med samme tittel som er publisert dette året",
+      "duplicate_title_warning": "Det finnes en registrering i NVA med samme tittel. Vennligst avbryt registreringen dersom det er det samme resultatet som du prøver å registrere, slik at du ikke oppretter duplikater.",
       "funding": {
         "funder": "Finansiør",
         "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",
@@ -1736,8 +1736,6 @@
       "date_from": "Dato fra",
       "date_to": "Dato til",
       "duplicate_category_warning": "Det finnes alt en publikasjon med {{sameFields}} som er publisert med denne kategorien. Hvis dette er det samme resultatet som du prøver å registrere, må du avbryte registreringen slik at du ikke oppretter duplikater.",
-      "same_title_and_date": "samme tittel og år",
-      "same_title": "samme tittel",
       "exhibition_production": {
         "add_exhibition_basic": "Legg til visningssted",
         "add_exhibition_catalog": "Legg til utstillingskatalog",
@@ -1843,6 +1841,8 @@
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
       "resource_type": "Kategori",
+      "same_title": "samme tittel",
+      "same_title_and_date": "samme tittel og år",
       "search_for_channel": "Søk i ISSN-portalen på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
@@ -1951,8 +1951,8 @@
       "approve_nvi_candidate_description": "<0>Kontroll av forskningsresultat for NVI-rapportering.</0><0>Klikk på knappen \"{{buttonText}}\" for å rapportere forskningsresultatet.</0>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
-        "correction_list_duct": "Retteliste (DUCT)",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
+        "correction_list_duct": "Retteliste (DUCT)",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
       },
       "delete_note": "Slett melding",
