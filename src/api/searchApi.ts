@@ -355,6 +355,7 @@ export enum ResultParam {
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
   Unit = 'unit',
+  Vocabulary = 'vocabulary',
 }
 
 export enum ResultSearchOrder {
@@ -406,6 +407,7 @@ export interface FetchResultsParams {
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
   [ResultParam.Unit]?: string | null;
+  [ResultParam.Vocabulary]?: string | null;
 }
 
 export const fetchResults = async (params: FetchResultsParams, signal?: AbortSignal) => {
@@ -523,6 +525,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.unit) {
     searchParams.set(ResultParam.Unit, params.unit);
+  }
+  if (params.vocabulary) {
+    searchParams.set(ResultParam.Vocabulary, params.vocabulary);
   }
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
