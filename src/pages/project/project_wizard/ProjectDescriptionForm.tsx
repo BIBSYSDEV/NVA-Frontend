@@ -1,4 +1,4 @@
-import { Autocomplete, Box, styled, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -8,15 +8,7 @@ import { CristinProject, ProjectFieldName, SaveCristinProject, TypedLabel } from
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
-
-const FormBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: theme.palette.secondary.light,
-  padding: '1.75rem 1.25rem',
-  gap: '1.5rem',
-  borderRadius: '0.25rem',
-}));
+import { FormBox } from './styles';
 
 interface ProjectDescriptionFormProps {
   project: CristinProject;
