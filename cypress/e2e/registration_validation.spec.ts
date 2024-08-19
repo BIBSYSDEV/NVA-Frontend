@@ -305,7 +305,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.addContributorButton}]`).first().click();
     cy.get('[data-testid=contributor-modal]').should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).type('test');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectPersonForContributor}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectPersonForContributor}]`).first().click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.selectUserButton}]`).click();
     cy.get('[data-testid=contributor-modal]').should('not.exist');
 
