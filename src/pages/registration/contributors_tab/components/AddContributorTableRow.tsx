@@ -1,6 +1,5 @@
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import CircleOutlined from '@mui/icons-material/CircleOutlined';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { Box, IconButton, TableCell, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
@@ -24,31 +23,10 @@ export const CristinPersonTableRow = ({
   const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
   const personIsSelected = cristinPerson.id === selectedPerson?.id;
 
-  const selectedPersonHasAllAffiliations = !activeAffiliations.some(
-    (affiliation) => !selectedPerson?.affiliations.some((a) => a.organization === affiliation.organization)
-  );
-
-  const hasSelectedAll = personIsSelected && selectedPersonHasAllAffiliations;
-
   const resetPersonSelection = () => setSelectedPerson(undefined);
 
   return (
     <TableRow selected={personIsSelected}>
-      <TableCell>
-        <IconButton
-          data-testid={dataTestId.registrationWizard.contributors.selectEverythingForContributor}
-          onClick={() => {
-            if (hasSelectedAll) {
-              resetPersonSelection();
-            } else {
-              setSelectedPerson({ ...cristinPerson, affiliations: activeAffiliations });
-            }
-          }}
-          color="primary"
-          title={t('registration.contributors.select_all')}>
-          {hasSelectedAll ? <CheckCircle color="info" fontSize="large" /> : <ControlPointIcon fontSize="large" />}
-        </IconButton>
-      </TableCell>
       <TableCell>
         <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
           <IconButton
@@ -59,7 +37,7 @@ export const CristinPersonTableRow = ({
               } else {
                 setSelectedPerson({
                   ...cristinPerson,
-                  affiliations: [],
+                  affiliations: activeAffiliations,
                 });
               }
             }}

@@ -134,7 +134,12 @@ export const ActionPanelContent = ({
 
       {userCanDeleteRegistration(registration) && (
         <Box sx={{ m: '0.5rem', mt: '1rem' }}>
-          <Button sx={{ bgcolor: 'white' }} fullWidth variant="outlined" onClick={() => setShowDeleteModal(true)}>
+          <Button
+            sx={{ bgcolor: 'white' }}
+            size="small"
+            fullWidth
+            variant="outlined"
+            onClick={() => setShowDeleteModal(true)}>
             {t('common.delete')}
           </Button>
 
