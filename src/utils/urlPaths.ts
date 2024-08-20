@@ -1,3 +1,5 @@
+import { RegistrationFormLocationState } from '../types/locationState.types';
+
 export interface IdentifierParams {
   identifier: string;
 }
@@ -80,9 +82,9 @@ export const getRegistrationWizardLink = (identifier: string, highestValidatedTa
   return {
     pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
     state: {
-      highestValidatedTab: highestValidatedTab ?? null,
+      highestValidatedTab: highestValidatedTab ?? undefined,
       previousPath: window.location.pathname,
-    },
+    } satisfies RegistrationFormLocationState,
   };
 };
 

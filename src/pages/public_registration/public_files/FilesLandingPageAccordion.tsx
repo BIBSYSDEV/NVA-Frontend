@@ -89,7 +89,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <SelectableButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
-            to={`${getRegistrationWizardLink(registration.identifier)}?tab=3`}>
+            to={{ ...getRegistrationWizardLink(registration.identifier), search: '?tab=3' }}>
             {t('registration.files_and_license.add_files_or_links')}
           </SelectableButton>
         </Box>

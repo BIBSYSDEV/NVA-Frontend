@@ -205,6 +205,7 @@ export const RegistrationListItemContent = ({
           <Tooltip title={t('common.edit')}>
             <IconButton
               component={Link}
+              target={target}
               to={getRegistrationWizardLink(identifier)}
               data-testid={`edit-registration-${identifier}`}
               size="small"

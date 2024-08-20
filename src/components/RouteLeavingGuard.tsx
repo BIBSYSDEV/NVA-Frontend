@@ -31,13 +31,9 @@ export const RouteLeavingGuard = ({
 
   useEffect(() => {
     if (confirmedNavigation && nextPath) {
-      const state = history.location.state as PreviousPathLocationState;
-      if (state?.previousPath) {
-        if (state.previousPath === nextPath) {
-          history.goBack();
-        } else {
-          history.push(nextPath);
-        }
+      const { previousPath } = (history.location.state as PreviousPathLocationState) || {};
+      if (previousPath === nextPath) {
+        history.goBack();
       } else {
         history.push(nextPath);
       }

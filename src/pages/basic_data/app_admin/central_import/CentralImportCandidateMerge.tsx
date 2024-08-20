@@ -112,10 +112,7 @@ export const CentralImportCandidateMerge = () => {
         await importCandidateMutation.mutateAsync();
         await registrationQuery.refetch();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
-        history.push(getRegistrationWizardLink(registrationIdentifier), {
-          previousPath: getImportCandidatePath(candidateIdentifier),
-          previousSearch: history.location.state.previousSearch,
-        } satisfies BasicDataLocationState);
+        history.push(getRegistrationWizardLink(registrationIdentifier));
       }}>
       {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (
         <Box

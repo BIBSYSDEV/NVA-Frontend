@@ -182,16 +182,14 @@ export const RegistrationFormActions = ({
             </Tooltip>
           </Box>
         ) : (
-          <>
-            <LoadingButton
-              variant="contained"
-              loading={isSaving}
-              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={handleSaveClick}
-              sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
-              {t('common.save_and_view')}
-            </LoadingButton>
-          </>
+          <LoadingButton
+            variant="contained"
+            loading={isSaving}
+            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+            onClick={handleSaveClick}
+            sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
+            {t('common.save_and_view')}
+          </LoadingButton>
         )}
       </Box>
 
