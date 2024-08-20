@@ -25,7 +25,11 @@ export const RegistrationErrorActions = ({
 
   return (
     <Box {...boxProps}>
-      <Typography>{isPublished ? 'Denne har feil' : t('registration.public_page.error_description')}</Typography>
+      <Typography>
+        {isPublished
+          ? t('registration.public_page.error_description_published_result')
+          : t('registration.public_page.error_description')}
+      </Typography>
       <ErrorList tabErrors={tabErrors} />
       <Button
         sx={{ bgcolor: 'white', width: '100%' }}
