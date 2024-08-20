@@ -31,6 +31,7 @@ import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 import { ScientificValueFilter } from './ScientificValueFilter';
 import { SeriesFilter } from './SeriesFilter';
+import { VocabularSearchField } from './VocabularSearchField';
 
 const StyledDivider = styled(Divider)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -81,6 +82,7 @@ export const AdvancedSearchPage = () => {
     title: params.get(ResultParam.Title),
     excludeSubunits,
     unit: unitId ?? topLevelOrganizationId,
+    vocabulary: params.get(ResultParam.Vocabulary),
   };
 
   const resultSearchQuery = useQuery({
@@ -226,6 +228,13 @@ export const AdvancedSearchPage = () => {
               paramName={ResultParam.Course}
               placeholder={t('search.search_for_course_code')}
             />
+          </Grid>
+
+          {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
+
+          <Grid item>
+            <StyledTypography>{t('editor.vocabulary')}</StyledTypography>
+            <VocabularSearchField />
           </Grid>
         </Grid>
 

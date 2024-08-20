@@ -16,6 +16,7 @@ import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchForOrganizations } from '../../api/hooks/useSearchForOrganizations';
+import { LanguageString } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
@@ -44,7 +45,7 @@ const initialValuesOrganizationForm: OrganizationForm = {
 };
 
 interface SelectInstitutionFormProps {
-  saveAffiliation: (id: string) => void;
+  saveAffiliation: (id: string, labels?: LanguageString) => void;
   onCancel?: () => void;
   suggestedInstitutions?: string[];
   initialValues?: OrganizationForm;
@@ -59,6 +60,7 @@ export const SelectInstitutionForm = ({
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSubunitId, setSelectedSubunitId] = useState(initialValues?.subunit?.id || '');
+  const [selectedSubunitLabels, setSelectedSubunitLabels] = useState(initialValues?.subunit?.labels || undefined);
 
   const debouncedQuery = useDebounce(searchTerm);
   const organizationSearchQuery = useSearchForOrganizations(debouncedQuery);
@@ -68,13 +70,17 @@ export const SelectInstitutionForm = ({
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
         if (values.selectedSuggestedAffiliationId) {
+          // When we select from a list of suggested affiliations
           saveAffiliation(values.selectedSuggestedAffiliationId);
         } else if (values.subunit?.id) {
-          saveAffiliation(values.subunit.id);
+          // When we select from the subunit search field
+          saveAffiliation(values.subunit.id, values.subunit.labels);
         } else if (selectedSubunitId) {
-          saveAffiliation(selectedSubunitId);
+          // When we select from the list below the subunit search field
+          saveAffiliation(selectedSubunitId, selectedSubunitLabels);
         } else if (values.unit?.id) {
-          saveAffiliation(values.unit?.id);
+          // When we only select from the unit search field (no sub-organization)
+          saveAffiliation(values.unit?.id, values.unit?.labels);
         }
         setSubmitting(false);
       }}>
@@ -144,6 +150,7 @@ export const SelectInstitutionForm = ({
 
                       setFieldValue(field.name, value);
                       setSelectedSubunitId('');
+                      setSelectedSubunitLabels(undefined);
                     }}
                     loading={organizationSearchQuery.isPending}
                     renderInput={(params) => (
@@ -178,6 +185,7 @@ export const SelectInstitutionForm = ({
                         onChange={(_, value) => {
                           setFieldValue(field.name, value);
                           setSelectedSubunitId(value?.id ?? '');
+                          setSelectedSubunitLabels(value?.labels ?? undefined);
                         }}
                         filterOptions={(options, state) =>
                           options.filter((option) =>
@@ -203,6 +211,7 @@ export const SelectInstitutionForm = ({
                           searchId={values.subunit?.id ?? ''}
                           selectedId={selectedSubunitId}
                           setSelectedId={setSelectedSubunitId}
+                          setSelectedLabels={setSelectedSubunitLabels}
                         />
                       ))}
                     </>

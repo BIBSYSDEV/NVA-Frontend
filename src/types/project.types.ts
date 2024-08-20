@@ -19,14 +19,7 @@ export interface ResearchProject {
   type: 'ResearchProject';
   id: string;
   name: string;
-  grants?: Grant[];
   approvals?: Approval[];
-}
-
-interface Grant {
-  type: 'Grant';
-  id: string;
-  source: string;
 }
 
 interface Approval {
@@ -55,10 +48,11 @@ export interface ProjectContributorIdentity {
 
 export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 
-interface ProjectContributorRole {
+export interface ProjectContributorRole {
   type: ProjectContributorType;
   affiliation: ProjectOrganization;
 }
+
 export interface ProjectContributor {
   identity: ProjectContributorIdentity;
   roles: ProjectContributorRole[];
@@ -190,4 +184,12 @@ export enum ProjectFieldName {
   PopularScientificSummaryEn = 'popularScientificSummary.en',
   Keywords = 'keywords',
   RelatedProjects = 'relatedProjects',
+  RoleType = 'roles[0].type',
+  RoleAffiliation = 'roles[0].affiliation',
+}
+
+export enum ProjectContributorFieldName {
+  Type = 'roles[0].type',
+  Identity = 'identity',
+  Roles = 'roles',
 }

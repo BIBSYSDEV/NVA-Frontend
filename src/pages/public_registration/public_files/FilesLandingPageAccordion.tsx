@@ -1,8 +1,8 @@
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../../../components/PageWithSideMenu';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
+import { SelectableButton } from '../../../components/SelectableButton';
 import { FileType } from '../../../types/associatedArtifact.types';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -86,12 +86,12 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             data-testid={dataTestId.registrationLandingPage.noLinkOrFilesWarning}>
             {t('registration.files_and_license.no_files_or_links_present_in_this_registration')}
           </Typography>
-          <LinkButton
+          <SelectableButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
             to={`${getRegistrationWizardLink(registration.identifier)}?tab=3`}>
             {t('registration.files_and_license.add_files_or_links')}
-          </LinkButton>
+          </SelectableButton>
         </Box>
       )}
       {filesToShow.map((file, index) => (

@@ -1,6 +1,6 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Box, BoxProps, Button, ButtonProps, styled, SvgIcon, Typography } from '@mui/material';
-import { Link, LinkProps } from 'react-router-dom';
+import { Box, BoxProps, styled, SvgIcon, Typography } from '@mui/material';
+import { SelectableButton, SelectableButtonProps } from './SelectableButton';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -65,32 +65,15 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
   />
 );
 
-interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
-  isSelected?: boolean;
-}
-
-export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
-  <Button
-    sx={{
-      bgcolor: isSelected ? 'primary.main' : 'background.default',
-      justifyContent: 'start',
-      boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.20)',
-      ...sx,
-    }}
-    variant={isSelected ? 'contained' : 'outlined'}
-    LinkComponent={rest.to ? Link : undefined}
-    {...rest}
-  />
-);
-
-interface LinkCreateButtonProps extends LinkButtonProps {
+interface LinkCreateButtonProps extends SelectableButtonProps {
   selectedColor?: string;
 }
 
 export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest }: LinkCreateButtonProps) => {
   return (
-    <LinkButton
+    <SelectableButton
       sx={{
+        textTransform: 'uppercase',
         borderWidth: '1px',
         borderRadius: 0,
         borderColor: isSelected ? 'primary.main' : 'secondary.dark',
@@ -104,6 +87,6 @@ export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest
         <AddCircleOutlineIcon />
         <Typography>{title}</Typography>
       </Box>
-    </LinkButton>
+    </SelectableButton>
   );
 };

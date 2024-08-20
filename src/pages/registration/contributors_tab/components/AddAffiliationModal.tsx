@@ -42,7 +42,7 @@ export const AddAffiliationModal = ({
     if (
       affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === newAffiliationId)
     ) {
-      dispatch(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
+      dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 

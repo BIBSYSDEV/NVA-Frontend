@@ -285,6 +285,9 @@ export interface ContextSeries {
   type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
   id?: string;
   title?: string;
+  onlineIssn?: string;
+  printIssn?: string;
+  issn?: string;
 }
 
 export interface ContextPublisher {

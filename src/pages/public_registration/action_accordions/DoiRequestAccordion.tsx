@@ -1,6 +1,7 @@
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LaunchIcon from '@mui/icons-material/Launch';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
@@ -11,6 +12,7 @@ import {
   Box,
   Button,
   DialogActions,
+  Link as MuiLink,
   TextField,
   Typography,
 } from '@mui/material';
@@ -55,6 +57,16 @@ enum LoadingState {
   DraftDoi,
 }
 
+const doiLink = (
+  <MuiLink
+    href="https://sikt.no/tjenester/doi"
+    target="_blank"
+    rel="noopener noreferrer"
+    sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+    <LaunchIcon fontSize="small" />
+  </MuiLink>
+);
+
 export const DoiRequestAccordion = ({
   registration,
   doiRequestTicket,
@@ -71,6 +83,9 @@ export const DoiRequestAccordion = ({
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
   const [showConfirmDialogAssignDoi, setShowConfirmDialogAssignDoi] = useState(false);
   const toggleConfirmDialogAssignDoi = () => setShowConfirmDialogAssignDoi((open) => !open);
+
+  const [openReserveDoiDialog, setOpenReserveDoiDialog] = useState(false);
+  const toggleReserveDoiDialog = () => setOpenReserveDoiDialog((open) => !open);
 
   const ticketMutation = useMutation({
     mutationFn: doiRequestTicket
@@ -146,6 +161,13 @@ export const DoiRequestAccordion = ({
     (file) => file.type === 'PublishedFile'
   );
 
+  const hasReservedDoi = !doiRequestTicket && registration.doi;
+  const status = doiRequestTicket
+    ? t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)
+    : hasReservedDoi
+      ? t('registration.public_page.tasks_panel.reserved')
+      : '';
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
@@ -154,15 +176,19 @@ export const DoiRequestAccordion = ({
       defaultExpanded={waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi')}
-        {doiRequestTicket && ` - ${t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)}`}
+        {status && ` - ${status}`}
       </AccordionSummary>
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
 
         {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} />}
 
-        {!doiRequestTicket && registration.doi && (
-          <Typography paragraph>{t('registration.public_page.tasks_panel.has_reserved_doi')}</Typography>
+        {hasReservedDoi && (
+          <Trans
+            t={t}
+            i18nKey="registration.public_page.tasks_panel.has_reserved_doi"
+            components={[<Typography paragraph key="1" />]}
+          />
         )}
 
         {waitingForRemovalOfDoi && (
@@ -182,28 +208,70 @@ export const DoiRequestAccordion = ({
         {!doiRequestTicket && !registration.doi && (
           <>
             {isPublishedRegistration && (
-              <LoadingButton
-                variant="outlined"
-                endIcon={<LocalOfferIcon />}
-                loadingPosition="end"
-                loading={isLoadingData || isLoading === LoadingState.RequestDoi}
-                disabled={isLoading !== LoadingState.None}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
-                onClick={toggleRequestDoiModal}>
-                {t('registration.public_page.request_doi')}
-              </LoadingButton>
+              <>
+                <Trans
+                  t={t}
+                  i18nKey="registration.public_page.tasks_panel.request_doi_description"
+                  values={{ buttonText: t('registration.public_page.request_doi') }}
+                  components={[
+                    <Typography paragraph key="1" />,
+                    <Typography paragraph key="2">
+                      {doiLink}
+                    </Typography>,
+                  ]}
+                />
+
+                <Button
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
+                  sx={{ bgcolor: 'white' }}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                  endIcon={<LocalOfferIcon />}
+                  disabled={isLoading !== LoadingState.None}
+                  onClick={toggleRequestDoiModal}>
+                  {t('registration.public_page.request_doi')}
+                </Button>
+              </>
             )}
             {isDraftRegistration && (
-              <LoadingButton
-                variant="outlined"
-                endIcon={<LocalOfferIcon />}
-                loadingPosition="end"
-                loading={isLoadingData || isLoading === LoadingState.DraftDoi}
-                disabled={isLoading !== LoadingState.None}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
-                onClick={addDraftDoi}>
-                {t('registration.public_page.reserve_doi')}
-              </LoadingButton>
+              <>
+                <Trans
+                  t={t}
+                  i18nKey="registration.public_page.tasks_panel.draft_doi_description"
+                  values={{ buttonText: t('registration.public_page.reserve_doi') }}
+                  components={[
+                    <Typography paragraph key="1" />,
+                    <Typography paragraph key="2">
+                      {doiLink}
+                    </Typography>,
+                  ]}
+                />
+
+                <Button
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
+                  sx={{ bgcolor: 'white' }}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                  endIcon={<LocalOfferIcon />}
+                  disabled={isLoading !== LoadingState.None}
+                  onClick={toggleReserveDoiDialog}>
+                  {t('registration.public_page.reserve_doi')}
+                </Button>
+
+                <ConfirmDialog
+                  open={openReserveDoiDialog}
+                  title={t('registration.public_page.reserve_doi')}
+                  onAccept={addDraftDoi}
+                  onCancel={toggleReserveDoiDialog}>
+                  <Trans
+                    t={t}
+                    i18nKey="registration.public_page.tasks_panel.reserve_doi_confirmation"
+                    components={[<Typography paragraph key="1" />, <Typography paragraph key="2" fontWeight={700} />]}
+                  />
+                </ConfirmDialog>
+              </>
             )}
 
             <Modal

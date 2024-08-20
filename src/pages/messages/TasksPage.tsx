@@ -1,6 +1,6 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import { Badge, Button, styled } from '@mui/material';
+import { Badge, Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +10,7 @@ import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { LinkButton, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
@@ -30,11 +30,6 @@ import { NviCorrectionList } from './components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
 import { NviStatusPage } from './components/NviStatusPage';
 import { TicketList } from './components/TicketList';
-
-export const StyledSearchModeButton = styled(LinkButton)({
-  borderRadius: '1.5rem',
-  textTransform: 'none',
-});
 
 const TasksPage = () => {
   const { t } = useTranslation();

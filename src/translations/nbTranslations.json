@@ -170,6 +170,9 @@
     "close": "Lukk",
     "close_forever": "Lukk og ikke vis igjen",
     "contributor": "Bidragsyter",
+    "contributors": {
+      "add_duplicate_affiliation": "Tilknytningen er allerede lagt til"
+    },
     "country": "Land",
     "create": "Opprett",
     "date": "Dato",
@@ -211,6 +214,7 @@
     "no_hits": "Ingen treff",
     "none": "Ingen",
     "not_decided": "Ikke bestemt",
+    "number_of_rows_per_page": "Antall rader per side",
     "number_short": "Nr.",
     "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
@@ -297,6 +301,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -368,11 +376,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1107,31 +1111,39 @@
     }
   },
   "project": {
+    "add_affiliation": "Legg til tilknytning",
+    "add_project_contributor": "Legg til prosjektdeltaker",
+    "affiliation_modal": {
+      "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
+      "delete_affiliation": "Fjern tilknytning",
+      "edit_affiliation": "Endre tilknytning"
+    },
     "close_view": "Lukk visning",
     "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
     "coordinating_institution": "Koordinerende institusjon",
+    "create_new_project": "Opprett nytt prosjekt",
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "form": {
-      "title_and_description": "Tittel og beskrivelse",
-      "keywords": "Nøkkelord",
       "date": "Dato",
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
+      "keywords": "Nøkkelord",
       "related_projects": "Relaterte prosjekt",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
       "search_for_person": "Søk etter person",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
-      "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt."
-    },
-    "heading": {
-      "description": "$t(common.description)",
-      "details": "Detaljer",
-      "project_participants": "Prosjektdeltakere",
-      "connections": "Koblinger"
+      "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt.",
+      "title_and_description": "Tittel og beskrivelse"
     },
     "grant_id": "Tilskudds-ID",
+    "heading": {
+      "connections": "Koblinger",
+      "description": "$t(common.description)",
+      "details": "Detaljer",
+      "project_participants": "Prosjektdeltakere"
+    },
     "keywords": "Nøkkelord",
     "no_participants": "Ingen registrerte deltakere.",
     "no_related_projects": "Ingen relaterte prosjekt.",
@@ -1144,6 +1156,7 @@
     "popular_science_summary_norwegian": "$t(project.popular_science_summary) (norsk)",
     "project": "Prosjekt",
     "project_category": "Prosjektkategori",
+    "project_has_no_funding": "Prosjektet har ingen finansiering",
     "project_id": "Prosjekt-ID",
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
@@ -1167,7 +1180,6 @@
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
       "add_contributor": "Legg til bidragsyter",
-      "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
       "add_new_affiliation": "Legg til ny tilknytning",
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som forskningen er gjennomført i samarbeid med, skal legges til som tilknytning til bidragsyteren.</0> <0>Legg til tilknytning til bidragsyteren ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører bidragsyteren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
       "add_new_contributor": "Legg til ny bidragsyter",
@@ -1199,7 +1211,6 @@
       "remove_contributor": "Fjern bidragsyter",
       "search_for_institution": "Søk etter institusjon",
       "select_affiliation": "Velg tilknytning",
-      "select_all": "Velg alt",
       "select_contributor_type": "Velg type bidragsyter",
       "select_person": "Velg person",
       "suggested_affiliations": "Foreslåtte tilknytninger",
@@ -1270,6 +1281,7 @@
     "delete_registration": "Avpubliser forskningsresultat",
     "description": {
       "abstract": "Sammendrag",
+      "add_project_helper_text": "Søk opp og velg prosjektet i søkefeltet for å knytte resultatet til et prosjekt som allerede er registrert i NVA.",
       "add_vocabulary": "Legg til vokabular",
       "alternative_abstract": "Alternativt sammendrag",
       "alternative_title": "Alternativ tittel",
@@ -1278,14 +1290,16 @@
       "create_project_helper_text": "<0>Forskeren definerer selv sine prosjekter.</0> <0>Et prosjekt må ha en tittel, en prosjektleder, en koordinerende institusjon, en start- og sluttdato. Et prosjekt kan ha prosjektdeltakere, finansiørerer, godkjenninger eller forskningsresultat.</0> <0>Om du har en NFR finansiering så kan du etablere et prosjekt med den som utgangspunkt. Da starter du med å søker du opp din NFR finansiering, den blir lagt til prosjektet og alle obligatoriske felt er ferdig utfylt, foruten prosjektleder som må søkes opp og bekreftes.</0> <0>(Det planlegges tilsvarende funksjonalitet med utgangspunkt i en REK-godkjenning. Alle prosjekter som skal være del av KBS-rapporteringen må ha en REK-godkjenning som identifiserer prosjektet som en klinisk behandlingsstudie.)</0>",
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, spesielt viktig for blant annet kunstnerisk resultat",
-      "duplicate_title_warning": "Det finnes en registrering i NVA med samme tittel. Vennligst avbryt registreringen dersom det er det samme resultatet som du prøver å registrere, slik at du ikke oppretter duplikater.",
       "duplicate_publication_date_warning": "Det finnes alt en publikasjon med samme tittel som er publisert dette året",
+      "duplicate_title_warning": "Det finnes en registrering i NVA med samme tittel. Vennligst avbryt registreringen dersom det er det samme resultatet som du prøver å registrere, slik at du ikke oppretter duplikater.",
       "funding": {
         "funder": "Finansiør",
         "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",
         "funding_id": "Tilskudds-ID",
         "funding_name": "Tilskuddsnavn",
         "funding_sum": "Sum",
+        "funding_without_project": "Finansiering uten prosjekt",
+        "funding_without_project_description": "<0>Mottar forskningen finansiering som ikke er tilknyttet et prosjekt så trykk på \"Legg til finansiering\" og deretter søk etter finansiør.</0> <0>Ikke registrer finansiering som er tilknyttet et prosjekt. Finansiering tilknyttet prosjekt legges til når du legger til prosjekt lengre opp på siden. Hvis ikke informasjonen om finansiering vises så må dette registreres på prosjektet i NVA.</0>",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
         "remove_funding": "Fjern finansiering"
@@ -1294,6 +1308,7 @@
       "hrcs_categories": "HRCS-kategorier",
       "keywords": "Nøkkelord",
       "keywords_helper": "Skill nøkkelord med komma eller enter",
+      "new_project_helper_text": "<0><0>Finner du ikke prosjektet?</0> Opprett nytt prosjekt i NVA</0>",
       "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
       "primary_language": "Hovedspråk for innhold",
       "project_association": "Prosjekttilknytning",
@@ -1385,7 +1400,7 @@
         "contact_registrator_to_change": "Er det feil eller mangler i publikasjonen som er registrert må du kontakte registrator eller bidragsyter i registreringen for å endre den. Du kan ikke publisere det samme resultatet på nytt i NVA.",
         "headline": "Resultatet kan være en duplikat",
         "if_same_press_no_in_box": "Om dette er samme resultat som din registrering, må du trykke 'NEI' i denne boksen for å unngå å publisere.",
-        "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel og år som din registrering."
+        "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel, år og kategori som din registrering."
       },
       "error_description": "Følgende feil må rettes opp før publisering av resultat:",
       "find_in_channel_registry": "Finn i kanalregisteret",
@@ -1407,9 +1422,9 @@
       "reason_for_rejection": "Begrunnelse for avvisning",
       "reject_publish_request": "Avvis publisering av fil",
       "reject_publish_request_description": "<0>Oppgi begrunnelse på hvorfor fil(ene) blir avvist for publisering.</0><0>Denne begrunnelsen blir lagret i NVA og synlig for både registratoren og bidragsytere som er tilknyttet forskningsresultatet.</0><0>Når du avviser fil(ene), så fjernes de fra presentasjonssiden til forskningsresultatet. Du og registrator kan publisere de senere eller slette de, ved å redigere forskningsresultatet.</0>",
-      "request_doi": "Be om en DOI",
+      "request_doi": "Be om DOI",
       "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
-      "reserve_doi": "Reserver en DOI",
+      "reserve_doi": "Reserver DOI",
       "reserved_doi": "Reservert DOI",
       "result_not_published": "Resultatet er ikke publisert",
       "scopus_id": "Scopus ID",
@@ -1419,12 +1434,13 @@
         "assign_curator": "Sett kurator",
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
+        "draft_doi_description": "<0>En reservert DOI gjør at du (og de du deler DOI med) kan sitere forskningsresultatet i andre arbeid før det publiseres.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om din registrering tilsvarer det som alt er publisert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det.</0>",
-        "duplicate_title_description_introduction": "Denne registreringen har samme tittel og år som følgende publikasjon:",
+        "duplicate_title_description_introduction": "Denne registreringen har samme tittel, år og kategori som følgende publikasjon:",
         "edit_publishing_request_description": "Er det noen av filene til publiseringen som ikke skal publiseres så kan du endre publiseringsstatus på disse ved å redigere registreringen.",
         "files_will_soon_be_published": "Fil(er) vil være tilgjengelig for andre om kort tid. Vent litt før du oppdaterer siden på nytt for å se status.",
         "has_rejected_files_publishing_request": "<0>Beskrivelse (metadata) er publisert og offentlig tilgjengelig.</0><0>Kurator har avvist filen, og den er fjernet fra visningen av forskningsresultatet.</0>",
-        "has_reserved_doi": "Du har reservert en DOI til denne registreringen. Den kan deles med de som ønsker å sitere dette resultatet. Når registreringen blir publisert og blir offentlig tilgjengelig, må en kurator validere metadata før DOI blir offentlig tilgjengelig.",
+        "has_reserved_doi": "<0>Du kan dele reservert DOI med de som skal sitere resultatet. Oppslag via DOI er ikke mulig før DOI er tildelt av kurator.</0><0>DOI-forespørselen blir sendt til kurator når resultatet publiseres. Du publiserer registreringen i publiseringsmenyen.</0>",
         "metadata_published_waiting_for_files": "<0>Beskrivelse av (metadata) er publisert og synlig for andre, men kurator må godkjenne filene som er lastet opp før de blir synlige.</0><0>Du får beskjed når fil(er) og valgt lisens er godkjent av kurator og er offentlig tilgjengelig. Statusen er alltid synlig på Min Side.</0>",
         "no_published_files_on_registration": "Ingen publiserte filer på resultatet",
         "no_published_files_on_registration_description": "<0>Resultatet har ingen publiserte filer.</0><0>Sjekk med registrator om det er korrekt at resultatet ikke skal ha publiserte filer i NVA.</0><0>Ønsker du å tildele DOI på resultat uten fil?</0>",
@@ -1437,7 +1453,10 @@
         "reject_publishing_request_description_one": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filen publisert og dermed ikke synlig for andre. Filen blir flyttet til ikke publisert.</0><0>Ønsker du å slette filen, gjør det i redigering av forskningsresultatet.</0>",
         "reject_publishing_request_description_other": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filene publisert og dermed ikke synlig for andre. Filene blir flyttet til ikke publisert.</0><0>Ønsker du å slette filene, gjør det i redigering av forskningsresultatet.</0>",
         "reload": "Last på nytt",
+        "reserve_doi_confirmation": "<0>Kun publiserte forskningsresultater kan ha en DOI.</0><0>Om du trenger en DOI for å sitere forskningsresultater korrekt i andre forskingsresultater som er under arbeid, før det er publisert, så kan du reservere en DOI.</0><0>Kun du ser den reserverte DOI-en, og den leder ikke til noe sted før du publiserer forskningsresultatet. Etter publisering blir din kurator informert om at du ønsker en DOI, og må da tildele den (eller avvise).</0><0>Om du er klar til å publisere, så publiser, og velg \"$t(registration.public_page.request_doi)\", i stedet for å reservere en DOI.</0><1>Ønsker du fortsatt å reservere en DOI?</1>",
+        "reserved": "Reservert",
         "review_preview_before_publishing": "Se over utkast før du går videre.",
+        "request_doi_description": "<0>En DOI (Digital Object Identifier) øker synligheten til forskningsresultatet og kan bidra til flere siteringer.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Beskrivelsen (metadata) av forskningsresultatet og opplastede filer blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
@@ -1717,6 +1736,7 @@
       "create_series": "Opprett serie",
       "date_from": "Dato fra",
       "date_to": "Dato til",
+      "duplicate_category_warning": "Det finnes alt en publikasjon med {{sameFields}} som er publisert med denne kategorien. Hvis dette er det samme resultatet som du prøver å registrere, må du avbryte registreringen slik at du ikke oppretter duplikater.",
       "exhibition_production": {
         "add_exhibition_basic": "Legg til visningssted",
         "add_exhibition_catalog": "Legg til utstillingskatalog",
@@ -1786,7 +1806,7 @@
       "pages_to": "til",
       "place_for_event": "Sted for arrangement",
       "print_issn": "Print ISSN",
-      "protected_degree_type": "Du mangler tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
+      "protected_degree_type": "Du mangler tilgang. Det er kun studentoppgavekurator som har tilganger til å registrere denne kategorien. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
       "protected_file_type": "Din institusjon har valgt å ikke støtte filer for denne kategorien.",
       "publisher_or_organizer": "Utgiver/arrangør eller lignende",
       "related_result": "Relatert resultat",
@@ -1822,6 +1842,8 @@
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
       "resource_type": "Kategori",
+      "same_title": "samme tittel",
+      "same_title_and_date": "samme tittel og år",
       "search_for_channel": "Søk i ISSN-portalen på <0><0></0></0> for å sikre at verdiene du oppgir er riktige.",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
@@ -1905,6 +1927,7 @@
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "Velg en eller flere kategorier",
+    "select_vocabulary": "Velg vokabular",
     "sort_alphabetically_asc": "Tittel (A-Å)",
     "sort_alphabetically_desc": "Tittel (Å-A)",
     "sort_by": "Sorter etter",
@@ -1929,8 +1952,8 @@
       "approve_nvi_candidate_description": "<0>Kontroll av forskningsresultat for NVI-rapportering.</0><0>Klikk på knappen \"{{buttonText}}\" for å rapportere forskningsresultatet.</0>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
-        "correction_list_duct": "Retteliste (DUCT)",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
+        "correction_list_duct": "Retteliste (DUCT)",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
       },
       "delete_note": "Slett melding",
