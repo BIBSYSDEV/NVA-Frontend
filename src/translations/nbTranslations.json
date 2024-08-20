@@ -605,6 +605,7 @@
       "cannot_be_after": "{{field}} kan ikke være etter {{limitField}}",
       "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
       "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
+      "contributor_required_project": "Du må ha minst en prosjektdeltaker",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
       "employments_missing_data": "Minst en ansettelse mangler stilling eller startdato",
       "has_invalid_format": "{{field}} har ugyldig format",

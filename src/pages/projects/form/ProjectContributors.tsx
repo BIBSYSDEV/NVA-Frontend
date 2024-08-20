@@ -30,10 +30,11 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
-  const { values } = useFormikContext<CristinProject>();
+  const { values, errors } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const contributorsToShow = contributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
   const thisIsRekProject = isRekProject(currentProject);
+  const contributorError = errors?.contributors;
 
   return (
     <>
@@ -56,44 +57,55 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
               data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
               {t('project.add_project_contributor')}
             </Button>
-            <ListPagination
-              count={contributors.length}
-              rowsPerPage={rowsPerPage}
-              page={currentPage}
-              onPageChange={(newPage) => setCurrentPage(newPage)}
-              onRowsPerPageChange={(newRowsPerPage) => {
-                setRowsPerPage(newRowsPerPage);
-                setCurrentPage(1);
-              }}
-              alternativePaginationText={t('common.number_of_rows_per_page')}>
-              <TableContainer sx={{ mb: '0.5rem' }} component={Paper}>
-                <Table size="small" sx={alternatingTableRowColor}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>{t('common.role')}</TableCell>
-                      <TableCell>{t('common.name')}</TableCell>
-                      <TableCell>{t('common.affiliation')}</TableCell>
-                      <TableCell>{t('common.clear')}</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {contributorsToShow.map((contributor) => {
-                      const contributorIndex = contributors.findIndex((c) => c.identity.id === contributor.identity.id);
-                      return (
-                        <ContributorRow
-                          key={contributor.identity.id}
-                          contributorIndex={contributorIndex}
-                          baseFieldName={`${name}[${contributorIndex}]`}
-                          contributor={contributor}
-                          removeContributor={isProjectManager(contributor) ? undefined : () => remove(contributorIndex)}
-                          isRekProject={thisIsRekProject}
-                        />
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </ListPagination>
+            {contributors.length > 0 ? (
+              <ListPagination
+                count={contributors.length}
+                rowsPerPage={rowsPerPage}
+                page={currentPage}
+                onPageChange={(newPage) => setCurrentPage(newPage)}
+                onRowsPerPageChange={(newRowsPerPage) => {
+                  setRowsPerPage(newRowsPerPage);
+                  setCurrentPage(1);
+                }}
+                alternativePaginationText={t('common.number_of_rows_per_page')}>
+                <TableContainer sx={{ mb: '0.5rem' }} component={Paper}>
+                  <Table size="small" sx={alternatingTableRowColor}>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>{t('common.role')}</TableCell>
+                        <TableCell>{t('common.name')}</TableCell>
+                        <TableCell>{t('common.affiliation')}</TableCell>
+                        <TableCell>{t('common.clear')}</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {contributorsToShow.map((contributor) => {
+                        const contributorIndex = contributors.findIndex(
+                          (c) => c.identity.id === contributor.identity.id
+                        );
+                        return (
+                          <ContributorRow
+                            key={contributor.identity.id}
+                            contributorIndex={contributorIndex}
+                            baseFieldName={`${name}[${contributorIndex}]`}
+                            contributor={contributor}
+                            removeContributor={
+                              isProjectManager(contributor) ? undefined : () => remove(contributorIndex)
+                            }
+                            isRekProject={thisIsRekProject}
+                          />
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </ListPagination>
+            ) : contributorError && typeof contributorError === 'string' ? (
+              <Typography
+                sx={{ color: 'error.main', marginTop: '0.25rem', letterSpacing: '0.03333em', marginBottom: '1rem' }}>
+                {contributorError}
+              </Typography>
+            ) : null}
           </>
         )}
       </FieldArray>

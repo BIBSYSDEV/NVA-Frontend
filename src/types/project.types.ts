@@ -155,12 +155,7 @@ export const emptyProject: SaveCristinProject = {
   language: 'http://lexvo.org/id/iso639-3/nob',
   startDate: '',
   endDate: '',
-  contributors: [
-    {
-      ...emptyProjectContributor,
-      roles: [{ type: 'ProjectManager', affiliation: emptyAffiliation }],
-    },
-  ],
+  contributors: [],
   coordinatingInstitution: emptyAffiliation,
   academicSummary: {},
   popularScientificSummary: {},

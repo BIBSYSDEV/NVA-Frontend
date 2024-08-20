@@ -36,6 +36,7 @@ const basicProjectErrorMessage = {
   startDateInvalidFormat: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('common.start_date'),
   }),
+  contributorRequired: i18n.t('feedback.validation.contributor_required_project'),
 };
 
 const roleValidationSchema = Yup.object().shape({
@@ -61,7 +62,7 @@ export const basicProjectValidationSchema = Yup.object<YupShape<SaveCristinProje
         ? schema.min(startDate, basicProjectErrorMessage.endDateCannotBeBeforeStart)
         : schema
     ),
-  contributors: Yup.array().of(contributorValidationSchema),
+  contributors: Yup.array().min(1, basicProjectErrorMessage.contributorRequired).of(contributorValidationSchema),
   coordinatingInstitution: Yup.object().shape({
     id: Yup.string().required(basicProjectErrorMessage.coordinatingInstitution),
   }),
