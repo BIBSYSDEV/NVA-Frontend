@@ -15,9 +15,11 @@ import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { NviCandidateContext } from '../../context/NviCandidateContext';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
+import { isApprovedAndOpenNviCandidate } from '../../utils/nviHelpers';
 import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -75,7 +77,11 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
-    <>
+    <NviCandidateContext.Provider
+      value={{
+        nviCandiadate: nviCandidateQuery.data,
+        isApprovedNviCandidate: !!nviCandidateQuery.data && isApprovedAndOpenNviCandidate(nviCandidateQuery.data),
+      }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
@@ -137,6 +143,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         <Typography paragraph>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
-    </>
+    </NviCandidateContext.Provider>
   ) : null;
 };
