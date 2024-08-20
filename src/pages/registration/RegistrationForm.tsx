@@ -25,7 +25,6 @@ import { isApprovedAndOpenNviCandidate } from '../../utils/nviHelpers';
 import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { hasCuratorRole } from '../../utils/user-helpers';
 import { Forbidden } from '../errorpages/Forbidden';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
@@ -85,7 +84,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
       value={{
         nviCandiadate: nviCandidateQuery.data,
         disableNviCriticalFields:
-          !!nviCandidateQuery.data && isApprovedAndOpenNviCandidate(nviCandidateQuery.data) && !hasCuratorRole(user),
+          !!nviCandidateQuery.data && isApprovedAndOpenNviCandidate(nviCandidateQuery.data) && !!user?.isNviCurator,
       }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
