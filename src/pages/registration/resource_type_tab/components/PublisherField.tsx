@@ -31,7 +31,7 @@ export const PublisherField = () => {
   const publisher = reference?.publicationContext.publisher;
   const year = publicationDate?.year ?? '';
 
-  const { isApprovedNviCandidate } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const [showPublisherForm, setShowPublisherForm] = useState(false);
   const togglePublisherForm = () => setShowPublisherForm(!showPublisherForm);
@@ -78,7 +78,7 @@ export const PublisherField = () => {
       <Field name={ResourceFieldNames.PublicationContextPublisherId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            disabled={isApprovedNviCandidate}
+            disabled={disableNviCriticalFields}
             fullWidth
             multiple
             id={publisherFieldTestId}

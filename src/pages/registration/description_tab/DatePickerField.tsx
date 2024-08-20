@@ -24,7 +24,7 @@ export const DatePickerField = () => {
   const [date, setDate] = useState(getRegistrationDate(dateData));
   const [yearOnly, setYearOnly] = useState(!!dateData?.year && !dateData?.month);
 
-  const { isApprovedNviCandidate } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
     const updatedDate: RegistrationDate = {
@@ -55,7 +55,7 @@ export const DatePickerField = () => {
           updateDateValues(newDate, yearOnly);
           setDate(newDate);
         }}
-        disabled={isApprovedNviCandidate}
+        disabled={disableNviCriticalFields}
         views={yearOnly ? ['year'] : ['year', 'month', 'day']}
         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
         slotProps={{
@@ -70,7 +70,7 @@ export const DatePickerField = () => {
         }}
       />
       <FormControlLabel
-        disabled={isApprovedNviCandidate}
+        disabled={disableNviCriticalFields}
         sx={{ alignSelf: 'start', mt: '0.4rem', width: 'fit-content' }} // Center field regardless of error state of published date field
         control={
           <Checkbox

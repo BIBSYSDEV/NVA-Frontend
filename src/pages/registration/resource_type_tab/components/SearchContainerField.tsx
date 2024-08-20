@@ -56,7 +56,7 @@ export const SearchContainerField = ({
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const { isApprovedNviCandidate } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),
@@ -74,7 +74,7 @@ export const SearchContainerField = ({
       {({ field, meta }: FieldProps<string>) => (
         <>
           <Autocomplete
-            disabled={isApprovedNviCandidate}
+            disabled={disableNviCriticalFields}
             multiple
             id={dataTestId}
             data-testid={dataTestId}

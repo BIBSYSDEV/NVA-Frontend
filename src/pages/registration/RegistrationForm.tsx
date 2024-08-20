@@ -4,6 +4,7 @@ import { useUppy } from '@uppy/react';
 import { Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { fetchRegistration } from '../../api/registrationApi';
 import { fetchNviCandidateForRegistration } from '../../api/scientificIndexApi';
@@ -16,6 +17,7 @@ import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../context/NviCandidateContext';
+import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
@@ -23,6 +25,7 @@ import { isApprovedAndOpenNviCandidate } from '../../utils/nviHelpers';
 import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { hasCuratorRole } from '../../utils/user-helpers';
 import { Forbidden } from '../errorpages/Forbidden';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
@@ -38,6 +41,7 @@ interface RegistrationFormProps {
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t, i18n } = useTranslation();
   const history = useHistory();
+  const user = useSelector((state: RootState) => state.user);
   const uppy = useUppy(createUppy(i18n.language));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
 
@@ -80,7 +84,8 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     <NviCandidateContext.Provider
       value={{
         nviCandiadate: nviCandidateQuery.data,
-        isApprovedNviCandidate: !!nviCandidateQuery.data && isApprovedAndOpenNviCandidate(nviCandidateQuery.data),
+        disableNviCriticalFields:
+          !!nviCandidateQuery.data && isApprovedAndOpenNviCandidate(nviCandidateQuery.data) && hasCuratorRole(user),
       }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik

@@ -31,7 +31,7 @@ export const SeriesField = () => {
   const series = reference?.publicationContext.series;
   const year = publicationDate?.year ?? '';
 
-  const { isApprovedNviCandidate } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const [showSeriesForm, setShowSeriesForm] = useState(false);
   const toggleSeriesForm = () => setShowSeriesForm(!showSeriesForm);
@@ -80,7 +80,7 @@ export const SeriesField = () => {
       <Field name={ResourceFieldNames.SeriesId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            disabled={isApprovedNviCandidate}
+            disabled={disableNviCriticalFields}
             fullWidth
             multiple
             id={seriesFieldTestId}

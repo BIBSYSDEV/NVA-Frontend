@@ -60,7 +60,7 @@ export const SelectRegistrationTypeField = () => {
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
 
-  const { isApprovedNviCandidate } = useContext(NviCandidateContext);
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
   const [confirmNewType, setConfirmNewType] = useState<PublicationInstanceType | ''>('');
@@ -354,7 +354,7 @@ export const SelectRegistrationTypeField = () => {
       <FormLabel sx={{ display: 'block' }}>{t('registration.resource_type.resource_type')}</FormLabel>
       <Chip
         data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(currentInstanceType)}
-        disabled={isApprovedNviCandidate}
+        disabled={disableNviCriticalFields}
         icon={
           nviApplicableTypes.includes(currentInstanceType) ? (
             <FilterVintageIcon
