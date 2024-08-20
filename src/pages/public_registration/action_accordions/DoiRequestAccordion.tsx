@@ -198,16 +198,37 @@ export const DoiRequestAccordion = ({
         {!doiRequestTicket && !registration.doi && (
           <>
             {isPublishedRegistration && (
-              <LoadingButton
-                variant="outlined"
-                endIcon={<LocalOfferIcon />}
-                loadingPosition="end"
-                loading={isLoadingData || isLoading === LoadingState.RequestDoi}
-                disabled={isLoading !== LoadingState.None}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
-                onClick={toggleRequestDoiModal}>
-                {t('registration.public_page.request_doi')}
-              </LoadingButton>
+              <>
+                <Trans
+                  t={t}
+                  i18nKey="registration.public_page.tasks_panel.request_doi_description"
+                  values={{ buttonText: t('registration.public_page.request_doi') }}
+                  components={[
+                    <Typography paragraph key="1" />,
+                    <Typography paragraph key="2">
+                      <MuiLink
+                        href="https://sikt.no/tjenester/doi"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                        <LaunchIcon fontSize="small" />
+                      </MuiLink>
+                    </Typography>,
+                  ]}
+                />
+
+                <Button
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
+                  sx={{ bgcolor: 'white' }}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                  endIcon={<LocalOfferIcon />}
+                  disabled={isLoading !== LoadingState.None}
+                  onClick={toggleRequestDoiModal}>
+                  {t('registration.public_page.request_doi')}
+                </Button>
+              </>
             )}
             {isDraftRegistration && (
               <>
