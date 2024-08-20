@@ -33,7 +33,6 @@ import { RegistrationErrorActions } from '../../../components/RegistrationErrorA
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -427,9 +426,8 @@ export const PublishingAccordion = ({
               endIcon={<EditIcon fontSize="large" />}
               component={RouterLink}
               to={{
-                pathname: getRegistrationWizardLink(registration.identifier),
+                ...getRegistrationWizardLink(registration.identifier),
                 search: '?tab=' + RegistrationTab.FilesAndLicenses,
-                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
               }}>
               {t('registration.edit_registration')}
             </Button>
