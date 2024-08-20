@@ -34,6 +34,7 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
   const { contributors } = values;
   const contributorsToShow = contributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
   const thisIsRekProject = isRekProject(currentProject);
+  const hasUnidentifiedContributor = contributors.some((contributor) => !contributor.identity.id);
 
   return (
     <>
@@ -53,6 +54,7 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
               onClick={() => push(emptyProjectContributor)}
               variant="contained"
               startIcon={<AddIcon />}
+              disabled={hasUnidentifiedContributor}
               data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
               {t('project.add_project_contributor')}
             </Button>
