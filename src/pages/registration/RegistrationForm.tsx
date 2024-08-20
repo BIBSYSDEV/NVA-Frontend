@@ -84,7 +84,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
       value={{
         nviCandiadate: nviCandidateQuery.data,
         disableNviCriticalFields:
-          !!nviCandidateQuery.data && isApprovedAndOpenNviCandidate(nviCandidateQuery.data) && !!user?.isNviCurator,
+          !!nviCandidateQuery.data && isApprovedAndOpenNviCandidate(nviCandidateQuery.data) && !user?.isNviCurator,
       }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
