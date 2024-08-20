@@ -27,7 +27,8 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
-import { RegistrationWizardLink } from '../editor/RegistrationWizardLink';
+import { Link as RouterLink } from 'react-router-dom';
+import { getRegistrationWizardLink } from '../../utils/urlPaths';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -74,11 +75,13 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
         {userCanEditRegistration(registration) && (
           <Tooltip title={t('registration.edit_registration')}>
-            <RegistrationWizardLink identifier={identifier} sx={{ ml: 'auto' }}>
-              <IconButton data-testid={dataTestId.registrationLandingPage.editButton} sx={{ color: 'white' }}>
-                <EditIcon />
-              </IconButton>
-            </RegistrationWizardLink>
+            <IconButton
+              component={RouterLink}
+              to={getRegistrationWizardLink(identifier)}
+              data-testid={dataTestId.registrationLandingPage.editButton}
+              sx={{ ml: 'auto', color: 'inherit' }}>
+              <EditIcon />
+            </IconButton>
           </Tooltip>
         )}
       </StyledPaperHeader>

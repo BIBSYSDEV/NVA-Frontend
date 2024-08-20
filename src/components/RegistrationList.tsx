@@ -19,12 +19,16 @@ import {
   getTitleString,
   userCanDeleteRegistration,
 } from '../utils/registration-helpers';
-import { getRegistrationLandingPagePath, getResearchProfilePath, UrlPathTemplate } from '../utils/urlPaths';
+import {
+  getRegistrationLandingPagePath,
+  getRegistrationWizardLink,
+  getResearchProfilePath,
+  UrlPathTemplate,
+} from '../utils/urlPaths';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
 import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
-import { RegistrationWizardLink } from '../pages/editor/RegistrationWizardLink';
 
 interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   registrations: Registration[];
@@ -199,14 +203,14 @@ export const RegistrationListItemContent = ({
             </IconButton>
           )}
           <Tooltip title={t('common.edit')}>
-            <RegistrationWizardLink identifier={identifier}>
-              <IconButton
-                data-testid={`edit-registration-${identifier}`}
-                size="small"
-                sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
-                <EditIcon fontSize="inherit" />
-              </IconButton>
-            </RegistrationWizardLink>
+            <IconButton
+              component={Link}
+              to={getRegistrationWizardLink(identifier)}
+              data-testid={`edit-registration-${identifier}`}
+              size="small"
+              sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+              <EditIcon fontSize="inherit" />
+            </IconButton>
           </Tooltip>
           {registration.status === 'DRAFT' && onDeleteDraftRegistration && userCanDeleteRegistration(registration) && (
             <Tooltip title={t('common.delete')}>

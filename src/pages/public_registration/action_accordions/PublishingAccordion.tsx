@@ -41,7 +41,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
 import { userCanPublishRegistration } from '../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationLandingPagePath, getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
@@ -427,7 +427,7 @@ export const PublishingAccordion = ({
               endIcon={<EditIcon fontSize="large" />}
               component={RouterLink}
               to={{
-                pathname: getRegistrationWizardPath(registration.identifier),
+                pathname: getRegistrationWizardLink(registration.identifier),
                 search: '?tab=' + RegistrationTab.FilesAndLicenses,
                 state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
               }}>

@@ -12,7 +12,7 @@ import {
   isTypeWithFileVersionField,
   userCanEditRegistration,
 } from '../../../utils/registration-helpers';
-import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { getRegistrationWizardLink } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 
@@ -89,7 +89,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <LinkButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
-            to={`${getRegistrationWizardPath(registration.identifier)}?tab=3`}>
+            to={`${getRegistrationWizardLink(registration.identifier)}?tab=3`}>
             {t('registration.files_and_license.add_files_or_links')}
           </LinkButton>
         </Box>
