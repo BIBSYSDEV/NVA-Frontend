@@ -256,7 +256,11 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
   return (
     <>
       <Typography variant="h3">{t(`registration.publication_types.${type}`)}</Typography>
-      {label && <Typography>{label}</Typography>}
+      {label && (
+        <Typography>
+          {t('registration.resource_type.title_of_event')}: {label}
+        </Typography>
+      )}
       {agent?.name && (
         <Typography>
           {t('registration.resource_type.organizer')}: {agent.name}
