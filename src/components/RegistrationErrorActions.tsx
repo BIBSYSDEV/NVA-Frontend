@@ -10,11 +10,13 @@ import { getRegistrationWizardPath } from '../utils/urlPaths';
 interface RegistrationErrorActionsProps extends BoxProps {
   tabErrors: TabErrors;
   registrationIdentifier: string;
+  isPublished: boolean;
 }
 
 export const RegistrationErrorActions = ({
   tabErrors,
   registrationIdentifier,
+  isPublished,
   ...boxProps
 }: RegistrationErrorActionsProps) => {
   const { t } = useTranslation();
@@ -23,7 +25,11 @@ export const RegistrationErrorActions = ({
 
   return (
     <Box {...boxProps}>
-      <Typography>{t('registration.public_page.error_description')}</Typography>
+      <Typography>
+        {isPublished
+          ? t('registration.public_page.error_description_published_result')
+          : t('registration.public_page.error_description')}
+      </Typography>
       <ErrorList tabErrors={tabErrors} />
       <Button
         sx={{ bgcolor: 'white', width: '100%' }}
