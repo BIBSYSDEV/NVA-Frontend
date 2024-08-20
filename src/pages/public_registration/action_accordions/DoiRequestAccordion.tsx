@@ -57,6 +57,16 @@ enum LoadingState {
   DraftDoi,
 }
 
+const doiLink = (
+  <MuiLink
+    href="https://sikt.no/tjenester/doi"
+    target="_blank"
+    rel="noopener noreferrer"
+    sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+    <LaunchIcon fontSize="small" />
+  </MuiLink>
+);
+
 export const DoiRequestAccordion = ({
   registration,
   doiRequestTicket,
@@ -206,13 +216,7 @@ export const DoiRequestAccordion = ({
                   components={[
                     <Typography paragraph key="1" />,
                     <Typography paragraph key="2">
-                      <MuiLink
-                        href="https://sikt.no/tjenester/doi"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                        <LaunchIcon fontSize="small" />
-                      </MuiLink>
+                      {doiLink}
                     </Typography>,
                   ]}
                 />
@@ -239,13 +243,7 @@ export const DoiRequestAccordion = ({
                   components={[
                     <Typography paragraph key="1" />,
                     <Typography paragraph key="2">
-                      <MuiLink
-                        href="https://sikt.no/tjenester/doi"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                        <LaunchIcon fontSize="small" />
-                      </MuiLink>
+                      {doiLink}
                     </Typography>,
                   ]}
                 />
