@@ -1,7 +1,7 @@
 import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { defaultChannelSearchSize, searchForJournals } from '../../../../api/publicationChannelApi';
@@ -10,6 +10,7 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
@@ -58,6 +59,8 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const { reference, publicationDate } = values.entityDescription as JournalEntityDescription;
   const journalId = reference?.publicationContext.id ?? '';
   const year = publicationDate?.year ?? '';
+
+  const { isApprovedNviCandidate } = useContext(NviCandidateContext);
 
   const [showJournalForm, setShowJournalForm] = useState(false);
   const toggleJournalForm = () => setShowJournalForm(!showJournalForm);
@@ -119,6 +122,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
       <Field name={ResourceFieldNames.PublicationContextId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
+            disabled={isApprovedNviCandidate}
             fullWidth
             multiple
             id={journalFieldTestId}

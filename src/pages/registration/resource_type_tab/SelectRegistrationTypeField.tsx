@@ -2,11 +2,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import FilterVintageIcon from '@mui/icons-material/FilterVintage';
 import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, Typography } from '@mui/material';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CategorySelector } from '../../../components/CategorySelector';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { NviCandidateContext } from '../../../context/NviCandidateContext';
 import { RootState } from '../../../redux/store';
 import { emptyArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
 import { emptyBookPublicationInstance } from '../../../types/publication_types/bookRegistration.types';
@@ -58,6 +59,8 @@ export const SelectRegistrationTypeField = () => {
   const customer = useSelector((store: RootState) => store.customer);
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
+
+  const { isApprovedNviCandidate } = useContext(NviCandidateContext);
 
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
   const [confirmNewType, setConfirmNewType] = useState<PublicationInstanceType | ''>('');
@@ -351,6 +354,7 @@ export const SelectRegistrationTypeField = () => {
       <FormLabel sx={{ display: 'block' }}>{t('registration.resource_type.resource_type')}</FormLabel>
       <Chip
         data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(currentInstanceType)}
+        disabled={isApprovedNviCandidate}
         icon={
           nviApplicableTypes.includes(currentInstanceType) ? (
             <FilterVintageIcon
