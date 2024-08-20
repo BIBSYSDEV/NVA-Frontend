@@ -39,7 +39,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
               <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
                 <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '2rem', padding: '1.5rem 1.25rem' }}>
                   {tabNumber === ProjectTab.Description && <ProjectDescriptionForm project={project} />}
-                  {tabNumber === ProjectTab.Details && <ProjectDetailsForm />}
+                  {tabNumber === ProjectTab.Details && <ProjectDetailsForm project={project} />}
                   {tabNumber === ProjectTab.Contributors && <ProjectContributorsForm />}
                   {tabNumber === ProjectTab.Connections && <ProjectConnectionsForm />}
                 </Box>
