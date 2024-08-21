@@ -107,8 +107,12 @@ export const RegistrationFormActions = ({
       <Box
         sx={{
           display: 'grid',
-          gridTemplateAreas: "'back-button support-button save-button'",
-          gridTemplateColumns: '1fr 1fr 1fr',
+          gridTemplateAreas: {
+            xs: "'back-button cancel-button . save-button' 'support-button support-button support-button support-button'",
+            md: "'back-button cancel-button support-button save-button'",
+          },
+          gridTemplateColumns: 'auto 1fr 1fr 1fr',
+          gridTemplateRows: { xs: '1fr 1fr', md: '1fr' },
           alignItems: 'center',
           gap: '1rem',
         }}>
@@ -144,9 +148,10 @@ export const RegistrationFormActions = ({
           {t('my_page.messages.get_curator_support')}
         </Button>
         <Button
+          data-testid={dataTestId.registrationWizard.formActions.cancelEditButton}
           onClick={cancelEdit}
           color="primary"
-          sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'center' }}>
+          sx={{ width: 'fit-content', gridArea: 'cancel-button' }}>
           {t('common.cancel')}
         </Button>
 
