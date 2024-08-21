@@ -18,24 +18,22 @@ import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { CristinProject, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { isProjectManager, isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { isProjectManager } from '../../registration/description_tab/projects_field/projectHelpers';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ContributorRow } from './ContributorRow';
 
 interface ProjectContributorsProps {
-  currentProject?: CristinProject;
   suggestedProjectManager?: string;
 }
 
-export const ProjectContributors = ({ currentProject, suggestedProjectManager }: ProjectContributorsProps) => {
+export const ProjectContributors = ({ suggestedProjectManager }: ProjectContributorsProps) => {
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
   const [openAddContributorView, setOpenAddContributorView] = useState(false);
-  const { values, errors } = useFormikContext<CristinProject>();
+  const { values, errors, touched } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const contributorsToShow = contributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
-  const thisIsRekProject = isRekProject(currentProject);
   const contributorError = errors?.contributors;
   const hasProjectManager = values.contributors.some((contributor) =>
     contributor.roles.some((role) => role.type === 'ProjectManager')
@@ -64,7 +62,7 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
               data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
               {t('project.add_project_contributor')}
             </Button>
-            {contributors.length > 0 ? (
+            {contributors.length > 0 && (
               <ListPagination
                 count={contributors.length}
                 rowsPerPage={rowsPerPage}
@@ -99,7 +97,6 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
                             removeContributor={
                               isProjectManager(contributor) ? undefined : () => remove(contributorIndex)
                             }
-                            isRekProject={thisIsRekProject}
                           />
                         );
                       })}
@@ -107,12 +104,13 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
                   </Table>
                 </TableContainer>
               </ListPagination>
-            ) : contributorError && typeof contributorError === 'string' ? (
+            )}
+            {contributorError && typeof contributorError === 'string' && touched.contributors && (
               <Typography
                 sx={{ color: 'error.main', marginTop: '0.25rem', letterSpacing: '0.03333em', marginBottom: '1rem' }}>
                 {contributorError}
               </Typography>
-            ) : null}
+            )}
           </>
         )}
       </FieldArray>

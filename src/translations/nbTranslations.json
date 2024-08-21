@@ -620,7 +620,8 @@
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_correct_errors": "Du må rette opp feil",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
-      "not_selected": "{{field}} er ikke valgt"
+      "not_selected": "{{field}} er ikke valgt",
+      "project_manager_required_project": "Prosjektet må ha en prosjektleder"
     }
   },
   "footer": {

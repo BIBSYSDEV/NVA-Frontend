@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
-import { SaveCristinProject } from '../../../types/project.types';
+import { ProjectContributor, SaveCristinProject } from '../../../types/project.types';
 import { projectFundingValidationSchema } from '../registration/fundingValidation';
 import { YupShape } from '../validationHelpers';
 
@@ -37,6 +37,7 @@ const basicProjectErrorMessage = {
     field: i18n.t('common.start_date'),
   }),
   contributorRequired: i18n.t('feedback.validation.contributor_required_project'),
+  mustHaveAProjectManager: i18n.t('feedback.validation.project_manager_required_project'),
 };
 
 const roleValidationSchema = Yup.object().shape({
@@ -62,7 +63,11 @@ export const basicProjectValidationSchema = Yup.object<YupShape<SaveCristinProje
         ? schema.min(startDate, basicProjectErrorMessage.endDateCannotBeBeforeStart)
         : schema
     ),
-  contributors: Yup.array().min(1, basicProjectErrorMessage.contributorRequired).of(contributorValidationSchema),
+  contributors:
+    Yup.array().min(1, basicProjectErrorMessage.contributorRequired).of(contributorValidationSchema) &&
+    Yup.array()
+      .compact((contributor: ProjectContributor) => !contributor.roles.some((role) => role.type === 'ProjectManager'))
+      .min(1, basicProjectErrorMessage.mustHaveAProjectManager),
   coordinatingInstitution: Yup.object().shape({
     id: Yup.string().required(basicProjectErrorMessage.coordinatingInstitution),
   }),
