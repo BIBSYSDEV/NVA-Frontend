@@ -104,6 +104,13 @@ export const ContributorRow = ({
                     ? undefined
                     : () => removeAffiliation(role.affiliation.id)
                 }
+                disabledTooltip={
+                  role.type === 'ProjectManager'
+                    ? t('project.affiliation_modal.cannot_delete_affiliation_for_project_manager')
+                    : contributor.roles.length === 1
+                      ? t('project.affiliation_modal.cannot_delete_only_affiliation')
+                      : ''
+                }
               />
             ))}
           <Button
@@ -127,6 +134,7 @@ export const ContributorRow = ({
           data-testid={dataTestId.registrationWizard.description.projectForm.removeContributorButton}
           onClick={() => setShowConfirmRemoveContributor(true)}
           tooltip={t('project.form.remove_participant')}
+          disabledTooltip={t('project.form.project_manager_cannot_be_removed')}
           disabled={!removeContributor}
         />
         {!!removeContributor && (
