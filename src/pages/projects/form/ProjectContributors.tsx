@@ -15,10 +15,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListPagination } from '../../../components/ListPagination';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
-import { CristinProject, emptyProjectContributor, ProjectFieldName } from '../../../types/project.types';
+import { CristinProject, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { isProjectManager, isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ContributorRow } from './ContributorRow';
 
 interface ProjectContributorsProps {
@@ -30,11 +31,17 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [openAddContributorView, setOpenAddContributorView] = useState(false);
   const { values, errors } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const contributorsToShow = contributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
   const thisIsRekProject = isRekProject(currentProject);
   const contributorError = errors?.contributors;
+  const hasProjectManager = values.contributors.some((contributor) =>
+    contributor.roles.some((role) => role.type === 'ProjectManager')
+  );
+
+  const toggleOpenAddContributorView = () => setOpenAddContributorView(!openAddContributorView);
 
   return (
     <>
@@ -47,11 +54,11 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
         </Typography>
       )}
       <FieldArray name={ProjectFieldName.Contributors}>
-        {({ name, remove, push }: FieldArrayRenderProps) => (
+        {({ name, remove }: FieldArrayRenderProps) => (
           <>
             <Button
               sx={{ marginBottom: '1rem', borderRadius: '1rem', width: '17rem' }}
-              onClick={() => push(emptyProjectContributor)}
+              onClick={toggleOpenAddContributorView}
               variant="contained"
               startIcon={<AddIcon />}
               data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
@@ -109,6 +116,11 @@ export const ProjectContributors = ({ currentProject, suggestedProjectManager }:
           </>
         )}
       </FieldArray>
+      <AddProjectContributorModal
+        open={openAddContributorView}
+        toggleModal={toggleOpenAddContributorView}
+        hasProjectManager={hasProjectManager}
+      />
     </>
   );
 };

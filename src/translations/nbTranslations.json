@@ -1125,6 +1125,9 @@
     "create_new_project": "Opprett nytt prosjekt",
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
+    "error": {
+      "there_can_only_be_one_project_manager_choose_different_role": "Et prosjekt kan kun ha en prosjektleder. Velg en annen rolle."
+    },
     "form": {
       "date": "Dato",
       "empty_registration": "Tom registrering",
@@ -1134,9 +1137,14 @@
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
       "search_for_person": "Søk etter person",
+      "select_project_role": "Velg rolle i prosjektet",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt.",
       "title_and_description": "Tittel og beskrivelse"
+    },
+    "role_types": {
+      "ProjectManager": "Prosjektleder",
+      "ProjectParticipant": "Prosjektdeltaker"
     },
     "grant_id": "Tilskudds-ID",
     "heading": {

@@ -1,6 +1,14 @@
 import { Box, Checkbox, FormGroup, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
+export const StyledRightAlignedFooter = styled(Box)({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'end',
+  gap: '0.5rem',
+  mt: '1rem',
+});
+
 export const StyledRightAlignedWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',

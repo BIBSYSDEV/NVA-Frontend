@@ -217,6 +217,7 @@ export const dataTestId = {
     scientificSummaryEnglishField: 'scientific-summary-english-field',
     scientificSummaryNorwegianField: 'scientific-summary-norwegian-field',
     titleField: 'project-title-field',
+    selectContributorButton: 'select-contributor-button',
   },
   projectLandingPage: {
     editProjectButton: 'edit-project-button',
@@ -234,6 +235,7 @@ export const dataTestId = {
       projectContributorsStepButton: 'nav-tabpanel-project-contributors',
       projectConnectionsStepButton: 'nav-tabpanel-project-connections',
     },
+    selectContributorType: 'select-contributor-type',
   },
   registrationLandingPage: {
     abstractAccordion: 'abstract-accordion',

@@ -144,11 +144,6 @@ const emptyAffiliation: ProjectOrganization = {
   labels: {},
 };
 
-export const emptyProjectContributor: ProjectContributor = {
-  identity: { type: 'Person', id: '', firstName: '', lastName: '' },
-  roles: [{ type: 'ProjectParticipant', affiliation: emptyAffiliation }],
-};
-
 export const emptyProject: SaveCristinProject = {
   type: 'Project',
   title: '',
