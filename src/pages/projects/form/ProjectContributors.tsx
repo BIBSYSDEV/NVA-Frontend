@@ -39,7 +39,6 @@ export const ProjectContributors = ({ suggestedProjectManager }: ProjectContribu
     contributor.roles.some((role) => role.type === 'ProjectManager')
   );
   const toggleOpenAddContributorView = () => setOpenAddContributorView(!openAddContributorView);
-  const thisIsRekProject = isRekProject(currentProject);
   const hasUnidentifiedContributor = contributors.some((contributor) => !contributor.identity.id);
 
   return (
