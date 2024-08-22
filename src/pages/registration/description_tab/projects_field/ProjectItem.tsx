@@ -71,7 +71,9 @@ export const ProjectItem = ({ projectId, removeProject }: ProjectItemProps) => {
         <Typography fontWeight="bold">{t('common.funding').toUpperCase()}</Typography>
         {project?.funding?.length ? (
           project.funding.map((funding, index) => (
-            <Box key={funding.identifier} sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <Box
+              key={`${funding.identifier}-${index}`}
+              sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               {index > 0 && <Divider sx={{ width: '50%' }} />}
               <div>
                 <Typography fontWeight="bold">{t('registration.description.funding.funder')}:</Typography>
