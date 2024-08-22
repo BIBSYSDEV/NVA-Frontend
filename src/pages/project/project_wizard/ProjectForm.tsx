@@ -8,6 +8,7 @@ import { SkipLink } from '../../../components/SkipLink';
 import { CristinProject, ProjectTabs } from '../../../types/project.types';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { InitialProjectFormData } from '../../projects/form/ProjectFormDialog';
+import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectConnectionsForm } from './ProjectConnectionsForm';
 import { ProjectContributorsForm } from './ProjectContributorsForm';
 import { ProjectDescriptionForm } from './ProjectDescriptionForm';
@@ -22,6 +23,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
   const { t } = useTranslation();
   const [tabNumber, setTabNumber] = useState(ProjectTabs.Description);
   const [initialValues] = useState<InitialProjectFormData>({ project: project });
+  const thisIsRekProject = isRekProject(project);
 
   return (
     <>
@@ -38,8 +40,10 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
               <RequiredDescription />
               <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
                 <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '2rem', padding: '1.5rem 1.25rem' }}>
-                  {tabNumber === ProjectTabs.Description && <ProjectDescriptionForm project={project} />}
-                  {tabNumber === ProjectTabs.Details && <ProjectDetailsForm project={project} />}
+                  {tabNumber === ProjectTabs.Description && (
+                    <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />
+                  )}
+                  {tabNumber === ProjectTabs.Details && <ProjectDetailsForm thisIsRekProject={thisIsRekProject} />}
                   {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm />}
                   {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
                 </Box>

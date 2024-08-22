@@ -4,20 +4,18 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { cristinKeywords } from '../../../resources/cristinKeywords';
-import { CristinProject, ProjectFieldName, SaveCristinProject, TypedLabel } from '../../../types/project.types';
+import { ProjectFieldName, SaveCristinProject, TypedLabel } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { FormBox } from './styles';
 
 interface ProjectDescriptionFormProps {
-  project: CristinProject;
+  thisIsRekProject: boolean;
 }
 
-export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps) => {
+export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
-  const thisIsRekProject = isRekProject(project);
 
   return (
     <ErrorBoundary>
@@ -28,7 +26,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <TextField
                 {...field}
-                data-testid={dataTestId.projectForm.titleField}
+                data-testid={dataTestId.projectWizard.descriptionPanel.titleField}
                 label={t('common.title')}
                 disabled={thisIsRekProject}
                 required
@@ -48,7 +46,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                 fullWidth
                 multiline
                 rows="4"
-                data-testid={dataTestId.projectForm.scientificSummaryNorwegianField}
+                data-testid={dataTestId.projectWizard.descriptionPanel.scientificSummaryNorwegianField}
                 label={t('project.scientific_summary_norwegian')}
               />
             )}
@@ -62,7 +60,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                 fullWidth
                 multiline
                 rows="4"
-                data-testid={dataTestId.projectForm.scientificSummaryEnglishField}
+                data-testid={dataTestId.projectWizard.descriptionPanel.scientificSummaryEnglishField}
                 label={t('project.scientific_summary_english')}
               />
             )}
@@ -76,7 +74,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                 fullWidth
                 multiline
                 rows="3"
-                data-testid={dataTestId.projectForm.popularScienceSummaryNorwegianField}
+                data-testid={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryNorwegianField}
                 label={t('project.popular_science_summary_norwegian')}
               />
             )}
@@ -90,7 +88,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                 fullWidth
                 multiline
                 rows="3"
-                data-testid={dataTestId.projectForm.popularScienceSummaryEnglishField}
+                data-testid={dataTestId.projectWizard.descriptionPanel.popularScienceSummaryEnglishField}
                 label={t('project.popular_science_summary_english')}
               />
             )}
@@ -103,7 +101,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
               <Autocomplete
                 options={cristinKeywords}
                 multiple
-                data-testid={dataTestId.projectForm.keywordsField}
+                data-testid={dataTestId.projectWizard.descriptionPanel.keywordsField}
                 getOptionLabel={(option) => getLanguageString(option.label)}
                 isOptionEqualToValue={(option, value) => option.type === value.type}
                 value={field.value}
@@ -132,7 +130,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                   slotProps={{
                     textField: {
                       inputProps: {
-                        'data-testid': dataTestId.projectForm.startDateField,
+                        'data-testid': dataTestId.projectWizard.descriptionPanel.startDateField,
                       },
                       variant: 'filled',
                       onBlur: () => !touched && setFieldTouched(field.name),
@@ -158,7 +156,7 @@ export const ProjectDescriptionForm = ({ project }: ProjectDescriptionFormProps)
                   minDate={values.startDate ? new Date(values.startDate) : undefined}
                   slotProps={{
                     textField: {
-                      inputProps: { 'data-testid': dataTestId.projectForm.endDateField },
+                      inputProps: { 'data-testid': dataTestId.projectWizard.descriptionPanel.endDateField },
                       variant: 'filled',
                       required: true,
                       error: touched && !!error,

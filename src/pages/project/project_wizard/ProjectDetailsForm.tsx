@@ -3,28 +3,20 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { cristinCategories } from '../../../resources/cristinCategories';
-import {
-  CristinProject,
-  ProjectFieldName,
-  ProjectOrganization,
-  SaveCristinProject,
-  TypedLabel,
-} from '../../../types/project.types';
+import { ProjectFieldName, ProjectOrganization, SaveCristinProject, TypedLabel } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
-import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectFundingsField } from './ProjectFundingsField';
 import { FormBox } from './styles';
 
 interface ProjectDescriptionFormProps {
-  project: CristinProject;
+  thisIsRekProject: boolean;
 }
 
-export const ProjectDetailsForm = ({ project }: ProjectDescriptionFormProps) => {
+export const ProjectDetailsForm = ({ thisIsRekProject }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
-  const thisIsRekProject = isRekProject(project);
 
   return (
     <ErrorBoundary>
@@ -62,15 +54,13 @@ export const ProjectDetailsForm = ({ project }: ProjectDescriptionFormProps) => 
           </Field>
         </FormBox>
         <FormBox>
-          <Typography variant="h2" sx={{ pb: '0.25rem' }}>
-            {t('project.form.category')}
-          </Typography>
+          <Typography variant="h2">{t('project.form.category')}</Typography>
           <Field name={ProjectFieldName.Categories}>
-            {({ field, form: { setFieldValue } }: FieldProps<TypedLabel[]>) => (
+            {({ field }: FieldProps<TypedLabel[]>) => (
               <Autocomplete
                 options={cristinCategories}
                 multiple
-                data-testid={dataTestId.registrationWizard.description.projectForm.projectCategoryField}
+                data-testid={dataTestId.projectWizard.detailsPanel.projectCategoryField}
                 getOptionLabel={(option) => getLanguageString(option.label)}
                 isOptionEqualToValue={(option, value) => option.type === value.type}
                 value={field.value}
@@ -83,7 +73,7 @@ export const ProjectDetailsForm = ({ project }: ProjectDescriptionFormProps) => 
           </Field>
         </FormBox>
         <FormBox sx={{ gap: '0.5rem' }}>
-          <Typography variant="h2" sx={{ pb: '0.25rem' }}>
+          <Typography variant="h2" sx={{ marginBottom: '1rem' }}>
             {t('project.form.add_financing')}
           </Typography>
           <Trans i18nKey="project.form.add_financing_description" components={[<Typography key="1" />]} />

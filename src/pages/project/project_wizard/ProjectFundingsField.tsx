@@ -56,7 +56,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                           label={t('common.id')}
                           fullWidth
                           variant="filled"
-                          data-testid={dataTestId.registrationWizard.description.fundingIdField}
+                          data-testid={dataTestId.projectWizard.detailsPanel.fundingIdField}
                         />
                         {funding.identifier && (
                           <Button
@@ -64,7 +64,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                             endIcon={<OpenInNewIcon />}
                             href={getNfrProjectUrl(funding.identifier)}
                             target="_blank"
-                            data-testid={dataTestId.registrationWizard.description.fundingLinkButton}
+                            data-testid={dataTestId.projectWizard.detailsPanel.fundingLinkButton}
                             rel="noopener noreferrer">
                             {t('common.open')}
                           </Button>
@@ -87,7 +87,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                             name={name}
                             onBlur={onBlur}
                             errorMessage={touched && !!error ? error : undefined}
-                            data-testid={dataTestId.registrationWizard.description.fundingNfrProjectSearchField}
+                            data-testid={dataTestId.projectWizard.detailsPanel.fundingNfrProjectSearchField}
                           />
                         )}
                       </Field>
@@ -103,7 +103,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                           label={t('common.id')}
                           fullWidth
                           variant="filled"
-                          data-testid={dataTestId.registrationWizard.description.fundingIdField}
+                          data-testid={dataTestId.projectWizard.detailsPanel.fundingIdField}
                         />
                       )}
                     </Field>
@@ -111,7 +111,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                   <IconButton
                     sx={{ width: 'fit-content' }}
                     onClick={() => remove(index)}
-                    data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
+                    data-testid={dataTestId.projectWizard.detailsPanel.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}>
                     <CancelIcon color="primary" />
                   </IconButton>
@@ -120,7 +120,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
             })}
             <Button
               sx={{ width: 'fit-content' }}
-              data-testid={dataTestId.registrationWizard.description.addFundingButton}
+              data-testid={dataTestId.projectWizard.detailsPanel.addFundingButton}
               startIcon={<AddIcon />}
               onClick={() => push(emptyProjectFunding)}>
               {t('common.add_custom', { name: t('common.funding').toLocaleLowerCase() })}

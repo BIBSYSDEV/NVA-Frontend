@@ -1138,7 +1138,7 @@
       "title_and_description": "Tittel og beskrivelse",
       "category": "Kategori",
       "add_financing": "Legg til finansiering",
-      "add_financing_description": "<0>Legg til finansieringskilde hvis prosjektet mottar finanisering</0><0>Alle forskningsresultater som er koblet til prosjektet vil arve finansiering som er registrert på prosjektet.</0>"
+      "add_financing_description": "<0>Legg til finansieringskilde hvis prosjektet mottar finanisering.</0><0>Alle forskningsresultater som er koblet til prosjektet vil arve finansiering som er registrert på prosjektet.</0>"
     },
     "grant_id": "Tilskudds-ID",
     "heading": {

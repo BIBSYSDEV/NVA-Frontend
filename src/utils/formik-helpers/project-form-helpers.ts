@@ -1,6 +1,6 @@
 import { FormikErrors, FormikTouched } from 'formik';
 import { CristinProject, ProjectTabs } from '../../types/project.types';
-import { ProjectDescriptionFieldNames, ProjectDetailsFieldNames } from '../projectFormikTouchedFieldNames';
+import { ProjectDescriptionFieldNames, ProjectDetailsFieldNames } from '../projectFormikFieldNames';
 import { getErrorMessages } from './formik-helpers';
 
 interface ProjectTabErrors {
