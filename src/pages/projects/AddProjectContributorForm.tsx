@@ -14,6 +14,7 @@ import {
 } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getValueByKey } from '../../utils/user-helpers';
 
 const roles: ProjectContributorType[] = ['ProjectManager', 'ProjectParticipant'];
 
@@ -27,7 +28,9 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedContributorRole, setSelectedContributorRole] = useState(hasProjectManager ? roles[1] : roles[0]);
+  const [selectedContributorRole, setSelectedContributorRole] = useState<ProjectContributorType>(
+    hasProjectManager ? 'ProjectParticipant' : 'ProjectManager'
+  );
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
   const addContributor = () => {
@@ -42,14 +45,15 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
           variant: 'error',
         })
       );
+      return;
     }
 
     const newContributor: ProjectContributor = {
       identity: {
         type: 'Person',
         id: selectedPerson.id,
-        firstName: selectedPerson.names[0].type === 'FirstName' ? selectedPerson.names[0].value : '',
-        lastName: selectedPerson.names[1].type === 'LastName' ? selectedPerson.names[1].value : '',
+        firstName: getValueByKey('FirstName', selectedPerson.names),
+        lastName: getValueByKey('LastName', selectedPerson.names),
       },
       roles: selectedPerson.affiliations.map((affiliation, index) => {
         return {
@@ -59,8 +63,7 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
       }),
     };
 
-    const newContributors = values.contributors ? [...values.contributors] : [];
-    newContributors.push(newContributor);
+    const newContributors = values.contributors ? [...values.contributors, newContributor] : [newContributor];
 
     setFieldValue(ProjectFieldName.Contributors, newContributors);
     toggleModal();
