@@ -29,6 +29,14 @@ interface RegistrationFormActionsProps {
   isNviCandidate: boolean;
 }
 
+const navigationButtonStyling: SxProps = {
+  color: 'white',
+  borderRadius: '50%',
+  bgcolor: 'primary.main',
+  height: '1.875rem',
+  width: '1.875rem',
+};
+
 export const RegistrationFormActions = ({
   tabNumber,
   setTabNumber,
@@ -49,14 +57,6 @@ export const RegistrationFormActions = ({
 
   const isFirstTab = tabNumber === RegistrationTab.Description;
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
-
-  const navigationButtonStyling: SxProps = {
-    color: 'white',
-    borderRadius: '50%',
-    bgcolor: 'primary.main',
-    height: '1.875rem',
-    width: '1.875rem',
-  };
 
   const cancelEdit = () => {
     if (history.location.state?.previousPath) {
