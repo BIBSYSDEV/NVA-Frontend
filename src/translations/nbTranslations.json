@@ -1882,7 +1882,8 @@
         "header": "Veiledning for å registrere et forskningsresultat"
       }
     },
-    "year_published": "Publiseringsår"
+    "year_published": "Publiseringsår",
+    "locked_nvi_field_description": "Publikasjonen er godkjent til årets NVI-rapportering. Du kan derfor ikke endre {{field}}. Om informasjonen er feil må du ta kontakt med kurator for å få endret."
   },
   "search": {
     "additional_participants_one": "+{{count}} deltaker",

@@ -81,3 +81,10 @@ export const StyledTruncatableTypography = styled(Typography)({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 });
+
+export const StyledInfoBanner = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.light,
+  padding: '0.75rem',
+  borderRadius: '0.25rem',
+  color: 'white',
+}));
