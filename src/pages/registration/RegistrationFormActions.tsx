@@ -1,7 +1,7 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, SxProps, Tooltip, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -50,8 +50,7 @@ export const RegistrationFormActions = ({
   const isFirstTab = tabNumber === RegistrationTab.Description;
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
 
-  const navigationButtonStyling = {
-    opacity: isLastTab ? 0.5 : 1,
+  const navigationButtonStyling: SxProps = {
     color: 'white',
     borderRadius: '50%',
     bgcolor: 'primary.main',
@@ -125,15 +124,13 @@ export const RegistrationFormActions = ({
           gap: '1rem',
         }}>
         <Box sx={{ gridArea: 'back-button' }}>
-          <Tooltip title={t('common.previous')}>
-            <span>
-              <IconButton
-                disabled={isFirstTab}
-                onClick={() => setTabNumber(tabNumber - 1)}
-                data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
-                <KeyboardArrowLeftIcon sx={navigationButtonStyling} />
-              </IconButton>
-            </span>
+          <Tooltip title={!isFirstTab ? t('common.previous') : ''}>
+            <IconButton
+              disabled={isFirstTab}
+              onClick={() => setTabNumber(tabNumber - 1)}
+              data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
+              <KeyboardArrowLeftIcon sx={{ ...navigationButtonStyling, opacity: isFirstTab ? 0.5 : 1 }} />
+            </IconButton>
           </Tooltip>
         </Box>
 
@@ -178,13 +175,13 @@ export const RegistrationFormActions = ({
               {t('common.save_and_view')}
             </LoadingButton>
           )}
-          <Tooltip title={t('common.next')}>
+          <Tooltip title={!isLastTab ? t('common.next') : ''}>
             <span>
               <IconButton
                 disabled={isLastTab}
                 onClick={() => setTabNumber(tabNumber + 1)}
                 data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
-                <KeyboardArrowRightIcon sx={navigationButtonStyling} />
+                <KeyboardArrowRightIcon sx={{ ...navigationButtonStyling, opacity: isLastTab ? 0.5 : 1 }} />
               </IconButton>
             </span>
           </Tooltip>
