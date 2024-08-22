@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
 import { FileType } from '../../../types/associatedArtifact.types';
-import { RegistrationStatus } from '../../../types/registration.types';
+import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   associatedArtifactIsNullArtifact,
@@ -89,7 +89,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <SelectableButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
-            to={{ ...getRegistrationWizardLink(registration.identifier), search: '?tab=3' }}>
+            to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
             {t('registration.files_and_license.add_files_or_links')}
           </SelectableButton>
         </Box>

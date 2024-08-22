@@ -18,7 +18,7 @@ export const RouteLeavingGuard = ({
   const [showModal, setShowModal] = useState(false);
   const [nextPath, setNextPath] = useState('');
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
-  const history = useHistory();
+  const history = useHistory<PreviousPathLocationState | undefined>();
 
   useEffect(() => {
     if (shouldBlockNavigation) {
@@ -31,7 +31,7 @@ export const RouteLeavingGuard = ({
 
   useEffect(() => {
     if (confirmedNavigation && nextPath) {
-      const { previousPath } = (history.location.state as PreviousPathLocationState) || {};
+      const { previousPath } = history.location.state ?? {};
       if (previousPath === nextPath) {
         history.goBack();
       } else {

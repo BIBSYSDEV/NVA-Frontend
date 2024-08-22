@@ -30,7 +30,7 @@ export const RegistrationErrorActions = ({
         variant="outlined"
         component={Link}
         size="small"
-        to={{ ...getRegistrationWizardLink(registrationIdentifier), search: `?tab=${firstErrorTab}` }}
+        to={getRegistrationWizardLink(registrationIdentifier, { tab: firstErrorTab })}
         endIcon={<EditIcon />}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
         {t('registration.public_page.go_back_to_wizard')}
