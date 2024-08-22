@@ -18,22 +18,21 @@ import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { CristinProject, emptyProjectContributor, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { isProjectManager, isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { isProjectManager } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ContributorRow } from './ContributorRow';
 
 interface ProjectContributorsProps {
-  currentProject?: CristinProject;
+  thisIsRekProject: boolean;
   suggestedProjectManager?: string;
 }
 
-export const ProjectContributors = ({ currentProject, suggestedProjectManager }: ProjectContributorsProps) => {
+export const ProjectContributors = ({ thisIsRekProject, suggestedProjectManager }: ProjectContributorsProps) => {
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
   const { values } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const contributorsToShow = contributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
-  const thisIsRekProject = isRekProject(currentProject);
   const hasUnidentifiedContributor = contributors.some((contributor) => !contributor.identity.id);
 
   return (

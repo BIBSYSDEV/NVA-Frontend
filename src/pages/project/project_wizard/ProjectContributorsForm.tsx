@@ -1,10 +1,21 @@
 import { Box } from '@mui/material';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { ProjectContributors } from '../../projects/form/ProjectContributors';
 
-export const ProjectContributorsForm = () => {
+interface ProjectContributorsFormProps {
+  suggestedProjectManager?: string;
+  thisIsRekProject: boolean;
+}
+
+export const ProjectContributorsForm = ({
+  thisIsRekProject,
+  suggestedProjectManager,
+}: ProjectContributorsFormProps) => {
   return (
     <ErrorBoundary>
-      <Box sx={{ bgcolor: 'secondary.light', padding: '1.75rem 1.25rem' }}>test 3</Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <ProjectContributors thisIsRekProject={thisIsRekProject} suggestedProjectManager={suggestedProjectManager} />
+      </Box>
     </ErrorBoundary>
   );
 };

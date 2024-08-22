@@ -44,7 +44,9 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
                     <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />
                   )}
                   {tabNumber === ProjectTabs.Details && <ProjectDetailsForm thisIsRekProject={thisIsRekProject} />}
-                  {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm />}
+                  {tabNumber === ProjectTabs.Contributors && (
+                    <ProjectContributorsForm thisIsRekProject={thisIsRekProject} />
+                  )}
                   {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
                 </Box>
                 <p>registration form actions</p>
