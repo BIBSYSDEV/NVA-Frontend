@@ -124,7 +124,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
           </Field>
         </Box>
       </Box>
-      <ProjectContributors suggestedProjectManager={suggestedProjectManager} />
+      <ProjectContributors suggestedProjectManager={suggestedProjectManager} isVisited={!!touched.contributors} />
       <ProjectFundingsField currentFundings={values.funding} />
     </>
   );

@@ -23,14 +23,15 @@ import { ContributorRow } from './ContributorRow';
 
 interface ProjectContributorsProps {
   suggestedProjectManager?: string;
+  isVisited: boolean;
 }
 
-export const ProjectContributors = ({ suggestedProjectManager }: ProjectContributorsProps) => {
+export const ProjectContributors = ({ suggestedProjectManager, isVisited }: ProjectContributorsProps) => {
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
   const [openAddContributorView, setOpenAddContributorView] = useState(false);
-  const { values, errors, touched } = useFormikContext<CristinProject>();
+  const { values, errors } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const contributorsToShow = contributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
   const contributorError = errors?.contributors;
@@ -103,7 +104,7 @@ export const ProjectContributors = ({ suggestedProjectManager }: ProjectContribu
                 </TableContainer>
               </ListPagination>
             )}
-            {contributorError && typeof contributorError === 'string' && touched.contributors && (
+            {contributorError && typeof contributorError === 'string' && isVisited && (
               <Typography
                 sx={{ color: 'error.main', marginTop: '0.25rem', letterSpacing: '0.03333em', marginBottom: '1rem' }}>
                 {contributorError}
