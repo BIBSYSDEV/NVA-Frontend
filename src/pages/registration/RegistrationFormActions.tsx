@@ -176,14 +176,12 @@ export const RegistrationFormActions = ({
             </LoadingButton>
           )}
           <Tooltip title={!isLastTab ? t('common.next') : ''}>
-            <span>
-              <IconButton
-                disabled={isLastTab}
-                onClick={() => setTabNumber(tabNumber + 1)}
-                data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
-                <KeyboardArrowRightIcon sx={{ ...navigationButtonStyling, opacity: isLastTab ? 0.5 : 1 }} />
-              </IconButton>
-            </span>
+            <IconButton
+              disabled={isLastTab}
+              onClick={() => setTabNumber(tabNumber + 1)}
+              data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
+              <KeyboardArrowRightIcon sx={{ ...navigationButtonStyling, opacity: isLastTab ? 0.5 : 1 }} />
+            </IconButton>
           </Tooltip>
         </Box>
       </Box>
