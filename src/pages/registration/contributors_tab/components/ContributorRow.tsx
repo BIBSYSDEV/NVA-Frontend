@@ -10,7 +10,6 @@ import {
   Checkbox,
   IconButton,
   MenuItem,
-  Link as MuiLink,
   TableCell,
   TableRow,
   TextField,
@@ -20,17 +19,14 @@ import {
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import { ContributorName } from '../../../../components/ContributorName';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
-import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getResearchProfilePath } from '../../../../utils/urlPaths';
 import { AddContributorModal } from '../AddContributorModal';
-import { ContributorIndicator } from '../ContributorIndicator';
 import { AffiliationsCell } from './AffiliationsCell';
 
 interface ContributorRowProps {
@@ -142,7 +138,7 @@ export const ContributorRow = ({
             <Tooltip title={t('registration.contributors.corresponding')}>
               <Checkbox
                 data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
-                checked={!!field.value}
+                checked={field.value}
                 sx={{ marginTop: '0.3rem' }}
                 {...field}
                 inputProps={{ 'aria-label': t('registration.contributors.corresponding') }}
@@ -166,23 +162,14 @@ export const ContributorRow = ({
               <Typography fontWeight="bold">{t('registration.contributors.contributor_is_unidentified')}</Typography>
             </Box>
           )}
-          <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
-            <ContributorIndicator contributor={contributor} />
-            {contributor.identity.id ? (
-              <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-                {contributor.identity.name}
-              </MuiLink>
-            ) : (
-              <Typography>{contributor.identity.name}</Typography>
-            )}
-            {contributor.identity.orcId && (
-              <Tooltip title={t('common.orcid_profile')}>
-                <IconButton size="small" href={contributor.identity.orcId} target="_blank">
-                  <img src={OrcidLogo} height="20" alt="orcid" />
-                </IconButton>
-              </Tooltip>
-            )}
-          </Box>
+          <ContributorName
+            id={contributor.identity.id}
+            name={contributor.identity.name}
+            hasVerifiedAffiliation={
+              !!contributor.affiliations &&
+              contributor.affiliations?.some((affiliation) => affiliation.type === 'Organization')
+            }
+          />
           {!contributor.identity.id && (
             <Button
               disabled={disableNviCriticalFields}
@@ -230,7 +217,7 @@ export const ContributorRow = ({
 
       {/* Remove contributor */}
       <ConfirmDialog
-        open={!!openRemoveContributor}
+        open={openRemoveContributor}
         title={t('registration.contributors.remove_contributor')}
         onAccept={() => {
           onRemoveContributor(contributor.sequence - 1);

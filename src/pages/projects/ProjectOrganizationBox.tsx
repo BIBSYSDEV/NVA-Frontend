@@ -17,6 +17,7 @@ interface ProjectOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
   removeAffiliation?: () => void;
   unitUri: string;
   contributorRoles: ProjectContributorRole[];
+  disabledTooltip?: string;
 }
 
 export const ProjectOrganizationBox = ({
@@ -24,6 +25,7 @@ export const ProjectOrganizationBox = ({
   authorName,
   baseFieldName,
   removeAffiliation,
+  disabledTooltip,
   contributorRoles,
   sx,
 }: ProjectOrganizationBoxProps) => {
@@ -59,7 +61,7 @@ export const ProjectOrganizationBox = ({
         data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
         onClick={removeAffiliation}
         disabled={!removeAffiliation}
-        tooltip={t('project.affiliation_modal.delete_affiliation')}
+        tooltip={!removeAffiliation ? disabledTooltip : t('project.affiliation_modal.delete_affiliation')}
       />
     </StyledOrganizationBox>
   ) : (

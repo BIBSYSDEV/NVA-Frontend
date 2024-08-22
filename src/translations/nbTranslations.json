@@ -605,6 +605,7 @@
       "cannot_be_after": "{{field}} kan ikke være etter {{limitField}}",
       "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
       "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
+      "contributor_required_project": "Du må ha minst en prosjektdeltaker",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
       "employments_missing_data": "Minst en ansettelse mangler stilling eller startdato",
       "has_invalid_format": "{{field}} har ugyldig format",
@@ -619,7 +620,8 @@
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_correct_errors": "Du må rette opp feil",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
-      "not_selected": "{{field}} er ikke valgt"
+      "not_selected": "{{field}} er ikke valgt",
+      "project_manager_required_project": "Prosjektet må ha en prosjektleder"
     }
   },
   "footer": {
@@ -1115,6 +1117,8 @@
     "add_project_contributor": "Legg til prosjektdeltaker",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
+      "cannot_delete_only_affiliation": "Kan ikke fjerne eneste tilknytning",
+      "cannot_delete_affiliation_for_project_manager": "Kan ikke fjerne tilknytning for prosjektleder",
       "delete_affiliation": "Fjern tilknytning",
       "edit_affiliation": "Endre tilknytning"
     },
@@ -1124,21 +1128,31 @@
     "create_new_project": "Opprett nytt prosjekt",
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
+    "error": {
+      "there_can_only_be_one_project_manager_choose_different_role": "Et prosjekt kan kun ha en prosjektleder. Velg en annen rolle."
+    },
     "form": {
+      "project_manager_cannot_be_removed": "Prosjektleder kan ikke fjernes",
       "date": "Dato",
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
       "related_projects": "Relaterte prosjekt",
+      "remove_affiliation": "Fjern tilknytning",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
       "search_for_person": "Søk etter person",
+      "select_project_role": "Velg rolle i prosjektet",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt.",
       "title_and_description": "Tittel og beskrivelse",
       "category": "Kategori",
       "add_financing": "Legg til finansiering",
       "add_financing_description": "<0>Legg til finansieringskilde hvis prosjektet mottar finanisering.</0><0>Alle forskningsresultater som er koblet til prosjektet vil arve finansiering som er registrert på prosjektet.</0>"
+    },
+    "role_types": {
+      "ProjectManager": "Prosjektleder",
+      "ProjectParticipant": "Prosjektdeltaker"
     },
     "grant_id": "Tilskudds-ID",
     "heading": {
