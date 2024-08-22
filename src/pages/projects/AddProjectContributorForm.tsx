@@ -84,7 +84,10 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
         label={t('project.form.select_project_role')}
         variant="outlined">
         {roles.map((role) => (
-          <MenuItem key={role} value={role} disabled={role === 'ProjectManager' && hasProjectManager}>
+          <MenuItem
+            key={role}
+            value={role}
+            disabled={hasProjectManager ? role === 'ProjectManager' : role === 'ProjectParticipant'}>
             {t(`project.role_types.${role}`)}
           </MenuItem>
         ))}
