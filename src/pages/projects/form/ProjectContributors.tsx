@@ -18,7 +18,6 @@ import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { CristinProject, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { isProjectManager } from '../../registration/description_tab/projects_field/projectHelpers';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ContributorRow } from './ContributorRow';
 
@@ -95,9 +94,7 @@ export const ProjectContributors = ({ suggestedProjectManager }: ProjectContribu
                             contributorIndex={contributorIndex}
                             baseFieldName={`${name}[${contributorIndex}]`}
                             contributor={contributor}
-                            removeContributor={
-                              isProjectManager(contributor) ? undefined : () => remove(contributorIndex)
-                            }
+                            removeContributor={() => remove(contributorIndex)}
                           />
                         );
                       })}
