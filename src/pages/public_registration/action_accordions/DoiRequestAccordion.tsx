@@ -20,13 +20,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import {
-  addTicketMessage,
-  createDraftDoi,
-  createTicket,
-  updateTicket,
-  UpdateTicketData,
-} from '../../../api/registrationApi';
+import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
@@ -53,8 +47,6 @@ interface DoiRequestAccordionProps {
 enum LoadingState {
   None,
   RequestDoi,
-  RejectDoi,
-  ApproveDoi,
   DraftDoi,
 }
 
@@ -93,16 +85,12 @@ export const DoiRequestAccordion = ({
   const [openRejectDoiDialog, setOpenRejectDoiDialog] = useState(false);
   const toggleRejectDoiDialog = () => setOpenRejectDoiDialog((open) => !open);
 
-  const ticketMutation = useMutation({
-    mutationFn: doiRequestTicket
-      ? (newTicketData: UpdateTicketData) => {
-          if (newTicketData.status === 'Completed') {
-            setIsLoading(LoadingState.ApproveDoi);
-          }
-          return updateTicket(doiRequestTicket.id, newTicketData);
-        }
-      : undefined,
-    onSettled: () => setIsLoading(LoadingState.None),
+  const approveTicketMutation = useMutation({
+    mutationFn: async () => {
+      if (doiRequestTicket) {
+        await updateTicket(doiRequestTicket.id, { status: 'Completed' });
+      }
+    },
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
       refetchData();
@@ -326,28 +314,29 @@ export const DoiRequestAccordion = ({
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <Typography>{t('registration.public_page.tasks_panel.assign_doi_about')}</Typography>
-            <Button
+            <LoadingButton
               sx={{ bgcolor: 'white' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
               endIcon={<CheckIcon />}
               onClick={() => {
                 if (publishedFilesOnRegistration.length > 0) {
-                  ticketMutation.mutate({ status: 'Completed' });
+                  approveTicketMutation.mutate();
                 } else {
                   toggleConfirmDialogAssignDoi();
                 }
               }}
-              disabled={isLoadingData || isLoading !== LoadingState.None}>
+              loading={approveTicketMutation.isPending}
+              disabled={isLoadingData}>
               {t('registration.public_page.tasks_panel.assign_doi')}
-            </Button>
+            </LoadingButton>
             <Button
               sx={{ bgcolor: 'white' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
               endIcon={<CloseIcon />}
               onClick={toggleRejectDoiDialog}
-              disabled={isLoadingData || isLoading !== LoadingState.None}>
+              disabled={isLoadingData || approveTicketMutation.isPending}>
               {t('common.reject_doi')}
             </Button>
 
@@ -355,10 +344,10 @@ export const DoiRequestAccordion = ({
               open={showConfirmDialogAssignDoi}
               title={t('registration.public_page.tasks_panel.no_published_files_on_registration')}
               onAccept={async () => {
-                await ticketMutation.mutateAsync({ status: 'Completed' });
+                await approveTicketMutation.mutateAsync();
                 toggleConfirmDialogAssignDoi();
               }}
-              isLoading={isLoadingData || ticketMutation.isPending}
+              isLoading={isLoadingData || approveTicketMutation.isPending}
               onCancel={toggleConfirmDialogAssignDoi}>
               <Trans
                 t={t}
