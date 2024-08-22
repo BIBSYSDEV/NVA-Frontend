@@ -133,8 +133,11 @@ export const ContributorRow = ({
         <DeleteIconButton
           data-testid={dataTestId.registrationWizard.description.projectForm.removeContributorButton}
           onClick={() => setShowConfirmRemoveContributor(true)}
-          tooltip={t('project.form.remove_participant')}
-          disabledTooltip={t('project.form.project_manager_cannot_be_removed')}
+          tooltip={
+            !removeContributor
+              ? t('project.form.project_manager_cannot_be_removed')
+              : t('project.form.remove_participant')
+          }
           disabled={!removeContributor}
         />
         {!!removeContributor && (

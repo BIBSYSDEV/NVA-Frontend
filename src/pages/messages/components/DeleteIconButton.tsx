@@ -3,13 +3,12 @@ import { IconButton, IconButtonProps, SxProps, Tooltip } from '@mui/material';
 
 interface DeleteIconButtonProps extends IconButtonProps {
   tooltip?: string;
-  disabledTooltip?: string;
   disabled?: boolean;
   sx?: SxProps;
 }
 
-export const DeleteIconButton = ({ sx, tooltip, disabledTooltip, disabled, ...rest }: DeleteIconButtonProps) => (
-  <Tooltip title={disabled ? disabledTooltip || '' : tooltip}>
+export const DeleteIconButton = ({ sx, tooltip, disabled, ...rest }: DeleteIconButtonProps) => (
+  <Tooltip title={tooltip}>
     <IconButton
       sx={{
         bgcolor: disabled ? 'grey.600' : 'primary.main',

@@ -61,8 +61,7 @@ export const ProjectOrganizationBox = ({
         data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
         onClick={removeAffiliation}
         disabled={!removeAffiliation}
-        tooltip={t('project.affiliation_modal.delete_affiliation')}
-        disabledTooltip={disabledTooltip}
+        tooltip={!removeAffiliation ? disabledTooltip : t('project.affiliation_modal.delete_affiliation')}
       />
     </StyledOrganizationBox>
   ) : (
