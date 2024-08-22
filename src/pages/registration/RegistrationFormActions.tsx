@@ -50,6 +50,15 @@ export const RegistrationFormActions = ({
   const isFirstTab = tabNumber === RegistrationTab.Description;
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
 
+  const navigationButtonStyling = {
+    opacity: isLastTab ? 0.5 : 1,
+    color: 'white',
+    borderRadius: '50%',
+    bgcolor: 'primary.main',
+    height: '1.875rem',
+    width: '1.875rem',
+  };
+
   const cancelEdit = () => {
     if (history.location.state?.previousPath) {
       history.goBack();
@@ -117,21 +126,14 @@ export const RegistrationFormActions = ({
         }}>
         <Box sx={{ gridArea: 'back-button' }}>
           <Tooltip title={t('common.previous')}>
-            <IconButton
-              disabled={isFirstTab}
-              onClick={() => setTabNumber(tabNumber - 1)}
-              data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
-              <KeyboardArrowLeftIcon
-                sx={{
-                  opacity: isFirstTab ? 0.5 : 1,
-                  color: 'white',
-                  borderRadius: '50%',
-                  bgcolor: 'primary.light',
-                  height: '1.875rem',
-                  width: '1.875rem',
-                }}
-              />
-            </IconButton>
+            <span>
+              <IconButton
+                disabled={isFirstTab}
+                onClick={() => setTabNumber(tabNumber - 1)}
+                data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
+                <KeyboardArrowLeftIcon sx={navigationButtonStyling} />
+              </IconButton>
+            </span>
           </Tooltip>
         </Box>
 
@@ -177,21 +179,14 @@ export const RegistrationFormActions = ({
             </LoadingButton>
           )}
           <Tooltip title={t('common.next')}>
-            <IconButton
-              disabled={isLastTab}
-              onClick={() => setTabNumber(tabNumber + 1)}
-              data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
-              <KeyboardArrowRightIcon
-                sx={{
-                  opacity: isLastTab ? 0.5 : 1,
-                  color: 'white',
-                  borderRadius: '50%',
-                  bgcolor: 'primary.light',
-                  height: '1.875rem',
-                  width: '1.875rem',
-                }}
-              />
-            </IconButton>
+            <span>
+              <IconButton
+                disabled={isLastTab}
+                onClick={() => setTabNumber(tabNumber + 1)}
+                data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
+                <KeyboardArrowRightIcon sx={navigationButtonStyling} />
+              </IconButton>
+            </span>
           </Tooltip>
         </Box>
       </Box>
