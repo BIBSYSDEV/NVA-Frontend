@@ -1145,7 +1145,10 @@
       "select_project_role": "Velg rolle i prosjektet",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt.",
-      "title_and_description": "Tittel og beskrivelse"
+      "title_and_description": "Tittel og beskrivelse",
+      "category": "Kategori",
+      "add_financing": "Legg til finansiering",
+      "add_financing_description": "<0>Legg til finansieringskilde hvis prosjektet mottar finanisering.</0><0>Alle forskningsresultater som er koblet til prosjektet vil arve finansiering som er registrert på prosjektet.</0>"
     },
     "role_types": {
       "ProjectManager": "Prosjektleder",

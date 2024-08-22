@@ -3,7 +3,7 @@ import { AggregationValue, LanguageString } from './common.types';
 import { Organization } from './organization.types';
 import { Funding } from './registration.types';
 
-export enum ProjectTab {
+export enum ProjectTabs {
   Description = 0,
   Details = 1,
   Contributors = 2,

@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { PageHeader } from '../../../components/PageHeader';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { SkipLink } from '../../../components/SkipLink';
-import { CristinProject, ProjectTab } from '../../../types/project.types';
+import { CristinProject, ProjectTabs } from '../../../types/project.types';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { InitialProjectFormData } from '../../projects/form/ProjectFormDialog';
+import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectConnectionsForm } from './ProjectConnectionsForm';
 import { ProjectContributorsForm } from './ProjectContributorsForm';
 import { ProjectDescriptionForm } from './ProjectDescriptionForm';
@@ -20,8 +21,9 @@ interface ProjectFormProps {
 
 export const ProjectForm = ({ project }: ProjectFormProps) => {
   const { t } = useTranslation();
-  const [tabNumber, setTabNumber] = useState(ProjectTab.Description);
+  const [tabNumber, setTabNumber] = useState(ProjectTabs.Description);
   const [initialValues] = useState<InitialProjectFormData>({ project: project });
+  const thisIsRekProject = isRekProject(project);
 
   return (
     <>
@@ -38,10 +40,12 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
               <RequiredDescription />
               <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
                 <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '2rem', padding: '1.5rem 1.25rem' }}>
-                  {tabNumber === ProjectTab.Description && <ProjectDescriptionForm project={project} />}
-                  {tabNumber === ProjectTab.Details && <ProjectDetailsForm />}
-                  {tabNumber === ProjectTab.Contributors && <ProjectContributorsForm />}
-                  {tabNumber === ProjectTab.Connections && <ProjectConnectionsForm />}
+                  {tabNumber === ProjectTabs.Description && (
+                    <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />
+                  )}
+                  {tabNumber === ProjectTabs.Details && <ProjectDetailsForm thisIsRekProject={thisIsRekProject} />}
+                  {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm />}
+                  {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
                 </Box>
                 <p>registration form actions</p>
               </Box>
