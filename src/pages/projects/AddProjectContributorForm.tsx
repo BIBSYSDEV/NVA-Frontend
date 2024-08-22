@@ -33,6 +33,8 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
   );
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
+  console.log('values', values);
+
   const addContributor = () => {
     if (!selectedPerson || !selectedContributorRole) {
       return;
