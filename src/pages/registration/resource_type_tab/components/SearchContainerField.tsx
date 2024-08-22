@@ -8,6 +8,7 @@ import { fetchResults } from '../../../../api/searchApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { Contributor } from '../../../../types/contributor.types';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
@@ -24,6 +25,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
+import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -73,6 +75,12 @@ export const SearchContainerField = ({
     <Field name={fieldName}>
       {({ field, meta }: FieldProps<string>) => (
         <>
+          {disableNviCriticalFields && (
+            <StyledInfoBanner sx={{ mb: '1rem' }}>
+              <LockedNviFieldDescription fieldLabel={t('registration.resource_type.journal')} />
+            </StyledInfoBanner>
+          )}
+
           <Autocomplete
             disabled={disableNviCriticalFields}
             multiple
