@@ -17,7 +17,9 @@ export const LockedNviFieldDescription = ({ fieldLabel }: LockedNviFieldDescript
           {t('common.nvi')}
         </Typography>
       </Box>
-      <Typography color="inherit">{t('registration.locked_nvi_field_description', { field: fieldLabel })}</Typography>
+      <Typography color="inherit">
+        {t('registration.locked_nvi_field_description', { field: fieldLabel.toLocaleLowerCase() })}
+      </Typography>
     </>
   );
 };
