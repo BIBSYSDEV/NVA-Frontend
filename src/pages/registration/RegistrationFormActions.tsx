@@ -112,7 +112,6 @@ export const RegistrationFormActions = ({
             md: "'back-button  support-button  action-buttons'",
           },
           gridTemplateColumns: { xs: 'auto auto auto', md: '1fr 1fr 1fr' },
-          gridTemplateRows: { xs: '1fr 1fr', md: '1fr' },
           alignItems: 'center',
           gap: '1rem',
         }}>
@@ -155,12 +154,9 @@ export const RegistrationFormActions = ({
             display: 'flex',
             justifyContent: 'end',
             alignItems: 'center',
+            gap: '0.5rem',
           }}>
-          <Button
-            data-testid={dataTestId.registrationWizard.formActions.cancelEditButton}
-            onClick={cancelEdit}
-            color="primary"
-            sx={{ width: 'fit-content', justifySelf: 'center' }}>
+          <Button data-testid={dataTestId.registrationWizard.formActions.cancelEditButton} onClick={cancelEdit}>
             {t('common.cancel')}
           </Button>
           {!isLastTab ? (
@@ -176,8 +172,7 @@ export const RegistrationFormActions = ({
               variant="contained"
               loading={isSaving}
               data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={handleSaveClick}
-              sx={{ width: 'fit-content', justifySelf: 'end' }}>
+              onClick={handleSaveClick}>
               {t('common.save_and_view')}
             </LoadingButton>
           )}
