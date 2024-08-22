@@ -1,7 +1,7 @@
 import { Autocomplete, Chip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { defaultChannelSearchSize, searchForPublishers } from '../../../../api/publicationChannelApi';
@@ -10,6 +10,7 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
@@ -29,6 +30,8 @@ export const PublisherField = () => {
   const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
   const year = publicationDate?.year ?? '';
+
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const [showPublisherForm, setShowPublisherForm] = useState(false);
   const togglePublisherForm = () => setShowPublisherForm(!showPublisherForm);
@@ -75,6 +78,7 @@ export const PublisherField = () => {
       <Field name={ResourceFieldNames.PublicationContextPublisherId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
+            disabled={disableNviCriticalFields}
             fullWidth
             multiple
             id={publisherFieldTestId}

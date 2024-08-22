@@ -253,7 +253,8 @@ export const PublishingAccordion = ({
           <RegistrationErrorActions
             tabErrors={tabErrors}
             registrationIdentifier={registration.identifier}
-            sx={{ mb: lastPublishingRequest ? '1rem' : undefined }}
+            isPublished={isPublishedRegistration}
+            sx={{ mb: '0.5rem' }}
           />
         )}
 

@@ -38,8 +38,9 @@ export const ProjectContributors = ({ suggestedProjectManager }: ProjectContribu
   const hasProjectManager = values.contributors.some((contributor) =>
     contributor.roles.some((role) => role.type === 'ProjectManager')
   );
-
   const toggleOpenAddContributorView = () => setOpenAddContributorView(!openAddContributorView);
+  const thisIsRekProject = isRekProject(currentProject);
+  const hasUnidentifiedContributor = contributors.some((contributor) => !contributor.identity.id);
 
   return (
     <>
@@ -59,6 +60,7 @@ export const ProjectContributors = ({ suggestedProjectManager }: ProjectContribu
               onClick={toggleOpenAddContributorView}
               variant="contained"
               startIcon={<AddIcon />}
+              disabled={hasUnidentifiedContributor}
               data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
               {t('project.add_project_contributor')}
             </Button>

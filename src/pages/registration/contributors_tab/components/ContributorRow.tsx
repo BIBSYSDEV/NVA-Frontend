@@ -10,6 +10,7 @@ import {
   Checkbox,
   IconButton,
   MenuItem,
+  Link as MuiLink,
   TableCell,
   TableRow,
   TextField,
@@ -17,10 +18,12 @@ import {
   Typography,
 } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ContributorName } from '../../../../components/ContributorName';
+import { NviCandidateContext } from '../../../../context/NviCandidateContext';
+import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { CristinPerson } from '../../../../types/user.types';
@@ -50,6 +53,8 @@ export const ContributorRow = ({
   const { t } = useTranslation();
   const [openRemoveContributor, setOpenRemoveContributor] = useState(false);
   const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
+
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const baseFieldName = `${ContributorFieldNames.Contributors}[${contributorIndex}]`;
   const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
@@ -169,6 +174,7 @@ export const ContributorRow = ({
           />
           {!contributor.identity.id && (
             <Button
+              disabled={disableNviCriticalFields}
               variant="outlined"
               sx={{ padding: '0.1rem 0.75rem' }}
               data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
@@ -181,10 +187,11 @@ export const ContributorRow = ({
           )}
 
           <Button
+            disabled={disableNviCriticalFields}
             size="small"
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
             onClick={() => setOpenRemoveContributor(true)}
-            startIcon={<RemoveIcon color="primary" />}>
+            startIcon={<RemoveIcon />}>
             {t('registration.contributors.remove_contributor')}
           </Button>
         </Box>
