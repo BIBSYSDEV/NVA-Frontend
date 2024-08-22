@@ -28,6 +28,7 @@ import {
   UpdateTicketData,
 } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -79,21 +80,24 @@ export const DoiRequestAccordion = ({
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
+
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
+
   const [showConfirmDialogAssignDoi, setShowConfirmDialogAssignDoi] = useState(false);
   const toggleConfirmDialogAssignDoi = () => setShowConfirmDialogAssignDoi((open) => !open);
 
   const [openReserveDoiDialog, setOpenReserveDoiDialog] = useState(false);
   const toggleReserveDoiDialog = () => setOpenReserveDoiDialog((open) => !open);
 
+  const [openRejectDoiDialog, setOpenRejectDoiDialog] = useState(false);
+  const toggleRejectDoiDialog = () => setOpenRejectDoiDialog((open) => !open);
+
   const ticketMutation = useMutation({
     mutationFn: doiRequestTicket
       ? (newTicketData: UpdateTicketData) => {
           if (newTicketData.status === 'Completed') {
             setIsLoading(LoadingState.ApproveDoi);
-          } else if (newTicketData.status === 'Closed') {
-            setIsLoading(LoadingState.RejectDoi);
           }
           return updateTicket(doiRequestTicket.id, newTicketData);
         }
@@ -104,6 +108,22 @@ export const DoiRequestAccordion = ({
       refetchData();
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' })),
+  });
+
+  const rejectDoiMutation = useMutation({
+    mutationFn: async (message: string) => {
+      if (doiRequestTicket && message) {
+        const sendMessageSuccess = await addMessage(doiRequestTicket.id, message);
+        if (sendMessageSuccess) {
+          await updateTicket(doiRequestTicket.id, { status: 'Closed' });
+        }
+      }
+    },
+    onSuccess: () => {
+      dispatch(setNotification({ message: t('feedback.success.doi_request_rejected'), variant: 'success' }));
+      refetchData();
+    },
+    onError: () => dispatch(setNotification({ message: t('feedback.error.reject_doi_request'), variant: 'error' })),
   });
 
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -321,17 +341,16 @@ export const DoiRequestAccordion = ({
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.tasks_panel.assign_doi')}
             </Button>
-            <LoadingButton
+            <Button
               sx={{ bgcolor: 'white' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
               endIcon={<CloseIcon />}
-              loadingPosition="end"
-              onClick={() => ticketMutation.mutate({ status: 'Closed' })}
-              loading={isLoading === LoadingState.RejectDoi}
+              onClick={toggleRejectDoiDialog}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.reject_doi')}
-            </LoadingButton>
+            </Button>
+
             <ConfirmDialog
               open={showConfirmDialogAssignDoi}
               title={t('registration.public_page.tasks_panel.no_published_files_on_registration')}
@@ -340,13 +359,28 @@ export const DoiRequestAccordion = ({
                 toggleConfirmDialogAssignDoi();
               }}
               isLoading={isLoadingData || ticketMutation.isPending}
-              onCancel={() => toggleConfirmDialogAssignDoi()}>
+              onCancel={toggleConfirmDialogAssignDoi}>
               <Trans
                 t={t}
                 i18nKey="registration.public_page.tasks_panel.no_published_files_on_registration_description"
                 components={[<Typography paragraph key="1" />]}
               />
             </ConfirmDialog>
+
+            <ConfirmMessageDialog
+              open={openRejectDoiDialog}
+              title={t('common.reject_doi')}
+              onAccept={async (message: string) => {
+                await rejectDoiMutation.mutateAsync(message);
+                toggleRejectDoiDialog();
+              }}
+              onCancel={toggleRejectDoiDialog}
+              textFieldLabel={t('common.message')}
+              confirmButtonLabel={t('common.reject_doi')}>
+              <Typography paragraph>
+                {t('registration.public_page.tasks_panel.describe_doi_rejection_reason')}
+              </Typography>
+            </ConfirmMessageDialog>
           </Box>
         )}
 

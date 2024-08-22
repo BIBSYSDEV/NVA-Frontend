@@ -533,6 +533,7 @@
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "project_search": "Søk på prosjekt feilet",
+      "reject_doi_request": "Kunne ikke avvise DOI-forespørsel",
       "remove_role": "Kunne ikke fjerne rolle",
       "reserve_doi": "Reservasjon av DOI feilet",
       "search": "Søk feilet",
@@ -575,6 +576,7 @@
       "delete_draft_registrations": "Alle kladdene ble slettet",
       "delete_message": "Meldingen ble slettet",
       "delete_registration": "Registrering ble slettet",
+      "doi_request_rejected": "DOI-forespørselen ble avvist",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
       "merge_import_candidate": "Importdata ble slått sammen med resultatdata",
@@ -1461,7 +1463,8 @@
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Beskrivelsen (metadata) av forskningsresultatet og opplastede filer blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
-        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig."
+        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig.",
+        "describe_doi_rejection_reason": "Du må begrunne avslaget på ønsket om DOI på dette forskningsresultatet."
       },
       "validation_errors": "Valideringsfeil"
     },
