@@ -384,7 +384,7 @@ export const DoiRequestAccordion = ({
           </Box>
         )}
 
-        {isPendingDoiRequest && (
+        {(isPendingDoiRequest || isClosedDoiRequest) && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {messages.length > 0 ? (
               <TicketMessageList ticket={doiRequestTicket} canDeleteMessage={userIsCurator} refetchData={refetchData} />
