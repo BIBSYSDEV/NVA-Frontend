@@ -92,19 +92,17 @@ export const DoiRequestAccordion = ({
       }
     },
     onSuccess: () => {
-      dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.doi_request_approved'), variant: 'success' }));
       refetchData();
     },
-    onError: () => dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.approve_doi_request'), variant: 'error' })),
   });
 
   const rejectDoiMutation = useMutation({
     mutationFn: async (message: string) => {
       if (doiRequestTicket && message) {
-        const sendMessageSuccess = await addMessage(doiRequestTicket.id, message);
-        if (sendMessageSuccess) {
-          await updateTicket(doiRequestTicket.id, { status: 'Closed' });
-        }
+        await addTicketMessage(doiRequestTicket.id, message);
+        await updateTicket(doiRequestTicket.id, { status: 'Closed' });
       }
     },
     onSuccess: () => {
