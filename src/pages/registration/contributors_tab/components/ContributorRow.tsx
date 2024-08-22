@@ -10,7 +10,6 @@ import {
   Checkbox,
   IconButton,
   MenuItem,
-  Link as MuiLink,
   TableCell,
   TableRow,
   TextField,
@@ -23,7 +22,6 @@ import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ContributorName } from '../../../../components/ContributorName';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
-import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { CristinPerson } from '../../../../types/user.types';
