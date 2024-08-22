@@ -83,17 +83,14 @@ interface RegistrationWizardOptions {
   tab?: number;
 }
 
-export const getRegistrationWizardLink = (
-  identifier: string,
-  { highestValidatedTab, tab }: RegistrationWizardOptions
-) => {
+export const getRegistrationWizardLink = (identifier: string, options: RegistrationWizardOptions = {}) => {
   return {
     pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
     state: {
-      highestValidatedTab: highestValidatedTab,
+      highestValidatedTab: options.highestValidatedTab,
       previousPath: window.location.pathname,
     } satisfies RegistrationFormLocationState,
-    search: tab ? `?tab=${tab}` : '',
+    search: options.tab ? `?tab=${options.tab}` : '',
   };
 };
 

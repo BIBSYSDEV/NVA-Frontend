@@ -39,7 +39,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
-      history.push(getRegistrationWizardLink(createRegistrationResponse.data.identifier, -1));
+      history.push(getRegistrationWizardLink(createRegistrationResponse.data.identifier, { highestValidatedTab: -1 }));
     }
   };
 

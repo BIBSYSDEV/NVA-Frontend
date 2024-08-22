@@ -56,7 +56,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const [doiQuery, setDoiQuery] = useState('');
 
   const onCreateRegistrationSuccess = (response: AxiosResponse<Registration, any>) => {
-    history.push(getRegistrationWizardLink(response.data.identifier, -1));
+    history.push(getRegistrationWizardLink(response.data.identifier, { highestValidatedTab: -1 }));
   };
 
   const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview } = useLookupDoi(doiQuery);
