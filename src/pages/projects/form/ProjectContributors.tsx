@@ -24,9 +24,10 @@ import { ContributorRow } from './ContributorRow';
 interface ProjectContributorsProps {
   suggestedProjectManager?: string;
   isVisited: boolean;
+  showHeader: boolean;
 }
 
-export const ProjectContributors = ({ suggestedProjectManager, isVisited }: ProjectContributorsProps) => {
+export const ProjectContributors = ({ suggestedProjectManager, isVisited, showHeader }: ProjectContributorsProps) => {
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,9 +44,11 @@ export const ProjectContributors = ({ suggestedProjectManager, isVisited }: Proj
 
   return (
     <>
-      <Typography variant="h3" gutterBottom sx={{ marginTop: '2rem', marginBottom: '1rem' }}>
-        {t('project.project_participants')}
-      </Typography>
+      {showHeader && (
+        <Typography variant="h3" gutterBottom sx={{ marginTop: '2rem', marginBottom: '1rem' }}>
+          {t('project.project_participants')}
+        </Typography>
+      )}
       {suggestedProjectManager && (
         <Typography sx={{ marginBottom: '1rem' }}>
           {t('project.project_manager_from_nfr', { name: suggestedProjectManager })}

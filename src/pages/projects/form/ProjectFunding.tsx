@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { FundingSourceField } from '../../../components/FundingSourceField';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
-import { ProjectFieldName, ProjectFunding, emptyProjectFunding } from '../../../types/project.types';
+import { emptyProjectFunding, ProjectFieldName, ProjectFunding } from '../../../types/project.types';
 import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { API_URL } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -22,7 +22,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
 
   return (
     <div>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h2" sx={{ mt: '2rem' }} gutterBottom>
         {t('common.funding')}
       </Typography>
 
