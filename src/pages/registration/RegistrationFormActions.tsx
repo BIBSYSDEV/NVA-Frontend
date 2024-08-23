@@ -1,7 +1,7 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, SxProps, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -18,7 +18,7 @@ import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration } from '../../utils/registration-helpers';
-import { getRegistrationLandingPagePath, UrlPathTemplate } from '../../utils/urlPaths';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 
 interface RegistrationFormActionsProps {
@@ -28,14 +28,6 @@ interface RegistrationFormActionsProps {
   persistedRegistration: Registration;
   isNviCandidate: boolean;
 }
-
-const navigationButtonStyling: SxProps = {
-  color: 'white',
-  borderRadius: '50%',
-  bgcolor: 'primary.main',
-  height: '1.875rem',
-  width: '1.875rem',
-};
 
 export const RegistrationFormActions = ({
   tabNumber,
@@ -57,14 +49,6 @@ export const RegistrationFormActions = ({
 
   const isFirstTab = tabNumber === RegistrationTab.Description;
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
-
-  const cancelEdit = () => {
-    if (history.location.state?.previousPath) {
-      history.goBack();
-    } else {
-      history.push(UrlPathTemplate.Home);
-    }
-  };
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
@@ -115,25 +99,30 @@ export const RegistrationFormActions = ({
       <Box
         sx={{
           display: 'grid',
-          gridTemplateAreas: {
-            xs: "'back-button . action-buttons' 'support-button support-button support-button'",
-            md: "'back-button  support-button  action-buttons'",
-          },
-          gridTemplateColumns: { xs: 'auto auto auto', md: '1fr 1fr 1fr' },
+          gridTemplateAreas: "'back-button support-button save-button'",
+          gridTemplateColumns: '1fr 1fr 1fr',
           alignItems: 'center',
           gap: '1rem',
         }}>
-        <Box sx={{ gridArea: 'back-button' }}>
-          <Tooltip title={!isFirstTab ? t('common.previous') : ''}>
-            <IconButton
-              disabled={isFirstTab}
-              onClick={() => setTabNumber(tabNumber - 1)}
-              data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
-              <KeyboardArrowLeftIcon sx={{ ...navigationButtonStyling, opacity: isFirstTab ? 0.5 : 1 }} />
-            </IconButton>
-          </Tooltip>
-        </Box>
-
+        {!isFirstTab && (
+          <Box sx={{ gridArea: 'back-button' }}>
+            <Tooltip title={t('common.previous')}>
+              <IconButton
+                onClick={() => setTabNumber(tabNumber - 1)}
+                data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
+                <KeyboardArrowLeftIcon
+                  sx={{
+                    color: 'white',
+                    borderRadius: '50%',
+                    bgcolor: 'primary.light',
+                    height: '1.875rem',
+                    width: '1.875rem',
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        )}
         <Button
           sx={{
             gridArea: 'support-button',
@@ -146,19 +135,14 @@ export const RegistrationFormActions = ({
           onClick={toggleSupportModal}>
           {t('my_page.messages.get_curator_support')}
         </Button>
-
-        <Box
-          sx={{
-            gridArea: 'action-buttons',
-            display: 'flex',
-            justifyContent: 'end',
-            alignItems: 'center',
-            gap: '0.5rem',
-          }}>
-          <Button data-testid={dataTestId.registrationWizard.formActions.cancelEditButton} onClick={cancelEdit}>
-            {t('common.cancel')}
-          </Button>
-          {!isLastTab ? (
+        {!isLastTab ? (
+          <Box
+            sx={{
+              gridArea: 'save-button',
+              display: 'flex',
+              justifyContent: 'end',
+              alignItems: 'center',
+            }}>
             <LoadingButton
               variant="outlined"
               loading={isSaving}
@@ -166,24 +150,32 @@ export const RegistrationFormActions = ({
               onClick={handleSaveClick}>
               {t('common.save')}
             </LoadingButton>
-          ) : (
-            <LoadingButton
-              variant="contained"
-              loading={isSaving}
-              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={handleSaveClick}>
-              {t('common.save_and_view')}
-            </LoadingButton>
-          )}
-          <Tooltip title={!isLastTab ? t('common.next') : ''}>
-            <IconButton
-              disabled={isLastTab}
-              onClick={() => setTabNumber(tabNumber + 1)}
-              data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
-              <KeyboardArrowRightIcon sx={{ ...navigationButtonStyling, opacity: isLastTab ? 0.5 : 1 }} />
-            </IconButton>
-          </Tooltip>
-        </Box>
+            <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
+              <IconButton
+                onClick={() => setTabNumber(tabNumber + 1)}
+                data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
+                <KeyboardArrowRightIcon
+                  sx={{
+                    color: 'white',
+                    borderRadius: '50%',
+                    bgcolor: 'primary.light',
+                    height: '1.875rem',
+                    width: '1.875rem',
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        ) : (
+          <LoadingButton
+            variant="contained"
+            loading={isSaving}
+            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+            onClick={handleSaveClick}
+            sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
+            {t('common.save_and_view')}
+          </LoadingButton>
+        )}
       </Box>
 
       <Modal

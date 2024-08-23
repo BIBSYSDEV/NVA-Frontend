@@ -82,7 +82,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : registration ? (
     <NviCandidateContext.Provider
       value={{
-        nviCandiadate: nviCandidateQuery.data,
+        nviCandidate: nviCandidateQuery.data,
         disableNviCriticalFields:
           !!nviCandidateQuery.data && isApprovedAndOpenNviCandidate(nviCandidateQuery.data) && !user?.isNviCurator,
       }}>

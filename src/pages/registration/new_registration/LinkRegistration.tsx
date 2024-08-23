@@ -24,7 +24,7 @@ import { RegistrationList } from '../../../components/RegistrationList';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { doiUrlBase, makeDoiUrl } from '../../../utils/general-helpers';
-import { getRegistrationWizardLink } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { RegistrationAccordion } from './RegistrationAccordion';
 
 export interface StartRegistrationAccordionProps {
@@ -56,7 +56,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const [doiQuery, setDoiQuery] = useState('');
 
   const onCreateRegistrationSuccess = (response: AxiosResponse<Registration, any>) => {
-    history.push(getRegistrationWizardLink(response.data.identifier, { highestValidatedTab: -1 }));
+    history.push(getRegistrationWizardPath(response.data.identifier), { highestValidatedTab: -1 });
   };
 
   const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview } = useLookupDoi(doiQuery);

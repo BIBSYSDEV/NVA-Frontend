@@ -2,6 +2,7 @@ import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { StyledInfoBanner } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
@@ -24,7 +25,7 @@ export const DuplicateWarning = ({ name, identifier, warning }: DuplicateWarning
         flexDirection: 'column',
         gap: '0.5rem',
       }}>
-      <Box sx={{ bgcolor: 'primary.light', color: 'white', p: '0.5rem', borderRadius: '0.25rem' }}>{warning}</Box>
+      <StyledInfoBanner>{warning}</StyledInfoBanner>
       {name && identifier && (
         <>
           <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
