@@ -24,7 +24,7 @@ import { ContributorRow } from './ContributorRow';
 interface ProjectContributorsProps {
   suggestedProjectManager?: string;
   isVisited: boolean;
-  showHeader: boolean;
+  showHeader?: boolean;
 }
 
 export const ProjectContributors = ({ suggestedProjectManager, isVisited, showHeader }: ProjectContributorsProps) => {
