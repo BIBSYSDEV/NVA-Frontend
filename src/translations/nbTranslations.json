@@ -1132,12 +1132,15 @@
       "there_can_only_be_one_project_manager_choose_different_role": "Et prosjekt kan kun ha en prosjektleder. Velg en annen rolle."
     },
     "form": {
+      "add_results": "Legg til resultat",
+      "add_results_description": "Legg til forskningsresultat som har tilkobling til prosjektet",
       "project_manager_cannot_be_removed": "Prosjektleder kan ikke fjernes",
       "date": "Dato",
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
       "related_projects": "Relaterte prosjekt",
+      "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
       "remove_affiliation": "Fjern tilknytning",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
