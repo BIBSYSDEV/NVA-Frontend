@@ -11,11 +11,17 @@ import { RelatedProjectItem } from './RelatedProjectItem';
 
 export const RelatedProjectsField = () => {
   const { t } = useTranslation();
-  const { values } = useFormikContext<SaveCristinProject>();
+  const { values, setFieldValue } = useFormikContext<SaveCristinProject>();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
   const projectsQuery = useFetchProjects(debouncedSearchTerm);
   const projects = projectsQuery.data?.hits ?? [];
+
+  const removeProject = (projectId: string) =>
+    setFieldValue(
+      ProjectFieldName.RelatedProjects,
+      values[ProjectFieldName.RelatedProjects].filter((val) => val !== projectId)
+    );
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -32,14 +38,16 @@ export const RelatedProjectsField = () => {
               }
             }}
             inputValue={searchTerm}
-            onChange={(_, value: CristinProject) => {
-              setSearchTerm('');
-              const projectUris = [...values[ProjectFieldName.RelatedProjects], value.id];
-              setFieldValue(field.name, projectUris);
+            onChange={(_, value: CristinProject | null) => {
+              if (value?.id) {
+                setSearchTerm('');
+                const projectUris = [...values[ProjectFieldName.RelatedProjects], value?.id];
+                setFieldValue(field.name, projectUris);
+              }
             }}
             popupIcon={null}
             clearIcon={null}
-            value={(field.value ?? []) as any[]}
+            value={null}
             getOptionDisabled={(option) => field.value.some((project) => project === option.id)}
             loading={projectsQuery.isFetching}
             renderInput={(params) => (
@@ -56,7 +64,11 @@ export const RelatedProjectsField = () => {
       </Field>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
         {values.relatedProjects.map((relatedProject) => (
-          <RelatedProjectItem projectId={relatedProject} key={relatedProject} />
+          <RelatedProjectItem
+            projectId={relatedProject}
+            key={relatedProject}
+            removeProject={() => removeProject(relatedProject)}
+          />
         ))}
       </Box>
     </Box>

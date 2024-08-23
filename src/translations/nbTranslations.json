@@ -1144,6 +1144,7 @@
       "remove_affiliation": "Fjern tilknytning",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
+      "remove_project": "Fjern prosjekt",
       "search_for_person": "Søk etter person",
       "select_project_role": "Velg rolle i prosjektet",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
