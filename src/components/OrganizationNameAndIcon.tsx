@@ -9,14 +9,10 @@ interface OrganizationNameAndIconProps extends Pick<BoxProps, 'sx'> {
   id: string;
 }
 
-const isOrganizationId = (str: string) => {
-  return str && str.includes(CristinApiPath.Organization);
-};
-
 export const OrganizationNameAndIcon = ({ id, sx }: OrganizationNameAndIconProps) => {
   const { t } = useTranslation();
 
-  const isValidOrgId = isOrganizationId(id);
+  const isValidOrgId = id && id.includes(CristinApiPath.Organization);
   const organizationQuery = useFetchOrganization(isValidOrgId ? id : '');
   const orgName = getLanguageString(organizationQuery.data?.labels);
   const orgAcronym = organizationQuery.data?.acronym;
