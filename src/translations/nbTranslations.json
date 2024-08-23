@@ -1395,6 +1395,7 @@
       "resource_type": "Kategori"
     },
     "is_revision": "Arbeidet er en revisjon",
+    "locked_nvi_field_description": "Publikasjonen er godkjent til årets NVI-rapportering. Du kan derfor ikke endre {{field}}. Om informasjonen er feil må du ta kontakt med kurator for å få endret.",
     "missing_name": "Mangler navn",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
