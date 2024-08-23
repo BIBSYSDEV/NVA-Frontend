@@ -22,6 +22,7 @@ interface ProjectFormProps {
 export const ProjectForm = ({ project }: ProjectFormProps) => {
   const { t } = useTranslation();
   const [tabNumber, setTabNumber] = useState(ProjectTabs.Description);
+  const [maxVisitedTab, setMaxVisitedTab] = useState(ProjectTabs.Description);
   const [initialValues] = useState<InitialProjectFormData>({ project: project });
   const thisIsRekProject = isRekProject(project);
 
@@ -36,7 +37,12 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
           return (
             <Form noValidate>
               <PageHeader variant="h1">{project.title}</PageHeader>
-              <ProjectFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
+              <ProjectFormStepper
+                tabNumber={tabNumber}
+                setTabNumber={setTabNumber}
+                maxVisitedTab={maxVisitedTab}
+                setMaxVisitedTab={setMaxVisitedTab}
+              />
               <RequiredDescription />
               <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
                 <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '2rem', padding: '1.5rem 1.25rem' }}>
@@ -44,7 +50,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
                     <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />
                   )}
                   {tabNumber === ProjectTabs.Details && <ProjectDetailsForm thisIsRekProject={thisIsRekProject} />}
-                  {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm />}
+                  {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm maxVisitedTab={maxVisitedTab} />}
                   {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
                 </Box>
                 <p>registration form actions</p>

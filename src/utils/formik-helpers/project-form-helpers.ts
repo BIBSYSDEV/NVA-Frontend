@@ -1,11 +1,16 @@
 import { FormikErrors, FormikTouched } from 'formik';
 import { CristinProject, ProjectTabs } from '../../types/project.types';
-import { ProjectDescriptionFieldNames, ProjectDetailsFieldNames } from '../projectFormikFieldNames';
+import {
+  ProjectContributorsFieldNames,
+  ProjectDescriptionFieldNames,
+  ProjectDetailsFieldNames,
+} from '../projectFormikFieldNames';
 import { getErrorMessages } from './formik-helpers';
 
 interface ProjectTabErrors {
   [ProjectTabs.Description]: string[];
   [ProjectTabs.Details]: string[];
+  [ProjectTabs.Contributors]: string[];
 }
 
 export const getProjectTabErrors = (errors: FormikErrors<CristinProject>, touched?: FormikTouched<CristinProject>) => {
@@ -16,6 +21,7 @@ export const getProjectTabErrors = (errors: FormikErrors<CristinProject>, touche
       touched
     ),
     [ProjectTabs.Details]: getErrorMessages<CristinProject>(Object.values(ProjectDetailsFieldNames), errors, touched),
+    [ProjectTabs.Contributors]: getErrorMessages<CristinProject>(Object.values(ProjectContributorsFieldNames), errors),
   };
 
   return tabErrors;
