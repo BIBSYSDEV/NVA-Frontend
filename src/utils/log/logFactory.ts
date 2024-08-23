@@ -1,18 +1,31 @@
 import { TFunction } from 'i18next';
-import { generateImportLogEntries } from './importEntryGenerator';
-import { generateRegistrationLogEntries } from './registrationEntryGenerator';
-import { generateTicketLogEntries } from './ticketEntryGenerator';
-import { getArchivedFiles } from '../registration-helpers';
+import { ImportUploadDetails } from '../../types/associatedArtifact.types';
 import { Log, LogEntry } from '../../types/log.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
+import { getArchivedFiles, getPublishedFiles } from '../registration-helpers';
+import { generateImportLogEntries } from './importEntryGenerator';
+import { generateRegistrationLogEntries } from './registrationEntryGenerator';
+import { generateTicketLogEntries } from './ticketEntryGenerator';
 
 export function generateLog(registration: Registration, tickets: Ticket[], t: TFunction): Log {
   const importLogEntries = generateImportLogEntries(registration.importDetails ?? [], t);
   const registrationLogEntries = generateRegistrationLogEntries(registration, tickets, t);
   const ticketLogEntries = generateTicketLogEntries(tickets, registration, t);
 
-  const entries = [...importLogEntries, ...registrationLogEntries, ...ticketLogEntries];
+  const importedFiles: LogEntry[] = getPublishedFiles(registration.associatedArtifacts)
+    .filter((file) => file.uploadDetails?.type === 'ImportUploadDetails')
+    .map((file) => {
+      const importDetails = file.uploadDetails as ImportUploadDetails;
+      return {
+        type: 'PublishingRequest',
+        title: t('log.titles.files_published_one'),
+        modifiedDate: importDetails.uploadedDate,
+        actions: [{ organization: importDetails.archive, items: [{ description: file.name, fileIcon: 'file' }] }],
+      };
+    });
+
+  const entries = [...importLogEntries, ...registrationLogEntries, ...ticketLogEntries, ...importedFiles];
 
   return {
     entries: entries.sort(sortByModifiedDateAndThenMetadataPublished),

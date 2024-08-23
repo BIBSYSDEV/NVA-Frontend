@@ -34,12 +34,19 @@ export interface AssociatedFile {
   license: string | null;
   legalNote?: string;
   rightsRetentionStrategy: FileRrs;
-  uploadDetails?: UploadDetails;
+  uploadDetails?: UserUploadDetails | ImportUploadDetails;
 }
 
-interface UploadDetails {
-  type: 'UploadDetails';
+interface UserUploadDetails {
+  type: 'UserUploadDetails';
   uploadedBy: string;
+  uploadedDate: string;
+}
+
+export interface ImportUploadDetails {
+  type: 'ImportUploadDetails';
+  source: string;
+  archive: string;
   uploadedDate: string;
 }
 
