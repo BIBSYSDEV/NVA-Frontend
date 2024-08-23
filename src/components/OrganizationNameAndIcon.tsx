@@ -7,22 +7,20 @@ import { getLanguageString } from '../utils/translation-helpers';
 
 interface OrganizationNameAndIconProps extends Pick<BoxProps, 'sx'> {
   id: string;
-  acronym?: boolean;
 }
 
 const isOrganizationId = (str: string) => {
   return str && str.includes(CristinApiPath.Organization);
 };
 
-export const OrganizationNameAndIcon = ({ id, acronym = false, sx }: OrganizationNameAndIconProps) => {
+export const OrganizationNameAndIcon = ({ id, sx }: OrganizationNameAndIconProps) => {
   const { t } = useTranslation();
 
   const isValidOrgId = isOrganizationId(id);
   const organizationQuery = useFetchOrganization(isValidOrgId ? id : '');
   const orgName = getLanguageString(organizationQuery.data?.labels);
   const orgAcronym = organizationQuery.data?.acronym;
-  // TODO: acronynm always true
-  const displayName = isValidOrgId ? orgName : id;
+  const displayName = isValidOrgId ? orgAcronym : id;
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', ...sx }}>
@@ -36,12 +34,10 @@ export const OrganizationNameAndIcon = ({ id, acronym = false, sx }: Organizatio
       />
       {organizationQuery.isLoading ? (
         <Skeleton sx={{ width: '2.5rem' }} />
-      ) : acronym && orgAcronym ? (
-        <Tooltip title={orgName}>
-          <Typography>{orgAcronym}</Typography>
-        </Tooltip>
       ) : displayName ? (
-        <Typography>{displayName}</Typography>
+        <Tooltip title={orgName}>
+          <Typography>{displayName}</Typography>
+        </Tooltip>
       ) : (
         <Typography>
           <i>{t('common.unknown')}</i>
