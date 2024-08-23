@@ -18,7 +18,7 @@ export const RelatedProjectsField = () => {
   const projects = projectsQuery.data?.hits ?? [];
 
   return (
-    <>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Field name={ProjectFieldName.RelatedProjects}>
         {({ field, form: { setFieldValue } }: FieldProps<string[]>) => (
           <Autocomplete
@@ -54,11 +54,11 @@ export const RelatedProjectsField = () => {
           />
         )}
       </Field>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
         {values.relatedProjects.map((relatedProject) => (
           <RelatedProjectItem projectId={relatedProject} key={relatedProject} />
         ))}
       </Box>
-    </>
+    </Box>
   );
 };
