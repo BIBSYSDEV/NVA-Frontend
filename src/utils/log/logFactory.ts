@@ -28,6 +28,7 @@ const sortLogEntries = (a: LogEntry, b: LogEntry) => {
   const dateB = new Date(b.modifiedDate);
 
   // Ignore date differences less than a second
+  // This is done to ensure a logical order if the imported posts have minor differences for timestamps
   const timeA = Math.floor(dateA.getTime() / 1000);
   const timeB = Math.floor(dateB.getTime() / 1000);
 
