@@ -610,6 +610,7 @@
       "contributor_required_project": "Du må ha minst en prosjektdeltaker",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
       "employments_missing_data": "Minst en ansettelse mangler stilling eller startdato",
+      "field_not_confirmed": "{{field}} er ikke bekreftet",
       "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_email": "Ugyldig epost",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
@@ -622,7 +623,6 @@
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_correct_errors": "Du må rette opp feil",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
-      "not_selected": "{{field}} er ikke valgt",
       "project_manager_required_project": "Prosjektet må ha en prosjektleder"
     }
   },
