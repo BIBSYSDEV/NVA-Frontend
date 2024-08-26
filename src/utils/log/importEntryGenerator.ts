@@ -51,7 +51,7 @@ function generateImportedFilesLogEntries(associatedArtifacts: AssociatedArtifact
       return {
         type: 'PublishingRequest',
         title: t('log.titles.files_published_one'),
-        modifiedDate: importDetails.uploadedDate,
+        modifiedDate: file.publishedDate ?? importDetails.uploadedDate,
         actions: [{ organization: importDetails.archive, items: [{ description: file.name, fileIcon: 'file' }] }],
       };
     });
