@@ -14,9 +14,10 @@ interface ProjectFormActionsProps {
   tabNumber: number;
   setTabNumber: (val: number) => void;
   isSaving: boolean;
+  hasErrors: boolean;
 }
 
-export const ProjectFormActions = ({ tabNumber, setTabNumber, isSaving }: ProjectFormActionsProps) => {
+export const ProjectFormActions = ({ tabNumber, setTabNumber, isSaving, hasErrors }: ProjectFormActionsProps) => {
   const { t } = useTranslation();
   const isFirstTab = tabNumber === RegistrationTab.Description;
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
@@ -39,6 +40,7 @@ export const ProjectFormActions = ({ tabNumber, setTabNumber, isSaving }: Projec
           type="submit"
           sx={{ height: '2rem', mr: '2rem' }}
           loading={isSaving}
+          disabled={hasErrors}
           data-testid={dataTestId.projectWizard.formActions.saveProjectButton}>
           {isLastTab ? t('common.save_and_view') : t('common.save')}
         </LoadingButton>
