@@ -16,7 +16,7 @@ export const OrganizationNameAndIcon = ({ id, sx }: OrganizationNameAndIconProps
   const organizationQuery = useFetchOrganization(isValidOrgId ? id : '');
   const orgName = getLanguageString(organizationQuery.data?.labels);
   const orgAcronym = organizationQuery.data?.acronym;
-  const displayName = isValidOrgId ? orgAcronym : id + 'sdfgsdfdsfdsfsdfsqqqqqqaaasadfsdfsfddssdfq';
+  const displayName = isValidOrgId ? orgAcronym : id;
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', ...sx }}>
@@ -31,10 +31,8 @@ export const OrganizationNameAndIcon = ({ id, sx }: OrganizationNameAndIconProps
       {organizationQuery.isLoading ? (
         <Skeleton sx={{ width: '2.5rem' }} />
       ) : displayName ? (
-        <Tooltip title={orgName}>
-          <Typography sx={{ maxWidth: '5rem' }} noWrap overflow="hidden">
-            {displayName}
-          </Typography>
+        <Tooltip title={orgName || displayName}>
+          <Typography>{displayName}</Typography>
         </Tooltip>
       ) : (
         <Typography>
