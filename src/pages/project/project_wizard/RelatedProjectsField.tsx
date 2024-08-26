@@ -41,7 +41,7 @@ export const RelatedProjectsField = () => {
             onChange={(_, value: CristinProject | null) => {
               if (value?.id) {
                 setSearchTerm('');
-                const projectUris = [...values[ProjectFieldName.RelatedProjects], value?.id];
+                const projectUris = [...values[ProjectFieldName.RelatedProjects], value.id];
                 setFieldValue(field.name, projectUris);
               }
             }}
@@ -62,7 +62,7 @@ export const RelatedProjectsField = () => {
           />
         )}
       </Field>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', paddingLeft: 0 }} component={'ul'}>
         {values.relatedProjects.map((relatedProject) => (
           <RelatedProjectItem
             projectId={relatedProject}

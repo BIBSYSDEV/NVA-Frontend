@@ -1,9 +1,8 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetchProject } from '../../../api/hooks/useFetchProject';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchListItem } from '../../../components/styled/Wrappers';
-import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 
 interface RelatedProjectItemProps {
@@ -21,10 +20,13 @@ export const RelatedProjectItem = ({ projectId, removeProject }: RelatedProjectI
       <ListSkeleton arrayLength={4} maxWidth={60} height={20} />
     </SearchListItem>
   ) : project ? (
-    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-      <ProjectListItem project={project} showEdit={false} refetchProjects={projectQuery.refetch} />
-      <DeleteIconButton sx={{ ml: '0.5rem' }} onClick={removeProject} tooltip={t('project.form.remove_project')} />
-    </Box>
+    <ProjectListItem
+      project={project}
+      showEdit={false}
+      refetchProjects={projectQuery.refetch}
+      onDelete={removeProject}
+      deleteTooltip={t('project.form.remove_project')}
+    />
   ) : (
     <Typography>{t('feedback.error.get_project')}</Typography>
   );
