@@ -33,7 +33,7 @@ export const ProjectFormActions = ({ tabNumber, setTabNumber, isSaving, hasError
         <CancelButton
           sx={{ mr: '1rem' }}
           testId={dataTestId.projectWizard.formActions.cancelEditProjectButton}
-          onClick={() => console.log('click cancel')}
+          onClick={() => {}}
         />
         <LoadingButton
           variant="contained"
