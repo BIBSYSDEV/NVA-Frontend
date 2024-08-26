@@ -10,6 +10,7 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
@@ -17,6 +18,7 @@ import { PublicationChannelType, Publisher, Registration } from '../../../../typ
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
+import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -75,6 +77,11 @@ export const PublisherField = () => {
 
   return (
     <StyledChannelContainerBox>
+      {disableNviCriticalFields && (
+        <StyledInfoBanner sx={{ gridColumn: '1/-1' }}>
+          <LockedNviFieldDescription fieldLabel={t('common.publisher')} />
+        </StyledInfoBanner>
+      )}
       <Field name={ResourceFieldNames.PublicationContextPublisherId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete

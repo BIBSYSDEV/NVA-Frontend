@@ -1,5 +1,5 @@
 import { TFunction } from 'i18next';
-import { AssociatedFile } from '../../types/associatedArtifact.types';
+import { AssociatedFile, UserUploadDetails } from '../../types/associatedArtifact.types';
 import { LogAction, LogActionItem, LogEntry } from '../../types/log.types';
 import { PublishingTicket } from '../../types/publication_types/ticket.types';
 import { getPublishedFiles, getUnpublishableFiles } from '../registration-helpers';
@@ -155,8 +155,10 @@ function generateFilesUploadedLogEntry(
 
 function groupFilesByUser(files: AssociatedFile[]) {
   const map: Map<string, AssociatedFile[]> = new Map();
-  files.forEach((item: AssociatedFile) => {
-    const key = item.uploadDetails?.uploadedBy ?? '';
+
+  const userUploadedFiles = files.filter((file) => file.uploadDetails?.type === 'UserUploadDetails');
+  userUploadedFiles.forEach((item: AssociatedFile) => {
+    const key = (item.uploadDetails as UserUploadDetails).uploadedBy;
     const collection = map.get(key);
     if (!collection) {
       map.set(key, [item]);

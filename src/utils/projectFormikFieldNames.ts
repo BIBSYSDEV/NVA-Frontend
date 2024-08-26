@@ -8,3 +8,13 @@ export enum ProjectDescriptionFieldNames {
   StartDate = 'startDate',
   EndDate = 'endDate',
 }
+
+export enum ProjectDetailsFieldNames {
+  CoordinatingInstitution = 'coordinatingInstitution.id',
+  Categories = 'projectCategories',
+  Funding = 'funding',
+}
+
+export enum ProjectContributorsFieldNames {
+  Contributors = 'contributors',
+}

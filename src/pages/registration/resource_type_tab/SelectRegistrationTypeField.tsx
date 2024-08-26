@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CategorySelector } from '../../../components/CategorySelector';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { StyledInfoBanner } from '../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../context/NviCandidateContext';
 import { RootState } from '../../../redux/store';
 import { emptyArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
@@ -52,6 +53,7 @@ import {
   isPeriodicalMediaContribution,
   nviApplicableTypes,
 } from '../../../utils/registration-helpers';
+import { LockedNviFieldDescription } from '../LockedNviFieldDescription';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
@@ -351,6 +353,12 @@ export const SelectRegistrationTypeField = () => {
     </>
   ) : (
     <div>
+      {disableNviCriticalFields && (
+        <StyledInfoBanner sx={{ mb: '0.5rem' }}>
+          <LockedNviFieldDescription fieldLabel={t('registration.resource_type.resource_type')} />
+        </StyledInfoBanner>
+      )}
+
       <FormLabel sx={{ display: 'block' }}>{t('registration.resource_type.resource_type')}</FormLabel>
       <Chip
         data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(currentInstanceType)}
@@ -367,7 +375,7 @@ export const SelectRegistrationTypeField = () => {
         color="primary"
         label={t(`registration.publication_types.${currentInstanceType}`)}
         onClick={() => setOpenSelectType(true)}
-        sx={{ mt: '0.5rem', width: 'max-content' }}
+        sx={{ mt: '0.25rem', width: 'max-content' }}
       />
       <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>
     </div>
