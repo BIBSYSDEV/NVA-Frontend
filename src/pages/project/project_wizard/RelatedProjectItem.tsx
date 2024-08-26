@@ -22,7 +22,7 @@ export const RelatedProjectItem = ({ projectId, removeProject }: RelatedProjectI
     </SearchListItem>
   ) : project ? (
     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-      <ProjectListItem key={projectId} project={project} showEdit={false} refetchProjects={projectQuery.refetch} />
+      <ProjectListItem project={project} showEdit={false} refetchProjects={projectQuery.refetch} />
       <DeleteIconButton sx={{ ml: '0.5rem' }} onClick={removeProject} tooltip={t('project.form.remove_project')} />
     </Box>
   ) : (
