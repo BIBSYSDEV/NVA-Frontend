@@ -1,7 +1,7 @@
 import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { defaultChannelSearchSize, searchForJournals } from '../../../../api/publicationChannelApi';
@@ -10,6 +10,8 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
+import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
@@ -19,6 +21,7 @@ import { Journal, PublicationChannelType } from '../../../../types/registration.
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
+import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -32,7 +35,7 @@ interface JournalFieldProps {
 
 export const StyledChannelContainerBox = styled(Box)(({ theme }) => ({
   display: 'grid',
-  columnGap: '1rem',
+  gap: '1rem',
 
   gridTemplateColumns: '4fr 1fr',
   [theme.breakpoints.down('md')]: {
@@ -58,6 +61,8 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const { reference, publicationDate } = values.entityDescription as JournalEntityDescription;
   const journalId = reference?.publicationContext.id ?? '';
   const year = publicationDate?.year ?? '';
+
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const [showJournalForm, setShowJournalForm] = useState(false);
   const toggleJournalForm = () => setShowJournalForm(!showJournalForm);
@@ -116,9 +121,15 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
 
   return (
     <StyledChannelContainerBox>
+      {disableNviCriticalFields && (
+        <StyledInfoBanner sx={{ gridColumn: '1/-1' }}>
+          <LockedNviFieldDescription fieldLabel={t('registration.resource_type.journal')} />
+        </StyledInfoBanner>
+      )}
       <Field name={ResourceFieldNames.PublicationContextId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
+            disabled={disableNviCriticalFields}
             fullWidth
             multiple
             id={journalFieldTestId}

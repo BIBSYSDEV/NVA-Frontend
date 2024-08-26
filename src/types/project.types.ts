@@ -3,7 +3,7 @@ import { AggregationValue, LanguageString } from './common.types';
 import { Organization } from './organization.types';
 import { Funding } from './registration.types';
 
-export enum ProjectTab {
+export enum ProjectTabs {
   Description = 0,
   Details = 1,
   Contributors = 2,
@@ -144,23 +144,13 @@ const emptyAffiliation: ProjectOrganization = {
   labels: {},
 };
 
-export const emptyProjectContributor: ProjectContributor = {
-  identity: { type: 'Person', id: '', firstName: '', lastName: '' },
-  roles: [{ type: 'ProjectParticipant', affiliation: emptyAffiliation }],
-};
-
 export const emptyProject: SaveCristinProject = {
   type: 'Project',
   title: '',
   language: 'http://lexvo.org/id/iso639-3/nob',
   startDate: '',
   endDate: '',
-  contributors: [
-    {
-      ...emptyProjectContributor,
-      roles: [{ type: 'ProjectManager', affiliation: emptyAffiliation }],
-    },
-  ],
+  contributors: [],
   coordinatingInstitution: emptyAffiliation,
   academicSummary: {},
   popularScientificSummary: {},

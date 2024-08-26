@@ -1,12 +1,15 @@
 import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { StyledInfoBanner } from '../../../components/styled/Wrappers';
+import { NviCandidateContext } from '../../../context/NviCandidateContext';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationDate } from '../../../utils/date-helpers';
+import { LockedNviFieldDescription } from '../LockedNviFieldDescription';
 
 export const DatePickerField = () => {
   const { t } = useTranslation();
@@ -22,6 +25,8 @@ export const DatePickerField = () => {
 
   const [date, setDate] = useState(getRegistrationDate(dateData));
   const [yearOnly, setYearOnly] = useState(!!dateData?.year && !dateData?.month);
+
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const updateDateValues = (newDate: Date | null, isYearOnly: boolean) => {
     const updatedDate: RegistrationDate = {
@@ -45,6 +50,12 @@ export const DatePickerField = () => {
 
   return (
     <>
+      {disableNviCriticalFields && (
+        <StyledInfoBanner sx={{ gridColumn: '1/3' }}>
+          <LockedNviFieldDescription fieldLabel={t('registration.description.date_published')} />
+        </StyledInfoBanner>
+      )}
+
       <DatePicker
         label={t('registration.description.date_published')}
         value={date}
@@ -52,6 +63,8 @@ export const DatePickerField = () => {
           updateDateValues(newDate, yearOnly);
           setDate(newDate);
         }}
+        sx={{ gridColumn: '1/2' }}
+        disabled={disableNviCriticalFields}
         views={yearOnly ? ['year'] : ['year', 'month', 'day']}
         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
         slotProps={{
@@ -66,6 +79,7 @@ export const DatePickerField = () => {
         }}
       />
       <FormControlLabel
+        disabled={disableNviCriticalFields}
         sx={{ alignSelf: 'start', mt: '0.4rem', width: 'fit-content' }} // Center field regardless of error state of published date field
         control={
           <Checkbox

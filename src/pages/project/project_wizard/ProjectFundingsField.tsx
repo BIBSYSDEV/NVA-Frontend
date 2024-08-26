@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, TextField } from '@mui/material';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
@@ -21,11 +21,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
   const { t } = useTranslation();
 
   return (
-    <div>
-      <Typography variant="h2" sx={{ mt: '2rem' }} gutterBottom>
-        {t('common.funding')}
-      </Typography>
-
+    <Box sx={{ marginTop: '1rem' }}>
       <FieldArray name={ProjectFieldName.Funding}>
         {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -60,7 +56,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                           label={t('common.id')}
                           fullWidth
                           variant="filled"
-                          data-testid={dataTestId.registrationWizard.description.fundingIdField}
+                          data-testid={dataTestId.projectWizard.detailsPanel.fundingIdField}
                         />
                         {funding.identifier && (
                           <Button
@@ -68,7 +64,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                             endIcon={<OpenInNewIcon />}
                             href={getNfrProjectUrl(funding.identifier)}
                             target="_blank"
-                            data-testid={dataTestId.registrationWizard.description.fundingLinkButton}
+                            data-testid={dataTestId.projectWizard.detailsPanel.fundingLinkButton}
                             rel="noopener noreferrer">
                             {t('common.open')}
                           </Button>
@@ -91,7 +87,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                             name={name}
                             onBlur={onBlur}
                             errorMessage={touched && !!error ? error : undefined}
-                            data-testid={dataTestId.registrationWizard.description.fundingNfrProjectSearchField}
+                            data-testid={dataTestId.projectWizard.detailsPanel.fundingNfrProjectSearchField}
                           />
                         )}
                       </Field>
@@ -107,7 +103,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                           label={t('common.id')}
                           fullWidth
                           variant="filled"
-                          data-testid={dataTestId.registrationWizard.description.fundingIdField}
+                          data-testid={dataTestId.projectWizard.detailsPanel.fundingIdField}
                         />
                       )}
                     </Field>
@@ -115,7 +111,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                   <IconButton
                     sx={{ width: 'fit-content' }}
                     onClick={() => remove(index)}
-                    data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
+                    data-testid={dataTestId.projectWizard.detailsPanel.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}>
                     <CancelIcon color="primary" />
                   </IconButton>
@@ -124,7 +120,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
             })}
             <Button
               sx={{ width: 'fit-content' }}
-              data-testid={dataTestId.registrationWizard.description.addFundingButton}
+              data-testid={dataTestId.projectWizard.detailsPanel.addFundingButton}
               startIcon={<AddIcon />}
               onClick={() => push(emptyProjectFunding)}>
               {t('common.add_custom', { name: t('common.funding').toLocaleLowerCase() })}
@@ -132,6 +128,6 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
           </Box>
         )}
       </FieldArray>
-    </div>
+    </Box>
   );
 };

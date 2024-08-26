@@ -1,13 +1,15 @@
 import { Autocomplete, Box, Chip, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { fetchResults } from '../../../../api/searchApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
+import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { Contributor } from '../../../../types/contributor.types';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import {
@@ -23,6 +25,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
+import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -55,6 +58,8 @@ export const SearchContainerField = ({
     meta: { errorMessage: t('feedback.error.search') },
   });
 
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),
     fetchErrorMessage
@@ -70,7 +75,14 @@ export const SearchContainerField = ({
     <Field name={fieldName}>
       {({ field, meta }: FieldProps<string>) => (
         <>
+          {disableNviCriticalFields && (
+            <StyledInfoBanner sx={{ mb: '1rem' }}>
+              <LockedNviFieldDescription fieldLabel={t('registration.resource_type.journal')} />
+            </StyledInfoBanner>
+          )}
+
           <Autocomplete
+            disabled={disableNviCriticalFields}
             multiple
             id={dataTestId}
             data-testid={dataTestId}
