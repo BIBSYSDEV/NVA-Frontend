@@ -27,7 +27,6 @@ export const LogActionActor = ({ actor = '', organization }: Pick<LogActionType,
       </Box>
       <OrganizationNameAndIcon
         id={organization ?? userQuery.data?.institutionCristinId ?? ''}
-        acronym
         sx={{ justifyContent: 'flex-end' }}
       />
     </>

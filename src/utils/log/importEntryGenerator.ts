@@ -1,11 +1,18 @@
-import { ImportDetail } from '../../types/registration.types';
 import { TFunction } from 'i18next';
-import { SiktIdentifier } from '../constants';
-import { LogEntry } from '../../types/log.types';
 import { CristinApiPath } from '../../api/apiPaths';
+import { AssociatedArtifact, ImportUploadDetails } from '../../types/associatedArtifact.types';
+import { LogEntry } from '../../types/log.types';
+import { ImportDetail, Registration } from '../../types/registration.types';
+import { SiktIdentifier } from '../constants';
+import { getPublishedFiles } from '../registration-helpers';
 
-export function generateImportLogEntries(importDetails: ImportDetail[], t: TFunction): LogEntry[] {
-  return importDetails.map((detail) => generateImportLogEntry(detail, t));
+export function generateImportLogEntries(registration: Registration, t: TFunction): LogEntry[] {
+  const importDetails = registration.importDetails ?? [];
+
+  const importLogEntries = importDetails.map((detail) => generateImportLogEntry(detail, t));
+  const importedFilesLogEntries = generateImportedFilesLogEntries(registration.associatedArtifacts, t);
+
+  return [...importLogEntries, ...importedFilesLogEntries];
 }
 
 function generateImportLogEntry(importDetail: ImportDetail, t: TFunction): LogEntry {
@@ -34,4 +41,20 @@ function generateImportLogEntry(importDetail: ImportDetail, t: TFunction): LogEn
       },
     ],
   };
+}
+
+function generateImportedFilesLogEntries(associatedArtifacts: AssociatedArtifact[], t: TFunction): LogEntry[] {
+  const importedFilesLogEntries: LogEntry[] = getPublishedFiles(associatedArtifacts)
+    .filter((file) => file.uploadDetails?.type === 'ImportUploadDetails')
+    .map((file) => {
+      const importDetails = file.uploadDetails as ImportUploadDetails;
+      return {
+        type: 'PublishingRequest',
+        title: t('log.titles.files_published_one'),
+        modifiedDate: importDetails.uploadedDate,
+        actions: [{ organization: importDetails.archive, items: [{ description: file.name, fileIcon: 'file' }] }],
+      };
+    });
+
+  return importedFilesLogEntries;
 }

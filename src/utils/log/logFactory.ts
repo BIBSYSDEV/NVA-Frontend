@@ -1,14 +1,14 @@
 import { TFunction } from 'i18next';
-import { generateImportLogEntries } from './importEntryGenerator';
-import { generateRegistrationLogEntries } from './registrationEntryGenerator';
-import { generateTicketLogEntries } from './ticketEntryGenerator';
-import { getArchivedFiles } from '../registration-helpers';
 import { Log, LogEntry } from '../../types/log.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
+import { getArchivedFiles } from '../registration-helpers';
+import { generateImportLogEntries } from './importEntryGenerator';
+import { generateRegistrationLogEntries } from './registrationEntryGenerator';
+import { generateTicketLogEntries } from './ticketEntryGenerator';
 
 export function generateLog(registration: Registration, tickets: Ticket[], t: TFunction): Log {
-  const importLogEntries = generateImportLogEntries(registration.importDetails ?? [], t);
+  const importLogEntries = generateImportLogEntries(registration, t);
   const registrationLogEntries = generateRegistrationLogEntries(registration, tickets, t);
   const ticketLogEntries = generateTicketLogEntries(tickets, registration, t);
 

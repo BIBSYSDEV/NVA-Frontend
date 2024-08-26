@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
+import { LogEntry as LogEntryType } from '../../types/log.types';
 import { LogAction } from './LogAction';
 import { LogHeader } from './LogHeader';
-import { LogEntry as LogEntryType } from '../../types/log.types';
 
 export const LogEntry = ({ title, type, modifiedDate, actions }: LogEntryType) => {
   return (
