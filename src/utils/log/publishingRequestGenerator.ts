@@ -156,8 +156,8 @@ function generateFilesUploadedLogEntry(
 function groupFilesByUser(files: AssociatedFile[]) {
   const map: Map<string, AssociatedFile[]> = new Map();
 
-  const filteredFiles = files.filter((file) => file.uploadDetails?.type === 'UserUploadDetails');
-  filteredFiles.forEach((item: AssociatedFile) => {
+  const userUploadedFiles = files.filter((file) => file.uploadDetails?.type === 'UserUploadDetails');
+  userUploadedFiles.forEach((item: AssociatedFile) => {
     const key = (item.uploadDetails as UserUploadDetails).uploadedBy;
     const collection = map.get(key);
     if (!collection) {
