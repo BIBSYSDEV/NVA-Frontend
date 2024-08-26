@@ -1,19 +1,22 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { Box, BoxProps, Skeleton, Tooltip, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { CristinApiPath } from '../api/apiPaths';
 import { useFetchOrganization } from '../api/hooks/useFetchOrganization';
 import { getLanguageString } from '../utils/translation-helpers';
-import { useTranslation } from 'react-i18next';
 
 interface OrganizationNameAndIconProps extends Pick<BoxProps, 'sx'> {
   id: string;
-  acronym?: boolean;
 }
 
-export const OrganizationNameAndIcon = ({ id, acronym = false, sx }: OrganizationNameAndIconProps) => {
+export const OrganizationNameAndIcon = ({ id, sx }: OrganizationNameAndIconProps) => {
   const { t } = useTranslation();
-  const organizationQuery = useFetchOrganization(id);
+
+  const isValidOrgId = id && id.includes(CristinApiPath.Organization);
+  const organizationQuery = useFetchOrganization(isValidOrgId ? id : '');
   const orgName = getLanguageString(organizationQuery.data?.labels);
   const orgAcronym = organizationQuery.data?.acronym;
+  const displayName = isValidOrgId ? orgAcronym : id;
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', ...sx }}>
@@ -27,12 +30,10 @@ export const OrganizationNameAndIcon = ({ id, acronym = false, sx }: Organizatio
       />
       {organizationQuery.isLoading ? (
         <Skeleton sx={{ width: '2.5rem' }} />
-      ) : acronym && orgAcronym ? (
+      ) : displayName ? (
         <Tooltip title={orgName}>
-          <Typography>{orgAcronym}</Typography>
+          <Typography>{displayName}</Typography>
         </Tooltip>
-      ) : orgName ? (
-        <Typography>{orgName}</Typography>
       ) : (
         <Typography>
           <i>{t('common.unknown')}</i>

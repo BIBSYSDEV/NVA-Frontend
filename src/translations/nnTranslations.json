@@ -171,7 +171,7 @@
     "close_forever": "Lukk og ikkje vis igjen",
     "contributor": "Bidragsytar",
     "contributors": {
-      "add_duplicate_affiliation": ""
+      "add_duplicate_affiliation": "Tilknytinga er allereie lagt til"
     },
     "country": "Land",
     "create": "Opprett",
@@ -214,7 +214,7 @@
     "no_hits": "Ingen treff",
     "none": "Ingen",
     "not_decided": "Ikkje bestemt",
-    "number_of_rows_per_page": "",
+    "number_of_rows_per_page": "Tal på rader per side",
     "number_short": "Nr.",
     "nva_tagline": "Nasjonalt Vitenarkiv (NVA)",
     "nvi": "Norsk vitskapsindeks (NVI)",
@@ -481,6 +481,7 @@
       "add_employment": "Kunne ikkje leggje til tilsetjing",
       "add_role": "Kunne ikkje leggje til rolle",
       "an_error_occurred": "Ein feil oppstod",
+      "approve_doi_request": "Kunne ikkje godkjenne DOI-førespurnad",
       "create_customer": "Kunne ikkje opprette institusjon",
       "create_doi_request": "Kunne ikkje opprette DOI-førespurnad",
       "create_journal": "Kunne ikkje opprette tidsskrift",
@@ -533,6 +534,7 @@
       "get_vocabularies": "Kunne ikkje hente kontrollerte vokabular",
       "orcid_login": "Kunne ikkje logge inn på ORCID",
       "project_search": "Søk på prosjekt feila",
+      "reject_doi_request": "Kunne ikkje avvise DOI-førespurnad",
       "remove_role": "Kunne ikkje fjerne rolle",
       "reserve_doi": "Reservasjon av DOI feila",
       "search": "Søk feila",
@@ -540,7 +542,6 @@
       "storing_orcid_credentials": "Kunne ikkje lagre orcid-data",
       "update_customer": "Kunne ikkje oppdatere institusjon",
       "update_doi_agent": "Kunne ikkje oppdatere DOI-konfigurasjon",
-      "update_doi_request": "Kunne ikkje oppdatere DOI-førespurnad",
       "update_import_status": "Kunne ikkje oppdatere importstatus",
       "update_institution_user": "Kunne ikkje oppdatere brukar",
       "update_nvi_period": "Kunne ikkje oppdatere NVI-perioden",
@@ -575,8 +576,9 @@
       "delete_draft_registrations": "Alle kladdane blei sletta",
       "delete_message": "Meldinga blei sletta",
       "delete_registration": "Registrering vart sletta",
+      "doi_request_approved": "DOI-førespurnaden blei godkjent",
+      "doi_request_rejected": "DOI-førespurnaden blei avvist",
       "doi_request_sent": "DOI-førespurnad sendt",
-      "doi_request_updated": "DOI-førespurnaden vart oppdatert",
       "merge_import_candidate": "Importdata blei slått saman med resultatdata",
       "publish_as_curator": "Registreringa blei publisert (inga godkjenning nødvendig sidan du er kurator)",
       "publishing_request_approved": "Registreringa blei publisert",
@@ -605,6 +607,7 @@
       "cannot_be_after": "{{field}} kan ikkje vere etter {{limitField}}",
       "cannot_be_before": "{{field}} kan ikkje være før {{limitField}}",
       "contributor_required": "Du må ha minst ein bidragsytar på denne registreringa",
+      "contributor_required_project": "Du treng minst ein prosjektdeltakar",
       "editor_required": "Du må ha minst ein redaktør på denne registreringa",
       "employments_missing_data": "Minst ei tilsetjing manglar stilling og startdato.",
       "has_invalid_format": "{{field}} har ugyldig format",
@@ -619,7 +622,8 @@
       "must_be_smaller_than": "{{field}} kan ikkje vere større enn {{limit}}",
       "must_correct_errors": "Du må rette opp feil",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
-      "not_selected": "{{field}} er ikkje vald"
+      "not_selected": "{{field}} er ikkje vald",
+      "project_manager_required_project": "Prosjektet må ha ein prosjektleiar"
     }
   },
   "footer": {
@@ -1111,12 +1115,14 @@
     }
   },
   "project": {
-    "add_affiliation": "",
-    "add_project_contributor": "",
+    "add_affiliation": "Legg til tilknyting",
+    "add_project_contributor": "Legg til prosjektdeltakar",
     "affiliation_modal": {
-      "add_new_affiliation_helper_text": "",
-      "delete_affiliation": "",
-      "edit_affiliation": ""
+      "add_new_affiliation_helper_text": "<0>Berre institusjonar som prosjektet er gjennomført i samarbeid med, skal leggast til som tilknyting til prosjektdeltakar.</0> <0>Legg til tilknyting til prosjektdeltakar ved å først søkje opp institusjonen og eventuelt eining.</0> <0>Høyrer prosjektdeltakaren til fleire forskjellige einingar under same institusjon, må du legge til dette som ny tilknyting.</0>",
+      "cannot_delete_affiliation_for_project_manager": "Kan ikkje fjerne tilknyting for prosjektleiar",
+      "cannot_delete_only_affiliation": "Kan ikkje fjerne einaste tilknyting",
+      "delete_affiliation": "Fjern tilknyting",
+      "edit_affiliation": "Endre tilknyting"
     },
     "close_view": "Lukk vising",
     "close_view_description": "Ulagra data du har skrive inn vil gå tapt om du lukkar denne visinga. Ønskjer du likevel å lukke visinga?",
@@ -1124,15 +1130,24 @@
     "create_new_project": "Oppret nytt prosjekt",
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
+    "error": {
+      "there_can_only_be_one_project_manager_choose_different_role": "Eit prosjekt kan kun ha ein prosjektleiar. Vel ei anna rolle."
+    },
     "form": {
+      "add_financing": "Legg til finansiering",
+      "add_financing_description": "<0>Legg til finansieringskjelde viss prosjektet mottar finansiering.</0><0>Alle forskingsresultat som er kopla til prosjektet vil arve finansieringa som er registrert på prosjektet.</0>",
+      "category": "Kategori",
       "date": "Dato",
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
+      "project_manager_cannot_be_removed": "Prosjektleiar kan ikkje fjernast",
       "related_projects": "Relaterte prosjekt",
+      "remove_affiliation": "Fjern tilknyting",
       "remove_participant": "Fjern prosjektdeltakar",
       "remove_participant_text": "Er du sikker på at du ønskjer å fjerne {{name}}?",
       "search_for_person": "Søk etter person",
+      "select_project_role": "Vel rolle i prosjektet",
       "start_with_empty_form": "Start utan nokre ferdig utfylte opplysingar.",
       "start_with_nfr_project": "Om du har finansiering frå Noregs Forskingsråd (NFR), kan du starte med den og få nokre felt ferdig utfylte.",
       "title_and_description": "Tittel og beskriving"
@@ -1164,6 +1179,10 @@
     "project_participant": "Prosjektdeltakar",
     "project_participants": "Prosjektdeltakarar",
     "results": "Resultat",
+    "role_types": {
+      "ProjectManager": "Prosjektleiar",
+      "ProjectParticipant": "Prosjektdeltakar"
+    },
     "scientific_summary": "Vitskapleg samandrag",
     "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",
     "scientific_summary_norwegian": "$t(project.scientific_summary) (norsk)",
@@ -1378,6 +1397,7 @@
       "resource_type": "Kategori"
     },
     "is_revision": "Arbeidet er ein revisjon",
+    "locked_nvi_field_description": "Publikasjonen er godkjend for årets NVI-rapportering. Du kan difor ikkje endre {{field}}. Om informasjonen er feil må du ta kontakt med kurator for å få endra.",
     "missing_name": "Manglar namn",
     "missing_title": "Manglar tittel",
     "modal_unsaved_changes_description": "Du har gjort endringar som ikkje er lagra. Er du sikker på at du vil forlate denne sida?",
@@ -1402,7 +1422,8 @@
         "if_same_press_no_in_box": "Viss dette er det same resultatet som di registrering, må du trykkje 'NEI' i denne boksen for å unngå å publisere.",
         "publication_already_exists": "Det fins allereie ein publikasjon med same tittel og år som di registrering."
       },
-      "error_description": "For å publisere må du rette følgjande feil:",
+      "error_description": "Følgjande feil må rettast opp før publisering av resultat:",
+      "error_description_published_result": "Registreringa er publisert. Ved redigering må følgjande rettast opp:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",
@@ -1434,13 +1455,14 @@
         "assign_curator": "Set kurator",
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne bruke DOI, må du tildele denne. Metadata må vere publisert.",
+        "describe_doi_rejection_reason": "Du må grunngje avslaget på ønsket om DOI på dette forskingsresultatet.",
         "draft_doi_description": "<0>Ein reservert DOI gjer at du (og dei du deler DOI med) kan sitere forskingsresultatet i andre arbeid før det blir publisert.</0><1><0>Les meir om DOI<0></0></0></1><0>Ynskjer du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "duplicate_title_description_details": "<0>Duplikat skal ikkje opprettast i NVA. Sjekk om resultatet som allereie er publisert er det same som resultatet du har registrert.</0><0>Om resultatet som er publisert har feil eller manglar, be registrator eller bidragsytar knytta til resultatet om å endre det. Ikkje registrert og publiser eit nytt resultat med endringa, då begge resultata vil vere tilgjengelege i NVA.</0>",
         "duplicate_title_description_introduction": "Denne registreringa har same tittel og år som fylgjande publikasjon:",
         "edit_publishing_request_description": "Er det nokre av filene til publiseringa som ikkje skal publiserast, kan du endre publiseringsstatusen på desse ved å redigere registreringa.",
         "files_will_soon_be_published": "Fil(er) vil vere tiljengeleg for andre om kort tid. Vent litt før du oppdaterer sida på nytt for å sjå status.",
         "has_rejected_files_publishing_request": "<0>Beskriving (metadata) er publisert og offentleg tilgjengeleg.</0><0>Kurator har avvist fila, og den er fjerna frå visninga av forskingsresultatet.</0>",
-        "has_reserved_doi": "Du har reservert ein DOI til denne registreringa. Den kan delast med dei som ønskjer å sitere dette resultatet. Når registreringa blir publisert og blir offentleg tilgjengeleg, må ein kurator validere metadata før DOI blir offentleg tilgjengeleg.",
+        "has_reserved_doi": "<0>Du kan dele reservert DOI med dei som skal sitere resultatet. Oppslag via DOI er ikkje mogleg før DOI er tildelt av kurator.</0><0>DOI-førespurnaden blir sendt til kurator når resultatet blir publisert. Du publiserer registreringa i publiseringsmenyen.</0>",
         "metadata_published_waiting_for_files": "Metadata er publisert og synleg for andre brukarar, men ein kurator må godkjenne filene som er lasta opp før dei blir synlege.",
         "no_published_files_on_registration": "Ingen publiserte filer på resultatet",
         "no_published_files_on_registration_description": "<0>Resultatet har ingen publiserte filer.</0><0>Sjekk med registrator om det er rett at resultatet ikkje skal ha publiserte filer i NVA.</0><0>Ynskjer du å tildela DOI på resultat utan fil?</0>",
@@ -1453,6 +1475,7 @@
         "reject_publishing_request_description_one": "<0>Vel du \"$t(registration.public_page.reject_publish_request)\" blir ikkje fila publisert og dermed ikkje synleg for andre. Fila blir flytta til ikkje publisert.</0><0>Ønskjer du å slette fila, gjer det i redigering av forskingsresultatet.</0>",
         "reject_publishing_request_description_other": "<0>Vel du \"$t(registration.public_page.reject_publish_request)\" blir ikkje filene publisert og dermed ikkje synleg for andre. Filene blir flytta til ikkje publisert.</0><0>Ønskjer du å slette filene, gjer det i redigering av forskingsresultatet.</0>",
         "reload": "Last inn på nytt",
+        "request_doi_description": "<0>Ein DOI (Digital Object Identifier) aukar synlegheita til forskingsresultatet og kan bidra til fleire siteringar.</0><1><0>Les meir om DOI<0></0></0></1><0>Ønskjer du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "reserve_doi_confirmation": "<0>Berre publiserte forskingsresultat kan ha ein DOI.</0><0>Om du treng ein DOI for å sitere forskingsresultat korrekt i andre forskingsresultat som er under arbeid, før det er publisert, så kan du reservere ein DOI.</0><0>Berre du ser den reserverte DOI-en, og den fører ikkje til noko stad før du publiserer forskingsresultatet. Etter publisering blir din kurator informert om at du ynskjer ein DOI, og må då tildela den (eller avvise).</0><0>Om du er klar til å publisere, så publiser, og vel \"$t(registration.public_page.request_doi)\", i staden for å reservere ein DOI.</0><1>Ynskjer du framleis å reservere ein DOI?</1>",
         "reserved": "Reservert",
         "review_preview_before_publishing": "Sjå over utkast før du går vidare.",
@@ -1926,7 +1949,7 @@
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "Vel ein eller fleire kategoriar",
-    "select_vocabulary": "",
+    "select_vocabulary": "Vel vokabular",
     "sort_alphabetically_asc": "Tittel (A-Å)",
     "sort_alphabetically_desc": "Tittel (Å-A)",
     "sort_by": "Sorter etter",
