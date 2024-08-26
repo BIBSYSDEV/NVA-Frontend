@@ -301,6 +301,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -372,11 +376,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -481,6 +481,7 @@
       "add_employment": "Kunne ikke legge til ansettelse",
       "add_role": "Kunne ikke legge til rolle",
       "an_error_occurred": "En feil oppstod",
+      "approve_doi_request": "Kunne ikke godkjenne DOI-forespørsel",
       "create_customer": "Kunne ikke opprette institusjon",
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
       "create_journal": "Kunne ikke opprette tidsskrift",
@@ -533,6 +534,7 @@
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "project_search": "Søk på prosjekt feilet",
+      "reject_doi_request": "Kunne ikke avvise DOI-forespørsel",
       "remove_role": "Kunne ikke fjerne rolle",
       "reserve_doi": "Reservasjon av DOI feilet",
       "search": "Søk feilet",
@@ -540,7 +542,6 @@
       "storing_orcid_credentials": "Kunne ikke lagre orcid-data",
       "update_customer": "Kunne ikke oppdatere institusjon",
       "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
-      "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
       "update_import_status": "Kunne ikke oppdatere importstatus",
       "update_institution_user": "Kunne ikke oppdatere bruker",
       "update_nvi_period": "Kunne ikke oppdatere NVI-perioden",
@@ -575,8 +576,9 @@
       "delete_draft_registrations": "Alle kladdene ble slettet",
       "delete_message": "Meldingen ble slettet",
       "delete_registration": "Registrering ble slettet",
+      "doi_request_approved": "DOI-forespørselen ble godkjent",
+      "doi_request_rejected": "DOI-forespørselen ble avvist",
       "doi_request_sent": "DOI-forespørsel sendt",
-      "doi_request_updated": "DOI-forespørselen ble oppdatert",
       "merge_import_candidate": "Importdata ble slått sammen med resultatdata",
       "publish_as_curator": "Registrering ble publisert (ingen godkjenning nødvendig siden du er kurator)",
       "publishing_request_approved": "Registreringen ble publisert",
@@ -1117,8 +1119,8 @@
     "add_project_contributor": "Legg til prosjektdeltaker",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
-      "cannot_delete_only_affiliation": "Kan ikke fjerne eneste tilknytning",
       "cannot_delete_affiliation_for_project_manager": "Kan ikke fjerne tilknytning for prosjektleder",
+      "cannot_delete_only_affiliation": "Kan ikke fjerne eneste tilknytning",
       "delete_affiliation": "Fjern tilknytning",
       "edit_affiliation": "Endre tilknytning"
     },
@@ -1135,10 +1137,14 @@
       "add_results": "Legg til resultat",
       "add_results_description": "Legg til forskningsresultat som har tilkobling til prosjektet",
       "project_manager_cannot_be_removed": "Prosjektleder kan ikke fjernes",
+      "add_financing": "Legg til finansiering",
+      "add_financing_description": "<0>Legg til finansieringskilde hvis prosjektet mottar finanisering.</0><0>Alle forskningsresultater som er koblet til prosjektet vil arve finansiering som er registrert på prosjektet.</0>",
+      "category": "Kategori",
       "date": "Dato",
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
+      "project_manager_cannot_be_removed": "Prosjektleder kan ikke fjernes",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
       "remove_affiliation": "Fjern tilknytning",
@@ -1149,14 +1155,7 @@
       "select_project_role": "Velg rolle i prosjektet",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt.",
-      "title_and_description": "Tittel og beskrivelse",
-      "category": "Kategori",
-      "add_financing": "Legg til finansiering",
-      "add_financing_description": "<0>Legg til finansieringskilde hvis prosjektet mottar finanisering.</0><0>Alle forskningsresultater som er koblet til prosjektet vil arve finansiering som er registrert på prosjektet.</0>"
-    },
-    "role_types": {
-      "ProjectManager": "Prosjektleder",
-      "ProjectParticipant": "Prosjektdeltaker"
+      "title_and_description": "Tittel og beskrivelse"
     },
     "grant_id": "Tilskudds-ID",
     "heading": {
@@ -1185,6 +1184,10 @@
     "project_participant": "Prosjektdeltaker",
     "project_participants": "Prosjektdeltakere",
     "results": "Resultater",
+    "role_types": {
+      "ProjectManager": "Prosjektleder",
+      "ProjectParticipant": "Prosjektdeltaker"
+    },
     "scientific_summary": "Vitenskapelig sammendrag",
     "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",
     "scientific_summary_norwegian": "$t(project.scientific_summary) (norsk)",
@@ -1399,6 +1402,7 @@
       "resource_type": "Kategori"
     },
     "is_revision": "Arbeidet er en revisjon",
+    "locked_nvi_field_description": "Publikasjonen er godkjent til årets NVI-rapportering. Du kan derfor ikke endre {{field}}. Om informasjonen er feil må du ta kontakt med kurator for å få endret.",
     "missing_name": "Mangler navn",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
@@ -1456,6 +1460,7 @@
         "assign_curator": "Sett kurator",
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
+        "describe_doi_rejection_reason": "Du må begrunne avslaget på ønsket om DOI på dette forskningsresultatet.",
         "draft_doi_description": "<0>En reservert DOI gjør at du (og de du deler DOI med) kan sitere forskningsresultatet i andre arbeid før det publiseres.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om din registrering tilsvarer det som alt er publisert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det.</0>",
         "duplicate_title_description_introduction": "Denne registreringen har samme tittel, år og kategori som følgende publikasjon:",
@@ -1475,10 +1480,10 @@
         "reject_publishing_request_description_one": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filen publisert og dermed ikke synlig for andre. Filen blir flyttet til ikke publisert.</0><0>Ønsker du å slette filen, gjør det i redigering av forskningsresultatet.</0>",
         "reject_publishing_request_description_other": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filene publisert og dermed ikke synlig for andre. Filene blir flyttet til ikke publisert.</0><0>Ønsker du å slette filene, gjør det i redigering av forskningsresultatet.</0>",
         "reload": "Last på nytt",
+        "request_doi_description": "<0>En DOI (Digital Object Identifier) øker synligheten til forskningsresultatet og kan bidra til flere siteringer.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "reserve_doi_confirmation": "<0>Kun publiserte forskningsresultater kan ha en DOI.</0><0>Om du trenger en DOI for å sitere forskningsresultater korrekt i andre forskingsresultater som er under arbeid, før det er publisert, så kan du reservere en DOI.</0><0>Kun du ser den reserverte DOI-en, og den leder ikke til noe sted før du publiserer forskningsresultatet. Etter publisering blir din kurator informert om at du ønsker en DOI, og må da tildele den (eller avvise).</0><0>Om du er klar til å publisere, så publiser, og velg \"$t(registration.public_page.request_doi)\", i stedet for å reservere en DOI.</0><1>Ønsker du fortsatt å reservere en DOI?</1>",
         "reserved": "Reservert",
         "review_preview_before_publishing": "Se over utkast før du går videre.",
-        "request_doi_description": "<0>En DOI (Digital Object Identifier) øker synligheten til forskningsresultatet og kan bidra til flere siteringer.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Beskrivelsen (metadata) av forskningsresultatet og opplastede filer blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",

@@ -1,6 +1,5 @@
 import { Step, StepButton, StepLabel, Stepper } from '@mui/material';
 import { useFormikContext } from 'formik';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinProject, ProjectTabs } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -9,17 +8,23 @@ import { getProjectTabErrors } from '../../../utils/formik-helpers/project-form-
 interface ProjectFormStepperProps {
   setTabNumber: (newTab: ProjectTabs) => void;
   tabNumber: ProjectTabs;
+  maxVisitedTab: ProjectTabs;
+  setMaxVisitedTab: (val: ProjectTabs) => void;
 }
 
-export const ProjectFormStepper = ({ tabNumber, setTabNumber }: ProjectFormStepperProps) => {
+export const ProjectFormStepper = ({
+  tabNumber,
+  setTabNumber,
+  maxVisitedTab,
+  setMaxVisitedTab,
+}: ProjectFormStepperProps) => {
   const { t } = useTranslation();
   const { errors, touched } = useFormikContext<CristinProject>();
-  const [maxVisitedTab, setMaxVisitedTab] = useState(ProjectTabs.Description);
 
   const tabErrors = getProjectTabErrors(errors, touched);
   const descriptionTabHasError = tabErrors[ProjectTabs.Description].length > 0;
   const detailsTabHasError = tabErrors[ProjectTabs.Details].length > 0;
-  const contributorTabHasError = false;
+  const contributorTabHasError = tabErrors[ProjectTabs.Contributors].length > 0;
   const connectionTabHasError = false;
 
   const onClickStep = (stepNumber: ProjectTabs) => {
@@ -58,7 +63,7 @@ export const ProjectFormStepper = ({ tabNumber, setTabNumber }: ProjectFormStepp
           data-testid={dataTestId.projectWizard.stepper.projectContributorsStepButton}
           onClick={() => onClickStep(ProjectTabs.Contributors)}>
           <StepLabel
-            error={contributorTabHasError}
+            error={contributorTabHasError && maxVisitedTab > ProjectTabs.Contributors}
             data-testid={contributorTabHasError ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
             {t('project.heading.project_participants')}
           </StepLabel>

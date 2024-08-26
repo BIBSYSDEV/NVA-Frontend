@@ -33,6 +33,7 @@ import { RegistrationErrorActions } from '../../../components/RegistrationErrorA
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
+import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -40,7 +41,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
 import { userCanPublishRegistration } from '../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath, getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
@@ -428,7 +429,11 @@ export const PublishingAccordion = ({
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
               endIcon={<EditIcon fontSize="large" />}
               component={RouterLink}
-              to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
+              to={{
+                pathname: getRegistrationWizardPath(registration.identifier),
+                search: '?tab=' + RegistrationTab.FilesAndLicenses,
+                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
+              }}>
               {t('registration.edit_registration')}
             </Button>
 

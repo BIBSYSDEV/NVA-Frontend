@@ -171,7 +171,7 @@
     "close_forever": "Close and do not show again",
     "contributor": "Contributor",
     "contributors": {
-      "add_duplicate_affiliation": ""
+      "add_duplicate_affiliation": "Affiliation has already been added"
     },
     "country": "Country",
     "create": "Create",
@@ -214,7 +214,7 @@
     "no_hits": "No hits",
     "none": "None",
     "not_decided": "Not decided",
-    "number_of_rows_per_page": "",
+    "number_of_rows_per_page": "Number of rows per page",
     "number_short": "No.",
     "nva_tagline": "National research archive (NVA)",
     "nvi": "Norwegian Science Index (NVI)",
@@ -481,6 +481,7 @@
       "add_employment": "Failed to add employment",
       "add_role": "Failed to add role",
       "an_error_occurred": "An error occurred",
+      "approve_doi_request": "Could not approve DOI request",
       "create_customer": "Failed to create customer institution",
       "create_doi_request": "Failed to create DOI request",
       "create_journal": "Failed to create journal",
@@ -533,6 +534,7 @@
       "get_vocabularies": "Could not retrieve vocabularies",
       "orcid_login": "ORCID login failed",
       "project_search": "Project search failed",
+      "reject_doi_request": "Could not reject DOI request",
       "remove_role": "Could not remove role",
       "reserve_doi": "Reservation of DOI failed",
       "search": "Search failed",
@@ -540,7 +542,6 @@
       "storing_orcid_credentials": "Failed to save orcid data",
       "update_customer": "Failed to update customer institution",
       "update_doi_agent": "Could not update DOI configuration",
-      "update_doi_request": "Failed to update DOI request",
       "update_import_status": "Failed to update import status",
       "update_institution_user": "User could not be updated",
       "update_nvi_period": "Failed to update NVI period",
@@ -575,8 +576,9 @@
       "delete_draft_registrations": "All drafts were deleted",
       "delete_message": "Message deleted",
       "delete_registration": "Deleted registration",
+      "doi_request_approved": "The DOI request was approved",
+      "doi_request_rejected": "The DOI request was rejected",
       "doi_request_sent": "DOI request sent",
-      "doi_request_updated": "DOI request is updated",
       "merge_import_candidate": "Import data was merged with existing result data",
       "publish_as_curator": "The registration was published (no approval required as you are the curator)",
       "publishing_request_approved": "The registration was published",
@@ -605,6 +607,7 @@
       "cannot_be_after": "{{field}} cannot be after {{limitField}}",
       "cannot_be_before": "{{field}} cannot be before {{limitField}}",
       "contributor_required": "You need to register at least one contributor on this registration",
+      "contributor_required_project": "You need at least one project participant",
       "editor_required": "You need to register at least one editor on this registration",
       "employments_missing_data": "At least one affiliation does not have position or start date",
       "has_invalid_format": "{{field}} has invalid format",
@@ -619,7 +622,8 @@
       "must_be_smaller_than": "{{field}} cannot be greater than {{limit}}",
       "must_correct_errors": "You must correct errors",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
-      "not_selected": "{{field}} is not selected"
+      "not_selected": "{{field}} is not selected",
+      "project_manager_required_project": "The project needs a project leader"
     }
   },
   "footer": {
@@ -1111,12 +1115,14 @@
     }
   },
   "project": {
-    "add_affiliation": "",
-    "add_project_contributor": "",
+    "add_affiliation": "Add affiliation",
+    "add_project_contributor": "Add project participant",
     "affiliation_modal": {
-      "add_new_affiliation_helper_text": "",
-      "delete_affiliation": "",
-      "edit_affiliation": ""
+      "add_new_affiliation_helper_text": "<0>Only institutions that the project has been carried out in collaboration with should be added as affiliation to the project participant.</0> <0>Add affiliation to the project participant by first searching for the institution and any units.</0> <0>If the project participant belongs to multiple different units under the same institution, you must add this as a new affiliation.</0>",
+      "cannot_delete_affiliation_for_project_manager": "Cannot remove affiliation for project leader",
+      "cannot_delete_only_affiliation": "Cannot remove the only affiliation",
+      "delete_affiliation": "Remove affiliation",
+      "edit_affiliation": "Change affiliation"
     },
     "close_view": "Close view",
     "close_view_description": "Unsaved data you have entered will be lost if you close this view. Do you still want to close it?",
@@ -1124,15 +1130,24 @@
     "create_new_project": "Create new project",
     "create_project": "New project",
     "edit_project": "Edit project",
+    "error": {
+      "there_can_only_be_one_project_manager_choose_different_role": "A project can only have one project leader. Select another role."
+    },
     "form": {
+      "add_financing": "Add funding",
+      "add_financing_description": "<0>Add a funding source if the project receives funding.</0><0>All research results linked to the project will inherit funding that is registered on the project.</0>",
+      "category": "Category",
       "date": "Date",
       "empty_registration": "Empty registration",
       "here_you_can_create_project": "Here you can create a project:",
       "keywords": "Keywords",
+      "project_manager_cannot_be_removed": "Cannot remove project leader",
       "related_projects": "Related projects",
+      "remove_affiliation": "Remove affiliation",
       "remove_participant": "Remove project participant",
       "remove_participant_text": "Are you sure you want to remove {{name}}?",
       "search_for_person": "Search for person",
+      "select_project_role": "Select role in the project",
       "start_with_empty_form": "Start without any prefilled values.",
       "start_with_nfr_project": "If you have a funding from The Research Council of Norway (NFR), you can start with that, and get some fields prefilled.",
       "title_and_description": "Title and description"
@@ -1164,6 +1179,10 @@
     "project_participant": "Project participant",
     "project_participants": "Project participants",
     "results": "Results",
+    "role_types": {
+      "ProjectManager": "Project leader",
+      "ProjectParticipant": "Project participant"
+    },
     "scientific_summary": "Scientific summary",
     "scientific_summary_english": "$t(project.scientific_summary) (English)",
     "scientific_summary_norwegian": "$t(project.scientific_summary) (Norwegian)",
@@ -1378,6 +1397,7 @@
       "resource_type": "Resource type"
     },
     "is_revision": "The work is a revision",
+    "locked_nvi_field_description": "The publication has been approved for this year's NVI reporting. Therefore, you cannot change {{field}}. If the information is incorrect, you must contact the curator to have it changed.",
     "missing_name": "Name missing",
     "missing_title": "Missing title",
     "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
@@ -1402,7 +1422,8 @@
         "if_same_press_no_in_box": "If this is the same result as your registration, you must press 'NO' in this box to avoid publishing.",
         "publication_already_exists": "There is already a publication with the same title and year as your registration."
       },
-      "error_description": "To publish you must fix the following errors:",
+      "error_description": "The following errors must be corrected before publishing the result:",
+      "error_description_published_result": "The registration is published. The following deficiencies must be corrected when editing:",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
       "go_back_to_wizard": "Go back to form",
       "handle": "Handle",
@@ -1434,6 +1455,7 @@
         "assign_curator": "Assign curator",
         "assign_doi": "Assign DOI",
         "assign_doi_about": "In order for others to be able to use the DOI, you must assign it. Metadata must be published.",
+        "describe_doi_rejection_reason": "You must justify the rejection of the request for a DOI on this research result.",
         "draft_doi_description": "<0>A reserved DOI allows you (and those you share the DOI with) to cite the research result in other work before it is published.</0><1><0>Read more about DOI<0></0></0></1><0>If you want a DOI for this result, click on \"{{buttonText}}\".</0>",
         "duplicate_title_description_details": "<0>Duplicates should not be created in NVA. Check if the result that has already been published is the same as the result you have registered.</0><0>If the result that is published has errors or omissions, ask the registrar or contributor associated with the result to change it. Do not register and publish a new result with the change as both results will be available in NVA.</0>",
         "duplicate_title_description_introduction": "This registration has the same title and year as this publication:",
@@ -1453,6 +1475,7 @@
         "reject_publishing_request_description_one": "<0>If you choose \"$t(registration.public_page.reject_publish_request)\", the file will not be published and therefore will not be visible to others. The file will be moved to unpublished.</0><0>If you wish to delete the file, do so in the editing of the research result.</0>",
         "reject_publishing_request_description_other": "<0>If you choose \"$t(registration.public_page.reject_publish_request)\", the files will not be published and therefore will not be visible to others. The files will be moved to unpublished.</0><0>If you wish to delete the files, do so in the editing of the research result.</0>",
         "reload": "Reload",
+        "request_doi_description": "<0>A DOI (Digital Object Identifier) increases the visibility of the research result and can lead to more citations.</0><1><0>Read more about DOI<0></0></0></1><0>If you want a DOI for this result, click on \"{{buttonText}}\".</0>",
         "reserve_doi_confirmation": "<0>Only published research results can have a DOI.</0><0>If you need a DOI to correctly cite research results in other research results that are in progress, before it is published, you can reserve a DOI.</0><0>Only you can see the reserved DOI, and it does not lead anywhere until you publish the research result. After publication, your curator is informed that you want a DOI, and must then assign it (or reject it).</0><0>If you are ready to publish, then publish, and select \"$t(registration.public_page.request_doi)\", instead of reserving a DOI.</0><1>Do you still want to reserve a DOI?</1>",
         "reserved": "Reserved",
         "review_preview_before_publishing": "Review content before publishing.",
@@ -1926,7 +1949,7 @@
     "search_term_label": "Value",
     "sector": "Sector",
     "select_one_or_more_categories": "Select one or more categories",
-    "select_vocabulary": "",
+    "select_vocabulary": "Select vocabulary",
     "sort_alphabetically_asc": "Title (A-Å)",
     "sort_alphabetically_desc": "Title (Å-A)",
     "sort_by": "Order by",
