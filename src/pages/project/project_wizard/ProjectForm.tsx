@@ -13,6 +13,7 @@ import { ProjectConnectionsForm } from './ProjectConnectionsForm';
 import { ProjectContributorsForm } from './ProjectContributorsForm';
 import { ProjectDescriptionForm } from './ProjectDescriptionForm';
 import { ProjectDetailsForm } from './ProjectDetailsForm';
+import { ProjectFormActions } from './ProjectFormActions';
 import { ProjectFormStepper } from './ProjectFormStepper';
 
 interface ProjectFormProps {
@@ -45,7 +46,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
               />
               <RequiredDescription />
               <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
-                <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '2rem', padding: '1.5rem 1.25rem' }}>
+                <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '0.5rem', padding: '1.5rem 1.25rem' }}>
                   {tabNumber === ProjectTabs.Description && (
                     <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />
                   )}
@@ -53,7 +54,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
                   {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm maxVisitedTab={maxVisitedTab} />}
                   {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
                 </Box>
-                <p>registration form actions</p>
+                <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} />
               </Box>
             </Form>
           );
