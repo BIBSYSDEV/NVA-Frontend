@@ -24,7 +24,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
   const [tabNumber, setTabNumber] = useState(ProjectTabs.Description);
   const [maxVisitedTab, setMaxVisitedTab] = useState(ProjectTabs.Description);
   const [initialValues] = useState<InitialProjectFormData>({ project: project });
-  const thisIsRekProject = isRekProject(project);
+  const thisIsRekProject = (project && project.id && isRekProject(project)) || false;
 
   return (
     <>

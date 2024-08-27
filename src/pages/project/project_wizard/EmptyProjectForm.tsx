@@ -1,17 +1,21 @@
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import { LoadingButton } from '@mui/lab';
-import { Box, TextField } from '@mui/material';
-import { useState } from 'react';
+import { Box, Button, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { CreateProjectAccordion } from './CreateProjectAccordion';
 
-export const EmptyProjectForm = () => {
+interface EmptyProjectFormProps {
+  title: string;
+  setTitle: (val: string) => void;
+  setShowProjectForm: (val: boolean) => void;
+}
+
+export const EmptyProjectForm = ({ title, setTitle, setShowProjectForm }: EmptyProjectFormProps) => {
   const { t } = useTranslation();
-  const [title, setTitle] = useState('');
-  const isSaving = false;
-  const disabled = false;
+  const disabled = !title;
+
+  const createProject = () => setShowProjectForm(true);
 
   return (
     <CreateProjectAccordion
@@ -29,17 +33,17 @@ export const EmptyProjectForm = () => {
           placeholder={t('project.form.write_project_title')}
           label={t('common.title')}
         />
-        <LoadingButton
+        <Button
           variant="contained"
           sx={{ height: '2rem', width: 'fit-content', alignSelf: 'end', mt: '1rem' }}
-          loading={isSaving}
           disabled={disabled}
+          onClick={createProject}
           data-testid={dataTestId.newProjectPage.startEmptyProjectButton}>
           <>
             {t('project.form.start_empty_project')}
             <EastOutlinedIcon sx={{ width: '1rem', ml: '0.5rem' }} />
           </>
-        </LoadingButton>
+        </Button>
       </Box>
     </CreateProjectAccordion>
   );
