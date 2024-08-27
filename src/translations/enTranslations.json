@@ -610,6 +610,7 @@
       "contributor_required_project": "You need at least one project participant",
       "editor_required": "You need to register at least one editor on this registration",
       "employments_missing_data": "At least one affiliation does not have position or start date",
+      "field_not_confirmed": "",
       "has_invalid_format": "{{field}} has invalid format",
       "invalid_email": "Invalid email",
       "invalid_number_of_digits": "{{field}} must have {{digits}} digits",
@@ -622,7 +623,6 @@
       "must_be_smaller_than": "{{field}} cannot be greater than {{limit}}",
       "must_correct_errors": "You must correct errors",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
-      "not_selected": "{{field}} is not selected",
       "project_manager_required_project": "The project needs a project leader"
     }
   },
@@ -1136,6 +1136,8 @@
     "form": {
       "add_financing": "Add funding",
       "add_financing_description": "<0>Add a funding source if the project receives funding.</0><0>All research results linked to the project will inherit funding that is registered on the project.</0>",
+      "add_results": "Add result",
+      "add_results_description": "Add research results that have a connection to the project",
       "category": "Category",
       "date": "Date",
       "empty_registration": "Empty registration",
@@ -1143,9 +1145,11 @@
       "keywords": "Keywords",
       "project_manager_cannot_be_removed": "Cannot remove project leader",
       "related_projects": "Related projects",
+      "related_projects_description": "Add other projects that are related to this project",
       "remove_affiliation": "Remove affiliation",
       "remove_participant": "Remove project participant",
       "remove_participant_text": "Are you sure you want to remove {{name}}?",
+      "remove_project": "Remove project",
       "search_for_person": "Search for person",
       "select_project_role": "Select role in the project",
       "start_with_empty_form": "Start without any prefilled values.",

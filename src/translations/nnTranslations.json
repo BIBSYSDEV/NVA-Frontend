@@ -610,6 +610,7 @@
       "contributor_required_project": "Du treng minst ein prosjektdeltakar",
       "editor_required": "Du må ha minst ein redaktør på denne registreringa",
       "employments_missing_data": "Minst ei tilsetjing manglar stilling og startdato.",
+      "field_not_confirmed": "",
       "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_email": "Ugyldig e-post",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
@@ -622,7 +623,6 @@
       "must_be_smaller_than": "{{field}} kan ikkje vere større enn {{limit}}",
       "must_correct_errors": "Du må rette opp feil",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
-      "not_selected": "{{field}} er ikkje vald",
       "project_manager_required_project": "Prosjektet må ha ein prosjektleiar"
     }
   },
@@ -1136,6 +1136,8 @@
     "form": {
       "add_financing": "Legg til finansiering",
       "add_financing_description": "<0>Legg til finansieringskjelde viss prosjektet mottar finansiering.</0><0>Alle forskingsresultat som er kopla til prosjektet vil arve finansieringa som er registrert på prosjektet.</0>",
+      "add_results": "Legg til resultat",
+      "add_results_description": "Legg til forskingsresultat som har kopling til prosjektet",
       "category": "Kategori",
       "date": "Dato",
       "empty_registration": "Tom registrering",
@@ -1143,9 +1145,11 @@
       "keywords": "Nøkkelord",
       "project_manager_cannot_be_removed": "Prosjektleiar kan ikkje fjernast",
       "related_projects": "Relaterte prosjekt",
+      "related_projects_description": "Legg til andre prosjekt som er relatert til dette prosjektet",
       "remove_affiliation": "Fjern tilknyting",
       "remove_participant": "Fjern prosjektdeltakar",
       "remove_participant_text": "Er du sikker på at du ønskjer å fjerne {{name}}?",
+      "remove_project": "Fjern prosjekt",
       "search_for_person": "Søk etter person",
       "select_project_role": "Vel rolle i prosjektet",
       "start_with_empty_form": "Start utan nokre ferdig utfylte opplysingar.",
