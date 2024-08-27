@@ -9,6 +9,13 @@ export const StyledRightAlignedFooter = styled(Box)({
   mt: '1rem',
 });
 
+export const StyledFormFooter = styled(Box)({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: '0.25rem',
+});
+
 export const StyledRightAlignedWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',

@@ -100,7 +100,15 @@ export const dataTestId = {
     personRegisterLink: 'person-register-link',
     personRegisterSearchBar: 'person-register-search-bar',
   },
-  common: { cancel: 'cancel', pagination: 'pagination', save: 'save', showMoreButton: 'show-more-button' },
+  common: {
+    cancel: 'cancel',
+    pagination: 'pagination',
+    save: 'save',
+    showMoreButton: 'show-more-button',
+    previousButton: 'previous-button',
+    nextButton: 'next-button',
+    doubleNextButton: 'double-next-button',
+  },
   confirmDialog: {
     acceptButton: 'accept-button',
     cancelButton: 'cancel-button',
@@ -234,6 +242,12 @@ export const dataTestId = {
       projectErrorStep: 'project-error-tab',
       projectContributorsStepButton: 'nav-tabpanel-project-contributors',
       projectConnectionsStepButton: 'nav-tabpanel-project-connections',
+    },
+    formActions: {
+      previousTabButton: 'previous-tab-button',
+      cancelEditProjectButton: 'cancel-edit-project-button',
+      saveProjectButton: 'save-project-button',
+      nextTabButton: 'next-tab-button',
     },
     selectContributorType: 'select-contributor-type',
     descriptionPanel: {
