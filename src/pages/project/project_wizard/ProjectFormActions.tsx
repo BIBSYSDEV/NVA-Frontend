@@ -13,11 +13,18 @@ import { dataTestId } from '../../../utils/dataTestIds';
 interface ProjectFormActionsProps {
   tabNumber: number;
   setTabNumber: (val: number) => void;
+  cancelEdit: () => void;
   isSaving: boolean;
   hasErrors: boolean;
 }
 
-export const ProjectFormActions = ({ tabNumber, setTabNumber, isSaving, hasErrors }: ProjectFormActionsProps) => {
+export const ProjectFormActions = ({
+  tabNumber,
+  setTabNumber,
+  isSaving,
+  hasErrors,
+  cancelEdit,
+}: ProjectFormActionsProps) => {
   const { t } = useTranslation();
   const isFirstTab = tabNumber === RegistrationTab.Description;
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
@@ -33,7 +40,7 @@ export const ProjectFormActions = ({ tabNumber, setTabNumber, isSaving, hasError
         <CancelButton
           sx={{ mr: '1rem' }}
           testId={dataTestId.projectWizard.formActions.cancelEditProjectButton}
-          onClick={() => {}}
+          onClick={cancelEdit}
         />
         <LoadingButton
           variant="contained"

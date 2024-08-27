@@ -54,6 +54,10 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
     }
   };
 
+  const cancelEdit = () => {
+    history.goBack();
+  };
+
   return (
     <>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
@@ -86,6 +90,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
                   setTabNumber={setTabNumber}
                   isSaving={isSubmitting}
                   hasErrors={hasErrors(errors, touched)}
+                  cancelEdit={cancelEdit}
                 />
               </Box>
             </Form>
