@@ -4,20 +4,17 @@ import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
-import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
-import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
@@ -30,6 +27,8 @@ import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
+import { Link as RouterLink } from 'react-router-dom';
+import { getRegistrationWizardLink } from '../../utils/urlPaths';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -73,16 +72,14 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
           {mainTitle}
         </TruncatableTypography>
+
         {userCanEditRegistration(registration) && (
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
-              data-testid={dataTestId.registrationLandingPage.editButton}
-              sx={{ ml: 'auto', color: 'inherit' }}
               component={RouterLink}
-              to={{
-                pathname: getRegistrationWizardPath(identifier),
-                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
-              }}>
+              to={getRegistrationWizardLink(identifier)}
+              data-testid={dataTestId.registrationLandingPage.editButton}
+              sx={{ ml: 'auto', color: 'inherit' }}>
               <EditIcon />
             </IconButton>
           </Tooltip>
