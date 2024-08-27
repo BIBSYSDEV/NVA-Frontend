@@ -4,20 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../utils/dataTestIds';
 import { arrowButtonStyle } from '../styled/ButtonStyles';
 
-interface PreviousButtonProps extends ButtonBaseProps {
-  tooltip?: string;
-  testId?: string;
-}
+interface PreviousButtonProps extends ButtonBaseProps {}
 
-export const PreviousButton = ({ tooltip, onClick, testId, sx }: PreviousButtonProps) => {
+export const PreviousButton = ({ onClick, sx }: PreviousButtonProps) => {
   const { t } = useTranslation();
 
   return (
-    <Tooltip title={tooltip || t('common.previous')}>
-      <IconButton
-        onClick={onClick ? onClick : undefined}
-        data-testid={testId || dataTestId.common.previousButton}
-        sx={sx}>
+    <Tooltip title={t('common.previous')}>
+      <IconButton onClick={onClick} data-testid={dataTestId.common.previousButton} sx={sx}>
         <KeyboardArrowLeftIcon sx={arrowButtonStyle} />
       </IconButton>
     </Tooltip>

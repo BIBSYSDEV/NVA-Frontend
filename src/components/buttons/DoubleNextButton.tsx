@@ -4,20 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../utils/dataTestIds';
 import { arrowButtonStyle } from '../styled/ButtonStyles';
 
-interface DoubleNextButtonProps extends ButtonBaseProps {
-  tooltip?: string;
-  testId?: string;
-}
+interface DoubleNextButtonProps extends ButtonBaseProps {}
 
-export const DoubleNextButton = ({ tooltip, onClick, testId, sx }: DoubleNextButtonProps) => {
+export const DoubleNextButton = ({ onClick, sx }: DoubleNextButtonProps) => {
   const { t } = useTranslation();
 
   return (
-    <Tooltip title={tooltip || t('common.last')}>
-      <IconButton
-        onClick={onClick ? onClick : undefined}
-        data-testid={testId || dataTestId.common.doubleNextButton}
-        sx={sx}>
+    <Tooltip title={t('common.go_to_last')}>
+      <IconButton onClick={onClick} data-testid={dataTestId.common.doubleNextButton} sx={sx}>
         <KeyboardDoubleArrowRightIcon sx={arrowButtonStyle} />
       </IconButton>
     </Tooltip>

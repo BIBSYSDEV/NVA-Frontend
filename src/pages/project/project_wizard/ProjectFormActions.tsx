@@ -1,40 +1,35 @@
 import { LoadingButton } from '@mui/lab';
 import { Box } from '@mui/material';
+import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { CancelButton } from '../../../components/buttons/CancelButton';
 import { DoubleNextButton } from '../../../components/buttons/DoubleNextButton';
 import { NextButton } from '../../../components/buttons/NextButton';
 import { PreviousButton } from '../../../components/buttons/PreviousButton';
-import { StyledFooter } from '../../../components/styled/Wrappers';
-import { ProjectTabs } from '../../../types/project.types';
-import { RegistrationTab } from '../../../types/registration.types';
+import { StyledFormFooter } from '../../../components/styled/Wrappers';
+import { ProjectTabs, SaveCristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { hasErrors } from '../../../utils/formik-helpers/project-form-helpers';
 
 interface ProjectFormActionsProps {
   tabNumber: number;
   setTabNumber: (val: number) => void;
   cancelEdit: () => void;
-  isSaving: boolean;
-  hasErrors: boolean;
 }
 
-export const ProjectFormActions = ({
-  tabNumber,
-  setTabNumber,
-  isSaving,
-  hasErrors,
-  cancelEdit,
-}: ProjectFormActionsProps) => {
+export const ProjectFormActions = ({ tabNumber, setTabNumber, cancelEdit }: ProjectFormActionsProps) => {
   const { t } = useTranslation();
-  const isFirstTab = tabNumber === RegistrationTab.Description;
-  const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
+  const { isSubmitting, errors, touched } = useFormikContext<SaveCristinProject>();
+  const isFirstTab = tabNumber === ProjectTabs.Description;
+  const isLastTab = tabNumber === ProjectTabs.Connections;
+  const disable = hasErrors(errors, touched);
 
   const incrementByOne = () => setTabNumber(tabNumber + 1);
   const decrementByOne = () => setTabNumber(tabNumber - 1);
   const goToLast = () => setTabNumber(ProjectTabs.Connections);
 
   return (
-    <StyledFooter>
+    <StyledFormFooter>
       <Box sx={{ display: 'flex', flexGrow: '1' }}>{!isFirstTab && <PreviousButton onClick={decrementByOne} />}</Box>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}>
         <CancelButton
@@ -45,19 +40,19 @@ export const ProjectFormActions = ({
         <LoadingButton
           variant="contained"
           type="submit"
-          sx={{ height: '2rem', mr: '2rem' }}
-          loading={isSaving}
-          disabled={hasErrors}
+          sx={{ mr: '2rem' }}
+          loading={isSubmitting}
+          disabled={disable}
           data-testid={dataTestId.projectWizard.formActions.saveProjectButton}>
           {isLastTab ? t('common.save_and_view') : t('common.save')}
         </LoadingButton>
         {!isLastTab && (
           <>
-            <NextButton onClick={incrementByOne} sx={{ mr: '-0.5rem' }} />
+            <NextButton onClick={incrementByOne} />
             <DoubleNextButton onClick={goToLast} />
           </>
         )}
       </Box>
-    </StyledFooter>
+    </StyledFormFooter>
   );
 };

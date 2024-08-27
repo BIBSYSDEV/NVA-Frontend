@@ -9,7 +9,7 @@ export const StyledRightAlignedFooter = styled(Box)({
   mt: '1rem',
 });
 
-export const StyledFooter = styled(Box)({
+export const StyledFormFooter = styled(Box)({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',

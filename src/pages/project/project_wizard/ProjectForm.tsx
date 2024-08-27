@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { Form, Formik, FormikProps } from 'formik';
+import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -11,7 +11,6 @@ import { SkipLink } from '../../../components/SkipLink';
 import { setNotification } from '../../../redux/notificationSlice';
 import { CristinProject, ProjectTabs, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { hasErrors } from '../../../utils/formik-helpers/project-form-helpers';
 import { getProjectPath } from '../../../utils/urlPaths';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { InitialProjectFormData } from '../../projects/form/ProjectFormDialog';
@@ -65,7 +64,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
         initialValues={initialValues.project!}
         validationSchema={basicProjectValidationSchema}
         onSubmit={submitProjectForm}>
-        {({ isSubmitting, errors, touched }: FormikProps<SaveCristinProject>) => {
+        {() => {
           return (
             <Form noValidate>
               <PageHeader variant="h1">{project.title}</PageHeader>
@@ -85,13 +84,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
                   {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm maxVisitedTab={maxVisitedTab} />}
                   {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
                 </Box>
-                <ProjectFormActions
-                  tabNumber={tabNumber}
-                  setTabNumber={setTabNumber}
-                  isSaving={isSubmitting}
-                  hasErrors={hasErrors(errors, touched)}
-                  cancelEdit={cancelEdit}
-                />
+                <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} cancelEdit={cancelEdit} />
               </Box>
             </Form>
           );
