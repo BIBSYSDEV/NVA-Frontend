@@ -14,28 +14,28 @@ import { hasErrors } from '../../../utils/formik-helpers/project-form-helpers';
 interface ProjectFormActionsProps {
   tabNumber: number;
   setTabNumber: (val: number) => void;
-  cancelEdit: () => void;
+  onCancel: () => void;
 }
 
-export const ProjectFormActions = ({ tabNumber, setTabNumber, cancelEdit }: ProjectFormActionsProps) => {
+export const ProjectFormActions = ({ tabNumber, setTabNumber, onCancel }: ProjectFormActionsProps) => {
   const { t } = useTranslation();
   const { isSubmitting, errors, touched } = useFormikContext<SaveCristinProject>();
   const isFirstTab = tabNumber === ProjectTabs.Description;
   const isLastTab = tabNumber === ProjectTabs.Connections;
   const disable = hasErrors(errors, touched);
 
-  const incrementByOne = () => setTabNumber(tabNumber + 1);
-  const decrementByOne = () => setTabNumber(tabNumber - 1);
-  const goToLast = () => setTabNumber(ProjectTabs.Connections);
+  const goToNextTab = () => setTabNumber(tabNumber + 1);
+  const goToPreviousTab = () => setTabNumber(tabNumber - 1);
+  const goToLastTab = () => setTabNumber(ProjectTabs.Connections);
 
   return (
     <StyledFormFooter>
-      <Box sx={{ display: 'flex', flexGrow: '1' }}>{!isFirstTab && <PreviousButton onClick={decrementByOne} />}</Box>
+      <Box sx={{ display: 'flex', flexGrow: '1' }}>{!isFirstTab && <PreviousButton onClick={goToPreviousTab} />}</Box>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}>
         <CancelButton
           sx={{ mr: '1rem' }}
           testId={dataTestId.projectWizard.formActions.cancelEditProjectButton}
-          onClick={cancelEdit}
+          onClick={onCancel}
         />
         {isLastTab && (
           <LoadingButton
@@ -50,8 +50,8 @@ export const ProjectFormActions = ({ tabNumber, setTabNumber, cancelEdit }: Proj
         )}
         {!isLastTab && (
           <>
-            <NextButton onClick={incrementByOne} />
-            <DoubleNextButton onClick={goToLast} />
+            <NextButton onClick={goToNextTab} />
+            <DoubleNextButton onClick={goToLastTab} />
           </>
         )}
       </Box>

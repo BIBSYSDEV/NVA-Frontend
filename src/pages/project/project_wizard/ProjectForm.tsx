@@ -36,6 +36,10 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
   const thisIsRekProject = isRekProject(project);
   const isLastTab = tabNumber === ProjectTabs.Connections;
 
+  const goToLandingPage = () => {
+    history.push(getProjectPath(project.id));
+  };
+
   const submitProjectForm = async (values: SaveCristinProject) => {
     const updateProjectResponse = await authenticatedApiRequest2<CristinProject>({
       url: project.id,
@@ -46,15 +50,11 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
     if (isSuccessStatus(updateProjectResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.update_project'), variant: 'success' }));
       if (isLastTab) {
-        history.push(getProjectPath(project.id));
+        goToLandingPage();
       }
     } else if (isErrorStatus(updateProjectResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.update_project'), variant: 'error' }));
     }
-  };
-
-  const cancelEdit = () => {
-    history.push(getProjectPath(project.id));
   };
 
   return (
@@ -84,7 +84,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
                   {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm maxVisitedTab={maxVisitedTab} />}
                   {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
                 </Box>
-                <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} cancelEdit={cancelEdit} />
+                <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} onCancel={goToLandingPage} />
               </Box>
             </Form>
           );
