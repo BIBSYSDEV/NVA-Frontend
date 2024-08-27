@@ -43,5 +43,5 @@ interface DegreeReference extends BaseReference {
 }
 
 export interface DegreeEntityDescription extends BaseEntityDescription {
-  reference: DegreeReference | null;
+  reference: DegreeReference;
 }
