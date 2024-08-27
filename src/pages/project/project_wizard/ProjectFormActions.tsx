@@ -37,15 +37,17 @@ export const ProjectFormActions = ({ tabNumber, setTabNumber, cancelEdit }: Proj
           testId={dataTestId.projectWizard.formActions.cancelEditProjectButton}
           onClick={cancelEdit}
         />
-        <LoadingButton
-          variant="contained"
-          type="submit"
-          sx={{ mr: '2rem' }}
-          loading={isSubmitting}
-          disabled={disable}
-          data-testid={dataTestId.projectWizard.formActions.saveProjectButton}>
-          {isLastTab ? t('common.save_and_view') : t('common.save')}
-        </LoadingButton>
+        {isLastTab && (
+          <LoadingButton
+            variant="contained"
+            type="submit"
+            sx={{ mr: '2rem' }}
+            loading={isSubmitting}
+            disabled={disable}
+            data-testid={dataTestId.projectWizard.formActions.saveProjectButton}>
+            {t('common.save_and_view')}
+          </LoadingButton>
+        )}
         {!isLastTab && (
           <>
             <NextButton onClick={incrementByOne} />
