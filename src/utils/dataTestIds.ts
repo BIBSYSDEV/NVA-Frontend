@@ -227,6 +227,12 @@ export const dataTestId = {
     titleField: 'project-title-field',
     selectContributorButton: 'select-contributor-button',
   },
+  newProjectPage: {
+    titleInput: 'project-title-input',
+    startEmptyProjectButton: 'start-empty-project-button',
+    createEmptyProjectAccordion: 'create-empty-project-accordion',
+    createNFRProjectAccordion: 'create-nfr-project-accordion',
+  },
   projectLandingPage: {
     editProjectButton: 'edit-project-button',
     generalInfoBox: 'general-info',
