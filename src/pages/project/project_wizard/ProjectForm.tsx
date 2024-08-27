@@ -54,7 +54,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
   };
 
   const cancelEdit = () => {
-    history.goBack();
+    history.push(getProjectPath(project.id));
   };
 
   return (
