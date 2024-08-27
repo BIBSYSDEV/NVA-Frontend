@@ -44,17 +44,29 @@ function generateImportLogEntry(importDetail: ImportDetail, t: TFunction): LogEn
 }
 
 function generateImportedFilesLogEntries(associatedArtifacts: AssociatedArtifact[], t: TFunction): LogEntry[] {
-  const importedFilesLogEntries: LogEntry[] = getPublishedFiles(associatedArtifacts)
-    .filter((file) => file.uploadDetails?.type === 'ImportUploadDetails')
-    .map((file) => {
-      const importDetails = file.uploadDetails as ImportUploadDetails;
-      return {
-        type: 'PublishingRequest',
-        title: t('log.titles.files_published_one'),
-        modifiedDate: file.publishedDate ?? importDetails.uploadedDate,
-        actions: [{ organization: importDetails.archive, items: [{ description: file.name, fileIcon: 'file' }] }],
-      };
-    });
+  const importedFiles = getPublishedFiles(associatedArtifacts).filter(
+    (file) => file.uploadDetails?.type === 'ImportUploadDetails'
+  );
 
-  return importedFilesLogEntries;
+  const archives = [...new Set(importedFiles.map((file) => (file.uploadDetails as ImportUploadDetails).archive))];
+
+  const logEntries: LogEntry[] = archives.map((archive) => {
+    const filesFromThisArchive = importedFiles.filter(
+      (file) => (file.uploadDetails as ImportUploadDetails).archive === archive
+    );
+
+    return {
+      type: 'PublishingRequest',
+      title: t('log.titles.files_published_one'),
+      modifiedDate: filesFromThisArchive[0].publishedDate ?? '',
+      actions: [
+        {
+          organization: archive,
+          items: filesFromThisArchive.map((file) => ({ description: file.name, fileIcon: 'file' })),
+        },
+      ],
+    };
+  });
+
+  return logEntries;
 }
