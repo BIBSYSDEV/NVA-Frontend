@@ -1144,7 +1144,6 @@
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
-      "project_manager_cannot_be_removed": "Prosjektleder kan ikke fjernes",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
       "remove_affiliation": "Fjern tilknytning",
@@ -1153,9 +1152,14 @@
       "remove_project": "Fjern prosjekt",
       "search_for_person": "Søk etter person",
       "select_project_role": "Velg rolle i prosjektet",
+      "start_empty_project": "Start tomt prosjekt",
+      "start_with_empty_form_headline": "Start i tomt registreringsskjema",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt.",
-      "title_and_description": "Tittel og beskrivelse"
+      "start_with_nfr_financing": "Start med finansiering fra Norges Forskningsråd (NFR)",
+      "start_with_nfr_financing_details": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med dem og få noen felt ferdig utfylt",
+      "title_and_description": "Tittel og beskrivelse",
+      "write_project_title": "Skriv inn tittel på prosjekt"
     },
     "grant_id": "Tilskudds-ID",
     "heading": {

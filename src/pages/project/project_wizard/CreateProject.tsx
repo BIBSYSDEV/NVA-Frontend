@@ -16,7 +16,7 @@ const CreateProject = () => {
           maxWidth: '55rem',
           display: 'flex',
           flexDirection: 'column',
-          gap: '2rem',
+          gap: '1.25rem',
         }}>
         <NFRProject />
         <EmptyProjectForm />

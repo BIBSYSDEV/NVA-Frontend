@@ -14,6 +14,12 @@ export const StyledRightAlignedWrapper = styled(Box)({
   justifyContent: 'flex-end',
 });
 
+export const HorizontalBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+});
+
 export const StyledSelectWrapper = styled(Box)(({ theme }) => ({
   maxWidth: theme.breakpoints.values.lg,
   [theme.breakpoints.down('sm')]: {
