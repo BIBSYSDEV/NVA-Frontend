@@ -16,12 +16,12 @@ export const ProjectSortSelector = () => {
         {
           orderBy: 'name',
           sortOrder: 'asc',
-          label: t('search.sort_by_name_asc'),
+          label: t('search.sort_alphabetically_asc'),
         },
         {
           orderBy: 'name',
           sortOrder: 'desc',
-          label: t('search.sort_by_name_desc'),
+          label: t('search.sort_alphabetically_desc'),
         },
       ]}
     />
