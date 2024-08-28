@@ -54,11 +54,7 @@ export const PublicRegistrationContributors = ({
             hiddenCount={showAll ? undefined : hiddenContributorsCount.current}
           />
           {showAll && secondaryContributorsToShow.length > 0 && (
-            <ContributorsRow
-              contributors={secondaryContributorsToShow}
-              distinctUnits={distinctUnits}
-              label={t('registration.heading.contributors')}
-            />
+            <ContributorsRow contributors={secondaryContributorsToShow} distinctUnits={distinctUnits} />
           )}
         </Box>
         {hiddenContributorsCount.current > 0 && (
@@ -86,16 +82,14 @@ export const PublicRegistrationContributors = ({
 interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
-  label?: string;
   hiddenCount?: number;
 }
 
-const ContributorsRow = ({ contributors, distinctUnits, label, hiddenCount }: ContributorsRowProps) => {
+const ContributorsRow = ({ contributors, distinctUnits, hiddenCount }: ContributorsRowProps) => {
   const { t } = useTranslation();
 
   return (
     <div>
-      {label && <Typography sx={{ display: 'inline', mr: '0.5rem' }}>{label}:</Typography>}
       <Box
         component="ul"
         sx={{
