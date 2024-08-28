@@ -6,15 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { Contributor } from '../../types/contributor.types';
+import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
-import {
-  contributorConfig,
-  getContributorsWithPrimaryRole,
-  getContributorsWithSecondaryRole,
-} from '../../utils/registration-helpers';
+import { getContributorsWithPrimaryRole, getContributorsWithSecondaryRole } from '../../utils/registration-helpers';
 import { getResearchProfilePath } from '../../utils/urlPaths';
 
 interface PublicRegistrationContributorsProps {
@@ -34,7 +30,6 @@ export const PublicRegistrationContributors = ({
   const toggleShowAll = () => setShowAll(!showAll);
 
   const primaryContributorsToShow = showAll ? primaryContributors : primaryContributors.slice(0, 10);
-  const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
   const secondaryContributorsToShow = showAll ? secondaryContributors : [];
 
   const hiddenContributorsCount = useRef(
@@ -57,13 +52,11 @@ export const PublicRegistrationContributors = ({
             contributors={primaryContributorsToShow}
             distinctUnits={distinctUnits}
             hiddenCount={showAll ? undefined : hiddenContributorsCount.current}
-            showRole={primaryRoles.length > 1}
           />
           {showAll && secondaryContributorsToShow.length > 0 && (
             <ContributorsRow
               contributors={secondaryContributorsToShow}
               distinctUnits={distinctUnits}
-              showRole={secondaryRoles.length > 1}
               label={t('registration.heading.contributors')}
             />
           )}
@@ -94,17 +87,10 @@ interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
   label?: string;
-  showRole?: boolean;
   hiddenCount?: number;
 }
 
-const ContributorsRow = ({
-  contributors,
-  distinctUnits,
-  label,
-  showRole = false,
-  hiddenCount,
-}: ContributorsRowProps) => {
+const ContributorsRow = ({ contributors, distinctUnits, label, hiddenCount }: ContributorsRowProps) => {
   const { t } = useTranslation();
 
   return (
@@ -131,6 +117,8 @@ const ContributorsRow = ({
             ?.map((affiliation) => affiliation.type === 'Organization' && distinctUnits.indexOf(affiliation.id) + 1)
             .filter((affiliationIndex) => affiliationIndex)
             .sort();
+
+          const showRole = contributor.role.type !== ContributorRole.Creator;
 
           return (
             <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
