@@ -1953,6 +1953,8 @@
     "sort_by_last_name_asc": "Etternavn (A-Å)",
     "sort_by_last_name_desc": "Etternavn (Å-A)",
     "sort_by_modified_date": "Sist endret",
+    "sort_by_name_asc": "Navn A-Å",
+    "sort_by_name_desc": "Navn Å-A",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
     "sort_by_relevance": "Relevans",
