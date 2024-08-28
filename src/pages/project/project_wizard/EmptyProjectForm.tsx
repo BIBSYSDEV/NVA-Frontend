@@ -35,7 +35,7 @@ export const EmptyProjectForm = ({ title, setTitle, setShowProjectForm }: EmptyP
         />
         <Button
           variant="contained"
-          sx={{ height: '2rem', width: 'fit-content', alignSelf: 'end', mt: '1rem' }}
+          sx={{ width: 'fit-content', alignSelf: 'end', mt: '1rem' }}
           disabled={disabled}
           onClick={createProject}
           data-testid={dataTestId.newProjectPage.startEmptyProjectButton}>

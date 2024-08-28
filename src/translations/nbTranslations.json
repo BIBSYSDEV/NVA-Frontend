@@ -233,6 +233,7 @@
     "person_id": "Person-ID",
     "place": "Sted",
     "previous": "Forrige",
+    "project": "Prosjekt",
     "project_status": "Prosjektstatus",
     "publisher": "Utgiver",
     "publishing_year": "Publiseringsår",
@@ -1154,6 +1155,7 @@
       "search_for_person": "Søk etter person",
       "select_project_role": "Velg rolle i prosjektet",
       "start_empty_project": "Start tomt prosjekt",
+      "start_registering_project": "Start registrering av prosjekt",
       "start_with_empty_form_headline": "Start i tomt registreringsskjema",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt.",
@@ -1170,6 +1172,10 @@
       "project_participants": "Prosjektdeltakere"
     },
     "keywords": "Nøkkelord",
+    "new_project": {
+      "nfr_project": "NFR-prosjekt",
+      "search_for_project_name_or_placeholder": "Søk etter prosjektnavn eller prosjektleder"
+    },
     "no_participants": "Ingen registrerte deltakere.",
     "no_related_projects": "Ingen relaterte prosjekt.",
     "no_results": "Ingen publiserte resultater.",

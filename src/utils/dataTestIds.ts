@@ -232,6 +232,8 @@ export const dataTestId = {
     startEmptyProjectButton: 'start-empty-project-button',
     createEmptyProjectAccordion: 'create-empty-project-accordion',
     createNFRProjectAccordion: 'create-nfr-project-accordion',
+    nrfProjectSearchInput: 'nrf-project-search-input',
+    startNfrProjectButton: 'start-nfr-project-button',
   },
   projectLandingPage: {
     editProjectButton: 'edit-project-button',
