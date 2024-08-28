@@ -3,12 +3,12 @@ import { Box, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/mate
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { ProjectIcon } from '../../../components/ProjectIcon';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
+import { ProjectIconHeader } from '../../project/components/ProjectIconHeader';
 import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
 import {
   getProjectManagers,
@@ -39,11 +39,7 @@ export const ProjectListItem = ({
   return (
     <SearchListItem sx={{ borderLeftColor: 'project.main', flexDirection: 'row' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: '1' }}>
-        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mb: '0.5rem' }}>
-          <ProjectIcon />
-          <Typography>{t('project.project')}</Typography>
-          <Typography sx={{ fontWeight: 'bold' }}>{t(`project.status.${project.status}`).toUpperCase()}</Typography>
-        </Box>
+        <ProjectIconHeader projectStatus={project.status} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <Typography sx={{ fontSize: '1rem', fontWeight: '600' }} gutterBottom>
             <MuiLink component={Link} to={getProjectPath(project.id)}>

@@ -1,11 +1,11 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { authenticatedApiRequest2 } from '../../../api/apiRequest';
-import { PageHeader } from '../../../components/PageHeader';
+import { PageHeader } from '../../../components/page_layout_components/PageHeader';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { SkipLink } from '../../../components/SkipLink';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -15,6 +15,7 @@ import { getProjectPath } from '../../../utils/urlPaths';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { InitialProjectFormData } from '../../projects/form/ProjectFormDialog';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { ProjectIconHeader } from '../components/ProjectIconHeader';
 import { ProjectConnectionsForm } from './ProjectConnectionsForm';
 import { ProjectContributorsForm } from './ProjectContributorsForm';
 import { ProjectDescriptionForm } from './ProjectDescriptionForm';
@@ -67,7 +68,10 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
         {() => {
           return (
             <Form noValidate>
-              <PageHeader variant="h1">{project.title}</PageHeader>
+              <PageHeader>
+                <ProjectIconHeader projectStatus={project.status} />
+                <Typography variant={'h1'}>{project.title}</Typography>
+              </PageHeader>
               <ProjectFormStepper
                 tabNumber={tabNumber}
                 setTabNumber={setTabNumber}
