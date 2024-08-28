@@ -27,6 +27,13 @@ export const StyledRightAlignedWrapper = styled(Box)({
   justifyContent: 'flex-end',
 });
 
+export const WizardStartPageWrapper = styled(Box)({
+  maxWidth: '55rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.25rem',
+});
+
 export const StyledSelectWrapper = styled(Box)(({ theme }) => ({
   maxWidth: theme.breakpoints.values.lg,
   [theme.breakpoints.down('sm')]: {

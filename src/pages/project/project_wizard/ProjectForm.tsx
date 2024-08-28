@@ -23,7 +23,7 @@ import { ProjectFormActions } from './ProjectFormActions';
 import { ProjectFormStepper } from './ProjectFormStepper';
 
 interface ProjectFormProps {
-  project: CristinProject;
+  project: SaveCristinProject | CristinProject;
 }
 
 export const ProjectForm = ({ project }: ProjectFormProps) => {
@@ -31,8 +31,10 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [tabNumber, setTabNumber] = useState(ProjectTabs.Description);
-  const [maxVisitedTab, setMaxVisitedTab] = useState(ProjectTabs.Connections); // TODO: Change for new project
-  const thisIsRekProject = (project && project.id && isRekProject(project)) || false;
+  const [maxVisitedTab, setMaxVisitedTab] = useState(ProjectTabs.Connections);
+
+  const projectWithId = Object.prototype.hasOwnProperty.call(project, 'id') ? (project as CristinProject) : undefined;
+  const thisIsRekProject = !!projectWithId && isRekProject(projectWithId);
 
   const goToLandingPage = (id: string) => {
     history.push(getProjectPath(id));
@@ -40,8 +42,8 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
 
   const submitProjectForm = async (values: SaveCristinProject) => {
     const config = {
-      url: project.id ? project.id : CristinApiPath.Project,
-      method: project.id ? 'PATCH' : 'POST',
+      url: projectWithId ? projectWithId.id : CristinApiPath.Project,
+      method: projectWithId ? 'PATCH' : 'POST',
       data: values,
     };
 
@@ -50,18 +52,19 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
     if (isSuccessStatus(updateProjectResponse.status)) {
       dispatch(
         setNotification({
-          message: project.id ? t('feedback.success.update_project') : t('feedback.success.create_project'),
+          message: projectWithId ? t('feedback.success.update_project') : t('feedback.success.create_project'),
           variant: 'success',
         })
       );
-      const id = project.id || updateProjectResponse.data.id;
+      const id = projectWithId ? projectWithId.id : updateProjectResponse.data.id;
+
       if (id) {
         goToLandingPage(id);
       }
     } else if (isErrorStatus(updateProjectResponse.status)) {
       dispatch(
         setNotification({
-          message: project.id ? t('feedback.error.update_project') : t('feedback.error.create_project'),
+          message: projectWithId ? t('feedback.error.update_project') : t('feedback.error.create_project'),
           variant: 'error',
         })
       );
@@ -69,8 +72,8 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
   };
 
   const onCancel = () => {
-    if (project.id) {
-      goToLandingPage(project.id);
+    if (projectWithId) {
+      goToLandingPage(projectWithId.id);
     } else {
       history.push(UrlPathTemplate.MyPageMyProjectRegistrations);
     }
@@ -80,31 +83,29 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
     <>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik initialValues={project} validationSchema={basicProjectValidationSchema} onSubmit={submitProjectForm}>
-        {() => {
-          return (
-            <Form noValidate>
-              <PageHeader variant="h1">{project.title}</PageHeader>
-              <ProjectFormStepper
-                tabNumber={tabNumber}
-                setTabNumber={setTabNumber}
-                maxVisitedTab={maxVisitedTab}
-                setMaxVisitedTab={setMaxVisitedTab}
-              />
-              <RequiredDescription />
-              <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
-                <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '0.5rem', padding: '1.5rem 1.25rem' }}>
-                  {tabNumber === ProjectTabs.Description && (
-                    <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />
-                  )}
-                  {tabNumber === ProjectTabs.Details && <ProjectDetailsForm thisIsRekProject={thisIsRekProject} />}
-                  {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm maxVisitedTab={maxVisitedTab} />}
-                  {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
-                </Box>
-                <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} onCancel={onCancel} />
+        {
+          <Form noValidate>
+            <PageHeader variant="h1">{project.title}</PageHeader>
+            <ProjectFormStepper
+              tabNumber={tabNumber}
+              setTabNumber={setTabNumber}
+              maxVisitedTab={maxVisitedTab}
+              setMaxVisitedTab={setMaxVisitedTab}
+            />
+            <RequiredDescription />
+            <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
+              <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '0.5rem', padding: '1.5rem 1.25rem' }}>
+                {tabNumber === ProjectTabs.Description && (
+                  <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />
+                )}
+                {tabNumber === ProjectTabs.Details && <ProjectDetailsForm thisIsRekProject={thisIsRekProject} />}
+                {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm maxVisitedTab={maxVisitedTab} />}
+                {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
               </Box>
-            </Form>
-          );
-        }}
+              <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} onCancel={onCancel} />
+            </Box>
+          </Form>
+        }
       </Formik>
     </>
   );
