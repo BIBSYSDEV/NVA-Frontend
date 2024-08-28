@@ -7,7 +7,7 @@ import { NfrProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { NFRProjectOption } from './NRFProjectOption';
+import { NfrProjectOption } from './NfrProjectOption';
 
 interface NfrProjectSearchProps {
   selectedProject: NfrProject | null;
@@ -34,7 +34,7 @@ export const NfrProjectSearch = ({ selectedProject, setSelectedProject }: NfrPro
           }
         }}
         inputValue={searchTerm}
-        onChange={(_, value: NfrProject | null) => {
+        onChange={(_, value) => {
           if (value?.id) {
             setSearchTerm('');
             setSelectedProject(value);
@@ -55,7 +55,7 @@ export const NfrProjectSearch = ({ selectedProject, setSelectedProject }: NfrPro
         )}
         renderOption={({ key, ...props }, option: NfrProject) => (
           <li {...props} key={option.identifier}>
-            <NFRProjectOption project={option} />
+            <NfrProjectOption project={option} />
           </li>
         )}
       />

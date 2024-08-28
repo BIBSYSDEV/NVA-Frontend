@@ -29,7 +29,7 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
       description={t('project.form.start_with_empty_form')}
       testId={dataTestId.newProjectPage.createEmptyProjectAccordion}
       icon={<InsertDriveFileOutlinedIcon sx={{ height: '3rem', width: '3rem', mr: '0.75rem' }} />}>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <TextField
           value={title}
           data-testid={dataTestId.newProjectPage.titleInput}
@@ -41,14 +41,12 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
         />
         <Button
           variant="contained"
-          sx={{ width: 'fit-content', alignSelf: 'end', mt: '1rem' }}
+          sx={{ width: 'fit-content', alignSelf: 'end' }}
           disabled={disabled}
           onClick={createProject}
-          data-testid={dataTestId.newProjectPage.startEmptyProjectButton}>
-          <>
-            {t('project.form.start_empty_project')}
-            <EastOutlinedIcon sx={{ width: '1rem', ml: '0.5rem' }} />
-          </>
+          data-testid={dataTestId.newProjectPage.startEmptyProjectButton}
+          endIcon={<EastOutlinedIcon />}>
+          {t('project.form.start_empty_project')}
         </Button>
       </Box>
     </CreateProjectAccordion>

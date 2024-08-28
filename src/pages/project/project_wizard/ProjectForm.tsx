@@ -33,7 +33,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
   const [tabNumber, setTabNumber] = useState(ProjectTabs.Description);
   const [maxVisitedTab, setMaxVisitedTab] = useState(ProjectTabs.Connections);
 
-  const projectWithId = Object.prototype.hasOwnProperty.call(project, 'id') ? (project as CristinProject) : undefined;
+  const projectWithId = 'id' in project ? (project as CristinProject) : undefined;
   const thisIsRekProject = !!projectWithId && isRekProject(projectWithId);
 
   const goToLandingPage = (id: string) => {
@@ -83,29 +83,25 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
     <>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik initialValues={project} validationSchema={basicProjectValidationSchema} onSubmit={submitProjectForm}>
-        {
-          <Form noValidate>
-            <PageHeader variant="h1">{project.title}</PageHeader>
-            <ProjectFormStepper
-              tabNumber={tabNumber}
-              setTabNumber={setTabNumber}
-              maxVisitedTab={maxVisitedTab}
-              setMaxVisitedTab={setMaxVisitedTab}
-            />
-            <RequiredDescription />
-            <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
-              <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '0.5rem', padding: '1.5rem 1.25rem' }}>
-                {tabNumber === ProjectTabs.Description && (
-                  <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />
-                )}
-                {tabNumber === ProjectTabs.Details && <ProjectDetailsForm thisIsRekProject={thisIsRekProject} />}
-                {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm maxVisitedTab={maxVisitedTab} />}
-                {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
-              </Box>
-              <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} onCancel={onCancel} />
+        <Form noValidate>
+          <PageHeader variant="h1">{project.title}</PageHeader>
+          <ProjectFormStepper
+            tabNumber={tabNumber}
+            setTabNumber={setTabNumber}
+            maxVisitedTab={maxVisitedTab}
+            setMaxVisitedTab={setMaxVisitedTab}
+          />
+          <RequiredDescription />
+          <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
+            <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '0.5rem', padding: '1.5rem 1.25rem' }}>
+              {tabNumber === ProjectTabs.Description && <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />}
+              {tabNumber === ProjectTabs.Details && <ProjectDetailsForm thisIsRekProject={thisIsRekProject} />}
+              {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm maxVisitedTab={maxVisitedTab} />}
+              {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
             </Box>
-          </Form>
-        }
+            <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} onCancel={onCancel} />
+          </Box>
+        </Form>
       </Formik>
     </>
   );

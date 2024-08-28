@@ -16,7 +16,7 @@ interface NFRProjectProps {
   coordinatingInstitution: ProjectOrganization;
 }
 
-export const NFRProject = ({
+export const CreateNfrProject = ({
   newProject,
   setNewProject,
   setShowProjectForm,
@@ -61,11 +61,9 @@ export const NFRProject = ({
           sx={{ width: 'fit-content', alignSelf: 'end', mt: '1rem' }}
           disabled={!selectedProject}
           onClick={onCreateProject}
+          endIcon={<EastOutlinedIcon />}
           data-testid={dataTestId.newProjectPage.startNfrProjectButton}>
-          <>
-            {t('project.form.start_registering_project')}
-            <EastOutlinedIcon sx={{ width: '1rem', ml: '0.5rem' }} />
-          </>
+          {t('project.form.start_registering_project')}
         </Button>
       </Box>
     </CreateProjectAccordion>

@@ -4,11 +4,11 @@ import { NfrProject } from '../../../types/project.types';
 import { getPeriodString } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
-interface NFRProjectOptionProps {
+interface NrfProjectOptionProps {
   project: NfrProject;
 }
 
-export const NFRProjectOption = ({ project }: NFRProjectOptionProps) => {
+export const NfrProjectOption = ({ project }: NrfProjectOptionProps) => {
   const { t } = useTranslation();
 
   return (
