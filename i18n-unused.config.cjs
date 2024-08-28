@@ -15,6 +15,7 @@ module.exports = {
     'privacy.disclosure_of_data.',
     'privacy.purpose.table.row',
     'privacy.registered_personal_data.',
+    'project.role_types.',
     'project.status.',
     'basic_data.institutions.sector_values.',
     'registration.contributors.types.',
