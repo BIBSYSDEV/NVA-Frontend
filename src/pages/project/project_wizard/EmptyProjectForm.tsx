@@ -1,21 +1,27 @@
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import { Box, Button, TextField } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SaveCristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { CreateProjectAccordion } from './CreateProjectAccordion';
 
 interface EmptyProjectFormProps {
-  title: string;
-  setTitle: (val: string) => void;
+  newProject: SaveCristinProject;
+  setNewProject: (val: SaveCristinProject) => void;
   setShowProjectForm: (val: boolean) => void;
 }
 
-export const EmptyProjectForm = ({ title, setTitle, setShowProjectForm }: EmptyProjectFormProps) => {
+export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm }: EmptyProjectFormProps) => {
   const { t } = useTranslation();
+  const [title, setTitle] = useState('');
   const disabled = !title;
 
-  const createProject = () => setShowProjectForm(true);
+  const createProject = () => {
+    setNewProject({ ...newProject, title: title });
+    setShowProjectForm(true);
+  };
 
   return (
     <CreateProjectAccordion

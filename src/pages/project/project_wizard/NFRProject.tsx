@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { SearchResponse } from '../../../types/common.types';
-import { NfrProject } from '../../../types/project.types';
+import { NfrProject, ProjectOrganization, SaveCristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
@@ -14,7 +14,19 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { CreateProjectAccordion } from './CreateProjectAccordion';
 import { NFRProjectOption } from './NRFProjectOption';
 
-export const NFRProject = () => {
+interface NFRProjectProps {
+  newProject: SaveCristinProject;
+  setNewProject: (val: SaveCristinProject) => void;
+  setShowProjectForm: (val: boolean) => void;
+  coordinatingInstitution: ProjectOrganization;
+}
+
+export const NFRProject = ({
+  newProject,
+  setNewProject,
+  setShowProjectForm,
+  coordinatingInstitution,
+}: NFRProjectProps) => {
   const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<NfrProject | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,6 +36,28 @@ export const NFRProject = () => {
     errorMessage: t('feedback.error.search'),
   });
   const nfrProjects = nfrProjectSearch?.hits ?? [];
+
+  const onCreateProject = () => {
+    if (!selectedProject) {
+      return;
+    }
+    setNewProject({
+      ...newProject,
+      title: getLanguageString(selectedProject.labels),
+      startDate: selectedProject.activeFrom,
+      endDate: selectedProject.activeTo,
+      coordinatingInstitution,
+      funding: [
+        {
+          type: 'UnconfirmedFunding',
+          source: selectedProject.source,
+          identifier: selectedProject.identifier,
+          labels: selectedProject.labels,
+        },
+      ],
+    });
+    setShowProjectForm(true);
+  };
 
   return (
     <CreateProjectAccordion
@@ -71,13 +105,14 @@ export const NFRProject = () => {
         {selectedProject && (
           <>
             <Typography sx={{ fontWeight: 'bold', mt: '1rem' }}>{t('common.project')}</Typography>
-            <Typography>{getLanguageString(selectedProject?.labels)}</Typography>
+            <Typography>{getLanguageString(selectedProject.labels)}</Typography>
           </>
         )}
         <Button
           variant="contained"
           sx={{ width: 'fit-content', alignSelf: 'end', mt: '1rem' }}
           disabled={!selectedProject}
+          onClick={onCreateProject}
           data-testid={dataTestId.newProjectPage.startNfrProjectButton}>
           <>
             {t('project.form.start_registering_project')}
