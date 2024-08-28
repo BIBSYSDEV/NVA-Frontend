@@ -2,11 +2,11 @@ import { Box, BoxProps, styled, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
-import { DeleteIconButton } from '../../pages/messages/components/DeleteIconButton';
-import { EditIconButton } from '../../pages/messages/components/EditIconButton';
 import { EditAffiliationModal } from '../../pages/registration/contributors_tab/components/EditAffiliationModal';
 import { Affiliation } from '../../types/contributor.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { DeleteIconButton } from '../buttons/DeleteIconButton';
+import { EditIconButton } from '../buttons/EditIconButton';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
 import { OrganizationHierarchy } from './OrganizationHierarchy';
 

@@ -2,8 +2,8 @@ import ErrorIcon from '@mui/icons-material/Error';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, BoxProps, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { DeleteIconButton } from '../../pages/messages/components/DeleteIconButton';
 import { dataTestId } from '../../utils/dataTestIds';
+import { DeleteIconButton } from '../buttons/DeleteIconButton';
 import { StyledOrganizationBox } from './OrganizationBox';
 
 interface UnconfirmedOrganizationBoxProps extends Pick<BoxProps, 'sx'> {

@@ -3,6 +3,7 @@ import { Box, Button, TableCell, TableRow, TextField, Typography } from '@mui/ma
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { DeleteIconButton } from '../../../components/buttons/DeleteIconButton';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ContributorName } from '../../../components/ContributorName';
 import {
@@ -14,7 +15,6 @@ import {
 } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFullName } from '../../../utils/user-helpers';
-import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { ProjectAddAffiliationModal } from '../ProjectAddAffiliationModal';
 import { ProjectOrganizationBox } from '../ProjectOrganizationBox';
 

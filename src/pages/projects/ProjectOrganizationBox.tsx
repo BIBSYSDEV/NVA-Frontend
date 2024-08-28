@@ -2,13 +2,13 @@ import { BoxProps, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
+import { DeleteIconButton } from '../../components/buttons/DeleteIconButton';
+import { EditIconButton } from '../../components/buttons/EditIconButton';
 import { AffiliationSkeleton } from '../../components/institution/AffiliationSkeleton';
 import { StyledOrganizationBox } from '../../components/institution/OrganizationBox';
 import { OrganizationHierarchy } from '../../components/institution/OrganizationHierarchy';
 import { ProjectContributorRole } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { DeleteIconButton } from '../messages/components/DeleteIconButton';
-import { EditIconButton } from '../messages/components/EditIconButton';
 import { ProjectEditAffiliationModal } from './ProjectEditAffiliationModal';
 
 interface ProjectOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
