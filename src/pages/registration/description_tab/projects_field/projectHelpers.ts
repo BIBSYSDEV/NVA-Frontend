@@ -1,5 +1,5 @@
-import { CristinProject, ProjectContributor, ProjectContributorIdentity } from '../../../../types/project.types';
-import { CristinPerson, User } from '../../../../types/user.types';
+import { CristinProject, ProjectContributor } from '../../../../types/project.types';
+import { User } from '../../../../types/user.types';
 import { toDateString } from '../../../../utils/date-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
@@ -20,7 +20,7 @@ export const getProjectPeriod = (project?: CristinProject) => {
   return dateInterval;
 };
 
-export const isProjectManager = (contributor: ProjectContributor) =>
+const isProjectManager = (contributor: ProjectContributor) =>
   contributor.roles.some((role) => role.type === 'ProjectManager');
 
 export const getProjectManagers = (contributors: ProjectContributor[]) =>
@@ -47,24 +47,6 @@ export const canEditProject = (user: User | null, project?: CristinProject) => {
 
   return isProjectManager || isProjectOwner;
 };
-
-export const projectContributorToCristinPerson = (
-  contributorIdentity?: ProjectContributorIdentity
-): CristinPerson | null =>
-  contributorIdentity
-    ? {
-        id: contributorIdentity.id,
-        identifiers: [],
-        names: [
-          { type: 'FirstName', value: contributorIdentity.firstName },
-          { type: 'LastName', value: contributorIdentity.lastName },
-        ],
-        affiliations: [],
-        employments: [],
-        background: {},
-        keywords: [],
-      }
-    : null;
 
 export const isRekProject = (project?: CristinProject) => project?.created.sourceShortName === 'REK';
 

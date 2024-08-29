@@ -1,4 +1,4 @@
-import { Step, StepButton, StepLabel, Stepper } from '@mui/material';
+import { Step, StepButton, StepLabel, Stepper, Theme, useMediaQuery } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { CristinProject, ProjectTabs } from '../../../types/project.types';
@@ -20,7 +20,7 @@ export const ProjectFormStepper = ({
 }: ProjectFormStepperProps) => {
   const { t } = useTranslation();
   const { errors, touched } = useFormikContext<CristinProject>();
-
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const tabErrors = getProjectTabErrors(errors, touched);
   const descriptionTabHasError = tabErrors[ProjectTabs.Description].length > 0;
   const detailsTabHasError = tabErrors[ProjectTabs.Details].length > 0;
@@ -34,7 +34,7 @@ export const ProjectFormStepper = ({
     }
   };
 
-  return (
+  return isMobile ? null : (
     <Stepper nonLinear activeStep={tabNumber}>
       <Step completed={maxVisitedTab >= ProjectTabs.Description}>
         <StepButton

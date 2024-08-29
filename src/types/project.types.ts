@@ -39,7 +39,7 @@ export type ProjectOrganization = Omit<Organization, 'partOf' | 'hasPart' | 'acr
 
 export type ProjectStatus = 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
 
-export interface ProjectContributorIdentity {
+interface ProjectContributorIdentity {
   type: 'Person';
   id: string;
   firstName: string;

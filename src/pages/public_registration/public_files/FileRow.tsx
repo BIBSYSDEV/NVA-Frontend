@@ -128,7 +128,9 @@ export const FileRow = ({
 
       <Box sx={{ gridArea: 'download' }}>
         {file.embargoDate && fileIsEmbargoed ? (
-          <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
+          <Typography
+            data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}
+            sx={{ display: 'flex', alignItems: 'center' }}>
             <LockIcon />
             {t('common.will_be_available')} {toDateString(file.embargoDate)}
           </Typography>
