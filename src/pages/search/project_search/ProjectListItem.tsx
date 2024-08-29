@@ -1,14 +1,15 @@
-import EditIcon from '@mui/icons-material/Edit';
-import { Box, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ProjectIcon } from '../../../components/ProjectIcon';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
+import { LocalStorageKey } from '../../../utils/constants';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { getEditProjectPath, getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
+import { EditIconButton } from '../../messages/components/EditIconButton';
 import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
 import {
   getProjectManagers,
@@ -31,10 +32,12 @@ export const ProjectListItem = ({
   deleteTooltip,
 }: ProjectListItemProps) => {
   const { t } = useTranslation();
+  const history = useHistory();
   const [openEditProject, setOpenEditProject] = useState(false);
 
   const projectManagers = getProjectManagers(project.contributors);
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
+  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
 
   return (
     <SearchListItem sx={{ borderLeftColor: 'project.main', flexDirection: 'row' }}>
@@ -69,14 +72,10 @@ export const ProjectListItem = ({
       <>
         {showEdit && (
           <>
-            <Tooltip title={t('project.edit_project')}>
-              <IconButton
-                sx={{ bgcolor: 'project.main', width: '1.5rem', height: '1.5rem' }}
-                size="small"
-                onClick={() => setOpenEditProject(true)}>
-                <EditIcon fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
+            <EditIconButton
+              tooltip={t('project.edit_project')}
+              onClick={() => (betaEnabled ? history.push(getEditProjectPath(project.id)) : setOpenEditProject(true))}
+            />
             <ProjectFormDialog
               open={openEditProject}
               currentProject={project}

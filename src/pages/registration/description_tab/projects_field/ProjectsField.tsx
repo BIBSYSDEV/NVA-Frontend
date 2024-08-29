@@ -1,4 +1,5 @@
-import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import AddIcon from '@mui/icons-material/Add';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
@@ -9,8 +10,10 @@ import { AutocompleteProjectOption } from '../../../../components/AutocompletePr
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
+import { LocalStorageKey } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { UrlPathTemplate } from '../../../../utils/urlPaths';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
 import { HelperTextModal } from '../../HelperTextModal';
 import { ProjectItem } from './ProjectItem';
@@ -29,6 +32,7 @@ export const ProjectsField = () => {
   });
 
   const projects = projectsQuery.data?.hits ?? [];
+  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
 
   return (
     <>
@@ -103,22 +107,11 @@ export const ProjectsField = () => {
                   renderTags={() => null}
                 />
 
-                <Trans
-                  i18nKey="registration.description.new_project_helper_text"
-                  components={[
-                    <Typography key="1">
-                      <span style={{ fontWeight: 'bold' }} />
-                    </Typography>,
-                  ]}
-                />
+                <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mt: '0.5rem' }}>
+                  <Typography sx={{ fontWeight: 'bold' }}>
+                    {t('registration.description.new_project_helper_text')}
+                  </Typography>
 
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Button
-                    data-testid={dataTestId.registrationWizard.description.createProjectButton}
-                    onClick={() => setOpenNewProjectDialog(true)}
-                    startIcon={<AddIcon />}>
-                    {t('project.create_new_project')}
-                  </Button>
                   <HelperTextModal
                     modalTitle={t('project.create_project')}
                     modalDataTestId={dataTestId.registrationWizard.description.createProjectModal}>
@@ -127,6 +120,25 @@ export const ProjectsField = () => {
                       components={[<Typography key="1" paragraph />]}
                     />
                   </HelperTextModal>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  {betaEnabled ? (
+                    <Button
+                      data-testid={dataTestId.registrationWizard.description.createProjectButton}
+                      href={UrlPathTemplate.ProjectsNew}
+                      target="_blank"
+                      startIcon={<AddIcon />}>
+                      {t('project.create_new_project')}
+                    </Button>
+                  ) : (
+                    <Button
+                      data-testid={dataTestId.registrationWizard.description.createProjectButton}
+                      onClick={() => setOpenNewProjectDialog(true)}
+                      startIcon={<AddIcon />}>
+                      {t('project.create_new_project')}
+                    </Button>
+                  )}
+                  {betaEnabled && <OpenInNewIcon />}
                 </Box>
                 <ProjectFormDialog
                   open={openNewProjectDialog}
