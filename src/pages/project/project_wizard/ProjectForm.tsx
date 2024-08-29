@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import { authenticatedApiRequest2 } from '../../../api/apiRequest';
 import { PageHeader } from '../../../components/page_layout_components/PageHeader';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { SkipLink } from '../../../components/SkipLink';
+import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { setNotification } from '../../../redux/notificationSlice';
 import { CristinProject, ProjectTabs, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -87,7 +88,7 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
         <Form noValidate>
           <PageHeader>
             <ProjectIconHeader projectStatus={projectWithId ? projectWithId.status : undefined} />
-            <Typography variant={'h1'}>{project.title}</Typography>
+            <TruncatableTypography variant="h1">{project.title}</TruncatableTypography>
           </PageHeader>
           <ProjectFormStepper
             tabNumber={tabNumber}
