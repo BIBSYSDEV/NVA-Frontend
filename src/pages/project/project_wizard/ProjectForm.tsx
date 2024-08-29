@@ -6,15 +6,17 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest2 } from '../../../api/apiRequest';
-import { PageHeader } from '../../../components/PageHeader';
+import { PageHeader } from '../../../components/page_layout_components/PageHeader';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { SkipLink } from '../../../components/SkipLink';
+import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { setNotification } from '../../../redux/notificationSlice';
 import { CristinProject, ProjectTabs, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { getProjectPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { ProjectIconHeader } from '../components/ProjectIconHeader';
 import { ProjectConnectionsForm } from './ProjectConnectionsForm';
 import { ProjectContributorsForm } from './ProjectContributorsForm';
 import { ProjectDescriptionForm } from './ProjectDescriptionForm';
@@ -84,7 +86,10 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik initialValues={project} validationSchema={basicProjectValidationSchema} onSubmit={submitProjectForm}>
         <Form noValidate>
-          <PageHeader variant="h1">{project.title}</PageHeader>
+          <PageHeader>
+            <ProjectIconHeader projectStatus={projectWithId ? projectWithId.status : undefined} />
+            <TruncatableTypography variant="h1">{project.title}</TruncatableTypography>
+          </PageHeader>
           <ProjectFormStepper
             tabNumber={tabNumber}
             setTabNumber={setTabNumber}
