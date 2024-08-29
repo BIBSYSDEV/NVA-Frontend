@@ -100,6 +100,7 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
       />
       <StyledRightAlignedFooter>
         <Button
+          sx={{ mt: '1rem' }}
           data-testid={dataTestId.projectForm.selectContributorButton}
           disabled={!selectedPerson}
           onClick={addContributor}
