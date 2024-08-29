@@ -430,7 +430,7 @@ export const FilesTableRow = ({
                           data-testid={dataTestId.registrationWizard.files.legalNoteField}
                           variant="filled"
                           fullWidth
-                          label={t('registration.files_and_license.legal_note')}
+                          label={t('registration.files_and_license.public_note')}
                           multiline
                           disabled={disabled}
                           helperText={<ErrorMessage name={field.name} />}
