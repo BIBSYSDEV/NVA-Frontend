@@ -100,7 +100,15 @@ export const dataTestId = {
     personRegisterLink: 'person-register-link',
     personRegisterSearchBar: 'person-register-search-bar',
   },
-  common: { cancel: 'cancel', pagination: 'pagination', save: 'save', showMoreButton: 'show-more-button' },
+  common: {
+    cancel: 'cancel',
+    pagination: 'pagination',
+    save: 'save',
+    showMoreButton: 'show-more-button',
+    previousButton: 'previous-button',
+    nextButton: 'next-button',
+    doubleNextButton: 'double-next-button',
+  },
   confirmDialog: {
     acceptButton: 'accept-button',
     cancelButton: 'cancel-button',
@@ -219,6 +227,14 @@ export const dataTestId = {
     titleField: 'project-title-field',
     selectContributorButton: 'select-contributor-button',
   },
+  newProjectPage: {
+    titleInput: 'project-title-input',
+    startEmptyProjectButton: 'start-empty-project-button',
+    createEmptyProjectAccordion: 'create-empty-project-accordion',
+    createNFRProjectAccordion: 'create-nfr-project-accordion',
+    nrfProjectSearchInput: 'nrf-project-search-input',
+    startNfrProjectButton: 'start-nfr-project-button',
+  },
   projectLandingPage: {
     editProjectButton: 'edit-project-button',
     generalInfoBox: 'general-info',
@@ -234,6 +250,12 @@ export const dataTestId = {
       projectErrorStep: 'project-error-tab',
       projectContributorsStepButton: 'nav-tabpanel-project-contributors',
       projectConnectionsStepButton: 'nav-tabpanel-project-connections',
+    },
+    formActions: {
+      previousTabButton: 'previous-tab-button',
+      cancelEditProjectButton: 'cancel-edit-project-button',
+      saveProjectButton: 'save-project-button',
+      nextTabButton: 'next-tab-button',
     },
     selectContributorType: 'select-contributor-type',
     descriptionPanel: {

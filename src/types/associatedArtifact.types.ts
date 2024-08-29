@@ -35,6 +35,7 @@ export interface AssociatedFile {
   legalNote?: string;
   rightsRetentionStrategy: FileRrs;
   uploadDetails?: UserUploadDetails | ImportUploadDetails;
+  publishedDate?: string;
 }
 
 export interface UserUploadDetails {

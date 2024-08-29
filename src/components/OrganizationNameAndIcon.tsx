@@ -31,7 +31,7 @@ export const OrganizationNameAndIcon = ({ id, sx }: OrganizationNameAndIconProps
       {organizationQuery.isLoading ? (
         <Skeleton sx={{ width: '2.5rem' }} />
       ) : displayName ? (
-        <Tooltip title={orgName}>
+        <Tooltip title={orgName || displayName}>
           <Typography>{displayName}</Typography>
         </Tooltip>
       ) : (

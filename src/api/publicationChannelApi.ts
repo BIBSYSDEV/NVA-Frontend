@@ -71,7 +71,7 @@ export const fetchSeries = async (identifier: string) => {
   return fetchSeriesResponse.data;
 };
 
-export const defaultChannelSearchSize = 5;
+export const defaultChannelSearchSize = 50;
 
 export const searchForSeries = async (query: string, year: string, size = defaultChannelSearchSize) => {
   const searchForSeriesResponse = await apiRequest2<SearchResponse2<Series>>({

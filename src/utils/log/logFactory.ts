@@ -22,18 +22,21 @@ export function generateLog(registration: Registration, tickets: Ticket[], t: TF
 }
 
 const logTypeOrder: LogEntryType[] = ['Import', 'Created', 'MetadataPublished', 'PublishingRequest', 'DoiRequest'];
+const msMargin = 5_000; // 5 seconds
 
 const sortLogEntries = (a: LogEntry, b: LogEntry) => {
   const dateA = new Date(a.modifiedDate);
   const dateB = new Date(b.modifiedDate);
 
-  // Ignore date differences less than a second
-  // This is done to ensure a logical order if the imported posts have minor differences for timestamps
-  const timeA = Math.floor(dateA.getTime() / 1000);
-  const timeB = Math.floor(dateB.getTime() / 1000);
+  // Ignore date differences less than the margin
+  // This is done to ensure a logical order if imported posts have some minor differences for timestamps
+  const timeA = Math.floor(dateA.getTime());
+  const timeB = Math.floor(dateB.getTime());
+  const timeDiff = Math.abs(timeA - timeB);
 
-  if (timeA < timeB) return -1;
-  if (timeA > timeB) return 1;
+  if (timeDiff > msMargin) {
+    return timeA - timeB;
+  }
 
   const indexA = logTypeOrder.indexOf(a.type);
   const indexB = logTypeOrder.indexOf(b.type);

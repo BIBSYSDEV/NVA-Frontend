@@ -24,6 +24,7 @@ import {
   OtherRelease,
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
+import { DegreeRegistration } from '../types/publication_types/degreeRegistration.types';
 import {
   ExhibitionBasic,
   ExhibitionMentionInPublication,
@@ -190,6 +191,23 @@ export const getFormattedRegistration = (registration: Registration) => {
             time: time?.from || time?.to ? { ...time, type: 'Period' } : null,
             agent: agent?.name ? { ...agent, type: 'UnconfirmedOrganization' } : null,
             place: place?.label || place?.country ? { ...place, type: 'UnconfirmedPlace' } : null,
+          },
+        },
+      },
+    };
+  } else if (isDegree(type)) {
+    const degreeRegistration = formattedRegistration as DegreeRegistration;
+    const { course } = degreeRegistration.entityDescription.reference.publicationContext;
+
+    formattedRegistration = {
+      ...degreeRegistration,
+      entityDescription: {
+        ...degreeRegistration.entityDescription,
+        reference: {
+          ...degreeRegistration.entityDescription.reference,
+          publicationContext: {
+            ...degreeRegistration.entityDescription.reference.publicationContext,
+            course: course?.code ? { ...course, type: 'UnconfirmedCourse' } : undefined,
           },
         },
       },

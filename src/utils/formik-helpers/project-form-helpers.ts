@@ -13,6 +13,11 @@ interface ProjectTabErrors {
   [ProjectTabs.Contributors]: string[];
 }
 
+export const hasErrors = (errors: FormikErrors<CristinProject>, touched?: FormikTouched<CristinProject>) => {
+  const tabErrors = getProjectTabErrors(errors, touched);
+  return Object.values(tabErrors).some((arr) => arr.length > 0);
+};
+
 export const getProjectTabErrors = (errors: FormikErrors<CristinProject>, touched?: FormikTouched<CristinProject>) => {
   const tabErrors: ProjectTabErrors = {
     [ProjectTabs.Description]: getErrorMessages<CristinProject>(
