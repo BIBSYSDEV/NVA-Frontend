@@ -2,15 +2,14 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
-import { ProjectIcon } from '../../../components/ProjectIcon';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
 import { LocalStorageKey } from '../../../utils/constants';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getEditProjectPath, getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
-import { ProjectIconHeader } from '../../project/components/ProjectIconHeader';
 import { EditIconButton } from '../../messages/components/EditIconButton';
+import { ProjectIconHeader } from '../../project/components/ProjectIconHeader';
 import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
 import {
   getProjectManagers,
