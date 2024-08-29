@@ -59,7 +59,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
   const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
 
   function canEditFile(file: AssociatedFile) {
-    if (isProtectedDegree && isEmbargoed(file.embargoDate)) {
+    if (isProtectedDegree && isEmbargoed(file.embargoDate) && file.type === FileType.PublishedFile) {
       return !!user?.isEmbargoThesisCurator;
     }
 

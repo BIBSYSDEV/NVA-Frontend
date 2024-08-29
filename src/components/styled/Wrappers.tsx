@@ -16,9 +16,22 @@ export const StyledFormFooter = styled(Box)({
   padding: '0.25rem',
 });
 
+export const HorizontalBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+});
+
 export const StyledRightAlignedWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
+});
+
+export const WizardStartPageWrapper = styled(Box)({
+  maxWidth: '55rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.25rem',
 });
 
 export const StyledSelectWrapper = styled(Box)(({ theme }) => ({
