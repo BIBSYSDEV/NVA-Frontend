@@ -1,8 +1,8 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ProjectContributor, ProjectContributorType } from '../../types/project.types';
-import { getLanguageString } from '../../utils/translation-helpers';
 import { getResearchProfilePath } from '../../utils/urlPaths';
 import {
   getProjectManagers,
@@ -72,12 +72,14 @@ const ContributorList = ({ contributors, projectRole }: ContributorListProps) =>
           </MuiLink>
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          {contributor.roles.map((contributorRole, j) => {
+          {contributor.roles.map((contributorRole) => {
             if (contributorRole.type === projectRole) {
               return (
-                <Typography variant="body2" key={j}>
-                  {getLanguageString(contributorRole.affiliation.labels)}
-                </Typography>
+                <AffiliationHierarchy
+                  key={contributorRole.affiliation.id}
+                  unitUri={contributorRole.affiliation.id}
+                  condensed
+                />
               );
             }
             return null;
