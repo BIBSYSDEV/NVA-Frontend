@@ -86,9 +86,9 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
       <Formik initialValues={project} validationSchema={basicProjectValidationSchema} onSubmit={submitProjectForm}>
         <Form noValidate>
           <PageHeader>
-                <ProjectIconHeader projectStatus={project.status} />
-                <Typography variant={'h1'}>{project.title}</Typography>
-              </PageHeader>
+            <ProjectIconHeader projectStatus={projectWithId ? projectWithId.status : undefined} />
+            <Typography variant={'h1'}>{project.title}</Typography>
+          </PageHeader>
           <ProjectFormStepper
             tabNumber={tabNumber}
             setTabNumber={setTabNumber}

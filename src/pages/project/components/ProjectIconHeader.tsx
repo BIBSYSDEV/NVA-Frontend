@@ -14,9 +14,9 @@ export const ProjectIconHeader = ({ projectStatus }: ProjectIconHeaderProps) => 
     <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mb: '0.5rem' }}>
       <ProjectIcon />
       <Typography>{t('project.project')}</Typography>
-      {projectStatus && (
-        <Typography sx={{ fontWeight: 'bold' }}>{t(`project.status.${projectStatus}`).toUpperCase()}</Typography>
-      )}
+      <Typography sx={{ fontWeight: 'bold' }}>
+        {projectStatus ? t(`project.status.${projectStatus}`).toUpperCase() : t('common.new').toUpperCase()}
+      </Typography>
     </Box>
   );
 };
