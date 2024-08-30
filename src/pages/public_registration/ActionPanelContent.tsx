@@ -46,8 +46,8 @@ export const ActionPanelContent = ({
   const publishingRequestTickets = tickets.filter(
     (ticket) => ticket.type === 'PublishingRequest'
   ) as PublishingTicket[];
-  const doiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
-  const currentSupportTicket = tickets.findLast((ticket) => ticket.type === 'GeneralSupportCase');
+  const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
+  const newestSupportTicket = tickets.findLast((ticket) => ticket.type === 'GeneralSupportCase');
 
   const addMessage = async (ticketId: string, message: string) => {
     const addMessageResponse = await addTicketMessage(ticketId, message);
@@ -104,14 +104,14 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {(canCreateTickets || doiRequestTicket) && (
+      {(canCreateTickets || newestDoiRequestTicket) && (
         <ErrorBoundary>
           {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
             <DoiRequestAccordion
               refetchData={refetchData}
               isLoadingData={isLoadingData}
               registration={registration}
-              doiRequestTicket={doiRequestTicket}
+              doiRequestTicket={newestDoiRequestTicket}
               userIsCurator={!!user?.isDoiCurator && canBeCuratorForThisCustomer}
               addMessage={addMessage}
             />
@@ -119,12 +119,12 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {(canCreateTickets || currentSupportTicket) && (
+      {(canCreateTickets || newestSupportTicket) && (
         <ErrorBoundary>
           <SupportAccordion
             userIsCurator={!!user?.isSupportCurator && canBeCuratorForThisCustomer}
             registration={registration}
-            supportTicket={currentSupportTicket}
+            supportTicket={newestSupportTicket}
             addMessage={addMessage}
             refetchData={refetchData}
           />
