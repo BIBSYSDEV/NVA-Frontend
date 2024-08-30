@@ -50,7 +50,7 @@ export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 
 export interface ProjectContributorRole {
   type: ProjectContributorType;
-  affiliation: ProjectOrganization;
+  affiliation: ProjectOrganization | undefined;
 }
 
 export interface ProjectContributor {

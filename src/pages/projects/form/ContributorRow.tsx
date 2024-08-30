@@ -33,15 +33,17 @@ export const ContributorRow = ({
   const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
 
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
-  const affiliationError = contributorErrors?.roles?.[0]?.affiliation.id;
+  const affiliationError = contributorErrors?.roles?.[0]?.affiliation?.id;
   const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
   const baseFieldRoles = `${baseFieldName}.${ProjectContributorFieldName.Roles}`;
   const rolesString = isProjectManager ? t('project.project_manager') : t('project.project_contributor');
 
+  const hasEmptyAffiliation = contributor.roles.some((r) => r.affiliation === undefined);
+
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const removeAffiliation = (affiliationId: string) => {
-    const roleToRemoveIndex = contributor.roles.findIndex((role) => role.affiliation.id === affiliationId);
+    const roleToRemoveIndex = contributor.roles.findIndex((role) => role.affiliation?.id === affiliationId);
     const newRoles = [...contributor.roles];
     newRoles.splice(roleToRemoveIndex, 1);
 
@@ -65,7 +67,7 @@ export const ContributorRow = ({
         <ContributorName
           id={contributor.identity.id}
           name={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
-          hasVerifiedAffiliation={contributor.roles?.some((role) => role.affiliation.type === 'Organization')}
+          hasVerifiedAffiliation={contributor.roles?.some((role) => role.affiliation?.type === 'Organization')}
           sx={{ width: '15rem', marginTop: '0.5rem' }}
         />
       </TableCell>
@@ -73,16 +75,17 @@ export const ContributorRow = ({
         <>
           {contributor.roles
             .filter((r) => (isProjectManager ? r.type === 'ProjectManager' : r.type !== 'ProjectManager'))
+            .filter((r) => r.affiliation && r.affiliation.id)
             .map((role) => (
               <ProjectOrganizationBox
-                key={role.affiliation.id}
-                unitUri={role.affiliation.id}
+                key={role.affiliation!.id}
+                unitUri={role.affiliation!.id}
                 authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
                 contributorRoles={contributor.roles}
                 baseFieldName={baseFieldRoles}
                 sx={{ width: '100%', marginBottom: '0.5rem' }}
                 removeAffiliation={
-                  contributor.roles.length === 1 ? undefined : () => removeAffiliation(role.affiliation.id)
+                  contributor.roles.length === 1 ? undefined : () => removeAffiliation(role.affiliation!.id)
                 }
                 disabledTooltip={
                   contributor.roles.length === 1 ? t('project.affiliation_modal.cannot_delete_only_affiliation') : ''
@@ -90,7 +93,7 @@ export const ContributorRow = ({
                 showDeleteButton={role.type !== 'ProjectManager' && contributor.roles.length > 1}
               />
             ))}
-          {!isProjectManager && (
+          {(!isProjectManager || hasEmptyAffiliation) && (
             <Button
               variant="outlined"
               sx={{ padding: '0.1rem 0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}

@@ -36,16 +36,14 @@ export const ProjectAddAffiliationModal = ({
     // Avoid adding same unit twice
     if (
       contributorRoles.some(
-        (role) => role.affiliation.type === 'Organization' && role.affiliation.id === newAffiliationId
+        (role) => role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId
       )
     ) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 
-    const emptyRoleIndex = contributorRoles.findIndex(
-      (role) => role.affiliation.type === 'Organization' && role.affiliation.id === ''
-    );
+    const emptyRoleIndex = contributorRoles.findIndex((role) => role.affiliation === undefined);
 
     const newAffiliation: ProjectOrganization = {
       type: 'Organization',

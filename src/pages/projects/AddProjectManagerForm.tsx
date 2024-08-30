@@ -45,6 +45,7 @@ export const AddProjectManagerForm = ({ toggleModal }: AddProjectManagerFormProp
       return;
     }
 
+    // The person chosen to be project manager might already exist in the project contributor list
     const existingContributorIndex = contributors.findIndex(
       (contributor) => contributor.identity.id === selectedPerson.id
     );
@@ -65,16 +66,26 @@ export const AddProjectManagerForm = ({ toggleModal }: AddProjectManagerFormProp
       };
     }
 
-    newContributor.roles = [
-      ...newContributor.roles,
-      {
-        type: 'ProjectManager',
-        affiliation: {
-          type: 'Organization',
-          id: selectedPerson.affiliations[0].organization, // We can only choose one affiliation for projectManager
-        },
-      } as ProjectContributorRole,
-    ];
+    if (selectedPerson.affiliations.length === 1) {
+      newContributor.roles = [
+        ...newContributor.roles,
+        {
+          type: 'ProjectManager',
+          affiliation: {
+            type: 'Organization',
+            id: selectedPerson.affiliations[0].organization, // We can only choose one affiliation for projectManager
+          },
+        } as ProjectContributorRole,
+      ];
+    } else {
+      newContributor.roles = [
+        ...newContributor.roles,
+        {
+          type: 'ProjectManager',
+          affiliation: undefined,
+        } as ProjectContributorRole,
+      ];
+    }
 
     const newContributors = [...values.contributors];
 

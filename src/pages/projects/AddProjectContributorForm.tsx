@@ -4,7 +4,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
-import { CristinProject, ProjectContributor, ProjectFieldName } from '../../types/project.types';
+import {
+  CristinProject,
+  ProjectContributor,
+  ProjectContributorRole,
+  ProjectFieldName,
+} from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getValueByKey } from '../../utils/user-helpers';
@@ -16,6 +21,7 @@ interface AddProjectContributorFormProps {
 export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributorFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
+  const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
@@ -24,22 +30,55 @@ export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributor
       return;
     }
 
-    const newContributor: ProjectContributor = {
-      identity: {
-        type: 'Person',
-        id: selectedPerson.id,
-        firstName: getValueByKey('FirstName', selectedPerson.names),
-        lastName: getValueByKey('LastName', selectedPerson.names),
-      },
-      roles: selectedPerson.affiliations.map((affiliation) => {
-        return {
-          type: 'ProjectParticipant',
-          affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
-        };
-      }),
-    };
+    // The person might already exist as a project manager
+    const existingContributorIndex = contributors.findIndex(
+      (contributor) => contributor.identity.id === selectedPerson.id
+    );
 
-    const newContributors = values.contributors ? [...values.contributors, newContributor] : [newContributor];
+    let newContributor: ProjectContributor;
+
+    if (existingContributorIndex > -1) {
+      newContributor = { ...contributors[existingContributorIndex] };
+    } else {
+      newContributor = {
+        identity: {
+          type: 'Person',
+          id: selectedPerson.id,
+          firstName: getValueByKey('FirstName', selectedPerson.names),
+          lastName: getValueByKey('LastName', selectedPerson.names),
+        },
+        roles: [],
+      };
+    }
+
+    // Adding a new role with several affiliations
+    if (selectedPerson.affiliations.length > 0) {
+      newContributor.roles = [...newContributor.roles].concat(
+        selectedPerson.affiliations.map((affiliation) => {
+          return {
+            type: 'ProjectParticipant',
+            affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
+          };
+        })
+      );
+    } else {
+      // Adding a new role without any affiliations
+      newContributor.roles = [
+        ...newContributor.roles,
+        {
+          type: 'ProjectParticipant',
+          affiliation: undefined,
+        } as ProjectContributorRole,
+      ];
+    }
+
+    const newContributors = [...values.contributors];
+
+    if (existingContributorIndex > -1) {
+      newContributors[existingContributorIndex] = newContributor;
+    } else {
+      newContributors.push(newContributor);
+    }
 
     setFieldValue(ProjectFieldName.Contributors, newContributors);
     toggleModal();
