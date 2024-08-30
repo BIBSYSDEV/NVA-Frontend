@@ -45,10 +45,23 @@ export const ContributorRow = ({
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const removeAffiliation = (affiliationId: string) => {
-    const roleToRemoveIndex = contributor.roles.findIndex((role) => role.affiliation?.id === affiliationId);
-    const newRoles = [...contributor.roles];
-    newRoles.splice(roleToRemoveIndex, 1);
+    const roleWithAffiliationIndex = contributor.roles.findIndex((role) => role.affiliation?.id === affiliationId);
+    const roleWithAffiliation = contributor.roles[roleWithAffiliationIndex];
+    const contributorHasOtherRolesWithSameType = contributor.roles
+      .filter((role) => role.affiliation?.id !== affiliationId)
+      .some((role) => role.type === roleWithAffiliation.type);
 
+    const newRoles = [...contributor.roles];
+
+    // If it's not the last role it's unproblematic to remove the whole role
+    if (contributorHasOtherRolesWithSameType) {
+      newRoles.splice(roleWithAffiliationIndex, 1);
+    } else {
+      // Since we're just supposed to remove the affiliation, we have to keep the last role of its type
+      const newRole = { ...roleWithAffiliation };
+      newRole.affiliation = undefined;
+      newRoles[roleWithAffiliationIndex] = newRole;
+    }
     setFieldValue(baseFieldRoles, newRoles);
   };
 
@@ -86,13 +99,7 @@ export const ContributorRow = ({
                 contributorRoles={contributor.roles}
                 baseFieldName={baseFieldRoles}
                 sx={{ width: '100%', marginBottom: '0.5rem' }}
-                removeAffiliation={
-                  contributor.roles.length === 1 ? undefined : () => removeAffiliation(role.affiliation!.id)
-                }
-                disabledTooltip={
-                  contributor.roles.length === 1 ? t('project.affiliation_modal.cannot_delete_only_affiliation') : ''
-                }
-                showDeleteButton={role.type !== 'ProjectManager' && contributor.roles.length > 1}
+                removeAffiliation={() => removeAffiliation(role.affiliation!.id)}
               />
             ))}
           {(!isProjectManager || hasEmptyAffiliation) && (
