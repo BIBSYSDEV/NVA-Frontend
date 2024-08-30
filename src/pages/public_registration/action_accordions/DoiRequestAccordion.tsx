@@ -404,6 +404,7 @@ export const DoiRequestAccordion = ({
             <Divider sx={{ my: '0.5rem', bgcolor: 'primary.main' }} />
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <IconButton
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.showMoreDoiActionsButton}
                 size="small"
                 color="primary"
                 onClick={() => setShowMoreActions((open) => !open)}
