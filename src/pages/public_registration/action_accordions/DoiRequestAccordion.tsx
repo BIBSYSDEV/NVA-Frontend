@@ -38,7 +38,7 @@ import { TicketAssignee } from './TicketAssignee';
 interface DoiRequestAccordionProps {
   registration: Registration;
   refetchData: () => void;
-  doiRequestTicket: Ticket | null;
+  doiRequestTicket?: Ticket;
   userIsCurator: boolean;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
