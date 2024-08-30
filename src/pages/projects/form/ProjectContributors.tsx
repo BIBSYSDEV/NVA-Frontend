@@ -26,7 +26,7 @@ export const ProjectContributors = () => {
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
   const [openAddContributorView, setOpenAddContributorView] = useState(false);
-  const { values } = useFormikContext<CristinProject>();
+  const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const contributorsWithNonProjectManagerRole = contributors.filter((contributor) =>
     contributor.roles.some((role) => role.type !== 'ProjectManager')
@@ -38,6 +38,27 @@ export const ProjectContributors = () => {
 
   const toggleOpenAddContributorView = () => setOpenAddContributorView(!openAddContributorView);
   const hasUnidentifiedContributor = contributors.some((contributor) => !contributor.identity.id);
+
+  const removeProjectParticipant = (name: string, remove: (index: number) => any, contributorIndex: number) => {
+    const contributor = contributors[contributorIndex];
+    const hasProjectManagerRole = contributor.roles.some((role) => role.type === 'ProjectManager');
+
+    // Contributor also has Project manager role: Only delete the others
+    if (hasProjectManagerRole) {
+      const projectManagerIndex = contributor.roles.findIndex((role) => role.type === 'ProjectManager');
+      const projectManagerRole = contributor.roles[projectManagerIndex];
+
+      const newContributors = [...contributors];
+      const newContributor = { ...contributors[contributorIndex] };
+      newContributor.roles = [projectManagerRole];
+      newContributors[contributorIndex] = newContributor;
+
+      setFieldValue(name, newContributors);
+    } else {
+      // Does not have project manager role: Delete the whole contributor
+      remove(contributorIndex);
+    }
+  };
 
   console.log('contributors', contributors);
 
@@ -88,7 +109,7 @@ export const ProjectContributors = () => {
                             contributorIndex={contributorIndex}
                             baseFieldName={`${name}[${contributorIndex}]`}
                             contributor={contributor}
-                            removeContributor={() => remove(contributorIndex)}
+                            removeContributor={() => removeProjectParticipant(name, remove, contributorIndex)}
                           />
                         );
                       })}
