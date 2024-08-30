@@ -43,7 +43,7 @@ export const ActionPanelContent = ({
 
   const canBeCuratorForThisCustomer = userHasSameCustomerAsRegistration(user, registration);
 
-  const doiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest') ?? null;
+  const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
   const publishingRequestTickets = tickets.filter(
     (ticket) => ticket.type === 'PublishingRequest'
   ) as PublishingTicket[];
