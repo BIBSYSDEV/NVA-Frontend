@@ -1458,7 +1458,7 @@
       "reject_publish_request": "Avvis publisering av fil",
       "reject_publish_request_description": "<0>Oppgi begrunnelse på hvorfor fil(ene) blir avvist for publisering.</0><0>Denne begrunnelsen blir lagret i NVA og synlig for både registratoren og bidragsytere som er tilknyttet forskningsresultatet.</0><0>Når du avviser fil(ene), så fjernes de fra presentasjonssiden til forskningsresultatet. Du og registrator kan publisere de senere eller slette de, ved å redigere forskningsresultatet.</0>",
       "request_doi": "Be om DOI",
-      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
+      "request_doi_description": "<0>Tildeling av DOI (Digital Object Identifier) betyr at metadata om forskningsresultatet blir delt internasjonalt, derfor vil en kurator se over registreringen før DOI blir tildelt.</0><0>Du kan legge ved en melding til kurator her.</0>",
       "reserve_doi": "Reserver DOI",
       "reserved_doi": "Reservert DOI",
       "result_not_published": "Resultatet er ikke publisert",

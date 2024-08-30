@@ -297,7 +297,11 @@ export const DoiRequestAccordion = ({
           onClose={toggleRequestDoiModal}
           headingText={t('registration.public_page.request_doi')}
           dataTestId={dataTestId.registrationLandingPage.tasksPanel.requestDoiModal}>
-          <Typography paragraph>{t('registration.public_page.request_doi_description')}</Typography>
+          <Trans
+            t={t}
+            i18nKey="registration.public_page.request_doi_description"
+            components={[<Typography paragraph key="1" />]}
+          />
           <TextField
             variant="outlined"
             multiline
