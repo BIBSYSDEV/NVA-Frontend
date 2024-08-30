@@ -1131,7 +1131,7 @@
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "error": {
-      "there_can_only_be_one_project_manager_choose_different_role": "Eit prosjekt kan kun ha ein prosjektleiar. Vel ei anna rolle."
+      "there_can_only_be_one_project_manager": "Eit prosjekt kan kun ha ein prosjektleiar."
     },
     "form": {
       "add_financing": "Legg til finansiering",

@@ -7,17 +7,21 @@ import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 import { LastRegistrationTableCellContent } from './LastRegistrationTableCellContent';
+import { SelectAffiliationCheckbox } from './SelectAffiliationCheckbox';
+import { SelectAffiliationRadioButton } from './SelectAffiliationRadioButton';
 
 interface CristinPersonTableRowProps {
   cristinPerson: CristinPerson;
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson | undefined) => void;
+  addProjectManager?: boolean;
 }
 
 export const CristinPersonTableRow = ({
   cristinPerson,
   setSelectedPerson,
   selectedPerson,
+  addProjectManager = false,
 }: CristinPersonTableRowProps) => {
   const { t } = useTranslation();
   const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
@@ -37,7 +41,7 @@ export const CristinPersonTableRow = ({
               } else {
                 setSelectedPerson({
                   ...cristinPerson,
-                  affiliations: activeAffiliations,
+                  affiliations: addProjectManager ? [activeAffiliations[0]] : activeAffiliations,
                 });
               }
             }}
@@ -66,32 +70,23 @@ export const CristinPersonTableRow = ({
                     alignItems: 'center',
                     gap: '0.25rem',
                   }}>
-                  <IconButton
-                    data-testid={dataTestId.registrationWizard.contributors.selectAffiliationForContributor}
-                    onClick={() => {
-                      if (!selectedPerson) {
-                        return;
-                      }
-                      const newAffiliations = affiliationIsSelected
-                        ? selectedPerson.affiliations.filter((a) => a.organization !== affiliation.organization)
-                        : [...selectedPerson.affiliations, affiliation];
-
-                      const personWithAffiliation: CristinPerson = {
-                        ...selectedPerson,
-                        affiliations: newAffiliations,
-                      };
-                      setSelectedPerson(personWithAffiliation);
-                    }}
-                    color="primary"
-                    size="small"
-                    disabled={!personIsSelected}
-                    title={t('registration.contributors.select_affiliation')}>
-                    {affiliationIsSelected ? (
-                      <CheckCircle fontSize="small" color="info" />
-                    ) : (
-                      <CircleOutlined fontSize="small" />
-                    )}
-                  </IconButton>
+                  {addProjectManager ? (
+                    <SelectAffiliationRadioButton
+                      personIsSelected={personIsSelected}
+                      affiliation={affiliation}
+                      selectedPerson={selectedPerson}
+                      setSelectedPerson={setSelectedPerson}
+                      affiliationIsSelected={affiliationIsSelected}
+                    />
+                  ) : (
+                    <SelectAffiliationCheckbox
+                      personIsSelected={personIsSelected}
+                      affiliation={affiliation}
+                      selectedPerson={selectedPerson}
+                      setSelectedPerson={setSelectedPerson}
+                      affiliationIsSelected={affiliationIsSelected}
+                    />
+                  )}
                   <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                 </Box>
               );

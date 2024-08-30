@@ -1131,7 +1131,7 @@
     "create_project": "New project",
     "edit_project": "Edit project",
     "error": {
-      "there_can_only_be_one_project_manager_choose_different_role": "A project can only have one project leader. Select another role."
+      "there_can_only_be_one_project_manager": "A project can only have one project leader."
     },
     "form": {
       "add_financing": "Add funding",

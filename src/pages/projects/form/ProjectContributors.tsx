@@ -21,44 +21,34 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ContributorRow } from './ContributorRow';
 
-interface ProjectContributorsProps {
-  suggestedProjectManager?: string;
-  isVisited: boolean;
-  showHeader?: boolean;
-}
-
-export const ProjectContributors = ({ suggestedProjectManager, isVisited, showHeader }: ProjectContributorsProps) => {
+export const ProjectContributors = () => {
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
   const [openAddContributorView, setOpenAddContributorView] = useState(false);
-  const { values, errors } = useFormikContext<CristinProject>();
+  const { values } = useFormikContext<CristinProject>();
   const { contributors } = values;
-  const contributorsToShow = contributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
-  const contributorError = errors?.contributors;
-  const hasProjectManager = values.contributors.some((contributor) =>
-    contributor.roles.some((role) => role.type === 'ProjectManager')
+  const contributorsWithNonProjectManagerRole = contributors.filter((contributor) =>
+    contributor.roles.some((role) => role.type !== 'ProjectManager')
   );
+  const paginatedContributors = contributorsWithNonProjectManagerRole.slice(
+    rowsPerPage * (currentPage - 1),
+    rowsPerPage * currentPage
+  );
+
   const toggleOpenAddContributorView = () => setOpenAddContributorView(!openAddContributorView);
   const hasUnidentifiedContributor = contributors.some((contributor) => !contributor.identity.id);
 
+  console.log('contributors', contributors);
+
   return (
     <>
-      {showHeader && (
-        <Typography variant="h3" gutterBottom sx={{ marginTop: '2rem', marginBottom: '1rem' }}>
-          {t('project.project_participants')}
-        </Typography>
-      )}
-      {suggestedProjectManager && (
-        <Typography sx={{ marginBottom: '1rem' }}>
-          {t('project.project_manager_from_nfr', { name: suggestedProjectManager })}
-        </Typography>
-      )}
+      <Typography variant="h2">{t('project.project_participants')}</Typography>
       <FieldArray name={ProjectFieldName.Contributors}>
         {({ name, remove }: FieldArrayRenderProps) => (
           <>
             <Button
-              sx={{ marginBottom: '1rem', borderRadius: '1rem', width: '17rem' }}
+              sx={{ borderRadius: '1rem', width: '17rem' }}
               onClick={toggleOpenAddContributorView}
               variant="contained"
               startIcon={<AddIcon />}
@@ -66,7 +56,7 @@ export const ProjectContributors = ({ suggestedProjectManager, isVisited, showHe
               data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
               {t('project.add_project_contributor')}
             </Button>
-            {contributors.length > 0 && (
+            {contributorsWithNonProjectManagerRole.length > 0 && (
               <ListPagination
                 count={contributors.length}
                 rowsPerPage={rowsPerPage}
@@ -88,7 +78,7 @@ export const ProjectContributors = ({ suggestedProjectManager, isVisited, showHe
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {contributorsToShow.map((contributor) => {
+                      {paginatedContributors.map((contributor) => {
                         const contributorIndex = contributors.findIndex(
                           (c) => c.identity.id === contributor.identity.id
                         );
@@ -107,20 +97,10 @@ export const ProjectContributors = ({ suggestedProjectManager, isVisited, showHe
                 </TableContainer>
               </ListPagination>
             )}
-            {contributorError && typeof contributorError === 'string' && isVisited && (
-              <Typography
-                sx={{ color: 'error.main', marginTop: '0.25rem', letterSpacing: '0.03333em', marginBottom: '1rem' }}>
-                {contributorError}
-              </Typography>
-            )}
           </>
         )}
       </FieldArray>
-      <AddProjectContributorModal
-        open={openAddContributorView}
-        toggleModal={toggleOpenAddContributorView}
-        hasProjectManager={hasProjectManager}
-      />
+      <AddProjectContributorModal open={openAddContributorView} toggleModal={toggleOpenAddContributorView} />
     </>
   );
 };
