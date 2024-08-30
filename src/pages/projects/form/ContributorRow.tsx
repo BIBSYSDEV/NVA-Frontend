@@ -38,7 +38,9 @@ export const ContributorRow = ({
   const baseFieldRoles = `${baseFieldName}.${ProjectContributorFieldName.Roles}`;
   const rolesString = isProjectManager ? t('project.project_manager') : t('project.project_contributor');
 
-  const hasEmptyAffiliation = contributor.roles.some((r) => r.affiliation === undefined);
+  const hasEmptyAffiliation = contributor.roles
+    .filter((role) => (isProjectManager ? role.type === 'ProjectManager' : role.type === 'ProjectParticipant'))
+    .some((r) => r.affiliation === undefined);
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
