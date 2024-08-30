@@ -292,15 +292,6 @@ export const DoiRequestAccordion = ({
           </>
         )}
 
-        <ConfirmMessageDialog
-          open={openRequestDoiModal}
-          title={t('registration.public_page.request_doi')}
-          onAccept={sendDoiRequest}
-          onCancel={toggleRequestDoiModal}
-          textFieldLabel={t('registration.public_page.message_to_curator')}>
-          <Typography paragraph>{t('registration.public_page.request_doi_description')}</Typography>
-        </ConfirmMessageDialog>
-
         <Modal
           open={openRequestDoiModal}
           onClose={toggleRequestDoiModal}
