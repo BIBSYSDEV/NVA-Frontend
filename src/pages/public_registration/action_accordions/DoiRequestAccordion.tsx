@@ -314,7 +314,7 @@ export const DoiRequestAccordion = ({
               data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}
               onClick={sendDoiRequest}
               loading={isLoadingData || isLoading !== LoadingState.None}>
-              {t('common.send')}
+              {t('registration.public_page.request_doi')}
             </LoadingButton>
           </DialogActions>
         </Modal>
