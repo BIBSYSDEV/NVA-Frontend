@@ -305,10 +305,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -380,7 +376,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1498,7 +1498,8 @@
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig."
       },
-      "validation_errors": "Valideringsfeil"
+      "validation_errors": "Valideringsfeil",
+      "request_doi_again": "Be om en ny vurdering av tildeling av DOI."
     },
     "publication_types": {
       "AcademicArticle": "Vitenskapelig artikkel",
