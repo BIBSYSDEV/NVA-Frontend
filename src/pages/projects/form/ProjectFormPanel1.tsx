@@ -19,7 +19,7 @@ interface ProjectFormPanel1Props {
   suggestedProjectManager?: string;
 }
 
-export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: ProjectFormPanel1Props) => {
+export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
 
@@ -124,11 +124,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
           </Field>
         </Box>
       </Box>
-      <ProjectContributors
-        suggestedProjectManager={suggestedProjectManager}
-        isVisited={!!touched.contributors}
-        showHeader
-      />
+      <ProjectContributors />
       <ProjectFundingsField currentFundings={values.funding} />
     </>
   );

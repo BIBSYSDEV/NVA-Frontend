@@ -18,6 +18,7 @@ interface ProjectOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
   unitUri: string;
   contributorRoles: ProjectContributorRole[];
   disabledTooltip?: string;
+  showDeleteButton?: boolean;
 }
 
 export const ProjectOrganizationBox = ({
@@ -27,6 +28,7 @@ export const ProjectOrganizationBox = ({
   removeAffiliation,
   disabledTooltip,
   contributorRoles,
+  showDeleteButton = true,
   sx,
 }: ProjectOrganizationBoxProps) => {
   const { t } = useTranslation();
@@ -57,12 +59,14 @@ export const ProjectOrganizationBox = ({
           />
         </>
       )}
-      <DeleteIconButton
-        data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
-        onClick={removeAffiliation}
-        disabled={!removeAffiliation}
-        tooltip={!removeAffiliation ? disabledTooltip : t('project.affiliation_modal.delete_affiliation')}
-      />
+      {showDeleteButton && (
+        <DeleteIconButton
+          data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
+          onClick={removeAffiliation}
+          disabled={!removeAffiliation}
+          tooltip={!removeAffiliation ? disabledTooltip : t('project.affiliation_modal.delete_affiliation')}
+        />
+      )}
     </StyledOrganizationBox>
   ) : (
     <Typography sx={{ fontStyle: 'italic' }}>
