@@ -1458,6 +1458,7 @@
       "reject_publish_request": "Avvis publisering av fil",
       "reject_publish_request_description": "<0>Oppgi begrunnelse på hvorfor fil(ene) blir avvist for publisering.</0><0>Denne begrunnelsen blir lagret i NVA og synlig for både registratoren og bidragsytere som er tilknyttet forskningsresultatet.</0><0>Når du avviser fil(ene), så fjernes de fra presentasjonssiden til forskningsresultatet. Du og registrator kan publisere de senere eller slette de, ved å redigere forskningsresultatet.</0>",
       "request_doi": "Be om DOI",
+      "request_doi_again": "Be om en ny vurdering av DOI-tildeling.",
       "request_doi_description": "<0>Tildeling av DOI (Digital Object Identifier) betyr at metadata om forskningsresultatet blir delt internasjonalt, derfor vil en kurator se over registreringen før DOI blir tildelt.</0><0>Du kan legge ved en melding til kurator her.</0>",
       "reserve_doi": "Reserver DOI",
       "reserved_doi": "Reservert DOI",
@@ -1498,8 +1499,7 @@
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig."
       },
-      "validation_errors": "Valideringsfeil",
-      "request_doi_again": "Be om en ny vurdering av tildeling av DOI."
+      "validation_errors": "Valideringsfeil"
     },
     "publication_types": {
       "AcademicArticle": "Vitenskapelig artikkel",

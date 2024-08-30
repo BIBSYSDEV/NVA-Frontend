@@ -41,7 +41,7 @@ import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
-  refetchData: () => void;
+  refetchData: () => Promise<void>;
   doiRequestTicket: Ticket | null;
   userIsCurator: boolean;
   isLoadingData: boolean;
@@ -97,9 +97,9 @@ export const DoiRequestAccordion = ({
         await updateTicket(doiRequestTicket.id, { status: 'Completed' });
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await refetchData();
       dispatch(setNotification({ message: t('feedback.success.doi_request_approved'), variant: 'success' }));
-      refetchData();
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.approve_doi_request'), variant: 'error' })),
   });
@@ -111,9 +111,9 @@ export const DoiRequestAccordion = ({
         await updateTicket(doiRequestTicket.id, { status: 'Closed' });
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await refetchData();
       dispatch(setNotification({ message: t('feedback.success.doi_request_rejected'), variant: 'success' }));
-      refetchData();
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.reject_doi_request'), variant: 'error' })),
   });
@@ -131,8 +131,8 @@ export const DoiRequestAccordion = ({
     if (isErrorStatus(createDraftDoiResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.reserve_doi'), variant: 'error' }));
     } else if (isSuccessStatus(createDraftDoiResponse.status)) {
+      await refetchData();
       dispatch(setNotification({ message: t('feedback.success.reserve_doi'), variant: 'success' }));
-      refetchData();
     }
     setIsLoading(LoadingState.None);
   };
@@ -155,13 +155,13 @@ export const DoiRequestAccordion = ({
       if (openRequestDoiModal) {
         toggleRequestDoiModal();
       }
+      await refetchData();
       dispatch(
         setNotification({
           message: t('feedback.success.doi_request_sent'),
           variant: 'success',
         })
       );
-      refetchData();
     }
     setIsLoading(LoadingState.None);
   };
@@ -291,6 +291,15 @@ export const DoiRequestAccordion = ({
             )}
           </>
         )}
+
+        <ConfirmMessageDialog
+          open={openRequestDoiModal}
+          title={t('registration.public_page.request_doi')}
+          onAccept={sendDoiRequest}
+          onCancel={toggleRequestDoiModal}
+          textFieldLabel={t('registration.public_page.message_to_curator')}>
+          <Typography paragraph>{t('registration.public_page.request_doi_description')}</Typography>
+        </ConfirmMessageDialog>
 
         <Modal
           open={openRequestDoiModal}
