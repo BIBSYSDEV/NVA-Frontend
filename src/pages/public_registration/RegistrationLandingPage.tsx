@@ -74,8 +74,7 @@ export const RegistrationLandingPage = () => {
   });
 
   const refetchRegistrationAndTickets = async () => {
-    await ticketsQuery.refetch();
-    await registrationQuery.refetch();
+    await Promise.all([ticketsQuery.refetch(), registrationQuery.refetch()]);
   };
 
   return (
