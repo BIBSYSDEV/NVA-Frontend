@@ -1,5 +1,4 @@
 import { Typography } from '@mui/material';
-import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
@@ -34,9 +33,16 @@ export const LastMessageBox = ({ ticket }: LastMessageBoxProps) => {
     <StyledStatusMessageBox sx={{ bgcolor: ticketColor }}>
       <Typography noWrap>{senderName}</Typography>
       <Typography>{toDateString(lastMessage.createdDate)}</Typography>
-      <TruncatableTypography lines={5} sx={{ gridColumn: '1/-1' }}>
+      <Typography
+        sx={{
+          gridColumn: '1/-1',
+          display: '-webkit-box',
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+        }}>
         {lastMessage.text}
-      </TruncatableTypography>
+      </Typography>
     </StyledStatusMessageBox>
   );
 };
