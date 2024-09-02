@@ -9,6 +9,12 @@ import { ProjectContributor, ProjectContributorFieldName, SaveCristinProject } f
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFullName } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
+import {
+  contributorHasEmptyAffiliation,
+  getRelevantContributorRoles,
+  isNonProjectManagerRole,
+  isProjectManagerRole,
+} from '../../project/helpers/projectContributorRoleHelpers';
 import { ProjectAddAffiliationModal } from '../ProjectAddAffiliationModal';
 import { ProjectOrganizationBox } from '../ProjectOrganizationBox';
 
@@ -36,31 +42,39 @@ export const ContributorRow = ({
   const affiliationError = contributorErrors?.roles?.[0]?.affiliation?.id;
   const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
   const baseFieldRoles = `${baseFieldName}.${ProjectContributorFieldName.Roles}`;
+  const relevantRoles = getRelevantContributorRoles(contributor, isProjectManager);
+  const hasEmptyAffiliation = contributorHasEmptyAffiliation(relevantRoles);
   const rolesString = isProjectManager ? t('project.project_manager') : t('project.project_contributor');
-
-  const hasEmptyAffiliation = contributor.roles
-    .filter((role) => (isProjectManager ? role.type === 'ProjectManager' : role.type === 'ProjectParticipant'))
-    .some((r) => r.affiliation === undefined);
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const removeAffiliation = (affiliationId: string) => {
-    const roleWithAffiliationIndex = contributor.roles.findIndex((role) => role.affiliation?.id === affiliationId);
-    const roleWithAffiliation = contributor.roles[roleWithAffiliationIndex];
-    const contributorHasOtherRolesWithSameType = contributor.roles
-      .filter((role) => role.affiliation?.id !== affiliationId)
-      .some((role) => role.type === roleWithAffiliation.type);
+    const roleThatHasAffiliationIndex = contributor.roles.findIndex(
+      (role) =>
+        role.affiliation?.id === affiliationId &&
+        ((isProjectManager && isProjectManagerRole(role)) || (!isProjectManager && isNonProjectManagerRole(role)))
+    );
+    const roleThatHasAffiliation = contributor.roles[roleThatHasAffiliationIndex];
+    const rolesWithoutDeleteId = contributor.roles.filter((role) => role.affiliation?.id !== affiliationId);
+    const contributorHasOtherRolesWithSameType = rolesWithoutDeleteId.some(
+      (role) => role.type === roleThatHasAffiliation.type
+    );
+
+    console.log('roleThatHasAffiliationIndex', roleThatHasAffiliationIndex);
+    console.log('roleThatHasAffiliation', roleThatHasAffiliation);
+    console.log('rolesWithoutDeleteId', rolesWithoutDeleteId);
+    console.log('contributorHasOtherRolesWithSameType', contributorHasOtherRolesWithSameType);
 
     const newRoles = [...contributor.roles];
 
     // If it's not the last role it's unproblematic to remove the whole role
     if (contributorHasOtherRolesWithSameType) {
-      newRoles.splice(roleWithAffiliationIndex, 1);
+      newRoles.splice(roleThatHasAffiliationIndex, 1);
     } else {
       // Since we're just supposed to remove the affiliation, we have to keep the last role of its type
-      const newRole = { ...roleWithAffiliation };
+      const newRole = { ...roleThatHasAffiliation };
       newRole.affiliation = undefined;
-      newRoles[roleWithAffiliationIndex] = newRole;
+      newRoles[roleThatHasAffiliationIndex] = newRole;
     }
     setFieldValue(baseFieldRoles, newRoles);
   };
@@ -88,9 +102,8 @@ export const ContributorRow = ({
       </TableCell>
       <TableCell>
         <>
-          {contributor.roles
-            .filter((r) => (isProjectManager ? r.type === 'ProjectManager' : r.type !== 'ProjectManager'))
-            .filter((r) => r.affiliation && r.affiliation.id)
+          {relevantRoles
+            .filter((role) => role.affiliation && role.affiliation.id)
             .map((role) => (
               <ProjectOrganizationBox
                 key={role.affiliation!.id}
@@ -122,7 +135,7 @@ export const ContributorRow = ({
       </TableCell>
       <TableCell sx={{ width: '3rem', textAlign: 'center', paddingTop: '1rem' }}>
         <DeleteIconButton
-          data-testid={dataTestId.registrationWizard.description.projectForm.removeContributorButton}
+          data-testid={dataTestId.projectForm.removeContributorButton}
           onClick={() => setShowConfirmRemoveContributor(true)}
           tooltip={isProjectManager ? t('project.form.remove_project_manager') : t('project.form.remove_participant')}
           disabled={!removeContributor}

@@ -1,23 +1,17 @@
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import {
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { CristinProject, ProjectFieldName } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { AddProjectContributorModal } from '../../projects/AddProjectContributorModal';
 import { ContributorRow } from '../../projects/form/ContributorRow';
+import { ProjectContributorTable } from '../../projects/form/ProjectContributorTable';
+import {
+  deleteProjectManagerRoleFromContributor,
+  isProjectManagerRole,
+} from '../helpers/projectContributorRoleHelpers';
 
 interface ProjectContributorsProps {
   suggestedProjectManager?: string;
@@ -26,25 +20,18 @@ interface ProjectContributorsProps {
 
 export const ProjectManager = ({ suggestedProjectManager, isVisited }: ProjectContributorsProps) => {
   const { t } = useTranslation();
-  const [addContributorViewIsOpen, setAddContributorViewIsOpen] = useState(false);
+  const [addManagerViewIsOpen, setAddManagerViewIsOpen] = useState(false);
   const { values, errors, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
-  const projectManagerIndex = contributors.findIndex((c) => c.roles.some((r) => r.type === 'ProjectManager'));
+  const projectManagerIndex = contributors.findIndex((c) => c.roles.some((role) => isProjectManagerRole(role)));
   const projectManager = contributors[projectManagerIndex];
-  const projectManagerRoleIndex = projectManager?.roles.findIndex((r) => r.type === 'ProjectManager');
 
   const contributorError = errors?.contributors;
 
   const removeProjectManager = (name: string, remove: (index: number) => any) => {
     // Project manager has other roles on project: only delete the project manager-role
     if (projectManager.roles.length > 1) {
-      const newContributors = [...contributors];
-      const newContributorObject = { ...contributors[projectManagerIndex] };
-      const newRoles = [...contributors[projectManagerIndex].roles];
-
-      newRoles.splice(projectManagerRoleIndex, 1);
-      newContributorObject.roles = newRoles;
-      newContributors[projectManagerIndex] = newContributorObject;
+      const newContributors = deleteProjectManagerRoleFromContributor(contributors);
       setFieldValue(name, newContributors);
     } else {
       // Project manager is only role: remove contributor
@@ -52,7 +39,7 @@ export const ProjectManager = ({ suggestedProjectManager, isVisited }: ProjectCo
     }
   };
 
-  const toggleAddContributorView = () => setAddContributorViewIsOpen(!addContributorViewIsOpen);
+  const toggleAddManagerView = () => setAddManagerViewIsOpen(!addManagerViewIsOpen);
 
   return (
     <>
@@ -67,7 +54,7 @@ export const ProjectManager = ({ suggestedProjectManager, isVisited }: ProjectCo
           <>
             <Button
               sx={{ borderRadius: '1rem', width: '17rem' }}
-              onClick={toggleAddContributorView}
+              onClick={toggleAddManagerView}
               variant="contained"
               startIcon={<AddIcon />}
               disabled={projectManager !== undefined}
@@ -75,28 +62,16 @@ export const ProjectManager = ({ suggestedProjectManager, isVisited }: ProjectCo
               {t('project.add_project_manager')}
             </Button>
             {projectManager && (
-              <TableContainer sx={{ mb: '0.5rem' }} component={Paper}>
-                <Table size="small" sx={alternatingTableRowColor}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>{t('common.role')}</TableCell>
-                      <TableCell>{t('common.name')}</TableCell>
-                      <TableCell>{t('common.affiliation')}</TableCell>
-                      <TableCell>{t('common.clear')}</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <ContributorRow
-                      key={projectManager.identity.id}
-                      contributorIndex={projectManagerIndex}
-                      baseFieldName={`${name}[${projectManagerIndex}]`}
-                      contributor={projectManager}
-                      removeContributor={() => removeProjectManager(name, remove)}
-                      isProjectManager
-                    />
-                  </TableBody>
-                </Table>
-              </TableContainer>
+              <ProjectContributorTable>
+                <ContributorRow
+                  key={projectManager.identity.id}
+                  contributorIndex={projectManagerIndex}
+                  baseFieldName={`${name}[${projectManagerIndex}]`}
+                  contributor={projectManager}
+                  removeContributor={() => removeProjectManager(name, remove)}
+                  isProjectManager
+                />
+              </ProjectContributorTable>
             )}
             {contributorError && typeof contributorError === 'string' && isVisited && (
               <Typography
@@ -107,11 +82,7 @@ export const ProjectManager = ({ suggestedProjectManager, isVisited }: ProjectCo
           </>
         )}
       </FieldArray>
-      <AddProjectContributorModal
-        open={addContributorViewIsOpen}
-        toggleModal={toggleAddContributorView}
-        addProjectManager
-      />
+      <AddProjectContributorModal open={addManagerViewIsOpen} toggleModal={toggleAddManagerView} addProjectManager />
     </>
   );
 };

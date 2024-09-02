@@ -228,6 +228,8 @@ export const dataTestId = {
     selectContributorButton: 'select-contributor-button',
     addProjectManagerButton: 'add-project-manager-button',
     addAffiliationButton: 'button-add-affiliation',
+    addParticipantButton: 'add-participant-button',
+    removeContributorButton: 'remove-contributor-button',
   },
   newProjectPage: {
     titleInput: 'project-title-input',

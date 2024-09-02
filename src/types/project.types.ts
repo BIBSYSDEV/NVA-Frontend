@@ -46,7 +46,12 @@ export interface ProjectContributorIdentity {
   lastName: string;
 }
 
-export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
+export const ProjectContributorTypes = {
+  PROJECT_MANAGER: 'ProjectManager',
+  PROJECT_PARTICIPANT: 'ProjectParticipant',
+};
+
+export type ProjectContributorType = keyof typeof ProjectContributorTypes;
 
 export interface ProjectContributorRole {
   type: ProjectContributorType;
@@ -181,7 +186,6 @@ export enum ProjectFieldName {
 }
 
 export enum ProjectContributorFieldName {
-  Type = 'roles[0].type',
   Identity = 'identity',
   Roles = 'roles',
 }
