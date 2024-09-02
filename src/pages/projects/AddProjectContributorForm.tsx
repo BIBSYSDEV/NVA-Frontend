@@ -9,6 +9,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import {
   CristinProject,
   ProjectContributor,
+  ProjectContributorRole,
   ProjectContributorType,
   ProjectFieldName,
 } from '../../types/project.types';
@@ -27,6 +28,7 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
+  const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedContributorRole, setSelectedContributorRole] = useState<ProjectContributorType>(
     hasProjectManager ? 'ProjectParticipant' : 'ProjectManager'
@@ -34,6 +36,10 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
   const addContributor = () => {
+    console.log('addContributor---------------');
+    console.log('selectedPerson', selectedPerson);
+    console.log('selectedContributorRole', selectedContributorRole);
+    console.log('hasProjectManager', hasProjectManager);
     if (!selectedPerson || !selectedContributorRole) {
       return;
     }
@@ -48,22 +54,55 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
       return;
     }
 
-    const newContributor: ProjectContributor = {
-      identity: {
-        type: 'Person',
-        id: selectedPerson.id,
-        firstName: getValueByKey('FirstName', selectedPerson.names),
-        lastName: getValueByKey('LastName', selectedPerson.names),
-      },
-      roles: selectedPerson.affiliations.map((affiliation, index) => {
-        return {
-          type: selectedContributorRole === 'ProjectManager' && index === 0 ? 'ProjectManager' : 'ProjectParticipant', // Backend only supports one ProjectManager role per project
-          affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
-        };
-      }),
-    };
+    let newContributor: ProjectContributor;
 
-    const newContributors = values.contributors ? [...values.contributors, newContributor] : [newContributor];
+    // The person might already exist
+    const existingContributorIndex = contributors.findIndex(
+      (contributor) => contributor.identity.id === selectedPerson.id
+    );
+
+    if (existingContributorIndex > -1) {
+      newContributor = { ...contributors[existingContributorIndex] };
+    } else {
+      newContributor = {
+        identity: {
+          type: 'Person',
+          id: selectedPerson.id,
+          firstName: getValueByKey('FirstName', selectedPerson.names),
+          lastName: getValueByKey('LastName', selectedPerson.names),
+        },
+        roles: [],
+      };
+    }
+
+    // Adding a new role with several affiliations
+    if (selectedPerson.affiliations.length > 0) {
+      newContributor.roles = [...newContributor.roles].concat(
+        selectedPerson.affiliations.map((affiliation) => {
+          return {
+            type: selectedContributorRole === 'ProjectManager' ? 'ProjectManager' : 'ProjectParticipant', // Backend only supports one ProjectManager role per project
+            affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
+          } as ProjectContributorRole;
+        })
+      );
+    } else {
+      // Adding a new role without any affiliations
+      newContributor.roles = [
+        ...newContributor.roles,
+        {
+          type: selectedContributorRole === 'ProjectManager' ? 'ProjectManager' : 'ProjectParticipant', // Backend only supports one ProjectManager role per project
+          affiliation: undefined,
+        } as ProjectContributorRole,
+      ];
+    }
+
+    const newContributors = [...values.contributors];
+
+    if (existingContributorIndex > -1) {
+      newContributors[existingContributorIndex] = newContributor;
+    } else {
+      newContributors.push(newContributor);
+    }
 
     setFieldValue(ProjectFieldName.Contributors, newContributors);
     toggleModal();
