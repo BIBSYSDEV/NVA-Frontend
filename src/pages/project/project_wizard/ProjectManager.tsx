@@ -15,10 +15,10 @@ import {
 
 interface ProjectContributorsProps {
   suggestedProjectManager?: string;
-  isVisited: boolean;
+  isVisited?: boolean;
 }
 
-export const ProjectManager = ({ suggestedProjectManager, isVisited }: ProjectContributorsProps) => {
+export const ProjectManager = ({ suggestedProjectManager, isVisited = false }: ProjectContributorsProps) => {
   const { t } = useTranslation();
   const [addManagerViewIsOpen, setAddManagerViewIsOpen] = useState(false);
   const { values, errors, setFieldValue } = useFormikContext<CristinProject>();

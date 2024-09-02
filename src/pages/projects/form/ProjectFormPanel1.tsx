@@ -10,6 +10,7 @@ import {
 } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
+import { ProjectManager } from '../../project/project_wizard/ProjectManager';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectContributors } from './ProjectContributors';
 import { ProjectFundingsField } from './ProjectFunding';
@@ -19,7 +20,7 @@ interface ProjectFormPanel1Props {
   suggestedProjectManager?: string;
 }
 
-export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) => {
+export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: ProjectFormPanel1Props) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
 
@@ -124,7 +125,12 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
           </Field>
         </Box>
       </Box>
-      <ProjectContributors />
+      <Box sx={{ mt: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <ProjectManager suggestedProjectManager={suggestedProjectManager} />
+      </Box>
+      <Box sx={{ mt: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <ProjectContributors />
+      </Box>
       <ProjectFundingsField currentFundings={values.funding} />
     </>
   );

@@ -38,6 +38,10 @@ export const ProjectContributors = () => {
   const removeProjectParticipant = (name: string, remove: (index: number) => any, contributorIndex: number) => {
     const projectManagerRole = findProjectManagerRole(values.contributors[contributorIndex]);
 
+    console.log('DELEETE contributorIndex', contributorIndex);
+    console.log('projectManagerRole', projectManagerRole);
+    console.log('contributorIndex', contributorIndex);
+
     // Contributor also has Project manager role: Only delete the others
     if (projectManagerRole) {
       const newContributors = replaceRolesOnContributor(values.contributors, contributorIndex, [projectManagerRole]);
@@ -76,7 +80,7 @@ export const ProjectContributors = () => {
                 alternativePaginationText={t('common.number_of_rows_per_page')}>
                 <ProjectContributorTable>
                   {paginatedContributors.map((contributor) => {
-                    const contributorIndex = contributorsWithNonProjectManagerRole.findIndex(
+                    const contributorIndex = values.contributors.findIndex(
                       (c) => c.identity.id === contributor.identity.id
                     );
                     return (

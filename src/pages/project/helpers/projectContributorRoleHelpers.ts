@@ -9,11 +9,14 @@ export const isNonProjectManagerRole = (role: ProjectContributorRole) => {
 };
 
 export const findProjectManagerRoleIndex = (contributor: ProjectContributor) => {
+  console.log('contributor', contributor);
   return contributor.roles.findIndex((role) => isProjectManagerRole(role));
 };
 
 export const findProjectManagerRole = (contributor: ProjectContributor) => {
   const projectManagerRoleIndex = findProjectManagerRoleIndex(contributor);
+
+  console.log('projectManagerRoleIndex', projectManagerRoleIndex);
 
   return projectManagerRoleIndex > -1 ? contributor.roles[projectManagerRoleIndex] : undefined;
 };
