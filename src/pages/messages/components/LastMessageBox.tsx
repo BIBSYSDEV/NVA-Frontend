@@ -32,7 +32,7 @@ export const LastMessageBox = ({ ticket }: LastMessageBoxProps) => {
 
   return (
     <StyledStatusMessageBox sx={{ bgcolor: ticketColor }}>
-      <Typography>{senderName}</Typography>
+      <Typography noWrap>{senderName}</Typography>
       <Typography>{toDateString(lastMessage.createdDate)}</Typography>
       <TruncatableTypography lines={5} sx={{ gridColumn: '1/-1' }}>
         {lastMessage.text}

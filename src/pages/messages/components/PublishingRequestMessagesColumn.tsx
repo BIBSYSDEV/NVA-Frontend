@@ -13,7 +13,7 @@ export const StyledMessagesContainer = styled(Box)({
 export const StyledStatusMessageBox = styled(Box)({
   display: 'grid',
   gridTemplateColumns: '1fr auto',
-  gap: '0.5rem 1rem',
+  gap: '0.25rem 0.5rem',
   padding: '0.2rem 1rem',
   borderRadius: '4px',
 });
