@@ -7,7 +7,13 @@ import { SelectInstitutionForm } from '../../components/institution/SelectInstit
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { LanguageString } from '../../types/common.types';
-import { CristinProject, ProjectContributorRole, ProjectOrganization } from '../../types/project.types';
+import {
+  CristinProject,
+  ProjectContributorRole,
+  ProjectContributorTypes,
+  ProjectOrganization,
+} from '../../types/project.types';
+import { checkIfSameAffiliationOnSameRoleType } from '../project/helpers/projectContributorRoleHelpers';
 
 interface ProjectAddAffiliationModalProps {
   openAffiliationModal: boolean;
@@ -15,6 +21,7 @@ interface ProjectAddAffiliationModalProps {
   authorName: string;
   baseFieldName: string;
   contributorRoles: ProjectContributorRole[];
+  isProjectManager?: boolean;
 }
 
 export const ProjectAddAffiliationModal = ({
@@ -23,6 +30,7 @@ export const ProjectAddAffiliationModal = ({
   authorName,
   baseFieldName,
   contributorRoles,
+  isProjectManager = false,
 }: ProjectAddAffiliationModalProps) => {
   const { t } = useTranslation();
   const { setFieldValue } = useFormikContext<CristinProject>();
@@ -35,9 +43,7 @@ export const ProjectAddAffiliationModal = ({
 
     // Avoid adding same unit twice
     if (
-      contributorRoles.some(
-        (role) => role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId
-      )
+      contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, isProjectManager))
     ) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
@@ -55,9 +61,9 @@ export const ProjectAddAffiliationModal = ({
 
     if (emptyRoleIndex < 0) {
       newContributorRoles.push({
-        type: 'ProjectParticipant',
+        type: ProjectContributorTypes.PROJECT_PARTICIPANT,
         affiliation: newAffiliation,
-      });
+      } as ProjectContributorRole);
     } else {
       newContributorRoles[emptyRoleIndex] = {
         ...contributorRoles[emptyRoleIndex],

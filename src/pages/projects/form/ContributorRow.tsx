@@ -112,6 +112,7 @@ export const ContributorRow = ({
                 contributorRoles={contributor.roles}
                 baseFieldName={baseFieldRoles}
                 sx={{ width: '100%', marginBottom: '0.5rem' }}
+                isProjectManager={isProjectManager}
                 removeAffiliation={() => removeAffiliation(role.affiliation!.id)}
               />
             ))}
@@ -166,6 +167,7 @@ export const ContributorRow = ({
         authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
         baseFieldName={baseFieldRoles}
         contributorRoles={contributor.roles}
+        isProjectManager={isProjectManager}
       />
     </TableRow>
   );

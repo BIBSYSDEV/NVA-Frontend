@@ -8,6 +8,7 @@ import {
   CristinProject,
   ProjectContributor,
   ProjectContributorRole,
+  ProjectContributorTypes,
   ProjectFieldName,
 } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
@@ -56,9 +57,9 @@ export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributor
       newContributor.roles = [...newContributor.roles].concat(
         selectedPerson.affiliations.map((affiliation) => {
           return {
-            type: 'ProjectParticipant',
+            type: ProjectContributorTypes.PROJECT_PARTICIPANT,
             affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
-          };
+          } as ProjectContributorRole;
         })
       );
     } else {
@@ -66,7 +67,7 @@ export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributor
       newContributor.roles = [
         ...newContributor.roles,
         {
-          type: 'ProjectParticipant',
+          type: ProjectContributorTypes.PROJECT_PARTICIPANT,
           affiliation: undefined,
         } as ProjectContributorRole,
       ];
