@@ -40,9 +40,9 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
           </StyledStatusMessageBox>
         </>
       ) : (
-        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-          <>
-            {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
+        <>
+          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
+          <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
             {ticket.status === 'Completed' ? (
               <Typography>
                 {ticket.approvedFiles.length
@@ -53,8 +53,8 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
               ticket.status === 'Closed' && <Typography>{t('my_page.messages.files_rejected')}</Typography>
             )}
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
-          </>
-        </StyledStatusMessageBox>
+          </StyledStatusMessageBox>
+        </>
       )}
     </StyledMessagesContainer>
   );

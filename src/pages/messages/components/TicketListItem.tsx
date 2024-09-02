@@ -92,7 +92,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           }}>
           <RegistrationListItemContent registration={registrationCopy} ticketView />
           {ticket.type === 'PublishingRequest' ? (
-            <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
+            <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} showLastMessage />
           ) : ticket.type === 'DoiRequest' ? (
             <DoiRequestMessagesColumn ticket={ticket} showLastMessage />
           ) : ticket.type === 'GeneralSupportCase' ? (
