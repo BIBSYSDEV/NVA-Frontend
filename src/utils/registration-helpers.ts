@@ -756,6 +756,11 @@ export const getDisabledCategories = (
     });
   }
 
+  if (user?.isPublishingCurator) {
+    // Publishing curator should be allowed to add files to categories where the customer has disallowed files
+    return disabledCategories;
+  }
+
   const hasFiles = getAssociatedFiles(registration.associatedArtifacts).length > 0;
 
   if (hasFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {

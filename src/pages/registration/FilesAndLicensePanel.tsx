@@ -14,6 +14,7 @@ import {
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isDegree,
   userCanEditRegistration,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
@@ -88,6 +89,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const canEditFiles = userCanEditRegistration(values) || userIsValidImporter(user, values);
 
+  const categorySupportsFiles =
+    !!customer && !!publicationInstanceType && customer.allowFileUploadForTypes.includes(publicationInstanceType);
+
+  const canUploadFiles =
+    categorySupportsFiles || (isDegree(publicationInstanceType) ? user?.isThesisCurator : user?.isPublishingCurator);
+
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <Typography component="h2" variant="h3">
@@ -124,9 +131,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           <>
             {!isNullAssociatedArtifact && (
               <>
-                {customer &&
-                publicationInstanceType &&
-                !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
+                {!canUploadFiles ? (
                   <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
                 ) : (
                   <FileUploader
