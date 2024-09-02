@@ -15,6 +15,7 @@ import {
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getValueByKey } from '../../utils/user-helpers';
+import { isProjectManagerRole } from '../project/helpers/projectContributorRoleHelpers';
 
 interface AddProjectManagerFormProps {
   toggleModal: () => void;
@@ -25,7 +26,7 @@ export const AddProjectManagerForm = ({ toggleModal }: AddProjectManagerFormProp
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
-  const projectManagerIndex = contributors.findIndex((c) => c.roles.some((r) => r.type === 'ProjectManager'));
+  const projectManagerIndex = contributors.findIndex((c) => c.roles.some((r) => isProjectManagerRole(r)));
   const projectManager = contributors[projectManagerIndex];
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();

@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { isProjectManagerRole } from '../../../pages/project/helpers/projectContributorRoleHelpers';
 import i18n from '../../../translations/i18n';
 import { ProjectContributor, SaveCristinProject } from '../../../types/project.types';
 import { projectFundingValidationSchema } from '../registration/fundingValidation';
@@ -66,7 +67,7 @@ export const basicProjectValidationSchema = Yup.object<YupShape<SaveCristinProje
   contributors:
     Yup.array().min(1, basicProjectErrorMessage.contributorRequired).of(contributorValidationSchema) &&
     Yup.array()
-      .compact((contributor: ProjectContributor) => !contributor.roles.some((role) => role.type === 'ProjectManager'))
+      .compact((contributor: ProjectContributor) => !contributor.roles.some((role) => isProjectManagerRole(role)))
       .min(1, basicProjectErrorMessage.mustHaveAProjectManager),
   coordinatingInstitution: Yup.object().shape({
     id: Yup.string().required(basicProjectErrorMessage.coordinatingInstitution),

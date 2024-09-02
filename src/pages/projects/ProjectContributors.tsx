@@ -35,7 +35,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
               <Typography variant="h3" gutterBottom>
                 {t('project.project_manager')}
               </Typography>
-              <ContributorList contributors={projectManagers} projectRole="ProjectManager" />
+              <ContributorList contributors={projectManagers} projectRole={'ProjectManager'} />
             </div>
           )}
           {projectParticipants.length > 0 && (
@@ -43,7 +43,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
               <Typography variant="h3" gutterBottom>
                 {t('project.project_participants')}
               </Typography>
-              <ContributorList contributors={projectParticipants} projectRole="ProjectParticipant" />
+              <ContributorList contributors={projectParticipants} projectRole={'ProjectParticipant'} />
             </div>
           )}
         </>
@@ -73,11 +73,11 @@ const ContributorList = ({ contributors, projectRole }: ContributorListProps) =>
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {contributor.roles.map((contributorRole) => {
-            if (contributorRole.type === projectRole) {
+            if (contributorRole.type === projectRole && contributorRole.affiliation) {
               return (
                 <AffiliationHierarchy
-                  key={contributorRole.affiliation.id}
-                  unitUri={contributorRole.affiliation.id}
+                  key={contributorRole.affiliation!.id}
+                  unitUri={contributorRole.affiliation!.id}
                   condensed
                 />
               );

@@ -1,22 +1,19 @@
-import { ProjectContributor, ProjectContributorRole, ProjectContributorTypes } from '../../../types/project.types';
+import { ProjectContributor, ProjectContributorRole } from '../../../types/project.types';
 
 export const isProjectManagerRole = (role: ProjectContributorRole) => {
-  return role.type === ProjectContributorTypes.PROJECT_MANAGER;
+  return role.type === 'ProjectManager';
 };
 
 export const isNonProjectManagerRole = (role: ProjectContributorRole) => {
-  return role.type !== ProjectContributorTypes.PROJECT_MANAGER;
+  return role.type !== 'ProjectManager';
 };
 
 export const findProjectManagerRoleIndex = (contributor: ProjectContributor) => {
-  console.log('contributor', contributor);
   return contributor.roles.findIndex((role) => isProjectManagerRole(role));
 };
 
 export const findProjectManagerRole = (contributor: ProjectContributor) => {
   const projectManagerRoleIndex = findProjectManagerRoleIndex(contributor);
-
-  console.log('projectManagerRoleIndex', projectManagerRoleIndex);
 
   return projectManagerRoleIndex > -1 ? contributor.roles[projectManagerRoleIndex] : undefined;
 };

@@ -31,16 +31,10 @@ export const ProjectContributors = () => {
     rowsPerPage * currentPage
   );
 
-  console.log(' values.contributors', values.contributors);
-
   const toggleOpenAddContributorView = () => setOpenAddContributorView(!openAddContributorView);
 
   const removeProjectParticipant = (name: string, remove: (index: number) => any, contributorIndex: number) => {
     const projectManagerRole = findProjectManagerRole(values.contributors[contributorIndex]);
-
-    console.log('DELEETE contributorIndex', contributorIndex);
-    console.log('projectManagerRole', projectManagerRole);
-    console.log('contributorIndex', contributorIndex);
 
     // Contributor also has Project manager role: Only delete the others
     if (projectManagerRole) {

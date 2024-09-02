@@ -60,11 +60,6 @@ export const ContributorRow = ({
       (role) => role.type === roleThatHasAffiliation.type
     );
 
-    console.log('roleThatHasAffiliationIndex', roleThatHasAffiliationIndex);
-    console.log('roleThatHasAffiliation', roleThatHasAffiliation);
-    console.log('rolesWithoutDeleteId', rolesWithoutDeleteId);
-    console.log('contributorHasOtherRolesWithSameType', contributorHasOtherRolesWithSameType);
-
     const newRoles = [...contributor.roles];
 
     // If it's not the last role it's unproblematic to remove the whole role

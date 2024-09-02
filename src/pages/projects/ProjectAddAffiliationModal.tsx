@@ -7,12 +7,7 @@ import { SelectInstitutionForm } from '../../components/institution/SelectInstit
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { LanguageString } from '../../types/common.types';
-import {
-  CristinProject,
-  ProjectContributorRole,
-  ProjectContributorTypes,
-  ProjectOrganization,
-} from '../../types/project.types';
+import { CristinProject, ProjectContributorRole, ProjectOrganization } from '../../types/project.types';
 import { checkIfSameAffiliationOnSameRoleType } from '../project/helpers/projectContributorRoleHelpers';
 
 interface ProjectAddAffiliationModalProps {
@@ -61,7 +56,7 @@ export const ProjectAddAffiliationModal = ({
 
     if (emptyRoleIndex < 0) {
       newContributorRoles.push({
-        type: ProjectContributorTypes.PROJECT_PARTICIPANT,
+        type: 'ProjectParticipant',
         affiliation: newAffiliation,
       } as ProjectContributorRole);
     } else {

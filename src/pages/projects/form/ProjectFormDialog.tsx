@@ -130,13 +130,8 @@ export const ProjectFormDialog = ({
                 coordinatingInstitution: {
                   id: true,
                 },
-                contributors: values.contributors.map((contributor) => ({
+                contributors: values.contributors.map(() => ({
                   identity: { id: true },
-                  roles: contributor.roles.map(() => ({
-                    affiliation: {
-                      id: true,
-                    },
-                  })),
                 })),
                 funding: values.funding.map(() => ({
                   source: true,

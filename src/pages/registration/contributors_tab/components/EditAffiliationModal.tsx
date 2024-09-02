@@ -21,7 +21,6 @@ interface EditAffiliationModalProps {
   baseFieldName: string;
   authorName?: string;
   affiliations?: Affiliation[];
-  isProjectManager?: boolean;
 }
 
 export const EditAffiliationModal = ({
@@ -31,7 +30,6 @@ export const EditAffiliationModal = ({
   authorName,
   affiliations = [],
   baseFieldName,
-  isProjectManager,
 }: EditAffiliationModalProps) => {
   const { t } = useTranslation();
   const { setFieldValue } = useFormikContext<Registration>();
