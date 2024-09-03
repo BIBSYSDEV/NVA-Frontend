@@ -41,8 +41,6 @@ export const ContributorRow = ({
   const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
   const baseFieldRoles = `${baseFieldName}.${ProjectContributorFieldName.Roles}`;
 
-  console.log('contributor***', contributor);
-
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
   const removeAffiliation = (affiliationId: string) => {

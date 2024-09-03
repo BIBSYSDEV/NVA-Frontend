@@ -33,8 +33,6 @@ export const ProjectAddAffiliationModal = ({
       return;
     }
 
-    console.log('addAffiliation--------------------');
-
     // Avoid adding same unit twice
     if (
       contributorRoles.some(
@@ -48,8 +46,6 @@ export const ProjectAddAffiliationModal = ({
     const emptyRoleIndex = contributorRoles.findIndex(
       (role) => !role.affiliation || (role.affiliation?.type === 'Organization' && role.affiliation?.id === '')
     );
-
-    console.log('emptyRoleIndex', emptyRoleIndex);
 
     const newAffiliation: ProjectOrganization = {
       type: 'Organization',

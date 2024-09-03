@@ -23,8 +23,6 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
 
-  console.log('values.contributors', values.contributors);
-
   const thisIsRekProject = isRekProject(currentProject);
 
   return (
