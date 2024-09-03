@@ -80,7 +80,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           state: { previousSearch: window.location.search } satisfies PreviousSearchLocationState,
         }}
         onClick={() => {
-          if (!viewedByUser || viewedByUser) {
+          if (!viewedByUser) {
             // Set ticket to read after some time, to ensure the user will load the ticket with correct read status first
             new Promise<void>((resolve) =>
               setTimeout(() => {
