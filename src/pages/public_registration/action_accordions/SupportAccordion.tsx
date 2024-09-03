@@ -64,6 +64,8 @@ export const SupportAccordion = ({
   const ownerHasReadTicket = supportTicket?.viewedBy.includes(supportTicket?.owner);
   const isOnTasksPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
+  const statusText = supportTicket && isOnTasksPage ? t(`my_page.messages.ticket_types.${supportTicket.status}`) : '';
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
@@ -72,7 +74,7 @@ export const SupportAccordion = ({
       defaultExpanded={isPendingSupportTicket || !ownerHasReadTicket}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
-        {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
+        {statusText && ` - ${statusText}`}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {!isOnTasksPage && <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>}
