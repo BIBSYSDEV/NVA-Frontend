@@ -80,7 +80,13 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         }}
         onClick={() => {
           if (!viewedByUser) {
-            viewStatusMutation.mutate();
+            // Set ticket to read after some time, to ensure the user will load the ticket with correct read status first
+            new Promise<void>((resolve) =>
+              setTimeout(() => {
+                viewStatusMutation.mutate();
+                resolve();
+              }, 5_000)
+            );
           }
         }}
         sx={{ width: '100%', textDecoration: 'none', p: '0.5rem 1rem' }}>
