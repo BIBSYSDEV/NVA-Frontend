@@ -56,8 +56,10 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     : '';
 
   const viewStatusMutation = useMutation({ mutationFn: () => updateTicket(ticket.id, { viewStatus: 'Read' }) });
-
   const viewedByUser = user?.nvaUsername && ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername);
+
+  const isOnTasksPage = window.location.pathname === UrlPathTemplate.TasksDialogue;
+  const isOnMyPageMessages = window.location.pathname === UrlPathTemplate.MyPageMyMessages;
 
   return (
     <SearchListItem
@@ -70,12 +72,11 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       <MuiLink
         component={Link}
         to={{
-          pathname:
-            window.location.pathname === UrlPathTemplate.TasksDialogue
-              ? getTasksRegistrationPath(identifier)
-              : window.location.pathname === UrlPathTemplate.MyPageMyMessages
-                ? getMyMessagesRegistrationPath(identifier)
-                : '',
+          pathname: isOnTasksPage
+            ? getTasksRegistrationPath(identifier)
+            : isOnMyPageMessages
+              ? getMyMessagesRegistrationPath(identifier)
+              : '',
           state: { previousSearch: window.location.search } satisfies PreviousSearchLocationState,
         }}
         onClick={() => {
@@ -106,7 +107,13 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           ) : (
             <div />
           )}
-          <Typography lineHeight="2rem">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
+          <Typography lineHeight="2rem">
+            {ticket.type === 'GeneralSupportCase' && isOnMyPageMessages
+              ? viewedByUser
+                ? t('common.read_past')
+                : t('common.unread')
+              : t(`my_page.messages.ticket_types.${ticket.status}`)}
+          </Typography>
           <Typography lineHeight="2rem">{ticketAge}</Typography>
           {assigneeFullName && (
             <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
