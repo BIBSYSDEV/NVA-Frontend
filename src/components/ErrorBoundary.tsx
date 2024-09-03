@@ -1,10 +1,14 @@
 import { Component, PropsWithChildren } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import nbTranslations from '../translations/nbTranslations.json';
 import { LocalStorageKey } from '../utils/constants';
 
-type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
+type ErrorBoundaryClassProps = WithTranslation & {
+  location: ReturnType<typeof useLocation>;
+  navigate: ReturnType<typeof useNavigate>;
+  params: ReturnType<typeof useParams>;
+};
 
 enum ErrorType {
   None,
@@ -33,8 +37,6 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
     }
   }
 
-  // Force page refresh if a chunk is not found. This error is usually caused by a new
-  // version of the app being deployed, and the old chunks currently used has been invalidated.
   componentDidCatch() {
     const { t } = this.props;
     const { error } = this.state;
@@ -71,7 +73,16 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
   }
 }
 
-export const ErrorBoundary = withTranslation()(withRouter(ErrorBoundaryClass));
+// Wrapper functional component to provide routing props
+const ErrorBoundaryClassWrapper = (props: PropsWithChildren<WithTranslation>) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = useParams();
+
+  return <ErrorBoundaryClass {...props} location={location} navigate={navigate} params={params} />;
+};
+
+export const ErrorBoundary = withTranslation()(ErrorBoundaryClassWrapper);
 
 export class BasicErrorBoundary extends Component<PropsWithChildren<unknown>> {
   state = { hasError: false };
