@@ -36,7 +36,7 @@ export const ProjectAddAffiliationModal = ({
     // Avoid adding same unit twice
     if (
       contributorRoles.some(
-        (role) => role.affiliation.type === 'Organization' && role.affiliation.id === newAffiliationId
+        (role) => role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId
       )
     ) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
@@ -44,7 +44,7 @@ export const ProjectAddAffiliationModal = ({
     }
 
     const emptyRoleIndex = contributorRoles.findIndex(
-      (role) => role.affiliation.type === 'Organization' && role.affiliation.id === ''
+      (role) => !role.affiliation || (role.affiliation?.type === 'Organization' && role.affiliation?.id === '')
     );
 
     const newAffiliation: ProjectOrganization = {

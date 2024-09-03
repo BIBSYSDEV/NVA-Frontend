@@ -9,6 +9,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import {
   CristinProject,
   ProjectContributor,
+  ProjectContributorRole,
   ProjectContributorType,
   ProjectFieldName,
 } from '../../types/project.types';
@@ -27,6 +28,7 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
+  const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedContributorRole, setSelectedContributorRole] = useState<ProjectContributorType>(
     hasProjectManager ? 'ProjectParticipant' : 'ProjectManager'
@@ -41,29 +43,78 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
     if (selectedContributorRole === 'ProjectManager' && hasProjectManager) {
       dispatch(
         setNotification({
-          message: t('project.error.there_can_only_be_one_project_manager_choose_different_role'),
+          message: t('project.error.there_can_only_be_one_project_manager'),
           variant: 'error',
         })
       );
       return;
     }
 
-    const newContributor: ProjectContributor = {
-      identity: {
-        type: 'Person',
-        id: selectedPerson.id,
-        firstName: getValueByKey('FirstName', selectedPerson.names),
-        lastName: getValueByKey('LastName', selectedPerson.names),
-      },
-      roles: selectedPerson.affiliations.map((affiliation, index) => {
-        return {
-          type: selectedContributorRole === 'ProjectManager' && index === 0 ? 'ProjectManager' : 'ProjectParticipant', // Backend only supports one ProjectManager role per project
-          affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
-        };
-      }),
-    };
+    let newContributor: ProjectContributor;
 
-    const newContributors = values.contributors ? [...values.contributors, newContributor] : [newContributor];
+    const existingContributorIndex = contributors.findIndex(
+      (contributor) => contributor.identity.id === selectedPerson.id
+    );
+
+    // If person is already added
+    if (existingContributorIndex > -1) {
+      // Cannot add same person with same role and affiliation
+      if (
+        contributors[existingContributorIndex].roles.some(
+          (role) =>
+            role.type === selectedContributorRole &&
+            selectedPerson.affiliations.some((affiliation) => affiliation.organization === role.affiliation?.id)
+        )
+      ) {
+        dispatch(
+          setNotification({
+            message: t('project.error.contributor_already_added_with_same_role_and_affiliation'),
+            variant: 'error',
+          })
+        );
+        return;
+      }
+      newContributor = { ...contributors[existingContributorIndex] };
+    } else {
+      newContributor = {
+        identity: {
+          type: 'Person',
+          id: selectedPerson.id,
+          firstName: getValueByKey('FirstName', selectedPerson.names),
+          lastName: getValueByKey('LastName', selectedPerson.names),
+        },
+        roles: [],
+      };
+    }
+
+    // Adding several affiliations
+    if (selectedPerson.affiliations.length > 0) {
+      newContributor.roles = [...newContributor.roles].concat(
+        selectedPerson.affiliations.map((affiliation, index) => {
+          return {
+            type: selectedContributorRole === 'ProjectManager' && index === 0 ? 'ProjectManager' : 'ProjectParticipant', // Backend only supports one ProjectManager role per project
+            affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
+          } as ProjectContributorRole;
+        })
+      );
+    } else {
+      // Adding no affiliations
+      newContributor.roles = [
+        ...newContributor.roles,
+        {
+          type: selectedContributorRole === 'ProjectManager' ? 'ProjectManager' : 'ProjectParticipant',
+          affiliation: undefined,
+        } as ProjectContributorRole,
+      ];
+    }
+
+    const newContributors = [...values.contributors];
+
+    if (existingContributorIndex > -1) {
+      newContributors[existingContributorIndex] = newContributor;
+    } else {
+      newContributors.push(newContributor);
+    }
 
     setFieldValue(ProjectFieldName.Contributors, newContributors);
     toggleModal();

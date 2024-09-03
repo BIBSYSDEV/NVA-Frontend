@@ -39,7 +39,7 @@ export type ProjectOrganization = Omit<Organization, 'partOf' | 'hasPart' | 'acr
 
 export type ProjectStatus = 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
 
-interface ProjectContributorIdentity {
+export interface ProjectContributorIdentity {
   type: 'Person';
   id: string;
   firstName: string;
@@ -50,7 +50,7 @@ export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 
 export interface ProjectContributorRole {
   type: ProjectContributorType;
-  affiliation: ProjectOrganization;
+  affiliation: ProjectOrganization | undefined;
 }
 
 export interface ProjectContributor {
@@ -175,7 +175,7 @@ export enum ProjectFieldName {
   Keywords = 'keywords',
   RelatedProjects = 'relatedProjects',
   RoleType = 'roles[0].type',
-  RoleAffiliation = 'roles[0].affiliation',
+  Type = 'type',
 }
 
 export enum ProjectContributorFieldName {
