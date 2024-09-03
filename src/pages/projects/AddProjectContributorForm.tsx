@@ -43,7 +43,7 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
     if (selectedContributorRole === 'ProjectManager' && hasProjectManager) {
       dispatch(
         setNotification({
-          message: t('project.error.there_can_only_be_one_project_manager_choose_different_role'),
+          message: t('project.error.there_can_only_be_one_project_manager'),
           variant: 'error',
         })
       );
