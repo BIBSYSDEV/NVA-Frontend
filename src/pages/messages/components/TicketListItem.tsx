@@ -55,7 +55,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       )
     : '';
 
-  const viewStatusMutation = useMutation({ mutationFn: () => updateTicket(ticket.id, { viewStatus: 'Unread' }) });
+  const viewStatusMutation = useMutation({ mutationFn: () => updateTicket(ticket.id, { viewStatus: 'Read' }) });
 
   const viewedByUser = user?.nvaUsername && ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername);
 
