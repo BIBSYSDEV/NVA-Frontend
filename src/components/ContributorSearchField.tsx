@@ -27,6 +27,7 @@ interface ContributorSearchFieldProps {
   setSelectedPerson: (val: CristinPerson | undefined) => void;
   searchTerm: string;
   setSearchTerm: (val: string) => void;
+  singleSelectAffiliations?: boolean;
 }
 
 export const ContributorSearchField = ({
@@ -34,6 +35,7 @@ export const ContributorSearchField = ({
   setSelectedPerson,
   searchTerm,
   setSearchTerm,
+  singleSelectAffiliations = false,
 }: ContributorSearchFieldProps) => {
   const { t } = useTranslation();
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -93,6 +95,7 @@ export const ContributorSearchField = ({
                     cristinPerson={cristinPerson}
                     setSelectedPerson={setSelectedPerson}
                     selectedPerson={selectedPerson}
+                    singleSelectAffiliations={singleSelectAffiliations}
                   />
                 ))}
               </TableBody>
