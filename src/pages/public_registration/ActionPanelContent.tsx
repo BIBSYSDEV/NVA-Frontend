@@ -24,7 +24,7 @@ import { SupportAccordion } from './action_accordions/SupportAccordion';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
-  refetchData: () => void;
+  refetchData: () => Promise<void>;
   isLoadingData?: boolean;
 }
 
@@ -54,8 +54,8 @@ export const ActionPanelContent = ({
     if (isErrorStatus(addMessageResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(addMessageResponse.status)) {
+      await refetchData();
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
-      refetchData();
       return true;
     }
   };

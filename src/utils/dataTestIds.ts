@@ -347,6 +347,7 @@ export const dataTestId = {
       requestDoiButton: 'button-toggle-request-doi',
       requestDoiModal: 'request-doi-modal',
       sendDoiButton: 'button-send-doi-request',
+      showMoreDoiActionsButton: 'show-more-doi-actions-button',
       supportAccordion: 'support-accordion',
       tabPanelLog: 'tab-panel-log',
       tabPanelTasks: 'tab-panel-tasks',
