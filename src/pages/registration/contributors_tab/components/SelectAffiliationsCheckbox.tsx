@@ -22,7 +22,7 @@ export const SelectAffiliationsCheckbox = ({
 }: SelectAffiliationsCheckboxProps) => {
   const { t } = useTranslation();
 
-  const selectPerson = () => {
+  const selectAffiliation = () => {
     if (!selectedPerson) {
       return;
     }
@@ -40,7 +40,7 @@ export const SelectAffiliationsCheckbox = ({
   return (
     <IconButton
       data-testid={dataTestId.registrationWizard.contributors.selectAffiliationForContributor}
-      onClick={selectPerson}
+      onClick={selectAffiliation}
       color="primary"
       size="small"
       disabled={!personIsSelected}

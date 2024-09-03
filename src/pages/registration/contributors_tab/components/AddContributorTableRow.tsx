@@ -14,14 +14,14 @@ interface CristinPersonTableRowProps {
   cristinPerson: CristinPerson;
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson | undefined) => void;
-  singleSelect?: boolean;
+  singleSelectAffiliations?: boolean;
 }
 
 export const CristinPersonTableRow = ({
   cristinPerson,
   setSelectedPerson,
   selectedPerson,
-  singleSelect = false,
+  singleSelectAffiliations = false,
 }: CristinPersonTableRowProps) => {
   const { t } = useTranslation();
   const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
@@ -41,7 +41,7 @@ export const CristinPersonTableRow = ({
               } else {
                 setSelectedPerson({
                   ...cristinPerson,
-                  affiliations: singleSelect ? [activeAffiliations[0]] : activeAffiliations,
+                  affiliations: singleSelectAffiliations ? [activeAffiliations[0]] : activeAffiliations,
                 });
               }
             }}
@@ -70,7 +70,7 @@ export const CristinPersonTableRow = ({
                     alignItems: 'center',
                     gap: '0.25rem',
                   }}>
-                  {singleSelect ? (
+                  {singleSelectAffiliations ? (
                     <SelectAffiliationRadioButton
                       personIsSelected={personIsSelected}
                       affiliation={affiliation}
