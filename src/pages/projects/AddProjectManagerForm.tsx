@@ -15,25 +15,37 @@ import {
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getValueByKey } from '../../utils/user-helpers';
+import { findProjectManager } from '../project/helpers/projectContributorHelpers';
 
-interface AddProjectContributorFormProps {
+interface AddProjectManagerFormProps {
   toggleModal: () => void;
 }
 
-export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributorFormProps) => {
+export const AddProjectManagerForm = ({ toggleModal }: AddProjectManagerFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
+  const projectManager = findProjectManager(contributors);
 
-  const addContributor = () => {
+  const addProjectManager = () => {
     if (!selectedPerson) {
       return;
     }
 
-    // The person might already exist
+    if (projectManager) {
+      dispatch(
+        setNotification({
+          message: t('project.error.there_can_only_be_one_project_manager'),
+          variant: 'error',
+        })
+      );
+      return;
+    }
+
+    // The person chosen to be project manager might already exist in the project contributor list
     const existingContributorIndex = contributors.findIndex(
       (contributor) => contributor.identity.id === selectedPerson.id
     );
@@ -41,22 +53,6 @@ export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributor
     let newContributor: ProjectContributor;
 
     if (existingContributorIndex > -1) {
-      // Cannot add same person with same role and affiliation
-      if (
-        contributors[existingContributorIndex].roles.some(
-          (role) =>
-            role.type === 'ProjectParticipant' &&
-            selectedPerson.affiliations.some((affiliation) => affiliation.organization === role.affiliation?.id)
-        )
-      ) {
-        dispatch(
-          setNotification({
-            message: t('project.error.contributor_already_added_with_same_role_and_affiliation'),
-            variant: 'error',
-          })
-        );
-        return;
-      }
       newContributor = { ...contributors[existingContributorIndex] };
     } else {
       newContributor = {
@@ -70,22 +66,24 @@ export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributor
       };
     }
 
-    // Adding 1 or more affiliations
-    if (selectedPerson.affiliations.length > 0) {
-      newContributor.roles = [...newContributor.roles].concat(
-        selectedPerson.affiliations.map((affiliation) => {
-          return {
-            type: 'ProjectParticipant',
-            affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
-          } as ProjectContributorRole;
-        })
-      );
-    } else {
-      // Adding no affiliations
+    // The UI only lets us choose one affiliation for projectManager
+    if (selectedPerson.affiliations.length === 1) {
       newContributor.roles = [
         ...newContributor.roles,
         {
-          type: 'ProjectParticipant',
+          type: 'ProjectManager',
+          affiliation: {
+            type: 'Organization',
+            id: selectedPerson.affiliations[0].organization,
+          },
+        } as ProjectContributorRole,
+      ];
+    } else {
+      // No affiliations selected
+      newContributor.roles = [
+        ...newContributor.roles,
+        {
+          type: 'ProjectManager',
           affiliation: undefined,
         } as ProjectContributorRole,
       ];
@@ -110,16 +108,17 @@ export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributor
         setSelectedPerson={setSelectedPerson}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        singleSelectAffiliations
       />
       <StyledRightAlignedFooter>
         <Button
           sx={{ mt: '1rem' }}
-          data-testid={dataTestId.projectForm.selectContributorButton}
+          data-testid={dataTestId.projectForm.addProjectManagerButton}
           disabled={!selectedPerson}
-          onClick={addContributor}
+          onClick={addProjectManager}
           size="large"
           variant="contained">
-          {t('registration.contributors.add_contributor')}
+          {t('project.add_project_manager')}
         </Button>
       </StyledRightAlignedFooter>
     </Box>

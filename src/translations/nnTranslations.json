@@ -1123,7 +1123,6 @@
     "add_project_contributor": "Legg til prosjektdeltakar",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Berre institusjonar som prosjektet er gjennomført i samarbeid med, skal leggast til som tilknyting til prosjektdeltakar.</0> <0>Legg til tilknyting til prosjektdeltakar ved å først søkje opp institusjonen og eventuelt eining.</0> <0>Høyrer prosjektdeltakaren til fleire forskjellige einingar under same institusjon, må du legge til dette som ny tilknyting.</0>",
-      "cannot_delete_affiliation_for_project_manager": "Kan ikkje fjerne tilknyting for prosjektleiar",
       "cannot_delete_only_affiliation": "Kan ikkje fjerne einaste tilknyting",
       "delete_affiliation": "Fjern tilknyting",
       "edit_affiliation": "Endre tilknyting"
@@ -1135,7 +1134,7 @@
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "error": {
-      "there_can_only_be_one_project_manager_choose_different_role": "Eit prosjekt kan kun ha ein prosjektleiar. Vel ei anna rolle."
+      "there_can_only_be_one_project_manager": "Eit prosjekt kan kun ha ein prosjektleiar."
     },
     "form": {
       "add_financing": "Legg til finansiering",

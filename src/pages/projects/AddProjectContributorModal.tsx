@@ -1,29 +1,34 @@
 import { useTranslation } from 'react-i18next';
 import { Modal } from '../../components/Modal';
 import { AddProjectContributorForm } from './AddProjectContributorForm';
+import { AddProjectManagerForm } from './AddProjectManagerForm';
 
 interface AddProjectContributorModalProps {
   open: boolean;
-  hasProjectManager: boolean;
   toggleModal: () => void;
+  addProjectManager?: boolean;
 }
 
 export const AddProjectContributorModal = ({
   open,
-  hasProjectManager,
   toggleModal,
+  addProjectManager = false,
 }: AddProjectContributorModalProps) => {
   const { t } = useTranslation();
 
   return (
     <Modal
-      headingText={t('project.add_project_contributor')}
+      headingText={addProjectManager ? t('project.add_project_manager') : t('project.add_project_contributor')}
       open={open}
       onClose={toggleModal}
       fullWidth
       maxWidth="md"
       dataTestId="contributor-modal">
-      <AddProjectContributorForm hasProjectManager={hasProjectManager} toggleModal={toggleModal} />
+      {addProjectManager ? (
+        <AddProjectManagerForm toggleModal={toggleModal} />
+      ) : (
+        <AddProjectContributorForm toggleModal={toggleModal} />
+      )}
     </Modal>
   );
 };
