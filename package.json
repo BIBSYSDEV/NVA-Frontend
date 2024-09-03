@@ -54,7 +54,7 @@
     "i18n-iso-countries": "^7.11.3",
     "i18next": "^23.14.0",
     "i18next-browser-languagedetector": "^8.0.0",
-    "isbn3": "^1.1.51",
+    "isbn3": "^1.1.52",
     "nva-language": "^1.0.19",
     "pretty-bytes": "^6.1.1",
     "react": "^18.3.1",
