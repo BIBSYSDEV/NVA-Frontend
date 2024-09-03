@@ -19,7 +19,7 @@ import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {
   registration: Registration;
-  supportTicket: Ticket | null;
+  supportTicket?: Ticket;
   userIsCurator: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   refetchData: () => void;
