@@ -36,10 +36,6 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
   const addContributor = () => {
-    console.log('addContributor---------------');
-    console.log('selectedPerson', selectedPerson);
-    console.log('selectedContributorRole', selectedContributorRole);
-    console.log('hasProjectManager', hasProjectManager);
     if (!selectedPerson || !selectedContributorRole) {
       return;
     }
@@ -56,12 +52,28 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
 
     let newContributor: ProjectContributor;
 
-    // The person might already exist
     const existingContributorIndex = contributors.findIndex(
       (contributor) => contributor.identity.id === selectedPerson.id
     );
 
+    // If person is already added
     if (existingContributorIndex > -1) {
+      // Cannot add same person with same role and affiliation
+      if (
+        contributors[existingContributorIndex].roles.some(
+          (role) =>
+            role.type === selectedContributorRole &&
+            selectedPerson.affiliations.some((affiliation) => affiliation.organization === role.affiliation?.id)
+        )
+      ) {
+        dispatch(
+          setNotification({
+            message: t('project.error.contributor_already_added_with_same_role_and_affiliation'),
+            variant: 'error',
+          })
+        );
+        return;
+      }
       newContributor = { ...contributors[existingContributorIndex] };
     } else {
       newContributor = {
@@ -75,22 +87,22 @@ export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: Ad
       };
     }
 
-    // Adding a new role with several affiliations
+    // Adding several affiliations
     if (selectedPerson.affiliations.length > 0) {
       newContributor.roles = [...newContributor.roles].concat(
-        selectedPerson.affiliations.map((affiliation) => {
+        selectedPerson.affiliations.map((affiliation, index) => {
           return {
-            type: selectedContributorRole === 'ProjectManager' ? 'ProjectManager' : 'ProjectParticipant', // Backend only supports one ProjectManager role per project
+            type: selectedContributorRole === 'ProjectManager' && index === 0 ? 'ProjectManager' : 'ProjectParticipant', // Backend only supports one ProjectManager role per project
             affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
           } as ProjectContributorRole;
         })
       );
     } else {
-      // Adding a new role without any affiliations
+      // Adding no affiliations
       newContributor.roles = [
         ...newContributor.roles,
         {
-          type: selectedContributorRole === 'ProjectManager' ? 'ProjectManager' : 'ProjectParticipant', // Backend only supports one ProjectManager role per project
+          type: selectedContributorRole === 'ProjectManager' ? 'ProjectManager' : 'ProjectParticipant',
           affiliation: undefined,
         } as ProjectContributorRole,
       ];
