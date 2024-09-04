@@ -37,6 +37,8 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
     }
   }
 
+  // Force page refresh if a chunk is not found. This error is usually caused by a new
+  // version of the app being deployed, and the old chunks currently used has been invalidated.
   componentDidCatch() {
     const { t } = this.props;
     const { error } = this.state;
