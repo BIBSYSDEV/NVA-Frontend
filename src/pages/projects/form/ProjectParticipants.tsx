@@ -30,7 +30,7 @@ export const ProjectParticipants = () => {
 
   const toggleOpenAddProjectParticipantView = () => setOpenAddProjectParticipantView(!openAddProjectParticipantView);
 
-  const removeProjectParticipant = (name: string, remove: (index: number) => any, contributorIndex: number) => {
+  const removeProjectParticipant = (name: string, remove: (index: number) => void, contributorIndex: number) => {
     const projectManagerRole = findProjectManagerRole(values.contributors[contributorIndex]);
 
     // Contributor also has Project manager role: Only delete all the others
@@ -50,7 +50,7 @@ export const ProjectParticipants = () => {
         {({ name, remove }: FieldArrayRenderProps) => (
           <>
             <Button
-              sx={{ borderRadius: '1rem', width: '17rem' }}
+              sx={{ borderRadius: '1rem', width: 'fit-content' }}
               onClick={toggleOpenAddProjectParticipantView}
               variant="contained"
               startIcon={<AddIcon />}

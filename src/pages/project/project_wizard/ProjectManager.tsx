@@ -51,7 +51,7 @@ export const ProjectManager = ({ suggestedProjectManager, isVisited = false }: P
         {({ name, remove }: FieldArrayRenderProps) => (
           <>
             <Button
-              sx={{ borderRadius: '1rem', width: '17rem' }}
+              sx={{ borderRadius: '1rem', width: 'fit-content' }}
               onClick={toggleAddProjectManagerView}
               variant="contained"
               startIcon={<AddIcon />}

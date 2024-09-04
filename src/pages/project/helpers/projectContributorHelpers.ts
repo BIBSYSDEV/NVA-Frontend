@@ -11,8 +11,3 @@ export const getNonProjectManagerContributors = (contributors: ProjectContributo
 
 export const hasUnidentifiedContributor = (contributors: ProjectContributor[]) =>
   contributors.some((contributor) => !contributor.identity || !contributor.identity.id);
-
-export const findProjectManager = (contributors: ProjectContributor[]) => {
-  const projectManagerIndex = findProjectManagerIndex(contributors);
-  return contributors[projectManagerIndex];
-};

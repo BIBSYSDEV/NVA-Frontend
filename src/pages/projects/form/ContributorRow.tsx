@@ -142,7 +142,6 @@ export const ContributorRow = ({
                 name:
                   getFullName(contributor?.identity?.firstName, contributor?.identity?.lastName) ??
                   t('project.project_participant').toLocaleLowerCase(),
-                as: asProjectManager ? ` ${t('project.as_project_manager')}` : '',
               })}
             </Typography>
           </ConfirmDialog>
