@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchNviInstitutionApprovalReport } from '../../../api/scientificIndexApi';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
 export const ExportNviStatusButton = () => {
@@ -39,6 +40,7 @@ export const ExportNviStatusButton = () => {
 
   return (
     <LoadingButton
+      data-testid={dataTestId.common.exportButton}
       variant="outlined"
       startIcon={<FileDownloadOutlinedIcon />}
       onClick={() => setFetchReport(true)}
