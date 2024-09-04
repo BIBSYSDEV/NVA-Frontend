@@ -21,7 +21,7 @@ export const ExportNviStatusButton = () => {
         setFetchReport(false);
       }
     },
-    meta: { errorMessage: 'Kunne ikke laste ned eksport av NVI-status' },
+    meta: { errorMessage: t('feedback.error.get_nvi_status_export') },
   });
 
   useEffect(() => {
