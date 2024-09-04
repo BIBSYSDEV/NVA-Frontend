@@ -14,7 +14,13 @@ export const ExportNviStatusButton = () => {
   const fetchNviApprovalReportQuery = useQuery({
     enabled: fetchReport && !!year,
     queryKey: ['nvi-report', year],
-    queryFn: () => fetchNviInstitutionApprovalReport(year),
+    queryFn: () => {
+      try {
+        return fetchNviInstitutionApprovalReport(year);
+      } finally {
+        setFetchReport(false);
+      }
+    },
     meta: { errorMessage: 'Kunne ikke laste ned eksport av NVI-status' },
   });
 
@@ -23,13 +29,13 @@ export const ExportNviStatusButton = () => {
       const url = window.URL.createObjectURL(fetchNviApprovalReportQuery.data);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', '`nvi_report_${year}.xlsx`');
+      link.setAttribute('download', `nvi_report_${year}.xlsx`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     }
-  }, [fetchNviApprovalReportQuery.data]);
+  }, [year, fetchNviApprovalReportQuery.data]);
 
   return (
     <LoadingButton
