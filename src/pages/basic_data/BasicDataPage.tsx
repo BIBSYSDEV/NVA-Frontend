@@ -6,7 +6,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
+import { Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -19,10 +19,9 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
-import { BasicDataLocationState } from '../../types/locationState.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
+import { getAdminInstitutionPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
 import { CentralImportCandidateForm } from './app_admin/central_import/CentralImportCandidateForm';
@@ -47,11 +46,11 @@ const BasicDataPage = () => {
   const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const isInternalImporter = !!user?.customerId && user.isInternalImporter;
-  const history = useHistory<BasicDataLocationState>();
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const location = useLocation();
+  const navigate = useNavigate();
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const newCustomerIsSelected =
-    currentPath === UrlPathTemplate.BasicDataInstitutions && history.location.search === '?id=new';
+  const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
   const centralImportIsSelected = currentPath.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
   const expandedMenu = currentPath === UrlPathTemplate.BasicDataCentralImport || !centralImportIsSelected;
@@ -64,14 +63,14 @@ const BasicDataPage = () => {
         expanded={expandedMenu}
         minimizedMenu={
           simpleGoBack ? (
-            <StyledMinimizedMenuButton title={t('basic_data.basic_data')} onClick={() => history.goBack()}>
+            <StyledMinimizedMenuButton title={t('basic_data.basic_data')} onClick={() => navigate(-1)}>
               <BusinessCenterIcon />
             </StyledMinimizedMenuButton>
           ) : (
             <Link
               to={{
                 pathname: UrlPathTemplate.BasicDataCentralImport,
-                search: history.location.state?.previousSearch,
+                search: location.state?.previousSearch,
               }}>
               <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
                 <BusinessCenterIcon />
@@ -169,48 +168,59 @@ const BasicDataPage = () => {
         )}
       </SideMenu>
 
-      <Switch>
+      <Routes>
         <ErrorBoundary>
-          <PrivateRoute exact path={UrlPathTemplate.BasicData} isAuthorized={isAppAdmin || isInstitutionAdmin}>
-            {isInstitutionAdmin ? (
-              <Redirect to={UrlPathTemplate.BasicDataPersonRegister} />
-            ) : isAppAdmin ? (
-              <Redirect to={UrlPathTemplate.BasicDataInstitutions} />
-            ) : null}
-          </PrivateRoute>
-
-          <PrivateRoute exact path={UrlPathTemplate.BasicDataInstitutions} isAuthorized={isAppAdmin}>
-            <AdminCustomerInstitutionsContainer />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isInternalImporter}>
-            <CentralImportPage />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImportCandidate} isAuthorized={isInternalImporter}>
-            <CentralImportDuplicationCheckPage />
-          </PrivateRoute>
-          <PrivateRoute
-            exact
+          <Route
+            path={UrlPathTemplate.BasicData}
+            element={
+              <PrivateRoute
+                isAuthorized={isAppAdmin || isInstitutionAdmin}
+                element={
+                  isInstitutionAdmin ? (
+                    <Navigate to={UrlPathTemplate.BasicDataPersonRegister} />
+                  ) : isAppAdmin ? (
+                    <Navigate to={UrlPathTemplate.BasicDataInstitutions} />
+                  ) : (
+                    <Navigate to="/forbidden" replace />
+                  )
+                }
+              />
+            }
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataInstitutions}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<AdminCustomerInstitutionsContainer />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataCentralImport}
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataCentralImportCandidate}
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportDuplicationCheckPage />} />}
+          />
+          <Route
             path={UrlPathTemplate.BasicDataCentralImportCandidateWizard}
-            isAuthorized={isInternalImporter}>
-            <CentralImportCandidateForm />
-          </PrivateRoute>
-          <PrivateRoute
-            exact
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateForm />} />}
+          />
+          <Route
             path={UrlPathTemplate.BasicDataCentralImportCandidateMerge}
-            isAuthorized={isInternalImporter}>
-            <CentralImportCandidateMerge />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.BasicDataAddEmployee} isAuthorized={isInstitutionAdmin}>
-            <AddEmployeePage />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.BasicDataPersonRegister} isAuthorized={isInstitutionAdmin}>
-            <PersonRegisterPage />
-          </PrivateRoute>
-          <PrivateRoute path={UrlPathTemplate.BasicDataNvi} isAuthorized={isAppAdmin}>
-            <NviPeriodsPage />
-          </PrivateRoute>
+            element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateMerge />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataAddEmployee}
+            element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<AddEmployeePage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataPersonRegister}
+            element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<PersonRegisterPage />} />}
+          />
+          <Route
+            path={UrlPathTemplate.BasicDataNvi}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
+          />
         </ErrorBoundary>
-      </Switch>
+      </Routes>
     </StyledPageWithSideMenu>
   );
 };

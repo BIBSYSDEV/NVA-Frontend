@@ -6,17 +6,17 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { fetchJournal, fetchPublisher, fetchSeries } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
-  PropertySearch,
   createSearchConfigFromSearchParams,
   getFileFacetText,
   isValidIsbn,
+  PropertySearch,
   removeSearchParamValue,
 } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -43,6 +43,7 @@ interface SelectedFacet {
   param: string;
   value: string;
 }
+
 interface SearchTermProperties {
   searchTerm: string;
   properties: SearchTermProperty[];
@@ -55,8 +56,9 @@ interface SearchTermProperty {
 
 export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const selectedFacets: SelectedFacet[] = [];
   searchParams.forEach((value, param) => {
@@ -117,7 +119,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         processSearchParamProperties(values, ResultParam.Course);
         processSearchParamProperties(values, ResultParam.CristinIdentifier);
 
-        history.push({ search: searchParams.toString() });
+        navigate({ search: searchParams.toString() });
       }}>
       {({ values, submitForm }) => (
         <Box
@@ -163,7 +165,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
                         const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
                         newParams.set(ResultParam.From, '0');
-                        history.push({ search: newParams.toString() });
+                        navigate({ search: newParams.toString() });
                       }}
                       baseFieldName={`properties[${index}]`}
                     />
@@ -334,7 +336,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     onClick={() => {
                       const newParams = removeSearchParamValue(searchParams, param, value);
                       newParams.set(ResultParam.From, '0');
-                      history.push({ search: newParams.toString() });
+                      navigate({ search: newParams.toString() });
                     }}>
                     {fieldName}: {fieldValueText}
                   </Button>
