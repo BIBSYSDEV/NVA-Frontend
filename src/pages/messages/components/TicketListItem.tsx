@@ -110,7 +110,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           <Typography lineHeight="2rem">
             {ticket.type === 'GeneralSupportCase' && isOnMyPageMessages
               ? viewedByUser
-                ? t('common.read_past')
+                ? t('common.read_past_tense')
                 : t('common.unread')
               : t(`my_page.messages.ticket_types.${ticket.status}`)}
           </Typography>
