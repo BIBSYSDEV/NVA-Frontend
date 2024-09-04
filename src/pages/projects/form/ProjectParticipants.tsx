@@ -8,7 +8,7 @@ import { CristinProject, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
-  findNonProjectManagerContributors,
+  getNonProjectManagerContributors,
   hasUnidentifiedContributor,
 } from '../../project/helpers/projectContributorHelpers';
 import { findProjectManagerRole, replaceRolesOnContributor } from '../../project/helpers/projectRoleHelpers';
@@ -22,7 +22,7 @@ export const ProjectParticipants = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openAddProjectParticipantView, setOpenAddProjectParticipantView] = useState(false);
   const { values, setFieldValue } = useFormikContext<CristinProject>();
-  const contributorsWithNonProjectManagerRole = findNonProjectManagerContributors(values.contributors);
+  const contributorsWithNonProjectManagerRole = getNonProjectManagerContributors(values.contributors);
   const paginatedContributors = contributorsWithNonProjectManagerRole.slice(
     rowsPerPage * (currentPage - 1),
     rowsPerPage * currentPage

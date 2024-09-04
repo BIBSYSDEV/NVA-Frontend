@@ -5,7 +5,7 @@ export const findProjectManagerIndex = (contributors: ProjectContributor[]) => {
   return contributors.findIndex((contributor) => contributor.roles.some((role) => isProjectManagerRole(role)));
 };
 
-export const findNonProjectManagerContributors = (contributors: ProjectContributor[]) => {
+export const getNonProjectManagerContributors = (contributors: ProjectContributor[]) => {
   return contributors.filter((contributor) => contributor.roles.some((role) => isNonProjectManagerRole(role)));
 };
 

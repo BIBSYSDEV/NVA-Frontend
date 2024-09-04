@@ -8,14 +8,8 @@ export const isNonProjectManagerRole = (role: ProjectContributorRole) => {
   return role.type !== 'ProjectManager';
 };
 
-export const findProjectManagerRoleIndex = (contributor: ProjectContributor) => {
-  return contributor.roles.findIndex((role) => isProjectManagerRole(role));
-};
-
 export const findProjectManagerRole = (contributor: ProjectContributor) => {
-  const projectManagerRoleIndex = findProjectManagerRoleIndex(contributor);
-
-  return projectManagerRoleIndex > -1 ? contributor.roles[projectManagerRoleIndex] : undefined;
+  return contributor.roles.find(isProjectManagerRole);
 };
 
 export const replaceRolesOnContributor = (
@@ -30,11 +24,7 @@ export const replaceRolesOnContributor = (
   return newContributors;
 };
 
-export const deleteRoleFromContributor = (
-  contributors: ProjectContributor[],
-  contributorIndex: number,
-  roleIndex: number
-) => {
+const deleteRoleFromContributor = (contributors: ProjectContributor[], contributorIndex: number, roleIndex: number) => {
   const newRoles = [...contributors[contributorIndex].roles];
   newRoles.splice(roleIndex, 1);
   return replaceRolesOnContributor(contributors, contributorIndex, newRoles);
@@ -50,10 +40,6 @@ export const deleteProjectManagerRoleFromContributor = (contributors: ProjectCon
     : contributors;
 };
 
-const rolesHaveEmptyAffiliation = (roles: ProjectContributorRole[]) => {
-  return roles.some((role) => role.affiliation === undefined);
-};
-
 export const getRelevantContributorRoles = (contributor: ProjectContributor, isProjectManager: boolean) => {
   return contributor.roles.filter((role) =>
     isProjectManager ? isProjectManagerRole(role) : isNonProjectManagerRole(role)
@@ -61,7 +47,7 @@ export const getRelevantContributorRoles = (contributor: ProjectContributor, isP
 };
 
 export const contributorHasEmptyAffiliation = (roles: ProjectContributorRole[]) => {
-  return rolesHaveEmptyAffiliation(roles);
+  return roles.some((role) => role.affiliation === undefined);
 };
 
 export const checkIfSameAffiliationOnSameRoleType = (
@@ -74,11 +60,11 @@ export const checkIfSameAffiliationOnSameRoleType = (
   return role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId && isSameRoleType;
 };
 
-export const findProjectManagerRoleThatHasAffiliation = (contributor: ProjectContributor, affiliationId: string) => {
+const findProjectManagerRoleThatHasAffiliation = (contributor: ProjectContributor, affiliationId: string) => {
   return contributor.roles.findIndex((role) => role.affiliation?.id === affiliationId && isProjectManagerRole(role));
 };
 
-export const findNonProjectManagerRoleThatHasAffiliation = (contributor: ProjectContributor, affiliationId: string) => {
+const findNonProjectManagerRoleThatHasAffiliation = (contributor: ProjectContributor, affiliationId: string) => {
   return contributor.roles.findIndex((role) => role.affiliation?.id === affiliationId && isNonProjectManagerRole(role));
 };
 
