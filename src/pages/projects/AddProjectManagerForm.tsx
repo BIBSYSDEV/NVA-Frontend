@@ -2,103 +2,40 @@ import { Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/notificationSlice';
 import {
   CristinProject,
   ProjectContributor,
-  ProjectContributorRole,
+  ProjectContributorType,
   ProjectFieldName,
 } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getValueByKey } from '../../utils/user-helpers';
-import { findProjectManager } from '../project/helpers/projectContributorHelpers';
 
 interface AddProjectManagerFormProps {
   toggleModal: () => void;
+  addContributor: (
+    personToAdd: CristinPerson | undefined,
+    contributors: ProjectContributor[],
+    roleToAddTo: ProjectContributorType
+  ) => ProjectContributor[] | undefined;
 }
 
-export const AddProjectManagerForm = ({ toggleModal }: AddProjectManagerFormProps) => {
+export const AddProjectManagerForm = ({ toggleModal, addContributor }: AddProjectManagerFormProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
-  const projectManager = findProjectManager(contributors);
 
   const addProjectManager = () => {
-    if (!selectedPerson) {
-      return;
+    const newContributors = addContributor(selectedPerson, contributors, 'ProjectManager');
+
+    if (newContributors) {
+      setFieldValue(ProjectFieldName.Contributors, newContributors);
+      toggleModal();
     }
-
-    if (projectManager) {
-      dispatch(
-        setNotification({
-          message: t('project.error.there_can_only_be_one_project_manager'),
-          variant: 'error',
-        })
-      );
-      return;
-    }
-
-    // The person chosen to be project manager might already exist in the project contributor list
-    const existingContributorIndex = contributors.findIndex(
-      (contributor) => contributor.identity.id === selectedPerson.id
-    );
-
-    let newContributor: ProjectContributor;
-
-    if (existingContributorIndex > -1) {
-      newContributor = { ...contributors[existingContributorIndex] };
-    } else {
-      newContributor = {
-        identity: {
-          type: 'Person',
-          id: selectedPerson.id,
-          firstName: getValueByKey('FirstName', selectedPerson.names),
-          lastName: getValueByKey('LastName', selectedPerson.names),
-        },
-        roles: [],
-      };
-    }
-
-    // The UI only lets us choose one affiliation for projectManager
-    if (selectedPerson.affiliations.length === 1) {
-      newContributor.roles = [
-        ...newContributor.roles,
-        {
-          type: 'ProjectManager',
-          affiliation: {
-            type: 'Organization',
-            id: selectedPerson.affiliations[0].organization,
-          },
-        } as ProjectContributorRole,
-      ];
-    } else {
-      // No affiliations selected
-      newContributor.roles = [
-        ...newContributor.roles,
-        {
-          type: 'ProjectManager',
-          affiliation: undefined,
-        } as ProjectContributorRole,
-      ];
-    }
-
-    const newContributors = [...values.contributors];
-
-    if (existingContributorIndex > -1) {
-      newContributors[existingContributorIndex] = newContributor;
-    } else {
-      newContributors.push(newContributor);
-    }
-
-    setFieldValue(ProjectFieldName.Contributors, newContributors);
-    toggleModal();
   };
 
   return (

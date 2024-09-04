@@ -2,105 +2,40 @@ import { Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/notificationSlice';
 import {
   CristinProject,
   ProjectContributor,
-  ProjectContributorRole,
+  ProjectContributorType,
   ProjectFieldName,
 } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getValueByKey } from '../../utils/user-helpers';
 
 interface AddProjectContributorFormProps {
   toggleModal: () => void;
+  addContributor: (
+    personToAdd: CristinPerson | undefined,
+    contributors: ProjectContributor[],
+    roleToAddTo: ProjectContributorType
+  ) => ProjectContributor[] | undefined;
 }
 
-export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributorFormProps) => {
+export const AddProjectContributorForm = ({ toggleModal, addContributor }: AddProjectContributorFormProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
-  const addContributor = () => {
-    if (!selectedPerson) {
-      return;
+  const addParticipant = () => {
+    const newContributors = addContributor(selectedPerson, contributors, 'ProjectParticipant');
+
+    if (newContributors) {
+      setFieldValue(ProjectFieldName.Contributors, newContributors);
+      toggleModal();
     }
-
-    // The person might already exist
-    const existingContributorIndex = contributors.findIndex(
-      (contributor) => contributor.identity.id === selectedPerson.id
-    );
-
-    let newContributor: ProjectContributor;
-
-    if (existingContributorIndex > -1) {
-      // Cannot add same person with same role and affiliation
-      if (
-        contributors[existingContributorIndex].roles.some(
-          (role) =>
-            role.type === 'ProjectParticipant' &&
-            selectedPerson.affiliations.some((affiliation) => affiliation.organization === role.affiliation?.id)
-        )
-      ) {
-        dispatch(
-          setNotification({
-            message: t('project.error.contributor_already_added_with_same_role_and_affiliation'),
-            variant: 'error',
-          })
-        );
-        return;
-      }
-      newContributor = { ...contributors[existingContributorIndex] };
-    } else {
-      newContributor = {
-        identity: {
-          type: 'Person',
-          id: selectedPerson.id,
-          firstName: getValueByKey('FirstName', selectedPerson.names),
-          lastName: getValueByKey('LastName', selectedPerson.names),
-        },
-        roles: [],
-      };
-    }
-
-    // Adding 1 or more affiliations
-    if (selectedPerson.affiliations.length > 0) {
-      newContributor.roles = [...newContributor.roles].concat(
-        selectedPerson.affiliations.map((affiliation) => {
-          return {
-            type: 'ProjectParticipant',
-            affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
-          } as ProjectContributorRole;
-        })
-      );
-    } else {
-      // Adding no affiliations
-      newContributor.roles = [
-        ...newContributor.roles,
-        {
-          type: 'ProjectParticipant',
-          affiliation: undefined,
-        } as ProjectContributorRole,
-      ];
-    }
-
-    const newContributors = [...values.contributors];
-
-    if (existingContributorIndex > -1) {
-      newContributors[existingContributorIndex] = newContributor;
-    } else {
-      newContributors.push(newContributor);
-    }
-
-    setFieldValue(ProjectFieldName.Contributors, newContributors);
-    toggleModal();
   };
 
   return (
@@ -116,7 +51,7 @@ export const AddProjectContributorForm = ({ toggleModal }: AddProjectContributor
           sx={{ mt: '1rem' }}
           data-testid={dataTestId.projectForm.selectContributorButton}
           disabled={!selectedPerson}
-          onClick={addContributor}
+          onClick={addParticipant}
           size="large"
           variant="contained">
           {t('registration.contributors.add_contributor')}

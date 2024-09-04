@@ -1137,7 +1137,6 @@
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "error": {
-      "there_can_only_be_one_project_manager": "Et prosjekt kan kun ha en prosjektleder.",
       "contributor_already_added_with_same_role_and_affiliation": "Prosjektdeltaker er allerede lagt til med samme rolle og tilknytning."
     },
     "form": {
