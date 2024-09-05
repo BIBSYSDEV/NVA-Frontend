@@ -113,6 +113,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const isNviReported = nviCandidateQuery.isSuccess && nviCandidateQuery.data.status === 'Reported';
   const reportedYear = nviCandidateQuery.data?.period.year;
 
+  const alternativeTitles = Object.values(registration.entityDescription?.alternativeTitles ?? {});
+
   return (
     <StyledGeneralInfo>
       <div data-testid={dataTestId.registrationLandingPage.generalInfo}>
@@ -184,6 +186,15 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               publicationInstance={publicationInstance as ExhibitionPublicationInstance}
             />
           ) : null)}
+
+        {alternativeTitles.length > 0 && (
+          <>
+            <Typography variant="overline">{t('registration.description.alternative_title')}</Typography>
+            {alternativeTitles.map((title) => (
+              <Typography key={title}>{title}</Typography>
+            ))}
+          </>
+        )}
         <PublicDoi registration={registration} />
         <PublicHandles registration={registration} />
 
