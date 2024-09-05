@@ -12,11 +12,13 @@ interface AddProjectContributorModalProps {
   open: boolean;
   toggleModal: () => void;
   addProjectManager?: boolean;
+  suggestedProjectManager?: string;
 }
 
 export const AddProjectContributorModal = ({
   open,
   toggleModal,
+  suggestedProjectManager,
   addProjectManager = false,
 }: AddProjectContributorModalProps) => {
   const { t } = useTranslation();
@@ -110,7 +112,11 @@ export const AddProjectContributorModal = ({
       maxWidth="md"
       dataTestId="contributor-modal">
       {addProjectManager ? (
-        <AddProjectManagerForm toggleModal={toggleModal} addContributor={addContributor} />
+        <AddProjectManagerForm
+          toggleModal={toggleModal}
+          addContributor={addContributor}
+          suggestedProjectManager={suggestedProjectManager}
+        />
       ) : (
         <AddProjectContributorForm toggleModal={toggleModal} addContributor={addContributor} />
       )}

@@ -17,11 +17,12 @@ const CreateProject = () => {
   const currentInstitutionQuery = useFetchOrganization(topOrgCristinId);
   const [newProject, setNewProject] = useState(emptyProject);
   const [showProjectForm, setShowProjectForm] = useState(false);
+  const [suggestedProjectManager, setSuggestedProjectManager] = useState('');
 
   return (
     <StyledPageContent>
       {showProjectForm ? (
-        <ProjectForm project={newProject} />
+        <ProjectForm project={newProject} suggestedProjectManager={suggestedProjectManager} />
       ) : (
         <>
           <PageHeader>{t('project.create_project')}</PageHeader>
@@ -30,6 +31,7 @@ const CreateProject = () => {
               newProject={newProject}
               setNewProject={setNewProject}
               setShowProjectForm={setShowProjectForm}
+              setSuggestedProjectManager={setSuggestedProjectManager}
               coordinatingInstitution={currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution}
             />
             <EmptyProjectForm

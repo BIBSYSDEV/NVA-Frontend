@@ -42,11 +42,6 @@ export const ProjectManager = ({ suggestedProjectManager, isVisited = false }: P
   return (
     <>
       <Typography variant="h2">{t('project.project_manager')}</Typography>
-      {suggestedProjectManager && (
-        <Typography sx={{ marginBottom: '1rem' }}>
-          {t('project.project_manager_from_nfr', { name: suggestedProjectManager })}
-        </Typography>
-      )}
       <FieldArray name={ProjectFieldName.Contributors}>
         {({ name, remove }: FieldArrayRenderProps) => (
           <>
@@ -83,6 +78,7 @@ export const ProjectManager = ({ suggestedProjectManager, isVisited = false }: P
       <AddProjectContributorModal
         open={addProjectManagerViewIsOpen}
         toggleModal={toggleAddProjectManagerView}
+        suggestedProjectManager={suggestedProjectManager}
         addProjectManager
       />
     </>
