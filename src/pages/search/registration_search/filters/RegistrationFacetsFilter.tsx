@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../../api/searchApi';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
@@ -9,11 +8,13 @@ import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { PublicationYearIntervalFilter } from '../../PublicationYearIntervalFilter';
 import { SearchPageProps } from '../../SearchPage';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const selectedCategory = searchParams.get(ResultParam.Category);
   const selectedOrganization = searchParams.get(ResultParam.TopLevelOrganization);
@@ -43,13 +44,13 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       searchParams.set(param, [...currentValues, key].join(','));
     }
     searchParams.set(ResultParam.From, '0');
-    history.push({ search: searchParams.toString() });
+    navigate({ search: searchParams.toString() });
   };
 
   const removeFacetFilter = (param: string, key: string) => {
     const newSearchParams = removeSearchParamValue(searchParams, param, key);
     newSearchParams.set(ResultParam.From, '0');
-    history.push({ search: newSearchParams.toString() });
+    navigate({ search: newSearchParams.toString() });
   };
 
   return (
