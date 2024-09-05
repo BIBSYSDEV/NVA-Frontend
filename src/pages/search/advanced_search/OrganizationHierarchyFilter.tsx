@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { OrganizationAccordion } from '../../../components/OrganizationAccordion';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
@@ -30,8 +30,9 @@ interface OrganizationHierarchyFilterProps extends Pick<DialogProps, 'open'> {
 
 export const OrganizationHierarchyFilter = ({ organization, open, onClose }: OrganizationHierarchyFilterProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const unitFromParams = params.get(ResultParam.Unit) ?? '';
 
   const [searchId, setSearchId] = useState('');
@@ -120,7 +121,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
           onClick={() => {
             params.delete(ResultParam.From);
             params.set(ResultParam.Unit, selectedId);
-            history.push({ search: params.toString() });
+            navigate({ search: params.toString() });
             closeDialog();
           }}>
           {t('common.select')}

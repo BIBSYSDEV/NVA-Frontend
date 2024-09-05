@@ -1,7 +1,7 @@
 import { Autocomplete } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchFundingSources } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
@@ -11,8 +11,9 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const FundingSourceFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const fundingSourceParam = searchParams.get(ResultParam.FundingSource);
 
   const fundingSourcesQuery = useQuery({
@@ -31,7 +32,7 @@ export const FundingSourceFilter = () => {
       searchParams.delete(ResultParam.FundingSource);
     }
 
-    history.push({ search: searchParams.toString() });
+    navigate({ search: searchParams.toString() });
   };
 
   return (

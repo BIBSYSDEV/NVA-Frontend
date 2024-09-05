@@ -1,11 +1,11 @@
 import { Box, FormControlLabel, FormGroup, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
+  fetchImportCandidates,
   FetchImportCandidatesParams,
   ImportCandidatesSearchParam,
-  fetchImportCandidates,
 } from '../../../../api/searchApi';
 import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -22,10 +22,11 @@ const yearOptions = [thisYear, thisYear - 1, thisYear - 2, thisYear - 3, thisYea
 
 export const ImportCandidatesMenuFilters = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
-  const shouldFetchImportCandidates = history.location.pathname === UrlPathTemplate.BasicDataCentralImport;
+  const shouldFetchImportCandidates = location.pathname === UrlPathTemplate.BasicDataCentralImport;
 
   const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery(shouldFetchImportCandidates);
 
@@ -48,7 +49,7 @@ export const ImportCandidatesMenuFilters = () => {
       searchParams.set(param, value);
     }
     searchParams.delete(ImportCandidatesSearchParam.From);
-    history.push({ search: searchParams.toString() });
+    navigate({ search: searchParams.toString() });
   };
 
   const statusBuckets = importCandidatesFacetsQuery.data?.aggregations?.importStatus;

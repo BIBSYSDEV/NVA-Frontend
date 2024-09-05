@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchOrganization, OrganizationSearchParams, searchForOrganizations } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
@@ -22,11 +22,12 @@ interface OrganizationFiltersProps {
 
 export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: OrganizationFiltersProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
   const user = useSelector((store: RootState) => store.user);
-  const params = new URLSearchParams(history.location.search);
+  const params = new URLSearchParams(location.search);
   const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
   const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
   const [showUnitSelection, setShowUnitSelection] = useState(false);
@@ -77,7 +78,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
       }
     }
 
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
   };
 
   return (
@@ -104,7 +105,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         }}
         onChange={(_, selectedInstitution) => {
           if (selectedInstitution !== topLevelOrganizationId) {
-            const params = new URLSearchParams(history.location.search);
+            const params = new URLSearchParams(location.search);
             if (selectedInstitution) {
               params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
             } else {
@@ -113,7 +114,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
             }
             params.set(ResultParam.From, '0');
             params.delete(ResultParam.Unit);
-            history.push({ search: params.toString() });
+            navigate({ search: params.toString() });
             setSearchTerm('');
           }
         }}
@@ -159,7 +160,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
             ? () => {
                 params.delete(ResultParam.From);
                 params.delete(ResultParam.Unit);
-                history.push({ search: params.toString() });
+                navigate({ search: params.toString() });
               }
             : undefined
         }

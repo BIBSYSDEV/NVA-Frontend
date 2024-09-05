@@ -1,6 +1,6 @@
 import { Autocomplete } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { HrcsActivityOption } from '../../../components/HrcsActivityAutocompleteOption';
@@ -15,8 +15,9 @@ const options = [...hrcsCategories.categories, ...hrcsActivityOptions];
 
 export const VocabularSearchField = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const selectedVocabularyId = searchParams.get(ResultParam.Vocabulary);
   const selectedValue = selectedVocabularyId
@@ -34,7 +35,7 @@ export const VocabularSearchField = () => {
         } else {
           searchParams.delete(ResultParam.Vocabulary);
         }
-        history.push({ search: searchParams.toString() });
+        navigate({ search: searchParams.toString() });
       }}
       getOptionLabel={(option) => getLanguageString(option.label)}
       groupBy={(option) =>
