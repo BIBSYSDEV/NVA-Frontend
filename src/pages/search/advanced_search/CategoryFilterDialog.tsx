@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ResultParam, TicketSearchParam } from '../../../api/searchApi';
 import { CategorySelector } from '../../../components/CategorySelector';
 import { PublicationInstanceType } from '../../../types/registration.types';
@@ -20,7 +20,8 @@ export const CategoryFilterDialog = ({
   searchParam,
 }: CategoryFilterDialogProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [selectedCategories, setSelectedCategories] = useState(currentCategories);
 
@@ -55,7 +56,7 @@ export const CategoryFilterDialog = ({
         <Button
           variant="outlined"
           onClick={() => {
-            const params = new URLSearchParams(history.location.search);
+            const params = new URLSearchParams(location.search);
             const newCategoryShould = selectedCategories.join(',');
             if (newCategoryShould) {
               params.set(searchParam, newCategoryShould);
@@ -63,7 +64,7 @@ export const CategoryFilterDialog = ({
               params.delete(searchParam);
             }
             params.set(ResultParam.From, '0');
-            history.push({ search: params.toString() });
+            navigate({ search: params.toString() });
             closeDialog();
           }}>
           {t('common.use')}
