@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,9 +20,14 @@ interface AddProjectManagerFormProps {
     contributors: ProjectContributor[],
     roleToAddTo: ProjectContributorType
   ) => ProjectContributor[] | undefined;
+  suggestedProjectManager?: string;
 }
 
-export const AddProjectManagerForm = ({ toggleModal, addContributor }: AddProjectManagerFormProps) => {
+export const AddProjectManagerForm = ({
+  toggleModal,
+  addContributor,
+  suggestedProjectManager,
+}: AddProjectManagerFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
@@ -40,6 +45,11 @@ export const AddProjectManagerForm = ({ toggleModal, addContributor }: AddProjec
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      {suggestedProjectManager && (
+        <Typography sx={{ marginBottom: '1rem' }}>
+          {t('project.project_manager_from_nfr', { name: suggestedProjectManager })}
+        </Typography>
+      )}
       <ContributorSearchField
         selectedPerson={selectedPerson}
         setSelectedPerson={setSelectedPerson}
