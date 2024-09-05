@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviReportExport } from '../../../api/hooks/useFetchNviReportExport';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { triggerFileDownload } from '../../../utils/download-file-helpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
 export const ExportNviStatusButton = () => {
@@ -15,14 +16,7 @@ export const ExportNviStatusButton = () => {
 
   useEffect(() => {
     if (fetchNviApprovalReportQuery.data) {
-      const url = window.URL.createObjectURL(fetchNviApprovalReportQuery.data);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `nvi_report_${year}.xlsx`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+      triggerFileDownload(fetchNviApprovalReportQuery.data, `nvi_report_${year}.xlsx`);
     }
   }, [year, fetchNviApprovalReportQuery.data]);
 
