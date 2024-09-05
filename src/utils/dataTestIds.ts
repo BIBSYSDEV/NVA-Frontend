@@ -226,6 +226,10 @@ export const dataTestId = {
     scientificSummaryNorwegianField: 'scientific-summary-norwegian-field',
     titleField: 'project-title-field',
     selectContributorButton: 'select-contributor-button',
+    addProjectManagerButton: 'add-project-manager-button',
+    addAffiliationButton: 'button-add-affiliation',
+    addParticipantButton: 'add-participant-button',
+    removeContributorButton: 'remove-contributor-button',
   },
   newProjectPage: {
     titleInput: 'project-title-input',
@@ -398,6 +402,7 @@ export const dataTestId = {
       nfrProjectLink: (id: string) => `nfr-project-link-${id}`,
       nfrProjectSearchField: 'nfr-project-search-field',
       projectForm: {
+        addProjectManagerButton: 'add-project-manager-button',
         addParticipantButton: 'add-participant-button',
         contributorAffiliationField: 'contributor-affiliation-field',
         contributorsSearchField: 'project-contributors-search-field',

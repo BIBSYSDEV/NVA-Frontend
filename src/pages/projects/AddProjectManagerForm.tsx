@@ -13,7 +13,7 @@ import {
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 
-interface AddProjectContributorFormProps {
+interface AddProjectManagerFormProps {
   toggleModal: () => void;
   addContributor: (
     personToAdd: CristinPerson | undefined,
@@ -22,15 +22,15 @@ interface AddProjectContributorFormProps {
   ) => ProjectContributor[] | undefined;
 }
 
-export const AddProjectContributorForm = ({ toggleModal, addContributor }: AddProjectContributorFormProps) => {
+export const AddProjectManagerForm = ({ toggleModal, addContributor }: AddProjectManagerFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
-  const addParticipant = () => {
-    const newContributors = addContributor(selectedPerson, contributors, 'ProjectParticipant');
+  const addProjectManager = () => {
+    const newContributors = addContributor(selectedPerson, contributors, 'ProjectManager');
 
     if (newContributors) {
       setFieldValue(ProjectFieldName.Contributors, newContributors);
@@ -45,16 +45,17 @@ export const AddProjectContributorForm = ({ toggleModal, addContributor }: AddPr
         setSelectedPerson={setSelectedPerson}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        singleSelectAffiliations
       />
       <StyledRightAlignedFooter>
         <Button
           sx={{ mt: '1rem' }}
-          data-testid={dataTestId.projectForm.selectContributorButton}
+          data-testid={dataTestId.projectForm.addProjectManagerButton}
           disabled={!selectedPerson}
-          onClick={addParticipant}
+          onClick={addProjectManager}
           size="large"
           variant="contained">
-          {t('registration.contributors.add_contributor')}
+          {t('project.add_project_manager')}
         </Button>
       </StyledRightAlignedFooter>
     </Box>

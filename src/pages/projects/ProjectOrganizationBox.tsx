@@ -18,6 +18,7 @@ interface ProjectOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
   unitUri: string;
   contributorRoles: ProjectContributorRole[];
   disabledTooltip?: string;
+  asProjectManager?: boolean;
 }
 
 export const ProjectOrganizationBox = ({
@@ -27,6 +28,7 @@ export const ProjectOrganizationBox = ({
   removeAffiliation,
   disabledTooltip,
   contributorRoles,
+  asProjectManager = false,
   sx,
 }: ProjectOrganizationBoxProps) => {
   const { t } = useTranslation();
@@ -54,6 +56,7 @@ export const ProjectOrganizationBox = ({
             preselectedOrganization={organizationQuery.data}
             baseFieldName={baseFieldName}
             contributorRoles={contributorRoles}
+            asProjectManager={asProjectManager}
           />
         </>
       )}

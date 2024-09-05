@@ -1122,10 +1122,11 @@
   },
   "project": {
     "add_affiliation": "Legg til tilknytning",
+    "add_project_manager": "Legg til prosjektleder",
     "add_project_contributor": "Legg til prosjektdeltaker",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
-      "cannot_delete_affiliation_for_project_manager": "Kan ikke fjerne tilknytning for prosjektleder",
+      "cannot_delete_affiliation_for_project_manager": "Prosjektleder må ha en tilknytning",
       "cannot_delete_only_affiliation": "Kan ikke fjerne eneste tilknytning",
       "delete_affiliation": "Fjern tilknytning",
       "edit_affiliation": "Endre tilknytning"
@@ -1137,7 +1138,6 @@
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "error": {
-      "there_can_only_be_one_project_manager": "Et prosjekt kan kun ha en prosjektleder.",
       "contributor_already_added_with_same_role_and_affiliation": "Prosjektdeltaker er allerede lagt til med samme rolle og tilknytning."
     },
     "form": {
@@ -1195,6 +1195,7 @@
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
     "project_participant": "Prosjektdeltaker",
     "project_participants": "Prosjektdeltakere",
+    "remove_project_manager": "Slett prosjektleder",
     "results": "Resultater",
     "role_types": {
       "ProjectManager": "Prosjektleder",
