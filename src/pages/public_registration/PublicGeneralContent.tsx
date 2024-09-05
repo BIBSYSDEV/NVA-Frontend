@@ -1,5 +1,6 @@
 import { Box, Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviCandidateQuery } from '../../api/hooks/useFetchNviCandidateQuery';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
@@ -56,7 +57,6 @@ import {
 import { ChapterPublisherInfo } from './ChapterPublisherInfo';
 import { PublicDoi } from './PublicDoi';
 import { PublicHandles } from './PublicHandles';
-import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 import {
   PublicJournal,
   PublicOutputs,
@@ -90,6 +90,19 @@ const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: Additional
   return 0;
 };
 
+interface PublicPageInfoEntryProps {
+  title: string;
+  content: ReactNode;
+}
+const PublicPageInfoEntry = ({ title, content }: PublicPageInfoEntryProps) => {
+  return (
+    <Box sx={{ display: 'flex', gap: '0.25rem' }}>
+      <Typography fontWeight={700}>{title}:</Typography>
+      {typeof content === 'string' ? <Typography>{content}</Typography> : content}
+    </Box>
+  );
+};
+
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
   const { entityDescription, id, status } = registration;
@@ -115,7 +128,6 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const reportedYear = nviCandidateQuery.data?.period.year;
 
   const alternativeTitles = Object.values(registration.entityDescription?.alternativeTitles ?? {});
-  const dateString = `${displayDate(entityDescription?.publicationDate)}${isNviReported && reportedYear ? ` (${t('basic_data.nvi.nvi_reporting_year')}: ${reportedYear})` : ''}`;
 
   return (
     <StyledGeneralInfo>
@@ -123,7 +135,13 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.public_page.about_registration')}
         </Typography>
-        {dateString && <PublicPageInfoEntry title={t('common.date')} content={dateString} />}
+        <Typography>{`${displayDate(entityDescription?.publicationDate)}${isNviReported && reportedYear ? ` (${t('basic_data.nvi.nvi_reporting_year')}: ${reportedYear})` : ''}`}</Typography>
+        {/* {language && (
+          <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
+            {i18n.language === 'nob' ? language.nob : language.eng}
+          </Typography>
+        )} */}
+
         {language && (
           <PublicPageInfoEntry
             title={t('common.language')}
@@ -131,10 +149,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           />
         )}
         {entityDescription?.npiSubjectHeading && (
-          <PublicPageInfoEntry
-            title={t('registration.description.npi_disciplines')}
-            content={`${t(`disciplines.${entityDescription.npiSubjectHeading}` as any)} (${t(`disciplines.${findParentSubject(disciplines, entityDescription.npiSubjectHeading)}` as any)})`}
-          />
+          <Typography data-testid={dataTestId.registrationLandingPage.npi}>
+            {t('registration.description.npi_disciplines')}:{' '}
+            {t(`disciplines.${entityDescription.npiSubjectHeading}` as any)} (
+            {t(`disciplines.${findParentSubject(disciplines, entityDescription.npiSubjectHeading)}` as any)})
+          </Typography>
         )}
         {publicationInstance &&
           ((isJournal(publicationInstance.type) || isPeriodicalMediaContribution(publicationInstance.type)) &&
