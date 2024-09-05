@@ -1,6 +1,7 @@
-import { Box, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Link as MuiLink } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../utils/dataTestIds';
+import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 export const PublicHandles = ({ registration }: PublicRegistrationContentProps) => {
@@ -17,21 +18,23 @@ export const PublicHandles = ({ registration }: PublicRegistrationContentProps) 
   }
 
   return (
-    <>
-      <Typography variant="overline">{t('registration.public_page.handle')}</Typography>
-      <Box component="ul" sx={{ p: 0, m: 0, listStyleType: 'none' }}>
-        {handles.map((handle) => (
-          <li key={handle}>
-            <MuiLink
-              data-testid={dataTestId.registrationLandingPage.handleLink}
-              href={handle}
-              target="_blank"
-              rel="noopener noreferrer">
-              {handle}
-            </MuiLink>
-          </li>
-        ))}
-      </Box>
-    </>
+    <PublicPageInfoEntry
+      title={t('registration.public_page.handle')}
+      content={
+        <Box component="ul" sx={{ p: 0, m: 0, listStyleType: 'none' }}>
+          {handles.map((handle) => (
+            <li key={handle}>
+              <MuiLink
+                data-testid={dataTestId.registrationLandingPage.handleLink}
+                href={handle}
+                target="_blank"
+                rel="noopener noreferrer">
+                {handle}
+              </MuiLink>
+            </li>
+          ))}
+        </Box>
+      }
+    />
   );
 };

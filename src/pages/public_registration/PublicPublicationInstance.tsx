@@ -22,6 +22,7 @@ import {
 import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
 import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.types';
 import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
+import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 
 const getPageInterval = (pages: PagesRange | null) => {
   return pages?.begin || pages?.end
@@ -138,12 +139,10 @@ export const PublicPublicationInstanceArtistic = ({
 
   return (
     <>
-      {typeString && (
-        <Typography>
-          {t('registration.resource_type.type_work')}: {typeString}
-        </Typography>
+      {typeString && <PublicPageInfoEntry title={t('registration.resource_type.type_work')} content={typeString} />}
+      {description && (
+        <PublicPageInfoEntry title={t('registration.resource_type.more_info_about_work')} content={description} />
       )}
-      {description && <Typography>{description}</Typography>}
     </>
   );
 };
@@ -163,9 +162,7 @@ export const PublicPublicationInstanceExhibition = ({
     : '-';
 
   return typeString ? (
-    <Typography>
-      {t('registration.resource_type.type_work')}: {typeString}
-    </Typography>
+    <PublicPageInfoEntry title={t('registration.resource_type.type_work')} content={typeString} />
   ) : null;
 };
 
@@ -173,9 +170,7 @@ const PublicTotalPagesContent = ({ pages }: { pages: PagesMonograph | null }) =>
   const { t } = useTranslation();
 
   return pages?.pages ? (
-    <Typography>
-      {t('registration.resource_type.number_of_pages')}: {pages.pages}
-    </Typography>
+    <PublicPageInfoEntry title={t('registration.resource_type.number_of_pages')} content={pages.pages} />
   ) : null;
 };
 
@@ -183,12 +178,12 @@ export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
   const { t } = useTranslation();
 
   return isbnList && isbnList.length > 0 ? (
-    <Typography>
-      {t('registration.resource_type.isbn')}:{' '}
-      {isbnList
+    <PublicPageInfoEntry
+      title={t('registration.resource_type.isbn')}
+      content={isbnList
         .filter((isbn) => isbn)
         .map((isbn) => hyphenate(isbn))
         .join(', ')}
-    </Typography>
+    />
   ) : null;
 };

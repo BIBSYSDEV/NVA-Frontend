@@ -1466,7 +1466,7 @@
       "reserve_doi": "Reserver DOI",
       "reserved_doi": "Reservert DOI",
       "result_not_published": "Resultatet er ikke publisert",
-      "scopus_id": "Scopus ID",
+      "scopus_id": "Scopus-ID",
       "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
         "approve_publishing_request_description": "<0>Som kurator kan du godkjenne eller avvise filer med lisenser for dette forskningsresultatet.</0><0>Velger du \"$t(registration.public_page.approve_publish_request)\" blir de umiddelbart tilgjengelig for alle.</0>",

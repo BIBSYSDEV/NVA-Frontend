@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviCandidateQuery } from '../../api/hooks/useFetchNviCandidateQuery';
@@ -153,10 +153,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 (publicationInstance.type === DegreeType.Bachelor ||
                   publicationInstance.type === DegreeType.Master ||
                   publicationInstance.type === DegreeType.Other) && (
-                  <Typography>
-                    {t('registration.resource_type.course_code')}:{' '}
-                    {(publicationContext as DegreePublicationContext).course?.code}
-                  </Typography>
+                  <PublicPageInfoEntry
+                    title={t('registration.resource_type.course_code')}
+                    content={(publicationContext as DegreePublicationContext).course?.code}
+                  />
                 )}
 
               {publicationInstance.type !== DegreeType.Bachelor && publicationInstance.type !== DegreeType.Master && (
@@ -190,32 +190,25 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         <PublicDoi registration={registration} />
         <PublicHandles registration={registration} />
 
-        {(cristinIdentifier || scopusIdentifier) && (
-          <Box sx={{ display: 'flex', columnGap: '2rem', flexWrap: 'wrap' }}>
-            {cristinIdentifier && (
-              <div>
-                <Typography variant="overline">{t('registration.public_page.cristin_id')}</Typography>
-                <Typography>
-                  <Link
-                    data-testid={dataTestId.registrationLandingPage.cristinLink}
-                    href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    {cristinIdentifier}
-                  </Link>
-                </Typography>
-              </div>
-            )}
-            {scopusIdentifier && (
-              <div>
-                <Typography variant="overline">{t('registration.public_page.scopus_id')}</Typography>
-                <Typography>{scopusIdentifier}</Typography>
-              </div>
-            )}
-          </Box>
+        {cristinIdentifier && (
+          <PublicPageInfoEntry
+            title={t('registration.public_page.cristin_id')}
+            content={
+              <Typography>
+                <Link
+                  href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  {cristinIdentifier}
+                </Link>
+              </Typography>
+            }
+          />
         )}
-        <Typography variant="overline">{t('registration.registration_id')}</Typography>
-        <Typography>{registration.identifier}</Typography>
+        {scopusIdentifier && (
+          <PublicPageInfoEntry title={t('registration.public_page.scopus_id')} content={scopusIdentifier} />
+        )}
+        <PublicPageInfoEntry title={t('registration.registration_id')} content={registration.identifier} />
       </div>
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
