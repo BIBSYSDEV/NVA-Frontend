@@ -1,5 +1,6 @@
 import { Box, Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviCandidateQuery } from '../../api/hooks/useFetchNviCandidateQuery';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
@@ -89,6 +90,19 @@ const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: Additional
   return 0;
 };
 
+interface PublicPageInfoEntryProps {
+  title: string;
+  content: ReactNode;
+}
+const PublicPageInfoEntry = ({ title, content }: PublicPageInfoEntryProps) => {
+  return (
+    <Box sx={{ display: 'flex', gap: '0.25rem' }}>
+      <Typography fontWeight={700}>{title}:</Typography>
+      {typeof content === 'string' ? <Typography>{content}</Typography> : content}
+    </Box>
+  );
+};
+
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
   const { entityDescription, id, status } = registration;
@@ -122,10 +136,17 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           {t('registration.public_page.about_registration')}
         </Typography>
         <Typography>{`${displayDate(entityDescription?.publicationDate)}${isNviReported && reportedYear ? ` (${t('basic_data.nvi.nvi_reporting_year')}: ${reportedYear})` : ''}`}</Typography>
-        {language && (
+        {/* {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
             {i18n.language === 'nob' ? language.nob : language.eng}
           </Typography>
+        )} */}
+
+        {language && (
+          <PublicPageInfoEntry
+            title={t('common.language')}
+            content={i18n.language === 'nob' ? language.nob : language.eng}
+          />
         )}
         {entityDescription?.npiSubjectHeading && (
           <Typography data-testid={dataTestId.registrationLandingPage.npi}>
