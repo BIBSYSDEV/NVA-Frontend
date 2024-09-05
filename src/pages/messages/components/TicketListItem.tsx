@@ -56,8 +56,10 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     : '';
 
   const viewStatusMutation = useMutation({ mutationFn: () => updateTicket(ticket.id, { viewStatus: 'Read' }) });
-
   const viewedByUser = user?.nvaUsername && ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername);
+
+  const isOnTasksPage = window.location.pathname === UrlPathTemplate.TasksDialogue;
+  const isOnMyPageMessages = window.location.pathname === UrlPathTemplate.MyPageMyMessages;
 
   return (
     <SearchListItem
@@ -70,17 +72,22 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       <MuiLink
         component={Link}
         to={{
-          pathname:
-            window.location.pathname === UrlPathTemplate.TasksDialogue
-              ? getTasksRegistrationPath(identifier)
-              : window.location.pathname === UrlPathTemplate.MyPageMyMessages
-                ? getMyMessagesRegistrationPath(identifier)
-                : '',
+          pathname: isOnTasksPage
+            ? getTasksRegistrationPath(identifier)
+            : isOnMyPageMessages
+              ? getMyMessagesRegistrationPath(identifier)
+              : '',
           state: { previousSearch: window.location.search } satisfies PreviousSearchLocationState,
         }}
         onClick={() => {
           if (!viewedByUser) {
-            viewStatusMutation.mutate();
+            // Set ticket to read after some time, to ensure the user will load the ticket with correct read status first
+            new Promise<void>((resolve) =>
+              setTimeout(() => {
+                viewStatusMutation.mutate();
+                resolve();
+              }, 3_000)
+            );
           }
         }}
         sx={{ width: '100%', textDecoration: 'none', p: '0.5rem 1rem' }}>
@@ -100,7 +107,13 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           ) : (
             <div />
           )}
-          <Typography lineHeight="2rem">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
+          <Typography lineHeight="2rem">
+            {ticket.type === 'GeneralSupportCase' && isOnMyPageMessages
+              ? viewedByUser
+                ? t('common.read_past_tense')
+                : t('common.unread')
+              : t(`my_page.messages.ticket_types.${ticket.status}`)}
+          </Typography>
           <Typography lineHeight="2rem">{ticketAge}</Typography>
           {assigneeFullName && (
             <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
