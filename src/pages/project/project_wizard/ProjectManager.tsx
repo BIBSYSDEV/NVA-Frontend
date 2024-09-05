@@ -24,9 +24,11 @@ export const ProjectManager = ({ suggestedProjectManager, isVisited = false }: P
   const projectManagerIndex = findProjectManagerIndex(contributors);
   const projectManager = contributors[projectManagerIndex];
 
+  console.log('contributors', contributors);
+
   const contributorError = errors?.contributors;
 
-  const removeProjectManager = (name: string, remove: (index: number) => any) => {
+  const removeProjectManager = (name: string, remove: (index: number) => void) => {
     // Project manager has other roles on project: only delete the project manager-role
     if (projectManager.roles.length > 1) {
       const newContributors = deleteProjectManagerRoleFromContributor(contributors);

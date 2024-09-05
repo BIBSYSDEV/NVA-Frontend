@@ -90,7 +90,7 @@ export const ContributorRow = ({
       <TableCell>
         <>
           {roles
-            .filter((role) => role.affiliation && role.affiliation.id)
+            .filter((role) => role.affiliation?.id)
             .map((role) => (
               <ProjectOrganizationBox
                 key={role.affiliation!.id}
