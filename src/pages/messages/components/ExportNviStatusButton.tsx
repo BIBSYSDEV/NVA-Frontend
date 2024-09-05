@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviReportExport } from '../../../api/hooks/useFetchNviReportExport';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { triggerFileDownload } from '../../../utils/download-file-helpers';
+import { triggerFileDownload } from '../../../utils/downloadFileHelpers';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
 export const ExportNviStatusButton = () => {
