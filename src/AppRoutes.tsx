@@ -82,19 +82,19 @@ export const AppRoutes = () => {
         {/* CuratorRoutes */}
         <Route
           path={UrlPathTemplate.Tasks}
-          element={<PrivateRoute element={<TasksPage />} isAuthorized={isCurator || isNviCurator} />}
+          element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}
         />
 
         {/* BasicDataRoutes */}
         <Route
           path={UrlPathTemplate.BasicData}
-          element={<PrivateRoute element={<BasicDataPage />} isAuthorized={isAdmin} />}
+          element={<PrivateRoute isAuthorized={isAdmin} element={<BasicDataPage />} />}
         />
 
         {/* InstitutionRoutes */}
         <Route
           path={UrlPathTemplate.Institution}
-          element={<PrivateRoute element={<EditorPage />} isAuthorized={hasCustomerId} />}
+          element={<PrivateRoute isAuthorized={hasCustomerId} element={<EditorPage />} />}
         />
 
         {/* Wildcard path must be last, otherwise it will catch all routes */}

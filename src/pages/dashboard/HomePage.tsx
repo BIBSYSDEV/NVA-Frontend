@@ -207,9 +207,12 @@ const HomePage = () => {
 
       <Routes>
         <ErrorBoundary>
-          <Route path={UrlPathTemplate.Home}>
-            <SearchPage registrationQuery={registrationQuery} personQuery={personQuery} projectQuery={projectQuery} />
-          </Route>
+          <Route
+            path={UrlPathTemplate.Home}
+            element={
+              <SearchPage registrationQuery={registrationQuery} personQuery={personQuery} projectQuery={projectQuery} />
+            }
+          />
           <Route path={UrlPathTemplate.Search} element={<AdvancedSearchPage />} />
           <Route path={UrlPathTemplate.Reports} element={<ReportsPage />} />
           <Route path={UrlPathTemplate.ReportsNvi} element={<NviReports />} />

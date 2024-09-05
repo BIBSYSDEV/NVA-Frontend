@@ -7,7 +7,7 @@ import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { unpublishRegistration } from '../../../api/registrationApi';
 import { Modal } from '../../../components/Modal';
@@ -34,7 +34,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [selectedDuplicate, setSelectedDuplicate] = useState<Registration | null>(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const userCanUnpublish = userCanUnpublishRegistration(registration);
 
@@ -61,7 +61,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
     },
     onSuccess: () => {
       setShowDeleteModal(false);
-      history.push(`${getRegistrationLandingPagePath(registration.identifier)}?shouldNotRedirect`);
+      navigate(`${getRegistrationLandingPagePath(registration.identifier)}?shouldNotRedirect`);
     },
     onError: () => {
       dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
