@@ -205,8 +205,8 @@ const HomePage = () => {
         </NavigationListAccordion>
       </SideMenu>
 
-      <Routes>
-        <ErrorBoundary>
+      <ErrorBoundary>
+        <Routes>
           <Route
             path={UrlPathTemplate.Home}
             element={
@@ -218,8 +218,8 @@ const HomePage = () => {
           <Route path={UrlPathTemplate.ReportsNvi} element={<NviReports />} />
           <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<InternationalCooperationReports />} />
           <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<ClinicalTreatmentStudiesReports />} />
-        </ErrorBoundary>
-      </Routes>
+        </Routes>
+      </ErrorBoundary>
     </StyledPageWithSideMenu>
   );
 };

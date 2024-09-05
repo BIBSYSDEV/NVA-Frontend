@@ -168,8 +168,8 @@ const BasicDataPage = () => {
         )}
       </SideMenu>
 
-      <Routes>
-        <ErrorBoundary>
+      <ErrorBoundary>
+        <Routes>
           <Route
             path={UrlPathTemplate.BasicData}
             element={
@@ -219,8 +219,8 @@ const BasicDataPage = () => {
             path={UrlPathTemplate.BasicDataNvi}
             element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
           />
-        </ErrorBoundary>
-      </Routes>
+        </Routes>
+      </ErrorBoundary>
     </StyledPageWithSideMenu>
   );
 };
