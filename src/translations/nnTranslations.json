@@ -245,6 +245,7 @@
     "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les meir",
     "read_more_about_nva": "Les meir om NVA",
+    "read_past_tense": "",
     "reject": "Avvis",
     "reject_doi": "Avvis DOI",
     "reload_page_info": "Ein ny versjon av NVA er tilgjengeleg og sida må lastast på nytt.",
@@ -288,6 +289,7 @@
     "total_number": "Totalt antal",
     "type": "Type",
     "unknown": "Ukjend",
+    "unread": "",
     "update": "Oppdater",
     "url": "URL",
     "use": "Bruk",
@@ -1121,8 +1123,10 @@
   "project": {
     "add_affiliation": "Legg til tilknyting",
     "add_project_contributor": "Legg til prosjektdeltakar",
+    "add_project_manager": "",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Berre institusjonar som prosjektet er gjennomført i samarbeid med, skal leggast til som tilknyting til prosjektdeltakar.</0> <0>Legg til tilknyting til prosjektdeltakar ved å først søkje opp institusjonen og eventuelt eining.</0> <0>Høyrer prosjektdeltakaren til fleire forskjellige einingar under same institusjon, må du legge til dette som ny tilknyting.</0>",
+      "cannot_delete_affiliation_for_project_manager": "Kan ikkje fjerne tilknyting for prosjektleiar",
       "cannot_delete_only_affiliation": "Kan ikkje fjerne einaste tilknyting",
       "delete_affiliation": "Fjern tilknyting",
       "edit_affiliation": "Endre tilknyting"
@@ -1134,7 +1138,7 @@
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "error": {
-      "there_can_only_be_one_project_manager": "Eit prosjekt kan kun ha ein prosjektleiar."
+      "contributor_already_added_with_same_role_and_affiliation": "Prosjektdeltakar er allereie lagt til med same rolle og tilknyting."
     },
     "form": {
       "add_financing": "Legg til finansiering",
@@ -1191,6 +1195,7 @@
     "project_manager_from_nfr": "Prosjektleiar frå NFR: {{name}}",
     "project_participant": "Prosjektdeltakar",
     "project_participants": "Prosjektdeltakarar",
+    "remove_project_manager": "",
     "results": "Resultat",
     "role_types": {
       "ProjectManager": "Prosjektleiar",
@@ -1340,7 +1345,7 @@
       "hrcs_categories": "HRCS-kategoriar",
       "keywords": "Nøkkelord",
       "keywords_helper": "Skil nøkkelord med komma eller enter",
-      "new_project_helper_text": "<0><0>Finn du ikkje prosjektet?</0> Opprett nytt prosjekt i NVA</0>",
+      "new_project_helper_text": "Finn du ikkje prosjektet?",
       "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
       "primary_language": "Hovudspråk for innhald",
       "project_association": "Prosjekttilknyting",
@@ -1373,7 +1378,6 @@
       "info_from_channel_register": "Meir informasjon om vald publiseringskanal",
       "institution_prefers_cc_by": "Din institusjon har ein <0>rettspolitikk</0> som anbefaler CC-BY.",
       "institution_rights_policy_opt_out_instructions": "Om du ønskjer å reservere deg frå institusjonen sin rettspolitikk, må du sjekke om det er mogleg ved din institusjon. Kontakt kuratorstøtte.",
-      "legal_note": "Note for juridisk avklaring",
       "license": "Lisens",
       "licenses": "Lisensar",
       "link_to_resource": "Lenkje til ressurs",
@@ -1383,6 +1387,7 @@
       "no_files_or_links_present_in_this_registration": "Det er ikkje lagt til fil eller lenkje for registreringa",
       "open_file": "Opne fil",
       "opted_out_of_rrs": "Du har valt å ikkje følgje vedtatt <0>rettspolitikk</0>",
+      "public_note": "Offentleg kommentar",
       "published": "Publisert",
       "published_files": "Publiserte filer",
       "published_version": "Publisert versjon",
@@ -1457,7 +1462,8 @@
       "reject_publish_request": "Avvis publisering av fil",
       "reject_publish_request_description": "<0>Oppgje grunngjeving på kvifor fil(ene) blir avviste for publisering.</0><0>Denne grunngjevinga blir lagra i NVA og synleg for både registratoren og bidragsytarane som er tilknytte forskingsresultatet.</0><0>Når du avviser fil(ene), så blir dei fjerna frå presentasjonssida til forskingsresultatet. Du og registrator kan publisere dei seinare eller slette dei, ved å redigere forskingsresultatet.</0>",
       "request_doi": "Be om ein DOI",
-      "request_doi_description": "Når du ber om ein DOI (Digital Object Identifier) vil bestillinga gå via ein kurator ved din institusjon for kvalitetskontroll. Legg til ein melding ved eventuelle spørsmål eller avklaringar.",
+      "request_doi_again": "Be om ei ny vurdering av DOI-tildeling.",
+      "request_doi_description": "<0>Tildeling av DOI (Digital Object Identifier) betyr at metadata om forskingsresultatet blir delt internasjonalt, derfor vil ein kurator sjå over registreringa før DOI blir tildelt.</0><0>Du kan leggje ved ei melding til kurator her.</0>",
       "reserve_doi": "Reserver ein DOI",
       "reserved_doi": "Reservert DOI",
       "result_not_published": "Resultatet er ikkje publisert",
