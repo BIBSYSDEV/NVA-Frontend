@@ -1,11 +1,13 @@
 import { LoadingButton } from '@mui/lab';
 import { Box } from '@mui/material';
 import { useFormikContext } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CancelButton } from '../../../components/buttons/CancelButton';
 import { DoubleNextButton } from '../../../components/buttons/DoubleNextButton';
 import { NextButton } from '../../../components/buttons/NextButton';
 import { PreviousButton } from '../../../components/buttons/PreviousButton';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { StyledFormFooter } from '../../../components/styled/Wrappers';
 import { ProjectTabs, SaveCristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -20,6 +22,7 @@ interface ProjectFormActionsProps {
 export const ProjectFormActions = ({ tabNumber, setTabNumber, onCancel }: ProjectFormActionsProps) => {
   const { t } = useTranslation();
   const { isSubmitting, errors, touched } = useFormikContext<SaveCristinProject>();
+  const [openCancelConfirmView, setOpenCancelConfirmView] = useState(false);
   const isFirstTab = tabNumber === ProjectTabs.Description;
   const isLastTab = tabNumber === ProjectTabs.Connections;
   const disable = hasErrors(errors, touched);
@@ -35,7 +38,7 @@ export const ProjectFormActions = ({ tabNumber, setTabNumber, onCancel }: Projec
         <CancelButton
           sx={{ mr: '1rem' }}
           testId={dataTestId.projectWizard.formActions.cancelEditProjectButton}
-          onClick={onCancel}
+          onClick={() => setOpenCancelConfirmView(true)}
         />
         {isLastTab && (
           <LoadingButton
@@ -55,6 +58,16 @@ export const ProjectFormActions = ({ tabNumber, setTabNumber, onCancel }: Projec
           </>
         )}
       </Box>
+      <ConfirmDialog
+        open={openCancelConfirmView}
+        title={t('project.close_view')}
+        onAccept={() => {
+          setOpenCancelConfirmView(false);
+          onCancel();
+        }}
+        onCancel={() => setOpenCancelConfirmView(false)}>
+        {t('project.close_view_description')}
+      </ConfirmDialog>
     </StyledFormFooter>
   );
 };
