@@ -1170,7 +1170,8 @@
       "connections": "Koblinger",
       "description": "$t(common.description)",
       "details": "Detaljer",
-      "project_participants": "Prosjektdeltakere"
+      "project_participants": "Prosjektdeltakere",
+      "members": "Medlemmer"
     },
     "keywords": "Nøkkelord",
     "new_project": {

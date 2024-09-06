@@ -65,7 +65,7 @@ export const ProjectFormStepper = ({
           <StepLabel
             error={contributorTabHasError && maxVisitedTab > ProjectTabs.Contributors}
             data-testid={contributorTabHasError ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
-            {t('project.heading.project_participants')}
+            {t('project.heading.members')}
           </StepLabel>
         </StepButton>
       </Step>
