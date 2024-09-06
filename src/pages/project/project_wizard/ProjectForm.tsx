@@ -88,29 +88,44 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik initialValues={project} validationSchema={basicProjectValidationSchema} onSubmit={submitProjectForm}>
         {({ setTouched }: FormikProps<SaveCristinProject>) => {
+          const onTabChange = (tab: ProjectTabs) => {
+            let maxTab = maxVisitedTab;
+            if (tab > maxVisitedTab) {
+              maxTab = tab;
+              setMaxVisitedTab(maxTab);
+            } else if (tab <= maxVisitedTab) {
+              // We have gone to a previous tab - we want maxTab to be validated as well
+              maxTab = maxVisitedTab + 1;
+            }
+            const touchedFields = getTouchedFields(maxTab);
+            setTouched(touchedFields);
+            setTabNumber(tab);
+          };
+
+          const onClickNext = () => {
+            const newTabNumber = tabNumber + 1;
+            setTabNumber(newTabNumber);
+            onTabChange(newTabNumber);
+          };
+
+          const onClickPrevious = () => {
+            const newTabNumber = tabNumber - 1;
+            setTabNumber(newTabNumber);
+            onTabChange(newTabNumber);
+          };
+
+          const onClickLast = () => {
+            setTabNumber(ProjectTabs.Connections);
+            onTabChange(ProjectTabs.Connections);
+          };
+
           return (
             <Form noValidate>
               <PageHeader>
                 <ProjectIconHeader projectStatus={projectWithId ? projectWithId.status : undefined} />
                 <TruncatableTypography variant="h1">{project.title}</TruncatableTypography>
               </PageHeader>
-              <ProjectFormStepper
-                tabNumber={tabNumber}
-                onTabClicked={(tab) => {
-                  let maxTab = maxVisitedTab;
-                  if (tab > maxVisitedTab) {
-                    maxTab = tab;
-                    setMaxVisitedTab(maxTab);
-                  } else if (tab <= maxVisitedTab) {
-                    // We have gone to a previous tab - we want maxTab to be validated as well
-                    maxTab = maxVisitedTab + 1;
-                  }
-                  const touchedFields = getTouchedFields(maxTab);
-                  setTouched(touchedFields);
-                  setTabNumber(tab);
-                }}
-                maxVisitedTab={maxVisitedTab}
-              />
+              <ProjectFormStepper tabNumber={tabNumber} onTabClicked={onTabChange} maxVisitedTab={maxVisitedTab} />
               <RequiredDescription />
               <Box sx={{ bgcolor: 'secondary.dark', padding: '0' }}>
                 <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '0.5rem', padding: '1.5rem 1.25rem' }}>
@@ -123,7 +138,13 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
                   )}
                   {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
                 </Box>
-                <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} onCancel={onCancel} />
+                <ProjectFormActions
+                  tabNumber={tabNumber}
+                  onCancel={onCancel}
+                  onClickNext={onClickNext}
+                  onClickPrevious={onClickPrevious}
+                  onClickLast={onClickLast}
+                />
               </Box>
             </Form>
           );
