@@ -230,6 +230,7 @@ export const dataTestId = {
     addAffiliationButton: 'button-add-affiliation',
     addParticipantButton: 'add-participant-button',
     removeContributorButton: 'remove-contributor-button',
+    cancelNewProjectButton: 'cancel-new-project-button',
   },
   newProjectPage: {
     titleInput: 'project-title-input',
