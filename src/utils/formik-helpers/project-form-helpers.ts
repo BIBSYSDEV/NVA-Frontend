@@ -53,7 +53,6 @@ const mandatoryFieldsTab2 = {
 const mandatoryFieldsTab3 = {};
 
 export const getTouchedFields = (tabNumber: number) => {
-  console.log('tabNumber----', tabNumber);
   switch (tabNumber) {
     case 0: {
       return {};
