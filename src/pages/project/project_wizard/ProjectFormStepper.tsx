@@ -6,18 +6,12 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getProjectTabErrors } from '../../../utils/formik-helpers/project-form-helpers';
 
 interface ProjectFormStepperProps {
-  setTabNumber: (newTab: ProjectTabs) => void;
+  onTabClicked: (newTab: ProjectTabs) => void;
   tabNumber: ProjectTabs;
   maxVisitedTab: ProjectTabs;
-  setMaxVisitedTab: (val: ProjectTabs) => void;
 }
 
-export const ProjectFormStepper = ({
-  tabNumber,
-  setTabNumber,
-  maxVisitedTab,
-  setMaxVisitedTab,
-}: ProjectFormStepperProps) => {
+export const ProjectFormStepper = ({ tabNumber, maxVisitedTab, onTabClicked }: ProjectFormStepperProps) => {
   const { t } = useTranslation();
   const { errors, touched } = useFormikContext<CristinProject>();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
@@ -27,11 +21,12 @@ export const ProjectFormStepper = ({
   const contributorTabHasError = tabErrors[ProjectTabs.Contributors].length > 0;
   const connectionTabHasError = false;
 
+  console.log('tabErrors', tabErrors);
+  console.log('errors', errors);
+  console.log('touched', touched);
+
   const onClickStep = (stepNumber: ProjectTabs) => {
-    setTabNumber(stepNumber);
-    if (stepNumber > maxVisitedTab) {
-      setMaxVisitedTab(stepNumber);
-    }
+    onTabClicked(stepNumber);
   };
 
   return isMobile ? null : (
@@ -63,7 +58,7 @@ export const ProjectFormStepper = ({
           data-testid={dataTestId.projectWizard.stepper.projectContributorsStepButton}
           onClick={() => onClickStep(ProjectTabs.Contributors)}>
           <StepLabel
-            error={contributorTabHasError && maxVisitedTab > ProjectTabs.Contributors}
+            error={contributorTabHasError}
             data-testid={contributorTabHasError ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
             {t('project.heading.project_participants')}
           </StepLabel>
