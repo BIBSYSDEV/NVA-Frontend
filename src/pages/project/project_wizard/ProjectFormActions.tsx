@@ -31,6 +31,8 @@ export const ProjectFormActions = ({ tabNumber, setTabNumber, onCancel }: Projec
   const goToPreviousTab = () => setTabNumber(tabNumber - 1);
   const goToLastTab = () => setTabNumber(ProjectTabs.Connections);
 
+  console.log('test');
+
   return (
     <StyledFormFooter>
       <Box sx={{ display: 'flex', flexGrow: '1' }}>{!isFirstTab && <PreviousButton onClick={goToPreviousTab} />}</Box>
