@@ -21,10 +21,6 @@ export const ProjectFormStepper = ({ tabNumber, maxVisitedTab, onTabClicked }: P
   const contributorTabHasError = tabErrors[ProjectTabs.Contributors].length > 0;
   const connectionTabHasError = false;
 
-  console.log('tabErrors', tabErrors);
-  console.log('errors', errors);
-  console.log('touched', touched);
-
   const onClickStep = (stepNumber: ProjectTabs) => {
     onTabClicked(stepNumber);
   };
