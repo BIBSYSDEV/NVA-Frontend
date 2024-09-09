@@ -8,8 +8,9 @@ import { RegistrationLandingPage } from './RegistrationLandingPage';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
-  const location = useLocation<PreviousPathLocationState>();
-  const previousPath = location.state?.previousPath;
+  const location = useLocation();
+  const locationState = location.state as PreviousPathLocationState;
+  const previousPath = locationState?.previousPath;
 
   return (
     <Box
