@@ -126,13 +126,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         {alternativeTitles.length > 0 && (
           <PublicPageInfoEntry
             title={t('registration.description.alternative_title')}
-            content={
-              <div>
-                {alternativeTitles.map((title) => (
-                  <Typography key={title}>{title}</Typography>
-                ))}
-              </div>
-            }
+            content={alternativeTitles.map((title) => (
+              <Typography key={title}>{title}</Typography>
+            ))}
           />
         )}
         {dateString && <PublicPageInfoEntry title={t('common.date')} content={dateString} />}
