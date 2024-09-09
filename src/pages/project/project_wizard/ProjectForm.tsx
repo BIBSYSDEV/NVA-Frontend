@@ -89,11 +89,11 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
       <Formik initialValues={project} validationSchema={basicProjectValidationSchema} onSubmit={submitProjectForm}>
         {({ setTouched, values }: FormikProps<SaveCristinProject>) => {
           const onTabChange = (tab: ProjectTabs) => {
-            let maxTab = maxVisitedTab;
+            let maxTab;
             if (tab > maxVisitedTab) {
               maxTab = tab;
               setMaxVisitedTab(maxTab);
-            } else if (tab <= maxVisitedTab) {
+            } else {
               // We have gone to a previous tab - we want maxTab to be validated as well
               maxTab = maxVisitedTab + 1;
             }
@@ -102,21 +102,9 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
             setTabNumber(tab);
           };
 
-          const onClickNext = () => {
-            const newTabNumber = tabNumber + 1;
-            setTabNumber(newTabNumber);
-            onTabChange(newTabNumber);
-          };
-
-          const onClickPrevious = () => {
-            const newTabNumber = tabNumber - 1;
-            setTabNumber(newTabNumber);
-            onTabChange(newTabNumber);
-          };
-
-          const onClickLast = () => {
-            setTabNumber(ProjectTabs.Connections);
-            onTabChange(ProjectTabs.Connections);
+          const onClickArrow = (newTab: ProjectTabs) => {
+            setTabNumber(newTab);
+            onTabChange(newTab);
           };
 
           return (
@@ -141,9 +129,9 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
                 <ProjectFormActions
                   tabNumber={tabNumber}
                   onCancel={onCancel}
-                  onClickNext={onClickNext}
-                  onClickPrevious={onClickPrevious}
-                  onClickLast={onClickLast}
+                  onClickNext={() => onClickArrow(tabNumber + 1)}
+                  onClickPrevious={() => onClickArrow(tabNumber - 1)}
+                  onClickLast={() => onClickArrow(ProjectTabs.Connections)}
                 />
               </Box>
             </Form>
