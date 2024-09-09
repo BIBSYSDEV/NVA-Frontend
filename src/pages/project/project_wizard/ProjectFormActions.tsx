@@ -1,11 +1,13 @@
 import { LoadingButton } from '@mui/lab';
 import { Box } from '@mui/material';
 import { useFormikContext } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CancelButton } from '../../../components/buttons/CancelButton';
 import { DoubleNextButton } from '../../../components/buttons/DoubleNextButton';
 import { NextButton } from '../../../components/buttons/NextButton';
 import { PreviousButton } from '../../../components/buttons/PreviousButton';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { StyledFormFooter } from '../../../components/styled/Wrappers';
 import { CristinProject, ProjectTabs } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -28,6 +30,7 @@ export const ProjectFormActions = ({
 }: ProjectFormActionsProps) => {
   const { t } = useTranslation();
   const { values, isSubmitting, errors, touched } = useFormikContext<CristinProject>();
+  const [openCancelConfirmView, setOpenCancelConfirmView] = useState(false);
   const isFirstTab = tabNumber === ProjectTabs.Description;
   const isLastTab = tabNumber === ProjectTabs.Connections;
   const disable = hasErrors(values, errors, touched);
@@ -39,7 +42,7 @@ export const ProjectFormActions = ({
         <CancelButton
           sx={{ mr: '1rem' }}
           testId={dataTestId.projectWizard.formActions.cancelEditProjectButton}
-          onClick={onCancel}
+          onClick={() => setOpenCancelConfirmView(true)}
         />
         {isLastTab && (
           <LoadingButton
@@ -59,6 +62,16 @@ export const ProjectFormActions = ({
           </>
         )}
       </Box>
+      <ConfirmDialog
+        open={openCancelConfirmView}
+        title={t('project.close_view')}
+        onAccept={() => {
+          setOpenCancelConfirmView(false);
+          onCancel();
+        }}
+        onCancel={() => setOpenCancelConfirmView(false)}>
+        {t('project.close_view_description')}
+      </ConfirmDialog>
     </StyledFormFooter>
   );
 };

@@ -102,6 +102,7 @@ export const dataTestId = {
   },
   common: {
     cancel: 'cancel',
+    exportButton: 'export-button',
     pagination: 'pagination',
     save: 'save',
     showMoreButton: 'show-more-button',
@@ -230,6 +231,7 @@ export const dataTestId = {
     addAffiliationButton: 'button-add-affiliation',
     addParticipantButton: 'add-participant-button',
     removeContributorButton: 'remove-contributor-button',
+    cancelNewProjectButton: 'cancel-new-project-button',
   },
   newProjectPage: {
     titleInput: 'project-title-input',
