@@ -1,7 +1,7 @@
 import { Box, List, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
@@ -20,10 +20,11 @@ import { NviYearSelector } from './NviYearSelector';
 
 export const NviCandidatesList = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const nviParams = useNviCandidatesParams();
 
-  const searchParams = new URLSearchParams(history.location.search);
+  const searchParams = new URLSearchParams(location.search);
 
   const nviCandidatesQuery = useFetchNviCandidates({ params: nviParams });
 
@@ -68,7 +69,7 @@ export const NviCandidatesList = () => {
               } else {
                 searchParams.delete(NviCandidatesSearchParam.Assignee);
               }
-              history.push({ search: searchParams.toString() });
+              navigate({ search: searchParams.toString() });
             }}
             roleFilter={[RoleName.NviCurator]}
             sx={{ flex: '1 15rem' }}
@@ -101,12 +102,12 @@ export const NviCandidatesList = () => {
               page={page}
               onPageChange={(newPage) => {
                 searchParams.set(NviCandidatesSearchParam.Offset, ((newPage - 1) * nviParams.size).toString());
-                history.push({ search: searchParams.toString() });
+                navigate({ search: searchParams.toString() });
               }}
               onRowsPerPageChange={(newRowsPerPage) => {
                 searchParams.set(NviCandidatesSearchParam.Size, newRowsPerPage.toString());
                 searchParams.delete(NviCandidatesSearchParam.Offset);
-                history.push({ search: searchParams.toString() });
+                navigate({ search: searchParams.toString() });
               }}
               maxHits={10_000}
               showPaginationTop
