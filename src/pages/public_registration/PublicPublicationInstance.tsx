@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import { hyphenate } from 'isbn3';
 import { useTranslation } from 'react-i18next';
 import { ArtisticType } from '../../types/publicationFieldNames';
@@ -24,11 +23,10 @@ import { ReportPublicationInstance } from '../../types/publication_types/reportR
 import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 
 const getPageInterval = (pages: PagesRange | null) => {
-  return pages?.begin || pages?.end
-    ? pages.begin === pages.end
-      ? pages.begin
-      : `${pages.begin ?? '?'}-${pages.end ?? '?'}`
-    : '';
+  if (!pages?.begin && !pages?.end) {
+    return '';
+  }
+  return pages.begin === pages.end ? pages.begin : `${pages.begin ?? '?'}-${pages.end ?? '?'}`;
 };
 
 export const PublicPublicationInstanceJournal = ({
@@ -40,21 +38,16 @@ export const PublicPublicationInstanceJournal = ({
   const { articleNumber, issue, pages, volume } = publicationInstance;
   const pagesInterval = getPageInterval(pages);
 
-  const fieldTexts = [];
-  if (volume) {
-    fieldTexts.push(`${t('registration.resource_type.volume')} ${volume}`);
-  }
-  if (issue) {
-    fieldTexts.push(`${t('registration.resource_type.issue')} ${issue}`);
-  }
-  if (pagesInterval) {
-    fieldTexts.push(pagesInterval);
-  }
-  if (articleNumber) {
-    fieldTexts.push(`${t('registration.resource_type.article_number')} ${articleNumber}`);
-  }
-
-  return <Typography>{fieldTexts.join(', ')}</Typography>;
+  return (
+    <>
+      {volume && <PublicPageInfoEntry title={t('registration.resource_type.volume')} content={volume} />}
+      {issue && <PublicPageInfoEntry title={t('registration.resource_type.issue')} content={issue} />}
+      {pagesInterval && <PublicPageInfoEntry title={t('registration.resource_type.page')} content={pagesInterval} />}
+      {articleNumber && (
+        <PublicPageInfoEntry title={t('registration.resource_type.article_number')} content={articleNumber} />
+      )}
+    </>
+  );
 };
 
 export const PublicPublicationInstanceBook = ({
