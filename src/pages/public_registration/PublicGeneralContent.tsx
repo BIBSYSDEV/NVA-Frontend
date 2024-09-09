@@ -123,6 +123,18 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.public_page.about_registration')}
         </Typography>
+        {alternativeTitles.length > 0 && (
+          <PublicPageInfoEntry
+            title={t('registration.description.alternative_title')}
+            content={
+              <div>
+                {alternativeTitles.map((title) => (
+                  <Typography key={title}>{title}</Typography>
+                ))}
+              </div>
+            }
+          />
+        )}
         {dateString && <PublicPageInfoEntry title={t('common.date')} content={dateString} />}
         {language && (
           <PublicPageInfoEntry
@@ -189,14 +201,6 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             />
           ) : null)}
 
-        {alternativeTitles.length > 0 && (
-          <>
-            <Typography variant="overline">{t('registration.description.alternative_title')}</Typography>
-            {alternativeTitles.map((title) => (
-              <Typography key={title}>{title}</Typography>
-            ))}
-          </>
-        )}
         <PublicDoi registration={registration} />
         <PublicHandles registration={registration} />
 
