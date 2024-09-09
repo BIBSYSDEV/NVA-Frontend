@@ -1,6 +1,6 @@
 import RuleIcon from '@mui/icons-material/Rule';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/PageWithSideMenu';
@@ -11,8 +11,9 @@ import { CorrectionListId, nviCorrectionListQueryKey } from './NviCorrectionList
 
 export const NviCorrectionListNavigationAccordion = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const selectedNviList = searchParams.get(nviCorrectionListQueryKey);
 
@@ -23,10 +24,7 @@ export const NviCorrectionListNavigationAccordion = () => {
       accordionPath={UrlPathTemplate.TasksNviCorrectionList}
       dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
       <NavigationList component="div">
-        <SelectableButton
-          isSelected={!selectedNviList}
-          onClick={() => history.push({ search: '' })}
-          sx={{ mb: '1rem' }}>
+        <SelectableButton isSelected={!selectedNviList} onClick={() => navigate({ search: '' })} sx={{ mb: '1rem' }}>
           {t('tasks.nvi.correction_list_type.correction_list_duct')}
         </SelectableButton>
 
@@ -40,7 +38,7 @@ export const NviCorrectionListNavigationAccordion = () => {
                 'ApplicableCategoriesWithNonApplicableChannel' satisfies CorrectionListId
               );
               searchParams.delete(ResultParam.From);
-              history.push({ search: searchParams.toString() });
+              navigate({ search: searchParams.toString() });
             }
           }}>
           {t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')}
@@ -55,7 +53,7 @@ export const NviCorrectionListNavigationAccordion = () => {
                 'NonApplicableCategoriesWithApplicableChannel' satisfies CorrectionListId
               );
               searchParams.delete(ResultParam.From);
-              history.push({ search: searchParams.toString() });
+              navigate({ search: searchParams.toString() });
             }
           }}>
           {t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')}
