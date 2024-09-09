@@ -26,9 +26,10 @@ import { ProjectFormStepper } from './ProjectFormStepper';
 
 interface ProjectFormProps {
   project: SaveCristinProject | CristinProject;
+  suggestedProjectManager?: string;
 }
 
-export const ProjectForm = ({ project }: ProjectFormProps) => {
+export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -101,7 +102,12 @@ export const ProjectForm = ({ project }: ProjectFormProps) => {
             <Box id="form" sx={{ bgcolor: 'secondary.main', mb: '0.5rem', padding: '1.5rem 1.25rem' }}>
               {tabNumber === ProjectTabs.Description && <ProjectDescriptionForm thisIsRekProject={thisIsRekProject} />}
               {tabNumber === ProjectTabs.Details && <ProjectDetailsForm thisIsRekProject={thisIsRekProject} />}
-              {tabNumber === ProjectTabs.Contributors && <ProjectContributorsForm maxVisitedTab={maxVisitedTab} />}
+              {tabNumber === ProjectTabs.Contributors && (
+                <ProjectContributorsForm
+                  maxVisitedTab={maxVisitedTab}
+                  suggestedProjectManager={suggestedProjectManager}
+                />
+              )}
               {tabNumber === ProjectTabs.Connections && <ProjectConnectionsForm />}
             </Box>
             <ProjectFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} onCancel={onCancel} />

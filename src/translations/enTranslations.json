@@ -245,6 +245,7 @@
     "read_less_about_nva": "Read less about NVA",
     "read_more": "Read more",
     "read_more_about_nva": "Read more about NVA",
+    "read_past_tense": "",
     "reject": "Reject",
     "reject_doi": "Reject DOI",
     "reload_page_info": "A new version of NVA is available and the page will need to be reloaded.",
@@ -288,6 +289,7 @@
     "total_number": "Total number",
     "type": "Type",
     "unknown": "Unknown",
+    "unread": "",
     "update": "Update",
     "url": "URL",
     "use": "Use",
@@ -1121,6 +1123,7 @@
   "project": {
     "add_affiliation": "Add affiliation",
     "add_project_contributor": "Add project participant",
+    "add_project_manager": "",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Only institutions that the project has been carried out in collaboration with should be added as affiliation to the project participant.</0> <0>Add affiliation to the project participant by first searching for the institution and any units.</0> <0>If the project participant belongs to multiple different units under the same institution, you must add this as a new affiliation.</0>",
       "cannot_delete_affiliation_for_project_manager": "Cannot remove affiliation for project leader",
@@ -1135,7 +1138,7 @@
     "create_project": "New project",
     "edit_project": "Edit project",
     "error": {
-      "there_can_only_be_one_project_manager_choose_different_role": "A project can only have one project leader. Select another role."
+      "contributor_already_added_with_same_role_and_affiliation": "The project participant has already been added with the same role and affiliation."
     },
     "form": {
       "add_financing": "Add funding",
@@ -1192,6 +1195,7 @@
     "project_manager_from_nfr": "Project manager from NFR: {{name}}",
     "project_participant": "Project participant",
     "project_participants": "Project participants",
+    "remove_project_manager": "",
     "results": "Results",
     "role_types": {
       "ProjectManager": "Project leader",
@@ -1341,7 +1345,7 @@
       "hrcs_categories": "HRCS categories",
       "keywords": "Keywords",
       "keywords_helper": "Separate keywords with commas or enter",
-      "new_project_helper_text": "<0><0>Cannot find the project?</0> Create a new project in NVA</0>",
+      "new_project_helper_text": "Cannot find project?",
       "npi_disciplines": "Scientific field in Norwegian publication indicator",
       "primary_language": "Primary language for content",
       "project_association": "Project association",
@@ -1374,7 +1378,6 @@
       "info_from_channel_register": "More information about the selected publication channel",
       "institution_prefers_cc_by": "Your institution has a <0>rights policy</0> that recommends CC-BY.",
       "institution_rights_policy_opt_out_instructions": "If you wish to opt out of the institution's rights policy, you must check if this is possible at your institution. Contact curator support.",
-      "legal_note": "Note for legal clarification",
       "license": "License",
       "licenses": "Licenses",
       "link_to_resource": "Link to resource",
@@ -1384,6 +1387,7 @@
       "no_files_or_links_present_in_this_registration": "No file or link has been added for the registration",
       "open_file": "Open file",
       "opted_out_of_rrs": "You have chosen not to follow the adopted <0>rights policy</0>",
+      "public_note": "Public comment",
       "published": "Published",
       "published_files": "Published files",
       "published_version": "Published version",
@@ -1458,7 +1462,8 @@
       "reject_publish_request": "Reject publishing request",
       "reject_publish_request_description": "<0>Please provide a reason for why the file(s) are being rejected for publication.</0><0>This reason will be stored in NVA and visible to both the registrar and contributors who are associated with the research result.</0><0>When you reject the file(s), they are removed from the presentation page of the research result. You and the registrar can publish them later or delete them by editing the research result.</0>",
       "request_doi": "Request a DOI",
-      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
+      "request_doi_again": "Request a new assessment of DOI allocation.",
+      "request_doi_description": "<0>Allocation of a DOI (Digital Object Identifier) means that metadata about the research result is shared internationally; therefore, a curator will review the registration before the DOI is allocated.</0><0>You can attach a message to the curator here.</0>",
       "reserve_doi": "Reserve a DOI",
       "reserved_doi": "Reserved DOI",
       "result_not_published": "The result is not published",

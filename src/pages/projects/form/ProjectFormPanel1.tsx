@@ -10,9 +10,10 @@ import {
 } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
+import { ProjectManager } from '../../project/project_wizard/ProjectManager';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
-import { ProjectContributors } from './ProjectContributors';
 import { ProjectFundingsField } from './ProjectFunding';
+import { ProjectParticipants } from './ProjectParticipants';
 
 interface ProjectFormPanel1Props {
   currentProject?: CristinProject;
@@ -124,11 +125,12 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
           </Field>
         </Box>
       </Box>
-      <ProjectContributors
-        suggestedProjectManager={suggestedProjectManager}
-        isVisited={!!touched.contributors}
-        showHeader
-      />
+      <Box sx={{ mt: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <ProjectManager suggestedProjectManager={suggestedProjectManager} />
+      </Box>
+      <Box sx={{ mt: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <ProjectParticipants />
+      </Box>
       <ProjectFundingsField currentFundings={values.funding} />
     </>
   );

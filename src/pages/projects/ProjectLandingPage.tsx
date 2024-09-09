@@ -91,7 +91,7 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
 
         <LandingPageAccordion
           dataTestId={dataTestId.projectLandingPage.participantsAccordion}
-          heading={`${t('project.project_participants')} (${project.contributors.length})`}>
+          heading={`${t('project.heading.members')} (${project.contributors.length})`}>
           <ProjectContributors contributors={project.contributors} />
         </LandingPageAccordion>
 
