@@ -7,7 +7,7 @@ import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { updateRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
@@ -37,7 +37,9 @@ export const RegistrationFormActions = ({
   isNviCandidate,
 }: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
-  const history = useHistory<RegistrationFormLocationState>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const locationState = location.state as RegistrationFormLocationState;
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   const { values, setTouched, resetForm } = useFormikContext<Registration>();
@@ -74,10 +76,10 @@ export const RegistrationFormActions = ({
       });
 
       if (isLastTab) {
-        if (history.location.state?.previousPath) {
-          history.goBack();
+        if (locationState?.previousPath) {
+          navigate(-1);
         } else {
-          history.push(getRegistrationLandingPagePath(values.identifier));
+          navigate(getRegistrationLandingPagePath(values.identifier));
         }
       }
     }
