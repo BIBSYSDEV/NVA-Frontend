@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material';
 import { hyphenate } from 'isbn3';
 import { useTranslation } from 'react-i18next';
-import i18n from '../../translations/i18n';
 import { ArtisticType } from '../../types/publicationFieldNames';
 import {
   ArchitectureType,
@@ -27,8 +26,8 @@ import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 const getPageInterval = (pages: PagesRange | null) => {
   return pages?.begin || pages?.end
     ? pages.begin === pages.end
-      ? `${i18n.t('registration.resource_type.page')} ${pages.begin}`
-      : `${i18n.t('registration.resource_type.page')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`
+      ? pages.begin
+      : `${pages.begin ?? '?'}-${pages.end ?? '?'}`
     : '';
 };
 
@@ -93,10 +92,13 @@ export const PublicPublicationInstanceChapter = ({
 }: {
   publicationInstance: ChapterPublicationInstance;
 }) => {
+  const { t } = useTranslation();
   const { pages } = publicationInstance;
   const pagesInterval = getPageInterval(pages);
 
-  return pagesInterval ? <Typography>{pagesInterval}</Typography> : null;
+  return pagesInterval ? (
+    <PublicPageInfoEntry title={t('registration.resource_type.page')} content={pagesInterval} />
+  ) : null;
 };
 
 const otherArtisticSubtypes = [
