@@ -29,7 +29,7 @@ export const TicketListDefaultValuesWrapper = ({ children }: TicketListDefaultVa
     }
     searchParams.set(TicketSearchParam.Status, defaultStatusFilterItems.join(','));
     navigate({ search: searchParams.toString() });
-  }, [navigate, nvaUsername]);
+  }, [navigate, location.search, nvaUsername]);
 
   return children;
 };
