@@ -1,6 +1,6 @@
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import { LoadingButton } from '@mui/lab';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviReportExport } from '../../../api/hooks/useFetchNviReportExport';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -10,15 +10,14 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 export const ExportNviStatusButton = () => {
   const { t } = useTranslation();
   const { year } = useNviCandidatesParams();
-  const [fetchReport, setFetchReport] = useState(false);
 
-  const fetchNviApprovalReportQuery = useFetchNviReportExport(year, fetchReport, setFetchReport);
+  const { fetchExportQuery, setFetchReport } = useFetchNviReportExport(year);
 
   useEffect(() => {
-    if (fetchNviApprovalReportQuery.data) {
-      triggerFileDownload(fetchNviApprovalReportQuery.data, `nvi_report_${year}.xlsx`);
+    if (fetchExportQuery.data) {
+      triggerFileDownload(fetchExportQuery.data, `nvi_report_${year}.xlsx`);
     }
-  }, [year, fetchNviApprovalReportQuery.data]);
+  }, [year, fetchExportQuery.data]);
 
   return (
     <LoadingButton
@@ -26,7 +25,7 @@ export const ExportNviStatusButton = () => {
       variant="outlined"
       startIcon={<FileDownloadOutlinedIcon />}
       onClick={() => setFetchReport(true)}
-      loading={fetchNviApprovalReportQuery.isFetching}>
+      loading={fetchExportQuery.isFetching}>
       {t('search.export')}
     </LoadingButton>
   );
