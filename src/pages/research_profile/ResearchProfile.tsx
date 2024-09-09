@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
@@ -41,7 +41,7 @@ import { RegistrationSearchResults } from '../search/registration_search/Registr
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const location = useLocation();
   const [registrationsPage, setRegistrationsPage] = useState(1);
   const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -50,9 +50,9 @@ const ResearchProfile = () => {
   const user = useSelector((store: RootState) => store.user);
 
   const currentCristinId = user?.cristinId ?? '';
-  const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
+  const isPublicPage = location.pathname === UrlPathTemplate.ResearchProfile;
   const personId = isPublicPage
-    ? (new URLSearchParams(history.location.search).get('id') ?? '') // Page for Research Profile of anyone
+    ? (new URLSearchParams(location.search).get('id') ?? '') // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
 
   const personIdNumber = getIdentifierFromId(personId);
@@ -214,7 +214,7 @@ const ResearchProfile = () => {
           </Box>
         )}
 
-        {!orcidUri && history.location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
+        {!orcidUri && location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
           <Grid
             sx={{
               backgroundColor: 'secondary.dark',
