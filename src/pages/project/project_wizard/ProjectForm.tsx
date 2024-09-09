@@ -87,7 +87,7 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
     <>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik initialValues={project} validationSchema={basicProjectValidationSchema} onSubmit={submitProjectForm}>
-        {({ setTouched }: FormikProps<SaveCristinProject>) => {
+        {({ setTouched, values }: FormikProps<SaveCristinProject>) => {
           const onTabChange = (tab: ProjectTabs) => {
             let maxTab = maxVisitedTab;
             if (tab > maxVisitedTab) {
@@ -97,7 +97,7 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
               // We have gone to a previous tab - we want maxTab to be validated as well
               maxTab = maxVisitedTab + 1;
             }
-            const touchedFields = getTouchedFields(maxTab);
+            const touchedFields = getTouchedFields(maxTab, values);
             setTouched(touchedFields);
             setTabNumber(tab);
           };

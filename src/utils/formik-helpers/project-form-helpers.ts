@@ -1,5 +1,5 @@
 import { FormikErrors, FormikTouched } from 'formik';
-import { CristinProject, ProjectTabs } from '../../types/project.types';
+import { CristinProject, ProjectTabs, SaveCristinProject } from '../../types/project.types';
 import {
   ProjectContributorsFieldNames,
   ProjectDescriptionFieldNames,
@@ -36,38 +36,42 @@ export const getProjectTabErrors = (errors: FormikErrors<CristinProject>, touche
   return tabErrors;
 };
 
-const mandatoryFieldsTab0 = {
-  title: true,
-  startDate: true,
-  endDate: true,
-};
+export const getTouchedFields = (tabNumber: number, values: SaveCristinProject) => {
+  const fieldsTab0 = {
+    title: true,
+    startDate: true,
+    endDate: true,
+  };
 
-const mandatoryFieldsTab1 = {
-  coordinatingInstitution: { id: true },
-};
+  const fieldsTab1 = {
+    coordinatingInstitution: { id: true },
+    funding: values.funding.map(() => ({
+      source: true,
+      identifier: true,
+    })),
+  };
 
-const mandatoryFieldsTab2 = {
-  contributors: true,
-};
+  const fieldsTab2 = {
+    contributors: true,
+  };
 
-const mandatoryFieldsTab3 = {};
+  const fieldsTab3 = {};
 
-export const getTouchedFields = (tabNumber: number) => {
   switch (tabNumber) {
     case 0: {
       return {};
     }
     case 1: {
-      return mandatoryFieldsTab0;
+      return fieldsTab0;
     }
     case 2: {
-      return { ...mandatoryFieldsTab0, ...mandatoryFieldsTab1 };
+      return { ...fieldsTab0, ...fieldsTab1 };
     }
     case 3: {
-      return { ...mandatoryFieldsTab0, ...mandatoryFieldsTab1, ...mandatoryFieldsTab2 };
+      return { ...fieldsTab0, ...fieldsTab1, ...fieldsTab2 };
     }
     case 4: {
-      return { ...mandatoryFieldsTab0, ...mandatoryFieldsTab1, ...mandatoryFieldsTab2, ...mandatoryFieldsTab3 };
+      return { ...fieldsTab0, ...fieldsTab1, ...fieldsTab2, ...fieldsTab3 };
     }
     default: {
       return {};
