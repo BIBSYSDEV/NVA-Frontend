@@ -1,6 +1,7 @@
 import { FormikErrors, FormikTouched } from 'formik';
-import { CristinProject, ProjectTabs, SaveCristinProject } from '../../types/project.types';
+import { CristinProject, ProjectFunding, ProjectTabs, SaveCristinProject } from '../../types/project.types';
 import {
+  FundingFieldNames,
   ProjectContributorsFieldNames,
   ProjectDescriptionFieldNames,
   ProjectDetailsFieldNames,
@@ -13,19 +14,38 @@ interface ProjectTabErrors {
   [ProjectTabs.Contributors]: string[];
 }
 
-export const hasErrors = (errors: FormikErrors<CristinProject>, touched?: FormikTouched<CristinProject>) => {
-  const tabErrors = getProjectTabErrors(errors, touched);
+const getAllDetailsFields = (funding: ProjectFunding[]): string[] => {
+  const fieldNames: string[] = Object.values(ProjectDetailsFieldNames);
+
+  funding.forEach((_, index) => {
+    const baseFieldName = `${ProjectDetailsFieldNames.Funding}[${index}]`;
+    fieldNames.push(`${baseFieldName}.${FundingFieldNames.Source}`);
+  });
+
+  return fieldNames;
+};
+
+export const hasErrors = (
+  values: CristinProject,
+  errors: FormikErrors<CristinProject>,
+  touched?: FormikTouched<CristinProject>
+) => {
+  const tabErrors = getProjectTabErrors(values, errors, touched);
   return Object.values(tabErrors).some((arr) => arr.length > 0);
 };
 
-export const getProjectTabErrors = (errors: FormikErrors<CristinProject>, touched?: FormikTouched<CristinProject>) => {
+export const getProjectTabErrors = (
+  values: CristinProject,
+  errors: FormikErrors<CristinProject>,
+  touched?: FormikTouched<CristinProject>
+) => {
   const tabErrors: ProjectTabErrors = {
     [ProjectTabs.Description]: getErrorMessages<CristinProject>(
       Object.values(ProjectDescriptionFieldNames),
       errors,
       touched
     ),
-    [ProjectTabs.Details]: getErrorMessages<CristinProject>(Object.values(ProjectDetailsFieldNames), errors, touched),
+    [ProjectTabs.Details]: getErrorMessages<CristinProject>(getAllDetailsFields(values.funding || []), errors, touched),
     [ProjectTabs.Contributors]: getErrorMessages<CristinProject>(
       Object.values(ProjectContributorsFieldNames),
       errors,

@@ -13,9 +13,9 @@ interface ProjectFormStepperProps {
 
 export const ProjectFormStepper = ({ tabNumber, maxVisitedTab, onTabClicked }: ProjectFormStepperProps) => {
   const { t } = useTranslation();
-  const { errors, touched } = useFormikContext<CristinProject>();
+  const { values, errors, touched } = useFormikContext<CristinProject>();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const tabErrors = getProjectTabErrors(errors, touched);
+  const tabErrors = getProjectTabErrors(values, errors, touched);
   const descriptionTabHasError = tabErrors[ProjectTabs.Description].length > 0;
   const detailsTabHasError = tabErrors[ProjectTabs.Details].length > 0;
   const contributorTabHasError = tabErrors[ProjectTabs.Contributors].length > 0;

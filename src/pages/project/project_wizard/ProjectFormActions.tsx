@@ -7,7 +7,7 @@ import { DoubleNextButton } from '../../../components/buttons/DoubleNextButton';
 import { NextButton } from '../../../components/buttons/NextButton';
 import { PreviousButton } from '../../../components/buttons/PreviousButton';
 import { StyledFormFooter } from '../../../components/styled/Wrappers';
-import { ProjectTabs, SaveCristinProject } from '../../../types/project.types';
+import { CristinProject, ProjectTabs } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { hasErrors } from '../../../utils/formik-helpers/project-form-helpers';
 
@@ -27,10 +27,10 @@ export const ProjectFormActions = ({
   onClickLast,
 }: ProjectFormActionsProps) => {
   const { t } = useTranslation();
-  const { isSubmitting, errors, touched } = useFormikContext<SaveCristinProject>();
+  const { values, isSubmitting, errors, touched } = useFormikContext<CristinProject>();
   const isFirstTab = tabNumber === ProjectTabs.Description;
   const isLastTab = tabNumber === ProjectTabs.Connections;
-  const disable = hasErrors(errors, touched);
+  const disable = hasErrors(values, errors, touched);
 
   return (
     <StyledFormFooter>
