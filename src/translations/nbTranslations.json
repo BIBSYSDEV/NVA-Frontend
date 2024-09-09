@@ -1127,8 +1127,6 @@
     "add_project_manager": "Legg til prosjektleder",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
-      "cannot_delete_affiliation_for_project_manager": "Prosjektleder må ha en tilknytning",
-      "cannot_delete_only_affiliation": "Kan ikke fjerne eneste tilknytning",
       "delete_affiliation": "Fjern tilknytning",
       "edit_affiliation": "Endre tilknytning"
     },
@@ -1149,13 +1147,11 @@
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
-      "project_manager_cannot_be_removed": "Prosjektleder kan ikke fjernes",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
       "remove_project": "Fjern prosjekt",
-      "select_project_role": "Velg rolle i prosjektet",
       "start_empty_project": "Start tomt prosjekt",
       "start_registering_project": "Start registrering av prosjekt",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
@@ -1171,7 +1167,6 @@
       "connections": "Koblinger",
       "description": "$t(common.description)",
       "details": "Detaljer",
-      "project_participants": "Prosjektdeltakere",
       "members": "Medlemmer"
     },
     "keywords": "Nøkkelord",
