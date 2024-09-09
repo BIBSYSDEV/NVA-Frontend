@@ -2,7 +2,7 @@ import { Autocomplete, BaseTextFieldProps, Checkbox, Chip, TextField } from '@mu
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchOrganizations } from '../api/cristinApi';
 import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
 import { RootState } from '../redux/store';
@@ -33,8 +33,9 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
   const areasOfResponsibilityIds = institutionUserQuery.data?.viewingScope?.includedUnits ?? [];
 
@@ -94,7 +95,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
           onDelete={() => {
             searchParams.delete(paramName);
             resetPagination();
-            history.push({ search: searchParams.toString() });
+            navigate({ search: searchParams.toString() });
           }}
         />
       )}
@@ -105,7 +106,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
           searchParams.delete(paramName);
         }
         resetPagination();
-        history.push({ search: searchParams.toString() });
+        navigate({ search: searchParams.toString() });
       }}
       renderOption={({ key, ...props }, option, { selected }) => (
         <li {...props} key={option.id}>
