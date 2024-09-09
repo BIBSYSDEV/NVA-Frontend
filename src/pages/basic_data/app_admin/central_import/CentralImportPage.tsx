@@ -2,7 +2,7 @@ import { List, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ImportCandidatesSearchParam } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
@@ -15,15 +15,16 @@ import { CentralImportResultItem } from './CentralImportResultItem';
 
 export const CentralImportPage = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery();
 
   const updatePath = (from: string, results: string) => {
     params.set(ImportCandidatesSearchParam.From, from);
     params.set(ImportCandidatesSearchParam.Size, results);
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
   };
 
   useEffect(() => {
