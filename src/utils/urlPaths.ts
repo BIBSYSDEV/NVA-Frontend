@@ -1,4 +1,4 @@
-export interface IdentifierParams extends Record<string, string | undefined> {
+export interface IdentifierParams extends Record<string, string> {
   identifier: string;
 }
 

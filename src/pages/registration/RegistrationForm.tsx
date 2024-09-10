@@ -5,7 +5,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchRegistration } from '../../api/registrationApi';
 import { fetchNviCandidateForRegistration } from '../../api/scientificIndexApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
@@ -39,13 +39,14 @@ interface RegistrationFormProps {
 
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t, i18n } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
   const uppy = useUppy(createUppy(i18n.language));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
+  const location = useLocation();
+  const locationState = location.state as RegistrationFormLocationState;
 
-  const highestValidatedTab =
-    useLocation<RegistrationFormLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+  const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
   const registrationQuery = useQuery({
     enabled: !!identifier,
@@ -72,7 +73,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
       (approval) => approval.status === 'Approved' || approval.status === 'Rejected'
     );
 
-  const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
+  const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
   const canEditRegistration = registration && userCanEditRegistration(registration);
@@ -145,7 +146,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         open={isNviCandidate && !hasAcceptedNviWarning}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
-        onCancel={() => (history.length > 1 ? history.goBack() : history.push(UrlPathTemplate.Home))}>
+        onCancel={() => (navigate.length > 1 ? navigate(-1) : navigate(UrlPathTemplate.Home))}>
         <Typography paragraph>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
