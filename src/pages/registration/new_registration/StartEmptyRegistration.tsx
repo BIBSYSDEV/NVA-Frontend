@@ -3,7 +3,7 @@ import { AccordionSummary, Box, CircularProgress, Typography } from '@mui/materi
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -17,7 +17,7 @@ const labelId = 'start-empty-label';
 export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccordionProps, 'onChange'>) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const createEmptyRegistration = async () => {
@@ -27,7 +27,9 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
       dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
-      history.push(getRegistrationWizardPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
+      navigate(getRegistrationWizardPath(createRegistrationResponse.data.identifier), {
+        state: { highestValidatedTab: -1 },
+      });
     }
   };
 

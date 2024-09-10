@@ -7,7 +7,7 @@ import { useUppy } from '@uppy/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
@@ -25,7 +25,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   const { t, i18n } = useTranslation();
   const [uploadedFiles, setUploadedFiles] = useState<AssociatedFile[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const uppy = useUppy(createUppy(i18n.language));
 
@@ -39,7 +39,9 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
-      history.push(getRegistrationWizardPath(createRegistrationResponse.data.identifier), { highestValidatedTab: -1 });
+      navigate(getRegistrationWizardPath(createRegistrationResponse.data.identifier), {
+        state: { highestValidatedTab: -1 },
+      });
     }
   };
 
