@@ -429,10 +429,10 @@ export const PublishingAccordion = ({
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
               endIcon={<EditIcon fontSize="large" />}
               component={RouterLink}
+              state={{ previousPath: window.location.pathname } satisfies RegistrationFormLocationState}
               to={{
                 pathname: getRegistrationWizardPath(registration.identifier),
                 search: '?tab=' + RegistrationTab.FilesAndLicenses,
-                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
               }}>
               {t('registration.edit_registration')}
             </Button>

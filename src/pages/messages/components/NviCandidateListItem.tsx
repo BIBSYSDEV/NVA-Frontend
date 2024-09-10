@@ -56,12 +56,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
           </Typography>
         )}
         <Typography sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-          <MuiLink
-            component={Link}
-            to={{
-              pathname: getNviCandidatePath(nviCandidate.identifier),
-              state: candidateLinkState,
-            }}>
+          <MuiLink component={Link} state={candidateLinkState} to={getNviCandidatePath(nviCandidate.identifier)}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>
         </Typography>

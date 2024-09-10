@@ -47,10 +47,8 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
           <MuiLink
             component={Link}
-            to={{
-              pathname: getImportCandidatePath(getIdentifierFromId(importCandidate.id)),
-              state: { previousSearch: location.search } satisfies PreviousSearchLocationState,
-            }}>
+            state={{ previousSearch: location.search } satisfies PreviousSearchLocationState}
+            to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
             {getTitleString(importCandidate.mainTitle)}
           </MuiLink>
         </Typography>
