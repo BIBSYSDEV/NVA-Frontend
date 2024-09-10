@@ -11,12 +11,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers';
-import { PreviousSearchLocationState } from '../../../types/locationState.types';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -34,11 +33,12 @@ const StyledNviStatusBox = styled(Box)({
 
 export const NviCandidatesNavigationAccordion = () => {
   const { t } = useTranslation();
-  const history = useHistory<PreviousSearchLocationState>();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
-  const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
-  const isOnNviStatusPage = history.location.pathname === UrlPathTemplate.TasksNviStatus;
+  const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
+  const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
 
   const nviParams = useNviCandidatesParams();
 
@@ -47,12 +47,12 @@ export const NviCandidatesNavigationAccordion = () => {
     if (nviParams.offset) {
       searchParams.delete(NviCandidatesSearchParam.Offset);
     }
-    history.push({ search: searchParams.toString() });
+    navigate({ search: searchParams.toString() });
   };
 
   const openCandidatesView = () => {
     if (!isOnNviCandidatesPage) {
-      history.push({ pathname: UrlPathTemplate.TasksNvi, search: searchParams.toString() });
+      navigate({ pathname: UrlPathTemplate.TasksNvi, search: searchParams.toString() });
     }
   };
 

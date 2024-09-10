@@ -3,7 +3,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SearchParam } from '../../utils/searchHelpers';
 
 export enum SearchTypeValue {
@@ -14,8 +14,9 @@ export enum SearchTypeValue {
 
 export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const paramsSearchType = params.get(SearchParam.Type);
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
@@ -44,7 +45,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         onClick={() => {
           if (!resultIsSelected) {
             const resultParams = new URLSearchParams();
-            history.push({ search: resultParams.toString() });
+            navigate({ search: resultParams.toString() });
           }
         }}>
         <NotesIcon fontSize="small" />
@@ -57,7 +58,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
           if (!personIsSeleced) {
             const personParams = new URLSearchParams();
             personParams.set(SearchParam.Type, SearchTypeValue.Person);
-            history.push({ search: personParams.toString() });
+            navigate({ search: personParams.toString() });
           }
         }}>
         <PersonIcon fontSize="small" />
@@ -70,7 +71,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
           if (!projectIsSelected) {
             const projectParams = new URLSearchParams();
             projectParams.set(SearchParam.Type, SearchTypeValue.Project);
-            history.push({ search: projectParams.toString() });
+            navigate({ search: projectParams.toString() });
           }
         }}>
         <ShowChartIcon fontSize="small" />

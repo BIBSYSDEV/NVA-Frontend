@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { LocalStorageKey } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
@@ -23,7 +23,7 @@ const Logout = () => {
   const redirectPath = previousPath && isPublicPage(previousPath) ? previousPath : UrlPathTemplate.Home;
   useEffect(() => () => localStorage.removeItem(LocalStorageKey.RedirectPath), []);
 
-  return <Redirect to={redirectPath} />;
+  return <Navigate to={redirectPath} />;
 };
 
 export default Logout;

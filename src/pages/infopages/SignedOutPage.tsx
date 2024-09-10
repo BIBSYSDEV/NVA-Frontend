@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -15,7 +15,7 @@ const SignedOutPage = () => {
   const user = useSelector((store: RootState) => store.user);
 
   if (user) {
-    return <Redirect to={UrlPathTemplate.Home} />;
+    return <Navigate to={UrlPathTemplate.Home} />;
   }
 
   return (

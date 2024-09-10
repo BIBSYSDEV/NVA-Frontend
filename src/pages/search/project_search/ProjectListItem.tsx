@@ -1,7 +1,7 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
 import { LocalStorageKey } from '../../../utils/constants';
@@ -32,7 +32,7 @@ export const ProjectListItem = ({
   deleteTooltip,
 }: ProjectListItemProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [openEditProject, setOpenEditProject] = useState(false);
 
   const projectManagers = getProjectManagers(project.contributors);
@@ -70,7 +70,7 @@ export const ProjectListItem = ({
           <>
             <EditIconButton
               tooltip={t('project.edit_project')}
-              onClick={() => (betaEnabled ? history.push(getEditProjectPath(project.id)) : setOpenEditProject(true))}
+              onClick={() => (betaEnabled ? navigate(getEditProjectPath(project.id)) : setOpenEditProject(true))}
             />
             <ProjectFormDialog
               open={openEditProject}

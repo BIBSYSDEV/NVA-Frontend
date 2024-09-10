@@ -1,10 +1,10 @@
 import { MenuItem, Select, Typography } from '@mui/material';
 import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { ProjectStatus } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface FilterItem {
   statusValue: ProjectStatus | '';
@@ -20,8 +20,9 @@ const statusFilters: FilterItem[] = [
 
 export const ProjectStatusFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   return (
     <div>
@@ -51,7 +52,7 @@ export const ProjectStatusFilter = () => {
           } else {
             searchParams.set(ProjectSearchParameter.Status, status);
           }
-          history.push({ search: searchParams.toString() });
+          navigate({ search: searchParams.toString() });
         }}
         data-testid={dataTestId.startPage.projectStatusFilter}
         variant="filled">

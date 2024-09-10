@@ -3,7 +3,7 @@ import { Query, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { fetchRegistration, fetchRegistrationTickets } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -18,15 +18,19 @@ import { ActionPanel } from './ActionPanel';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 
 export const RegistrationLandingPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { identifier } = useParams<IdentifierParams>();
-  const shouldNotRedirect = new URLSearchParams(history.location.search).has('shouldNotRedirect');
+  const shouldNotRedirect = new URLSearchParams(location.search).has('shouldNotRedirect');
 
   const registrationQuery = useQuery({
     queryKey: ['registration', identifier, shouldNotRedirect],
-    queryFn: () => fetchRegistration(identifier, shouldNotRedirect),
+    queryFn: () =>
+      identifier
+        ? fetchRegistration(identifier, shouldNotRedirect)
+        : Promise.reject(new Error('Identifier is undefined')),
     meta: {
       handleError: (
         error: AxiosError<DeletedRegistrationProblem>,
@@ -52,10 +56,10 @@ export const RegistrationLandingPage = () => {
   const registration = registrationQuery.data;
   const registrationId = registration?.id;
 
-  if (identifier !== registration?.identifier && !!registration?.identifier) {
-    const newPath = history.location.pathname.replace(identifier, registration.identifier);
-    const searchParams = history.location.search ?? '';
-    history.replace(newPath + searchParams);
+  if (identifier && identifier !== registration?.identifier && !!registration?.identifier) {
+    const newPath = location.pathname.replace(identifier, registration.identifier);
+    const searchParams = location.search ?? '';
+    navigate(newPath + searchParams, { replace: true });
   }
 
   const canEditRegistration = registration && userCanEditRegistration(registration);

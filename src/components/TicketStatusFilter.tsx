@@ -1,6 +1,6 @@
 import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus, ticketStatusValues } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
@@ -9,8 +9,9 @@ const labelId = 'status-filter-select';
 
 export const TicketStatusFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const selectedStatuses = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
@@ -22,7 +23,7 @@ export const TicketStatusFilter = () => {
       searchParams.delete(TicketSearchParam.Status);
     }
 
-    history.push({ search: searchParams.toString() });
+    navigate({ search: searchParams.toString() });
   };
 
   return (

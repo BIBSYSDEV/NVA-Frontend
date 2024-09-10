@@ -1,7 +1,6 @@
 import { Box, styled } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
 import { SearchForm } from '../../components/SearchForm';
 import { SearchResponse, SearchResponse2 } from '../../types/common.types';
@@ -14,6 +13,7 @@ import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
+import { useLocation } from 'react-router-dom';
 
 const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
   display: 'grid',
@@ -38,8 +38,8 @@ export interface SearchPageProps {
 
 export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: SearchPageProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const paramsSearchType = params.get(SearchParam.Type);
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;

@@ -2,7 +2,6 @@ import { Autocomplete } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
 import { defaultChannelSearchSize, fetchPublisher, searchForPublishers } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
@@ -15,11 +14,13 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const PublisherFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const publisherParam = searchParams.get(ResultParam.Publisher);
   const [publisherQuery, setPublisherQuery] = useState('');
   const debouncedQuery = useDebounce(publisherQuery);
@@ -53,7 +54,7 @@ export const PublisherFilter = () => {
       searchParams.delete(ResultParam.Publisher);
     }
 
-    history.push({ search: searchParams.toString() });
+    navigate({ search: searchParams.toString() });
   };
 
   const isFetching = publisherParam ? selectedPublisherQuery.isPending : publisherOptionsQuery.isFetching;

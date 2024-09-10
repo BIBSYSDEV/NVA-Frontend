@@ -3,7 +3,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest2 } from '../../../api/apiRequest';
 import { PageHeader } from '../../../components/page_layout_components/PageHeader';
@@ -33,7 +33,7 @@ interface ProjectFormProps {
 export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [tabNumber, setTabNumber] = useState(ProjectTabs.Description);
   const projectWithId = 'id' in project ? (project as CristinProject) : undefined;
   const [maxVisitedTab, setMaxVisitedTab] = useState(projectWithId ? ProjectTabs.Connections : ProjectTabs.Description);
@@ -41,7 +41,7 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
   const thisIsRekProject = !!projectWithId && isRekProject(projectWithId);
 
   const goToLandingPage = (id: string) => {
-    history.push(getProjectPath(id));
+    navigate(getProjectPath(id));
   };
 
   const submitProjectForm = async (values: SaveCristinProject) => {
@@ -79,7 +79,7 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
     if (projectWithId) {
       goToLandingPage(projectWithId.id);
     } else {
-      history.push(UrlPathTemplate.MyPageMyProjectRegistrations);
+      navigate(UrlPathTemplate.MyPageMyProjectRegistrations);
     }
   };
 

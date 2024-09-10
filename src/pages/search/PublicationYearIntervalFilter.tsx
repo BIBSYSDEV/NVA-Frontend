@@ -1,7 +1,7 @@
 import { Box, BoxProps } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ResultParam } from '../../api/searchApi';
 
 const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
@@ -19,8 +19,9 @@ const defaultMaxDate = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 99
 
 export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: PublicationDateIntervalFilterProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const selectedYearSinceParam = searchParams.get(ResultParam.PublicationYearSince);
   const selectedYearBeforeParam = searchParams.get(ResultParam.PublicationYearBefore);
@@ -41,12 +42,12 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
           searchParams.set(param, year.toString());
         }
         searchParams.delete(ResultParam.From);
-        history.push({ search: searchParams.toString() });
+        navigate({ search: searchParams.toString() });
       }
     } else {
       searchParams.delete(param);
       searchParams.delete(ResultParam.From);
-      history.push({ search: searchParams.toString() });
+      navigate({ search: searchParams.toString() });
     }
   };
 

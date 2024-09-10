@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
@@ -11,8 +11,9 @@ import { RegistrationSortSelector } from './RegistrationSortSelector';
 
 export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const resultsParam = params.get(SearchParam.Results);
   const fromParam = params.get(SearchParam.From);
@@ -23,7 +24,7 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
   const updatePath = (from: string, results: string) => {
     params.set(SearchParam.From, from);
     params.set(SearchParam.Results, results);
-    history.push({ search: params.toString() });
+    navigate({ search: params.toString() });
   };
 
   return (

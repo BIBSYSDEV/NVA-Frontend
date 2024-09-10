@@ -1,7 +1,7 @@
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 
@@ -13,8 +13,9 @@ export enum ScientificValueLevels {
 
 export const ScientificValueFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const scientificValueParam = searchParams.get(ResultParam.ScientificValue) ?? '';
 
   const selectedScientificValues = {
@@ -43,7 +44,7 @@ export const ScientificValueFilter = () => {
     } else {
       searchParams.delete(ResultParam.ScientificValue);
     }
-    history.push({ search: searchParams.toString() });
+    navigate({ search: searchParams.toString() });
   };
 
   return (

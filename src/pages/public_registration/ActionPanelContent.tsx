@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { addTicketMessage, deleteRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -36,8 +36,9 @@ export const ActionPanelContent = ({
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory();
-  const currentPath = history.location.pathname;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
 
@@ -75,9 +76,9 @@ export const ActionPanelContent = ({
       );
 
       if (currentPath.startsWith(UrlPathTemplate.MyPageMessages)) {
-        history.push(UrlPathTemplate.MyPageMyMessages);
+        navigate(UrlPathTemplate.MyPageMyMessages);
       } else if (currentPath.startsWith(UrlPathTemplate.RegistrationNew)) {
-        history.push(UrlPathTemplate.MyPageMyRegistrations);
+        navigate(UrlPathTemplate.MyPageMyRegistrations);
       }
     },
     onError: () => {
