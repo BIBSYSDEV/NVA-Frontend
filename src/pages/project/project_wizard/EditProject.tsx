@@ -13,7 +13,7 @@ import { ProjectForm } from './ProjectForm';
 const EditProject = () => {
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
-  const projectQuery = useFetchProject(decodeURIComponent(identifier));
+  const projectQuery = useFetchProject(decodeURIComponent(identifier ?? ''));
   const project = projectQuery.data;
   const user = useSelector((store: RootState) => store.user);
   const userCanEditProject = canEditProject(user, project);
