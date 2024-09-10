@@ -20,15 +20,18 @@ interface AddProjectContributorFormProps {
   addContributor: (
     personToAdd: CristinPerson | undefined,
     contributors: ProjectContributor[],
-    roleToAddTo: ProjectContributorType
+    roleToAddTo: ProjectContributorType,
+    index?: number
   ) => ProjectContributor[] | undefined;
   initialSearchTerm?: string;
+  indexToReplace?: number;
 }
 
 export const AddProjectContributorForm = ({
   toggleModal,
   addContributor,
   initialSearchTerm = '',
+  indexToReplace = -1,
 }: AddProjectContributorFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
@@ -37,11 +40,12 @@ export const AddProjectContributorForm = ({
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
   const addParticipant = () => {
-    if (searchTerm === initialSearchTerm) {
+    // No change in form - nothing happens
+    if (searchTerm === initialSearchTerm && !selectedPerson) {
       return;
     }
 
-    const newContributors = addContributor(selectedPerson, contributors, 'ProjectParticipant');
+    const newContributors = addContributor(selectedPerson, contributors, 'ProjectParticipant', indexToReplace);
 
     if (newContributors) {
       setFieldValue(ProjectFieldName.Contributors, newContributors);
@@ -97,7 +101,7 @@ export const AddProjectContributorForm = ({
         <Box sx={{ flexGrow: '1' }}>
           <Button
             data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
-            disabled={!searchTerm || searchTerm === initialSearchTerm}
+            disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
             onClick={addUnidentifiedParticipant}
             size="large">
             {t('project.add_unidentified_contributor')}

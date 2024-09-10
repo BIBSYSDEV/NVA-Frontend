@@ -7,7 +7,10 @@ import { ListPagination } from '../../../components/ListPagination';
 import { CristinProject, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getNonProjectManagerContributors } from '../../project/helpers/projectContributorHelpers';
+import {
+  contributorsAreEqual,
+  getNonProjectManagerContributors,
+} from '../../project/helpers/projectContributorHelpers';
 import { findProjectManagerRole, replaceRolesOnContributor } from '../../project/helpers/projectRoleHelpers';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ContributorRow } from './ContributorRow';
@@ -67,9 +70,7 @@ export const ProjectParticipants = () => {
                 alternativePaginationText={t('common.number_of_rows_per_page')}>
                 <ProjectContributorTable>
                   {paginatedContributors.map((contributor, index) => {
-                    const contributorIndex = values.contributors.findIndex(
-                      (c) => c.identity.id === contributor.identity.id
-                    );
+                    const contributorIndex = values.contributors.findIndex((c) => contributorsAreEqual(contributor, c));
                     return (
                       <ContributorRow
                         key={

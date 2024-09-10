@@ -2,7 +2,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
-import { ProjectContributor, ProjectContributorRole, ProjectContributorType } from '../../types/project.types';
+import {
+  ProjectContributor,
+  ProjectContributorIdentity,
+  ProjectContributorRole,
+  ProjectContributorType,
+} from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { getValueByKey } from '../../utils/user-helpers';
 import { AddProjectContributorForm } from './AddProjectContributorForm';
@@ -14,6 +19,7 @@ interface AddProjectContributorModalProps {
   initialSearchTerm?: string;
   addProjectManager?: boolean;
   suggestedProjectManager?: string;
+  indexToReplace?: number;
 }
 
 export const AddProjectContributorModal = ({
@@ -22,6 +28,7 @@ export const AddProjectContributorModal = ({
   suggestedProjectManager,
   addProjectManager = false,
   initialSearchTerm,
+  indexToReplace = -1,
 }: AddProjectContributorModalProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -29,17 +36,28 @@ export const AddProjectContributorModal = ({
   const addContributor = (
     personToAdd: CristinPerson | undefined,
     contributors: ProjectContributor[],
-    roleToAddTo: ProjectContributorType
+    roleToAddTo: ProjectContributorType,
+    index = -1
   ) => {
     if (!personToAdd) {
       return;
     }
 
     let newContributor: ProjectContributor;
+    let existingContributorIndex: number;
 
-    const existingContributorIndex = contributors.findIndex(
-      (contributor) => contributor.identity.id === personToAdd.id
-    );
+    const newContributorIdentity: ProjectContributorIdentity = {
+      type: 'Person',
+      id: personToAdd.id,
+      firstName: getValueByKey('FirstName', personToAdd.names),
+      lastName: getValueByKey('LastName', personToAdd.names),
+    };
+
+    if (index > -1) {
+      existingContributorIndex = index;
+    } else {
+      existingContributorIndex = contributors.findIndex((contributor) => contributor.identity.id === personToAdd.id);
+    }
 
     if (existingContributorIndex > -1) {
       const sameRoleAndSameType = contributors[existingContributorIndex].roles.some((role) => {
@@ -58,17 +76,17 @@ export const AddProjectContributorModal = ({
         );
         return;
       }
-      newContributor = { ...contributors[existingContributorIndex] };
+
+      // Replacing unidentified contributor with contributor selected from search
+      if (index > -1) {
+        newContributor = { identity: newContributorIdentity, roles: [...contributors[existingContributorIndex].roles] };
+      } else {
+        // Adding new contributor from search, but contributor already exists (for instance with other role)
+        newContributor = { ...contributors[existingContributorIndex] };
+      }
     } else {
-      newContributor = {
-        identity: {
-          type: 'Person',
-          id: personToAdd.id,
-          firstName: getValueByKey('FirstName', personToAdd.names),
-          lastName: getValueByKey('LastName', personToAdd.names),
-        },
-        roles: [],
-      };
+      // Contributor is brand new
+      newContributor = { identity: newContributorIdentity, roles: [] };
     }
 
     // Adding 1 or more affiliations
@@ -124,6 +142,7 @@ export const AddProjectContributorModal = ({
           toggleModal={toggleModal}
           addContributor={addContributor}
           initialSearchTerm={initialSearchTerm}
+          indexToReplace={indexToReplace}
         />
       )}
     </Modal>
