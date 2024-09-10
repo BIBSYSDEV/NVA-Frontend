@@ -245,7 +245,7 @@
     "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les meir",
     "read_more_about_nva": "Les meir om NVA",
-    "read_past_tense": "",
+    "read_past_tense": "Lest",
     "reject": "Avvis",
     "reject_doi": "Avvis DOI",
     "reload_page_info": "Ein ny versjon av NVA er tilgjengeleg og sida må lastast på nytt.",
@@ -289,7 +289,7 @@
     "total_number": "Totalt antal",
     "type": "Type",
     "unknown": "Ukjend",
-    "unread": "",
+    "unread": "Ulest",
     "update": "Oppdater",
     "url": "URL",
     "use": "Bruk",
@@ -525,6 +525,7 @@
       "get_nvi_candidates": "Kunne ikkje hente NVI-kandidatar",
       "get_nvi_periods": "Kunne ikkje hente NVI-periodar",
       "get_nvi_status": "Kunne ikkje hente NVI-rapporteringsstatus",
+      "get_nvi_status_export": "Kunne ikkje laste ned eksport av NVI-rapporteringsstatus",
       "get_orcid": "Kunne ikkje hente data frå ORCID",
       "get_organization": "Kunne ikkje hente informasjon om organisasjon",
       "get_person": "Kunne ikkje hente person",
@@ -1123,11 +1124,9 @@
   "project": {
     "add_affiliation": "Legg til tilknyting",
     "add_project_contributor": "Legg til prosjektdeltakar",
-    "add_project_manager": "",
+    "add_project_manager": "Legg til prosjektleiar",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Berre institusjonar som prosjektet er gjennomført i samarbeid med, skal leggast til som tilknyting til prosjektdeltakar.</0> <0>Legg til tilknyting til prosjektdeltakar ved å først søkje opp institusjonen og eventuelt eining.</0> <0>Høyrer prosjektdeltakaren til fleire forskjellige einingar under same institusjon, må du legge til dette som ny tilknyting.</0>",
-      "cannot_delete_affiliation_for_project_manager": "Kan ikkje fjerne tilknyting for prosjektleiar",
-      "cannot_delete_only_affiliation": "Kan ikkje fjerne einaste tilknyting",
       "delete_affiliation": "Fjern tilknyting",
       "edit_affiliation": "Endre tilknyting"
     },
@@ -1148,13 +1147,11 @@
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
-      "project_manager_cannot_be_removed": "Prosjektleiar kan ikkje fjernast",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekt som er relatert til dette prosjektet",
       "remove_participant": "Fjern prosjektdeltakar",
       "remove_participant_text": "Er du sikker på at du ønskjer å fjerne {{name}}?",
       "remove_project": "Fjern prosjekt",
-      "select_project_role": "Vel rolle i prosjektet",
       "start_empty_project": "Start tomt prosjekt",
       "start_registering_project": "Start registring av prosjekt",
       "start_with_empty_form": "Start utan nokre ferdig utfylte opplysingar.",
@@ -1170,7 +1167,7 @@
       "connections": "Koplingar",
       "description": "$t(common.description)",
       "details": "Detaljar",
-      "project_participants": "Prosjektdeltakarar"
+      "members": "Medlemmar"
     },
     "keywords": "Nøkkelord",
     "new_project": {
@@ -1195,7 +1192,7 @@
     "project_manager_from_nfr": "Prosjektleiar frå NFR: {{name}}",
     "project_participant": "Prosjektdeltakar",
     "project_participants": "Prosjektdeltakarar",
-    "remove_project_manager": "",
+    "remove_project_manager": "Slett prosjektleiar",
     "results": "Resultat",
     "role_types": {
       "ProjectManager": "Prosjektleiar",

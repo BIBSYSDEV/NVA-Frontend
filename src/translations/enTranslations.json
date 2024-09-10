@@ -245,7 +245,7 @@
     "read_less_about_nva": "Read less about NVA",
     "read_more": "Read more",
     "read_more_about_nva": "Read more about NVA",
-    "read_past_tense": "",
+    "read_past_tense": "Read",
     "reject": "Reject",
     "reject_doi": "Reject DOI",
     "reload_page_info": "A new version of NVA is available and the page will need to be reloaded.",
@@ -289,7 +289,7 @@
     "total_number": "Total number",
     "type": "Type",
     "unknown": "Unknown",
-    "unread": "",
+    "unread": "Unread",
     "update": "Update",
     "url": "URL",
     "use": "Use",
@@ -525,6 +525,7 @@
       "get_nvi_candidates": "Failed to retrieve NVI candidates",
       "get_nvi_periods": "Failed to retrieve NVI periods",
       "get_nvi_status": "Could not retrieve NVI report status",
+      "get_nvi_status_export": "Could not download export of the NVI reporting status",
       "get_orcid": "Failed to retrieve data from ORCID",
       "get_organization": "Could not retrieve information about organization",
       "get_person": "Failed to retrieve person",
@@ -1123,11 +1124,9 @@
   "project": {
     "add_affiliation": "Add affiliation",
     "add_project_contributor": "Add project participant",
-    "add_project_manager": "",
+    "add_project_manager": "Add project leader",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Only institutions that the project has been carried out in collaboration with should be added as affiliation to the project participant.</0> <0>Add affiliation to the project participant by first searching for the institution and any units.</0> <0>If the project participant belongs to multiple different units under the same institution, you must add this as a new affiliation.</0>",
-      "cannot_delete_affiliation_for_project_manager": "Cannot remove affiliation for project leader",
-      "cannot_delete_only_affiliation": "Cannot remove the only affiliation",
       "delete_affiliation": "Remove affiliation",
       "edit_affiliation": "Change affiliation"
     },
@@ -1148,13 +1147,11 @@
       "empty_registration": "Empty registration",
       "here_you_can_create_project": "Here you can create a project:",
       "keywords": "Keywords",
-      "project_manager_cannot_be_removed": "Cannot remove project leader",
       "related_projects": "Related projects",
       "related_projects_description": "Add other projects that are related to this project",
       "remove_participant": "Remove project participant",
       "remove_participant_text": "Are you sure you want to remove {{name}}?",
       "remove_project": "Remove project",
-      "select_project_role": "Select role in the project",
       "start_empty_project": "Start empty project",
       "start_registering_project": "Start registering a project",
       "start_with_empty_form": "Start without any prefilled values.",
@@ -1170,7 +1167,7 @@
       "connections": "Connections",
       "description": "$t(common.description)",
       "details": "Details",
-      "project_participants": "Project participants"
+      "members": "Members"
     },
     "keywords": "Keywords",
     "new_project": {
@@ -1195,7 +1192,7 @@
     "project_manager_from_nfr": "Project manager from NFR: {{name}}",
     "project_participant": "Project participant",
     "project_participants": "Project participants",
-    "remove_project_manager": "",
+    "remove_project_manager": "Delete project leader",
     "results": "Results",
     "role_types": {
       "ProjectManager": "Project leader",
