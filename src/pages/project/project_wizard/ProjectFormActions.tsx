@@ -9,31 +9,35 @@ import { NextButton } from '../../../components/buttons/NextButton';
 import { PreviousButton } from '../../../components/buttons/PreviousButton';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { StyledFormFooter } from '../../../components/styled/Wrappers';
-import { ProjectTabs, SaveCristinProject } from '../../../types/project.types';
+import { CristinProject, ProjectTabs } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { hasErrors } from '../../../utils/formik-helpers/project-form-helpers';
 
 interface ProjectFormActionsProps {
   tabNumber: number;
-  setTabNumber: (val: number) => void;
   onCancel: () => void;
+  onClickNext: () => void;
+  onClickPrevious: () => void;
+  onClickLast: () => void;
 }
 
-export const ProjectFormActions = ({ tabNumber, setTabNumber, onCancel }: ProjectFormActionsProps) => {
+export const ProjectFormActions = ({
+  tabNumber,
+  onCancel,
+  onClickNext,
+  onClickPrevious,
+  onClickLast,
+}: ProjectFormActionsProps) => {
   const { t } = useTranslation();
-  const { isSubmitting, errors, touched } = useFormikContext<SaveCristinProject>();
+  const { values, isSubmitting, errors, touched } = useFormikContext<CristinProject>();
   const [openCancelConfirmView, setOpenCancelConfirmView] = useState(false);
   const isFirstTab = tabNumber === ProjectTabs.Description;
   const isLastTab = tabNumber === ProjectTabs.Connections;
-  const disable = hasErrors(errors, touched);
-
-  const goToNextTab = () => setTabNumber(tabNumber + 1);
-  const goToPreviousTab = () => setTabNumber(tabNumber - 1);
-  const goToLastTab = () => setTabNumber(ProjectTabs.Connections);
+  const disable = hasErrors(values, errors, touched);
 
   return (
     <StyledFormFooter>
-      <Box sx={{ display: 'flex', flexGrow: '1' }}>{!isFirstTab && <PreviousButton onClick={goToPreviousTab} />}</Box>
+      <Box sx={{ display: 'flex', flexGrow: '1' }}>{!isFirstTab && <PreviousButton onClick={onClickPrevious} />}</Box>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}>
         <CancelButton
           sx={{ mr: '1rem' }}
@@ -53,8 +57,8 @@ export const ProjectFormActions = ({ tabNumber, setTabNumber, onCancel }: Projec
         )}
         {!isLastTab && (
           <>
-            <NextButton onClick={goToNextTab} />
-            <DoubleNextButton onClick={goToLastTab} />
+            <NextButton onClick={onClickNext} />
+            <DoubleNextButton onClick={onClickLast} />
           </>
         )}
       </Box>

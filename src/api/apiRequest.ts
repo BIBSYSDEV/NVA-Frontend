@@ -12,6 +12,7 @@ setAxiosDefaults();
 export const authenticatedApiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig) => {
   const token = await getAccessToken();
   axiosRequestConfig.headers = {
+    ...axiosRequestConfig.headers,
     Authorization: `Bearer ${token}`,
   };
 
@@ -31,6 +32,7 @@ export const apiRequest = async <T>(axiosRequestConfig: AxiosRequestConfig) =>
 export const authenticatedApiRequest2 = async <T>(axiosRequestConfig: AxiosRequestConfig) => {
   const token = await getAccessToken();
   axiosRequestConfig.headers = {
+    ...axiosRequestConfig.headers,
     Authorization: `Bearer ${token}`,
   };
 

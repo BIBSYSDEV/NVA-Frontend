@@ -13,18 +13,17 @@ import { deleteProjectManagerRoleFromContributor } from '../helpers/projectRoleH
 
 interface ProjectContributorsProps {
   suggestedProjectManager?: string;
-  isVisited?: boolean;
 }
 
-export const ProjectManager = ({ suggestedProjectManager, isVisited = false }: ProjectContributorsProps) => {
+export const ProjectManager = ({ suggestedProjectManager }: ProjectContributorsProps) => {
   const { t } = useTranslation();
   const [addProjectManagerViewIsOpen, setAddProjectManagerViewIsOpen] = useState(false);
-  const { values, errors, setFieldValue } = useFormikContext<CristinProject>();
+  const { values, errors, touched, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const projectManagerIndex = findProjectManagerIndex(contributors);
   const projectManager = contributors[projectManagerIndex];
 
-  const contributorError = errors?.contributors;
+  const contributorError = touched.contributors && errors?.contributors ? errors.contributors : '';
 
   const removeProjectManager = (name: string, remove: (index: number) => void) => {
     // Project manager has other roles on project: only delete the project manager-role
@@ -66,7 +65,7 @@ export const ProjectManager = ({ suggestedProjectManager, isVisited = false }: P
                 />
               </ProjectContributorTable>
             )}
-            {contributorError && typeof contributorError === 'string' && isVisited && (
+            {contributorError && typeof contributorError === 'string' && (
               <Typography
                 sx={{ color: 'error.main', marginTop: '0.25rem', letterSpacing: '0.03333em', marginBottom: '1rem' }}>
                 {contributorError}
