@@ -22,16 +22,25 @@ interface AddProjectContributorFormProps {
     contributors: ProjectContributor[],
     roleToAddTo: ProjectContributorType
   ) => ProjectContributor[] | undefined;
+  initialSearchTerm?: string;
 }
 
-export const AddProjectContributorForm = ({ toggleModal, addContributor }: AddProjectContributorFormProps) => {
+export const AddProjectContributorForm = ({
+  toggleModal,
+  addContributor,
+  initialSearchTerm = '',
+}: AddProjectContributorFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
   const addParticipant = () => {
+    if (searchTerm === initialSearchTerm) {
+      return;
+    }
+
     const newContributors = addContributor(selectedPerson, contributors, 'ProjectParticipant');
 
     if (newContributors) {
@@ -88,7 +97,7 @@ export const AddProjectContributorForm = ({ toggleModal, addContributor }: AddPr
         <Box sx={{ flexGrow: '1' }}>
           <Button
             data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
-            disabled={!searchTerm}
+            disabled={!searchTerm || searchTerm === initialSearchTerm}
             onClick={addUnidentifiedParticipant}
             size="large">
             {t('project.add_unidentified_contributor')}

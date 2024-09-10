@@ -11,6 +11,7 @@ import { AddProjectManagerForm } from './AddProjectManagerForm';
 interface AddProjectContributorModalProps {
   open: boolean;
   toggleModal: () => void;
+  initialSearchTerm?: string;
   addProjectManager?: boolean;
   suggestedProjectManager?: string;
 }
@@ -20,6 +21,7 @@ export const AddProjectContributorModal = ({
   toggleModal,
   suggestedProjectManager,
   addProjectManager = false,
+  initialSearchTerm,
 }: AddProjectContributorModalProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -118,7 +120,11 @@ export const AddProjectContributorModal = ({
           suggestedProjectManager={suggestedProjectManager}
         />
       ) : (
-        <AddProjectContributorForm toggleModal={toggleModal} addContributor={addContributor} />
+        <AddProjectContributorForm
+          toggleModal={toggleModal}
+          addContributor={addContributor}
+          initialSearchTerm={initialSearchTerm}
+        />
       )}
     </Modal>
   );

@@ -1215,7 +1215,8 @@
       "CONCLUDED": "Avsluttet",
       "NOTSTARTED": "Ikke startet"
     },
-    "summary": "Sammendrag"
+    "summary": "Sammendrag",
+    "verify_contributor": "Identifiser deltaker"
   },
   "registration": {
     "citation_points_to": "Siteringen viser til",

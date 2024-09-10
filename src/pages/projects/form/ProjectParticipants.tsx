@@ -7,10 +7,7 @@ import { ListPagination } from '../../../components/ListPagination';
 import { CristinProject, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import {
-  getNonProjectManagerContributors,
-  hasUnidentifiedContributor,
-} from '../../project/helpers/projectContributorHelpers';
+import { getNonProjectManagerContributors } from '../../project/helpers/projectContributorHelpers';
 import { findProjectManagerRole, replaceRolesOnContributor } from '../../project/helpers/projectRoleHelpers';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ContributorRow } from './ContributorRow';
@@ -54,7 +51,6 @@ export const ProjectParticipants = () => {
               onClick={toggleOpenAddProjectParticipantView}
               variant="contained"
               startIcon={<AddIcon />}
-              disabled={hasUnidentifiedContributor(contributorsWithNonProjectManagerRole)}
               data-testid={dataTestId.projectForm.addParticipantButton}>
               {t('project.add_project_contributor')}
             </Button>

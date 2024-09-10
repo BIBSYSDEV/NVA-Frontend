@@ -1,4 +1,5 @@
 import AddIcon from '@mui/icons-material/AddCircleOutline';
+import SearchIcon from '@mui/icons-material/Search';
 import { Box, Button, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -16,6 +17,7 @@ import {
   getRelevantContributorRoles,
   notLastOfItsRoleType,
 } from '../../project/helpers/projectRoleHelpers';
+import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ProjectAddAffiliationModal } from '../ProjectAddAffiliationModal';
 import { ProjectOrganizationBox } from '../ProjectOrganizationBox';
 
@@ -38,6 +40,7 @@ export const ContributorRow = ({
   const { errors, touched, setFieldValue } = useFormikContext<SaveCristinProject>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
+  const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
 
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
   const affiliationError = contributorErrors?.roles?.[0]?.affiliation?.id;
@@ -48,6 +51,7 @@ export const ContributorRow = ({
   const rolesString = asProjectManager ? t('project.project_manager') : t('project.project_participant');
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
+  const toggleOpenVerifyContributor = () => setOpenVerifyContributor(!openVerifyContributor);
 
   const removeAffiliation = (affiliationId: string) => {
     const indexOfRoleThatHasAffiliation = findRoleIndexForAffiliation(asProjectManager, contributor, affiliationId);
@@ -93,9 +97,21 @@ export const ContributorRow = ({
           <ContributorName
             id={contributor.identity.id}
             name={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
-            hasVerifiedAffiliation={contributor.roles?.some((role) => role.affiliation?.type === 'Organization')}
+            hasVerifiedAffiliation={contributor.roles?.some((role) => role.affiliation?.id)}
             sx={{ width: '15rem' }}
           />
+          {!contributor.identity.id && (
+            <Button
+              variant="outlined"
+              sx={{ padding: '0.1rem 0.75rem' }}
+              data-testid={dataTestId.projectWizard.contributorsPanel.verifyContributorButton(
+                getFullName(contributor.identity.firstName, contributor.identity.lastName)
+              )}
+              startIcon={<SearchIcon />}
+              onClick={() => setOpenVerifyContributor(true)}>
+              {t('project.verify_contributor')}
+            </Button>
+          )}
         </Box>
       </TableCell>
       <TableCell>
@@ -158,6 +174,13 @@ export const ContributorRow = ({
           </ConfirmDialog>
         )}
       </TableCell>
+      {/* Verify contributor */}
+      <AddProjectContributorModal
+        open={openVerifyContributor}
+        toggleModal={toggleOpenVerifyContributor}
+        initialSearchTerm={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+      />
+      {/* Add Affiliation */}
       <ProjectAddAffiliationModal
         openAffiliationModal={openAffiliationModal}
         toggleAffiliationModal={toggleAffiliationModal}

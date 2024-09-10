@@ -284,7 +284,9 @@ export const dataTestId = {
       fundingRemoveButton: 'funding-remove-button',
       addFundingButton: 'add-funding-button',
     },
-    contributorsPanel: {},
+    contributorsPanel: {
+      verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
+    },
     connectionsPanel: {},
   },
   registrationLandingPage: {
