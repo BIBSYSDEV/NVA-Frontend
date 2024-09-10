@@ -70,13 +70,17 @@ export const ProjectParticipants = () => {
                 }}
                 alternativePaginationText={t('common.number_of_rows_per_page')}>
                 <ProjectContributorTable>
-                  {paginatedContributors.map((contributor) => {
+                  {paginatedContributors.map((contributor, index) => {
                     const contributorIndex = values.contributors.findIndex(
                       (c) => c.identity.id === contributor.identity.id
                     );
                     return (
                       <ContributorRow
-                        key={contributor.identity.id}
+                        key={
+                          contributor.identity.id
+                            ? `${contributor.identity.id}_${index}`
+                            : `${contributor.identity.firstName}_${contributor.identity.lastName}_${index}`
+                        }
                         contributorIndex={contributorIndex}
                         baseFieldName={`${name}[${contributorIndex}]`}
                         contributor={contributor}

@@ -1136,6 +1136,7 @@
     },
     "close_view": "Lukk visning",
     "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
+    "contributor_is_unidentified": "Prosjektdeltaker er uidentifisert",
     "coordinating_institution": "Koordinerende institusjon",
     "create_new_project": "Opprett nytt prosjekt",
     "create_project": "Nytt prosjekt",

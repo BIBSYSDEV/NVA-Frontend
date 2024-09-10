@@ -1,10 +1,11 @@
 import AddIcon from '@mui/icons-material/AddCircleOutline';
-import { Button, TableCell, TableRow, TextField, Typography } from '@mui/material';
+import { Box, Button, TableCell, TableRow, TextField, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ContributorName } from '../../../components/ContributorName';
+import { SimpleWarning } from '../../../components/messages/SimpleWarning';
 import { ProjectContributor, ProjectContributorFieldName, SaveCristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFullName } from '../../../utils/user-helpers';
@@ -80,12 +81,22 @@ export const ContributorRow = ({
         />
       </TableCell>
       <TableCell width={'1'}>
-        <ContributorName
-          id={contributor.identity.id}
-          name={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
-          hasVerifiedAffiliation={contributor.roles?.some((role) => role.affiliation?.type === 'Organization')}
-          sx={{ width: '15rem', marginTop: '0.5rem' }}
-        />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.25rem',
+            alignItems: 'start',
+            paddingY: '0.5rem',
+          }}>
+          {!contributor.identity.id && <SimpleWarning text={t('project.contributor_is_unidentified')} />}
+          <ContributorName
+            id={contributor.identity.id}
+            name={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+            hasVerifiedAffiliation={contributor.roles?.some((role) => role.affiliation?.type === 'Organization')}
+            sx={{ width: '15rem' }}
+          />
+        </Box>
       </TableCell>
       <TableCell>
         <>
