@@ -73,11 +73,11 @@ const ContributorList = ({ contributors, projectRole }: ContributorListProps) =>
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {contributor.roles.map((contributorRole) => {
-            if (contributorRole.type === projectRole) {
+            if (contributorRole.type === projectRole && contributorRole.affiliation) {
               return (
                 <AffiliationHierarchy
-                  key={contributorRole.affiliation.id}
-                  unitUri={contributorRole.affiliation.id}
+                  key={contributorRole.affiliation!.id}
+                  unitUri={contributorRole.affiliation!.id}
                   condensed
                 />
               );

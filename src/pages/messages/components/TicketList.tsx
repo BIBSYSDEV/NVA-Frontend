@@ -138,7 +138,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
               <List disablePadding sx={{ my: '0.5rem' }}>
                 {tickets.map((ticket) => (
                   <ErrorBoundary key={ticket.id}>
-                    <TicketListItem key={ticket.id} ticket={ticket} />
+                    <TicketListItem ticket={ticket} />
                   </ErrorBoundary>
                 ))}
               </List>

@@ -12,6 +12,7 @@ import { LanguageString } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
 import { CristinProject, ProjectContributorRole, ProjectOrganization } from '../../types/project.types';
 import { findDescendantWithId, getTopLevelOrganization } from '../../utils/institutions-helpers';
+import { checkIfSameAffiliationOnSameRoleType } from '../project/helpers/projectRoleHelpers';
 
 interface EditProjectAffiliationModalProps {
   affiliationModalIsOpen: boolean;
@@ -20,6 +21,7 @@ interface EditProjectAffiliationModalProps {
   authorName: string;
   baseFieldName: string;
   contributorRoles: ProjectContributorRole[];
+  asProjectManager?: boolean;
 }
 
 export const ProjectEditAffiliationModal = ({
@@ -29,6 +31,7 @@ export const ProjectEditAffiliationModal = ({
   preselectedOrganization,
   baseFieldName,
   contributorRoles,
+  asProjectManager = false,
 }: EditProjectAffiliationModalProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -41,7 +44,7 @@ export const ProjectEditAffiliationModal = ({
       return;
     }
     const roleToChangeIndex = contributorRoles.findIndex(
-      (role) => role.affiliation.type === 'Organization' && role.affiliation.id === preselectedOrganization.id
+      (role) => role.affiliation?.type === 'Organization' && role.affiliation?.id === preselectedOrganization.id
     );
 
     if (roleToChangeIndex < 0) {
@@ -50,9 +53,7 @@ export const ProjectEditAffiliationModal = ({
 
     // If user tries to change affiliation to an already existing affiliation
     if (
-      contributorRoles.some(
-        (role) => role.affiliation.type === 'Organization' && role.affiliation.id === newAffiliationId
-      )
+      contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))
     ) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;

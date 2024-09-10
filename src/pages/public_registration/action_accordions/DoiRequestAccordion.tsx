@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LaunchIcon from '@mui/icons-material/Launch';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -11,7 +12,10 @@ import {
   AccordionSummary,
   Box,
   Button,
+  Collapse,
   DialogActions,
+  Divider,
+  IconButton,
   Link as MuiLink,
   TextField,
   Typography,
@@ -19,13 +23,14 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
+import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -37,8 +42,8 @@ import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
-  refetchData: () => void;
-  doiRequestTicket: Ticket | null;
+  refetchData: () => Promise<void>;
+  doiRequestTicket?: Ticket;
   userIsCurator: boolean;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
@@ -70,6 +75,7 @@ export const DoiRequestAccordion = ({
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const user = useSelector((store: RootState) => store.user);
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
 
@@ -85,15 +91,17 @@ export const DoiRequestAccordion = ({
   const [openRejectDoiDialog, setOpenRejectDoiDialog] = useState(false);
   const toggleRejectDoiDialog = () => setOpenRejectDoiDialog((open) => !open);
 
+  const [showMoreActions, setShowMoreActions] = useState(false);
+
   const approveTicketMutation = useMutation({
     mutationFn: async () => {
       if (doiRequestTicket) {
         await updateTicket(doiRequestTicket.id, { status: 'Completed' });
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await refetchData();
       dispatch(setNotification({ message: t('feedback.success.doi_request_approved'), variant: 'success' }));
-      refetchData();
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.approve_doi_request'), variant: 'error' })),
   });
@@ -105,9 +113,9 @@ export const DoiRequestAccordion = ({
         await updateTicket(doiRequestTicket.id, { status: 'Closed' });
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await refetchData();
       dispatch(setNotification({ message: t('feedback.success.doi_request_rejected'), variant: 'success' }));
-      refetchData();
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.reject_doi_request'), variant: 'error' })),
   });
@@ -125,8 +133,8 @@ export const DoiRequestAccordion = ({
     if (isErrorStatus(createDraftDoiResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.reserve_doi'), variant: 'error' }));
     } else if (isSuccessStatus(createDraftDoiResponse.status)) {
+      await refetchData();
       dispatch(setNotification({ message: t('feedback.success.reserve_doi'), variant: 'success' }));
-      refetchData();
     }
     setIsLoading(LoadingState.None);
   };
@@ -149,13 +157,13 @@ export const DoiRequestAccordion = ({
       if (openRequestDoiModal) {
         toggleRequestDoiModal();
       }
+      await refetchData();
       dispatch(
         setNotification({
           message: t('feedback.success.doi_request_sent'),
           variant: 'success',
         })
       );
-      refetchData();
     }
     setIsLoading(LoadingState.None);
   };
@@ -173,6 +181,41 @@ export const DoiRequestAccordion = ({
     : hasReservedDoi
       ? t('registration.public_page.tasks_panel.reserved')
       : '';
+
+  const requestDoiButton = (
+    <Button
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
+      sx={{ bgcolor: 'white' }}
+      size="small"
+      fullWidth
+      variant="outlined"
+      endIcon={<LocalOfferIcon />}
+      disabled={isLoading !== LoadingState.None}
+      onClick={toggleRequestDoiModal}>
+      {t('registration.public_page.request_doi')}
+    </Button>
+  );
+
+  const assignDoiButton = (
+    <LoadingButton
+      sx={{ bgcolor: 'white' }}
+      fullWidth
+      size="small"
+      variant="outlined"
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
+      endIcon={<CheckIcon />}
+      onClick={() => {
+        if (publishedFilesOnRegistration.length > 0) {
+          approveTicketMutation.mutate();
+        } else {
+          toggleConfirmDialogAssignDoi();
+        }
+      }}
+      loading={approveTicketMutation.isPending}
+      disabled={isLoadingData}>
+      {t('registration.public_page.tasks_panel.assign_doi')}
+    </LoadingButton>
+  );
 
   return (
     <Accordion
@@ -227,17 +270,7 @@ export const DoiRequestAccordion = ({
                   ]}
                 />
 
-                <Button
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
-                  sx={{ bgcolor: 'white' }}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                  endIcon={<LocalOfferIcon />}
-                  disabled={isLoading !== LoadingState.None}
-                  onClick={toggleRequestDoiModal}>
-                  {t('registration.public_page.request_doi')}
-                </Button>
+                {requestDoiButton}
               </>
             )}
             {isDraftRegistration && (
@@ -279,58 +312,49 @@ export const DoiRequestAccordion = ({
                 </ConfirmDialog>
               </>
             )}
-
-            <Modal
-              open={openRequestDoiModal}
-              onClose={toggleRequestDoiModal}
-              headingText={t('registration.public_page.request_doi')}
-              dataTestId={dataTestId.registrationLandingPage.tasksPanel.requestDoiModal}>
-              <Typography paragraph>{t('registration.public_page.request_doi_description')}</Typography>
-              <TextField
-                variant="outlined"
-                multiline
-                rows="4"
-                fullWidth
-                data-testid={dataTestId.registrationLandingPage.doiMessageField}
-                label={t('registration.public_page.message_to_curator')}
-                onChange={(event) => setMessageToCurator(event.target.value)}
-              />
-              <DialogActions>
-                <Button onClick={toggleRequestDoiModal}>{t('common.cancel')}</Button>
-                <LoadingButton
-                  variant="contained"
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}
-                  onClick={sendDoiRequest}
-                  loading={isLoadingData || isLoading !== LoadingState.None}>
-                  {t('common.send')}
-                </LoadingButton>
-              </DialogActions>
-            </Modal>
           </>
         )}
+
+        <Modal
+          open={openRequestDoiModal}
+          onClose={toggleRequestDoiModal}
+          headingText={t('registration.public_page.request_doi')}
+          dataTestId={dataTestId.registrationLandingPage.tasksPanel.requestDoiModal}>
+          <Trans
+            t={t}
+            i18nKey="registration.public_page.request_doi_description"
+            components={[<Typography paragraph key="1" />]}
+          />
+          <TextField
+            variant="outlined"
+            multiline
+            rows="4"
+            fullWidth
+            data-testid={dataTestId.registrationLandingPage.doiMessageField}
+            label={t('registration.public_page.message_to_curator')}
+            onChange={(event) => setMessageToCurator(event.target.value)}
+          />
+          <DialogActions>
+            <Button onClick={toggleRequestDoiModal}>{t('common.cancel')}</Button>
+            <LoadingButton
+              variant="contained"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}
+              onClick={sendDoiRequest}
+              loading={isLoadingData || isLoading !== LoadingState.None}>
+              {t('registration.public_page.request_doi')}
+            </LoadingButton>
+          </DialogActions>
+        </Modal>
 
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <Typography>{t('registration.public_page.tasks_panel.assign_doi_about')}</Typography>
-            <LoadingButton
-              sx={{ bgcolor: 'white' }}
-              variant="outlined"
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
-              endIcon={<CheckIcon />}
-              onClick={() => {
-                if (publishedFilesOnRegistration.length > 0) {
-                  approveTicketMutation.mutate();
-                } else {
-                  toggleConfirmDialogAssignDoi();
-                }
-              }}
-              loading={approveTicketMutation.isPending}
-              disabled={isLoadingData}>
-              {t('registration.public_page.tasks_panel.assign_doi')}
-            </LoadingButton>
+
+            {assignDoiButton}
             <Button
               sx={{ bgcolor: 'white' }}
               variant="outlined"
+              size="small"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
               endIcon={<CloseIcon />}
               onClick={toggleRejectDoiDialog}
@@ -383,6 +407,40 @@ export const DoiRequestAccordion = ({
               hideRequiredAsterisk
             />
           </Box>
+        )}
+
+        {isClosedDoiRequest && (
+          <>
+            <Divider sx={{ my: '0.5rem', bgcolor: 'primary.main' }} />
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <IconButton
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.showMoreDoiActionsButton}
+                size="small"
+                color="primary"
+                onClick={() => setShowMoreActions((open) => !open)}
+                title={showMoreActions ? t('common.show_fewer_options') : t('common.show_more_options')}>
+                <MoreHorizIcon />
+              </IconButton>
+            </Box>
+            <Collapse in={showMoreActions}>
+              {user?.isDoiCurator ? (
+                <>
+                  <Typography variant="h2" gutterBottom>
+                    {t('registration.public_page.tasks_panel.assign_doi')}
+                  </Typography>
+                  {assignDoiButton}
+                </>
+              ) : (
+                <>
+                  <Typography variant="h2" gutterBottom>
+                    {t('registration.public_page.request_doi')}
+                  </Typography>
+                  <Typography paragraph>{t('registration.public_page.request_doi_again')}</Typography>
+                  {requestDoiButton}
+                </>
+              )}
+            </Collapse>
+          </>
         )}
       </AccordionDetails>
     </Accordion>

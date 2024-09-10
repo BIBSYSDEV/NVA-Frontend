@@ -102,6 +102,7 @@ export const dataTestId = {
   },
   common: {
     cancel: 'cancel',
+    exportButton: 'export-button',
     pagination: 'pagination',
     save: 'save',
     showMoreButton: 'show-more-button',
@@ -226,6 +227,11 @@ export const dataTestId = {
     scientificSummaryNorwegianField: 'scientific-summary-norwegian-field',
     titleField: 'project-title-field',
     selectContributorButton: 'select-contributor-button',
+    addProjectManagerButton: 'add-project-manager-button',
+    addAffiliationButton: 'button-add-affiliation',
+    addParticipantButton: 'add-participant-button',
+    removeContributorButton: 'remove-contributor-button',
+    cancelNewProjectButton: 'cancel-new-project-button',
   },
   newProjectPage: {
     titleInput: 'project-title-input',
@@ -347,6 +353,7 @@ export const dataTestId = {
       requestDoiButton: 'button-toggle-request-doi',
       requestDoiModal: 'request-doi-modal',
       sendDoiButton: 'button-send-doi-request',
+      showMoreDoiActionsButton: 'show-more-doi-actions-button',
       supportAccordion: 'support-accordion',
       tabPanelLog: 'tab-panel-log',
       tabPanelTasks: 'tab-panel-tasks',
@@ -397,6 +404,7 @@ export const dataTestId = {
       nfrProjectLink: (id: string) => `nfr-project-link-${id}`,
       nfrProjectSearchField: 'nfr-project-search-field',
       projectForm: {
+        addProjectManagerButton: 'add-project-manager-button',
         addParticipantButton: 'add-participant-button',
         contributorAffiliationField: 'contributor-affiliation-field',
         contributorsSearchField: 'project-contributors-search-field',

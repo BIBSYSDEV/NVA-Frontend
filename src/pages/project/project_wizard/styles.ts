@@ -5,6 +5,6 @@ export const FormBox = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   backgroundColor: theme.palette.secondary.light,
   padding: '1.75rem 1.25rem',
-  gap: '1.5rem',
+  gap: '1rem',
   borderRadius: '0.25rem',
 }));

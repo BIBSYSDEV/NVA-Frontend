@@ -112,14 +112,6 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             </Typography>
           </Box>
         )}
-        {entityDescription?.alternativeTitles.und && (
-          <Box sx={{ borderTop: '1px solid', py: '1rem' }}>
-            <Typography variant="h3" component="h2">
-              {t('registration.description.alternative_title')}
-            </Typography>
-            <Typography>{entityDescription.alternativeTitles.und}</Typography>
-          </Box>
-        )}
 
         {!isResearchData(entityDescription?.reference?.publicationInstance?.type) && (
           <FilesLandingPageAccordion registration={registration} />
