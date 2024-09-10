@@ -245,6 +245,7 @@
     "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les mer",
     "read_more_about_nva": "Les mer om NVA",
+    "read_past_tense": "Lest",
     "reject": "Avvis",
     "reject_doi": "Avvis DOI",
     "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
@@ -288,6 +289,7 @@
     "total_number": "Totalt antall",
     "type": "Type",
     "unknown": "Ukjent",
+    "unread": "Ulest",
     "update": "Oppdater",
     "url": "URL",
     "use": "Bruk",
@@ -523,6 +525,7 @@
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
       "get_nvi_periods": "Kunne ikke hente NVI-perioder",
       "get_nvi_status": "Kunne ikke hente NVI-rapporteringsstatus",
+      "get_nvi_status_export": "Kunne ikke laste ned eksport av NVI-rapporteringsstatus",
       "get_orcid": "Kunne ikke hente data fra ORCID",
       "get_organization": "Kunne ikke hente informasjon om organisasjon",
       "get_person": "Kunne ikke hente person",
@@ -1121,10 +1124,9 @@
   "project": {
     "add_affiliation": "Legg til tilknytning",
     "add_project_contributor": "Legg til prosjektdeltaker",
+    "add_project_manager": "Legg til prosjektleder",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
-      "cannot_delete_affiliation_for_project_manager": "Kan ikke fjerne tilknytning for prosjektleder",
-      "cannot_delete_only_affiliation": "Kan ikke fjerne eneste tilknytning",
       "delete_affiliation": "Fjern tilknytning",
       "edit_affiliation": "Endre tilknytning"
     },
@@ -1135,7 +1137,7 @@
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "error": {
-      "there_can_only_be_one_project_manager_choose_different_role": "Et prosjekt kan kun ha en prosjektleder. Velg en annen rolle."
+      "contributor_already_added_with_same_role_and_affiliation": "Prosjektdeltaker er allerede lagt til med samme rolle og tilknytning."
     },
     "form": {
       "add_financing": "Legg til finansiering",
@@ -1145,13 +1147,11 @@
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
-      "project_manager_cannot_be_removed": "Prosjektleder kan ikke fjernes",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
       "remove_project": "Fjern prosjekt",
-      "select_project_role": "Velg rolle i prosjektet",
       "start_empty_project": "Start tomt prosjekt",
       "start_registering_project": "Start registrering av prosjekt",
       "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
@@ -1167,7 +1167,7 @@
       "connections": "Koblinger",
       "description": "$t(common.description)",
       "details": "Detaljer",
-      "project_participants": "Prosjektdeltakere"
+      "members": "Medlemmer"
     },
     "keywords": "Nøkkelord",
     "new_project": {
@@ -1192,6 +1192,7 @@
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
     "project_participant": "Prosjektdeltaker",
     "project_participants": "Prosjektdeltakere",
+    "remove_project_manager": "Slett prosjektleder",
     "results": "Resultater",
     "role_types": {
       "ProjectManager": "Prosjektleder",
@@ -1374,7 +1375,6 @@
       "info_from_channel_register": "Mer informasjon om valgt publiseringskanal",
       "institution_prefers_cc_by": "Din institusjon har en <0>rettighetspolitikk</0> som anbefaler CC-BY.",
       "institution_rights_policy_opt_out_instructions": "Om du ønsker å reservere deg fra institusjonens rettighetspolitikk, så må du sjekke om dette kan gjøres ved din institusjon. Kontakt kuratorstøtte.",
-      "legal_note": "Note for juridisk avklaring",
       "license": "Lisens",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
@@ -1384,6 +1384,7 @@
       "no_files_or_links_present_in_this_registration": "Det er ikke lagt til fil eller lenke for registreringen",
       "open_file": "Åpne fil",
       "opted_out_of_rrs": "Du har valgt å ikke følge vedtatt <0>rettighetspolitikk</0>",
+      "public_note": "Offentlig kommentar",
       "published": "Publisert",
       "published_files": "Publiserte filer",
       "published_version": "Publisert versjon",
@@ -1458,7 +1459,8 @@
       "reject_publish_request": "Avvis publisering av fil",
       "reject_publish_request_description": "<0>Oppgi begrunnelse på hvorfor fil(ene) blir avvist for publisering.</0><0>Denne begrunnelsen blir lagret i NVA og synlig for både registratoren og bidragsytere som er tilknyttet forskningsresultatet.</0><0>Når du avviser fil(ene), så fjernes de fra presentasjonssiden til forskningsresultatet. Du og registrator kan publisere de senere eller slette de, ved å redigere forskningsresultatet.</0>",
       "request_doi": "Be om DOI",
-      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
+      "request_doi_again": "Be om en ny vurdering av DOI-tildeling.",
+      "request_doi_description": "<0>Tildeling av DOI (Digital Object Identifier) betyr at metadata om forskningsresultatet blir delt internasjonalt, derfor vil en kurator se over registreringen før DOI blir tildelt.</0><0>Du kan legge ved en melding til kurator her.</0>",
       "reserve_doi": "Reserver DOI",
       "reserved_doi": "Reservert DOI",
       "result_not_published": "Resultatet er ikke publisert",

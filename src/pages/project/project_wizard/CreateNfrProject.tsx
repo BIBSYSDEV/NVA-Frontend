@@ -13,6 +13,7 @@ interface NFRProjectProps {
   newProject: SaveCristinProject;
   setNewProject: (val: SaveCristinProject) => void;
   setShowProjectForm: (val: boolean) => void;
+  setSuggestedProjectManager: (val: string) => void;
   coordinatingInstitution: ProjectOrganization;
 }
 
@@ -20,6 +21,7 @@ export const CreateNfrProject = ({
   newProject,
   setNewProject,
   setShowProjectForm,
+  setSuggestedProjectManager,
   coordinatingInstitution,
 }: NFRProjectProps) => {
   const { t } = useTranslation();
@@ -29,6 +31,8 @@ export const CreateNfrProject = ({
     if (!selectedProject) {
       return;
     }
+
+    setSuggestedProjectManager(selectedProject.lead);
 
     setNewProject({
       ...newProject,

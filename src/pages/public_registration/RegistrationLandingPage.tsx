@@ -73,9 +73,8 @@ export const RegistrationLandingPage = () => {
     meta: { errorMessage: t('feedback.error.get_tickets') },
   });
 
-  const refetchRegistrationAndTickets = () => {
-    ticketsQuery.refetch();
-    registrationQuery.refetch();
+  const refetchRegistrationAndTickets = async () => {
+    await Promise.all([ticketsQuery.refetch(), registrationQuery.refetch()]);
   };
 
   return (

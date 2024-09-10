@@ -57,7 +57,7 @@ function generateImportedFilesLogEntries(associatedArtifacts: AssociatedArtifact
 
     return {
       type: 'PublishingRequest',
-      title: t('log.titles.files_published_one'),
+      title: t('log.titles.files_published', { count: filesFromThisArchive.length }),
       modifiedDate: filesFromThisArchive[0].publishedDate ?? '',
       actions: [
         {
