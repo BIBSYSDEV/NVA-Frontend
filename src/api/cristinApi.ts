@@ -82,6 +82,8 @@ export interface OrganizationSearchParams {
   includeSubunits?: boolean;
 }
 
+export const defaultOrganizationSizeParam = 20;
+
 export const searchForOrganizations = async (params: OrganizationSearchParams) => {
   const searchParams = new URLSearchParams();
   const headers = new AxiosHeaders();
@@ -93,7 +95,7 @@ export const searchForOrganizations = async (params: OrganizationSearchParams) =
     headers.set('Accept', 'application/json; version=1');
   }
 
-  searchParams.set('results', params.results?.toString() ?? '20');
+  searchParams.set('results', (params.results ?? defaultOrganizationSizeParam).toString());
   searchParams.set('page', params.page?.toString() ?? '1');
 
   const queryContent = searchParams.toString();

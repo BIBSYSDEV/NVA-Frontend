@@ -15,6 +15,7 @@ import {
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { defaultOrganizationSizeParam } from '../../api/cristinApi';
 import { useSearchForOrganizations } from '../../api/hooks/useSearchForOrganizations';
 import { LanguageString } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
@@ -22,6 +23,10 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../AutocompleteListboxWithExpansion';
 import { OrganizationAccordion } from '../OrganizationAccordion';
 import { OrganizationRenderOption } from '../OrganizationRenderOption';
 import { OrganizationBox } from './OrganizationBox';
@@ -62,8 +67,11 @@ export const SelectInstitutionForm = ({
   const [selectedSubunitId, setSelectedSubunitId] = useState(initialValues?.subunit?.id || '');
   const [selectedSubunitLabels, setSelectedSubunitLabels] = useState(initialValues?.subunit?.labels || undefined);
 
+  const [searchSize, setSearchSize] = useState(defaultOrganizationSizeParam);
   const debouncedQuery = useDebounce(searchTerm);
-  const organizationSearchQuery = useSearchForOrganizations(debouncedQuery);
+  const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
+
+  const institutionOptions = organizationSearchQuery.data?.hits ?? [];
 
   return (
     <Formik
@@ -128,12 +136,21 @@ export const SelectInstitutionForm = ({
                 {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
                     {...field}
-                    options={organizationSearchQuery.data?.hits ?? []}
+                    options={institutionOptions}
                     inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
                     getOptionLabel={(option) => getLanguageString(option.labels)}
                     renderOption={({ key, ...props }, option) => (
                       <OrganizationRenderOption key={option.id} props={props} option={option} />
                     )}
+                    ListboxComponent={AutocompleteListboxWithExpansion}
+                    ListboxProps={
+                      {
+                        hasMoreHits:
+                          !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
+                        onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSizeParam),
+                        isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > institutionOptions.length,
+                      } satisfies AutocompleteListboxWithExpansionProps as any
+                    }
                     filterOptions={(options) => options}
                     onInputChange={(_, value, reason) => {
                       if (field.value) {
