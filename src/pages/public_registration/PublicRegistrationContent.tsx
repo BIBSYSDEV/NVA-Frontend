@@ -79,10 +79,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}
               component={RouterLink}
-              to={{
-                pathname: getRegistrationWizardPath(identifier),
-                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
-              }}>
+              state={{ previousPath: window.location.pathname } satisfies RegistrationFormLocationState}
+              to={getRegistrationWizardPath(identifier)}>
               <EditIcon />
             </IconButton>
           </Tooltip>
