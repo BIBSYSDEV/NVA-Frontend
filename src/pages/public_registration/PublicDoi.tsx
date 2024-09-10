@@ -61,27 +61,25 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
         <PublicPageInfoEntry
           title={t('common.doi')}
           content={
-            <>
-              <Typography data-testid={dataTestId.registrationLandingPage.doiLink}>
-                {nvaDoiIsFindable ? (
-                  <Link href={nvaDoi} target="_blank" rel="noopener noreferrer">
-                    {nvaDoi}
-                  </Link>
-                ) : (
-                  nvaDoi
+            <Typography data-testid={dataTestId.registrationLandingPage.doiLink}>
+              {nvaDoiIsFindable ? (
+                <Link href={nvaDoi} target="_blank" rel="noopener noreferrer">
+                  {nvaDoi}
+                </Link>
+              ) : (
+                nvaDoi
+              )}
+              {canSeeDraftDoi &&
+                nvaDoiIsFindable === false && ( // Note: Must check explicitly for false, since it is undefined initially
+                  <Box component="span" sx={{ ml: '0.5rem' }}>
+                    (
+                    {registration.status === RegistrationStatus.Published
+                      ? t('registration.public_page.in_progress')
+                      : t('registration.public_page.reserved_doi')}
+                    )
+                  </Box>
                 )}
-                {canSeeDraftDoi &&
-                  nvaDoiIsFindable === false && ( // Note: Must check explicitly for false, since it is undefined initially
-                    <Box component="span" sx={{ ml: '0.5rem' }}>
-                      (
-                      {registration.status === RegistrationStatus.Published
-                        ? t('registration.public_page.in_progress')
-                        : t('registration.public_page.reserved_doi')}
-                      )
-                    </Box>
-                  )}
-              </Typography>
-            </>
+            </Typography>
           }
         />
       )}
