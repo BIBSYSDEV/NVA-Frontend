@@ -2,9 +2,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { OrganizationSearchParams, searchForOrganizations } from '../cristinApi';
 
-type OrganizationSearchQueryParams = Pick<OrganizationSearchParams, 'query' | 'results'>;
-
-export const useSearchForOrganizations = (params: OrganizationSearchQueryParams) => {
+export const useSearchForOrganizations = (params: OrganizationSearchParams) => {
   const { t } = useTranslation();
 
   const organizationQueryParams: OrganizationSearchParams = {

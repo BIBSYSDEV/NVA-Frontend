@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { defaultOrganizationSizeParam, fetchOrganization } from '../../../api/cristinApi';
+import { defaultOrganizationSearchSize, fetchOrganization } from '../../../api/cristinApi';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { useSearchForOrganizations } from '../../../api/hooks/useSearchForOrganizations';
 import { ResultParam } from '../../../api/searchApi';
@@ -58,7 +58,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
     gcTime: 1_800_000, // 30 minutes
   });
 
-  const [searchSize, setSearchSize] = useState(defaultOrganizationSizeParam);
+  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
 
   const defaultOptions = userOrganization ? [userOrganization] : [];
@@ -126,7 +126,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         ListboxProps={
           {
             hasMoreHits: !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
-            onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSizeParam),
+            onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
             isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > options.length,
           } satisfies AutocompleteListboxWithExpansionProps as any
         }

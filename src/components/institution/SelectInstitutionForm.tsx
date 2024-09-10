@@ -15,7 +15,7 @@ import {
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultOrganizationSizeParam } from '../../api/cristinApi';
+import { defaultOrganizationSearchSize } from '../../api/cristinApi';
 import { useSearchForOrganizations } from '../../api/hooks/useSearchForOrganizations';
 import { LanguageString } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
@@ -67,7 +67,7 @@ export const SelectInstitutionForm = ({
   const [selectedSubunitId, setSelectedSubunitId] = useState(initialValues?.subunit?.id || '');
   const [selectedSubunitLabels, setSelectedSubunitLabels] = useState(initialValues?.subunit?.labels || undefined);
 
-  const [searchSize, setSearchSize] = useState(defaultOrganizationSizeParam);
+  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const debouncedQuery = useDebounce(searchTerm);
   const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
 
@@ -147,7 +147,7 @@ export const SelectInstitutionForm = ({
                       {
                         hasMoreHits:
                           !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
-                        onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSizeParam),
+                        onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
                         isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > institutionOptions.length,
                       } satisfies AutocompleteListboxWithExpansionProps as any
                     }

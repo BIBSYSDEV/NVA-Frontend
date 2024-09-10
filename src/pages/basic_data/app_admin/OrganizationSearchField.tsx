@@ -2,7 +2,7 @@ import { Autocomplete, TextFieldProps } from '@mui/material';
 import { FieldInputProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultOrganizationSizeParam } from '../../../api/cristinApi';
+import { defaultOrganizationSearchSize } from '../../../api/cristinApi';
 import { useSearchForOrganizations } from '../../../api/hooks/useSearchForOrganizations';
 import {
   AutocompleteListboxWithExpansion,
@@ -41,7 +41,7 @@ export const OrganizationSearchField = ({
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
 
-  const [searchSize, setSearchSize] = useState(defaultOrganizationSizeParam);
+  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
 
   const isLoading = isLoadingDefaultOptions || organizationSearchQuery.isFetching;
@@ -74,7 +74,7 @@ export const OrganizationSearchField = ({
       ListboxProps={
         {
           hasMoreHits: !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
-          onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSizeParam),
+          onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
           isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > options.length,
         } satisfies AutocompleteListboxWithExpansionProps as any
       }
