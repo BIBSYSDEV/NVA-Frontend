@@ -30,7 +30,6 @@ export const AddProjectContributorForm = ({ toggleModal, addContributor }: AddPr
   const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
-  const [showAddUnidentifiedButton, setShowAddUnidentifiedButton] = useState(false);
 
   const addParticipant = () => {
     const newContributors = addContributor(selectedPerson, contributors, 'ProjectParticipant');
@@ -84,18 +83,18 @@ export const AddProjectContributorForm = ({ toggleModal, addContributor }: AddPr
         setSelectedPerson={setSelectedPerson}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        setShowAddUnidentifiedButton={setShowAddUnidentifiedButton}
       />
       <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
+        <Box sx={{ flexGrow: '1' }}>
+          <Button
+            data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
+            disabled={!searchTerm}
+            onClick={addUnidentifiedParticipant}
+            size="large">
+            {t('project.add_unidentified_contributor')}
+          </Button>
+        </Box>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
-        <Button
-          data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
-          disabled={!showAddUnidentifiedButton}
-          onClick={addUnidentifiedParticipant}
-          size="large"
-          variant="contained">
-          {t('project.add_unidentified_contributor')}
-        </Button>
         <Button
           data-testid={dataTestId.projectForm.selectContributorButton}
           disabled={!selectedPerson}

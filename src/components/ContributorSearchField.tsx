@@ -28,7 +28,6 @@ interface ContributorSearchFieldProps {
   searchTerm: string;
   setSearchTerm: (val: string) => void;
   singleSelectAffiliations?: boolean;
-  setShowAddUnidentifiedButton?: (val: boolean) => void;
 }
 
 export const ContributorSearchField = ({
@@ -37,7 +36,6 @@ export const ContributorSearchField = ({
   searchTerm,
   setSearchTerm,
   singleSelectAffiliations = false,
-  setShowAddUnidentifiedButton,
 }: ContributorSearchFieldProps) => {
   const { t } = useTranslation();
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -45,10 +43,6 @@ export const ContributorSearchField = ({
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const personQuery = useFetchPerson(debouncedSearchTerm, rowsPerPage, page, t('feedback.error.search'));
   const userSearch = personQuery.data?.hits ?? [];
-
-  if (setShowAddUnidentifiedButton && personQuery.data && personQuery.data.size === 0) {
-    setShowAddUnidentifiedButton(true);
-  }
 
   return (
     <>
