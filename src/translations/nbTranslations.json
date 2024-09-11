@@ -1487,6 +1487,7 @@
         "registration_is_published": "Forskningsresultatet er publisert og offentlig tilgjengelig i NVA.",
         "registration_is_published_with_files": "Forskningsresultatet er publisert med fil(er) og offentlig tilgjengelig i NVA.",
         "registration_is_published_workflow2": "<0>Fil og lisens er godkjent og offentlig i NVA.</0><0>Du kan fritt endre på beskrivelse av resultatet, men endrer du fil eller lisens må registreringen godkjennes på nytt.</0>",
+        "registration_is_published_workflow2_without_file": "<0>Du kan fritt endre på beskrivelse av resultatet, men eventuelle filer må godkjennes før publisering.</0>",
         "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Vent litt før du oppdaterer siden på nytt for å se status.",
         "reject_publishing_request_description_one": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filen publisert og dermed ikke synlig for andre. Filen blir flyttet til ikke publisert.</0><0>Ønsker du å slette filen, gjør det i redigering av forskningsresultatet.</0>",
         "reject_publishing_request_description_other": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filene publisert og dermed ikke synlig for andre. Filene blir flyttet til ikke publisert.</0><0>Ønsker du å slette filene, gjør det i redigering av forskningsresultatet.</0>",
