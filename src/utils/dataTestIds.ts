@@ -287,6 +287,8 @@ export const dataTestId = {
     },
     contributorsPanel: {
       verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
+      editAffiliationButton: 'edit-affiliation-button',
+      deleteAffiliationButton: 'delete-affiliation-button',
     },
     connectionsPanel: {},
   },
@@ -378,6 +380,7 @@ export const dataTestId = {
       addUnverifiedContributorButton: 'add-unverified-contributor-button',
       contributorSearchField: 'contributor-search-field',
       correspondingCheckbox: 'author-corresponding-checkbox',
+      editAffiliationButton: 'edit-affiliation-button',
       verifyAffiliationButton: 'button-set-unverified-affiliation',
       verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
       removeAffiliationButton: 'button-remove-affiliation',
