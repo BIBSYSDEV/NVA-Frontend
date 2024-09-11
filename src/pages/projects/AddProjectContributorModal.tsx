@@ -6,7 +6,6 @@ import { setNotification } from '../../redux/notificationSlice';
 import {
   CristinProject,
   ProjectContributor,
-  ProjectContributorIdentity,
   ProjectContributorRole,
   ProjectContributorType,
 } from '../../types/project.types';
@@ -49,25 +48,28 @@ export const AddProjectContributorModal = ({
     }
 
     let newContributor: ProjectContributor;
-    let existingContributorIndex: number;
+    const newContributors = [...contributors];
 
-    const newContributorIdentity: ProjectContributorIdentity = {
-      type: 'Person',
-      id: personToAdd.id,
-      firstName: getValueByKey('FirstName', personToAdd.names),
-      lastName: getValueByKey('LastName', personToAdd.names),
-    };
+    const existingContributorIndex = contributors.findIndex(
+      (contributor) => contributor.identity.id === personToAdd.id
+    );
 
-    if (index > -1) {
-      existingContributorIndex = index;
-    } else {
-      existingContributorIndex = contributors.findIndex((contributor) => contributor.identity.id === personToAdd.id);
-    }
-
+    // User is already added (probably with other roles)
     if (existingContributorIndex > -1) {
-      const contributorToReplace = contributors[existingContributorIndex];
+      newContributor = { ...contributors[existingContributorIndex] };
 
-      const sameRoleAndSameType = contributorToReplace.roles.some(
+      // If identifying unidentified
+      if (index > -1) {
+        // Remove unidentified, but keep roles
+        newContributor.roles = newContributor.roles.concat(
+          contributors[index].roles.filter(
+            (role) => (role.type === roleToAddTo && role.affiliation?.id) || role.type !== roleToAddTo
+          )
+        );
+        newContributors.splice(index, 1);
+      }
+
+      const sameRoleAndSameType = newContributor.roles.some(
         (role) =>
           role.type === roleToAddTo &&
           personToAdd.affiliations.some((affiliation) => affiliation.organization === role.affiliation?.id)
@@ -82,22 +84,16 @@ export const AddProjectContributorModal = ({
         );
         return;
       }
-
-      // Replacing unidentified contributor with contributor selected from search
-      if (index > -1) {
-        newContributor = {
-          identity: newContributorIdentity,
-          roles: contributorToReplace.roles.filter(
-            (role) => (role.type === roleToAddTo && role.affiliation?.id) || role.type !== roleToAddTo
-          ),
-        };
-      } else {
-        // Adding new contributor from search, on contributor that already exists (for instance with other role)
-        newContributor = { ...contributors[existingContributorIndex] };
-      }
     } else {
-      // Contributor is brand new - new identity and new roles
-      newContributor = { identity: newContributorIdentity, roles: [] };
+      newContributor = {
+        identity: {
+          type: 'Person',
+          id: personToAdd.id,
+          firstName: getValueByKey('FirstName', personToAdd.names),
+          lastName: getValueByKey('LastName', personToAdd.names),
+        },
+        roles: [],
+      };
     }
 
     // Adding 1 or more affiliations
@@ -114,7 +110,6 @@ export const AddProjectContributorModal = ({
       );
     } else {
       // If contributor has no other roles of this type, we need a role without affiliation to store the role name
-
       if (
         (addProjectManager && !findProjectManagerRole(newContributor)) ||
         (!addProjectManager && !findNonProjectManagerRole(newContributor))
@@ -128,8 +123,6 @@ export const AddProjectContributorModal = ({
         ];
       }
     }
-
-    const newContributors = [...contributors];
 
     if (existingContributorIndex > -1) {
       newContributors[existingContributorIndex] = newContributor;
