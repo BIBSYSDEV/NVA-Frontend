@@ -12,6 +12,10 @@ export const findProjectManagerRole = (contributor: ProjectContributor) => {
   return contributor.roles.find(isProjectManagerRole);
 };
 
+export const findNonProjectManagerRole = (contributor: ProjectContributor) => {
+  return contributor.roles.find(isNonProjectManagerRole);
+};
+
 export const replaceRolesOnContributor = (
   contributors: ProjectContributor[],
   contributorIndex: number,

@@ -75,7 +75,7 @@ export const ProjectParticipants = () => {
                       <ContributorRow
                         key={
                           contributor.identity.id
-                            ? `${contributor.identity.id}_${index}`
+                            ? contributor.identity.id
                             : `${contributor.identity.firstName}_${contributor.identity.lastName}_${index}`
                         }
                         contributorIndex={contributorIndex}

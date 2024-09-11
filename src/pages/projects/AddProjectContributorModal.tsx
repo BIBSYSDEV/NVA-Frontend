@@ -12,6 +12,7 @@ import {
 } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { getValueByKey } from '../../utils/user-helpers';
+import { findNonProjectManagerRole, findProjectManagerRole } from '../project/helpers/projectRoleHelpers';
 import { AddProjectContributorForm } from './AddProjectContributorForm';
 import { AddProjectManagerForm } from './AddProjectManagerForm';
 
@@ -27,9 +28,9 @@ interface AddProjectContributorModalProps {
 export const AddProjectContributorModal = ({
   open,
   toggleModal,
-  suggestedProjectManager,
+  suggestedProjectManager = '',
   addProjectManager = false,
-  initialSearchTerm,
+  initialSearchTerm = '',
   indexToReplace = -1,
 }: AddProjectContributorModalProps) => {
   const { t } = useTranslation();
@@ -64,12 +65,13 @@ export const AddProjectContributorModal = ({
     }
 
     if (existingContributorIndex > -1) {
-      const sameRoleAndSameType = contributors[existingContributorIndex].roles.some((role) => {
-        return (
+      const contributorToReplace = contributors[existingContributorIndex];
+
+      const sameRoleAndSameType = contributorToReplace.roles.some(
+        (role) =>
           role.type === roleToAddTo &&
           personToAdd.affiliations.some((affiliation) => affiliation.organization === role.affiliation?.id)
-        );
-      });
+      );
 
       if (sameRoleAndSameType) {
         dispatch(
@@ -83,13 +85,18 @@ export const AddProjectContributorModal = ({
 
       // Replacing unidentified contributor with contributor selected from search
       if (index > -1) {
-        newContributor = { identity: newContributorIdentity, roles: [...contributors[existingContributorIndex].roles] };
+        newContributor = {
+          identity: newContributorIdentity,
+          roles: contributorToReplace.roles.filter(
+            (role) => (role.type === roleToAddTo && role.affiliation?.id) || role.type !== roleToAddTo
+          ),
+        };
       } else {
-        // Adding new contributor from search, but contributor already exists (for instance with other role)
+        // Adding new contributor from search, on contributor that already exists (for instance with other role)
         newContributor = { ...contributors[existingContributorIndex] };
       }
     } else {
-      // Contributor is brand new
+      // Contributor is brand new - new identity and new roles
       newContributor = { identity: newContributorIdentity, roles: [] };
     }
 
@@ -106,14 +113,20 @@ export const AddProjectContributorModal = ({
           })
       );
     } else {
-      // Adding no affiliations
-      newContributor.roles = [
-        ...newContributor.roles,
-        {
-          type: 'ProjectParticipant',
-          affiliation: undefined,
-        } as ProjectContributorRole,
-      ];
+      // If contributor has no other roles of this type, we need a role without affiliation to store the role name
+
+      if (
+        (addProjectManager && !findProjectManagerRole(newContributor)) ||
+        (!addProjectManager && !findNonProjectManagerRole(newContributor))
+      ) {
+        newContributor.roles = [
+          ...newContributor.roles, // Keep existing roles since they may contain other role types
+          {
+            type: roleToAddTo,
+            affiliation: undefined,
+          } as ProjectContributorRole,
+        ];
+      }
     }
 
     const newContributors = [...contributors];

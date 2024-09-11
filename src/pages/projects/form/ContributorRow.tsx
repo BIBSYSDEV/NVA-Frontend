@@ -38,6 +38,7 @@ export const ContributorRow = ({
 }: ContributorRowProps) => {
   const { t } = useTranslation();
   const { errors, touched, setFieldValue } = useFormikContext<SaveCristinProject>();
+
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
   const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
@@ -47,8 +48,8 @@ export const ContributorRow = ({
   const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
   const baseFieldRoles = `${baseFieldName}.${ProjectContributorFieldName.Roles}`;
   const roles = getRelevantContributorRoles(contributor, asProjectManager);
-  const hasOnlyUnaffiliatedRole = roles.every((role) => !role.affiliation || role.affiliation.id === undefined);
   const hasEmptyAffiliation = contributorHasEmptyAffiliation(roles);
+  const hasOnlyEmptyAffiliations = roles.every((role) => !role.affiliation || role.affiliation.id === undefined);
   const rolesString = asProjectManager ? t('project.project_manager') : t('project.project_participant');
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
@@ -128,7 +129,7 @@ export const ContributorRow = ({
           sx={{
             paddingY: '0.5rem',
           }}>
-          {hasOnlyUnaffiliatedRole ? (
+          {hasOnlyEmptyAffiliations ? (
             <SimpleWarning text={t('project.no_affiliation')} />
           ) : (
             roles

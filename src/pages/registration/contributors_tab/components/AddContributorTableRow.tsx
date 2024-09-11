@@ -49,7 +49,9 @@ export const CristinPersonTableRow = ({
                   ...cristinPerson,
                   affiliations:
                     selectAffiliations === SelectAffiliations.SINGLE
-                      ? [activeAffiliations[0]]
+                      ? activeAffiliations.length > 0
+                        ? [activeAffiliations[0]]
+                        : []
                       : selectAffiliations === SelectAffiliations.MULTIPLE
                         ? activeAffiliations
                         : [],
