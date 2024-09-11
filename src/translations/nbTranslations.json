@@ -1126,6 +1126,7 @@
     "add_project_contributor": "Legg til prosjektdeltaker",
     "add_project_manager": "Legg til prosjektleder",
     "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltaker",
+    "add_unidentified_project_manager": "Legg til uidentifisert prosjektleder",
     "add_contributor": "Legg til prosjektdeltaker",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
@@ -1199,6 +1200,7 @@
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
+    "project_manager_is_unidentified": "Prosjektleder er uidentifisert",
     "project_participant": "Prosjektdeltaker",
     "project_participants": "Prosjektdeltakere",
     "remove_project_manager": "Slett prosjektleder",
@@ -1217,7 +1219,8 @@
       "NOTSTARTED": "Ikke startet"
     },
     "summary": "Sammendrag",
-    "verify_contributor": "Identifiser deltaker"
+    "verify_contributor": "Identifiser prosjektdeltaker",
+    "verify_project_manager": "Identifiser prosjektleder"
   },
   "registration": {
     "citation_points_to": "Siteringen viser til",

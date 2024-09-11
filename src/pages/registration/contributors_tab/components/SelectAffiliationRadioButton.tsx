@@ -11,6 +11,7 @@ interface SelectAffiliationRadioButtonProps {
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson | undefined) => void;
   affiliationIsSelected: boolean;
+  disabled?: boolean;
 }
 
 export const SelectAffiliationRadioButton = ({
@@ -19,6 +20,7 @@ export const SelectAffiliationRadioButton = ({
   setSelectedPerson,
   affiliationIsSelected,
   personIsSelected,
+  disabled = false,
 }: SelectAffiliationRadioButtonProps) => {
   const { t } = useTranslation();
 
@@ -43,7 +45,7 @@ export const SelectAffiliationRadioButton = ({
       onClick={selectAffiliation}
       color="primary"
       size="small"
-      disabled={!personIsSelected}
+      disabled={!personIsSelected || disabled}
       title={t('registration.contributors.select_affiliation')}>
       {affiliationIsSelected ? <CheckCircle fontSize="small" color="info" /> : <CircleOutlined fontSize="small" />}
     </IconButton>

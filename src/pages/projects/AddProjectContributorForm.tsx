@@ -8,7 +8,6 @@ import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
 import {
   CristinProject,
   ProjectContributor,
-  ProjectContributorRole,
   ProjectContributorType,
   ProjectFieldName,
 } from '../../types/project.types';
@@ -23,6 +22,10 @@ interface AddProjectContributorFormProps {
     roleToAddTo: ProjectContributorType,
     index?: number
   ) => ProjectContributor[] | undefined;
+  addUnidentifiedProjectParticipant: (
+    searchTerm: string,
+    role: ProjectContributorType
+  ) => ProjectContributor[] | undefined;
   initialSearchTerm?: string;
   indexToReplace?: number;
 }
@@ -32,6 +35,7 @@ export const AddProjectContributorForm = ({
   addContributor,
   initialSearchTerm = '',
   indexToReplace = -1,
+  addUnidentifiedProjectParticipant,
 }: AddProjectContributorFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
@@ -54,39 +58,12 @@ export const AddProjectContributorForm = ({
   };
 
   const addUnidentifiedParticipant = () => {
-    if (!searchTerm) {
-      return;
+    const newContributors = addUnidentifiedProjectParticipant(searchTerm, 'ProjectParticipant');
+
+    if (newContributors) {
+      setFieldValue(ProjectFieldName.Contributors, newContributors);
+      toggleModal();
     }
-
-    const names = searchTerm.split(' ');
-    let firstName, lastName;
-
-    if (names.length > 1) {
-      const namesWithoutLastName = names.slice(0, -1);
-      firstName = namesWithoutLastName.join(' ');
-      lastName = names[names.length - 1];
-    } else {
-      firstName = names[0];
-      lastName = '';
-    }
-
-    const newContributor: ProjectContributor = {
-      identity: {
-        type: 'Person',
-        firstName: firstName,
-        lastName: lastName,
-      },
-      roles: [
-        {
-          type: 'ProjectParticipant',
-          affiliation: undefined,
-        } as ProjectContributorRole,
-      ],
-    };
-    const newContributors = [...contributors];
-    newContributors.push(newContributor);
-    setFieldValue(ProjectFieldName.Contributors, newContributors);
-    toggleModal();
   };
 
   return (

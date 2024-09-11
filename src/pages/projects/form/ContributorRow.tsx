@@ -94,12 +94,20 @@ export const ContributorRow = ({
             alignItems: 'start',
             paddingY: '0.5rem',
           }}>
-          {!contributor.identity.id && <SimpleWarning text={t('project.contributor_is_unidentified')} />}
+          {!contributor.identity.id && (
+            <SimpleWarning
+              text={
+                asProjectManager
+                  ? t('project.project_manager_is_unidentified')
+                  : t('project.contributor_is_unidentified')
+              }
+            />
+          )}
           <ContributorName
             id={contributor.identity.id}
             name={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
             hasVerifiedAffiliation={contributor.roles?.some((role) => role.affiliation?.id)}
-            sx={{ width: '15rem' }}
+            sx={{ width: '18rem' }}
           />
           {!contributor.identity.id && (
             <Button
@@ -110,7 +118,7 @@ export const ContributorRow = ({
               )}
               startIcon={<SearchIcon />}
               onClick={() => setOpenVerifyContributor(true)}>
-              {t('project.verify_contributor')}
+              {asProjectManager ? t('project.verify_project_manager') : t('project.verify_contributor')}
             </Button>
           )}
         </Box>
@@ -170,6 +178,7 @@ export const ContributorRow = ({
         toggleModal={toggleOpenVerifyContributor}
         initialSearchTerm={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
         indexToReplace={contributorIndex}
+        addProjectManager={asProjectManager}
       />
       {/* Add Affiliation */}
       <ProjectAddAffiliationModal

@@ -50,6 +50,10 @@ export const contributorHasEmptyAffiliation = (roles: ProjectContributorRole[]) 
   return roles.some((role) => role.affiliation === undefined);
 };
 
+export const contributorHasNonEmptyAffiliation = (roles: ProjectContributorRole[]) => {
+  return roles.some((role) => role.affiliation !== undefined);
+};
+
 export const checkIfSameAffiliationOnSameRoleType = (
   newAffiliationId: string,
   role: ProjectContributorRole,

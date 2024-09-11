@@ -1,8 +1,10 @@
+import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import {
+  CristinProject,
   ProjectContributor,
   ProjectContributorIdentity,
   ProjectContributorRole,
@@ -32,6 +34,8 @@ export const AddProjectContributorModal = ({
 }: AddProjectContributorModalProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { values } = useFormikContext<CristinProject>();
+  const { contributors } = values;
 
   const addContributor = (
     personToAdd: CristinPerson | undefined,
@@ -123,6 +127,41 @@ export const AddProjectContributorModal = ({
     return newContributors;
   };
 
+  const addUnidentifiedProjectParticipant = (searchTerm: string, role: ProjectContributorType) => {
+    if (!searchTerm) {
+      return;
+    }
+
+    const names = searchTerm.split(' ');
+    let firstName, lastName;
+
+    if (names.length > 1) {
+      const namesWithoutLastName = names.slice(0, -1);
+      firstName = namesWithoutLastName.join(' ');
+      lastName = names[names.length - 1];
+    } else {
+      firstName = names[0];
+      lastName = '';
+    }
+
+    const newContributor: ProjectContributor = {
+      identity: {
+        type: 'Person',
+        firstName: firstName,
+        lastName: lastName,
+      },
+      roles: [
+        {
+          type: role,
+          affiliation: undefined,
+        } as ProjectContributorRole,
+      ],
+    };
+    const newContributors = [...contributors];
+    newContributors.push(newContributor);
+    return newContributors;
+  };
+
   return (
     <Modal
       headingText={addProjectManager ? t('project.add_project_manager') : t('project.add_project_contributor')}
@@ -136,6 +175,9 @@ export const AddProjectContributorModal = ({
           toggleModal={toggleModal}
           addContributor={addContributor}
           suggestedProjectManager={suggestedProjectManager}
+          initialSearchTerm={initialSearchTerm}
+          indexToReplace={indexToReplace}
+          addUnidentifiedProjectParticipant={addUnidentifiedProjectParticipant}
         />
       ) : (
         <AddProjectContributorForm
@@ -143,6 +185,7 @@ export const AddProjectContributorModal = ({
           addContributor={addContributor}
           initialSearchTerm={initialSearchTerm}
           indexToReplace={indexToReplace}
+          addUnidentifiedProjectParticipant={addUnidentifiedProjectParticipant}
         />
       )}
     </Modal>

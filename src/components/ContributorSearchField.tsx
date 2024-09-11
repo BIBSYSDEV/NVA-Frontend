@@ -14,7 +14,10 @@ import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchPerson } from '../api/hooks/useFetchPerson';
-import { CristinPersonTableRow } from '../pages/registration/contributors_tab/components/AddContributorTableRow';
+import {
+  CristinPersonTableRow,
+  SelectAffiliations,
+} from '../pages/registration/contributors_tab/components/AddContributorTableRow';
 import { CristinPerson } from '../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../utils/constants';
 import { dataTestId } from '../utils/dataTestIds';
@@ -28,6 +31,7 @@ interface ContributorSearchFieldProps {
   searchTerm: string;
   setSearchTerm: (val: string) => void;
   singleSelectAffiliations?: boolean;
+  selectAffiliations?: SelectAffiliations;
 }
 
 export const ContributorSearchField = ({
@@ -35,7 +39,7 @@ export const ContributorSearchField = ({
   setSelectedPerson,
   searchTerm,
   setSearchTerm,
-  singleSelectAffiliations = false,
+  selectAffiliations = SelectAffiliations.MULTIPLE,
 }: ContributorSearchFieldProps) => {
   const { t } = useTranslation();
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -95,7 +99,7 @@ export const ContributorSearchField = ({
                     cristinPerson={cristinPerson}
                     setSelectedPerson={setSelectedPerson}
                     selectedPerson={selectedPerson}
-                    singleSelectAffiliations={singleSelectAffiliations}
+                    selectAffiliations={selectAffiliations}
                   />
                 ))}
               </TableBody>
