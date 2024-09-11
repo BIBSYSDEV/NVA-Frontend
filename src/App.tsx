@@ -18,13 +18,12 @@ import { SkipLink } from './components/SkipLink';
 import { Footer } from './layout/Footer';
 import { Notifier } from './layout/Notifier';
 import { Header } from './layout/header/Header';
-import { initializeMatomo } from './matomo/matomo';
+import { useMatomoTracking } from './matomo/useMatomoTracking';
 import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { getDateFnsLocale, getDatePickerLocaleText } from './utils/date-helpers';
-import { isValidUrl } from './utils/general-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
 
@@ -46,9 +45,11 @@ if (
 }
 
 export const App = () => {
+  useMatomoTracking();
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
   useEffect(() => {
@@ -75,13 +76,6 @@ export const App = () => {
       getUser();
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    const matomoContainerUrl = import.meta.env.VITE_MATOMO_CONTAINER_URL;
-    if (isValidUrl(matomoContainerUrl)) {
-      initializeMatomo(matomoContainerUrl);
-    }
-  }, []);
 
   const mustCreatePerson = user && !user.cristinId;
   const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
