@@ -1981,7 +1981,6 @@
   },
   "tasks": {
     "correction_list": "Retteliste",
-    "dialogues_without_curator": "Dialoger uten kurator",
     "nvi": {
       "approval_status_count": "Kontrollert ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
