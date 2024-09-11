@@ -24,7 +24,8 @@ interface AddProjectContributorFormProps {
   ) => ProjectContributor[] | undefined;
   addUnidentifiedProjectParticipant: (
     searchTerm: string,
-    role: ProjectContributorType
+    role: ProjectContributorType,
+    indexToReplace: number
   ) => ProjectContributor[] | undefined;
   initialSearchTerm?: string;
   indexToReplace?: number;
@@ -58,7 +59,7 @@ export const AddProjectContributorForm = ({
   };
 
   const addUnidentifiedParticipant = () => {
-    const newContributors = addUnidentifiedProjectParticipant(searchTerm, 'ProjectParticipant');
+    const newContributors = addUnidentifiedProjectParticipant(searchTerm, 'ProjectParticipant', indexToReplace);
 
     if (newContributors) {
       setFieldValue(ProjectFieldName.Contributors, newContributors);

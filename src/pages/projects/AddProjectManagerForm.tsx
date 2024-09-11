@@ -26,7 +26,8 @@ interface AddProjectManagerFormProps {
   ) => ProjectContributor[] | undefined;
   addUnidentifiedProjectParticipant: (
     searchTerm: string,
-    role: ProjectContributorType
+    role: ProjectContributorType,
+    indexToReplace: number
   ) => ProjectContributor[] | undefined;
   suggestedProjectManager?: string;
   initialSearchTerm?: string;
@@ -44,7 +45,7 @@ export const AddProjectManagerForm = ({
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
-  const contributorToReplace = indexToReplace > -1 && contributors[indexToReplace];
+  const contributorToReplace = indexToReplace > -1 ? contributors[indexToReplace] : undefined;
   const hasAffiliation = contributorToReplace && contributorHasNonEmptyAffiliation(contributorToReplace.roles);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
@@ -59,7 +60,7 @@ export const AddProjectManagerForm = ({
   };
 
   const addUnidentifiedManager = () => {
-    const newContributors = addUnidentifiedProjectParticipant(searchTerm, 'ProjectManager');
+    const newContributors = addUnidentifiedProjectParticipant(searchTerm, 'ProjectManager', indexToReplace);
 
     if (newContributors) {
       setFieldValue(ProjectFieldName.Contributors, newContributors);
@@ -93,7 +94,6 @@ export const AddProjectManagerForm = ({
         </Box>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
         <Button
-          sx={{ mt: '1rem' }}
           data-testid={dataTestId.projectForm.addProjectManagerButton}
           disabled={!selectedPerson}
           onClick={addProjectManager}

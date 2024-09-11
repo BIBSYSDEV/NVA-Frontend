@@ -6,6 +6,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import {
   CristinProject,
   ProjectContributor,
+  ProjectContributorIdentity,
   ProjectContributorRole,
   ProjectContributorType,
 } from '../../types/project.types';
@@ -54,6 +55,13 @@ export const AddProjectContributorModal = ({
     console.log('personToAdd', personToAdd);
     console.log('unidentifiedIndex', unidentifiedIndex);
 
+    const newIdentityObject: ProjectContributorIdentity = {
+      type: 'Person',
+      id: personToAdd.id,
+      firstName: getValueByKey('FirstName', personToAdd.names),
+      lastName: getValueByKey('LastName', personToAdd.names),
+    };
+
     let newContributor: ProjectContributor;
     const newContributors = [...contributors];
 
@@ -92,14 +100,14 @@ export const AddProjectContributorModal = ({
         );
         return;
       }
+    } else if (identifyingUnidentified) {
+      newContributor = {
+        identity: newIdentityObject,
+        roles: removeEmptyAffiliationsWithinRoletype(contributors[unidentifiedIndex].roles, roleToAddTo),
+      };
     } else {
       newContributor = {
-        identity: {
-          type: 'Person',
-          id: personToAdd.id,
-          firstName: getValueByKey('FirstName', personToAdd.names),
-          lastName: getValueByKey('LastName', personToAdd.names),
-        },
+        identity: newIdentityObject,
         roles: [],
       };
     }
@@ -134,6 +142,8 @@ export const AddProjectContributorModal = ({
 
     if (userIsAlreadyAdded) {
       newContributors[existingContributorIndex] = newContributor;
+    } else if (identifyingUnidentified) {
+      newContributors[unidentifiedIndex] = newContributor;
     } else {
       newContributors.push(newContributor);
     }
@@ -141,7 +151,7 @@ export const AddProjectContributorModal = ({
     return newContributors;
   };
 
-  const addUnidentifiedProjectParticipant = (searchTerm: string, role: ProjectContributorType) => {
+  const addUnidentifiedProjectParticipant = (searchTerm: string, role: ProjectContributorType, indexToReplace = -1) => {
     if (!searchTerm) {
       return;
     }
@@ -164,15 +174,26 @@ export const AddProjectContributorModal = ({
         firstName: firstName,
         lastName: lastName,
       },
-      roles: [
+      roles: [],
+    };
+
+    if (indexToReplace > -1) {
+      newContributor.roles = contributors[indexToReplace].roles;
+    } else {
+      newContributor.roles = [
         {
           type: role,
           affiliation: undefined,
         } as ProjectContributorRole,
-      ],
-    };
+      ];
+    }
+
     const newContributors = [...contributors];
-    newContributors.push(newContributor);
+    if (indexToReplace > -1) {
+      newContributors[indexToReplace] = newContributor;
+    } else {
+      newContributors.push(newContributor);
+    }
     return newContributors;
   };
 
