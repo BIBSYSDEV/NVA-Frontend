@@ -10,8 +10,7 @@ declare global {
   }
 }
 
-export const initializeMatomo = () => {
-  const matomoContainerUrl = import.meta.env.VITE_MATOMO_CONTAINER_URL;
+export const initializeMatomo = (matomoContainerUrl: string) => {
   if (!matomoContainerUrl) {
     return;
   }
@@ -28,11 +27,4 @@ export const initializeMatomo = () => {
   g.async = true;
   g.src = matomoContainerUrl;
   s.parentNode?.insertBefore(g, s);
-
-  g.onload = () => {
-    if (window.Matomo) {
-      window.Matomo.trackPageView();
-      window.Matomo.enableLinkTracking();
-    }
-  };
 };

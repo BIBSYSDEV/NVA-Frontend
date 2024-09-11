@@ -37,6 +37,8 @@ export const AppRoutes = () => {
   const isAdmin = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin);
   const isNviCurator = hasCustomerId && user.isNviCurator;
 
+  // useMatomoTracking(); // TODO: burde ha setup også her?
+
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
       <Switch>
