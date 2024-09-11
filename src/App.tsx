@@ -18,6 +18,8 @@ import { SkipLink } from './components/SkipLink';
 import { Footer } from './layout/Footer';
 import { Notifier } from './layout/Notifier';
 import { Header } from './layout/header/Header';
+import { initializeMatomo } from './matomo/matomo';
+import { useMatomoTracking } from './matomo/useMatomoTracking';
 import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
@@ -73,6 +75,14 @@ export const App = () => {
       getUser();
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (import.meta.env.VITE_MATOMO_CONTAINER_URL) {
+      initializeMatomo(); // Initialiser Matomo én gang når appen laster
+    }
+  }, []);
+
+  useMatomoTracking(); // TODO: burde ha setup også her?
 
   const mustCreatePerson = user && !user.cristinId;
   const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
