@@ -94,3 +94,8 @@ export const notLastOfItsRoleType = (
   const rolesWithoutAffiliationId = contributor.roles.filter((role) => role.affiliation?.id !== affiliationId);
   return rolesWithoutAffiliationId.some((role) => role.type === roleType);
 };
+
+export const removeEmptyAffiliationsWithinRoletype = (
+  roles: ProjectContributorRole[],
+  roleType: ProjectContributorType
+) => roles.filter((role) => (role.type === roleType && role.affiliation?.id) || role.type !== roleType);

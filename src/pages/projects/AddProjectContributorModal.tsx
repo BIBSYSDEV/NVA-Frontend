@@ -11,7 +11,11 @@ import {
 } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { getValueByKey } from '../../utils/user-helpers';
-import { findNonProjectManagerRole, findProjectManagerRole } from '../project/helpers/projectRoleHelpers';
+import {
+  findNonProjectManagerRole,
+  findProjectManagerRole,
+  removeEmptyAffiliationsWithinRoletype,
+} from '../project/helpers/projectRoleHelpers';
 import { AddProjectContributorForm } from './AddProjectContributorForm';
 import { AddProjectManagerForm } from './AddProjectManagerForm';
 
@@ -41,11 +45,14 @@ export const AddProjectContributorModal = ({
     personToAdd: CristinPerson | undefined,
     contributors: ProjectContributor[],
     roleToAddTo: ProjectContributorType,
-    index = -1
+    unidentifiedIndex = -1
   ) => {
     if (!personToAdd) {
       return;
     }
+
+    console.log('personToAdd', personToAdd);
+    console.log('unidentifiedIndex', unidentifiedIndex);
 
     let newContributor: ProjectContributor;
     const newContributors = [...contributors];
@@ -54,19 +61,20 @@ export const AddProjectContributorModal = ({
       (contributor) => contributor.identity.id === personToAdd.id
     );
 
-    // User is already added (probably with other roles)
-    if (existingContributorIndex > -1) {
+    const userIsAlreadyAdded = existingContributorIndex > -1;
+    const identifyingUnidentified = unidentifiedIndex > -1;
+
+    console.log('identifyingUnidentified', identifyingUnidentified);
+
+    if (userIsAlreadyAdded) {
       newContributor = { ...contributors[existingContributorIndex] };
 
-      // If identifying unidentified
-      if (index > -1) {
-        // Remove unidentified, but keep roles
+      if (identifyingUnidentified) {
+        // Remove unidentified contributor, but keep its roles
         newContributor.roles = newContributor.roles.concat(
-          contributors[index].roles.filter(
-            (role) => (role.type === roleToAddTo && role.affiliation?.id) || role.type !== roleToAddTo
-          )
+          removeEmptyAffiliationsWithinRoletype(contributors[unidentifiedIndex].roles, roleToAddTo)
         );
-        newContributors.splice(index, 1);
+        newContributors.splice(unidentifiedIndex, 1);
       }
 
       const sameRoleAndSameType = newContributor.roles.some(
@@ -111,8 +119,8 @@ export const AddProjectContributorModal = ({
     } else {
       // If contributor has no other roles of this type, we need a role without affiliation to store the role name
       if (
-        (addProjectManager && !findProjectManagerRole(newContributor)) ||
-        (!addProjectManager && !findNonProjectManagerRole(newContributor))
+        (roleToAddTo === 'ProjectManager' && !findProjectManagerRole(newContributor)) ||
+        (roleToAddTo !== 'ProjectManager' && !findNonProjectManagerRole(newContributor))
       ) {
         newContributor.roles = [
           ...newContributor.roles, // Keep existing roles since they may contain other role types
@@ -124,7 +132,7 @@ export const AddProjectContributorModal = ({
       }
     }
 
-    if (existingContributorIndex > -1) {
+    if (userIsAlreadyAdded) {
       newContributors[existingContributorIndex] = newContributor;
     } else {
       newContributors.push(newContributor);
