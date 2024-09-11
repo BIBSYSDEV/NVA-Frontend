@@ -1,6 +1,6 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { Badge, Box, Button } from '@mui/material';
+import { Badge, Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -58,9 +58,7 @@ export const DialoguesWithoutCuratorButton = () => {
       onClick={toggleDialoguesWithoutCurators}
       title={t('tasks.include_tasks_without_curator')}
       data-testid={dataTestId.tasksPage.dialoguesWithoutCuratorButton}>
-      <Box component="span" sx={{ whiteSpace: 'nowrap' }}>
-        {t('tasks.include_tasks_without_curator')}
-      </Box>
+      {t('tasks.include_tasks_without_curator')}
     </Button>
   );
 };
