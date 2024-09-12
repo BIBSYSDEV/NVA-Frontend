@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ParseKeys } from 'i18next';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -9,8 +9,11 @@ import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
+import { JournalFilter } from '../../search/advanced_search/JournalFilter';
 import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
+import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
+import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 
 export type CorrectionListId =
@@ -59,13 +62,16 @@ export const NviCorrectionList = () => {
   const fetchParams: FetchResultsParams = {
     ...listConfig?.queryParams,
     categoryShould,
-    unit: unitId ?? topLevelOrganizationId,
+    excludeSubunits,
     from: Number(searchParams.get(ResultParam.From) ?? 0),
+    journal: searchParams.get(ResultParam.Journal),
     results: Number(searchParams.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     publicationYearSince: (new Date().getFullYear() - 1).toString(),
+    publisher: searchParams.get(ResultParam.Publisher),
     order: searchParams.get(ResultParam.Order) as ResultSearchOrder | null,
+    series: searchParams.get(ResultParam.Series),
     sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
-    excludeSubunits,
+    unit: unitId ?? topLevelOrganizationId,
   };
 
   const registrationQuery = useRegistrationSearch({ enabled: !!listConfig, params: fetchParams });
@@ -84,6 +90,13 @@ export const NviCorrectionList = () => {
         <>
           <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
           <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+
+          <Box sx={{ display: 'flex', gap: '1rem' }}>
+            <PublisherFilter />
+            <JournalFilter />
+            <SeriesFilter />
+          </Box>
+
           <RegistrationSearch registrationQuery={registrationQuery} />
         </>
       ) : (
