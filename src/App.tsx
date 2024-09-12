@@ -49,7 +49,6 @@ export const App = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
   useEffect(() => {
