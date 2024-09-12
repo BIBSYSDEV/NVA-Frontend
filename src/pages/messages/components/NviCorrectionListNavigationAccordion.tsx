@@ -16,6 +16,18 @@ export const NviCorrectionListNavigationAccordion = () => {
 
   const selectedNviList = searchParams.get(nviCorrectionListQueryKey);
 
+  const goToNewCorrectionList = (correctionListId: CorrectionListId) => {
+    if (selectedNviList !== correctionListId) {
+      const newSearchParams = new URLSearchParams();
+      const currentSearchSize = searchParams.get(ResultParam.Results);
+      if (currentSearchSize) {
+        newSearchParams.set(ResultParam.Results, currentSearchSize);
+      }
+      newSearchParams.set(nviCorrectionListQueryKey, correctionListId);
+      history.push({ search: newSearchParams.toString() });
+    }
+  };
+
   return (
     <NavigationListAccordion
       title={t('tasks.correction_list')}
@@ -33,31 +45,13 @@ export const NviCorrectionListNavigationAccordion = () => {
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.applicableCategoriesWithNonApplicableChannelButton}
           isSelected={selectedNviList === 'ApplicableCategoriesWithNonApplicableChannel'}
-          onClick={() => {
-            if (selectedNviList !== 'ApplicableCategoriesWithNonApplicableChannel') {
-              searchParams.set(
-                nviCorrectionListQueryKey,
-                'ApplicableCategoriesWithNonApplicableChannel' satisfies CorrectionListId
-              );
-              searchParams.delete(ResultParam.From);
-              history.push({ search: searchParams.toString() });
-            }
-          }}>
+          onClick={() => goToNewCorrectionList('ApplicableCategoriesWithNonApplicableChannel')}>
           {t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')}
         </SelectableButton>
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.nonApplicableCategoriesWithApplicableChannelButton}
           isSelected={selectedNviList === 'NonApplicableCategoriesWithApplicableChannel'}
-          onClick={() => {
-            if (selectedNviList !== 'NonApplicableCategoriesWithApplicableChannel') {
-              searchParams.set(
-                nviCorrectionListQueryKey,
-                'NonApplicableCategoriesWithApplicableChannel' satisfies CorrectionListId
-              );
-              searchParams.delete(ResultParam.From);
-              history.push({ search: searchParams.toString() });
-            }
-          }}>
+          onClick={() => goToNewCorrectionList('NonApplicableCategoriesWithApplicableChannel')}>
           {t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')}
         </SelectableButton>
       </NavigationList>

@@ -24,6 +24,7 @@ type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
     i18nKey: ParseKeys;
     queryParams: FetchResultsParams;
+    disabledFilters: ResultParam[];
   };
 };
 
@@ -34,6 +35,7 @@ const correctionListConfig: CorrectionListSearchConfig = {
       categoryShould: nviApplicableTypes,
       scientificValue: ScientificValueLevels.LevelZero,
     },
+    disabledFilters: [ResultParam.CategoryShould],
   },
   NonApplicableCategoriesWithApplicableChannel: {
     i18nKey: 'tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel',
@@ -41,6 +43,7 @@ const correctionListConfig: CorrectionListSearchConfig = {
       categoryNot: nviApplicableTypes,
       scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
     },
+    disabledFilters: [],
   },
 };
 
@@ -90,14 +93,21 @@ export const NviCorrectionList = () => {
         <>
           <Box
             sx={{ px: { xs: '0.5rem', md: 0 }, display: 'flex', flexDirection: 'column', gap: '0.5rem', mb: '1rem' }}>
-            <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+            <OrganizationFilters
+              topLevelOrganizationId={topLevelOrganizationId}
+              unitId={unitId}
+              disabled={listConfig.disabledFilters.includes(ResultParam.Unit)}
+            />
 
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
               <PublisherFilter />
               <JournalFilter />
               <SeriesFilter />
               <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
-              <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
+              <CategorySearchFilter
+                searchParam={ResultParam.CategoryShould}
+                disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
+              />
             </Box>
           </Box>
 

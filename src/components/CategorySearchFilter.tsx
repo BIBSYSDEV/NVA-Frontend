@@ -10,9 +10,10 @@ import { CategoryChip } from './CategorySelector';
 
 interface CategorySearchFilterProps {
   searchParam: ResultParam.CategoryShould | TicketSearchParam.PublicationType;
+  disabled?: boolean;
 }
 
-export const CategorySearchFilter = ({ searchParam }: CategorySearchFilterProps) => {
+export const CategorySearchFilter = ({ searchParam, disabled }: CategorySearchFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -45,6 +46,7 @@ export const CategorySearchFilter = ({ searchParam }: CategorySearchFilterProps)
           />
         ) : (
           <Chip
+            disabled={disabled}
             label={t('registration.resource_type.select_resource_type')}
             color="primary"
             onClick={toggleCategoryFilter}

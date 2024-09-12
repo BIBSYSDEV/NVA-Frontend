@@ -24,9 +24,10 @@ import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
 interface OrganizationFiltersProps {
   topLevelOrganizationId: string | null;
   unitId: string | null;
+  disabled?: boolean;
 }
 
-export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: OrganizationFiltersProps) => {
+export const OrganizationFilters = ({ topLevelOrganizationId, unitId, disabled }: OrganizationFiltersProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('');
@@ -119,7 +120,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
             }
           }}
           isOptionEqualToValue={(option, value) => option.id === value.id}
-          disabled={topLevelOrganizationQuery.isFetching}
+          disabled={disabled || topLevelOrganizationQuery.isFetching}
           value={topLevelOrganizationQuery.data ?? null}
           loading={isLoading}
           renderOption={({ key, ...props }, option) => (
