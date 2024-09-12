@@ -63,7 +63,6 @@ export const NviCorrectionList = () => {
   const excludeSubunits = searchParams.get(ResultParam.ExcludeSubunits) === 'true';
 
   const fetchParams: FetchResultsParams = {
-    ...listConfig?.queryParams,
     categoryShould,
     excludeSubunits,
     from: Number(searchParams.get(ResultParam.From) ?? 0),
@@ -75,6 +74,7 @@ export const NviCorrectionList = () => {
     series: searchParams.get(ResultParam.Series),
     sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
     unit: unitId ?? topLevelOrganizationId,
+    ...listConfig?.queryParams,
   };
 
   const registrationQuery = useRegistrationSearch({ enabled: !!listConfig, params: fetchParams });
