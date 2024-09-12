@@ -134,12 +134,14 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         {dateString && <PublicPageInfoEntry title={t('common.date')} content={dateString} />}
         {language && (
           <PublicPageInfoEntry
+            data-testid={dataTestId.registrationLandingPage.primaryLanguage}
             title={t('common.language')}
             content={i18n.language === 'nob' ? language.nob : language.eng}
           />
         )}
         {entityDescription?.npiSubjectHeading && (
           <PublicPageInfoEntry
+            data-testid={dataTestId.registrationLandingPage.npi}
             title={t('registration.description.npi_disciplines')}
             content={`${t(`disciplines.${entityDescription.npiSubjectHeading}` as any)} (${t(`disciplines.${findParentSubject(disciplines, entityDescription.npiSubjectHeading)}` as any)})`}
           />
