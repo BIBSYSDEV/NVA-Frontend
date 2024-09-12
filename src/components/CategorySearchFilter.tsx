@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam, TicketSearchParam } from '../api/searchApi';
-import { StyledTypography } from '../pages/search/advanced_search/AdvancedSearchPage';
+import { StyledFilterTitle } from '../pages/search/advanced_search/AdvancedSearchPage';
 import { CategoryFilterDialog } from '../pages/search/advanced_search/CategoryFilterDialog';
 import { PublicationInstanceType } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
@@ -25,7 +25,7 @@ export const CategorySearchFilter = ({ searchParam, disabled }: CategorySearchFi
 
   return (
     <section>
-      <StyledTypography>{t('common.category')}</StyledTypography>
+      <StyledFilterTitle>{t('common.category')}</StyledFilterTitle>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
         {selectedCategories.slice(0, 3).map((category) => (
           <CategoryChip

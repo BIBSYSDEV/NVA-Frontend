@@ -18,7 +18,7 @@ import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { StyledTypography } from './AdvancedSearchPage';
+import { StyledFilterTitle } from './AdvancedSearchPage';
 import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
 
 interface OrganizationFiltersProps {
@@ -81,7 +81,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
 
   return (
     <section>
-      <StyledTypography>{t('common.institution')}</StyledTypography>
+      <StyledFilterTitle>{t('common.institution')}</StyledFilterTitle>
       <Box
         sx={{
           display: 'flex',

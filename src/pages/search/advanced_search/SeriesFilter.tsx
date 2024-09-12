@@ -15,7 +15,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
-import { StyledTypography } from './AdvancedSearchPage';
+import { StyledFilterTitle } from './AdvancedSearchPage';
 
 export const SeriesFilter = () => {
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ export const SeriesFilter = () => {
 
   return (
     <section>
-      <StyledTypography>{t('registration.resource_type.series')}</StyledTypography>
+      <StyledFilterTitle>{t('registration.resource_type.series')}</StyledFilterTitle>
       <Autocomplete
         size="small"
         sx={{ minWidth: '15rem' }}

@@ -13,17 +13,16 @@ export const NviCorrectionListNavigationAccordion = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-
   const selectedNviList = searchParams.get(nviCorrectionListQueryKey);
 
-  const goToNewCorrectionList = (correctionListId: CorrectionListId) => {
-    if (selectedNviList !== correctionListId) {
+  const openNewCorrectionList = (newCorrectionListId: CorrectionListId) => {
+    if (selectedNviList !== newCorrectionListId) {
       const newSearchParams = new URLSearchParams();
       const currentSearchSize = searchParams.get(ResultParam.Results);
       if (currentSearchSize) {
         newSearchParams.set(ResultParam.Results, currentSearchSize);
       }
-      newSearchParams.set(nviCorrectionListQueryKey, correctionListId);
+      newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
       history.push({ search: newSearchParams.toString() });
     }
   };
@@ -45,13 +44,13 @@ export const NviCorrectionListNavigationAccordion = () => {
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.applicableCategoriesWithNonApplicableChannelButton}
           isSelected={selectedNviList === 'ApplicableCategoriesWithNonApplicableChannel'}
-          onClick={() => goToNewCorrectionList('ApplicableCategoriesWithNonApplicableChannel')}>
+          onClick={() => openNewCorrectionList('ApplicableCategoriesWithNonApplicableChannel')}>
           {t('tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel')}
         </SelectableButton>
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.nonApplicableCategoriesWithApplicableChannelButton}
           isSelected={selectedNviList === 'NonApplicableCategoriesWithApplicableChannel'}
-          onClick={() => goToNewCorrectionList('NonApplicableCategoriesWithApplicableChannel')}>
+          onClick={() => openNewCorrectionList('NonApplicableCategoriesWithApplicableChannel')}>
           {t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')}
         </SelectableButton>
       </NavigationList>
