@@ -6,6 +6,7 @@ import { ResultParam, TicketSearchParam } from '../api/searchApi';
 import { StyledTypography } from '../pages/search/advanced_search/AdvancedSearchPage';
 import { CategoryFilterDialog } from '../pages/search/advanced_search/CategoryFilterDialog';
 import { PublicationInstanceType } from '../types/registration.types';
+import { dataTestId } from '../utils/dataTestIds';
 import { CategoryChip } from './CategorySelector';
 
 interface CategorySearchFilterProps {
@@ -46,6 +47,7 @@ export const CategorySearchFilter = ({ searchParam, disabled }: CategorySearchFi
           />
         ) : (
           <Chip
+            data-testid={dataTestId.startPage.advancedSearch.selectCategoryChip}
             disabled={disabled}
             label={t('registration.resource_type.select_resource_type')}
             color="primary"
