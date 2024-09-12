@@ -628,7 +628,6 @@
       "must_be_a_positive_number": "{{field}} må vere eit positivt tal",
       "must_be_bigger_than": "{{field}} kan ikkje vere mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikkje vere større enn {{limit}}",
-      "must_correct_errors": "Du må rette opp feil",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
       "project_manager_required_project": "Prosjektet må ha ein prosjektleiar"
     }
@@ -1144,8 +1143,6 @@
       "add_financing_description": "<0>Legg til finansieringskjelde viss prosjektet mottar finansiering.</0><0>Alle forskingsresultat som er kopla til prosjektet vil arve finansieringa som er registrert på prosjektet.</0>",
       "category": "Kategori",
       "date": "Dato",
-      "empty_registration": "Tom registrering",
-      "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekt som er relatert til dette prosjektet",
@@ -1158,7 +1155,6 @@
       "start_with_empty_form_headline": "Start i tomt registreringsskjema",
       "start_with_nfr_financing": "Start med finansiering frå Noregs forskingsråd (NFR)",
       "start_with_nfr_financing_details": "Viss du har finansiering frå Noregs Forskingsråd, kan du starte med dei og få nokre felt ferdig utfylte",
-      "start_with_nfr_project": "Om du har finansiering frå Noregs Forskingsråd (NFR), kan du starte med den og få nokre felt ferdig utfylte.",
       "title_and_description": "Tittel og beskriving",
       "write_project_title": "Skriv inn tittel på prosjekt"
     },

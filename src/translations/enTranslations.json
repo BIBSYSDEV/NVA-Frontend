@@ -628,7 +628,6 @@
       "must_be_a_positive_number": "{{field}} must be a positive number",
       "must_be_bigger_than": "{{field}} cannot be less than {{limit}}",
       "must_be_smaller_than": "{{field}} cannot be greater than {{limit}}",
-      "must_correct_errors": "You must correct errors",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
       "project_manager_required_project": "The project needs a project leader"
     }
@@ -1144,8 +1143,6 @@
       "add_financing_description": "<0>Add a funding source if the project receives funding.</0><0>All research results linked to the project will inherit funding that is registered on the project.</0>",
       "category": "Category",
       "date": "Date",
-      "empty_registration": "Empty registration",
-      "here_you_can_create_project": "Here you can create a project:",
       "keywords": "Keywords",
       "related_projects": "Related projects",
       "related_projects_description": "Add other projects that are related to this project",
@@ -1158,7 +1155,6 @@
       "start_with_empty_form_headline": "Start in empty registration form",
       "start_with_nfr_financing": "Start with funding from the Norwegian research council (NFR)",
       "start_with_nfr_financing_details": "If you have funding from the Norwegian Research Council, you may start with them and have some fields preregistered",
-      "start_with_nfr_project": "If you have a funding from The Research Council of Norway (NFR), you can start with that, and get some fields prefilled.",
       "title_and_description": "Title and description",
       "write_project_title": "Enter title for project"
     },
