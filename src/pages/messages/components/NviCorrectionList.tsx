@@ -43,7 +43,7 @@ const correctionListConfig: CorrectionListSearchConfig = {
       categoryNot: nviApplicableTypes,
       scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
     },
-    disabledFilters: [],
+    disabledFilters: [ResultParam.CategoryShould],
   },
 };
 
@@ -93,21 +93,19 @@ export const NviCorrectionList = () => {
         <>
           <Box
             sx={{ px: { xs: '0.5rem', md: 0 }, display: 'flex', flexDirection: 'column', gap: '0.5rem', mb: '1rem' }}>
-            <OrganizationFilters
-              topLevelOrganizationId={topLevelOrganizationId}
-              unitId={unitId}
-              disabled={listConfig.disabledFilters.includes(ResultParam.Unit)}
-            />
-
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-              <PublisherFilter />
-              <JournalFilter />
-              <SeriesFilter />
+              <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
               <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
               <CategorySearchFilter
                 searchParam={ResultParam.CategoryShould}
                 disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
               />
+            </Box>
+
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
+              <PublisherFilter />
+              <JournalFilter />
+              <SeriesFilter />
             </Box>
           </Box>
 
