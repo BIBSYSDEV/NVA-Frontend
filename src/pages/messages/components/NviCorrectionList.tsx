@@ -9,6 +9,7 @@ import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
+import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 
@@ -49,15 +50,22 @@ export const NviCorrectionList = () => {
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
   const listConfig = listId && correctionListConfig[listId];
 
+  const categoryShould =
+    (searchParams.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
+  const topLevelOrganizationId = searchParams.get(ResultParam.TopLevelOrganization);
+  const unitId = searchParams.get(ResultParam.Unit);
+  const excludeSubunits = searchParams.get(ResultParam.ExcludeSubunits) === 'true';
+
   const fetchParams: FetchResultsParams = {
     ...listConfig?.queryParams,
-    categoryShould:
-      (searchParams.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [],
+    categoryShould,
+    unit: unitId ?? topLevelOrganizationId,
     from: Number(searchParams.get(ResultParam.From) ?? 0),
     results: Number(searchParams.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     publicationYearSince: (new Date().getFullYear() - 1).toString(),
     order: searchParams.get(ResultParam.Order) as ResultSearchOrder | null,
     sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
+    excludeSubunits,
   };
 
   const registrationQuery = useRegistrationSearch({ enabled: !!listConfig, params: fetchParams });
@@ -75,6 +83,7 @@ export const NviCorrectionList = () => {
       {listConfig ? (
         <>
           <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
+          <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
           <RegistrationSearch registrationQuery={registrationQuery} />
         </>
       ) : (
