@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { ParseKeys } from 'i18next';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -87,18 +87,19 @@ export const NviCorrectionList = () => {
       </Typography>
 
       {listConfig ? (
-        <>
-          <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
+        <Box sx={{ px: { xs: '0.5rem', md: 0 }, display: 'flex', flexDirection: 'column', gap: '0.5rem', mb: '1rem' }}>
           <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
 
-          <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
             <PublisherFilter />
             <JournalFilter />
             <SeriesFilter />
+            <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+            <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
           </Box>
 
           <RegistrationSearch registrationQuery={registrationQuery} />
-        </>
+        </Box>
       ) : (
         <iframe
           style={{ border: 'none', height: '80vh' }}
