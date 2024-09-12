@@ -37,8 +37,8 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
 }));
 
-const StyledTypography = styled(Typography)({
-  marginBottom: '0.25rem',
+export const StyledTypography = styled(Typography)({
+  marginBottom: '0.2rem',
   fontWeight: 'bold',
 });
 
@@ -128,7 +128,6 @@ export const AdvancedSearchPage = () => {
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <StyledTypography>{t('common.category')}</StyledTypography>
             <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
           </Grid>
 
@@ -173,7 +172,6 @@ export const AdvancedSearchPage = () => {
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <StyledTypography>{t('common.institution')}</StyledTypography>
             <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
           </Grid>
         </Grid>
@@ -183,17 +181,14 @@ export const AdvancedSearchPage = () => {
         <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
           <Grid container item direction={isLargeScreen ? 'row' : 'column'} gap={2}>
             <Grid item>
-              <StyledTypography>{t('common.publisher')}</StyledTypography>
               <PublisherFilter />
             </Grid>
 
             <Grid item>
-              <StyledTypography>{t('registration.resource_type.journal')}</StyledTypography>
               <JournalFilter />
             </Grid>
 
             <Grid item>
-              <StyledTypography>{t('registration.resource_type.series')}</StyledTypography>
               <SeriesFilter />
             </Grid>
           </Grid>

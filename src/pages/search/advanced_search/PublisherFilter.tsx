@@ -15,6 +15,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
+import { StyledTypography } from './AdvancedSearchPage';
 
 export const PublisherFilter = () => {
   const { t } = useTranslation();
@@ -59,48 +60,51 @@ export const PublisherFilter = () => {
   const isFetching = publisherParam ? selectedPublisherQuery.isPending : publisherOptionsQuery.isFetching;
 
   return (
-    <Autocomplete
-      size="small"
-      sx={{ minWidth: '15rem' }}
-      value={publisherParam && selectedPublisherQuery.data ? selectedPublisherQuery.data : null}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
-      options={options}
-      filterOptions={(options) => options}
-      inputValue={publisherQuery}
-      onInputChange={(_, newInputValue) => setPublisherQuery(newInputValue)}
-      onChange={(_, newValue) => handleChange(newValue)}
-      blurOnSelect
-      disableClearable={!publisherQuery}
-      loading={isFetching}
-      getOptionLabel={(option) => option.name}
-      renderOption={({ key, ...props }, option, state) => (
-        <PublicationChannelOption
-          key={option.identifier}
-          props={props}
-          option={option}
-          state={state}
-          hideScientificLevel
-        />
-      )}
-      ListboxComponent={AutocompleteListboxWithExpansion}
-      ListboxProps={
-        {
-          hasMoreHits: !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
-          onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-          isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
-        } satisfies AutocompleteListboxWithExpansionProps as any
-      }
-      data-testid={dataTestId.startPage.advancedSearch.publisherField}
-      renderInput={(params) => (
-        <AutocompleteTextField
-          {...params}
-          variant="outlined"
-          isLoading={isFetching}
-          placeholder={t('registration.resource_type.search_for_publisher_placeholder')}
-          showSearchIcon={!publisherParam}
-          multiline
-        />
-      )}
-    />
+    <section>
+      <StyledTypography>{t('common.publisher')}</StyledTypography>
+      <Autocomplete
+        size="small"
+        sx={{ minWidth: '15rem' }}
+        value={publisherParam && selectedPublisherQuery.data ? selectedPublisherQuery.data : null}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        options={options}
+        filterOptions={(options) => options}
+        inputValue={publisherQuery}
+        onInputChange={(_, newInputValue) => setPublisherQuery(newInputValue)}
+        onChange={(_, newValue) => handleChange(newValue)}
+        blurOnSelect
+        disableClearable={!publisherQuery}
+        loading={isFetching}
+        getOptionLabel={(option) => option.name}
+        renderOption={({ key, ...props }, option, state) => (
+          <PublicationChannelOption
+            key={option.identifier}
+            props={props}
+            option={option}
+            state={state}
+            hideScientificLevel
+          />
+        )}
+        ListboxComponent={AutocompleteListboxWithExpansion}
+        ListboxProps={
+          {
+            hasMoreHits: !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
+            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+            isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
+          } satisfies AutocompleteListboxWithExpansionProps as any
+        }
+        data-testid={dataTestId.startPage.advancedSearch.publisherField}
+        renderInput={(params) => (
+          <AutocompleteTextField
+            {...params}
+            variant="outlined"
+            isLoading={isFetching}
+            placeholder={t('registration.resource_type.search_for_publisher_placeholder')}
+            showSearchIcon={!publisherParam}
+            multiline
+          />
+        )}
+      />
+    </section>
   );
 };

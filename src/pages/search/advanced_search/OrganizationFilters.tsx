@@ -18,6 +18,7 @@ import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { StyledTypography } from './AdvancedSearchPage';
 import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
 
 interface OrganizationFiltersProps {
@@ -79,119 +80,122 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        gap: '0.5rem 1rem',
-        flexDirection: { xs: 'column', lg: 'row' },
-        alignItems: { xs: 'start', lg: 'center' },
-      }}>
-      <Autocomplete
-        fullWidth
-        size="small"
-        options={options}
-        inputMode="search"
-        sx={{ minWidth: '15rem' }}
-        getOptionLabel={(option) => getLanguageString(option.labels)}
-        getOptionKey={(option) => option.id}
-        filterOptions={(options) => options}
-        onInputChange={(_, value, reason) => {
-          if (reason !== 'reset') {
-            setSearchTerm(value);
-          }
-        }}
-        onChange={(_, selectedInstitution) => {
-          if (selectedInstitution !== topLevelOrganizationId) {
-            const params = new URLSearchParams(history.location.search);
-            if (selectedInstitution) {
-              params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
-            } else {
-              params.delete(ResultParam.TopLevelOrganization);
-              params.delete(ResultParam.ExcludeSubunits);
+    <section>
+      <StyledTypography>{t('common.institution')}</StyledTypography>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '0.5rem 1rem',
+          flexDirection: { xs: 'column', lg: 'row' },
+          alignItems: { xs: 'start', lg: 'center' },
+        }}>
+        <Autocomplete
+          fullWidth
+          size="small"
+          options={options}
+          inputMode="search"
+          sx={{ minWidth: '15rem' }}
+          getOptionLabel={(option) => getLanguageString(option.labels)}
+          getOptionKey={(option) => option.id}
+          filterOptions={(options) => options}
+          onInputChange={(_, value, reason) => {
+            if (reason !== 'reset') {
+              setSearchTerm(value);
             }
-            params.set(ResultParam.From, '0');
-            params.delete(ResultParam.Unit);
-            history.push({ search: params.toString() });
-            setSearchTerm('');
-          }
-        }}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
-        disabled={topLevelOrganizationQuery.isFetching}
-        value={topLevelOrganizationQuery.data ?? null}
-        loading={isLoading}
-        renderOption={({ key, ...props }, option) => (
-          <OrganizationRenderOption key={option.id} props={props} option={option} />
-        )}
-        ListboxComponent={AutocompleteListboxWithExpansion}
-        ListboxProps={
-          {
-            hasMoreHits: !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
-            onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
-            isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > options.length,
-          } satisfies AutocompleteListboxWithExpansionProps as any
-        }
-        renderInput={(params) => (
-          <AutocompleteTextField
-            {...params}
-            variant="outlined"
-            multiline
-            isLoading={isLoading}
-            data-testid={dataTestId.organization.searchField}
-            placeholder={t('project.search_for_institution')}
-            showSearchIcon
-          />
-        )}
-      />
-
-      <Chip
-        data-testid={dataTestId.organization.subSearchField}
-        color="primary"
-        onClick={toggleShowUnitSelection}
-        label={
-          unitId ? (
-            subUnitQuery.isPending ? (
-              <Skeleton sx={{ minWidth: '10rem' }} />
-            ) : (
-              getLanguageString(subUnitQuery.data?.labels)
-            )
-          ) : (
-            <Box component="span" sx={{ textWrap: 'nowrap' }}>
-              {t('common.select_unit')}
-            </Box>
-          )
-        }
-        onDelete={
-          unitId
-            ? () => {
-                params.delete(ResultParam.From);
-                params.delete(ResultParam.Unit);
-                history.push({ search: params.toString() });
+          }}
+          onChange={(_, selectedInstitution) => {
+            if (selectedInstitution !== topLevelOrganizationId) {
+              const params = new URLSearchParams(history.location.search);
+              if (selectedInstitution) {
+                params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
+              } else {
+                params.delete(ResultParam.TopLevelOrganization);
+                params.delete(ResultParam.ExcludeSubunits);
               }
-            : undefined
-        }
-        sx={{ minWidth: unitId ? '15rem' : undefined }}
-        disabled={!topLevelOrganizationQuery.data?.hasPart || topLevelOrganizationQuery.data?.hasPart?.length === 0}
-      />
-
-      {topLevelOrganizationQuery.data && (
-        <OrganizationHierarchyFilter
-          organization={topLevelOrganizationQuery.data}
-          open={showUnitSelection}
-          onClose={toggleShowUnitSelection}
+              params.set(ResultParam.From, '0');
+              params.delete(ResultParam.Unit);
+              history.push({ search: params.toString() });
+              setSearchTerm('');
+            }
+          }}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          disabled={topLevelOrganizationQuery.isFetching}
+          value={topLevelOrganizationQuery.data ?? null}
+          loading={isLoading}
+          renderOption={({ key, ...props }, option) => (
+            <OrganizationRenderOption key={option.id} props={props} option={option} />
+          )}
+          ListboxComponent={AutocompleteListboxWithExpansion}
+          ListboxProps={
+            {
+              hasMoreHits: !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
+              onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
+              isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > options.length,
+            } satisfies AutocompleteListboxWithExpansionProps as any
+          }
+          renderInput={(params) => (
+            <AutocompleteTextField
+              {...params}
+              variant="outlined"
+              multiline
+              isLoading={isLoading}
+              data-testid={dataTestId.organization.searchField}
+              placeholder={t('project.search_for_institution')}
+              showSearchIcon
+            />
+          )}
         />
-      )}
 
-      <FormControlLabel
-        sx={{ whiteSpace: 'nowrap' }}
-        control={
-          <Checkbox
-            disabled={!topLevelOrganizationId}
-            onChange={handleCheckedExcludeSubunits}
-            checked={!!topLevelOrganizationId && excludeSubunits}
+        <Chip
+          data-testid={dataTestId.organization.subSearchField}
+          color="primary"
+          onClick={toggleShowUnitSelection}
+          label={
+            unitId ? (
+              subUnitQuery.isPending ? (
+                <Skeleton sx={{ minWidth: '10rem' }} />
+              ) : (
+                getLanguageString(subUnitQuery.data?.labels)
+              )
+            ) : (
+              <Box component="span" sx={{ textWrap: 'nowrap' }}>
+                {t('common.select_unit')}
+              </Box>
+            )
+          }
+          onDelete={
+            unitId
+              ? () => {
+                  params.delete(ResultParam.From);
+                  params.delete(ResultParam.Unit);
+                  history.push({ search: params.toString() });
+                }
+              : undefined
+          }
+          sx={{ minWidth: unitId ? '15rem' : undefined }}
+          disabled={!topLevelOrganizationQuery.data?.hasPart || topLevelOrganizationQuery.data?.hasPart?.length === 0}
+        />
+
+        {topLevelOrganizationQuery.data && (
+          <OrganizationHierarchyFilter
+            organization={topLevelOrganizationQuery.data}
+            open={showUnitSelection}
+            onClose={toggleShowUnitSelection}
           />
-        }
-        label={t('tasks.nvi.exclude_subunits')}
-      />
-    </Box>
+        )}
+
+        <FormControlLabel
+          sx={{ whiteSpace: 'nowrap' }}
+          control={
+            <Checkbox
+              disabled={!topLevelOrganizationId}
+              onChange={handleCheckedExcludeSubunits}
+              checked={!!topLevelOrganizationId && excludeSubunits}
+            />
+          }
+          label={t('tasks.nvi.exclude_subunits')}
+        />
+      </Box>
+    </section>
   );
 };
