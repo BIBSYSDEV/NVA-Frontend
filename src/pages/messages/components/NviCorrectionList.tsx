@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
+import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
@@ -49,6 +51,8 @@ export const NviCorrectionList = () => {
 
   const fetchParams: FetchResultsParams = {
     ...listConfig?.queryParams,
+    categoryShould:
+      (searchParams.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [],
     from: Number(searchParams.get(ResultParam.From) ?? 0),
     results: Number(searchParams.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     publicationYearSince: (new Date().getFullYear() - 1).toString(),
@@ -69,7 +73,10 @@ export const NviCorrectionList = () => {
       </Typography>
 
       {listConfig ? (
-        <RegistrationSearch registrationQuery={registrationQuery} />
+        <>
+          <CategorySearchFilter searchParam={ResultParam.CategoryShould} />
+          <RegistrationSearch registrationQuery={registrationQuery} />
+        </>
       ) : (
         <iframe
           style={{ border: 'none', height: '80vh' }}
