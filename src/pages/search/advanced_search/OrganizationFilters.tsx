@@ -4,8 +4,14 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchOrganization, OrganizationSearchParams, searchForOrganizations } from '../../../api/cristinApi';
+import { defaultOrganizationSearchSize, fetchOrganization } from '../../../api/cristinApi';
+import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
+import { useSearchForOrganizations } from '../../../api/hooks/useSearchForOrganizations';
 import { ResultParam } from '../../../api/searchApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
 import { RootState } from '../../../redux/store';
@@ -13,7 +19,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
-import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 
 interface OrganizationFiltersProps {
   topLevelOrganizationId: string | null;
@@ -53,15 +58,8 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
     gcTime: 1_800_000, // 30 minutes
   });
 
-  const organizationQueryParams: OrganizationSearchParams = {
-    query: debouncedQuery,
-  };
-  const organizationSearchQuery = useQuery({
-    enabled: !!debouncedQuery,
-    queryKey: ['organization', organizationQueryParams],
-    queryFn: () => searchForOrganizations(organizationQueryParams),
-    meta: { errorMessage: t('feedback.error.get_institutions') },
-  });
+  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
+  const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
 
   const defaultOptions = userOrganization ? [userOrganization] : [];
   const options = organizationSearchQuery.data?.hits ?? defaultOptions;
@@ -124,6 +122,14 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
         renderOption={({ key, ...props }, option) => (
           <OrganizationRenderOption key={option.id} props={props} option={option} />
         )}
+        ListboxComponent={AutocompleteListboxWithExpansion}
+        ListboxProps={
+          {
+            hasMoreHits: !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
+            onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
+            isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > options.length,
+          } satisfies AutocompleteListboxWithExpansionProps as any
+        }
         renderInput={(params) => (
           <AutocompleteTextField
             {...params}
