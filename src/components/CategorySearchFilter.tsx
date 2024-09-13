@@ -30,6 +30,7 @@ export const CategorySearchFilter = ({ searchParam, disabled }: CategorySearchFi
         {selectedCategories.slice(0, 3).map((category) => (
           <CategoryChip
             key={category}
+            disabled={disabled}
             category={{
               value: category,
               text: t(`registration.publication_types.${category}`),
@@ -40,6 +41,7 @@ export const CategorySearchFilter = ({ searchParam, disabled }: CategorySearchFi
         ))}
         {selectedCategories.length > 3 ? (
           <Chip
+            disabled={disabled}
             label={t('common.x_others', { count: selectedCategories.length - 3 })}
             variant="filled"
             color="primary"

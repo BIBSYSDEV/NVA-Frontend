@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { BookType } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
@@ -18,7 +19,9 @@ import { RegistrationSearch } from '../../search/registration_search/Registratio
 
 export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
-  | 'NonApplicableCategoriesWithApplicableChannel';
+  | 'NonApplicableCategoriesWithApplicableChannel'
+  | 'AntologyWithoutChapter'
+  | 'BooksWithLessThan50Pages';
 
 type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
@@ -28,14 +31,14 @@ type CorrectionListSearchConfig = {
   };
 };
 
-const correctionListConfig: CorrectionListSearchConfig = {
+export const correctionListConfig: CorrectionListSearchConfig = {
   ApplicableCategoriesWithNonApplicableChannel: {
     i18nKey: 'tasks.nvi.correction_list_type.applicable_category_in_non_applicable_channel',
     queryParams: {
       categoryShould: nviApplicableTypes,
       scientificValue: ScientificValueLevels.LevelZero,
     },
-    disabledFilters: [ResultParam.CategoryShould],
+    disabledFilters: [],
   },
   NonApplicableCategoriesWithApplicableChannel: {
     i18nKey: 'tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel',
@@ -44,6 +47,22 @@ const correctionListConfig: CorrectionListSearchConfig = {
       scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
     },
     disabledFilters: [ResultParam.CategoryShould],
+  },
+  AntologyWithoutChapter: {
+    i18nKey: 'tasks.nvi.correction_list_type.antology_without_chapter',
+    queryParams: {
+      categoryShould: [BookType.Anthology],
+      hasNoChildren: false,
+    },
+    disabledFilters: [],
+  },
+  BooksWithLessThan50Pages: {
+    i18nKey: 'tasks.nvi.correction_list_type.book_with_less_than_50_pages',
+    queryParams: {
+      categoryShould: Object.values(BookType),
+      publicationPages: '0,50',
+    },
+    disabledFilters: [],
   },
 };
 
@@ -63,6 +82,7 @@ export const NviCorrectionList = () => {
   const excludeSubunits = searchParams.get(ResultParam.ExcludeSubunits) === 'true';
 
   const fetchParams: FetchResultsParams = {
+    ...listConfig?.queryParams,
     categoryShould,
     excludeSubunits,
     from: Number(searchParams.get(ResultParam.From) ?? 0),
@@ -74,7 +94,6 @@ export const NviCorrectionList = () => {
     series: searchParams.get(ResultParam.Series),
     sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
     unit: unitId ?? topLevelOrganizationId,
-    ...listConfig?.queryParams,
   };
 
   const registrationQuery = useRegistrationSearch({ enabled: !!listConfig, params: fetchParams });
