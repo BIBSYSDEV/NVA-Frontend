@@ -164,6 +164,7 @@
     "at": "ved",
     "cancel": "Avbryt",
     "category": "Kategori",
+    "chapters": "Kapitler",
     "chosen_one": "{{count}} valgt",
     "chosen_other": "{{count}} valgte",
     "clear": "Fjern",
@@ -628,7 +629,6 @@
       "must_be_a_positive_number": "{{field}} må være et positivt tall",
       "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
-      "must_correct_errors": "Du må rette opp feil",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
       "project_manager_required_project": "Prosjektet må ha en prosjektleder"
     }
@@ -1144,8 +1144,6 @@
       "add_financing_description": "<0>Legg til finansieringskilde hvis prosjektet mottar finanisering.</0><0>Alle forskningsresultater som er koblet til prosjektet vil arve finansiering som er registrert på prosjektet.</0>",
       "category": "Kategori",
       "date": "Dato",
-      "empty_registration": "Tom registrering",
-      "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
       "keywords": "Nøkkelord",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
@@ -1158,7 +1156,6 @@
       "start_with_empty_form_headline": "Start i tomt registreringsskjema",
       "start_with_nfr_financing": "Start med finansiering fra Norges Forskningsråd (NFR)",
       "start_with_nfr_financing_details": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med dem og få noen felt ferdig utfylt",
-      "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt.",
       "title_and_description": "Tittel og beskrivelse",
       "write_project_title": "Skriv inn tittel på prosjekt"
     },
@@ -1464,7 +1461,7 @@
       "reserve_doi": "Reserver DOI",
       "reserved_doi": "Reservert DOI",
       "result_not_published": "Resultatet er ikke publisert",
-      "scopus_id": "Scopus ID",
+      "scopus_id": "Scopus-ID",
       "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
         "approve_publishing_request_description": "<0>Som kurator kan du godkjenne eller avvise filer med lisenser for dette forskningsresultatet.</0><0>Velger du \"$t(registration.public_page.approve_publish_request)\" blir de umiddelbart tilgjengelig for alle.</0>",
@@ -1487,6 +1484,7 @@
         "registration_is_published": "Forskningsresultatet er publisert og offentlig tilgjengelig i NVA.",
         "registration_is_published_with_files": "Forskningsresultatet er publisert med fil(er) og offentlig tilgjengelig i NVA.",
         "registration_is_published_workflow2": "<0>Fil og lisens er godkjent og offentlig i NVA.</0><0>Du kan fritt endre på beskrivelse av resultatet, men endrer du fil eller lisens må registreringen godkjennes på nytt.</0>",
+        "registration_is_published_workflow2_without_file": "<0>Du kan fritt endre på beskrivelse av resultatet, men eventuelle filer må godkjennes før publisering.</0>",
         "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Vent litt før du oppdaterer siden på nytt for å se status.",
         "reject_publishing_request_description_one": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filen publisert og dermed ikke synlig for andre. Filen blir flyttet til ikke publisert.</0><0>Ønsker du å slette filen, gjør det i redigering av forskningsresultatet.</0>",
         "reject_publishing_request_description_other": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filene publisert og dermed ikke synlig for andre. Filene blir flyttet til ikke publisert.</0><0>Ønsker du å slette filene, gjør det i redigering av forskningsresultatet.</0>",
@@ -1981,13 +1979,15 @@
   },
   "tasks": {
     "correction_list": "Retteliste",
-    "dialogues_without_curator": "Dialoger uten kurator",
+    "include_tasks_without_curator": "Inkluder oppgaver uten kurator",
     "nvi": {
       "approval_status_count": "Kontrollert ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<0>Kontroll av forskningsresultat for NVI-rapportering.</0><0>Klikk på knappen \"{{buttonText}}\" for å rapportere forskningsresultatet.</0>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
+        "antology_without_chapter": "Antologier uten kapittel",
+        "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "correction_list_duct": "Retteliste (DUCT)",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
