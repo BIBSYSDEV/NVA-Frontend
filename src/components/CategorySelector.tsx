@@ -188,9 +188,10 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
 interface CategoryChipProps {
   category: RegistrationTypeElement;
   onClickChip?: (type: PublicationInstanceType) => void;
+  disabled?: boolean;
 }
 
-export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
+export const CategoryChip = ({ category, onClickChip, disabled = !!category.disableText }: CategoryChipProps) => {
   const { t } = useTranslation();
 
   return (
@@ -198,7 +199,7 @@ export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
       <span>
         <Chip
           data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
-          disabled={!!category.disableText}
+          disabled={disabled}
           icon={
             nviApplicableTypes.includes(category.value) ? (
               <FilterVintageIcon

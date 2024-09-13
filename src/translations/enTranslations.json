@@ -164,6 +164,7 @@
     "at": "by",
     "cancel": "Cancel",
     "category": "Category",
+    "chapters": "Chapters",
     "chosen_one": "{{count}} selected",
     "chosen_other": "{{count}} selected",
     "clear": "Clear",
@@ -628,7 +629,6 @@
       "must_be_a_positive_number": "{{field}} must be a positive number",
       "must_be_bigger_than": "{{field}} cannot be less than {{limit}}",
       "must_be_smaller_than": "{{field}} cannot be greater than {{limit}}",
-      "must_correct_errors": "You must correct errors",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
       "project_manager_required_project": "The project needs a project leader"
     }
@@ -1144,8 +1144,6 @@
       "add_financing_description": "<0>Add a funding source if the project receives funding.</0><0>All research results linked to the project will inherit funding that is registered on the project.</0>",
       "category": "Category",
       "date": "Date",
-      "empty_registration": "Empty registration",
-      "here_you_can_create_project": "Here you can create a project:",
       "keywords": "Keywords",
       "related_projects": "Related projects",
       "related_projects_description": "Add other projects that are related to this project",
@@ -1158,7 +1156,6 @@
       "start_with_empty_form_headline": "Start in empty registration form",
       "start_with_nfr_financing": "Start with funding from the Norwegian research council (NFR)",
       "start_with_nfr_financing_details": "If you have funding from the Norwegian Research Council, you may start with them and have some fields preregistered",
-      "start_with_nfr_project": "If you have a funding from The Research Council of Norway (NFR), you can start with that, and get some fields prefilled.",
       "title_and_description": "Title and description",
       "write_project_title": "Enter title for project"
     },
@@ -1487,6 +1484,7 @@
         "registration_is_published": "The registration has been published. Metadata and any files are publicly available.",
         "registration_is_published_with_files": "The registration is published. Metadata and file(s) are publicly available.",
         "registration_is_published_workflow2": "<0>The file and license are approved and public in NVA.</0><0>You are free to change the description of the result, but if you change the file or license, the registration must be approved again.</0>",
+        "registration_is_published_workflow2_without_file": "<0>You may freely change the description of the result, but any files must be approved before publishing.</0>",
         "registration_will_soon_be_published": "The registration will be published soon. Wait a bit before you reload page to see updated status.",
         "reject_publishing_request_description_one": "<0>If you choose \"$t(registration.public_page.reject_publish_request)\", the file will not be published and therefore will not be visible to others. The file will be moved to unpublished.</0><0>If you wish to delete the file, do so in the editing of the research result.</0>",
         "reject_publishing_request_description_other": "<0>If you choose \"$t(registration.public_page.reject_publish_request)\", the files will not be published and therefore will not be visible to others. The files will be moved to unpublished.</0><0>If you wish to delete the files, do so in the editing of the research result.</0>",
@@ -1981,7 +1979,7 @@
   },
   "tasks": {
     "correction_list": "Correction list",
-    "dialogues_without_curator": "Dialogs without a curator",
+    "include_tasks_without_curator": "Include tasks without a curator",
     "nvi": {
       "approval_status_count": "Checked ({{checked}} of {{total}})",
       "approve_nvi_candidate": "Approve result",

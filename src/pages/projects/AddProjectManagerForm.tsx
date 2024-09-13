@@ -2,40 +2,40 @@ import { Box, Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
-import {
-  CristinProject,
-  ProjectContributor,
-  ProjectContributorType,
-  ProjectFieldName,
-} from '../../types/project.types';
+import { setNotification } from '../../redux/notificationSlice';
+import { CristinProject, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { addContributor, AddContributorErrors } from '../project/helpers/projectContributorHelpers';
 
 interface AddProjectManagerFormProps {
   toggleModal: () => void;
-  addContributor: (
-    personToAdd: CristinPerson | undefined,
-    contributors: ProjectContributor[],
-    roleToAddTo: ProjectContributorType
-  ) => ProjectContributor[] | undefined;
   suggestedProjectManager?: string;
 }
 
-export const AddProjectManagerForm = ({
-  toggleModal,
-  addContributor,
-  suggestedProjectManager,
-}: AddProjectManagerFormProps) => {
+export const AddProjectManagerForm = ({ toggleModal, suggestedProjectManager }: AddProjectManagerFormProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
   const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
   const addProjectManager = () => {
-    const newContributors = addContributor(selectedPerson, contributors, 'ProjectManager');
+    const { newContributors, error } = addContributor(selectedPerson, contributors, 'ProjectManager');
+
+    if (error === AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION) {
+      dispatch(
+        setNotification({
+          message: t('project.error.contributor_already_added_with_same_role_and_affiliation'),
+          variant: 'error',
+        })
+      );
+      return;
+    }
 
     if (newContributors) {
       setFieldValue(ProjectFieldName.Contributors, newContributors);

@@ -1,16 +1,13 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
-import { LocalStorageKey } from '../../../utils/constants';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getEditProjectPath, getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { EditIconButton } from '../../messages/components/EditIconButton';
 import { ProjectIconHeader } from '../../project/components/ProjectIconHeader';
-import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
 import {
   getProjectManagers,
   getProjectParticipants,
@@ -24,20 +21,11 @@ interface ProjectListItemProps {
   onDelete?: () => void;
 }
 
-export const ProjectListItem = ({
-  project,
-  refetchProjects,
-  showEdit = false,
-  onDelete,
-  deleteTooltip,
-}: ProjectListItemProps) => {
+export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteTooltip }: ProjectListItemProps) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const [openEditProject, setOpenEditProject] = useState(false);
-
   const projectManagers = getProjectManagers(project.contributors);
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
-  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
 
   return (
     <SearchListItem sx={{ borderLeftColor: 'project.main', flexDirection: 'row' }}>
@@ -67,18 +55,10 @@ export const ProjectListItem = ({
       </Box>
       <>
         {showEdit && (
-          <>
-            <EditIconButton
-              tooltip={t('project.edit_project')}
-              onClick={() => (betaEnabled ? history.push(getEditProjectPath(project.id)) : setOpenEditProject(true))}
-            />
-            <ProjectFormDialog
-              open={openEditProject}
-              currentProject={project}
-              onClose={() => setOpenEditProject(false)}
-              refetchData={refetchProjects}
-            />
-          </>
+          <EditIconButton
+            tooltip={t('project.edit_project')}
+            onClick={() => history.push(getEditProjectPath(project.id))}
+          />
         )}
         {onDelete && <DeleteIconButton sx={{ ml: '0.5rem' }} onClick={onDelete} tooltip={deleteTooltip} />}
       </>

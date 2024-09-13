@@ -15,6 +15,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
+import { StyledFilterTitle } from './AdvancedSearchPage';
 
 export const SeriesFilter = () => {
   const { t } = useTranslation();
@@ -59,48 +60,51 @@ export const SeriesFilter = () => {
   const isFetching = seriesParam ? selectedSeriesQuery.isPending : seriesOptionsQuery.isFetching;
 
   return (
-    <Autocomplete
-      size="small"
-      sx={{ minWidth: '15rem' }}
-      value={seriesParam && selectedSeriesQuery.data ? selectedSeriesQuery.data : null}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
-      options={options}
-      filterOptions={(options) => options}
-      inputValue={seriesQuery}
-      onInputChange={(_, newInputValue) => setSeriesQuery(newInputValue)}
-      onChange={(_, newValue) => handleChange(newValue)}
-      blurOnSelect
-      disableClearable={!seriesQuery}
-      loading={isFetching}
-      getOptionLabel={(option) => option.name}
-      renderOption={({ key, ...props }, option, state) => (
-        <PublicationChannelOption
-          key={option.identifier}
-          props={props}
-          option={option}
-          state={state}
-          hideScientificLevel
-        />
-      )}
-      ListboxComponent={AutocompleteListboxWithExpansion}
-      ListboxProps={
-        {
-          hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
-          onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-          isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
-        } satisfies AutocompleteListboxWithExpansionProps as any
-      }
-      data-testid={dataTestId.startPage.advancedSearch.seriesField}
-      renderInput={(params) => (
-        <AutocompleteTextField
-          {...params}
-          variant="outlined"
-          isLoading={isFetching}
-          placeholder={t('registration.resource_type.search_for_title_or_issn')}
-          showSearchIcon={!seriesParam}
-          multiline
-        />
-      )}
-    />
+    <section>
+      <StyledFilterTitle>{t('registration.resource_type.series')}</StyledFilterTitle>
+      <Autocomplete
+        size="small"
+        sx={{ minWidth: '15rem' }}
+        value={seriesParam && selectedSeriesQuery.data ? selectedSeriesQuery.data : null}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        options={options}
+        filterOptions={(options) => options}
+        inputValue={seriesQuery}
+        onInputChange={(_, newInputValue) => setSeriesQuery(newInputValue)}
+        onChange={(_, newValue) => handleChange(newValue)}
+        blurOnSelect
+        disableClearable={!seriesQuery}
+        loading={isFetching}
+        getOptionLabel={(option) => option.name}
+        renderOption={({ key, ...props }, option, state) => (
+          <PublicationChannelOption
+            key={option.identifier}
+            props={props}
+            option={option}
+            state={state}
+            hideScientificLevel
+          />
+        )}
+        ListboxComponent={AutocompleteListboxWithExpansion}
+        ListboxProps={
+          {
+            hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
+            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+            isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
+          } satisfies AutocompleteListboxWithExpansionProps as any
+        }
+        data-testid={dataTestId.startPage.advancedSearch.seriesField}
+        renderInput={(params) => (
+          <AutocompleteTextField
+            {...params}
+            variant="outlined"
+            isLoading={isFetching}
+            placeholder={t('registration.resource_type.search_for_title_or_issn')}
+            showSearchIcon={!seriesParam}
+            multiline
+          />
+        )}
+      />
+    </section>
   );
 };

@@ -395,10 +395,16 @@ export const PublishingAccordion = ({
                     : t('registration.public_page.tasks_panel.registration_is_published')}
                 </Typography>
               </>
-            ) : (
+            ) : registrationHasFile ? (
               <Trans
                 t={t}
                 i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
+                components={[<Typography paragraph key="1" />]}
+              />
+            ) : (
+              <Trans
+                t={t}
+                i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2_without_file"
                 components={[<Typography paragraph key="1" />]}
               />
             )}
