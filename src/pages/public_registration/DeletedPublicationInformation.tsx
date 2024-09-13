@@ -1,7 +1,6 @@
 import { Box, Link, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchRegistration } from '../../api/registrationApi';
+import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { PageSpinner } from '../../components/PageSpinner';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
@@ -16,11 +15,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
 
   const originalIdentifier = registration.duplicateOf ? getIdentifierFromId(registration.duplicateOf) : '';
 
-  const originalRegistrationQuery = useQuery({
-    queryKey: ['registration', originalIdentifier],
-    queryFn: () => fetchRegistration(originalIdentifier ?? ''),
-    enabled: !!originalIdentifier,
-  });
+  const originalRegistrationQuery = useFetchRegistration(originalIdentifier);
   const originalRegistration = originalRegistrationQuery.data;
 
   const originalRegistrationMainTitle = getTitleString(originalRegistration?.entityDescription?.mainTitle);

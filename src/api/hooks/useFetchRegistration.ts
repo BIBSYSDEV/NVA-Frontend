@@ -7,7 +7,7 @@ import { DeletedRegistrationProblem } from '../../types/error_responses';
 import { Registration } from '../../types/registration.types';
 import { fetchRegistration } from '../registrationApi';
 
-export const useFetchRegistration = (identifier: string, shouldNotRedirect?: boolean) => {
+export const useFetchRegistration = (identifier = '', shouldNotRedirect?: boolean) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
