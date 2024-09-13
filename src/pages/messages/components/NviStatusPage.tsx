@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchNviInstitutionStatus } from '../../../api/hooks/useFetchNviStatus';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -39,9 +38,7 @@ export const NviStatusPage = () => {
 
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
         <NviYearSelector />
-        <BetaFunctionality>
-          <ExportNviStatusButton />
-        </BetaFunctionality>
+        <ExportNviStatusButton />
       </Box>
 
       <TableContainer component={Paper} variant="outlined">

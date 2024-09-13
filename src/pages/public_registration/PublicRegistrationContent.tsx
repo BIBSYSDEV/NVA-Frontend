@@ -16,7 +16,13 @@ import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames'
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
+import {
+  getTitleString,
+  isBook,
+  isReport,
+  isResearchData,
+  userCanEditRegistration,
+} from '../../utils/registration-helpers';
 import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
@@ -253,9 +259,12 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={`${t('registration.public_page.other_related_registrations')} (${
-              relatedRegistrationsQuery.data.totalHits
-            })`}>
+            heading={`${
+              isBook(entityDescription?.reference?.publicationInstance?.type) ||
+              isReport(entityDescription?.reference?.publicationInstance?.type)
+                ? t('common.chapters')
+                : t('registration.public_page.other_related_registrations')
+            } (${relatedRegistrationsQuery.data.totalHits})`}>
             <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
           </LandingPageAccordion>
         )}

@@ -196,6 +196,7 @@ export const dataTestId = {
         levelZeroCheckbox: 'level-zero-checkbox',
       },
       searchButton: 'search-button',
+      selectCategoryChip: 'select-category-chip',
       seriesField: 'series-field',
       vocabularyField: 'vocabulary-field',
     },
