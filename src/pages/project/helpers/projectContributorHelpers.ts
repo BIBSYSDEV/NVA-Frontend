@@ -1,7 +1,7 @@
 import { ProjectContributor, ProjectContributorRole, ProjectContributorType } from '../../../types/project.types';
 import { CristinPerson } from '../../../types/user.types';
 import { getValueByKey } from '../../../utils/user-helpers';
-import { isNonProjectManagerRole, isProjectManagerRole } from './projectRoleHelpers';
+import { findProjectManagerRole, isNonProjectManagerRole, isProjectManagerRole } from './projectRoleHelpers';
 
 export const findProjectManagerIndex = (contributors: ProjectContributor[]) => {
   return contributors.findIndex((contributor) => contributor.roles.some((role) => isProjectManagerRole(role)));
@@ -25,8 +25,18 @@ export const addContributor = (
   contributors: ProjectContributor[],
   roleToAddTo: ProjectContributorType
 ): { newContributors?: ProjectContributor[]; error?: AddContributorErrors } => {
+  // Must have person to add
   if (!personToAdd) {
     return { error: AddContributorErrors.NO_PERSON_TO_ADD };
+  }
+
+  // Cannot add project manager if we already have one
+  if (roleToAddTo === 'ProjectManager') {
+    const existingProjectManager = contributors.find((contributor) => findProjectManagerRole(contributor));
+
+    if (existingProjectManager) {
+      return { error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER };
+    }
   }
 
   let newContributor: ProjectContributor;
@@ -44,6 +54,7 @@ export const addContributor = (
     if (sameRoleAndSameType) {
       return { error: AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION };
     }
+
     newContributor = { ...contributors[existingContributorIndex] };
   } else {
     newContributor = {
