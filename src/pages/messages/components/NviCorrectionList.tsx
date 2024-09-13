@@ -51,7 +51,7 @@ const correctionListConfig: CorrectionListSearchConfig = {
     i18nKey: 'tasks.nvi.correction_list_type.book_with_less_than_50_pages',
     queryParams: {
       categoryShould: Object.values(BookType),
-      publicationBookPages: '0,50',
+      publicationPages: '0,50',
     },
   },
 };

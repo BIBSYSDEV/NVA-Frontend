@@ -339,7 +339,7 @@ export enum ResultParam {
   Order = 'order',
   Project = 'project',
   PublicationLanguageShould = 'publicationLanguageShould',
-  PublicationPages = 'publicationBookPages',
+  PublicationPages = 'publicationPages',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
   PublicationYearShould = 'publicationYearShould',
@@ -489,8 +489,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.publicationLanguageShould) {
     searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
   }
-  if (params.publicationBookPages) {
-    searchParams.set(ResultParam.PublicationPages, params.publicationBookPages);
+  if (params.publicationPages) {
+    searchParams.set(ResultParam.PublicationPages, params.publicationPages);
   }
   if (params.publicationYearBefore) {
     if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
