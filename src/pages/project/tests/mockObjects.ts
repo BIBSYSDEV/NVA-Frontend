@@ -44,7 +44,7 @@ export const selectedPersonIdentity: ProjectContributorIdentity = {
   type: 'Person',
 };
 
-export const existingPersonIdentity: ProjectContributorIdentity = {
+const existingPersonIdentity: ProjectContributorIdentity = {
   firstName: 'Ole',
   id: '456',
   lastName: 'Jensen',
@@ -57,7 +57,7 @@ export const abcOrgAsAffiliation: ProjectOrganization = {
   type: 'Organization',
 };
 
-export const defOrgAsAffiliation: ProjectOrganization = {
+const defOrgAsAffiliation: ProjectOrganization = {
   id: 'deforg',
   labels: {},
   type: 'Organization',

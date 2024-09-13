@@ -15,16 +15,16 @@ export const hasUnidentifiedContributor = (contributors: ProjectContributor[]) =
   contributors.some((contributor) => !contributor.identity || !contributor.identity.id);
 
 export enum AddContributorErrors {
-  NO_PERSON_TO_ADD = 'NO_PERSON_TO_ADD',
-  SAME_ROLE_WITH_SAME_AFFILIATION = 'SAME_ROLE_WITH_AFFILIATION',
-  ALREADY_HAS_A_PROJECT_MANAGER = 'ALREADY_HAS_A_PROJECT_MANAGER',
+  NO_PERSON_TO_ADD,
+  SAME_ROLE_WITH_SAME_AFFILIATION,
+  ALREADY_HAS_A_PROJECT_MANAGER,
 }
 
 export const addContributor = (
   personToAdd: CristinPerson | undefined,
   contributors: ProjectContributor[],
   roleToAddTo: ProjectContributorType
-): { newContributors?: ProjectContributor[]; error?: string } => {
+): { newContributors?: ProjectContributor[]; error?: AddContributorErrors } => {
   if (!personToAdd) {
     return { error: AddContributorErrors.NO_PERSON_TO_ADD };
   }
