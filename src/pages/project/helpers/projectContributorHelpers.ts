@@ -89,14 +89,13 @@ export const addContributor = (
         })
     );
   } else {
-    // Adding no affiliations
-    newContributor.roles = [
-      ...newContributor.roles,
-      {
+    // Only adding empty role if no other roles present on the role
+    if (newContributor.roles.filter((role) => role.type === roleToAddTo).length === 0) {
+      newContributor.roles.push({
         type: roleToAddTo,
         affiliation: undefined,
-      } as ProjectContributorRole,
-    ];
+      } as ProjectContributorRole);
+    }
   }
 
   const newContributors = [...contributors];
