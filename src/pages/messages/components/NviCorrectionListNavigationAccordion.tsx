@@ -74,10 +74,10 @@ export const NviCorrectionListNavigationAccordion = () => {
         </SelectableButton>
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.booksWithLessThan50PagesButton}
-          isSelected={selectedNviList === 'LessThan50Pages'}
+          isSelected={selectedNviList === 'BooksWithLessThan50Pages'}
           onClick={() => {
-            if (selectedNviList !== 'LessThan50Pages') {
-              searchParams.set(nviCorrectionListQueryKey, 'LessThan50Pages' satisfies CorrectionListId);
+            if (selectedNviList !== 'BooksWithLessThan50Pages') {
+              searchParams.set(nviCorrectionListQueryKey, 'BooksWithLessThan50Pages' satisfies CorrectionListId);
               searchParams.delete(ResultParam.From);
               history.push({ search: searchParams.toString() });
             }
