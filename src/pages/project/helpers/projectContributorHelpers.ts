@@ -41,9 +41,11 @@ export const addContributor = (
 
   let newContributor: ProjectContributor;
 
+  // If the user to add already exists in the contributor list
   const existingContributorIndex = contributors.findIndex((contributor) => contributor.identity.id === personToAdd.id);
 
   if (existingContributorIndex > -1) {
+    // Cannot have same roletype and affiliation
     const sameRoleAndSameType = contributors[existingContributorIndex].roles.some((role) => {
       return (
         role.type === roleToAddTo &&
@@ -55,7 +57,13 @@ export const addContributor = (
       return { error: AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION };
     }
 
-    newContributor = { ...contributors[existingContributorIndex] };
+    // Replace the empty roles on the type
+    newContributor = {
+      ...contributors[existingContributorIndex],
+      roles: contributors[existingContributorIndex].roles.filter(
+        (role) => role.type !== roleToAddTo || (role.type === roleToAddTo && role.affiliation)
+      ),
+    };
   } else {
     newContributor = {
       identity: {
