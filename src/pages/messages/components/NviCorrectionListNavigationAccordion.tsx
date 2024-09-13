@@ -7,7 +7,7 @@ import { NavigationList } from '../../../components/PageWithSideMenu';
 import { SelectableButton } from '../../../components/SelectableButton';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import { CorrectionListId, nviCorrectionListQueryKey } from './NviCorrectionList';
+import { correctionListConfig, CorrectionListId, nviCorrectionListQueryKey } from './NviCorrectionList';
 
 export const NviCorrectionListNavigationAccordion = () => {
   const { t } = useTranslation();
@@ -18,11 +18,15 @@ export const NviCorrectionListNavigationAccordion = () => {
   const openNewCorrectionList = (newCorrectionListId: CorrectionListId) => {
     if (selectedNviList !== newCorrectionListId) {
       const newSearchParams = new URLSearchParams();
+      newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
+      const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
+      if (correctionListCategoryFilter) {
+        newSearchParams.set(ResultParam.CategoryShould, correctionListCategoryFilter.join(','));
+      }
       const currentSearchSize = searchParams.get(ResultParam.Results);
       if (currentSearchSize) {
         newSearchParams.set(ResultParam.Results, currentSearchSize);
       }
-      newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
       history.push({ search: newSearchParams.toString() });
     }
   };
