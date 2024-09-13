@@ -74,7 +74,7 @@ export const addContributor = (
     newContributor.roles = [
       ...newContributor.roles,
       {
-        type: 'ProjectParticipant',
+        type: roleToAddTo,
         affiliation: undefined,
       } as ProjectContributorRole,
     ];

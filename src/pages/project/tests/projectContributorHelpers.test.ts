@@ -61,7 +61,7 @@ describe('addContributor', () => {
     it('if there is already a project manager in the contributors array it returns an error', async () => {
       /* */
     });
-    it.skip('the chosen person is added with role "ProjectManager" and affiliation undefined', async () => {
+    it('the chosen person is added with role "ProjectManager" and affiliation undefined', async () => {
       expect(addContributor(selectedPersonWithoutAffiliation, [], 'ProjectManager')).toEqual({
         newContributors: [
           {
