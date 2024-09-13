@@ -35,6 +35,7 @@ import {
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
+import { ResearchDataPublicationContext } from '../../types/publication_types/researchDataRegistration.types';
 import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { AdditionalIdentifier } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -290,7 +291,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               />
             )
           ) : isResearchData(publicationInstance.type) ? (
-            <PublicPublisher publisher={(publicationContext as ReportPublicationContext).publisher} />
+            <PublicPublisher publisher={(publicationContext as ResearchDataPublicationContext).publisher} />
           ) : isExhibitionContent(publicationInstance.type) ? (
             <PublicOutputs
               outputs={(publicationInstance as ExhibitionPublicationInstance).manifestations ?? []}
