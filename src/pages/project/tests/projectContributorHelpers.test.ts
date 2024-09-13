@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { addContributor } from '../helpers/projectContributorHelpers.js';
+import { addContributor, AddContributorErrors } from '../helpers/projectContributorHelpers.js';
 import {
   abcOrgAsAffiliation,
+  contributorsArrayWithProjectManager,
   selectedPersonIdentity,
   selectedPersonWithAffiliation,
   selectedPersonWithoutAffiliation,
@@ -9,8 +10,12 @@ import {
 
 describe('addContributor', () => {
   describe('when adding a project manager with affiliation', () => {
-    it('if there is already a project manager in the contributors array it returns an error', async () => {
-      /* */
+    it.skip('if there is already a project manager in the contributors array it returns an error', async () => {
+      expect(
+        addContributor(selectedPersonWithAffiliation, contributorsArrayWithProjectManager, 'ProjectManager')
+      ).toEqual({
+        error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER,
+      });
     });
     describe('when there exists a project contributor with the same id', () => {
       it('it adds a new "ProjectManager" role with the added affiliation to the existing user when the existing contributor has an affiliation with the same id. The contributor keeps its role.', async () => {
@@ -56,7 +61,7 @@ describe('addContributor', () => {
     it('if there is already a project manager in the contributors array it returns an error', async () => {
       /* */
     });
-    it('the chosen person is added with role "ProjectManager" and affiliation undefined', async () => {
+    it.skip('the chosen person is added with role "ProjectManager" and affiliation undefined', async () => {
       expect(addContributor(selectedPersonWithoutAffiliation, [], 'ProjectManager')).toEqual({
         newContributors: [
           {

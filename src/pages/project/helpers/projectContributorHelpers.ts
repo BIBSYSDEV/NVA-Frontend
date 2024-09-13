@@ -17,6 +17,7 @@ export const hasUnidentifiedContributor = (contributors: ProjectContributor[]) =
 export enum AddContributorErrors {
   NO_PERSON_TO_ADD = 'NO_PERSON_TO_ADD',
   SAME_ROLE_WITH_SAME_AFFILIATION = 'SAME_ROLE_WITH_AFFILIATION',
+  ALREADY_HAS_A_PROJECT_MANAGER = 'ALREADY_HAS_A_PROJECT_MANAGER',
 }
 
 export const addContributor = (

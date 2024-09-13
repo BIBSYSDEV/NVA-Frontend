@@ -1,3 +1,4 @@
+import { ProjectContributor, ProjectContributorIdentity, ProjectOrganization } from '../../../types/project.types';
 import { CristinPerson } from '../../../types/user.types';
 
 export const selectedPersonWithAffiliation: CristinPerson = {
@@ -36,15 +37,32 @@ export const selectedPersonWithoutAffiliation: CristinPerson = {
   affiliations: [],
 };
 
-export const selectedPersonIdentity = {
+export const selectedPersonIdentity: ProjectContributorIdentity = {
   firstName: 'Navn',
   id: '123',
   lastName: 'Navnesen',
   type: 'Person',
 };
 
-export const abcOrgAsAffiliation = {
+export const existingPersonIdentity: ProjectContributorIdentity = {
+  firstName: 'Ole',
+  id: '456',
+  lastName: 'Jensen',
+  type: 'Person',
+};
+
+export const abcOrgAsAffiliation: ProjectOrganization = {
   id: 'abcorg',
   labels: {},
   type: 'Organization',
 };
+
+export const defOrgAsAffiliation: ProjectOrganization = {
+  id: 'deforg',
+  labels: {},
+  type: 'Organization',
+};
+
+export const contributorsArrayWithProjectManager: ProjectContributor[] = [
+  { identity: existingPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }] },
+];
