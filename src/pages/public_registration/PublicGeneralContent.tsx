@@ -52,6 +52,7 @@ import {
   isPeriodicalMediaContribution,
   isPresentation,
   isReport,
+  isResearchData,
 } from '../../utils/registration-helpers';
 import { ChapterPublisherInfo } from './ChapterPublisherInfo';
 import { PublicDoi } from './PublicDoi';
@@ -288,6 +289,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 publicationContext={publicationContext as MediaContributionPublicationContext}
               />
             )
+          ) : isResearchData(publicationInstance.type) ? (
+            <PublicPublisher publisher={(publicationContext as ReportPublicationContext).publisher} />
           ) : isExhibitionContent(publicationInstance.type) ? (
             <PublicOutputs
               outputs={(publicationInstance as ExhibitionPublicationInstance).manifestations ?? []}
