@@ -20,7 +20,7 @@ export const NviCorrectionListNavigationAccordion = () => {
       const newSearchParams = new URLSearchParams();
       newSearchParams.set(nviCorrectionListQueryKey, newCorrectionListId);
       const correctionListCategoryFilter = correctionListConfig[newCorrectionListId].queryParams.categoryShould;
-      if (correctionListCategoryFilter) {
+      if (correctionListCategoryFilter && correctionListCategoryFilter.length > 0) {
         newSearchParams.set(ResultParam.CategoryShould, correctionListCategoryFilter.join(','));
       }
       const currentSearchSize = searchParams.get(ResultParam.Results);

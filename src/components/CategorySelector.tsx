@@ -199,7 +199,7 @@ export const CategoryChip = ({ category, onClickChip, disabled = !!category.disa
       <span>
         <Chip
           data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
-          disabled={disabled || !!category.disableText}
+          disabled={disabled}
           icon={
             nviApplicableTypes.includes(category.value) ? (
               <FilterVintageIcon
