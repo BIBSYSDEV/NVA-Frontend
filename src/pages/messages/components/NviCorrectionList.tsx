@@ -1,13 +1,19 @@
-import { Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { ParseKeys } from 'i18next';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
+import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
+import { JournalFilter } from '../../search/advanced_search/JournalFilter';
+import { OrganizationFilters } from '../../search/advanced_search/OrganizationFilters';
+import { PublisherFilter } from '../../search/advanced_search/PublisherFilter';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
+import { SeriesFilter } from '../../search/advanced_search/SeriesFilter';
 import { RegistrationSearch } from '../../search/registration_search/RegistrationSearch';
 
 export type CorrectionListId =
@@ -18,6 +24,7 @@ type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
     i18nKey: ParseKeys;
     queryParams: FetchResultsParams;
+    disabledFilters: ResultParam[];
   };
 };
 
@@ -28,6 +35,7 @@ const correctionListConfig: CorrectionListSearchConfig = {
       categoryShould: nviApplicableTypes,
       scientificValue: ScientificValueLevels.LevelZero,
     },
+    disabledFilters: [ResultParam.CategoryShould],
   },
   NonApplicableCategoriesWithApplicableChannel: {
     i18nKey: 'tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel',
@@ -35,6 +43,7 @@ const correctionListConfig: CorrectionListSearchConfig = {
       categoryNot: nviApplicableTypes,
       scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
     },
+    disabledFilters: [ResultParam.CategoryShould],
   },
 };
 
@@ -47,13 +56,25 @@ export const NviCorrectionList = () => {
   const listId = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
   const listConfig = listId && correctionListConfig[listId];
 
+  const categoryShould =
+    (searchParams.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
+  const topLevelOrganizationId = searchParams.get(ResultParam.TopLevelOrganization);
+  const unitId = searchParams.get(ResultParam.Unit);
+  const excludeSubunits = searchParams.get(ResultParam.ExcludeSubunits) === 'true';
+
   const fetchParams: FetchResultsParams = {
-    ...listConfig?.queryParams,
+    categoryShould,
+    excludeSubunits,
     from: Number(searchParams.get(ResultParam.From) ?? 0),
+    journal: searchParams.get(ResultParam.Journal),
     results: Number(searchParams.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     publicationYearSince: (new Date().getFullYear() - 1).toString(),
+    publisher: searchParams.get(ResultParam.Publisher),
     order: searchParams.get(ResultParam.Order) as ResultSearchOrder | null,
+    series: searchParams.get(ResultParam.Series),
     sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
+    unit: unitId ?? topLevelOrganizationId,
+    ...listConfig?.queryParams,
   };
 
   const registrationQuery = useRegistrationSearch({ enabled: !!listConfig, params: fetchParams });
@@ -69,7 +90,27 @@ export const NviCorrectionList = () => {
       </Typography>
 
       {listConfig ? (
-        <RegistrationSearch registrationQuery={registrationQuery} />
+        <>
+          <Box
+            sx={{ px: { xs: '0.5rem', md: 0 }, display: 'flex', flexDirection: 'column', gap: '0.5rem', mb: '1rem' }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+              <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+              <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
+              <CategorySearchFilter
+                searchParam={ResultParam.CategoryShould}
+                disabled={listConfig.disabledFilters.includes(ResultParam.CategoryShould)}
+              />
+            </Box>
+
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem 1rem' }}>
+              <PublisherFilter />
+              <JournalFilter />
+              <SeriesFilter />
+            </Box>
+          </Box>
+
+          <RegistrationSearch registrationQuery={registrationQuery} />
+        </>
       ) : (
         <iframe
           style={{ border: 'none', height: '80vh' }}
