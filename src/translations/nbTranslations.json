@@ -1986,6 +1986,7 @@
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
         "antology_without_chapter": "Antologier uten kapittel",
+        "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "correction_list_duct": "Retteliste (DUCT)",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"

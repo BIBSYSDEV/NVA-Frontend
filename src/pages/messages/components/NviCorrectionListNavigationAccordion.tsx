@@ -61,7 +61,7 @@ export const NviCorrectionListNavigationAccordion = () => {
           {t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')}
         </SelectableButton>
         <SelectableButton
-          data-testid={dataTestId.tasksPage.correctionList.nonApplicableCategoriesWithApplicableChannelButton}
+          data-testid={dataTestId.tasksPage.correctionList.antologyWithoutChapterButton}
           isSelected={selectedNviList === 'AntologyWithoutChapter'}
           onClick={() => {
             if (selectedNviList !== 'AntologyWithoutChapter') {
@@ -71,6 +71,18 @@ export const NviCorrectionListNavigationAccordion = () => {
             }
           }}>
           {t('tasks.nvi.correction_list_type.antology_without_chapter')}
+        </SelectableButton>
+        <SelectableButton
+          data-testid={dataTestId.tasksPage.correctionList.booksWithLessThan50PagesButton}
+          isSelected={selectedNviList === 'LessThan50Pages'}
+          onClick={() => {
+            if (selectedNviList !== 'LessThan50Pages') {
+              searchParams.set(nviCorrectionListQueryKey, 'LessThan50Pages' satisfies CorrectionListId);
+              searchParams.delete(ResultParam.From);
+              history.push({ search: searchParams.toString() });
+            }
+          }}>
+          {t('tasks.nvi.correction_list_type.book_with_less_than_50_pages')}
         </SelectableButton>
       </NavigationList>
     </NavigationListAccordion>

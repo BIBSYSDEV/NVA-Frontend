@@ -14,7 +14,8 @@ import { RegistrationSearch } from '../../search/registration_search/Registratio
 export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
   | 'NonApplicableCategoriesWithApplicableChannel'
-  | 'AntologyWithoutChapter';
+  | 'AntologyWithoutChapter'
+  | 'BooksWithLessThan50Pages';
 
 type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
@@ -45,6 +46,13 @@ const correctionListConfig: CorrectionListSearchConfig = {
       hasNoChildren: false,
     },
     // TODO: disable category filter
+  },
+  BooksWithLessThan50Pages: {
+    i18nKey: 'tasks.nvi.correction_list_type.book_with_less_than_50_pages',
+    queryParams: {
+      categoryShould: Object.values(BookType),
+      publicationBookPages: '0,50',
+    },
   },
 };
 
