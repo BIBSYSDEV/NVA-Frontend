@@ -2,10 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { addContributor, AddContributorErrors } from '../helpers/projectContributorHelpers.js';
 import {
   abcOrgAsAffiliation,
+  contributorsArrayWithDifferentProjectManagerWithDifferentAffiliation,
+  contributorsArrayWithDifferentProjectManagerWithSameAffiliation,
+  contributorsArrayWithDifferentProjectManagerWithUndefinedAffiliation,
   contributorsArrayWithOtherPersonWithDifferentAffiliation,
   contributorsArrayWithOtherPersonWithSameAffiliation,
   contributorsArrayWithOtherPersonWithUndefinedAffiliation,
   contributorsArrayWithProjectManager,
+  contributorsArrayWithSelectedPersonAsProjectManagerWithDifferentAffiliation,
+  contributorsArrayWithSelectedPersonAsProjectManagerWithNoAffiliation,
+  contributorsArrayWithSelectedPersonAsProjectManagerWithSameAffiliation,
   contributorsArrayWithSelectedPersonWithDifferentAffiliation,
   contributorsArrayWithSelectedPersonWithSameAffiliation,
   contributorsArrayWithSelectedPersonWithUndefinedAffiliation,
@@ -428,36 +434,264 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project contributor with a different id', () => {
-      it('it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user when the other contributor has an affiliation with the same id. The other contributor keeps its roles unchanged.', async () => {
-        /* */
+      it('when the other contributor has an affiliation with the same id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user .The other project participant keeps its roles unchanged.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithOtherPersonWithSameAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: existingPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
-      it('it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user when the other contributor only has an affiliation with a different id. The other contributor keeps its roles unchanged.', async () => {
-        /* */
+      it('when the other contributor only has an affiliation with a different id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role. The other contributor keeps its roles unchanged.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithOtherPersonWithDifferentAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: existingPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: defOrgAsAffiliation,
+                },
+              ],
+            },
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
-      it('it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user when the other  contributor only has an affiliation that is undefined. The other contributor keeps its roles unchanged.', async () => {
-        /* */
+      it('when the other contributor only has an affiliation that is undefined, it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user . The other contributor keeps its roles unchanged.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithOtherPersonWithUndefinedAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: existingPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: undefined,
+                },
+              ],
+            },
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
     });
     describe('when there exists a project manager with the same id', () => {
-      it('it adds a new "ProjectParticipant" role with the added affiliation when the project manager has an affiliation with the same id. The project manager keeps its project manager role unchanged.', async () => {
-        /* */
+      it('when the project manager has an affiliation with the same id, it adds a new "ProjectParticipant" role with the added affiliation. The project manager keeps its project manager role unchanged.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithSelectedPersonAsProjectManagerWithSameAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectManager',
+                  affiliation: abcOrgAsAffiliation,
+                },
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
-      it('it adds a new "ProjectParticipant" role with the added affiliation when the project manager only has an affiliation with a different id. The project manager keeps its project manager role unchanged.', async () => {
-        /* */
+      it('when the project manager only has an affiliation with a different id, it adds a new "ProjectParticipant" role with the added affiliation. The project manager keeps its project manager role unchanged.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithSelectedPersonAsProjectManagerWithDifferentAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectManager',
+                  affiliation: defOrgAsAffiliation,
+                },
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
-      it('it adds a new "ProjectParticipant" role with the added affiliation project manager only has an affiliation that is undefined. The project manager keeps its project manager role unchanged.', async () => {
-        /* */
+      it('when the project manager only has an affiliation that is undefined it adds a new "ProjectParticipant" role with the added affiliation. The project manager keeps its project manager role unchanged.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithSelectedPersonAsProjectManagerWithNoAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectManager',
+                  affiliation: undefined,
+                },
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
     });
     describe('when there exists a project manager with a different id', () => {
-      it('it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user when the project manager has an affiliation with the same id. The when the project manager keeps its roles unchanged.', async () => {
-        /* */
+      it('when the project manager has an affiliation with the same id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user. The the project manager keeps its roles unchanged.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithDifferentProjectManagerWithSameAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: existingPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectManager',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
-      it('it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user when the when the project manager only has an affiliation with a different id. The when the project manager keeps its roles unchanged.', async () => {
-        /* */
+      it('when the project manager only has an affiliation with a different id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithDifferentProjectManagerWithDifferentAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: existingPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectManager',
+                  affiliation: defOrgAsAffiliation,
+                },
+              ],
+            },
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
-      it('it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user when the when the project manager only has an affiliation that is undefined. The when the project manager keeps its roles unchanged.', async () => {
-        /* */
+      it('when the when the project manager only has an affiliation that is undefined, it adds a new "ProjectParticipant" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithDifferentProjectManagerWithUndefinedAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: existingPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectManager',
+                  affiliation: undefined,
+                },
+              ],
+            },
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
     });
   });
@@ -478,8 +712,26 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project contributor with the same id', () => {
-      it('it does nothing when there is an existing contributor with the same id. The existing contributor keeps its roles unchanged', async () => {
-        /* */
+      it('when there is an existing contributor with the same id, it does nothing.', async () => {
+        expect(
+          addContributor(
+            selectedPersonWithoutAffiliation,
+            contributorsArrayWithSelectedPersonWithSameAffiliation,
+            'ProjectParticipant'
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
       });
     });
     describe('when there exists a project contributor with a different id', () => {
