@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
+import { BookType } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
 import { ScientificValueLevels } from '../../search/advanced_search/ScientificValueFilter';
@@ -12,7 +13,8 @@ import { RegistrationSearch } from '../../search/registration_search/Registratio
 
 export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
-  | 'NonApplicableCategoriesWithApplicableChannel';
+  | 'NonApplicableCategoriesWithApplicableChannel'
+  | 'AntologyWithoutChapter';
 
 type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
@@ -35,6 +37,14 @@ const correctionListConfig: CorrectionListSearchConfig = {
       categoryNot: nviApplicableTypes,
       scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
     },
+  },
+  AntologyWithoutChapter: {
+    i18nKey: 'tasks.nvi.correction_list_type.antology_without_chapter',
+    queryParams: {
+      categoryShould: [BookType.Anthology],
+      hasNoChildren: false,
+    },
+    // TODO: disable category filter
   },
 };
 

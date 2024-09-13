@@ -60,6 +60,18 @@ export const NviCorrectionListNavigationAccordion = () => {
           }}>
           {t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')}
         </SelectableButton>
+        <SelectableButton
+          data-testid={dataTestId.tasksPage.correctionList.nonApplicableCategoriesWithApplicableChannelButton}
+          isSelected={selectedNviList === 'AntologyWithoutChapter'}
+          onClick={() => {
+            if (selectedNviList !== 'AntologyWithoutChapter') {
+              searchParams.set(nviCorrectionListQueryKey, 'AntologyWithoutChapter' satisfies CorrectionListId);
+              searchParams.delete(ResultParam.From);
+              history.push({ search: searchParams.toString() });
+            }
+          }}>
+          {t('tasks.nvi.correction_list_type.antology_without_chapter')}
+        </SelectableButton>
       </NavigationList>
     </NavigationListAccordion>
   );
