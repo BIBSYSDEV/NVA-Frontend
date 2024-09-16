@@ -46,9 +46,9 @@ import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
 import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
 import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
-import { DeletePublication } from './DeletePublication';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { TicketAssignee } from './TicketAssignee';
+import { UnpublishRegistration } from './UnpublishRegistration';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -519,7 +519,8 @@ export const PublishingAccordion = ({
             />
           </Box>
         )}
-        {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
+        {registration.status === RegistrationStatus.Published && <UnpublishRegistration registration={registration} />}
+
         <DuplicateWarningDialog
           isOpen={displayDuplicateWarningModal}
           toggleModal={toggleDuplicateWarningModal}

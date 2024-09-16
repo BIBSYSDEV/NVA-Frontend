@@ -24,11 +24,11 @@ interface DeleteForm {
   deleteMessage: string;
 }
 
-interface DeletePublicationProps {
+interface UnpublishRegistrationProps {
   registration: Registration;
 }
 
-export const DeletePublication = ({ registration }: DeletePublicationProps) => {
+export const UnpublishRegistration = ({ registration }: UnpublishRegistrationProps) => {
   const [showDeleteField, setShowDeleteField] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { t } = useTranslation();
