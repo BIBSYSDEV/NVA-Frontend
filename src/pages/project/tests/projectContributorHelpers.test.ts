@@ -24,7 +24,7 @@ import {
 
 describe('addContributor', () => {
   describe('when adding a project manager with affiliation', () => {
-    it('if there is already a project manager in the contributors array it returns an error', async () => {
+    it('if there is already a project manager in the contributors array it returns an error', () => {
       expect(
         addContributor(selectedPersonWithAffiliation, contributorsArrayWithProjectManager, 'ProjectManager')
       ).toEqual({
@@ -32,7 +32,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project participant with the same id', () => {
-      it('and the existing project participant has an affiliation with the same id, it adds a new "ProjectManager" role with the added affiliation to the existing user. The existing user keeps its other role.', async () => {
+      it('and the existing project participant has an affiliation with the same id, it adds a new "ProjectManager" role with the added affiliation to the existing user. The existing user keeps its other role.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -57,7 +57,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the existing project participant only has an affiliation with a different id, it adds a new "ProjectManager" role with the added affiliation to the existing project participant. The contributor keeps its other role.', async () => {
+      it('when the existing project participant only has an affiliation with a different id, it adds a new "ProjectManager" role with the added affiliation to the existing project participant. The contributor keeps its other role.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -82,7 +82,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the existing contributor only has an affiliation that is undefined, it adds a new "ProjectManager" role with the added affiliation to the existing user. The contributor keeps its undefined role.', async () => {
+      it('when the existing contributor only has an affiliation that is undefined, it adds a new "ProjectManager" role with the added affiliation to the existing user. The contributor keeps its undefined role.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -109,7 +109,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists another contributor with a different id', () => {
-      it('when the other contributor has an affiliation with the same id, it adds a new "ProjectManager" contributor with the added affiliation in a role', async () => {
+      it('when the other contributor has an affiliation with the same id, it adds a new "ProjectManager" contributor with the added affiliation in a role', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -139,7 +139,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the other contributor only has an affiliation with a different id, it adds a new "ProjectManager" contributor with the added affiliation in a role to a new user', async () => {
+      it('when the other contributor only has an affiliation with a different id, it adds a new "ProjectManager" contributor with the added affiliation in a role to a new user', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -169,7 +169,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the other contributor only has an affiliation that is undefined, it adds a new "ProjectManager" contributor with the added affiliation in a role to a new user', async () => {
+      it('when the other contributor only has an affiliation that is undefined, it adds a new "ProjectManager" contributor with the added affiliation in a role to a new user', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -201,7 +201,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there are no other contributors', () => {
-      it('the chosen person is added with role type "ProjectManager" and the added affiliation', async () => {
+      it('the chosen person is added with role type "ProjectManager" and the added affiliation', () => {
         expect(addContributor(selectedPersonWithAffiliation, [], 'ProjectManager')).toEqual({
           newContributors: [
             {
@@ -219,7 +219,7 @@ describe('addContributor', () => {
     });
   });
   describe('when adding a project manager without affiliation', () => {
-    it('if there is already a project manager in the contributors array it returns an error', async () => {
+    it('if there is already a project manager in the contributors array it returns an error', () => {
       expect(
         addContributor(selectedPersonWithoutAffiliation, contributorsArrayWithProjectManager, 'ProjectManager')
       ).toEqual({
@@ -227,7 +227,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project contributor with the same id', () => {
-      it('when the existing project contributor only has an affiliation with an affiliation, it adds a new "ProjectManager" role with an empty affiliation to the existing user. The existing project contributor keeps its role.', async () => {
+      it('when the existing project contributor only has an affiliation with an affiliation, it adds a new "ProjectManager" role with an empty affiliation to the existing user. The existing project contributor keeps its role.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -252,7 +252,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the existing contributor only has an affiliation that is undefined, it adds a new "ProjectManager" role with an empty affiliation to the existing user . The contributor keeps its undefined role.', async () => {
+      it('when the existing contributor only has an affiliation that is undefined, it adds a new "ProjectManager" role with an empty affiliation to the existing user . The contributor keeps its undefined role.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -279,7 +279,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists another contributor with a different id', () => {
-      it('when the other contributor has an affiliation, it adds a new "ProjectManager" contributor with an empty affiliation', async () => {
+      it('when the other contributor has an affiliation, it adds a new "ProjectManager" contributor with an empty affiliation', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -309,7 +309,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the other  contributor only has an affiliation that is undefined, it adds a new "ProjectManager" contributor with with an empty affiliation', async () => {
+      it('when the other  contributor only has an affiliation that is undefined, it adds a new "ProjectManager" contributor with with an empty affiliation', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -341,7 +341,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there are no other contributors', () => {
-      it('the chosen person is added with role "ProjectManager" and affiliation undefined', async () => {
+      it('the chosen person is added with role "ProjectManager" and affiliation undefined', () => {
         expect(addContributor(selectedPersonWithoutAffiliation, [], 'ProjectManager')).toEqual({
           newContributors: [
             {
@@ -359,7 +359,7 @@ describe('addContributor', () => {
     });
   });
   describe('when adding a project contributor with affiliation', () => {
-    it('the chosen person is added with role "ProjectParticipant" and affiliation with id', async () => {
+    it('the chosen person is added with role "ProjectParticipant" and affiliation with id', () => {
       expect(addContributor(selectedPersonWithAffiliation, [], 'ProjectParticipant')).toEqual({
         newContributors: [
           {
@@ -375,7 +375,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project contributor with the same id', () => {
-      it('when the existing contributor has an affiliation with the same id it returns an error', async () => {
+      it('when the existing contributor has an affiliation with the same id it returns an error', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -386,7 +386,7 @@ describe('addContributor', () => {
           error: AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION,
         });
       });
-      it('when the existing contributor only has an affiliation with a different id, it adds a new "ProjectParticipant" role with the added affiliation to the existing user.', async () => {
+      it('when the existing contributor only has an affiliation with a different id, it adds a new "ProjectParticipant" role with the added affiliation to the existing user.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -411,7 +411,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the existing contributor only has an affiliation that is undefined, it replaces the existing undefined role with a new "ProjectParticipant" role with the added affiliation', async () => {
+      it('when the existing contributor only has an affiliation that is undefined, it replaces the existing undefined role with a new "ProjectParticipant" role with the added affiliation', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -434,7 +434,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project contributor with a different id', () => {
-      it('when the other contributor has an affiliation with the same id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user .The other project participant keeps its roles unchanged.', async () => {
+      it('when the other contributor has an affiliation with the same id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user .The other project participant keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -464,7 +464,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the other contributor only has an affiliation with a different id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role. The other contributor keeps its roles unchanged.', async () => {
+      it('when the other contributor only has an affiliation with a different id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role. The other contributor keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -494,7 +494,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the other contributor only has an affiliation that is undefined, it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user . The other contributor keeps its roles unchanged.', async () => {
+      it('when the other contributor only has an affiliation that is undefined, it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user . The other contributor keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -526,7 +526,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project manager with the same id', () => {
-      it('when the project manager has an affiliation with the same id, it adds a new "ProjectParticipant" role with the added affiliation. The project manager keeps its project manager role unchanged.', async () => {
+      it('when the project manager has an affiliation with the same id, it adds a new "ProjectParticipant" role with the added affiliation. The project manager keeps its project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -551,7 +551,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation with a different id, it adds a new "ProjectParticipant" role with the added affiliation. The project manager keeps its project manager role unchanged.', async () => {
+      it('when the project manager only has an affiliation with a different id, it adds a new "ProjectParticipant" role with the added affiliation. The project manager keeps its project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -576,7 +576,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation that is undefined it adds a new "ProjectParticipant" role with the added affiliation. The project manager keeps its project manager role unchanged.', async () => {
+      it('when the project manager only has an affiliation that is undefined it adds a new "ProjectParticipant" role with the added affiliation. The project manager keeps its project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -603,7 +603,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project manager with a different id', () => {
-      it('when the project manager has an affiliation with the same id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user. The the project manager keeps its roles unchanged.', async () => {
+      it('when the project manager has an affiliation with the same id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role to a new user. The the project manager keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -633,7 +633,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation with a different id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', async () => {
+      it('when the project manager only has an affiliation with a different id, it adds a new "ProjectParticipant" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -663,7 +663,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the when the project manager only has an affiliation that is undefined, it adds a new "ProjectParticipant" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', async () => {
+      it('when the when the project manager only has an affiliation that is undefined, it adds a new "ProjectParticipant" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -696,7 +696,7 @@ describe('addContributor', () => {
     });
   });
   describe('when adding a project contributor without affiliation', () => {
-    it('the chosen person is added with role with type project participant and affiliation undefined', async () => {
+    it('the chosen person is added with role with type project participant and affiliation undefined', () => {
       expect(addContributor(selectedPersonWithoutAffiliation, [], 'ProjectParticipant')).toEqual({
         newContributors: [
           {
@@ -712,7 +712,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project contributor with the same id', () => {
-      it('when there is an existing contributor with the same id, it does nothing.', async () => {
+      it('when there is an existing contributor with the same id, it does nothing.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -735,7 +735,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project contributor with a different id', () => {
-      it('it adds a new "ProjectParticipant" contributor with an undefined affiliation. The other contributor keeps its roles unchanged.', async () => {
+      it('it adds a new "ProjectParticipant" contributor with an undefined affiliation. The other contributor keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -767,7 +767,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project manager with the same id', () => {
-      it('when the project manager only has an other affiliation, it adds a new "ProjectParticipant" role with an undefined affiliation. The project manager keeps its project manager role unchanged.', async () => {
+      it('when the project manager only has an other affiliation, it adds a new "ProjectParticipant" role with an undefined affiliation. The project manager keeps its project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -792,7 +792,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation that is undefined, it adds a new "ProjectParticipant" role with an undefined affiliation. The project manager keeps its undefined project manager role unchanged.', async () => {
+      it('when the project manager only has an affiliation that is undefined, it adds a new "ProjectParticipant" role with an undefined affiliation. The project manager keeps its undefined project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -819,7 +819,7 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project manager with a different id', () => {
-      it('when the when the project manager has an affiliation, it adds a new "ProjectParticipant" contributor with an undefined affiliation. The project manager keeps its role unchanged.', async () => {
+      it('when the when the project manager has an affiliation, it adds a new "ProjectParticipant" contributor with an undefined affiliation. The project manager keeps its role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -849,7 +849,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation that is undefined, it adds a new "ProjectParticipant" contributor with an undefined affiliation. The project manager keeps its undefined role unchanged.', async () => {
+      it('when the project manager only has an affiliation that is undefined, it adds a new "ProjectParticipant" contributor with an undefined affiliation. The project manager keeps its undefined role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
