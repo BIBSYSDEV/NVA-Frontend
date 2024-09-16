@@ -10,8 +10,8 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import {
   getNonProjectManagerContributors,
   hasUnidentifiedContributor,
+  removeProjectParticipant,
 } from '../../project/helpers/projectContributorHelpers';
-import { findProjectManagerRole, replaceRolesOnContributor } from '../../project/helpers/projectRoleHelpers';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ContributorRow } from './ContributorRow';
 import { ProjectContributorTable } from './ProjectContributorTable';
@@ -30,24 +30,16 @@ export const ProjectParticipants = () => {
 
   const toggleOpenAddProjectParticipantView = () => setOpenAddProjectParticipantView(!openAddProjectParticipantView);
 
-  const removeProjectParticipant = (name: string, remove: (index: number) => void, contributorIndex: number) => {
-    const projectManagerRole = findProjectManagerRole(values.contributors[contributorIndex]);
-
-    // Contributor also has Project manager role: Only delete all the others
-    if (projectManagerRole) {
-      const newContributors = replaceRolesOnContributor(values.contributors, contributorIndex, [projectManagerRole]);
-      setFieldValue(name, newContributors);
-    } else {
-      // Does not have project manager role: Delete the whole contributor
-      remove(contributorIndex);
-    }
+  const onRemoveContributor = (name: string, contributorIndex: number) => {
+    const newContributors = removeProjectParticipant(values.contributors, contributorIndex);
+    setFieldValue(name, newContributors);
   };
 
   return (
     <>
       <Typography variant="h2">{t('project.project_participants')}</Typography>
       <FieldArray name={ProjectFieldName.Contributors}>
-        {({ name, remove }: FieldArrayRenderProps) => (
+        {({ name }: FieldArrayRenderProps) => (
           <>
             <Button
               sx={{ borderRadius: '1rem', width: 'fit-content' }}
@@ -80,7 +72,7 @@ export const ProjectParticipants = () => {
                         contributorIndex={contributorIndex}
                         baseFieldName={`${name}[${contributorIndex}]`}
                         contributor={contributor}
-                        removeContributor={() => removeProjectParticipant(name, remove, contributorIndex)}
+                        removeContributor={() => onRemoveContributor(name, contributorIndex)}
                       />
                     );
                   })}

@@ -8,8 +8,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { AddProjectContributorModal } from '../../projects/AddProjectContributorModal';
 import { ContributorRow } from '../../projects/form/ContributorRow';
 import { ProjectContributorTable } from '../../projects/form/ProjectContributorTable';
-import { findProjectManagerIndex } from '../helpers/projectContributorHelpers';
-import { deleteProjectManagerRoleFromContributor } from '../helpers/projectRoleHelpers';
+import { findProjectManagerIndex, removeProjectManager } from '../helpers/projectContributorHelpers';
 
 interface ProjectContributorsProps {
   suggestedProjectManager?: string;
@@ -25,15 +24,9 @@ export const ProjectManager = ({ suggestedProjectManager }: ProjectContributorsP
 
   const contributorError = touched.contributors && errors?.contributors ? errors.contributors : '';
 
-  const removeProjectManager = (name: string, remove: (index: number) => void) => {
-    // Project manager has other roles on project: only delete the project manager-role
-    if (projectManager.roles.length > 1) {
-      const newContributors = deleteProjectManagerRoleFromContributor(contributors);
-      setFieldValue(name, newContributors);
-    } else {
-      // Project manager is only role: remove contributor
-      remove(projectManagerIndex);
-    }
+  const onRemoveProjectManager = (name: string) => {
+    const newContributors = removeProjectManager(contributors);
+    setFieldValue(name, newContributors);
   };
 
   const toggleAddProjectManagerView = () => setAddProjectManagerViewIsOpen(!addProjectManagerViewIsOpen);
@@ -42,7 +35,7 @@ export const ProjectManager = ({ suggestedProjectManager }: ProjectContributorsP
     <>
       <Typography variant="h2">{t('project.project_manager')}</Typography>
       <FieldArray name={ProjectFieldName.Contributors}>
-        {({ name, remove }: FieldArrayRenderProps) => (
+        {({ name }: FieldArrayRenderProps) => (
           <>
             <Button
               sx={{ borderRadius: '1rem', width: 'fit-content' }}
@@ -60,7 +53,7 @@ export const ProjectManager = ({ suggestedProjectManager }: ProjectContributorsP
                   contributorIndex={projectManagerIndex}
                   baseFieldName={`${name}[${projectManagerIndex}]`}
                   contributor={projectManager}
-                  removeContributor={() => removeProjectManager(name, remove)}
+                  removeContributor={() => onRemoveProjectManager(name)}
                   asProjectManager
                 />
               </ProjectContributorTable>

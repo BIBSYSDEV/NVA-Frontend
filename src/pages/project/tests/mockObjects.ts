@@ -113,3 +113,94 @@ export const contributorsArrayWithOtherPersonWithDifferentAffiliation: ProjectCo
 export const contributorsArrayWithOtherPersonWithUndefinedAffiliation: ProjectContributor[] = [
   { identity: existingPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
 ];
+
+export const contributorsArrayWithContributorWithBothPMRoleAndParticipantRole: ProjectContributor[] = [
+  {
+    identity: selectedPersonIdentity,
+    roles: [
+      { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
+      { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+      { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+    ],
+  },
+  {
+    identity: existingPersonIdentity,
+    roles: [
+      { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+      { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+    ],
+  },
+];
+
+export const contributorsArrayWithContributorsWithOnlyParticipantRole: ProjectContributor[] = [
+  {
+    identity: selectedPersonIdentity,
+    roles: [
+      { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+      { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+    ],
+  },
+  {
+    identity: existingPersonIdentity,
+    roles: [
+      { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+      { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+    ],
+  },
+];
+
+export const contributorsArrayWithContributorsWithOnlyManagerRole: ProjectContributor[] = [
+  {
+    identity: selectedPersonIdentity,
+    roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }],
+  },
+  {
+    identity: existingPersonIdentity,
+    roles: [
+      { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+      { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+    ],
+  },
+];
+
+export const contributorsArrayWithOtherPMAndUndefinedAffiliation: ProjectContributor[] = [
+  {
+    identity: existingPersonIdentity,
+    roles: [
+      { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
+      { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+    ],
+  },
+  {
+    identity: selectedPersonIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+  },
+];
+
+export const contributorsArrayWithUndefinedPMAffiliationAndOtherContributor: ProjectContributor[] = [
+  {
+    identity: existingPersonIdentity,
+    roles: [
+      { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+      { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+    ],
+  },
+  {
+    identity: selectedPersonIdentity,
+    roles: [{ type: 'ProjectManager', affiliation: undefined }],
+  },
+];
+
+export const contributorsArrayWithNoProjectManager: ProjectContributor[] = [
+  {
+    identity: existingPersonIdentity,
+    roles: [
+      { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+      { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+    ],
+  },
+  {
+    identity: selectedPersonIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+  },
+];

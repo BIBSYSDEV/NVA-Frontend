@@ -1,7 +1,13 @@
 import { ProjectContributor, ProjectContributorRole, ProjectContributorType } from '../../../types/project.types';
 import { CristinPerson } from '../../../types/user.types';
 import { getValueByKey } from '../../../utils/user-helpers';
-import { findProjectManagerRole, isNonProjectManagerRole, isProjectManagerRole } from './projectRoleHelpers';
+import {
+  deleteProjectManagerRoleFromContributor,
+  findProjectManagerRole,
+  isNonProjectManagerRole,
+  isProjectManagerRole,
+  replaceRolesOnContributor,
+} from './projectRoleHelpers';
 
 export const findProjectManagerIndex = (contributors: ProjectContributor[]) => {
   return contributors.findIndex((contributor) => contributor.roles.some((role) => isProjectManagerRole(role)));
@@ -107,4 +113,39 @@ export const addContributor = (
   }
 
   return { newContributors };
+};
+
+export const removeProjectParticipant = (contributors: ProjectContributor[], contributorIndex: number) => {
+  if (contributorIndex < 0) {
+    return contributors;
+  }
+  const projectManagerRole = findProjectManagerRole(contributors[contributorIndex]);
+
+  // Contributor also has Project manager role: Only delete all the other roles
+  if (projectManagerRole) {
+    return replaceRolesOnContributor(contributors, contributorIndex, [projectManagerRole]);
+  }
+  // Does not have project manager role: Delete the whole contributor
+  const newContributors = [...contributors];
+  newContributors.splice(contributorIndex, 1);
+  return newContributors;
+};
+
+export const removeProjectManager = (contributors: ProjectContributor[]) => {
+  const projectManagerIndex = findProjectManagerIndex(contributors);
+
+  if (projectManagerIndex < 0) {
+    return contributors;
+  }
+
+  const projectManager = contributors[projectManagerIndex];
+
+  // Project manager has other roles on project: only delete the project manager-role
+  if (projectManager.roles.length > 1) {
+    return deleteProjectManagerRoleFromContributor(contributors);
+  }
+  // Project manager is only role: remove contributor
+  const newContributors = [...contributors];
+  newContributors.splice(projectManagerIndex, 1);
+  return newContributors;
 };
