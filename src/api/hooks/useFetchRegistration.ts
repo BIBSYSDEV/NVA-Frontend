@@ -7,13 +7,21 @@ import { DeletedRegistrationProblem } from '../../types/error_responses';
 import { Registration } from '../../types/registration.types';
 import { fetchRegistration } from '../registrationApi';
 
-export const useFetchRegistration = (identifier = '', shouldNotRedirect?: boolean) => {
+interface FetchRegistrationConfig {
+  enabled?: boolean;
+  shouldNotRedirect?: boolean;
+}
+
+export const useFetchRegistration = (
+  identifier = '',
+  { enabled = true, shouldNotRedirect = false }: FetchRegistrationConfig = {}
+) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   return useQuery({
     queryKey: ['registration', identifier, shouldNotRedirect],
-    enabled: !!identifier,
+    enabled: enabled && !!identifier,
     queryFn: () => fetchRegistration(identifier, shouldNotRedirect),
     meta: {
       handleError: (
