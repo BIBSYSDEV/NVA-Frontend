@@ -29,6 +29,8 @@ export const useFetchRegistration = (
         query: Query<Registration, AxiosError<DeletedRegistrationProblem>>
       ) => {
         if (error.response?.status === 410) {
+          // Fetching an unpublished results will return a 410 Gone (client error) response.
+          // The frontend should then use the supplied 'resource' property instead, and treat it as an successful GET.
           const errorRegistration = query.state.error?.response?.data?.resource;
           if (errorRegistration) {
             query.setData(errorRegistration);
