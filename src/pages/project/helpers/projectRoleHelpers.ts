@@ -1,5 +1,4 @@
 import { LanguageString } from '../../../types/common.types';
-import { Organization } from '../../../types/organization.types';
 import {
   ProjectContributor,
   ProjectContributorRole,
