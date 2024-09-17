@@ -339,6 +339,7 @@ export const dataTestId = {
       messageSender: 'message-author',
       messageText: 'message-text',
       messageTimestamp: 'message-timestamp',
+      morePublishingActionsButton: 'more-publishing-actions-button',
       panelRoot: 'tasks-panel',
       publishButton: 'button-publish-registration',
       publishingRequestAcceptButton: 'publishing-request-accept-button',
@@ -725,7 +726,6 @@ export const dataTestId = {
   unpublishActions: {
     openUnpublishModalButton: 'open-unpublish-modal-button',
     unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
-    showUnpublishButtonButton: 'show-unpublish-button-button',
     submitButton: 'submit-unpublish-request-button',
   },
 };

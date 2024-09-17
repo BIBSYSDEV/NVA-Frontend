@@ -16,7 +16,7 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
   const { t } = useTranslation();
   const [openMoreActions, setOpenMoreActions] = useState(false);
 
-  const isPublished = registration.status === 'PUBLISHED';
+  const isPublished = registration.status === 'PUBLISHED' || registration.status === 'PUBLISHED_METADATA';
   const isUnpublished = registration.status === 'UNPUBLISHED';
 
   if (!(isPublished || isUnpublished)) {
@@ -28,7 +28,7 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
       <Divider flexItem />
       <IconButton
         sx={{ width: 'fit-content', alignSelf: 'center', p: '0' }}
-        data-testid={dataTestId.unpublishActions.showUnpublishButtonButton} // TODO: Update data test id
+        data-testid={dataTestId.registrationLandingPage.tasksPanel.morePublishingActionsButton}
         title={openMoreActions ? t('common.show_fewer_options') : t('common.show_more_options')}
         onClick={() => setOpenMoreActions(!openMoreActions)}>
         {openMoreActions ? <ExpandLess /> : <ExpandMore />}
