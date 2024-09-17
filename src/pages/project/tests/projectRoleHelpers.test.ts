@@ -1,11 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { addAffiliation, AddAffiliationErrors } from '../helpers/projectRoleHelpers';
+import { addAffiliation, AddAffiliationErrors, editAffiliation } from '../helpers/projectRoleHelpers';
 import {
   abcOrgAsAffiliation,
   defOrgAsAffiliation,
+  ghiOrgAsAffiliation,
+  jklOrgAsAffiliation,
   rolesWithDefOrg,
   rolesWithoutProjectManager,
   rolesWithProjectManager,
+  rolesWithProjectManagerWithGhiOrg,
+  rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg,
+  rolesWithProjectParticipantWithGhiOrg,
+  rolesWithSeveralProjectParticipantRoles,
   rolesWithUndefinedProjectManager,
   rolesWithUndefinedProjectParticipant,
   severalRolesWithUndefined,
@@ -88,6 +94,88 @@ describe('addAffiliation', () => {
           { type: 'ProjectManager', affiliation: undefined },
           { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
         ],
+      });
+    });
+  });
+});
+
+describe('editAffiliation', () => {
+  describe('for a project manager', () => {
+    it('when newAffiliationId is empty it returns an error', () => {
+      expect(editAffiliation('', [], 'abc', true, {})).toEqual({
+        newContributorRoles: [],
+        error: AddAffiliationErrors.NO_AFFILIATION_ID,
+      });
+    });
+    it('when the affiliation to edit doesnt exist it returns an error', () => {
+      expect(editAffiliation('abcorg', rolesWithProjectManagerWithGhiOrg, 'deforg', true, {})).toEqual({
+        newContributorRoles: rolesWithProjectManagerWithGhiOrg,
+        error: AddAffiliationErrors.NO_ROLE_TO_CHANGE,
+      });
+    });
+    it('when they try to change an affiliation to an affiliation that already exists on the role, it returns an error', () => {
+      expect(editAffiliation('ghiorg', rolesWithProjectManagerWithGhiOrg, 'ghiorg', true, {})).toEqual({
+        newContributorRoles: rolesWithProjectManagerWithGhiOrg,
+        error: AddAffiliationErrors.ADD_DUPLICATE_AFFILIATION,
+      });
+    });
+    it('when they try to change an affiliation to an affiliation that the user has on a different role type, it changes the affiliation successfully', () => {
+      expect(
+        editAffiliation('abcorg', rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg, 'ghiorg', true, {})
+      ).toEqual({
+        newContributorRoles: [
+          { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+        ],
+      });
+    });
+    it('when they try to change an affiliation on a user with only one role, it changes the affiliation successfully', () => {
+      expect(editAffiliation('abcorg', rolesWithProjectManagerWithGhiOrg, 'ghiorg', true, {})).toEqual({
+        newContributorRoles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }],
+      });
+    });
+  });
+  describe('for a project participant', () => {
+    it('when newAffiliationId is empty it returns an error', () => {
+      expect(editAffiliation('', [], 'abc', false, {})).toEqual({
+        newContributorRoles: [],
+        error: AddAffiliationErrors.NO_AFFILIATION_ID,
+      });
+    });
+    it('when the affiliation to edit doesnt exist it returns an error', () => {
+      expect(editAffiliation('abcorg', rolesWithProjectParticipantWithGhiOrg, 'deforg', false, {})).toEqual({
+        newContributorRoles: rolesWithProjectParticipantWithGhiOrg,
+        error: AddAffiliationErrors.NO_ROLE_TO_CHANGE,
+      });
+    });
+    it('when they try to change an affiliation to an affiliation that already exists on the role, it returns an error', () => {
+      expect(editAffiliation('ghiorg', rolesWithProjectParticipantWithGhiOrg, 'ghiorg', false, {})).toEqual({
+        newContributorRoles: rolesWithProjectParticipantWithGhiOrg,
+        error: AddAffiliationErrors.ADD_DUPLICATE_AFFILIATION,
+      });
+    });
+    it('when they try to change an affiliation to an affiliation that the user has on a different role type, it changes the affiliation successfully', () => {
+      expect(
+        editAffiliation('ghiorg', rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg, 'abcorg', false, {})
+      ).toEqual({
+        newContributorRoles: [
+          { type: 'ProjectManager', affiliation: ghiOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+        ],
+      });
+    });
+    it('when they have several affiliations, it changes the correct one', () => {
+      expect(editAffiliation('jklorg', rolesWithSeveralProjectParticipantRoles, 'deforg', false, {})).toEqual({
+        newContributorRoles: [
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: jklOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+        ],
+      });
+    });
+    it('when they have only one affiliation, it changes the correct one', () => {
+      expect(editAffiliation('abcorg', rolesWithProjectParticipantWithGhiOrg, 'ghiorg', false, {})).toEqual({
+        newContributorRoles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
       });
     });
   });

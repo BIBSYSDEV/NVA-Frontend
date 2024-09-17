@@ -1,4 +1,5 @@
 import { LanguageString } from '../../../types/common.types';
+import { Organization } from '../../../types/organization.types';
 import {
   ProjectContributor,
   ProjectContributorRole,
@@ -101,6 +102,7 @@ export enum AddAffiliationErrors {
   NO_AFFILIATION_ID,
   CAN_ONLY_BE_ONE_PROJECT_MANAGER,
   ADD_DUPLICATE_AFFILIATION,
+  NO_ROLE_TO_CHANGE,
 }
 
 export const addAffiliation = (
@@ -158,6 +160,53 @@ export const addAffiliation = (
       affiliation: newAffiliation,
     };
   }
+
+  return { newContributorRoles: newContributorRoles };
+};
+
+export const editAffiliation = (
+  newAffiliationId: string,
+  contributorRoles: ProjectContributorRole[],
+  affiliationToEditId: string,
+  asProjectManager = false,
+  labels?: LanguageString
+): { newContributorRoles?: ProjectContributorRole[]; error?: AddAffiliationErrors } => {
+  if (!newAffiliationId) {
+    return {
+      newContributorRoles: contributorRoles,
+      error: AddAffiliationErrors.NO_AFFILIATION_ID,
+    };
+  }
+
+  const roleToChangeIndex = contributorRoles.findIndex((role) => role.affiliation?.id === affiliationToEditId);
+
+  if (roleToChangeIndex < 0) {
+    return {
+      newContributorRoles: contributorRoles,
+      error: AddAffiliationErrors.NO_ROLE_TO_CHANGE,
+    };
+  }
+
+  // If user tries to change affiliation to an already existing affiliation
+  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))) {
+    return {
+      newContributorRoles: contributorRoles,
+      error: AddAffiliationErrors.ADD_DUPLICATE_AFFILIATION,
+    };
+  }
+
+  const newAffiliation: ProjectOrganization = {
+    type: 'Organization',
+    id: newAffiliationId,
+    labels: labels || {},
+  };
+
+  const newContributorRoles = [...contributorRoles];
+
+  newContributorRoles[roleToChangeIndex] = {
+    ...contributorRoles[roleToChangeIndex],
+    affiliation: newAffiliation,
+  };
 
   return { newContributorRoles: newContributorRoles };
 };

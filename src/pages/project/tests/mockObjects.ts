@@ -68,6 +68,18 @@ export const defOrgAsAffiliation: ProjectOrganization = {
   type: 'Organization',
 };
 
+export const ghiOrgAsAffiliation: ProjectOrganization = {
+  id: 'ghiorg',
+  labels: {},
+  type: 'Organization',
+};
+
+export const jklOrgAsAffiliation: ProjectOrganization = {
+  id: 'jklorg',
+  labels: {},
+  type: 'Organization',
+};
+
 export const contributorsArrayWithProjectManager: ProjectContributor[] = [
   { identity: existingPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }] },
 ];
@@ -236,4 +248,23 @@ export const rolesWithUndefinedProjectParticipant: ProjectContributorRole[] = [
 export const severalRolesWithUndefined: ProjectContributorRole[] = [
   { type: 'ProjectManager', affiliation: undefined },
   { type: 'ProjectParticipant', affiliation: undefined },
+];
+
+export const rolesWithProjectManagerWithGhiOrg: ProjectContributorRole[] = [
+  { type: 'ProjectManager', affiliation: ghiOrgAsAffiliation },
+];
+
+export const rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg: ProjectContributorRole[] = [
+  { type: 'ProjectManager', affiliation: ghiOrgAsAffiliation },
+  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+];
+
+export const rolesWithProjectParticipantWithGhiOrg: ProjectContributorRole[] = [
+  { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+];
+
+export const rolesWithSeveralProjectParticipantRoles: ProjectContributorRole[] = [
+  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+  { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
 ];
