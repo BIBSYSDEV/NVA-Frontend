@@ -120,7 +120,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                 <LoadingButton
                   loading={updateRegistrationStatusMutation.isPending}
                   type="submit"
-                  data-testid={dataTestId.unpublishActions.submitButton}
+                  data-testid={dataTestId.confirmDialog.acceptButton}
                   variant="outlined">
                   {t('unpublish_actions.unpublish')}
                 </LoadingButton>
