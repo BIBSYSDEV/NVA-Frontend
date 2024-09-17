@@ -10,6 +10,7 @@ import { CristinProject, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { addContributor, AddContributorErrors } from '../project/helpers/projectContributorHelpers';
+import { SelectAffiliations } from '../registration/contributors_tab/components/AddContributorTableRow';
 
 interface AddProjectManagerFormProps {
   toggleModal: () => void;
@@ -55,7 +56,7 @@ export const AddProjectManagerForm = ({ toggleModal, suggestedProjectManager }: 
         setSelectedPerson={setSelectedPerson}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        singleSelectAffiliations
+        selectAffiliations={SelectAffiliations.SINGLE}
       />
       <StyledRightAlignedFooter>
         <Button

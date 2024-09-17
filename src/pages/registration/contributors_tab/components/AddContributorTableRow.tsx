@@ -10,18 +10,24 @@ import { LastRegistrationTableCellContent } from './LastRegistrationTableCellCon
 import { SelectAffiliationRadioButton } from './SelectAffiliationRadioButton';
 import { SelectAffiliationsCheckbox } from './SelectAffiliationsCheckbox';
 
+export enum SelectAffiliations {
+  'MULTIPLE',
+  'SINGLE',
+  'NO_SELECT',
+}
+
 interface CristinPersonTableRowProps {
   cristinPerson: CristinPerson;
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson | undefined) => void;
-  singleSelectAffiliations?: boolean;
+  selectAffiliations?: SelectAffiliations;
 }
 
 export const CristinPersonTableRow = ({
   cristinPerson,
   setSelectedPerson,
   selectedPerson,
-  singleSelectAffiliations = false,
+  selectAffiliations = SelectAffiliations.MULTIPLE,
 }: CristinPersonTableRowProps) => {
   const { t } = useTranslation();
   const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
@@ -41,7 +47,8 @@ export const CristinPersonTableRow = ({
               } else {
                 setSelectedPerson({
                   ...cristinPerson,
-                  affiliations: singleSelectAffiliations ? [activeAffiliations[0]] : activeAffiliations,
+                  affiliations:
+                    selectAffiliations === SelectAffiliations.SINGLE ? [activeAffiliations[0]] : activeAffiliations,
                 });
               }
             }}
@@ -70,13 +77,15 @@ export const CristinPersonTableRow = ({
                     alignItems: 'center',
                     gap: '0.25rem',
                   }}>
-                  {singleSelectAffiliations ? (
+                  {selectAffiliations === SelectAffiliations.SINGLE ||
+                  selectAffiliations === SelectAffiliations.NO_SELECT ? (
                     <SelectAffiliationRadioButton
                       personIsSelected={personIsSelected}
                       affiliation={affiliation}
                       selectedPerson={selectedPerson}
                       setSelectedPerson={setSelectedPerson}
                       affiliationIsSelected={affiliationIsSelected}
+                      disabled={selectAffiliations === SelectAffiliations.NO_SELECT}
                     />
                   ) : (
                     <SelectAffiliationsCheckbox
