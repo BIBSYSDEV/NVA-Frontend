@@ -18,10 +18,13 @@ interface UnpublishRegistrationProps {
 }
 
 export const UnpublishRegistration = ({ registration }: UnpublishRegistrationProps) => {
-  const [showUnpublishModal, setShowUnpublishModal] = useState(false);
   const { t } = useTranslation();
-  const [selectedDuplicate, setSelectedDuplicate] = useState<Registration | null>(null);
   const history = useHistory();
+
+  const [showUnpublishModal, setShowUnpublishModal] = useState(false);
+  const toggleUnpublishModal = () => setShowUnpublishModal(!showUnpublishModal);
+
+  const [selectedDuplicate, setSelectedDuplicate] = useState<Registration>();
 
   const userCanUnpublish = userCanUnpublishRegistration(registration);
 
@@ -43,7 +46,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
             data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
             variant="outlined"
             sx={{ bgcolor: 'white' }}
-            onClick={() => setShowUnpublishModal(true)}>
+            onClick={toggleUnpublishModal}>
             {t('unpublish_actions.unpublish')}
           </Button>
         </>
@@ -58,7 +61,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
       <Modal
         headingText={t('registration.delete_registration')}
         open={showUnpublishModal}
-        onClose={() => setShowUnpublishModal(false)}>
+        onClose={toggleUnpublishModal}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <RequiredDescription />
           <Typography>{t('unpublish_actions.unpublish_registration_detail_1')}</Typography>
@@ -76,7 +79,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                   comment: values.comment,
                 },
                 onSuccess: () => {
-                  setShowUnpublishModal(false);
+                  toggleUnpublishModal();
                   history.push({ search: '?shouldNotRedirect' });
                 },
               })
@@ -111,9 +114,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                 filteredRegistrationIdentifier={registration.identifier}
               />
               <DialogActions>
-                <Button
-                  data-testid={dataTestId.confirmDialog.cancelButton}
-                  onClick={() => setShowUnpublishModal(false)}>
+                <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={toggleUnpublishModal}>
                   {t('common.cancel')}
                 </Button>
                 <LoadingButton

@@ -726,6 +726,5 @@ export const dataTestId = {
   unpublishActions: {
     openUnpublishModalButton: 'open-unpublish-modal-button',
     unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
-    submitButton: 'submit-unpublish-request-button',
   },
 };
