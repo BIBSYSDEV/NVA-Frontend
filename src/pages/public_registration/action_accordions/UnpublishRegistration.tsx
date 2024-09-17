@@ -1,25 +1,17 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import { updateRegistrationStatus } from '../../../api/registrationApi';
+import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
 import { Modal } from '../../../components/Modal';
 import { RequiredDescription } from '../../../components/RequiredDescription';
-import { setNotification } from '../../../redux/notificationSlice';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userCanUnpublishRegistration } from '../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 import { FindRegistration } from './FindRegistration';
-
-interface UnpublishForm {
-  deleteMessage: string;
-}
 
 interface UnpublishRegistrationProps {
   registration: Registration;
@@ -28,41 +20,18 @@ interface UnpublishRegistrationProps {
 export const UnpublishRegistration = ({ registration }: UnpublishRegistrationProps) => {
   const [showUnpublishModal, setShowUnpublishModal] = useState(false);
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const [selectedDuplicate, setSelectedDuplicate] = useState<Registration | null>(null);
   const history = useHistory();
 
   const userCanUnpublish = userCanUnpublishRegistration(registration);
 
-  const deleteValidationSchema = Yup.object().shape({
-    deleteMessage: Yup.string()
+  const unpublishValidationSchema = Yup.object().shape({
+    comment: Yup.string()
       .min(3, t('feedback.validation.must_be_bigger_than', { field: t('common.justification'), limit: 3 }))
       .required(t('feedback.validation.is_required', { field: t('common.justification') })),
   });
 
-  const unpublishRegistrationMutation = useMutation({
-    mutationFn: (values: UnpublishForm) => {
-      if (selectedDuplicate) {
-        return updateRegistrationStatus(registration.identifier, {
-          type: 'UnpublishPublicationRequest',
-          duplicateOf: selectedDuplicate.id,
-          comment: values.deleteMessage,
-        });
-      } else {
-        return updateRegistrationStatus(registration.identifier, {
-          type: 'UnpublishPublicationRequest',
-          comment: values.deleteMessage,
-        });
-      }
-    },
-    onSuccess: () => {
-      setShowUnpublishModal(false);
-      history.push(`${getRegistrationLandingPagePath(registration.identifier)}?shouldNotRedirect`);
-    },
-    onError: () => {
-      dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
-    },
-  });
+  const updateRegistrationStatusMutation = useUpdateRegistrationStatus();
 
   return (
     <>
@@ -96,13 +65,26 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
           <Typography>{t('unpublish_actions.unpublish_registration_detail_2')}</Typography>
 
           <Formik
-            initialValues={{ deleteMessage: '' }}
-            validationSchema={deleteValidationSchema}
-            onSubmit={(values) => unpublishRegistrationMutation.mutate(values)}>
+            initialValues={{ comment: '' }}
+            validationSchema={unpublishValidationSchema}
+            onSubmit={(values) =>
+              updateRegistrationStatusMutation.mutate({
+                registrationIdentifier: registration.identifier,
+                data: {
+                  type: 'UnpublishPublicationRequest',
+                  duplicateOf: selectedDuplicate?.id,
+                  comment: values.comment,
+                },
+                onSuccess: () => {
+                  setShowUnpublishModal(false);
+                  history.push({ search: '?shouldNotRedirect' });
+                },
+              })
+            }>
             <Form noValidate>
               <Box sx={{ my: '1rem' }}>
                 <Typography gutterBottom>{t('unpublish_actions.unpublish_registration_reason')}</Typography>
-                <Field name="deleteMessage">
+                <Field name="comment">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
@@ -135,7 +117,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                   {t('common.cancel')}
                 </Button>
                 <LoadingButton
-                  loading={unpublishRegistrationMutation.isPending}
+                  loading={updateRegistrationStatusMutation.isPending}
                   type="submit"
                   data-testid={dataTestId.unpublishActions.submitButton}
                   variant="outlined">
