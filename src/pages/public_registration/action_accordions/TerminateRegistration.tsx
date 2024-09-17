@@ -14,6 +14,8 @@ interface TerminateRegistrationProps {
 export const TerminateRegistration = ({ registration }: TerminateRegistrationProps) => {
   const { t } = useTranslation();
   const [showTerminateModal, setShowTerminateModal] = useState(false);
+  const toggleTerminateModal = () => setShowTerminateModal(!showTerminateModal);
+
   const userCanTerminate = userCanTerminateRegistration(registration);
 
   const updateRegistrationStatusMutation = useUpdateRegistrationStatus();
@@ -33,7 +35,7 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
         data-testid={dataTestId.registrationLandingPage.tasksPanel.terminateRegistrationButton}
         variant="outlined"
         sx={{ bgcolor: 'white' }}
-        onClick={() => setShowTerminateModal(true)}>
+        onClick={toggleTerminateModal}>
         {t('common.delete')}
       </Button>
 
@@ -44,13 +46,13 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
           updateRegistrationStatusMutation.mutate({
             registrationIdentifier: registration.identifier,
             data: { type: 'DeletePublicationRequest' },
-            onSuccess: () => setShowTerminateModal(false),
+            onSuccess: toggleTerminateModal,
           })
         }
         isLoading={updateRegistrationStatusMutation.isPending}
         confirmButtonLabel={t('common.delete')}
         cancelButtonLabel={t('common.cancel')}
-        onCancel={() => setShowTerminateModal(false)}>
+        onCancel={toggleTerminateModal}>
         <Trans
           i18nKey="registration.public_page.tasks_panel.terminate_result_confirmation"
           components={[<Typography key="1" gutterBottom />]}
