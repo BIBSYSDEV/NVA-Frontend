@@ -259,6 +259,11 @@ export const rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg: ProjectC
   { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
 ];
 
+export const rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrgReversed: ProjectContributorRole[] = [
+  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+  { type: 'ProjectManager', affiliation: ghiOrgAsAffiliation },
+];
+
 export const rolesWithProjectParticipantWithGhiOrg: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
 ];

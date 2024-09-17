@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { addAffiliation, AddAffiliationErrors, editAffiliation } from '../helpers/projectRoleHelpers';
+import {
+  addAffiliation,
+  AddAffiliationErrors,
+  editAffiliation,
+  removeAffiliation,
+} from '../helpers/projectRoleHelpers';
 import {
   abcOrgAsAffiliation,
   defOrgAsAffiliation,
@@ -10,6 +15,7 @@ import {
   rolesWithProjectManager,
   rolesWithProjectManagerWithGhiOrg,
   rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg,
+  rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrgReversed,
   rolesWithProjectParticipantWithGhiOrg,
   rolesWithSeveralProjectParticipantRoles,
   rolesWithUndefinedProjectManager,
@@ -176,6 +182,73 @@ describe('editAffiliation', () => {
     it('when they have only one affiliation, it changes the correct one', () => {
       expect(editAffiliation('abcorg', rolesWithProjectParticipantWithGhiOrg, 'ghiorg', false, {})).toEqual({
         newContributorRoles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+      });
+    });
+  });
+});
+
+describe('removeAffiliation', () => {
+  describe('for a project manager', () => {
+    it('if we dont have an affiliationId it returns an error', () => {
+      expect(removeAffiliation('', [], true)).toEqual({
+        newContributorRoles: [],
+        error: AddAffiliationErrors.NO_AFFILIATION_ID,
+      });
+    });
+    it('if the role to delete doesnt exist it returns an error', () => {
+      expect(removeAffiliation('abcorg', rolesWithProjectManagerWithGhiOrg, true)).toEqual({
+        newContributorRoles: rolesWithProjectManagerWithGhiOrg,
+        error: AddAffiliationErrors.NO_ROLE_TO_REMOVE,
+      });
+    });
+    it('when they have only one affiliation on the role type, it changes the affiliation to undefined', () => {
+      expect(removeAffiliation('ghiorg', rolesWithProjectManagerWithGhiOrg, true)).toEqual({
+        newContributorRoles: [{ type: 'ProjectManager', affiliation: undefined }],
+      });
+    });
+    it('when they have more than one affiliation, it deletes the correct one', () => {
+      expect(removeAffiliation('ghiorg', rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg, true)).toEqual({
+        newContributorRoles: [
+          { type: 'ProjectManager', affiliation: undefined },
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+        ],
+      });
+    });
+    it('when they have more than one affiliation, it deletes the correct one also when its not first in the array', () => {
+      expect(
+        removeAffiliation('ghiorg', rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrgReversed, true)
+      ).toEqual({
+        newContributorRoles: [
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectManager', affiliation: undefined },
+        ],
+      });
+    });
+  });
+  describe('for a project participant', () => {
+    it('if we dont have an affiliationId it returns an error', () => {
+      expect(removeAffiliation('', [], false)).toEqual({
+        newContributorRoles: [],
+        error: AddAffiliationErrors.NO_AFFILIATION_ID,
+      });
+    });
+    it('if the role to delete doesnt exist it returns an error', () => {
+      expect(removeAffiliation('abcorg', rolesWithProjectParticipantWithGhiOrg, false)).toEqual({
+        newContributorRoles: rolesWithProjectParticipantWithGhiOrg,
+        error: AddAffiliationErrors.NO_ROLE_TO_REMOVE,
+      });
+    });
+    it('when they have only one affiliation on the role type, it changes the affiliation to undefined', () => {
+      expect(removeAffiliation('ghiorg', rolesWithProjectParticipantWithGhiOrg, false)).toEqual({
+        newContributorRoles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+      });
+    });
+    it('when they have more than one affiliation, it deletes the correct one', () => {
+      expect(removeAffiliation('deforg', rolesWithSeveralProjectParticipantRoles, false)).toEqual({
+        newContributorRoles: [
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+        ],
       });
     });
   });

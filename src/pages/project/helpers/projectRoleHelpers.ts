@@ -71,30 +71,30 @@ export const checkIfSameAffiliationOnSameRoleType = (
   return role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId && isSameRoleType;
 };
 
-const findProjectManagerRoleThatHasAffiliation = (contributor: ProjectContributor, affiliationId: string) => {
-  return contributor.roles.findIndex((role) => role.affiliation?.id === affiliationId && isProjectManagerRole(role));
+const findProjectManagerRoleThatHasAffiliation = (roles: ProjectContributorRole[], affiliationId: string) => {
+  return roles.findIndex((role) => role.affiliation?.id === affiliationId && isProjectManagerRole(role));
 };
 
-const findNonProjectManagerRoleThatHasAffiliation = (contributor: ProjectContributor, affiliationId: string) => {
-  return contributor.roles.findIndex((role) => role.affiliation?.id === affiliationId && isNonProjectManagerRole(role));
+const findNonProjectManagerRoleThatHasAffiliation = (roles: ProjectContributorRole[], affiliationId: string) => {
+  return roles.findIndex((role) => role.affiliation?.id === affiliationId && isNonProjectManagerRole(role));
 };
 
 export const findRoleIndexForAffiliation = (
   asProjectManager: boolean,
-  contributor: ProjectContributor,
+  roles: ProjectContributorRole[],
   affiliationId: string
 ) => {
   return asProjectManager
-    ? findProjectManagerRoleThatHasAffiliation(contributor, affiliationId)
-    : findNonProjectManagerRoleThatHasAffiliation(contributor, affiliationId);
+    ? findProjectManagerRoleThatHasAffiliation(roles, affiliationId)
+    : findNonProjectManagerRoleThatHasAffiliation(roles, affiliationId);
 };
 
 export const notLastOfItsRoleType = (
-  contributor: ProjectContributor,
+  roles: ProjectContributorRole[],
   affiliationId: string,
   roleType: ProjectContributorType
 ) => {
-  const rolesWithoutAffiliationId = contributor.roles.filter((role) => role.affiliation?.id !== affiliationId);
+  const rolesWithoutAffiliationId = roles.filter((role) => role.affiliation?.id !== affiliationId);
   return rolesWithoutAffiliationId.some((role) => role.type === roleType);
 };
 
@@ -103,6 +103,7 @@ export enum AddAffiliationErrors {
   CAN_ONLY_BE_ONE_PROJECT_MANAGER,
   ADD_DUPLICATE_AFFILIATION,
   NO_ROLE_TO_CHANGE,
+  NO_ROLE_TO_REMOVE,
 }
 
 export const addAffiliation = (
@@ -209,4 +210,42 @@ export const editAffiliation = (
   };
 
   return { newContributorRoles: newContributorRoles };
+};
+
+export const removeAffiliation = (
+  affiliationId: string,
+  contributorRoles: ProjectContributorRole[],
+  asProjectManager = false
+) => {
+  if (!affiliationId) {
+    return {
+      newContributorRoles: contributorRoles,
+      error: AddAffiliationErrors.NO_AFFILIATION_ID,
+    };
+  }
+
+  const indexOfRoleThatHasAffiliation = findRoleIndexForAffiliation(asProjectManager, contributorRoles, affiliationId);
+
+  if (indexOfRoleThatHasAffiliation < 0) {
+    return {
+      newContributorRoles: contributorRoles,
+      error: AddAffiliationErrors.NO_ROLE_TO_REMOVE,
+    };
+  }
+
+  const roleToDelete = contributorRoles[indexOfRoleThatHasAffiliation];
+  const notLastOfItsType = notLastOfItsRoleType(contributorRoles, affiliationId, roleToDelete.type);
+  const newRoles = [...contributorRoles];
+
+  // If it's not the last role it's unproblematic to remove the whole role
+  if (notLastOfItsType) {
+    newRoles.splice(indexOfRoleThatHasAffiliation, 1);
+  } else {
+    // Since we're just supposed to remove the affiliation and not the whole role/user row, we have to keep the last role of its type
+    const newRole = { ...roleToDelete };
+    newRole.affiliation = undefined;
+    newRoles[indexOfRoleThatHasAffiliation] = newRole;
+  }
+
+  return { newContributorRoles: newRoles };
 };
