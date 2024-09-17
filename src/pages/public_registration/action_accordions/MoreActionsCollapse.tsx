@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { userCanTerminateRegistration, userCanUnpublishRegistration } from '../../../utils/registration-helpers';
+import { TerminateRegistration } from './TerminateRegistration';
 import { UnpublishRegistration } from './UnpublishRegistration';
 
 interface MoreActionsCollapseProps {
@@ -14,12 +14,12 @@ interface MoreActionsCollapseProps {
 
 export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) => {
   const { t } = useTranslation();
-  const [showMoreActions, setShowMoreActions] = useState(false);
+  const [openMoreActions, setOpenMoreActions] = useState(false);
 
-  const userCanUnpublish = userCanUnpublishRegistration(registration);
-  const userCanDelete = userCanTerminateRegistration(registration);
+  const isPublished = registration.status === 'PUBLISHED';
+  const isUnpublished = registration.status === 'UNPUBLISHED';
 
-  if (!(userCanUnpublish || userCanDelete)) {
+  if (!(isPublished || isUnpublished)) {
     return null;
   }
 
@@ -29,15 +29,16 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
       <IconButton
         sx={{ width: 'fit-content', alignSelf: 'center', p: '0' }}
         data-testid={dataTestId.unpublishActions.showUnpublishButtonButton} // TODO: Update data test id
-        title={showMoreActions ? t('common.show_fewer_options') : t('common.show_more_options')}
-        onClick={() => setShowMoreActions(!showMoreActions)}>
-        {showMoreActions ? <ExpandLess /> : <ExpandMore />}
+        title={openMoreActions ? t('common.show_fewer_options') : t('common.show_more_options')}
+        onClick={() => setOpenMoreActions(!openMoreActions)}>
+        {openMoreActions ? <ExpandLess /> : <ExpandMore />}
       </IconButton>
 
-      {showMoreActions && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-          {userCanUnpublish ? <UnpublishRegistration registration={registration} /> : null}
-        </Box>
+      {openMoreActions && (
+        <>
+          {isPublished && <UnpublishRegistration registration={registration} />}
+          {isUnpublished && <TerminateRegistration registration={registration} />}
+        </>
       )}
     </Box>
   );

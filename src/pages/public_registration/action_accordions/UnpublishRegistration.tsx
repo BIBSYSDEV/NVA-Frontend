@@ -67,27 +67,26 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
 
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-        <Typography fontWeight="bold">{t('unpublish_actions.unpublish_header')}</Typography>
-        {userCanUnpublish ? (
-          <>
-            <Typography gutterBottom>{t('unpublish_actions.unpublish_info')}</Typography>
-            <Button
-              data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
-              variant="outlined"
-              sx={{ bgcolor: 'white' }}
-              onClick={() => setShowDeleteModal(true)}>
-              {t('unpublish_actions.unpublish')}
-            </Button>
-          </>
-        ) : (
-          <Trans
-            t={t}
-            i18nKey="unpublish_actions.unpublish_not_allowed"
-            components={[<Typography paragraph key="1" />]}
-          />
-        )}
-      </Box>
+      <Typography fontWeight="bold">{t('unpublish_actions.unpublish_header')}</Typography>
+      {userCanUnpublish ? (
+        <>
+          <Typography gutterBottom>{t('unpublish_actions.unpublish_info')}</Typography>
+          <Button
+            data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
+            variant="outlined"
+            sx={{ bgcolor: 'white' }}
+            onClick={() => setShowDeleteModal(true)}>
+            {t('unpublish_actions.unpublish')}
+          </Button>
+        </>
+      ) : (
+        <Trans
+          t={t}
+          i18nKey="unpublish_actions.unpublish_not_allowed"
+          components={[<Typography paragraph key="1" />]}
+        />
+      )}
+
       <Modal
         headingText={t('registration.delete_registration')}
         open={showDeleteModal}

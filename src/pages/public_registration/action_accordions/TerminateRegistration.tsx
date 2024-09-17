@@ -1,9 +1,16 @@
 import { Registration } from '../../../types/registration.types';
+import { userCanTerminateRegistration } from '../../../utils/registration-helpers';
 
 interface TerminateRegistrationProps {
   registration: Registration;
 }
 
 export const TerminateRegistration = ({ registration }: TerminateRegistrationProps) => {
-  return <p>TODO: Delete unpublished result</p>;
+  const userCanTerminate = userCanTerminateRegistration(registration);
+
+  if (!userCanTerminate) {
+    return null;
+  }
+
+  return <p>Show terminate actions</p>;
 };
