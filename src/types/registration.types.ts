@@ -339,7 +339,7 @@ export interface UnpublishPublicationRequest {
 }
 
 export interface TerminatePublicationRequest {
-  type: 'TerminatePublicationRequest';
+  type: 'DeletePublicationRequest';
 }
 
 interface NpiSubjectSubdomain {

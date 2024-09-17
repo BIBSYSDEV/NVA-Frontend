@@ -43,7 +43,8 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
         onAccept={() =>
           updateRegistrationStatusMutation.mutate({
             registrationIdentifier: registration.identifier,
-            data: { type: 'TerminatePublicationRequest' },
+            data: { type: 'DeletePublicationRequest' },
+            onSuccess: () => setShowTerminateModal(false),
           })
         }
         isLoading={updateRegistrationStatusMutation.isPending}

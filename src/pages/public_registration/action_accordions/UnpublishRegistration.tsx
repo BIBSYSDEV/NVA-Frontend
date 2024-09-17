@@ -7,7 +7,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import { unpublishRegistration } from '../../../api/registrationApi';
+import { updateRegistrationStatus } from '../../../api/registrationApi';
 import { Modal } from '../../../components/Modal';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -43,13 +43,13 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
   const unpublishRegistrationMutation = useMutation({
     mutationFn: (values: UnpublishForm) => {
       if (selectedDuplicate) {
-        return unpublishRegistration(registration.identifier, {
+        return updateRegistrationStatus(registration.identifier, {
           type: 'UnpublishPublicationRequest',
           duplicateOf: selectedDuplicate.id,
           comment: values.deleteMessage,
         });
       } else {
-        return unpublishRegistration(registration.identifier, {
+        return updateRegistrationStatus(registration.identifier, {
           type: 'UnpublishPublicationRequest',
           comment: values.deleteMessage,
         });
