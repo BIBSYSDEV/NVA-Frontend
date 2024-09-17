@@ -98,7 +98,7 @@ export const notLastOfItsRoleType = (
   return rolesWithoutAffiliationId.some((role) => role.type === roleType);
 };
 
-export enum AddAffiliationErrors {
+export enum AffiliationErrors {
   NO_AFFILIATION_ID,
   CAN_ONLY_BE_ONE_PROJECT_MANAGER,
   ADD_DUPLICATE_AFFILIATION,
@@ -111,11 +111,11 @@ export const addAffiliation = (
   contributorRoles: ProjectContributorRole[],
   asProjectManager = false,
   labels?: LanguageString
-): { newContributorRoles?: ProjectContributorRole[]; error?: AddAffiliationErrors } => {
+): { newContributorRoles?: ProjectContributorRole[]; error?: AffiliationErrors } => {
   if (!newAffiliationId) {
     return {
       newContributorRoles: contributorRoles,
-      error: AddAffiliationErrors.NO_AFFILIATION_ID,
+      error: AffiliationErrors.NO_AFFILIATION_ID,
     };
   }
 
@@ -123,7 +123,7 @@ export const addAffiliation = (
   if (asProjectManager && contributorRoles.some((role) => isProjectManagerRole(role) && !hasEmptyAffiliation(role))) {
     return {
       newContributorRoles: contributorRoles,
-      error: AddAffiliationErrors.CAN_ONLY_BE_ONE_PROJECT_MANAGER,
+      error: AffiliationErrors.CAN_ONLY_BE_ONE_PROJECT_MANAGER,
     };
   }
 
@@ -131,7 +131,7 @@ export const addAffiliation = (
   if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))) {
     return {
       newContributorRoles: contributorRoles,
-      error: AddAffiliationErrors.ADD_DUPLICATE_AFFILIATION,
+      error: AffiliationErrors.ADD_DUPLICATE_AFFILIATION,
     };
   }
 
@@ -171,11 +171,11 @@ export const editAffiliation = (
   affiliationToEditId: string,
   asProjectManager = false,
   labels?: LanguageString
-): { newContributorRoles?: ProjectContributorRole[]; error?: AddAffiliationErrors } => {
+): { newContributorRoles?: ProjectContributorRole[]; error?: AffiliationErrors } => {
   if (!newAffiliationId) {
     return {
       newContributorRoles: contributorRoles,
-      error: AddAffiliationErrors.NO_AFFILIATION_ID,
+      error: AffiliationErrors.NO_AFFILIATION_ID,
     };
   }
 
@@ -184,7 +184,7 @@ export const editAffiliation = (
   if (roleToChangeIndex < 0) {
     return {
       newContributorRoles: contributorRoles,
-      error: AddAffiliationErrors.NO_ROLE_TO_CHANGE,
+      error: AffiliationErrors.NO_ROLE_TO_CHANGE,
     };
   }
 
@@ -192,7 +192,7 @@ export const editAffiliation = (
   if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))) {
     return {
       newContributorRoles: contributorRoles,
-      error: AddAffiliationErrors.ADD_DUPLICATE_AFFILIATION,
+      error: AffiliationErrors.ADD_DUPLICATE_AFFILIATION,
     };
   }
 
@@ -220,7 +220,7 @@ export const removeAffiliation = (
   if (!affiliationId) {
     return {
       newContributorRoles: contributorRoles,
-      error: AddAffiliationErrors.NO_AFFILIATION_ID,
+      error: AffiliationErrors.NO_AFFILIATION_ID,
     };
   }
 
@@ -229,7 +229,7 @@ export const removeAffiliation = (
   if (indexOfRoleThatHasAffiliation < 0) {
     return {
       newContributorRoles: contributorRoles,
-      error: AddAffiliationErrors.NO_ROLE_TO_REMOVE,
+      error: AffiliationErrors.NO_ROLE_TO_REMOVE,
     };
   }
 

@@ -12,7 +12,7 @@ import { LanguageString } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
 import { CristinProject, ProjectContributorRole } from '../../types/project.types';
 import { findDescendantWithId, getTopLevelOrganization } from '../../utils/institutions-helpers';
-import { AddAffiliationErrors, editAffiliation } from '../project/helpers/projectRoleHelpers';
+import { AffiliationErrors, editAffiliation } from '../project/helpers/projectRoleHelpers';
 
 interface EditProjectAffiliationModalProps {
   affiliationModalIsOpen: boolean;
@@ -48,11 +48,11 @@ export const ProjectEditAffiliationModal = ({
       labels || {}
     );
 
-    if (newContributorRolesObject.error === AddAffiliationErrors.NO_AFFILIATION_ID) {
+    if (newContributorRolesObject.error === AffiliationErrors.NO_AFFILIATION_ID) {
       return;
     }
 
-    if (newContributorRolesObject.error === AddAffiliationErrors.ADD_DUPLICATE_AFFILIATION) {
+    if (newContributorRolesObject.error === AffiliationErrors.ADD_DUPLICATE_AFFILIATION) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }

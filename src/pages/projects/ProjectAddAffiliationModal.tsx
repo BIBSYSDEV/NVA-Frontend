@@ -8,7 +8,7 @@ import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { LanguageString } from '../../types/common.types';
 import { CristinProject, ProjectContributorRole } from '../../types/project.types';
-import { addAffiliation, AddAffiliationErrors } from '../project/helpers/projectRoleHelpers';
+import { addAffiliation, AffiliationErrors } from '../project/helpers/projectRoleHelpers';
 
 interface ProjectAddAffiliationModalProps {
   openAffiliationModal: boolean;
@@ -39,11 +39,11 @@ export const ProjectAddAffiliationModal = ({
       labels || {}
     );
 
-    if (newContributorRolesObject.error === AddAffiliationErrors.NO_AFFILIATION_ID) {
+    if (newContributorRolesObject.error === AffiliationErrors.NO_AFFILIATION_ID) {
       return;
     }
 
-    if (newContributorRolesObject.error === AddAffiliationErrors.ADD_DUPLICATE_AFFILIATION) {
+    if (newContributorRolesObject.error === AffiliationErrors.ADD_DUPLICATE_AFFILIATION) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
