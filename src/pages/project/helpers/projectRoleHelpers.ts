@@ -1,4 +1,10 @@
-import { ProjectContributor, ProjectContributorRole, ProjectContributorType } from '../../../types/project.types';
+import { LanguageString } from '../../../types/common.types';
+import {
+  ProjectContributor,
+  ProjectContributorRole,
+  ProjectContributorType,
+  ProjectOrganization,
+} from '../../../types/project.types';
 
 export const isProjectManagerRole = (role: ProjectContributorRole) => {
   return role.type === 'ProjectManager';
@@ -6,6 +12,10 @@ export const isProjectManagerRole = (role: ProjectContributorRole) => {
 
 export const isNonProjectManagerRole = (role: ProjectContributorRole) => {
   return role.type !== 'ProjectManager';
+};
+
+export const hasEmptyAffiliation = (role: ProjectContributorRole) => {
+  return role.affiliation?.id === '' || role.affiliation?.id === undefined;
 };
 
 export const findProjectManagerRole = (contributor: ProjectContributor) => {
@@ -85,4 +95,69 @@ export const notLastOfItsRoleType = (
 ) => {
   const rolesWithoutAffiliationId = contributor.roles.filter((role) => role.affiliation?.id !== affiliationId);
   return rolesWithoutAffiliationId.some((role) => role.type === roleType);
+};
+
+export enum AddAffiliationErrors {
+  NO_AFFILIATION_ID,
+  CAN_ONLY_BE_ONE_PROJECT_MANAGER,
+  ADD_DUPLICATE_AFFILIATION,
+}
+
+export const addAffiliation = (
+  newAffiliationId: string,
+  contributorRoles: ProjectContributorRole[],
+  asProjectManager = false,
+  labels?: LanguageString
+): { newContributorRoles?: ProjectContributorRole[]; error?: AddAffiliationErrors } => {
+  if (!newAffiliationId) {
+    return {
+      newContributorRoles: contributorRoles,
+      error: AddAffiliationErrors.NO_AFFILIATION_ID,
+    };
+  }
+
+  // There can only be one project manager role
+  if (asProjectManager && contributorRoles.some((role) => isProjectManagerRole(role) && !hasEmptyAffiliation(role))) {
+    return {
+      newContributorRoles: contributorRoles,
+      error: AddAffiliationErrors.CAN_ONLY_BE_ONE_PROJECT_MANAGER,
+    };
+  }
+
+  // Avoid adding same unit twice
+  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))) {
+    return {
+      newContributorRoles: contributorRoles,
+      error: AddAffiliationErrors.ADD_DUPLICATE_AFFILIATION,
+    };
+  }
+
+  const emptyRoleIndex = contributorRoles.findIndex(
+    (role) =>
+      hasEmptyAffiliation(role) &&
+      ((asProjectManager && role.type === 'ProjectManager') ||
+        (!asProjectManager && role.type === 'ProjectParticipant'))
+  );
+
+  const newAffiliation: ProjectOrganization = {
+    type: 'Organization',
+    id: newAffiliationId,
+    labels: labels || {},
+  };
+
+  const newContributorRoles = [...contributorRoles];
+
+  if (emptyRoleIndex < 0) {
+    newContributorRoles.push({
+      type: asProjectManager ? 'ProjectManager' : 'ProjectParticipant',
+      affiliation: newAffiliation,
+    } as ProjectContributorRole);
+  } else {
+    newContributorRoles[emptyRoleIndex] = {
+      ...contributorRoles[emptyRoleIndex],
+      affiliation: newAffiliation,
+    };
+  }
+
+  return { newContributorRoles: newContributorRoles };
 };

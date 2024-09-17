@@ -1,4 +1,9 @@
-import { ProjectContributor, ProjectContributorIdentity, ProjectOrganization } from '../../../types/project.types';
+import {
+  ProjectContributor,
+  ProjectContributorIdentity,
+  ProjectContributorRole,
+  ProjectOrganization,
+} from '../../../types/project.types';
 import { CristinPerson } from '../../../types/user.types';
 
 export const selectedPersonWithAffiliation: CristinPerson = {
@@ -203,4 +208,32 @@ export const contributorsArrayWithNoProjectManager: ProjectContributor[] = [
     identity: selectedPersonIdentity,
     roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
   },
+];
+
+export const rolesWithProjectManager: ProjectContributorRole[] = [
+  { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
+  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+];
+
+export const rolesWithUndefinedProjectManager: ProjectContributorRole[] = [
+  { type: 'ProjectManager', affiliation: undefined },
+  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+];
+
+export const rolesWithoutProjectManager: ProjectContributorRole[] = [
+  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+];
+
+export const rolesWithDefOrg: ProjectContributorRole[] = [
+  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+];
+
+export const rolesWithUndefinedProjectParticipant: ProjectContributorRole[] = [
+  { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
+  { type: 'ProjectParticipant', affiliation: undefined },
+];
+
+export const severalRolesWithUndefined: ProjectContributorRole[] = [
+  { type: 'ProjectManager', affiliation: undefined },
+  { type: 'ProjectParticipant', affiliation: undefined },
 ];

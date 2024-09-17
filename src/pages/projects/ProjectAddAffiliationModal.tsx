@@ -7,8 +7,8 @@ import { SelectInstitutionForm } from '../../components/institution/SelectInstit
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { LanguageString } from '../../types/common.types';
-import { CristinProject, ProjectContributorRole, ProjectOrganization } from '../../types/project.types';
-import { checkIfSameAffiliationOnSameRoleType } from '../project/helpers/projectRoleHelpers';
+import { CristinProject, ProjectContributorRole } from '../../types/project.types';
+import { addAffiliation, AddAffiliationErrors } from '../project/helpers/projectRoleHelpers';
 
 interface ProjectAddAffiliationModalProps {
   openAffiliationModal: boolean;
@@ -31,44 +31,27 @@ export const ProjectAddAffiliationModal = ({
   const { setFieldValue } = useFormikContext<CristinProject>();
   const dispatch = useDispatch();
 
-  const addAffiliation = (newAffiliationId: string, labels?: LanguageString) => {
-    if (!newAffiliationId || !labels) {
+  const onAddAffiliation = (newAffiliationId: string, labels?: LanguageString) => {
+    const newContributorRolesObject = addAffiliation(
+      newAffiliationId,
+      contributorRoles,
+      asProjectManager,
+      labels || {}
+    );
+
+    if (newContributorRolesObject.error === AddAffiliationErrors.NO_AFFILIATION_ID) {
       return;
     }
 
-    // Avoid adding same unit twice
-    if (
-      contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))
-    ) {
+    if (newContributorRolesObject.error === AddAffiliationErrors.ADD_DUPLICATE_AFFILIATION) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 
-    const emptyRoleIndex = contributorRoles.findIndex(
-      (role) => !role.affiliation || (role.affiliation?.type === 'Organization' && role.affiliation?.id === '')
-    );
-
-    const newAffiliation: ProjectOrganization = {
-      type: 'Organization',
-      id: newAffiliationId,
-      labels: labels,
-    };
-
-    const newContributorRoles = [...contributorRoles];
-
-    if (emptyRoleIndex < 0) {
-      newContributorRoles.push({
-        type: 'ProjectParticipant',
-        affiliation: newAffiliation,
-      } as ProjectContributorRole);
-    } else {
-      newContributorRoles[emptyRoleIndex] = {
-        ...contributorRoles[emptyRoleIndex],
-        affiliation: newAffiliation,
-      };
+    if (newContributorRolesObject.newContributorRoles) {
+      setFieldValue(baseFieldName, newContributorRolesObject.newContributorRoles);
     }
 
-    setFieldValue(baseFieldName, newContributorRoles);
     toggleAffiliationModal();
   };
 
@@ -85,7 +68,7 @@ export const ProjectAddAffiliationModal = ({
         components={[<Typography paragraph key="1" />]}
       />
       {authorName && <AuthorName authorName={authorName} description={t('project.project_participant')} />}
-      <SelectInstitutionForm saveAffiliation={addAffiliation} onCancel={toggleAffiliationModal} />
+      <SelectInstitutionForm saveAffiliation={onAddAffiliation} onCancel={toggleAffiliationModal} />
     </Modal>
   );
 };

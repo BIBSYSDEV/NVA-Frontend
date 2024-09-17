@@ -895,7 +895,7 @@ describe('addContributor', () => {
 });
 
 describe('remove project participant', () => {
-  it('when they also have a project manager role, it removes all project participant roles on the participant, but keeps the user and its project manager role', async () => {
+  it('when they also have a project manager role, it removes all project participant roles on the participant, but keeps the user and its project manager role', () => {
     expect(removeProjectParticipant(contributorsArrayWithContributorWithBothPMRoleAndParticipantRole, 0)).toEqual([
       {
         identity: selectedPersonIdentity,
@@ -910,7 +910,7 @@ describe('remove project participant', () => {
       },
     ]);
   });
-  it('when they only have project participant roles, it removes the whole user object', async () => {
+  it('when they only have project participant roles, it removes the whole user object', () => {
     expect(removeProjectParticipant(contributorsArrayWithContributorsWithOnlyParticipantRole, 0)).toEqual([
       {
         identity: existingPersonIdentity,
@@ -921,7 +921,7 @@ describe('remove project participant', () => {
       },
     ]);
   });
-  it('when they only have a project participant role with undefined affiliation, it removes the whole user object', async () => {
+  it('when they only have a project participant role with undefined affiliation, it removes the whole user object', () => {
     expect(removeProjectParticipant(contributorsArrayWithOtherPMAndUndefinedAffiliation, 1)).toEqual([
       {
         identity: existingPersonIdentity,
@@ -932,7 +932,7 @@ describe('remove project participant', () => {
       },
     ]);
   });
-  it('when the index to delete is negative, it returns an unchanged object', async () => {
+  it('when the index to delete is negative, it returns an unchanged object', () => {
     expect(removeProjectParticipant(contributorsArrayWithOtherPMAndUndefinedAffiliation, -1)).toEqual(
       contributorsArrayWithOtherPMAndUndefinedAffiliation
     );
@@ -940,7 +940,7 @@ describe('remove project participant', () => {
 });
 
 describe('remove project manager', () => {
-  it('when they also have other roles, it removes project manager role on the participant, but keeps the user and its other roles', async () => {
+  it('when they also have other roles, it removes project manager role on the participant, but keeps the user and its other roles', () => {
     expect(removeProjectManager(contributorsArrayWithContributorWithBothPMRoleAndParticipantRole)).toEqual([
       {
         identity: selectedPersonIdentity,
@@ -958,7 +958,7 @@ describe('remove project manager', () => {
       },
     ]);
   });
-  it('when project manager role is the only role, it removes the whole user object', async () => {
+  it('when project manager role is the only role, it removes the whole user object', () => {
     expect(removeProjectManager(contributorsArrayWithContributorsWithOnlyManagerRole)).toEqual([
       {
         identity: existingPersonIdentity,
@@ -969,7 +969,7 @@ describe('remove project manager', () => {
       },
     ]);
   });
-  it('when they only have a project manager role with undefined affiliation, it removes the whole user object', async () => {
+  it('when they only have a project manager role with undefined affiliation, it removes the whole user object', () => {
     expect(removeProjectManager(contributorsArrayWithUndefinedPMAffiliationAndOtherContributor)).toEqual([
       {
         identity: existingPersonIdentity,
@@ -980,7 +980,7 @@ describe('remove project manager', () => {
       },
     ]);
   });
-  it('when there is no project manager, it returns an unchanged object', async () => {
+  it('when there is no project manager, it returns an unchanged object', () => {
     expect(removeProjectManager(contributorsArrayWithNoProjectManager)).toEqual(contributorsArrayWithNoProjectManager);
   });
 });
