@@ -357,6 +357,7 @@ export const dataTestId = {
       supportAccordion: 'support-accordion',
       tabPanelLog: 'tab-panel-log',
       tabPanelTasks: 'tab-panel-tasks',
+      terminateRegistrationButton: 'terminate-registration-button',
     },
     duplicateRegistrationModal: {
       duplicationModal: 'duplication-modal',

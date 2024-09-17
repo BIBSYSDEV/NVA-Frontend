@@ -11,7 +11,6 @@ import { unpublishRegistration } from '../../../api/registrationApi';
 import { Modal } from '../../../components/Modal';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { setNotification } from '../../../redux/notificationSlice';
-import i18n from '../../../translations/i18n';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userCanUnpublishRegistration } from '../../../utils/registration-helpers';
@@ -27,7 +26,7 @@ interface UnpublishRegistrationProps {
 }
 
 export const UnpublishRegistration = ({ registration }: UnpublishRegistrationProps) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showUnpublishModal, setShowUnpublishModal] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [selectedDuplicate, setSelectedDuplicate] = useState<Registration | null>(null);
@@ -37,8 +36,8 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
 
   const deleteValidationSchema = Yup.object().shape({
     deleteMessage: Yup.string()
-      .min(3, t('feedback.validation.must_be_bigger_than', { field: i18n.t('common.justification'), limit: 3 }))
-      .required(t('feedback.validation.is_required', { field: i18n.t('common.justification') })),
+      .min(3, t('feedback.validation.must_be_bigger_than', { field: t('common.justification'), limit: 3 }))
+      .required(t('feedback.validation.is_required', { field: t('common.justification') })),
   });
 
   const unpublishRegistrationMutation = useMutation({
@@ -57,7 +56,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
       }
     },
     onSuccess: () => {
-      setShowDeleteModal(false);
+      setShowUnpublishModal(false);
       history.push(`${getRegistrationLandingPagePath(registration.identifier)}?shouldNotRedirect`);
     },
     onError: () => {
@@ -75,7 +74,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
             data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
             variant="outlined"
             sx={{ bgcolor: 'white' }}
-            onClick={() => setShowDeleteModal(true)}>
+            onClick={() => setShowUnpublishModal(true)}>
             {t('unpublish_actions.unpublish')}
           </Button>
         </>
@@ -89,17 +88,15 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
 
       <Modal
         headingText={t('registration.delete_registration')}
-        open={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}>
+        open={showUnpublishModal}
+        onClose={() => setShowUnpublishModal(false)}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <RequiredDescription />
           <Typography>{t('unpublish_actions.unpublish_registration_detail_1')}</Typography>
           <Typography>{t('unpublish_actions.unpublish_registration_detail_2')}</Typography>
 
           <Formik
-            initialValues={{
-              deleteMessage: '',
-            }}
+            initialValues={{ deleteMessage: '' }}
             validationSchema={deleteValidationSchema}
             onSubmit={(values) => unpublishRegistrationMutation.mutate(values)}>
             <Form noValidate>
@@ -132,7 +129,9 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                 filteredRegistrationIdentifier={registration.identifier}
               />
               <DialogActions>
-                <Button data-testid={'close-delete-modal'} onClick={() => setShowDeleteModal(false)}>
+                <Button
+                  data-testid={dataTestId.confirmDialog.cancelButton}
+                  onClick={() => setShowUnpublishModal(false)}>
                   {t('common.cancel')}
                 </Button>
                 <LoadingButton
