@@ -1,7 +1,5 @@
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, DialogActions, Divider, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
@@ -20,7 +18,7 @@ import { userCanUnpublishRegistration } from '../../../utils/registration-helper
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 import { FindRegistration } from './FindRegistration';
 
-interface DeleteForm {
+interface UnpublishForm {
   deleteMessage: string;
 }
 
@@ -29,7 +27,6 @@ interface UnpublishRegistrationProps {
 }
 
 export const UnpublishRegistration = ({ registration }: UnpublishRegistrationProps) => {
-  const [showDeleteField, setShowDeleteField] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -45,7 +42,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
   });
 
   const unpublishRegistrationMutation = useMutation({
-    mutationFn: (values: DeleteForm) => {
+    mutationFn: (values: UnpublishForm) => {
       if (selectedDuplicate) {
         return unpublishRegistration(registration.identifier, {
           type: 'UnpublishPublicationRequest',
@@ -71,36 +68,24 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-        <Divider flexItem />
-        <IconButton
-          sx={{ width: 'fit-content', alignSelf: 'center', p: '0' }}
-          data-testid={dataTestId.unpublishActions.showUnpublishButtonButton}
-          title={showDeleteField ? t('common.show_fewer_options') : t('common.show_more_options')}
-          onClick={() => setShowDeleteField(!showDeleteField)}>
-          {showDeleteField ? <ExpandLess /> : <ExpandMore />}
-        </IconButton>
-        {showDeleteField && (
+        <Typography fontWeight="bold">{t('unpublish_actions.unpublish_header')}</Typography>
+        {userCanUnpublish ? (
           <>
-            <Typography fontWeight="bold">{t('unpublish_actions.unpublish_header')}</Typography>
-            {userCanUnpublish ? (
-              <>
-                <Typography gutterBottom>{t('unpublish_actions.unpublish_info')}</Typography>
-                <Button
-                  data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
-                  variant="outlined"
-                  sx={{ bgcolor: 'white' }}
-                  onClick={() => setShowDeleteModal(true)}>
-                  {t('unpublish_actions.unpublish')}
-                </Button>
-              </>
-            ) : (
-              <Trans
-                t={t}
-                i18nKey="unpublish_actions.unpublish_not_allowed"
-                components={[<Typography paragraph key="1" />]}
-              />
-            )}
+            <Typography gutterBottom>{t('unpublish_actions.unpublish_info')}</Typography>
+            <Button
+              data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
+              variant="outlined"
+              sx={{ bgcolor: 'white' }}
+              onClick={() => setShowDeleteModal(true)}>
+              {t('unpublish_actions.unpublish')}
+            </Button>
           </>
+        ) : (
+          <Trans
+            t={t}
+            i18nKey="unpublish_actions.unpublish_not_allowed"
+            components={[<Typography paragraph key="1" />]}
+          />
         )}
       </Box>
       <Modal
