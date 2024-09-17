@@ -67,7 +67,7 @@ export enum UrlPathTemplate {
   TasksNviCandidate = '/tasks/nvi/:identifier',
   TasksNviCorrectionList = '/tasks/correction-list',
   TasksNviStatus = '/tasks/nvi/status',
-  Wildcard = '*',
+  Wildcard = '*/*',
 }
 
 export const getRegistrationLandingPagePath = (identifier: string) =>

@@ -208,12 +208,13 @@ const HomePage = () => {
       <ErrorBoundary>
         <Routes>
           <Route
+            index
             path={UrlPathTemplate.Home}
             element={
               <SearchPage registrationQuery={registrationQuery} personQuery={personQuery} projectQuery={projectQuery} />
             }
           />
-          <Route path={UrlPathTemplate.Search} element={<AdvancedSearchPage />} />
+          <Route index path={UrlPathTemplate.Search} element={<AdvancedSearchPage />} />
           <Route path={UrlPathTemplate.Reports} element={<ReportsPage />} />
           <Route path={UrlPathTemplate.ReportsNvi} element={<NviReports />} />
           <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<InternationalCooperationReports />} />
