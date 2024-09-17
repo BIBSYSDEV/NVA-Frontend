@@ -346,6 +346,22 @@ export const DoiRequestAccordion = ({
           </DialogActions>
         </Modal>
 
+        <ConfirmDialog
+          open={showConfirmDialogAssignDoi}
+          title={t('registration.public_page.tasks_panel.no_published_files_on_registration')}
+          onAccept={async () => {
+            await approveTicketMutation.mutateAsync();
+            toggleConfirmDialogAssignDoi();
+          }}
+          isLoading={isLoadingData || approveTicketMutation.isPending}
+          onCancel={toggleConfirmDialogAssignDoi}>
+          <Trans
+            t={t}
+            i18nKey="registration.public_page.tasks_panel.no_published_files_on_registration_description"
+            components={[<Typography paragraph key="1" />]}
+          />
+        </ConfirmDialog>
+
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <Typography>{t('registration.public_page.tasks_panel.assign_doi_about')}</Typography>
@@ -361,22 +377,6 @@ export const DoiRequestAccordion = ({
               disabled={isLoadingData || approveTicketMutation.isPending}>
               {t('common.reject_doi')}
             </Button>
-
-            <ConfirmDialog
-              open={showConfirmDialogAssignDoi}
-              title={t('registration.public_page.tasks_panel.no_published_files_on_registration')}
-              onAccept={async () => {
-                await approveTicketMutation.mutateAsync();
-                toggleConfirmDialogAssignDoi();
-              }}
-              isLoading={isLoadingData || approveTicketMutation.isPending}
-              onCancel={toggleConfirmDialogAssignDoi}>
-              <Trans
-                t={t}
-                i18nKey="registration.public_page.tasks_panel.no_published_files_on_registration_description"
-                components={[<Typography paragraph key="1" />]}
-              />
-            </ConfirmDialog>
 
             <ConfirmMessageDialog
               open={openRejectDoiDialog}
