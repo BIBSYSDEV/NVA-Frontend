@@ -8,7 +8,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
@@ -351,16 +351,6 @@ const MyPagePage = () => {
 
       <ErrorBoundary>
         <Routes>
-          <Route
-            path={UrlPathTemplate.MyPage}
-            element={
-              <PrivateRoute
-                isAuthorized={isAuthenticated}
-                element={<Navigate to={UrlPathTemplate.MyPageResearchProfile} />}
-              />
-            }
-          />
-
           <Route
             path={UrlPathTemplate.MyPageMyMessages}
             element={

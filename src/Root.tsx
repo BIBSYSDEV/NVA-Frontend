@@ -3,7 +3,7 @@ import { lazy, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Route, RouterProvider, Routes } from 'react-router-dom';
 import { getUserAttributes } from './api/authApi';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 import { PageSpinner } from './components/PageSpinner';
@@ -11,7 +11,7 @@ import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInst
 import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
-import { USE_MOCK_DATA } from './utils/constants';
+import { ROWS_PER_PAGE_OPTIONS, USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { Layout } from './Layout';
@@ -22,6 +22,9 @@ import MyPagePage from './pages/my_page/MyPagePage';
 import ResearchProfile from './pages/research_profile/ResearchProfile';
 import { RegistrationLandingPage } from './pages/public_registration/RegistrationLandingPage';
 import { MyRegistrations } from './pages/my_registrations/MyRegistrations';
+import { TicketList } from './pages/messages/components/TicketList';
+import { useQuery } from '@tanstack/react-query';
+import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from './api/searchApi';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -102,6 +105,45 @@ export const Root = () => {
     unpublished: true,
   });
 
+  //MY PAGE
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const searchParams = new URLSearchParams(location.search);
+  const apiPage = page - 1;
+
+  const [selectedTypes, setSelectedTypes] = useState({
+    doiRequest: true,
+    generalSupportCase: true,
+    publishingRequest: true,
+  });
+
+  const selectedTypesArray = Object.entries(selectedTypes)
+    .filter(([, selected]) => selected)
+    .map(([key]) => key);
+  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot);
+  const ticketSearchParams: FetchTicketsParams = {
+    aggregation: 'all',
+    query: searchParams.get(TicketSearchParam.Query),
+    results: rowsPerPage,
+    createdDate: searchParams.get(TicketSearchParam.CreatedDate),
+    from: apiPage * rowsPerPage,
+    owner: user?.nvaUsername,
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+    status: searchParams.get(TicketSearchParam.Status),
+    viewedByNot: viewedByNotParam,
+    type: selectedTypesArray.join(','),
+    publicationType: searchParams.get(TicketSearchParam.PublicationType),
+  };
+
+  const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
+  const ticketsQuery = useQuery({
+    enabled: isOnDialoguePage && !!user?.isCreator,
+    queryKey: ['tickets', ticketSearchParams],
+    queryFn: () => fetchCustomerTickets(ticketSearchParams),
+    meta: { errorMessage: t('feedback.error.get_messages') },
+  });
+
   return (
     <>
       <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
@@ -137,6 +179,33 @@ export const Root = () => {
               path={UrlPathTemplate.MyPage}
               element={<PrivateRoute isAuthorized={isAuthenticated} element={<MyPagePage />} />}>
               <>
+                <Route
+                  path={UrlPathTemplate.MyPage}
+                  element={
+                    <PrivateRoute
+                      isAuthorized={isAuthenticated}
+                      element={<Navigate to={UrlPathTemplate.MyPageResearchProfile} />}
+                    />
+                  }
+                />
+                <Route
+                  path={UrlPathTemplate.MyPageMyMessages}
+                  element={
+                    <PrivateRoute
+                      isAuthorized={isCreator}
+                      element={
+                        <TicketList
+                          ticketsQuery={ticketsQuery}
+                          rowsPerPage={rowsPerPage}
+                          setRowsPerPage={setRowsPerPage}
+                          page={page}
+                          setPage={setPage}
+                          title={t('common.dialogue')}
+                        />
+                      }
+                    />
+                  }
+                />
                 <Route
                   path={UrlPathTemplate.MyPageMyMessagesRegistration}
                   element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isCreator} />}
