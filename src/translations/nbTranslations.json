@@ -1493,11 +1493,13 @@
         "reserve_doi_confirmation": "<0>Kun publiserte forskningsresultater kan ha en DOI.</0><0>Om du trenger en DOI for å sitere forskningsresultater korrekt i andre forskingsresultater som er under arbeid, før det er publisert, så kan du reservere en DOI.</0><0>Kun du ser den reserverte DOI-en, og den leder ikke til noe sted før du publiserer forskningsresultatet. Etter publisering blir din kurator informert om at du ønsker en DOI, og må da tildele den (eller avvise).</0><0>Om du er klar til å publisere, så publiser, og velg \"$t(registration.public_page.request_doi)\", i stedet for å reservere en DOI.</0><1>Ønsker du fortsatt å reservere en DOI?</1>",
         "reserved": "Reservert",
         "review_preview_before_publishing": "Se over utkast før du går videre.",
+        "terminate_result": "Slett resultat",
+        "terminate_result_confirmation": "<0>Alle filer og det meste av metadata slettes fra resultatet.</0><0>Kun tittel, forfatterer med tilhørighet, kanalinformasjon, kategori, publiseringstidspunkt og eventuelt persistente identifikatorer som DOI og handle blir bevart.</0>",
+        "terminate_result_description": "<0>Slett resultatet om det er feilregistrert.</0><0>Slettes resultatet er det ikke mulig å gjenopprette informasjon og filer på resultatet.</0>",
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Beskrivelsen (metadata) av forskningsresultatet og opplastede filer blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
-        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig.",
-        "terminate_result_description": "<0>Slett resultatet om det er feilregistrert.</0><0>Slettes resultatet er det ikke mulig å gjenopprette informasjon og filer på resultatet.</0>"
+        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig."
       },
       "validation_errors": "Valideringsfeil"
     },

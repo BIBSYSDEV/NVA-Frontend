@@ -1,6 +1,8 @@
 import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userCanTerminateRegistration } from '../../../utils/registration-helpers';
@@ -14,29 +16,7 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
   const [showTerminateModal, setShowTerminateModal] = useState(false);
   const userCanTerminate = userCanTerminateRegistration(registration);
 
-  // const unpublishRegistrationMutation = useMutation({
-  //   mutationFn: (values: UnpublishForm) => {
-  //     if (selectedDuplicate) {
-  //       return unpublishRegistration(registration.identifier, {
-  //         type: 'UnpublishPublicationRequest',
-  //         duplicateOf: selectedDuplicate.id,
-  //         comment: values.deleteMessage,
-  //       });
-  //     } else {
-  //       return unpublishRegistration(registration.identifier, {
-  //         type: 'UnpublishPublicationRequest',
-  //         comment: values.deleteMessage,
-  //       });
-  //     }
-  //   },
-  //   onSuccess: () => {
-  //     setShowDeleteModal(false);
-  //     history.push(`${getRegistrationLandingPagePath(registration.identifier)}?shouldNotRedirect`);
-  //   },
-  //   onError: () => {
-  //     dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
-  //   },
-  // });
+  const updateRegistrationStatusMutation = useUpdateRegistrationStatus();
 
   if (!userCanTerminate) {
     return null;
@@ -56,6 +36,25 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
         onClick={() => setShowTerminateModal(true)}>
         {t('common.delete')}
       </Button>
+
+      <ConfirmDialog
+        open={showTerminateModal}
+        title={t('registration.public_page.tasks_panel.terminate_result')}
+        onAccept={() =>
+          updateRegistrationStatusMutation.mutate({
+            registrationIdentifier: registration.identifier,
+            data: { type: 'TerminatePublicationRequest' },
+          })
+        }
+        isLoading={updateRegistrationStatusMutation.isPending}
+        confirmButtonLabel={t('common.delete')}
+        cancelButtonLabel={t('common.cancel')}
+        onCancel={() => setShowTerminateModal(false)}>
+        <Trans
+          i18nKey="registration.public_page.tasks_panel.terminate_result_confirmation"
+          components={[<Typography key="1" gutterBottom />]}
+        />
+      </ConfirmDialog>
     </>
   );
 };

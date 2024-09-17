@@ -338,6 +338,10 @@ export interface UnpublishPublicationRequest {
   comment: string;
 }
 
+export interface TerminatePublicationRequest {
+  type: 'TerminatePublicationRequest';
+}
+
 interface NpiSubjectSubdomain {
   id: string;
   name: string;
