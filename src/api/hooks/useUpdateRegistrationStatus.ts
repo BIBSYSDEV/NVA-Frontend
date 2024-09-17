@@ -22,17 +22,13 @@ export const useUpdateRegistrationStatus = () => {
     onSuccess: (response, variables) => {
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (response.data) {
-        const key1 = ['registration', response.data.identifier];
+        const key1 = ['registration', response.data.identifier, true];
         if (queryClient.getQueryData(key1)) {
           queryClient.setQueryData(key1, response.data);
         }
-        const key2 = ['registration', response.data.identifier, true];
+        const key2 = ['registration', response.data.identifier, false];
         if (queryClient.getQueryData(key2)) {
           queryClient.setQueryData(key2, response.data);
-        }
-        const key3 = ['registration', response.data.identifier, false];
-        if (queryClient.getQueryData(key3)) {
-          queryClient.setQueryData(key3, response.data);
         }
       }
       variables.onSuccess?.();
