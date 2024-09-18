@@ -1,13 +1,23 @@
 import { describe, expect, it } from 'vitest';
-import { addContributor, AddContributorErrors } from '../helpers/projectContributorHelpers.js';
+import {
+  addContributor,
+  AddContributorErrors,
+  removeProjectManager,
+  removeProjectParticipant,
+} from '../helpers/projectContributorHelpers.js';
 import {
   abcOrgAsAffiliation,
+  contributorsArrayWithContributorsWithOnlyManagerRole,
+  contributorsArrayWithContributorsWithOnlyParticipantRole,
+  contributorsArrayWithContributorWithBothPMRoleAndParticipantRole,
   contributorsArrayWithDifferentProjectManagerWithDifferentAffiliation,
   contributorsArrayWithDifferentProjectManagerWithSameAffiliation,
   contributorsArrayWithDifferentProjectManagerWithUndefinedAffiliation,
+  contributorsArrayWithNoProjectManager,
   contributorsArrayWithOtherPersonWithDifferentAffiliation,
   contributorsArrayWithOtherPersonWithSameAffiliation,
   contributorsArrayWithOtherPersonWithUndefinedAffiliation,
+  contributorsArrayWithOtherPMAndUndefinedAffiliation,
   contributorsArrayWithProjectManager,
   contributorsArrayWithSelectedPersonAsProjectManagerWithDifferentAffiliation,
   contributorsArrayWithSelectedPersonAsProjectManagerWithNoAffiliation,
@@ -15,6 +25,7 @@ import {
   contributorsArrayWithSelectedPersonWithDifferentAffiliation,
   contributorsArrayWithSelectedPersonWithSameAffiliation,
   contributorsArrayWithSelectedPersonWithUndefinedAffiliation,
+  contributorsArrayWithUndefinedPMAffiliationAndOtherContributor,
   defOrgAsAffiliation,
   existingPersonIdentity,
   selectedPersonIdentity,
@@ -880,5 +891,96 @@ describe('addContributor', () => {
         });
       });
     });
+  });
+});
+
+describe('remove project participant', () => {
+  it('when they also have a project manager role, it removes all project participant roles on the participant, but keeps the user and its project manager role', () => {
+    expect(removeProjectParticipant(contributorsArrayWithContributorWithBothPMRoleAndParticipantRole, 0)).toEqual([
+      {
+        identity: selectedPersonIdentity,
+        roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }],
+      },
+      {
+        identity: existingPersonIdentity,
+        roles: [
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+        ],
+      },
+    ]);
+  });
+  it('when they only have project participant roles, it removes the whole user object', () => {
+    expect(removeProjectParticipant(contributorsArrayWithContributorsWithOnlyParticipantRole, 0)).toEqual([
+      {
+        identity: existingPersonIdentity,
+        roles: [
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+        ],
+      },
+    ]);
+  });
+  it('when they only have a project participant role with undefined affiliation, it removes the whole user object', () => {
+    expect(removeProjectParticipant(contributorsArrayWithOtherPMAndUndefinedAffiliation, 1)).toEqual([
+      {
+        identity: existingPersonIdentity,
+        roles: [
+          { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+        ],
+      },
+    ]);
+  });
+  it('when the index to delete is negative, it returns an unchanged object', () => {
+    expect(removeProjectParticipant(contributorsArrayWithOtherPMAndUndefinedAffiliation, -1)).toEqual(
+      contributorsArrayWithOtherPMAndUndefinedAffiliation
+    );
+  });
+});
+
+describe('remove project manager', () => {
+  it('when they also have other roles, it removes project manager role on the participant, but keeps the user and its other roles', () => {
+    expect(removeProjectManager(contributorsArrayWithContributorWithBothPMRoleAndParticipantRole)).toEqual([
+      {
+        identity: selectedPersonIdentity,
+        roles: [
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+        ],
+      },
+      {
+        identity: existingPersonIdentity,
+        roles: [
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+        ],
+      },
+    ]);
+  });
+  it('when project manager role is the only role, it removes the whole user object', () => {
+    expect(removeProjectManager(contributorsArrayWithContributorsWithOnlyManagerRole)).toEqual([
+      {
+        identity: existingPersonIdentity,
+        roles: [
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+        ],
+      },
+    ]);
+  });
+  it('when they only have a project manager role with undefined affiliation, it removes the whole user object', () => {
+    expect(removeProjectManager(contributorsArrayWithUndefinedPMAffiliationAndOtherContributor)).toEqual([
+      {
+        identity: existingPersonIdentity,
+        roles: [
+          { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+          { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+        ],
+      },
+    ]);
+  });
+  it('when there is no project manager, it returns an unchanged object', () => {
+    expect(removeProjectManager(contributorsArrayWithNoProjectManager)).toEqual(contributorsArrayWithNoProjectManager);
   });
 });
