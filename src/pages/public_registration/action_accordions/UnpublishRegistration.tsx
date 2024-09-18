@@ -75,7 +75,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
             onSubmit={(values) =>
               updateRegistrationStatusMutation.mutate({
                 registrationIdentifier: registration.identifier,
-                data: {
+                updateStatusRequest: {
                   type: 'UnpublishPublicationRequest',
                   duplicateOf: selectedDuplicate?.id,
                   comment: values.comment,

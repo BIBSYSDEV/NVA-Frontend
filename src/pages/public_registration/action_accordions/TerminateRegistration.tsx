@@ -47,7 +47,7 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
         onAccept={() =>
           updateRegistrationStatusMutation.mutate({
             registrationIdentifier: registration.identifier,
-            data: { type: 'DeletePublicationRequest' },
+            updateStatusRequest: { type: 'DeletePublicationRequest' },
             onSuccess: toggleTerminateModal,
           })
         }

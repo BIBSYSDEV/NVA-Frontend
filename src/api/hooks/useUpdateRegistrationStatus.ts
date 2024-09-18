@@ -7,7 +7,7 @@ import { updateRegistrationStatus } from '../registrationApi';
 
 interface UpdateRequest {
   registrationIdentifier: string;
-  data: UpdateRegistrationStatusRequest;
+  updateStatusRequest: UpdateRegistrationStatusRequest;
   onSuccess?: () => void;
 }
 
@@ -17,8 +17,8 @@ export const useUpdateRegistrationStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ registrationIdentifier, data }: UpdateRequest) =>
-      updateRegistrationStatus(registrationIdentifier, data),
+    mutationFn: ({ registrationIdentifier, updateStatusRequest }: UpdateRequest) =>
+      updateRegistrationStatus(registrationIdentifier, updateStatusRequest),
     onSuccess: (response, variables) => {
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (response.data) {

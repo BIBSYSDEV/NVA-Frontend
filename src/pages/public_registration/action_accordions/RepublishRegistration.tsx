@@ -48,7 +48,7 @@ export const RepublishRegistration = ({ registration }: RepublishRegistrationPro
             onAccept={() =>
               updateRegistrationStatusMutation.mutate({
                 registrationIdentifier: registration.identifier,
-                data: { type: 'RepublishPublicationRequest' },
+                updateStatusRequest: { type: 'RepublishPublicationRequest' },
                 onSuccess: toggleRepublishDialog,
               })
             }
