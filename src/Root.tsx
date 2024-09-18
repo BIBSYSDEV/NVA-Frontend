@@ -25,6 +25,13 @@ import { MyRegistrations } from './pages/my_registrations/MyRegistrations';
 import { TicketList } from './pages/messages/components/TicketList';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from './api/searchApi';
+import { MyProfile } from './pages/my_page/user_profile/MyProfile';
+import { MyFieldAndBackground } from './pages/my_page/user_profile/MyFieldAndBackground';
+import { MyProjects } from './pages/my_page/user_profile/MyProjects';
+import { MyResults } from './pages/my_page/user_profile/MyResults';
+import { MyProjectRegistrations } from './pages/my_page/user_profile/MyProjectRegistrations';
+import { UserRoleAndHelp } from './pages/my_page/user_profile/UserRoleAndHelp';
+import EditRegistration from './pages/registration/new_registration/EditRegistration';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -46,7 +53,6 @@ if (
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
-const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const CreateProject = lazy(() => import('./pages/project/project_wizard/CreateProject'));
 const EditProject = lazy(() => import('./pages/project/project_wizard/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
@@ -166,6 +172,18 @@ export const Root = () => {
               <Route index path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
             </Route>
 
+            <Route
+              path={UrlPathTemplate.RegistrationNew}
+              element={<PrivateRoute isAuthorized={isCreator} element={<EditRegistration />} />}
+            />
+
+            <Route
+              path={UrlPathTemplate.RegistrationWizard}
+              element={
+                <PrivateRoute isAuthorized={isCreator || isCurator || isEditor} element={<EditRegistration />} />
+              }
+            />
+
             <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
             <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
             <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
@@ -187,6 +205,42 @@ export const Root = () => {
                       element={<Navigate to={UrlPathTemplate.MyPageResearchProfile} />}
                     />
                   }
+                />
+                <Route
+                  path={UrlPathTemplate.MyPagePersonalia}
+                  element={<PrivateRoute element={<MyProfile />} isAuthorized={isAuthenticated} />}
+                />
+                <Route
+                  path={UrlPathTemplate.MyPageFieldAndBackground}
+                  element={<PrivateRoute element={<MyFieldAndBackground />} isAuthorized={isAuthenticated} />}
+                />
+                <Route
+                  path={UrlPathTemplate.MyPageMyProjects}
+                  element={<PrivateRoute element={<MyProjects />} isAuthorized={isAuthenticated} />}
+                />
+                <Route
+                  path={UrlPathTemplate.MyPageResearchProfile}
+                  element={<PrivateRoute element={<ResearchProfile />} isAuthorized={isAuthenticated} />}
+                />
+
+                <Route
+                  path={UrlPathTemplate.MyPageResults}
+                  element={<PrivateRoute element={<MyResults />} isAuthorized={isAuthenticated} />}
+                />
+
+                <Route
+                  path={UrlPathTemplate.MyPageMyProjectRegistrations}
+                  element={<PrivateRoute element={<MyProjectRegistrations />} isAuthorized={isAuthenticated} />}
+                />
+
+                <Route
+                  path={UrlPathTemplate.MyPageUserRoleAndHelp}
+                  element={<PrivateRoute element={<UserRoleAndHelp />} isAuthorized={isAuthenticated} />}
+                />
+
+                <Route
+                  path={UrlPathTemplate.Wildcard}
+                  element={<PrivateRoute element={<NotFound />} isAuthorized={isAuthenticated} />}
                 />
                 <Route
                   path={UrlPathTemplate.MyPageMyMessages}

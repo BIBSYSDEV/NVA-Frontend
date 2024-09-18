@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Prompt, useHistory } from 'react-router-dom';
+import { useBlocker, useNavigate } from 'react-router-dom';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { ConfirmDialog } from './ConfirmDialog';
 
@@ -15,10 +15,9 @@ export const RouteLeavingGuard = ({
   modalHeading,
   shouldBlockNavigation,
 }: RouteLeavingGuardProps) => {
-  const [showModal, setShowModal] = useState(false);
   const [nextPath, setNextPath] = useState('');
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (shouldBlockNavigation) {
@@ -31,42 +30,30 @@ export const RouteLeavingGuard = ({
 
   useEffect(() => {
     if (confirmedNavigation && nextPath) {
-      history.push(nextPath);
+      navigate(nextPath);
     }
-  }, [history, confirmedNavigation, nextPath]);
+  }, [navigate, confirmedNavigation, nextPath]);
+
+  const blocker = useBlocker(() => shouldBlockNavigation);
+
+  const isBlocked = blocker.state === 'blocked';
 
   return (
-    <>
-      <Prompt
-        when={shouldBlockNavigation}
-        message={(nextLocation) => {
-          const currentPath = `${history.location.pathname}${history.location.search}`;
-          const newPath = `${nextLocation.pathname}${nextLocation.search}${nextLocation.hash}`;
-          if (
-            !confirmedNavigation &&
-            shouldBlockNavigation &&
-            currentPath !== newPath &&
-            !goFromRegistrationWizardToLandingPage(history.location.pathname, nextLocation.pathname)
-          ) {
-            setShowModal(true);
-            setNextPath(newPath);
-            return false;
-          }
-          return true;
-        }}
-      />
+    blocker.state === 'blocked' && (
       <ConfirmDialog
-        open={showModal}
+        open={isBlocked}
         title={modalHeading}
         onAccept={() => {
-          setShowModal(false);
+          blocker.proceed();
           setConfirmedNavigation(true);
         }}
-        onCancel={() => setShowModal(false)}
+        onCancel={() => {
+          blocker.reset();
+        }}
         dialogDataTestId="confirm-leaving-registration-form-dialog">
         <Typography>{modalDescription}</Typography>
       </ConfirmDialog>
-    </>
+    )
   );
 };
 

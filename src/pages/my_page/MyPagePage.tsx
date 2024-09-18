@@ -37,10 +37,7 @@ import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import ResearchProfile from '../research_profile/ResearchProfile';
-import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
-import { MyProfile } from './user_profile/MyProfile';
 import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
-import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
 import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
@@ -388,21 +385,6 @@ const MyPagePage = () => {
                 isAuthorized={isCreator}
               />
             }
-          />
-
-          <Route
-            path={UrlPathTemplate.MyPagePersonalia}
-            element={<PrivateRoute element={<MyProfile />} isAuthorized={isAuthenticated} />}
-          />
-
-          <Route
-            path={UrlPathTemplate.MyPageFieldAndBackground}
-            element={<PrivateRoute element={<MyFieldAndBackground />} isAuthorized={isAuthenticated} />}
-          />
-
-          <Route
-            path={UrlPathTemplate.MyPageMyProjects}
-            element={<PrivateRoute element={<MyProjects />} isAuthorized={isAuthenticated} />}
           />
 
           <Route
