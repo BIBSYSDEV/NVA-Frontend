@@ -24,11 +24,6 @@ export const ProjectManager = ({ suggestedProjectManager }: ProjectContributorsP
 
   const contributorError = touched.contributors && errors?.contributors ? errors.contributors : '';
 
-  const onRemoveProjectManager = (name: string) => {
-    const newContributors = removeProjectManager(contributors);
-    setFieldValue(name, newContributors);
-  };
-
   const toggleAddProjectManagerView = () => setAddProjectManagerViewIsOpen(!addProjectManagerViewIsOpen);
 
   return (
@@ -53,7 +48,7 @@ export const ProjectManager = ({ suggestedProjectManager }: ProjectContributorsP
                   contributorIndex={projectManagerIndex}
                   baseFieldName={`${name}[${projectManagerIndex}]`}
                   contributor={projectManager}
-                  removeContributor={() => onRemoveProjectManager(name)}
+                  removeContributor={() => setFieldValue(name, removeProjectManager(contributors))}
                   asProjectManager
                 />
               </ProjectContributorTable>

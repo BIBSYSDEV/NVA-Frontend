@@ -241,9 +241,7 @@ export const removeAffiliation = (
     newRoles.splice(indexOfRoleThatHasAffiliation, 1);
   } else {
     // Since we're just supposed to remove the affiliation and not the whole role/user row, we have to keep the last role of its type
-    const newRole = { ...roleToDelete };
-    newRole.affiliation = undefined;
-    newRoles[indexOfRoleThatHasAffiliation] = newRole;
+    newRoles[indexOfRoleThatHasAffiliation] = { ...roleToDelete, affiliation: undefined };
   }
 
   return { newContributorRoles: newRoles };

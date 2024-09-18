@@ -30,11 +30,6 @@ export const ProjectParticipants = () => {
 
   const toggleOpenAddProjectParticipantView = () => setOpenAddProjectParticipantView(!openAddProjectParticipantView);
 
-  const onRemoveContributor = (name: string, contributorIndex: number) => {
-    const newContributors = removeProjectParticipant(values.contributors, contributorIndex);
-    setFieldValue(name, newContributors);
-  };
-
   return (
     <>
       <Typography variant="h2">{t('project.project_participants')}</Typography>
@@ -72,7 +67,9 @@ export const ProjectParticipants = () => {
                         contributorIndex={contributorIndex}
                         baseFieldName={`${name}[${contributorIndex}]`}
                         contributor={contributor}
-                        removeContributor={() => onRemoveContributor(name, contributorIndex)}
+                        removeContributor={() =>
+                          setFieldValue(name, removeProjectParticipant(values.contributors, contributorIndex))
+                        }
                       />
                     );
                   })}
