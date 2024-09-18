@@ -32,11 +32,7 @@ export const RepublishRegistration = ({ registration }: RepublishRegistrationPro
         />
       ) : (
         <>
-          <Trans
-            t={t}
-            i18nKey="registration.public_page.tasks_panel.republish_description"
-            components={[<Typography gutterBottom key="1" />]}
-          />
+          <Typography gutterBottom>{t('registration.public_page.tasks_panel.republish_description')}</Typography>
           <Button
             data-testid={dataTestId.registrationLandingPage.tasksPanel.republishRegistrationButton}
             variant="outlined"
@@ -60,7 +56,7 @@ export const RepublishRegistration = ({ registration }: RepublishRegistrationPro
             confirmButtonLabel={t('common.republish')}
             cancelButtonLabel={t('common.cancel')}
             onCancel={toggleRepublishDialog}>
-            dialog
+            {t('registration.public_page.tasks_panel.confirm_republish_description')}
           </ConfirmDialog>
         </>
       )}
