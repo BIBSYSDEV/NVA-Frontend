@@ -37,7 +37,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
   const updateRegistrationStatusMutation = useUpdateRegistrationStatus();
 
   return (
-    <>
+    <section>
       <Typography fontWeight="bold">{t('unpublish_actions.unpublish_header')}</Typography>
       {userCanUnpublish ? (
         <>
@@ -54,7 +54,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
         <Trans
           t={t}
           i18nKey="unpublish_actions.unpublish_not_allowed"
-          components={[<Typography paragraph key="1" />]}
+          components={[<Typography gutterBottom key="1" />]}
         />
       )}
 
@@ -129,6 +129,6 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
           </Formik>
         </Box>
       </Modal>
-    </>
+    </section>
   );
 };

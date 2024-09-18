@@ -670,6 +670,9 @@ export const userCanUnpublishRegistration = (registration: Registration) =>
 export const userCanTerminateRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('terminate') ?? false;
 
+export const userCanRepublishRegistration = (registration: Registration) =>
+  registration.allowedOperations?.includes('republish') ?? false;
+
 export const userCanPublishRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('ticket/publish') ?? false;
 

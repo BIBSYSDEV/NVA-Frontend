@@ -103,6 +103,7 @@ type RegistrationOperation =
   | 'update'
   | 'delete'
   | 'unpublish'
+  | 'republish'
   | 'ticket/publish'
   | 'terminate'
   | 'update-including-files';
