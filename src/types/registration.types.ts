@@ -333,15 +333,24 @@ export const emptyUnconfirmedDocument: UnconfirmedDocument = {
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
 
-export interface UnpublishPublicationRequest {
+interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
   duplicateOf?: string;
   comment: string;
 }
 
-export interface TerminatePublicationRequest {
+interface TerminatePublicationRequest {
   type: 'DeletePublicationRequest';
 }
+
+interface RepublishPublicationRequest {
+  type: 'RepublishPublicationRequest';
+}
+
+export type UpdateRegistrationStatusRequest =
+  | UnpublishPublicationRequest
+  | TerminatePublicationRequest
+  | RepublishPublicationRequest;
 
 interface NpiSubjectSubdomain {
   id: string;

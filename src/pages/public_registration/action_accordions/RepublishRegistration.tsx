@@ -2,6 +2,7 @@ import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userCanRepublishRegistration } from '../../../utils/registration-helpers';
@@ -45,6 +46,22 @@ export const RepublishRegistration = ({ registration }: RepublishRegistrationPro
             onClick={toggleRepublishDialog}>
             {t('common.republish')}
           </Button>
+          <ConfirmDialog
+            open={openRepublishDialog}
+            title={t('common.republish')}
+            onAccept={() =>
+              updateRegistrationStatusMutation.mutate({
+                registrationIdentifier: registration.identifier,
+                data: { type: 'RepublishPublicationRequest' },
+                onSuccess: toggleRepublishDialog,
+              })
+            }
+            isLoading={updateRegistrationStatusMutation.isPending}
+            confirmButtonLabel={t('common.republish')}
+            cancelButtonLabel={t('common.cancel')}
+            onCancel={toggleRepublishDialog}>
+            dialog
+          </ConfirmDialog>
         </>
       )}
     </section>
