@@ -35,6 +35,11 @@ import EditRegistration from './pages/registration/new_registration/EditRegistra
 import ProjectsPage from './pages/projects/ProjectsPage';
 import LoginPage from './layout/LoginPage';
 import Logout from './layout/Logout';
+import { TicketListDefaultValuesWrapper } from './components/TicketListDefaultValuesWrapper';
+import { NviCandidatesList } from './pages/messages/components/NviCandidatesList';
+import { NviStatusPage } from './pages/messages/components/NviStatusPage';
+import { NviCandidatePage } from './pages/messages/components/NviCandidatePage';
+import { NviCorrectionList } from './pages/messages/components/NviCorrectionList';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -104,17 +109,22 @@ export const Root = () => {
   const isCurator = hasCuratorRole(user);
   const isEditor = hasCustomerId && user.isEditor;
   const isAdmin = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin);
-  const isNviCurator = hasCustomerId && user.isNviCurator;
+  const isSupportCurator = !!user?.isSupportCurator;
+  const isDoiCurator = !!user?.isDoiCurator;
+  const isPublishingCurator = !!user?.isPublishingCurator;
+  const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
+  const isNviCurator = !!user?.isNviCurator;
 
   const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
     published: false,
     unpublished: true,
   });
 
+  const searchParams = new URLSearchParams(location.search);
+
   //MY PAGE
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const searchParams = new URLSearchParams(location.search);
   const apiPage = page - 1;
 
   const [selectedTypes, setSelectedTypes] = useState({
@@ -149,6 +159,8 @@ export const Root = () => {
     queryFn: () => fetchCustomerTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
+
+  //TASKS PAGE
 
   return (
     <>
@@ -296,10 +308,70 @@ export const Root = () => {
 
             {/* CuratorRoutes */}
             <Route
-              index
               path={UrlPathTemplate.Tasks}
-              element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}
-            />
+              element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}>
+              <Route
+                path={UrlPathTemplate.Tasks}
+                element={
+                  <PrivateRoute
+                    isAuthorized={isTicketCurator || isNviCurator}
+                    element={
+                      isTicketCurator ? (
+                        <Navigate to={UrlPathTemplate.TasksDialogue} />
+                      ) : (
+                        <Navigate to={UrlPathTemplate.TasksNvi} />
+                      )
+                    }
+                  />
+                }
+              />
+
+              <Route
+                path={UrlPathTemplate.TasksDialogue}
+                element={
+                  <PrivateRoute
+                    isAuthorized={isTicketCurator}
+                    element={
+                      <TicketListDefaultValuesWrapper>
+                        <TicketList
+                          ticketsQuery={ticketsQuery}
+                          rowsPerPage={rowsPerPage}
+                          setRowsPerPage={setRowsPerPage}
+                          page={page}
+                          setPage={setPage}
+                          title={t('common.tasks')}
+                        />
+                      </TicketListDefaultValuesWrapper>
+                    }
+                  />
+                }
+              />
+
+              <Route
+                path={UrlPathTemplate.TasksDialogueRegistration}
+                element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isTicketCurator} />}
+              />
+
+              <Route
+                path={UrlPathTemplate.TasksNvi}
+                element={<PrivateRoute element={<NviCandidatesList />} isAuthorized={isNviCurator} />}
+              />
+
+              <Route
+                path={UrlPathTemplate.TasksNviStatus}
+                element={<PrivateRoute element={<NviStatusPage />} isAuthorized={isNviCurator} />}
+              />
+
+              <Route
+                path={UrlPathTemplate.TasksNviCandidate}
+                element={<PrivateRoute element={<NviCandidatePage />} isAuthorized={isNviCurator} />}
+              />
+
+              <Route
+                path={UrlPathTemplate.TasksNviCorrectionList}
+                element={<PrivateRoute element={<NviCorrectionList />} isAuthorized={isNviCurator} />}
+              />
+            </Route>
 
             {/* BasicDataRoutes */}
             <Route

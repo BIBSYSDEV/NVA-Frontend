@@ -5,9 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
+import { Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
-import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
+import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -33,7 +33,8 @@ import { TicketList } from './components/TicketList';
 
 const TasksPage = () => {
   const { t } = useTranslation();
-  const history = useHistory<PreviousSearchLocationState>();
+  const location = useLocation();
+  const locationState = location.state as PreviousSearchLocationState;
   const user = useSelector((store: RootState) => store.user);
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;
@@ -41,18 +42,18 @@ const TasksPage = () => {
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
   const isNviCurator = !!user?.isNviCurator;
 
-  const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
-  const isOnTicketPage = history.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
-  const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
-  const isOnNviStatusPage = history.location.pathname === UrlPathTemplate.TasksNviStatus;
-  const isOnCorrectionListPage = history.location.pathname === UrlPathTemplate.TasksNviCorrectionList;
+  const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
+  const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
+  const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
+  const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
+  const isOnCorrectionListPage = location.pathname === UrlPathTemplate.TasksNviCorrectionList;
 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
 
-  const searchParams = new URLSearchParams(history.location.search);
+  const searchParams = new URLSearchParams(location.search);
 
   const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
 
@@ -122,7 +123,7 @@ const TasksPage = () => {
           <Link
             to={{
               pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
-              search: history.location.state?.previousSearch,
+              search: locationState?.previousSearch,
             }}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
@@ -213,48 +214,72 @@ const TasksPage = () => {
         )}
       </SideMenu>
 
-      <ErrorBoundary>
-        <Switch>
-          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isTicketCurator || isNviCurator}>
-            {isTicketCurator ? (
-              <Redirect to={UrlPathTemplate.TasksDialogue} />
-            ) : (
-              <Redirect to={UrlPathTemplate.TasksNvi} />
-            )}
-          </PrivateRoute>
+      <Outlet />
 
-          <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isTicketCurator}>
-            <TicketListDefaultValuesWrapper>
-              <TicketList
-                ticketsQuery={ticketsQuery}
-                rowsPerPage={rowsPerPage}
-                setRowsPerPage={setRowsPerPage}
-                page={page}
-                setPage={setPage}
-                title={t('common.tasks')}
+      <ErrorBoundary>
+        <Routes>
+          <Route
+            path={UrlPathTemplate.Tasks}
+            element={
+              <PrivateRoute
+                isAuthorized={isTicketCurator || isNviCurator}
+                element={
+                  isTicketCurator ? (
+                    <Navigate to={UrlPathTemplate.TasksDialogue} />
+                  ) : (
+                    <Navigate to={UrlPathTemplate.TasksNvi} />
+                  )
+                }
               />
-            </TicketListDefaultValuesWrapper>
-          </PrivateRoute>
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.TasksDialogueRegistration}
-            component={RegistrationLandingPage}
-            isAuthorized={isTicketCurator}
+            }
           />
 
-          <PrivateRoute exact path={UrlPathTemplate.TasksNvi} isAuthorized={isNviCurator}>
-            <NviCandidatesList />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.TasksNviStatus} isAuthorized={isNviCurator}>
-            <NviStatusPage />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.TasksNviCandidate} isAuthorized={isNviCurator}>
-            <NviCandidatePage />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.TasksNviCorrectionList} isAuthorized={isNviCurator}>
-            <NviCorrectionList />
-          </PrivateRoute>
-        </Switch>
+          <Route
+            path={UrlPathTemplate.TasksDialogue}
+            element={
+              <PrivateRoute
+                isAuthorized={isTicketCurator}
+                element={
+                  <TicketListDefaultValuesWrapper>
+                    <TicketList
+                      ticketsQuery={ticketsQuery}
+                      rowsPerPage={rowsPerPage}
+                      setRowsPerPage={setRowsPerPage}
+                      page={page}
+                      setPage={setPage}
+                      title={t('common.tasks')}
+                    />
+                  </TicketListDefaultValuesWrapper>
+                }
+              />
+            }
+          />
+
+          <Route
+            path={UrlPathTemplate.TasksDialogueRegistration}
+            element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isTicketCurator} />}
+          />
+
+          <Route
+            path={UrlPathTemplate.TasksNvi}
+            element={<PrivateRoute element={<NviCandidatesList />} isAuthorized={isNviCurator} />}
+          />
+
+          <Route
+            path={UrlPathTemplate.TasksNviStatus}
+            element={<PrivateRoute element={<NviStatusPage />} isAuthorized={isNviCurator} />}
+          />
+
+          <Route
+            path={UrlPathTemplate.TasksNviCandidate}
+            element={<PrivateRoute element={<NviCandidatePage />} isAuthorized={isNviCurator} />}
+          />
+
+          <Route
+            path={UrlPathTemplate.TasksNviCorrectionList}
+            element={<PrivateRoute element={<NviCorrectionList />} isAuthorized={isNviCurator} />}
+          />
+        </Routes>
       </ErrorBoundary>
     </StyledPageWithSideMenu>
   );
