@@ -23,6 +23,13 @@ export const useFetchRegistration = (
     queryKey: ['registration', identifier, shouldNotRedirect],
     enabled: enabled && !!identifier,
     queryFn: () => fetchRegistration(identifier, shouldNotRedirect),
+    retry: (failureCount, error: AxiosError<DeletedRegistrationProblem>) => {
+      if (error.response?.status === 410) {
+        // Do not retry for 410 Gone response, as this will be handled as an success in the meta.handleError function.
+        return false;
+      }
+      return failureCount < 1;
+    },
     meta: {
       handleError: (
         error: AxiosError<DeletedRegistrationProblem>,
