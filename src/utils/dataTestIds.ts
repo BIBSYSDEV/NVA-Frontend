@@ -227,12 +227,15 @@ export const dataTestId = {
     scientificSummaryEnglishField: 'scientific-summary-english-field',
     scientificSummaryNorwegianField: 'scientific-summary-norwegian-field',
     titleField: 'project-title-field',
+    addUnidentifiedContributorButton: 'add-unidentified-contributor-button',
+    addUnidentifiedProjectManagerButton: 'add-unidentified-project-manager-button',
     selectContributorButton: 'select-contributor-button',
     addProjectManagerButton: 'add-project-manager-button',
     addAffiliationButton: 'button-add-affiliation',
     addParticipantButton: 'add-participant-button',
     removeContributorButton: 'remove-contributor-button',
     cancelNewProjectButton: 'cancel-new-project-button',
+    cancelAddParticipantButton: 'cancel-add-participant-button',
   },
   newProjectPage: {
     titleInput: 'project-title-input',
@@ -284,6 +287,7 @@ export const dataTestId = {
       addFundingButton: 'add-funding-button',
     },
     contributorsPanel: {
+      verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
       editAffiliationButton: 'edit-affiliation-button',
       deleteAffiliationButton: 'delete-affiliation-button',
     },

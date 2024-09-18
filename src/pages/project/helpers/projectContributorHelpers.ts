@@ -22,6 +22,7 @@ export const hasUnidentifiedContributor = (contributors: ProjectContributor[]) =
 
 export enum AddContributorErrors {
   NO_PERSON_TO_ADD,
+  NO_SEARCH_TERM,
   SAME_ROLE_WITH_SAME_AFFILIATION,
   ALREADY_HAS_A_PROJECT_MANAGER,
 }
@@ -31,7 +32,6 @@ export const addContributor = (
   contributors: ProjectContributor[],
   roleToAddTo: ProjectContributorType
 ): { newContributors?: ProjectContributor[]; error?: AddContributorErrors } => {
-  // Must have person to add
   if (!personToAdd) {
     return { error: AddContributorErrors.NO_PERSON_TO_ADD };
   }
@@ -115,6 +115,57 @@ export const addContributor = (
   return { newContributors };
 };
 
+export const addUnidentifiedProjectParticipant = (
+  searchTerm: string,
+  contributors: ProjectContributor[],
+  role: ProjectContributorType,
+  indexToReplace = -1
+): { newContributors?: ProjectContributor[]; error?: AddContributorErrors } => {
+  if (!searchTerm) {
+    return { error: AddContributorErrors.NO_SEARCH_TERM };
+  }
+
+  const names = searchTerm.split(' ');
+  let firstName, lastName;
+
+  if (names.length > 1) {
+    const namesWithoutLastName = names.slice(0, -1);
+    firstName = namesWithoutLastName.join(' ');
+    lastName = names[names.length - 1];
+  } else {
+    firstName = names[0];
+    lastName = '';
+  }
+
+  const newContributor: ProjectContributor = {
+    identity: {
+      type: 'Person',
+      firstName: firstName,
+      lastName: lastName,
+    },
+    roles: [],
+  };
+
+  if (indexToReplace > -1) {
+    newContributor.roles = contributors[indexToReplace].roles;
+  } else {
+    newContributor.roles = [
+      {
+        type: role,
+        affiliation: undefined,
+      } as ProjectContributorRole,
+    ];
+  }
+
+  const newContributors = [...contributors];
+  if (indexToReplace > -1) {
+    newContributors[indexToReplace] = newContributor;
+  } else {
+    newContributors.push(newContributor);
+  }
+  return { newContributors: newContributors };
+};
+
 export const removeProjectParticipant = (contributors: ProjectContributor[], contributorIndex: number) => {
   if (contributorIndex < 0) {
     return contributors;
@@ -148,4 +199,27 @@ export const removeProjectManager = (contributors: ProjectContributor[]) => {
   const newContributors = [...contributors];
   newContributors.splice(projectManagerIndex, 1);
   return newContributors;
+};
+
+const rolesAreEqual = (r1: ProjectContributorRole[], r2: ProjectContributorRole[]) => {
+  if (r1.length !== r2.length) return false;
+
+  r1.forEach((role, index) => {
+    if (role.type !== r2[index].type) return false;
+    if (role.affiliation !== r2[index].affiliation) return false;
+  });
+
+  return true;
+};
+
+export const contributorsAreEqual = (c1: ProjectContributor, c2: ProjectContributor) => {
+  if (c1.identity.id && c2.identity.id) return c1.identity.id === c2.identity.id;
+  else if ((!c1.identity.id && c2.identity.id) || (c1.identity.id && !c2.identity.id)) return false;
+  else
+    return (
+      c1.identity.type === c2.identity.type &&
+      c1.identity.firstName === c2.identity.firstName &&
+      c1.identity.lastName === c2.identity.lastName &&
+      rolesAreEqual(c1.roles, c2.roles)
+    );
 };
