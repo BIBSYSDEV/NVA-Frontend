@@ -68,7 +68,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.13.0",
+    "@cypress/code-coverage": "^3.13.1",
     "@tanstack/eslint-plugin-query": "^5.56.1",
     "@tanstack/react-query-devtools": "^5.56.2",
     "@types/isbn-utils": "^1.1.6",
