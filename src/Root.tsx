@@ -40,6 +40,17 @@ import { NviCandidatesList } from './pages/messages/components/NviCandidatesList
 import { NviStatusPage } from './pages/messages/components/NviStatusPage';
 import { NviCandidatePage } from './pages/messages/components/NviCandidatePage';
 import { NviCorrectionList } from './pages/messages/components/NviCorrectionList';
+import { CategoriesWithFiles } from './pages/editor/CategoriesWithFiles';
+import { VocabularySettings } from './pages/editor/VocabularySettings';
+import { VocabularyOverview } from './pages/editor/VocabularyOverview';
+import { CategoriesWithFilesOverview } from './pages/editor/CategoriesWithFilesOverview';
+import { EditorDoi } from './pages/editor/EditorDoi';
+import { OrganizationOverview } from './pages/editor/OrganizationOverview';
+import { OrganizationCurators } from './pages/editor/curators/OrganizationCurators';
+import { InstitutionSupport } from './pages/editor/InstitutionSupport';
+import { PublishStrategySettings } from './pages/editor/PublishStrategySettings';
+import { PublishingStrategyOverview } from './pages/editor/PublishingStrategyOverview';
+import { EditorInstitution } from './pages/editor/EditorInstitution';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -74,6 +85,7 @@ export const Root = () => {
   const { t, i18n } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
+  const hasCustomer = !!user?.customerId;
 
   useEffect(() => {
     // Setup aws-amplify
@@ -382,8 +394,70 @@ export const Root = () => {
             {/* InstitutionRoutes */}
             <Route
               path={UrlPathTemplate.Institution}
-              element={<PrivateRoute isAuthorized={hasCustomerId} element={<EditorPage />} />}
-            />
+              element={<PrivateRoute isAuthorized={hasCustomerId} element={<EditorPage />} />}>
+              <Route
+                path={UrlPathTemplate.InstitutionVocabulary}
+                element={<PrivateRoute element={<VocabularySettings />} isAuthorized={isEditor} />}
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionVocabularyOverview}
+                element={<PrivateRoute element={<VocabularyOverview />} isAuthorized={hasCustomer} />}
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionPublishStrategy}
+                element={<PrivateRoute element={<PublishStrategySettings />} isAuthorized={isEditor} />}
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionPublishStrategyOverview}
+                element={<PrivateRoute element={<PublishingStrategyOverview />} isAuthorized={hasCustomer} />}
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionOverviewPage}
+                element={<PrivateRoute element={<EditorInstitution />} isAuthorized={hasCustomer} />}
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionCuratorsOverview}
+                element={
+                  <PrivateRoute
+                    element={<OrganizationCurators heading={t('editor.curators.curators')} />}
+                    isAuthorized={hasCustomer}
+                  />
+                }
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionCurators}
+                element={
+                  <PrivateRoute
+                    element={<OrganizationCurators heading={t('editor.curators.administer_curators')} canEditUsers />}
+                    isAuthorized={isEditor}
+                  />
+                }
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionDoi}
+                element={<PrivateRoute element={<EditorDoi />} isAuthorized={hasCustomer} />}
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionCategories}
+                element={<PrivateRoute element={<CategoriesWithFiles />} isAuthorized={isEditor} />}
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionCategoriesOverview}
+                element={<PrivateRoute element={<CategoriesWithFilesOverview />} isAuthorized={hasCustomer} />}
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionOrganizationOverview}
+                element={<PrivateRoute element={<OrganizationOverview />} isAuthorized={hasCustomer} />}
+              />
+              <Route
+                path={UrlPathTemplate.InstitutionSupport}
+                element={<PrivateRoute element={<InstitutionSupport />} isAuthorized={isEditor} />}
+              />
+              <Route
+                path={UrlPathTemplate.Wildcard}
+                element={<PrivateRoute element={<NotFound />} isAuthorized={isEditor} />}
+              />
+            </Route>
 
             {/* Wildcard path must be last, otherwise it will catch all routes */}
             <Route path={UrlPathTemplate.Wildcard} element={<NotFound />} />
