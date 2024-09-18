@@ -28,8 +28,6 @@ export const ProjectParticipants = () => {
     rowsPerPage * currentPage
   );
 
-  console.log('test');
-
   const toggleOpenAddProjectParticipantView = () => setOpenAddProjectParticipantView(!openAddProjectParticipantView);
 
   return (
