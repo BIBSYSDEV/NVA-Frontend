@@ -44,7 +44,6 @@ export const ProjectManager = ({ suggestedProjectManager }: ProjectContributorsP
             {projectManager && (
               <ProjectContributorTable>
                 <ContributorRow
-                  key={projectManager.identity.id}
                   contributorIndex={projectManagerIndex}
                   baseFieldName={`${name}[${projectManagerIndex}]`}
                   contributor={projectManager}
