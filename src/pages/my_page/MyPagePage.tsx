@@ -8,9 +8,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkCreateButton,
@@ -27,19 +26,10 @@ import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { LocalStorageKey, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { PrivateRoute } from '../../utils/routes/Routes';
 import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
-import NotFound from '../errorpages/NotFound';
-import { TicketList } from '../messages/components/TicketList';
-import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
-import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
-import ResearchProfile from '../research_profile/ResearchProfile';
-import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
-import { MyResults } from './user_profile/MyResults';
-import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -345,74 +335,6 @@ const MyPagePage = () => {
       </SideMenu>
 
       <Outlet />
-
-      <ErrorBoundary>
-        <Routes>
-          <Route
-            path={UrlPathTemplate.MyPageMyMessages}
-            element={
-              <PrivateRoute
-                isAuthorized={isCreator}
-                element={
-                  <TicketList
-                    ticketsQuery={ticketsQuery}
-                    rowsPerPage={rowsPerPage}
-                    setRowsPerPage={setRowsPerPage}
-                    page={page}
-                    setPage={setPage}
-                    title={t('common.dialogue')}
-                  />
-                }
-              />
-            }
-          />
-
-          <Route
-            path={UrlPathTemplate.MyPageMyMessagesRegistration}
-            element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isCreator} />}
-          />
-
-          <Route
-            path={UrlPathTemplate.MyPageMyRegistrations}
-            element={
-              <PrivateRoute
-                element={
-                  <MyRegistrations
-                    selectedPublished={selectedRegistrationStatus.published}
-                    selectedUnpublished={selectedRegistrationStatus.unpublished}
-                  />
-                }
-                isAuthorized={isCreator}
-              />
-            }
-          />
-
-          <Route
-            path={UrlPathTemplate.MyPageResearchProfile}
-            element={<PrivateRoute element={<ResearchProfile />} isAuthorized={isAuthenticated} />}
-          />
-
-          <Route
-            path={UrlPathTemplate.MyPageResults}
-            element={<PrivateRoute element={<MyResults />} isAuthorized={isAuthenticated} />}
-          />
-
-          <Route
-            path={UrlPathTemplate.MyPageMyProjectRegistrations}
-            element={<PrivateRoute element={<MyProjectRegistrations />} isAuthorized={isAuthenticated} />}
-          />
-
-          <Route
-            path={UrlPathTemplate.MyPageUserRoleAndHelp}
-            element={<PrivateRoute element={<UserRoleAndHelp />} isAuthorized={isAuthenticated} />}
-          />
-
-          <Route
-            path={UrlPathTemplate.Wildcard}
-            element={<PrivateRoute element={<NotFound />} isAuthorized={isAuthenticated} />}
-          />
-        </Routes>
-      </ErrorBoundary>
 
       {user?.isCreator && (
         <ProjectFormDialog

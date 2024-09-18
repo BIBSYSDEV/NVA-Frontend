@@ -1,5 +1,5 @@
 import { Amplify } from 'aws-amplify';
-import { lazy, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -32,6 +32,9 @@ import { MyResults } from './pages/my_page/user_profile/MyResults';
 import { MyProjectRegistrations } from './pages/my_page/user_profile/MyProjectRegistrations';
 import { UserRoleAndHelp } from './pages/my_page/user_profile/UserRoleAndHelp';
 import EditRegistration from './pages/registration/new_registration/EditRegistration';
+import ProjectsPage from './pages/projects/ProjectsPage';
+import LoginPage from './layout/LoginPage';
+import Logout from './layout/Logout';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -57,11 +60,8 @@ const CreateProject = lazy(() => import('./pages/project/project_wizard/CreatePr
 const EditProject = lazy(() => import('./pages/project/project_wizard/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
-const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
-const Logout = lazy(() => import('./layout/Logout'));
-const LoginPage = lazy(() => import('./layout/LoginPage'));
 const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 
 export const Root = () => {
@@ -172,18 +172,6 @@ export const Root = () => {
               <Route index path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
             </Route>
 
-            <Route
-              path={UrlPathTemplate.RegistrationNew}
-              element={<PrivateRoute isAuthorized={isCreator} element={<EditRegistration />} />}
-            />
-
-            <Route
-              path={UrlPathTemplate.RegistrationWizard}
-              element={
-                <PrivateRoute isAuthorized={isCreator || isCurator || isEditor} element={<EditRegistration />} />
-              }
-            />
-
             <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
             <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
             <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
@@ -239,10 +227,6 @@ export const Root = () => {
                 />
 
                 <Route
-                  path={UrlPathTemplate.Wildcard}
-                  element={<PrivateRoute element={<NotFound />} isAuthorized={isAuthenticated} />}
-                />
-                <Route
                   path={UrlPathTemplate.MyPageMyMessages}
                   element={
                     <PrivateRoute
@@ -281,6 +265,11 @@ export const Root = () => {
                 <Route
                   path={UrlPathTemplate.MyPageResearchProfile}
                   element={<PrivateRoute element={<ResearchProfile />} isAuthorized={isAuthenticated} />}
+                />
+
+                <Route
+                  path={UrlPathTemplate.Wildcard}
+                  element={<PrivateRoute element={<NotFound />} isAuthorized={isAuthenticated} />}
                 />
               </>
             </Route>
@@ -341,5 +330,9 @@ const router = createBrowserRouter([
 ]);
 
 export const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<PageSpinner aria-label="Loading" />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 };
