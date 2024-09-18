@@ -305,7 +305,8 @@
     "x_years_one": "{{count}} år",
     "x_years_other": "{{count}} år",
     "year": "År",
-    "yes": "Ja"
+    "yes": "Ja",
+    "result_portfolio": "Resultatportefølje"
   },
   "disciplines": {
     "1003": "Arkeologi og konservering",

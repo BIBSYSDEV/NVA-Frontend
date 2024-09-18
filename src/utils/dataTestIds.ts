@@ -134,6 +134,7 @@ export const dataTestId = {
     overviewAccordion: 'overview-accordion',
     publishStrategyLinkButton: 'publishing-strategy-link-button',
     publishStrategyOverviewLinkButton: 'publishing-strategy-overview-link-button',
+    resultsPortfolioAccordion: 'results-portfolio-accordion',
     settingsAccordion: 'settings-accordion',
     vocabularyLinkButton: 'vocabulary-link-button',
     vocabularyOverviewLinkButton: 'vocabulary-overview-link-button',

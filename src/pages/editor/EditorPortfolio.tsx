@@ -17,7 +17,7 @@ export const EditorPortfolio = () => {
 
   return (
     <>
-      <Typography variant="h1">{'Resultatportefølje'}</Typography>
+      <Typography variant="h1">{t('common.result_portfolio')}</Typography>
       <RegistrationSearch registrationQuery={registrationQuery} />
     </>
   );

@@ -2,6 +2,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import GavelIcon from '@mui/icons-material/Gavel';
 import NotesIcon from '@mui/icons-material/Notes';
+import { Box, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -154,11 +155,18 @@ const InstitutionPage = () => {
               </NavigationList>
             </NavigationListAccordion>
             <NavigationListAccordion
-              dataTestId={'dataTestId.editor.settingsAccordion'} // TODO
-              title={'Resultatportefølje'}
+              dataTestId={dataTestId.editor.resultsPortfolioAccordion}
+              title={t('common.result_portfolio')}
               startIcon={<NotesIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
               accordionPath={UrlPathTemplate.InstitutionPortfolio}>
-              <p>TODO</p>
+              <Box sx={{ mx: '1rem', mb: '0.5rem' }}>
+                {/* TODO: Reuse same margin here and in TasksPage menu */}
+                <FormGroup>
+                  <FormControlLabel control={<Checkbox size="small" />} label={t('registration.status.PUBLISHED')} />
+                  <FormControlLabel control={<Checkbox size="small" />} label={t('registration.status.UNPUBLISHED')} />
+                  <FormControlLabel control={<Checkbox size="small" />} label={t('registration.status.DELETED')} />
+                </FormGroup>
+              </Box>
             </NavigationListAccordion>
           </>
         )}
