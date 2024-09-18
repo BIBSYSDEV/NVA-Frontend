@@ -10,7 +10,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import {
   contributorsAreEqual,
   getNonProjectManagerContributors,
-  hasUnidentifiedContributor,
   removeProjectParticipant,
 } from '../../project/helpers/projectContributorHelpers';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
@@ -42,7 +41,6 @@ export const ProjectParticipants = () => {
               onClick={toggleOpenAddProjectParticipantView}
               variant="contained"
               startIcon={<AddIcon />}
-              disabled={hasUnidentifiedContributor(contributorsWithNonProjectManagerRole)}
               data-testid={dataTestId.projectForm.addParticipantButton}>
               {t('project.add_project_contributor')}
             </Button>

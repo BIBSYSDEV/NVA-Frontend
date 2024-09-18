@@ -56,6 +56,18 @@ export const existingPersonIdentity: ProjectContributorIdentity = {
   type: 'Person',
 };
 
+export const unidentifiedDaffyIdentity: ProjectContributorIdentity = {
+  firstName: 'Daffy',
+  lastName: 'Duck',
+  type: 'Person',
+};
+
+export const unidentifiedOleJensenIdentity: ProjectContributorIdentity = {
+  firstName: 'Ole',
+  lastName: 'Jensen',
+  type: 'Person',
+};
+
 export const abcOrgAsAffiliation: ProjectOrganization = {
   id: 'abcorg',
   labels: {},
@@ -219,6 +231,20 @@ export const contributorsArrayWithNoProjectManager: ProjectContributor[] = [
   {
     identity: selectedPersonIdentity,
     roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+  },
+];
+
+export const contributorsArrayWithUndefinedDaffy: ProjectContributor[] = [
+  {
+    identity: unidentifiedDaffyIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+  },
+];
+
+export const contributorsArrayWithExistingPersonIdentity: ProjectContributor[] = [
+  {
+    identity: existingPersonIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
   },
 ];
 

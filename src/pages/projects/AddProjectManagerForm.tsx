@@ -13,7 +13,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import {
   addContributor,
   AddContributorErrors,
-  addUnidentifiedProjectParticipant,
+  addUnidentifiedProjectContributor,
 } from '../project/helpers/projectContributorHelpers';
 import { contributorHasNonEmptyAffiliation } from '../project/helpers/projectRoleHelpers';
 import { SelectAffiliations } from '../registration/contributors_tab/components/AddContributorTableRow';
@@ -60,7 +60,7 @@ export const AddProjectManagerForm = ({
   };
 
   const addUnidentifiedManager = () => {
-    const { newContributors, error } = addUnidentifiedProjectParticipant(
+    const { newContributors, error } = addUnidentifiedProjectContributor(
       searchTerm,
       contributors,
       'ProjectManager',

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   addContributor,
   AddContributorErrors,
+  addUnidentifiedProjectContributor,
   removeProjectManager,
   removeProjectParticipant,
 } from '../helpers/projectContributorHelpers.js';
@@ -13,6 +14,7 @@ import {
   contributorsArrayWithDifferentProjectManagerWithDifferentAffiliation,
   contributorsArrayWithDifferentProjectManagerWithSameAffiliation,
   contributorsArrayWithDifferentProjectManagerWithUndefinedAffiliation,
+  contributorsArrayWithExistingPersonIdentity,
   contributorsArrayWithNoProjectManager,
   contributorsArrayWithOtherPersonWithDifferentAffiliation,
   contributorsArrayWithOtherPersonWithSameAffiliation,
@@ -25,12 +27,15 @@ import {
   contributorsArrayWithSelectedPersonWithDifferentAffiliation,
   contributorsArrayWithSelectedPersonWithSameAffiliation,
   contributorsArrayWithSelectedPersonWithUndefinedAffiliation,
+  contributorsArrayWithUndefinedDaffy,
   contributorsArrayWithUndefinedPMAffiliationAndOtherContributor,
   defOrgAsAffiliation,
   existingPersonIdentity,
   selectedPersonIdentity,
   selectedPersonWithAffiliation,
   selectedPersonWithoutAffiliation,
+  unidentifiedDaffyIdentity,
+  unidentifiedOleJensenIdentity,
 } from './mockObjects';
 
 describe('addContributor', () => {
@@ -982,5 +987,267 @@ describe('remove project manager', () => {
   });
   it('when there is no project manager, it returns an unchanged object', () => {
     expect(removeProjectManager(contributorsArrayWithNoProjectManager)).toEqual(contributorsArrayWithNoProjectManager);
+  });
+});
+
+describe('addUnidentifiedProjectContributor', () => {
+  describe('when adding an undefined project manager', () => {
+    it('when there is already a project manager in the contributors array it returns an error', () => {
+      expect(
+        addUnidentifiedProjectContributor(
+          'Daffy Duck',
+          contributorsArrayWithContributorWithBothPMRoleAndParticipantRole,
+          'ProjectManager'
+        )
+      ).toEqual({ error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER });
+    });
+    it('when there is no search term it returns and error', () => {
+      expect(addUnidentifiedProjectContributor('', [], 'ProjectManager')).toEqual({
+        error: AddContributorErrors.NO_SEARCH_TERM,
+      });
+    });
+    it('it returns a new identity without id, with a role with undefined project manager', () => {
+      expect(
+        addUnidentifiedProjectContributor(
+          'Daffy Duck',
+          contributorsArrayWithContributorsWithOnlyParticipantRole,
+          'ProjectManager'
+        )
+      ).toEqual({
+        newContributors: [
+          {
+            identity: selectedPersonIdentity,
+            roles: [
+              { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+              { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+            ],
+          },
+          {
+            identity: existingPersonIdentity,
+            roles: [
+              { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+              { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+            ],
+          },
+          {
+            identity: {
+              firstName: 'Daffy',
+              lastName: 'Duck',
+              type: 'Person',
+            },
+            roles: [{ type: 'ProjectManager', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+    it('when there is another unidentified contributor with the same name, it adds a new unidentified user', () => {
+      expect(
+        addUnidentifiedProjectContributor('Daffy Duck', contributorsArrayWithUndefinedDaffy, 'ProjectManager')
+      ).toEqual({
+        newContributors: [
+          {
+            identity: unidentifiedDaffyIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+          },
+          {
+            identity: unidentifiedDaffyIdentity,
+            roles: [{ type: 'ProjectManager', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+    it('when there is another identified contributor with the same name, it adds a new unidentified user', () => {
+      expect(
+        addUnidentifiedProjectContributor('Ole Jensen', contributorsArrayWithExistingPersonIdentity, 'ProjectManager')
+      ).toEqual({
+        newContributors: [
+          {
+            identity: existingPersonIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+          },
+          {
+            identity: unidentifiedOleJensenIdentity,
+            roles: [{ type: 'ProjectManager', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+    it('when the search term consists of one word, it', () => {
+      expect(
+        addUnidentifiedProjectContributor('DaffyDuck', contributorsArrayWithExistingPersonIdentity, 'ProjectManager')
+      ).toEqual({
+        newContributors: [
+          {
+            identity: existingPersonIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+          },
+          {
+            identity: {
+              firstName: 'DaffyDuck',
+              lastName: '',
+              type: 'Person',
+            },
+            roles: [{ type: 'ProjectManager', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+    it('when the search term consists of three words, it', () => {
+      expect(
+        addUnidentifiedProjectContributor(
+          'Daffy Augustus Duck',
+          contributorsArrayWithExistingPersonIdentity,
+          'ProjectManager'
+        )
+      ).toEqual({
+        newContributors: [
+          {
+            identity: existingPersonIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+          },
+          {
+            identity: {
+              firstName: 'Daffy Augustus',
+              lastName: 'Duck',
+              type: 'Person',
+            },
+            roles: [{ type: 'ProjectManager', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+  });
+  describe('when adding an undefined project participant', () => {
+    it('it returns a new identity without id, with a role with undefined project participant', () => {
+      expect(
+        addUnidentifiedProjectContributor(
+          'Daffy Duck',
+          contributorsArrayWithContributorsWithOnlyManagerRole,
+          'ProjectParticipant'
+        )
+      ).toEqual({
+        newContributors: [
+          {
+            identity: selectedPersonIdentity,
+            roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }],
+          },
+          {
+            identity: existingPersonIdentity,
+            roles: [
+              { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+              { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+            ],
+          },
+          {
+            identity: unidentifiedDaffyIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+    it('when there is another unidentified contributor with the same name, it adds a new contributor', () => {
+      expect(
+        addUnidentifiedProjectContributor('Daffy Duck', contributorsArrayWithUndefinedDaffy, 'ProjectParticipant')
+      ).toEqual({
+        newContributors: [
+          {
+            identity: unidentifiedDaffyIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+          },
+          {
+            identity: unidentifiedDaffyIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+    it('when there is another unidentified contributor with a different name, it', () => {
+      expect(
+        addUnidentifiedProjectContributor('Mikkel Rev', contributorsArrayWithUndefinedDaffy, 'ProjectParticipant')
+      ).toEqual({
+        newContributors: [
+          {
+            identity: unidentifiedDaffyIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+          },
+          {
+            identity: {
+              firstName: 'Mikkel',
+              lastName: 'Rev',
+              type: 'Person',
+            },
+            roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+    it('when there is another identified contributor with the same name, it', () => {
+      expect(
+        addUnidentifiedProjectContributor(
+          'Ole Jensen',
+          contributorsArrayWithExistingPersonIdentity,
+          'ProjectParticipant'
+        )
+      ).toEqual({
+        newContributors: [
+          {
+            identity: existingPersonIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+          },
+          {
+            identity: unidentifiedOleJensenIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+    it('when the search term consists of one word, it', () => {
+      expect(
+        addUnidentifiedProjectContributor(
+          'DaffyDuck',
+          contributorsArrayWithExistingPersonIdentity,
+          'ProjectParticipant'
+        )
+      ).toEqual({
+        newContributors: [
+          {
+            identity: existingPersonIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+          },
+          {
+            identity: {
+              firstName: 'DaffyDuck',
+              lastName: '',
+              type: 'Person',
+            },
+            roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+          },
+        ],
+      });
+    });
+    it('when the search term consists of three words, it', () => {
+      expect(
+        addUnidentifiedProjectContributor(
+          'Daffy Augustus Duck',
+          contributorsArrayWithExistingPersonIdentity,
+          'ProjectParticipant'
+        )
+      ).toEqual({
+        newContributors: [
+          {
+            identity: existingPersonIdentity,
+            roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+          },
+          {
+            identity: {
+              firstName: 'Daffy Augustus',
+              lastName: 'Duck',
+              type: 'Person',
+            },
+            roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+          },
+        ],
+      });
+    });
   });
 });

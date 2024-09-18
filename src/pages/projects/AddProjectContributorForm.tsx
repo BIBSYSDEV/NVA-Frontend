@@ -13,7 +13,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import {
   addContributor,
   AddContributorErrors,
-  addUnidentifiedProjectParticipant,
+  addUnidentifiedProjectContributor,
 } from '../project/helpers/projectContributorHelpers';
 
 interface AddProjectContributorFormProps {
@@ -54,7 +54,7 @@ export const AddProjectContributorForm = ({
   };
 
   const addUnidentifiedParticipant = () => {
-    const { newContributors, error } = addUnidentifiedProjectParticipant(
+    const { newContributors, error } = addUnidentifiedProjectContributor(
       searchTerm,
       contributors,
       'ProjectParticipant',

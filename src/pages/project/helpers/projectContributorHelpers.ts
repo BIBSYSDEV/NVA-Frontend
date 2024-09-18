@@ -115,7 +115,7 @@ export const addContributor = (
   return { newContributors };
 };
 
-export const addUnidentifiedProjectParticipant = (
+export const addUnidentifiedProjectContributor = (
   searchTerm: string,
   contributors: ProjectContributor[],
   role: ProjectContributorType,
@@ -123,6 +123,15 @@ export const addUnidentifiedProjectParticipant = (
 ): { newContributors?: ProjectContributor[]; error?: AddContributorErrors } => {
   if (!searchTerm) {
     return { error: AddContributorErrors.NO_SEARCH_TERM };
+  }
+
+  // Cannot add project manager if we already have one
+  if (role === 'ProjectManager') {
+    const existingProjectManager = contributors.find((contributor) => findProjectManagerRole(contributor));
+
+    if (existingProjectManager) {
+      return { error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER };
+    }
   }
 
   const names = searchTerm.split(' ');
