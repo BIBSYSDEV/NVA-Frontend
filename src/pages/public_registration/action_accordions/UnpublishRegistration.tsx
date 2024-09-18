@@ -45,6 +45,8 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
           <Button
             data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
             variant="outlined"
+            fullWidth
+            size="small"
             sx={{ bgcolor: 'white' }}
             onClick={toggleUnpublishModal}>
             {t('unpublish_actions.unpublish')}

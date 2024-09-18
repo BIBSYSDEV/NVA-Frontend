@@ -37,7 +37,7 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
       </IconButton>
 
       {openMoreActions && (
-        <>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {isPublished && <UnpublishRegistration registration={registration} />}
           {isUnpublished && (
             <>
@@ -45,7 +45,7 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
               <TerminateRegistration registration={registration} />
             </>
           )}
-        </>
+        </Box>
       )}
     </Box>
   );

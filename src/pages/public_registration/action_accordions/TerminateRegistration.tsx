@@ -34,6 +34,8 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
       <Button
         data-testid={dataTestId.registrationLandingPage.tasksPanel.terminateRegistrationButton}
         variant="outlined"
+        fullWidth
+        size="small"
         sx={{ bgcolor: 'white' }}
         onClick={toggleTerminateModal}>
         {t('common.delete')}
