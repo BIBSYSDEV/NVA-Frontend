@@ -1,10 +1,11 @@
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
-import { PageSpinner } from '../../components/PageSpinner';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 interface DeletePublicationInformationProps {
   registration: Registration;
@@ -52,11 +53,13 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
                 my: '1rem',
               }}>
               {originalRegistrationQuery.isPending ? (
-                <PageSpinner aria-label={t('registration.citation_points_to')} />
+                <Skeleton sx={{ width: '50%' }} aria-label={t('registration.citation_points_to')} />
               ) : (
                 <Typography>
                   {`${t('registration.citation_points_to')} `}
-                  <Link href={`/registration/${originalIdentifier}`}>{originalRegistrationMainTitle}</Link>
+                  <MuiLink component={Link} to={getRegistrationLandingPagePath(originalIdentifier)}>
+                    {originalRegistrationMainTitle}
+                  </MuiLink>
                 </Typography>
               )}
             </Box>
