@@ -128,6 +128,15 @@ export const contributorsArrayWithSelectedPersonWithDifferentAffiliation: Projec
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
 ];
 
+export const contributorsArrayWithDifferentPersonWithDifferentAffiliation: ProjectContributor[] = [
+  { identity: existingPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
+];
+
+export const contributorsArrayWithTwoOtherPeople: ProjectContributor[] = [
+  { identity: existingPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
+  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
+];
+
 export const contributorsArrayWithSelectedPersonWithUndefinedAffiliation: ProjectContributor[] = [
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
 ];

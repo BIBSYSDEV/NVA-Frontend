@@ -2,6 +2,7 @@ import { ProjectContributor, ProjectContributorRole, ProjectContributorType } fr
 import { CristinPerson } from '../../../types/user.types';
 import { getValueByKey } from '../../../utils/user-helpers';
 import {
+  addRoles,
   deleteProjectManagerRoleFromContributor,
   findProjectManagerRole,
   isNonProjectManagerRole,
@@ -27,10 +28,46 @@ export enum AddContributorErrors {
   ALREADY_HAS_A_PROJECT_MANAGER,
 }
 
+const checkIfProjectManagerDuplicate = (contributors: ProjectContributor[], indexToReplace: number) => {
+  const indexOfExistingProjectManager = contributors.findIndex((contributor) => findProjectManagerRole(contributor));
+  if (indexOfExistingProjectManager > -1 && indexToReplace !== indexOfExistingProjectManager) {
+    return AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER;
+  }
+};
+
+const checkIfRoleAndTypeDuplicate = (
+  personToAdd: CristinPerson,
+  contributor: ProjectContributor,
+  roleToAddTo: ProjectContributorType
+) => {
+  const sameRoleAndSameType = contributor.roles.some(
+    (role) =>
+      role.type === roleToAddTo &&
+      personToAdd.affiliations.some((affiliation) => affiliation.organization === role.affiliation?.id)
+  );
+
+  if (sameRoleAndSameType) {
+    return AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION;
+  }
+};
+
+const addEmptyRoleIfNecessary = (existingRoles: ProjectContributorRole[], roleToAddTo: ProjectContributorType) => {
+  if (existingRoles.filter((role) => role.type === roleToAddTo).length === 0) {
+    const newRoles = [...existingRoles];
+    newRoles.push({
+      type: roleToAddTo,
+      affiliation: undefined,
+    } as ProjectContributorRole);
+    return newRoles;
+  }
+  return existingRoles;
+};
+
 export const addContributor = (
   personToAdd: CristinPerson | undefined,
   contributors: ProjectContributor[],
-  roleToAddTo: ProjectContributorType
+  roleToAddTo: ProjectContributorType,
+  indexToReplace = -1
 ): { newContributors?: ProjectContributor[]; error?: AddContributorErrors } => {
   if (!personToAdd) {
     return { error: AddContributorErrors.NO_PERSON_TO_ADD };
@@ -38,48 +75,39 @@ export const addContributor = (
 
   // Cannot add project manager if we already have one
   if (roleToAddTo === 'ProjectManager') {
-    const existingProjectManager = contributors.find((contributor) => findProjectManagerRole(contributor));
-
-    if (existingProjectManager) {
-      return { error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER };
-    }
+    const projectManagerError = checkIfProjectManagerDuplicate(contributors, indexToReplace);
+    if (projectManagerError) return { error: projectManagerError };
   }
 
-  let newContributor: ProjectContributor;
+  const newContributor: ProjectContributor = {
+    identity: {
+      type: 'Person',
+      id: personToAdd.id,
+      firstName: getValueByKey('FirstName', personToAdd.names),
+      lastName: getValueByKey('LastName', personToAdd.names),
+    },
+    roles: [],
+  };
 
   // If the user to add already exists in the contributor list
   const existingContributorIndex = contributors.findIndex((contributor) => contributor.identity.id === personToAdd.id);
 
   if (existingContributorIndex > -1) {
-    // Cannot have same roletype and affiliation
-    const sameRoleAndSameType = contributors[existingContributorIndex].roles.some((role) => {
-      return (
-        role.type === roleToAddTo &&
-        personToAdd.affiliations.some((affiliation) => affiliation.organization === role.affiliation?.id)
-      );
-    });
+    // The existing contributor cannot have same affiliation on the same role type as the person to add
+    const roleAndTypeDuplicateError = checkIfRoleAndTypeDuplicate(
+      personToAdd,
+      contributors[existingContributorIndex],
+      roleToAddTo
+    );
+    if (roleAndTypeDuplicateError) return { error: roleAndTypeDuplicateError };
 
-    if (sameRoleAndSameType) {
-      return { error: AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION };
-    }
+    // Add affiliations from the existing participant since we are merging them
+    newContributor.roles = addRoles(newContributor.roles, contributors[existingContributorIndex].roles, roleToAddTo);
+  }
 
-    // Replace the empty roles on the type
-    newContributor = {
-      ...contributors[existingContributorIndex],
-      roles: contributors[existingContributorIndex].roles.filter(
-        (role) => role.type !== roleToAddTo || (role.type === roleToAddTo && role.affiliation)
-      ),
-    };
-  } else {
-    newContributor = {
-      identity: {
-        type: 'Person',
-        id: personToAdd.id,
-        firstName: getValueByKey('FirstName', personToAdd.names),
-        lastName: getValueByKey('LastName', personToAdd.names),
-      },
-      roles: [],
-    };
+  // If we are replacing an index we must keep its affiliations as well
+  if (indexToReplace > -1) {
+    newContributor.roles = addRoles(newContributor.roles, contributors[indexToReplace].roles, roleToAddTo);
   }
 
   // Adding 1 or more affiliations
@@ -95,18 +123,17 @@ export const addContributor = (
         })
     );
   } else {
-    // Only adding empty role if no other roles present on the role
-    if (newContributor.roles.filter((role) => role.type === roleToAddTo).length === 0) {
-      newContributor.roles.push({
-        type: roleToAddTo,
-        affiliation: undefined,
-      } as ProjectContributorRole);
-    }
+    newContributor.roles = addEmptyRoleIfNecessary(newContributor.roles, roleToAddTo);
   }
 
   const newContributors = [...contributors];
 
-  if (existingContributorIndex > -1) {
+  if (indexToReplace > -1) {
+    newContributors[indexToReplace] = newContributor;
+    if (existingContributorIndex > -1) {
+      newContributors.splice(existingContributorIndex, 1);
+    }
+  } else if (existingContributorIndex > -1) {
     newContributors[existingContributorIndex] = newContributor;
   } else {
     newContributors.push(newContributor);
@@ -115,25 +142,7 @@ export const addContributor = (
   return { newContributors };
 };
 
-export const addUnidentifiedProjectContributor = (
-  searchTerm: string,
-  contributors: ProjectContributor[],
-  role: ProjectContributorType,
-  indexToReplace = -1
-): { newContributors?: ProjectContributor[]; error?: AddContributorErrors } => {
-  if (!searchTerm) {
-    return { error: AddContributorErrors.NO_SEARCH_TERM };
-  }
-
-  // Cannot add project manager if we already have one
-  if (role === 'ProjectManager') {
-    const existingProjectManager = contributors.find((contributor) => findProjectManagerRole(contributor));
-
-    if (existingProjectManager) {
-      return { error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER };
-    }
-  }
-
+const createNamesFromInput = (searchTerm: string) => {
   const names = searchTerm.split(' ');
   let firstName, lastName;
 
@@ -146,6 +155,27 @@ export const addUnidentifiedProjectContributor = (
     lastName = '';
   }
 
+  return { firstName, lastName };
+};
+
+export const addUnidentifiedProjectContributor = (
+  searchTerm: string,
+  contributors: ProjectContributor[],
+  roleToAddTo: ProjectContributorType,
+  indexToReplace = -1
+): { newContributors?: ProjectContributor[]; error?: AddContributorErrors } => {
+  if (!searchTerm) {
+    return { error: AddContributorErrors.NO_SEARCH_TERM };
+  }
+
+  // Cannot add project manager if we already have one
+  if (roleToAddTo === 'ProjectManager') {
+    const projectManagerError = checkIfProjectManagerDuplicate(contributors, indexToReplace);
+    if (projectManagerError) return { error: projectManagerError };
+  }
+
+  const { firstName, lastName } = createNamesFromInput(searchTerm);
+
   const newContributor: ProjectContributor = {
     identity: {
       type: 'Person',
@@ -155,23 +185,22 @@ export const addUnidentifiedProjectContributor = (
     roles: [],
   };
 
+  // If we are replacing an index we must keep its roles
   if (indexToReplace > -1) {
-    newContributor.roles = contributors[indexToReplace].roles;
-  } else {
-    newContributor.roles = [
-      {
-        type: role,
-        affiliation: undefined,
-      } as ProjectContributorRole,
-    ];
+    newContributor.roles = addRoles(newContributor.roles, contributors[indexToReplace].roles, roleToAddTo);
   }
 
+  // It needs at least one role to contain the role type
+  newContributor.roles = addEmptyRoleIfNecessary(newContributor.roles, roleToAddTo);
+
   const newContributors = [...contributors];
+
   if (indexToReplace > -1) {
     newContributors[indexToReplace] = newContributor;
   } else {
     newContributors.push(newContributor);
   }
+
   return { newContributors: newContributors };
 };
 

@@ -35,7 +35,12 @@ export const AddProjectContributorForm = ({
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
   const addParticipant = () => {
-    const { newContributors, error } = addContributor(selectedPerson, contributors, 'ProjectParticipant');
+    const { newContributors, error } = addContributor(
+      selectedPerson,
+      contributors,
+      'ProjectParticipant',
+      indexToReplace
+    );
 
     if (error === AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION) {
       dispatch(
