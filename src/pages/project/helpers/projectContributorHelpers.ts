@@ -18,9 +18,6 @@ export const getNonProjectManagerContributors = (contributors: ProjectContributo
   return contributors.filter((contributor) => contributor.roles.some((role) => isNonProjectManagerRole(role)));
 };
 
-export const hasUnidentifiedContributor = (contributors: ProjectContributor[]) =>
-  contributors.some((contributor) => !contributor.identity || !contributor.identity.id);
-
 export enum AddContributorErrors {
   NO_PERSON_TO_ADD,
   NO_SEARCH_TERM,
@@ -114,7 +111,9 @@ export const addContributor = (
   if (personToAdd.affiliations.length > 0) {
     newContributor.roles = [...newContributor.roles].concat(
       personToAdd.affiliations
-        .filter((_, index) => roleToAddTo !== 'ProjectManager' || index === 0) // For project managers, we only allow one affiliation
+        .filter(
+          (_, index) => roleToAddTo !== 'ProjectManager' || (index === 0 && !findProjectManagerRole(newContributor))
+        ) // For project managers, we only allow one affiliation
         .map((affiliation) => {
           return {
             type: roleToAddTo,
@@ -130,7 +129,8 @@ export const addContributor = (
 
   if (indexToReplace > -1) {
     newContributors[indexToReplace] = newContributor;
-    if (existingContributorIndex > -1) {
+    if (existingContributorIndex > -1 && indexToReplace !== existingContributorIndex) {
+      // The latter case is prohibited through the frontend code (you cannot replace an identified contributor), but keeping check and tests for this in case it ever changes
       newContributors.splice(existingContributorIndex, 1);
     }
   } else if (existingContributorIndex > -1) {

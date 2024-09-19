@@ -31,6 +31,7 @@ import {
   contributorsArrayWithSelectedUserAndUndefinedDaffy,
   contributorsArrayWithTwoOtherPeople,
   contributorsArrayWithUndefinedDaffy,
+  contributorsArrayWithUndefinedDaffyAsPMWithAffiliation,
   contributorsArrayWithUndefinedPMAffiliationAndOtherContributor,
   defOrgAsAffiliation,
   existingPersonIdentity,
@@ -51,7 +52,7 @@ describe('addContributor', () => {
         error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER,
       });
     });
-    it('if there is already a project manager in the contributors array with no affiliations, and we send an indexToReplace with the same index as the existing project manager, it replaces the existing project manager and adds its role to it', () => {
+    it('if there is already a project manager in the contributors array with no affiliations, and we send an index to replace the existing project manager, it replaces the existing project manager and adds its role to it', () => {
       expect(
         addContributor(
           selectedPersonWithAffiliation,
@@ -62,6 +63,23 @@ describe('addContributor', () => {
       ).toEqual({
         newContributors: [
           { identity: selectedPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }] },
+        ],
+      });
+    });
+    it('if there is already a project manager in the contributors array with one affiliation, and we send an index to replace the existing project manager, it replaces the existing project manager but doesnt add its role to it', () => {
+      expect(
+        addContributor(
+          selectedPersonWithAffiliation,
+          contributorsArrayWithUndefinedDaffyAsPMWithAffiliation,
+          'ProjectManager',
+          0
+        )
+      ).toEqual({
+        newContributors: [
+          {
+            identity: selectedPersonIdentity,
+            roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }],
+          },
         ],
       });
     });
@@ -143,6 +161,25 @@ describe('addContributor', () => {
                   type: 'ProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
+              ],
+            },
+          ],
+        });
+      });
+      it('if we send an index to replace the participant with same id, we replace the participant but keep its roles', () => {
+        expect(
+          addContributor(selectedPersonWithAffiliation, contributorsArrayWithTwoOtherPeople, 'ProjectManager', 1)
+        ).toEqual({
+          newContributors: [
+            {
+              identity: existingPersonIdentity,
+              roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }],
+            },
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+                { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
               ],
             },
           ],
@@ -235,6 +272,22 @@ describe('addContributor', () => {
                   type: 'ProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
+              ],
+            },
+          ],
+        });
+      });
+      it('if we send an index to replace the participant with a different id, we replace the person on the index with the selected person, keep the existing roles and add the selected affiliation at the end', () => {
+        expect(
+          addContributor(selectedPersonWithAffiliation, contributorsArrayWithTwoOtherPeople, 'ProjectManager', 0)
+        ).toEqual({
+          newContributors: [
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+                { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+                { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
               ],
             },
           ],
