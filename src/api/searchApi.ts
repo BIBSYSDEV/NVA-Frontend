@@ -568,23 +568,19 @@ export interface FetchCustomerResultsParams
 
 export const fetchCustomerResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
+
   if (params.status && params.status.length > 0) {
-    console.log('asd', params.status.join(','));
-    console.log('hei1', params.status);
     searchParams.set(CustomerResultParam.Status, params.status.join(','));
-    console.log('kommer hit=');
   }
-  console.log('hei1.5');
   if (params.query) {
     searchParams.set(ResultParam.Title, params.query);
   }
-  console.log('hei2');
+
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
   searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  console.log('hei3', searchParams.toString());
   const getCustomerResults = await authenticatedApiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
     signal,
