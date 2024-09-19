@@ -16,7 +16,9 @@ export const EditorPortfolio = () => {
       <Helmet>
         <title>{t('common.result_portfolio')}</title>
       </Helmet>
-      <Typography variant="h1">{t('common.result_portfolio')}</Typography>
+      <Typography variant="h1" gutterBottom>
+        {t('common.result_portfolio')}
+      </Typography>
       <RegistrationSearch registrationQuery={registrationQuery} />
     </>
   );

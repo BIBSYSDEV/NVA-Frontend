@@ -1,10 +1,11 @@
 import NotesIcon from '@mui/icons-material/Notes';
-import { Box, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { CustomerResultParam } from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import { NavigationList } from '../../components/PageWithSideMenu';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -22,9 +23,9 @@ export const ResultsPortfolioNavigationListAccodion = () => {
       startIcon={<NotesIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
       accordionPath={UrlPathTemplate.InstitutionPortfolio}
       defaultPath={`${UrlPathTemplate.InstitutionPortfolio}?${CustomerResultParam.Status}=${RegistrationStatus.Published}`}>
-      <Box sx={{ mx: '1rem', mb: '0.5rem' }}>
-        {/* TODO: Reuse same margin here and in TasksPage menu */}
+      <NavigationList component="div">
         <FormGroup
+          sx={{ mx: '1rem' }}
           onChange={(event: ChangeEvent<any>) => {
             const clickedStatus = event.target.value as RegistrationStatus;
             const statusAlreadySelected = selectedStatuses.includes(clickedStatus);
@@ -41,6 +42,7 @@ export const ResultsPortfolioNavigationListAccodion = () => {
             history.push({ search: queryParams.toString() });
           }}>
           <FormControlLabel
+            data-testid={dataTestId.editor.resultsPortfolioPublishedCheckbox}
             control={
               <Checkbox
                 size="small"
@@ -51,6 +53,7 @@ export const ResultsPortfolioNavigationListAccodion = () => {
             label={t('registration.status.PUBLISHED')}
           />
           <FormControlLabel
+            data-testid={dataTestId.editor.resultsPortfolioUnpublishedCheckbox}
             control={
               <Checkbox
                 size="small"
@@ -61,6 +64,7 @@ export const ResultsPortfolioNavigationListAccodion = () => {
             label={t('registration.status.UNPUBLISHED')}
           />
           <FormControlLabel
+            data-testid={dataTestId.editor.resultsPortfolioDeletedCheckbox}
             control={
               <Checkbox
                 size="small"
@@ -71,7 +75,7 @@ export const ResultsPortfolioNavigationListAccodion = () => {
             label={t('registration.status.DELETED')}
           />
         </FormGroup>
-      </Box>
+      </NavigationList>
     </NavigationListAccordion>
   );
 };
