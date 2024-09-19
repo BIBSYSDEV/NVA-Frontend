@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
+import { useCustomerRegistrationSearch } from '../../api/hooks/useFetchCustomerRegistrationSearch';
 import { RootState } from '../../redux/store';
 import { RegistrationSearch } from '../search/registration_search/RegistrationSearch';
 
@@ -10,7 +10,7 @@ export const EditorPortfolio = () => {
   const user = useSelector((state: RootState) => state.user);
   const organizationId = user?.topOrgCristinId;
 
-  const registrationQuery = useRegistrationSearch({
+  const registrationQuery = useCustomerRegistrationSearch({
     enabled: !!organizationId,
     params: { unit: organizationId },
   });
