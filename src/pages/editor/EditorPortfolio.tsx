@@ -9,7 +9,7 @@ export const EditorPortfolio = () => {
   const { t } = useTranslation();
 
   const params = useRegistrationsQueryParams();
-  const registrationQuery = useCustomerRegistrationSearch({ params });
+  const registrationQuery = useCustomerRegistrationSearch(params);
 
   return (
     <>

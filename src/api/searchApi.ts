@@ -558,21 +558,19 @@ export enum CustomerResultParam {
   Status = 'status',
 }
 
-export interface FetchCustomerResultsParams {
-  [ResultParam.From]?: number | null;
-  [ResultParam.Order]?: ResultSearchOrder | null;
-  [ResultParam.Query]?: string | null;
-  [ResultParam.Results]?: number | null;
-  [ResultParam.Sort]?: SortOrder | null;
-  [CustomerResultParam.Status]?: RegistrationStatus | RegistrationStatus[] | null;
+export interface FetchCustomerResultsParams
+  extends Pick<
+    FetchResultsParams,
+    ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
+  > {
+  [CustomerResultParam.Status]?: RegistrationStatus[] | null;
 }
 
 export const fetchCustomerResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
 
-  if (params.status) {
-    const paramValue = Array.isArray(params.status) ? params.status.join(',') : params.status;
-    searchParams.set(CustomerResultParam.Status, paramValue);
+  if (params.status && params.status.length > 0) {
+    searchParams.set(CustomerResultParam.Status, params.status.join(','));
   }
   if (params.query) {
     searchParams.set(ResultParam.Title, params.query);
