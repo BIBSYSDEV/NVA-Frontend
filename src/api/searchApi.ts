@@ -564,14 +564,15 @@ export interface FetchCustomerResultsParams {
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
   [ResultParam.Sort]?: SortOrder | null;
-  [CustomerResultParam.Status]?: RegistrationStatus | null;
+  [CustomerResultParam.Status]?: RegistrationStatus | RegistrationStatus[] | null;
 }
 
 export const fetchCustomerResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
 
   if (params.status) {
-    searchParams.set(CustomerResultParam.Status, params.status);
+    const paramValue = Array.isArray(params.status) ? params.status.join(',') : params.status;
+    searchParams.set(CustomerResultParam.Status, paramValue);
   }
   if (params.query) {
     searchParams.set(ResultParam.Title, params.query);
