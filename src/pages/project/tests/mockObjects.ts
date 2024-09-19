@@ -250,6 +250,17 @@ export const contributorsArrayWithUndefinedDaffy: ProjectContributor[] = [
   },
 ];
 
+export const contributorsArrayWithSelectedUserAndUndefinedDaffy: ProjectContributor[] = [
+  {
+    identity: selectedPersonIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }],
+  },
+  {
+    identity: unidentifiedDaffyIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }],
+  },
+];
+
 export const contributorsArrayWithExistingPersonIdentity: ProjectContributor[] = [
   {
     identity: existingPersonIdentity,

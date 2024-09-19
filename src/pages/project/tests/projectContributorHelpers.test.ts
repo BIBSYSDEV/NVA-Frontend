@@ -28,6 +28,7 @@ import {
   contributorsArrayWithSelectedPersonWithDifferentAffiliation,
   contributorsArrayWithSelectedPersonWithSameAffiliation,
   contributorsArrayWithSelectedPersonWithUndefinedAffiliation,
+  contributorsArrayWithSelectedUserAndUndefinedDaffy,
   contributorsArrayWithTwoOtherPeople,
   contributorsArrayWithUndefinedDaffy,
   contributorsArrayWithUndefinedPMAffiliationAndOtherContributor,
@@ -812,6 +813,28 @@ describe('addContributor', () => {
                 {
                   type: 'ProjectParticipant',
                   affiliation: abcOrgAsAffiliation,
+                },
+              ],
+            },
+          ],
+        });
+      });
+      it('when there is an index to replace and the user on the index has an affiliation, and the contributor to add has the same affiliation, it only keeps one of the affiliations', () => {
+        expect(
+          addContributor(
+            selectedPersonWithoutAffiliation,
+            contributorsArrayWithSelectedUserAndUndefinedDaffy,
+            'ProjectParticipant',
+            1
+          )
+        ).toEqual({
+          newContributors: [
+            {
+              identity: selectedPersonIdentity,
+              roles: [
+                {
+                  type: 'ProjectParticipant',
+                  affiliation: defOrgAsAffiliation,
                 },
               ],
             },

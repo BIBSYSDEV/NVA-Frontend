@@ -82,16 +82,20 @@ const findNonProjectManagerRoleThatHasAffiliation = (roles: ProjectContributorRo
   return roles.findIndex((role) => role.affiliation?.id === affiliationId && isNonProjectManagerRole(role));
 };
 
+const affiliationExists = (existingRoles: ProjectContributorRole[], role: ProjectContributorRole) =>
+  existingRoles.find((r) => r.affiliation?.id === role.affiliation?.id);
+
 export const addRoles = (
   existingRoles: ProjectContributorRole[],
   rolesToAdd: ProjectContributorRole[],
   roleToAddTo: ProjectContributorType
 ) => {
-  return existingRoles.concat(rolesToAdd.filter((role) => sameTypeNotEmpty(role, roleToAddTo)));
+  return existingRoles.concat(
+    rolesToAdd.filter(
+      (role) => role.type !== roleToAddTo || (!hasEmptyAffiliation(role) && !affiliationExists(existingRoles, role))
+    )
+  );
 };
-
-export const sameTypeNotEmpty = (role: ProjectContributorRole, roleType: ProjectContributorType) =>
-  role.type !== roleType || (role.type === roleType && !hasEmptyAffiliation(role));
 
 const findRoleIndexForAffiliation = (
   asProjectManager: boolean,
