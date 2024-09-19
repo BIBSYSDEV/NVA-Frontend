@@ -19,6 +19,8 @@ export const useRegistrationsQueryParams = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
+  const status = searchParams.get(CustomerResultParam.Status);
+
   return {
     abstract: searchParams.get(ResultParam.Abstract),
     category: searchParams.get(ResultParam.Category) as PublicationInstanceType | null,
@@ -45,7 +47,7 @@ export const useRegistrationsQueryParams = () => {
     scientificIndex: searchParams.get(ResultParam.ScientificIndex),
     series: searchParams.get(ResultParam.Series),
     sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
-    status: searchParams.get(CustomerResultParam.Status) as RegistrationStatus[] | null,
+    status: status ? (status.split(',') as RegistrationStatus[]) : null,
     tags: searchParams.get(ResultParam.Tags),
     title: searchParams.get(ResultParam.Title),
     topLevelOrganization: searchParams.get(ResultParam.TopLevelOrganization),

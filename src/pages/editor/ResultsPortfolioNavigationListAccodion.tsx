@@ -8,13 +8,15 @@ import { NavigationListAccordion } from '../../components/NavigationListAccordio
 import { NavigationList } from '../../components/PageWithSideMenu';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 export const ResultsPortfolioNavigationListAccodion = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const queryParams = new URLSearchParams(history.location.search);
-  const selectedStatuses = (queryParams.get(CustomerResultParam.Status)?.split(',') ?? []) as RegistrationStatus[];
+  const { status } = useRegistrationsQueryParams();
+  const selectedStatuses = status ?? [];
 
   return (
     <NavigationListAccordion
