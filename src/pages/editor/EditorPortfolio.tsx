@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useCustomerRegistrationSearch } from '../../api/hooks/useFetchCustomerRegistrationSearch';
 import { RootState } from '../../redux/store';
+import { RegistrationStatus } from '../../types/registration.types';
 import { RegistrationSearch } from '../search/registration_search/RegistrationSearch';
 
 export const EditorPortfolio = () => {
@@ -12,7 +13,7 @@ export const EditorPortfolio = () => {
 
   const registrationQuery = useCustomerRegistrationSearch({
     enabled: !!organizationId,
-    params: { unit: organizationId },
+    params: { query: '', status: RegistrationStatus.Unpublished },
   });
 
   return (

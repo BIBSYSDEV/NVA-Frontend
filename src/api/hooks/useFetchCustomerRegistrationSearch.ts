@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../searchApi';
+import { fetchCustomerResults, FetchCustomerResultsParams } from '../searchApi';
 
 interface UseCustomerRegistrationSearch {
   enabled?: boolean;
-  params: FetchResultsParams;
+  params: FetchCustomerResultsParams;
 }
 
 export const useCustomerRegistrationSearch = ({ enabled, params }: UseCustomerRegistrationSearch) => {
@@ -13,7 +13,7 @@ export const useCustomerRegistrationSearch = ({ enabled, params }: UseCustomerRe
   return useQuery({
     enabled,
     queryKey: ['customerRegistrations', params],
-    queryFn: ({ signal }) => fetchResults(params, signal), // TODO: Use new customer endpoint
+    queryFn: ({ signal }) => fetchCustomerResults(params, signal),
     meta: { errorMessage: t('feedback.error.search') },
   });
 };

@@ -17,6 +17,7 @@ import {
   PublicationInstanceType,
   Registration,
   RegistrationAggregations,
+  RegistrationStatus,
 } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
@@ -553,12 +554,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   return getResults.data;
 };
 
-export enum CustomerResultsParam {
-  From = 'from',
-  Order = 'order',
-  Query = 'query',
-  Results = 'results',
-  Sort = 'sort',
+export enum CustomerResultParam {
+  Status = 'status',
 }
 
 export interface FetchCustomerResultsParams {
@@ -567,11 +564,15 @@ export interface FetchCustomerResultsParams {
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
   [ResultParam.Sort]?: SortOrder | null;
+  [CustomerResultParam.Status]?: RegistrationStatus | null;
 }
 
 export const fetchCustomerResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
 
+  if (params.status) {
+    searchParams.set(CustomerResultParam.Status, params.status);
+  }
   if (params.query) {
     searchParams.set(ResultParam.Title, params.query);
   }
@@ -581,10 +582,10 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getResults = await apiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
+  const getCustomerResults = await authenticatedApiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
     signal,
   });
 
-  return getResults.data;
+  return getCustomerResults.data;
 };
