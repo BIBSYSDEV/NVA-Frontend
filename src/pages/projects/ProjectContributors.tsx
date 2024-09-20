@@ -67,9 +67,15 @@ const ContributorList = ({ contributors, projectRole }: ContributorListProps) =>
     {contributors.map((contributor, index) => (
       <div key={index}>
         <Typography variant="subtitle1" component="p">
-          <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-            {contributor.identity.firstName} {contributor.identity.lastName}
-          </MuiLink>
+          {contributor.identity.id ? (
+            <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+              {contributor.identity.firstName} {contributor.identity.lastName}
+            </MuiLink>
+          ) : (
+            <>
+              {contributor.identity.firstName} {contributor.identity.lastName}
+            </>
+          )}
         </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {contributor.roles.map((contributorRole) => {

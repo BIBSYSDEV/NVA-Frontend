@@ -35,9 +35,15 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography variant="overline">{t('project.project_manager')}</Typography>
         <Typography>
           {projectManager ? (
-            <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
-              {projectManager.identity.firstName} {projectManager.identity.lastName}
-            </MuiLink>
+            projectManager.identity.id ? (
+              <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+                {projectManager.identity.firstName} {projectManager.identity.lastName}
+              </MuiLink>
+            ) : (
+              <>
+                {projectManager.identity.firstName} {projectManager.identity.lastName}
+              </>
+            )
           ) : (
             '-'
           )}

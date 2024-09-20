@@ -39,14 +39,20 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
-          {projectManagers.map((projectManager, index) => (
-            <span key={projectManager.identity.id}>
-              <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+          {projectManagers.map((projectManager, index) =>
+            projectManager.identity.id ? (
+              <span key={projectManager.identity.id}>
+                <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+                  {`${projectManager.identity.firstName} ${projectManager.identity.lastName}`}
+                </MuiLink>
+                {index < projectManagers.length - 1 && <span>;</span>}
+              </span>
+            ) : (
+              <span key={`${projectManager.identity.firstName}_${projectManager.identity.lastName}_${index}`}>
                 {`${projectManager.identity.firstName} ${projectManager.identity.lastName}`}
-              </MuiLink>
-              {index < projectManagers.length - 1 && <span>;</span>}
-            </span>
-          ))}
+              </span>
+            )
+          )}
           {projectParticipantsLength > 0 && (
             <Typography>({t('search.additional_participants', { count: projectParticipantsLength })})</Typography>
           )}
