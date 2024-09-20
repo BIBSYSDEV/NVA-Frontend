@@ -1,10 +1,11 @@
 import { ProjectContributor, ProjectContributorRole, ProjectContributorType } from '../../../types/project.types';
-import { CristinPerson } from '../../../types/user.types';
+import { CristinPerson, CristinPersonAffiliation } from '../../../types/user.types';
 import { getValueByKey } from '../../../utils/user-helpers';
 import {
   addRoles,
   deleteProjectManagerRoleFromContributor,
   findProjectManagerRole,
+  hasEmptyAffiliation,
   isNonProjectManagerRole,
   isProjectManagerRole,
   replaceRolesOnContributor,
@@ -20,15 +21,33 @@ export const getNonProjectManagerContributors = (contributors: ProjectContributo
 
 export enum AddContributorErrors {
   NO_PERSON_TO_ADD,
+  INDEX_OUT_OF_BOUNDS,
   NO_SEARCH_TERM,
   SAME_ROLE_WITH_SAME_AFFILIATION,
   ALREADY_HAS_A_PROJECT_MANAGER,
+  CANNOT_ADD_ANOTHER_PROJECT_MANAGER_ROLE,
+  CAN_ONLY_REPLACE_UNIDENTIFIED_CONTRIBUTORS,
 }
 
-const checkIfProjectManagerDuplicate = (contributors: ProjectContributor[], indexToReplace: number) => {
+const checkIfExistingProjectManager = (contributors: ProjectContributor[], indexToReplace: number) => {
   const indexOfExistingProjectManager = contributors.findIndex((contributor) => findProjectManagerRole(contributor));
+
   if (indexOfExistingProjectManager > -1 && indexToReplace !== indexOfExistingProjectManager) {
+    // It's ok to have an existing Project Manager, if we are going to replace it
     return AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER;
+  }
+};
+
+const checkIfDefinedProjectManagerRole = (contributors: ProjectContributor[]) => {
+  const indexOfExistingProjectManager = contributors.findIndex((contributor) => findProjectManagerRole(contributor));
+
+  if (indexOfExistingProjectManager > -1) {
+    const existingProjectManager = contributors[indexOfExistingProjectManager];
+    const existingProjectManagerRole = findProjectManagerRole(existingProjectManager);
+
+    if (existingProjectManagerRole && !hasEmptyAffiliation(existingProjectManagerRole)) {
+      return AddContributorErrors.CANNOT_ADD_ANOTHER_PROJECT_MANAGER_ROLE;
+    }
   }
 };
 
@@ -60,6 +79,16 @@ const addEmptyRoleIfNecessary = (existingRoles: ProjectContributorRole[], roleTo
   return existingRoles;
 };
 
+const isAlreadyAdded = (
+  existingRoles: ProjectContributorRole[],
+  cristinAffiliation: CristinPersonAffiliation,
+  roleToAddTo: ProjectContributorType
+) => {
+  return existingRoles.some(
+    (role) => role.type === roleToAddTo && role.affiliation?.id === cristinAffiliation.organization
+  );
+};
+
 export const addContributor = (
   personToAdd: CristinPerson | undefined,
   contributors: ProjectContributor[],
@@ -70,10 +99,22 @@ export const addContributor = (
     return { error: AddContributorErrors.NO_PERSON_TO_ADD };
   }
 
-  // Cannot add project manager if we already have one
+  if (indexToReplace > contributors.length - 1 || indexToReplace < -1) {
+    return { error: AddContributorErrors.INDEX_OUT_OF_BOUNDS };
+  }
+
+  if (indexToReplace > -1 && contributors[indexToReplace].identity.id) {
+    return { error: AddContributorErrors.CAN_ONLY_REPLACE_UNIDENTIFIED_CONTRIBUTORS };
+  }
+
   if (roleToAddTo === 'ProjectManager') {
-    const projectManagerError = checkIfProjectManagerDuplicate(contributors, indexToReplace);
-    if (projectManagerError) return { error: projectManagerError };
+    const projectManagerError = checkIfExistingProjectManager(contributors, indexToReplace);
+    if (projectManagerError) return { error: projectManagerError }; // Can only replace, not add Project Manager if we already have one
+
+    if (personToAdd.affiliations.length > 0) {
+      const projectManagerErrorRoleError = checkIfDefinedProjectManagerRole(contributors);
+      if (projectManagerErrorRoleError) return { error: projectManagerErrorRoleError }; // Can not add affiliations if the project manager has one
+    }
   }
 
   const newContributor: ProjectContributor = {
@@ -112,8 +153,10 @@ export const addContributor = (
     newContributor.roles = [...newContributor.roles].concat(
       personToAdd.affiliations
         .filter(
-          (_, index) => roleToAddTo !== 'ProjectManager' || (index === 0 && !findProjectManagerRole(newContributor))
-        ) // For project managers, we only allow one affiliation
+          (cristinAffiliation, index) =>
+            !isAlreadyAdded(newContributor.roles, cristinAffiliation, roleToAddTo) && // Not adding duplicates
+            (roleToAddTo !== 'ProjectManager' || index === 0) // For project managers, we only allow one affiliation
+        )
         .map((affiliation) => {
           return {
             type: roleToAddTo,
@@ -170,7 +213,7 @@ export const addUnidentifiedProjectContributor = (
 
   // Cannot add project manager if we already have one
   if (roleToAddTo === 'ProjectManager') {
-    const projectManagerError = checkIfProjectManagerDuplicate(contributors, indexToReplace);
+    const projectManagerError = checkIfExistingProjectManager(contributors, indexToReplace);
     if (projectManagerError) return { error: projectManagerError };
   }
 

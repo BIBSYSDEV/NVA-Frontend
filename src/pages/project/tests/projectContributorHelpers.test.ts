@@ -11,12 +11,17 @@ import {
   contributorsArrayWithContributorsWithOnlyManagerRole,
   contributorsArrayWithContributorsWithOnlyParticipantRole,
   contributorsArrayWithContributorWithBothPMRoleAndParticipantRole,
-  contributorsArrayWithDifferentPersonWithDifferentAffiliation,
   contributorsArrayWithDifferentProjectManagerWithDifferentAffiliation,
   contributorsArrayWithDifferentProjectManagerWithSameAffiliation,
   contributorsArrayWithDifferentProjectManagerWithUndefinedAffiliation,
   contributorsArrayWithExistingPersonIdentity,
   contributorsArrayWithNoProjectManager,
+  contributorsArrayWithOneUnidentifiedAndOneOther,
+  contributorsArrayWithOneUnidentifiedAndOneOtherWithUndefined,
+  contributorsArrayWithOneUnidentifiedWithSameAndOneOther,
+  contributorsArrayWithOneUnidentifiedWithSameAndOneOtherWithUndefined,
+  contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOther,
+  contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOtherWithUndefined,
   contributorsArrayWithOtherPersonWithDifferentAffiliation,
   contributorsArrayWithOtherPersonWithSameAffiliation,
   contributorsArrayWithOtherPersonWithUndefinedAffiliation,
@@ -28,11 +33,20 @@ import {
   contributorsArrayWithSelectedPersonWithDifferentAffiliation,
   contributorsArrayWithSelectedPersonWithSameAffiliation,
   contributorsArrayWithSelectedPersonWithUndefinedAffiliation,
-  contributorsArrayWithSelectedUserAndUndefinedDaffy,
-  contributorsArrayWithTwoOtherPeople,
-  contributorsArrayWithUndefinedDaffy,
-  contributorsArrayWithUndefinedDaffyAsPMWithAffiliation,
-  contributorsArrayWithUndefinedPMAffiliationAndOtherContributor,
+  contributorsArrayWithTwoUnidentified,
+  contributorsArrayWithUnidentifiedAndOther,
+  contributorsArrayWithUnidentifiedAndSamePersonWithUndefined,
+  contributorsArrayWithUnidentifiedDaffy,
+  contributorsArrayWithUnidentifiedDaffyPM,
+  contributorsArrayWithUnidentifiedDaffyWithAffiliation,
+  contributorsArrayWithUnidentifiedDaffyWithSameAffiliation,
+  contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithOther,
+  contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithTwoOthers,
+  contributorsArrayWithUnidentifiedPersonWithUnidentifiedAffiliationAndSelectedWithOther,
+  contributorsArrayWithUnidentifiedPMAffiliationAndOtherContributor,
+  contributorsArrayWithUnidentifiedProjectManagerWithDifferentAffiliation,
+  contributorsArrayWithUnidentifiedProjectManagerWithSameAffiliation,
+  contributorsArrayWithUnidentifiedProjectManagerWithUndefinedAffiliation,
   defOrgAsAffiliation,
   existingPersonIdentity,
   ghiOrgAsAffiliation,
@@ -45,49 +59,117 @@ import {
 
 describe('addContributor', () => {
   describe('when adding a project manager with affiliation', () => {
-    it('if there is already a project manager in the contributors array it returns an error', () => {
+    it('if there is already a project manager with affiliation in the contributors array, it returns an error', () => {
       expect(
         addContributor(selectedPersonWithAffiliation, contributorsArrayWithProjectManager, 'ProjectManager')
       ).toEqual({
         error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER,
       });
     });
-    it('if there is already a project manager in the contributors array with no affiliations, and we send an index to replace the existing project manager, it replaces the existing project manager and adds its role to it', () => {
-      expect(
-        addContributor(
-          selectedPersonWithAffiliation,
-          contributorsArrayWithDifferentProjectManagerWithUndefinedAffiliation,
-          'ProjectManager',
-          0
-        )
-      ).toEqual({
-        newContributors: [
-          { identity: selectedPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }] },
-        ],
+    describe('when we are sent an index to add to', () => {
+      it('and the index is a different index than the index of the existing project manager, it returns an error', () => {
+        expect(
+          addContributor(selectedPersonWithAffiliation, contributorsArrayWithTwoUnidentified, 'ProjectManager', 1)
+        ).toEqual({
+          error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER,
+        });
       });
-    });
-    it('if there is already a project manager in the contributors array with one affiliation, and we send an index to replace the existing project manager, it replaces the existing project manager but doesnt add its role to it', () => {
-      expect(
-        addContributor(
-          selectedPersonWithAffiliation,
-          contributorsArrayWithUndefinedDaffyAsPMWithAffiliation,
-          'ProjectManager',
-          0
-        )
-      ).toEqual({
-        newContributors: [
-          {
-            identity: selectedPersonIdentity,
-            roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }],
-          },
-        ],
+      it('and the provided index is too high we return an error', () => {
+        expect(
+          addContributor(selectedPersonWithAffiliation, contributorsArrayWithProjectManager, 'ProjectManager', 1)
+        ).toEqual({
+          error: AddContributorErrors.INDEX_OUT_OF_BOUNDS,
+        });
       });
-    });
-    it('if there is already a project manager in the contributors array but we send an indexToReplace with a different index than the existing project manager, it returns an error', () => {
-      expect(
-        addContributor(selectedPersonWithAffiliation, contributorsArrayWithProjectManager, 'ProjectManager', 1)
-      ).toEqual({
-        error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER,
+      it('and contributor at the index is not unidentified, it returns an error', () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithOther,
+            'ProjectManager',
+            1
+          )
+        ).toEqual({
+          error: AddContributorErrors.CAN_ONLY_REPLACE_UNIDENTIFIED_CONTRIBUTORS,
+        });
+      });
+      it('and the unidentified contributor on the index has another Project Manager-affiliation than the one we are adding, we return an error', () => {
+        expect(
+          addContributor(selectedPersonWithAffiliation, contributorsArrayWithUnidentifiedDaffyPM, 'ProjectManager', 0)
+        ).toEqual({
+          error: AddContributorErrors.CANNOT_ADD_ANOTHER_PROJECT_MANAGER_ROLE,
+        });
+      });
+      it('and the unidentified contributor on the index has the same Project Manager-affiliation as the one we are adding, we return an error', () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithUnidentifiedProjectManagerWithSameAffiliation,
+            'ProjectManager',
+            0
+          )
+        ).toEqual({
+          error: AddContributorErrors.CANNOT_ADD_ANOTHER_PROJECT_MANAGER_ROLE,
+        });
+      });
+      describe('and the unidentified contributor on the index has an undefined Project Manager-affiliation', () => {
+        it('we replace the undefined one with the selected role', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithUnidentifiedProjectManagerWithUndefinedAffiliation,
+              'ProjectManager',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index with affiliations, the index will now contain the roles of the existing person, and the affiliation selected when adding', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithOther,
+              'ProjectManager',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+                  { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
+                ],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index without affiliations, the index will now contain the roles selected when adding', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithUnidentifiedAndSamePersonWithUndefined,
+              'ProjectManager',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: undefined },
+                  { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
+                ],
+              },
+            ],
+          });
+        });
       });
     });
     describe('when there exists a project participant with the same id', () => {
@@ -161,25 +243,6 @@ describe('addContributor', () => {
                   type: 'ProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
-              ],
-            },
-          ],
-        });
-      });
-      it('if we send an index to replace the participant with same id, we replace the participant but keep its roles', () => {
-        expect(
-          addContributor(selectedPersonWithAffiliation, contributorsArrayWithTwoOtherPeople, 'ProjectManager', 1)
-        ).toEqual({
-          newContributors: [
-            {
-              identity: existingPersonIdentity,
-              roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }],
-            },
-            {
-              identity: selectedPersonIdentity,
-              roles: [
-                { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
-                { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
               ],
             },
           ],
@@ -279,7 +342,7 @@ describe('addContributor', () => {
       });
       it('if we send an index to replace the participant with a different id, we replace the person on the index with the selected person, keep the existing roles and add the selected affiliation at the end', () => {
         expect(
-          addContributor(selectedPersonWithAffiliation, contributorsArrayWithTwoOtherPeople, 'ProjectManager', 0)
+          addContributor(selectedPersonWithAffiliation, contributorsArrayWithUnidentifiedAndOther, 'ProjectManager', 0)
         ).toEqual({
           newContributors: [
             {
@@ -294,21 +357,19 @@ describe('addContributor', () => {
         });
       });
     });
-    describe('when there are no other contributors', () => {
-      it('the chosen person is added with role type "ProjectManager" and the added affiliation', () => {
-        expect(addContributor(selectedPersonWithAffiliation, [], 'ProjectManager')).toEqual({
-          newContributors: [
-            {
-              identity: selectedPersonIdentity,
-              roles: [
-                {
-                  type: 'ProjectManager',
-                  affiliation: abcOrgAsAffiliation,
-                },
-              ],
-            },
-          ],
-        });
+    it('when there are no other contributors, the chosen person is added with role type "ProjectManager" and the added affiliation', () => {
+      expect(addContributor(selectedPersonWithAffiliation, [], 'ProjectManager')).toEqual({
+        newContributors: [
+          {
+            identity: selectedPersonIdentity,
+            roles: [
+              {
+                type: 'ProjectManager',
+                affiliation: abcOrgAsAffiliation,
+              },
+            ],
+          },
+        ],
       });
     });
   });
@@ -320,13 +381,122 @@ describe('addContributor', () => {
         error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER,
       });
     });
-    it('if there is already a project manager in the contributors array but we send an indexToReplace containing the index of the existing project manager, it replaces it', () => {
-      expect(
-        addContributor(selectedPersonWithoutAffiliation, contributorsArrayWithProjectManager, 'ProjectManager', 0)
-      ).toEqual({
-        newContributors: [
-          { identity: selectedPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }] },
-        ],
+    describe('when we are sent an index to add to', () => {
+      describe('and the unidentified contributor on the index has a Project Manager-affiliation', () => {
+        it('we change the user and keep the role', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithUnidentifiedProjectManagerWithDifferentAffiliation,
+              'ProjectManager',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index with affiliations, the index will now contain the roles of the existing person, and the roles of the replaced index', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithUnidentifiedPersonWithUnidentifiedAffiliationAndSelectedWithOther,
+              'ProjectManager',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+                  { type: 'ProjectManager', affiliation: undefined },
+                ],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index without affiliations, the index will now contain the new user and empty affiliations', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithUnidentifiedAndSamePersonWithUndefined,
+              'ProjectManager',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: undefined },
+                  { type: 'ProjectManager', affiliation: undefined },
+                ],
+              },
+            ],
+          });
+        });
+      });
+      describe('and the unidentified contributor on the index has an undefined Project Manager-affiliation', () => {
+        it('we replace the user and keep the undefined role', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithUnidentifiedProjectManagerWithUndefinedAffiliation,
+              'ProjectManager',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              { identity: selectedPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index with affiliations, the index will now contain the roles of the existing person, and an empty PM affiliation', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithTwoOthers,
+              'ProjectManager',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+                  { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+                  { type: 'ProjectManager', affiliation: undefined },
+                ],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index without affiliations, the index will now contain the empty role on the index', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithUnidentifiedAndSamePersonWithUndefined,
+              'ProjectManager',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: undefined },
+                  { type: 'ProjectManager', affiliation: undefined },
+                ],
+              },
+            ],
+          });
+        });
       });
     });
     describe('when there exists a project contributor with the same id', () => {
@@ -412,7 +582,7 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the other  contributor only has an affiliation that is undefined, it adds a new "ProjectManager" contributor with with an empty affiliation', () => {
+      it('when the other contributor only has an affiliation that is undefined, it adds a new "ProjectManager" contributor with with an empty affiliation', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
@@ -443,21 +613,19 @@ describe('addContributor', () => {
         });
       });
     });
-    describe('when there are no other contributors', () => {
-      it('the chosen person is added with role "ProjectManager" and affiliation undefined', () => {
-        expect(addContributor(selectedPersonWithoutAffiliation, [], 'ProjectManager')).toEqual({
-          newContributors: [
-            {
-              identity: selectedPersonIdentity,
-              roles: [
-                {
-                  type: 'ProjectManager',
-                  affiliation: undefined,
-                },
-              ],
-            },
-          ],
-        });
+    it('when there are no other contributors, the chosen person is added with role "ProjectManager" and affiliation undefined', () => {
+      expect(addContributor(selectedPersonWithoutAffiliation, [], 'ProjectManager')).toEqual({
+        newContributors: [
+          {
+            identity: selectedPersonIdentity,
+            roles: [
+              {
+                type: 'ProjectManager',
+                affiliation: undefined,
+              },
+            ],
+          },
+        ],
       });
     });
   });
@@ -477,44 +645,197 @@ describe('addContributor', () => {
         ],
       });
     });
-    it('if we send an indexToReplace containing the index of an existing participant with a role, it replaces the existing participant, but keeps its role', () => {
-      expect(
-        addContributor(
-          selectedPersonWithAffiliation,
-          contributorsArrayWithDifferentPersonWithDifferentAffiliation,
-          'ProjectParticipant',
-          0
-        )
-      ).toEqual({
-        newContributors: [
-          {
-            identity: selectedPersonIdentity,
-            roles: [
-              { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-              { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
-            ],
-          },
-        ],
+    describe('if we are sent an index to add to', () => {
+      it('and the participant on the index isnt unidentified, we return an error', () => {
+        expect(
+          addContributor(
+            selectedPersonWithAffiliation,
+            contributorsArrayWithOtherPersonWithDifferentAffiliation,
+            'ProjectParticipant',
+            0
+          )
+        ).toEqual({
+          error: AddContributorErrors.CAN_ONLY_REPLACE_UNIDENTIFIED_CONTRIBUTORS,
+        });
       });
-    });
-    it('if the selected person already exists in the array with a different role, and we send an indexToReplace, the index will now contain the selected person and its role plus the roles of the replaced index, plus the affiliation used when adding', () => {
-      expect(
-        addContributor(selectedPersonWithAffiliation, contributorsArrayWithTwoOtherPeople, 'ProjectParticipant', 0)
-      ).toEqual({
-        newContributors: [
-          {
-            identity: selectedPersonIdentity,
-            roles: [
-              { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
-              { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-              { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+      describe('and the unidentified contributor on the index has another affiliation', () => {
+        it('we keep the existing affiliation and add an extra', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithUnidentifiedDaffyWithAffiliation,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+                  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+                ],
+              },
             ],
-          },
-        ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index with affiliations, the index will now contain the roles of the existing person, the roles of the replaced index, and the affiliation selected when adding', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithOneUnidentifiedAndOneOther,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+                  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+                  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+                ],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index without affiliations, the index will now contain the roles of the replaced index and the affiliation selected when adding', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithOneUnidentifiedAndOneOtherWithUndefined,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+                  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+                ],
+              },
+            ],
+          });
+        });
+      });
+      describe('and the unidentified contributor on the index has the same affiliation', () => {
+        it('we only keep one of the affiliations', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithUnidentifiedDaffyWithSameAffiliation,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index with affiliations, the index will now contain the roles of the existing person, and the roles of the replaced index', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithOneUnidentifiedWithSameAndOneOther,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+                  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+                ],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index without affiliations, the index will now contain the affiliation selected when adding and the role from the index', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithOneUnidentifiedWithSameAndOneOtherWithUndefined,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+              },
+            ],
+          });
+        });
+      });
+      describe('and the unidentified contributor on the index has an undefined affiliation', () => {
+        it('we replace the undefined one', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithUnidentifiedDaffy,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index with affiliations, the index will now contain the roles of the existing person, and the affiliation selected when adding', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOther,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+                  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+                ],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index without affiliations, the index will now contain the roles selected when adding', () => {
+          expect(
+            addContributor(
+              selectedPersonWithAffiliation,
+              contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOtherWithUndefined,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+              },
+            ],
+          });
+        });
       });
     });
     describe('when there exists a project contributor with the same id', () => {
-      it('when the existing contributor has an affiliation with the same id it returns an error', () => {
+      it('when the existing contributor has an affiliation with the same id, it returns an error', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
@@ -850,6 +1171,114 @@ describe('addContributor', () => {
         ],
       });
     });
+    describe('when we are sent an index to add to', () => {
+      describe('and the unidentified contributor on the index has another affiliation', () => {
+        it('we replace the user and keep the affiliation', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithUnidentifiedDaffyWithAffiliation,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index with affiliations, the index will now contain the roles of the existing person and the roles of the replaced index', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithOneUnidentifiedAndOneOther,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [
+                  { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+                  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+                ],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index without affiliations, the index will now contain the roles of the replaced index', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithOneUnidentifiedWithSameAndOneOtherWithUndefined,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+              },
+            ],
+          });
+        });
+      });
+      describe('and the unidentified contributor on the index has an undefined affiliation', () => {
+        it('we replace the undefined one and keep an undefined role', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithUnidentifiedDaffy,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index with affiliations, the index will now contain the roles of the existing person', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOther,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              {
+                identity: selectedPersonIdentity,
+                roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }],
+              },
+            ],
+          });
+        });
+        it('and the contributor we are adding exists on a different index without affiliations, the index will now contain the the new user with an empty role', () => {
+          expect(
+            addContributor(
+              selectedPersonWithoutAffiliation,
+              contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOtherWithUndefined,
+              'ProjectParticipant',
+              0
+            )
+          ).toEqual({
+            newContributors: [
+              { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
+            ],
+          });
+        });
+      });
+    });
     describe('when there exists a project contributor with the same id', () => {
       it('when there is an existing contributor with the same id, it does nothing.', () => {
         expect(
@@ -866,28 +1295,6 @@ describe('addContributor', () => {
                 {
                   type: 'ProjectParticipant',
                   affiliation: abcOrgAsAffiliation,
-                },
-              ],
-            },
-          ],
-        });
-      });
-      it('when there is an index to replace and the user on the index has an affiliation, and the contributor to add has the same affiliation, it only keeps one of the affiliations', () => {
-        expect(
-          addContributor(
-            selectedPersonWithoutAffiliation,
-            contributorsArrayWithSelectedUserAndUndefinedDaffy,
-            'ProjectParticipant',
-            1
-          )
-        ).toEqual({
-          newContributors: [
-            {
-              identity: selectedPersonIdentity,
-              roles: [
-                {
-                  type: 'ProjectParticipant',
-                  affiliation: defOrgAsAffiliation,
                 },
               ],
             },
@@ -1120,7 +1527,7 @@ describe('remove project manager', () => {
     ]);
   });
   it('when they only have a project manager role with undefined affiliation, it removes the whole user object', () => {
-    expect(removeProjectManager(contributorsArrayWithUndefinedPMAffiliationAndOtherContributor)).toEqual([
+    expect(removeProjectManager(contributorsArrayWithUnidentifiedPMAffiliationAndOtherContributor)).toEqual([
       {
         identity: existingPersonIdentity,
         roles: [
@@ -1136,7 +1543,7 @@ describe('remove project manager', () => {
 });
 
 describe('addUnidentifiedProjectContributor', () => {
-  describe('when adding an undefined project manager', () => {
+  describe('when adding an unidentified project manager', () => {
     it('when there is already a project manager in the contributors array it returns an error', () => {
       expect(
         addUnidentifiedProjectContributor(
@@ -1187,7 +1594,7 @@ describe('addUnidentifiedProjectContributor', () => {
     });
     it('when there is another unidentified contributor with the same name, it adds a new unidentified user', () => {
       expect(
-        addUnidentifiedProjectContributor('Daffy Duck', contributorsArrayWithUndefinedDaffy, 'ProjectManager')
+        addUnidentifiedProjectContributor('Daffy Duck', contributorsArrayWithUnidentifiedDaffy, 'ProjectManager')
       ).toEqual({
         newContributors: [
           {
@@ -1262,8 +1669,8 @@ describe('addUnidentifiedProjectContributor', () => {
       });
     });
   });
-  describe('when adding an undefined project participant', () => {
-    it('it returns a new identity without id, with a role with undefined project participant', () => {
+  describe('when adding an unidentified project participant', () => {
+    it('it returns a new identity without id, with a role with unidentified project participant', () => {
       expect(
         addUnidentifiedProjectContributor(
           'Daffy Duck',
@@ -1292,7 +1699,7 @@ describe('addUnidentifiedProjectContributor', () => {
     });
     it('when sending an index, the person on the index in the array is changed', () => {
       expect(
-        addUnidentifiedProjectContributor('Ole Jensen', contributorsArrayWithUndefinedDaffy, 'ProjectParticipant', 0)
+        addUnidentifiedProjectContributor('Ole Jensen', contributorsArrayWithUnidentifiedDaffy, 'ProjectParticipant', 0)
       ).toEqual({
         newContributors: [
           {
@@ -1304,7 +1711,7 @@ describe('addUnidentifiedProjectContributor', () => {
     });
     it('when there is another unidentified contributor with the same name, it adds a new contributor', () => {
       expect(
-        addUnidentifiedProjectContributor('Daffy Duck', contributorsArrayWithUndefinedDaffy, 'ProjectParticipant')
+        addUnidentifiedProjectContributor('Daffy Duck', contributorsArrayWithUnidentifiedDaffy, 'ProjectParticipant')
       ).toEqual({
         newContributors: [
           {
@@ -1320,7 +1727,7 @@ describe('addUnidentifiedProjectContributor', () => {
     });
     it('when there is another unidentified contributor with a different name, it', () => {
       expect(
-        addUnidentifiedProjectContributor('Mikkel Rev', contributorsArrayWithUndefinedDaffy, 'ProjectParticipant')
+        addUnidentifiedProjectContributor('Mikkel Rev', contributorsArrayWithUnidentifiedDaffy, 'ProjectParticipant')
       ).toEqual({
         newContributors: [
           {
