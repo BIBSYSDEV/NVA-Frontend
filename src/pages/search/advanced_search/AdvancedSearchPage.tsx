@@ -114,7 +114,7 @@ export const AdvancedSearchPage = () => {
               data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
               control={<Checkbox name="scientificIndexStatus" />}
               onChange={handleNviReportedCheckbox}
-              checked={params.get(ResultParam.ScientificIndexStatus) === ScientificIndexStatuses.Reported}
+              checked={registrationParams.scientificIndexStatus === ScientificIndexStatuses.Reported}
               label={t('search.advanced_search.reported')}
             />
           </Grid>
