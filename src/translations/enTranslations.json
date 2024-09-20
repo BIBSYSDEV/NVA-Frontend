@@ -780,7 +780,7 @@
           "link": "For more information go to ORCID",
           "modal_title": "Open Researcher Contributor IDentity (ORCID)"
         },
-        "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. This makes it easier to identify you",
+        "orcid_description": "If you link your ORCID, it will be easier to identify you",
         "remove_connection": "Unlink ORCID",
         "remove_connection_info": "Are you sure you want to unlink ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, please go to your ORCID profile."
       },
@@ -1342,7 +1342,7 @@
       "new_project_helper_text": "Cannot find project?",
       "npi_disciplines": "Scientific field in Norwegian publication indicator",
       "primary_language": "Primary language for content",
-      "project_association": "Project association",
+      "project_association": "Project affiliation",
       "project_helper_text": "<0>If you register a funding source on a project, the results you link to that project will \"inherit\" information about funding. This means you don't have to register all funding sources on all the results of the project. If you search for the funding source in NVA, you will get hits on both the project and the results, and reporting to the Research Council or others will include all results.</0> <0>A result can be linked to several projects.</0>",
       "remove_vocabulary": "Remove vocabulary",
       "search_for_npi_discipline": "Search for scientific field",
@@ -1493,6 +1493,9 @@
         "reserve_doi_confirmation": "<0>Only published research results can have a DOI.</0><0>If you need a DOI to correctly cite research results in other research results that are in progress, before it is published, you can reserve a DOI.</0><0>Only you can see the reserved DOI, and it does not lead anywhere until you publish the research result. After publication, your curator is informed that you want a DOI, and must then assign it (or reject it).</0><0>If you are ready to publish, then publish, and select \"$t(registration.public_page.request_doi)\", instead of reserving a DOI.</0><1>Do you still want to reserve a DOI?</1>",
         "reserved": "Reserved",
         "review_preview_before_publishing": "Review content before publishing.",
+        "terminate_result": "Delete the result",
+        "terminate_result_confirmation": "<0>All files and most of the metadata are deleted from the result.</0><0>Only the title, authors with affiliations, channel information, category, publication date, and any persistent identifiers such as DOI and handle will be preserved.</0>",
+        "terminate_result_description": "<0>Delete the result if it has been incorrectly registered.</0><0>If the result is deleted, it is not possible to restore the information and files associated with the result.</0>",
         "waiting_for_rejected_doi": "It can take some time before the reserved DOI is removed. Reload to check again.",
         "you_can_publish_everything": "You can publish on your own. The content will then be visible to other users.",
         "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the files you uploaded before they can be displayed to other users.",
@@ -1986,7 +1989,9 @@
       "approve_nvi_candidate_description": "<0>As curator you can approve or reject a research result for reporting to the NVI</0> <0> If the research result is to be reported, select \"{{buttonText}}\".</0>",
       "completed_count": "Completed ({{completed}} of {{total}})",
       "correction_list_type": {
+        "antology_without_chapter": "Anthologies without a chapter",
         "applicable_category_in_non_applicable_channel": "Counting categories in non-counting channels",
+        "book_with_less_than_50_pages": "Books with fewer that 50 pages",
         "correction_list_duct": "Correction list (DUCT)",
         "non_applicable_category_in_applicable_channel": "Non-counting categories in counting channels"
       },

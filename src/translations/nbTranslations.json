@@ -308,6 +308,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -379,11 +383,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1990,8 +1990,8 @@
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
         "antology_without_chapter": "Antologier uten kapittel",
-        "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
+        "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "correction_list_duct": "Retteliste (DUCT)",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
       },
