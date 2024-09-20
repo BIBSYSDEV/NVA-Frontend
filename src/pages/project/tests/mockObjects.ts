@@ -37,6 +37,26 @@ export const selectedPersonWithAffiliation: CristinPerson = {
   ],
 };
 
+export const selectedPersonWithManyAffiliations = {
+  ...selectedPersonWithAffiliation,
+  affiliations: [
+    {
+      active: true,
+      organization: 'abcorg',
+      role: {
+        labels: { no: 'no' },
+      },
+    },
+    {
+      active: true,
+      organization: 'deforg',
+      role: {
+        labels: { no: 'no' },
+      },
+    },
+  ],
+};
+
 export const selectedPersonWithoutAffiliation: CristinPerson = {
   ...selectedPersonWithAffiliation,
   affiliations: [],

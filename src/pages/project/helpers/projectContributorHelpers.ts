@@ -27,6 +27,7 @@ export enum AddContributorErrors {
   ALREADY_HAS_A_PROJECT_MANAGER,
   CANNOT_ADD_ANOTHER_PROJECT_MANAGER_ROLE,
   CAN_ONLY_REPLACE_UNIDENTIFIED_CONTRIBUTORS,
+  CAN_ONLY_ADD_ONE_PROJECT_MANAGER_ROLE,
 }
 
 const checkIfExistingProjectManager = (contributors: ProjectContributor[], indexToReplace: number) => {
@@ -108,6 +109,10 @@ export const addContributor = (
   }
 
   if (roleToAddTo === 'ProjectManager') {
+    if (personToAdd.affiliations.length > 1) {
+      return { error: AddContributorErrors.CAN_ONLY_ADD_ONE_PROJECT_MANAGER_ROLE };
+    }
+
     const projectManagerError = checkIfExistingProjectManager(contributors, indexToReplace);
     if (projectManagerError) return { error: projectManagerError }; // Can only replace, not add Project Manager if we already have one
 
@@ -152,11 +157,7 @@ export const addContributor = (
   if (personToAdd.affiliations.length > 0) {
     newContributor.roles = [...newContributor.roles].concat(
       personToAdd.affiliations
-        .filter(
-          (cristinAffiliation, index) =>
-            !isAlreadyAdded(newContributor.roles, cristinAffiliation, roleToAddTo) && // Not adding duplicates
-            (roleToAddTo !== 'ProjectManager' || index === 0) // For project managers, we only allow one affiliation
-        )
+        .filter((cristinAffiliation) => !isAlreadyAdded(newContributor.roles, cristinAffiliation, roleToAddTo))
         .map((affiliation) => {
           return {
             type: roleToAddTo,

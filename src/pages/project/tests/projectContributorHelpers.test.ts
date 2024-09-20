@@ -52,6 +52,7 @@ import {
   ghiOrgAsAffiliation,
   selectedPersonIdentity,
   selectedPersonWithAffiliation,
+  selectedPersonWithManyAffiliations,
   selectedPersonWithoutAffiliation,
   unidentifiedDaffyIdentity,
   unidentifiedOleJensenIdentity,
@@ -64,6 +65,13 @@ describe('addContributor', () => {
         addContributor(selectedPersonWithAffiliation, contributorsArrayWithProjectManager, 'ProjectManager')
       ).toEqual({
         error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER,
+      });
+    });
+    it('if the person to add comes with several affiliations, it returns an error', () => {
+      expect(
+        addContributor(selectedPersonWithManyAffiliations, contributorsArrayWithProjectManager, 'ProjectManager')
+      ).toEqual({
+        error: AddContributorErrors.CAN_ONLY_ADD_ONE_PROJECT_MANAGER_ROLE,
       });
     });
     describe('when we are sent an index to add to', () => {
