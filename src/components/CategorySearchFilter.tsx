@@ -12,9 +12,10 @@ import { CategoryChip } from './CategorySelector';
 interface CategorySearchFilterProps {
   searchParam: ResultParam.CategoryShould | TicketSearchParam.PublicationType;
   disabled?: boolean;
+  hideHeading?: boolean;
 }
 
-export const CategorySearchFilter = ({ searchParam, disabled }: CategorySearchFilterProps) => {
+export const CategorySearchFilter = ({ searchParam, disabled, hideHeading }: CategorySearchFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -25,7 +26,7 @@ export const CategorySearchFilter = ({ searchParam, disabled }: CategorySearchFi
 
   return (
     <section>
-      <StyledFilterTitle>{t('common.category')}</StyledFilterTitle>
+      {!hideHeading && <StyledFilterTitle>{t('common.category')}</StyledFilterTitle>}
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
         {selectedCategories.slice(0, 3).map((category) => (
           <CategoryChip
