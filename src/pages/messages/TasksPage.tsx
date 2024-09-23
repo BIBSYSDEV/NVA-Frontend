@@ -22,7 +22,6 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { EditorPortfolio } from '../editor/EditorPortfolio';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
@@ -31,6 +30,7 @@ import { NviCorrectionList } from './components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
 import { NviStatusPage } from './components/NviStatusPage';
 import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
+import { ResultRegistrationSearch } from './components/ResultRegistrationsSearch';
 import { TicketList } from './components/TicketList';
 
 const TasksPage = () => {
@@ -266,7 +266,7 @@ const TasksPage = () => {
             <NviCorrectionList />
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksResultRegistrations} isAuthorized={isPublishingCurator}>
-            <EditorPortfolio />
+            <ResultRegistrationSearch />
           </PrivateRoute>
         </Switch>
       </ErrorBoundary>
