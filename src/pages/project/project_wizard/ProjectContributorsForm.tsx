@@ -1,7 +1,5 @@
 import { Box } from '@mui/material';
-import { useFormikContext } from 'formik';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { SaveCristinProject } from '../../../types/project.types';
 import { ProjectParticipants } from '../../projects/form/ProjectParticipants';
 import { ProjectManager } from './ProjectManager';
 import { FormBox } from './styles';
@@ -11,9 +9,6 @@ interface ProjectContributorsFormProps {
 }
 
 export const ProjectContributorsForm = ({ suggestedProjectManager }: ProjectContributorsFormProps) => {
-  const { values } = useFormikContext<SaveCristinProject>();
-
-  console.log('values', values);
   return (
     <ErrorBoundary>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

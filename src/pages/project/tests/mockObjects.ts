@@ -310,7 +310,7 @@ export const contributorsArrayWithOtherPMAndUndefinedAffiliation: ProjectContrib
   },
 ];
 
-export const contributorsArrayWithUnidentifiedPMAffiliationAndOtherContributor: ProjectContributor[] = [
+export const contributorsArrayWithUndefinedPMAffiliationAndOtherContributor: ProjectContributor[] = [
   {
     identity: existingPersonIdentity,
     roles: [

@@ -33,8 +33,8 @@ export enum AddContributorErrors {
 const checkIfExistingProjectManager = (contributors: ProjectContributor[], indexToReplace: number) => {
   const indexOfExistingProjectManager = contributors.findIndex((contributor) => findProjectManagerRole(contributor));
 
+  // It's ok to have an existing Project Manager if we are going to replace it
   if (indexOfExistingProjectManager > -1 && indexToReplace !== indexOfExistingProjectManager) {
-    // It's ok to have an existing Project Manager, if we are going to replace it
     return AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER;
   }
 };
@@ -46,6 +46,7 @@ const checkIfDefinedProjectManagerRole = (contributors: ProjectContributor[]) =>
     const existingProjectManager = contributors[indexOfExistingProjectManager];
     const existingProjectManagerRole = findProjectManagerRole(existingProjectManager);
 
+    // It's ok to have an existing Project Manager if its affiliation is undefined
     if (existingProjectManagerRole && !hasEmptyAffiliation(existingProjectManagerRole)) {
       return AddContributorErrors.CANNOT_ADD_ANOTHER_PROJECT_MANAGER_ROLE;
     }
@@ -54,10 +55,10 @@ const checkIfDefinedProjectManagerRole = (contributors: ProjectContributor[]) =>
 
 const checkIfRoleAndTypeDuplicate = (
   personToAdd: CristinPerson,
-  contributor: ProjectContributor,
+  roles: ProjectContributorRole[],
   roleToAddTo: ProjectContributorType
 ) => {
-  const sameRoleAndSameType = contributor.roles.some(
+  const sameRoleAndSameType = roles.some(
     (role) =>
       role.type === roleToAddTo &&
       personToAdd.affiliations.some((affiliation) => affiliation.organization === role.affiliation?.id)
@@ -132,14 +133,14 @@ export const addContributor = (
     roles: [],
   };
 
-  // If the user to add already exists in the contributor list
+  // Check if the user to add already exists in the contributor list
   const existingContributorIndex = contributors.findIndex((contributor) => contributor.identity.id === personToAdd.id);
 
   if (existingContributorIndex > -1) {
     // The existing contributor cannot have same affiliation on the same role type as the person to add
     const roleAndTypeDuplicateError = checkIfRoleAndTypeDuplicate(
       personToAdd,
-      contributors[existingContributorIndex],
+      contributors[existingContributorIndex].roles,
       roleToAddTo
     );
     if (roleAndTypeDuplicateError) return { error: roleAndTypeDuplicateError };
@@ -153,9 +154,9 @@ export const addContributor = (
     newContributor.roles = addRoles(newContributor.roles, contributors[indexToReplace].roles, roleToAddTo);
   }
 
-  // Adding 1 or more affiliations
+  // Adding 1 or more affiliations from the selected user
   if (personToAdd.affiliations.length > 0) {
-    newContributor.roles = [...newContributor.roles].concat(
+    newContributor.roles = newContributor.roles.concat(
       personToAdd.affiliations
         .filter((cristinAffiliation) => !isAlreadyAdded(newContributor.roles, cristinAffiliation, roleToAddTo))
         .map((affiliation) => {
@@ -174,7 +175,6 @@ export const addContributor = (
   if (indexToReplace > -1) {
     newContributors[indexToReplace] = newContributor;
     if (existingContributorIndex > -1 && indexToReplace !== existingContributorIndex) {
-      // The latter case is prohibited through the frontend code (you cannot replace an identified contributor), but keeping check and tests for this in case it ever changes
       newContributors.splice(existingContributorIndex, 1);
     }
   } else if (existingContributorIndex > -1) {

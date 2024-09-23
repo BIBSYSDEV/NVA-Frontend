@@ -34,6 +34,7 @@ import {
   contributorsArrayWithSelectedPersonWithSameAffiliation,
   contributorsArrayWithSelectedPersonWithUndefinedAffiliation,
   contributorsArrayWithTwoUnidentified,
+  contributorsArrayWithUndefinedPMAffiliationAndOtherContributor,
   contributorsArrayWithUnidentifiedAndOther,
   contributorsArrayWithUnidentifiedAndSamePersonWithUndefined,
   contributorsArrayWithUnidentifiedDaffy,
@@ -43,7 +44,6 @@ import {
   contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithOther,
   contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithTwoOthers,
   contributorsArrayWithUnidentifiedPersonWithUnidentifiedAffiliationAndSelectedWithOther,
-  contributorsArrayWithUnidentifiedPMAffiliationAndOtherContributor,
   contributorsArrayWithUnidentifiedProjectManagerWithDifferentAffiliation,
   contributorsArrayWithUnidentifiedProjectManagerWithSameAffiliation,
   contributorsArrayWithUnidentifiedProjectManagerWithUndefinedAffiliation,
@@ -1535,7 +1535,7 @@ describe('remove project manager', () => {
     ]);
   });
   it('when they only have a project manager role with undefined affiliation, it removes the whole user object', () => {
-    expect(removeProjectManager(contributorsArrayWithUnidentifiedPMAffiliationAndOtherContributor)).toEqual([
+    expect(removeProjectManager(contributorsArrayWithUndefinedPMAffiliationAndOtherContributor)).toEqual([
       {
         identity: existingPersonIdentity,
         roles: [
