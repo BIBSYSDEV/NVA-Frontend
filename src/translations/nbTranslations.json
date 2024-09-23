@@ -303,11 +303,12 @@
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "x_years_one": "{{count}} år",
+    "result_portfolio": "Resultatportefølje",
+    "republish": "Republiser",
+    "consists_of": "Består av",
     "x_years_other": "{{count}} år",
     "year": "År",
-    "yes": "Ja",
-    "result_portfolio": "Resultatportefølje",
-    "consists_of": "Består av"
+    "yes": "Ja"
   },
   "disciplines": {
     "0001": "Humaniora",
@@ -1501,7 +1502,10 @@
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Beskrivelsen (metadata) av forskningsresultatet og opplastede filer blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
-        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig."
+        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig.",
+        "no_access_to_republish": "<0>Er det feil at resultatet er avpublisert?</0><0>Ta kontakt med redaktør for å få resultatet republisert.</0>",
+        "republish_description": "Republiser resultatet om det skal være tilgjengelig i NVA.",
+        "confirm_republish_description": "Republiser resultatet om det skal være tilgjengelig i NVA. Dette vil føre til at resultatet vil vises blant søkeresultater igjen."
       },
       "validation_errors": "Valideringsfeil"
     },

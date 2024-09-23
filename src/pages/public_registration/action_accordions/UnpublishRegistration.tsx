@@ -37,7 +37,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
   const updateRegistrationStatusMutation = useUpdateRegistrationStatus();
 
   return (
-    <>
+    <section>
       <Typography fontWeight="bold">{t('unpublish_actions.unpublish_header')}</Typography>
       {userCanUnpublish ? (
         <>
@@ -45,6 +45,8 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
           <Button
             data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
             variant="outlined"
+            fullWidth
+            size="small"
             sx={{ bgcolor: 'white' }}
             onClick={toggleUnpublishModal}>
             {t('unpublish_actions.unpublish')}
@@ -54,7 +56,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
         <Trans
           t={t}
           i18nKey="unpublish_actions.unpublish_not_allowed"
-          components={[<Typography paragraph key="1" />]}
+          components={[<Typography gutterBottom key="1" />]}
         />
       )}
 
@@ -73,7 +75,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
             onSubmit={(values) =>
               updateRegistrationStatusMutation.mutate({
                 registrationIdentifier: registration.identifier,
-                data: {
+                updateStatusRequest: {
                   type: 'UnpublishPublicationRequest',
                   duplicateOf: selectedDuplicate?.id,
                   comment: values.comment,
@@ -129,6 +131,6 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
           </Formik>
         </Box>
       </Modal>
-    </>
+    </section>
   );
 };
