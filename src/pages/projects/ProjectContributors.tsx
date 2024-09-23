@@ -66,7 +66,6 @@ const ContributorList = ({ contributors, projectRole }: ContributorListProps) =>
       gap: '0.75rem',
     }}>
     {contributors.map((contributor, index) => {
-      console.log('contributor', contributor);
       return (
         <div key={index}>
           <Typography variant="subtitle1" component="p">
