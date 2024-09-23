@@ -25,15 +25,17 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
   }
 
   return (
-    <>
+    <section>
       <Typography fontWeight="bold">{t('common.delete')}</Typography>
       <Trans
         i18nKey="registration.public_page.tasks_panel.terminate_result_description"
-        components={[<Typography key="1" />]}
+        components={[<Typography gutterBottom key="1" />]}
       />
       <Button
         data-testid={dataTestId.registrationLandingPage.tasksPanel.terminateRegistrationButton}
         variant="outlined"
+        fullWidth
+        size="small"
         sx={{ bgcolor: 'white' }}
         onClick={toggleTerminateModal}>
         {t('common.delete')}
@@ -45,7 +47,7 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
         onAccept={() =>
           updateRegistrationStatusMutation.mutate({
             registrationIdentifier: registration.identifier,
-            data: { type: 'DeletePublicationRequest' },
+            updateStatusRequest: { type: 'DeletePublicationRequest' },
             onSuccess: toggleTerminateModal,
           })
         }
@@ -58,6 +60,6 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
           components={[<Typography key="1" gutterBottom />]}
         />
       </ConfirmDialog>
-    </>
+    </section>
   );
 };
