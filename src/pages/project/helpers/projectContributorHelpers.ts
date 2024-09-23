@@ -71,12 +71,13 @@ const checkIfRoleAndTypeDuplicate = (
 
 const addEmptyRoleIfNecessary = (existingRoles: ProjectContributorRole[], roleToAddTo: ProjectContributorType) => {
   if (existingRoles.filter((role) => role.type === roleToAddTo).length === 0) {
-    const newRoles = [...existingRoles];
-    newRoles.push({
-      type: roleToAddTo,
-      affiliation: undefined,
-    } as ProjectContributorRole);
-    return newRoles;
+    return [
+      ...existingRoles,
+      {
+        type: roleToAddTo,
+        affiliation: undefined,
+      } as ProjectContributorRole,
+    ];
   }
   return existingRoles;
 };

@@ -5,6 +5,7 @@ import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getEditProjectPath, getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { getFullName } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { EditIconButton } from '../../messages/components/EditIconButton';
 import { ProjectIconHeader } from '../../project/components/ProjectIconHeader';
@@ -43,7 +44,7 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
             projectManager.identity.id ? (
               <span key={projectManager.identity.id}>
                 <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
-                  {`${projectManager.identity.firstName} ${projectManager.identity.lastName}`}
+                  {getFullName(projectManager.identity.firstName, projectManager.identity.lastName)}
                 </MuiLink>
                 {index < projectManagers.length - 1 && <span>;</span>}
               </span>

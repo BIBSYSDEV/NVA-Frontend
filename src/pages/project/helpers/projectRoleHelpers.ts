@@ -79,8 +79,8 @@ const findNonProjectManagerRoleThatHasAffiliation = (roles: ProjectContributorRo
 };
 
 const isAlreadyInExistingRoles = (existingRoles: ProjectContributorRole[], role: ProjectContributorRole) => {
-  const a = existingRoles.find((r) => r.affiliation?.id === role.affiliation?.id);
-  return a !== undefined;
+  const existingRole = existingRoles.find((r) => r.affiliation?.id === role.affiliation?.id);
+  return existingRole !== undefined;
 };
 
 export const addRoles = (

@@ -85,15 +85,14 @@ export const AddProjectContributorForm = ({
         setSearchTerm={setSearchTerm}
       />
       <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
-        <Box sx={{ flexGrow: '1' }}>
-          <Button
-            data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
-            disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
-            onClick={addUnidentifiedParticipant}
-            size="large">
-            {t('project.add_unidentified_contributor')}
-          </Button>
-        </Box>
+        <Button
+          sx={{ mr: 'auto' }}
+          data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
+          disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
+          onClick={addUnidentifiedParticipant}
+          size="large">
+          {t('project.add_unidentified_contributor')}
+        </Button>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
         <Button
           data-testid={dataTestId.projectForm.selectContributorButton}

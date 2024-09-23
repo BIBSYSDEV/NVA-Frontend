@@ -110,7 +110,7 @@ export const ContributorRow = ({
                 getFullName(contributor.identity.firstName, contributor.identity.lastName)
               )}
               startIcon={<SearchIcon />}
-              onClick={() => setOpenVerifyContributor(true)}>
+              onClick={toggleOpenVerifyContributor}>
               {asProjectManager ? t('project.verify_project_manager') : t('project.verify_contributor')}
             </Button>
           )}
