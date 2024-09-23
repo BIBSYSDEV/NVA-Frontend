@@ -22,6 +22,7 @@ export enum UrlPathTemplate {
   InstitutionSupport = '/institution/settings/support',
   InstitutionOrganizationOverview = '/institution/overview/organization',
   InstitutionOverview = '/institution/overview',
+  InstitutionPortfolio = '/institution/portfolio',
   InstitutionPublishStrategy = '/institution/settings/publish-strategy',
   InstitutionPublishStrategyOverview = '/institution/overview/publish-strategy',
   InstitutionSettings = '/institution/settings',

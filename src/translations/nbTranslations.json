@@ -303,11 +303,12 @@
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "x_years_one": "{{count}} år",
+    "result_portfolio": "Resultatportefølje",
+    "republish": "Republiser",
+    "consists_of": "Består av",
     "x_years_other": "{{count}} år",
     "year": "År",
-    "yes": "Ja",
-    "republish": "Republiser",
-    "consists_of": "Består av"
+    "yes": "Ja"
   },
   "disciplines": {
     "0001": "Humaniora",
