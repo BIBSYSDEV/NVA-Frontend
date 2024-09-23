@@ -357,6 +357,7 @@ export const dataTestId = {
       refreshDoiRequestButton: 'refresh-doi-button',
       rejectionDialogConfirmButton: 'rejection-dialog-confirm-button',
       refreshPublishingRequestButton: 'refresh-publishing-request-button',
+      republishRegistrationButton: 'republish-registration-button',
       reserveDoiButton: 'button-toggle-reserve-doi',
       requestDoiButton: 'button-toggle-request-doi',
       requestDoiModal: 'request-doi-modal',
