@@ -12,7 +12,7 @@ export const EditorPortfolio = () => {
   const registrationQuery = useCustomerRegistrationSearch(params);
 
   return (
-    <>
+    <section>
       <Helmet>
         <title>{t('common.result_portfolio')}</title>
       </Helmet>
@@ -20,6 +20,6 @@ export const EditorPortfolio = () => {
         {t('common.result_portfolio')}
       </Typography>
       <RegistrationSearch registrationQuery={registrationQuery} />
-    </>
+    </section>
   );
 };

@@ -22,6 +22,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { EditorPortfolio } from '../editor/EditorPortfolio';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
@@ -29,6 +30,7 @@ import { NviCandidatesNavigationAccordion } from './components/NviCandidatesNavi
 import { NviCorrectionList } from './components/NviCorrectionList';
 import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
 import { NviStatusPage } from './components/NviStatusPage';
+import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
 
 const TasksPage = () => {
@@ -46,6 +48,7 @@ const TasksPage = () => {
   const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = history.location.pathname === UrlPathTemplate.TasksNviStatus;
   const isOnCorrectionListPage = history.location.pathname === UrlPathTemplate.TasksNviCorrectionList;
+  const isOnResultRegistrationsPage = history.location.pathname === UrlPathTemplate.TasksResultRegistrations;
 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -117,7 +120,13 @@ const TasksPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={isOnTicketsPage || isOnNviCandidatesPage || isOnNviStatusPage || isOnCorrectionListPage}
+        expanded={
+          isOnTicketsPage ||
+          isOnNviCandidatesPage ||
+          isOnNviStatusPage ||
+          isOnCorrectionListPage ||
+          isOnResultRegistrationsPage
+        }
         minimizedMenu={
           <Link
             to={{
@@ -205,6 +214,8 @@ const TasksPage = () => {
           </NavigationListAccordion>
         )}
 
+        {isPublishingCurator && <ResultRegistrationsNavigationListAccordion />}
+
         {isNviCurator && (
           <>
             <NviCandidatesNavigationAccordion />
@@ -253,6 +264,9 @@ const TasksPage = () => {
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviCorrectionList} isAuthorized={isNviCurator}>
             <NviCorrectionList />
+          </PrivateRoute>
+          <PrivateRoute exact path={UrlPathTemplate.TasksResultRegistrations} isAuthorized={isPublishingCurator}>
+            <EditorPortfolio />
           </PrivateRoute>
         </Switch>
       </ErrorBoundary>
