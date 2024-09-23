@@ -10,16 +10,15 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { styled } from '@mui/system';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder, fetchResults } from '../../../api/searchApi';
+import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
+import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { SearchForm } from '../../../components/SearchForm';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
-import { PublicationInstanceType } from '../../../types/registration.types';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { ExportResultsButton } from '../ExportResultsButton';
 import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
@@ -55,41 +54,10 @@ export const AdvancedSearchPage = () => {
 
   const params = new URLSearchParams(history.location.search);
 
-  const categoryShould = (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
-  const topLevelOrganizationId = params.get(ResultParam.TopLevelOrganization);
-  const unitId = params.get(ResultParam.Unit);
-  const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
-
-  const resultSearchQueryConfig: FetchResultsParams = {
-    categoryShould,
-    contributorName: params.get(ResultParam.ContributorName),
-    course: params.get(ResultParam.Course),
-    files: params.get(ResultParam.Files),
-    from: Number(params.get(ResultParam.From) ?? 0),
-    fundingIdentifier: params.get(ResultParam.FundingIdentifier),
-    fundingSource: params.get(ResultParam.FundingSource),
-    journal: params.get(ResultParam.Journal),
-    order: params.get(ResultParam.Order) as ResultSearchOrder | null,
-    publicationLanguageShould: params.get(ResultParam.PublicationLanguageShould),
-    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
-    publicationYearSince: params.get(ResultParam.PublicationYearSince),
-    publisher: params.get(ResultParam.Publisher),
-    results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
-    scientificIndexStatus: params.get(ResultParam.ScientificIndexStatus) as ScientificIndexStatuses | null,
-    scientificValue: params.get(ResultParam.ScientificValue),
-    series: params.get(ResultParam.Series),
-    sort: params.get(ResultParam.Sort) as SortOrder | null,
-    title: params.get(ResultParam.Title),
-    excludeSubunits,
-    unit: unitId ?? topLevelOrganizationId,
-    vocabulary: params.get(ResultParam.Vocabulary),
-  };
-
-  const resultSearchQuery = useQuery({
-    queryKey: ['registrations', resultSearchQueryConfig],
-    queryFn: () => fetchResults(resultSearchQueryConfig),
-    meta: { errorMessage: t('feedback.error.search') },
-    placeholderData: keepPreviousData,
+  const registrationParams = useRegistrationsQueryParams();
+  const resultSearchQuery = useRegistrationSearch({
+    params: { ...registrationParams, unit: registrationParams.unit ?? registrationParams.topLevelOrganization },
+    keepDataWhileLoading: true,
   });
 
   const handleNviReportedCheckbox = (event: React.SyntheticEvent, checked: boolean) => {
@@ -146,7 +114,7 @@ export const AdvancedSearchPage = () => {
               data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
               control={<Checkbox name="scientificIndexStatus" />}
               onChange={handleNviReportedCheckbox}
-              checked={params.get(ResultParam.ScientificIndexStatus) === ScientificIndexStatuses.Reported}
+              checked={registrationParams.scientificIndexStatus === ScientificIndexStatuses.Reported}
               label={t('search.advanced_search.reported')}
             />
           </Grid>
@@ -172,7 +140,10 @@ export const AdvancedSearchPage = () => {
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+            <OrganizationFilters
+              topLevelOrganizationId={registrationParams.topLevelOrganization}
+              unitId={registrationParams.unit}
+            />
           </Grid>
         </Grid>
 

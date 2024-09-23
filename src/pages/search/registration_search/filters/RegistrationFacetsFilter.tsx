@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../../api/searchApi';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { useRegistrationsQueryParams } from '../../../../utils/hooks/useRegistrationSearchParams';
 import { getFileFacetText, removeSearchParamValue } from '../../../../utils/searchHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { FacetItem } from '../../FacetItem';
@@ -15,15 +16,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const selectedCategory = searchParams.get(ResultParam.Category);
-  const selectedOrganization = searchParams.get(ResultParam.TopLevelOrganization);
-  const selectedFunding = searchParams.get(ResultParam.FundingSource);
-  const selectedContributor = searchParams.get(ResultParam.Contributor);
-  const selectedPublisher = searchParams.get(ResultParam.Publisher);
-  const selectedSeries = searchParams.get(ResultParam.Series);
-  const selectedJournal = searchParams.get(ResultParam.Journal);
-  const selectedScientificIndex = searchParams.get(ResultParam.ScientificIndex);
-  const selectedFiles = searchParams.get(ResultParam.Files);
+  const registrationParams = useRegistrationsQueryParams();
 
   const typeFacet = registrationQuery.data?.aggregations?.type ?? [];
   const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization ?? [];
@@ -57,7 +50,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {typeFacet.length > 0 && (
         <FacetItem title={t('common.category')} dataTestId={dataTestId.aggregations.typeFacets}>
           {typeFacet.map((facet) => {
-            const isSelected = selectedCategory === facet.key;
+            const isSelected = registrationParams.category === facet.key;
 
             return (
               <FacetListItem
@@ -82,7 +75,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {topLevelOrganizationFacet.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.aggregations.institutionFacets}>
           {topLevelOrganizationFacet.map((facet) => {
-            const isSelected = !!selectedOrganization?.includes(facet.key);
+            const isSelected = !!registrationParams.topLevelOrganization?.includes(facet.key);
 
             return (
               <FacetListItem
@@ -109,7 +102,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.aggregations.contributorFacets}>
           {contributorFacet.map((facet) => {
-            const isSelected = !!selectedContributor?.includes(facet.key);
+            const isSelected = !!registrationParams.contributor?.includes(facet.key);
 
             return (
               <FacetListItem
@@ -134,7 +127,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {fundingFacet.length > 0 && (
         <FacetItem title={t('common.financier')} dataTestId={dataTestId.aggregations.fundingFacets}>
           {fundingFacet.map((facet) => {
-            const isSelected = !!selectedFunding?.includes(facet.key);
+            const isSelected = !!registrationParams.fundingSource?.includes(facet.key);
 
             return (
               <FacetListItem
@@ -159,7 +152,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {publisherFacet.length > 0 && (
         <FacetItem title={t('common.publisher')} dataTestId={dataTestId.aggregations.publisherFacets}>
           {publisherFacet.map((facet) => {
-            const isSelected = !!selectedPublisher?.includes(facet.key);
+            const isSelected = !!registrationParams.publisher?.includes(facet.key);
 
             return (
               <FacetListItem
@@ -184,7 +177,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {seriesFacet.length > 0 && (
         <FacetItem title={t('registration.resource_type.series')} dataTestId={dataTestId.aggregations.seriesFacets}>
           {seriesFacet.map((facet) => {
-            const isSelected = !!selectedSeries?.includes(facet.key);
+            const isSelected = !!registrationParams.series?.includes(facet.key);
 
             return (
               <FacetListItem
@@ -209,7 +202,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {journalFacet.length > 0 && (
         <FacetItem title={t('registration.resource_type.journal')} dataTestId={dataTestId.aggregations.journalFacets}>
           {journalFacet.map((facet) => {
-            const isSelected = !!selectedJournal?.includes(facet.key);
+            const isSelected = !!registrationParams.journal?.includes(facet.key);
 
             return (
               <FacetListItem
@@ -238,7 +231,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           {scientificIndexFacet
             .sort((a, b) => +b.key - +a.key)
             .map((facet) => {
-              const isSelected = !!selectedScientificIndex?.includes(facet.key);
+              const isSelected = !!registrationParams.scientificIndex?.includes(facet.key);
 
               return (
                 <FacetListItem
@@ -265,7 +258,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           {filesFacet
             .sort((one) => (one.key === 'hasPublicFiles' ? -1 : 1))
             .map((facet) => {
-              const isSelected = !!selectedFiles?.includes(facet.key);
+              const isSelected = !!registrationParams.files?.includes(facet.key);
 
               return (
                 <FacetListItem
