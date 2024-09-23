@@ -22,9 +22,9 @@ import { CategoriesWithFiles } from './CategoriesWithFiles';
 import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
-import { EditorPortfolio } from './EditorPortfolio';
 import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
+import { PortfolioSearchPage } from './PortfolioSearchPage';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
@@ -223,11 +223,9 @@ const InstitutionPage = () => {
             component={InstitutionSupport}
             isAuthorized={isEditor}
           />
-          <PrivateRoute
-            path={UrlPathTemplate.InstitutionPortfolio}
-            component={EditorPortfolio}
-            isAuthorized={isEditor}
-          />
+          <PrivateRoute exact path={UrlPathTemplate.InstitutionPortfolio} isAuthorized={isEditor}>
+            <PortfolioSearchPage title={t('common.result_portfolio')} />
+          </PrivateRoute>
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>
       </BackgroundDiv>

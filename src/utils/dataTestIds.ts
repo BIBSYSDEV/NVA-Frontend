@@ -709,7 +709,7 @@ export const dataTestId = {
       yearSelect: 'year-select',
     },
     nviAccordion: 'nvi-accordion',
-    userDialogAccordion: 'user-dialog-accordion',
+    resultRegistrationsAccordion: 'result-registrations-accordion',
     scope: {
       addOrganizationScopeButton: 'add-organization-scope-button',
       organizationSearchField: 'organization-search-field',
@@ -731,6 +731,7 @@ export const dataTestId = {
       supportButton: 'support-button',
     },
     unreadSearchCheckbox: 'unread-search-checkbox',
+    userDialogAccordion: 'user-dialog-accordion',
   },
   unpublishActions: {
     openUnpublishModalButton: 'open-unpublish-modal-button',
