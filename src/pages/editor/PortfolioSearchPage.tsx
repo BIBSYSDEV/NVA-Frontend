@@ -1,23 +1,24 @@
 import { Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
-import { useTranslation } from 'react-i18next';
 import { useCustomerRegistrationSearch } from '../../api/hooks/useFetchCustomerRegistrationSearch';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { RegistrationSearch } from '../search/registration_search/RegistrationSearch';
 
-export const EditorPortfolio = () => {
-  const { t } = useTranslation();
+interface PortfolioSearchPageProps {
+  title: string;
+}
 
+export const PortfolioSearchPage = ({ title }: PortfolioSearchPageProps) => {
   const params = useRegistrationsQueryParams();
   const registrationQuery = useCustomerRegistrationSearch(params);
 
   return (
     <section>
       <Helmet>
-        <title>{t('common.result_portfolio')}</title>
+        <title>{title}</title>
       </Helmet>
       <Typography variant="h1" gutterBottom>
-        {t('common.result_portfolio')}
+        {title}
       </Typography>
       <RegistrationSearch registrationQuery={registrationQuery} />
     </section>
