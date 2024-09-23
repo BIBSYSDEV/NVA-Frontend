@@ -171,7 +171,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <LandingPageAccordion
               dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
               defaultExpanded
-              heading={t('registration.resource_type.related_results')}>
+              heading={t('common.consists_of')}>
               <ShowRelatedDocuments related={entityDescription.reference.publicationInstance.related} />
             </LandingPageAccordion>
           )}
