@@ -308,7 +308,8 @@
     "consists_of": "Består av",
     "x_years_other": "{{count}} år",
     "year": "År",
-    "yes": "Ja"
+    "yes": "Ja",
+    "result_portfolio": "Resultatportefølje"
   },
   "disciplines": {
     "0001": "Humaniora",

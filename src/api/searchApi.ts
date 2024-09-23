@@ -373,7 +373,7 @@ export interface FetchResultsParams {
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | PublicationInstanceType[] | null;
-  [ResultParam.CategoryShould]?: PublicationInstanceType[];
+  [ResultParam.CategoryShould]?: PublicationInstanceType[] | null;
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
   [ResultParam.Course]?: string | null;
