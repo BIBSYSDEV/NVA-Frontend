@@ -1,6 +1,7 @@
 version: 0.2
 
 env:
+  image: aws/codebuild/standard:5.0
   variables:
     VITE_API_HOST: 'https://my-nva-api.no'
 
