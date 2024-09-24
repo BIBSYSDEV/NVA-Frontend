@@ -141,8 +141,8 @@ export const AdvancedSearchPage = () => {
 
           <Grid item>
             <OrganizationFilters
-              topLevelOrganizationId={registrationParams.topLevelOrganization}
-              unitId={registrationParams.unit}
+              topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
+              unitId={registrationParams.unit ?? null}
             />
           </Grid>
         </Grid>
