@@ -1,7 +1,8 @@
 version: 0.2
 
+image: public.ecr.aws/docker/library/node:slim
+
 env:
-  image: public.ecr.aws/docker/library/node:slim
   variables:
     VITE_API_HOST: 'https://my-nva-api.no'
 
