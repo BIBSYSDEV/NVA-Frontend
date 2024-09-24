@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "tsc && vite build",
+    "lint": "eslint . --ext .ts,.tsx",
     "pre-commit": "npx lint-staged && npm run unused-i18n-keys",
     "prepare": "husky",
     "preview": "vite preview",
