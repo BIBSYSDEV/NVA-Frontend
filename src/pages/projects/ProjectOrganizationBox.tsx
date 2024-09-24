@@ -45,7 +45,7 @@ export const ProjectOrganizationBox = ({
       {baseFieldName && (
         <>
           <EditIconButton
-            data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
+            data-testid={dataTestId.projectWizard.contributorsPanel.editAffiliationButton}
             onClick={() => setEditModalIsOpen(true)}
             tooltip={t('registration.contributors.edit_affiliation')}
           />
@@ -61,7 +61,7 @@ export const ProjectOrganizationBox = ({
         </>
       )}
       <DeleteIconButton
-        data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
+        data-testid={dataTestId.projectWizard.contributorsPanel.deleteAffiliationButton}
         onClick={removeAffiliation}
         disabled={!removeAffiliation}
         tooltip={!removeAffiliation ? disabledTooltip : t('project.affiliation_modal.delete_affiliation')}

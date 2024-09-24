@@ -116,7 +116,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         </Grid>
 
         <Grid item>
-          <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
+          <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} hideHeading />
         </Grid>
       </Grid>
 

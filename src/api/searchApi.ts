@@ -17,6 +17,7 @@ import {
   PublicationInstanceType,
   Registration,
   RegistrationAggregations,
+  RegistrationStatus,
 } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
@@ -372,7 +373,7 @@ export interface FetchResultsParams {
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | PublicationInstanceType[] | null;
-  [ResultParam.CategoryShould]?: PublicationInstanceType[];
+  [ResultParam.CategoryShould]?: PublicationInstanceType[] | null;
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
   [ResultParam.Course]?: string | null;
@@ -551,4 +552,39 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   });
 
   return getResults.data;
+};
+
+export enum CustomerResultParam {
+  Status = 'status',
+}
+
+export interface FetchCustomerResultsParams
+  extends Pick<
+    FetchResultsParams,
+    ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
+  > {
+  [CustomerResultParam.Status]?: RegistrationStatus[] | null;
+}
+
+export const fetchCustomerResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
+  const searchParams = new URLSearchParams();
+
+  if (params.status && params.status.length > 0) {
+    searchParams.set(CustomerResultParam.Status, params.status.join(','));
+  }
+  if (params.query) {
+    searchParams.set(ResultParam.Title, params.query);
+  }
+
+  searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
+  searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
+  searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
+  searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
+
+  const getCustomerResults = await authenticatedApiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
+    url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
+    signal,
+  });
+
+  return getCustomerResults.data;
 };

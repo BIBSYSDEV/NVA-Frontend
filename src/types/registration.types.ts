@@ -103,6 +103,7 @@ type RegistrationOperation =
   | 'update'
   | 'delete'
   | 'unpublish'
+  | 'republish'
   | 'ticket/publish'
   | 'terminate'
   | 'update-including-files';
@@ -332,11 +333,24 @@ export const emptyUnconfirmedDocument: UnconfirmedDocument = {
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
 
-export interface UnpublishPublicationRequest {
+interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
   duplicateOf?: string;
   comment: string;
 }
+
+interface TerminatePublicationRequest {
+  type: 'DeletePublicationRequest';
+}
+
+interface RepublishPublicationRequest {
+  type: 'RepublishPublicationRequest';
+}
+
+export type UpdateRegistrationStatusRequest =
+  | UnpublishPublicationRequest
+  | TerminatePublicationRequest
+  | RepublishPublicationRequest;
 
 interface NpiSubjectSubdomain {
   id: string;

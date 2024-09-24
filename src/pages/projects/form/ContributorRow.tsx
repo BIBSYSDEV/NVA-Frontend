@@ -11,9 +11,8 @@ import { getFullName } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import {
   contributorHasEmptyAffiliation,
-  findRoleIndexForAffiliation,
   getRelevantContributorRoles,
-  notLastOfItsRoleType,
+  removeAffiliation,
 } from '../../project/helpers/projectRoleHelpers';
 import { ProjectAddAffiliationModal } from '../ProjectAddAffiliationModal';
 import { ProjectOrganizationBox } from '../ProjectOrganizationBox';
@@ -48,22 +47,16 @@ export const ContributorRow = ({
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
-  const removeAffiliation = (affiliationId: string) => {
-    const indexOfRoleThatHasAffiliation = findRoleIndexForAffiliation(asProjectManager, contributor, affiliationId);
-    const roleToDelete = contributor.roles[indexOfRoleThatHasAffiliation];
-    const notLastOfItsType = notLastOfItsRoleType(contributor, affiliationId, roleToDelete.type);
-    const newRoles = [...contributor.roles];
+  const onRemoveAffiliation = (affiliationId: string) => {
+    const newRolesObject = removeAffiliation(affiliationId, contributor.roles, asProjectManager);
 
-    // If it's not the last role it's unproblematic to remove the whole role
-    if (notLastOfItsType) {
-      newRoles.splice(indexOfRoleThatHasAffiliation, 1);
-    } else {
-      // Since we're just supposed to remove the affiliation and not the whole role/user row, we have to keep the last role of its type
-      const newRole = { ...roleToDelete };
-      newRole.affiliation = undefined;
-      newRoles[indexOfRoleThatHasAffiliation] = newRole;
+    if (newRolesObject.error) {
+      return;
     }
-    setFieldValue(baseFieldRoles, newRoles);
+
+    if (newRolesObject.newContributorRoles) {
+      setFieldValue(baseFieldRoles, newRolesObject.newContributorRoles);
+    }
   };
 
   return (
@@ -100,7 +93,7 @@ export const ContributorRow = ({
                 baseFieldName={baseFieldRoles}
                 sx={{ width: '100%', marginBottom: '0.5rem' }}
                 asProjectManager={asProjectManager}
-                removeAffiliation={() => removeAffiliation(role.affiliation!.id)}
+                removeAffiliation={() => onRemoveAffiliation(role.affiliation!.id)}
               />
             ))}
           {(!asProjectManager || hasEmptyAffiliation) && (

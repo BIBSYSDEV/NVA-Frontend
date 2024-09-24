@@ -10,6 +10,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import {
   getTitleString,
@@ -90,6 +91,11 @@ export const ActionPanelContent = ({
     },
   });
 
+  const isPublishedOrDraft =
+    registration.status === RegistrationStatus.Published ||
+    registration.status === RegistrationStatus.Draft ||
+    registration.status === RegistrationStatus.PublishedMetadata;
+
   return (
     <>
       {(canCreateTickets || publishingRequestTickets.length > 0) && (
@@ -104,7 +110,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {(canCreateTickets || newestDoiRequestTicket) && (
+      {isPublishedOrDraft && (canCreateTickets || newestDoiRequestTicket) && (
         <ErrorBoundary>
           {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
             <DoiRequestAccordion

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { fetchRegistration } from '../../api/registrationApi';
+import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { fetchNviCandidateForRegistration } from '../../api/scientificIndexApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -47,12 +47,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const highestValidatedTab =
     useLocation<RegistrationFormLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
-  const registrationQuery = useQuery({
-    enabled: !!identifier,
-    queryKey: ['registration', identifier],
-    queryFn: () => fetchRegistration(identifier),
-    meta: { errorMessage: t('feedback.error.get_registration') },
-  });
+  const registrationQuery = useFetchRegistration(identifier);
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
   const canHaveNviCandidate =
