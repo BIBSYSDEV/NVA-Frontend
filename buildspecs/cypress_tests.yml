@@ -3,10 +3,10 @@
 version: 0.2
 
 env:
-  image: public.ecr.aws/cypress-io/cypress/browsers:node-20.14.0-chrome-116.0.5845.96-1-ff-116.0.3-edge-116.0.1938.69-1
   variables:
     VITE_API_HOST: 'https://my-nva-api.no'
     VITE_USE_MOCK: 'true'
+  image: 'public.ecr.aws/cypress-io/cypress/browsers:node-20.14.0-chrome-116.0.5845.96-1-ff-116.0.3-edge-116.0.1938.69-1'
 
 phases:
   install:
