@@ -79,8 +79,6 @@ export const App = () => {
   const mustCreatePerson = user && !user.cristinId;
   const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
 
-  console.log('hei');
-
   return (
     <>
       <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>

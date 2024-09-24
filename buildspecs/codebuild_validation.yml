@@ -7,5 +7,3 @@ batch:
       buildspec: buildspecs/production_build.yml
     - identifier: tests
       buildspec: buildspecs/cypress_tests.yml
-      env:
-        image: public.ecr.aws/cypress-io/cypress/browsers:node-20.14.0-chrome-126.0.6478.114-1-ff-127.0.1-edge-126.0.2592.61-1
