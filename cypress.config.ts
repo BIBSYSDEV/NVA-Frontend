@@ -1,4 +1,3 @@
-import codeCoverageTask from '@cypress/code-coverage/task';
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
@@ -7,7 +6,6 @@ export default defineConfig({
   viewportWidth: 1600,
   e2e: {
     setupNodeEvents(on, config) {
-      codeCoverageTask(on, config);
       on('task', {
         table(message) {
           console.table(message); // eslint-disable-line no-console
