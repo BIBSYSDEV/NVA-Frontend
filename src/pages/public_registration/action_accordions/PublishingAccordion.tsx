@@ -149,19 +149,21 @@ export const PublishingAccordion = ({
         })
       );
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      userCanPublish
-        ? dispatch(
-            setNotification({
-              message: t('feedback.success.publish_as_curator'),
-              variant: 'success',
-            })
-          )
-        : dispatch(
-            setNotification({
-              message: t('feedback.success.create_publishing_request'),
-              variant: 'success',
-            })
-          );
+      if (userCanPublish) {
+        dispatch(
+          setNotification({
+            message: t('feedback.success.publish_as_curator'),
+            variant: 'success',
+          })
+        );
+      } else {
+        dispatch(
+          setNotification({
+            message: t('feedback.success.create_publishing_request'),
+            variant: 'success',
+          })
+        );
+      }
       refetchData();
     }
     setIsLoading(LoadingState.None);

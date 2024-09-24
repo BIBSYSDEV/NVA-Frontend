@@ -10,7 +10,7 @@ export default defineConfig({
       codeCoverageTask(on, config);
       on('task', {
         table(message) {
-          console.table(message);
+          console.table(message); // eslint-disable-line no-console
           return null;
         },
       });
