@@ -1,10 +1,15 @@
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
+import ErrorIcon from '@mui/icons-material/Error';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDuplicateProjectSearch } from '../../../api/hooks/useDuplicateProjectSearch';
+import { StyledInfoBanner } from '../../../components/styled/Wrappers';
 import { SaveCristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 import { CreateProjectAccordion } from './CreateProjectAccordion';
 
 interface EmptyProjectFormProps {
@@ -16,6 +21,8 @@ interface EmptyProjectFormProps {
 export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm }: EmptyProjectFormProps) => {
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
+  const debouncedTitle = useDebounce(title);
+  const titleSearch = useDuplicateProjectSearch(debouncedTitle);
   const disabled = !title;
 
   const createProject = () => {
@@ -35,10 +42,23 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
           data-testid={dataTestId.newProjectPage.titleInput}
           variant="filled"
           onChange={(event) => setTitle(event.target.value)}
+          InputProps={{
+            endAdornment: titleSearch.isPending ? (
+              <CircularProgress size={20} />
+            ) : titleSearch.duplicateProject ? (
+              <ErrorIcon color="warning" />
+            ) : undefined,
+          }}
           fullWidth
           placeholder={t('project.form.write_project_title')}
           label={t('common.title')}
         />
+        {titleSearch.duplicateProject && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <StyledInfoBanner>{t('project.duplicate_project_warning')}</StyledInfoBanner>
+            <ProjectListItem project={titleSearch.duplicateProject} />
+          </Box>
+        )}
         <Button
           variant="contained"
           sx={{ width: 'fit-content', alignSelf: 'end' }}
