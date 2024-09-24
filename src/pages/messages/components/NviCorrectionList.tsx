@@ -20,6 +20,7 @@ export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
   | 'NonApplicableCategoriesWithApplicableChannel'
   | 'AntologyWithoutChapter'
+  | 'AntologyWithApplicableChapter'
   | 'BooksWithLessThan50Pages';
 
 type CorrectionListSearchConfig = {
@@ -60,6 +61,15 @@ export const correctionListConfig: CorrectionListSearchConfig = {
     queryParams: {
       categoryShould: Object.values(BookType),
       publicationPages: '0,50',
+    },
+    disabledFilters: [],
+  },
+  AntologyWithApplicableChapter: {
+    i18nKey: 'tasks.nvi.correction_list_type.antology_with_applicable_chapter',
+    queryParams: {
+      categoryShould: [BookType.Anthology],
+      hasChildren: true,
+      scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
     },
     disabledFilters: [],
   },
