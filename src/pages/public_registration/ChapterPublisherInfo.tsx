@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchRegistration } from '../../api/registrationApi';
+import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
@@ -16,13 +15,7 @@ export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInf
   const { t } = useTranslation();
 
   const identifier = publicationContext.id ? getIdentifierFromId(publicationContext.id) : '';
-
-  const publisherQuery = useQuery({
-    enabled: !!identifier,
-    queryKey: ['registration', identifier],
-    queryFn: () => fetchRegistration(identifier),
-    meta: { errorMessage: t('feedback.error.search') },
-  });
+  const publisherQuery = useFetchRegistration(identifier);
 
   const publisherPublicationContext = publisherQuery.data?.entityDescription?.reference?.publicationContext as
     | BookPublicationContext

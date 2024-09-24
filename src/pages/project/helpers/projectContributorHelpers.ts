@@ -1,7 +1,13 @@
 import { ProjectContributor, ProjectContributorRole, ProjectContributorType } from '../../../types/project.types';
 import { CristinPerson } from '../../../types/user.types';
 import { getValueByKey } from '../../../utils/user-helpers';
-import { isNonProjectManagerRole, isProjectManagerRole } from './projectRoleHelpers';
+import {
+  deleteProjectManagerRoleFromContributor,
+  findProjectManagerRole,
+  isNonProjectManagerRole,
+  isProjectManagerRole,
+  replaceRolesOnContributor,
+} from './projectRoleHelpers';
 
 export const findProjectManagerIndex = (contributors: ProjectContributor[]) => {
   return contributors.findIndex((contributor) => contributor.roles.some((role) => isProjectManagerRole(role)));
@@ -25,15 +31,27 @@ export const addContributor = (
   contributors: ProjectContributor[],
   roleToAddTo: ProjectContributorType
 ): { newContributors?: ProjectContributor[]; error?: AddContributorErrors } => {
+  // Must have person to add
   if (!personToAdd) {
     return { error: AddContributorErrors.NO_PERSON_TO_ADD };
   }
 
+  // Cannot add project manager if we already have one
+  if (roleToAddTo === 'ProjectManager') {
+    const existingProjectManager = contributors.find((contributor) => findProjectManagerRole(contributor));
+
+    if (existingProjectManager) {
+      return { error: AddContributorErrors.ALREADY_HAS_A_PROJECT_MANAGER };
+    }
+  }
+
   let newContributor: ProjectContributor;
 
+  // If the user to add already exists in the contributor list
   const existingContributorIndex = contributors.findIndex((contributor) => contributor.identity.id === personToAdd.id);
 
   if (existingContributorIndex > -1) {
+    // Cannot have same roletype and affiliation
     const sameRoleAndSameType = contributors[existingContributorIndex].roles.some((role) => {
       return (
         role.type === roleToAddTo &&
@@ -44,7 +62,14 @@ export const addContributor = (
     if (sameRoleAndSameType) {
       return { error: AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION };
     }
-    newContributor = { ...contributors[existingContributorIndex] };
+
+    // Replace the empty roles on the type
+    newContributor = {
+      ...contributors[existingContributorIndex],
+      roles: contributors[existingContributorIndex].roles.filter(
+        (role) => role.type !== roleToAddTo || (role.type === roleToAddTo && role.affiliation)
+      ),
+    };
   } else {
     newContributor = {
       identity: {
@@ -70,14 +95,13 @@ export const addContributor = (
         })
     );
   } else {
-    // Adding no affiliations
-    newContributor.roles = [
-      ...newContributor.roles,
-      {
+    // Only adding empty role if no other roles present on the role
+    if (newContributor.roles.filter((role) => role.type === roleToAddTo).length === 0) {
+      newContributor.roles.push({
         type: roleToAddTo,
         affiliation: undefined,
-      } as ProjectContributorRole,
-    ];
+      } as ProjectContributorRole);
+    }
   }
 
   const newContributors = [...contributors];
@@ -89,4 +113,39 @@ export const addContributor = (
   }
 
   return { newContributors };
+};
+
+export const removeProjectParticipant = (contributors: ProjectContributor[], contributorIndex: number) => {
+  if (contributorIndex < 0) {
+    return contributors;
+  }
+  const projectManagerRole = findProjectManagerRole(contributors[contributorIndex]);
+
+  // Contributor also has Project manager role: Only delete all the other roles
+  if (projectManagerRole) {
+    return replaceRolesOnContributor(contributors, contributorIndex, [projectManagerRole]);
+  }
+  // Does not have project manager role: Delete the whole contributor
+  const newContributors = [...contributors];
+  newContributors.splice(contributorIndex, 1);
+  return newContributors;
+};
+
+export const removeProjectManager = (contributors: ProjectContributor[]) => {
+  const projectManagerIndex = findProjectManagerIndex(contributors);
+
+  if (projectManagerIndex < 0) {
+    return contributors;
+  }
+
+  const projectManager = contributors[projectManagerIndex];
+
+  // Project manager has other roles on project: only delete the project manager-role
+  if (projectManager.roles.length > 1) {
+    return deleteProjectManagerRoleFromContributor(contributors);
+  }
+  // Project manager is only role: remove contributor
+  const newContributors = [...contributors];
+  newContributors.splice(projectManagerIndex, 1);
+  return newContributors;
 };

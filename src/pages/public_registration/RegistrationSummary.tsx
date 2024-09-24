@@ -1,8 +1,6 @@
 import { Link, Skeleton } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { fetchRegistration } from '../../api/registrationApi';
+import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
@@ -12,15 +10,8 @@ interface RegistrationSummaryProps {
 }
 
 export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
-  const { t } = useTranslation();
-
   const identifier = getIdentifierFromId(id);
-
-  const containerQuery = useQuery({
-    queryKey: ['registration', identifier],
-    queryFn: () => fetchRegistration(identifier),
-    meta: { errorMessage: t('feedback.error.search') },
-  });
+  const containerQuery = useFetchRegistration(identifier);
 
   const container = containerQuery.data;
 

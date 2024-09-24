@@ -24,7 +24,7 @@ import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../api/commonApi';
-import { fetchRegistration } from '../../api/registrationApi';
+import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
@@ -314,12 +314,7 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
   const exhibitionCatalogIdentifier =
     output.type === 'ExhibitionCatalog' && output.id ? getIdentifierFromId(output.id) : '';
 
-  const exhibitionCatalogQuery = useQuery({
-    enabled: !!exhibitionCatalogIdentifier,
-    queryKey: ['registration', exhibitionCatalogIdentifier],
-    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
-    meta: { errorMessage: t('feedback.error.get_registration') },
-  });
+  const exhibitionCatalogQuery = useFetchRegistration(exhibitionCatalogIdentifier);
 
   const nameString = exhibitionCatalogIdentifier
     ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle
