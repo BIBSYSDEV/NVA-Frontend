@@ -161,10 +161,12 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                   {values.properties.map((property, index) => (
                     <AdvancedSearchRow
                       key={index}
+                      queryParam={property.fieldName}
                       removeFilter={() => {
                         remove(index);
                         const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
-                        const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
+                        const syncedParams = syncParamsWithSearchFields(searchParams);
+                        const newParams = removeSearchParamValue(syncedParams, property.fieldName, valueToRemove);
                         newParams.set(ResultParam.From, '0');
                         history.push({ search: newParams.toString() });
                       }}
