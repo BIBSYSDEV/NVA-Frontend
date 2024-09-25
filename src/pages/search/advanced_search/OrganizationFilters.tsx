@@ -14,11 +14,11 @@ import {
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
+import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { StyledFilterTitle } from './AdvancedSearchPage';
 import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
 
 interface OrganizationFiltersProps {
@@ -81,7 +81,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
 
   return (
     <section>
-      <StyledFilterTitle>{t('common.institution')}</StyledFilterTitle>
+      <StyledFilterHeading>{t('common.institution')}</StyledFilterHeading>
       <Box
         sx={{
           display: 'flex',
