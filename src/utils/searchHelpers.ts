@@ -167,12 +167,11 @@ export const syncParamsWithSearchFields = (params: URLSearchParams) => {
     `input[${dataSearchFieldAttributeName}]`
   ) as NodeListOf<HTMLInputElement>;
 
-  searchFieldElements.forEach((input) => {
-    const fieldName = input.getAttribute(dataSearchFieldAttributeName);
-    const value = input.value;
+  searchFieldElements.forEach((element) => {
+    const fieldName = element.getAttribute(dataSearchFieldAttributeName);
     if (fieldName) {
-      if (value) {
-        params.set(fieldName, value);
+      if (element.value) {
+        params.set(fieldName, element.value);
       } else if (params.has(fieldName)) {
         params.delete(fieldName);
       }
