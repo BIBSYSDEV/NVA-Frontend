@@ -115,9 +115,9 @@ export const mockMathJaxRegistration: JournalRegistration = {
   ...mockRegistration,
   entityDescription: {
     ...mockRegistration.entityDescription,
-    mainTitle: 'The title $$\\sqrt{25} = 5~\\hbox {ost}$$ and $A_{FB}^{\\mathrm{b}\\overline{\\mathrm{b}}}$',
+    mainTitle: 'The title \\[\\sqrt{25} = 5~\\hbox{ost}\\] and \\(A_{FB}^{\\mathrm{b}\\overline{\\mathrm{b}}}\\)',
     abstract:
-      'This is abastract -> $$\\sqrt{25} = 5~\\hbox {ost}$$ and $X_{AB}^{\\mathrm{c}\\overline{\\mathrm{d}}}$ and so on it goes.',
+      'This is abstract -> \\[\\sqrt{25} = 5~\\hbox{ost}\\] and \\(X_{AB}^{\\mathrm{c}\\overline{\\mathrm{d}}}\\) and so on it goes.',
   },
 };
 
