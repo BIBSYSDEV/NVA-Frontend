@@ -13,11 +13,12 @@ import { ResultParam } from '../../../api/searchApi';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
-  PropertySearch,
   createSearchConfigFromSearchParams,
   getFileFacetText,
   isValidIsbn,
+  PropertySearch,
   removeSearchParamValue,
+  syncParamsWithSearchFields,
 } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullCristinName } from '../../../utils/user-helpers';
@@ -137,6 +138,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
             {({ field }: FieldProps<string>) => (
               <SearchTextField
                 {...field}
+                inputProps={{ 'data-searchfield': ResultParam.Query }}
                 placeholder={t('search.search_placeholder')}
                 clearValue={() => {
                   field.onChange({ target: { value: '', id: field.name } });
@@ -332,8 +334,9 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     sx={{ textTransform: 'none' }}
                     endIcon={<ClearIcon />}
                     onClick={() => {
-                      const newParams = removeSearchParamValue(searchParams, param, value);
-                      newParams.set(ResultParam.From, '0');
+                      const syncedParams = syncParamsWithSearchFields(searchParams);
+                      const newParams = removeSearchParamValue(syncedParams, param, value);
+                      newParams.delete(ResultParam.From);
                       history.push({ search: newParams.toString() });
                     }}>
                     {fieldName}: {fieldValueText}

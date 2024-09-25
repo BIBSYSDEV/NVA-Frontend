@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { SearchParam } from '../../../utils/searchHelpers';
+import { SearchParam, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { SearchPageProps } from '../SearchPage';
 import { RegistrationSearchResults } from './RegistrationSearchResults';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
@@ -21,9 +21,10 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
   const updatePath = (from: string, results: string) => {
-    params.set(SearchParam.From, from);
-    params.set(SearchParam.Results, results);
-    history.push({ search: params.toString() });
+    const syncedParams = syncParamsWithSearchFields(params);
+    syncedParams.set(SearchParam.From, from);
+    syncedParams.set(SearchParam.Results, results);
+    history.push({ search: syncedParams.toString() });
   };
 
   return (
