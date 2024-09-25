@@ -14,6 +14,7 @@ import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   createSearchConfigFromSearchParams,
+  dataSearchFieldAttributeName,
   getFileFacetText,
   isValidIsbn,
   PropertySearch,
@@ -138,7 +139,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
             {({ field }: FieldProps<string>) => (
               <SearchTextField
                 {...field}
-                inputProps={{ 'data-searchfield': ResultParam.Query }}
+                inputProps={{ [dataSearchFieldAttributeName]: ResultParam.Query }}
                 placeholder={t('search.search_placeholder')}
                 clearValue={() => {
                   field.onChange({ target: { value: '', id: field.name } });

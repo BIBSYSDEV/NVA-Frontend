@@ -157,21 +157,24 @@ export const keepSimilarPreviousData = <T>(
   }
 };
 
+export const dataSearchFieldAttributeName = 'data-searchfield';
 /**
  * Takes one URLSearchParams object and adds or removes values from other HTML input nodes with
  * the "data-searchfield" attribute to ensure that all params are in sync with the HTML.
  */
 export const syncParamsWithSearchFields = (params: URLSearchParams) => {
-  const searchElements = document.querySelectorAll('input[data-searchfield]') as NodeListOf<HTMLInputElement>;
+  const searchFieldElements = document.querySelectorAll(
+    `input[${dataSearchFieldAttributeName}]`
+  ) as NodeListOf<HTMLInputElement>;
 
-  searchElements.forEach((input) => {
-    const dataSearchField = input.getAttribute('data-searchfield');
+  searchFieldElements.forEach((input) => {
+    const fieldName = input.getAttribute(dataSearchFieldAttributeName);
     const value = input.value;
-    if (dataSearchField) {
+    if (fieldName) {
       if (value) {
-        params.set(dataSearchField, value);
-      } else if (params.has(dataSearchField)) {
-        params.delete(dataSearchField);
+        params.set(fieldName, value);
+      } else if (params.has(fieldName)) {
+        params.delete(fieldName);
       }
     }
   });
