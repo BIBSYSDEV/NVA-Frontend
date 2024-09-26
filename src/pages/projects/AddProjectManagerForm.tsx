@@ -9,6 +9,7 @@ import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { CristinProject, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
+import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   addContributor,
@@ -39,6 +40,8 @@ export const AddProjectManagerForm = ({
   const hasAffiliation = contributorToReplace && contributorHasNonEmptyAffiliation(contributorToReplace.roles);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
+
+  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
 
   const addProjectManager = () => {
     const { newContributors, error } = addContributor(selectedPerson, contributors, 'ProjectManager', indexToReplace);
@@ -92,15 +95,17 @@ export const AddProjectManagerForm = ({
         selectAffiliations={hasAffiliation ? SelectAffiliations.NO_SELECT : SelectAffiliations.SINGLE}
       />
       <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
-        <Box sx={{ flexGrow: '1' }}>
-          <Button
-            data-testid={dataTestId.projectForm.addUnidentifiedProjectManagerButton}
-            disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
-            onClick={addUnidentifiedManager}
-            size="large">
-            {t('project.add_unidentified_project_manager')}
-          </Button>
-        </Box>
+        {betaEnabled && (
+          <Box sx={{ mr: 'auto' }}>
+            <Button
+              data-testid={dataTestId.projectForm.addUnidentifiedProjectManagerButton}
+              disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
+              onClick={addUnidentifiedManager}
+              size="large">
+              {t('project.add_unidentified_project_manager')}
+            </Button>
+          </Box>
+        )}
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
         <Button
           data-testid={dataTestId.projectForm.addProjectManagerButton}
