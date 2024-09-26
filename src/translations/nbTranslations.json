@@ -171,6 +171,7 @@
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
     "close_forever": "Lukk og ikke vis igjen",
+    "consists_of": "Består av",
     "contributor": "Bidragsyter",
     "contributors": {
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til"
@@ -251,8 +252,10 @@
     "reject_doi": "Avvis DOI",
     "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
     "remove": "Fjern",
+    "republish": "Republiser",
     "required_description": "Felt med stjerne er obligatorisk",
     "result": "Resultat",
+    "result_portfolio": "Resultatportefølje",
     "result_registrations": "Resultatregistreringer",
     "role": "Rolle",
     "save": "Lagre",
@@ -308,6 +311,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -379,11 +386,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -643,7 +646,7 @@
     "language_selector": "Valgt språk",
     "news_link": "Nyhetsbrev",
     "system_status_link": "Driftsmeldinger",
-    "technical_support_link": "Ved teknisk støtte kontakt <0>kontakt@sikt.no</0>"
+    "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>"
   },
   "licenses": {
     "description": {
@@ -1476,6 +1479,7 @@
         "assign_curator": "Sett kurator",
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
+        "confirm_republish_description": "Republiser resultatet om det skal være tilgjengelig i NVA. Dette vil føre til at resultatet vil vises blant søkeresultater igjen.",
         "describe_doi_rejection_reason": "Du må begrunne avslaget på ønsket om DOI på dette forskningsresultatet.",
         "draft_doi_description": "<0>En reservert DOI gjør at du (og de du deler DOI med) kan sitere forskningsresultatet i andre arbeid før det publiseres.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om din registrering tilsvarer det som alt er publisert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det.</0>",
@@ -1485,6 +1489,7 @@
         "has_rejected_files_publishing_request": "<0>Beskrivelse (metadata) er publisert og offentlig tilgjengelig.</0><0>Kurator har avvist filen, og den er fjernet fra visningen av forskningsresultatet.</0>",
         "has_reserved_doi": "<0>Du kan dele reservert DOI med de som skal sitere resultatet. Oppslag via DOI er ikke mulig før DOI er tildelt av kurator.</0><0>DOI-forespørselen blir sendt til kurator når resultatet publiseres. Du publiserer registreringen i publiseringsmenyen.</0>",
         "metadata_published_waiting_for_files": "<0>Beskrivelse av (metadata) er publisert og synlig for andre, men kurator må godkjenne filene som er lastet opp før de blir synlige.</0><0>Du får beskjed når fil(er) og valgt lisens er godkjent av kurator og er offentlig tilgjengelig. Statusen er alltid synlig på Min Side.</0>",
+        "no_access_to_republish": "<0>Er det feil at resultatet er avpublisert?</0><0>Ta kontakt med redaktør for å få resultatet republisert.</0>",
         "no_published_files_on_registration": "Ingen publiserte filer på resultatet",
         "no_published_files_on_registration_description": "<0>Resultatet har ingen publiserte filer.</0><0>Sjekk med registrator om det er korrekt at resultatet ikke skal ha publiserte filer i NVA.</0><0>Ønsker du å tildele DOI på resultat uten fil?</0>",
         "publish_registration": "Publiser registrering",
@@ -1497,12 +1502,13 @@
         "reject_publishing_request_description_one": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filen publisert og dermed ikke synlig for andre. Filen blir flyttet til ikke publisert.</0><0>Ønsker du å slette filen, gjør det i redigering av forskningsresultatet.</0>",
         "reject_publishing_request_description_other": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filene publisert og dermed ikke synlig for andre. Filene blir flyttet til ikke publisert.</0><0>Ønsker du å slette filene, gjør det i redigering av forskningsresultatet.</0>",
         "reload": "Last på nytt",
+        "republish_description": "Republiser resultatet om det skal være tilgjengelig i NVA.",
         "request_doi_description": "<0>En DOI (Digital Object Identifier) øker synligheten til forskningsresultatet og kan bidra til flere siteringer.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "reserve_doi_confirmation": "<0>Kun publiserte forskningsresultater kan ha en DOI.</0><0>Om du trenger en DOI for å sitere forskningsresultater korrekt i andre forskingsresultater som er under arbeid, før det er publisert, så kan du reservere en DOI.</0><0>Kun du ser den reserverte DOI-en, og den leder ikke til noe sted før du publiserer forskningsresultatet. Etter publisering blir din kurator informert om at du ønsker en DOI, og må da tildele den (eller avvise).</0><0>Om du er klar til å publisere, så publiser, og velg \"$t(registration.public_page.request_doi)\", i stedet for å reservere en DOI.</0><1>Ønsker du fortsatt å reservere en DOI?</1>",
         "reserved": "Reservert",
         "review_preview_before_publishing": "Se over utkast før du går videre.",
         "terminate_result": "Slett resultat",
-        "terminate_result_confirmation": "<0>Alle filer og det meste av metadata slettes fra resultatet.</0><0>Kun tittel, forfatterer med tilhørighet, kanalinformasjon, kategori, publiseringstidspunkt og eventuelt persistente identifikatorer som DOI og handle blir bevart.</0>",
+        "terminate_result_confirmation": "<0>Alle filer og det meste av metadata slettes fra resultatet.</0><0>Kun nødvendige metadata for å kunne sitere forskningsresultatet vil bli bevart. Dette inkluderer blant annet tittel, bidragsytere, kanalinformasjon, kategori, publiseringstidspunkt og persistente identifikatorer.</0>",
         "terminate_result_description": "<0>Slett resultatet om det er feilregistrert.</0><0>Slettes resultatet er det ikke mulig å gjenopprette informasjon og filer på resultatet.</0>",
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Beskrivelsen (metadata) av forskningsresultatet og opplastede filer blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
@@ -1998,8 +2004,8 @@
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
         "antology_without_chapter": "Antologier uten kapittel",
-        "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
+        "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "correction_list_duct": "Retteliste (DUCT)",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
       },

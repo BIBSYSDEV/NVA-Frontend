@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { RepublishRegistration } from './RepublishRegistration';
 import { TerminateRegistration } from './TerminateRegistration';
 import { UnpublishRegistration } from './UnpublishRegistration';
 
@@ -27,7 +28,8 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
       <Divider flexItem />
       <IconButton
-        sx={{ width: 'fit-content', alignSelf: 'center', p: '0' }}
+        sx={{ width: 'fit-content', alignSelf: 'center' }}
+        size="small"
         data-testid={dataTestId.registrationLandingPage.tasksPanel.morePublishingActionsButton}
         title={openMoreActions ? t('common.show_fewer_options') : t('common.show_more_options')}
         onClick={() => setOpenMoreActions(!openMoreActions)}>
@@ -35,10 +37,15 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
       </IconButton>
 
       {openMoreActions && (
-        <>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {isPublished && <UnpublishRegistration registration={registration} />}
-          {isUnpublished && <TerminateRegistration registration={registration} />}
-        </>
+          {isUnpublished && (
+            <>
+              <RepublishRegistration registration={registration} />
+              <TerminateRegistration registration={registration} />
+            </>
+          )}
+        </Box>
       )}
     </Box>
   );

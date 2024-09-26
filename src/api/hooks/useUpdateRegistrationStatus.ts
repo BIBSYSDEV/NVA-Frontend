@@ -2,12 +2,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setNotification } from '../../redux/notificationSlice';
-import { TerminatePublicationRequest, UnpublishPublicationRequest } from '../../types/registration.types';
+import { UpdateRegistrationStatusRequest } from '../../types/registration.types';
 import { updateRegistrationStatus } from '../registrationApi';
 
 interface UpdateRequest {
   registrationIdentifier: string;
-  data: UnpublishPublicationRequest | TerminatePublicationRequest;
+  updateStatusRequest: UpdateRegistrationStatusRequest;
   onSuccess?: () => void;
 }
 
@@ -17,8 +17,8 @@ export const useUpdateRegistrationStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ registrationIdentifier, data }: UpdateRequest) =>
-      updateRegistrationStatus(registrationIdentifier, data),
+    mutationFn: ({ registrationIdentifier, updateStatusRequest }: UpdateRequest) =>
+      updateRegistrationStatus(registrationIdentifier, updateStatusRequest),
     onSuccess: (response, variables) => {
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (response.data) {
