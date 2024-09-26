@@ -26,8 +26,6 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
   const titleSearch = useDuplicateProjectSearch(debouncedTitle);
   const disabled = !debouncedTitle || titleSearch.isPending;
 
-  console.log('titleSearch', titleSearch);
-
   const createProject = () => {
     setNewProject({ ...newProject, title: title });
     setShowProjectForm(true);
