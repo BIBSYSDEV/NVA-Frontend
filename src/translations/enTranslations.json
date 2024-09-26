@@ -1995,7 +1995,7 @@
       "approve_nvi_candidate_description": "<0>As curator you can approve or reject a research result for reporting to the NVI</0> <0> If the research result is to be reported, select \"{{buttonText}}\".</0>",
       "completed_count": "Finished checking ({{completed}} of {{total}})",
       "correction_list_type": {
-        "antology_without_chapter": "Anthologies without a chapter",
+        "anthology_without_chapter": "Anthologies without a chapter",
         "applicable_category_in_non_applicable_channel": "Counting categories in non-counting channels",
         "book_with_less_than_50_pages": "Books with fewer than 50 pages",
         "correction_list_duct": "Correction list (DUCT)",

@@ -676,6 +676,7 @@ export const dataTestId = {
   tasksPage: {
     areaOfResponsibilitySelector: 'area-of-responsibility-selector',
     correctionList: {
+      anthologyWithApplicableChapterButton: 'antology-with-applicable-chapter-button',
       anthologyWithoutChapterButton: 'anthology-without-chapter-button',
       booksWithLessThan50PagesButton: 'books-with-less-than-50-pages-button',
       applicableCategoriesWithNonApplicableChannelButton: 'applicable-categories-with-non-applicable-channel-button',

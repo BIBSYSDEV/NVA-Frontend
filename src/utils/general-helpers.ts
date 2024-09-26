@@ -74,3 +74,6 @@ export const getCurrentPath = () => {
     return pathname;
   }
 };
+
+export const getObjectEntriesWithValue = (object: Record<string, any>) =>
+  Object.fromEntries(Object.entries(object).filter(([, value]) => value !== null && value !== undefined));
