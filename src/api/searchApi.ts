@@ -529,7 +529,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.Tags, encodeURIComponent(params.tags));
   }
   if (params.title) {
-    searchParams.set(ResultParam.Title, encodeURIComponent(params.title));
+    searchParams.set(ResultParam.Title, params.title);
   }
   if (params.topLevelOrganization) {
     searchParams.set(ResultParam.TopLevelOrganization, encodeURIComponent(params.topLevelOrganization));
