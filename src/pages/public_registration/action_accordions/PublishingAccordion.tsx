@@ -78,12 +78,13 @@ export const PublishingAccordion = ({
   const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
 
-  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(
-    registration.entityDescription?.mainTitle || '',
-    registration.identifier,
-    registration.entityDescription?.publicationDate?.year,
-    registration.entityDescription?.reference?.publicationInstance?.type
-  );
+  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch({
+    enabled: registration.status === RegistrationStatus.Draft && !!registration.entityDescription?.mainTitle,
+    title: registration.entityDescription?.mainTitle,
+    identifier: registration.identifier,
+    publishedYear: registration.entityDescription?.publicationDate?.year,
+    category: registration.entityDescription?.reference?.publicationInstance?.type,
+  });
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);

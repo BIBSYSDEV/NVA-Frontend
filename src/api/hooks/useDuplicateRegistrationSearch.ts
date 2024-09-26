@@ -1,26 +1,24 @@
-import { useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
-import { fetchResults, FetchResultsParams } from '../searchApi';
+import { PublicationInstanceType } from '../../types/registration.types';
+import { useRegistrationSearch } from './useRegistrationSearch';
 
-export const useDuplicateRegistrationSearch = (
-  title: string | undefined,
-  identifier?: string,
-  publishedYear?: string,
-  category?: string
-) => {
-  const { t } = useTranslation();
+interface UseDuplicateRegistrationSearchParams {
+  enabled?: boolean;
+  title?: string;
+  identifier?: string;
+  publishedYear?: string;
+  category?: PublicationInstanceType | '';
+}
 
-  const searchConfig: FetchResultsParams = {
-    title: title,
-  };
-
-  const enabled = !!title;
-
-  const titleSearch = useQuery({
-    enabled: enabled,
-    queryKey: ['registrations', searchConfig],
-    queryFn: () => fetchResults(searchConfig),
-    meta: { errorMessage: t('feedback.error.get_registrations') },
+export const useDuplicateRegistrationSearch = ({
+  title,
+  enabled = !!title,
+  identifier,
+  publishedYear,
+  category,
+}: UseDuplicateRegistrationSearchParams) => {
+  const titleSearch = useRegistrationSearch({
+    enabled: enabled && !!title,
+    params: { title },
   });
 
   const registrationsWithSimilarName = titleSearch.data?.hits ?? [];
@@ -36,7 +34,7 @@ export const useDuplicateRegistrationSearch = (
       return false;
     }
 
-    if (publishedYear && reg?.entityDescription?.publicationDate?.year !== publishedYear) {
+    if (publishedYear && reg.entityDescription?.publicationDate?.year !== publishedYear) {
       return false;
     }
 
