@@ -20,6 +20,7 @@ export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
   | 'NonApplicableCategoriesWithApplicableChannel'
   | 'AntologyWithoutChapter'
+  | 'AntologyWithApplicableChapter'
   | 'BooksWithLessThan50Pages';
 
 type CorrectionListSearchConfig = {
@@ -63,6 +64,15 @@ export const correctionListConfig: CorrectionListSearchConfig = {
     },
     disabledFilters: [],
   },
+  AntologyWithApplicableChapter: {
+    i18nKey: 'tasks.nvi.correction_list_type.antology_with_applicable_chapter',
+    queryParams: {
+      categoryShould: [BookType.Anthology],
+      hasChildren: true,
+      scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+    },
+    disabledFilters: [],
+  },
 };
 
 export const nviCorrectionListQueryKey = 'list';
@@ -102,8 +112,8 @@ export const NviCorrectionList = () => {
             sx={{ px: { xs: '0.5rem', md: 0 }, display: 'flex', flexDirection: 'column', gap: '0.5rem', mb: '1rem' }}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
               <OrganizationFilters
-                topLevelOrganizationId={registrationParams.topLevelOrganization}
-                unitId={registrationParams.unit}
+                topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
+                unitId={registrationParams.unit ?? null}
               />
               <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
               <CategorySearchFilter

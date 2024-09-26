@@ -2006,6 +2006,7 @@
         "antology_without_chapter": "Antologier uten kapittel",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
+        "antology_with_applicable_chapter": "Antologier med tellende kapittel",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
       },
       "delete_note": "Slett melding",
