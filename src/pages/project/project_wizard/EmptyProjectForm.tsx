@@ -1,3 +1,4 @@
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import ErrorIcon from '@mui/icons-material/Error';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
@@ -49,6 +50,8 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
               <CircularProgress size={20} />
             ) : titleSearch.duplicateProject ? (
               <ErrorIcon color="warning" />
+            ) : debouncedTitle && titleSearch.duplicateProject === undefined ? (
+              <CheckCircleIcon color="success" />
             ) : undefined,
           }}
           fullWidth
