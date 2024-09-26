@@ -117,7 +117,9 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                     label={t('registration.resource_type.artistic.competition_date')}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
-                      !touched && setFieldTouched(field.name, true, false);
+                      if (!touched) {
+                        setFieldTouched(field.name, true, false);
+                      }
                       setFieldValue(field.name, date ?? '');
                     }}
                     views={['year', 'month', 'day']}

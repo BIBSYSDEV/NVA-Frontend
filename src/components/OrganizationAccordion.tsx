@@ -73,7 +73,7 @@ export const OrganizationAccordion = ({
       onChange={() => {
         setIsExpanded(!expanded);
         setSelectedId(organization.id);
-        setSelectedLabels && setSelectedLabels(organization.labels);
+        setSelectedLabels?.(organization.labels);
       }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
         <Box
