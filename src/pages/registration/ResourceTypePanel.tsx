@@ -35,10 +35,10 @@ import { DatasetForm } from './resource_type_tab/sub_type_forms/research_data_ty
 export const ResourceTypePanel = () => {
   const { t } = useTranslation();
   const { values } = useFormikContext<Registration>();
-  const { duplicateRegistration } = useDuplicateRegistrationSearch(
-    values.entityDescription?.mainTitle || '',
-    values.identifier
-  );
+  const { duplicateRegistration } = useDuplicateRegistrationSearch({
+    title: values.entityDescription?.mainTitle,
+    identifier: values.identifier,
+  });
   const instanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
   const mainType = getMainRegistrationType(instanceType);
 
