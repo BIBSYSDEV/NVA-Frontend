@@ -4,7 +4,7 @@ import { ResultParam } from '../../../../api/searchApi';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useRegistrationsQueryParams } from '../../../../utils/hooks/useRegistrationSearchParams';
-import { getFileFacetText, removeSearchParamValue } from '../../../../utils/searchHelpers';
+import { getFileFacetText, removeSearchParamValue, syncParamsWithSearchFields } from '../../../../utils/searchHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
@@ -29,18 +29,20 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const filesFacet = registrationQuery.data?.aggregations?.files ?? [];
 
   const addFacetFilter = (param: string, key: string) => {
-    const currentValues = searchParams.get(param)?.split(',') ?? [];
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    const currentValues = syncedParams.get(param)?.split(',') ?? [];
     if (currentValues.length === 0) {
-      searchParams.set(param, key);
+      syncedParams.set(param, key);
     } else {
-      searchParams.set(param, [...currentValues, key].join(','));
+      syncedParams.set(param, [...currentValues, key].join(','));
     }
-    searchParams.set(ResultParam.From, '0');
-    history.push({ search: searchParams.toString() });
+    syncedParams.set(ResultParam.From, '0');
+    history.push({ search: syncedParams.toString() });
   };
 
   const removeFacetFilter = (param: string, key: string) => {
-    const newSearchParams = removeSearchParamValue(searchParams, param, key);
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    const newSearchParams = removeSearchParamValue(syncedParams, param, key);
     newSearchParams.set(ResultParam.From, '0');
     history.push({ search: newSearchParams.toString() });
   };
