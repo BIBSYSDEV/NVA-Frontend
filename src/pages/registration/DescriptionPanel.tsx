@@ -24,10 +24,10 @@ export const DescriptionPanel = () => {
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
-  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(
-    debouncedTitle || values.entityDescription?.mainTitle,
-    values.identifier
-  );
+  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch({
+    title: debouncedTitle || values.entityDescription?.mainTitle,
+    identifier: values.identifier,
+  });
 
   return (
     <InputContainerBox>

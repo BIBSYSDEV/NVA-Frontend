@@ -35,7 +35,9 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
   const handleKeyPress = (event: KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      isTruncated && setLineClamp(undefined);
+      if (isTruncated) {
+        setLineClamp(undefined);
+      }
     }
   };
 

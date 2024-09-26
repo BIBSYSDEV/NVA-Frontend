@@ -101,12 +101,18 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
       <Divider component="span" orientation="vertical" />
       {projectQuery.isPending ? (
         <Skeleton />
-      ) : (
-        projectManager && (
+      ) : projectManager ? (
+        projectManager.identity.id ? (
           <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
             {projectManager.identity.firstName} {projectManager.identity.lastName}
           </MuiLink>
+        ) : (
+          <>
+            {projectManager.identity.firstName} {projectManager.identity.lastName}
+          </>
         )
+      ) : (
+        '-'
       )}
       <Divider component="span" orientation="vertical" />
       {projectQuery.isPending ? (

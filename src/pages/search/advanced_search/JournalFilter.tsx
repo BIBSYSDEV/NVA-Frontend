@@ -10,12 +10,12 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
-import { StyledFilterTitle } from './AdvancedSearchPage';
 
 export const JournalFilter = () => {
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ export const JournalFilter = () => {
 
   return (
     <section>
-      <StyledFilterTitle>{t('registration.resource_type.journal')}</StyledFilterTitle>
+      <StyledFilterHeading>{t('registration.resource_type.journal')}</StyledFilterHeading>
       <Autocomplete
         size="small"
         sx={{ minWidth: '15rem' }}

@@ -14,8 +14,12 @@ export const isNonProjectManagerRole = (role: ProjectContributorRole) => {
   return role.type !== 'ProjectManager';
 };
 
-const hasEmptyAffiliation = (role: ProjectContributorRole) => {
-  return role.affiliation?.id === '' || role.affiliation?.id === undefined;
+export const contributorHasNonEmptyAffiliation = (roles: ProjectContributorRole[]) => {
+  return roles.some((role) => role.affiliation !== undefined);
+};
+
+export const hasEmptyAffiliation = (role: ProjectContributorRole) => {
+  return role.affiliation === undefined || role.affiliation.id === '' || role.affiliation.id === undefined;
 };
 
 export const findProjectManagerRole = (contributor: ProjectContributor) => {
@@ -56,10 +60,6 @@ export const getRelevantContributorRoles = (contributor: ProjectContributor, isP
   );
 };
 
-export const contributorHasEmptyAffiliation = (roles: ProjectContributorRole[]) => {
-  return roles.some((role) => role.affiliation === undefined);
-};
-
 const checkIfSameAffiliationOnSameRoleType = (
   newAffiliationId: string,
   role: ProjectContributorRole,
@@ -76,6 +76,24 @@ const findProjectManagerRoleThatHasAffiliation = (roles: ProjectContributorRole[
 
 const findNonProjectManagerRoleThatHasAffiliation = (roles: ProjectContributorRole[], affiliationId: string) => {
   return roles.findIndex((role) => role.affiliation?.id === affiliationId && isNonProjectManagerRole(role));
+};
+
+const isAlreadyInExistingRoles = (existingRoles: ProjectContributorRole[], role: ProjectContributorRole) => {
+  const existingRole = existingRoles.find((r) => r.affiliation?.id === role.affiliation?.id);
+  return existingRole !== undefined;
+};
+
+export const addRoles = (
+  existingRoles: ProjectContributorRole[],
+  rolesToAdd: ProjectContributorRole[],
+  roleToAddTo: ProjectContributorType
+) => {
+  return existingRoles.concat(
+    rolesToAdd.filter(
+      (role) =>
+        !isAlreadyInExistingRoles(existingRoles, role) && (role.type !== roleToAddTo || !hasEmptyAffiliation(role))
+    )
+  );
 };
 
 const findRoleIndexForAffiliation = (

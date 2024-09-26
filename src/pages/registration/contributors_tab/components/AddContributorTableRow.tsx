@@ -48,7 +48,13 @@ export const CristinPersonTableRow = ({
                 setSelectedPerson({
                   ...cristinPerson,
                   affiliations:
-                    selectAffiliations === SelectAffiliations.SINGLE ? [activeAffiliations[0]] : activeAffiliations,
+                    selectAffiliations === SelectAffiliations.SINGLE
+                      ? activeAffiliations.length > 0
+                        ? [activeAffiliations[0]]
+                        : []
+                      : selectAffiliations === SelectAffiliations.MULTIPLE
+                        ? activeAffiliations
+                        : [],
                 });
               }
             }}

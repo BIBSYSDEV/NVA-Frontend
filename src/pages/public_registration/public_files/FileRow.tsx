@@ -50,7 +50,9 @@ export const FileRow = ({
 
   const handleDownload = useCallback(
     async (previewFile = false) => {
-      previewFile && setIsLoadingPreviewFile(true);
+      if (previewFile) {
+        setIsLoadingPreviewFile(true);
+      }
       const downloadFileResponse = user
         ? await downloadPrivateFile(registrationIdentifier, file.identifier)
         : await downloadPublicFile(registrationIdentifier, file.identifier);
@@ -63,7 +65,9 @@ export const FileRow = ({
           openFileInNewTab(downloadFileResponse.id);
         }
       }
-      previewFile && setIsLoadingPreviewFile(false);
+      if (previewFile) {
+        setIsLoadingPreviewFile(false);
+      }
     },
     [t, dispatch, user, registrationIdentifier, file.identifier]
   );

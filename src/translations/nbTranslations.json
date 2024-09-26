@@ -171,6 +171,7 @@
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
     "close_forever": "Lukk og ikke vis igjen",
+    "consists_of": "Består av",
     "contributor": "Bidragsyter",
     "contributors": {
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til"
@@ -251,8 +252,10 @@
     "reject_doi": "Avvis DOI",
     "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
     "remove": "Fjern",
+    "republish": "Republiser",
     "required_description": "Felt med stjerne er obligatorisk",
     "result": "Resultat",
+    "result_portfolio": "Resultatportefølje",
     "result_registrations": "Resultatregistreringer",
     "role": "Rolle",
     "save": "Lagre",
@@ -303,12 +306,9 @@
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "x_years_one": "{{count}} år",
-    "republish": "Republiser",
     "x_years_other": "{{count}} år",
     "year": "År",
-    "yes": "Ja",
-    "result_portfolio": "Resultatportefølje",
-    "consists_of": "Består av"
+    "yes": "Ja"
   },
   "disciplines": {
     "0001": "Humaniora",
@@ -1128,6 +1128,9 @@
     "add_affiliation": "Legg til tilknytning",
     "add_project_contributor": "Legg til prosjektdeltaker",
     "add_project_manager": "Legg til prosjektleder",
+    "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltaker",
+    "add_unidentified_project_manager": "Legg til uidentifisert prosjektleder",
+    "add_contributor": "Legg til prosjektdeltaker",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
       "delete_affiliation": "Fjern tilknytning",
@@ -1135,6 +1138,7 @@
     },
     "close_view": "Lukk visning",
     "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
+    "contributor_is_unidentified": "Prosjektdeltaker er uidentifisert",
     "coordinating_institution": "Koordinerende institusjon",
     "create_new_project": "Opprett nytt prosjekt",
     "create_project": "Nytt prosjekt",
@@ -1180,6 +1184,7 @@
     "no_participants": "Ingen registrerte deltakere.",
     "no_related_projects": "Ingen relaterte prosjekt.",
     "no_results": "Ingen publiserte resultater.",
+    "no_affiliation": "Ingen tilknytning",
     "no_summary": "Ingen registrerte sammendrag.",
     "period": "Prosjektperiode",
     "person": "Person",
@@ -1193,6 +1198,7 @@
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
+    "project_manager_is_unidentified": "Prosjektleder er uidentifisert",
     "project_participant": "Prosjektdeltaker",
     "project_participants": "Prosjektdeltakere",
     "remove_project_manager": "Slett prosjektleder",
@@ -1210,7 +1216,9 @@
       "CONCLUDED": "Avsluttet",
       "NOTSTARTED": "Ikke startet"
     },
-    "summary": "Sammendrag"
+    "summary": "Sammendrag",
+    "verify_contributor": "Identifiser prosjektdeltaker",
+    "verify_project_manager": "Identifiser prosjektleder"
   },
   "registration": {
     "citation_points_to": "Siteringen viser til",
@@ -1474,6 +1482,7 @@
         "assign_curator": "Sett kurator",
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
+        "confirm_republish_description": "Republiser resultatet om det skal være tilgjengelig i NVA. Dette vil føre til at resultatet vil vises blant søkeresultater igjen.",
         "describe_doi_rejection_reason": "Du må begrunne avslaget på ønsket om DOI på dette forskningsresultatet.",
         "draft_doi_description": "<0>En reservert DOI gjør at du (og de du deler DOI med) kan sitere forskningsresultatet i andre arbeid før det publiseres.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om din registrering tilsvarer det som alt er publisert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det.</0>",
@@ -1483,6 +1492,7 @@
         "has_rejected_files_publishing_request": "<0>Beskrivelse (metadata) er publisert og offentlig tilgjengelig.</0><0>Kurator har avvist filen, og den er fjernet fra visningen av forskningsresultatet.</0>",
         "has_reserved_doi": "<0>Du kan dele reservert DOI med de som skal sitere resultatet. Oppslag via DOI er ikke mulig før DOI er tildelt av kurator.</0><0>DOI-forespørselen blir sendt til kurator når resultatet publiseres. Du publiserer registreringen i publiseringsmenyen.</0>",
         "metadata_published_waiting_for_files": "<0>Beskrivelse av (metadata) er publisert og synlig for andre, men kurator må godkjenne filene som er lastet opp før de blir synlige.</0><0>Du får beskjed når fil(er) og valgt lisens er godkjent av kurator og er offentlig tilgjengelig. Statusen er alltid synlig på Min Side.</0>",
+        "no_access_to_republish": "<0>Er det feil at resultatet er avpublisert?</0><0>Ta kontakt med redaktør for å få resultatet republisert.</0>",
         "no_published_files_on_registration": "Ingen publiserte filer på resultatet",
         "no_published_files_on_registration_description": "<0>Resultatet har ingen publiserte filer.</0><0>Sjekk med registrator om det er korrekt at resultatet ikke skal ha publiserte filer i NVA.</0><0>Ønsker du å tildele DOI på resultat uten fil?</0>",
         "publish_registration": "Publiser registrering",
@@ -1495,6 +1505,7 @@
         "reject_publishing_request_description_one": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filen publisert og dermed ikke synlig for andre. Filen blir flyttet til ikke publisert.</0><0>Ønsker du å slette filen, gjør det i redigering av forskningsresultatet.</0>",
         "reject_publishing_request_description_other": "<0>Velger du \"$t(registration.public_page.reject_publish_request)\" blir ikke filene publisert og dermed ikke synlig for andre. Filene blir flyttet til ikke publisert.</0><0>Ønsker du å slette filene, gjør det i redigering av forskningsresultatet.</0>",
         "reload": "Last på nytt",
+        "republish_description": "Republiser resultatet om det skal være tilgjengelig i NVA.",
         "request_doi_description": "<0>En DOI (Digital Object Identifier) øker synligheten til forskningsresultatet og kan bidra til flere siteringer.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "reserve_doi_confirmation": "<0>Kun publiserte forskningsresultater kan ha en DOI.</0><0>Om du trenger en DOI for å sitere forskningsresultater korrekt i andre forskingsresultater som er under arbeid, før det er publisert, så kan du reservere en DOI.</0><0>Kun du ser den reserverte DOI-en, og den leder ikke til noe sted før du publiserer forskningsresultatet. Etter publisering blir din kurator informert om at du ønsker en DOI, og må da tildele den (eller avvise).</0><0>Om du er klar til å publisere, så publiser, og velg \"$t(registration.public_page.request_doi)\", i stedet for å reservere en DOI.</0><1>Ønsker du fortsatt å reservere en DOI?</1>",
         "reserved": "Reservert",
@@ -1505,10 +1516,7 @@
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Beskrivelsen (metadata) av forskningsresultatet og opplastede filer blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
-        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig.",
-        "no_access_to_republish": "<0>Er det feil at resultatet er avpublisert?</0><0>Ta kontakt med redaktør for å få resultatet republisert.</0>",
-        "republish_description": "Republiser resultatet om det skal være tilgjengelig i NVA.",
-        "confirm_republish_description": "Republiser resultatet om det skal være tilgjengelig i NVA. Dette vil føre til at resultatet vil vises blant søkeresultater igjen."
+        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig."
       },
       "validation_errors": "Valideringsfeil"
     },
@@ -1565,13 +1573,13 @@
       "MovingPicture": "Film",
       "MusicPerformance": "Musikk",
       "NonFictionChapter": "Faglig kapittel",
-      "NonFictionMonograph": "Faglig monografi",
+      "NonFictionMonograph": "Fagbok",
       "OtherPresentation": "Annen presentasjon",
       "OtherStudentWork": "Annen studentoppgave",
       "PerformingArts": "Scenekunst",
       "PopularScienceArticle": "Populærvitenskapelig artikkel",
       "PopularScienceChapter": "Populærvitenskapelig kapittel",
-      "PopularScienceMonograph": "Populærvitenskapelig monografi",
+      "PopularScienceMonograph": "Populærvitenskapelig bok",
       "ProfessionalArticle": "Fagartikkel",
       "Report": "Rapport",
       "ReportBasic": "Annen rapport",
@@ -2001,7 +2009,7 @@
         "antology_without_chapter": "Antologier uten kapittel",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
-        "correction_list_duct": "Retteliste (DUCT)",
+        "antology_with_applicable_chapter": "Antologier med tellende kapittel",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
       },
       "delete_note": "Slett melding",

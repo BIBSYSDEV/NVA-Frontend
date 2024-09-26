@@ -140,7 +140,7 @@ export const SelectRegistrationTypeField = () => {
           }
           break;
         case PublicationType.Degree:
-          contextTypeIsChanged &&
+          if (contextTypeIsChanged) {
             setFieldValue(
               contextTypeBaseFieldName,
               {
@@ -151,6 +151,7 @@ export const SelectRegistrationTypeField = () => {
               },
               false
             );
+          }
           setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
           break;
         case PublicationType.Anthology:
@@ -187,8 +188,9 @@ export const SelectRegistrationTypeField = () => {
 
           break;
         case PublicationType.Artistic:
-          contextTypeIsChanged &&
+          if (contextTypeIsChanged) {
             setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
+          }
           setFieldValue(
             instanceTypeBaseFieldName,
             { ...emptyArtisticPublicationInstance, type: newInstanceType },
@@ -227,7 +229,9 @@ export const SelectRegistrationTypeField = () => {
           }
           break;
         case PublicationType.ResearchData:
-          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
+          if (contextTypeIsChanged) {
+            setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
+          }
           setFieldValue(
             instanceTypeBaseFieldName,
             { ...emptyResearchDataPublicationInstance, type: newInstanceType },
@@ -235,11 +239,15 @@ export const SelectRegistrationTypeField = () => {
           );
           break;
         case PublicationType.ExhibitionContent:
-          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);
+          if (contextTypeIsChanged) {
+            setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);
+          }
           setFieldValue(instanceTypeBaseFieldName, emptyExhibitionPublicationInstance, false);
           break;
         case PublicationType.GeographicalContent:
-          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
+          if (contextTypeIsChanged) {
+            setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
+          }
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }
