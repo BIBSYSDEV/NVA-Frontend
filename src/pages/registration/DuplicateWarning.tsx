@@ -1,18 +1,18 @@
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import { Box, Typography } from '@mui/material';
+import { Box, BoxProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { StyledInfoBanner } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
-interface DuplicateWarningProps {
+interface DuplicateWarningProps extends BoxProps {
   warning: string;
   identifier?: string;
   name?: string;
 }
 
-export const DuplicateWarning = ({ name, identifier, warning }: DuplicateWarningProps) => {
+export const DuplicateWarning = ({ name, identifier, warning, sx }: DuplicateWarningProps) => {
   const { t } = useTranslation();
   return (
     <Box
@@ -24,6 +24,7 @@ export const DuplicateWarning = ({ name, identifier, warning }: DuplicateWarning
         display: 'flex',
         flexDirection: 'column',
         gap: '0.5rem',
+        ...sx,
       }}>
       <StyledInfoBanner>{warning}</StyledInfoBanner>
       {name && identifier && (

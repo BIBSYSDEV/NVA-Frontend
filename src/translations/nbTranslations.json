@@ -1139,6 +1139,7 @@
     "create_new_project": "Opprett nytt prosjekt",
     "create_project": "Nytt prosjekt",
     "duplicate_project_warning": "Det finnes et prosjekt  NVA med samme tittel. Vennligst ikke registrer prosjektet dersom det er samme prosjekt, slik at du ikke oppretter duplikater.",
+    "duplicate_title_warning": "Det finnes et prosjekt  NVA med samme tittel. Vennligst avbryt registreringen dersom det er det samme prosjektet som du prøver å registrere, slik at du ikke oppretter duplikater.",
     "edit_project": "Endre prosjekt",
     "error": {
       "contributor_already_added_with_same_role_and_affiliation": "Prosjektdeltaker er allerede lagt til med samme rolle og tilknytning."

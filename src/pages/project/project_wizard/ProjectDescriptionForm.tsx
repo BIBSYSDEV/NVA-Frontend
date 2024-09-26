@@ -1,12 +1,17 @@
-import { Autocomplete, Box, TextField, Typography } from '@mui/material';
+import ErrorIcon from '@mui/icons-material/Error';
+import { Autocomplete, Box, CircularProgress, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDuplicateProjectSearch } from '../../../api/hooks/useDuplicateProjectSearch';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { cristinKeywords } from '../../../resources/cristinKeywords';
 import { ProjectFieldName, SaveCristinProject, TypedLabel } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { DuplicateWarning } from '../../registration/DuplicateWarning';
 import { FormBox } from './styles';
 
 interface ProjectDescriptionFormProps {
@@ -16,6 +21,9 @@ interface ProjectDescriptionFormProps {
 export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
+  const [title, setTitle] = useState(values.title);
+  const debouncedTitle = useDebounce(title);
+  const duplicateProjectSearch = useDuplicateProjectSearch(debouncedTitle);
 
   return (
     <ErrorBoundary>
@@ -29,6 +37,17 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                 data-testid={dataTestId.projectWizard.descriptionPanel.titleField}
                 label={t('common.title')}
                 disabled={thisIsRekProject}
+                onChange={(event) => {
+                  setTitle(event.target.value);
+                  field.onChange(event);
+                }}
+                InputProps={{
+                  endAdornment: duplicateProjectSearch.isPending ? (
+                    <CircularProgress size={20} />
+                  ) : duplicateProjectSearch.duplicateProject ? (
+                    <ErrorIcon color="warning" />
+                  ) : undefined,
+                }}
                 required
                 variant="filled"
                 fullWidth
@@ -37,6 +56,14 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
               />
             )}
           </Field>
+          {duplicateProjectSearch.duplicateProject && (
+            <DuplicateWarning
+              sx={{ padding: 0 }}
+              name={duplicateProjectSearch.duplicateProject.title}
+              identifier={duplicateProjectSearch.duplicateProject.id}
+              warning={t('project.duplicate_title_warning')}
+            />
+          )}
           <Field name={ProjectFieldName.AcademicSummaryNo}>
             {({ field }: FieldProps<string>) => (
               <TextField
