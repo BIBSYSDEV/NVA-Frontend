@@ -4,15 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { StyledInfoBanner } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 interface DuplicateWarningProps extends BoxProps {
   warning: string;
-  identifier?: string;
+  linkTo?: string;
   name?: string;
 }
 
-export const DuplicateWarning = ({ name, identifier, warning, sx }: DuplicateWarningProps) => {
+export const DuplicateWarning = ({ name, linkTo, warning, sx }: DuplicateWarningProps) => {
   const { t } = useTranslation();
   return (
     <Box
@@ -27,13 +26,10 @@ export const DuplicateWarning = ({ name, identifier, warning, sx }: DuplicateWar
         ...sx,
       }}>
       <StyledInfoBanner>{warning}</StyledInfoBanner>
-      {name && identifier && (
+      {name && linkTo && (
         <>
           <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
-          <Link
-            target="_blank"
-            data-testid={dataTestId.registrationLandingPage.duplicateRegistrationLink}
-            to={getRegistrationLandingPagePath(identifier)}>
+          <Link target="_blank" data-testid={dataTestId.registrationLandingPage.duplicateRegistrationLink} to={linkTo}>
             <Box sx={{ display: 'flex', gap: '0.5rem' }}>
               <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>{name}</Typography>
               <OpenInNewOutlinedIcon

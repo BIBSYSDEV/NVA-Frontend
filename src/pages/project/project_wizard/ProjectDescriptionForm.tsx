@@ -11,6 +11,7 @@ import { ProjectFieldName, SaveCristinProject, TypedLabel } from '../../../types
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { getProjectPath } from '../../../utils/urlPaths';
 import { DuplicateWarning } from '../../registration/DuplicateWarning';
 import { FormBox } from './styles';
 
@@ -60,7 +61,7 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
             <DuplicateWarning
               sx={{ padding: 0 }}
               name={duplicateProjectSearch.duplicateProject.title}
-              identifier={duplicateProjectSearch.duplicateProject.id}
+              linkTo={getProjectPath(duplicateProjectSearch.duplicateProject.id)}
               warning={t('project.duplicate_title_warning')}
             />
           )}

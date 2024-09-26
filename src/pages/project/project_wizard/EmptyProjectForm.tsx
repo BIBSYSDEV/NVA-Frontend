@@ -1,7 +1,7 @@
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import ErrorIcon from '@mui/icons-material/Error';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import { Box, Button, CircularProgress, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDuplicateProjectSearch } from '../../../api/hooks/useDuplicateProjectSearch';
@@ -23,7 +23,9 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
   const titleSearch = useDuplicateProjectSearch(debouncedTitle);
-  const disabled = !title;
+  const disabled = !debouncedTitle || titleSearch.isPending;
+
+  console.log('titleSearch', titleSearch);
 
   const createProject = () => {
     setNewProject({ ...newProject, title: title });
@@ -57,6 +59,12 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <StyledInfoBanner>{t('project.duplicate_project_warning')}</StyledInfoBanner>
             <ProjectListItem project={titleSearch.duplicateProject} />
+          </Box>
+        )}
+        {debouncedTitle && !titleSearch.isPending && titleSearch.duplicateProject === undefined && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
+            <Typography>{t('project.no_duplicate_title')}</Typography>
           </Box>
         )}
         <Button
