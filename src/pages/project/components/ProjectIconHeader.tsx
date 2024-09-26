@@ -5,16 +5,17 @@ import { ProjectStatus } from '../../../types/project.types';
 
 interface ProjectIconHeaderProps {
   projectStatus?: ProjectStatus;
+  fontColor?: string;
 }
 
-export const ProjectIconHeader = ({ projectStatus }: ProjectIconHeaderProps) => {
+export const ProjectIconHeader = ({ projectStatus, fontColor = '' }: ProjectIconHeaderProps) => {
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mb: '0.5rem' }}>
+    <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center', mb: '0.5rem' }}>
       <ProjectIcon />
-      <Typography>{t('project.project')}</Typography>
-      <Typography sx={{ fontWeight: 'bold' }}>
+      <Typography sx={{ color: fontColor }}>{t('project.project')}</Typography>
+      <Typography sx={{ fontWeight: 'bold', color: fontColor }}>
         {projectStatus ? t(`project.status.${projectStatus}`).toUpperCase() : t('common.new').toUpperCase()}
       </Typography>
     </Box>
