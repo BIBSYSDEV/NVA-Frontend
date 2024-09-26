@@ -19,7 +19,7 @@ import { RegistrationSearch } from '../../search/registration_search/Registratio
 export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
   | 'NonApplicableCategoriesWithApplicableChannel'
-  | 'AntologyWithoutChapter'
+  | 'AnthologyWithoutChapter'
   | 'BooksWithLessThan50Pages';
 
 type CorrectionListSearchConfig = {
@@ -47,8 +47,8 @@ export const correctionListConfig: CorrectionListSearchConfig = {
     },
     disabledFilters: [ResultParam.CategoryShould],
   },
-  AntologyWithoutChapter: {
-    i18nKey: 'tasks.nvi.correction_list_type.antology_without_chapter',
+  AnthologyWithoutChapter: {
+    i18nKey: 'tasks.nvi.correction_list_type.anthology_without_chapter',
     queryParams: {
       categoryShould: [BookType.Anthology],
       hasNoChildren: false,

@@ -2003,7 +2003,7 @@
       "approve_nvi_candidate_description": "<0>Kontroll av forskningsresultat for NVI-rapportering.</0><0>Klikk på knappen \"{{buttonText}}\" for å rapportere forskningsresultatet.</0>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
-        "antology_without_chapter": "Antologier uten kapittel",
+        "anthology_without_chapter": "Antologier uten kapittel",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
