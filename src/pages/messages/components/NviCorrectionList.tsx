@@ -65,7 +65,7 @@ export const correctionListConfig: CorrectionListSearchConfig = {
     disabledFilters: [],
   },
   AnthologyWithApplicableChapter: {
-    i18nKey: 'tasks.nvi.correction_list_type.antology_with_applicable_chapter',
+    i18nKey: 'tasks.nvi.correction_list_type.anthology_with_applicable_chapter',
     queryParams: {
       categoryShould: [BookType.Anthology],
       hasChildren: true,

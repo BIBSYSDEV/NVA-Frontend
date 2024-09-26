@@ -63,7 +63,7 @@ export const NviCorrectionListNavigationAccordion = () => {
           data-testid={dataTestId.tasksPage.correctionList.anthologyWithApplicableChapterButton}
           isSelected={selectedNviList === 'AnthologyWithApplicableChapter'}
           onClick={() => openNewCorrectionList('AnthologyWithApplicableChapter')}>
-          {t('tasks.nvi.correction_list_type.antology_with_applicable_chapter')}
+          {t('tasks.nvi.correction_list_type.anthology_with_applicable_chapter')}
         </SelectableButton>
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.booksWithLessThan50PagesButton}
