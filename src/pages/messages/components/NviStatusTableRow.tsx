@@ -1,6 +1,6 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IconButton, TableCell, TableRow } from '@mui/material';
+import { IconButton, Skeleton, styled, TableCell, TableRow } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NviInstitutionStatusResponse } from '../../../types/nvi.types';
