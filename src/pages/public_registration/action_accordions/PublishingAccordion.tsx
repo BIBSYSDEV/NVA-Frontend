@@ -78,8 +78,14 @@ export const PublishingAccordion = ({
   const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
 
+  const isDraftRegistration = registration.status === RegistrationStatus.Draft;
+  const isPublishedRegistration = registration.status === RegistrationStatus.Published;
+  const isDeletedRegistration = registration.status === RegistrationStatus.Deleted;
+  const isUnpublisehdRegistration = registration.status === RegistrationStatus.Unpublished;
+  const isUnpublishedOrDeletedRegistration = isDeletedRegistration || isUnpublisehdRegistration;
+
   const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch({
-    enabled: registration.status === RegistrationStatus.Draft && !!registration.entityDescription?.mainTitle,
+    enabled: isDraftRegistration && !!registration.entityDescription?.mainTitle,
     title: registration.entityDescription?.mainTitle,
     identifier: registration.identifier,
     publishedYear: registration.entityDescription?.publicationDate?.year,
@@ -179,8 +185,6 @@ export const PublishingAccordion = ({
     lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataAndFiles';
   const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
 
-  const isDraftRegistration = registration.status === RegistrationStatus.Draft;
-  const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const filesAwaitingApproval = registration.associatedArtifacts.filter(
     (artifact) => artifact.type === FileType.UnpublishedFile
   ).length;
@@ -205,10 +209,7 @@ export const PublishingAccordion = ({
 
   const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const isUnpublishedOrDeleted =
-    registration.status === RegistrationStatus.Deleted || registration.status === RegistrationStatus.Unpublished;
-  const isPublished = registration.status === RegistrationStatus.Published;
-  const showRegistrationWithSameNameWarningIcon = duplicateRegistration && !isPublished;
+  const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
   const handleRejectPublishFileRequest = async (message: string) => {
     if (lastPublishingRequest) {
@@ -228,18 +229,18 @@ export const PublishingAccordion = ({
       defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
-          {isUnpublishedOrDeleted
+          {isUnpublishedOrDeletedRegistration
             ? t(`registration.status.${registration.status}`)
             : t('registration.public_page.publication')}
           {lastPublishingRequest &&
-            registration.status !== RegistrationStatus.Unpublished &&
-            registration.status !== RegistrationStatus.Deleted &&
+            !isUnpublisehdRegistration &&
+            !isDeletedRegistration &&
             ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         </Typography>
-        {(!registrationIsValid || showRegistrationWithSameNameWarningIcon) && !isUnpublishedOrDeleted && (
+        {(!registrationIsValid || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (
           <Tooltip
             title={
-              showRegistrationWithSameNameWarningIcon
+              showRegistrationWithSameNameWarning
                 ? t('registration.public_page.potential_duplicate')
                 : t('registration.public_page.validation_errors')
             }>
@@ -250,7 +251,7 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {tabErrors && !isUnpublishedOrDeleted && (
+        {tabErrors && !isUnpublishedOrDeletedRegistration && (
           <RegistrationErrorActions
             tabErrors={tabErrors}
             registrationIdentifier={registration.identifier}
@@ -260,9 +261,7 @@ export const PublishingAccordion = ({
         )}
 
         {/* Show approval history */}
-        {(registration.status === RegistrationStatus.Published ||
-          registration.status === RegistrationStatus.Deleted ||
-          registration.status === RegistrationStatus.Unpublished) && (
+        {(isPublishedRegistration || isDeletedRegistration || isUnpublisehdRegistration) && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mb: '0.5rem' }}>
             <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
               <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
@@ -303,8 +302,8 @@ export const PublishingAccordion = ({
             </LoadingButton>
           </>
         )}
-        {registrationIsValid && duplicateRegistration && !isUnpublishedOrDeleted && !isPublished && (
-          <Box>
+        {registrationIsValid && showRegistrationWithSameNameWarning && (
+          <div>
             <Typography paragraph>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
             </Typography>
@@ -327,7 +326,7 @@ export const PublishingAccordion = ({
               components={[<Typography paragraph key="1" />]}
             />
             <Divider sx={{ bgcolor: 'grey.400', mb: '0.5rem' }} />
-          </Box>
+          </div>
         )}
 
         {/* Tell user what they can publish */}
