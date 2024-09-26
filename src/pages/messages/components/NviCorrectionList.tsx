@@ -19,8 +19,8 @@ import { RegistrationSearch } from '../../search/registration_search/Registratio
 export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
   | 'NonApplicableCategoriesWithApplicableChannel'
-  | 'AnthologyWithApplicableChapter'
   | 'AnthologyWithoutChapter'
+  | 'AnthologyWithApplicableChapter'
   | 'BooksWithLessThan50Pages';
 
 type CorrectionListSearchConfig = {
