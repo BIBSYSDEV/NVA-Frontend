@@ -92,12 +92,12 @@ export const NviCorrectionList = () => {
         <title>{t('tasks.correction_list')}</title>
       </Helmet>
 
-      <Typography variant="h1" gutterBottom sx={{ mx: { xs: '0.25rem', md: 0 } }}>
-        {listConfig ? t(listConfig.i18nKey) : t('tasks.nvi.correction_list_type.correction_list_duct')}
-      </Typography>
-
-      {listConfig ? (
+      {listConfig && (
         <>
+          <Typography variant="h1" gutterBottom sx={{ mx: { xs: '0.25rem', md: 0 } }}>
+            {t(listConfig.i18nKey)}
+          </Typography>
+
           <Box
             sx={{ px: { xs: '0.5rem', md: 0 }, display: 'flex', flexDirection: 'column', gap: '0.5rem', mb: '1rem' }}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
@@ -121,13 +121,6 @@ export const NviCorrectionList = () => {
 
           <RegistrationSearch registrationQuery={registrationQuery} />
         </>
-      ) : (
-        <iframe
-          style={{ border: 'none', height: '80vh' }}
-          title={t('tasks.nvi.correction_list_type.correction_list_duct')}
-          width="100%"
-          src="https://rapport-dv.uhad.no/t/DUCT/views/Ryddelister_2023/Rettelister2023?%3Aembed=y"
-        />
       )}
     </section>
   );

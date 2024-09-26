@@ -36,15 +36,11 @@ export const NviCorrectionListNavigationAccordion = () => {
       title={t('tasks.correction_list')}
       startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
       accordionPath={UrlPathTemplate.TasksNviCorrectionList}
+      defaultPath={`${UrlPathTemplate.TasksNviCorrectionList}?${nviCorrectionListQueryKey}=${
+        'ApplicableCategoriesWithNonApplicableChannel' satisfies CorrectionListId
+      }`}
       dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
       <NavigationList component="div">
-        <SelectableButton
-          isSelected={!selectedNviList}
-          onClick={() => history.push({ search: '' })}
-          sx={{ mb: '1rem' }}>
-          {t('tasks.nvi.correction_list_type.correction_list_duct')}
-        </SelectableButton>
-
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.applicableCategoriesWithNonApplicableChannelButton}
           isSelected={selectedNviList === 'ApplicableCategoriesWithNonApplicableChannel'}
