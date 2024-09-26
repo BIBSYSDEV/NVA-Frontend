@@ -41,8 +41,6 @@ export const AddProjectManagerForm = ({
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
-  console.log('');
-
   const addProjectManager = () => {
     const { newContributors, error } = addContributor(selectedPerson, contributors, 'ProjectManager', indexToReplace);
 
