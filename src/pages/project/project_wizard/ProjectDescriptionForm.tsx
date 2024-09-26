@@ -122,7 +122,9 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                   label={t('common.start_date')}
                   disabled={thisIsRekProject}
                   onChange={(date) => {
-                    !touched && setFieldTouched(field.name, true, false);
+                    if (!touched) {
+                      setFieldTouched(field.name, true, false);
+                    }
                     setFieldValue(field.name, date ?? '');
                   }}
                   value={field.value ? new Date(field.value) : null}
@@ -149,7 +151,9 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                   label={t('common.end_date')}
                   disabled={thisIsRekProject}
                   onChange={(date) => {
-                    !touched && setFieldTouched(field.name, true, false);
+                    if (!touched) {
+                      setFieldTouched(field.name, true, false);
+                    }
                     setFieldValue(field.name, date);
                   }}
                   value={field.value ? new Date(field.value) : null}

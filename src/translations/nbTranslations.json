@@ -1128,6 +1128,9 @@
     "add_affiliation": "Legg til tilknytning",
     "add_project_contributor": "Legg til prosjektdeltaker",
     "add_project_manager": "Legg til prosjektleder",
+    "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltaker",
+    "add_unidentified_project_manager": "Legg til uidentifisert prosjektleder",
+    "add_contributor": "Legg til prosjektdeltaker",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Bare institusjoner som prosjektet er gjennomført i samarbeid med, skal legges til som tilknytning til prosjektdeltaker.</0> <0>Legg til tilknytning til prosjektdeltaker ved å først søke opp institusjonen og eventuelt enhet.</0> <0>Tilhører prosjektdeltakeren flere forskjellige enheter under samme institusjon, må du legge til dette som ny tilknytning.</0>",
       "delete_affiliation": "Fjern tilknytning",
@@ -1135,6 +1138,7 @@
     },
     "close_view": "Lukk visning",
     "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
+    "contributor_is_unidentified": "Prosjektdeltaker er uidentifisert",
     "coordinating_institution": "Koordinerende institusjon",
     "create_new_project": "Opprett nytt prosjekt",
     "create_project": "Nytt prosjekt",
@@ -1177,6 +1181,7 @@
     "no_participants": "Ingen registrerte deltakere.",
     "no_related_projects": "Ingen relaterte prosjekt.",
     "no_results": "Ingen publiserte resultater.",
+    "no_affiliation": "Ingen tilknytning",
     "no_summary": "Ingen registrerte sammendrag.",
     "period": "Prosjektperiode",
     "person": "Person",
@@ -1190,6 +1195,7 @@
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
+    "project_manager_is_unidentified": "Prosjektleder er uidentifisert",
     "project_participant": "Prosjektdeltaker",
     "project_participants": "Prosjektdeltakere",
     "remove_project_manager": "Slett prosjektleder",
@@ -1207,7 +1213,9 @@
       "CONCLUDED": "Avsluttet",
       "NOTSTARTED": "Ikke startet"
     },
-    "summary": "Sammendrag"
+    "summary": "Sammendrag",
+    "verify_contributor": "Identifiser prosjektdeltaker",
+    "verify_project_manager": "Identifiser prosjektleder"
   },
   "registration": {
     "citation_points_to": "Siteringen viser til",
@@ -1562,13 +1570,13 @@
       "MovingPicture": "Film",
       "MusicPerformance": "Musikk",
       "NonFictionChapter": "Faglig kapittel",
-      "NonFictionMonograph": "Faglig monografi",
+      "NonFictionMonograph": "Fagbok",
       "OtherPresentation": "Annen presentasjon",
       "OtherStudentWork": "Annen studentoppgave",
       "PerformingArts": "Scenekunst",
       "PopularScienceArticle": "Populærvitenskapelig artikkel",
       "PopularScienceChapter": "Populærvitenskapelig kapittel",
-      "PopularScienceMonograph": "Populærvitenskapelig monografi",
+      "PopularScienceMonograph": "Populærvitenskapelig bok",
       "ProfessionalArticle": "Fagartikkel",
       "Report": "Rapport",
       "ReportBasic": "Annen rapport",
@@ -1998,7 +2006,6 @@
         "antology_without_chapter": "Antologier uten kapittel",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
-        "correction_list_duct": "Retteliste (DUCT)",
         "antology_with_applicable_chapter": "Antologier med tellende kapittel",
         "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
       },

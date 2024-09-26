@@ -10,12 +10,12 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
-import { StyledFilterTitle } from './AdvancedSearchPage';
 
 export const PublisherFilter = () => {
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ export const PublisherFilter = () => {
 
   return (
     <section>
-      <StyledFilterTitle>{t('common.publisher')}</StyledFilterTitle>
+      <StyledFilterHeading>{t('common.publisher')}</StyledFilterHeading>
       <Autocomplete
         size="small"
         sx={{ minWidth: '15rem' }}

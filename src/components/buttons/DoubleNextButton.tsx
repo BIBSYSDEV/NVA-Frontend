@@ -4,9 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../utils/dataTestIds';
 import { arrowButtonStyle } from '../styled/ButtonStyles';
 
-interface DoubleNextButtonProps extends ButtonBaseProps {}
-
-export const DoubleNextButton = ({ onClick, sx }: DoubleNextButtonProps) => {
+export const DoubleNextButton = ({ onClick, sx }: ButtonBaseProps) => {
   const { t } = useTranslation();
 
   return (

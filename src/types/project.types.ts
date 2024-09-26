@@ -41,7 +41,7 @@ export type ProjectStatus = 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
 
 export interface ProjectContributorIdentity {
   type: 'Person';
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
 }

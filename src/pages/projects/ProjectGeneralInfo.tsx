@@ -6,7 +6,7 @@ import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { getResearchProfilePath } from '../../utils/urlPaths';
-import { getValueByKey } from '../../utils/user-helpers';
+import { getFullName, getValueByKey } from '../../utils/user-helpers';
 import {
   fundingSourceIsNfr,
   getNfrProjectUrl,
@@ -35,9 +35,13 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography variant="overline">{t('project.project_manager')}</Typography>
         <Typography>
           {projectManager ? (
-            <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
-              {projectManager.identity.firstName} {projectManager.identity.lastName}
-            </MuiLink>
+            projectManager.identity.id ? (
+              <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+                {projectManager.identity.firstName} {projectManager.identity.lastName}
+              </MuiLink>
+            ) : (
+              getFullName(projectManager.identity.firstName, projectManager.identity.lastName)
+            )
           ) : (
             '-'
           )}
