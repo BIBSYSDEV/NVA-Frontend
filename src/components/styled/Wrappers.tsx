@@ -116,3 +116,8 @@ export const StyledInfoBanner = styled(Box)(({ theme }) => ({
   borderRadius: '0.25rem',
   color: 'white',
 }));
+
+export const StyledFilterHeading = styled(Typography)({
+  marginBottom: '0.2rem',
+  fontWeight: 'bold',
+});

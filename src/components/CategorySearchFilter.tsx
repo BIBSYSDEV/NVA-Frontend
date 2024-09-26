@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam, TicketSearchParam } from '../api/searchApi';
-import { StyledFilterTitle } from '../pages/search/advanced_search/AdvancedSearchPage';
 import { CategoryFilterDialog } from '../pages/search/advanced_search/CategoryFilterDialog';
 import { PublicationInstanceType } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { CategoryChip } from './CategorySelector';
+import { StyledFilterHeading } from './styled/Wrappers';
 
 interface CategorySearchFilterProps {
   searchParam: ResultParam.CategoryShould | TicketSearchParam.PublicationType;
@@ -26,7 +26,7 @@ export const CategorySearchFilter = ({ searchParam, disabled, hideHeading }: Cat
 
   return (
     <section>
-      {!hideHeading && <StyledFilterTitle>{t('common.category')}</StyledFilterTitle>}
+      {!hideHeading && <StyledFilterHeading>{t('common.category')}</StyledFilterHeading>}
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
         {selectedCategories.slice(0, 3).map((category) => (
           <CategoryChip
