@@ -3,13 +3,13 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { CristinProject, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
-import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   addContributor,
@@ -40,8 +40,6 @@ export const AddProjectManagerForm = ({
   const hasAffiliation = contributorToReplace && contributorHasNonEmptyAffiliation(contributorToReplace.roles);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
-
-  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
 
   const addProjectManager = () => {
     const { newContributors, error } = addContributor(selectedPerson, contributors, 'ProjectManager', indexToReplace);
@@ -95,7 +93,7 @@ export const AddProjectManagerForm = ({
         selectAffiliations={hasAffiliation ? SelectAffiliations.NO_SELECT : SelectAffiliations.SINGLE}
       />
       <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
-        {betaEnabled && (
+        <BetaFunctionality>
           <Box sx={{ mr: 'auto' }}>
             <Button
               data-testid={dataTestId.projectForm.addUnidentifiedProjectManagerButton}
@@ -105,7 +103,7 @@ export const AddProjectManagerForm = ({
               {t('project.add_unidentified_project_manager')}
             </Button>
           </Box>
-        )}
+        </BetaFunctionality>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
         <Button
           data-testid={dataTestId.projectForm.addProjectManagerButton}
