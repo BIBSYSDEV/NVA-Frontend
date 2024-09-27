@@ -13,7 +13,7 @@ export const NviCorrectionListNavigationAccordion = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const selectedNviList = searchParams.get(nviCorrectionListQueryKey);
+  const selectedNviList = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
 
   const openNewCorrectionList = (newCorrectionListId: CorrectionListId) => {
     if (selectedNviList !== newCorrectionListId) {
@@ -54,16 +54,16 @@ export const NviCorrectionListNavigationAccordion = () => {
           {t('tasks.nvi.correction_list_type.non_applicable_category_in_applicable_channel')}
         </SelectableButton>
         <SelectableButton
-          data-testid={dataTestId.tasksPage.correctionList.antologyWithoutChapterButton}
-          isSelected={selectedNviList === 'AntologyWithoutChapter'}
-          onClick={() => openNewCorrectionList('AntologyWithoutChapter')}>
-          {t('tasks.nvi.correction_list_type.antology_without_chapter')}
+          data-testid={dataTestId.tasksPage.correctionList.anthologyWithoutChapterButton}
+          isSelected={selectedNviList === 'AnthologyWithoutChapter'}
+          onClick={() => openNewCorrectionList('AnthologyWithoutChapter')}>
+          {t('tasks.nvi.correction_list_type.anthology_without_chapter')}
         </SelectableButton>
         <SelectableButton
-          data-testid={dataTestId.tasksPage.correctionList.antologyWithApplicableChapterButton}
-          isSelected={selectedNviList === 'AntologyWithApplicableChapter'}
-          onClick={() => openNewCorrectionList('AntologyWithApplicableChapter')}>
-          {t('tasks.nvi.correction_list_type.antology_with_applicable_chapter')}
+          data-testid={dataTestId.tasksPage.correctionList.anthologyWithApplicableChapterButton}
+          isSelected={selectedNviList === 'AnthologyWithApplicableChapter'}
+          onClick={() => openNewCorrectionList('AnthologyWithApplicableChapter')}>
+          {t('tasks.nvi.correction_list_type.anthology_with_applicable_chapter')}
         </SelectableButton>
         <SelectableButton
           data-testid={dataTestId.tasksPage.correctionList.booksWithLessThan50PagesButton}
