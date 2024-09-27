@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ProjectContributor, ProjectContributorType } from '../../types/project.types';
 import { getResearchProfilePath } from '../../utils/urlPaths';
+import { getFullName } from '../../utils/user-helpers';
 import {
   getProjectManagers,
   getProjectParticipants,
@@ -64,28 +65,34 @@ const ContributorList = ({ contributors, projectRole }: ContributorListProps) =>
       gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)', md: 'repeat(6, 1fr)' },
       gap: '0.75rem',
     }}>
-    {contributors.map((contributor, index) => (
-      <div key={index}>
-        <Typography variant="subtitle1" component="p">
-          <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-            {contributor.identity.firstName} {contributor.identity.lastName}
-          </MuiLink>
-        </Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          {contributor.roles.map((contributorRole) => {
-            if (contributorRole.type === projectRole && contributorRole.affiliation) {
-              return (
-                <AffiliationHierarchy
-                  key={contributorRole.affiliation!.id}
-                  unitUri={contributorRole.affiliation!.id}
-                  condensed
-                />
-              );
-            }
-            return null;
-          })}
-        </Box>
-      </div>
-    ))}
+    {contributors.map((contributor, index) => {
+      return (
+        <div key={index}>
+          <Typography variant="subtitle1" component="p">
+            {contributor.identity.id ? (
+              <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                {contributor.identity.firstName} {contributor.identity.lastName}
+              </MuiLink>
+            ) : (
+              getFullName(contributor.identity.firstName, contributor.identity.lastName)
+            )}
+          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            {contributor.roles.map((contributorRole) => {
+              if (contributorRole.type === projectRole && contributorRole.affiliation) {
+                return (
+                  <AffiliationHierarchy
+                    key={contributorRole.affiliation!.id}
+                    unitUri={contributorRole.affiliation!.id}
+                    condensed
+                  />
+                );
+              }
+              return null;
+            })}
+          </Box>
+        </div>
+      );
+    })}
   </Box>
 );

@@ -19,7 +19,8 @@ import { RegistrationSearch } from '../../search/registration_search/Registratio
 export type CorrectionListId =
   | 'ApplicableCategoriesWithNonApplicableChannel'
   | 'NonApplicableCategoriesWithApplicableChannel'
-  | 'AntologyWithoutChapter'
+  | 'AnthologyWithoutChapter'
+  | 'AnthologyWithApplicableChapter'
   | 'BooksWithLessThan50Pages';
 
 type CorrectionListSearchConfig = {
@@ -47,8 +48,8 @@ export const correctionListConfig: CorrectionListSearchConfig = {
     },
     disabledFilters: [ResultParam.CategoryShould],
   },
-  AntologyWithoutChapter: {
-    i18nKey: 'tasks.nvi.correction_list_type.antology_without_chapter',
+  AnthologyWithoutChapter: {
+    i18nKey: 'tasks.nvi.correction_list_type.anthology_without_chapter',
     queryParams: {
       categoryShould: [BookType.Anthology],
       hasNoChildren: false,
@@ -60,6 +61,15 @@ export const correctionListConfig: CorrectionListSearchConfig = {
     queryParams: {
       categoryShould: Object.values(BookType),
       publicationPages: '0,50',
+    },
+    disabledFilters: [],
+  },
+  AnthologyWithApplicableChapter: {
+    i18nKey: 'tasks.nvi.correction_list_type.anthology_with_applicable_chapter',
+    queryParams: {
+      categoryShould: [BookType.Anthology],
+      hasChildren: true,
+      scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
     },
     disabledFilters: [],
   },
@@ -92,18 +102,18 @@ export const NviCorrectionList = () => {
         <title>{t('tasks.correction_list')}</title>
       </Helmet>
 
-      <Typography variant="h1" gutterBottom sx={{ mx: { xs: '0.25rem', md: 0 } }}>
-        {listConfig ? t(listConfig.i18nKey) : t('tasks.nvi.correction_list_type.correction_list_duct')}
-      </Typography>
-
-      {listConfig ? (
+      {listConfig && (
         <>
+          <Typography variant="h1" gutterBottom sx={{ mx: { xs: '0.25rem', md: 0 } }}>
+            {t(listConfig.i18nKey)}
+          </Typography>
+
           <Box
             sx={{ px: { xs: '0.5rem', md: 0 }, display: 'flex', flexDirection: 'column', gap: '0.5rem', mb: '1rem' }}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
               <OrganizationFilters
-                topLevelOrganizationId={registrationParams.topLevelOrganization}
-                unitId={registrationParams.unit}
+                topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
+                unitId={registrationParams.unit ?? null}
               />
               <Divider flexItem orientation="vertical" sx={{ bgcolor: 'primary.main' }} />
               <CategorySearchFilter
@@ -121,13 +131,6 @@ export const NviCorrectionList = () => {
 
           <RegistrationSearch registrationQuery={registrationQuery} />
         </>
-      ) : (
-        <iframe
-          style={{ border: 'none', height: '80vh' }}
-          title={t('tasks.nvi.correction_list_type.correction_list_duct')}
-          width="100%"
-          src="https://rapport-dv.uhad.no/t/DUCT/views/Ryddelister_2023/Rettelister2023?%3Aembed=y"
-        />
       )}
     </section>
   );

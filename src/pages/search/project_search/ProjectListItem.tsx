@@ -5,6 +5,7 @@ import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getEditProjectPath, getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { getFullName } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { EditIconButton } from '../../messages/components/EditIconButton';
 import { ProjectIconHeader } from '../../project/components/ProjectIconHeader';
@@ -39,14 +40,20 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
-          {projectManagers.map((projectManager, index) => (
-            <span key={projectManager.identity.id}>
-              <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+          {projectManagers.map((projectManager, index) =>
+            projectManager.identity.id ? (
+              <span key={projectManager.identity.id}>
+                <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+                  {getFullName(projectManager.identity.firstName, projectManager.identity.lastName)}
+                </MuiLink>
+                {index < projectManagers.length - 1 && <span>;</span>}
+              </span>
+            ) : (
+              <span key={`${projectManager.identity.firstName}_${projectManager.identity.lastName}_${index}`}>
                 {`${projectManager.identity.firstName} ${projectManager.identity.lastName}`}
-              </MuiLink>
-              {index < projectManagers.length - 1 && <span>;</span>}
-            </span>
-          ))}
+              </span>
+            )
+          )}
           {projectParticipantsLength > 0 && (
             <Typography>({t('search.additional_participants', { count: projectParticipantsLength })})</Typography>
           )}

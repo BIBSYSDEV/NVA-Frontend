@@ -16,6 +16,7 @@ import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch'
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { SearchForm } from '../../../components/SearchForm';
+import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
@@ -35,11 +36,6 @@ import { VocabularSearchField } from './VocabularSearchField';
 const StyledDivider = styled(Divider)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
 }));
-
-export const StyledFilterTitle = styled(Typography)({
-  marginBottom: '0.2rem',
-  fontWeight: 'bold',
-});
 
 const gridRowDivider = (
   <Grid item xs={12}>
@@ -75,7 +71,7 @@ export const AdvancedSearchPage = () => {
       <Grid container rowGap={2} sx={{ px: { xs: '0.5rem', md: 0 } }}>
         <Typography variant="h2">{t('search.advanced_search.advanced_search')}</Typography>
         <Grid item xs={12}>
-          <StyledFilterTitle>{t('search.advanced_search.title_search')}</StyledFilterTitle>
+          <StyledFilterHeading>{t('search.advanced_search.title_search')}</StyledFilterHeading>
           <Box sx={{ display: 'flex', gap: '0.5rem' }}>
             <SearchForm
               sx={{ flex: '1 0 15rem' }}
@@ -89,7 +85,7 @@ export const AdvancedSearchPage = () => {
 
         <Grid item container direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
           <Grid item sx={{ width: 'fit-content' }}>
-            <StyledFilterTitle>{t('search.advanced_search.publishing_period')}</StyledFilterTitle>
+            <StyledFilterHeading>{t('search.advanced_search.publishing_period')}</StyledFilterHeading>
             <PublicationYearIntervalFilter />
           </Grid>
 
@@ -102,14 +98,14 @@ export const AdvancedSearchPage = () => {
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <StyledFilterTitle id="language-select-label">{t('common.language')}</StyledFilterTitle>
+            <StyledFilterHeading id="language-select-label">{t('common.language')}</StyledFilterHeading>
             <LanguageFilter />
           </Grid>
 
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <StyledFilterTitle>{t('common.nvi')}</StyledFilterTitle>
+            <StyledFilterHeading>{t('common.nvi')}</StyledFilterHeading>
             <FormControlLabel
               data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
               control={<Checkbox name="scientificIndexStatus" />}
@@ -122,9 +118,9 @@ export const AdvancedSearchPage = () => {
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <StyledFilterTitle id="file-status-select-label">
+            <StyledFilterHeading id="file-status-select-label">
               {t('registration.files_and_license.files')}
-            </StyledFilterTitle>
+            </StyledFilterHeading>
             <FileStatusSelect />
           </Grid>
         </Grid>
@@ -133,7 +129,7 @@ export const AdvancedSearchPage = () => {
 
         <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
           <Grid item>
-            <StyledFilterTitle>{t('registration.contributors.contributor')}</StyledFilterTitle>
+            <StyledFilterHeading>{t('registration.contributors.contributor')}</StyledFilterHeading>
             <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
           </Grid>
 
@@ -141,8 +137,8 @@ export const AdvancedSearchPage = () => {
 
           <Grid item>
             <OrganizationFilters
-              topLevelOrganizationId={registrationParams.topLevelOrganization}
-              unitId={registrationParams.unit}
+              topLevelOrganizationId={registrationParams.topLevelOrganization ?? null}
+              unitId={registrationParams.unit ?? null}
             />
           </Grid>
         </Grid>
@@ -173,12 +169,12 @@ export const AdvancedSearchPage = () => {
 
         <Grid container item direction={isLargeScreen ? 'row' : 'column'} xs={12} gap={2}>
           <Grid item>
-            <StyledFilterTitle>{t('common.financier')}</StyledFilterTitle>
+            <StyledFilterHeading>{t('common.financier')}</StyledFilterHeading>
             <FundingSourceFilter />
           </Grid>
 
           <Grid item>
-            <StyledFilterTitle>{t('project.grant_id')}</StyledFilterTitle>
+            <StyledFilterHeading>{t('project.grant_id')}</StyledFilterHeading>
             <SearchForm
               paramName={ResultParam.FundingIdentifier}
               placeholder={t('search.search_for_funding_identifier')}
@@ -188,7 +184,7 @@ export const AdvancedSearchPage = () => {
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <StyledFilterTitle>{t('registration.resource_type.course_code')}</StyledFilterTitle>
+            <StyledFilterHeading>{t('registration.resource_type.course_code')}</StyledFilterHeading>
             <SearchForm
               dataTestId={dataTestId.startPage.advancedSearch.courseField}
               paramName={ResultParam.Course}
@@ -199,7 +195,7 @@ export const AdvancedSearchPage = () => {
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
 
           <Grid item>
-            <StyledFilterTitle>{t('editor.vocabulary')}</StyledFilterTitle>
+            <StyledFilterHeading>{t('editor.vocabulary')}</StyledFilterHeading>
             <VocabularSearchField />
           </Grid>
         </Grid>

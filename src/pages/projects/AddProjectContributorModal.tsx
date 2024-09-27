@@ -8,13 +8,17 @@ interface AddProjectContributorModalProps {
   toggleModal: () => void;
   addProjectManager?: boolean;
   suggestedProjectManager?: string;
+  initialSearchTerm?: string;
+  indexToReplace?: number;
 }
 
 export const AddProjectContributorModal = ({
   open,
   toggleModal,
-  suggestedProjectManager,
+  suggestedProjectManager = '',
   addProjectManager = false,
+  initialSearchTerm = '',
+  indexToReplace = -1,
 }: AddProjectContributorModalProps) => {
   const { t } = useTranslation();
 
@@ -27,9 +31,18 @@ export const AddProjectContributorModal = ({
       maxWidth="md"
       dataTestId="contributor-modal">
       {addProjectManager ? (
-        <AddProjectManagerForm toggleModal={toggleModal} suggestedProjectManager={suggestedProjectManager} />
+        <AddProjectManagerForm
+          toggleModal={toggleModal}
+          suggestedProjectManager={suggestedProjectManager}
+          initialSearchTerm={initialSearchTerm}
+          indexToReplace={indexToReplace}
+        />
       ) : (
-        <AddProjectContributorForm toggleModal={toggleModal} />
+        <AddProjectContributorForm
+          toggleModal={toggleModal}
+          initialSearchTerm={initialSearchTerm}
+          indexToReplace={indexToReplace}
+        />
       )}
     </Modal>
   );
