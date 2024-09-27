@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 export enum ScientificValueLevels {
   LevelZero = 'Unassigned,LevelZero',
