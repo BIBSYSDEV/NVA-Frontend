@@ -23,7 +23,7 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
-  const titleSearch = useDuplicateProjectSearch(debouncedTitle);
+  const titleSearch = useDuplicateProjectSearch({ title: debouncedTitle });
   const disabled = !debouncedTitle || titleSearch.isPending;
 
   const createProject = () => {

@@ -2,7 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { ProjectsSearchParams, searchForProjects } from '../cristinApi';
 
-export const useDuplicateProjectSearch = (title: string | undefined) => {
+interface UseDuplicateProjectSearchProps {
+  title?: string;
+  id?: string;
+}
+
+export const useDuplicateProjectSearch = ({ title, id }: UseDuplicateProjectSearchProps) => {
   const { t } = useTranslation();
 
   const projectQueryParams: ProjectsSearchParams = {
@@ -20,13 +25,18 @@ export const useDuplicateProjectSearch = (title: string | undefined) => {
 
   const projectsWithSimilarName = projectQuery.data?.hits ?? [];
 
-  const duplicateProject = projectsWithSimilarName.find((project) => {
-    if (!title) {
-      return false;
-    }
+  const duplicateProject = !title
+    ? undefined
+    : projectsWithSimilarName.find((project) => {
+        const isSameProject = project.id === id;
+        const hasSameName = project.title.toLowerCase() === title.toLowerCase();
 
-    return project.title?.toLowerCase() === title.toLowerCase();
-  });
+        if (!hasSameName || isSameProject) {
+          return false;
+        }
+
+        return true;
+      });
 
   return {
     isPending: enabled && projectQuery.isPending,

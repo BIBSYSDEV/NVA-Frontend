@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDuplicateProjectSearch } from '../../../api/hooks/useDuplicateProjectSearch';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { cristinKeywords } from '../../../resources/cristinKeywords';
-import { ProjectFieldName, SaveCristinProject, TypedLabel } from '../../../types/project.types';
+import { CristinProject, ProjectFieldName, TypedLabel } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -21,10 +21,10 @@ interface ProjectDescriptionFormProps {
 
 export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<CristinProject>();
   const [title, setTitle] = useState(values.title);
   const debouncedTitle = useDebounce(title);
-  const duplicateProjectSearch = useDuplicateProjectSearch(debouncedTitle);
+  const duplicateProjectSearch = useDuplicateProjectSearch({ title: debouncedTitle, id: values.id });
 
   return (
     <ErrorBoundary>
