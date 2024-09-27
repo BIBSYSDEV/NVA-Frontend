@@ -22,7 +22,6 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: Nvi
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(level === 0);
   const orgAggregations = aggregations?.[organization.id];
-  aggregations = undefined;
 
   return (
     <>
