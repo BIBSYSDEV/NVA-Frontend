@@ -10,6 +10,7 @@ import {
 import { ScientificIndexStatuses } from '../../types/nvi.types';
 import { PublicationInstanceType, RegistrationStatus } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
+import { getObjectEntriesWithValue } from '../general-helpers';
 import { SearchParam } from '../searchHelpers';
 
 const defaultRowsPerPage = ROWS_PER_PAGE_OPTIONS[0];
@@ -23,7 +24,7 @@ export const useRegistrationsQueryParams = () => {
   const status = searchParams.get(CustomerResultParam.Status);
   const categoryShould = searchParams.get(ResultParam.CategoryShould);
 
-  return {
+  const allParams = {
     abstract: searchParams.get(ResultParam.Abstract),
     category: searchParams.get(ResultParam.Category) as PublicationInstanceType | null,
     categoryShould: categoryShould ? (categoryShould.split(',') as PublicationInstanceType[]) : null,
@@ -61,4 +62,7 @@ export const useRegistrationsQueryParams = () => {
     unit: searchParams.get(ResultParam.Unit),
     vocabulary: searchParams.get(ResultParam.Vocabulary),
   } satisfies SearchParamType;
+
+  const paramsWithValues: SearchParamType = getObjectEntriesWithValue(allParams);
+  return paramsWithValues;
 };

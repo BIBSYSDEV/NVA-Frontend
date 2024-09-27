@@ -8,8 +8,8 @@ import { CristinProject, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
+  contributorsAreEqual,
   getNonProjectManagerContributors,
-  hasUnidentifiedContributor,
   removeProjectParticipant,
 } from '../../project/helpers/projectContributorHelpers';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
@@ -41,7 +41,6 @@ export const ProjectParticipants = () => {
               onClick={toggleOpenAddProjectParticipantView}
               variant="contained"
               startIcon={<AddIcon />}
-              disabled={hasUnidentifiedContributor(contributorsWithNonProjectManagerRole)}
               data-testid={dataTestId.projectForm.addParticipantButton}>
               {t('project.add_project_contributor')}
             </Button>
@@ -57,13 +56,15 @@ export const ProjectParticipants = () => {
                 }}
                 alternativePaginationText={t('common.number_of_rows_per_page')}>
                 <ProjectContributorTable>
-                  {paginatedContributors.map((contributor) => {
-                    const contributorIndex = values.contributors.findIndex(
-                      (c) => c.identity.id === contributor.identity.id
-                    );
+                  {paginatedContributors.map((contributor, index) => {
+                    const contributorIndex = values.contributors.findIndex((c) => contributorsAreEqual(contributor, c));
                     return (
                       <ContributorRow
-                        key={contributor.identity.id}
+                        key={
+                          contributor.identity.id
+                            ? contributor.identity.id
+                            : `${contributor.identity.firstName}_${contributor.identity.lastName}_${index}`
+                        }
                         contributorIndex={contributorIndex}
                         baseFieldName={`${name}[${contributorIndex}]`}
                         contributor={contributor}

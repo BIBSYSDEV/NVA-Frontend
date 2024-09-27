@@ -171,7 +171,7 @@
     "click_to_show_all": "Click to show all",
     "close": "Close",
     "close_forever": "Close and do not show again",
-    "consists_of": "",
+    "consists_of": "Consists of",
     "contributor": "Contributor",
     "contributors": {
       "add_duplicate_affiliation": "Affiliation has already been added"
@@ -252,10 +252,10 @@
     "reject_doi": "Reject DOI",
     "reload_page_info": "A new version of NVA is available and the page needs to be reloaded.",
     "remove": "Remove",
-    "republish": "",
+    "republish": "Republish",
     "required_description": "Fields with an asterisk are mandatory",
     "result": "Result",
-    "result_portfolio": "",
+    "result_portfolio": "Result portfolio",
     "result_registrations": "Result registrations",
     "role": "Role",
     "save": "Save",
@@ -1126,8 +1126,11 @@
   },
   "project": {
     "add_affiliation": "Add affiliation",
+    "add_contributor": "",
     "add_project_contributor": "Add project participant",
     "add_project_manager": "Add project leader",
+    "add_unidentified_contributor": "",
+    "add_unidentified_project_manager": "",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Only institutions that the project has been carried out in collaboration with should be added as affiliation to the project participant.</0> <0>Add affiliation to the project participant by first searching for the institution and any units.</0> <0>If the project participant belongs to multiple different units under the same institution, you must add this as a new affiliation.</0>",
       "delete_affiliation": "Remove affiliation",
@@ -1135,6 +1138,7 @@
     },
     "close_view": "Close view",
     "close_view_description": "Unsaved data you have entered will be lost if you close this view. Do you still want to close the view?",
+    "contributor_is_unidentified": "",
     "coordinating_institution": "Coordinating institution",
     "create_new_project": "Create new project",
     "create_project": "New project",
@@ -1174,6 +1178,7 @@
       "nfr_project": "NFR project",
       "search_for_project_name_or_placeholder": "Search for project name or project leader"
     },
+    "no_affiliation": "",
     "no_participants": "No registered participants.",
     "no_related_projects": "No related projects.",
     "no_results": "No published results.",
@@ -1190,6 +1195,7 @@
     "project_info": "Project info",
     "project_manager": "Project manager",
     "project_manager_from_nfr": "Project manager from NFR: {{name}}",
+    "project_manager_is_unidentified": "",
     "project_participant": "Project participant",
     "project_participants": "Project participants",
     "remove_project_manager": "Delete project leader",
@@ -1207,7 +1213,9 @@
       "CONCLUDED": "Finished",
       "NOTSTARTED": "Not started"
     },
-    "summary": "Summary"
+    "summary": "Summary",
+    "verify_contributor": "",
+    "verify_project_manager": ""
   },
   "registration": {
     "citation_points_to": "The citation refers to",
@@ -1471,7 +1479,7 @@
         "assign_curator": "Assign curator",
         "assign_doi": "Assign DOI",
         "assign_doi_about": "In order for others to be able to use the DOI, you must assign it. Metadata must be published.",
-        "confirm_republish_description": "",
+        "confirm_republish_description": "Republish the result if it is to be available in NVA. This will cause the result to appear in search results again.",
         "describe_doi_rejection_reason": "You must justify the rejection of the request for a DOI on this research result.",
         "draft_doi_description": "<0>A reserved DOI allows you (and those you share the DOI with) to cite the research result in other work before it is published.</0><1><0>Read more about DOI<0></0></0></1><0>If you want a DOI for this result, click on \"{{buttonText}}\".</0>",
         "duplicate_title_description_details": "<0>Duplicates should not be created in NVA. Check if the result that has already been published is the same as the result you have registered.</0><0>If the result that is published has errors or omissions, ask the registrar or contributor associated with the result to change it. Do not register and publish a new result with the change as both results will be available in NVA.</0>",
@@ -1481,7 +1489,7 @@
         "has_rejected_files_publishing_request": "<0>Description (metadata) is published and publicly available.</0><0>Curator has rejected the file, and it has been removed from the public view of the research result</0>",
         "has_reserved_doi": "<0>You can share the reserved DOI with those who will cite the result. Lookup via DOI is not possible until the DOI is assigned by the curator.</0><0>The DOI request is sent to the curator when the result is published. You publish the registration in the publishing menu.</0>",
         "metadata_published_waiting_for_files": "Metadata is published and visible to other users, but a curator must approve the files that have been uploaded before they become visible.",
-        "no_access_to_republish": "",
+        "no_access_to_republish": "<0>Should the result not have been unpublished</0><0>Contact the editor to have the result republished.</0>",
         "no_published_files_on_registration": "No published files on the result",
         "no_published_files_on_registration_description": "<0>The result has no published files.</0><0>Check with the registrar if it is correct that the result should not have published files in NVA.</0><0>Do you want to assign a DOI to a result without a file?</0>",
         "publish_registration": "Publish registration",
@@ -1494,7 +1502,7 @@
         "reject_publishing_request_description_one": "<0>If you choose \"$t(registration.public_page.reject_publish_request)\", the file will not be published and therefore will not be visible to others. The file will be moved to unpublished.</0><0>If you wish to delete the file, do so in the editing of the research result.</0>",
         "reject_publishing_request_description_other": "<0>If you choose \"$t(registration.public_page.reject_publish_request)\", the files will not be published and therefore will not be visible to others. The files will be moved to unpublished.</0><0>If you wish to delete the files, do so in the editing of the research result.</0>",
         "reload": "Reload",
-        "republish_description": "",
+        "republish_description": "Republish the result if it is to be available in NVA.",
         "request_doi_description": "<0>A DOI (Digital Object Identifier) increases the visibility of the research result and can lead to more citations.</0><1><0>Read more about DOI<0></0></0></1><0>If you want a DOI for this result, click on \"{{buttonText}}\".</0>",
         "reserve_doi_confirmation": "<0>Only published research results can have a DOI.</0><0>If you need a DOI to correctly cite research results in other research results that are in progress, before it is published, you can reserve a DOI.</0><0>Only you can see the reserved DOI, and it does not lead anywhere until you publish the research result. After publication, your curator is informed that you want a DOI, and must then assign it (or reject it).</0><0>If you are ready to publish, then publish, and select \"$t(registration.public_page.request_doi)\", instead of reserving a DOI.</0><1>Do you still want to reserve a DOI?</1>",
         "reserved": "Reserved",
@@ -1995,10 +2003,10 @@
       "approve_nvi_candidate_description": "<0>As curator you can approve or reject a research result for reporting to the NVI</0> <0> If the research result is to be reported, select \"{{buttonText}}\".</0>",
       "completed_count": "Finished checking ({{completed}} of {{total}})",
       "correction_list_type": {
-        "antology_without_chapter": "Anthologies without a chapter",
+        "anthology_with_applicable_chapter": "",
+        "anthology_without_chapter": "",
         "applicable_category_in_non_applicable_channel": "Counting categories in non-counting channels",
         "book_with_less_than_50_pages": "Books with fewer than 50 pages",
-        "correction_list_duct": "Correction list (DUCT)",
         "non_applicable_category_in_applicable_channel": "Non-counting categories in counting channels"
       },
       "delete_note": "Delete note",

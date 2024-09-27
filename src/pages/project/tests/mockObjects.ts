@@ -37,6 +37,26 @@ export const selectedPersonWithAffiliation: CristinPerson = {
   ],
 };
 
+export const selectedPersonWithManyAffiliations = {
+  ...selectedPersonWithAffiliation,
+  affiliations: [
+    {
+      active: true,
+      organization: 'abcorg',
+      role: {
+        labels: { no: 'no' },
+      },
+    },
+    {
+      active: true,
+      organization: 'deforg',
+      role: {
+        labels: { no: 'no' },
+      },
+    },
+  ],
+};
+
 export const selectedPersonWithoutAffiliation: CristinPerson = {
   ...selectedPersonWithAffiliation,
   affiliations: [],
@@ -52,6 +72,18 @@ export const selectedPersonIdentity: ProjectContributorIdentity = {
 export const existingPersonIdentity: ProjectContributorIdentity = {
   firstName: 'Ole',
   id: '456',
+  lastName: 'Jensen',
+  type: 'Person',
+};
+
+export const unidentifiedDaffyIdentity: ProjectContributorIdentity = {
+  firstName: 'Daffy',
+  lastName: 'Duck',
+  type: 'Person',
+};
+
+export const unidentifiedOleJensenIdentity: ProjectContributorIdentity = {
+  firstName: 'Ole',
   lastName: 'Jensen',
   type: 'Person',
 };
@@ -84,6 +116,10 @@ export const contributorsArrayWithProjectManager: ProjectContributor[] = [
   { identity: existingPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }] },
 ];
 
+export const contributorsArrayWithUnidentifiedProjectManagerWithSameAffiliation: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }] },
+];
+
 export const contributorsArrayWithSelectedPersonAsProjectManagerWithSameAffiliation: ProjectContributor[] = [
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }] },
 ];
@@ -104,8 +140,16 @@ export const contributorsArrayWithDifferentProjectManagerWithDifferentAffiliatio
   { identity: existingPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }] },
 ];
 
+export const contributorsArrayWithUnidentifiedProjectManagerWithDifferentAffiliation: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }] },
+];
+
 export const contributorsArrayWithDifferentProjectManagerWithUndefinedAffiliation: ProjectContributor[] = [
   { identity: existingPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
+];
+
+export const contributorsArrayWithUnidentifiedProjectManagerWithUndefinedAffiliation: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
 ];
 
 export const contributorsArrayWithSelectedPersonWithSameAffiliation: ProjectContributor[] = [
@@ -114,6 +158,78 @@ export const contributorsArrayWithSelectedPersonWithSameAffiliation: ProjectCont
 
 export const contributorsArrayWithSelectedPersonWithDifferentAffiliation: ProjectContributor[] = [
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
+];
+
+export const contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithOther: ProjectContributor[] =
+  [
+    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
+    { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
+  ];
+
+export const contributorsArrayWithTwoUnidentified: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
+  {
+    identity: unidentifiedOleJensenIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }],
+  },
+];
+
+export const contributorsArrayWithUnidentifiedPersonWithUnidentifiedAffiliationAndSelectedWithOther: ProjectContributor[] =
+  [
+    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
+    { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
+  ];
+
+export const contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithTwoOthers: ProjectContributor[] =
+  [
+    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
+    {
+      identity: selectedPersonIdentity,
+      roles: [
+        { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+        { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+      ],
+    },
+  ];
+
+export const contributorsArrayWithUnidentifiedAndSamePersonWithUndefined: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
+  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
+];
+
+export const contributorsArrayWithUnidentifiedAndOther: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
+  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
+];
+
+export const contributorsArrayWithOneUnidentifiedAndOneOther: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
+  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
+];
+
+export const contributorsArrayWithOneUnidentifiedWithSameAndOneOther: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }] },
+  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
+];
+
+export const contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOther: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
+  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
+];
+
+export const contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOtherWithUndefined: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
+  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
+];
+
+export const contributorsArrayWithOneUnidentifiedWithSameAndOneOtherWithUndefined: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }] },
+  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
+];
+
+export const contributorsArrayWithOneUnidentifiedAndOneOtherWithUndefined: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
+  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
 ];
 
 export const contributorsArrayWithSelectedPersonWithUndefinedAffiliation: ProjectContributor[] = [
@@ -219,6 +335,41 @@ export const contributorsArrayWithNoProjectManager: ProjectContributor[] = [
   {
     identity: selectedPersonIdentity,
     roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+  },
+];
+
+export const contributorsArrayWithUnidentifiedDaffy: ProjectContributor[] = [
+  {
+    identity: unidentifiedDaffyIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: undefined }],
+  },
+];
+
+export const contributorsArrayWithUnidentifiedDaffyPM: ProjectContributor[] = [
+  {
+    identity: unidentifiedDaffyIdentity,
+    roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }],
+  },
+];
+
+export const contributorsArrayWithUnidentifiedDaffyWithSameAffiliation: ProjectContributor[] = [
+  {
+    identity: unidentifiedDaffyIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
+  },
+];
+
+export const contributorsArrayWithUnidentifiedDaffyWithAffiliation: ProjectContributor[] = [
+  {
+    identity: unidentifiedDaffyIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }],
+  },
+];
+
+export const contributorsArrayWithExistingPersonIdentity: ProjectContributor[] = [
+  {
+    identity: existingPersonIdentity,
+    roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }],
   },
 ];
 
