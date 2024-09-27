@@ -48,7 +48,7 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
               <CircularProgress size={20} />
             ) : titleSearch.duplicateProject ? (
               <ErrorIcon color="warning" />
-            ) : debouncedTitle && titleSearch.duplicateProject === undefined ? (
+            ) : debouncedTitle && !titleSearch.duplicateProject ? (
               <CheckCircleIcon color="success" />
             ) : undefined,
           }}
@@ -62,7 +62,7 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
             <ProjectListItem project={titleSearch.duplicateProject} />
           </Box>
         )}
-        {debouncedTitle && !titleSearch.isPending && titleSearch.duplicateProject === undefined && (
+        {debouncedTitle && !titleSearch.isPending && titleSearch.duplicateProject && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
             <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
             <Typography>{t('project.no_duplicate_title')}</Typography>

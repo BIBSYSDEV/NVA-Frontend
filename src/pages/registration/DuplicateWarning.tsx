@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { StyledInfoBanner } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
 
-interface DuplicateWarningProps extends BoxProps {
+interface DuplicateWarningProps extends Pick<BoxProps, 'sx'> {
   warning: string;
   linkTo?: string;
   name?: string;

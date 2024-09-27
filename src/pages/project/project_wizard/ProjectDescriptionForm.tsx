@@ -2,7 +2,6 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { Autocomplete, Box, CircularProgress, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDuplicateProjectSearch } from '../../../api/hooks/useDuplicateProjectSearch';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -22,8 +21,7 @@ interface ProjectDescriptionFormProps {
 export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<CristinProject>();
-  const [title, setTitle] = useState(values.title);
-  const debouncedTitle = useDebounce(title);
+  const debouncedTitle = useDebounce(values.title);
   const duplicateProjectSearch = useDuplicateProjectSearch({ title: debouncedTitle, id: values.id });
 
   return (
@@ -38,10 +36,6 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                 data-testid={dataTestId.projectWizard.descriptionPanel.titleField}
                 label={t('common.title')}
                 disabled={thisIsRekProject}
-                onChange={(event) => {
-                  setTitle(event.target.value);
-                  field.onChange(event);
-                }}
                 InputProps={{
                   endAdornment: duplicateProjectSearch.isPending ? (
                     <CircularProgress size={20} />
