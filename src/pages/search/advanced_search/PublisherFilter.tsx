@@ -14,7 +14,7 @@ import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
+import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 export const PublisherFilter = () => {
@@ -48,13 +48,15 @@ export const PublisherFilter = () => {
   });
 
   const handleChange = (selectedValue: Publisher | null) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
-      searchParams.set(ResultParam.Publisher, selectedValue.identifier);
+      syncedParams.set(ResultParam.Publisher, selectedValue.identifier);
     } else {
-      searchParams.delete(ResultParam.Publisher);
+      syncedParams.delete(ResultParam.Publisher);
     }
+    syncedParams.delete(ResultParam.From);
 
-    history.push({ search: searchParams.toString() });
+    history.push({ search: syncedParams.toString() });
   };
 
   const isFetching = publisherParam ? selectedPublisherQuery.isPending : publisherOptionsQuery.isFetching;
