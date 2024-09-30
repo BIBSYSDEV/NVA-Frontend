@@ -93,9 +93,10 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
           variant="filled"
           data-testid={dataTestId.registrationWizard.resourceType.journalChip}
           onDelete={() => {
-            searchParams.delete(paramName);
+            const syncedParams = syncParamsWithSearchFields(searchParams);
+            syncedParams.delete(paramName);
             resetPagination();
-            history.push({ search: searchParams.toString() });
+            history.push({ search: syncedParams.toString() });
           }}
         />
       )}
