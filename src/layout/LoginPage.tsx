@@ -15,7 +15,6 @@ const LoginPage = () => {
     return <Navigate to={UrlPathTemplate.Home} />;
   }
 
-  // Cast location.state to the appropriate type
   const locationState = location.state as PreviousPathLocationState | undefined;
   const redirectPath = locationState?.previousPath ?? UrlPathTemplate.Home;
 

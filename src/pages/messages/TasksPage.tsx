@@ -219,7 +219,7 @@ const TasksPage = () => {
       <ErrorBoundary>
         <Routes>
           <Route
-            path={UrlPathTemplate.Tasks}
+            path={UrlPathTemplate.Home}
             element={
               <PrivateRoute
                 isAuthorized={isTicketCurator || isNviCurator}
@@ -235,7 +235,7 @@ const TasksPage = () => {
           />
 
           <Route
-            path={UrlPathTemplate.TasksDialogue}
+            path={'/dialogue'}
             element={
               <PrivateRoute
                 isAuthorized={isTicketCurator}
@@ -256,27 +256,24 @@ const TasksPage = () => {
           />
 
           <Route
-            path={UrlPathTemplate.TasksDialogueRegistration}
+            path={'/dialogue/:identifier'}
             element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isTicketCurator} />}
           />
 
-          <Route
-            path={UrlPathTemplate.TasksNvi}
-            element={<PrivateRoute element={<NviCandidatesList />} isAuthorized={isNviCurator} />}
-          />
+          <Route path={'/nvi'} element={<PrivateRoute element={<NviCandidatesList />} isAuthorized={isNviCurator} />} />
 
           <Route
-            path={UrlPathTemplate.TasksNviStatus}
+            path={'nvi/status'}
             element={<PrivateRoute element={<NviStatusPage />} isAuthorized={isNviCurator} />}
           />
 
           <Route
-            path={UrlPathTemplate.TasksNviCandidate}
+            path={'/nvi/:identifier'}
             element={<PrivateRoute element={<NviCandidatePage />} isAuthorized={isNviCurator} />}
           />
 
           <Route
-            path={UrlPathTemplate.TasksNviCorrectionList}
+            path={'/correction-list'}
             element={<PrivateRoute element={<NviCorrectionList />} isAuthorized={isNviCurator} />}
           />
         </Routes>

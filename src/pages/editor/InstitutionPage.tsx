@@ -4,7 +4,7 @@ import GavelIcon from '@mui/icons-material/Gavel';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchResource } from '../../api/commonApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -15,6 +15,21 @@ import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { PrivateRoute } from '../../utils/routes/Routes';
+import { lazy } from 'react';
+import { VocabularyOverview } from './VocabularyOverview';
+import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublishingStrategyOverview } from './PublishingStrategyOverview';
+import { EditorInstitution } from './EditorInstitution';
+import { OrganizationCurators } from './curators/OrganizationCurators';
+import { EditorDoi } from './EditorDoi';
+import { CategoriesWithFiles } from './CategoriesWithFiles';
+import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
+import { OrganizationOverview } from './OrganizationOverview';
+import { InstitutionSupport } from './InstitutionSupport';
+import NotFound from '../errorpages/NotFound';
+
+const VocabularySettings = lazy(() => import('./VocabularySettings'));
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
@@ -141,6 +156,77 @@ const InstitutionPage = () => {
       </SideMenu>
       <BackgroundDiv>
         <Outlet />
+
+        <Routes>
+          <Route
+            path={'settings/vocabulary'}
+            element={<PrivateRoute element={<VocabularySettings />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={'overview/vocabulary'}
+            element={<PrivateRoute element={<VocabularyOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={'settings/publish-strategy'}
+            element={<PrivateRoute element={<PublishStrategySettings />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={'overview/publish-strategy'}
+            element={<PrivateRoute element={<PublishingStrategyOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={'/overview/institution'}
+            element={<PrivateRoute element={<EditorInstitution />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={'overview/curators'}
+            element={
+              <PrivateRoute
+                isAuthorized={hasCustomer}
+                element={<OrganizationCurators heading={t('editor.curators.curators')} />}
+              />
+            }
+          />
+
+          <Route
+            path={'settings/curators'}
+            element={
+              <PrivateRoute
+                isAuthorized={isEditor}
+                element={<OrganizationCurators heading={t('editor.curators.administer_curators')} canEditUsers />}
+              />
+            }
+          />
+
+          <Route path={'/overview/doi'} element={<PrivateRoute element={<EditorDoi />} isAuthorized={hasCustomer} />} />
+
+          <Route
+            path={'settings/categories'}
+            element={<PrivateRoute element={<CategoriesWithFiles />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={'overview/categories'}
+            element={<PrivateRoute element={<CategoriesWithFilesOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={'overview/organization'}
+            element={<PrivateRoute element={<OrganizationOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={'/settings/support'}
+            element={<PrivateRoute element={<InstitutionSupport />} isAuthorized={isEditor} />}
+          />
+
+          <Route path={'/*'} element={<PrivateRoute element={<NotFound />} isAuthorized={isEditor} />} />
+        </Routes>
       </BackgroundDiv>
     </StyledPageWithSideMenu>
   );

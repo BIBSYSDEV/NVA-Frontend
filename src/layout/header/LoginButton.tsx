@@ -25,10 +25,10 @@ export const LoginButton = () => {
       color="inherit"
       sx={{ borderRadius: '1rem', flexDirection: 'row !important', height: 'fit-content', alignSelf: 'center' }}
       data-testid={dataTestId.header.logInButton}
-      component={RouterLink as any}
+      component={RouterLink}
+      state={{ previousPath: getCurrentPath() } satisfies PreviousPathLocationState}
       to={{
         pathname: UrlPathTemplate.Login,
-        state: { previousPath: getCurrentPath() } satisfies PreviousPathLocationState,
       }}>
       {t('authorization.login')}
     </Button>

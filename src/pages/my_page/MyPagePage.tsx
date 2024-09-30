@@ -8,7 +8,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -30,6 +30,18 @@ import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
+import { PrivateRoute } from '../../utils/routes/Routes';
+import { MyProfile } from './user_profile/MyProfile';
+import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
+import { MyProjects } from './user_profile/MyProjects';
+import ResearchProfile from '../research_profile/ResearchProfile';
+import { MyResults } from './user_profile/MyResults';
+import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
+import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
+import { TicketList } from '../messages/components/TicketList';
+import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { MyRegistrations } from '../my_registrations/MyRegistrations';
+import NotFound from '../errorpages/NotFound';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -335,6 +347,87 @@ const MyPagePage = () => {
       </SideMenu>
 
       <Outlet />
+
+      <Routes>
+        <Route
+          path={UrlPathTemplate.Home}
+          element={
+            <PrivateRoute
+              isAuthorized={isAuthenticated}
+              element={<Navigate to={UrlPathTemplate.MyPageResearchProfile} />}
+            />
+          }
+        />
+        <Route
+          path={'/profile/personalia'}
+          element={<PrivateRoute element={<MyProfile />} isAuthorized={isAuthenticated} />}
+        />
+        <Route
+          path={'/profile/background'}
+          element={<PrivateRoute element={<MyFieldAndBackground />} isAuthorized={isAuthenticated} />}
+        />
+        <Route
+          path={'/profile/projects'}
+          element={<PrivateRoute element={<MyProjects />} isAuthorized={isAuthenticated} />}
+        />
+        <Route
+          path={'/profile/research-profile'}
+          element={<PrivateRoute element={<ResearchProfile />} isAuthorized={isAuthenticated} />}
+        />
+
+        <Route
+          path={'/profile/results'}
+          element={<PrivateRoute element={<MyResults />} isAuthorized={isAuthenticated} />}
+        />
+
+        <Route
+          path={'/project-registrations/my-project-registrations'}
+          element={<PrivateRoute element={<MyProjectRegistrations />} isAuthorized={isAuthenticated} />}
+        />
+
+        <Route
+          path={'/profile/user-role-and-help'}
+          element={<PrivateRoute element={<UserRoleAndHelp />} isAuthorized={isAuthenticated} />}
+        />
+
+        <Route
+          path={'messages/my-messages'}
+          element={
+            <PrivateRoute
+              isAuthorized={isCreator}
+              element={
+                <TicketList
+                  ticketsQuery={ticketsQuery}
+                  rowsPerPage={rowsPerPage}
+                  setRowsPerPage={setRowsPerPage}
+                  page={page}
+                  setPage={setPage}
+                  title={t('common.dialogue')}
+                />
+              }
+            />
+          }
+        />
+        <Route
+          path={'/messages/my-messages/:identifier'}
+          element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isCreator} />}
+        />
+        <Route
+          path={'/registrations/my-registrations'}
+          element={
+            <PrivateRoute
+              element={
+                <MyRegistrations
+                  selectedPublished={selectedRegistrationStatus.published}
+                  selectedUnpublished={selectedRegistrationStatus.unpublished}
+                />
+              }
+              isAuthorized={isCreator}
+            />
+          }
+        />
+        <Route path={'/*'} element={<PrivateRoute element={<NotFound />} isAuthorized={isAuthenticated} />} />
+      </Routes>
 
       {user?.isCreator && (
         <ProjectFormDialog
