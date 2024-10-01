@@ -103,7 +103,7 @@ export const RegistrationListItemContent = ({
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' }, marginBottom: '0.5rem' }}>
-          <Box sx={{ display: 'flex', gap: '0.25rem' }}>
+          <Box sx={{ display: 'flex', gap: '0.4rem' }}>
             <RegistrationIcon />
             <Typography sx={{ color: 'primary.main' }}>
               {registrationType ? t(`registration.publication_types.${registrationType}`) : ''}
