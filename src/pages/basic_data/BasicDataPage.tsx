@@ -179,9 +179,9 @@ const BasicDataPage = () => {
                 isAuthorized={isAppAdmin || isInstitutionAdmin}
                 element={
                   isInstitutionAdmin ? (
-                    <Navigate to={'/person-register'} />
+                    <Navigate to={UrlPathTemplate.BasicDataPersonRegister} />
                   ) : isAppAdmin ? (
-                    <Navigate to={'/institutions'} />
+                    <Navigate to={UrlPathTemplate.BasicDataInstitutions} />
                   ) : (
                     <Navigate to="/forbidden" replace />
                   )
