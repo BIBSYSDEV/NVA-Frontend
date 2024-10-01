@@ -1,4 +1,4 @@
-import { Autocomplete, Box } from '@mui/material';
+import { Autocomplete, Box, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,8 @@ export const RelatedProjectsField = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Typography variant="h2">{t('project.form.related_projects')}</Typography>
+      <Typography>{t('project.form.related_projects_description')}</Typography>
       <Field name={ProjectFieldName.RelatedProjects}>
         {({ field, form: { setFieldValue } }: FieldProps<string[]>) => (
           <Autocomplete
