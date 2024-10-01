@@ -111,7 +111,7 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
             <Form noValidate>
               <PageHeader>
                 <ProjectIconHeader projectStatus={projectWithId ? projectWithId.status : undefined} />
-                <TruncatableTypography variant="h1">{project.title}</TruncatableTypography>
+                <TruncatableTypography variant="h1">{values.title}</TruncatableTypography>
               </PageHeader>
               <ProjectFormStepper tabNumber={tabNumber} onTabClicked={onTabChange} maxVisitedTab={maxVisitedTab} />
               <RequiredDescription />

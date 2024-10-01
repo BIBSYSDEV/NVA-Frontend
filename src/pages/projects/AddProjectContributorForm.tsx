@@ -3,6 +3,7 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
@@ -85,14 +86,16 @@ export const AddProjectContributorForm = ({
         setSearchTerm={setSearchTerm}
       />
       <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
-        <Button
-          sx={{ mr: 'auto' }}
-          data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
-          disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
-          onClick={addUnidentifiedParticipant}
-          size="large">
-          {t('project.add_unidentified_contributor')}
-        </Button>
+        <BetaFunctionality>
+          <Button
+            sx={{ mr: 'auto' }}
+            data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
+            disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
+            onClick={addUnidentifiedParticipant}
+            size="large">
+            {t('project.add_unidentified_contributor')}
+          </Button>
+        </BetaFunctionality>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
         <Button
           data-testid={dataTestId.projectForm.selectContributorButton}
