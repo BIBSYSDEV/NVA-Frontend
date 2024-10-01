@@ -1,24 +1,14 @@
 import LinkIcon from '@mui/icons-material/Link';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
-import {
-  Box,
-  Chip,
-  CircularProgress,
-  Divider,
-  Grid,
-  IconButton,
-  List,
-  Link as MuiLink,
-  Typography,
-} from '@mui/material';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchPerson, searchForProjects } from '../../api/cristinApi';
+import { fetchPerson, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -26,6 +16,7 @@ import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
+import { projectSortOptions } from '../../components/ProjectSortSelector';
 import { SortSelectorWithoutParams } from '../../components/SortSelectorWithoutParams';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
@@ -46,10 +37,12 @@ const ResearchProfile = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const [registrationsPage, setRegistrationsPage] = useState(1);
+  const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationSort, setRegistrationSort] = useState(registrationSortOptions[0]);
+
   const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [projectSort, setProjectSort] = useState(projectSortOptions[0]);
 
   const user = useSelector((store: RootState) => store.user);
 
@@ -84,11 +77,16 @@ const ResearchProfile = () => {
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
+  const projectsQueryConfig: ProjectsSearchParams = {
+    participant: personIdNumber,
+    orderBy: projectSort.orderBy,
+    sort: projectSort.sortOrder,
+  };
+
   const projectsQuery = useQuery({
-    queryKey: ['projects', projectRowsPerPage, projectsPage, personIdNumber],
-    queryFn: () => searchForProjects(projectRowsPerPage, projectsPage, { participant: personIdNumber }),
+    queryKey: ['projects', projectRowsPerPage, projectsPage, projectsQueryConfig],
+    queryFn: () => searchForProjects(projectRowsPerPage, projectsPage, projectsQueryConfig),
     meta: { errorMessage: t('feedback.error.project_search') },
-    placeholderData: keepPreviousData,
   });
 
   const projects = projectsQuery.data?.hits ?? [];
@@ -295,11 +293,11 @@ const ResearchProfile = () => {
 
         <Divider sx={{ my: '1rem' }} />
 
-        <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
+        <Typography variant="h2" sx={{ mt: '1rem' }}>
           {projectHeading}
         </Typography>
         {projectsQuery.isPending ? (
-          <CircularProgress aria-labelledby="project-label" />
+          <ListSkeleton minWidth={100} height={100} />
         ) : projects.length > 0 ? (
           <ListPagination
             count={projectsQuery.data?.size ?? 0}
@@ -309,7 +307,14 @@ const ResearchProfile = () => {
             onRowsPerPageChange={(newRowsPerPage) => {
               setProjectRowsPerPage(newRowsPerPage);
               setProjectsPage(1);
-            }}>
+            }}
+            sortingComponent={
+              <SortSelectorWithoutParams
+                options={projectSortOptions}
+                value={projectSort}
+                setValue={(value) => setProjectSort(value)}
+              />
+            }>
             <List>
               {projects.map((project) => (
                 <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />

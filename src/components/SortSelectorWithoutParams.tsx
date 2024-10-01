@@ -1,15 +1,18 @@
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { SortSelectorOption } from '../pages/search/registration_search/RegistrationSortSelector';
 import { dataTestId } from '../utils/dataTestIds';
 
-interface SortSelectorWithoutParamsProps {
-  options: SortSelectorOption[];
-  value: SortSelectorOption;
-  setValue: (value: SortSelectorOption) => void;
+interface SortSelectorWithoutParamsProps<T> {
+  options: T[];
+  value: T;
+  setValue: (value: T) => void;
 }
 
-export const SortSelectorWithoutParams = ({ value, setValue, options }: SortSelectorWithoutParamsProps) => {
+export const SortSelectorWithoutParams = <T extends { label: string }>({
+  value,
+  setValue,
+  options,
+}: SortSelectorWithoutParamsProps<T>) => {
   const { t } = useTranslation();
 
   return (
@@ -21,7 +24,7 @@ export const SortSelectorWithoutParams = ({ value, setValue, options }: SortSele
       size="small"
       variant="standard"
       onChange={(event) => {
-        const value = event.target.value as unknown as SortSelectorOption;
+        const value = event.target.value as unknown as T;
         setValue(value);
       }}>
       {options.map((option) => (

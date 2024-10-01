@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
 import { SortSelector } from '../../../components/SortSelector';
 
-export interface SortSelectorOption {
+export interface RegistrationSortOption {
   orderBy: ResultSearchOrder;
   sortOrder: SortOrder;
   label: string;
 }
 
-export const registrationSortOptions: SortSelectorOption[] = [
+export const registrationSortOptions: RegistrationSortOption[] = [
   { orderBy: ResultSearchOrder.Relevance, sortOrder: 'desc', label: t('search.sort_by_relevance') },
   {
     orderBy: ResultSearchOrder.ModifiedDate,
