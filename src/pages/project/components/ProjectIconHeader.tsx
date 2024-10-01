@@ -11,10 +11,10 @@ export const ProjectIconHeader = ({ projectStatus }: ProjectIconHeaderProps) => 
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mb: '0.5rem' }}>
+    <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center', mb: '0.5rem' }}>
       <ProjectIcon />
-      <Typography>{t('project.project')}</Typography>
-      <Typography sx={{ fontWeight: 'bold' }}>
+      <Typography sx={{ color: 'inherit' }}>{t('project.project')}</Typography>
+      <Typography sx={{ fontWeight: 'bold', color: 'inherit' }}>
         {projectStatus ? t(`project.status.${projectStatus}`).toUpperCase() : t('common.new').toUpperCase()}
       </Typography>
     </Box>
