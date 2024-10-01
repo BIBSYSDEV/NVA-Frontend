@@ -8,8 +8,8 @@ import {
   Divider,
   Grid,
   IconButton,
-  Link as MuiLink,
   List,
+  Link as MuiLink,
   Typography,
 } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -23,8 +23,10 @@ import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
+import { ListSkeleton } from '../../components/ListSkeleton';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
+import { SortSelectorWithoutParams } from '../../components/SortSelectorWithoutParams';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
@@ -38,11 +40,13 @@ import { UserOrcid } from '../my_page/user_profile/UserOrcid';
 import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperModal';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
+import { registrationSortOptions } from '../search/registration_search/RegistrationSortSelector';
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const [registrationsPage, setRegistrationsPage] = useState(1);
+  const [registrationSort, setRegistrationSort] = useState(registrationSortOptions[0]);
   const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -70,6 +74,8 @@ const ResearchProfile = () => {
     contributor: personId,
     from: (registrationsPage - 1) * registrationRowsPerPage,
     results: registrationRowsPerPage,
+    order: registrationSort.orderBy,
+    sort: registrationSort.sortOrder,
   };
   const registrationsQuery = useQuery({
     enabled: !!personId,
@@ -254,11 +260,11 @@ const ResearchProfile = () => {
             {!!personBackground && <Typography>{personBackground}</Typography>}
           </Box>
         )}
-        <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
+        <Typography variant="h2" gutterBottom sx={{ mt: '2rem' }}>
           {registrationsHeading}
         </Typography>
         {registrationsQuery.isPending || promotedPublicationsQuery.isPending ? (
-          <CircularProgress aria-labelledby="registration-label" />
+          <ListSkeleton minWidth={100} height={100} />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <ListPagination
             count={registrationsQuery.data.totalHits}
@@ -268,7 +274,14 @@ const ResearchProfile = () => {
             onRowsPerPageChange={(newRowsPerPage) => {
               setRegistrationRowsPerPage(newRowsPerPage);
               setRegistrationsPage(1);
-            }}>
+            }}
+            sortingComponent={
+              <SortSelectorWithoutParams
+                options={registrationSortOptions}
+                value={registrationSort}
+                setValue={(value) => setRegistrationSort(value)}
+              />
+            }>
             <RegistrationSearchResults
               searchResult={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
