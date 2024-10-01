@@ -10,6 +10,8 @@ import { getDateFnsLocale, getDatePickerLocaleText } from './utils/date-helpers'
 import { Footer } from './layout/Footer';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
+import { PageSpinner } from './components/PageSpinner';
+import { Suspense } from 'react';
 
 export const Layout = () => {
   const { t, i18n } = useTranslation();
@@ -37,7 +39,9 @@ export const Layout = () => {
             adapterLocale={getDateFnsLocale(i18n.language)}
             dateFormats={{ keyboardDate: 'dd.MM.yyyy' }}
             localeText={getDatePickerLocaleText(i18n.language)}>
-            <Outlet />
+            <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
+              <Outlet />
+            </Suspense>
           </LocalizationProvider>
         </ErrorBoundary>
       </Box>

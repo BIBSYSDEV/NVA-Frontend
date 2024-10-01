@@ -108,72 +108,70 @@ export const Root = () => {
       {isLoadingUserAttributes ? (
         <PageSpinner aria-label={t('common.page_title')} />
       ) : (
-        <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path={UrlPathTemplate.Home} element={<Dashboard />} />
-              <Route path={UrlPathTemplate.Search} element={<Dashboard />} />
-              <Route path={UrlPathTemplate.Reports} element={<Dashboard />} />
-              <Route path={UrlPathTemplate.ReportsNvi} element={<Dashboard />} />
-              <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<Dashboard />} />
-              <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path={UrlPathTemplate.Home} element={<Dashboard />} />
+            <Route path={UrlPathTemplate.Search} element={<Dashboard />} />
+            <Route path={UrlPathTemplate.Reports} element={<Dashboard />} />
+            <Route path={UrlPathTemplate.ReportsNvi} element={<Dashboard />} />
+            <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<Dashboard />} />
+            <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
 
-              <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
-              <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
-              <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
-              <Route path={UrlPathTemplate.Projects} element={<ProjectsPage />} />
-              <Route path={UrlPathTemplate.Login} element={<LoginPage />} />
-              <Route path={UrlPathTemplate.Logout} element={<Logout />} />
-              <Route path={UrlPathTemplate.SignedOut} element={<SignedOutPage />} />
+            <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
+            <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
+            <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
+            <Route path={UrlPathTemplate.Projects} element={<ProjectsPage />} />
+            <Route path={UrlPathTemplate.Login} element={<LoginPage />} />
+            <Route path={UrlPathTemplate.Logout} element={<Logout />} />
+            <Route path={UrlPathTemplate.SignedOut} element={<SignedOutPage />} />
 
-              <Route
-                path={'/my-page/*'}
-                element={<PrivateRoute element={<MyPagePage />} isAuthorized={isAuthenticated} />}
-              />
+            <Route
+              path={'/my-page/*'}
+              element={<PrivateRoute element={<MyPagePage />} isAuthorized={isAuthenticated} />}
+            />
 
-              {/* CreatorRoutes */}
-              <Route
-                path={UrlPathTemplate.RegistrationWizard}
-                element={
-                  <PrivateRoute isAuthorized={isCreator || isCurator || isEditor} element={<EditRegistration />} />
-                }
-              />
-              <Route
-                path={UrlPathTemplate.RegistrationNew}
-                element={<PrivateRoute isAuthorized={isCreator} element={<EditRegistration />} />}
-              />
-              <Route
-                path={UrlPathTemplate.ProjectsEdit}
-                element={<PrivateRoute isAuthorized={isCreator} element={<EditProject />} />}
-              />
-              <Route
-                path={UrlPathTemplate.ProjectsNew}
-                element={<PrivateRoute isAuthorized={isCreator} element={<CreateProject />} />}
-              />
+            {/* CreatorRoutes */}
+            <Route
+              path={UrlPathTemplate.RegistrationWizard}
+              element={
+                <PrivateRoute isAuthorized={isCreator || isCurator || isEditor} element={<EditRegistration />} />
+              }
+            />
+            <Route
+              path={UrlPathTemplate.RegistrationNew}
+              element={<PrivateRoute isAuthorized={isCreator} element={<EditRegistration />} />}
+            />
+            <Route
+              path={UrlPathTemplate.ProjectsEdit}
+              element={<PrivateRoute isAuthorized={isCreator} element={<EditProject />} />}
+            />
+            <Route
+              path={UrlPathTemplate.ProjectsNew}
+              element={<PrivateRoute isAuthorized={isCreator} element={<CreateProject />} />}
+            />
 
-              {/* CuratorRoutes */}
-              <Route
-                path={'/tasks/*'}
-                element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}
-              />
+            {/* CuratorRoutes */}
+            <Route
+              path={'/tasks/*'}
+              element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}
+            />
 
-              {/* BasicDataRoutes */}
-              <Route
-                path={'/basic-data/*'}
-                element={<PrivateRoute isAuthorized={isAdmin} element={<BasicDataPage />} />}
-              />
+            {/* BasicDataRoutes */}
+            <Route
+              path={'/basic-data/*'}
+              element={<PrivateRoute isAuthorized={isAdmin} element={<BasicDataPage />} />}
+            />
 
-              {/* InstitutionRoutes */}
-              <Route
-                path={'/institution/*'}
-                element={<PrivateRoute isAuthorized={hasCustomerId} element={<EditorPage />} />}
-              />
+            {/* InstitutionRoutes */}
+            <Route
+              path={'/institution/*'}
+              element={<PrivateRoute isAuthorized={hasCustomerId} element={<EditorPage />} />}
+            />
 
-              {/* Wildcard path must be last, otherwise it will catch all routes */}
-              <Route path={UrlPathTemplate.Wildcard} element={<NotFound />} />
-            </Route>
-          </Routes>
-        </Suspense>
+            {/* Wildcard path must be last, otherwise it will catch all routes */}
+            <Route path={UrlPathTemplate.Wildcard} element={<NotFound />} />
+          </Route>
+        </Routes>
       )}
     </>
   );
