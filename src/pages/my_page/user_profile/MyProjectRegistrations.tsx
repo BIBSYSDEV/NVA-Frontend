@@ -4,7 +4,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../../api/cristinApi';
+import {
+  ProjectSearchOrder,
+  ProjectSearchParameter,
+  ProjectsSearchParams,
+  searchForProjects,
+} from '../../../api/cristinApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
@@ -25,7 +30,7 @@ export const MyProjectRegistrations = () => {
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const projectQueryParams: ProjectsSearchParams = {
-    orderBy: searchParams.get(ProjectSearchParameter.OrderBy),
+    orderBy: searchParams.get(ProjectSearchParameter.OrderBy) as ProjectSearchOrder | null,
     sort: searchParams.get(ProjectSearchParameter.Sort),
     creator: cristinIdentifier,
   };
