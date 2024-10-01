@@ -187,37 +187,6 @@ const router = createBrowserRouter([
 ]);
 
 export const App = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((store: RootState) => store.user);
-  const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
-
-  useEffect(() => {
-    // Setup aws-amplify
-    if (!USE_MOCK_DATA) {
-      Amplify.configure(authOptions);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Fetch attributes of authenticated user
-    const getUser = async () => {
-      const feideUser = await getUserAttributes();
-      if (feideUser) {
-        dispatch(setUser(feideUser));
-      }
-      setIsLoadingUserAttributes(false);
-    };
-
-    if (USE_MOCK_DATA) {
-      setUser(mockUser);
-      setIsLoadingUserAttributes(false);
-    } else {
-      getUser();
-    }
-  }, [dispatch]);
-
-  const mustCreatePerson = user && !user.cristinId;
-  const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
   return (
     <Suspense fallback={<PageSpinner aria-label="Loading" />}>
       <RouterProvider router={router} />
