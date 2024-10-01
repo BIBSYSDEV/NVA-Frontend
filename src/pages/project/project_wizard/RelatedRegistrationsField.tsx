@@ -22,32 +22,38 @@ export const RelatedRegistrationsField = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Typography variant="h2">{t('project.form.related_registrations')}</Typography>
-      <Typography>{t('project.form.related_registrations_description')}</Typography>
-      {resultsQuery.isPending ? (
-        <Box>
-          <ListSkeleton arrayLength={4} maxWidth={60} height={20} />
-        </Box>
-      ) : results && results.totalHits > 0 ? (
-        <ListPagination
-          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-          count={results.totalHits}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={(newPage) => setPage(newPage)}
-          onRowsPerPageChange={(newRowsPerPage) => {
-            setRowsPerPage(newRowsPerPage);
-            setPage(1);
-          }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', paddingLeft: 0 }} component={'ul'}>
-            {results.hits.map((relatedRegistration) => (
-              <SearchListItem sx={{ borderLeftColor: 'registration.main' }} key={relatedRegistration.id}>
-                <RegistrationListItemContent registration={relatedRegistration} />
-              </SearchListItem>
-            ))}
-          </Box>
-        </ListPagination>
+      {values.id ? (
+        <>
+          <Typography>{t('project.form.related_registrations_description')}</Typography>
+          {resultsQuery.isPending ? (
+            <Box>
+              <ListSkeleton arrayLength={4} maxWidth={60} height={20} />
+            </Box>
+          ) : results && results.totalHits > 0 ? (
+            <ListPagination
+              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+              count={results.totalHits}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(newPage) => setPage(newPage)}
+              onRowsPerPageChange={(newRowsPerPage) => {
+                setRowsPerPage(newRowsPerPage);
+                setPage(1);
+              }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', paddingLeft: 0 }} component={'ul'}>
+                {results.hits.map((relatedRegistration) => (
+                  <SearchListItem sx={{ borderLeftColor: 'registration.main' }} key={relatedRegistration.id}>
+                    <RegistrationListItemContent registration={relatedRegistration} />
+                  </SearchListItem>
+                ))}
+              </Box>
+            </ListPagination>
+          ) : (
+            <Typography>{t('project.no_results')}</Typography>
+          )}
+        </>
       ) : (
-        <Typography>{t('project.no_results')}</Typography>
+        <Typography>{t('project.form.no_related_registrations_description')}</Typography>
       )}
     </Box>
   );
