@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ResultParam, ResultSearchOrder, SortOrder } from '../../../api/searchApi';
 import { SortSelector } from '../../../components/SortSelector';
 
-export interface RegistrationSortOption {
+interface RegistrationSortOption {
   orderBy: ResultSearchOrder;
   sortOrder: SortOrder;
   label: string;

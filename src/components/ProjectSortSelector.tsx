@@ -4,7 +4,7 @@ import { ProjectSearchOrder } from '../api/cristinApi';
 import { SortOrder } from '../api/searchApi';
 import { SortSelector } from './SortSelector';
 
-export interface ProjectSortOption {
+interface ProjectSortOption {
   orderBy: ProjectSearchOrder;
   sortOrder: SortOrder;
   label: string;
