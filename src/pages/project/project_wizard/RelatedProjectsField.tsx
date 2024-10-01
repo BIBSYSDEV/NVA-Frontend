@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchProjects } from '../../../api/hooks/useFetchProjects';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { ListPagination } from '../../../components/ListPagination';
 import { CristinProject, ProjectFieldName, SaveCristinProject } from '../../../types/project.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { RelatedProjectItem } from './RelatedProjectItem';
@@ -12,10 +14,13 @@ import { RelatedProjectItem } from './RelatedProjectItem';
 export const RelatedProjectsField = () => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<SaveCristinProject>();
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
   const projectsQuery = useFetchProjects(debouncedSearchTerm);
   const projects = projectsQuery.data?.hits ?? [];
+  const paginatedProjects = values.relatedProjects.slice(rowsPerPage * (page - 1), rowsPerPage * page);
 
   const removeProject = (projectId: string) =>
     setFieldValue(
@@ -64,15 +69,28 @@ export const RelatedProjectsField = () => {
           />
         )}
       </Field>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', paddingLeft: 0 }} component={'ul'}>
-        {values.relatedProjects.map((relatedProject) => (
-          <RelatedProjectItem
-            projectId={relatedProject}
-            key={relatedProject}
-            removeProject={() => removeProject(relatedProject)}
-          />
-        ))}
-      </Box>
+      {values.relatedProjects.length > 0 && (
+        <ListPagination
+          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+          count={values.relatedProjects.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(newPage) => setPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(1);
+          }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', paddingLeft: 0 }} component={'ul'}>
+            {paginatedProjects.map((relatedProject) => (
+              <RelatedProjectItem
+                projectId={relatedProject}
+                key={relatedProject}
+                removeProject={() => removeProject(relatedProject)}
+              />
+            ))}
+          </Box>
+        </ListPagination>
+      )}
     </Box>
   );
 };
