@@ -5,12 +5,12 @@ import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { fetchPerson, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
+import { Link, useHistory } from 'react-router-dom';
+import { fetchPerson, ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam } from '../../api/searchApi';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -23,9 +23,11 @@ import { RootState } from '../../redux/store';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
+import { SearchParam } from '../../utils/searchHelpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
+import { SearchTypeValue } from '../dashboard/HomePage';
 import NotFound from '../errorpages/NotFound';
 import { UserOrcid } from '../my_page/user_profile/UserOrcid';
 import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperModal';
@@ -263,6 +265,11 @@ const ResearchProfile = () => {
         <Typography variant="h2" gutterBottom sx={{ mt: '2rem' }}>
           {registrationsHeading}
         </Typography>
+        <Typography>
+          <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
+            <MuiLink component={Link} to={`/?${ResultParam.Contributor}=${encodeURIComponent(personId)}`} />
+          </Trans>
+        </Typography>
         {registrationsQuery.isPending || promotedPublicationsQuery.isPending ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
@@ -293,8 +300,18 @@ const ResearchProfile = () => {
 
         <Divider sx={{ my: '1rem' }} />
 
-        <Typography variant="h2" sx={{ mt: '1rem' }}>
+        <Typography variant="h2" gutterBottom sx={{ mt: '1rem' }}>
           {projectHeading}
+        </Typography>
+        <Typography>
+          <Trans t={t} i18nKey="my_page.my_profile.link_to_projects_search">
+            <MuiLink
+              component={Link}
+              to={`/?${SearchParam.Type}=${SearchTypeValue.Project}&${ProjectSearchParameter.ParticipantFacet}=${encodeURIComponent(
+                getIdentifierFromId(personId)
+              )}`}
+            />
+          </Trans>
         </Typography>
         {projectsQuery.isPending ? (
           <ListSkeleton minWidth={100} height={100} />
