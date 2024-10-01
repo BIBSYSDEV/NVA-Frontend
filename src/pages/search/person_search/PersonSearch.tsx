@@ -37,12 +37,12 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
         {
           orderBy: 'name',
           sortOrder: 'asc',
-          label: t('search.sort_by_last_name_asc'),
+          i18nKey: t('search.sort_by_last_name_asc'),
         },
         {
           orderBy: 'name',
           sortOrder: 'desc',
-          label: t('search.sort_by_last_name_desc'),
+          i18nKey: t('search.sort_by_last_name_desc'),
         },
       ]}
     />

@@ -1,6 +1,7 @@
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../utils/dataTestIds';
+import { SortSelectorOption } from './SortSelector';
 
 interface SortSelectorWithoutParamsProps<T> {
   options: T[];
@@ -8,7 +9,7 @@ interface SortSelectorWithoutParamsProps<T> {
   setValue: (value: T) => void;
 }
 
-export const SortSelectorWithoutParams = <T extends { label: string }>({
+export const SortSelectorWithoutParams = <T extends SortSelectorOption>({
   value,
   setValue,
   options,
@@ -28,8 +29,8 @@ export const SortSelectorWithoutParams = <T extends { label: string }>({
         setValue(value);
       }}>
       {options.map((option) => (
-        <MenuItem key={option.label} value={option as any}>
-          {option.label}
+        <MenuItem key={option.i18nKey} value={option as any}>
+          {t(option.i18nKey)}
         </MenuItem>
       ))}
     </TextField>
