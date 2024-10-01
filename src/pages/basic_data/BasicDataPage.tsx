@@ -6,7 +6,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -168,18 +168,20 @@ const BasicDataPage = () => {
         )}
       </SideMenu>
 
+      <Outlet />
+
       <ErrorBoundary>
         <Routes>
           <Route
-            path={UrlPathTemplate.BasicData}
+            path={UrlPathTemplate.Home}
             element={
               <PrivateRoute
                 isAuthorized={isAppAdmin || isInstitutionAdmin}
                 element={
                   isInstitutionAdmin ? (
-                    <Navigate to={UrlPathTemplate.BasicDataPersonRegister} />
+                    <Navigate to={'/person-register'} />
                   ) : isAppAdmin ? (
-                    <Navigate to={UrlPathTemplate.BasicDataInstitutions} />
+                    <Navigate to={'/institutions'} />
                   ) : (
                     <Navigate to="/forbidden" replace />
                   )
@@ -188,37 +190,34 @@ const BasicDataPage = () => {
             }
           />
           <Route
-            path={UrlPathTemplate.BasicDataInstitutions}
+            path={'/institutions'}
             element={<PrivateRoute isAuthorized={isAppAdmin} element={<AdminCustomerInstitutionsContainer />} />}
           />
           <Route
-            path={UrlPathTemplate.BasicDataCentralImport}
+            path={'/central-import'}
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportPage />} />}
           />
           <Route
-            path={UrlPathTemplate.BasicDataCentralImportCandidate}
+            path={'/central-import/:identifier'}
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportDuplicationCheckPage />} />}
           />
           <Route
-            path={UrlPathTemplate.BasicDataCentralImportCandidateWizard}
+            path={'/central-import/:identifier/edit'}
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateForm />} />}
           />
           <Route
-            path={UrlPathTemplate.BasicDataCentralImportCandidateMerge}
+            path={'/central-import/:identifier/merge/:registrationIdentifier'}
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateMerge />} />}
           />
           <Route
-            path={UrlPathTemplate.BasicDataAddEmployee}
+            path={'/person-register/new'}
             element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<AddEmployeePage />} />}
           />
           <Route
-            path={UrlPathTemplate.BasicDataPersonRegister}
+            path={'/person-register'}
             element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<PersonRegisterPage />} />}
           />
-          <Route
-            path={UrlPathTemplate.BasicDataNvi}
-            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
-          />
+          <Route path={'/nvi'} element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />} />
         </Routes>
       </ErrorBoundary>
     </StyledPageWithSideMenu>
