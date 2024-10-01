@@ -5,7 +5,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   fetchImportCandidate,
   fetchRegistration,
@@ -31,7 +31,7 @@ import { CompareDoiField } from './CompareDoiField';
 import { CompareFields } from './CompareFields';
 import { CompareJournalFields } from './CompareJournalFields';
 
-interface MergeImportCandidateParams {
+interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
   registrationIdentifier: string;
 }
@@ -39,18 +39,22 @@ interface MergeImportCandidateParams {
 export const CentralImportCandidateMerge = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory<BasicDataLocationState>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const locationState = location.state as BasicDataLocationState;
   const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
   const registrationQuery = useQuery({
+    enabled: !!registrationIdentifier,
     queryKey: ['registration', registrationIdentifier],
-    queryFn: () => fetchRegistration(registrationIdentifier),
+    queryFn: () => fetchRegistration(registrationIdentifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
   const importCandidateQuery = useQuery({
+    enabled: !!candidateIdentifier,
     queryKey: ['importCandidate', candidateIdentifier],
-    queryFn: () => fetchImportCandidate(candidateIdentifier),
+    queryFn: () => fetchImportCandidate(candidateIdentifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
 
@@ -67,7 +71,7 @@ export const CentralImportCandidateMerge = () => {
 
   const importCandidateMutation = useMutation({
     mutationFn: () =>
-      updateImportCandidateStatus(candidateIdentifier, {
+      updateImportCandidateStatus(candidateIdentifier ?? '', {
         candidateStatus: 'IMPORTED',
         nvaPublicationId: registration?.id,
       }),
@@ -84,7 +88,7 @@ export const CentralImportCandidateMerge = () => {
   const importCandidate = importCandidateQuery.data;
 
   if (importCandidate?.importStatus.candidateStatus === 'IMPORTED') {
-    return <Redirect to={{ pathname: getImportCandidatePath(candidateIdentifier), state: history.location.state }} />;
+    return <Navigate to={{ pathname: getImportCandidatePath(candidateIdentifier ?? '') }} state={locationState} />;
   }
 
   const getLanguageName = (languageUri?: string) => {
@@ -112,10 +116,12 @@ export const CentralImportCandidateMerge = () => {
         await importCandidateMutation.mutateAsync();
         await registrationQuery.refetch();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
-        history.push(getRegistrationWizardPath(registrationIdentifier), {
-          previousPath: getImportCandidatePath(candidateIdentifier),
-          previousSearch: history.location.state.previousSearch,
-        } satisfies BasicDataLocationState);
+        navigate(getRegistrationWizardPath(registrationIdentifier ?? ''), {
+          state: {
+            previousPath: getImportCandidatePath(candidateIdentifier ?? ''),
+            previousSearch: locationState.previousSearch,
+          },
+        });
       }}>
       {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (
         <Box
@@ -264,7 +270,7 @@ export const CentralImportCandidateMerge = () => {
             )}
 
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
-            <Button onClick={() => history.goBack()}>{t('common.cancel')}</Button>
+            <Button onClick={() => navigate(-1)}>{t('common.cancel')}</Button>
             <LoadingButton
               type="submit"
               variant="contained"

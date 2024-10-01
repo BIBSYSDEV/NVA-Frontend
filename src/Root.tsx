@@ -159,7 +159,7 @@ export const Root = () => {
 
               {/* BasicDataRoutes */}
               <Route
-                path={UrlPathTemplate.BasicData}
+                path={'/basic-data/*'}
                 element={<PrivateRoute isAuthorized={isAdmin} element={<BasicDataPage />} />}
               />
 
