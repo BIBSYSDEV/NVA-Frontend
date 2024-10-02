@@ -58,8 +58,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       size="small"
       variant="standard"
       options={[
-        { i18nKey: t('common.sort_newest_first'), orderBy: 'createdDate', sortOrder: 'desc' },
-        { i18nKey: t('common.sort_oldest_first'), orderBy: 'createdDate', sortOrder: 'asc' },
+        { i18nKey: 'common.sort_newest_first', orderBy: 'createdDate', sortOrder: 'desc' },
+        { i18nKey: 'common.sort_oldest_first', orderBy: 'createdDate', sortOrder: 'asc' },
       ]}
     />
   );

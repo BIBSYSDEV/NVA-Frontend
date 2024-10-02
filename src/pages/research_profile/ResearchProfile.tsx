@@ -9,8 +9,9 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { fetchPerson, ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
+import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { fetchResults, FetchResultsParams, ResultParam } from '../../api/searchApi';
+import { FetchResultsParams, ResultParam } from '../../api/searchApi';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -72,12 +73,8 @@ const ResearchProfile = () => {
     order: registrationSort.orderBy,
     sort: registrationSort.sortOrder,
   };
-  const registrationsQuery = useQuery({
-    enabled: !!personId,
-    queryKey: ['registrations', registrationsQueryConfig],
-    queryFn: () => fetchResults(registrationsQueryConfig),
-    meta: { errorMessage: t('feedback.error.get_registrations') },
-  });
+
+  const registrationsQuery = useRegistrationSearch({ enabled: !!personId, params: registrationsQueryConfig });
 
   const projectsQueryConfig: ProjectsSearchParams = {
     participant: personIdNumber,

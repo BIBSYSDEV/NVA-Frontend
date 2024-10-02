@@ -25,6 +25,7 @@ export const SortSelectorWithoutParams = <T extends SortSelectorOption>({
       size="small"
       variant="standard"
       onChange={(event) => {
+        // These typing workarounds are needed because of the way MenuItem handle object values: https://github.com/mui/material-ui/issues/14286
         const value = event.target.value as unknown as T;
         setValue(value);
       }}>
