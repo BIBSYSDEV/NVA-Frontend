@@ -15,6 +15,7 @@
     "start:mock:unix": "export VITE_USE_MOCK=true && npm start",
     "test": "cypress run",
     "test:vitest": "vitest",
+    "test:vitest:verbose": "vitest run --reporter=verbose",
     "test:cypress": "start-server-and-test start:mock:win http://localhost:3000 test",
     "unused-i18n-keys": "i18n-unused display-unused"
   },
