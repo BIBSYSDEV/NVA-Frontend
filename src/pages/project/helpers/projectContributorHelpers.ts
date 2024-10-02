@@ -6,7 +6,6 @@ import {
   deleteProjectManagerRoleFromContributor,
   findProjectManagerRole,
   hasEmptyAffiliation,
-  isNonProjectManagerRole,
   isProjectManagerRole,
   replaceRolesOnContributor,
 } from './projectRoleHelpers';
@@ -15,8 +14,11 @@ export const findProjectManagerIndex = (contributors: ProjectContributor[]) => {
   return contributors.findIndex((contributor) => contributor.roles.some((role) => isProjectManagerRole(role)));
 };
 
-export const getNonProjectManagerContributors = (contributors: ProjectContributor[]) => {
-  return contributors.filter((contributor) => contributor.roles.some((role) => isNonProjectManagerRole(role)));
+export const getContributorsWithRelevantRole = (
+  contributors: ProjectContributor[],
+  roleType: ProjectContributorType
+) => {
+  return contributors.filter((contributor) => contributor.roles.some((role) => role.type === roleType));
 };
 
 export enum AddContributorErrors {

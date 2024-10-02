@@ -4,35 +4,38 @@ import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListPagination } from '../../../components/ListPagination';
-import { CristinProject, ProjectFieldName } from '../../../types/project.types';
+import { CristinProject, ProjectContributorType, ProjectFieldName } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   contributorsAreEqual,
-  getNonProjectManagerContributors,
+  getContributorsWithRelevantRole,
   removeProjectParticipant,
 } from '../../project/helpers/projectContributorHelpers';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ContributorRow } from './ContributorRow';
 import { ProjectContributorTable } from './ProjectContributorTable';
 
-export const ProjectParticipants = () => {
+interface ProjectParticipantProps {
+  roleType: ProjectContributorType;
+}
+
+export const ProjectParticipants = ({ roleType }: ProjectParticipantProps) => {
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
   const [openAddProjectParticipantView, setOpenAddProjectParticipantView] = useState(false);
   const { values, setFieldValue } = useFormikContext<CristinProject>();
-  const contributorsWithNonProjectManagerRole = getNonProjectManagerContributors(values.contributors);
-  const paginatedContributors = contributorsWithNonProjectManagerRole.slice(
-    rowsPerPage * (currentPage - 1),
-    rowsPerPage * currentPage
-  );
+  const contributorsWithRole = getContributorsWithRelevantRole(values.contributors, roleType);
+  const paginatedContributors = contributorsWithRole.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
 
   const toggleOpenAddProjectParticipantView = () => setOpenAddProjectParticipantView(!openAddProjectParticipantView);
 
   return (
     <>
-      <Typography variant="h2">{t('project.project_participants')}</Typography>
+      <Typography variant="h2">
+        {roleType === 'LocalManager' ? t('project.local_managers') : t('project.project_participants')}
+      </Typography>
       <FieldArray name={ProjectFieldName.Contributors}>
         {({ name }: FieldArrayRenderProps) => (
           <>
@@ -42,11 +45,11 @@ export const ProjectParticipants = () => {
               variant="contained"
               startIcon={<AddIcon />}
               data-testid={dataTestId.projectForm.addParticipantButton}>
-              {t('project.add_project_contributor')}
+              {roleType === 'LocalManager' ? t('project.add_local_manager') : t('project.add_project_contributor')}
             </Button>
-            {contributorsWithNonProjectManagerRole.length > 0 && (
+            {contributorsWithRole.length > 0 && (
               <ListPagination
-                count={contributorsWithNonProjectManagerRole.length}
+                count={contributorsWithRole.length}
                 rowsPerPage={rowsPerPage}
                 page={currentPage}
                 onPageChange={(newPage) => setCurrentPage(newPage)}
@@ -71,6 +74,7 @@ export const ProjectParticipants = () => {
                         removeContributor={() =>
                           setFieldValue(name, removeProjectParticipant(values.contributors, contributorIndex))
                         }
+                        roleType={roleType}
                       />
                     );
                   })}
@@ -83,6 +87,7 @@ export const ProjectParticipants = () => {
       <AddProjectContributorModal
         open={openAddProjectParticipantView}
         toggleModal={toggleOpenAddProjectParticipantView}
+        roleType={roleType}
       />
     </>
   );

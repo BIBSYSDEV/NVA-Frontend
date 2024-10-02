@@ -1127,6 +1127,7 @@
     "add_affiliation": "Legg til tilknytning",
     "add_contributor": "Legg til prosjektdeltaker",
     "add_project_contributor": "Legg til prosjektdeltaker",
+    "add_local_manager": "Legg til lokalt ansvarlig",
     "add_project_manager": "Legg til prosjektleder",
     "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltaker",
     "add_unidentified_project_manager": "Legg til uidentifisert prosjektleder",
@@ -1203,12 +1204,14 @@
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
     "project_manager_is_unidentified": "Prosjektleder er uidentifisert",
     "project_participant": "Prosjektdeltaker",
+    "local_managers": "Lokalt ansvarlige",
     "project_participants": "Prosjektdeltakere",
     "remove_project_manager": "Slett prosjektleder",
     "results": "Resultater",
     "role_types": {
       "ProjectManager": "Prosjektleder",
-      "ProjectParticipant": "Prosjektdeltaker"
+      "ProjectParticipant": "Prosjektdeltaker",
+      "LocalManager": "Lokalt ansvarlig"
     },
     "scientific_summary": "Vitenskapelig sammendrag",
     "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",

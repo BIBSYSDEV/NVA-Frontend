@@ -54,19 +54,16 @@ export const deleteProjectManagerRoleFromContributor = (contributors: ProjectCon
     : contributors;
 };
 
-export const getRelevantContributorRoles = (contributor: ProjectContributor, isProjectManager: boolean) => {
-  return contributor.roles.filter((role) =>
-    isProjectManager ? isProjectManagerRole(role) : isNonProjectManagerRole(role)
-  );
+export const getRelevantContributorRoles = (contributor: ProjectContributor, roleType: ProjectContributorType) => {
+  return contributor.roles.filter((role) => role.type === roleType);
 };
 
 const checkIfSameAffiliationOnSameRoleType = (
   newAffiliationId: string,
   role: ProjectContributorRole,
-  isProjectManager: boolean
+  roleType: ProjectContributorType
 ) => {
-  const isSameRoleType =
-    (isProjectManager && isProjectManagerRole(role)) || (!isProjectManager && isNonProjectManagerRole(role));
+  const isSameRoleType = roleType === role.type;
   return role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId && isSameRoleType;
 };
 
@@ -126,9 +123,11 @@ export enum AffiliationErrors {
 export const addAffiliation = (
   newAffiliationId: string,
   contributorRoles: ProjectContributorRole[],
-  asProjectManager = false,
+  roleType: ProjectContributorType,
   labels?: LanguageString
 ): { newContributorRoles?: ProjectContributorRole[]; error?: AffiliationErrors } => {
+  const asProjectManager = roleType === 'ProjectManager';
+
   if (!newAffiliationId) {
     return {
       newContributorRoles: contributorRoles,
@@ -145,19 +144,14 @@ export const addAffiliation = (
   }
 
   // Avoid adding same unit twice
-  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))) {
+  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, roleType))) {
     return {
       newContributorRoles: contributorRoles,
       error: AffiliationErrors.ADD_DUPLICATE_AFFILIATION,
     };
   }
 
-  const emptyRoleIndex = contributorRoles.findIndex(
-    (role) =>
-      hasEmptyAffiliation(role) &&
-      ((asProjectManager && role.type === 'ProjectManager') ||
-        (!asProjectManager && role.type === 'ProjectParticipant'))
-  );
+  const emptyRoleIndex = contributorRoles.findIndex((role) => hasEmptyAffiliation(role) && role.type === roleType);
 
   const newAffiliation: ProjectOrganization = {
     type: 'Organization',
@@ -169,7 +163,7 @@ export const addAffiliation = (
 
   if (emptyRoleIndex < 0) {
     newContributorRoles.push({
-      type: asProjectManager ? 'ProjectManager' : 'ProjectParticipant',
+      type: roleType,
       affiliation: newAffiliation,
     } as ProjectContributorRole);
   } else {
@@ -186,7 +180,7 @@ export const editAffiliation = (
   newAffiliationId: string,
   contributorRoles: ProjectContributorRole[],
   affiliationToEditId: string,
-  asProjectManager = false,
+  roleType: ProjectContributorType,
   labels?: LanguageString
 ): { newContributorRoles?: ProjectContributorRole[]; error?: AffiliationErrors } => {
   if (!newAffiliationId) {
@@ -206,7 +200,7 @@ export const editAffiliation = (
   }
 
   // If user tries to change affiliation to an already existing affiliation
-  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))) {
+  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, roleType))) {
     return {
       newContributorRoles: contributorRoles,
       error: AffiliationErrors.ADD_DUPLICATE_AFFILIATION,

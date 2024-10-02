@@ -7,7 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ContributorName } from '../../../components/ContributorName';
 import { SimpleWarning } from '../../../components/messages/SimpleWarning';
-import { ProjectContributor, ProjectContributorFieldName, SaveCristinProject } from '../../../types/project.types';
+import {
+  ProjectContributor,
+  ProjectContributorFieldName,
+  ProjectContributorType,
+  SaveCristinProject,
+} from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFullName } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
@@ -24,16 +29,16 @@ interface ContributorRowProps {
   contributorIndex: number;
   baseFieldName: string;
   contributor: ProjectContributor;
+  roleType: ProjectContributorType;
   removeContributor?: () => void;
-  asProjectManager?: boolean;
 }
 
 export const ContributorRow = ({
   contributorIndex,
   baseFieldName,
   contributor,
+  roleType,
   removeContributor,
-  asProjectManager = false,
 }: ContributorRowProps) => {
   const { t } = useTranslation();
   const { errors, touched, setFieldValue } = useFormikContext<SaveCristinProject>();
@@ -41,14 +46,14 @@ export const ContributorRow = ({
   const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
   const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
 
+  const asProjectManager = roleType === 'ProjectManager';
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
   const affiliationError = contributorErrors?.roles?.[0]?.affiliation?.id;
   const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
   const baseFieldRoles = `${baseFieldName}.${ProjectContributorFieldName.Roles}`;
-  const roles = getRelevantContributorRoles(contributor, asProjectManager);
+  const roles = getRelevantContributorRoles(contributor, roleType);
   const hasAtLeastOneEmptyAffiliation = roles.some((role) => hasEmptyAffiliation(role));
   const hasOnlyEmptyAffiliations = roles.every((role) => hasEmptyAffiliation(role));
-  const rolesString = asProjectManager ? t('project.project_manager') : t('project.project_participant');
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
   const toggleOpenVerifyContributor = () => setOpenVerifyContributor(!openVerifyContributor);
@@ -72,7 +77,7 @@ export const ContributorRow = ({
           data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
           label={t('common.role')}
           sx={{ width: '10rem' }}
-          value={rolesString}
+          value={t(`project.role_types.${roleType}`)}
           disabled
           fullWidth
           variant="filled"
@@ -134,7 +139,7 @@ export const ContributorRow = ({
                   contributorRoles={contributor.roles}
                   baseFieldName={baseFieldRoles}
                   sx={{ width: '100%', marginBottom: '0.5rem' }}
-                  asProjectManager={asProjectManager}
+                  roleType={roleType}
                   removeAffiliation={() => onRemoveAffiliation(role.affiliation!.id)}
                 />
               ))
@@ -171,7 +176,7 @@ export const ContributorRow = ({
         toggleModal={toggleOpenVerifyContributor}
         initialSearchTerm={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
         indexToReplace={contributorIndex}
-        addProjectManager={asProjectManager}
+        roleType={roleType}
       />
       {/* Add Affiliation */}
       <ProjectAddAffiliationModal
@@ -180,7 +185,7 @@ export const ContributorRow = ({
         authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
         baseFieldName={baseFieldRoles}
         contributorRoles={contributor.roles}
-        asProjectManager={asProjectManager}
+        roleType={roleType}
       />
       {/* Confirm delete contributor */}
       {!!removeContributor && (
