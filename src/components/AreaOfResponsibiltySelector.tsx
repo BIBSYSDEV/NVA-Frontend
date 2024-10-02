@@ -8,6 +8,7 @@ import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
 import { RootState } from '../redux/store';
 import { Organization } from '../types/organization.types';
 import { dataTestId } from '../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../utils/searchHelpers';
 import { getLanguageString } from '../utils/translation-helpers';
 
 interface OrganizationOption extends Organization {
@@ -92,20 +93,22 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
           variant="filled"
           data-testid={dataTestId.registrationWizard.resourceType.journalChip}
           onDelete={() => {
-            searchParams.delete(paramName);
+            const syncedParams = syncParamsWithSearchFields(searchParams);
+            syncedParams.delete(paramName);
             resetPagination();
-            history.push({ search: searchParams.toString() });
+            history.push({ search: syncedParams.toString() });
           }}
         />
       )}
       onChange={(_, values) => {
+        const syncedParams = syncParamsWithSearchFields(searchParams);
         if (values.length) {
-          searchParams.set(paramName, values.map((org) => org.identifier).join(','));
+          syncedParams.set(paramName, values.map((org) => org.identifier).join(','));
         } else {
-          searchParams.delete(paramName);
+          syncedParams.delete(paramName);
         }
         resetPagination();
-        history.push({ search: searchParams.toString() });
+        history.push({ search: syncedParams.toString() });
       }}
       renderOption={({ key, ...props }, option, { selected }) => (
         <li {...props} key={option.id}>
