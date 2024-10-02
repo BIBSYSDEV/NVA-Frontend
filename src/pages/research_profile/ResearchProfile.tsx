@@ -3,7 +3,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -42,10 +42,12 @@ const ResearchProfile = () => {
   const [registrationsPage, setRegistrationsPage] = useState(1);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationSort, setRegistrationSort] = useState(registrationSortOptions[0]);
+  const [totalRegistrations, setTotalRegistrations] = useState<number | null>(null);
 
   const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [projectSort, setProjectSort] = useState(projectSortOptions[0]);
+  const [totalProjects, setTotalProjects] = useState<number | null>(null);
 
   const user = useSelector((store: RootState) => store.user);
 
@@ -106,13 +108,27 @@ const ResearchProfile = () => {
   const personBackground = getLanguageString(person?.background);
   const personKeywords = person?.keywords ?? [];
 
-  const registrationsHeading = registrationsQuery.data
-    ? `${t('my_page.my_profile.results')} (${registrationsQuery.data.totalHits})`
-    : t('my_page.my_profile.results');
+  useEffect(() => {
+    if (totalRegistrations === null && registrationsQuery.data) {
+      setTotalRegistrations(registrationsQuery.data.totalHits);
+    }
+  }, [totalRegistrations, registrationsQuery.data]);
 
-  const projectHeading = projectsQuery.data
-    ? `${t('my_page.my_profile.projects')} (${projectsQuery.data.size})`
-    : t('my_page.my_profile.projects');
+  useEffect(() => {
+    if (totalProjects === null && projectsQuery.data) {
+      setTotalProjects(projectsQuery.data.size);
+    }
+  }, [totalProjects, projectsQuery.data]);
+
+  const registrationsHeading =
+    !!totalRegistrations && totalRegistrations > 0
+      ? `${t('my_page.my_profile.results')} (${totalRegistrations})`
+      : t('my_page.my_profile.results');
+
+  const projectHeading =
+    !!totalProjects && totalProjects > 0
+      ? `${t('my_page.my_profile.projects')} (${totalProjects})`
+      : t('my_page.my_profile.projects');
 
   return personQuery.isPending ? (
     <PageSpinner aria-label={t('my_page.research_profile')} />
@@ -262,11 +278,13 @@ const ResearchProfile = () => {
         <Typography variant="h2" gutterBottom sx={{ mt: '2rem' }}>
           {registrationsHeading}
         </Typography>
-        <Typography>
-          <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
-            <MuiLink component={Link} to={`/?${ResultParam.Contributor}=${encodeURIComponent(personId)}`} />
-          </Trans>
-        </Typography>
+        {!!totalRegistrations && totalRegistrations > 0 && (
+          <Typography>
+            <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
+              <MuiLink component={Link} to={`/?${ResultParam.Contributor}=${encodeURIComponent(personId)}`} />
+            </Trans>
+          </Typography>
+        )}
         {registrationsQuery.isPending || promotedPublicationsQuery.isPending ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
@@ -300,16 +318,18 @@ const ResearchProfile = () => {
         <Typography variant="h2" gutterBottom sx={{ mt: '1rem' }}>
           {projectHeading}
         </Typography>
-        <Typography>
-          <Trans t={t} i18nKey="my_page.my_profile.link_to_projects_search">
-            <MuiLink
-              component={Link}
-              to={`/?${SearchParam.Type}=${SearchTypeValue.Project}&${ProjectSearchParameter.ParticipantFacet}=${encodeURIComponent(
-                getIdentifierFromId(personId)
-              )}`}
-            />
-          </Trans>
-        </Typography>
+        {!!totalProjects && totalProjects > 0 && (
+          <Typography>
+            <Trans t={t} i18nKey="my_page.my_profile.link_to_projects_search">
+              <MuiLink
+                component={Link}
+                to={`/?${SearchParam.Type}=${SearchTypeValue.Project}&${ProjectSearchParameter.ParticipantFacet}=${encodeURIComponent(
+                  getIdentifierFromId(personId)
+                )}`}
+              />
+            </Trans>
+          </Typography>
+        )}
         {projectsQuery.isPending ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : projects.length > 0 ? (
