@@ -1159,6 +1159,7 @@
       "related_registrations": "Relaterte forskningsresultater",
       "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
       "no_related_registrations_description": "Prosjektet må lagres før det kan tilknyttes forskningsresultater",
+      "no_related_projects_description": "Prosjektet har ingen tilknyttede prosjekter enda.",
       "related_registrations_description": "Se forskningsresultater som er relatert til prosjektet",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",

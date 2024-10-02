@@ -103,14 +103,18 @@ export const RegistrationListItemContent = ({
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' }, marginBottom: '0.5rem' }}>
-          <Box sx={{ display: 'flex', gap: '0.4rem' }}>
+          <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
             <RegistrationIcon />
-            <Typography sx={{ color: 'primary.main' }}>
-              {registrationType ? t(`registration.publication_types.${registrationType}`) : ''}
-            </Typography>
-            <Typography sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-              {entityDescription?.publicationDate ? displayDate(entityDescription?.publicationDate) : ''}
-            </Typography>
+            {registrationType && (
+              <Typography sx={{ color: 'primary.main' }}>
+                {t(`registration.publication_types.${registrationType}`)}
+              </Typography>
+            )}
+            {entityDescription?.publicationDate && (
+              <Typography sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                {displayDate(entityDescription?.publicationDate)}
+              </Typography>
+            )}
           </Box>
           {ticketView &&
             (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (

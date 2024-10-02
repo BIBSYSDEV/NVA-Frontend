@@ -1,7 +1,8 @@
 import { CircularProgress, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFetchRegistrationsForProject } from '../../api/hooks/useFetchRegistrationsForProject';
+import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
@@ -18,7 +19,16 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(itemsPerRowOptions[0]);
 
-  const resultsQuery = useFetchRegistrationsForProject(projectId, rowsPerPage, page);
+  const registrationsQueryConfig: FetchResultsParams = {
+    project: projectId,
+    from: rowsPerPage * (page - 1),
+    results: rowsPerPage,
+  };
+  const resultsQuery = useQuery({
+    queryKey: ['registrations', registrationsQueryConfig],
+    queryFn: () => fetchResults(registrationsQueryConfig),
+    meta: { errorMessage: t('feedback.error.search') },
+  });
   const results = resultsQuery.data;
 
   return (

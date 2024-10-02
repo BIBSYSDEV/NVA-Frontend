@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFetchRegistrationsForProject } from '../../../api/hooks/useFetchRegistrationsForProject';
+import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
@@ -16,7 +16,9 @@ export const RelatedRegistrationsField = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const resultsQuery = useFetchRegistrationsForProject(values.id, rowsPerPage, page);
+  const resultsQuery = useRegistrationSearch({
+    params: { project: values.id, from: rowsPerPage * (page - 1), results: rowsPerPage },
+  });
   const results = resultsQuery.data;
 
   return (
@@ -26,9 +28,7 @@ export const RelatedRegistrationsField = () => {
         <>
           <Typography>{t('project.form.related_registrations_description')}</Typography>
           {resultsQuery.isPending ? (
-            <Box>
-              <ListSkeleton arrayLength={4} maxWidth={60} height={20} />
-            </Box>
+            <ListSkeleton arrayLength={4} maxWidth={60} height={20} />
           ) : results && results.totalHits > 0 ? (
             <ListPagination
               rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}

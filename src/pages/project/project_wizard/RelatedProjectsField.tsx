@@ -69,7 +69,7 @@ export const RelatedProjectsField = () => {
           />
         )}
       </Field>
-      {values.relatedProjects.length > 0 && (
+      {values.relatedProjects.length > 0 ? (
         <ListPagination
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           count={values.relatedProjects.length}
@@ -90,6 +90,8 @@ export const RelatedProjectsField = () => {
             ))}
           </Box>
         </ListPagination>
+      ) : (
+        <Typography>{t('project.form.no_related_projects_description')}</Typography>
       )}
     </Box>
   );
