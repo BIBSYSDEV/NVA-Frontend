@@ -171,7 +171,7 @@ export const DoiRequestAccordion = ({
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
   const messages = doiRequestTicket?.messages ?? [];
 
-  const publishedFilesOnRegistration = getOpenFiles(registration.associatedArtifacts);
+  const openFilesOnRegistration = getOpenFiles(registration.associatedArtifacts);
 
   const hasReservedDoi = !doiRequestTicket && registration.doi;
   const status = doiRequestTicket
@@ -203,7 +203,7 @@ export const DoiRequestAccordion = ({
       data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
       endIcon={<CheckIcon />}
       onClick={() => {
-        if (publishedFilesOnRegistration.length > 0) {
+        if (openFilesOnRegistration.length > 0) {
           approveTicketMutation.mutate();
         } else {
           toggleConfirmDialogAssignDoi();

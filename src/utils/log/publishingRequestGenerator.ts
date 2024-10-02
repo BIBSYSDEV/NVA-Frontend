@@ -35,7 +35,7 @@ function generateOpenFilesLogEntry(
   filesOnRegistration: AssociatedFile[],
   t: TFunction
 ): LogEntry {
-  const publishedFilesItems: LogActionItem[] = getOpenFiles(filesOnRegistration)
+  const openFilesItems: LogActionItem[] = getOpenFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => {
@@ -71,7 +71,7 @@ function generateOpenFilesLogEntry(
     actions: [
       {
         actor: ticket.finalizedBy ?? '',
-        items: [...publishedFilesItems, ...archivedFilesItems, ...deletedFilesItems],
+        items: [...openFilesItems, ...archivedFilesItems, ...deletedFilesItems],
       },
     ],
   };

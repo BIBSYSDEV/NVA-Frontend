@@ -185,7 +185,7 @@ export const PublishingAccordion = ({
   const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
 
   const filesAwaitingApproval = registration.associatedArtifacts.filter(isPendingOpenFile).length;
-  const hasUnpublishedFiles = filesAwaitingApproval > 0;
+  const hasPendingOpenFiles = filesAwaitingApproval > 0;
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
@@ -198,7 +198,7 @@ export const PublishingAccordion = ({
   const mismatchingPublishedStatusWorkflow2 =
     registratorPublishesMetadataOnly &&
     !!lastPublishingRequest &&
-    (isDraftRegistration || (hasCompletedTicket && hasUnpublishedFiles));
+    (isDraftRegistration || (hasCompletedTicket && hasPendingOpenFiles));
 
   const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
 
@@ -285,7 +285,7 @@ export const PublishingAccordion = ({
         {!tabErrors && hasMismatchingPublishedStatus && (
           <>
             <Typography paragraph sx={{ mt: '1rem' }}>
-              {hasUnpublishedFiles && isPublishedRegistration
+              {hasPendingOpenFiles && isPublishedRegistration
                 ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
@@ -338,7 +338,7 @@ export const PublishingAccordion = ({
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
               <>
                 <Typography paragraph>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
-                {hasUnpublishedFiles && (
+                {hasPendingOpenFiles && (
                   <Typography paragraph>
                     {t('registration.public_page.tasks_panel.you_can_publish_metadata_files_info')}
                   </Typography>

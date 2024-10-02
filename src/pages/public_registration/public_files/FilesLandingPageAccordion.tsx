@@ -25,11 +25,11 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const userIsRegistrationAdmin = userCanEditRegistration(registration);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const publishedFiles = associatedFiles.filter(isOpenFile);
-  const unpublishedFiles = associatedFiles.filter(isPendingOpenFile);
-  const publishableFilesLength = publishedFiles.length + unpublishedFiles.length;
+  const openFiles = associatedFiles.filter(isOpenFile);
+  const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
+  const publishableFilesLength = openFiles.length + pendingOpenFiles.length;
 
-  const filesToShow = userIsRegistrationAdmin ? [...publishedFiles, ...unpublishedFiles] : publishedFiles;
+  const filesToShow = userIsRegistrationAdmin ? [...openFiles, ...pendingOpenFiles] : openFiles;
 
   const showFileVersionField = isTypeWithFileVersionField(
     registration.entityDescription?.reference?.publicationInstance?.type
@@ -62,9 +62,9 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <Typography variant="h2" color="primary">
             {t('registration.files_and_license.files_count', { count: publishableFilesLength })}
           </Typography>
-          {registrationMetadataIsPublished && unpublishedFiles.length > 0 && (
+          {registrationMetadataIsPublished && pendingOpenFiles.length > 0 && (
             <Typography sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
-              {t('registration.files_and_license.files_awaits_approval', { count: unpublishedFiles.length })}
+              {t('registration.files_and_license.files_awaits_approval', { count: pendingOpenFiles.length })}
             </Typography>
           )}
         </Box>

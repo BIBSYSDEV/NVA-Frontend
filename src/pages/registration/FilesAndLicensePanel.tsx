@@ -43,8 +43,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
-  const publishedFiles = files.filter(isOpenFile);
-  const filesToPublish = files.filter(isPendingOpenFile);
+  const openFiles = files.filter(isOpenFile);
+  const pendingOpenFiles = files.filter(isPendingOpenFile);
   const filesNotToPublish = files.filter((file) => file.type === FileType.UnpublishableFile);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
@@ -145,10 +145,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     disabled={!canEditFiles}
                   />
                 )}
-                {filesToPublish.length > 0 && (
+                {pendingOpenFiles.length > 0 && (
                   <FileList
                     title={t('registration.files_and_license.files_to_publish')}
-                    files={filesToPublish}
+                    files={pendingOpenFiles}
                     uppy={uppy}
                     remove={remove}
                     baseFieldName={name}
@@ -164,10 +164,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     archived
                   />
                 )}
-                {publishedFiles.length > 0 && (
+                {openFiles.length > 0 && (
                   <FileList
                     title={t('registration.files_and_license.published_files')}
-                    files={publishedFiles}
+                    files={openFiles}
                     uppy={uppy}
                     remove={remove}
                     baseFieldName={name}
