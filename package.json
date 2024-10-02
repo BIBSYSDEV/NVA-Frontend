@@ -48,7 +48,7 @@
     "@uppy/locales": "^4.1.0",
     "@uppy/progress-bar": "^3.1.1",
     "@uppy/react": "^3.4.0",
-    "aws-amplify": "^6.6.2",
+    "aws-amplify": "^6.6.3",
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
     "deepmerge": "^4.3.1",
