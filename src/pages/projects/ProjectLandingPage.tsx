@@ -1,5 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
-import { IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Paper, Tooltip } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import { RootState } from '../../redux/store';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getEditProjectPath } from '../../utils/urlPaths';
+import { ProjectIconHeader } from '../project/components/ProjectIconHeader';
 import { canEditProject } from '../registration/description_tab/projects_field/projectHelpers';
 import { ProjectContributors } from './ProjectContributors';
 import { ProjectGeneralInfo } from './ProjectGeneralInfo';
@@ -34,24 +35,23 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       <Helmet>
         <title>{project.title}</title>
       </Helmet>
-      <StyledPaperHeader>
-        <Typography sx={{ color: 'inherit' }}>{t('project.project')}</Typography>
-
-        <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
-          {project.title}
-        </TruncatableTypography>
+      <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'project.main' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <ProjectIconHeader projectStatus={project.status} />
+          <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
+            {project.title}
+          </TruncatableTypography>
+        </Box>
         {userCanEditProject && (
-          <>
-            <Tooltip title={t('project.edit_project')}>
-              <IconButton
-                data-testid={dataTestId.projectLandingPage.editProjectButton}
-                component={RouterLink}
-                to={getEditProjectPath(project.id)}
-                sx={{ ml: 'auto', color: 'inherit' }}>
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
-          </>
+          <Tooltip title={t('project.edit_project')}>
+            <IconButton
+              data-testid={dataTestId.projectLandingPage.editProjectButton}
+              component={RouterLink}
+              to={getEditProjectPath(project.id)}
+              sx={{ ml: 'auto', color: 'inherit' }}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
         )}
       </StyledPaperHeader>
       <BackgroundDiv>

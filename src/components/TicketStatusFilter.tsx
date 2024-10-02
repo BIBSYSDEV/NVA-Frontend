@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../utils/searchHelpers';
 
 const labelId = 'status-filter-select';
 
@@ -23,12 +24,13 @@ export const TicketStatusFilter = ({ options }: TicketStatusFilterProps) => {
     const newSelectedOptions = event.target.value as TicketStatus[];
     const newSelectedStatuses = [...otherSelectedStatuses, ...newSelectedOptions];
 
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (newSelectedStatuses.length > 0) {
-      searchParams.set(TicketSearchParam.Status, newSelectedStatuses.join(','));
+      syncedParams.set(TicketSearchParam.Status, newSelectedStatuses.join(','));
     } else {
-      searchParams.delete(TicketSearchParam.Status);
+      syncedParams.delete(TicketSearchParam.Status);
     }
-    history.push({ search: searchParams.toString() });
+    history.push({ search: syncedParams.toString() });
   };
 
   return (

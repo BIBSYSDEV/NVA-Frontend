@@ -801,7 +801,6 @@
       "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbildet?",
       "results": "Resultat",
       "telephone": "Telefon",
-      "user_profile": "Brukerprofil",
       "user_role_and_help": {
         "application_help_helper_text": "Om du trenger veiledning til utfylling, kan denne være til hjelp.",
         "application_help_text": "Veiledning for å registrere et resultat",
@@ -1144,6 +1143,9 @@
     "coordinating_institution": "Koordinerende institusjon",
     "create_new_project": "Opprett nytt prosjekt",
     "create_project": "Nytt prosjekt",
+    "duplicate_project_warning": "Det finnes et prosjekt i NVA med samme tittel. Vennligst ikke registrer prosjektet dersom det er samme prosjekt, slik at du ikke oppretter duplikater.",
+    "duplicate_title_warning": "Det finnes et prosjekt i NVA med samme tittel. Vennligst avbryt registreringen dersom det er det samme prosjektet som du prøver å registrere, slik at du ikke oppretter duplikater.",
+    "no_duplicate_title": "Ingen resultat funnet med samme tittel.",
     "edit_project": "Endre prosjekt",
     "error": {
       "contributor_already_added_with_same_role_and_affiliation": "Prosjektdeltaker er allerede lagt til med samme rolle og tilknytning."

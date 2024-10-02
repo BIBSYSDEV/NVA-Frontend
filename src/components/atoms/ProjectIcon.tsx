@@ -6,6 +6,7 @@ export const ProjectIcon = () => {
       sx={{
         bgcolor: 'project.main',
         borderRadius: '0.4rem',
+        color: 'black',
       }}
     />
   );

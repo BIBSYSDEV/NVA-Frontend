@@ -9,6 +9,7 @@ import { NavigationList } from '../../components/PageWithSideMenu';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
+import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 export const ResultsPortfolioNavigationListAccodion = () => {
@@ -32,16 +33,17 @@ export const ResultsPortfolioNavigationListAccodion = () => {
             const clickedStatus = event.target.value as RegistrationStatus;
             const statusAlreadySelected = selectedStatuses.includes(clickedStatus);
 
+            const syncedParams = syncParamsWithSearchFields(queryParams);
             const newStatuses = statusAlreadySelected
               ? selectedStatuses.filter((status) => status !== clickedStatus)
               : [...selectedStatuses, clickedStatus];
 
             if (newStatuses.length === 0) {
-              queryParams.delete(CustomerResultParam.Status);
+              syncedParams.delete(CustomerResultParam.Status);
             } else {
-              queryParams.set(CustomerResultParam.Status, newStatuses.join(','));
+              syncedParams.set(CustomerResultParam.Status, newStatuses.join(','));
             }
-            history.push({ search: queryParams.toString() });
+            history.push({ search: syncedParams.toString() });
           }}>
           <FormControlLabel
             data-testid={dataTestId.editor.resultsPortfolioPublishedCheckbox}
