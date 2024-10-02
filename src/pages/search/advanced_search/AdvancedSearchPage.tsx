@@ -20,6 +20,7 @@ import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { ScientificIndexStatuses } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { ExportResultsButton } from '../ExportResultsButton';
 import { PublicationYearIntervalFilter } from '../PublicationYearIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
@@ -56,14 +57,15 @@ export const AdvancedSearchPage = () => {
     keepDataWhileLoading: true,
   });
 
-  const handleNviReportedCheckbox = (event: React.SyntheticEvent, checked: boolean) => {
+  const handleNviReportedCheckbox = (_: unknown, checked: boolean) => {
+    const syncedParams = syncParamsWithSearchFields(params);
     if (checked) {
-      params.set(ResultParam.ScientificIndexStatus, ScientificIndexStatuses.Reported);
+      syncedParams.set(ResultParam.ScientificIndexStatus, ScientificIndexStatuses.Reported);
     } else {
-      params.delete(ResultParam.ScientificIndexStatus);
+      syncedParams.delete(ResultParam.ScientificIndexStatus);
     }
 
-    history.push({ search: params.toString() });
+    history.push({ search: syncedParams.toString() });
   };
 
   return (

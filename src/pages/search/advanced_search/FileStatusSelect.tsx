@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 enum FileStatus {
   hasPublicFiles = 'hasPublicFiles',
@@ -17,14 +18,15 @@ export const FileStatusSelect = () => {
 
   const handleChange = (event: SelectChangeEvent) => {
     const newValue = event.target.value;
+    const syncedParams = syncParamsWithSearchFields(searchParams);
 
     if (newValue) {
-      searchParams.set(ResultParam.Files, newValue);
+      syncedParams.set(ResultParam.Files, newValue);
     } else {
-      searchParams.delete(ResultParam.Files);
-      searchParams.delete(ResultParam.From);
+      syncedParams.delete(ResultParam.Files);
     }
-    history.push({ search: searchParams.toString() });
+    syncedParams.delete(ResultParam.From);
+    history.push({ search: syncedParams.toString() });
   };
 
   return (

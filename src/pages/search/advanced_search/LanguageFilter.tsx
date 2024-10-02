@@ -6,6 +6,7 @@ import { useHistory } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { registrationLanguageOptions } from '../../../utils/registration-helpers';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 export const LanguageFilter = () => {
   const { t, i18n } = useTranslation();
@@ -19,6 +20,7 @@ export const LanguageFilter = () => {
   };
 
   const updateSelectedLanguages = (selectedUris: string[]) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedUris && selectedUris.length > 0) {
       const languages = selectedUris
         .map(
@@ -28,15 +30,16 @@ export const LanguageFilter = () => {
         .filter(Boolean);
 
       if (languages.length > 0) {
-        searchParams.set(ResultParam.PublicationLanguageShould, languages.join(','));
+        syncedParams.set(ResultParam.PublicationLanguageShould, languages.join(','));
       } else {
-        searchParams.delete(ResultParam.PublicationLanguageShould);
+        syncedParams.delete(ResultParam.PublicationLanguageShould);
       }
     } else {
-      searchParams.delete(ResultParam.PublicationLanguageShould);
+      syncedParams.delete(ResultParam.PublicationLanguageShould);
     }
+    syncedParams.delete(ResultParam.From);
 
-    history.push({ search: searchParams.toString() });
+    history.push({ search: syncedParams.toString() });
   };
 
   const selectedLanguages = languageParam

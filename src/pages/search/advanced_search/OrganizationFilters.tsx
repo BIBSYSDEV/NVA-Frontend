@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Checkbox, Chip, FormControlLabel, Skeleton } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -18,6 +18,7 @@ import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { OrganizationHierarchyFilter } from './OrganizationHierarchyFilter';
 
@@ -67,16 +68,18 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
 
   const isLoading = topLevelOrganizationQuery.isFetching || organizationSearchQuery.isFetching;
 
-  const handleCheckedExcludeSubunits = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckedExcludeSubunits = (event: ChangeEvent<HTMLInputElement>) => {
+    const syncedParams = syncParamsWithSearchFields(params);
     if (topLevelOrgParam) {
       if (event.target.checked) {
-        params.set(ResultParam.ExcludeSubunits, 'true');
+        syncedParams.set(ResultParam.ExcludeSubunits, 'true');
       } else {
-        params.delete(ResultParam.ExcludeSubunits);
+        syncedParams.delete(ResultParam.ExcludeSubunits);
       }
+      syncedParams.delete(ResultParam.From);
     }
 
-    history.push({ search: params.toString() });
+    history.push({ search: syncedParams.toString() });
   };
 
   return (
