@@ -3,12 +3,12 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
-import { FileType } from '../../../types/associatedArtifact.types';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isOpenFile,
   isPendingOpenFile,
   isTypeWithFileVersionField,
   userCanEditRegistration,
@@ -25,7 +25,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const userIsRegistrationAdmin = userCanEditRegistration(registration);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const publishedFiles = associatedFiles.filter((file) => file.type === FileType.PublishedFile);
+  const publishedFiles = associatedFiles.filter(isOpenFile);
   const unpublishedFiles = associatedFiles.filter(isPendingOpenFile);
   const publishableFilesLength = publishedFiles.length + unpublishedFiles.length;
 

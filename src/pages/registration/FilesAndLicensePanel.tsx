@@ -14,6 +14,7 @@ import {
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isOpenFile,
   isPendingOpenFile,
   userCanEditRegistration,
   userIsValidImporter,
@@ -42,7 +43,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
-  const publishedFiles = files.filter((file) => file.type === FileType.PublishedFile);
+  const publishedFiles = files.filter(isOpenFile);
   const filesToPublish = files.filter(isPendingOpenFile);
   const filesNotToPublish = files.filter((file) => file.type === FileType.UnpublishableFile);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);

@@ -41,7 +41,7 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
-import { isPendingOpenFile } from '../../../utils/registration-helpers';
+import { isOpenFile, isPendingOpenFile } from '../../../utils/registration-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
@@ -158,7 +158,7 @@ export const FilesTableRow = ({
               <Checkbox
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
-                checked={isPendingOpenFile(file) || field.value === FileType.PublishedFile}
+                checked={isPendingOpenFile(file) || isOpenFile(file)}
                 disabled={disabled}
                 inputProps={{
                   'aria-labelledby': markForPublishId,

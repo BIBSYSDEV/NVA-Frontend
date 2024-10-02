@@ -32,7 +32,6 @@ import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { FileType } from '../../../types/associatedArtifact.types';
 import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
@@ -40,7 +39,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
-import { isPendingOpenFile, userCanPublishRegistration } from '../../../utils/registration-helpers';
+import { isOpenFile, isPendingOpenFile, userCanPublishRegistration } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
@@ -94,9 +93,7 @@ export const PublishingAccordion = ({
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
-  const registrationHasFile = registration.associatedArtifacts.some(
-    (artifact) => artifact.type === FileType.PublishedFile
-  );
+  const registrationHasFile = registration.associatedArtifacts.some(isOpenFile);
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
   const userCanPublish = userCanPublishRegistration(registration);
 

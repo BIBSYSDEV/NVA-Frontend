@@ -35,7 +35,7 @@ import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getAssociatedFiles } from '../../../utils/registration-helpers';
+import { getOpenFiles } from '../../../utils/registration-helpers';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -171,9 +171,7 @@ export const DoiRequestAccordion = ({
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
   const messages = doiRequestTicket?.messages ?? [];
 
-  const publishedFilesOnRegistration = getAssociatedFiles(registration.associatedArtifacts).filter(
-    (file) => file.type === 'PublishedFile'
-  );
+  const publishedFilesOnRegistration = getOpenFiles(registration.associatedArtifacts);
 
   const hasReservedDoi = !doiRequestTicket && registration.doi;
   const status = doiRequestTicket

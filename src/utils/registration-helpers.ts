@@ -678,7 +678,7 @@ export const userCanPublishRegistration = (registration: Registration) =>
 export const userCanDeleteRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('delete') ?? false;
 
-export const userCanEditPublishedFile = (registration: Registration) =>
+export const userCanEditOpenFile = (registration: Registration) =>
   registration.allowedOperations?.includes('update-including-files') ?? false;
 
 export const hyphenateIsrc = (isrc: string) =>
@@ -701,13 +701,14 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
-export const getPublishedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
-  getAssociatedFiles(associatedArtifacts).filter(
-    (file) => file.type === FileType.PublishedFile || file.type === FileType.OpenFile
-  );
+export const getOpenFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  getAssociatedFiles(associatedArtifacts).filter(isOpenFile);
 
 export const isPendingOpenFile = (artifact: AssociatedArtifact) =>
   artifact.type === FileType.PendingOpenFile || artifact.type === FileType.UnpublishedFile;
+
+export const isOpenFile = (artifact: AssociatedArtifact) =>
+  artifact.type === FileType.OpenFile || artifact.type === FileType.PublishedFile;
 
 export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[]) => {
   return getAssociatedFiles(associatedArtifacts).filter(
