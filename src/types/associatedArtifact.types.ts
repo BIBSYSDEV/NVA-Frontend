@@ -18,9 +18,16 @@ export enum FileVersion {
 }
 
 export enum FileType {
+  // Deprecated types
   UnpublishedFile = 'UnpublishedFile',
   UnpublishableFile = 'UnpublishableFile',
   PublishedFile = 'PublishedFile',
+  // New types
+  OpenFile = 'OpenFile',
+  PendingOpenFile = 'PendingOpenFile',
+  RejectedFile = 'RejectedFile',
+  InternalFile = 'InternalFile',
+  PendingInternalFile = 'PendingInternalFile',
 }
 
 export interface AssociatedFile {
@@ -52,7 +59,7 @@ export interface ImportUploadDetails {
 }
 
 export const emptyFile: AssociatedFile = {
-  type: FileType.UnpublishedFile,
+  type: FileType.PendingOpenFile,
   identifier: '',
   name: '',
   size: 0,

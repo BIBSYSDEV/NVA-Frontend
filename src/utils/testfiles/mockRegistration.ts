@@ -24,7 +24,7 @@ export const mockRegistration: JournalRegistration = {
   publisher: { id: mockCustomerInstitution.id },
   associatedArtifacts: [
     {
-      type: FileType.UnpublishedFile,
+      type: FileType.PendingOpenFile,
       identifier: '3214324',
       name: 'filename.pdf',
       size: 10,

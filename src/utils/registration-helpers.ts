@@ -32,7 +32,6 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
 import {
   allPublicationInstanceTypes,
   ArtisticType,
@@ -687,11 +686,10 @@ export const hyphenateIsrc = (isrc: string) =>
 
 export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;
 
-export const associatedArtifactIsFile = ({ type }: { type: string }) =>
-  type === 'File' ||
-  type === FileType.UnpublishedFile ||
-  type === FileType.PublishedFile ||
-  type === FileType.UnpublishableFile;
+export const associatedArtifactIsFile = ({ type }: { type: string }) => {
+  const allFileTypes: string[] = Object.values(FileType);
+  return allFileTypes.includes(type);
+};
 
 export const associatedArtifactIsLink = ({ type }: { type: string }) => type === 'AssociatedLink';
 
@@ -704,23 +702,16 @@ export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
 export const getPublishedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
-  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.PublishedFile);
+  getAssociatedFiles(associatedArtifacts).filter(
+    (file) => file.type === FileType.PublishedFile || file.type === FileType.OpenFile
+  );
 
-export const getUnpublishableFiles = (associatedArtifacts: AssociatedArtifact[]) =>
-  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.UnpublishableFile);
+export const isPendingOpenFile = (artifact: AssociatedArtifact) =>
+  artifact.type === FileType.PendingOpenFile || artifact.type === FileType.UnpublishedFile;
 
-const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
-  const rejectedFileIdentifiers = tickets
-    .filter((ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Closed')
-    .flatMap((ticket) => (ticket as PublishingTicket).filesForApproval);
-
-  return getAssociatedFiles(associatedArtifacts).filter((file) => rejectedFileIdentifiers.includes(file.identifier));
-};
-
-export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
-  const rejectedFileIdentifiers = getRejectedFiles(associatedArtifacts, tickets).map((file) => file.identifier);
+export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[]) => {
   return getAssociatedFiles(associatedArtifacts).filter(
-    (file) => file.type === 'UnpublishableFile' && !rejectedFileIdentifiers.includes(file.identifier)
+    (file) => file.type === 'UnpublishableFile' || file.type === 'RejectedFile'
   );
 };
 

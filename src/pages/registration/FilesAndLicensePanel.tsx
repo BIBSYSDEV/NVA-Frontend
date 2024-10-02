@@ -14,6 +14,7 @@ import {
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isPendingOpenFile,
   userCanEditRegistration,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
@@ -42,7 +43,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const publishedFiles = files.filter((file) => file.type === FileType.PublishedFile);
-  const filesToPublish = files.filter((file) => file.type === FileType.UnpublishedFile);
+  const filesToPublish = files.filter(isPendingOpenFile);
   const filesNotToPublish = files.filter((file) => file.type === FileType.UnpublishableFile);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =

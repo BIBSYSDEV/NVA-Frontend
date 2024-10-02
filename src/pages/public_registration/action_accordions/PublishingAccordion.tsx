@@ -40,7 +40,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
-import { userCanPublishRegistration } from '../../../utils/registration-helpers';
+import { isPendingOpenFile, userCanPublishRegistration } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
@@ -187,9 +187,7 @@ export const PublishingAccordion = ({
     lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataAndFiles';
   const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
 
-  const filesAwaitingApproval = registration.associatedArtifacts.filter(
-    (artifact) => artifact.type === FileType.UnpublishedFile
-  ).length;
+  const filesAwaitingApproval = registration.associatedArtifacts.filter(isPendingOpenFile).length;
   const hasUnpublishedFiles = filesAwaitingApproval > 0;
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';

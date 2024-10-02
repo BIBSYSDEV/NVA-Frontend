@@ -41,6 +41,7 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
+import { isPendingOpenFile } from '../../../utils/registration-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
@@ -153,11 +154,11 @@ export const FilesTableRow = ({
         </VerticalAlignedTableCell>
         <VerticalAlignedTableCell>
           <Field name={fileTypeFieldName}>
-            {({ field }: FieldProps) => (
+            {({ field }: FieldProps<FileType>) => (
               <Checkbox
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
-                checked={field.value === FileType.UnpublishedFile || field.value === FileType.PublishedFile}
+                checked={isPendingOpenFile(file) || field.value === FileType.PublishedFile}
                 disabled={disabled}
                 inputProps={{
                   'aria-labelledby': markForPublishId,
@@ -166,7 +167,7 @@ export const FilesTableRow = ({
                   if (!checked) {
                     setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
                   } else {
-                    setFieldValue(fileTypeFieldName, FileType.UnpublishedFile);
+                    setFieldValue(fileTypeFieldName, FileType.PendingOpenFile);
                   }
                 }}
               />

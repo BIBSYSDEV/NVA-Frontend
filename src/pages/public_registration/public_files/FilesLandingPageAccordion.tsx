@@ -9,6 +9,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isPendingOpenFile,
   isTypeWithFileVersionField,
   userCanEditRegistration,
 } from '../../../utils/registration-helpers';
@@ -25,7 +26,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
   const publishedFiles = associatedFiles.filter((file) => file.type === FileType.PublishedFile);
-  const unpublishedFiles = associatedFiles.filter((file) => file.type === FileType.UnpublishedFile);
+  const unpublishedFiles = associatedFiles.filter(isPendingOpenFile);
   const publishableFilesLength = publishedFiles.length + unpublishedFiles.length;
 
   const filesToShow = userIsRegistrationAdmin ? [...publishedFiles, ...unpublishedFiles] : publishedFiles;
