@@ -301,7 +301,10 @@ const ResearchProfile = () => {
               <SortSelectorWithoutParams
                 options={registrationSortOptions}
                 value={registrationSort}
-                setValue={(value) => setRegistrationSort(value)}
+                setValue={(value) => {
+                  setRegistrationsPage(1);
+                  setRegistrationSort(value);
+                }}
               />
             }>
             <RegistrationSearchResults
@@ -346,7 +349,10 @@ const ResearchProfile = () => {
               <SortSelectorWithoutParams
                 options={projectSortOptions}
                 value={projectSort}
-                setValue={(value) => setProjectSort(value)}
+                setValue={(value) => {
+                  setProjectsPage(1);
+                  setProjectSort(value);
+                }}
               />
             }>
             <List>
