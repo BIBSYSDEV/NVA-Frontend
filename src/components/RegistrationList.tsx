@@ -25,6 +25,7 @@ import {
   getResearchProfilePath,
   UrlPathTemplate,
 } from '../utils/urlPaths';
+import { RegistrationIcon } from './atoms/RegistrationIcon';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
 import { SearchListItem } from './styled/Wrappers';
@@ -82,11 +83,6 @@ export const RegistrationListItemContent = ({
   const focusedContributors = primaryContributors.slice(0, 5);
   const countRestContributors = primaryContributors.length - focusedContributors.length;
 
-  const typeString = registrationType ? t(`registration.publication_types.${registrationType}`) : '';
-
-  const publicationDate = displayDate(entityDescription?.publicationDate);
-  const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
-
   const isPromotedPublication = promotedPublications.includes(id);
 
   const isMutating = useIsMutating({ mutationKey }) > 0;
@@ -106,13 +102,20 @@ export const RegistrationListItemContent = ({
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' } }}>
-          {heading && (
-            <Typography variant="overline" sx={{ color: 'primary.main' }}>
-              {heading}
-            </Typography>
-          )}
-
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' }, marginBottom: '0.5rem' }}>
+          <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+            <RegistrationIcon />
+            {registrationType && (
+              <Typography sx={{ color: 'primary.main' }}>
+                {t(`registration.publication_types.${registrationType}`)}
+              </Typography>
+            )}
+            {entityDescription?.publicationDate && (
+              <Typography sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                {displayDate(entityDescription?.publicationDate)}
+              </Typography>
+            )}
+          </Box>
           {ticketView &&
             (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
               <Typography
@@ -176,11 +179,9 @@ export const RegistrationListItemContent = ({
           </TruncatableTypography>
         )}
       </ListItemText>
-
       {location.pathname.includes(UrlPathTemplate.ResearchProfile) && isPromotedPublication && (
         <StarIcon fontSize="small" />
       )}
-
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
           {location.pathname === UrlPathTemplate.MyPageResults && (
