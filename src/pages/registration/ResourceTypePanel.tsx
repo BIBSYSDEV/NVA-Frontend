@@ -10,6 +10,7 @@ import {
   registrationsHaveSameCategory,
   registrationsHaveSamePublicationYear,
 } from '../../utils/registration-helpers';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { DuplicateWarning } from './DuplicateWarning';
 import { SelectRegistrationTypeField } from './resource_type_tab/SelectRegistrationTypeField';
 import { ArtisticArchitectureForm } from './resource_type_tab/sub_type_forms/artistic_types/architecture/ArtisticArchitectureForm';
@@ -48,7 +49,7 @@ export const ResourceTypePanel = () => {
       {duplicateRegistration && registrationsHaveSameCategory(values, duplicateRegistration) && (
         <DuplicateWarning
           name={duplicateRegistration.entityDescription?.mainTitle}
-          identifier={duplicateRegistration.identifier}
+          linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
           warning={t('registration.resource_type.duplicate_category_warning', {
             sameFields: registrationsHaveSamePublicationYear(values, duplicateRegistration)
               ? t('registration.resource_type.same_title_and_date').toLowerCase()
