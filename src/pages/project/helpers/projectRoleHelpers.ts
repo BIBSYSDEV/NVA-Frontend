@@ -54,10 +54,8 @@ export const deleteProjectManagerRoleFromContributor = (contributors: ProjectCon
     : contributors;
 };
 
-export const getRelevantContributorRoles = (contributor: ProjectContributor, isProjectManager: boolean) => {
-  return contributor.roles.filter((role) =>
-    isProjectManager ? isProjectManagerRole(role) : isNonProjectManagerRole(role)
-  );
+export const getRelevantContributorRoles = (contributor: ProjectContributor, roleType: ProjectContributorType) => {
+  return contributor.roles.filter((role) => role.type === roleType);
 };
 
 const checkIfSameAffiliationOnSameRoleType = (

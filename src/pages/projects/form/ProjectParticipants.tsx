@@ -12,6 +12,7 @@ import {
   getNonProjectManagerContributors,
   removeProjectParticipant,
 } from '../../project/helpers/projectContributorHelpers';
+import { nonProjectManagerRoles } from '../../project/project_wizard/ProjectContributorsForm';
 import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ContributorRow } from './ContributorRow';
 import { ProjectContributorTable } from './ProjectContributorTable';
@@ -32,7 +33,7 @@ export const ProjectParticipants = () => {
 
   return (
     <>
-      <Typography variant="h2">{t('project.project_participants')}</Typography>
+      <Typography variant="h2">{t('project.project_members')}</Typography>
       <FieldArray name={ProjectFieldName.Contributors}>
         {({ name }: FieldArrayRenderProps) => (
           <>
@@ -42,7 +43,7 @@ export const ProjectParticipants = () => {
               variant="contained"
               startIcon={<AddIcon />}
               data-testid={dataTestId.projectForm.addParticipantButton}>
-              {t('project.add_project_contributor')}
+              {t('project.add_member')}
             </Button>
             {contributorsWithNonProjectManagerRole.length > 0 && (
               <ListPagination
@@ -58,21 +59,27 @@ export const ProjectParticipants = () => {
                 <ProjectContributorTable>
                   {paginatedContributors.map((contributor, index) => {
                     const contributorIndex = values.contributors.findIndex((c) => contributorsAreEqual(contributor, c));
-                    return (
-                      <ContributorRow
-                        key={
-                          contributor.identity.id
-                            ? contributor.identity.id
-                            : `${contributor.identity.firstName}_${contributor.identity.lastName}_${index}`
-                        }
-                        contributorIndex={contributorIndex}
-                        baseFieldName={`${name}[${contributorIndex}]`}
-                        contributor={contributor}
-                        removeContributor={() =>
-                          setFieldValue(name, removeProjectParticipant(values.contributors, contributorIndex))
-                        }
-                      />
-                    );
+
+                    return nonProjectManagerRoles.map((roleType) => {
+                      if (contributor.roles.some((role) => role.type === roleType)) {
+                        return (
+                          <ContributorRow
+                            key={
+                              contributor.identity.id
+                                ? contributor.identity.id
+                                : `${contributor.identity.firstName}_${contributor.identity.lastName}_${index}`
+                            }
+                            contributorIndex={contributorIndex}
+                            baseFieldName={`${name}[${contributorIndex}]`}
+                            contributor={contributor}
+                            removeContributor={() =>
+                              setFieldValue(name, removeProjectParticipant(values.contributors, contributorIndex))
+                            }
+                            roleType={roleType}
+                          />
+                        );
+                      }
+                    });
                   })}
                 </ProjectContributorTable>
               </ListPagination>

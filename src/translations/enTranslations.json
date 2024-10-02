@@ -1126,8 +1126,6 @@
   },
   "project": {
     "add_affiliation": "Add affiliation",
-    "add_contributor": "",
-    "add_project_contributor": "Add project participant",
     "add_project_manager": "Add project leader",
     "add_unidentified_contributor": "",
     "add_unidentified_project_manager": "",
@@ -1197,7 +1195,6 @@
     "project_manager_from_nfr": "Project manager from NFR: {{name}}",
     "project_manager_is_unidentified": "",
     "project_participant": "Project participant",
-    "project_participants": "Project participants",
     "remove_project_manager": "Delete project leader",
     "results": "Results",
     "role_types": {

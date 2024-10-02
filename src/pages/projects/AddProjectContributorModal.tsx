@@ -24,7 +24,7 @@ export const AddProjectContributorModal = ({
 
   return (
     <Modal
-      headingText={addProjectManager ? t('project.add_project_manager') : t('project.add_project_contributor')}
+      headingText={addProjectManager ? t('project.add_project_manager') : t('project.add_member')}
       open={open}
       onClose={toggleModal}
       fullWidth

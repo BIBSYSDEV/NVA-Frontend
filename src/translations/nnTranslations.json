@@ -1126,8 +1126,6 @@
   },
   "project": {
     "add_affiliation": "Legg til tilknyting",
-    "add_contributor": "",
-    "add_project_contributor": "Legg til prosjektdeltakar",
     "add_project_manager": "Legg til prosjektleiar",
     "add_unidentified_contributor": "",
     "add_unidentified_project_manager": "",
@@ -1197,7 +1195,6 @@
     "project_manager_from_nfr": "Prosjektleiar frå NFR: {{name}}",
     "project_manager_is_unidentified": "",
     "project_participant": "Prosjektdeltakar",
-    "project_participants": "Prosjektdeltakarar",
     "remove_project_manager": "Slett prosjektleiar",
     "results": "Resultat",
     "role_types": {

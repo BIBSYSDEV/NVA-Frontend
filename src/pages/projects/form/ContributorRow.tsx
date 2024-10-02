@@ -7,7 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ContributorName } from '../../../components/ContributorName';
 import { SimpleWarning } from '../../../components/messages/SimpleWarning';
-import { ProjectContributor, ProjectContributorFieldName, SaveCristinProject } from '../../../types/project.types';
+import {
+  ProjectContributor,
+  ProjectContributorFieldName,
+  ProjectContributorType,
+  SaveCristinProject,
+} from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFullName } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
@@ -24,8 +29,8 @@ interface ContributorRowProps {
   contributorIndex: number;
   baseFieldName: string;
   contributor: ProjectContributor;
+  roleType: ProjectContributorType;
   removeContributor?: () => void;
-  asProjectManager?: boolean;
 }
 
 export const ContributorRow = ({
@@ -33,7 +38,7 @@ export const ContributorRow = ({
   baseFieldName,
   contributor,
   removeContributor,
-  asProjectManager = false,
+  roleType,
 }: ContributorRowProps) => {
   const { t } = useTranslation();
   const { errors, touched, setFieldValue } = useFormikContext<SaveCristinProject>();
@@ -41,14 +46,18 @@ export const ContributorRow = ({
   const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
   const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
 
+  const asProjectManager = roleType === 'ProjectManager';
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
   const affiliationError = contributorErrors?.roles?.[0]?.affiliation?.id;
   const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
   const baseFieldRoles = `${baseFieldName}.${ProjectContributorFieldName.Roles}`;
-  const roles = getRelevantContributorRoles(contributor, asProjectManager);
+  const roles = getRelevantContributorRoles(contributor, roleType);
   const hasAtLeastOneEmptyAffiliation = roles.some((role) => hasEmptyAffiliation(role));
   const hasOnlyEmptyAffiliations = roles.every((role) => hasEmptyAffiliation(role));
-  const rolesString = asProjectManager ? t('project.project_manager') : t('project.project_participant');
+
+  console.log('contributor', contributor);
+  console.log('roleType', roleType);
+  console.log('roles', roles);
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
   const toggleOpenVerifyContributor = () => setOpenVerifyContributor(!openVerifyContributor);
@@ -67,17 +76,6 @@ export const ContributorRow = ({
 
   return (
     <TableRow sx={{ td: { verticalAlign: 'top' } }}>
-      <TableCell align="left" width={'1'}>
-        <TextField
-          data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
-          label={t('common.role')}
-          sx={{ width: '10rem' }}
-          value={rolesString}
-          disabled
-          fullWidth
-          variant="filled"
-        />
-      </TableCell>
       <TableCell width={'1'}>
         <Box
           sx={{
@@ -115,6 +113,17 @@ export const ContributorRow = ({
             </Button>
           )}
         </Box>
+      </TableCell>
+      <TableCell align="left" width={'1'}>
+        <TextField
+          data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
+          label={t('common.role')}
+          sx={{ width: '10rem' }}
+          value={t(`project.role_types.${roleType}`)}
+          disabled
+          fullWidth
+          variant="filled"
+        />
       </TableCell>
       <TableCell>
         <Box

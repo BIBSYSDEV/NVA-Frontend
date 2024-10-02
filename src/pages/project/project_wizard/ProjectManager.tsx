@@ -47,8 +47,8 @@ export const ProjectManager = ({ suggestedProjectManager }: ProjectContributorsP
                   contributorIndex={projectManagerIndex}
                   baseFieldName={`${name}[${projectManagerIndex}]`}
                   contributor={projectManager}
+                  roleType={'ProjectManager'}
                   removeContributor={() => setFieldValue(name, removeProjectManager(contributors))}
-                  asProjectManager
                 />
               </ProjectContributorTable>
             )}

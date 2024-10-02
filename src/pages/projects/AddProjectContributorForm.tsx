@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, MenuItem, TextField } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,7 @@ import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
-import { CristinProject, ProjectFieldName } from '../../types/project.types';
+import { CristinProject, ProjectContributorType, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
@@ -16,6 +16,7 @@ import {
   AddContributorErrors,
   addUnidentifiedProjectContributor,
 } from '../project/helpers/projectContributorHelpers';
+import { nonProjectManagerRoles } from '../project/project_wizard/ProjectContributorsForm';
 
 interface AddProjectContributorFormProps {
   toggleModal: () => void;
@@ -34,12 +35,16 @@ export const AddProjectContributorForm = ({
   const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
+  const [selectedContributorRole, setSelectedContributorRole] = useState<ProjectContributorType>('ProjectParticipant');
+
+  console.log('values', values);
+  console.log('selectedContributorRole', selectedContributorRole);
 
   const addParticipant = () => {
     const { newContributors, error } = addContributor(
       selectedPerson,
       contributors,
-      'ProjectParticipant',
+      selectedContributorRole,
       indexToReplace
     );
 
@@ -79,6 +84,24 @@ export const AddProjectContributorForm = ({
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <TextField
+        data-testid={dataTestId.projectWizard.selectContributorType}
+        sx={{ maxWidth: '15rem' }}
+        value={selectedContributorRole}
+        onChange={(event) => {
+          const role = (event.target.value as ProjectContributorType) ?? '';
+          setSelectedContributorRole(role);
+        }}
+        fullWidth
+        select
+        label={t('project.select_project_role')}
+        variant="outlined">
+        {nonProjectManagerRoles.map((role) => (
+          <MenuItem key={role} value={role}>
+            {t(`project.role_types.${role}`)}
+          </MenuItem>
+        ))}
+      </TextField>
       <ContributorSearchField
         selectedPerson={selectedPerson}
         setSelectedPerson={setSelectedPerson}
@@ -103,7 +126,7 @@ export const AddProjectContributorForm = ({
           onClick={addParticipant}
           size="large"
           variant="contained">
-          {t('project.add_contributor')}
+          {t('project.add_member')}
         </Button>
       </StyledRightAlignedFooter>
     </Box>

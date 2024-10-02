@@ -42,7 +42,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
           {projectParticipants.length > 0 && (
             <div>
               <Typography variant="h3" gutterBottom>
-                {t('project.project_participants')}
+                {t('project.project_members')}
               </Typography>
               <ContributorList contributors={projectParticipants} projectRole="ProjectParticipant" />
             </div>

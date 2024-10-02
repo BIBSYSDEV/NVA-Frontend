@@ -1,8 +1,11 @@
 import { Box } from '@mui/material';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { ProjectContributorType } from '../../../types/project.types';
 import { ProjectParticipants } from '../../projects/form/ProjectParticipants';
 import { ProjectManager } from './ProjectManager';
 import { FormBox } from './styles';
+
+export const nonProjectManagerRoles: ProjectContributorType[] = ['ProjectParticipant', 'LocalManager'];
 
 interface ProjectContributorsFormProps {
   suggestedProjectManager?: string;

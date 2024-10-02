@@ -15,8 +15,8 @@ export const ProjectContributorTable = ({ children }: ProjectContributorTablePro
       <Table size="small" sx={alternatingTableRowColor}>
         <TableHead>
           <TableRow>
-            <TableCell>{t('common.role')}</TableCell>
             <TableCell>{t('common.name')}</TableCell>
+            <TableCell>{t('common.role')}</TableCell>
             <TableCell>{t('common.affiliation')}</TableCell>
             <TableCell>{t('common.clear')}</TableCell>
           </TableRow>
