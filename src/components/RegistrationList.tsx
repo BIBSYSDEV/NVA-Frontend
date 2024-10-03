@@ -14,11 +14,7 @@ import { PreviousPathLocationState } from '../types/locationState.types';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
-import {
-  getContributorsWithPrimaryRole,
-  getTitleString,
-  userCanDeleteRegistration,
-} from '../utils/registration-helpers';
+import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
   getRegistrationWizardPath,
@@ -214,7 +210,7 @@ export const RegistrationListItemContent = ({
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
-          {registration.status === 'DRAFT' && onDeleteDraftRegistration && userCanDeleteRegistration(registration) && (
+          {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
             <Tooltip title={t('common.delete')}>
               <IconButton
                 data-testid={`delete-registration-${identifier}`}

@@ -5,7 +5,7 @@ import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistr
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { userCanTerminateRegistration } from '../../../utils/registration-helpers';
+import { userHasAccessRight } from '../../../utils/registration-helpers';
 
 interface TerminateRegistrationProps {
   registration: Registration;
@@ -16,7 +16,7 @@ export const TerminateRegistration = ({ registration }: TerminateRegistrationPro
   const [showTerminateModal, setShowTerminateModal] = useState(false);
   const toggleTerminateModal = () => setShowTerminateModal(!showTerminateModal);
 
-  const userCanTerminate = userCanTerminateRegistration(registration);
+  const userCanTerminate = userHasAccessRight(registration, 'terminate');
 
   const updateRegistrationStatusMutation = useUpdateRegistrationStatus();
 

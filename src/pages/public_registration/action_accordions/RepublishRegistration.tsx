@@ -5,7 +5,7 @@ import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistr
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { userCanRepublishRegistration } from '../../../utils/registration-helpers';
+import { userHasAccessRight } from '../../../utils/registration-helpers';
 
 interface RepublishRegistrationProps {
   registration: Registration;
@@ -18,7 +18,7 @@ export const RepublishRegistration = ({ registration }: RepublishRegistrationPro
 
   const updateRegistrationStatusMutation = useUpdateRegistrationStatus();
 
-  const userCanRepublish = userCanRepublishRegistration(registration);
+  const userCanRepublish = userHasAccessRight(registration, 'republish');
 
   return (
     <section>

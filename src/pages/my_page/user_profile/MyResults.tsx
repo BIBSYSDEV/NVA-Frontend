@@ -76,7 +76,7 @@ export const MyResults = () => {
             />
           }>
           <RegistrationSearchResults
-            canEditRegistration={true}
+            canEditRegistration
             searchResult={registrationsQuery.data.hits}
             promotedPublications={promotedPublications}
           />

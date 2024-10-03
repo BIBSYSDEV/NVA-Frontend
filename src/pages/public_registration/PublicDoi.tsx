@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getAssociatedLinks, userCanEditRegistration } from '../../utils/registration-helpers';
+import { getAssociatedLinks, userHasAccessRight } from '../../utils/registration-helpers';
 import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
@@ -36,7 +36,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
     lookupNvaDoi();
   }, [nvaDoi, registration.status]);
 
-  const canSeeDraftDoi = userCanEditRegistration(registration);
+  const canSeeDraftDoi = userHasAccessRight(registration, 'update');
   const canSeeNvaDoi = nvaDoi && (nvaDoiIsFindable || canSeeDraftDoi);
 
   return (

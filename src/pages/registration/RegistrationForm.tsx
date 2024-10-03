@@ -22,7 +22,7 @@ import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { isApprovedAndOpenNviCandidate } from '../../utils/nviHelpers';
-import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
+import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
@@ -70,7 +70,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
-  const canEditRegistration = registration && userCanEditRegistration(registration);
+  const canEditRegistration = userHasAccessRight(registration, 'update');
 
   return registrationQuery.isPending || (canHaveNviCandidate && nviCandidateQuery.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
