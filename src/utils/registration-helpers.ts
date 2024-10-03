@@ -55,6 +55,7 @@ import {
   PublicationInstanceType,
   Publisher,
   Registration,
+  RegistrationOperation,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -661,26 +662,50 @@ export const getOutputName = (item: OutputItem): string => {
   }
 };
 
+/**
+ * @deprecated Use userHasAccessRight instead
+ */
 export const userCanEditRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('update') ?? false;
 
+/**
+ * @deprecated Use userHasAccessRight instead
+ */
 export const userCanUnpublishRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('unpublish') ?? false;
 
+/**
+ * @deprecated Use userHasAccessRight instead
+ */
 export const userCanTerminateRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('terminate') ?? false;
 
+/**
+ * @deprecated Use userHasAccessRight instead
+ */
 export const userCanRepublishRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('republish') ?? false;
 
+/**
+ * @deprecated Use userHasAccessRight instead
+ */
 export const userCanPublishRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('ticket/publish') ?? false;
 
+/**
+ * @deprecated Use userHasAccessRight instead
+ */
 export const userCanDeleteRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('delete') ?? false;
 
+/**
+ * @deprecated Use userHasAccessRight instead
+ */
 export const userCanEditPublishedFile = (registration: Registration) =>
   registration.allowedOperations?.includes('update-including-files') ?? false;
+
+export const userHasAccessRight = (registration: Registration, operation: RegistrationOperation) =>
+  registration.allowedOperations?.includes(operation) ?? false;
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';

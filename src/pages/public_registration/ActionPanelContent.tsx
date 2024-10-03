@@ -118,7 +118,6 @@ export const ActionPanelContent = ({
               isLoadingData={isLoadingData}
               registration={registration}
               doiRequestTicket={newestDoiRequestTicket}
-              userIsCurator={!!user?.isDoiCurator && canBeCuratorForThisCustomer}
               addMessage={addMessage}
             />
           )}

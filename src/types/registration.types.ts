@@ -99,14 +99,16 @@ interface ImportSource {
   archive?: string;
 }
 
-type RegistrationOperation =
+export type RegistrationOperation =
   | 'update'
   | 'delete'
   | 'unpublish'
   | 'republish'
   | 'ticket/publish'
   | 'terminate'
-  | 'update-including-files';
+  | 'update-including-files'
+  | 'doi-request-create'
+  | 'doi-request-approve';
 
 export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
