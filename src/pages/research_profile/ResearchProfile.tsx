@@ -3,7 +3,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
