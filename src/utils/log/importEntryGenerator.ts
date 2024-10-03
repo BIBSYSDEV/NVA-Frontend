@@ -4,7 +4,7 @@ import { AssociatedArtifact, ImportUploadDetails } from '../../types/associatedA
 import { LogEntry } from '../../types/log.types';
 import { ImportDetail, Registration } from '../../types/registration.types';
 import { SiktIdentifier } from '../constants';
-import { getPublishedFiles } from '../registration-helpers';
+import { getOpenFiles } from '../registration-helpers';
 
 export function generateImportLogEntries(registration: Registration, t: TFunction): LogEntry[] {
   const importDetails = registration.importDetails ?? [];
@@ -44,7 +44,7 @@ function generateImportLogEntry(importDetail: ImportDetail, t: TFunction): LogEn
 }
 
 function generateImportedFilesLogEntries(associatedArtifacts: AssociatedArtifact[], t: TFunction): LogEntry[] {
-  const importedFiles = getPublishedFiles(associatedArtifacts).filter(
+  const importedFiles = getOpenFiles(associatedArtifacts).filter(
     (file) => file.uploadDetails?.type === 'ImportUploadDetails'
   );
 

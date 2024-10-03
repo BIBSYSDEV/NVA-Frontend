@@ -18,12 +18,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, FileType, FileVersion } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { equalUris } from '../../../utils/general-helpers';
-import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
+import { isEmbargoed, isPendingOpenFile, openFileInNewTab } from '../../../utils/registration-helpers';
 import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
@@ -96,7 +96,7 @@ export const FileRow = ({
         gap: '0.5rem 0.75rem',
         alignItems: 'center',
         marginBottom: '2rem',
-        opacity: registrationMetadataIsPublished && file.type === FileType.UnpublishedFile ? 0.6 : 1,
+        opacity: registrationMetadataIsPublished && isPendingOpenFile(file) ? 0.6 : 1,
       }}>
       <Typography
         data-testid={dataTestId.registrationLandingPage.fileName}

@@ -2,7 +2,7 @@ import { TFunction } from 'i18next';
 import { AssociatedFile, UserUploadDetails } from '../../types/associatedArtifact.types';
 import { LogAction, LogActionItem, LogEntry } from '../../types/log.types';
 import { PublishingTicket } from '../../types/publication_types/ticket.types';
-import { getPublishedFiles, getUnpublishableFiles } from '../registration-helpers';
+import { getArchivedFiles, getOpenFiles } from '../registration-helpers';
 
 export function generatePublishingRequestLogEntry(
   ticket: PublishingTicket,
@@ -12,7 +12,7 @@ export function generatePublishingRequestLogEntry(
   switch (ticket.status) {
     case 'Completed': {
       if (ticket.approvedFiles.length > 0) {
-        return generatePublishedFilesLogEntry(ticket, filesOnRegistration, t);
+        return generateOpenFilesLogEntry(ticket, filesOnRegistration, t);
       }
       return generateMetadataUpdatedLogEntry(ticket, t);
     }
@@ -30,12 +30,12 @@ export function generatePublishingRequestLogEntry(
   }
 }
 
-function generatePublishedFilesLogEntry(
+function generateOpenFilesLogEntry(
   ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
   t: TFunction
 ): LogEntry {
-  const publishedFilesItems: LogActionItem[] = getPublishedFiles(filesOnRegistration)
+  const openFilesItems: LogActionItem[] = getOpenFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => {
@@ -45,7 +45,7 @@ function generatePublishedFilesLogEntry(
       };
     });
 
-  const archivedFilesItems: LogActionItem[] = getUnpublishableFiles(filesOnRegistration)
+  const archivedFilesItems: LogActionItem[] = getArchivedFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => {
@@ -71,7 +71,7 @@ function generatePublishedFilesLogEntry(
     actions: [
       {
         actor: ticket.finalizedBy ?? '',
-        items: [...publishedFilesItems, ...archivedFilesItems, ...deletedFilesItems],
+        items: [...openFilesItems, ...archivedFilesItems, ...deletedFilesItems],
       },
     ],
   };
