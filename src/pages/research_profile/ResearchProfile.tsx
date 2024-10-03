@@ -3,7 +3,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -289,6 +289,7 @@ const ResearchProfile = () => {
           <ListSkeleton minWidth={100} height={100} />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <ListPagination
+            paginationAriaLabel={t('common.pagination_result_search')}
             count={registrationsQuery.data.totalHits}
             rowsPerPage={registrationRowsPerPage}
             page={registrationsPage}
@@ -337,6 +338,7 @@ const ResearchProfile = () => {
           <ListSkeleton minWidth={100} height={100} />
         ) : projects.length > 0 ? (
           <ListPagination
+            paginationAriaLabel={t('common.pagination_project_search')}
             count={projectsQuery.data?.size ?? 0}
             rowsPerPage={projectRowsPerPage}
             page={projectsPage}

@@ -59,6 +59,7 @@ export const MyResults = () => {
         <ListSkeleton minWidth={100} height={100} />
       ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
         <ListPagination
+          paginationAriaLabel={t('common.pagination_project_search')}
           count={registrationsQuery.data.totalHits}
           rowsPerPage={rowsPerPage}
           page={page}

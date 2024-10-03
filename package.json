@@ -15,6 +15,7 @@
     "start:mock:unix": "export VITE_USE_MOCK=true && npm start",
     "test": "cypress run",
     "test:vitest": "vitest",
+    "test:vitest:verbose": "vitest run --reporter=verbose",
     "test:cypress": "start-server-and-test start:mock:win http://localhost:3000 test",
     "unused-i18n-keys": "i18n-unused display-unused"
   },
@@ -73,7 +74,7 @@
     "@tanstack/react-query-devtools": "^5.59.0",
     "@types/isbn-utils": "^1.1.6",
     "@types/jest": "^29.5.13",
-    "@types/react": "^18.3.10",
+    "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
@@ -97,6 +98,6 @@
     "typescript": "^5.6.2",
     "vite": "^5.4.8",
     "vite-plugin-eslint": "^1.8.1",
-    "vitest": "^2.1.1"
+    "vitest": "^2.1.2"
   }
 }

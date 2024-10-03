@@ -231,6 +231,8 @@
     "other": "Annet",
     "overview": "Oversikt",
     "page_title": "Nasjonalt vitenarkiv",
+    "pagination_project_search": "Paginering for prosjektsøk",
+    "pagination_result_search": "Paginering for resultatsøk",
     "pagination_rows_per_page": "Antall resultater per side:",
     "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
     "person": "Person",
@@ -311,10 +313,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -386,7 +384,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1157,7 +1159,11 @@
       "date": "Dato",
       "keywords": "Nøkkelord",
       "related_projects": "Relaterte prosjekt",
+      "related_registrations": "Relaterte forskningsresultater",
       "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
+      "no_related_registrations_description": "Prosjektet må lagres før det kan tilknyttes forskningsresultater",
+      "no_related_projects_description": "Prosjektet har ingen tilknyttede prosjekter enda.",
+      "related_registrations_description": "Se forskningsresultater som er relatert til prosjektet",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
       "remove_project": "Fjern prosjekt",

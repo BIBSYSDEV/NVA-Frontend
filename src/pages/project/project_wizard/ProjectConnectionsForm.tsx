@@ -1,18 +1,20 @@
-import { Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Box } from '@mui/material';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { RelatedProjectsField } from './RelatedProjectsField';
+import { RelatedRegistrationsField } from './RelatedRegistrationsField';
 import { FormBox } from './styles';
 
 export const ProjectConnectionsForm = () => {
-  const { t } = useTranslation();
   return (
     <ErrorBoundary>
-      <FormBox>
-        <Typography variant="h2">{t('project.form.related_projects')}</Typography>
-        <Typography>{t('project.form.related_projects_description')}</Typography>
-        <RelatedProjectsField />
-      </FormBox>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <FormBox>
+          <RelatedProjectsField />
+        </FormBox>
+        <FormBox>
+          <RelatedRegistrationsField />
+        </FormBox>
+      </Box>
     </ErrorBoundary>
   );
 };
