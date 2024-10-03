@@ -274,7 +274,6 @@ export const emptyRegistration: Registration = {
   status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
   projects: [],
-  publisher: { id: '' },
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
