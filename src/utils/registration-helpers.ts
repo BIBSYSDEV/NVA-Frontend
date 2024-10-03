@@ -665,12 +665,6 @@ export const getOutputName = (item: OutputItem): string => {
 export const userCanEditRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('update') ?? false;
 
-/**
- * @deprecated Use userHasAccessRight instead
- */
-export const userCanUnpublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('unpublish') ?? false;
-
 export const userHasAccessRight = (registration: Registration, operation: RegistrationOperation) =>
   registration.allowedOperations?.includes(operation) ?? false;
 
