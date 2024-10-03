@@ -686,12 +686,6 @@ export const userCanRepublishRegistration = (registration: Registration) =>
 /**
  * @deprecated Use userHasAccessRight instead
  */
-export const userCanPublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('ticket/publish') ?? false;
-
-/**
- * @deprecated Use userHasAccessRight instead
- */
 export const userCanDeleteRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('delete') ?? false;
 
