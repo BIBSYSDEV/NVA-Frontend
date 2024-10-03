@@ -12,7 +12,7 @@ import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { RegistrationStatus } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getTitleString, userCanDeleteRegistration } from '../../utils/registration-helpers';
+import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
@@ -128,7 +128,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {userCanDeleteRegistration(registration) && (
+      {userHasAccessRight(registration, 'delete') && (
         <Box sx={{ m: '0.5rem', mt: '1rem' }}>
           <Button
             sx={{ bgcolor: 'white' }}

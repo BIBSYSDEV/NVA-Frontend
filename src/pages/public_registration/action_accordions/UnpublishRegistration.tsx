@@ -10,7 +10,7 @@ import { Modal } from '../../../components/Modal';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { userCanUnpublishRegistration } from '../../../utils/registration-helpers';
+import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { FindRegistration } from './FindRegistration';
 
 interface UnpublishRegistrationProps {
@@ -26,7 +26,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
 
   const [selectedDuplicate, setSelectedDuplicate] = useState<Registration>();
 
-  const userCanUnpublish = userCanUnpublishRegistration(registration);
+  const userCanUnpublish = userHasAccessRight(registration, 'unpublish');
 
   const unpublishValidationSchema = Yup.object().shape({
     comment: Yup.string()
