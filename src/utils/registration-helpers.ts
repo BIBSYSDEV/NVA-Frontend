@@ -118,9 +118,6 @@ export const nviApplicableTypes: PublicationInstanceType[] = [
   ChapterType.AcademicChapter,
 ];
 
-export const userHasSameCustomerAsRegistration = (user: User | null, registration?: Registration) =>
-  !!user?.customerId && registration?.publisher.id === user.customerId;
-
 export const userIsValidImporter = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
 

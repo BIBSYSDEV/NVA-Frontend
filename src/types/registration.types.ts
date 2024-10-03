@@ -76,10 +76,6 @@ export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
 
-interface RegistrationPublisher {
-  id: string;
-}
-
 type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier' | 'HandleIdentifier';
 type ImportSourceName = 'Cristin' | 'Scopus' | 'handle';
 
@@ -108,7 +104,9 @@ export type RegistrationOperation =
   | 'terminate'
   | 'update-including-files'
   | 'doi-request-create'
-  | 'doi-request-approve';
+  | 'doi-request-approve'
+  | 'support-request-create'
+  | 'support-request-approve';
 
 export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
@@ -130,7 +128,6 @@ export interface BaseRegistration {
   };
   readonly status: RegistrationStatus;
   readonly doi?: string;
-  readonly publisher: RegistrationPublisher;
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;

@@ -214,7 +214,7 @@ export const DoiRequestAccordion = ({
   );
 
   const userCanRequestDoi = userHasAccessRight(registration, 'doi-request-create');
-  const userCanApproveDoi = userHasAccessRight(registration, 'doi-request-approve');
+  const userCanAssignDoi = userHasAccessRight(registration, 'doi-request-approve');
 
   return (
     <Accordion
@@ -361,7 +361,7 @@ export const DoiRequestAccordion = ({
           />
         </ConfirmDialog>
 
-        {userCanApproveDoi && isPublishedRegistration && isPendingDoiRequest && (
+        {userCanAssignDoi && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <Typography>{t('registration.public_page.tasks_panel.assign_doi_about')}</Typography>
 
@@ -400,7 +400,7 @@ export const DoiRequestAccordion = ({
             {messages.length > 0 ? (
               <TicketMessageList
                 ticket={doiRequestTicket}
-                canDeleteMessage={userCanApproveDoi}
+                canDeleteMessage={userCanAssignDoi}
                 refetchData={refetchData}
               />
             ) : (
@@ -427,7 +427,7 @@ export const DoiRequestAccordion = ({
               </IconButton>
             </Box>
             <Collapse in={showMoreActions}>
-              {userCanApproveDoi ? (
+              {userCanAssignDoi ? (
                 <>
                   <Typography variant="h2" gutterBottom>
                     {t('registration.public_page.tasks_panel.assign_doi')}
