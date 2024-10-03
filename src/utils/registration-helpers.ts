@@ -659,14 +659,8 @@ export const getOutputName = (item: OutputItem): string => {
   }
 };
 
-/**
- * @deprecated Use userHasAccessRight instead
- */
-export const userCanEditRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('update') ?? false;
-
-export const userHasAccessRight = (registration: Registration, operation: RegistrationOperation) =>
-  registration.allowedOperations?.includes(operation) ?? false;
+export const userHasAccessRight = (registration: Registration | undefined, operation: RegistrationOperation) =>
+  registration?.allowedOperations?.includes(operation) ?? false;
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
