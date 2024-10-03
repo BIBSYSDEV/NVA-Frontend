@@ -1,16 +1,14 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
-import { LocalStorageKey } from '../../../utils/constants';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getEditProjectPath, getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { getFullName } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { EditIconButton } from '../../messages/components/EditIconButton';
 import { ProjectIconHeader } from '../../project/components/ProjectIconHeader';
-import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
 import {
   getProjectManagers,
   getProjectParticipants,
@@ -24,20 +22,11 @@ interface ProjectListItemProps {
   onDelete?: () => void;
 }
 
-export const ProjectListItem = ({
-  project,
-  refetchProjects,
-  showEdit = false,
-  onDelete,
-  deleteTooltip,
-}: ProjectListItemProps) => {
+export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteTooltip }: ProjectListItemProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [openEditProject, setOpenEditProject] = useState(false);
-
   const projectManagers = getProjectManagers(project.contributors);
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
-  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
 
   return (
     <SearchListItem sx={{ borderLeftColor: 'project.main', flexDirection: 'row' }}>
@@ -51,14 +40,20 @@ export const ProjectListItem = ({
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
-          {projectManagers.map((projectManager, index) => (
-            <span key={projectManager.identity.id}>
-              <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+          {projectManagers.map((projectManager, index) =>
+            projectManager.identity.id ? (
+              <span key={projectManager.identity.id}>
+                <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+                  {getFullName(projectManager.identity.firstName, projectManager.identity.lastName)}
+                </MuiLink>
+                {index < projectManagers.length - 1 && <span>;</span>}
+              </span>
+            ) : (
+              <span key={`${projectManager.identity.firstName}_${projectManager.identity.lastName}_${index}`}>
                 {`${projectManager.identity.firstName} ${projectManager.identity.lastName}`}
-              </MuiLink>
-              {index < projectManagers.length - 1 && <span>;</span>}
-            </span>
-          ))}
+              </span>
+            )
+          )}
           {projectParticipantsLength > 0 && (
             <Typography>({t('search.additional_participants', { count: projectParticipantsLength })})</Typography>
           )}
@@ -67,18 +62,10 @@ export const ProjectListItem = ({
       </Box>
       <>
         {showEdit && (
-          <>
-            <EditIconButton
-              tooltip={t('project.edit_project')}
-              onClick={() => (betaEnabled ? navigate(getEditProjectPath(project.id)) : setOpenEditProject(true))}
-            />
-            <ProjectFormDialog
-              open={openEditProject}
-              currentProject={project}
-              onClose={() => setOpenEditProject(false)}
-              refetchData={refetchProjects}
-            />
-          </>
+          <EditIconButton
+            tooltip={t('project.edit_project')}
+            onClick={() => navigate(getEditProjectPath(project.id))}
+          />
         )}
         {onDelete && <DeleteIconButton sx={{ ml: '0.5rem' }} onClick={onDelete} tooltip={deleteTooltip} />}
       </>

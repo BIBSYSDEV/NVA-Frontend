@@ -9,10 +9,11 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { Publisher } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
+import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -48,60 +49,65 @@ export const PublisherFilter = () => {
   });
 
   const handleChange = (selectedValue: Publisher | null) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
-      searchParams.set(ResultParam.Publisher, selectedValue.identifier);
+      syncedParams.set(ResultParam.Publisher, selectedValue.identifier);
     } else {
-      searchParams.delete(ResultParam.Publisher);
+      syncedParams.delete(ResultParam.Publisher);
     }
+    syncedParams.delete(ResultParam.From);
 
-    navigate({ search: searchParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   const isFetching = publisherParam ? selectedPublisherQuery.isPending : publisherOptionsQuery.isFetching;
 
   return (
-    <Autocomplete
-      size="small"
-      sx={{ minWidth: '15rem' }}
-      value={publisherParam && selectedPublisherQuery.data ? selectedPublisherQuery.data : null}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
-      options={options}
-      filterOptions={(options) => options}
-      inputValue={publisherQuery}
-      onInputChange={(_, newInputValue) => setPublisherQuery(newInputValue)}
-      onChange={(_, newValue) => handleChange(newValue)}
-      blurOnSelect
-      disableClearable={!publisherQuery}
-      loading={isFetching}
-      getOptionLabel={(option) => option.name}
-      renderOption={({ key, ...props }, option, state) => (
-        <PublicationChannelOption
-          key={option.identifier}
-          props={props}
-          option={option}
-          state={state}
-          hideScientificLevel
-        />
-      )}
-      ListboxComponent={AutocompleteListboxWithExpansion}
-      ListboxProps={
-        {
-          hasMoreHits: !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
-          onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-          isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
-        } satisfies AutocompleteListboxWithExpansionProps as any
-      }
-      data-testid={dataTestId.startPage.advancedSearch.publisherField}
-      renderInput={(params) => (
-        <AutocompleteTextField
-          {...params}
-          variant="outlined"
-          isLoading={isFetching}
-          placeholder={t('registration.resource_type.search_for_publisher_placeholder')}
-          showSearchIcon={!publisherParam}
-          multiline
-        />
-      )}
-    />
+    <section>
+      <StyledFilterHeading>{t('common.publisher')}</StyledFilterHeading>
+      <Autocomplete
+        size="small"
+        sx={{ minWidth: '15rem' }}
+        value={publisherParam && selectedPublisherQuery.data ? selectedPublisherQuery.data : null}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        options={options}
+        filterOptions={(options) => options}
+        inputValue={publisherQuery}
+        onInputChange={(_, newInputValue) => setPublisherQuery(newInputValue)}
+        onChange={(_, newValue) => handleChange(newValue)}
+        blurOnSelect
+        disableClearable={!publisherQuery}
+        loading={isFetching}
+        getOptionLabel={(option) => option.name}
+        renderOption={({ key, ...props }, option, state) => (
+          <PublicationChannelOption
+            key={option.identifier}
+            props={props}
+            option={option}
+            state={state}
+            hideScientificLevel
+          />
+        )}
+        ListboxComponent={AutocompleteListboxWithExpansion}
+        ListboxProps={
+          {
+            hasMoreHits: !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
+            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+            isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
+          } satisfies AutocompleteListboxWithExpansionProps as any
+        }
+        data-testid={dataTestId.startPage.advancedSearch.publisherField}
+        renderInput={(params) => (
+          <AutocompleteTextField
+            {...params}
+            variant="outlined"
+            isLoading={isFetching}
+            placeholder={t('registration.resource_type.search_for_publisher_placeholder')}
+            showSearchIcon={!publisherParam}
+            multiline
+          />
+        )}
+      />
+    </section>
   );
 };

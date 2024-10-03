@@ -143,7 +143,9 @@ export const ExhibitionOtherPresentationModal = ({
                     label={t('common.date')}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
-                      !touched && setFieldTouched(field.name, true, false);
+                      if (!touched) {
+                        setFieldTouched(field.name, true, false);
+                      }
                       setFieldValue(field.name, date);
                     }}
                     slotProps={{

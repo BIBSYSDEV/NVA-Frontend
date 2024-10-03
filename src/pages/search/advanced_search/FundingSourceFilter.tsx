@@ -7,6 +7,7 @@ import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSource } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const FundingSourceFilter = () => {
@@ -26,13 +27,15 @@ export const FundingSourceFilter = () => {
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   const handleChange = (selectedValue: FundingSource | null) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
-      searchParams.set(ResultParam.FundingSource, selectedValue.identifier);
+      syncedParams.set(ResultParam.FundingSource, selectedValue.identifier);
     } else {
-      searchParams.delete(ResultParam.FundingSource);
+      syncedParams.delete(ResultParam.FundingSource);
     }
+    syncedParams.delete(ResultParam.From);
 
-    navigate({ search: searchParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (

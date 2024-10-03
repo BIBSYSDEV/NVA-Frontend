@@ -10,7 +10,7 @@ import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
   isTypeWithFileVersionField,
-  userCanEditRegistration,
+  userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
@@ -21,7 +21,7 @@ const maxFileSizeForPreview = 10_000_000; //10 MB
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
 
-  const userIsRegistrationAdmin = userCanEditRegistration(registration);
+  const userIsRegistrationAdmin = userHasAccessRight(registration, 'update');
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
   const publishedFiles = associatedFiles.filter((file) => file.type === FileType.PublishedFile);

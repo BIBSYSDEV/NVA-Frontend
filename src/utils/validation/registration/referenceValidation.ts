@@ -467,11 +467,7 @@ export const mediaContributionReference = baseReference.shape({
 
 // Research Data
 const researchDataPublicationContext = Yup.object<YupShape<ResearchDataPublicationContext>>({
-  publisher: Yup.object()
-    .nullable()
-    .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
-      publicationInstanceType === ResearchDataType.DataManagementPlan ? publisherField : schema
-    ),
+  publisher: publisherField,
 });
 
 const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicationInstance>>({

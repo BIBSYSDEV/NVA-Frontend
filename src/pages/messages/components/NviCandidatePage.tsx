@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useParams } from 'react-router-dom';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
-import { fetchRegistration } from '../../../api/registrationApi';
+import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
@@ -45,12 +45,7 @@ export const NviCandidatePage = () => {
   const periodStatus = nviCandidate?.period.status;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
-  const registrationQuery = useQuery({
-    enabled: !!registrationIdentifier,
-    queryKey: ['registration', registrationIdentifier],
-    queryFn: () => fetchRegistration(registrationIdentifier),
-    meta: { errorMessage: t('feedback.error.get_registration') },
-  });
+  const registrationQuery = useFetchRegistration(registrationIdentifier);
 
   const nviQueryParams = location.state?.candidateOffsetState?.nviQueryParams;
   const thisCandidateOffset = locationState?.candidateOffsetState?.currentOffset;

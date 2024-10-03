@@ -1,20 +1,22 @@
 import AddIcon from '@mui/icons-material/AddCircleOutline';
+import SearchIcon from '@mui/icons-material/Search';
 import { Box, Button, TableCell, TableRow, TextField, Typography } from '@mui/material';
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ContributorName } from '../../../components/ContributorName';
-import {
-  ProjectContributor,
-  ProjectContributorFieldName,
-  ProjectContributorType,
-  ProjectFieldName,
-  SaveCristinProject,
-} from '../../../types/project.types';
+import { SimpleWarning } from '../../../components/messages/SimpleWarning';
+import { ProjectContributor, ProjectContributorFieldName, SaveCristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFullName } from '../../../utils/user-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
+import {
+  getRelevantContributorRoles,
+  hasEmptyAffiliation,
+  removeAffiliation,
+} from '../../project/helpers/projectRoleHelpers';
+import { AddProjectContributorModal } from '../AddProjectContributorModal';
 import { ProjectAddAffiliationModal } from '../ProjectAddAffiliationModal';
 import { ProjectOrganizationBox } from '../ProjectOrganizationBox';
 
@@ -23,6 +25,7 @@ interface ContributorRowProps {
   baseFieldName: string;
   contributor: ProjectContributor;
   removeContributor?: () => void;
+  asProjectManager?: boolean;
 }
 
 export const ContributorRow = ({
@@ -30,142 +33,174 @@ export const ContributorRow = ({
   baseFieldName,
   contributor,
   removeContributor,
+  asProjectManager = false,
 }: ContributorRowProps) => {
   const { t } = useTranslation();
   const { errors, touched, setFieldValue } = useFormikContext<SaveCristinProject>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
+  const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
 
   const contributorErrors = errors?.contributors?.[contributorIndex] as ProjectContributor;
   const affiliationError = contributorErrors?.roles?.[0]?.affiliation?.id;
   const affiliationFieldTouched = touched?.contributors?.[contributorIndex]?.roles;
   const baseFieldRoles = `${baseFieldName}.${ProjectContributorFieldName.Roles}`;
+  const roles = getRelevantContributorRoles(contributor, asProjectManager);
+  const hasAtLeastOneEmptyAffiliation = roles.some((role) => hasEmptyAffiliation(role));
+  const hasOnlyEmptyAffiliations = roles.every((role) => hasEmptyAffiliation(role));
+  const rolesString = asProjectManager ? t('project.project_manager') : t('project.project_participant');
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
+  const toggleOpenVerifyContributor = () => setOpenVerifyContributor(!openVerifyContributor);
 
-  const removeAffiliation = (affiliationId: string) => {
-    const roleToRemoveIndex = contributor.roles.findIndex((role) => role.affiliation?.id === affiliationId);
-    if (contributor.roles.length === 1 || contributor.roles[roleToRemoveIndex].type === 'ProjectManager') {
+  const onRemoveAffiliation = (affiliationId: string) => {
+    const newRolesObject = removeAffiliation(affiliationId, contributor.roles, asProjectManager);
+
+    if (newRolesObject.error) {
       return;
     }
-    const newRoles = [...contributor.roles];
-    newRoles.splice(roleToRemoveIndex, 1);
 
-    setFieldValue(baseFieldRoles, newRoles);
+    if (newRolesObject.newContributorRoles) {
+      setFieldValue(baseFieldRoles, newRolesObject.newContributorRoles);
+    }
   };
 
   return (
     <TableRow sx={{ td: { verticalAlign: 'top' } }}>
       <TableCell align="left" width={'1'}>
-        <Box sx={{ display: 'flex', alignItems: 'end' }}>
-          <Field name={`${baseFieldName}.${ProjectFieldName.RoleType}`}>
-            {({ field }: FieldProps<ProjectContributorType>) => (
-              <TextField
-                data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
-                label={t('common.role')}
-                sx={{ width: '10rem' }}
-                value={
-                  field.value === 'ProjectManager'
-                    ? t('project.project_manager')
-                    : field.value === 'ProjectParticipant'
-                      ? t('project.project_participant')
-                      : ''
-                }
-                disabled
-                fullWidth
-                variant="filled"
-              />
-            )}
-          </Field>
-        </Box>
-      </TableCell>
-      <TableCell width={'1'}>
-        <ContributorName
-          id={contributor.identity.id}
-          name={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
-          hasVerifiedAffiliation={contributor.roles?.some((role) => role.affiliation?.type === 'Organization')}
-          sx={{ width: '15rem', marginTop: '0.5rem' }}
+        <TextField
+          data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
+          label={t('common.role')}
+          sx={{ width: '10rem' }}
+          value={rolesString}
+          disabled
+          fullWidth
+          variant="filled"
         />
       </TableCell>
+      <TableCell width={'1'}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.25rem',
+            alignItems: 'start',
+            paddingY: '0.5rem',
+          }}>
+          {!contributor.identity.id && (
+            <SimpleWarning
+              text={
+                asProjectManager
+                  ? t('project.project_manager_is_unidentified')
+                  : t('project.contributor_is_unidentified')
+              }
+            />
+          )}
+          <ContributorName
+            id={contributor.identity.id}
+            name={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+            hasVerifiedAffiliation={contributor.roles?.some((role) => role.affiliation?.id)}
+            sx={{ width: '18rem' }}
+          />
+          {!contributor.identity.id && (
+            <Button
+              variant="outlined"
+              sx={{ padding: '0.1rem 0.75rem' }}
+              data-testid={dataTestId.projectWizard.contributorsPanel.verifyContributorButton(
+                getFullName(contributor.identity.firstName, contributor.identity.lastName)
+              )}
+              startIcon={<SearchIcon />}
+              onClick={toggleOpenVerifyContributor}>
+              {asProjectManager ? t('project.verify_project_manager') : t('project.verify_contributor')}
+            </Button>
+          )}
+        </Box>
+      </TableCell>
       <TableCell>
-        <>
-          {contributor.roles
-            .filter((role) => role.affiliation?.id)
-            .map((role) => (
-              <ProjectOrganizationBox
-                key={role.affiliation!.id}
-                unitUri={role.affiliation!.id}
-                authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
-                contributorRoles={contributor.roles}
-                baseFieldName={baseFieldRoles}
-                sx={{ width: '100%', marginBottom: '0.5rem' }}
-                removeAffiliation={
-                  contributor.roles.length === 1 || role.type === 'ProjectManager'
-                    ? undefined
-                    : () => removeAffiliation(role.affiliation!.id)
-                }
-                disabledTooltip={
-                  role.type === 'ProjectManager'
-                    ? t('project.affiliation_modal.cannot_delete_affiliation_for_project_manager')
-                    : contributor.roles.length === 1
-                      ? t('project.affiliation_modal.cannot_delete_only_affiliation')
-                      : ''
-                }
-              />
-            ))}
-          <Button
-            variant="outlined"
-            sx={{ padding: '0.1rem 0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}
-            data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
-            startIcon={<AddIcon />}
-            color={affiliationFieldTouched && affiliationError ? 'error' : 'inherit'}
-            onClick={toggleAffiliationModal}>
-            {t('project.add_affiliation')}
-          </Button>
+        <Box
+          sx={{
+            paddingY: '0.5rem',
+          }}>
+          {hasOnlyEmptyAffiliations ? (
+            <SimpleWarning text={t('project.no_affiliation')} />
+          ) : (
+            roles
+              .filter((role) => role.affiliation?.id)
+              .map((role) => (
+                <ProjectOrganizationBox
+                  key={role.affiliation!.id}
+                  unitUri={role.affiliation!.id}
+                  authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+                  contributorRoles={contributor.roles}
+                  baseFieldName={baseFieldRoles}
+                  sx={{ width: '100%', marginBottom: '0.5rem' }}
+                  asProjectManager={asProjectManager}
+                  removeAffiliation={() => onRemoveAffiliation(role.affiliation!.id)}
+                />
+              ))
+          )}
+          {(!asProjectManager || hasAtLeastOneEmptyAffiliation) && (
+            <Button
+              variant="outlined"
+              sx={{ padding: '0.1rem 0.75rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}
+              data-testid={dataTestId.projectForm.addAffiliationButton}
+              startIcon={<AddIcon />}
+              color={affiliationFieldTouched && affiliationError ? 'error' : 'inherit'}
+              onClick={toggleAffiliationModal}>
+              {t('project.add_affiliation')}
+            </Button>
+          )}
           {affiliationFieldTouched && affiliationError && (
             <Typography sx={{ color: 'error.main', marginTop: '0.25rem', letterSpacing: '0.03333em' }}>
               {affiliationError}
             </Typography>
           )}
-        </>
+        </Box>
       </TableCell>
       <TableCell sx={{ width: '3rem', textAlign: 'center', paddingTop: '1rem' }}>
         <DeleteIconButton
-          data-testid={dataTestId.registrationWizard.description.projectForm.removeContributorButton}
+          data-testid={dataTestId.projectForm.removeContributorButton}
           onClick={() => setShowConfirmRemoveContributor(true)}
-          tooltip={
-            !removeContributor
-              ? t('project.form.project_manager_cannot_be_removed')
-              : t('project.form.remove_participant')
-          }
+          tooltip={asProjectManager ? t('project.remove_project_manager') : t('project.form.remove_participant')}
           disabled={!removeContributor}
         />
-        {!!removeContributor && (
-          <ConfirmDialog
-            open={showConfirmRemoveContributor}
-            onAccept={() => {
-              removeContributor();
-              setShowConfirmRemoveContributor(false);
-            }}
-            title={t('project.form.remove_participant')}
-            onCancel={() => setShowConfirmRemoveContributor(false)}>
-            <Typography>
-              {t('project.form.remove_participant_text', {
-                name:
-                  getFullName(contributor?.identity?.firstName, contributor?.identity?.lastName) ??
-                  t('project.project_participant').toLocaleLowerCase(),
-              })}
-            </Typography>
-          </ConfirmDialog>
-        )}
       </TableCell>
+      {/* Verify contributor */}
+      <AddProjectContributorModal
+        open={openVerifyContributor}
+        toggleModal={toggleOpenVerifyContributor}
+        initialSearchTerm={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
+        indexToReplace={contributorIndex}
+        addProjectManager={asProjectManager}
+      />
+      {/* Add Affiliation */}
       <ProjectAddAffiliationModal
         openAffiliationModal={openAffiliationModal}
         toggleAffiliationModal={toggleAffiliationModal}
         authorName={getFullName(contributor.identity.firstName, contributor.identity.lastName)}
         baseFieldName={baseFieldRoles}
         contributorRoles={contributor.roles}
+        asProjectManager={asProjectManager}
       />
+      {/* Confirm delete contributor */}
+      {!!removeContributor && (
+        <ConfirmDialog
+          open={showConfirmRemoveContributor}
+          onAccept={() => {
+            removeContributor();
+            setShowConfirmRemoveContributor(false);
+          }}
+          title={asProjectManager ? t('project.remove_project_manager') : t('project.form.remove_participant')}
+          onCancel={() => setShowConfirmRemoveContributor(false)}>
+          <Typography>
+            {t('project.form.remove_participant_text', {
+              name:
+                getFullName(contributor?.identity?.firstName, contributor?.identity?.lastName) ??
+                t('project.project_participant').toLocaleLowerCase(),
+            })}
+          </Typography>
+        </ConfirmDialog>
+      )}
     </TableRow>
   );
 };

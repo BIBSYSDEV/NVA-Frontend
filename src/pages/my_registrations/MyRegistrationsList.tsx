@@ -93,7 +93,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
           <RegistrationList
             onDeleteDraftRegistration={onClickDeleteRegistration}
             registrations={registrationsCopy}
-            canEditRegistration={true}
+            canEditRegistration
           />
         </ListPagination>
       ) : (

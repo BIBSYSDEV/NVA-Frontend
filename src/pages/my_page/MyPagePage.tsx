@@ -4,7 +4,7 @@ import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Badge, Button, Divider, FormControlLabel, Typography } from '@mui/material';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -24,12 +24,11 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
-import { LocalStorageKey, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
-import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
@@ -55,7 +54,6 @@ const MyPagePage = () => {
   const personId = user?.cristinId ?? '';
   const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
 
-  const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const apiPage = page - 1;
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -124,10 +122,7 @@ const MyPagePage = () => {
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
-  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
-
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
-  const [showCreateProject, setShowCreateProject] = useState(false);
 
   // Hide menu when opening a ticket on Messages path
   const expandMenu =
@@ -327,21 +322,11 @@ const MyPagePage = () => {
             <Typography sx={{ margin: '1rem' }}>
               {t('my_page.my_profile.list_contains_all_registration_you_have_created')}
             </Typography>
-            {betaEnabled ? (
-              <LinkCreateButton
-                data-testid={dataTestId.myPage.createProjectButton}
-                to={UrlPathTemplate.ProjectsNew}
-                title={t('project.create_project')}
-              />
-            ) : (
-              <LinkCreateButton
-                data-testid={dataTestId.myPage.createProjectButton}
-                isSelected={showCreateProject}
-                selectedColor="project.main"
-                onClick={() => setShowCreateProject(true)}
-                title={t('project.create_project')}
-              />
-            )}
+            <LinkCreateButton
+              data-testid={dataTestId.myPage.createProjectButton}
+              to={UrlPathTemplate.ProjectsNew}
+              title={t('project.create_project')}
+            />
           </NavigationListAccordion>,
         ]}
       </SideMenu>
@@ -428,19 +413,6 @@ const MyPagePage = () => {
         />
         <Route path={'/*'} element={<PrivateRoute element={<NotFound />} isAuthorized={isAuthenticated} />} />
       </Routes>
-
-      {user?.isCreator && (
-        <ProjectFormDialog
-          open={showCreateProject}
-          onClose={() => setShowCreateProject(false)}
-          onCreateProject={async () => {
-            await new Promise((resolve) => setTimeout(resolve, 10_000));
-            // Wait 10sec before refetching projects, and hope that it is indexed by then
-            // TODO: consider placing the new project in the cache manually instead of a fixed waiting time
-            queryClient.invalidateQueries({ queryKey: ['projects'] });
-          }}
-        />
-      )}
     </StyledPageWithSideMenu>
   );
 };

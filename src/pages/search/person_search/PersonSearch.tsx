@@ -50,7 +50,7 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {personQuery.isPending ? (
+      {personQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.length > 0 ? (
         <div>

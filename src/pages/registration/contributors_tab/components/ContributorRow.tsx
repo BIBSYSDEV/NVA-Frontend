@@ -1,6 +1,5 @@
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ErrorIcon from '@mui/icons-material/Error';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import SearchIcon from '@mui/icons-material/Search';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -21,6 +20,7 @@ import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ContributorName } from '../../../../components/ContributorName';
+import { SimpleWarning } from '../../../../components/messages/SimpleWarning';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
@@ -157,10 +157,7 @@ export const ContributorRow = ({
             paddingY: '0.5rem',
           }}>
           {!contributor.identity.id && (
-            <Box sx={{ display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
-              <ErrorIcon color="warning" />
-              <Typography fontWeight="bold">{t('registration.contributors.contributor_is_unidentified')}</Typography>
-            </Box>
+            <SimpleWarning text={t('registration.contributors.contributor_is_unidentified')} />
           )}
           <ContributorName
             id={contributor.identity.id}

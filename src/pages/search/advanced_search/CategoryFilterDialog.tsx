@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ResultParam, TicketSearchParam } from '../../../api/searchApi';
 import { CategorySelector } from '../../../components/CategorySelector';
 import { PublicationInstanceType } from '../../../types/registration.types';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 interface CategoryFilterDialogProps {
   open: boolean;
@@ -57,14 +58,16 @@ export const CategoryFilterDialog = ({
           variant="outlined"
           onClick={() => {
             const params = new URLSearchParams(location.search);
+            const syncedParams = syncParamsWithSearchFields(params);
             const newCategoryShould = selectedCategories.join(',');
             if (newCategoryShould) {
-              params.set(searchParam, newCategoryShould);
+              syncedParams.set(searchParam, newCategoryShould);
             } else {
-              params.delete(searchParam);
+              syncedParams.delete(searchParam);
             }
-            params.set(ResultParam.From, '0');
-            navigate({ search: params.toString() });
+            syncedParams.delete(ResultParam.From);
+
+            navigate({ search: syncedParams.toString() });
             closeDialog();
           }}>
           {t('common.use')}

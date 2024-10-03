@@ -3,15 +3,12 @@ import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { getLanguageByUri } from 'nva-language';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
-import {
-  fetchImportCandidate,
-  fetchRegistration,
-  updateImportCandidateStatus,
-  updateRegistration,
-} from '../../../../api/registrationApi';
+import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
+import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration } from '../../../../api/registrationApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { AssociatedLink } from '../../../../types/associatedArtifact.types';
@@ -44,12 +41,7 @@ export const CentralImportCandidateMerge = () => {
   const locationState = location.state as BasicDataLocationState;
   const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
-  const registrationQuery = useQuery({
-    enabled: !!registrationIdentifier,
-    queryKey: ['registration', registrationIdentifier],
-    queryFn: () => fetchRegistration(registrationIdentifier ?? ''),
-    meta: { errorMessage: t('feedback.error.get_registration') },
-  });
+  const registrationQuery = useFetchRegistration(registrationIdentifier);
 
   const importCandidateQuery = useQuery({
     enabled: !!candidateIdentifier,
@@ -134,6 +126,9 @@ export const CentralImportCandidateMerge = () => {
             gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
           }}>
+          <Helmet>
+            <title>{t('basic_data.central_import.central_import')}</title>
+          </Helmet>
           <Typography sx={{ gridColumn: '1/-1' }}>
             {t('basic_data.central_import.merge_candidate.merge_details_1')}
           </Typography>

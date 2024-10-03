@@ -4,7 +4,7 @@ import {
   DoiPreview,
   MyRegistrationsResponse,
   Registration,
-  UnpublishPublicationRequest,
+  UpdateRegistrationStatusRequest,
 } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
@@ -24,14 +24,14 @@ export const updateRegistration = async (registration: Registration) =>
     data: registration,
   });
 
-export const unpublishRegistration = async (
+export const updateRegistrationStatus = async (
   registrationIdentifier: string,
-  unpublishingRequest: UnpublishPublicationRequest
+  updateRequest: UpdateRegistrationStatusRequest
 ) =>
   await authenticatedApiRequest2<Registration>({
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
     method: 'PUT',
-    data: unpublishingRequest,
+    data: updateRequest,
   });
 
 export const getRegistrationByDoi = async (doiUrl: string) => {
