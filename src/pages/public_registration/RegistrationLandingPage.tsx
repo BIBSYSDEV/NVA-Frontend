@@ -1,16 +1,13 @@
 import { Box } from '@mui/material';
-import { Query, useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { fetchRegistration, fetchRegistrationTickets } from '../../api/registrationApi';
+import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
+import { fetchRegistrationTickets } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
-import { setNotification } from '../../redux/notificationSlice';
-import { DeletedRegistrationProblem } from '../../types/error_responses';
-import { Registration, RegistrationStatus } from '../../types/registration.types';
-import { userCanEditRegistration } from '../../utils/registration-helpers';
+import { RegistrationStatus } from '../../types/registration.types';
+import { userHasAccessRight } from '../../utils/registration-helpers';
 import { IdentifierParams } from '../../utils/urlPaths';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
@@ -21,37 +18,9 @@ export const RegistrationLandingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const { identifier } = useParams<IdentifierParams>();
-  const shouldNotRedirect = new URLSearchParams(location.search).has('shouldNotRedirect');
-
-  const registrationQuery = useQuery({
-    queryKey: ['registration', identifier, shouldNotRedirect],
-    queryFn: () =>
-      identifier
-        ? fetchRegistration(identifier, shouldNotRedirect)
-        : Promise.reject(new Error('Identifier is undefined')),
-    meta: {
-      handleError: (
-        error: AxiosError<DeletedRegistrationProblem>,
-        query: Query<Registration, AxiosError<DeletedRegistrationProblem>>
-      ) => {
-        if (error.response?.status === 410) {
-          const errorRegistration = query.state.error?.response?.data?.resource;
-          if (errorRegistration) {
-            query.setData(errorRegistration);
-          }
-        } else {
-          dispatch(
-            setNotification({
-              message: t('feedback.error.get_registration'),
-              variant: 'error',
-            })
-          );
-        }
-      },
-    },
-  });
+  const shouldNotRedirect = new URLSearchParams(history.location.search).has('shouldNotRedirect');
+  const registrationQuery = useFetchRegistration(identifier, { shouldNotRedirect });
 
   const registration = registrationQuery.data;
   const registrationId = registration?.id;
@@ -62,7 +31,7 @@ export const RegistrationLandingPage = () => {
     navigate(newPath + searchParams, { replace: true });
   }
 
-  const canEditRegistration = registration && userCanEditRegistration(registration);
+  const canEditRegistration = userHasAccessRight(registration, 'update');
 
   const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.Published ||

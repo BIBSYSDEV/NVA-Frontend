@@ -18,6 +18,7 @@ interface ProjectOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
   unitUri: string;
   contributorRoles: ProjectContributorRole[];
   disabledTooltip?: string;
+  asProjectManager?: boolean;
 }
 
 export const ProjectOrganizationBox = ({
@@ -27,6 +28,7 @@ export const ProjectOrganizationBox = ({
   removeAffiliation,
   disabledTooltip,
   contributorRoles,
+  asProjectManager = false,
   sx,
 }: ProjectOrganizationBoxProps) => {
   const { t } = useTranslation();
@@ -43,7 +45,7 @@ export const ProjectOrganizationBox = ({
       {baseFieldName && (
         <>
           <EditIconButton
-            data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
+            data-testid={dataTestId.projectWizard.contributorsPanel.editAffiliationButton}
             onClick={() => setEditModalIsOpen(true)}
             tooltip={t('registration.contributors.edit_affiliation')}
           />
@@ -54,11 +56,12 @@ export const ProjectOrganizationBox = ({
             preselectedOrganization={organizationQuery.data}
             baseFieldName={baseFieldName}
             contributorRoles={contributorRoles}
+            asProjectManager={asProjectManager}
           />
         </>
       )}
       <DeleteIconButton
-        data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
+        data-testid={dataTestId.projectWizard.contributorsPanel.deleteAffiliationButton}
         onClick={removeAffiliation}
         disabled={!removeAffiliation}
         tooltip={!removeAffiliation ? disabledTooltip : t('project.affiliation_modal.delete_affiliation')}

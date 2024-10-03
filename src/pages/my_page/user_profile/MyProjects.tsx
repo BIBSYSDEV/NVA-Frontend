@@ -1,6 +1,7 @@
 import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { searchForProjects } from '../../../api/cristinApi';
@@ -31,6 +32,9 @@ export const MyProjects = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>{t('my_page.my_profile.my_projects')}</title>
+      </Helmet>
       <Typography variant="h2" gutterBottom>
         {t('my_page.my_profile.my_projects')}
       </Typography>

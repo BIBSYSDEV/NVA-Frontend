@@ -12,6 +12,7 @@ import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
 import { findRelatedDocumentIndex, getTitleString } from '../../../../../utils/registration-helpers';
 import { filterConfirmedDocuments } from '../../../../public_registration/PublicRegistrationContent';
+import { PublisherField } from '../../components/PublisherField';
 import { YearAndContributorsText } from '../../components/SearchContainerField';
 import { ExternalLinkField } from './ExternalLinkField';
 import { RelatedResourceRow } from './RelatedResourceRow';
@@ -55,6 +56,8 @@ export const DatasetForm = () => {
 
   return (
     <>
+      <PublisherField />
+
       <Field name={ResourceFieldNames.PublicationInstanceGeographicDescription}>
         {({ field }: FieldProps<string>) => (
           <TextField

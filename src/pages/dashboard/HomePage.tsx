@@ -13,15 +13,15 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { fetchResults, FetchResultsParams, ResultParam, ResultSearchOrder, SortOrder } from '../../api/searchApi';
+import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
-import { PublicationInstanceType } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { SearchParam } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ClinicalTreatmentStudiesReports } from '../reports/ClinicalTreatmentStudiesReports';
@@ -56,45 +56,11 @@ const HomePage = () => {
   const rowsPerPage = Number(params.get(SearchParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]);
   const page = Number(params.get(SearchParam.Page) ?? 1);
 
-  const registrationSearchTerm = params.get(ResultParam.Query);
-  const registrationsQueryConfig: FetchResultsParams = {
-    abstract: params.get(ResultParam.Abstract),
-    aggregation: 'all',
-    category: params.get(ResultParam.Category) as PublicationInstanceType | null,
-    contributor: params.get(ResultParam.Contributor),
-    contributorName: params.get(ResultParam.ContributorName),
-    course: params.get(ResultParam.Course),
-    cristinIdentifier: params.get(ResultParam.CristinIdentifier),
-    files: params.get(ResultParam.Files),
-    doi: params.get(ResultParam.Doi),
-    from: Number(params.get(ResultParam.From) ?? 0),
-    fundingIdentifier: params.get(ResultParam.FundingIdentifier),
-    fundingSource: params.get(ResultParam.FundingSource),
-    handle: params.get(ResultParam.Handle),
-    id: params.get(ResultParam.Identifier),
-    isbn: params.get(ResultParam.Isbn),
-    issn: params.get(ResultParam.Issn),
-    journal: params.get(ResultParam.Journal),
-    order: params.get(ResultParam.Order) as ResultSearchOrder | null,
-    publicationYearSince: params.get(ResultParam.PublicationYearSince),
-    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
-    publisher: params.get(ResultParam.Publisher),
-    query: registrationSearchTerm,
-    results: rowsPerPage,
-    scientificIndex: params.get(ResultParam.ScientificIndex),
-    series: params.get(ResultParam.Series),
-    sort: params.get(ResultParam.Sort) as SortOrder | null,
-    tags: params.get(ResultParam.Tags),
-    title: params.get(ResultParam.Title),
-    topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
-  };
-
-  const registrationQuery = useQuery({
+  const registrationParams = useRegistrationsQueryParams();
+  const registrationQuery = useRegistrationSearch({
     enabled: resultIsSelected,
-    queryKey: ['registrations', registrationsQueryConfig],
-    queryFn: ({ signal }) => fetchResults(registrationsQueryConfig, signal),
-    meta: { errorMessage: t('feedback.error.search') },
-    placeholderData: keepPreviousData,
+    params: { ...registrationParams, aggregation: 'all' },
+    keepDataWhileLoading: true,
   });
 
   const personSearchTerm = params.get(PersonSearchParameter.Name) ?? '.';

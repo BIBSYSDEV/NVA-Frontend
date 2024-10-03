@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { formatDateStringToISO } from '../../../utils/date-helpers';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   views: ['year', 'month', 'day'],
@@ -29,12 +30,13 @@ export const TicketDateIntervalFilter = () => {
   const [selectedFromDate, selectedToDate] = selectedDatesParam ? selectedDatesParam.split(',') : ['', ''];
 
   const updateSearchParams = (newFromDate: string, newToDate: string) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (newFromDate || newToDate) {
-      searchParams.set(TicketSearchParam.CreatedDate, `${newFromDate},${newToDate}`);
+      syncedParams.set(TicketSearchParam.CreatedDate, `${newFromDate},${newToDate}`);
     } else {
-      searchParams.delete(TicketSearchParam.CreatedDate);
+      syncedParams.delete(TicketSearchParam.CreatedDate);
     }
-    navigate({ search: searchParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (

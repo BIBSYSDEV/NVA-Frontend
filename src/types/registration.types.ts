@@ -76,10 +76,6 @@ export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
 
-interface RegistrationPublisher {
-  id: string;
-}
-
 type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier' | 'HandleIdentifier';
 type ImportSourceName = 'Cristin' | 'Scopus' | 'handle';
 
@@ -99,13 +95,19 @@ interface ImportSource {
   archive?: string;
 }
 
-type RegistrationOperation =
+export type RegistrationOperation =
   | 'update'
   | 'delete'
   | 'unpublish'
-  | 'ticket/publish'
+  | 'republish'
   | 'terminate'
-  | 'update-including-files';
+  | 'update-including-files'
+  | 'publishing-request-create'
+  | 'publishing-request-approve'
+  | 'doi-request-create'
+  | 'doi-request-approve'
+  | 'support-request-create'
+  | 'support-request-approve';
 
 export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
@@ -127,7 +129,6 @@ export interface BaseRegistration {
   };
   readonly status: RegistrationStatus;
   readonly doi?: string;
-  readonly publisher: RegistrationPublisher;
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
@@ -274,7 +275,6 @@ export const emptyRegistration: Registration = {
   status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
   projects: [],
-  publisher: { id: '' },
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
@@ -332,11 +332,24 @@ export const emptyUnconfirmedDocument: UnconfirmedDocument = {
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
 
-export interface UnpublishPublicationRequest {
+interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
   duplicateOf?: string;
   comment: string;
 }
+
+interface TerminatePublicationRequest {
+  type: 'DeletePublicationRequest';
+}
+
+interface RepublishPublicationRequest {
+  type: 'RepublishPublicationRequest';
+}
+
+export type UpdateRegistrationStatusRequest =
+  | UnpublishPublicationRequest
+  | TerminatePublicationRequest
+  | RepublishPublicationRequest;
 
 interface NpiSubjectSubdomain {
   id: string;

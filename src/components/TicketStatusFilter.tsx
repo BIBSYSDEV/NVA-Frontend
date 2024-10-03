@@ -2,28 +2,36 @@ import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent,
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TicketSearchParam } from '../api/searchApi';
-import { TicketStatus, ticketStatusValues } from '../types/publication_types/ticket.types';
+import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../utils/searchHelpers';
 
 const labelId = 'status-filter-select';
 
-export const TicketStatusFilter = () => {
+interface TicketStatusFilterProps {
+  options: TicketStatus[];
+}
+
+export const TicketStatusFilter = ({ options }: TicketStatusFilterProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const selectedStatuses = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
+  const currentStatusFilter = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
+  const selectedOptions = currentStatusFilter.filter((status) => options.includes(status));
+  const otherSelectedStatuses = currentStatusFilter.filter((status) => !options.includes(status));
 
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
-    const newSelectedStatuses = event.target.value as TicketStatus[];
+  const handleChange = (event: SelectChangeEvent<TicketStatus[]>) => {
+    const newSelectedOptions = event.target.value as TicketStatus[];
+    const newSelectedStatuses = [...otherSelectedStatuses, ...newSelectedOptions];
 
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (newSelectedStatuses.length > 0) {
-      searchParams.set(TicketSearchParam.Status, newSelectedStatuses.join(','));
+      syncedParams.set(TicketSearchParam.Status, newSelectedStatuses.join(','));
     } else {
-      searchParams.delete(TicketSearchParam.Status);
+      syncedParams.delete(TicketSearchParam.Status);
     }
-
-    navigate({ search: searchParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (
@@ -34,18 +42,18 @@ export const TicketStatusFilter = () => {
         label={t('tasks.status')}
         data-testid={dataTestId.myPage.myMessages.ticketStatusField}
         multiple
-        value={selectedStatuses}
+        value={selectedOptions}
         onChange={handleChange}
-        renderValue={(selected: TicketStatus[]) => {
-          if (selected.length === ticketStatusValues.length) {
+        renderValue={(selected) => {
+          if (selected.length === options.length) {
             return t('my_page.messages.all_ticket_types');
           } else {
             return selected.map((value) => t(`my_page.messages.ticket_types.${value}`)).join(', ');
           }
         }}>
-        {ticketStatusValues.map((status) => (
+        {options.map((status) => (
           <MenuItem sx={{ height: '2.5rem' }} key={status} value={status}>
-            <Checkbox checked={selectedStatuses.includes(status)} />
+            <Checkbox checked={selectedOptions.includes(status)} />
             <Typography>{t(`my_page.messages.ticket_types.${status}`)}</Typography>
           </MenuItem>
         ))}

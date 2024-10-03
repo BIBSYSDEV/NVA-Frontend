@@ -11,6 +11,7 @@ import { SearchForm } from '../../../../components/SearchForm';
 import { SortSelector } from '../../../../components/SortSelector';
 import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
+import { syncParamsWithSearchFields } from '../../../../utils/searchHelpers';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
 export const CentralImportPage = () => {
@@ -22,9 +23,10 @@ export const CentralImportPage = () => {
   const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery();
 
   const updatePath = (from: string, results: string) => {
-    params.set(ImportCandidatesSearchParam.From, from);
-    params.set(ImportCandidatesSearchParam.Size, results);
-    navigate({ search: params.toString() });
+    const syncedParams = syncParamsWithSearchFields(params);
+    syncedParams.set(ImportCandidatesSearchParam.From, from);
+    syncedParams.set(ImportCandidatesSearchParam.Size, results);
+    navigate({ search: syncedParams.toString() });
   };
 
   useEffect(() => {

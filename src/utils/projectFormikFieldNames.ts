@@ -18,3 +18,7 @@ export enum ProjectDetailsFieldNames {
 export enum ProjectContributorsFieldNames {
   Contributors = 'contributors',
 }
+
+export enum FundingFieldNames {
+  Source = 'source',
+}

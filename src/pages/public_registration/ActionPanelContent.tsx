@@ -10,12 +10,9 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import {
-  getTitleString,
-  userCanDeleteRegistration,
-  userHasSameCustomerAsRegistration,
-} from '../../utils/registration-helpers';
+import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
@@ -39,10 +36,7 @@ export const ActionPanelContent = ({
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
-  const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
-
-  const canBeCuratorForThisCustomer = userHasSameCustomerAsRegistration(user, registration);
 
   const publishingRequestTickets = tickets.filter(
     (ticket) => ticket.type === 'PublishingRequest'
@@ -91,6 +85,11 @@ export const ActionPanelContent = ({
     },
   });
 
+  const isPublishedOrDraft =
+    registration.status === RegistrationStatus.Published ||
+    registration.status === RegistrationStatus.Draft ||
+    registration.status === RegistrationStatus.PublishedMetadata;
+
   return (
     <>
       {(canCreateTickets || publishingRequestTickets.length > 0) && (
@@ -105,7 +104,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {(canCreateTickets || newestDoiRequestTicket) && (
+      {isPublishedOrDraft && (canCreateTickets || newestDoiRequestTicket) && (
         <ErrorBoundary>
           {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
             <DoiRequestAccordion
@@ -113,7 +112,6 @@ export const ActionPanelContent = ({
               isLoadingData={isLoadingData}
               registration={registration}
               doiRequestTicket={newestDoiRequestTicket}
-              userIsCurator={!!user?.isDoiCurator && canBeCuratorForThisCustomer}
               addMessage={addMessage}
             />
           )}
@@ -123,7 +121,6 @@ export const ActionPanelContent = ({
       {(canCreateTickets || newestSupportTicket) && (
         <ErrorBoundary>
           <SupportAccordion
-            userIsCurator={!!user?.isSupportCurator && canBeCuratorForThisCustomer}
             registration={registration}
             supportTicket={newestSupportTicket}
             addMessage={addMessage}
@@ -132,7 +129,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {userCanDeleteRegistration(registration) && (
+      {userHasAccessRight(registration, 'delete') && (
         <Box sx={{ m: '0.5rem', mt: '1rem' }}>
           <Button
             sx={{ bgcolor: 'white' }}

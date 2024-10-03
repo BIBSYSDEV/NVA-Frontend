@@ -16,7 +16,7 @@ import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames'
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
+import { getTitleString, isBook, isReport, isResearchData, userHasAccessRight } from '../../utils/registration-helpers';
 import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
@@ -55,6 +55,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     meta: { errorMessage: t('feedback.error.search') },
   });
 
+  const userCanEditRegistration = userHasAccessRight(registration, 'update');
+
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
       {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
@@ -73,7 +75,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
           {mainTitle}
         </TruncatableTypography>
-        {userCanEditRegistration(registration) && (
+        {userCanEditRegistration && (
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
               data-testid={dataTestId.registrationLandingPage.editButton}
@@ -108,14 +110,6 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               }}>
               {t('registration.public_page.result_not_published')}
             </Typography>
-          </Box>
-        )}
-        {entityDescription?.alternativeTitles.und && (
-          <Box sx={{ borderTop: '1px solid', py: '1rem' }}>
-            <Typography variant="h3" component="h2">
-              {t('registration.description.alternative_title')}
-            </Typography>
-            <Typography>{entityDescription.alternativeTitles.und}</Typography>
           </Box>
         )}
 
@@ -171,7 +165,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <LandingPageAccordion
               dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
               defaultExpanded
-              heading={t('registration.resource_type.related_results')}>
+              heading={t('common.consists_of')}>
               <ShowRelatedDocuments related={entityDescription.reference.publicationInstance.related} />
             </LandingPageAccordion>
           )}
@@ -259,9 +253,12 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={`${t('registration.public_page.other_related_registrations')} (${
-              relatedRegistrationsQuery.data.totalHits
-            })`}>
+            heading={`${
+              isBook(entityDescription?.reference?.publicationInstance?.type) ||
+              isReport(entityDescription?.reference?.publicationInstance?.type)
+                ? t('common.chapters')
+                : t('registration.public_page.other_related_registrations')
+            } (${relatedRegistrationsQuery.data.totalHits})`}>
             <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
           </LandingPageAccordion>
         )}

@@ -1,5 +1,6 @@
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
@@ -19,6 +20,9 @@ export const UserRoleAndHelp = () => {
 
   return (
     <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Helmet>
+        <title>{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</title>
+      </Helmet>
       {nvaUser?.viewingScope && hasCuratorRole(user) && (
         <div>
           <Typography gutterBottom fontWeight="bold">

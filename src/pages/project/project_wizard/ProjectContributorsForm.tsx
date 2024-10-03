@@ -1,21 +1,23 @@
 import { Box } from '@mui/material';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { ProjectTabs } from '../../../types/project.types';
-import { ProjectContributors } from '../../projects/form/ProjectContributors';
+import { ProjectParticipants } from '../../projects/form/ProjectParticipants';
+import { ProjectManager } from './ProjectManager';
+import { FormBox } from './styles';
 
 interface ProjectContributorsFormProps {
   suggestedProjectManager?: string;
-  maxVisitedTab: ProjectTabs;
 }
 
-export const ProjectContributorsForm = ({ suggestedProjectManager, maxVisitedTab }: ProjectContributorsFormProps) => {
+export const ProjectContributorsForm = ({ suggestedProjectManager }: ProjectContributorsFormProps) => {
   return (
     <ErrorBoundary>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <ProjectContributors
-          suggestedProjectManager={suggestedProjectManager}
-          isVisited={maxVisitedTab > ProjectTabs.Contributors}
-        />
+        <FormBox>
+          <ProjectManager suggestedProjectManager={suggestedProjectManager} />
+        </FormBox>
+        <FormBox>
+          <ProjectParticipants />
+        </FormBox>
       </Box>
     </ErrorBoundary>
   );

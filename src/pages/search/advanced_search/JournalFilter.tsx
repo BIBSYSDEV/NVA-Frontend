@@ -9,10 +9,11 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
+import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -48,60 +49,65 @@ export const JournalFilter = () => {
   });
 
   const handleChange = (selectedValue: Journal | null) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
-      searchParams.set(ResultParam.Journal, selectedValue.identifier);
+      syncedParams.set(ResultParam.Journal, selectedValue.identifier);
     } else {
-      searchParams.delete(ResultParam.Journal);
+      syncedParams.delete(ResultParam.Journal);
     }
+    syncedParams.delete(ResultParam.From);
 
-    navigate({ search: searchParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   const isFetching = journalParam ? selectedJournalQuery.isPending : journalOptionsQuery.isFetching;
 
   return (
-    <Autocomplete
-      size="small"
-      sx={{ minWidth: '15rem' }}
-      value={journalParam && selectedJournalQuery.data ? selectedJournalQuery.data : null}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
-      options={options}
-      filterOptions={(options) => options}
-      inputValue={journalQuery}
-      onInputChange={(_, newInputValue) => setJournalQuery(newInputValue)}
-      onChange={(_, newValue) => handleChange(newValue)}
-      blurOnSelect
-      disableClearable={!journalQuery}
-      loading={isFetching}
-      getOptionLabel={(option) => option.name}
-      renderOption={({ key, ...props }, option, state) => (
-        <PublicationChannelOption
-          key={option.identifier}
-          props={props}
-          option={option}
-          state={state}
-          hideScientificLevel
-        />
-      )}
-      ListboxComponent={AutocompleteListboxWithExpansion}
-      ListboxProps={
-        {
-          hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
-          onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-          isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
-        } satisfies AutocompleteListboxWithExpansionProps as any
-      }
-      data-testid={dataTestId.startPage.advancedSearch.journalField}
-      renderInput={(params) => (
-        <AutocompleteTextField
-          {...params}
-          variant="outlined"
-          isLoading={isFetching}
-          placeholder={t('registration.resource_type.search_for_title_or_issn')}
-          showSearchIcon={!journalParam}
-          multiline
-        />
-      )}
-    />
+    <section>
+      <StyledFilterHeading>{t('registration.resource_type.journal')}</StyledFilterHeading>
+      <Autocomplete
+        size="small"
+        sx={{ minWidth: '15rem' }}
+        value={journalParam && selectedJournalQuery.data ? selectedJournalQuery.data : null}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        options={options}
+        filterOptions={(options) => options}
+        inputValue={journalQuery}
+        onInputChange={(_, newInputValue) => setJournalQuery(newInputValue)}
+        onChange={(_, newValue) => handleChange(newValue)}
+        blurOnSelect
+        disableClearable={!journalQuery}
+        loading={isFetching}
+        getOptionLabel={(option) => option.name}
+        renderOption={({ key, ...props }, option, state) => (
+          <PublicationChannelOption
+            key={option.identifier}
+            props={props}
+            option={option}
+            state={state}
+            hideScientificLevel
+          />
+        )}
+        ListboxComponent={AutocompleteListboxWithExpansion}
+        ListboxProps={
+          {
+            hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
+            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+            isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
+          } satisfies AutocompleteListboxWithExpansionProps as any
+        }
+        data-testid={dataTestId.startPage.advancedSearch.journalField}
+        renderInput={(params) => (
+          <AutocompleteTextField
+            {...params}
+            variant="outlined"
+            isLoading={isFetching}
+            placeholder={t('registration.resource_type.search_for_title_or_issn')}
+            showSearchIcon={!journalParam}
+            multiline
+          />
+        )}
+      />
+    </section>
   );
 };

@@ -19,6 +19,7 @@ import { StyledTicketSearchFormGroup } from '../../../components/styled/Wrappers
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 const StyledStatusRadio = styled(Radio)({
@@ -43,11 +44,12 @@ export const NviCandidatesNavigationAccordion = () => {
   const nviParams = useNviCandidatesParams();
 
   const setNviStatusParam = (newStatusFilter: NviCandidateSearchStatus) => {
-    searchParams.set(NviCandidatesSearchParam.Filter, newStatusFilter);
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    syncedParams.set(NviCandidatesSearchParam.Filter, newStatusFilter);
     if (nviParams.offset) {
-      searchParams.delete(NviCandidatesSearchParam.Offset);
+      syncedParams.delete(NviCandidatesSearchParam.Offset);
     }
-    navigate({ search: searchParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   const openCandidatesView = () => {
