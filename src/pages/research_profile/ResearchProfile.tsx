@@ -8,8 +8,8 @@ import {
   Divider,
   Grid,
   IconButton,
-  Link as MuiLink,
   List,
+  Link as MuiLink,
   Typography,
 } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -261,6 +261,7 @@ const ResearchProfile = () => {
           <CircularProgress aria-labelledby="registration-label" />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <ListPagination
+            paginationAriaLabel={t('common.pagination_result_search')}
             count={registrationsQuery.data.totalHits}
             rowsPerPage={registrationRowsPerPage}
             page={registrationsPage}
@@ -287,6 +288,7 @@ const ResearchProfile = () => {
           <CircularProgress aria-labelledby="project-label" />
         ) : projects.length > 0 ? (
           <ListPagination
+            paginationAriaLabel={t('common.pagination_project_search')}
             count={projectsQuery.data?.size ?? 0}
             rowsPerPage={projectRowsPerPage}
             page={projectsPage}

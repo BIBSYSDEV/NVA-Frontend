@@ -14,6 +14,7 @@ export interface ListPaginationBottomProps {
   maxHits?: number; // Default limit of 10_000 hits in ElasticSearch
   pageCounterComponent: ReactNode;
   alternativePaginationText?: string;
+  paginationAriaLabel?: string;
 }
 
 export const ListPaginationBottom = ({
@@ -26,6 +27,7 @@ export const ListPaginationBottom = ({
   maxHits,
   pageCounterComponent,
   alternativePaginationText,
+  paginationAriaLabel,
 }: ListPaginationBottomProps) => {
   const { t } = useTranslation();
 
@@ -52,6 +54,7 @@ export const ListPaginationBottom = ({
             justifyContent: 'center',
           },
         }}
+        aria-label={paginationAriaLabel}
         page={page}
         count={pages}
         onChange={(_, newPage) => onPageChange(newPage)}

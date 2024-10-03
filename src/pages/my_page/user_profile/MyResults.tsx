@@ -55,6 +55,7 @@ export const MyResults = () => {
         </Box>
       ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
         <ListPagination
+          paginationAriaLabel={t('common.pagination_project_search')}
           count={registrationsQuery.data.totalHits}
           rowsPerPage={rowsPerPage}
           page={page}
