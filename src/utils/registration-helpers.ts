@@ -689,12 +689,6 @@ export const userCanRepublishRegistration = (registration: Registration) =>
 export const userCanDeleteRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('delete') ?? false;
 
-/**
- * @deprecated Use userHasAccessRight instead
- */
-export const userCanEditPublishedFile = (registration: Registration) =>
-  registration.allowedOperations?.includes('update-including-files') ?? false;
-
 export const userHasAccessRight = (registration: Registration, operation: RegistrationOperation) =>
   registration.allowedOperations?.includes(operation) ?? false;
 
