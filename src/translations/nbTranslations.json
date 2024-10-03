@@ -772,6 +772,8 @@
         "upload_profile_photo": "Last opp profilfoto",
         "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
       },
+      "link_to_projects_search": "Se <0>søkesiden</0> for å filtrere blant alle prosjekter.",
+      "link_to_results_search": "Se <0>søkesiden</0> for å filtrere blant alle resultater.",
       "list_contains_all_registration_you_have_created": "Listen viser alle prosjekter du har registrert",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
