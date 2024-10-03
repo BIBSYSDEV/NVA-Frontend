@@ -683,12 +683,6 @@ export const userCanTerminateRegistration = (registration: Registration) =>
 export const userCanRepublishRegistration = (registration: Registration) =>
   registration.allowedOperations?.includes('republish') ?? false;
 
-/**
- * @deprecated Use userHasAccessRight instead
- */
-export const userCanDeleteRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('delete') ?? false;
-
 export const userHasAccessRight = (registration: Registration, operation: RegistrationOperation) =>
   registration.allowedOperations?.includes(operation) ?? false;
 
