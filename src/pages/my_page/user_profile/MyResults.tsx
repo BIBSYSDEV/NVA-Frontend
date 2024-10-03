@@ -64,7 +64,7 @@ export const MyResults = () => {
             setPage(1);
           }}>
           <RegistrationSearchResults
-            canEditRegistration={true}
+            canEditRegistration
             searchResult={registrationsQuery.data.hits}
             promotedPublications={promotedPublications}
           />
