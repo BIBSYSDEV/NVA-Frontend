@@ -14,7 +14,7 @@ import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { Journal } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
+import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 export const JournalFilter = () => {
@@ -48,13 +48,15 @@ export const JournalFilter = () => {
   });
 
   const handleChange = (selectedValue: Journal | null) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
-      searchParams.set(ResultParam.Journal, selectedValue.identifier);
+      syncedParams.set(ResultParam.Journal, selectedValue.identifier);
     } else {
-      searchParams.delete(ResultParam.Journal);
+      syncedParams.delete(ResultParam.Journal);
     }
+    syncedParams.delete(ResultParam.From);
 
-    history.push({ search: searchParams.toString() });
+    history.push({ search: syncedParams.toString() });
   };
 
   const isFetching = journalParam ? selectedJournalQuery.isPending : journalOptionsQuery.isFetching;

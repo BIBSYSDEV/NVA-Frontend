@@ -1,10 +1,16 @@
 import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../../api/cristinApi';
+import {
+  ProjectSearchOrder,
+  ProjectSearchParameter,
+  ProjectsSearchParams,
+  searchForProjects,
+} from '../../../api/cristinApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
@@ -25,7 +31,7 @@ export const MyProjectRegistrations = () => {
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const projectQueryParams: ProjectsSearchParams = {
-    orderBy: searchParams.get(ProjectSearchParameter.OrderBy),
+    orderBy: searchParams.get(ProjectSearchParameter.OrderBy) as ProjectSearchOrder | null,
     sort: searchParams.get(ProjectSearchParameter.Sort),
     creator: cristinIdentifier,
   };
@@ -55,6 +61,9 @@ export const MyProjectRegistrations = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>{t('my_page.project_registrations')}</title>
+      </Helmet>
       <Typography variant="h2" gutterBottom>
         {t('my_page.project_registrations')}
       </Typography>

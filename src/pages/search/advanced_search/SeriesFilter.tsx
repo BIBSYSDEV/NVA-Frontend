@@ -14,7 +14,7 @@ import { StyledFilterHeading } from '../../../components/styled/Wrappers';
 import { Series } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { keepSimilarPreviousData } from '../../../utils/searchHelpers';
+import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { PublicationChannelOption } from '../../registration/resource_type_tab/components/PublicationChannelOption';
 
 export const SeriesFilter = () => {
@@ -48,13 +48,15 @@ export const SeriesFilter = () => {
   });
 
   const handleChange = (selectedValue: Series | null) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
-      searchParams.set(ResultParam.Series, selectedValue.identifier);
+      syncedParams.set(ResultParam.Series, selectedValue.identifier);
     } else {
-      searchParams.delete(ResultParam.Series);
+      syncedParams.delete(ResultParam.Series);
     }
+    syncedParams.delete(ResultParam.From);
 
-    history.push({ search: searchParams.toString() });
+    history.push({ search: syncedParams.toString() });
   };
 
   const isFetching = seriesParam ? selectedSeriesQuery.isPending : seriesOptionsQuery.isFetching;

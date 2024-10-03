@@ -33,6 +33,7 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
         <ListPagination
+          paginationAriaLabel={t('common.pagination_project_search')}
           count={registrationQuery.data.totalHits}
           page={page + 1}
           onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}

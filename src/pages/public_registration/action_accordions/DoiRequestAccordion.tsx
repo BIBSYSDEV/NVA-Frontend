@@ -23,19 +23,18 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
-import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getAssociatedFiles } from '../../../utils/registration-helpers';
+import { getAssociatedFiles, userHasAccessRight } from '../../../utils/registration-helpers';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -44,7 +43,6 @@ interface DoiRequestAccordionProps {
   registration: Registration;
   refetchData: () => Promise<void>;
   doiRequestTicket?: Ticket;
-  userIsCurator: boolean;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
@@ -69,13 +67,11 @@ export const DoiRequestAccordion = ({
   registration,
   doiRequestTicket,
   refetchData,
-  userIsCurator,
   isLoadingData,
   addMessage,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const user = useSelector((store: RootState) => store.user);
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
 
@@ -217,6 +213,9 @@ export const DoiRequestAccordion = ({
     </LoadingButton>
   );
 
+  const userCanRequestDoi = userHasAccessRight(registration, 'doi-request-create');
+  const userCanAssignDoi = userHasAccessRight(registration, 'doi-request-approve');
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
@@ -256,7 +255,7 @@ export const DoiRequestAccordion = ({
 
         {!doiRequestTicket && !registration.doi && (
           <>
-            {isPublishedRegistration && (
+            {isPublishedRegistration && userCanRequestDoi && (
               <>
                 <Trans
                   t={t}
@@ -362,11 +361,12 @@ export const DoiRequestAccordion = ({
           />
         </ConfirmDialog>
 
-        {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
+        {userCanAssignDoi && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <Typography>{t('registration.public_page.tasks_panel.assign_doi_about')}</Typography>
 
             {assignDoiButton}
+
             <Button
               sx={{ bgcolor: 'white' }}
               variant="outlined"
@@ -398,7 +398,11 @@ export const DoiRequestAccordion = ({
         {(isPendingDoiRequest || isClosedDoiRequest) && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {messages.length > 0 ? (
-              <TicketMessageList ticket={doiRequestTicket} canDeleteMessage={userIsCurator} refetchData={refetchData} />
+              <TicketMessageList
+                ticket={doiRequestTicket}
+                canDeleteMessage={userCanAssignDoi}
+                refetchData={refetchData}
+              />
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}
@@ -423,7 +427,7 @@ export const DoiRequestAccordion = ({
               </IconButton>
             </Box>
             <Collapse in={showMoreActions}>
-              {user?.isDoiCurator ? (
+              {userCanAssignDoi ? (
                 <>
                   <Typography variant="h2" gutterBottom>
                     {t('registration.public_page.tasks_panel.assign_doi')}

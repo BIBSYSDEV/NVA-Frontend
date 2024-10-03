@@ -40,7 +40,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
-import { userCanPublishRegistration } from '../../../utils/registration-helpers';
+import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
@@ -98,8 +98,7 @@ export const PublishingAccordion = ({
     (artifact) => artifact.type === FileType.PublishedFile
   );
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
-  const userCanPublish = userCanPublishRegistration(registration);
-
+  const userCanPublish = userHasAccessRight(registration, 'publishing-request-approve');
   const formErrors = validateRegistrationForm(registration);
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;

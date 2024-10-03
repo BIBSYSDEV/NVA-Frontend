@@ -7,7 +7,7 @@ import { fetchRegistrationTickets } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RegistrationStatus } from '../../types/registration.types';
-import { userCanEditRegistration } from '../../utils/registration-helpers';
+import { userHasAccessRight } from '../../utils/registration-helpers';
 import { IdentifierParams } from '../../utils/urlPaths';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
@@ -30,7 +30,7 @@ export const RegistrationLandingPage = () => {
     history.replace(newPath + searchParams);
   }
 
-  const canEditRegistration = registration && userCanEditRegistration(registration);
+  const canEditRegistration = userHasAccessRight(registration, 'update');
 
   const isAllowedToSeePublicRegistration =
     registration?.status === RegistrationStatus.Published ||

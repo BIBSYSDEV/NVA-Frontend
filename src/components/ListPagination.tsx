@@ -8,6 +8,7 @@ interface ListPaginationProps extends Omit<ListPaginationBottomProps, 'pageCount
   showPaginationTop?: boolean;
   sortingComponent?: ReactNode;
   alternativePaginationText?: string;
+  paginationAriaLabel?: string;
 }
 
 export const ListPagination = ({
@@ -22,6 +23,7 @@ export const ListPagination = ({
   maxHits,
   rowsPerPageOptions,
   alternativePaginationText,
+  paginationAriaLabel,
 }: ListPaginationProps) => {
   const itemsStart = count > 0 ? (page - 1) * rowsPerPage + 1 : 0;
   const itemsEnd = Math.min(page * rowsPerPage, count);
@@ -43,6 +45,7 @@ export const ListPagination = ({
         pageCounterComponent={pageCounter}
         rowsPerPageOptions={rowsPerPageOptions}
         alternativePaginationText={alternativePaginationText}
+        paginationAriaLabel={paginationAriaLabel}
       />
     </>
   );

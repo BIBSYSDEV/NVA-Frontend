@@ -1,6 +1,7 @@
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
@@ -98,6 +99,9 @@ export const CentralImportDuplicationCheckPage = () => {
         gridTemplateAreas: { xs: '"actions" "main"', sm: '"main actions"' },
         gap: '1rem',
       }}>
+      <Helmet>
+        <title>{t('basic_data.central_import.central_import')}</title>
+      </Helmet>
       <BackgroundDiv>
         {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
