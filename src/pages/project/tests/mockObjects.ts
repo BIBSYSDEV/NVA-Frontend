@@ -54,6 +54,13 @@ export const selectedPersonWithManyAffiliations = {
         labels: { no: 'no' },
       },
     },
+    {
+      active: true,
+      organization: 'ghiorg',
+      role: {
+        labels: { no: 'no' },
+      },
+    },
   ],
 };
 
@@ -114,6 +121,10 @@ export const jklOrgAsAffiliation: ProjectOrganization = {
 
 export const contributorsArrayWithProjectManager: ProjectContributor[] = [
   { identity: existingPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }] },
+];
+
+export const contributorsArrayWithProjectManagerWithoutAffiliation: ProjectContributor[] = [
+  { identity: existingPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
 ];
 
 export const contributorsArrayWithUnidentifiedProjectManagerWithSameAffiliation: ProjectContributor[] = [
