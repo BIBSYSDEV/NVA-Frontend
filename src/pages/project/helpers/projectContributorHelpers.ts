@@ -285,14 +285,16 @@ export const removeProjectManager = (contributors: ProjectContributor[]) => {
 };
 
 const rolesAreEqual = (r1: ProjectContributorRole[], r2: ProjectContributorRole[]) => {
-  if (r1.length !== r2.length) return false;
+  let areEqual = true;
+
+  if (r1.length !== r2.length) areEqual = false;
 
   r1.forEach((role, index) => {
-    if (role.type !== r2[index].type) return false;
-    if (role.affiliation !== r2[index].affiliation) return false;
+    if (role.type !== r2[index].type) areEqual = false;
+    if (role.affiliation !== r2[index].affiliation) areEqual = false;
   });
 
-  return true;
+  return areEqual;
 };
 
 export const contributorsAreEqual = (c1: ProjectContributor, c2: ProjectContributor) => {
