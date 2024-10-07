@@ -10,10 +10,6 @@ export const isProjectManagerRole = (role: ProjectContributorRole) => {
   return role.type === 'ProjectManager';
 };
 
-export const isNonProjectManagerRole = (role: ProjectContributorRole) => {
-  return role.type !== 'ProjectManager';
-};
-
 export const contributorHasNonEmptyAffiliation = (roles: ProjectContributorRole[]) => {
   return roles.some((role) => role.affiliation !== undefined);
 };
@@ -93,14 +89,6 @@ export const addRoles = (
         !isAlreadyInExistingRoles(existingRoles, role) && (role.type !== roleToAddTo || !hasEmptyAffiliation(role))
     )
   );
-};
-
-const findRoleIndexForAffiliation = (
-  roleType: ProjectContributorType,
-  roles: ProjectContributorRole[],
-  affiliationId: string
-) => {
-  return findAffiliationOnCorrectRoleType(roles, affiliationId, roleType);
 };
 
 const notLastOfItsRoleType = (
@@ -236,7 +224,7 @@ export const removeAffiliation = (
       error: AffiliationErrors.NO_AFFILIATION_ID,
     };
   }
-  const indexOfRoleThatHasAffiliation = findRoleIndexForAffiliation(roleType, contributorRoles, affiliationId);
+  const indexOfRoleThatHasAffiliation = findAffiliationOnCorrectRoleType(contributorRoles, affiliationId, roleType);
 
   if (indexOfRoleThatHasAffiliation < 0) {
     return {

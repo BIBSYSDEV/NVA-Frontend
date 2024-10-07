@@ -2523,7 +2523,7 @@ describe('remove project manager', () => {
 });
 
 describe('addUnidentifiedProjectContributor', () => {
-  it('when there is no search term it returns an error', () => {
+  it('when there is no search term, it returns an error', () => {
     expect(addUnidentifiedProjectContributor('', [], 'ProjectParticipant')).toEqual({
       error: AddContributorErrors.NO_SEARCH_TERM,
     });
