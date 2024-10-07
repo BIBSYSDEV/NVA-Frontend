@@ -221,10 +221,18 @@ export const addUnidentifiedProjectContributor = (
     return { error: AddContributorErrors.NO_SEARCH_TERM };
   }
 
+  if (indexToReplace > contributors.length - 1 || indexToReplace < -1) {
+    return { error: AddContributorErrors.INDEX_OUT_OF_BOUNDS };
+  }
+
   // Cannot add project manager if we already have one
   if (roleToAddTo === 'ProjectManager') {
     const projectManagerError = checkIfExistingProjectManager(contributors, indexToReplace);
     if (projectManagerError) return { error: projectManagerError };
+  }
+
+  if (indexToReplace > -1 && contributors[indexToReplace].identity.id) {
+    return { error: AddContributorErrors.CAN_ONLY_REPLACE_UNIDENTIFIED_CONTRIBUTORS };
   }
 
   const { firstName, lastName } = createNamesFromInput(searchTerm);
