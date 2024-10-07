@@ -75,8 +75,8 @@ const findNonProjectManagerRoleThatHasAffiliation = (roles: ProjectContributorRo
   return roles.findIndex((role) => role.affiliation?.id === affiliationId && isNonProjectManagerRole(role));
 };
 
-const isAlreadyInExistingRoles = (existingRoles: ProjectContributorRole[], role: ProjectContributorRole) => {
-  const existingRole = existingRoles.find((r) => r.affiliation?.id === role.affiliation?.id);
+export const isAlreadyInExistingRoles = (existingRoles: ProjectContributorRole[], role: ProjectContributorRole) => {
+  const existingRole = existingRoles.find((r) => r.affiliation?.id === role.affiliation?.id && r.type === role.type);
   return existingRole !== undefined;
 };
 
@@ -85,6 +85,7 @@ export const addRoles = (
   rolesToAdd: ProjectContributorRole[],
   roleToAddTo: ProjectContributorType
 ) => {
+  // Not adding roles of same type that are empty or roles that already exist in the array
   return existingRoles.concat(
     rolesToAdd.filter(
       (role) =>

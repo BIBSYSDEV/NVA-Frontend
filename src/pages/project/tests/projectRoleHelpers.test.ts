@@ -1,10 +1,21 @@
 import { describe, expect, it } from 'vitest';
-import { addAffiliation, AffiliationErrors, editAffiliation, removeAffiliation } from '../helpers/projectRoleHelpers';
+import {
+  addAffiliation,
+  addRoles,
+  AffiliationErrors,
+  editAffiliation,
+  isAlreadyInExistingRoles,
+  removeAffiliation,
+} from '../helpers/projectRoleHelpers';
 import {
   abcOrgAsAffiliation,
   defOrgAsAffiliation,
   ghiOrgAsAffiliation,
   jklOrgAsAffiliation,
+  localManagerRole,
+  otherEmptyProjectParticipantRole,
+  otherProjectParticipantRole,
+  projectParticipantRole,
   rolesWithDefOrg,
   rolesWithoutProjectManager,
   rolesWithProjectManager,
@@ -16,6 +27,8 @@ import {
   rolesWithUndefinedProjectManager,
   rolesWithUndefinedProjectParticipant,
   severalRolesWithUndefined,
+  undefinedLocalManagerRole,
+  undefinedProjectParticipantRole,
 } from './mockObjects';
 
 describe('addAffiliation', () => {
@@ -266,5 +279,58 @@ describe('removeAffiliation', () => {
         ],
       });
     });
+  });
+});
+
+describe('addRoles', () => {
+  it("Doesn't add roles of same role type that are empty", () => {
+    expect(addRoles([projectParticipantRole], [undefinedProjectParticipantRole], 'ProjectParticipant')).toEqual([
+      projectParticipantRole,
+    ]);
+  });
+  it('Does add roles of same role type that arent empty', () => {
+    expect(addRoles([projectParticipantRole], [otherProjectParticipantRole], 'ProjectParticipant')).toEqual([
+      projectParticipantRole,
+      otherProjectParticipantRole,
+    ]);
+  });
+  it("Doesn't add roles that already exist in the array", () => {
+    expect(addRoles([projectParticipantRole], [projectParticipantRole], 'ProjectParticipant')).toEqual([
+      projectParticipantRole,
+    ]);
+  });
+  it("Doesn't add existing undefined role of different role type", () => {
+    expect(addRoles([undefinedLocalManagerRole], [undefinedLocalManagerRole], 'ProjectParticipant')).toEqual([
+      undefinedLocalManagerRole,
+    ]);
+  });
+  it("Doesn't add existing undefined role of same role type", () => {
+    expect(
+      addRoles([undefinedProjectParticipantRole], [otherEmptyProjectParticipantRole], 'ProjectParticipant')
+    ).toEqual([undefinedProjectParticipantRole]);
+  });
+  it('Adds existing roles with same id if they are of different role type', () => {
+    expect(addRoles([projectParticipantRole], [localManagerRole], 'ProjectParticipant')).toEqual([
+      projectParticipantRole,
+      localManagerRole,
+    ]);
+  });
+});
+
+describe('isAlreadyInExistingRoles', () => {
+  it('returns true if the role is the same as a role in existing roles', () => {
+    expect(isAlreadyInExistingRoles([projectParticipantRole], projectParticipantRole)).toEqual(true);
+  });
+  it('returns false if the role does not have same id as a role in existing roles', () => {
+    expect(isAlreadyInExistingRoles([projectParticipantRole], otherProjectParticipantRole)).toEqual(false);
+  });
+  it('returns false if the id is the same but the role types are different', () => {
+    expect(isAlreadyInExistingRoles([projectParticipantRole], localManagerRole)).toEqual(false);
+  });
+  it('returns true if both are undefined and has same role', () => {
+    expect(isAlreadyInExistingRoles([undefinedProjectParticipantRole], undefinedProjectParticipantRole)).toEqual(true);
+  });
+  it('returns false if both are undefined and have different roles', () => {
+    expect(isAlreadyInExistingRoles([undefinedProjectParticipantRole], undefinedLocalManagerRole)).toEqual(false);
   });
 });

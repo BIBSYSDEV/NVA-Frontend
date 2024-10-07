@@ -30,6 +30,7 @@ export enum AddContributorErrors {
   CANNOT_ADD_ANOTHER_PROJECT_MANAGER_ROLE,
   CAN_ONLY_REPLACE_UNIDENTIFIED_CONTRIBUTORS,
   CAN_ONLY_ADD_ONE_PROJECT_MANAGER_ROLE,
+  MUST_HAVE_ROLE_OF_TYPE_TO_BE_IDENTIFIED,
 }
 
 const checkIfExistingProjectManager = (contributors: ProjectContributor[], indexToReplace: number) => {
@@ -124,6 +125,11 @@ export const addContributor = (
       const projectManagerErrorRoleError = checkIfDefinedProjectManagerRole(contributors);
       if (projectManagerErrorRoleError) return { error: projectManagerErrorRoleError }; // Can not add affiliations if the project manager has one
     }
+  }
+
+  // The UI only makes available an identify-button on roles that exist, so this is mostly to ensure the tests are correct
+  if (indexToReplace > -1 && !contributors[indexToReplace].roles.some((role) => role.type === roleToAddTo)) {
+    return { error: AddContributorErrors.MUST_HAVE_ROLE_OF_TYPE_TO_BE_IDENTIFIED };
   }
 
   const newContributor: ProjectContributor = {
