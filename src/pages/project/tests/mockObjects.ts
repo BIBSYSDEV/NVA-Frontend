@@ -519,14 +519,29 @@ export const rolesWithDefOrg: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
 ];
 
+export const rolesWithLocalManagerWithDefOrg: ProjectContributorRole[] = [
+  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+];
+
 export const rolesWithUndefinedProjectParticipant: ProjectContributorRole[] = [
   { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
   { type: 'ProjectParticipant', affiliation: undefined },
 ];
 
+export const rolesWithUndefinedLocalManager: ProjectContributorRole[] = [
+  { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
+  { type: 'LocalManager', affiliation: undefined },
+];
+
 export const severalRolesWithUndefined: ProjectContributorRole[] = [
   { type: 'ProjectManager', affiliation: undefined },
   { type: 'ProjectParticipant', affiliation: undefined },
+];
+
+export const evenMoreRolesWithUndefined: ProjectContributorRole[] = [
+  { type: 'ProjectManager', affiliation: undefined },
+  { type: 'ProjectParticipant', affiliation: undefined },
+  { type: 'LocalManager', affiliation: undefined },
 ];
 
 export const rolesWithProjectManagerWithGhiOrg: ProjectContributorRole[] = [
@@ -538,6 +553,11 @@ export const rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg: ProjectC
   { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
 ];
 
+export const rolesWithProjectManagerWithGhiOrgAndLocalManagerWithAbcOrg: ProjectContributorRole[] = [
+  { type: 'ProjectManager', affiliation: ghiOrgAsAffiliation },
+  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+];
+
 export const rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrgReversed: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
   { type: 'ProjectManager', affiliation: ghiOrgAsAffiliation },
@@ -547,8 +567,27 @@ export const rolesWithProjectParticipantWithGhiOrg: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
 ];
 
+export const rolesWithLocalManagerWithGhiOrg: ProjectContributorRole[] = [
+  { type: 'LocalManager', affiliation: ghiOrgAsAffiliation },
+];
+
 export const rolesWithSeveralProjectParticipantRoles: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
   { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+  { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+];
+
+export const rolesWithSeveralRoles: ProjectContributorRole[] = [
+  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+  { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
+];
+
+export const rolesWithSeveralRolesAndOneLocalManager: ProjectContributorRole[] = [
+  { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
+  { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
+  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
 ];

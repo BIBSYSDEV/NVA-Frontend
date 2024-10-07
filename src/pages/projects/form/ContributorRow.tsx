@@ -59,7 +59,7 @@ export const ContributorRow = ({
   const toggleOpenVerifyContributor = () => setOpenVerifyContributor(!openVerifyContributor);
 
   const onRemoveAffiliation = (affiliationId: string) => {
-    const newRolesObject = removeAffiliation(affiliationId, contributor.roles, asProjectManager);
+    const newRolesObject = removeAffiliation(affiliationId, contributor.roles, roleType);
 
     if (newRolesObject.error) {
       return;
