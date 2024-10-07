@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useBlocker, useNavigate } from 'react-router-dom';
-import { UrlPathTemplate } from '../utils/urlPaths';
 import { ConfirmDialog } from './ConfirmDialog';
 
 interface RouteLeavingGuardProps {
@@ -31,6 +30,7 @@ export const RouteLeavingGuard = ({
   useEffect(() => {
     if (confirmedNavigation && nextPath) {
       navigate(nextPath);
+      setNextPath(''); // TEMP SOLUTION TO BUILD
     }
   }, [navigate, confirmedNavigation, nextPath]);
 
@@ -60,6 +60,8 @@ export const RouteLeavingGuard = ({
 // NOTE:
 // This is a workaround to allow navigating to Landing Page programatically from Wizard, due to changes for React v18(?).
 // This solution may lead to some unexpected behaviour, and should be revisited if we find a better solution.
+{
+  /*
 const goFromRegistrationWizardToLandingPage = (currentPath: string, newPath: string) => {
   const splittedPath = UrlPathTemplate.RegistrationWizard.split(':identifier');
   const currentPathIsRegistrationWizard =
@@ -67,4 +69,5 @@ const goFromRegistrationWizardToLandingPage = (currentPath: string, newPath: str
   const newPathIsLandingPage = currentPath.startsWith(newPath) && !newPath.endsWith(splittedPath[1]);
 
   return currentPathIsRegistrationWizard && newPathIsLandingPage;
-};
+}; */
+}
