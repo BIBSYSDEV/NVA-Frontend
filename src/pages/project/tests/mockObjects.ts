@@ -123,10 +123,6 @@ export const contributorsArrayWithProjectManager: ProjectContributor[] = [
   { identity: existingPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: defOrgAsAffiliation }] },
 ];
 
-export const contributorsArrayWithProjectManagerWithoutAffiliation: ProjectContributor[] = [
-  { identity: existingPersonIdentity, roles: [{ type: 'ProjectManager', affiliation: undefined }] },
-];
-
 export const contributorsArrayWithUnidentifiedProjectManagerWithSameAffiliation: ProjectContributor[] = [
   { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }] },
 ];
