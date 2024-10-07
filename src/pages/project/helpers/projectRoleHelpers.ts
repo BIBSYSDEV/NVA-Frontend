@@ -63,8 +63,9 @@ const checkIfSameAffiliationOnSameRoleType = (
   role: ProjectContributorRole,
   roleType: ProjectContributorType
 ) => {
-  const isSameRoleType = roleType === role.type;
-  return role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId && isSameRoleType;
+  return (
+    role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId && roleType === role.type
+  );
 };
 
 const findAffiliationOnCorrectRoleType = (
