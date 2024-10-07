@@ -127,7 +127,7 @@ export const addContributor = (
     }
   }
 
-  // The UI only makes available an identify-button on roles that exist, so this is mostly to ensure the tests are correct
+  // The UI only makes available an identify-button on unidentified contributors, so this is mostly to ensure the tests test the right thing
   if (indexToReplace > -1 && !contributors[indexToReplace].roles.some((role) => role.type === roleToAddTo)) {
     return { error: AddContributorErrors.MUST_HAVE_ROLE_OF_TYPE_TO_BE_IDENTIFIED };
   }
