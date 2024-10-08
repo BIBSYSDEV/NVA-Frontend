@@ -46,7 +46,7 @@ export interface ProjectContributorIdentity {
   lastName: string;
 }
 
-export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant' | 'LocalManager';
+export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant' | 'LocalProjectManager';
 
 export interface ProjectContributorRole {
   type: ProjectContributorType;

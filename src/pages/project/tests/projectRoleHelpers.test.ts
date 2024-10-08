@@ -12,28 +12,28 @@ import {
   defOrgAsAffiliation,
   ghiOrgAsAffiliation,
   jklOrgAsAffiliation,
-  localManagerRole,
+  localProjectManagerRole,
   otherEmptyProjectParticipantRole,
   otherProjectParticipantRole,
   projectParticipantRole,
   rolesWithDefOrg,
-  rolesWithLocalManagerWithDefOrg,
-  rolesWithLocalManagerWithGhiOrg,
+  rolesWithLocalProjectManagerWithDefOrg,
+  rolesWithLocalProjectManagerWithGhiOrg,
   rolesWithoutProjectManager,
   rolesWithProjectManager,
   rolesWithProjectManagerWithGhiOrg,
-  rolesWithProjectManagerWithGhiOrgAndLocalManagerWithAbcOrg,
+  rolesWithProjectManagerWithGhiOrgAndLocalProjectManagerWithAbcOrg,
   rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg,
   rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrgReversed,
   rolesWithProjectParticipantWithGhiOrg,
   rolesWithSeveralProjectParticipantRoles,
   rolesWithSeveralRoles,
-  rolesWithSeveralRolesAndOneLocalManager,
-  rolesWithUndefinedLocalManager,
+  rolesWithSeveralRolesAndOneLocalProjectManager,
+  rolesWithUndefinedLocalProjectManager,
   rolesWithUndefinedProjectManager,
   rolesWithUndefinedProjectParticipant,
   severalRolesWithUndefined,
-  undefinedLocalManagerRole,
+  undefinedLocalProjectManagerRole,
   undefinedProjectParticipantRole,
 } from './mockObjects';
 
@@ -118,60 +118,60 @@ describe('addAffiliation', () => {
   });
   describe('to a local manager', () => {
     it('when newAffiliationId is empty it returns an error', () => {
-      expect(addAffiliation('', [], 'LocalManager', {})).toEqual({
+      expect(addAffiliation('', [], 'LocalProjectManager', {})).toEqual({
         newContributorRoles: [],
         error: AffiliationErrors.NO_AFFILIATION_ID,
       });
     });
     it('when they already have another affiliation with the same id it returns an error', () => {
-      expect(addAffiliation('deforg', rolesWithLocalManagerWithDefOrg, 'LocalManager', {})).toEqual({
-        newContributorRoles: rolesWithLocalManagerWithDefOrg,
+      expect(addAffiliation('deforg', rolesWithLocalProjectManagerWithDefOrg, 'LocalProjectManager', {})).toEqual({
+        newContributorRoles: rolesWithLocalProjectManagerWithDefOrg,
         error: AffiliationErrors.ADD_DUPLICATE_AFFILIATION,
       });
     });
     it('when they have another affiliation with a different role type with the same id it adds the new affiliation', () => {
-      expect(addAffiliation('deforg', rolesWithDefOrg, 'LocalManager', {})).toEqual({
+      expect(addAffiliation('deforg', rolesWithDefOrg, 'LocalProjectManager', {})).toEqual({
         newContributorRoles: [
           { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-          { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
         ],
       });
     });
     it('when they already have another affiliation with a different id and different role, it adds the new affiliation in an additional role', () => {
-      expect(addAffiliation('abcorg', rolesWithDefOrg, 'LocalManager', {})).toEqual({
+      expect(addAffiliation('abcorg', rolesWithDefOrg, 'LocalProjectManager', {})).toEqual({
         newContributorRoles: [
           { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-          { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
         ],
       });
     });
     it('when they already have another affiliation with a different id, it adds the new affiliation in an additional role', () => {
-      expect(addAffiliation('abcorg', rolesWithLocalManagerWithDefOrg, 'LocalManager', {})).toEqual({
+      expect(addAffiliation('abcorg', rolesWithLocalProjectManagerWithDefOrg, 'LocalProjectManager', {})).toEqual({
         newContributorRoles: [
-          { type: 'LocalManager', affiliation: defOrgAsAffiliation },
-          { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
         ],
       });
     });
     it('when they have no other affiliation, it adds the new affiliation in a new role', () => {
-      expect(addAffiliation('abcorg', [], 'LocalManager', {})).toEqual({
-        newContributorRoles: [{ type: 'LocalManager', affiliation: abcOrgAsAffiliation }],
+      expect(addAffiliation('abcorg', [], 'LocalProjectManager', {})).toEqual({
+        newContributorRoles: [{ type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation }],
       });
     });
     it('when they have an undefined affiliation with same role type it replaces the undefined affiliation', () => {
-      expect(addAffiliation('abcorg', rolesWithUndefinedLocalManager, 'LocalManager', {})).toEqual({
+      expect(addAffiliation('abcorg', rolesWithUndefinedLocalProjectManager, 'LocalProjectManager', {})).toEqual({
         newContributorRoles: [
           { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
-          { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
         ],
       });
     });
     it('when they have several undefined roles it replaces the one with the same role type', () => {
-      expect(addAffiliation('abcorg', severalRolesWithUndefined, 'LocalManager', {})).toEqual({
+      expect(addAffiliation('abcorg', severalRolesWithUndefined, 'LocalProjectManager', {})).toEqual({
         newContributorRoles: [
           { type: 'ProjectManager', affiliation: undefined },
           { type: 'ProjectParticipant', affiliation: undefined },
-          { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
         ],
       });
     });
@@ -280,8 +280,10 @@ describe('editAffiliation', () => {
   });
   describe('for a local manager', () => {
     it('when they try to change an affiliation to an affiliation that already exists on the role, it returns an error', () => {
-      expect(editAffiliation('ghiorg', rolesWithLocalManagerWithGhiOrg, 'ghiorg', 'LocalManager', {})).toEqual({
-        newContributorRoles: rolesWithLocalManagerWithGhiOrg,
+      expect(
+        editAffiliation('ghiorg', rolesWithLocalProjectManagerWithGhiOrg, 'ghiorg', 'LocalProjectManager', {})
+      ).toEqual({
+        newContributorRoles: rolesWithLocalProjectManagerWithGhiOrg,
         error: AffiliationErrors.ADD_DUPLICATE_AFFILIATION,
       });
     });
@@ -289,32 +291,34 @@ describe('editAffiliation', () => {
       expect(
         editAffiliation(
           'ghiorg',
-          rolesWithProjectManagerWithGhiOrgAndLocalManagerWithAbcOrg,
+          rolesWithProjectManagerWithGhiOrgAndLocalProjectManagerWithAbcOrg,
           'abcorg',
-          'LocalManager',
+          'LocalProjectManager',
           {}
         )
       ).toEqual({
         newContributorRoles: [
           { type: 'ProjectManager', affiliation: ghiOrgAsAffiliation },
-          { type: 'LocalManager', affiliation: ghiOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: ghiOrgAsAffiliation },
         ],
       });
     });
     it('when they have several affiliations, it changes the correct one', () => {
-      expect(editAffiliation('jklorg', rolesWithSeveralRoles, 'deforg', 'LocalManager', {})).toEqual({
+      expect(editAffiliation('jklorg', rolesWithSeveralRoles, 'deforg', 'LocalProjectManager', {})).toEqual({
         newContributorRoles: [
           { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
           { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-          { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
-          { type: 'LocalManager', affiliation: jklOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: jklOrgAsAffiliation },
           { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
         ],
       });
     });
     it('when they have only one affiliation, it changes the correct one', () => {
-      expect(editAffiliation('abcorg', rolesWithLocalManagerWithGhiOrg, 'ghiorg', 'LocalManager', {})).toEqual({
-        newContributorRoles: [{ type: 'LocalManager', affiliation: abcOrgAsAffiliation }],
+      expect(
+        editAffiliation('abcorg', rolesWithLocalProjectManagerWithGhiOrg, 'ghiorg', 'LocalProjectManager', {})
+      ).toEqual({
+        newContributorRoles: [{ type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation }],
       });
     });
   });
@@ -389,26 +393,28 @@ describe('removeAffiliation', () => {
   });
   describe('for a local manager', () => {
     it('when they have only one affiliation on the role type, it changes the affiliation to undefined', () => {
-      expect(removeAffiliation('ghiorg', rolesWithLocalManagerWithGhiOrg, 'LocalManager')).toEqual({
-        newContributorRoles: [{ type: 'LocalManager', affiliation: undefined }],
+      expect(removeAffiliation('ghiorg', rolesWithLocalProjectManagerWithGhiOrg, 'LocalProjectManager')).toEqual({
+        newContributorRoles: [{ type: 'LocalProjectManager', affiliation: undefined }],
       });
     });
     it('when they have more than one role with the same affiliation, it deletes the correct one', () => {
-      expect(removeAffiliation('deforg', rolesWithSeveralRoles, 'LocalManager')).toEqual({
+      expect(removeAffiliation('deforg', rolesWithSeveralRoles, 'LocalProjectManager')).toEqual({
         newContributorRoles: [
           { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
           { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-          { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+          { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
           { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
         ],
       });
     });
     it('when its the last affiliation on the role type, it keeps it as undefined', () => {
-      expect(removeAffiliation('abcorg', rolesWithSeveralRolesAndOneLocalManager, 'LocalManager')).toEqual({
+      expect(
+        removeAffiliation('abcorg', rolesWithSeveralRolesAndOneLocalProjectManager, 'LocalProjectManager')
+      ).toEqual({
         newContributorRoles: [
           { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
           { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-          { type: 'LocalManager', affiliation: undefined },
+          { type: 'LocalProjectManager', affiliation: undefined },
           { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
         ],
       });
@@ -434,9 +440,9 @@ describe('addRoles', () => {
     ]);
   });
   it("Doesn't add existing undefined role of different role type", () => {
-    expect(addRoles([undefinedLocalManagerRole], [undefinedLocalManagerRole], 'ProjectParticipant')).toEqual([
-      undefinedLocalManagerRole,
-    ]);
+    expect(
+      addRoles([undefinedLocalProjectManagerRole], [undefinedLocalProjectManagerRole], 'ProjectParticipant')
+    ).toEqual([undefinedLocalProjectManagerRole]);
   });
   it("Doesn't add existing undefined role of same role type", () => {
     expect(
@@ -444,9 +450,9 @@ describe('addRoles', () => {
     ).toEqual([undefinedProjectParticipantRole]);
   });
   it('Adds existing roles with same id if they are of different role type', () => {
-    expect(addRoles([projectParticipantRole], [localManagerRole], 'ProjectParticipant')).toEqual([
+    expect(addRoles([projectParticipantRole], [localProjectManagerRole], 'ProjectParticipant')).toEqual([
       projectParticipantRole,
-      localManagerRole,
+      localProjectManagerRole,
     ]);
   });
 });
@@ -459,12 +465,14 @@ describe('isAlreadyInExistingRoles', () => {
     expect(isAlreadyInExistingRoles([projectParticipantRole], otherProjectParticipantRole)).toEqual(false);
   });
   it('returns false if the id is the same but the role types are different', () => {
-    expect(isAlreadyInExistingRoles([projectParticipantRole], localManagerRole)).toEqual(false);
+    expect(isAlreadyInExistingRoles([projectParticipantRole], localProjectManagerRole)).toEqual(false);
   });
   it('returns true if both are undefined and has same role', () => {
     expect(isAlreadyInExistingRoles([undefinedProjectParticipantRole], undefinedProjectParticipantRole)).toEqual(true);
   });
   it('returns false if both are undefined and have different roles', () => {
-    expect(isAlreadyInExistingRoles([undefinedProjectParticipantRole], undefinedLocalManagerRole)).toEqual(false);
+    expect(isAlreadyInExistingRoles([undefinedProjectParticipantRole], undefinedLocalProjectManagerRole)).toEqual(
+      false
+    );
   });
 });

@@ -18,7 +18,7 @@ export const ProjectContributorsForm = ({ suggestedProjectManager }: ProjectCont
         </FormBox>
         <BetaFunctionality>
           <FormBox>
-            <ProjectParticipants roleType={'LocalManager'} />
+            <ProjectParticipants roleType={'LocalProjectManager'} />
           </FormBox>
         </BetaFunctionality>
         <FormBox>

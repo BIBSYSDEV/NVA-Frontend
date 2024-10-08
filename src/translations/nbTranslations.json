@@ -1211,7 +1211,7 @@
     "role_types": {
       "ProjectManager": "Prosjektleder",
       "ProjectParticipant": "Prosjektdeltaker",
-      "LocalManager": "Lokalt ansvarlig"
+      "LocalProjectManager": "Lokalt ansvarlig"
     },
     "scientific_summary": "Vitenskapelig sammendrag",
     "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",

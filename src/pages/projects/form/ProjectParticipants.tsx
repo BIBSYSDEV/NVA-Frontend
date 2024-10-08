@@ -34,7 +34,7 @@ export const ProjectParticipants = ({ roleType }: ProjectParticipantProps) => {
   return (
     <>
       <Typography variant="h2">
-        {roleType === 'LocalManager' ? t('project.local_managers') : t('project.project_participants')}
+        {roleType === 'LocalProjectManager' ? t('project.local_managers') : t('project.project_participants')}
       </Typography>
       <FieldArray name={ProjectFieldName.Contributors}>
         {({ name }: FieldArrayRenderProps) => (
@@ -45,7 +45,9 @@ export const ProjectParticipants = ({ roleType }: ProjectParticipantProps) => {
               variant="contained"
               startIcon={<AddIcon />}
               data-testid={dataTestId.projectForm.addParticipantButton}>
-              {roleType === 'LocalManager' ? t('project.add_local_manager') : t('project.add_project_contributor')}
+              {roleType === 'LocalProjectManager'
+                ? t('project.add_local_manager')
+                : t('project.add_project_contributor')}
             </Button>
             {contributorsWithRole.length > 0 && (
               <ListPagination

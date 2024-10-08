@@ -18,20 +18,20 @@ import {
   contributorsArrayWithNoProjectManager,
   contributorsArrayWithOneUnidentifiedAndOneOther,
   contributorsArrayWithOneUnidentifiedAndOneOtherWithUndefined,
-  contributorsArrayWithOneUnidentifiedLocalManagerAndOneOtherWithUndefined,
-  contributorsArrayWithOneUnidentifiedWithLocalManagerRoleAndOneOther,
-  contributorsArrayWithOneUnidentifiedWithLocalManagerRoleAndOneOtherWithSameAffiliation,
-  contributorsArrayWithOneUnidentifiedWithLocalManagerRoleWithDifferentAffiliationAndOneOtherWithSameAffiliationAsThat,
+  contributorsArrayWithOneUnidentifiedLocalProjectManagerAndOneOtherWithUndefined,
+  contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleAndOneOther,
+  contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleAndOneOtherWithSameAffiliation,
+  contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleWithDifferentAffiliationAndOneOtherWithSameAffiliationAsThat,
   contributorsArrayWithOneUnidentifiedWithSameAndOneOther,
   contributorsArrayWithOneUnidentifiedWithSameAndOneOtherWithUndefined,
-  contributorsArrayWithOneUnidentifiedWithSameLocalManagerAndOneOther,
-  contributorsArrayWithOneUnidentifiedWithSameLocalManagerAndOneOtherWithUndefined,
+  contributorsArrayWithOneUnidentifiedWithSameLocalProjectManagerAndOneOther,
+  contributorsArrayWithOneUnidentifiedWithSameLocalProjectManagerAndOneOtherWithUndefined,
   contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOther,
   contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOtherWithUndefined,
-  contributorsArrayWithOneUnidentifiedWithUndefinedLocalManagerAndOneOther,
-  contributorsArrayWithOneUnidentifiedWithUndefinedLocalManagerAndOneOtherWithUndefined,
+  contributorsArrayWithOneUnidentifiedWithUndefinedLocalProjectManagerAndOneOther,
+  contributorsArrayWithOneUnidentifiedWithUndefinedLocalProjectManagerAndOneOtherWithUndefined,
   contributorsArrayWithOtherPersonWithDifferentAffiliation,
-  contributorsArrayWithOtherPersonWithLocalManagerAffiliation,
+  contributorsArrayWithOtherPersonWithLocalProjectManagerAffiliation,
   contributorsArrayWithOtherPersonWithSameAffiliation,
   contributorsArrayWithOtherPersonWithUndefinedAffiliation,
   contributorsArrayWithOtherPMAndUndefinedAffiliation,
@@ -41,24 +41,24 @@ import {
   contributorsArrayWithSelectedPersonAsProjectManagerWithSameAffiliation,
   contributorsArrayWithSelectedPersonWithDifferentAffiliation,
   contributorsArrayWithSelectedPersonWithSameAffiliation,
-  contributorsArrayWithSelectedPersonWithSameAffiliationAndLocalManagerRole,
+  contributorsArrayWithSelectedPersonWithSameAffiliationAndLocalProjectManagerRole,
   contributorsArrayWithSelectedPersonWithUndefinedAffiliation,
   contributorsArrayWithTwoUnidentified,
   contributorsArrayWithUndefinedPMAffiliationAndOtherContributor,
   contributorsArrayWithUnidentifiedAndSamePersonWithUndefined,
   contributorsArrayWithUnidentifiedContributorWithDifferentAffiliation,
   contributorsArrayWithUnidentifiedDaffy,
-  contributorsArrayWithUnidentifiedDaffyAsLocalManager,
+  contributorsArrayWithUnidentifiedDaffyAsLocalProjectManager,
   contributorsArrayWithUnidentifiedDaffyPM,
   contributorsArrayWithUnidentifiedDaffyWithAffiliation,
   contributorsArrayWithUnidentifiedDaffyWithDefinedAffiliation,
-  contributorsArrayWithUnidentifiedDaffyWithLocalManager,
-  contributorsArrayWithUnidentifiedDaffyWithLocalManagerAffiliation,
-  contributorsArrayWithUnidentifiedDaffyWithLocalManagerRole,
+  contributorsArrayWithUnidentifiedDaffyWithLocalProjectManager,
+  contributorsArrayWithUnidentifiedDaffyWithLocalProjectManagerAffiliation,
+  contributorsArrayWithUnidentifiedDaffyWithLocalProjectManagerRole,
   contributorsArrayWithUnidentifiedDaffyWithLotsOfRoles,
   contributorsArrayWithUnidentifiedDaffyWithProjectManagerRole,
   contributorsArrayWithUnidentifiedDaffyWithSameAffiliation,
-  contributorsArrayWithUnidentifiedDaffyWithSameLocalManagerAffiliation,
+  contributorsArrayWithUnidentifiedDaffyWithSameLocalProjectManagerAffiliation,
   contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithOther,
   contributorsArrayWithUnidentifiedPersonWithUndefinedAffiliationAndSelectedWithTwoOthers,
   contributorsArrayWithUnidentifiedPersonWithUnidentifiedAffiliationAndSelectedWithOther,
@@ -675,14 +675,14 @@ describe('addContributor', () => {
     });
   });
   describe('when adding a local manager with affiliation', () => {
-    it('the chosen person is added with role "LocalManager" and affiliation with id', () => {
-      expect(addContributor(selectedPersonWithAffiliation, [], 'LocalManager')).toEqual({
+    it('the chosen person is added with role "LocalProjectManager" and affiliation with id', () => {
+      expect(addContributor(selectedPersonWithAffiliation, [], 'LocalProjectManager')).toEqual({
         newContributors: [
           {
             identity: selectedPersonIdentity,
             roles: [
               {
-                type: 'LocalManager',
+                type: 'LocalProjectManager',
                 affiliation: abcOrgAsAffiliation,
               },
             ],
@@ -695,8 +695,8 @@ describe('addContributor', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
-            contributorsArrayWithOtherPersonWithLocalManagerAffiliation,
-            'LocalManager',
+            contributorsArrayWithOtherPersonWithLocalProjectManagerAffiliation,
+            'LocalProjectManager',
             0
           )
         ).toEqual({
@@ -708,7 +708,7 @@ describe('addContributor', () => {
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithUnidentifiedContributorWithDifferentAffiliation,
-            'LocalManager',
+            'LocalProjectManager',
             0
           )
         ).toEqual({
@@ -720,8 +720,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithUnidentifiedDaffyWithLocalManagerAffiliation,
-              'LocalManager',
+              contributorsArrayWithUnidentifiedDaffyWithLocalProjectManagerAffiliation,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -729,8 +729,8 @@ describe('addContributor', () => {
               {
                 identity: selectedPersonIdentity,
                 roles: [
-                  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -740,8 +740,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithOneUnidentifiedWithLocalManagerRoleAndOneOther,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleAndOneOther,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -750,8 +750,8 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -761,8 +761,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithOneUnidentifiedWithLocalManagerRoleAndOneOtherWithSameAffiliation,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleAndOneOtherWithSameAffiliation,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -771,8 +771,8 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -782,8 +782,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithOneUnidentifiedWithLocalManagerRoleWithDifferentAffiliationAndOneOtherWithSameAffiliationAsThat,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleWithDifferentAffiliationAndOneOtherWithSameAffiliationAsThat,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -792,8 +792,8 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -803,8 +803,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithOneUnidentifiedLocalManagerAndOneOtherWithUndefined,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedLocalProjectManagerAndOneOtherWithUndefined,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -813,8 +813,8 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: undefined },
-                  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -826,15 +826,15 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithUnidentifiedDaffyWithSameLocalManagerAffiliation,
-              'LocalManager',
+              contributorsArrayWithUnidentifiedDaffyWithSameLocalProjectManagerAffiliation,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
             newContributors: [
               {
                 identity: selectedPersonIdentity,
-                roles: [{ type: 'LocalManager', affiliation: abcOrgAsAffiliation }],
+                roles: [{ type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation }],
               },
             ],
           });
@@ -843,8 +843,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithOneUnidentifiedWithSameLocalManagerAndOneOther,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithSameLocalProjectManagerAndOneOther,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -853,7 +853,7 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -863,8 +863,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithOneUnidentifiedWithSameLocalManagerAndOneOtherWithUndefined,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithSameLocalProjectManagerAndOneOtherWithUndefined,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -873,7 +873,7 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: undefined },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -885,15 +885,15 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithUnidentifiedDaffyWithLocalManagerRole,
-              'LocalManager',
+              contributorsArrayWithUnidentifiedDaffyWithLocalProjectManagerRole,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
             newContributors: [
               {
                 identity: selectedPersonIdentity,
-                roles: [{ type: 'LocalManager', affiliation: abcOrgAsAffiliation }],
+                roles: [{ type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation }],
               },
             ],
           });
@@ -902,8 +902,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithOneUnidentifiedWithUndefinedLocalManagerAndOneOther,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithUndefinedLocalProjectManagerAndOneOther,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -912,7 +912,7 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -922,8 +922,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithAffiliation,
-              contributorsArrayWithOneUnidentifiedWithUndefinedLocalManagerAndOneOtherWithUndefined,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithUndefinedLocalProjectManagerAndOneOtherWithUndefined,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -932,7 +932,7 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: undefined },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -945,19 +945,19 @@ describe('addContributor', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
-            contributorsArrayWithSelectedPersonWithSameAffiliationAndLocalManagerRole,
-            'LocalManager'
+            contributorsArrayWithSelectedPersonWithSameAffiliationAndLocalProjectManagerRole,
+            'LocalProjectManager'
           )
         ).toEqual({
           error: AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION,
         });
       });
-      it('when the existing contributor has an affiliation with the same id, but not the same role, it adds a new LocalManager role to the existing person', () => {
+      it('when the existing contributor has an affiliation with the same id, but not the same role, it adds a new LocalProjectManager role to the existing person', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithSelectedPersonWithSameAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -965,18 +965,18 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
-                { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
               ],
             },
           ],
         });
       });
-      it('when the existing contributor only has an affiliation with a different id, it adds a new "LocalManager" role with the added affiliation to the existing user.', () => {
+      it('when the existing contributor only has an affiliation with a different id, it adds a new "LocalProjectManager" role with the added affiliation to the existing user.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithSelectedPersonWithDifferentAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -988,7 +988,7 @@ describe('addContributor', () => {
                   affiliation: defOrgAsAffiliation,
                 },
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1001,7 +1001,7 @@ describe('addContributor', () => {
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithSelectedPersonWithUndefinedAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1009,7 +1009,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 { type: 'ProjectParticipant', affiliation: undefined },
-                { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
               ],
             },
           ],
@@ -1017,12 +1017,12 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project contributor with a different id', () => {
-      it('when the other contributor has an affiliation with the same id, it adds a new "LocalManager" contributor with the added affiliation in a role to a new user. The other project participant keeps its roles unchanged.', () => {
+      it('when the other contributor has an affiliation with the same id, it adds a new "LocalProjectManager" contributor with the added affiliation in a role to a new user. The other project participant keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithOtherPersonWithSameAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1039,7 +1039,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1047,12 +1047,12 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the other contributor only has an affiliation with a different id, it adds a new "LocalManager" contributor with the added affiliation in a role. The other contributor keeps its roles unchanged.', () => {
+      it('when the other contributor only has an affiliation with a different id, it adds a new "LocalProjectManager" contributor with the added affiliation in a role. The other contributor keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithOtherPersonWithDifferentAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1069,7 +1069,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1077,12 +1077,12 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the other contributor only has an affiliation that is undefined, it adds a new "LocalManager" contributor with the added affiliation in a role to a new user. The other contributor keeps its roles unchanged.', () => {
+      it('when the other contributor only has an affiliation that is undefined, it adds a new "LocalProjectManager" contributor with the added affiliation in a role to a new user. The other contributor keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithOtherPersonWithUndefinedAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1099,7 +1099,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1109,12 +1109,12 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project manager with the same id', () => {
-      it('when the project manager has an affiliation with the same id, it adds a new "LocalManager" role with the added affiliation. The project manager keeps its project manager role unchanged.', () => {
+      it('when the project manager has an affiliation with the same id, it adds a new "LocalProjectManager" role with the added affiliation. The project manager keeps its project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithSelectedPersonAsProjectManagerWithSameAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1126,7 +1126,7 @@ describe('addContributor', () => {
                   affiliation: abcOrgAsAffiliation,
                 },
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1134,12 +1134,12 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation with a different id, it adds a new "LocalManager" role with the added affiliation. The project manager keeps its project manager role unchanged.', () => {
+      it('when the project manager only has an affiliation with a different id, it adds a new "LocalProjectManager" role with the added affiliation. The project manager keeps its project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithSelectedPersonAsProjectManagerWithDifferentAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1151,7 +1151,7 @@ describe('addContributor', () => {
                   affiliation: defOrgAsAffiliation,
                 },
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1159,12 +1159,12 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation that is undefined it adds a new "LocalManager" role with the added affiliation. The project manager keeps its project manager role unchanged.', () => {
+      it('when the project manager only has an affiliation that is undefined it adds a new "LocalProjectManager" role with the added affiliation. The project manager keeps its project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithSelectedPersonAsProjectManagerWithNoAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1176,7 +1176,7 @@ describe('addContributor', () => {
                   affiliation: undefined,
                 },
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1186,12 +1186,12 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project manager with a different id', () => {
-      it('when the project manager has an affiliation with the same id, it adds a new "LocalManager" contributor with the added affiliation in a role to a new user. The the project manager keeps its roles unchanged.', () => {
+      it('when the project manager has an affiliation with the same id, it adds a new "LocalProjectManager" contributor with the added affiliation in a role to a new user. The the project manager keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithDifferentProjectManagerWithSameAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1208,7 +1208,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1216,12 +1216,12 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation with a different id, it adds a new "LocalManager" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', () => {
+      it('when the project manager only has an affiliation with a different id, it adds a new "LocalProjectManager" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithDifferentProjectManagerWithDifferentAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1238,7 +1238,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1246,12 +1246,12 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the when the project manager only has an affiliation that is undefined, it adds a new "LocalManager" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', () => {
+      it('when the when the project manager only has an affiliation that is undefined, it adds a new "LocalProjectManager" contributor with the added affiliation in a role. The project manager keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithAffiliation,
             contributorsArrayWithDifferentProjectManagerWithUndefinedAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1268,7 +1268,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1279,14 +1279,14 @@ describe('addContributor', () => {
     });
   });
   describe('when adding a local manager without affiliation', () => {
-    it('the chosen person is added with role with type LocalManager and affiliation undefined', () => {
-      expect(addContributor(selectedPersonWithoutAffiliation, [], 'LocalManager')).toEqual({
+    it('the chosen person is added with role with type LocalProjectManager and affiliation undefined', () => {
+      expect(addContributor(selectedPersonWithoutAffiliation, [], 'LocalProjectManager')).toEqual({
         newContributors: [
           {
             identity: selectedPersonIdentity,
             roles: [
               {
-                type: 'LocalManager',
+                type: 'LocalProjectManager',
                 affiliation: undefined,
               },
             ],
@@ -1300,15 +1300,15 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithoutAffiliation,
-              contributorsArrayWithUnidentifiedDaffyWithLocalManagerAffiliation,
-              'LocalManager',
+              contributorsArrayWithUnidentifiedDaffyWithLocalProjectManagerAffiliation,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
             newContributors: [
               {
                 identity: selectedPersonIdentity,
-                roles: [{ type: 'LocalManager', affiliation: defOrgAsAffiliation }],
+                roles: [{ type: 'LocalProjectManager', affiliation: defOrgAsAffiliation }],
               },
             ],
           });
@@ -1317,8 +1317,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithoutAffiliation,
-              contributorsArrayWithOneUnidentifiedWithLocalManagerRoleAndOneOther,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleAndOneOther,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -1327,7 +1327,7 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
                 ],
               },
             ],
@@ -1337,8 +1337,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithoutAffiliation,
-              contributorsArrayWithOneUnidentifiedWithSameLocalManagerAndOneOtherWithUndefined,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithSameLocalProjectManagerAndOneOtherWithUndefined,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -1347,7 +1347,7 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: undefined },
-                  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+                  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
                 ],
               },
             ],
@@ -1359,15 +1359,15 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithoutAffiliation,
-              contributorsArrayWithUnidentifiedDaffyWithLocalManagerRole,
-              'LocalManager',
+              contributorsArrayWithUnidentifiedDaffyWithLocalProjectManagerRole,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
             newContributors: [
               {
                 identity: selectedPersonIdentity,
-                roles: [{ type: 'LocalManager', affiliation: undefined }],
+                roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
               },
             ],
           });
@@ -1376,8 +1376,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithoutAffiliation,
-              contributorsArrayWithOneUnidentifiedWithUndefinedLocalManagerAndOneOther,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithUndefinedLocalProjectManagerAndOneOther,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -1386,7 +1386,7 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
-                  { type: 'LocalManager', affiliation: undefined },
+                  { type: 'LocalProjectManager', affiliation: undefined },
                 ],
               },
             ],
@@ -1396,8 +1396,8 @@ describe('addContributor', () => {
           expect(
             addContributor(
               selectedPersonWithoutAffiliation,
-              contributorsArrayWithOneUnidentifiedWithUndefinedLocalManagerAndOneOtherWithUndefined,
-              'LocalManager',
+              contributorsArrayWithOneUnidentifiedWithUndefinedLocalProjectManagerAndOneOtherWithUndefined,
+              'LocalProjectManager',
               0
             )
           ).toEqual({
@@ -1406,7 +1406,7 @@ describe('addContributor', () => {
                 identity: selectedPersonIdentity,
                 roles: [
                   { type: 'ProjectParticipant', affiliation: undefined },
-                  { type: 'LocalManager', affiliation: undefined },
+                  { type: 'LocalProjectManager', affiliation: undefined },
                 ],
               },
             ],
@@ -1419,8 +1419,8 @@ describe('addContributor', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
-            contributorsArrayWithSelectedPersonWithSameAffiliationAndLocalManagerRole,
-            'LocalManager'
+            contributorsArrayWithSelectedPersonWithSameAffiliationAndLocalProjectManagerRole,
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1428,7 +1428,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: abcOrgAsAffiliation,
                 },
               ],
@@ -1436,12 +1436,12 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when there is an existing contributor with the same id and different role, it adds a new undefined LocalManager-role to the existing user.', () => {
+      it('when there is an existing contributor with the same id and different role, it adds a new undefined LocalProjectManager-role to the existing user.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
             contributorsArrayWithSelectedPersonWithSameAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1453,7 +1453,7 @@ describe('addContributor', () => {
                   affiliation: abcOrgAsAffiliation,
                 },
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: undefined,
                 },
               ],
@@ -1463,12 +1463,12 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project contributor with a different id', () => {
-      it('it adds a new "LocalManager" contributor with an undefined affiliation. The other contributor keeps its roles unchanged.', () => {
+      it('it adds a new "LocalProjectManager" contributor with an undefined affiliation. The other contributor keeps its roles unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
             contributorsArrayWithOtherPersonWithUndefinedAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1485,7 +1485,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: undefined,
                 },
               ],
@@ -1495,12 +1495,12 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project manager with the same id', () => {
-      it('when the project manager only has an other affiliation, it adds a new "LocalManager" role with an undefined affiliation. The project manager keeps its project manager role unchanged.', () => {
+      it('when the project manager only has an other affiliation, it adds a new "LocalProjectManager" role with an undefined affiliation. The project manager keeps its project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
             contributorsArrayWithSelectedPersonAsProjectManagerWithDifferentAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1512,7 +1512,7 @@ describe('addContributor', () => {
                   affiliation: defOrgAsAffiliation,
                 },
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: undefined,
                 },
               ],
@@ -1520,12 +1520,12 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation that is undefined, it adds a new "LocalManager" role with an undefined affiliation. The project manager keeps its undefined project manager role unchanged.', () => {
+      it('when the project manager only has an affiliation that is undefined, it adds a new "LocalProjectManager" role with an undefined affiliation. The project manager keeps its undefined project manager role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
             contributorsArrayWithSelectedPersonAsProjectManagerWithNoAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1537,7 +1537,7 @@ describe('addContributor', () => {
                   affiliation: undefined,
                 },
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: undefined,
                 },
               ],
@@ -1547,12 +1547,12 @@ describe('addContributor', () => {
       });
     });
     describe('when there exists a project manager with a different id', () => {
-      it('when the when the project manager has an affiliation, it adds a new "LocalManager" contributor with an undefined affiliation. The project manager keeps its role unchanged.', () => {
+      it('when the when the project manager has an affiliation, it adds a new "LocalProjectManager" contributor with an undefined affiliation. The project manager keeps its role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
             contributorsArrayWithDifferentProjectManagerWithDifferentAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1569,7 +1569,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: undefined,
                 },
               ],
@@ -1577,12 +1577,12 @@ describe('addContributor', () => {
           ],
         });
       });
-      it('when the project manager only has an affiliation that is undefined, it adds a new "LocalManager" contributor with an undefined affiliation. The project manager keeps its undefined role unchanged.', () => {
+      it('when the project manager only has an affiliation that is undefined, it adds a new "LocalProjectManager" contributor with an undefined affiliation. The project manager keeps its undefined role unchanged.', () => {
         expect(
           addContributor(
             selectedPersonWithoutAffiliation,
             contributorsArrayWithDifferentProjectManagerWithUndefinedAffiliation,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -1599,7 +1599,7 @@ describe('addContributor', () => {
               identity: selectedPersonIdentity,
               roles: [
                 {
-                  type: 'LocalManager',
+                  type: 'LocalProjectManager',
                   affiliation: undefined,
                 },
               ],
@@ -2707,7 +2707,7 @@ describe('addUnidentifiedProjectContributor', () => {
           addUnidentifiedProjectContributor(
             'Daffy Duck',
             contributorsArrayWithContributorWithOnlyProjectManagerRole,
-            'LocalManager'
+            'LocalProjectManager'
           )
         ).toEqual({
           newContributors: [
@@ -2724,14 +2724,14 @@ describe('addUnidentifiedProjectContributor', () => {
             },
             {
               identity: unidentifiedDaffyIdentity,
-              roles: [{ type: 'LocalManager', affiliation: undefined }],
+              roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
             },
           ],
         });
       });
       it('when there is another unidentified contributor with the same name, it adds a new contributor', () => {
         expect(
-          addUnidentifiedProjectContributor('Daffy Duck', contributorsArrayWithUnidentifiedDaffy, 'LocalManager')
+          addUnidentifiedProjectContributor('Daffy Duck', contributorsArrayWithUnidentifiedDaffy, 'LocalProjectManager')
         ).toEqual({
           newContributors: [
             {
@@ -2740,14 +2740,14 @@ describe('addUnidentifiedProjectContributor', () => {
             },
             {
               identity: unidentifiedDaffyIdentity,
-              roles: [{ type: 'LocalManager', affiliation: undefined }],
+              roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
             },
           ],
         });
       });
       it('when there is another unidentified contributor with a different name, it it adds a new contributor', () => {
         expect(
-          addUnidentifiedProjectContributor('Mikkel Rev', contributorsArrayWithUnidentifiedDaffy, 'LocalManager')
+          addUnidentifiedProjectContributor('Mikkel Rev', contributorsArrayWithUnidentifiedDaffy, 'LocalProjectManager')
         ).toEqual({
           newContributors: [
             {
@@ -2760,14 +2760,18 @@ describe('addUnidentifiedProjectContributor', () => {
                 lastName: 'Rev',
                 type: 'Person',
               },
-              roles: [{ type: 'LocalManager', affiliation: undefined }],
+              roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
             },
           ],
         });
       });
       it('when there is another identified contributor with the same name, it', () => {
         expect(
-          addUnidentifiedProjectContributor('Ole Jensen', contributorsArrayWithExistingPersonIdentity, 'LocalManager')
+          addUnidentifiedProjectContributor(
+            'Ole Jensen',
+            contributorsArrayWithExistingPersonIdentity,
+            'LocalProjectManager'
+          )
         ).toEqual({
           newContributors: [
             {
@@ -2776,7 +2780,7 @@ describe('addUnidentifiedProjectContributor', () => {
             },
             {
               identity: unidentifiedOleJensenIdentity,
-              roles: [{ type: 'LocalManager', affiliation: undefined }],
+              roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
             },
           ],
         });
@@ -2826,7 +2830,7 @@ describe('addUnidentifiedProjectContributor', () => {
               identity: unidentifiedDollyIdentity,
               roles: [
                 { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
-                { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+                { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
                 { type: 'ProjectManager', affiliation: undefined },
               ],
             },
@@ -2901,7 +2905,7 @@ describe('addUnidentifiedProjectContributor', () => {
               roles: [
                 { type: 'ProjectManager', affiliation: undefined },
                 { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
-                { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+                { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
               ],
             },
           ],
@@ -2913,15 +2917,15 @@ describe('addUnidentifiedProjectContributor', () => {
         expect(
           addUnidentifiedProjectContributor(
             'Ole Jensen',
-            contributorsArrayWithUnidentifiedDaffyAsLocalManager,
-            'LocalManager',
+            contributorsArrayWithUnidentifiedDaffyAsLocalProjectManager,
+            'LocalProjectManager',
             0
           )
         ).toEqual({
           newContributors: [
             {
               identity: unidentifiedOleJensenIdentity,
-              roles: [{ type: 'LocalManager', affiliation: undefined }],
+              roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
             },
           ],
         });
@@ -2930,15 +2934,15 @@ describe('addUnidentifiedProjectContributor', () => {
         expect(
           addUnidentifiedProjectContributor(
             'Dolly Duck',
-            contributorsArrayWithUnidentifiedDaffyWithLocalManager,
-            'LocalManager',
+            contributorsArrayWithUnidentifiedDaffyWithLocalProjectManager,
+            'LocalProjectManager',
             0
           )
         ).toEqual({
           newContributors: [
             {
               identity: unidentifiedDollyIdentity,
-              roles: [{ type: 'LocalManager', affiliation: undefined }],
+              roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
             },
           ],
         });
@@ -2948,7 +2952,7 @@ describe('addUnidentifiedProjectContributor', () => {
           addUnidentifiedProjectContributor(
             'Dolly Duck',
             contributorsArrayWithUnidentifiedDaffyWithLotsOfRoles,
-            'LocalManager',
+            'LocalProjectManager',
             0
           )
         ).toEqual({
@@ -2958,7 +2962,7 @@ describe('addUnidentifiedProjectContributor', () => {
               roles: [
                 { type: 'ProjectManager', affiliation: undefined },
                 { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
-                { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+                { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
               ],
             },
           ],

@@ -25,7 +25,7 @@ export const AddProjectContributorModal = ({
   const addProjectManager = roleType === 'ProjectManager';
   const addText = addProjectManager
     ? t('project.add_project_manager')
-    : roleType === 'LocalManager'
+    : roleType === 'LocalProjectManager'
       ? t('project.add_local_manager')
       : t('project.add_project_contributor');
 

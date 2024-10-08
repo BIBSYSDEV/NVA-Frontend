@@ -130,13 +130,13 @@ export const projectParticipantRole = {
   affiliation: abcOrgAsAffiliation,
 } as ProjectContributorRole;
 
-export const localManagerRole = {
-  type: 'LocalManager',
+export const localProjectManagerRole = {
+  type: 'LocalProjectManager',
   affiliation: abcOrgAsAffiliation,
 } as ProjectContributorRole;
 
-export const undefinedLocalManagerRole = {
-  type: 'LocalManager',
+export const undefinedLocalProjectManagerRole = {
+  type: 'LocalProjectManager',
   affiliation: undefined,
 } as ProjectContributorRole;
 
@@ -199,8 +199,8 @@ export const contributorsArrayWithSelectedPersonWithSameAffiliation: ProjectCont
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }] },
 ];
 
-export const contributorsArrayWithSelectedPersonWithSameAffiliationAndLocalManagerRole: ProjectContributor[] = [
-  { identity: selectedPersonIdentity, roles: [{ type: 'LocalManager', affiliation: abcOrgAsAffiliation }] },
+export const contributorsArrayWithSelectedPersonWithSameAffiliationAndLocalProjectManagerRole: ProjectContributor[] = [
+  { identity: selectedPersonIdentity, roles: [{ type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation }] },
 ];
 
 export const contributorsArrayWithSelectedPersonWithDifferentAffiliation: ProjectContributor[] = [
@@ -259,20 +259,20 @@ export const contributorsArrayWithOneUnidentifiedAndOneOther: ProjectContributor
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
 ];
 
-export const contributorsArrayWithOneUnidentifiedWithLocalManagerRoleAndOneOther: ProjectContributor[] = [
-  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalManager', affiliation: defOrgAsAffiliation }] },
+export const contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleAndOneOther: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalProjectManager', affiliation: defOrgAsAffiliation }] },
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
 ];
 
-export const contributorsArrayWithOneUnidentifiedWithLocalManagerRoleAndOneOtherWithSameAffiliation: ProjectContributor[] =
+export const contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleAndOneOtherWithSameAffiliation: ProjectContributor[] =
   [
-    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalManager', affiliation: defOrgAsAffiliation }] },
+    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalProjectManager', affiliation: defOrgAsAffiliation }] },
     { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation }] },
   ];
 
-export const contributorsArrayWithOneUnidentifiedWithLocalManagerRoleWithDifferentAffiliationAndOneOtherWithSameAffiliationAsThat: ProjectContributor[] =
+export const contributorsArrayWithOneUnidentifiedWithLocalProjectManagerRoleWithDifferentAffiliationAndOneOtherWithSameAffiliationAsThat: ProjectContributor[] =
   [
-    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalManager', affiliation: defOrgAsAffiliation }] },
+    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalProjectManager', affiliation: defOrgAsAffiliation }] },
     { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
   ];
 
@@ -281,8 +281,8 @@ export const contributorsArrayWithOneUnidentifiedWithSameAndOneOther: ProjectCon
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
 ];
 
-export const contributorsArrayWithOneUnidentifiedWithSameLocalManagerAndOneOther: ProjectContributor[] = [
-  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalManager', affiliation: abcOrgAsAffiliation }] },
+export const contributorsArrayWithOneUnidentifiedWithSameLocalProjectManagerAndOneOther: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation }] },
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
 ];
 
@@ -291,8 +291,8 @@ export const contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOther: Proje
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
 ];
 
-export const contributorsArrayWithOneUnidentifiedWithUndefinedLocalManagerAndOneOther: ProjectContributor[] = [
-  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalManager', affiliation: undefined }] },
+export const contributorsArrayWithOneUnidentifiedWithUndefinedLocalProjectManagerAndOneOther: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalProjectManager', affiliation: undefined }] },
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation }] },
 ];
 
@@ -301,9 +301,9 @@ export const contributorsArrayWithOneUnidentifiedWithUndefinedAndOneOtherWithUnd
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
 ];
 
-export const contributorsArrayWithOneUnidentifiedWithUndefinedLocalManagerAndOneOtherWithUndefined: ProjectContributor[] =
+export const contributorsArrayWithOneUnidentifiedWithUndefinedLocalProjectManagerAndOneOtherWithUndefined: ProjectContributor[] =
   [
-    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalManager', affiliation: undefined }] },
+    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalProjectManager', affiliation: undefined }] },
     { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
   ];
 
@@ -312,18 +312,19 @@ export const contributorsArrayWithOneUnidentifiedWithSameAndOneOtherWithUndefine
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
 ];
 
-export const contributorsArrayWithOneUnidentifiedWithSameLocalManagerAndOneOtherWithUndefined: ProjectContributor[] = [
-  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalManager', affiliation: abcOrgAsAffiliation }] },
-  { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
-];
+export const contributorsArrayWithOneUnidentifiedWithSameLocalProjectManagerAndOneOtherWithUndefined: ProjectContributor[] =
+  [
+    { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation }] },
+    { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
+  ];
 
 export const contributorsArrayWithOneUnidentifiedAndOneOtherWithUndefined: ProjectContributor[] = [
   { identity: unidentifiedDaffyIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
 ];
 
-export const contributorsArrayWithOneUnidentifiedLocalManagerAndOneOtherWithUndefined: ProjectContributor[] = [
-  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalManager', affiliation: defOrgAsAffiliation }] },
+export const contributorsArrayWithOneUnidentifiedLocalProjectManagerAndOneOtherWithUndefined: ProjectContributor[] = [
+  { identity: unidentifiedDaffyIdentity, roles: [{ type: 'LocalProjectManager', affiliation: defOrgAsAffiliation }] },
   { identity: selectedPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: undefined }] },
 ];
 
@@ -342,8 +343,8 @@ export const contributorsArrayWithOtherPersonWithDifferentAffiliation: ProjectCo
   { identity: existingPersonIdentity, roles: [{ type: 'ProjectParticipant', affiliation: defOrgAsAffiliation }] },
 ];
 
-export const contributorsArrayWithOtherPersonWithLocalManagerAffiliation: ProjectContributor[] = [
-  { identity: existingPersonIdentity, roles: [{ type: 'LocalManager', affiliation: defOrgAsAffiliation }] },
+export const contributorsArrayWithOtherPersonWithLocalProjectManagerAffiliation: ProjectContributor[] = [
+  { identity: existingPersonIdentity, roles: [{ type: 'LocalProjectManager', affiliation: defOrgAsAffiliation }] },
 ];
 
 export const contributorsArrayWithOtherPersonWithUndefinedAffiliation: ProjectContributor[] = [
@@ -448,17 +449,17 @@ export const contributorsArrayWithUnidentifiedDaffy: ProjectContributor[] = [
   },
 ];
 
-export const contributorsArrayWithUnidentifiedDaffyWithLocalManager: ProjectContributor[] = [
+export const contributorsArrayWithUnidentifiedDaffyWithLocalProjectManager: ProjectContributor[] = [
   {
     identity: unidentifiedDaffyIdentity,
-    roles: [{ type: 'LocalManager', affiliation: undefined }],
+    roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
   },
 ];
 
-export const contributorsArrayWithUnidentifiedDaffyAsLocalManager: ProjectContributor[] = [
+export const contributorsArrayWithUnidentifiedDaffyAsLocalProjectManager: ProjectContributor[] = [
   {
     identity: unidentifiedDaffyIdentity,
-    roles: [{ type: 'LocalManager', affiliation: undefined }],
+    roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
   },
 ];
 
@@ -475,7 +476,7 @@ export const contributorsArrayWithUnidentifiedDaffyWithLotsOfRoles: ProjectContr
     roles: [
       { type: 'ProjectManager', affiliation: undefined },
       { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
-      { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+      { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
     ],
   },
 ];
@@ -487,10 +488,10 @@ export const contributorsArrayWithUnidentifiedDaffyWithDefinedAffiliation: Proje
   },
 ];
 
-export const contributorsArrayWithUnidentifiedDaffyWithLocalManagerRole: ProjectContributor[] = [
+export const contributorsArrayWithUnidentifiedDaffyWithLocalProjectManagerRole: ProjectContributor[] = [
   {
     identity: unidentifiedDaffyIdentity,
-    roles: [{ type: 'LocalManager', affiliation: undefined }],
+    roles: [{ type: 'LocalProjectManager', affiliation: undefined }],
   },
 ];
 
@@ -508,10 +509,10 @@ export const contributorsArrayWithUnidentifiedDaffyWithSameAffiliation: ProjectC
   },
 ];
 
-export const contributorsArrayWithUnidentifiedDaffyWithSameLocalManagerAffiliation: ProjectContributor[] = [
+export const contributorsArrayWithUnidentifiedDaffyWithSameLocalProjectManagerAffiliation: ProjectContributor[] = [
   {
     identity: unidentifiedDaffyIdentity,
-    roles: [{ type: 'LocalManager', affiliation: abcOrgAsAffiliation }],
+    roles: [{ type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation }],
   },
 ];
 
@@ -522,10 +523,10 @@ export const contributorsArrayWithUnidentifiedDaffyWithAffiliation: ProjectContr
   },
 ];
 
-export const contributorsArrayWithUnidentifiedDaffyWithLocalManagerAffiliation: ProjectContributor[] = [
+export const contributorsArrayWithUnidentifiedDaffyWithLocalProjectManagerAffiliation: ProjectContributor[] = [
   {
     identity: unidentifiedDaffyIdentity,
-    roles: [{ type: 'LocalManager', affiliation: defOrgAsAffiliation }],
+    roles: [{ type: 'LocalProjectManager', affiliation: defOrgAsAffiliation }],
   },
 ];
 
@@ -554,8 +555,8 @@ export const rolesWithDefOrg: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
 ];
 
-export const rolesWithLocalManagerWithDefOrg: ProjectContributorRole[] = [
-  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+export const rolesWithLocalProjectManagerWithDefOrg: ProjectContributorRole[] = [
+  { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
 ];
 
 export const rolesWithUndefinedProjectParticipant: ProjectContributorRole[] = [
@@ -563,9 +564,9 @@ export const rolesWithUndefinedProjectParticipant: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: undefined },
 ];
 
-export const rolesWithUndefinedLocalManager: ProjectContributorRole[] = [
+export const rolesWithUndefinedLocalProjectManager: ProjectContributorRole[] = [
   { type: 'ProjectManager', affiliation: abcOrgAsAffiliation },
-  { type: 'LocalManager', affiliation: undefined },
+  { type: 'LocalProjectManager', affiliation: undefined },
 ];
 
 export const severalRolesWithUndefined: ProjectContributorRole[] = [
@@ -582,9 +583,9 @@ export const rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrg: ProjectC
   { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
 ];
 
-export const rolesWithProjectManagerWithGhiOrgAndLocalManagerWithAbcOrg: ProjectContributorRole[] = [
+export const rolesWithProjectManagerWithGhiOrgAndLocalProjectManagerWithAbcOrg: ProjectContributorRole[] = [
   { type: 'ProjectManager', affiliation: ghiOrgAsAffiliation },
-  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
 ];
 
 export const rolesWithProjectManagerWithGhiOrgAndParticipantWithAbcOrgReversed: ProjectContributorRole[] = [
@@ -596,8 +597,8 @@ export const rolesWithProjectParticipantWithGhiOrg: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
 ];
 
-export const rolesWithLocalManagerWithGhiOrg: ProjectContributorRole[] = [
-  { type: 'LocalManager', affiliation: ghiOrgAsAffiliation },
+export const rolesWithLocalProjectManagerWithGhiOrg: ProjectContributorRole[] = [
+  { type: 'LocalProjectManager', affiliation: ghiOrgAsAffiliation },
 ];
 
 export const rolesWithSeveralProjectParticipantRoles: ProjectContributorRole[] = [
@@ -609,14 +610,14 @@ export const rolesWithSeveralProjectParticipantRoles: ProjectContributorRole[] =
 export const rolesWithSeveralRoles: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
   { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
-  { type: 'LocalManager', affiliation: defOrgAsAffiliation },
+  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
+  { type: 'LocalProjectManager', affiliation: defOrgAsAffiliation },
   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
 ];
 
-export const rolesWithSeveralRolesAndOneLocalManager: ProjectContributorRole[] = [
+export const rolesWithSeveralRolesAndOneLocalProjectManager: ProjectContributorRole[] = [
   { type: 'ProjectParticipant', affiliation: abcOrgAsAffiliation },
   { type: 'ProjectParticipant', affiliation: defOrgAsAffiliation },
-  { type: 'LocalManager', affiliation: abcOrgAsAffiliation },
+  { type: 'LocalProjectManager', affiliation: abcOrgAsAffiliation },
   { type: 'ProjectParticipant', affiliation: ghiOrgAsAffiliation },
 ];

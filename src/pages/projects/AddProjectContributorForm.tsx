@@ -100,7 +100,7 @@ export const AddProjectContributorForm = ({
           onClick={addParticipant}
           size="large"
           variant="contained">
-          {roleType === 'LocalManager' ? t('project.add_local_manager') : t('project.add_contributor')}
+          {roleType === 'LocalProjectManager' ? t('project.add_local_manager') : t('project.add_contributor')}
         </Button>
       </StyledRightAlignedFooter>
     </Box>

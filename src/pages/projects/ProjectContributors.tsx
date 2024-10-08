@@ -1,13 +1,12 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ProjectContributor, ProjectContributorType } from '../../types/project.types';
 import { getResearchProfilePath } from '../../utils/urlPaths';
 import { getFullName } from '../../utils/user-helpers';
 import {
-  getLocalManagers,
+  getLocalProjectManagers,
   getProjectManagers,
   getProjectParticipants,
 } from '../registration/description_tab/projects_field/projectHelpers';
@@ -20,7 +19,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
   const { t } = useTranslation();
 
   const projectManagers = getProjectManagers(contributors);
-  const localManagers = getLocalManagers(contributors);
+  const localProjectManagers = getLocalProjectManagers(contributors);
   const projectParticipants = getProjectParticipants(contributors);
 
   return (
@@ -42,15 +41,13 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
               <ContributorList contributors={projectManagers} projectRole="ProjectManager" />
             </div>
           )}
-          {localManagers.length > 0 && (
-            <BetaFunctionality>
-              <div>
-                <Typography variant="h3" gutterBottom>
-                  {t('project.role_types.LocalManager')}
-                </Typography>
-                <ContributorList contributors={localManagers} projectRole="LocalManager" />
-              </div>
-            </BetaFunctionality>
+          {localProjectManagers.length > 0 && (
+            <div>
+              <Typography variant="h3" gutterBottom>
+                {t('project.role_types.LocalProjectManager')}
+              </Typography>
+              <ContributorList contributors={localProjectManagers} projectRole="LocalProjectManager" />
+            </div>
           )}
           {projectParticipants.length > 0 && (
             <div>
