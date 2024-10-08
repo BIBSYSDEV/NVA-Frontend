@@ -64,6 +64,10 @@ export const ActionPanelContent = ({
   const canCreatePublishingTicket = notOnTasksPage && userHasAccessRight(registration, 'publishing-request-create');
   const canApprovePublishingTicket =
     publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
+  const hasOtherPublishingRights =
+    userHasAccessRight(registration, 'unpublish') ||
+    userHasAccessRight(registration, 'republish') ||
+    userHasAccessRight(registration, 'terminate');
 
   const canCreateDoiTicket =
     isPublishedOrDraft && notOnTasksPage && userHasAccessRight(registration, 'doi-request-create');
@@ -103,7 +107,7 @@ export const ActionPanelContent = ({
 
   return (
     <>
-      {(canCreatePublishingTicket || canApprovePublishingTicket) && (
+      {(canCreatePublishingTicket || canApprovePublishingTicket || hasOtherPublishingRights) && (
         <ErrorBoundary>
           <PublishingAccordion
             refetchData={refetchData}
