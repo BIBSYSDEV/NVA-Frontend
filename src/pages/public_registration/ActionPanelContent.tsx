@@ -54,7 +54,24 @@ export const ActionPanelContent = ({
     }
   };
 
-  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
+  const isPublishedOrDraft =
+    registration.status === RegistrationStatus.Published ||
+    registration.status === RegistrationStatus.Draft ||
+    registration.status === RegistrationStatus.PublishedMetadata;
+
+  const notOnTasksPage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
+
+  const canCreatePublishingTicket = notOnTasksPage && userHasAccessRight(registration, 'publishing-request-create');
+  const canApprovePublishingTicket =
+    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
+
+  const canCreateDoiTicket =
+    isPublishedOrDraft && notOnTasksPage && userHasAccessRight(registration, 'doi-request-create');
+  const canApproveDoiTicket =
+    !!newestDoiRequestTicket && isPublishedOrDraft && userHasAccessRight(registration, 'doi-request-approve');
+
+  const canCreateSupportTicket = notOnTasksPage && userHasAccessRight(registration, 'support-request-create');
+  const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -84,14 +101,9 @@ export const ActionPanelContent = ({
     },
   });
 
-  const isPublishedOrDraft =
-    registration.status === RegistrationStatus.Published ||
-    registration.status === RegistrationStatus.Draft ||
-    registration.status === RegistrationStatus.PublishedMetadata;
-
   return (
     <>
-      {(canCreateTickets || publishingRequestTickets.length > 0) && (
+      {(canCreatePublishingTicket || canApprovePublishingTicket) && (
         <ErrorBoundary>
           <PublishingAccordion
             refetchData={refetchData}
@@ -103,7 +115,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {isPublishedOrDraft && (canCreateTickets || newestDoiRequestTicket) && (
+      {(canCreateDoiTicket || canApproveDoiTicket) && (
         <ErrorBoundary>
           {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
             <DoiRequestAccordion
@@ -117,7 +129,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {(canCreateTickets || newestSupportTicket) && (
+      {(canCreateSupportTicket || canApproveSupportTicket) && (
         <ErrorBoundary>
           <SupportAccordion
             registration={registration}
