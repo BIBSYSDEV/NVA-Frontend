@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useBlocker, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useBlocker } from 'react-router-dom';
 import { ConfirmDialog } from './ConfirmDialog';
 
 interface RouteLeavingGuardProps {
@@ -14,10 +14,6 @@ export const RouteLeavingGuard = ({
   modalHeading,
   shouldBlockNavigation,
 }: RouteLeavingGuardProps) => {
-  const [nextPath, setNextPath] = useState('');
-  const [confirmedNavigation, setConfirmedNavigation] = useState(false);
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (shouldBlockNavigation) {
       window.onbeforeunload = () => true;
@@ -38,7 +34,6 @@ export const RouteLeavingGuard = ({
         title={modalHeading}
         onAccept={() => {
           blocker.proceed();
-          setConfirmedNavigation(true);
         }}
         onCancel={() => {
           blocker.reset();
