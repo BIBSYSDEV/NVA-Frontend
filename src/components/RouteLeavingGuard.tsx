@@ -27,19 +27,12 @@ export const RouteLeavingGuard = ({
     }
   }, [shouldBlockNavigation]);
 
-  useEffect(() => {
-    if (confirmedNavigation && nextPath) {
-      navigate(nextPath);
-      setNextPath(''); // TEMP SOLUTION TO BUILD
-    }
-  }, [navigate, confirmedNavigation, nextPath]);
-
   const blocker = useBlocker(() => shouldBlockNavigation);
 
   const isBlocked = blocker.state === 'blocked';
 
   return (
-    blocker.state === 'blocked' && (
+    isBlocked && (
       <ConfirmDialog
         open={isBlocked}
         title={modalHeading}

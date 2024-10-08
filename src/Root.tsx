@@ -13,7 +13,7 @@ import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
-import { UrlPathTemplate } from './utils/urlPaths';
+import { SplashRoutes, UrlPathTemplate } from './utils/urlPaths';
 import { Layout } from './Layout';
 import { PrivateRoute } from './utils/routes/Routes';
 import NotFound from './pages/errorpages/NotFound';
@@ -110,12 +110,13 @@ export const Root = () => {
       ) : (
         <Routes>
           <Route element={<Layout />}>
-            <Route path={UrlPathTemplate.Home} element={<Dashboard />} />
-            <Route path={UrlPathTemplate.Search} element={<Dashboard />} />
-            <Route path={UrlPathTemplate.Reports} element={<Dashboard />} />
-            <Route path={UrlPathTemplate.ReportsNvi} element={<Dashboard />} />
-            <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<Dashboard />} />
-            <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
+            <Route path={UrlPathTemplate.Root} element={<Dashboard />}>
+              <Route path={UrlPathTemplate.Search} element={<Dashboard />} />
+              <Route path={UrlPathTemplate.Reports} element={<Dashboard />} />
+              <Route path={UrlPathTemplate.ReportsNvi} element={<Dashboard />} />
+              <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<Dashboard />} />
+              <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
+            </Route>
 
             <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
             <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
@@ -126,7 +127,7 @@ export const Root = () => {
             <Route path={UrlPathTemplate.SignedOut} element={<SignedOutPage />} />
 
             <Route
-              path={'/my-page/*'}
+              path={SplashRoutes.MyPage}
               element={<PrivateRoute element={<MyPagePage />} isAuthorized={isAuthenticated} />}
             />
 
@@ -152,19 +153,19 @@ export const Root = () => {
 
             {/* CuratorRoutes */}
             <Route
-              path={'/tasks/*'}
+              path={SplashRoutes.Tasks}
               element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}
             />
 
             {/* BasicDataRoutes */}
             <Route
-              path={'/basic-data/*'}
+              path={SplashRoutes.BasicData}
               element={<PrivateRoute isAuthorized={isAdmin} element={<BasicDataPage />} />}
             />
 
             {/* InstitutionRoutes */}
             <Route
-              path={'/institution/*'}
+              path={SplashRoutes.Institution}
               element={<PrivateRoute isAuthorized={hasCustomerId} element={<EditorPage />} />}
             />
 

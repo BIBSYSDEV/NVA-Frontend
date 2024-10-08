@@ -335,7 +335,7 @@ const MyPagePage = () => {
 
       <Routes>
         <Route
-          path={UrlPathTemplate.Home}
+          path={UrlPathTemplate.Root}
           element={
             <PrivateRoute
               isAuthorized={isAuthenticated}

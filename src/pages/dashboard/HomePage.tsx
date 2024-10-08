@@ -48,7 +48,7 @@ const HomePage = () => {
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const isOnFilterPage = location.pathname === UrlPathTemplate.Home;
+  const isOnFilterPage = location.pathname === UrlPathTemplate.Root;
   const resultIsSelected = isOnFilterPage && (!paramsSearchType || paramsSearchType === SearchTypeValue.Result);
   const personIsSeleced = isOnFilterPage && paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = isOnFilterPage && paramsSearchType === SearchTypeValue.Project;
@@ -175,12 +175,12 @@ const HomePage = () => {
         <Routes>
           <Route
             index
-            path={UrlPathTemplate.Home}
+            path={UrlPathTemplate.Root}
             element={
               <SearchPage registrationQuery={registrationQuery} personQuery={personQuery} projectQuery={projectQuery} />
             }
           />
-          <Route index path={UrlPathTemplate.Search} element={<AdvancedSearchPage />} />
+          <Route path={UrlPathTemplate.Search} element={<AdvancedSearchPage />} />
           <Route path={UrlPathTemplate.Reports} element={<ReportsPage />} />
           <Route path={UrlPathTemplate.ReportsNvi} element={<NviReports />} />
           <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<InternationalCooperationReports />} />

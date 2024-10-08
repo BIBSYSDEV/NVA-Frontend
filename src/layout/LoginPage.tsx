@@ -12,11 +12,11 @@ const LoginPage = () => {
   const { handleLogin } = useAuthentication();
 
   if (user) {
-    return <Navigate to={UrlPathTemplate.Home} />;
+    return <Navigate to={UrlPathTemplate.Root} />;
   }
 
   const locationState = location.state as PreviousPathLocationState | undefined;
-  const redirectPath = locationState?.previousPath ?? UrlPathTemplate.Home;
+  const redirectPath = locationState?.previousPath ?? UrlPathTemplate.Root;
 
   localStorage.setItem(LocalStorageKey.RedirectPath, redirectPath);
   handleLogin();

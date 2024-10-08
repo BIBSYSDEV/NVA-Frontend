@@ -6,7 +6,7 @@ const allRoles = Object.values(RoleName);
 
 describe.skip('Menu', () => {
   it('Unauthenticated user should not see protected menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('not.exist');
@@ -17,7 +17,7 @@ describe.skip('Menu', () => {
   });
 
   it('Authorized user should see protected menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.setUserRolesInRedux(allRoles);
     cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('be.visible');
@@ -29,7 +29,7 @@ describe.skip('Menu', () => {
   });
 
   it('Unauthorized user should not see protected menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.setUserRolesInRedux([]);
     cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('not.exist');
@@ -41,7 +41,7 @@ describe.skip('Menu', () => {
   });
 
   it('User without roles sees My Page menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.setUserRolesInRedux([]);
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
@@ -55,7 +55,7 @@ describe.skip('Menu', () => {
   });
 
   it('Creator without roles sees My Page menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.Creator]);
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
@@ -74,7 +74,7 @@ describe.skip('Menu', () => {
   });
 
   it('App-admin sees Basic Data menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.AppAdmin]);
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
@@ -85,7 +85,7 @@ describe.skip('Menu', () => {
   });
 
   it('Insitution-admin sees Basic Data menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.InstitutionAdmin]);
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
@@ -97,7 +97,7 @@ describe.skip('Menu', () => {
   });
 
   it('User sees Editor Page menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.Editor]);
     cy.get(`[data-testid=${dataTestId.header.editorLink}]`).click();

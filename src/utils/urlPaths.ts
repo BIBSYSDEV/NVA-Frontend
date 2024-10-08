@@ -13,7 +13,7 @@ export enum UrlPathTemplate {
   BasicDataNvi = '/basic-data/nvi',
   BasicDataNviNew = '/basic-data/nvi/new',
   BasicDataPersonRegister = '/basic-data/person-register',
-  Home = '/',
+  Root = '/',
   Institution = '/institution',
   InstitutionCurators = '/institution/settings/curators',
   InstitutionCuratorsOverview = '/institution/overview/curators',
@@ -69,7 +69,15 @@ export enum UrlPathTemplate {
   TasksNviCorrectionList = '/tasks/correction-list',
   TasksNviStatus = '/tasks/nvi/status',
   TasksResultRegistrations = '/tasks/result-registrations',
-  Wildcard = '*/*',
+  Wildcard = '*',
+}
+
+export enum SplashRoutes {
+  Home = '/*',
+  MyPage = '/my-page/*',
+  BasicData = '/basic-data/*',
+  Tasks = '/tasks/*',
+  Institution = '/institution/*',
 }
 
 export const getRegistrationLandingPagePath = (identifier: string) =>
