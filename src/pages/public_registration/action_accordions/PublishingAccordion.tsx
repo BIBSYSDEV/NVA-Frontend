@@ -186,9 +186,7 @@ export const PublishingAccordion = ({
     lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataAndFiles';
   const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
 
-  const filesAwaitingApproval = registration.associatedArtifacts.filter(
-    (artifact) => artifact.type === FileType.UnpublishedFile
-  ).length;
+  const filesAwaitingApproval = lastPublishingRequest ? lastPublishingRequest.filesForApproval.length : 0;
   const hasUnpublishedFiles = filesAwaitingApproval > 0;
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
