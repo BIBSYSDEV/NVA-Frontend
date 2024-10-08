@@ -42,16 +42,16 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
               <ContributorList contributors={projectManagers} projectRole="ProjectManager" />
             </div>
           )}
-          <BetaFunctionality>
-            {localManagers.length > 0 && (
+          {localManagers.length > 0 && (
+            <BetaFunctionality>
               <div>
                 <Typography variant="h3" gutterBottom>
                   {t('project.role_types.LocalManager')}
                 </Typography>
                 <ContributorList contributors={localManagers} projectRole="LocalManager" />
               </div>
-            )}
-          </BetaFunctionality>
+            </BetaFunctionality>
+          )}
           {projectParticipants.length > 0 && (
             <div>
               <Typography variant="h3" gutterBottom>
