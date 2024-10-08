@@ -59,9 +59,10 @@ export const ActionPanelContent = ({
     registration.status === RegistrationStatus.Draft ||
     registration.status === RegistrationStatus.PublishedMetadata;
 
-  const notOnTasksPage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
+  const isNotOnTasksDialoguePage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const canCreatePublishingTicket = notOnTasksPage && userHasAccessRight(registration, 'publishing-request-create');
+  const canCreatePublishingTicket =
+    isNotOnTasksDialoguePage && userHasAccessRight(registration, 'publishing-request-create');
   const canApprovePublishingTicket =
     publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
   const hasOtherPublishingRights =
@@ -70,11 +71,11 @@ export const ActionPanelContent = ({
     userHasAccessRight(registration, 'terminate');
 
   const canCreateDoiTicket =
-    isPublishedOrDraft && notOnTasksPage && userHasAccessRight(registration, 'doi-request-create');
+    isPublishedOrDraft && isNotOnTasksDialoguePage && userHasAccessRight(registration, 'doi-request-create');
   const canApproveDoiTicket =
     !!newestDoiRequestTicket && isPublishedOrDraft && userHasAccessRight(registration, 'doi-request-approve');
 
-  const canCreateSupportTicket = notOnTasksPage && userHasAccessRight(registration, 'support-request-create');
+  const canCreateSupportTicket = isNotOnTasksDialoguePage && userHasAccessRight(registration, 'support-request-create');
   const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
