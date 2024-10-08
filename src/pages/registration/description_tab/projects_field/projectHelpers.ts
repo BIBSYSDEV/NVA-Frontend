@@ -26,6 +26,9 @@ const isProjectManager = (contributor: ProjectContributor) =>
 export const getProjectManagers = (contributors: ProjectContributor[]) =>
   contributors.filter((contributor) => isProjectManager(contributor));
 
+export const getLocalManagers = (contributors: ProjectContributor[]) =>
+  contributors.filter((contributor) => contributor.roles.some((role) => role.type === 'LocalManager'));
+
 export const getProjectParticipants = (contributors: ProjectContributor[]) =>
   contributors.filter((contributor) => contributor.roles.some((role) => role.type === 'ProjectParticipant'));
 
