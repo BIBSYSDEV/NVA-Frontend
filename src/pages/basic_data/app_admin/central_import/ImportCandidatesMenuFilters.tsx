@@ -42,7 +42,7 @@ export const ImportCandidatesMenuFilters = () => {
   });
 
   const updateSearchParams = (param: ImportCandidatesSearchParam, value: string) => {
-    const searchParams = new URLSearchParams(history.location.search);
+    const searchParams = new URLSearchParams(location.search);
     const syncedParams = syncParamsWithSearchFields(searchParams);
     if (syncedParams.get(param) === value) {
       syncedParams.delete(param);

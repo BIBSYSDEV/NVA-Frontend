@@ -13,7 +13,7 @@ export const Logo = () => {
 
   const showShortLogo = showShortLogoAnonymous || showShortLogoLoggedIn;
   return (
-    <Button sx={{ gridArea: 'logo' }} data-testid="logo" component={RouterLink} to={UrlPathTemplate.Home}>
+    <Button sx={{ gridArea: 'logo' }} data-testid="logo" component={RouterLink} to={UrlPathTemplate.Root}>
       <Typography variant="h5" component="span" sx={{ color: 'white', fontWeight: 900, fontSize: '3rem' }}>
         NVA
       </Typography>

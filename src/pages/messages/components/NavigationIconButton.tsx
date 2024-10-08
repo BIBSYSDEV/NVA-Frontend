@@ -3,7 +3,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { IconButton, IconButtonProps } from '@mui/material';
 import { Link, LinkProps } from 'react-router-dom';
 
-interface NavigationIconButtonProps extends IconButtonProps, Pick<LinkProps, 'to'> {
+interface NavigationIconButtonProps extends IconButtonProps, Pick<LinkProps, 'to' | 'state'> {
   navigateTo: 'previous' | 'next';
 }
 

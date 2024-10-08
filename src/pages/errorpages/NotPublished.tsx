@@ -11,7 +11,7 @@ export const NotPublished = () => {
       <Typography variant="h2" component="h1" paragraph>
         {t('authorization.registration_not_published')}
       </Typography>
-      <MuiLink component={Link} to={UrlPathTemplate.Home}>
+      <MuiLink component={Link} to={UrlPathTemplate.Root}>
         <Typography>{t('authorization.back_to_home')}</Typography>
       </MuiLink>
     </Box>

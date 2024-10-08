@@ -3,7 +3,7 @@ import { Box, Button, DialogActions, TextField, Typography } from '@mui/material
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
 import { Modal } from '../../../components/Modal';
@@ -19,7 +19,7 @@ interface UnpublishRegistrationProps {
 
 export const UnpublishRegistration = ({ registration }: UnpublishRegistrationProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [showUnpublishModal, setShowUnpublishModal] = useState(false);
   const toggleUnpublishModal = () => setShowUnpublishModal(!showUnpublishModal);
@@ -82,7 +82,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                 },
                 onSuccess: () => {
                   toggleUnpublishModal();
-                  history.push({ search: '?shouldNotRedirect' });
+                  navigate({ search: '?shouldNotRedirect' });
                 },
               })
             }>

@@ -2,7 +2,7 @@ import NotesIcon from '@mui/icons-material/Notes';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CustomerResultParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/PageWithSideMenu';
@@ -14,8 +14,9 @@ import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 export const ResultRegistrationsNavigationListAccordion = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const queryParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const { status } = useRegistrationsQueryParams();
   const selectedStatuses = status ?? [];
 
@@ -43,7 +44,7 @@ export const ResultRegistrationsNavigationListAccordion = () => {
             } else {
               syncedParams.set(CustomerResultParam.Status, newStatuses.join(','));
             }
-            history.push({ search: syncedParams.toString() });
+            navigate({ search: syncedParams.toString() });
           }}>
           <FormControlLabel
             data-testid={dataTestId.editor.resultsPortfolioPublishedCheckbox}

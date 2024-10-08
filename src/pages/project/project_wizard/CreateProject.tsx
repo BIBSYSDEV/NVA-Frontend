@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { CancelButton } from '../../../components/buttons/CancelButton';
 import { PageHeader } from '../../../components/PageHeader';
@@ -20,7 +20,7 @@ import { ProjectForm } from './ProjectForm';
 
 const CreateProject = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
   const currentInstitutionQuery = useFetchOrganization(topOrgCristinId);
@@ -52,7 +52,7 @@ const CreateProject = () => {
           <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
             <CancelButton
               testId={dataTestId.projectForm.cancelNewProjectButton}
-              onClick={() => history.push(UrlPathTemplate.MyPageMyProjectRegistrations)}
+              onClick={() => navigate(UrlPathTemplate.MyPageMyProjectRegistrations)}
             />
           </StyledRightAlignedFooter>
         </>

@@ -19,7 +19,7 @@ export const RegistrationLandingPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
-  const shouldNotRedirect = new URLSearchParams(history.location.search).has('shouldNotRedirect');
+  const shouldNotRedirect = new URLSearchParams(location.search).has('shouldNotRedirect');
   const registrationQuery = useFetchRegistration(identifier, { shouldNotRedirect });
 
   const registration = registrationQuery.data;

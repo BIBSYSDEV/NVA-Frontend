@@ -19,7 +19,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { getTranslatedVocabularyName } from './VocabularyOverview';
 import { VocabularyRow } from './VocabularyRow';
 
-export const VocabularySettings = () => {
+const VocabularySettings = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const dispatch = useDispatch();
@@ -113,3 +113,5 @@ export const VocabularySettings = () => {
     </>
   );
 };
+
+export default VocabularySettings;

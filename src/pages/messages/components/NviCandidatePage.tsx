@@ -12,7 +12,7 @@ import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
+import { getNviCandidatePath, IdentifierParams } from '../../../utils/urlPaths';
 import { Forbidden } from '../../errorpages/Forbidden';
 import NotFound from '../../errorpages/NotFound';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
@@ -22,14 +22,15 @@ import { NviCandidateActions } from './NviCandidateActions';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
-  const location = useLocation<NviCandidatePageLocationState>();
+  const location = useLocation();
+  const locationState = location.state as NviCandidatePageLocationState;
   const { identifier } = useParams<IdentifierParams>();
 
-  const nviCandidateQueryKey = ['nviCandidate', identifier];
+  const nviCandidateQueryKey = ['nviCandidate', identifier ?? ''];
   const nviCandidateQuery = useQuery({
     enabled: !!identifier,
     queryKey: nviCandidateQueryKey,
-    queryFn: () => fetchNviCandidate(identifier),
+    queryFn: () => fetchNviCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
     retry(failureCount, error: Pick<AxiosError, 'response'>) {
       if (error.response?.status === 401) {
@@ -47,7 +48,7 @@ export const NviCandidatePage = () => {
   const registrationQuery = useFetchRegistration(registrationIdentifier);
 
   const nviQueryParams = location.state?.candidateOffsetState?.nviQueryParams;
-  const thisCandidateOffset = location.state?.candidateOffsetState?.currentOffset;
+  const thisCandidateOffset = locationState?.candidateOffsetState?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
   const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
@@ -80,7 +81,7 @@ export const NviCandidatePage = () => {
   const previousCandidateState =
     hasOffset && nviQueryParams
       ? ({
-          ...location.state,
+          ...locationState,
           candidateOffsetState: {
             currentOffset: thisCandidateOffset - 1,
             nviQueryParams,
@@ -117,8 +118,8 @@ export const NviCandidatePage = () => {
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
-                  state: previousCandidateState,
                 }}
+                state={previousCandidateState}
                 title={t('tasks.nvi.previous_candidate')}
                 navigateTo={'previous'}
                 sx={{
@@ -133,8 +134,8 @@ export const NviCandidatePage = () => {
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
-                  state: nextCandidateState,
                 }}
+                state={nextCandidateState}
                 title={t('tasks.nvi.next_candidate')}
                 navigateTo={'next'}
                 sx={{

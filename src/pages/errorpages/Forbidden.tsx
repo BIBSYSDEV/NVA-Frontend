@@ -12,7 +12,7 @@ export const Forbidden = () => {
         {t('authorization.forbidden')}
       </Typography>
       <Typography paragraph>{t('authorization.forbidden_description')}</Typography>
-      <MuiLink component={Link} to={UrlPathTemplate.Home}>
+      <MuiLink component={Link} to={UrlPathTemplate.Root}>
         <Typography>{t('authorization.back_to_home')}</Typography>
       </MuiLink>
     </Box>

@@ -141,7 +141,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         open={isNviCandidate && !hasAcceptedNviWarning}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
-        onCancel={() => (navigate.length > 1 ? navigate(-1) : navigate(UrlPathTemplate.Home))}>
+        onCancel={() => (navigate.length > 1 ? navigate(-1) : navigate(UrlPathTemplate.Root))}>
         <Typography paragraph>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>

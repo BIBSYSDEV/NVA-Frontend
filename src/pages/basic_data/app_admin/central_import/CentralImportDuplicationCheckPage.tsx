@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus } from '../../../../api/registrationApi';
-import { FetchImportCandidatesParams, fetchImportCandidates } from '../../../../api/searchApi';
+import { fetchImportCandidates, FetchImportCandidatesParams } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
@@ -15,14 +15,14 @@ import { RegistrationListItemContent } from '../../../../components/Registration
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
-import { PreviousSearchLocationState } from '../../../../types/locationState.types';
+import { PreviousPathLocationState } from '../../../../types/locationState.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import {
-  IdentifierParams,
-  UrlPathTemplate,
   getImportCandidateMergePath,
   getImportCandidateWizardPath,
+  IdentifierParams,
+  UrlPathTemplate,
 } from '../../../../utils/urlPaths';
 import NotFound from '../../../errorpages/NotFound';
 import { MessageItem } from '../../../messages/components/MessageList';
@@ -33,7 +33,8 @@ import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const location = useLocation<PreviousSearchLocationState>();
+  const location = useLocation();
+  const locationState = location.state as PreviousPathLocationState;
   const { identifier } = useParams<IdentifierParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
   const [registrationIdentifier, setRegistrationIdentifier] = useState('');
@@ -54,15 +55,16 @@ export const CentralImportDuplicationCheckPage = () => {
   const queryClient = useQueryClient();
   const importCandidateQueryKey = ['importCandidate', identifier];
   const importCandidateQuery = useQuery({
+    enabled: !!identifier,
     queryKey: importCandidateQueryKey,
-    queryFn: () => fetchImportCandidate(identifier),
+    queryFn: () => fetchImportCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
   const importCandidate = importCandidateQuery.data;
 
   const importCandidateStatusMutation = useMutation({
     mutationFn: (comment: string) =>
-      updateImportCandidateStatus(identifier, { candidateStatus: 'NOT_APPLICABLE', comment }),
+      updateImportCandidateStatus(identifier ?? '', { candidateStatus: 'NOT_APPLICABLE', comment }),
     onError: () =>
       dispatch(
         setNotification({
@@ -181,7 +183,7 @@ export const CentralImportDuplicationCheckPage = () => {
                 {t('basic_data.central_import.create_publication_from_import_candidate')}
               </Typography>
 
-              <Link to={getImportCandidateWizardPath(identifier)}>
+              <Link to={getImportCandidateWizardPath(identifier ?? '')}>
                 <Button variant="outlined" fullWidth size="small">
                   {t('basic_data.central_import.create_new')}
                 </Button>
@@ -193,9 +195,9 @@ export const CentralImportDuplicationCheckPage = () => {
               {registrationIdentifier ? (
                 <Link
                   to={{
-                    pathname: getImportCandidateMergePath(identifier, registrationIdentifier),
-                    state: location.state,
-                  }}>
+                    pathname: getImportCandidateMergePath(identifier ?? '', registrationIdentifier),
+                  }}
+                  state={locationState}>
                   <Button variant="outlined" fullWidth size="small">
                     {t('basic_data.central_import.merge_candidate.merge')}
                   </Button>
