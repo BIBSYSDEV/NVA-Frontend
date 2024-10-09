@@ -5,7 +5,7 @@ import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { AffiliationSkeleton } from '../../components/institution/AffiliationSkeleton';
 import { StyledOrganizationBox } from '../../components/institution/OrganizationBox';
 import { OrganizationHierarchy } from '../../components/institution/OrganizationHierarchy';
-import { ProjectContributorRole } from '../../types/project.types';
+import { ProjectContributorRole, ProjectContributorType } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { DeleteIconButton } from '../messages/components/DeleteIconButton';
 import { EditIconButton } from '../messages/components/EditIconButton';
@@ -17,8 +17,8 @@ interface ProjectOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
   removeAffiliation?: () => void;
   unitUri: string;
   contributorRoles: ProjectContributorRole[];
+  roleType: ProjectContributorType;
   disabledTooltip?: string;
-  asProjectManager?: boolean;
 }
 
 export const ProjectOrganizationBox = ({
@@ -28,7 +28,7 @@ export const ProjectOrganizationBox = ({
   removeAffiliation,
   disabledTooltip,
   contributorRoles,
-  asProjectManager = false,
+  roleType,
   sx,
 }: ProjectOrganizationBoxProps) => {
   const { t } = useTranslation();
@@ -56,7 +56,7 @@ export const ProjectOrganizationBox = ({
             preselectedOrganization={organizationQuery.data}
             baseFieldName={baseFieldName}
             contributorRoles={contributorRoles}
-            asProjectManager={asProjectManager}
+            roleType={roleType}
           />
         </>
       )}
