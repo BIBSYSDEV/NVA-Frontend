@@ -98,9 +98,11 @@ export const PublishingAccordion = ({
     (artifact) => artifact.type === FileType.PublishedFile
   );
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
+
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
   const userCanApprovePublishingRequest = userHasAccessRight(registration, 'publishing-request-approve');
-  const canCanHandlePublishingRequest = userCanCreatePublishingRequest || userCanApprovePublishingRequest;
+  const userCanHandlePublishingRequest = userCanCreatePublishingRequest || userCanApprovePublishingRequest;
+
   const formErrors = validateRegistrationForm(registration);
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
@@ -287,7 +289,7 @@ export const PublishingAccordion = ({
         {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
         {/* Option to reload data if status is not up to date with ticket */}
-        {canCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus && (
+        {userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus && (
           <>
             <Typography paragraph sx={{ mt: '1rem' }}>
               {hasUnpublishedFiles && isPublishedRegistration
@@ -333,7 +335,7 @@ export const PublishingAccordion = ({
         )}
 
         {/* Tell user what they can publish */}
-        {canCanHandlePublishingRequest && !lastPublishingRequest && isDraftRegistration && registrationIsValid && (
+        {userCanHandlePublishingRequest && !lastPublishingRequest && isDraftRegistration && registrationIsValid && (
           <>
             <Typography paragraph>
               {t('registration.public_page.tasks_panel.review_preview_before_publishing')}
@@ -368,7 +370,7 @@ export const PublishingAccordion = ({
           </LoadingButton>
         )}
 
-        {canCanHandlePublishingRequest && (
+        {userCanHandlePublishingRequest && (
           <>
             {isPublishedRegistration && hasClosedTicket && (
               <>
@@ -515,7 +517,7 @@ export const PublishingAccordion = ({
           </Box>
         )}
 
-        {canCanHandlePublishingRequest && hasPendingTicket && (
+        {userCanHandlePublishingRequest && hasPendingTicket && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {ticketMessages.length > 0 ? (
               <TicketMessageList ticket={lastPublishingRequest} />
