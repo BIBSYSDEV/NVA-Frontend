@@ -3,7 +3,7 @@ import { Divider, Grid, Link as MuiLink, Skeleton, Typography } from '@mui/mater
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { addTicketMessage, createTicket, fetchRegistrationTickets } from '../../api/registrationApi';
+import { createTicket, fetchRegistrationTickets } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/notificationSlice';
 import { Registration } from '../../types/registration.types';
@@ -25,12 +25,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
   });
 
   const createSupportTicketMutation = useMutation({
-    mutationFn: async (message: string) => {
-      const newTicket = (await createTicket(registration.id, 'GeneralSupportCase', true)).data;
-      if (newTicket) {
-        await addTicketMessage(newTicket.id, message);
-      }
-    },
+    mutationFn: async (message: string) => createTicket(registration.id, 'GeneralSupportCase', message),
     onSuccess: () => {
       dispatch(
         setNotification({

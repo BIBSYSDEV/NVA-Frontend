@@ -40,7 +40,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   });
 
   const createSupportTicket = async (message: string) => {
-    const createTicketResponse = await createTicket(registration.id, 'GeneralSupportCase', false, message);
+    const createTicketResponse = await createTicket(registration.id, 'GeneralSupportCase', message);
 
     if (isErrorStatus(createTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));

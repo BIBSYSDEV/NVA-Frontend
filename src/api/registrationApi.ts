@@ -74,8 +74,8 @@ export const deleteTicketMessage = async (ticketId: string, messageId: string) =
 export const createTicket = async (
   registrationId: string,
   type: TicketType,
-  returnCreatedTicket = false,
-  message?: string
+  message?: string,
+  returnCreatedTicket = false
 ) => {
   const createTicketResponse = await authenticatedApiRequest<null>({
     url: `${registrationId}/ticket`,

@@ -139,7 +139,7 @@ export const DoiRequestAccordion = ({
     setIsLoading(LoadingState.RequestDoi);
     const message = isPublishedRegistration ? messageToCurator : '';
 
-    const createDoiRequestResponse = await createTicket(registration.id, 'DoiRequest', false, message);
+    const createDoiRequestResponse = await createTicket(registration.id, 'DoiRequest', message);
     if (isErrorStatus(createDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_doi_request'), variant: 'error' }));
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
