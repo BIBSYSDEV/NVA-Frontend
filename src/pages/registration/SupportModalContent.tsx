@@ -25,7 +25,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
   });
 
   const createSupportTicketMutation = useMutation({
-    mutationFn: async (message: string) => createTicket(registration.id, 'GeneralSupportCase', message),
+    mutationFn: (message: string) => createTicket(registration.id, 'GeneralSupportCase', message),
     onSuccess: () => {
       dispatch(
         setNotification({
