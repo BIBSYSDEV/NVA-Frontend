@@ -139,17 +139,10 @@ export const DoiRequestAccordion = ({
     setIsLoading(LoadingState.RequestDoi);
     const message = isPublishedRegistration ? messageToCurator : '';
 
-    const createDoiRequestResponse = await createTicket(registration.id, 'DoiRequest', !!message);
+    const createDoiRequestResponse = await createTicket(registration.id, 'DoiRequest', false, message);
     if (isErrorStatus(createDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_doi_request'), variant: 'error' }));
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
-      const ticketId = createDoiRequestResponse.data?.id;
-      // Add message
-      if (ticketId && message) {
-        await addTicketMessage(ticketId, message);
-        // No need to show potential error message, since Ticket with actual DoiRequest is created anyway
-      }
-
       if (openRequestDoiModal) {
         toggleRequestDoiModal();
       }

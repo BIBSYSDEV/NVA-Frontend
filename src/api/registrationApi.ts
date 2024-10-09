@@ -71,11 +71,27 @@ export const deleteTicketMessage = async (ticketId: string, messageId: string) =
   });
 };
 
-export const createTicket = async (registrationId: string, type: TicketType, returnCreatedTicket = false) => {
+export const createTicket = async (
+  registrationId: string,
+  type: TicketType,
+  returnCreatedTicket = false,
+  message?: string
+) => {
   const createTicketResponse = await authenticatedApiRequest<null>({
     url: `${registrationId}/ticket`,
     method: 'POST',
-    data: { type },
+    data: {
+      type: type,
+      ...(message &&
+        message.length > 0 && {
+          messages: [
+            {
+              type: 'Message',
+              text: message,
+            },
+          ],
+        }),
+    },
   });
 
   // Must handle redirects manually since the browser denies the app access to the response's location header
