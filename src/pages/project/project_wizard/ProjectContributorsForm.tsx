@@ -1,5 +1,4 @@
 import { Box } from '@mui/material';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ProjectParticipants } from '../../projects/form/ProjectParticipants';
 import { ProjectManager } from './ProjectManager';
@@ -16,11 +15,9 @@ export const ProjectContributorsForm = ({ suggestedProjectManager }: ProjectCont
         <FormBox>
           <ProjectManager suggestedProjectManager={suggestedProjectManager} />
         </FormBox>
-        <BetaFunctionality>
-          <FormBox>
-            <ProjectParticipants roleType={'LocalProjectManager'} />
-          </FormBox>
-        </BetaFunctionality>
+        <FormBox>
+          <ProjectParticipants roleType={'LocalProjectManager'} />
+        </FormBox>
         <FormBox>
           <ProjectParticipants roleType={'ProjectParticipant'} />
         </FormBox>
