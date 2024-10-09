@@ -6,6 +6,7 @@ import { ProjectContributor, ProjectContributorType } from '../../types/project.
 import { getResearchProfilePath } from '../../utils/urlPaths';
 import { getFullName } from '../../utils/user-helpers';
 import {
+  getLocalProjectManagers,
   getProjectManagers,
   getProjectParticipants,
 } from '../registration/description_tab/projects_field/projectHelpers';
@@ -18,6 +19,7 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
   const { t } = useTranslation();
 
   const projectManagers = getProjectManagers(contributors);
+  const localProjectManagers = getLocalProjectManagers(contributors);
   const projectParticipants = getProjectParticipants(contributors);
 
   return (
@@ -37,6 +39,14 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
                 {t('project.project_manager')}
               </Typography>
               <ContributorList contributors={projectManagers} projectRole="ProjectManager" />
+            </div>
+          )}
+          {localProjectManagers.length > 0 && (
+            <div>
+              <Typography variant="h3" gutterBottom>
+                {t('project.role_types.LocalProjectManager')}
+              </Typography>
+              <ContributorList contributors={localProjectManagers} projectRole="LocalProjectManager" />
             </div>
           )}
           {projectParticipants.length > 0 && (

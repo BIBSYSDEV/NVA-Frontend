@@ -10,7 +10,7 @@ import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { LanguageString } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
-import { CristinProject, ProjectContributorRole } from '../../types/project.types';
+import { CristinProject, ProjectContributorRole, ProjectContributorType } from '../../types/project.types';
 import { findDescendantWithId, getTopLevelOrganization } from '../../utils/institutions-helpers';
 import { AffiliationErrors, editAffiliation } from '../project/helpers/projectRoleHelpers';
 
@@ -21,7 +21,7 @@ interface EditProjectAffiliationModalProps {
   authorName: string;
   baseFieldName: string;
   contributorRoles: ProjectContributorRole[];
-  asProjectManager?: boolean;
+  roleType: ProjectContributorType;
 }
 
 export const ProjectEditAffiliationModal = ({
@@ -31,7 +31,7 @@ export const ProjectEditAffiliationModal = ({
   preselectedOrganization,
   baseFieldName,
   contributorRoles,
-  asProjectManager = false,
+  roleType,
 }: EditProjectAffiliationModalProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ export const ProjectEditAffiliationModal = ({
       newAffiliationId,
       contributorRoles,
       preselectedOrganization.id,
-      asProjectManager,
+      roleType,
       labels || {}
     );
 

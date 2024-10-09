@@ -6,7 +6,6 @@ import {
   deleteProjectManagerRoleFromContributor,
   findProjectManagerRole,
   hasEmptyAffiliation,
-  isNonProjectManagerRole,
   isProjectManagerRole,
   replaceRolesOnContributor,
 } from './projectRoleHelpers';
@@ -15,8 +14,11 @@ export const findProjectManagerIndex = (contributors: ProjectContributor[]) => {
   return contributors.findIndex((contributor) => contributor.roles.some((role) => isProjectManagerRole(role)));
 };
 
-export const getNonProjectManagerContributors = (contributors: ProjectContributor[]) => {
-  return contributors.filter((contributor) => contributor.roles.some((role) => isNonProjectManagerRole(role)));
+export const getContributorsWithRelevantRole = (
+  contributors: ProjectContributor[],
+  roleType: ProjectContributorType
+) => {
+  return contributors.filter((contributor) => contributor.roles.some((role) => role.type === roleType));
 };
 
 export enum AddContributorErrors {
@@ -28,6 +30,7 @@ export enum AddContributorErrors {
   CANNOT_ADD_ANOTHER_PROJECT_MANAGER_ROLE,
   CAN_ONLY_REPLACE_UNIDENTIFIED_CONTRIBUTORS,
   CAN_ONLY_ADD_ONE_PROJECT_MANAGER_ROLE,
+  MUST_HAVE_ROLE_OF_TYPE_TO_BE_IDENTIFIED,
 }
 
 const checkIfExistingProjectManager = (contributors: ProjectContributor[], indexToReplace: number) => {
@@ -124,6 +127,11 @@ export const addContributor = (
     }
   }
 
+  // The UI only makes available an identify-button on unidentified contributors, so this is mostly to ensure the tests test the right thing
+  if (indexToReplace > -1 && !contributors[indexToReplace].roles.some((role) => role.type === roleToAddTo)) {
+    return { error: AddContributorErrors.MUST_HAVE_ROLE_OF_TYPE_TO_BE_IDENTIFIED };
+  }
+
   const newContributor: ProjectContributor = {
     identity: {
       type: 'Person',
@@ -213,10 +221,18 @@ export const addUnidentifiedProjectContributor = (
     return { error: AddContributorErrors.NO_SEARCH_TERM };
   }
 
+  if (indexToReplace > contributors.length - 1 || indexToReplace < -1) {
+    return { error: AddContributorErrors.INDEX_OUT_OF_BOUNDS };
+  }
+
   // Cannot add project manager if we already have one
   if (roleToAddTo === 'ProjectManager') {
     const projectManagerError = checkIfExistingProjectManager(contributors, indexToReplace);
     if (projectManagerError) return { error: projectManagerError };
+  }
+
+  if (indexToReplace > -1 && contributors[indexToReplace].identity.id) {
+    return { error: AddContributorErrors.CAN_ONLY_REPLACE_UNIDENTIFIED_CONTRIBUTORS };
   }
 
   const { firstName, lastName } = createNamesFromInput(searchTerm);
@@ -285,14 +301,16 @@ export const removeProjectManager = (contributors: ProjectContributor[]) => {
 };
 
 const rolesAreEqual = (r1: ProjectContributorRole[], r2: ProjectContributorRole[]) => {
-  if (r1.length !== r2.length) return false;
+  let areEqual = true;
+
+  if (r1.length !== r2.length) areEqual = false;
 
   r1.forEach((role, index) => {
-    if (role.type !== r2[index].type) return false;
-    if (role.affiliation !== r2[index].affiliation) return false;
+    if (role.type !== r2[index].type) areEqual = false;
+    if (role.affiliation !== r2[index].affiliation) areEqual = false;
   });
 
-  return true;
+  return areEqual;
 };
 
 export const contributorsAreEqual = (c1: ProjectContributor, c2: ProjectContributor) => {
