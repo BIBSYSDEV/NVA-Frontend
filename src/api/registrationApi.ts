@@ -1,5 +1,5 @@
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
-import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
+import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import {
   DoiPreview,
   MyRegistrationsResponse,
@@ -71,13 +71,8 @@ export const deleteTicketMessage = async (ticketId: string, messageId: string) =
   });
 };
 
-export const createTicket = async (
-  registrationId: string,
-  type: TicketType,
-  message?: string,
-  returnCreatedTicket = false
-) => {
-  const createTicketResponse = await authenticatedApiRequest<null>({
+export const createTicket = async (registrationId: string, type: TicketType, message?: string) => {
+  return authenticatedApiRequest<null>({
     url: `${registrationId}/ticket`,
     method: 'POST',
     data: {
@@ -93,22 +88,6 @@ export const createTicket = async (
         }),
     },
   });
-
-  // Must handle redirects manually since the browser denies the app access to the response's location header
-  if (!returnCreatedTicket) {
-    return createTicketResponse;
-  } else {
-    const getTickets = await authenticatedApiRequest<TicketCollection>({
-      url: `${registrationId}/tickets`,
-    });
-    const createdTicketId =
-      getTickets.data.tickets
-        .sort((a, b) => (a.createdDate < b.createdDate ? 1 : -1))
-        .find((ticket) => ticket.type === type)?.id ?? '';
-    return await authenticatedApiRequest<Ticket>({
-      url: createdTicketId,
-    });
-  }
 };
 
 export const createDraftDoi = async (registrationId: string) =>
