@@ -240,14 +240,14 @@ export interface RegistrationSearchItem {
     mainTitle: string;
     abstract: string;
     description: string;
-    publicationDate: RegistrationDate;
+    publicationDate?: RegistrationDate;
     contributorsPreview: Contributor[];
     contributorsCount: number;
     /** @deprecated Use 'contributorsPreview' and/or 'contributorsCount' instead */
-    contributors: Contributor[]; // TODO: Remove when new format is availble in all enviroments
+    contributors?: Contributor[]; // TODO: Remove when new format is availble in all enviroments
     reference: {
       publicationInstance: {
-        type: PublicationInstanceType;
+        type?: PublicationInstanceType | '';
       };
       publicationContext: {
         publisher?: ContextPublisher;

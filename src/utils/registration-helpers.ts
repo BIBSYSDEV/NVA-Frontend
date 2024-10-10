@@ -56,6 +56,7 @@ import {
   Publisher,
   Registration,
   RegistrationOperation,
+  RegistrationSearchItem,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -809,4 +810,34 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
     context.issn ? `${t('registration.resource_type.issn')}: ${context.issn}` : '',
   ].filter(Boolean);
   return issnValues.join(', ');
+};
+
+export const convertToRegistrationSearchItem = (registration: Registration) => {
+  const registrationSearchItem: RegistrationSearchItem = {
+    id: registration.id,
+    identifier: registration.identifier,
+    createdDate: registration.createdDate,
+    modifiedDate: registration.modifiedDate,
+    publishedDate: registration.publishedDate,
+    status: registration.status,
+    entityDescription: {
+      mainTitle: registration.entityDescription?.mainTitle ?? '',
+      abstract: registration.entityDescription?.abstract ?? '',
+      description: registration.entityDescription?.description ?? '',
+      publicationDate: registration.entityDescription?.publicationDate,
+      contributorsPreview: registration.entityDescription?.contributors ?? [],
+      contributorsCount: (registration.entityDescription?.contributors ?? []).length,
+      reference: {
+        publicationInstance: {
+          type: registration.entityDescription?.reference?.publicationInstance?.type,
+        },
+        publicationContext: {
+          publisher: (registration.entityDescription?.reference?.publicationContext as any)?.publisher,
+          series: (registration.entityDescription?.reference?.publicationContext as any)?.series,
+          journal: (registration.entityDescription?.reference?.publicationContext as any)?.journal,
+        },
+      },
+    },
+  };
+  return registrationSearchItem;
 };

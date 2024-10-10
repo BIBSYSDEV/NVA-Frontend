@@ -24,7 +24,7 @@ import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { getTitleString } from '../../../../utils/registration-helpers';
+import { convertToRegistrationSearchItem, getTitleString } from '../../../../utils/registration-helpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 
 interface SearchContainerFieldProps {
@@ -103,7 +103,7 @@ export const SearchContainerField = ({
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
-            value={field.value && selectedContainer ? [selectedContainer] : []}
+            value={field.value && selectedContainer ? [convertToRegistrationSearchItem(selectedContainer)] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
                 setFieldValue(field.name, inputValue.pop()?.id);

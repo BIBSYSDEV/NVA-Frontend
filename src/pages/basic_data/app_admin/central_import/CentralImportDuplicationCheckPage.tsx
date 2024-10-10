@@ -18,6 +18,7 @@ import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTyp
 import { PreviousSearchLocationState } from '../../../../types/locationState.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
+import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
 import {
   IdentifierParams,
   UrlPathTemplate,
@@ -134,7 +135,9 @@ export const CentralImportDuplicationCheckPage = () => {
                 </Typography>
                 {importedRegistrationQuery.data && (
                   <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
-                    <RegistrationListItemContent registration={importedRegistrationQuery.data} />
+                    <RegistrationListItemContent
+                      registration={convertToRegistrationSearchItem(importedRegistrationQuery.data)}
+                    />
                   </SearchListItem>
                 )}
               </>
