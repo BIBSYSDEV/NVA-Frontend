@@ -249,6 +249,11 @@ export interface RegistrationSearchItem {
       publicationInstance: {
         type: PublicationInstanceType;
       };
+      publicationContext: {
+        publisher?: ContextPublisher;
+        series?: ContextSeries;
+        journal?: Journal;
+      };
     };
   };
 }

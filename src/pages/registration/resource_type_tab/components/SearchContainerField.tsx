@@ -11,12 +11,12 @@ import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { Contributor } from '../../../../types/contributor.types';
-import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import {
   PublicationInstanceType,
   Publisher,
   Registration,
   RegistrationDate,
+  RegistrationSearchItem,
   Series,
 } from '../../../../types/registration.types';
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
@@ -194,13 +194,13 @@ export const YearAndContributorsText = ({ date, contributors }: YearAndContribut
 };
 
 interface ContainerAndLevelTextProps {
-  registration: Registration;
+  registration: RegistrationSearchItem;
 }
 
 const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
   const { t } = useTranslation();
 
-  const publicationContext = registration.entityDescription?.reference?.publicationContext as BookPublicationContext;
+  const publicationContext = registration.entityDescription?.reference?.publicationContext;
   const publisherId = publicationContext.publisher?.id ?? '';
   const seriesId = publicationContext.series?.id ?? '';
 

@@ -15,7 +15,6 @@ import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.
 import {
   AggregationFileKeyType,
   PublicationInstanceType,
-  Registration,
   RegistrationAggregations,
   RegistrationSearchItem,
   RegistrationStatus,
@@ -587,7 +586,9 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getCustomerResults = await authenticatedApiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
+  const getCustomerResults = await authenticatedApiRequest2<
+    SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
+  >({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
     signal,
   });
