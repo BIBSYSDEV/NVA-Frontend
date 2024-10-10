@@ -11,6 +11,7 @@ import { PreviousSearchLocationState } from '../../../types/locationState.types'
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration } from '../../../types/registration.types';
 import { getInitials, getTimePeriodString } from '../../../utils/general-helpers';
+import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
 import { getMyMessagesRegistrationPath, getTasksRegistrationPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
@@ -97,7 +98,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             gap: '0 1rem',
             gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
           }}>
-          <RegistrationListItemContent registration={registrationCopy} ticketView />
+          <RegistrationListItemContent registration={convertToRegistrationSearchItem(registrationCopy)} ticketView />
           {ticket.type === 'PublishingRequest' ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} showLastMessage />
           ) : ticket.type === 'DoiRequest' ? (

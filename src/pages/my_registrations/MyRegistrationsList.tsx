@@ -7,11 +7,16 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
 import { setNotification } from '../../redux/notificationSlice';
-import { emptyRegistration, Registration, RegistrationPreview } from '../../types/registration.types';
+import {
+  emptyRegistration,
+  Registration,
+  RegistrationPreview,
+  RegistrationSearchItem,
+} from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { getTitleString } from '../../utils/registration-helpers';
+import { convertToRegistrationSearchItem, getTitleString } from '../../utils/registration-helpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -52,7 +57,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
   });
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [registrationToDelete, setRegistrationToDelete] = useState<Registration>();
+  const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationSearchItem>();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const deleteDraftRegistration = async () => {
@@ -73,7 +78,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     }
   };
 
-  const onClickDeleteRegistration = (registration: Registration) => {
+  const onClickDeleteRegistration = (registration: RegistrationSearchItem) => {
     setRegistrationToDelete(registration);
     setShowDeleteModal(true);
   };
@@ -92,7 +97,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
           }}>
           <RegistrationList
             onDeleteDraftRegistration={onClickDeleteRegistration}
-            registrations={registrationsCopy}
+            registrations={registrationsCopy.map(convertToRegistrationSearchItem)}
             canEditRegistration
           />
         </ListPagination>
