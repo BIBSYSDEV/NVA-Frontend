@@ -44,7 +44,11 @@ export const ProjectParticipants = ({ roleType }: ProjectParticipantProps) => {
               onClick={toggleOpenAddProjectParticipantView}
               variant="contained"
               startIcon={<AddIcon />}
-              data-testid={dataTestId.projectForm.addParticipantButton}>
+              data-testid={
+                roleType === 'LocalProjectManager'
+                  ? dataTestId.projectForm.addLocalManagerButton
+                  : dataTestId.projectForm.addParticipantButton
+              }>
               {roleType === 'LocalProjectManager'
                 ? t('project.add_local_manager')
                 : t('project.add_project_contributor')}
