@@ -158,8 +158,8 @@ export const EditorInstitution = () => {
               <Typography variant="h3" component="h2">
                 {t('editor.institution.institution_support')}
               </Typography>
-              <Link href={customer?.serviceCenter.uri} target="_blank" rel="noopener noreferrer">
-                {customer?.serviceCenter.uri}
+              <Link href={customer.serviceCenter.uri} target="_blank" rel="noopener noreferrer">
+                {customer.serviceCenter.uri}
               </Link>
             </Grid>
           )}
