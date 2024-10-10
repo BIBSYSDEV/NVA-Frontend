@@ -28,9 +28,10 @@ import { ProjectFormStepper } from './ProjectFormStepper';
 interface ProjectFormProps {
   project: SaveCristinProject | CristinProject;
   suggestedProjectManager?: string;
+  toggleModal?: () => void;
 }
 
-export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormProps) => {
+export const ProjectForm = ({ project, suggestedProjectManager, toggleModal }: ProjectFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -60,9 +61,16 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
           variant: 'success',
         })
       );
+
       const id = projectWithId ? projectWithId.id : updateProjectResponse.data.id;
 
-      if (id) {
+      console.log('toggleModal', toggleModal);
+
+      if (toggleModal) {
+        console.log('test1');
+        toggleModal();
+      } else if (id) {
+        console.log('test2');
         goToLandingPage(id);
       }
     } else if (isErrorStatus(updateProjectResponse.status)) {

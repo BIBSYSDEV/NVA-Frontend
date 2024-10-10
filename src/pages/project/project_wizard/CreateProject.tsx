@@ -18,7 +18,11 @@ import { CreateNfrProject } from './CreateNfrProject';
 import { EmptyProjectForm } from './EmptyProjectForm';
 import { ProjectForm } from './ProjectForm';
 
-const CreateProject = () => {
+interface CreateProjectProps {
+  toggleModal?: () => void;
+}
+
+const CreateProject = ({ toggleModal }: CreateProjectProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const user = useSelector((store: RootState) => store.user);
@@ -28,10 +32,12 @@ const CreateProject = () => {
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [suggestedProjectManager, setSuggestedProjectManager] = useState('');
 
+  console.log('toggleModal in Create Project', toggleModal);
+
   return (
     <StyledPageContent>
       {showProjectForm ? (
-        <ProjectForm project={newProject} suggestedProjectManager={suggestedProjectManager} />
+        <ProjectForm project={newProject} suggestedProjectManager={suggestedProjectManager} toggleModal={toggleModal} />
       ) : (
         <>
           <PageHeader>{t('project.create_project')}</PageHeader>
@@ -52,7 +58,7 @@ const CreateProject = () => {
           <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
             <CancelButton
               testId={dataTestId.projectForm.cancelNewProjectButton}
-              onClick={() => history.push(UrlPathTemplate.MyPageMyProjectRegistrations)}
+              onClick={() => (toggleModal ? toggleModal() : history.push(UrlPathTemplate.MyPageMyProjectRegistrations))}
             />
           </StyledRightAlignedFooter>
         </>
