@@ -28,6 +28,8 @@ export const InstitutionSupport = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' })),
   });
 
+  console.log(customer);
+
   return (
     <>
       <Helmet>
@@ -44,7 +46,7 @@ export const InstitutionSupport = () => {
               </Typography>
               <Typography paragraph>{t('editor.institution.institution_support_description')}</Typography>
 
-              <Field name={'serviceCenterUri'}>
+              <Field name={'serviceCenter.uri'}>
                 {({ field }: FieldProps<string>) => (
                   <TextField
                     data-testid={dataTestId.editor.institutionSupportInputField}
