@@ -28,8 +28,6 @@ export const InstitutionSupport = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' })),
   });
 
-  console.log(customer);
-
   return (
     <>
       <Helmet>
