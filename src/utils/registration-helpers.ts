@@ -782,7 +782,10 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
-export const registrationsHaveSamePublicationYear = (reg1: Registration, reg2: Registration) => {
+export const registrationsHaveSamePublicationYear = (
+  reg1: Registration | RegistrationSearchItem,
+  reg2: Registration | RegistrationSearchItem
+) => {
   if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
     return false;
   }
@@ -790,7 +793,10 @@ export const registrationsHaveSamePublicationYear = (reg1: Registration, reg2: R
   return reg1.entityDescription.publicationDate.year === reg2.entityDescription.publicationDate.year;
 };
 
-export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registration) => {
+export const registrationsHaveSameCategory = (
+  reg1: Registration | RegistrationSearchItem,
+  reg2: Registration | RegistrationSearchItem
+) => {
   if (
     reg1.entityDescription?.reference?.publicationInstance?.type &&
     reg2.entityDescription?.reference?.publicationInstance?.type
