@@ -64,13 +64,9 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal }: P
 
       const id = projectWithId ? projectWithId.id : updateProjectResponse.data.id;
 
-      console.log('toggleModal', toggleModal);
-
       if (toggleModal) {
-        console.log('test1');
         toggleModal();
       } else if (id) {
-        console.log('test2');
         goToLandingPage(id);
       }
     } else if (isErrorStatus(updateProjectResponse.status)) {
@@ -140,6 +136,7 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal }: P
                   onClickNext={() => onClickArrow(tabNumber + 1)}
                   onClickPrevious={() => onClickArrow(tabNumber - 1)}
                   onClickLast={() => onClickArrow(ProjectTabs.Connections)}
+                  openedInModal={toggleModal !== undefined}
                 />
               </Box>
             </Form>

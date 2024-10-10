@@ -32,8 +32,6 @@ const CreateProject = ({ toggleModal }: CreateProjectProps) => {
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [suggestedProjectManager, setSuggestedProjectManager] = useState('');
 
-  console.log('toggleModal in Create Project', toggleModal);
-
   return (
     <StyledPageContent>
       {showProjectForm ? (
