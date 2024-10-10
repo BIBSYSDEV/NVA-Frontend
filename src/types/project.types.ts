@@ -3,6 +3,13 @@ import { AggregationValue, LanguageString } from './common.types';
 import { Organization } from './organization.types';
 import { Funding } from './registration.types';
 
+export enum ProjectTabs {
+  Description = 0,
+  Details = 1,
+  Contributors = 2,
+  Connections = 3,
+}
+
 export interface TypedLabel {
   type: string;
   label: LanguageString;
@@ -12,14 +19,7 @@ export interface ResearchProject {
   type: 'ResearchProject';
   id: string;
   name: string;
-  grants?: Grant[];
   approvals?: Approval[];
-}
-
-interface Grant {
-  type: 'Grant';
-  id: string;
-  source: string;
 }
 
 interface Approval {
@@ -41,21 +41,29 @@ export type ProjectStatus = 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
 
 export interface ProjectContributorIdentity {
   type: 'Person';
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
 }
 
-export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
+export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant' | 'LocalProjectManager';
 
-export interface ProjectContributor {
+export interface ProjectContributorRole {
   type: ProjectContributorType;
-  affiliation: ProjectOrganization;
-  identity: ProjectContributorIdentity;
+  affiliation: ProjectOrganization | undefined;
 }
 
-interface ProjectCreator extends Omit<ProjectContributor, 'type'> {
+export interface ProjectContributor {
+  identity: ProjectContributorIdentity;
+  roles: ProjectContributorRole[];
+}
+
+interface CreatorRole extends Omit<ProjectContributorRole, 'type'> {
   type: 'ProjectCreator';
+}
+
+interface ProjectCreator extends Omit<ProjectContributor, 'roles'> {
+  roles: [CreatorRole];
 }
 
 export interface ProjectFunding extends Pick<Funding, 'identifier' | 'source' | 'labels'> {
@@ -87,7 +95,7 @@ export interface SaveCristinProject {
 
 export interface CristinProject extends SaveCristinProject {
   id: string;
-  identifier: ProjectIdentifier[];
+  identifiers: ProjectIdentifier[];
   status: ProjectStatus;
   alternativeTitles: LanguageString[];
   coordinatingInstitution: ProjectOrganization;
@@ -130,10 +138,10 @@ export interface NfrProject {
   activeTo: string;
 }
 
-export const emptyProjectContributor: ProjectContributor = {
-  type: 'ProjectParticipant',
-  identity: { type: 'Person', id: '', firstName: '', lastName: '' },
-  affiliation: { type: 'Organization', id: '', labels: {} },
+const emptyAffiliation: ProjectOrganization = {
+  type: 'Organization',
+  id: '',
+  labels: {},
 };
 
 export const emptyProject: SaveCristinProject = {
@@ -142,12 +150,8 @@ export const emptyProject: SaveCristinProject = {
   language: 'http://lexvo.org/id/iso639-3/nob',
   startDate: '',
   endDate: '',
-  contributors: [{ ...emptyProjectContributor, type: 'ProjectManager' }],
-  coordinatingInstitution: {
-    type: 'Organization',
-    id: '',
-    labels: {},
-  },
+  contributors: [],
+  coordinatingInstitution: emptyAffiliation,
   academicSummary: {},
   popularScientificSummary: {},
   projectCategories: [],
@@ -170,4 +174,12 @@ export enum ProjectFieldName {
   PopularScientificSummaryEn = 'popularScientificSummary.en',
   Keywords = 'keywords',
   RelatedProjects = 'relatedProjects',
+  RoleType = 'roles[0].type',
+  Type = 'type',
+}
+
+export enum ProjectContributorFieldName {
+  Type = 'roles[0].type',
+  Identity = 'identity',
+  Roles = 'roles',
 }

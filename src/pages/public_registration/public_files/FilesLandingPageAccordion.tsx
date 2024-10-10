@@ -1,8 +1,8 @@
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../../../components/PageWithSideMenu';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
+import { SelectableButton } from '../../../components/SelectableButton';
 import { FileType } from '../../../types/associatedArtifact.types';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -10,7 +10,7 @@ import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
   isTypeWithFileVersionField,
-  userCanEditRegistration,
+  userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
@@ -21,7 +21,7 @@ const maxFileSizeForPreview = 10_000_000; //10 MB
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
 
-  const userIsRegistrationAdmin = userCanEditRegistration(registration);
+  const userIsRegistrationAdmin = userHasAccessRight(registration, 'update');
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
   const publishedFiles = associatedFiles.filter((file) => file.type === FileType.PublishedFile);
@@ -86,12 +86,12 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             data-testid={dataTestId.registrationLandingPage.noLinkOrFilesWarning}>
             {t('registration.files_and_license.no_files_or_links_present_in_this_registration')}
           </Typography>
-          <LinkButton
+          <SelectableButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
             to={`${getRegistrationWizardPath(registration.identifier)}?tab=3`}>
             {t('registration.files_and_license.add_files_or_links')}
-          </LinkButton>
+          </SelectableButton>
         </Box>
       )}
       {filesToShow.map((file, index) => (

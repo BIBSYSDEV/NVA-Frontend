@@ -2,11 +2,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import FilterVintageIcon from '@mui/icons-material/FilterVintage';
 import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, Typography } from '@mui/material';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CategorySelector } from '../../../components/CategorySelector';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { StyledInfoBanner } from '../../../components/styled/Wrappers';
+import { NviCandidateContext } from '../../../context/NviCandidateContext';
 import { RootState } from '../../../redux/store';
 import { emptyArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
 import { emptyBookPublicationInstance } from '../../../types/publication_types/bookRegistration.types';
@@ -51,6 +53,7 @@ import {
   isPeriodicalMediaContribution,
   nviApplicableTypes,
 } from '../../../utils/registration-helpers';
+import { LockedNviFieldDescription } from '../LockedNviFieldDescription';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
@@ -58,6 +61,8 @@ export const SelectRegistrationTypeField = () => {
   const customer = useSelector((store: RootState) => store.customer);
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
+
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
   const [confirmNewType, setConfirmNewType] = useState<PublicationInstanceType | ''>('');
@@ -135,7 +140,7 @@ export const SelectRegistrationTypeField = () => {
           }
           break;
         case PublicationType.Degree:
-          contextTypeIsChanged &&
+          if (contextTypeIsChanged) {
             setFieldValue(
               contextTypeBaseFieldName,
               {
@@ -146,6 +151,7 @@ export const SelectRegistrationTypeField = () => {
               },
               false
             );
+          }
           setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
           break;
         case PublicationType.Anthology:
@@ -182,8 +188,9 @@ export const SelectRegistrationTypeField = () => {
 
           break;
         case PublicationType.Artistic:
-          contextTypeIsChanged &&
+          if (contextTypeIsChanged) {
             setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
+          }
           setFieldValue(
             instanceTypeBaseFieldName,
             { ...emptyArtisticPublicationInstance, type: newInstanceType },
@@ -222,7 +229,9 @@ export const SelectRegistrationTypeField = () => {
           }
           break;
         case PublicationType.ResearchData:
-          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
+          if (contextTypeIsChanged) {
+            setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
+          }
           setFieldValue(
             instanceTypeBaseFieldName,
             { ...emptyResearchDataPublicationInstance, type: newInstanceType },
@@ -230,11 +239,15 @@ export const SelectRegistrationTypeField = () => {
           );
           break;
         case PublicationType.ExhibitionContent:
-          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);
+          if (contextTypeIsChanged) {
+            setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);
+          }
           setFieldValue(instanceTypeBaseFieldName, emptyExhibitionPublicationInstance, false);
           break;
         case PublicationType.GeographicalContent:
-          contextTypeIsChanged && setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
+          if (contextTypeIsChanged) {
+            setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
+          }
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }
@@ -348,9 +361,16 @@ export const SelectRegistrationTypeField = () => {
     </>
   ) : (
     <div>
+      {disableNviCriticalFields && (
+        <StyledInfoBanner sx={{ mb: '0.5rem' }}>
+          <LockedNviFieldDescription fieldLabel={t('registration.resource_type.resource_type')} />
+        </StyledInfoBanner>
+      )}
+
       <FormLabel sx={{ display: 'block' }}>{t('registration.resource_type.resource_type')}</FormLabel>
       <Chip
         data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(currentInstanceType)}
+        disabled={disableNviCriticalFields}
         icon={
           nviApplicableTypes.includes(currentInstanceType) ? (
             <FilterVintageIcon
@@ -363,7 +383,7 @@ export const SelectRegistrationTypeField = () => {
         color="primary"
         label={t(`registration.publication_types.${currentInstanceType}`)}
         onClick={() => setOpenSelectType(true)}
-        sx={{ mt: '0.5rem', width: 'max-content' }}
+        sx={{ mt: '0.25rem', width: 'max-content' }}
       />
       <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>
     </div>

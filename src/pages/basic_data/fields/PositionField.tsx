@@ -57,7 +57,7 @@ export const PositionField = ({
           disabled={disabled}
           value={sortedPositions.find((option) => option.id === field.value) ?? null}
           options={sortedPositions}
-          renderOption={(props, option) => (
+          renderOption={({ key, ...props }, option) => (
             <li {...props} key={option.id}>
               <div>
                 <Typography>{getLanguageString(option.labels)}</Typography>

@@ -1,16 +1,24 @@
 import { Autocomplete, Chip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { searchForSeries } from '../../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, searchForSeries } from '../../../../api/publicationChannelApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
+import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
+import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
@@ -25,17 +33,24 @@ export const SeriesField = () => {
   const series = reference?.publicationContext.series;
   const year = publicationDate?.year ?? '';
 
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+
   const [showSeriesForm, setShowSeriesForm] = useState(false);
   const toggleSeriesForm = () => setShowSeriesForm(!showSeriesForm);
 
-  const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
+  const [query, setQuery] = useState(!series?.id ? (series?.title ?? '') : '');
   const debouncedQuery = useDebounce(query);
+  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
+
+  // Reset search size when query changes
+  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
   const seriesOptionsQuery = useQuery({
-    queryKey: ['seriesSearch', debouncedQuery, year],
+    queryKey: ['seriesSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForSeries(debouncedQuery, year),
+    queryFn: () => searchForSeries(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_series') },
+    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
 
   useEffect(() => {
@@ -60,22 +75,26 @@ export const SeriesField = () => {
     staleTime: Infinity,
   });
 
+  const options = seriesOptionsQuery.data?.hits ?? [];
+
   return (
     <StyledChannelContainerBox>
+      {disableNviCriticalFields && (
+        <StyledInfoBanner sx={{ gridColumn: '1/-1' }}>
+          <LockedNviFieldDescription fieldLabel={t('registration.resource_type.series')} />
+        </StyledInfoBanner>
+      )}
       <Field name={ResourceFieldNames.SeriesId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
+            disabled={disableNviCriticalFields}
             fullWidth
             multiple
             id={seriesFieldTestId}
             data-testid={seriesFieldTestId}
             aria-labelledby={`${seriesFieldTestId}-label`}
             popupIcon={null}
-            options={
-              debouncedQuery && query === debouncedQuery && !seriesOptionsQuery.isPending
-                ? seriesOptionsQuery.data?.hits ?? []
-                : []
-            }
+            options={options}
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
@@ -102,13 +121,22 @@ export const SeriesField = () => {
             }}
             loading={seriesOptionsQuery.isFetching || seriesQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={(props, option, state) => (
-              <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
+            renderOption={({ key, ...props }, option, state) => (
+              <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
+            ListboxComponent={AutocompleteListboxWithExpansion}
+            ListboxProps={
+              {
+                hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
+                onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+                isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
+              } satisfies AutocompleteListboxWithExpansionProps as any
+            }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
+                  key={option.identifier}
                   data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
                   label={<PublicationChannelChipLabel value={option} />}
                 />

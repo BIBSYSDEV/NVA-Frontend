@@ -1,4 +1,5 @@
 import { Box, CircularProgress, Link as MuiLink, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
@@ -9,6 +10,9 @@ export const EditorDoi = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{t('common.doi_long')}</title>
+      </Helmet>
       <Typography id="doi-label" variant="h2" sx={{ mb: '2rem' }}>
         {t('common.doi_long')}
       </Typography>

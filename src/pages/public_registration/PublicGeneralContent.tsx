@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { useFetchNviCandidateQuery } from '../../api/hooks/useFetchNviCandidateQuery';
@@ -35,7 +35,9 @@ import {
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
+import { ResearchDataPublicationContext } from '../../types/publication_types/researchDataRegistration.types';
 import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
+import { AdditionalIdentifier } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import {
@@ -51,9 +53,12 @@ import {
   isPeriodicalMediaContribution,
   isPresentation,
   isReport,
+  isResearchData,
 } from '../../utils/registration-helpers';
 import { ChapterPublisherInfo } from './ChapterPublisherInfo';
 import { PublicDoi } from './PublicDoi';
+import { PublicHandles } from './PublicHandles';
+import { PublicPageInfoEntry } from './PublicPageInfoEntry';
 import {
   PublicJournal,
   PublicOutputs,
@@ -77,6 +82,16 @@ import {
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
 
+const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: AdditionalIdentifier): number => {
+  if (a.sourceName === 'Cristin') {
+    return -1;
+  }
+  if (b.sourceName === 'Cristin') {
+    return 1;
+  }
+  return 0;
+};
+
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
   const { entityDescription, id, status } = registration;
@@ -90,15 +105,19 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 
-  const cristinIdentifier = registration.additionalIdentifiers?.find(
-    (identifier) => identifier.sourceName === 'Cristin'
-  )?.value;
+  const cristinIdentifier = registration.additionalIdentifiers
+    ?.filter((identifier) => identifier.type === 'CristinIdentifier' || identifier.sourceName === 'Cristin')
+    .sort((a, b) => prioritiseIdentifiersFromCristin(a, b))
+    .shift()?.value;
   const scopusIdentifier = registration.additionalIdentifiers?.find(
-    (identifier) => identifier.sourceName === 'Scopus'
+    (identifier) => identifier.type === 'ScopusIdentifier' || identifier.sourceName === 'Scopus'
   )?.value;
 
   const isNviReported = nviCandidateQuery.isSuccess && nviCandidateQuery.data.status === 'Reported';
   const reportedYear = nviCandidateQuery.data?.period.year;
+
+  const dateString = `${displayDate(entityDescription?.publicationDate)}${isNviReported && reportedYear ? ` (${t('basic_data.nvi.nvi_reporting_year')}: ${reportedYear})` : ''}`;
+  const alternativeTitles = Object.values(registration.entityDescription?.alternativeTitles ?? {});
 
   return (
     <StyledGeneralInfo>
@@ -106,18 +125,28 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.public_page.about_registration')}
         </Typography>
-        <Typography>{`${displayDate(entityDescription?.publicationDate)}${isNviReported && reportedYear ? ` (${t('basic_data.nvi.nvi_reporting_year')}: ${reportedYear})` : ''}`}</Typography>
+        {alternativeTitles.length > 0 && (
+          <PublicPageInfoEntry
+            title={t('registration.description.alternative_title')}
+            content={alternativeTitles.map((title) => (
+              <Typography key={title}>{title}</Typography>
+            ))}
+          />
+        )}
+        {dateString && <PublicPageInfoEntry title={t('common.date')} content={dateString} />}
         {language && (
-          <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
-            {i18n.language === 'nob' ? language.nob : language.eng}
-          </Typography>
+          <PublicPageInfoEntry
+            data-testid={dataTestId.registrationLandingPage.primaryLanguage}
+            title={t('common.language')}
+            content={i18n.language === 'nob' ? language.nob : language.eng}
+          />
         )}
         {entityDescription?.npiSubjectHeading && (
-          <Typography data-testid={dataTestId.registrationLandingPage.npi}>
-            {t('registration.description.npi_disciplines')}:{' '}
-            {t(`disciplines.${entityDescription.npiSubjectHeading}` as any)} (
-            {t(`disciplines.${findParentSubject(disciplines, entityDescription.npiSubjectHeading)}` as any)})
-          </Typography>
+          <PublicPageInfoEntry
+            data-testid={dataTestId.registrationLandingPage.npi}
+            title={t('registration.description.npi_disciplines')}
+            content={`${t(`disciplines.${entityDescription.npiSubjectHeading}` as any)} (${t(`disciplines.${findParentSubject(disciplines, entityDescription.npiSubjectHeading)}` as any)})`}
+          />
         )}
         {publicationInstance &&
           ((isJournal(publicationInstance.type) || isPeriodicalMediaContribution(publicationInstance.type)) &&
@@ -137,10 +166,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 (publicationInstance.type === DegreeType.Bachelor ||
                   publicationInstance.type === DegreeType.Master ||
                   publicationInstance.type === DegreeType.Other) && (
-                  <Typography>
-                    {t('registration.resource_type.course_code')}:{' '}
-                    {(publicationContext as DegreePublicationContext).course?.code}
-                  </Typography>
+                  <PublicPageInfoEntry
+                    title={t('registration.resource_type.course_code')}
+                    content={(publicationContext as DegreePublicationContext).course?.code}
+                  />
                 )}
 
               {publicationInstance.type !== DegreeType.Bachelor && publicationInstance.type !== DegreeType.Master && (
@@ -171,47 +200,29 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               publicationInstance={publicationInstance as ExhibitionPublicationInstance}
             />
           ) : null)}
+
         <PublicDoi registration={registration} />
-        {registration.handle && (
-          <>
-            <Typography variant="overline">{t('registration.public_page.handle')}</Typography>
-            <Typography>
-              <Link
-                data-testid={dataTestId.registrationLandingPage.handleLink}
-                href={registration.handle}
-                target="_blank"
-                rel="noopener noreferrer">
-                {registration.handle}
-              </Link>
-            </Typography>
-          </>
+        <PublicHandles registration={registration} />
+
+        {cristinIdentifier && (
+          <PublicPageInfoEntry
+            title={t('registration.public_page.cristin_id')}
+            content={
+              <Typography>
+                <Link
+                  href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  {cristinIdentifier}
+                </Link>
+              </Typography>
+            }
+          />
         )}
-        {(cristinIdentifier || scopusIdentifier) && (
-          <Box sx={{ display: 'flex', columnGap: '2rem', flexWrap: 'wrap' }}>
-            {cristinIdentifier && (
-              <div>
-                <Typography variant="overline">{t('registration.public_page.cristin_id')}</Typography>
-                <Typography>
-                  <Link
-                    data-testid={dataTestId.registrationLandingPage.cristinLink}
-                    href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    {cristinIdentifier}
-                  </Link>
-                </Typography>
-              </div>
-            )}
-            {scopusIdentifier && (
-              <div>
-                <Typography variant="overline">{t('registration.public_page.scopus_id')}</Typography>
-                <Typography>{scopusIdentifier}</Typography>
-              </div>
-            )}
-          </Box>
+        {scopusIdentifier && (
+          <PublicPageInfoEntry title={t('registration.public_page.scopus_id')} content={scopusIdentifier} />
         )}
-        <Typography variant="overline">{t('registration.registration_id')}</Typography>
-        <Typography>{registration.identifier}</Typography>
+        <PublicPageInfoEntry title={t('registration.registration_id')} content={registration.identifier} />
       </div>
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
@@ -279,6 +290,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 publicationContext={publicationContext as MediaContributionPublicationContext}
               />
             )
+          ) : isResearchData(publicationInstance.type) ? (
+            <PublicPublisher publisher={(publicationContext as ResearchDataPublicationContext).publisher} />
           ) : isExhibitionContent(publicationInstance.type) ? (
             <PublicOutputs
               outputs={(publicationInstance as ExhibitionPublicationInstance).manifestations ?? []}

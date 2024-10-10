@@ -1,5 +1,6 @@
-import { FetchTicketsParams, ResultParam } from '../api/searchApi';
+import { Query } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
+import { FetchTicketsParams, ResultParam } from '../api/searchApi';
 import { AggregationFileKeyType } from '../types/registration.types';
 
 export enum SearchParam {
@@ -144,3 +145,38 @@ export const getDialogueNotificationsParams = (username?: string): FetchTicketsP
   owner: username,
   viewedByNot: username,
 });
+
+export const keepSimilarPreviousData = <T>(
+  previousData: T | undefined,
+  query: Query<T, Error, T, (string | number)[]> | undefined,
+  searchTerm: string
+) => {
+  // Keep previous data if query has the same search term
+  if (searchTerm && query?.queryKey.includes(searchTerm)) {
+    return previousData;
+  }
+};
+
+export const dataSearchFieldAttributeName = 'data-searchfield';
+/**
+ * Takes one URLSearchParams object and adds or removes values from other HTML input nodes with
+ * the "data-searchfield" attribute to ensure that all params are in sync with the HTML.
+ */
+export const syncParamsWithSearchFields = (params: URLSearchParams) => {
+  const searchFieldElements = document.querySelectorAll(
+    `input[${dataSearchFieldAttributeName}]`
+  ) as NodeListOf<HTMLInputElement>;
+
+  searchFieldElements.forEach((element) => {
+    const fieldName = element.getAttribute(dataSearchFieldAttributeName);
+    if (fieldName) {
+      if (element.value) {
+        params.set(fieldName, element.value);
+      } else if (params.has(fieldName)) {
+        params.delete(fieldName);
+      }
+    }
+  });
+
+  return params;
+};

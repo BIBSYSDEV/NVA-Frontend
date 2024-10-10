@@ -1,8 +1,10 @@
 import { Grid, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useFormikContext } from 'formik';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchOrganization } from '../../../api/cristinApi';
+import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { PageSpinner } from '../../../components/PageSpinner';
+import { CustomerInstitutionFieldNames, CustomerInstitutionFormData } from '../../../types/customerInstitution.types';
 
 interface CustomerInstitutionInformationFromCristinProps {
   cristinId?: string;
@@ -12,16 +14,21 @@ export const CustomerInstitutionInformationFromCristin = ({
   cristinId,
 }: CustomerInstitutionInformationFromCristinProps) => {
   const { t } = useTranslation();
-  const organizationQuery = useQuery({
-    queryKey: [cristinId],
-    enabled: !!cristinId,
-    queryFn: cristinId ? () => fetchOrganization(cristinId) : undefined,
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    gcTime: 1_800_000, // 30 minutes
-  });
-
+  const { values, setFieldValue } = useFormikContext<CustomerInstitutionFormData>();
+  const organizationQuery = useFetchOrganization(cristinId ?? '');
   const customerInformation = organizationQuery.data;
+  const nbInstitutionName = customerInformation?.labels.nb;
+
+  useEffect(() => {
+    if (
+      nbInstitutionName &&
+      (nbInstitutionName !== values.customer.displayName || nbInstitutionName !== values.customer.name)
+    ) {
+      // Ensure that customer name is up to date with name in Cristin
+      setFieldValue(CustomerInstitutionFieldNames.Name, nbInstitutionName);
+      setFieldValue(CustomerInstitutionFieldNames.DisplayName, nbInstitutionName);
+    }
+  }, [setFieldValue, nbInstitutionName, values.customer.displayName, values.customer.name]);
 
   return (
     <Grid aria-live="polite" aria-busy={organizationQuery.isFetching} container spacing={2}>
@@ -35,7 +42,7 @@ export const CustomerInstitutionInformationFromCristin = ({
             <Typography variant="h3" component="h2">
               {t('editor.institution.institution_name_norwegian')}
             </Typography>
-            <Typography>{customerInformation?.labels.nb ?? '-'}</Typography>
+            <Typography>{nbInstitutionName ?? '-'}</Typography>
           </Grid>
           <Grid item xs={12} md={3}>
             <Typography variant="h3" component="h2">

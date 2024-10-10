@@ -2,10 +2,10 @@ import { CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../api/searchApi';
+import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
-import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface ProjectResultsProps {

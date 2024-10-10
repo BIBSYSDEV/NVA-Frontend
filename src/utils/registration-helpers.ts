@@ -1,4 +1,4 @@
-import { TFunction } from 'i18next';
+import { t, TFunction } from 'i18next';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
@@ -6,21 +6,6 @@ import i18n from '../translations/i18n';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '../types/associatedArtifact.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
-import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-  allPublicationInstanceTypes,
-} from '../types/publicationFieldNames';
 import {
   AudioVisualPublication,
   Award,
@@ -39,6 +24,7 @@ import {
   OtherRelease,
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
+import { DegreeRegistration } from '../types/publication_types/degreeRegistration.types';
 import {
   ExhibitionBasic,
   ExhibitionMentionInPublication,
@@ -46,12 +32,30 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
 import {
+  allPublicationInstanceTypes,
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  PublicationType,
+  ReportType,
+  ResearchDataType,
+} from '../types/publicationFieldNames';
+import {
+  ContextSeries,
   Journal,
   NpiSubjectDomain,
   PublicationInstanceType,
   Publisher,
   Registration,
+  RegistrationOperation,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -114,35 +118,29 @@ export const nviApplicableTypes: PublicationInstanceType[] = [
   ChapterType.AcademicChapter,
 ];
 
-export const userHasSameCustomerAsRegistration = (user: User | null, registration?: Registration) =>
-  !!user?.customerId && registration?.publisher.id === user.customerId;
-
 export const userIsValidImporter = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
 
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear().toString();
 
-const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?: string | null) => {
-  const issnString =
-    printIssn || onlineIssn
+const getChannelMetadataString = (discontinued?: string, onlineIssn?: string | null, printIssn?: string | null) => {
+  const metadataString =
+    discontinued || printIssn || onlineIssn
       ? [
+          discontinued ? `${i18n.t('common.discontinued')}: ${discontinued}` : '',
           printIssn ? `${i18n.t('registration.resource_type.print_issn')}: ${printIssn}` : '',
           onlineIssn ? `${i18n.t('registration.resource_type.online_issn')}: ${onlineIssn}` : '',
         ]
-          .filter((issn) => issn)
+          .filter(Boolean)
           .join(', ')
       : '';
-  return issnString;
+  return metadataString;
 };
 
-export const getPublicationChannelString = (publicationChannel: Journal | Series | Publisher) => {
-  if (publicationChannel.type === 'Publisher') {
-    return publicationChannel.name;
-  } else {
-    const issnString = getPublicationChannelIssnString(publicationChannel.onlineIssn, publicationChannel.printIssn);
-    return issnString ? `${publicationChannel.name} (${issnString})` : publicationChannel.name;
-  }
+export const getPublicationChannelString = (channel: Journal | Series | Publisher) => {
+  const channelMetadata = getChannelMetadataString(channel.discontinued, channel.onlineIssn, channel.printIssn);
+  return channelMetadata ? `${channel.name} (${channelMetadata})` : channel.name;
 };
 
 // Ensure Registration has correct type values, etc
@@ -188,9 +186,26 @@ export const getFormattedRegistration = (registration: Registration) => {
           ...presentationRegistration.entityDescription.reference,
           publicationContext: {
             ...presentationRegistration.entityDescription.reference.publicationContext,
-            time: time?.from && time.to ? { ...time, type: 'Period' } : null,
+            time: time?.from || time?.to ? { ...time, type: 'Period' } : null,
             agent: agent?.name ? { ...agent, type: 'UnconfirmedOrganization' } : null,
             place: place?.label || place?.country ? { ...place, type: 'UnconfirmedPlace' } : null,
+          },
+        },
+      },
+    };
+  } else if (isDegree(type)) {
+    const degreeRegistration = formattedRegistration as DegreeRegistration;
+    const { course } = degreeRegistration.entityDescription.reference.publicationContext;
+
+    formattedRegistration = {
+      ...degreeRegistration,
+      entityDescription: {
+        ...degreeRegistration.entityDescription,
+        reference: {
+          ...degreeRegistration.entityDescription.reference,
+          publicationContext: {
+            ...degreeRegistration.entityDescription.reference.publicationContext,
+            course: course?.code ? { ...course, type: 'UnconfirmedCourse' } : undefined,
           },
         },
       },
@@ -644,17 +659,8 @@ export const getOutputName = (item: OutputItem): string => {
   }
 };
 
-export const userCanEditRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('update');
-
-export const userCanUnpublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('unpublish');
-
-export const userCanPublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('ticket/publish');
-
-export const userCanDeleteRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('delete');
+export const userHasAccessRight = (registration: Registration | undefined, operation: RegistrationOperation) =>
+  registration?.allowedOperations?.includes(operation) ?? false;
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
@@ -677,9 +683,33 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
-export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+export const getPublishedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.PublishedFile);
+
+export const getUnpublishableFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.UnpublishableFile);
+
+const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
+  const rejectedFileIdentifiers = tickets
+    .filter((ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Closed')
+    .flatMap((ticket) => (ticket as PublishingTicket).filesForApproval);
+
+  return getAssociatedFiles(associatedArtifacts).filter((file) => rejectedFileIdentifiers.includes(file.identifier));
+};
+
+export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
+  const rejectedFileIdentifiers = getRejectedFiles(associatedArtifacts, tickets).map((file) => file.identifier);
+  return getAssociatedFiles(associatedArtifacts).filter(
+    (file) => file.type === 'UnpublishableFile' && !rejectedFileIdentifiers.includes(file.identifier)
+  );
+};
+
+export const isTypeWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
+
+export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+  isJournal(publicationInstanceType) || isBook(publicationInstanceType) || isChapter(publicationInstanceType);
 
 export const isEmbargoed = (embargoDate: Date | null) => {
   if (!embargoDate) {
@@ -750,3 +780,33 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('deu'),
   getLanguageByIso6393Code('mis'),
 ];
+
+export const registrationsHaveSamePublicationYear = (reg1: Registration, reg2: Registration) => {
+  if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
+    return false;
+  }
+
+  return reg1.entityDescription.publicationDate.year === reg2.entityDescription.publicationDate.year;
+};
+
+export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registration) => {
+  if (
+    reg1.entityDescription?.reference?.publicationInstance?.type &&
+    reg2.entityDescription?.reference?.publicationInstance?.type
+  ) {
+    return (
+      reg1.entityDescription.reference.publicationInstance.type ===
+      reg2.entityDescription.reference.publicationInstance.type
+    );
+  }
+  return false;
+};
+
+export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'onlineIssn' | 'printIssn' | 'issn'>>) => {
+  const issnValues = [
+    context.printIssn ? `${t('registration.resource_type.print_issn')}: ${context.printIssn}` : '',
+    context.onlineIssn ? `${t('registration.resource_type.online_issn')}: ${context.onlineIssn}` : '',
+    context.issn ? `${t('registration.resource_type.issn')}: ${context.issn}` : '',
+  ].filter(Boolean);
+  return issnValues.join(', ');
+};

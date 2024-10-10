@@ -3,6 +3,7 @@ import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/mat
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, searchForKeywords, updateCristinPerson } from '../../../api/cristinApi';
@@ -93,10 +94,11 @@ export const MyFieldAndBackground = () => {
   const maxMessageLength = 500;
 
   return (
-    <Box
-      sx={{
-        bgcolor: 'secondary.main',
-      }}>
+    <Box sx={{ bgcolor: 'secondary.main' }}>
+      <Helmet>
+        <title>{t('my_page.my_profile.field_and_background.field_and_background')}</title>
+      </Helmet>
+
       <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
         {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
           <Form>
@@ -119,14 +121,18 @@ export const MyFieldAndBackground = () => {
                       getOptionDisabled={(option) =>
                         field.value.some((keyword) => keyword.identifier === option.identifier)
                       }
-                      renderOption={(props, option) => (
+                      renderOption={({ key, ...props }, option) => (
                         <li {...props} key={option.identifier}>
                           <Typography>{getLanguageString(option.labels)}</Typography>
                         </li>
                       )}
                       renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.labels)} />
+                          <Chip
+                            {...getTagProps({ index })}
+                            key={option.identifier}
+                            label={getLanguageString(option.labels)}
+                          />
                         ))
                       }
                       filterOptions={(options) => options}

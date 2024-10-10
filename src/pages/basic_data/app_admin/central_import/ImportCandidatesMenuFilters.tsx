@@ -11,7 +11,7 @@ import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
-import { getFileFacetText } from '../../../../utils/searchHelpers';
+import { getFileFacetText, syncParamsWithSearchFields } from '../../../../utils/searchHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../../../utils/urlPaths';
 import { FacetItem } from '../../../search/FacetItem';
@@ -23,7 +23,6 @@ const yearOptions = [thisYear, thisYear - 1, thisYear - 2, thisYear - 3, thisYea
 export const ImportCandidatesMenuFilters = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
 
   const shouldFetchImportCandidates = history.location.pathname === UrlPathTemplate.BasicDataCentralImport;
 
@@ -42,13 +41,15 @@ export const ImportCandidatesMenuFilters = () => {
   });
 
   const updateSearchParams = (param: ImportCandidatesSearchParam, value: string) => {
-    if (searchParams.get(param) === value) {
-      searchParams.delete(param);
+    const searchParams = new URLSearchParams(history.location.search);
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    if (syncedParams.get(param) === value) {
+      syncedParams.delete(param);
     } else {
-      searchParams.set(param, value);
+      syncedParams.set(param, value);
     }
-    searchParams.delete(ImportCandidatesSearchParam.From);
-    history.push({ search: searchParams.toString() });
+    syncedParams.delete(ImportCandidatesSearchParam.From);
+    history.push({ search: syncedParams.toString() });
   };
 
   const statusBuckets = importCandidatesFacetsQuery.data?.aggregations?.importStatus;

@@ -12,7 +12,7 @@ export const useDeleteTicketMessage = (ticketId: string, refetchData?: () => voi
     mutationFn: (messageId: string) => deleteTicketMessage(ticketId, messageId),
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.delete_message'), variant: 'success' }));
-      refetchData && refetchData();
+      refetchData?.();
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.delete_message'), variant: 'error' })),
   });

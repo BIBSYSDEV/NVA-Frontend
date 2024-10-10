@@ -14,6 +14,8 @@ export interface PreviousSearchLocationState {
   previousSearch?: string;
 }
 
+export type BasicDataLocationState = PreviousPathLocationState & PreviousSearchLocationState;
+
 export interface NviCandidatePageLocationState extends PreviousSearchLocationState {
   candidateOffsetState?: {
     currentOffset: number;

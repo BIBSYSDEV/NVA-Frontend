@@ -2,7 +2,7 @@ import { Box, List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { SortSelector } from '../../../components/SortSelector';
+import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../CristinSearchPagination';
@@ -25,32 +25,9 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
 
   const rowsPerPage = resultsParam ? +resultsParam : ROWS_PER_PAGE_OPTIONS[0];
 
-  const sortingComponent = (
-    <SortSelector
-      orderKey="orderBy"
-      sortKey="sort"
-      paginationKey="page"
-      aria-label={t('search.sort_by')}
-      size="small"
-      variant="standard"
-      options={[
-        {
-          orderBy: 'name',
-          sortOrder: 'asc',
-          label: t('search.sort_by_name_asc'),
-        },
-        {
-          orderBy: 'name',
-          sortOrder: 'desc',
-          label: t('search.sort_by_name_desc'),
-        },
-      ]}
-    />
-  );
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {projectQuery.isPending ? (
+      {projectQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projectsSearchResults && projectsSearchResults.length > 0 ? (
         <div>
@@ -58,7 +35,7 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
             totalCount={totalHits}
             page={page}
             rowsPerPage={rowsPerPage}
-            sortingComponent={sortingComponent}>
+            sortingComponent={<ProjectSortSelector />}>
             <List>
               {projectsSearchResults.map((project) => (
                 <ProjectListItem key={project.id} project={project} />

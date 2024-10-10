@@ -1,10 +1,11 @@
 import AddIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { OrganizationBox } from '../../../../components/institution/OrganizationBox';
 import { UnconfirmedOrganizationBox } from '../../../../components/institution/UnconfirmedOrganizationBox';
+import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { Affiliation } from '../../../../types/contributor.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
@@ -22,6 +23,8 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
   const { setFieldValue } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
+
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
@@ -61,15 +64,15 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
               authorName={authorName}
               affiliations={affiliations}
               baseFieldName={baseFieldName}
-              removeAffiliation={() => removeAffiliation(index)}
+              removeAffiliation={disableNviCriticalFields ? undefined : () => removeAffiliation(index)}
               sx={{ width: '100%' }}
-              canEdit
+              canEdit={!disableNviCriticalFields}
             />
           )}
           {affiliation.type === 'UnconfirmedOrganization' && (
             <UnconfirmedOrganizationBox
               name={affiliation.name}
-              onIdentifyAffiliationClick={onIdentifyAffiliationClick}
+              onIdentifyAffiliationClick={disableNviCriticalFields ? undefined : onIdentifyAffiliationClick}
               removeAffiliation={() => removeAffiliation(index)}
               sx={{ width: '100%' }}
             />
@@ -77,6 +80,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         </Box>
       ))}
       <Button
+        disabled={disableNviCriticalFields}
         variant="outlined"
         sx={{ padding: '0.1rem 0.75rem' }}
         data-testid={dataTestId.registrationWizard.contributors.addAffiliationButton}
