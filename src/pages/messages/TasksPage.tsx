@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -216,11 +215,7 @@ const TasksPage = () => {
           </NavigationListAccordion>
         )}
 
-        {isAnyCurator && (
-          <BetaFunctionality>
-            <ResultRegistrationsNavigationListAccordion />
-          </BetaFunctionality>
-        )}
+        {isAnyCurator && <ResultRegistrationsNavigationListAccordion />}
 
         {isNviCurator && (
           <>
