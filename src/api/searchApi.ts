@@ -348,7 +348,6 @@ export enum ResultParam {
   Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
-  ScientificIndex = 'scientificIndex',
   ScientificIndexStatus = 'scientificIndexStatus',
   ScientificReportPeriodBeforeParam = 'scientificReportPeriodBefore',
   ScientificReportPeriodSinceParam = 'scientificReportPeriodSince',
@@ -404,7 +403,6 @@ export interface FetchResultsParams {
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
   [ResultParam.Series]?: string | null;
-  [ResultParam.ScientificIndex]?: string | null;
   [ResultParam.ScientificIndexStatus]?: ScientificIndexStatuses | null;
   [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
   [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
@@ -517,9 +515,12 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
   }
-  if (params.scientificIndex) {
-    searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
-    searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificIndex);
+  if (params.scientificReportPeriodSince) {
+    searchParams.set(
+      ResultParam.ScientificReportPeriodBeforeParam,
+      (+params.scientificReportPeriodSince + 1).toString()
+    );
+    searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificReportPeriodSince);
   }
   if (params.scientificIndexStatus) {
     searchParams.set(ResultParam.ScientificIndexStatus, params.scientificIndexStatus);
