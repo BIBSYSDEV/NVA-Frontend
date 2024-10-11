@@ -12,16 +12,21 @@ enum ErrorType {
   Other,
 }
 
+const updatedAppErrorMessages = [
+  'TypeError: Failed to fetch dynamically imported module', // Chrome, Edge
+  'TypeError: Importing a module script failed.', // Safari
+  'TypeError: error loading dynamically imported module', // Firefox
+];
+
 class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassProps>> {
   state = { error: ErrorType.None };
 
   static getDerivedStateFromError(error: any) {
-    console.log('ERR1', error, error.toString());
-    console.log('  > ', error.toString().startsWith('TypeError:'));
+    const errorString = error.toString();
+    const isUpdatedAppError = updatedAppErrorMessages.some((message) => errorString.includes(message.toLowerCase()));
+    console.log('isUpdatedAppError', isUpdatedAppError);
 
-    return /TypeError:.*dynamically imported module/.test(error)
-      ? { error: ErrorType.Chunk }
-      : { error: ErrorType.Other };
+    return isUpdatedAppError ? { error: ErrorType.Chunk } : { error: ErrorType.Other };
   }
 
   componentDidUpdate(prevProps: ErrorBoundaryClassProps) {
