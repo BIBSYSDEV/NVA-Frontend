@@ -1205,6 +1205,7 @@
     "project_id": "Prosjekt-ID",
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
+    "project_modal_title": "Nytt prosjekt",
     "save_and_close": "Lagre og lukk",
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
     "project_manager_is_unidentified": "Prosjektleder er uidentifisert",

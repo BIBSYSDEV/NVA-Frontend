@@ -44,7 +44,7 @@ const CreateProject = ({ toggleModal, onProjectCreated }: CreateProjectProps) =>
         />
       ) : (
         <>
-          <PageHeader>{t('project.create_project')}</PageHeader>
+          {!toggleModal && <PageHeader>{t('project.create_project')}</PageHeader>}
           <WizardStartPageWrapper>
             <CreateNfrProject
               newProject={newProject}
