@@ -22,7 +22,7 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
   state = { error: ErrorType.None };
 
   static getDerivedStateFromError(error: any) {
-    const errorString = error.toString();
+    const errorString = error.toString().toLowerCase();
     const isUpdatedAppError = updatedAppErrorMessages.some((message) => errorString.includes(message.toLowerCase()));
     console.log('error', error, errorString);
     console.log('isUpdatedAppError', isUpdatedAppError);
