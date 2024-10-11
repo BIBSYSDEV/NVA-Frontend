@@ -52,7 +52,6 @@ export const useRegistrationsQueryParams = () => {
     results: Number(searchParams.get(SearchParam.Results) ?? defaultRowsPerPage),
     scientificIndexStatus: searchParams.get(ResultParam.ScientificIndexStatus) as ScientificIndexStatuses | null,
     scientificValue: searchParams.get(ResultParam.ScientificValue),
-    scientificIndex: searchParams.get(ResultParam.ScientificIndex),
     scientificReportPeriodSince: searchParams.get(ResultParam.ScientificReportPeriodSinceParam),
     series: searchParams.get(ResultParam.Series),
     sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
