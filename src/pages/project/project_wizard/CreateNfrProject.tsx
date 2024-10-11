@@ -4,8 +4,10 @@ import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NfrProject, ProjectOrganization, SaveCristinProject } from '../../../types/project.types';
+import { LocalStorageKey } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { createNamesFromInput } from '../helpers/projectContributorHelpers';
 import { CreateProjectAccordion } from './CreateProjectAccordion';
 import { NfrProjectSearch } from './NfrProjectSearch';
 
@@ -25,6 +27,7 @@ export const CreateNfrProject = ({
   coordinatingInstitution,
 }: NFRProjectProps) => {
   const { t } = useTranslation();
+  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
   const [selectedProject, setSelectedProject] = useState<NfrProject | null>(null);
 
   const onCreateProject = () => {
@@ -34,7 +37,7 @@ export const CreateNfrProject = ({
 
     setSuggestedProjectManager(selectedProject.lead);
 
-    setNewProject({
+    const newNFRProject: SaveCristinProject = {
       ...newProject,
       title: getLanguageString(selectedProject.labels),
       startDate: selectedProject.activeFrom,
@@ -48,7 +51,28 @@ export const CreateNfrProject = ({
           labels: selectedProject.labels,
         },
       ],
-    });
+    };
+
+    if (betaEnabled && selectedProject.lead) {
+      const suggestedProjectManagerNames = createNamesFromInput(selectedProject.lead);
+      newNFRProject.contributors = [
+        {
+          identity: {
+            type: 'Person',
+            firstName: suggestedProjectManagerNames.firstName,
+            lastName: suggestedProjectManagerNames.lastName,
+          },
+          roles: [
+            {
+              type: 'ProjectManager',
+              affiliation: undefined,
+            },
+          ],
+        },
+      ];
+    }
+
+    setNewProject(newNFRProject);
     setShowProjectForm(true);
   };
 
