@@ -1,15 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { Modal } from '../../components/Modal';
+import { CristinProject, ResearchProject } from '../../types/project.types';
 import CreateProject from './project_wizard/CreateProject';
 
 interface ProjectModalProps {
   isOpen: boolean;
   toggleModal: () => void;
+  onProjectCreated: (value: CristinProject | ResearchProject) => void;
 }
 
-export const ProjectModal = ({ isOpen, toggleModal }: ProjectModalProps) => {
+export const ProjectModal = ({ isOpen, toggleModal, onProjectCreated }: ProjectModalProps) => {
   const { t } = useTranslation();
-  console.log('toggleModal in ProjectModal', toggleModal);
+
   return (
     <Modal
       title={t('project.project_modal_title')}
@@ -18,7 +20,7 @@ export const ProjectModal = ({ isOpen, toggleModal }: ProjectModalProps) => {
       fullWidth
       maxWidth="lg"
       dataTestId="contributor-modal">
-      <CreateProject toggleModal={toggleModal} />
+      <CreateProject toggleModal={toggleModal} onProjectCreated={onProjectCreated} />
     </Modal>
   );
 };

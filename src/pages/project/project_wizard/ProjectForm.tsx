@@ -11,7 +11,7 @@ import { RequiredDescription } from '../../../components/RequiredDescription';
 import { SkipLink } from '../../../components/SkipLink';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { setNotification } from '../../../redux/notificationSlice';
-import { CristinProject, ProjectTabs, SaveCristinProject } from '../../../types/project.types';
+import { CristinProject, ProjectTabs, ResearchProject, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { getTouchedFields } from '../../../utils/formik-helpers/project-form-helpers';
 import { getProjectPath, UrlPathTemplate } from '../../../utils/urlPaths';
@@ -29,9 +29,10 @@ interface ProjectFormProps {
   project: SaveCristinProject | CristinProject;
   suggestedProjectManager?: string;
   toggleModal?: () => void;
+  onProjectCreated?: (value: CristinProject | ResearchProject) => void;
 }
 
-export const ProjectForm = ({ project, suggestedProjectManager, toggleModal }: ProjectFormProps) => {
+export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onProjectCreated }: ProjectFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -65,6 +66,10 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal }: P
       const id = projectWithId ? projectWithId.id : updateProjectResponse.data.id;
 
       if (toggleModal) {
+        if (onProjectCreated) {
+          if (projectWithId) onProjectCreated(projectWithId);
+          else onProjectCreated(updateProjectResponse.data);
+        }
         toggleModal();
       } else if (id) {
         goToLandingPage(id);
