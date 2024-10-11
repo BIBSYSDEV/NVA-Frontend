@@ -14,7 +14,7 @@ enum ErrorType {
 
 const updatedAppErrorMessages = [
   'TypeError: Failed to fetch dynamically imported module', // Chrome, Edge
-  'TypeError: Importing a module script failed.', // Safari
+  'TypeError: Importing a module script failed', // Safari
   'TypeError: error loading dynamically imported module', // Firefox
 ];
 
@@ -24,6 +24,7 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
   static getDerivedStateFromError(error: any) {
     const errorString = error.toString();
     const isUpdatedAppError = updatedAppErrorMessages.some((message) => errorString.includes(message.toLowerCase()));
+    console.log('error', error, errorString);
     console.log('isUpdatedAppError', isUpdatedAppError);
 
     return isUpdatedAppError ? { error: ErrorType.Chunk } : { error: ErrorType.Other };
