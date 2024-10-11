@@ -48,9 +48,11 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
     const { error } = this.state;
 
     if (error === ErrorType.Chunk) {
+      console.log('Chunk error');
       const lastUpdateTime = parseInt(localStorage.getItem(LocalStorageKey.AppUpdateTime) ?? '');
       const currentTime = Date.now();
 
+      console.log('lastUpdateTime', lastUpdateTime, currentTime);
       if (!isNaN(lastUpdateTime)) {
         const timeSinceUpdate = currentTime - lastUpdateTime;
         if (timeSinceUpdate < 10000) {
