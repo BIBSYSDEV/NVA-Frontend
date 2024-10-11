@@ -348,6 +348,7 @@ export enum ResultParam {
   Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
+  ScientificIndex = 'scientificIndex',
   ScientificIndexStatus = 'scientificIndexStatus',
   ScientificReportPeriodBeforeParam = 'scientificReportPeriodBefore',
   ScientificReportPeriodSinceParam = 'scientificReportPeriodSince',
@@ -403,6 +404,7 @@ export interface FetchResultsParams {
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
   [ResultParam.Series]?: string | null;
+  [ResultParam.ScientificIndex]?: string | null;
   [ResultParam.ScientificIndexStatus]?: ScientificIndexStatuses | null;
   [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
   [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
