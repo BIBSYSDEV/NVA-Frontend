@@ -11,7 +11,7 @@ import {
   WizardStartPageWrapper,
 } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { CristinProject, emptyProject, ResearchProject } from '../../../types/project.types';
+import { CristinProject, emptyProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { CreateNfrProject } from './CreateNfrProject';
@@ -20,7 +20,7 @@ import { ProjectForm } from './ProjectForm';
 
 interface CreateProjectProps {
   toggleModal?: () => void;
-  onProjectCreated?: (value: CristinProject | ResearchProject) => void;
+  onProjectCreated?: (value: CristinProject) => void;
 }
 
 const CreateProject = ({ toggleModal, onProjectCreated }: CreateProjectProps) => {

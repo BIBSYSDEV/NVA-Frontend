@@ -258,6 +258,7 @@ export const dataTestId = {
     scientificSummaryAccordion: 'scientific-summary-accordion',
   },
   projectWizard: {
+    modal: 'new-project-modal',
     stepper: {
       projectDescriptionStepButton: 'nav-tabpanel-project-description',
       projectDetailsStepButton: 'nav-tabpanel-project-details',

@@ -11,7 +11,7 @@ import { RequiredDescription } from '../../../components/RequiredDescription';
 import { SkipLink } from '../../../components/SkipLink';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { setNotification } from '../../../redux/notificationSlice';
-import { CristinProject, ProjectTabs, ResearchProject, SaveCristinProject } from '../../../types/project.types';
+import { CristinProject, ProjectTabs, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { getTouchedFields } from '../../../utils/formik-helpers/project-form-helpers';
 import { getProjectPath, UrlPathTemplate } from '../../../utils/urlPaths';
@@ -29,7 +29,7 @@ interface ProjectFormProps {
   project: SaveCristinProject | CristinProject;
   suggestedProjectManager?: string;
   toggleModal?: () => void;
-  onProjectCreated?: (value: CristinProject | ResearchProject) => void;
+  onProjectCreated?: (value: CristinProject) => void;
 }
 
 export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onProjectCreated }: ProjectFormProps) => {
@@ -145,7 +145,7 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onP
                   onClickNext={() => onClickArrow(tabNumber + 1)}
                   onClickPrevious={() => onClickArrow(tabNumber - 1)}
                   onClickLast={() => onClickArrow(ProjectTabs.Connections)}
-                  openedInModal={toggleModal !== undefined}
+                  openedInModal={!!toggleModal}
                 />
               </Box>
             </Form>
