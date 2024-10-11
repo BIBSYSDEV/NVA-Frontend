@@ -98,7 +98,11 @@ export const PublishingAccordion = ({
     (artifact) => artifact.type === FileType.PublishedFile
   );
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
-  const userCanPublish = userHasAccessRight(registration, 'publishing-request-approve');
+
+  const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
+  const userCanApprovePublishingRequest = userHasAccessRight(registration, 'publishing-request-approve');
+  const userCanHandlePublishingRequest = userCanCreatePublishingRequest || userCanApprovePublishingRequest;
+
   const formErrors = validateRegistrationForm(registration);
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
@@ -121,7 +125,7 @@ export const PublishingAccordion = ({
       if (variables.status === 'Completed') {
         dispatch(
           setNotification({
-            message: t('feedback.success.publishing_request_approved'),
+            message: t('feedback.success.published_registration'),
             variant: 'success',
           })
         );
@@ -150,25 +154,37 @@ export const PublishingAccordion = ({
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(
         setNotification({
-          message: t('feedback.error.create_publishing_request'),
+          message: t('feedback.error.publish_registration'),
           variant: 'error',
         })
       );
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      if (userCanPublish) {
+      if (userCanApprovePublishingRequest) {
         dispatch(
           setNotification({
-            message: t('feedback.success.publish_as_curator'),
+            message: t('feedback.success.published_registration'),
             variant: 'success',
           })
         );
       } else {
-        dispatch(
-          setNotification({
-            message: t('feedback.success.create_publishing_request'),
-            variant: 'success',
-          })
+        const hasFilesWaitingForApproval = registration.associatedArtifacts.some(
+          (artifact) => artifact.type === FileType.UnpublishedFile
         );
+        if (hasFilesWaitingForApproval) {
+          dispatch(
+            setNotification({
+              message: t('feedback.success.published_metadata_waiting_for_files'),
+              variant: 'success',
+            })
+          );
+        } else {
+          dispatch(
+            setNotification({
+              message: t('feedback.success.published_registration'),
+              variant: 'success',
+            })
+          );
+        }
       }
       refetchData();
     }
@@ -193,7 +209,8 @@ export const PublishingAccordion = ({
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
   const hasCompletedTicket = lastPublishingRequest?.status === 'Completed';
 
-  const canHandlePublishingRequest = userCanPublish && !registratorPublishesMetadataAndFiles && hasPendingTicket;
+  const canApprovePublishingRequest =
+    userCanApprovePublishingRequest && !registratorPublishesMetadataAndFiles && hasPendingTicket;
 
   const mismatchingPublishedStatusWorkflow1 =
     registratorPublishesMetadataAndFiles && !!lastPublishingRequest && isDraftRegistration;
@@ -284,7 +301,7 @@ export const PublishingAccordion = ({
         {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
         {/* Option to reload data if status is not up to date with ticket */}
-        {!tabErrors && hasMismatchingPublishedStatus && (
+        {userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus && (
           <>
             <Typography paragraph sx={{ mt: '1rem' }}>
               {hasUnpublishedFiles && isPublishedRegistration
@@ -301,6 +318,7 @@ export const PublishingAccordion = ({
             </LoadingButton>
           </>
         )}
+
         {registrationIsValid && showRegistrationWithSameNameWarning && (
           <div>
             <Typography paragraph>
@@ -329,7 +347,7 @@ export const PublishingAccordion = ({
         )}
 
         {/* Tell user what they can publish */}
-        {!lastPublishingRequest && isDraftRegistration && registrationIsValid && (
+        {userCanHandlePublishingRequest && !lastPublishingRequest && isDraftRegistration && registrationIsValid && (
           <>
             <Typography paragraph>
               {t('registration.public_page.tasks_panel.review_preview_before_publishing')}
@@ -350,7 +368,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {isDraftRegistration && !lastPublishingRequest && (
+        {userCanCreatePublishingRequest && isDraftRegistration && !lastPublishingRequest && (
           <LoadingButton
             disabled={isLoading !== LoadingState.None || !registrationIsValid || titleSearchPending}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
@@ -364,53 +382,59 @@ export const PublishingAccordion = ({
           </LoadingButton>
         )}
 
-        {isPublishedRegistration && hasClosedTicket && (
+        {userCanHandlePublishingRequest && (
           <>
-            <Trans
-              t={t}
-              i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
-              components={[<Typography paragraph key="1" />]}
-            />
-            <TicketMessageList ticket={lastPublishingRequest} />
-          </>
-        )}
-
-        {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
-          <Trans
-            t={t}
-            i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files"
-            components={[<Typography paragraph key="1" />]}
-          />
-        )}
-
-        {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
-          <Box sx={{ mt: '0.5rem' }}>
-            {registratorPublishesMetadataAndFiles ? (
+            {isPublishedRegistration && hasClosedTicket && (
               <>
-                <Typography paragraph>{t('registration.public_page.tasks_panel.published_registration')}</Typography>
-                <Typography paragraph>
-                  {registrationHasFile
-                    ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
-                    : t('registration.public_page.tasks_panel.registration_is_published')}
-                </Typography>
+                <Trans
+                  t={t}
+                  i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
+                  components={[<Typography paragraph key="1" />]}
+                />
+                <TicketMessageList ticket={lastPublishingRequest} />
               </>
-            ) : registrationHasFile ? (
+            )}
+
+            {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
               <Trans
                 t={t}
-                i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
-                components={[<Typography paragraph key="1" />]}
-              />
-            ) : (
-              <Trans
-                t={t}
-                i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2_without_file"
+                i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files"
                 components={[<Typography paragraph key="1" />]}
               />
             )}
-          </Box>
+
+            {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
+              <Box sx={{ mt: '0.5rem' }}>
+                {registratorPublishesMetadataAndFiles ? (
+                  <>
+                    <Typography paragraph>
+                      {t('registration.public_page.tasks_panel.published_registration')}
+                    </Typography>
+                    <Typography paragraph>
+                      {registrationHasFile
+                        ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
+                        : t('registration.public_page.tasks_panel.registration_is_published')}
+                    </Typography>
+                  </>
+                ) : registrationHasFile ? (
+                  <Trans
+                    t={t}
+                    i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
+                    components={[<Typography paragraph key="1" />]}
+                  />
+                ) : (
+                  <Trans
+                    t={t}
+                    i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2_without_file"
+                    components={[<Typography paragraph key="1" />]}
+                  />
+                )}
+              </Box>
+            )}
+          </>
         )}
 
-        {canHandlePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
+        {canApprovePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <Trans
               t={t}
@@ -505,7 +529,7 @@ export const PublishingAccordion = ({
           </Box>
         )}
 
-        {hasPendingTicket && (
+        {userCanHandlePublishingRequest && hasPendingTicket && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {ticketMessages.length > 0 ? (
               <TicketMessageList ticket={lastPublishingRequest} />

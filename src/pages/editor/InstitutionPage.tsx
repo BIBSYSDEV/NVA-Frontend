@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import { fetchResource } from '../../api/commonApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
@@ -155,9 +154,7 @@ const InstitutionPage = () => {
               </NavigationList>
             </NavigationListAccordion>
 
-            <BetaFunctionality>
-              <ResultsPortfolioNavigationListAccodion />
-            </BetaFunctionality>
+            <ResultsPortfolioNavigationListAccodion />
           </>
         )}
       </SideMenu>

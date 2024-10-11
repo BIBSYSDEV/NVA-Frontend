@@ -195,7 +195,7 @@ export const addContributor = (
   return { newContributors };
 };
 
-const createNamesFromInput = (searchTerm: string) => {
+export const createNamesFromInput = (searchTerm: string) => {
   const names = searchTerm.split(' ');
   let firstName, lastName;
 
