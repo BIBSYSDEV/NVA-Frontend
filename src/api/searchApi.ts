@@ -406,6 +406,7 @@ export interface FetchResultsParams {
   [ResultParam.ScientificIndexStatus]?: ScientificIndexStatuses | null;
   [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
   [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
+  [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
   [ResultParam.ScientificValue]?: string | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
@@ -516,11 +517,10 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.Query, params.query);
   }
   if (params.scientificReportPeriodSince) {
-    searchParams.set(
-      ResultParam.ScientificReportPeriodBeforeParam,
-      (+params.scientificReportPeriodSince + 1).toString()
-    );
     searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificReportPeriodSince);
+  }
+  if (params.scientificReportPeriodBefore) {
+    searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, params.scientificReportPeriodBefore);
   }
   if (params.scientificIndexStatus) {
     searchParams.set(ResultParam.ScientificIndexStatus, params.scientificIndexStatus);

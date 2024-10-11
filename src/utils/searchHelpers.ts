@@ -117,6 +117,9 @@ export const removeSearchParamValue = (params: URLSearchParams, key: string, val
   const newValues = selectedValues.filter((selectedValue) => selectedValue !== value);
   if (newValues.length === 0) {
     params.delete(key);
+    if (key === ResultParam.ScientificReportPeriodSinceParam) {
+      params.delete(ResultParam.ScientificReportPeriodBeforeParam);
+    }
   } else {
     params.set(key, newValues.join(','));
   }

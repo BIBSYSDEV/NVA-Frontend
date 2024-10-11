@@ -247,7 +247,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   onClickFacet={() => {
                     if (isSelected) {
                       removeFacetFilter(ResultParam.ScientificReportPeriodSinceParam, facet.key);
-                      removeFacetFilter(ResultParam.ScientificReportPeriodBeforeParam, (+facet.key + 1).toString());
                     } else {
                       addFacetFilter(ResultParam.ScientificReportPeriodSinceParam, facet.key);
                       addFacetFilter(ResultParam.ScientificReportPeriodBeforeParam, (+facet.key + 1).toString());

@@ -53,6 +53,7 @@ export const useRegistrationsQueryParams = () => {
     scientificIndexStatus: searchParams.get(ResultParam.ScientificIndexStatus) as ScientificIndexStatuses | null,
     scientificValue: searchParams.get(ResultParam.ScientificValue),
     scientificReportPeriodSince: searchParams.get(ResultParam.ScientificReportPeriodSinceParam),
+    scientificReportPeriodBefore: searchParams.get(ResultParam.ScientificReportPeriodBeforeParam),
     series: searchParams.get(ResultParam.Series),
     sort: searchParams.get(ResultParam.Sort) as SortOrder | null,
     status: status ? (status.split(',') as RegistrationStatus[]) : null,

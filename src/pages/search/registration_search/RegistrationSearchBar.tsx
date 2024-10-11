@@ -37,6 +37,7 @@ const facetParams: string[] = [
   ResultParam.Files,
   ResultParam.FundingSource,
   ResultParam.ScientificReportPeriodSinceParam,
+  ResultParam.ScientificReportPeriodBeforeParam,
   ResultParam.Series,
   ResultParam.TopLevelOrganization,
 ];
