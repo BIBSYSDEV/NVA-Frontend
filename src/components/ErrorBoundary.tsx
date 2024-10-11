@@ -16,6 +16,9 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
   state = { error: ErrorType.None };
 
   static getDerivedStateFromError(error: any) {
+    console.log(error, error.toString());
+    console.log(' > ', error.toString().startsWith('TypeError:'));
+
     return /TypeError:.*dynamically imported module/.test(error)
       ? { error: ErrorType.Chunk }
       : { error: ErrorType.Other };
