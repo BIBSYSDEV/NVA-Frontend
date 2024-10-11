@@ -125,7 +125,7 @@ export const PublishingAccordion = ({
       if (variables.status === 'Completed') {
         dispatch(
           setNotification({
-            message: t('feedback.success.publishing_request_approved'),
+            message: t('feedback.success.published_registration'),
             variant: 'success',
           })
         );
@@ -154,7 +154,7 @@ export const PublishingAccordion = ({
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(
         setNotification({
-          message: t('feedback.error.create_publishing_request'),
+          message: t('feedback.error.publish_registration'),
           variant: 'error',
         })
       );
@@ -162,17 +162,29 @@ export const PublishingAccordion = ({
       if (userCanApprovePublishingRequest) {
         dispatch(
           setNotification({
-            message: t('feedback.success.publish_as_curator'),
+            message: t('feedback.success.published_registration'),
             variant: 'success',
           })
         );
       } else {
-        dispatch(
-          setNotification({
-            message: t('feedback.success.create_publishing_request'),
-            variant: 'success',
-          })
+        const hasFilesWaitingForApproval = registration.associatedArtifacts.some(
+          (artifact) => artifact.type === FileType.UnpublishedFile
         );
+        if (hasFilesWaitingForApproval) {
+          dispatch(
+            setNotification({
+              message: t('feedback.success.published_metadata_waiting_for_files'),
+              variant: 'success',
+            })
+          );
+        } else {
+          dispatch(
+            setNotification({
+              message: t('feedback.success.published_registration'),
+              variant: 'success',
+            })
+          );
+        }
       }
       refetchData();
     }
