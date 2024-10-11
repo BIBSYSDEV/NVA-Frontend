@@ -593,7 +593,7 @@
       "doi_request_sent": "DOI-forespørsel sendt",
       "merge_import_candidate": "Importdata ble slått sammen med resultatdata",
       "published_registration": "Registreringen ble publisert",
-      "published_metadaat_waiting_for_files": "Metadata ble publisert og filer er sendt til godkjenning",
+      "published_metadata_waiting_for_files": "Metadata ble publisert og filer er sendt til godkjenning",
       "publishing_request_rejected": "Publiseringsforespørselen ble avvist",
       "removed_role": "Rollen ble fjernet",
       "reserve_doi": "DOI er reservert",

@@ -173,7 +173,7 @@ export const PublishingAccordion = ({
         if (hasFilesWaitingForApproval) {
           dispatch(
             setNotification({
-              message: t('feedback.success.published_metadaat_waiting_for_files'),
+              message: t('feedback.success.published_metadata_waiting_for_files'),
               variant: 'success',
             })
           );
