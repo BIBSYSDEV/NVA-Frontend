@@ -231,6 +231,8 @@
     "other": "Annan",
     "overview": "Oversyn",
     "page_title": "Nasjonalt vitenarkiv",
+    "pagination_project_search": "",
+    "pagination_result_search": "",
     "pagination_rows_per_page": "Antal resultat per side:",
     "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
     "person": "Person",
@@ -770,6 +772,8 @@
         "upload_profile_photo": "Last opp profilbilete",
         "upload_profile_photo_info": "Maksimum storleik: 1 MB. Støtta filtypar: .jpg eller .jpeg"
       },
+      "link_to_projects_search": "",
+      "link_to_results_search": "",
       "list_contains_all_registration_you_have_created": "Lista viser alle prosjekt du har registrert",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskingsresultat",
@@ -799,7 +803,6 @@
       "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbiletet?",
       "results": "Resultat",
       "telephone": "Telefon",
-      "user_profile": "Brukarprofil",
       "user_role_and_help": {
         "application_help_helper_text": "Om du treng rettleiing til utfylling, kan denne vere til hjelp.",
         "application_help_text": "Rettleiing for å registrere eit resultat",
@@ -1126,11 +1129,12 @@
   },
   "project": {
     "add_affiliation": "Legg til tilknyting",
-    "add_contributor": "",
+    "add_contributor": "Legg til prosjektdeltakar",
+    "add_local_manager": "",
     "add_project_contributor": "Legg til prosjektdeltakar",
     "add_project_manager": "Legg til prosjektleiar",
-    "add_unidentified_contributor": "",
-    "add_unidentified_project_manager": "",
+    "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltakar",
+    "add_unidentified_project_manager": "Legg til uidentifisert prosjektleiar",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Berre institusjonar som prosjektet er gjennomført i samarbeid med, skal leggast til som tilknyting til prosjektdeltakar.</0> <0>Legg til tilknyting til prosjektdeltakar ved å først søkje opp institusjonen og eventuelt eining.</0> <0>Høyrer prosjektdeltakaren til fleire forskjellige einingar under same institusjon, må du legge til dette som ny tilknyting.</0>",
       "delete_affiliation": "Fjern tilknyting",
@@ -1138,10 +1142,12 @@
     },
     "close_view": "Lukk vising",
     "close_view_description": "Ulagra data du har skrive inn vil gå tapt om du lukkar denne visinga. Ønskjer du likevel å lukke visinga?",
-    "contributor_is_unidentified": "",
+    "contributor_is_unidentified": "Prosjektdeltakar er uidentifisert",
     "coordinating_institution": "Koordinerande institusjon",
     "create_new_project": "Oppret nytt prosjekt",
     "create_project": "Nytt prosjekt",
+    "duplicate_project_warning": "",
+    "duplicate_title_warning": "",
     "edit_project": "Endre prosjekt",
     "error": {
       "contributor_already_added_with_same_role_and_affiliation": "Prosjektdeltakar er allereie lagt til med same rolle og tilknyting."
@@ -1152,8 +1158,12 @@
       "category": "Kategori",
       "date": "Dato",
       "keywords": "Nøkkelord",
+      "no_related_projects_description": "",
+      "no_related_registrations_description": "",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekt som er relatert til dette prosjektet",
+      "related_registrations": "",
+      "related_registrations_description": "",
       "remove_participant": "Fjern prosjektdeltakar",
       "remove_participant_text": "Er du sikker på at du ønskjer å fjerne {{name}}?",
       "remove_project": "Fjern prosjekt",
@@ -1174,11 +1184,13 @@
       "members": "Medlemmar"
     },
     "keywords": "Nøkkelord",
+    "local_managers": "",
     "new_project": {
       "nfr_project": "NFR-prosjekt",
       "search_for_project_name_or_placeholder": "Søk etter prosjektnamn eller prosjektleiar"
     },
-    "no_affiliation": "",
+    "no_affiliation": "Inga tilknyting",
+    "no_duplicate_title": "Ingen resultat funne med same tittel",
     "no_participants": "Ingen registrerte deltakarar.",
     "no_related_projects": "Ingen relaterte prosjekt.",
     "no_results": "Ingen publiserte resultat.",
@@ -1195,12 +1207,13 @@
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleiar",
     "project_manager_from_nfr": "Prosjektleiar frå NFR: {{name}}",
-    "project_manager_is_unidentified": "",
+    "project_manager_is_unidentified": "Prosjektleiar er uidentifisert",
     "project_participant": "Prosjektdeltakar",
     "project_participants": "Prosjektdeltakarar",
     "remove_project_manager": "Slett prosjektleiar",
     "results": "Resultat",
     "role_types": {
+      "LocalProjectManager": "",
       "ProjectManager": "Prosjektleiar",
       "ProjectParticipant": "Prosjektdeltakar"
     },
@@ -1214,8 +1227,8 @@
       "NOTSTARTED": "Ikkje starta"
     },
     "summary": "Samandrag",
-    "verify_contributor": "",
-    "verify_project_manager": ""
+    "verify_contributor": "Identifiser prosjektdeltakar",
+    "verify_project_manager": "Identifiser prosjektleiar"
   },
   "registration": {
     "citation_points_to": "Siteringa viser til",
@@ -2003,8 +2016,8 @@
       "approve_nvi_candidate_description": "<0>Som kurator kan du godkjenne eller avvise om forskingsresultatet skal NVI-rapporterast.</0> <0>Skal forskingsresultatet rapporterast, vel du \"{{buttonText}}\".</0>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
-        "anthology_with_applicable_chapter": "",
-        "anthology_without_chapter": "",
+        "anthology_with_applicable_chapter": "Antologiar med teljande kapittel",
+        "anthology_without_chapter": "Antologiar utan kapittel",
         "applicable_category_in_non_applicable_channel": "Teljande katgoriar i ikkje-teljande kanalar",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
         "non_applicable_category_in_applicable_channel": "Ikkje-teljande kategoriar i teljande kanalar"

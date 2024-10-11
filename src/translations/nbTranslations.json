@@ -313,6 +313,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -384,11 +388,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -501,7 +501,6 @@
       "create_nvi_period": "Kunne ikke opprette NVI-periode",
       "create_project": "Kunne ikke opprette prosjekt",
       "create_publisher": "Kunne ikke opprette utgiver",
-      "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
       "create_series": "Kunne ikke opprette serie",
       "create_user": "Kunne ikke opprette person",
@@ -546,6 +545,7 @@
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "orcid_login": "Kunne ikke logge inn på ORCID",
+      "publish_registration": "Kunne ikke publisere registrering",
       "project_search": "Søk på prosjekt feilet",
       "reject_doi_request": "Kunne ikke avvise DOI-forespørsel",
       "remove_role": "Kunne ikke fjerne rolle",
@@ -581,7 +581,6 @@
       "create_person": "Person ble opprettet",
       "create_project": "Prosjekt er opprettet",
       "create_publisher": "Utgiveren ble opprettet",
-      "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_registration": "Publikasjon er opprettet",
       "create_series": "Serien ble opprettet",
       "create_user": "Din bruker ble opprettet",
@@ -593,8 +592,8 @@
       "doi_request_rejected": "DOI-forespørselen ble avvist",
       "doi_request_sent": "DOI-forespørsel sendt",
       "merge_import_candidate": "Importdata ble slått sammen med resultatdata",
-      "publish_as_curator": "Registrering ble publisert (ingen godkjenning nødvendig siden du er kurator)",
-      "publishing_request_approved": "Registreringen ble publisert",
+      "published_registration": "Registreringen ble publisert",
+      "published_metadata_waiting_for_files": "Metadata ble publisert og filer er sendt til godkjenning",
       "publishing_request_rejected": "Publiseringsforespørselen ble avvist",
       "removed_role": "Rollen ble fjernet",
       "reserve_doi": "DOI er reservert",
@@ -1130,8 +1129,8 @@
   "project": {
     "add_affiliation": "Legg til tilknytning",
     "add_contributor": "Legg til prosjektdeltaker",
-    "add_project_contributor": "Legg til prosjektdeltaker",
     "add_local_manager": "Legg til lokalt ansvarlig",
+    "add_project_contributor": "Legg til prosjektdeltaker",
     "add_project_manager": "Legg til prosjektleder",
     "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltaker",
     "add_unidentified_project_manager": "Legg til uidentifisert prosjektleder",
@@ -1148,7 +1147,6 @@
     "create_project": "Nytt prosjekt",
     "duplicate_project_warning": "Det finnes et prosjekt i NVA med samme tittel. Vennligst ikke registrer prosjektet dersom det er samme prosjekt, slik at du ikke oppretter duplikater.",
     "duplicate_title_warning": "Det finnes et prosjekt i NVA med samme tittel. Vennligst avbryt registreringen dersom det er det samme prosjektet som du prøver å registrere, slik at du ikke oppretter duplikater.",
-    "no_duplicate_title": "Ingen resultat funnet med samme tittel.",
     "edit_project": "Endre prosjekt",
     "error": {
       "contributor_already_added_with_same_role_and_affiliation": "Prosjektdeltaker er allerede lagt til med samme rolle og tilknytning."
@@ -1159,11 +1157,11 @@
       "category": "Kategori",
       "date": "Dato",
       "keywords": "Nøkkelord",
-      "related_projects": "Relaterte prosjekt",
-      "related_registrations": "Relaterte forskningsresultater",
-      "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
-      "no_related_registrations_description": "Prosjektet må lagres før det kan tilknyttes forskningsresultater",
       "no_related_projects_description": "Prosjektet har ingen tilknyttede prosjekter enda.",
+      "no_related_registrations_description": "Prosjektet må lagres før det kan tilknyttes forskningsresultater",
+      "related_projects": "Relaterte prosjekt",
+      "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
+      "related_registrations": "Relaterte forskningsresultater",
       "related_registrations_description": "Se forskningsresultater som er relatert til prosjektet",
       "remove_participant": "Fjern prosjektdeltaker",
       "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
@@ -1185,11 +1183,13 @@
       "members": "Medlemmer"
     },
     "keywords": "Nøkkelord",
+    "local_managers": "Lokalt ansvarlige",
     "new_project": {
       "nfr_project": "NFR-prosjekt",
       "search_for_project_name_or_placeholder": "Søk etter prosjektnavn eller prosjektleder"
     },
     "no_affiliation": "Ingen tilknytning",
+    "no_duplicate_title": "Ingen resultat funnet med samme tittel.",
     "no_participants": "Ingen registrerte deltakere.",
     "no_related_projects": "Ingen relaterte prosjekt.",
     "no_results": "Ingen publiserte resultater.",
@@ -1205,17 +1205,18 @@
     "project_id": "Prosjekt-ID",
     "project_info": "Prosjektinfo",
     "project_manager": "Prosjektleder",
+    "project_modal_title": "Nytt prosjekt",
+    "save_and_close": "Lagre og lukk",
     "project_manager_from_nfr": "Prosjektleder fra NFR: {{name}}",
     "project_manager_is_unidentified": "Prosjektleder er uidentifisert",
     "project_participant": "Prosjektdeltaker",
-    "local_managers": "Lokalt ansvarlige",
     "project_participants": "Prosjektdeltakere",
     "remove_project_manager": "Slett prosjektleder",
     "results": "Resultater",
     "role_types": {
+      "LocalProjectManager": "Lokalt ansvarlig",
       "ProjectManager": "Prosjektleder",
-      "ProjectParticipant": "Prosjektdeltaker",
-      "LocalProjectManager": "Lokalt ansvarlig"
+      "ProjectParticipant": "Prosjektdeltaker"
     },
     "scientific_summary": "Vitenskapelig sammendrag",
     "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",
