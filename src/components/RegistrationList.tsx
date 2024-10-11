@@ -77,7 +77,7 @@ export const RegistrationListItemContent = ({
     : contributors;
 
   const focusedContributors = primaryContributors.slice(0, 5);
-  const countRestContributors = primaryContributors.length - focusedContributors.length;
+  const countRestContributors = registration.entityDescription.contributorsCount - focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
 
