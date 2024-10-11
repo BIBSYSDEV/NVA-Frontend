@@ -85,10 +85,14 @@ export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onP
   };
 
   const onCancel = () => {
-    if (projectWithId) {
-      goToLandingPage(projectWithId.id);
+    if (toggleModal) {
+      toggleModal();
     } else {
-      history.push(UrlPathTemplate.MyPageMyProjectRegistrations);
+      if (projectWithId) {
+        goToLandingPage(projectWithId.id);
+      } else {
+        history.push(UrlPathTemplate.MyPageMyProjectRegistrations);
+      }
     }
   };
 
