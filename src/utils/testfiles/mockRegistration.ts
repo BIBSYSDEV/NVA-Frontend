@@ -5,7 +5,6 @@ import { TicketCollection } from '../../types/publication_types/ticket.types';
 import { JournalType } from '../../types/publicationFieldNames';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockUser } from './mock_feide_user';
-import { mockCustomerInstitution } from './mockCustomerInstitutions';
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',
@@ -21,7 +20,6 @@ export const mockRegistration: JournalRegistration = {
   projects: [
     { type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/cristin/project/1', name: 'A dummy project' },
   ],
-  publisher: { id: mockCustomerInstitution.id },
   associatedArtifacts: [
     {
       type: FileType.UnpublishedFile,

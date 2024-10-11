@@ -18,6 +18,7 @@ import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { TicketListItem } from './TicketListItem';
@@ -57,8 +58,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       size="small"
       variant="standard"
       options={[
-        { label: t('common.sort_newest_first'), orderBy: 'createdDate', sortOrder: 'desc' },
-        { label: t('common.sort_oldest_first'), orderBy: 'createdDate', sortOrder: 'asc' },
+        { i18nKey: 'common.sort_newest_first', orderBy: 'createdDate', sortOrder: 'desc' },
+        { i18nKey: 'common.sort_oldest_first', orderBy: 'createdDate', sortOrder: 'asc' },
       ]}
     />
   );
@@ -88,12 +89,13 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
               <CuratorSelector
                 selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
                 onChange={(curator) => {
+                  const syncedParams = syncParamsWithSearchFields(searchParams);
                   if (curator) {
-                    searchParams.set(TicketSearchParam.Assignee, curator.username);
+                    syncedParams.set(TicketSearchParam.Assignee, curator.username);
                   } else {
-                    searchParams.delete(TicketSearchParam.Assignee);
+                    syncedParams.delete(TicketSearchParam.Assignee);
                   }
-                  history.push({ search: searchParams.toString() });
+                  history.push({ search: syncedParams.toString() });
                 }}
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />

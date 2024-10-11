@@ -237,6 +237,7 @@ export const dataTestId = {
     addProjectManagerButton: 'add-project-manager-button',
     addAffiliationButton: 'button-add-affiliation',
     addParticipantButton: 'add-participant-button',
+    addLocalManagerButton: 'add-local-manager-button',
     removeContributorButton: 'remove-contributor-button',
     cancelNewProjectButton: 'cancel-new-project-button',
     cancelAddParticipantButton: 'cancel-add-participant-button',
@@ -258,6 +259,7 @@ export const dataTestId = {
     scientificSummaryAccordion: 'scientific-summary-accordion',
   },
   projectWizard: {
+    modal: 'new-project-modal',
     stepper: {
       projectDescriptionStepButton: 'nav-tabpanel-project-description',
       projectDetailsStepButton: 'nav-tabpanel-project-details',

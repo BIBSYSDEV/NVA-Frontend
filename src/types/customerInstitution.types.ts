@@ -33,7 +33,7 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   doiAgent: DoiAgent;
   sector: Sector;
   inactiveFrom?: string;
-  serviceCenterUri?: string;
+  serviceCenter?: { uri: string };
   nviInstitution: boolean;
   rboInstitution: boolean;
   rightsRetentionStrategy: {

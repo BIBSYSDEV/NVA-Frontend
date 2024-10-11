@@ -9,6 +9,7 @@ import { NavigationList } from '../../../components/PageWithSideMenu';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 export const ResultRegistrationsNavigationListAccordion = () => {
@@ -36,12 +37,13 @@ export const ResultRegistrationsNavigationListAccordion = () => {
               ? selectedStatuses.filter((status) => status !== clickedStatus)
               : [...selectedStatuses, clickedStatus];
 
+            const syncedParams = syncParamsWithSearchFields(queryParams);
             if (newStatuses.length === 0) {
-              queryParams.delete(CustomerResultParam.Status);
+              syncedParams.delete(CustomerResultParam.Status);
             } else {
-              queryParams.set(CustomerResultParam.Status, newStatuses.join(','));
+              syncedParams.set(CustomerResultParam.Status, newStatuses.join(','));
             }
-            history.push({ search: queryParams.toString() });
+            history.push({ search: syncedParams.toString() });
           }}>
           <FormControlLabel
             data-testid={dataTestId.editor.resultsPortfolioPublishedCheckbox}

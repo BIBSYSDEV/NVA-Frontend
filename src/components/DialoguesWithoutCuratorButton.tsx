@@ -9,7 +9,7 @@ import { TicketSearchParam, fetchCustomerTickets } from '../api/searchApi';
 import { RootState } from '../redux/store';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { taskNotificationsParams } from '../utils/searchHelpers';
+import { syncParamsWithSearchFields, taskNotificationsParams } from '../utils/searchHelpers';
 
 const statusNew: TicketStatus = 'New';
 
@@ -33,17 +33,18 @@ export const DialoguesWithoutCuratorButton = () => {
   )?.count;
 
   const toggleDialoguesWithoutCurators = () => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (newStatusIsSelected) {
       const newValues = currentStatusFilter.filter((status) => status !== statusNew);
       if (newValues.length > 0) {
-        searchParams.set(TicketSearchParam.Status, newValues.join(','));
+        syncedParams.set(TicketSearchParam.Status, newValues.join(','));
       } else {
-        searchParams.delete(TicketSearchParam.Status);
+        syncedParams.delete(TicketSearchParam.Status);
       }
     } else {
-      searchParams.set(TicketSearchParam.Status, [...currentStatusFilter, statusNew].join(','));
+      syncedParams.set(TicketSearchParam.Status, [...currentStatusFilter, statusNew].join(','));
     }
-    history.push({ search: searchParams.toString() });
+    history.push({ search: syncedParams.toString() });
   };
 
   return (
