@@ -12,7 +12,12 @@ enum ErrorType {
   Other,
 }
 
-const updatedAppErrorMessages = [
+/**
+ * Browsers have different error messages when a chunk is not found.
+ * This error is often triggered when a new version of the app is deployed with different chunk names than the current version.
+ * When this happens the user must reload the page to get the new chunks.
+ */
+const chunkNotFoundErrorMessages = [
   'TypeError: Failed to fetch dynamically imported module', // Chrome, Edge
   'TypeError: Importing a module script failed', // Safari
   'TypeError: error loading dynamically imported module', // Firefox
@@ -23,10 +28,7 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
 
   static getDerivedStateFromError(error: any) {
     const errorString = error.toString().toLowerCase();
-    const isUpdatedAppError = updatedAppErrorMessages.some((message) => errorString.includes(message.toLowerCase()));
-    console.log('error:', error, errorString);
-    console.log('isUpdatedAppError', isUpdatedAppError);
-
+    const isUpdatedAppError = chunkNotFoundErrorMessages.some((message) => errorString.includes(message.toLowerCase()));
     return isUpdatedAppError ? { error: ErrorType.Chunk } : { error: ErrorType.Other };
   }
 
@@ -49,11 +51,9 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
     const { error } = this.state;
 
     if (error === ErrorType.Chunk) {
-      console.log('Chunk error');
       const lastUpdateTime = parseInt(localStorage.getItem(LocalStorageKey.AppUpdateTime) ?? '');
       const currentTime = Date.now();
 
-      console.log('lastUpdateTime', lastUpdateTime, currentTime);
       if (!isNaN(lastUpdateTime)) {
         const timeSinceUpdate = currentTime - lastUpdateTime;
         if (timeSinceUpdate < 10000) {
