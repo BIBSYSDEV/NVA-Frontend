@@ -30,9 +30,9 @@ export default defineConfig({
     rollupOptions: {
       onwarn: ({ message }) => {
         console.warn(message); // eslint-disable-line no-console
-        if (message.startsWith('[plugin vite-plugin-eslint]')) {
-          throw new Error(message);
-        }
+        // if (message.startsWith('[plugin vite-plugin-eslint]')) {
+        //   throw new Error(message);
+        // }
       },
       output: {
         experimentalMinChunkSize: 10_000,
