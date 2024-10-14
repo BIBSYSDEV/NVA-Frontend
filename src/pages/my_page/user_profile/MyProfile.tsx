@@ -297,7 +297,7 @@ export const MyProfile = () => {
                     </Field>
                   </Grid>
                 </Grid>
-                <FormBox>
+                <FormBox sx={{ mb: '1rem' }}>
                   <Box
                     sx={{
                       gridArea: 'profile-picture',
@@ -311,7 +311,13 @@ export const MyProfile = () => {
                     </Typography>
                     <Trans
                       i18nKey="my_page.my_profile.upload_is_not_mandatory"
-                      components={[<Typography key="1" paragraph sx={{ mb: '0.25rem', fontStyle: 'italic' }} />]}
+                      components={[
+                        <Typography
+                          key="1"
+                          paragraph
+                          sx={{ mb: '0.25rem', textAlign: 'center', fontStyle: 'italic' }}
+                        />,
+                      ]}
                     />
                     <ProfilePictureUploader personId={personId} />
                     <Trans
