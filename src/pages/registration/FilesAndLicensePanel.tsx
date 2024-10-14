@@ -16,7 +16,7 @@ import {
   getAssociatedFiles,
   isOpenFile,
   isPendingOpenFile,
-  userCanEditRegistration,
+  userHasAccessRight,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 
@@ -88,7 +88,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const originalDoi = entityDescription?.reference?.doi;
 
-  const canEditFiles = userCanEditRegistration(values) || userIsValidImporter(user, values);
+  const canEditFiles = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

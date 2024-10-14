@@ -17,7 +17,7 @@ import { Registration, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
-import { getFormattedRegistration } from '../../utils/registration-helpers';
+import { getFormattedRegistration, userHasAccessRight } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 
@@ -123,18 +123,22 @@ export const RegistrationFormActions = ({
             </Tooltip>
           </Box>
         )}
-        <Button
-          sx={{
-            gridArea: 'support-button',
-            width: 'fit-content',
-            justifySelf: 'center',
-          }}
-          variant="contained"
-          size="small"
-          data-testid={dataTestId.registrationWizard.formActions.openSupportButton}
-          onClick={toggleSupportModal}>
-          {t('my_page.messages.get_curator_support')}
-        </Button>
+
+        {userHasAccessRight(persistedRegistration, 'support-request-create') && (
+          <Button
+            sx={{
+              gridArea: 'support-button',
+              width: 'fit-content',
+              justifySelf: 'center',
+            }}
+            variant="contained"
+            size="small"
+            data-testid={dataTestId.registrationWizard.formActions.openSupportButton}
+            onClick={toggleSupportModal}>
+            {t('my_page.messages.get_curator_support')}
+          </Button>
+        )}
+
         {!isLastTab ? (
           <Box
             sx={{

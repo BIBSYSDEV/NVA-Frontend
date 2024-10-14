@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -43,6 +42,7 @@ const TasksPage = () => {
   const isPublishingCurator = !!user?.isPublishingCurator;
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
   const isNviCurator = !!user?.isNviCurator;
+  const isAnyCurator = isSupportCurator || isDoiCurator || isPublishingCurator || isNviCurator;
 
   const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = history.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
@@ -215,11 +215,7 @@ const TasksPage = () => {
           </NavigationListAccordion>
         )}
 
-        {isPublishingCurator && (
-          <BetaFunctionality>
-            <ResultRegistrationsNavigationListAccordion />
-          </BetaFunctionality>
-        )}
+        {isAnyCurator && <ResultRegistrationsNavigationListAccordion />}
 
         {isNviCurator && (
           <>
@@ -231,7 +227,7 @@ const TasksPage = () => {
 
       <ErrorBoundary>
         <Switch>
-          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isTicketCurator || isNviCurator}>
+          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isAnyCurator}>
             {isTicketCurator ? (
               <Redirect to={UrlPathTemplate.TasksDialogue} />
             ) : (
@@ -270,7 +266,7 @@ const TasksPage = () => {
           <PrivateRoute exact path={UrlPathTemplate.TasksNviCorrectionList} isAuthorized={isNviCurator}>
             <NviCorrectionList />
           </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.TasksResultRegistrations} isAuthorized={isPublishingCurator}>
+          <PrivateRoute exact path={UrlPathTemplate.TasksResultRegistrations} isAuthorized={isAnyCurator}>
             <PortfolioSearchPage title={t('common.result_registrations')} />
           </PrivateRoute>
         </Switch>

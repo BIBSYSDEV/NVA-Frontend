@@ -8,7 +8,7 @@ import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
-import { CristinProject, ProjectFieldName } from '../../types/project.types';
+import { CristinProject, ProjectContributorType, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
@@ -19,12 +19,14 @@ import {
 
 interface AddProjectContributorFormProps {
   toggleModal: () => void;
+  roleType: ProjectContributorType;
   initialSearchTerm?: string;
   indexToReplace?: number;
 }
 
 export const AddProjectContributorForm = ({
   toggleModal,
+  roleType,
   initialSearchTerm = '',
   indexToReplace = -1,
 }: AddProjectContributorFormProps) => {
@@ -36,12 +38,7 @@ export const AddProjectContributorForm = ({
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
   const addParticipant = () => {
-    const { newContributors, error } = addContributor(
-      selectedPerson,
-      contributors,
-      'ProjectParticipant',
-      indexToReplace
-    );
+    const { newContributors, error } = addContributor(selectedPerson, contributors, roleType, indexToReplace);
 
     if (error === AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION) {
       dispatch(
@@ -63,7 +60,7 @@ export const AddProjectContributorForm = ({
     const { newContributors, error } = addUnidentifiedProjectContributor(
       searchTerm,
       contributors,
-      'ProjectParticipant',
+      roleType,
       indexToReplace
     );
 
@@ -103,7 +100,7 @@ export const AddProjectContributorForm = ({
           onClick={addParticipant}
           size="large"
           variant="contained">
-          {t('project.add_contributor')}
+          {roleType === 'LocalProjectManager' ? t('project.add_local_manager') : t('project.add_contributor')}
         </Button>
       </StyledRightAlignedFooter>
     </Box>

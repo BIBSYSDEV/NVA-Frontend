@@ -26,7 +26,7 @@ import {
   isOpenFile,
   isTypeWithFileVersionField,
   isTypeWithRrs,
-  userCanEditOpenFile,
+  userHasAccessRight,
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
@@ -73,7 +73,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
     }
 
     if (isOpenFile(file)) {
-      return userCanEditOpenFile(values);
+      return userHasAccessRight(values, 'update-including-files');
     }
 
     return true;

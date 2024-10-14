@@ -12,11 +12,7 @@ import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { RegistrationStatus } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import {
-  getTitleString,
-  userCanDeleteRegistration,
-  userHasSameCustomerAsRegistration,
-} from '../../utils/registration-helpers';
+import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
@@ -39,10 +35,7 @@ export const ActionPanelContent = ({
   const dispatch = useDispatch();
   const history = useHistory();
   const currentPath = history.location.pathname;
-  const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
-
-  const canBeCuratorForThisCustomer = userHasSameCustomerAsRegistration(user, registration);
 
   const publishingRequestTickets = tickets.filter(
     (ticket) => ticket.type === 'PublishingRequest'
@@ -61,7 +54,29 @@ export const ActionPanelContent = ({
     }
   };
 
-  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
+  const isPublishedOrDraft =
+    registration.status === RegistrationStatus.Published ||
+    registration.status === RegistrationStatus.Draft ||
+    registration.status === RegistrationStatus.PublishedMetadata;
+
+  const isNotOnTasksDialoguePage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
+
+  const canCreatePublishingTicket =
+    isNotOnTasksDialoguePage && userHasAccessRight(registration, 'publishing-request-create');
+  const canApprovePublishingTicket =
+    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
+  const hasOtherPublishingRights =
+    userHasAccessRight(registration, 'unpublish') ||
+    userHasAccessRight(registration, 'republish') ||
+    userHasAccessRight(registration, 'terminate');
+
+  const canCreateDoiTicket =
+    isPublishedOrDraft && isNotOnTasksDialoguePage && userHasAccessRight(registration, 'doi-request-create');
+  const canApproveDoiTicket =
+    !!newestDoiRequestTicket && isPublishedOrDraft && userHasAccessRight(registration, 'doi-request-approve');
+
+  const canCreateSupportTicket = isNotOnTasksDialoguePage && userHasAccessRight(registration, 'support-request-create');
+  const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -91,14 +106,9 @@ export const ActionPanelContent = ({
     },
   });
 
-  const isPublishedOrDraft =
-    registration.status === RegistrationStatus.Published ||
-    registration.status === RegistrationStatus.Draft ||
-    registration.status === RegistrationStatus.PublishedMetadata;
-
   return (
     <>
-      {(canCreateTickets || publishingRequestTickets.length > 0) && (
+      {(canCreatePublishingTicket || canApprovePublishingTicket || hasOtherPublishingRights) && (
         <ErrorBoundary>
           <PublishingAccordion
             refetchData={refetchData}
@@ -110,7 +120,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {isPublishedOrDraft && (canCreateTickets || newestDoiRequestTicket) && (
+      {(canCreateDoiTicket || canApproveDoiTicket) && (
         <ErrorBoundary>
           {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
             <DoiRequestAccordion
@@ -118,17 +128,15 @@ export const ActionPanelContent = ({
               isLoadingData={isLoadingData}
               registration={registration}
               doiRequestTicket={newestDoiRequestTicket}
-              userIsCurator={!!user?.isDoiCurator && canBeCuratorForThisCustomer}
               addMessage={addMessage}
             />
           )}
         </ErrorBoundary>
       )}
 
-      {(canCreateTickets || newestSupportTicket) && (
+      {(canCreateSupportTicket || canApproveSupportTicket) && (
         <ErrorBoundary>
           <SupportAccordion
-            userIsCurator={!!user?.isSupportCurator && canBeCuratorForThisCustomer}
             registration={registration}
             supportTicket={newestSupportTicket}
             addMessage={addMessage}
@@ -137,7 +145,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {userCanDeleteRegistration(registration) && (
+      {userHasAccessRight(registration, 'delete') && (
         <Box sx={{ m: '0.5rem', mt: '1rem' }}>
           <Button
             sx={{ bgcolor: 'white' }}

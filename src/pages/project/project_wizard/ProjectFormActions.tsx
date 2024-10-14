@@ -19,6 +19,7 @@ interface ProjectFormActionsProps {
   onClickNext: () => void;
   onClickPrevious: () => void;
   onClickLast: () => void;
+  openedInModal?: boolean;
 }
 
 export const ProjectFormActions = ({
@@ -27,6 +28,7 @@ export const ProjectFormActions = ({
   onClickNext,
   onClickPrevious,
   onClickLast,
+  openedInModal = false,
 }: ProjectFormActionsProps) => {
   const { t } = useTranslation();
   const { values, isSubmitting, errors, touched } = useFormikContext<CristinProject>();
@@ -52,7 +54,7 @@ export const ProjectFormActions = ({
             loading={isSubmitting}
             disabled={disable}
             data-testid={dataTestId.projectWizard.formActions.saveProjectButton}>
-            {t('common.save_and_view')}
+            {openedInModal ? t('project.save_and_close') : t('common.save_and_view')}
           </LoadingButton>
         )}
         {!isLastTab && (

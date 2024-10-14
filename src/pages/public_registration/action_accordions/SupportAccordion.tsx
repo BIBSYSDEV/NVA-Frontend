@@ -14,6 +14,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
+import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -21,18 +22,11 @@ import { TicketAssignee } from './TicketAssignee';
 interface SupportAccordionProps {
   registration: Registration;
   supportTicket?: Ticket;
-  userIsCurator: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   refetchData: () => void;
 }
 
-export const SupportAccordion = ({
-  registration,
-  supportTicket,
-  userIsCurator,
-  addMessage,
-  refetchData,
-}: SupportAccordionProps) => {
+export const SupportAccordion = ({ registration, supportTicket, addMessage, refetchData }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -46,15 +40,13 @@ export const SupportAccordion = ({
   });
 
   const createSupportTicket = async (message: string) => {
-    const createTicketResponse = await createTicket(registration.id, 'GeneralSupportCase', true);
+    const createTicketResponse = await createTicket(registration.id, 'GeneralSupportCase', message);
 
     if (isErrorStatus(createTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(createTicketResponse.status)) {
-      const ticketId = createTicketResponse.data?.id;
-      if (ticketId) {
-        await addMessage(ticketId, message);
-      }
+      await refetchData();
+      dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
     }
   };
 
@@ -67,6 +59,8 @@ export const SupportAccordion = ({
   const isOnTasksPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   const statusText = supportTicket && isOnTasksPage ? t(`my_page.messages.ticket_types.${supportTicket.status}`) : '';
+
+  const userCanCompleteTicket = userHasAccessRight(registration, 'support-request-approve');
 
   return (
     <Accordion
@@ -84,7 +78,7 @@ export const SupportAccordion = ({
         {supportTicket && (
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
-            {userIsCurator && isOnTasksPage && supportTicket.status !== 'Completed' && (
+            {userCanCompleteTicket && isOnTasksPage && supportTicket.status !== 'Completed' && (
               <LoadingButton
                 sx={{
                   alignSelf: 'center',
@@ -107,7 +101,11 @@ export const SupportAccordion = ({
             )}
 
             {supportTicket.messages.length > 0 && (
-              <TicketMessageList ticket={supportTicket} refetchData={refetchData} canDeleteMessage={userIsCurator} />
+              <TicketMessageList
+                ticket={supportTicket}
+                refetchData={refetchData}
+                canDeleteMessage={userCanCompleteTicket}
+              />
             )}
           </>
         )}
@@ -117,7 +115,7 @@ export const SupportAccordion = ({
             if (message) {
               if (supportTicket) {
                 await addMessage(supportTicket.id, message);
-                if (userIsCurator) {
+                if (userCanCompleteTicket) {
                   await updateTicket(supportTicket.id, { status: 'Completed' });
                 }
               } else {
