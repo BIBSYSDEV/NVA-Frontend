@@ -797,6 +797,8 @@
       "preferred_last_name": "Foretrukket etternavn",
       "preferred_name": "Forfatternavn",
       "profile_picture": "Profilbilde",
+      "upload_is_not_mandatory": "<0>Det er frivillig å laste opp et bilde.</0><0>Du kan når som helst trekke tilbake samtykket ved å slette bildet.</0>",
+      "upload_description": "<0>Ved å laste opp et bilde samtykker du til at bilde legges inn som profilbilde på din offentlige profil i Nasjonalt vitenarkiv.</0><0>Profilbilde er offentlig synlig for alle som benytter Nasjonalt vitenarkiv.</0>",
       "projects": "Prosjekt",
       "remove_profile_picture": "Fjern profilbilde?",
       "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbildet?",
