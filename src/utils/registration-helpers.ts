@@ -690,11 +690,14 @@ export const isPendingOpenFile = (artifact: AssociatedArtifact) =>
 export const isOpenFile = (artifact: AssociatedArtifact) =>
   artifact.type === FileType.OpenFile || artifact.type === FileType.PublishedFile;
 
-export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[]) => {
-  return getAssociatedFiles(associatedArtifacts).filter(
-    (file) => file.type === 'UnpublishableFile' || file.type === 'RejectedFile'
+export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  associatedArtifacts.filter(
+    (file) =>
+      file.type === 'UnpublishableFile' ||
+      file.type === 'RejectedFile' ||
+      file.type === 'InternalFile' ||
+      file.type === 'PendingInternalFile'
   );
-};
 
 export const isTypeWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||

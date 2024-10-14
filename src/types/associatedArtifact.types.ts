@@ -18,11 +18,13 @@ export enum FileVersion {
 }
 
 export enum FileType {
-  // Deprecated types
+  /** @deprecated Use PendingOpenFile instead */
   UnpublishedFile = 'UnpublishedFile',
+  /** @deprecated Use RejectedFile|InternalFile|PendingInternalFile instead */
   UnpublishableFile = 'UnpublishableFile',
+  /** @deprecated Use OpenFile instead */
   PublishedFile = 'PublishedFile',
-  // New types
+
   OpenFile = 'OpenFile',
   PendingOpenFile = 'PendingOpenFile',
   RejectedFile = 'RejectedFile',
