@@ -2610,7 +2610,7 @@ describe('addUnidentifiedProjectContributor', () => {
             },
             {
               identity: unidentifiedOleJensenIdentity,
-              roles: [{ type: 'ProjectManager', affiliation: abcOrgAsAffiliation }],
+              roles: [{ type: 'ProjectManager', affiliation: undefined }],
             },
           ],
         });
