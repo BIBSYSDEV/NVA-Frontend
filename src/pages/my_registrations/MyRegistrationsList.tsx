@@ -40,9 +40,9 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
 
   const registrationsOnPage = registrations.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
-  const registrationsCopy = registrationsOnPage.map((registrationPreview) => {
+  const registrationSearchItems: RegistrationSearchItem[] = registrationsOnPage.map((registrationPreview) => {
     const { identifier, id, contributors, mainTitle, publicationInstance, status, abstract } = registrationPreview;
-    return {
+    const registration = {
       ...emptyRegistration,
       identifier,
       id,
@@ -54,6 +54,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
         reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
       },
     } as Registration;
+    return convertToRegistrationSearchItem(registration);
   });
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -85,7 +86,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
 
   return (
     <>
-      {registrationsCopy.length > 0 ? (
+      {registrationSearchItems.length > 0 ? (
         <ListPagination
           count={registrations.length}
           rowsPerPage={rowsPerPage}
@@ -97,7 +98,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
           }}>
           <RegistrationList
             onDeleteDraftRegistration={onClickDeleteRegistration}
-            registrations={registrationsCopy.map(convertToRegistrationSearchItem)}
+            registrations={registrationSearchItems}
             canEditRegistration
           />
         </ListPagination>
