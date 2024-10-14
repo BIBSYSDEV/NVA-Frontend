@@ -242,7 +242,7 @@ export interface RegistrationSearchItem {
     description: string;
     publicationDate?: RegistrationDate;
     contributorsPreview?: Contributor[];
-    contributorsCount: number;
+    contributorsCount?: number;
     /** @deprecated Use 'contributorsPreview' and/or 'contributorsCount' instead */
     contributors?: Contributor[]; // TODO: Remove when new format is availble in all enviroments
     reference: {

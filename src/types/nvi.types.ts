@@ -25,10 +25,10 @@ export interface NviCandidateSearchHit {
     type: PublicationInstanceType;
     title: string;
     publicationDate: Omit<RegistrationDate, 'type'>;
-    contributorsPreview: NviCandidateContributor[];
-    contributorsCount: number;
+    contributorsPreview?: NviCandidateContributor[];
+    contributorsCount?: number;
     /** @deprecated Use 'contributorsPreview' and/or 'contributorsCount' instead */
-    contributors: NviCandidateContributor[];
+    contributors?: NviCandidateContributor[];
   };
   approvals: NviCandidateSearchHitApproval[];
   numberOfApprovals: number;
