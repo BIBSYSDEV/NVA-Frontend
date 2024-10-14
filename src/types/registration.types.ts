@@ -249,10 +249,9 @@ export interface RegistrationSearchItem {
       publicationInstance: {
         type?: PublicationInstanceType | '';
       };
-      publicationContext: {
+      publicationContext?: {
         publisher?: ContextPublisher;
         series?: ContextSeries;
-        journal?: Journal;
       };
     };
   };

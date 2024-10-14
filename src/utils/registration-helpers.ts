@@ -819,6 +819,18 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
 };
 
 export const convertToRegistrationSearchItem = (registration: Registration) => {
+  const publisher =
+    registration.entityDescription?.reference?.publicationContext &&
+    'publisher' in registration.entityDescription.reference.publicationContext
+      ? registration.entityDescription.reference.publicationContext.publisher
+      : undefined;
+
+  const series =
+    registration.entityDescription?.reference?.publicationContext &&
+    'series' in registration.entityDescription.reference.publicationContext
+      ? registration.entityDescription.reference.publicationContext.series
+      : undefined;
+
   const registrationSearchItem: RegistrationSearchItem = {
     id: registration.id,
     identifier: registration.identifier,
@@ -838,9 +850,8 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
           type: registration.entityDescription?.reference?.publicationInstance?.type,
         },
         publicationContext: {
-          publisher: (registration.entityDescription?.reference?.publicationContext as any)?.publisher,
-          series: (registration.entityDescription?.reference?.publicationContext as any)?.series,
-          journal: (registration.entityDescription?.reference?.publicationContext as any)?.journal,
+          publisher,
+          series,
         },
       },
     },

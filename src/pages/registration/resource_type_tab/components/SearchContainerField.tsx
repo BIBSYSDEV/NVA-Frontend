@@ -201,8 +201,8 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const { t } = useTranslation();
 
   const publicationContext = registration.entityDescription?.reference?.publicationContext;
-  const publisherId = publicationContext.publisher?.id ?? '';
-  const seriesId = publicationContext.series?.id ?? '';
+  const publisherId = publicationContext?.publisher?.id ?? '';
+  const seriesId = publicationContext?.series?.id ?? '';
 
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],
