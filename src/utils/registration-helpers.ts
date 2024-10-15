@@ -667,10 +667,8 @@ export const hyphenateIsrc = (isrc: string) =>
 
 export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;
 
-export const associatedArtifactIsFile = ({ type }: { type: string }) => {
-  const allFileTypes: string[] = Object.values(FileType);
-  return allFileTypes.includes(type);
-};
+const allFileTypes: string[] = Object.values(FileType);
+export const associatedArtifactIsFile = ({ type }: { type: string }) => allFileTypes.includes(type);
 
 export const associatedArtifactIsLink = ({ type }: { type: string }) => type === 'AssociatedLink';
 
@@ -695,6 +693,7 @@ const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ti
   const rejectedFileIdentifiers = tickets
     .filter((ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Closed')
     .flatMap((ticket) => (ticket as PublishingTicket).filesForApproval);
+
   return getAssociatedFiles(associatedArtifacts).filter((file) => rejectedFileIdentifiers.includes(file.identifier));
 };
 
