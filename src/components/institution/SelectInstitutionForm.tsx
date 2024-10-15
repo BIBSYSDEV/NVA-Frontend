@@ -80,12 +80,12 @@ export const SelectInstitutionForm = ({
         if (values.selectedSuggestedAffiliationId) {
           // When we select from a list of suggested affiliations
           saveAffiliation(values.selectedSuggestedAffiliationId);
-        } else if (values.subunit?.id) {
-          // When we select from the subunit search field
-          saveAffiliation(values.subunit.id, values.subunit.labels);
         } else if (selectedSubunitId) {
           // When we select from the list below the subunit search field
           saveAffiliation(selectedSubunitId, selectedSubunitLabels);
+        } else if (values.subunit?.id) {
+          // When we select from the subunit search field
+          saveAffiliation(values.subunit.id, values.subunit.labels);
         } else if (values.unit?.id) {
           // When we only select from the unit search field (no sub-organization)
           saveAffiliation(values.unit?.id, values.unit?.labels);
