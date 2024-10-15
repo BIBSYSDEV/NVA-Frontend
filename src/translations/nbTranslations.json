@@ -1945,7 +1945,8 @@
       "need_help": "Trenger du hjelp?",
       "self_help": {
         "description": "Trenger du hjelp? Se om du kan løse problemet selv ved å se på brukerveiledningene.",
-        "header": "Veiledning for å registrere et forskningsresultat"
+        "header": "Veiledning for å registrere et forskningsresultat",
+        "institution_help_description": "<0>Har du tekniske problemer?</0><0>Se og eventuelt meld inn feil til brukerstøtte</0>"
       }
     },
     "year_published": "Publiseringsår"
