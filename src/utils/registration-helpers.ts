@@ -697,7 +697,7 @@ export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
       file.type === 'RejectedFile' ||
       file.type === 'InternalFile' ||
       file.type === 'PendingInternalFile'
-  );
+  ) as AssociatedFile[];
 
 export const isTypeWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
