@@ -19,7 +19,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getOrcidUri, getValueByKey } from '../../../utils/user-helpers';
 import { personaliaValidationSchema } from '../../../utils/validation/personaliaValidation';
-import { FormBox } from '../../project/project_wizard/styles';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { UserOrcid } from './UserOrcid';
 import { UserOrcidHelperModal } from './UserOrcidHelperModal';
@@ -297,43 +296,33 @@ export const MyProfile = () => {
                     </Field>
                   </Grid>
                 </Grid>
-                <FormBox sx={{ mb: '1rem' }}>
-                  <Box
-                    sx={{
-                      gridArea: 'profile-picture',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      mb: { xs: '1rem', lg: 0 },
-                    }}>
-                    <Typography variant="h3" sx={{ mb: '1rem' }}>
-                      {t('my_page.my_profile.profile_picture')}
-                    </Typography>
-                    <Trans
-                      i18nKey="my_page.my_profile.upload_is_not_mandatory"
-                      components={[
-                        <Typography
-                          key="1"
-                          paragraph
-                          sx={{ mb: '0.25rem', textAlign: 'center', fontStyle: 'italic' }}
-                        />,
-                      ]}
-                    />
-                    <ProfilePictureUploader personId={personId} />
-                    <Trans
-                      i18nKey="my_page.my_profile.upload_description"
-                      components={[
-                        <Typography
-                          key="1"
-                          paragraph
-                          sx={{ mb: '0.25rem', textAlign: 'center', fontStyle: 'italic' }}
-                        />,
-                      ]}
-                    />
-                  </Box>
-                </FormBox>
+                <Box
+                  sx={{
+                    gridArea: 'profile-picture',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    backgroundColor: 'secondary.light',
+                    padding: '1.75rem 1.25rem',
+                    borderRadius: '0.25rem',
+                    mb: { xs: '1rem', lg: 0 },
+                  }}>
+                  <Typography variant="h3" sx={{ mb: '1rem' }}>
+                    {t('my_page.my_profile.profile_picture')}
+                  </Typography>
+                  <Trans
+                    i18nKey="my_page.my_profile.upload_is_not_mandatory"
+                    components={[
+                      <Typography key="1" paragraph sx={{ mb: '0.25rem', textAlign: 'center', fontStyle: 'italic' }} />,
+                    ]}
+                  />
+                  <ProfilePictureUploader personId={personId} />
+                  <Trans
+                    i18nKey="my_page.my_profile.upload_description"
+                    components={[<Typography key="1" gutterBottom sx={{ textAlign: 'center', fontStyle: 'italic' }} />]}
+                  />
+                </Box>
               </Box>
-
               <Box
                 sx={{
                   display: 'flex',

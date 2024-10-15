@@ -49,7 +49,7 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
   };
 
   return (
-    <Box sx={{ display: 'flex', width: '12rem', height: '12rem', justifyContent: 'center', mt: '1rem', mb: '1rem' }}>
+    <Box sx={{ display: 'flex', width: '12rem', height: '12rem', justifyContent: 'center', my: '1rem' }}>
       {profilePictureQuery.isFetching || mutateProfilePicture.isPending ? (
         <Skeleton variant="circular" sx={{ height: '100%', aspectRatio: '1/1' }} />
       ) : profilePictureQuery.isSuccess ? (
