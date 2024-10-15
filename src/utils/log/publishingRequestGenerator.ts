@@ -12,7 +12,7 @@ export function generatePublishingRequestLogEntry(
   switch (ticket.status) {
     case 'Completed': {
       if (ticket.approvedFiles.length > 0) {
-        return generateOpenFilesLogEntry(ticket, filesOnRegistration, t);
+        return generateApprovedFilesLogEntry(ticket, filesOnRegistration, t);
       }
       return generateMetadataUpdatedLogEntry(ticket, t);
     }
@@ -30,7 +30,7 @@ export function generatePublishingRequestLogEntry(
   }
 }
 
-function generateOpenFilesLogEntry(
+function generateApprovedFilesLogEntry(
   ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
   t: TFunction
