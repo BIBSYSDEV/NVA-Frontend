@@ -22,7 +22,7 @@ export const mockRegistration: JournalRegistration = {
   ],
   associatedArtifacts: [
     {
-      type: FileType.PendingOpenFile,
+      type: FileType.UnpublishedFile,
       identifier: '3214324',
       name: 'filename.pdf',
       size: 10,

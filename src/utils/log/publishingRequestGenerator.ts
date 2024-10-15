@@ -1,8 +1,8 @@
 import { TFunction } from 'i18next';
-import { AssociatedFile, UserUploadDetails } from '../../types/associatedArtifact.types';
+import { AssociatedFile, FileType, UserUploadDetails } from '../../types/associatedArtifact.types';
 import { LogAction, LogActionItem, LogEntry } from '../../types/log.types';
 import { PublishingTicket } from '../../types/publication_types/ticket.types';
-import { getArchivedFiles, getOpenFiles } from '../registration-helpers';
+import { getOpenFiles } from '../registration-helpers';
 
 export function generatePublishingRequestLogEntry(
   ticket: PublishingTicket,
@@ -45,8 +45,12 @@ function generateOpenFilesLogEntry(
       };
     });
 
-  const archivedFilesItems: LogActionItem[] = getArchivedFiles(filesOnRegistration)
-    .filter((file) => ticket.approvedFiles.includes(file.identifier))
+  const archivedFilesItems: LogActionItem[] = filesOnRegistration
+    .filter(
+      (file) =>
+        (file.type === FileType.UnpublishableFile || file.type === FileType.InternalFile) &&
+        ticket.approvedFiles.includes(file.identifier)
+    )
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => {
       return {

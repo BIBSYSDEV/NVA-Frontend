@@ -32,6 +32,7 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
 import {
   allPublicationInstanceTypes,
   ArtisticType,
@@ -690,14 +691,22 @@ export const isPendingOpenFile = (artifact: AssociatedArtifact) =>
 export const isOpenFile = (artifact: AssociatedArtifact) =>
   artifact.type === FileType.OpenFile || artifact.type === FileType.PublishedFile;
 
-export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
-  associatedArtifacts.filter(
+const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
+  const rejectedFileIdentifiers = tickets
+    .filter((ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Closed')
+    .flatMap((ticket) => (ticket as PublishingTicket).filesForApproval);
+  return getAssociatedFiles(associatedArtifacts).filter((file) => rejectedFileIdentifiers.includes(file.identifier));
+};
+
+export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
+  const rejectedFileIdentifiers = getRejectedFiles(associatedArtifacts, tickets).map((file) => file.identifier);
+
+  return associatedArtifacts.filter(
     (file) =>
-      file.type === 'UnpublishableFile' ||
-      file.type === 'RejectedFile' ||
-      file.type === 'InternalFile' ||
-      file.type === 'PendingInternalFile'
+      file.type === FileType.InternalFile ||
+      (file.type === 'UnpublishableFile' && !rejectedFileIdentifiers.includes(file.identifier))
   ) as AssociatedFile[];
+};
 
 export const isTypeWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||

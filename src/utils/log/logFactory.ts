@@ -17,7 +17,7 @@ export function generateLog(registration: Registration, tickets: Ticket[], t: TF
   return {
     entries: entries.sort(sortLogEntries),
     metadataUpdated: registration.modifiedDate,
-    numberOfArchivedFiles: getArchivedFiles(registration.associatedArtifacts).length,
+    numberOfArchivedFiles: getArchivedFiles(registration.associatedArtifacts, tickets).length,
   };
 }
 
