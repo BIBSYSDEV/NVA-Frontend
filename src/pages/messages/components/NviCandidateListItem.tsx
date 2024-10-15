@@ -23,7 +23,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
   const nviParams = useNviCandidatesParams();
 
   const contributors =
-    nviCandidate.publicationDetails.contributorsPreview ?? nviCandidate.publicationDetails.contributors ?? [];
+    nviCandidate.publicationDetails.nviContributors ?? nviCandidate.publicationDetails.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
   const countRestContributors =
     (nviCandidate.publicationDetails.contributorsCount ?? (nviCandidate.publicationDetails.contributors ?? []).length) -

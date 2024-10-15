@@ -25,9 +25,9 @@ export interface NviCandidateSearchHit {
     type: PublicationInstanceType;
     title: string;
     publicationDate: Omit<RegistrationDate, 'type'>;
-    contributorsPreview?: NviCandidateContributor[];
+    nviContributors?: NviCandidateContributor[];
     contributorsCount?: number;
-    /** @deprecated Use 'contributorsPreview' and/or 'contributorsCount' instead */
+    /** @deprecated Use 'nviContributors' and/or 'contributorsCount' instead */
     contributors?: NviCandidateContributor[];
   };
   approvals: NviCandidateSearchHitApproval[];
