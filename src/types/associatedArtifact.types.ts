@@ -61,7 +61,7 @@ export interface ImportUploadDetails {
 }
 
 export const emptyFile: AssociatedFile = {
-  type: FileType.PendingOpenFile,
+  type: FileType.UnpublishedFile,
   identifier: '',
   name: '',
   size: 0,

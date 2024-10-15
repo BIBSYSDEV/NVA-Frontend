@@ -682,7 +682,7 @@ export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
 export const getOpenFiles = (associatedArtifacts: AssociatedArtifact[]) =>
-  getAssociatedFiles(associatedArtifacts).filter(isOpenFile);
+  associatedArtifacts.filter(isOpenFile) as AssociatedFile[];
 
 export const isPendingOpenFile = (artifact: AssociatedArtifact) =>
   artifact.type === FileType.PendingOpenFile || artifact.type === FileType.UnpublishedFile;

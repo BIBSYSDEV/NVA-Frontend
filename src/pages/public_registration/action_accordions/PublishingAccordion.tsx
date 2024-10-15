@@ -93,7 +93,7 @@ export const PublishingAccordion = ({
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
-  const registrationHasFile = registration.associatedArtifacts.some(isOpenFile);
+  const registrationHasOpenFile = registration.associatedArtifacts.some(isOpenFile);
   const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
@@ -406,12 +406,12 @@ export const PublishingAccordion = ({
                       {t('registration.public_page.tasks_panel.published_registration')}
                     </Typography>
                     <Typography paragraph>
-                      {registrationHasFile
+                      {registrationHasOpenFile
                         ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
                         : t('registration.public_page.tasks_panel.registration_is_published')}
                     </Typography>
                   </>
-                ) : registrationHasFile ? (
+                ) : registrationHasOpenFile ? (
                   <Trans
                     t={t}
                     i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
