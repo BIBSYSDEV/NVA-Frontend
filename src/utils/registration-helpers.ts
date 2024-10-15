@@ -699,12 +699,12 @@ const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ti
 
 export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
   const rejectedFileIdentifiers = getRejectedFiles(associatedArtifacts, tickets).map((file) => file.identifier);
-
-  return associatedArtifacts.filter(
+  const archivedFiles = associatedArtifacts.filter(
     (file) =>
       file.type === FileType.InternalFile ||
       (file.type === 'UnpublishableFile' && !rejectedFileIdentifiers.includes(file.identifier))
-  ) as AssociatedFile[];
+  );
+  return archivedFiles.length;
 };
 
 export const isTypeWithRrs = (publicationInstanceType?: string) =>
