@@ -67,6 +67,7 @@ export const EditAffiliationModal = ({
       type: 'Organization',
       id: newAffiliationId,
     };
+
     const updatedAffiliations = [...affiliations];
 
     // Replace old affiliation
