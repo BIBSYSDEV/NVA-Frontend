@@ -15,7 +15,7 @@ const SignedOutPage = () => {
   const user = useSelector((store: RootState) => store.user);
 
   if (user) {
-    return <Navigate to={UrlPathTemplate.Home} />;
+    return <Navigate to={UrlPathTemplate.Root} />;
   }
 
   return (
@@ -29,7 +29,7 @@ const SignedOutPage = () => {
         <Button
           data-testid={dataTestId.common.cancel}
           component={Link}
-          to={UrlPathTemplate.Home}
+          to={UrlPathTemplate.Root}
           variant="outlined"
           onClick={() => localStorage.removeItem(LocalStorageKey.RedirectPath)}>
           {t('authorization.back_to_home')}

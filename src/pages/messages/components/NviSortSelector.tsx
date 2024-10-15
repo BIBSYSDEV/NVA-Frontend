@@ -17,12 +17,12 @@ export const NviSortSelector = () => {
         {
           orderBy: 'createdDate' satisfies NviCandidateOrderBy,
           sortOrder: 'desc' satisfies SortOrder,
-          label: t('common.sort_newest_first'),
+          i18nKey: 'common.sort_newest_first',
         },
         {
           orderBy: 'createdDate' satisfies NviCandidateOrderBy,
           sortOrder: 'asc' satisfies SortOrder,
-          label: t('common.sort_oldest_first'),
+          i18nKey: 'common.sort_oldest_first',
         },
       ]}
     />

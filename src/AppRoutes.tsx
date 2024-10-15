@@ -40,7 +40,7 @@ export const AppRoutes = () => {
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
       <Routes>
-        <Route path={UrlPathTemplate.Home} element={<Dashboard />} />
+        <Route path={UrlPathTemplate.Root} element={<Dashboard />} />
         <Route path={UrlPathTemplate.Search} element={<Dashboard />} />
         <Route path={UrlPathTemplate.Reports} element={<Dashboard />} />
         <Route path={UrlPathTemplate.ReportsNvi} element={<Dashboard />} />

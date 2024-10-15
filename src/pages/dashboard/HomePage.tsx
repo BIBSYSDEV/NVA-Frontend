@@ -8,6 +8,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import {
   PersonSearchParameter,
   PersonSearchParams,
+  ProjectSearchOrder,
   ProjectSearchParameter,
   ProjectsSearchParams,
   searchForPerson,
@@ -34,7 +35,7 @@ import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
 
-enum SearchTypeValue {
+export enum SearchTypeValue {
   Result = 'result',
   Person = 'person',
   Project = 'project',
@@ -48,7 +49,7 @@ const HomePage = () => {
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const isOnFilterPage = location.pathname === UrlPathTemplate.Home;
+  const isOnFilterPage = location.pathname === UrlPathTemplate.Root;
   const resultIsSelected = isOnFilterPage && (!paramsSearchType || paramsSearchType === SearchTypeValue.Result);
   const personIsSeleced = isOnFilterPage && paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = isOnFilterPage && paramsSearchType === SearchTypeValue.Project;
@@ -85,7 +86,7 @@ const HomePage = () => {
     categoryFacet: params.get(ProjectSearchParameter.CategoryFacet),
     fundingSourceFacet: params.get(ProjectSearchParameter.FundingSourceFacet),
     healthProjectFacet: params.get(ProjectSearchParameter.HealthProjectFacet),
-    orderBy: params.get(ProjectSearchParameter.OrderBy),
+    orderBy: params.get(ProjectSearchParameter.OrderBy) as ProjectSearchOrder | null,
     participantFacet: params.get(ProjectSearchParameter.ParticipantFacet),
     participantOrgFacet: params.get(ProjectSearchParameter.ParticipantOrgFacet),
     responsibleFacet: params.get(ProjectSearchParameter.ResponsibleFacet),
@@ -174,7 +175,8 @@ const HomePage = () => {
       <ErrorBoundary>
         <Routes>
           <Route
-            path={UrlPathTemplate.Home}
+            index
+            path={UrlPathTemplate.Root}
             element={
               <SearchPage registrationQuery={registrationQuery} personQuery={personQuery} projectQuery={projectQuery} />
             }

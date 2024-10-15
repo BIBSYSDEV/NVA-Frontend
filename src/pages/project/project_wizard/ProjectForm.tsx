@@ -28,9 +28,11 @@ import { ProjectFormStepper } from './ProjectFormStepper';
 interface ProjectFormProps {
   project: SaveCristinProject | CristinProject;
   suggestedProjectManager?: string;
+  toggleModal?: () => void;
+  onProjectCreated?: (value: CristinProject) => void;
 }
 
-export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormProps) => {
+export const ProjectForm = ({ project, suggestedProjectManager, toggleModal, onProjectCreated }: ProjectFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,9 +62,16 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
           variant: 'success',
         })
       );
+
       const id = projectWithId ? projectWithId.id : updateProjectResponse.data.id;
 
-      if (id) {
+      if (toggleModal) {
+        if (onProjectCreated) {
+          if (projectWithId) onProjectCreated(projectWithId);
+          else onProjectCreated(updateProjectResponse.data);
+        }
+        toggleModal();
+      } else if (id) {
         goToLandingPage(id);
       }
     } else if (isErrorStatus(updateProjectResponse.status)) {
@@ -76,10 +85,14 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
   };
 
   const onCancel = () => {
-    if (projectWithId) {
-      goToLandingPage(projectWithId.id);
+    if (toggleModal) {
+      toggleModal();
     } else {
-      navigate(UrlPathTemplate.MyPageMyProjectRegistrations);
+      if (projectWithId) {
+        goToLandingPage(projectWithId.id);
+      } else {
+        navigate(UrlPathTemplate.MyPageMyProjectRegistrations);
+      }
     }
   };
 
@@ -132,6 +145,7 @@ export const ProjectForm = ({ project, suggestedProjectManager }: ProjectFormPro
                   onClickNext={() => onClickArrow(tabNumber + 1)}
                   onClickPrevious={() => onClickArrow(tabNumber - 1)}
                   onClickLast={() => onClickArrow(ProjectTabs.Connections)}
+                  openedInModal={!!toggleModal}
                 />
               </Box>
             </Form>

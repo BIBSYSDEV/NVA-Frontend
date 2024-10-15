@@ -4,33 +4,34 @@ import GavelIcon from '@mui/icons-material/Gavel';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Switch, useHistory } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchResource } from '../../api/commonApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import NotFound from '../../pages/errorpages/NotFound';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { CategoriesWithFiles } from './CategoriesWithFiles';
-import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
-import { EditorDoi } from './EditorDoi';
-import { EditorInstitution } from './EditorInstitution';
-import { InstitutionSupport } from './InstitutionSupport';
-import { OrganizationOverview } from './OrganizationOverview';
-import { PortfolioSearchPage } from './PortfolioSearchPage';
+import { PrivateRoute } from '../../utils/routes/Routes';
+import { lazy } from 'react';
+import { VocabularyOverview } from './VocabularyOverview';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
-import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
-import { VocabularyOverview } from './VocabularyOverview';
-import { VocabularySettings } from './VocabularySettings';
+import { EditorInstitution } from './EditorInstitution';
 import { OrganizationCurators } from './curators/OrganizationCurators';
+import { EditorDoi } from './EditorDoi';
+import { CategoriesWithFiles } from './CategoriesWithFiles';
+import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
+import { OrganizationOverview } from './OrganizationOverview';
+import { PortfolioSearchPage } from './PortfolioSearchPage';
+import { InstitutionSupport } from './InstitutionSupport';
+import NotFound from '../errorpages/NotFound';
+import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
+
+const VocabularySettings = lazy(() => import('./VocabularySettings'));
 
 const InstitutionPage = () => {
   const { t } = useTranslation();
@@ -49,8 +50,8 @@ const InstitutionPage = () => {
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
-  const history = useHistory();
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const location = useLocation();
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   return (
     <StyledPageWithSideMenu>
@@ -155,79 +156,93 @@ const InstitutionPage = () => {
               </NavigationList>
             </NavigationListAccordion>
 
-            <BetaFunctionality>
-              <ResultsPortfolioNavigationListAccodion />
-            </BetaFunctionality>
+            <ResultsPortfolioNavigationListAccodion />
           </>
         )}
       </SideMenu>
       <BackgroundDiv>
-        <Switch>
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionVocabulary}
-            component={VocabularySettings}
-            isAuthorized={isEditor}
+        <Outlet />
+
+        <Routes>
+          <Route
+            path={'settings/vocabulary'}
+            element={<PrivateRoute element={<VocabularySettings />} isAuthorized={isEditor} />}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionVocabularyOverview}
-            component={VocabularyOverview}
-            isAuthorized={hasCustomer}
+
+          <Route
+            path={'overview/vocabulary'}
+            element={<PrivateRoute element={<VocabularyOverview />} isAuthorized={hasCustomer} />}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionPublishStrategy}
-            component={PublishStrategySettings}
-            isAuthorized={isEditor}
+
+          <Route
+            path={'settings/publish-strategy'}
+            element={<PrivateRoute element={<PublishStrategySettings />} isAuthorized={isEditor} />}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionPublishStrategyOverview}
-            component={PublishingStrategyOverview}
-            isAuthorized={hasCustomer}
+
+          <Route
+            path={'overview/publish-strategy'}
+            element={<PrivateRoute element={<PublishingStrategyOverview />} isAuthorized={hasCustomer} />}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionOverviewPage}
-            component={EditorInstitution}
-            isAuthorized={hasCustomer}
+
+          <Route
+            path={'/overview/institution'}
+            element={<PrivateRoute element={<EditorInstitution />} isAuthorized={hasCustomer} />}
           />
-          <PrivateRoute exact path={UrlPathTemplate.InstitutionCuratorsOverview} isAuthorized={hasCustomer}>
-            <OrganizationCurators heading={t('editor.curators.curators')} />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.InstitutionCurators} isAuthorized={isEditor}>
-            <OrganizationCurators heading={t('editor.curators.administer_curators')} canEditUsers />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.InstitutionDoi} component={EditorDoi} isAuthorized={hasCustomer} />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionCategories}
-            component={CategoriesWithFiles}
-            isAuthorized={isEditor}
+
+          <Route
+            path={'overview/curators'}
+            element={
+              <PrivateRoute
+                isAuthorized={hasCustomer}
+                element={<OrganizationCurators heading={t('editor.curators.curators')} />}
+              />
+            }
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionCategoriesOverview}
-            component={CategoriesWithFilesOverview}
-            isAuthorized={hasCustomer}
+
+          <Route
+            path={'settings/curators'}
+            element={
+              <PrivateRoute
+                isAuthorized={isEditor}
+                element={<OrganizationCurators heading={t('editor.curators.administer_curators')} canEditUsers />}
+              />
+            }
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionOrganizationOverview}
-            component={OrganizationOverview}
-            isAuthorized={hasCustomer}
+
+          <Route path={'/overview/doi'} element={<PrivateRoute element={<EditorDoi />} isAuthorized={hasCustomer} />} />
+
+          <Route
+            path={'settings/categories'}
+            element={<PrivateRoute element={<CategoriesWithFiles />} isAuthorized={isEditor} />}
           />
-          <PrivateRoute
-            path={UrlPathTemplate.InstitutionSupport}
-            component={InstitutionSupport}
-            isAuthorized={isEditor}
+
+          <Route
+            path={'overview/categories'}
+            element={<PrivateRoute element={<CategoriesWithFilesOverview />} isAuthorized={hasCustomer} />}
           />
-          <PrivateRoute exact path={UrlPathTemplate.InstitutionPortfolio} isAuthorized={isEditor}>
-            <PortfolioSearchPage title={t('common.result_portfolio')} />
-          </PrivateRoute>
-          <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
-        </Switch>
+
+          <Route
+            path={'overview/organization'}
+            element={<PrivateRoute element={<OrganizationOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={'/settings/support'}
+            element={<PrivateRoute element={<InstitutionSupport />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={'/portfolio'}
+            element={
+              <PrivateRoute
+                element={<PortfolioSearchPage title={t('common.result_portfolio')} />}
+                isAuthorized={isEditor}
+              />
+            }
+          />
+
+          <Route path={'/*'} element={<PrivateRoute element={<NotFound />} isAuthorized={isEditor} />} />
+        </Routes>
       </BackgroundDiv>
     </StyledPageWithSideMenu>
   );

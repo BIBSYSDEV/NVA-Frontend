@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Prompt, useHistory } from 'react-router-dom';
-import { UrlPathTemplate } from '../utils/urlPaths';
+import { useEffect } from 'react';
+import { useBlocker } from 'react-router-dom';
 import { ConfirmDialog } from './ConfirmDialog';
 
 interface RouteLeavingGuardProps {
@@ -15,11 +14,6 @@ export const RouteLeavingGuard = ({
   modalHeading,
   shouldBlockNavigation,
 }: RouteLeavingGuardProps) => {
-  const [showModal, setShowModal] = useState(false);
-  const [nextPath, setNextPath] = useState('');
-  const [confirmedNavigation, setConfirmedNavigation] = useState(false);
-  const history = useHistory();
-
   useEffect(() => {
     if (shouldBlockNavigation) {
       window.onbeforeunload = () => true;
@@ -29,50 +23,33 @@ export const RouteLeavingGuard = ({
     }
   }, [shouldBlockNavigation]);
 
-  useEffect(() => {
-    if (confirmedNavigation && nextPath) {
-      history.push(nextPath);
-    }
-  }, [history, confirmedNavigation, nextPath]);
+  const blocker = useBlocker(() => shouldBlockNavigation);
+
+  const isBlocked = blocker.state === 'blocked';
 
   return (
-    <>
-      <Prompt
-        when={shouldBlockNavigation}
-        message={(nextLocation) => {
-          const currentPath = `${history.location.pathname}${history.location.search}`;
-          const newPath = `${nextLocation.pathname}${nextLocation.search}${nextLocation.hash}`;
-          if (
-            !confirmedNavigation &&
-            shouldBlockNavigation &&
-            currentPath !== newPath &&
-            !goFromRegistrationWizardToLandingPage(history.location.pathname, nextLocation.pathname)
-          ) {
-            setShowModal(true);
-            setNextPath(newPath);
-            return false;
-          }
-          return true;
-        }}
-      />
+    isBlocked && (
       <ConfirmDialog
-        open={showModal}
+        open={isBlocked}
         title={modalHeading}
         onAccept={() => {
-          setShowModal(false);
-          setConfirmedNavigation(true);
+          blocker.proceed();
         }}
-        onCancel={() => setShowModal(false)}
+        onCancel={() => {
+          blocker.reset();
+        }}
         dialogDataTestId="confirm-leaving-registration-form-dialog">
         <Typography>{modalDescription}</Typography>
       </ConfirmDialog>
-    </>
+    )
   );
 };
 
 // NOTE:
 // This is a workaround to allow navigating to Landing Page programatically from Wizard, due to changes for React v18(?).
 // This solution may lead to some unexpected behaviour, and should be revisited if we find a better solution.
+{
+  /*
 const goFromRegistrationWizardToLandingPage = (currentPath: string, newPath: string) => {
   const splittedPath = UrlPathTemplate.RegistrationWizard.split(':identifier');
   const currentPathIsRegistrationWizard =
@@ -80,4 +57,5 @@ const goFromRegistrationWizardToLandingPage = (currentPath: string, newPath: str
   const newPathIsLandingPage = currentPath.startsWith(newPath) && !newPath.endsWith(splittedPath[1]);
 
   return currentPathIsRegistrationWizard && newPathIsLandingPage;
-};
+}; */
+}
