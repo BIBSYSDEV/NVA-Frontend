@@ -685,6 +685,8 @@ export const dataTestId = {
       correctionListAccordion: 'correction-list-accordion',
       correctionListRadioButton: 'correction-list-radio-button',
       nonApplicableCategoriesWithApplicableChannelButton: 'non-applicable-categories-with-applicable-channel-button',
+      unidentifiedContributorWithIdentifiedAffiliationButton:
+        'unidentified-contributor-with-identified-affiliation-button',
     },
     curatorSelector: 'curator-selector',
     dialoguesWithoutCuratorButton: 'dialogues-without-curator-button',
