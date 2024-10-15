@@ -69,7 +69,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
     <>
       <Grid container spacing={3}>
         <Grid item md={6} sm={12}>
-          <Typography variant={'h3'} marginBottom={2} gutterBottom>
+          <Typography variant="h3" marginBottom={2} gutterBottom>
             {t('registration.support.self_help.header')}
           </Typography>
           <StyledMuiLink
@@ -79,13 +79,13 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
             <Typography>{t('footer.help_page')}</Typography>
             <OpenInNewIcon />
           </StyledMuiLink>
-          <Typography fontStyle="italic" marginBottom="2" gutterBottom>
+          <Typography fontStyle="italic" marginBottom={2} gutterBottom>
             {t('registration.support.self_help.description')}
           </Typography>
         </Grid>
         {customerServiceCenterUri && (
           <Grid item md={6} sm={12}>
-            <Typography variant={'h3'} marginBottom={2} gutterBottom>
+            <Typography variant="h3" marginBottom={2} gutterBottom>
               {t('editor.institution.institution_support')}
             </Typography>
             <StyledMuiLink target="_blank" rel="noopener noreferrer" href={customerServiceCenterUri}>
