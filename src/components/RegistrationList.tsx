@@ -11,7 +11,7 @@ import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
-import { Registration, RegistrationStatus } from '../types/registration.types';
+import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
@@ -28,9 +28,9 @@ import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps extends Pick<LinkProps, 'target'> {
-  registrations: Registration[];
+  registrations: RegistrationSearchItem[];
   canEditRegistration?: boolean;
-  onDeleteDraftRegistration?: (registration: Registration) => void;
+  onDeleteDraftRegistration?: (registration: RegistrationSearchItem) => void;
   promotedPublications?: string[];
 }
 
@@ -47,7 +47,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 );
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
-  registration: Registration;
+  registration: RegistrationSearchItem;
   ticketView?: boolean;
 }
 
@@ -70,14 +70,16 @@ export const RegistrationListItemContent = ({
   const mutationKey = ['person-preferences', userCristinId];
 
   const registrationType = entityDescription?.reference?.publicationInstance?.type;
-  const contributors = entityDescription?.contributors ?? [];
+  const contributors = entityDescription?.contributorsPreview ?? entityDescription.contributors ?? [];
 
   const primaryContributors = registrationType
     ? getContributorsWithPrimaryRole(contributors, registrationType)
     : contributors;
 
   const focusedContributors = primaryContributors.slice(0, 5);
-  const countRestContributors = primaryContributors.length - focusedContributors.length;
+  const countRestContributors =
+    (registration.entityDescription.contributorsCount ?? (entityDescription.contributors ?? []).length) -
+    focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
 

@@ -229,6 +229,34 @@ export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;
 }
 
+export interface RegistrationSearchItem {
+  id: string;
+  identifier: string;
+  createdDate: string;
+  modifiedDate: string;
+  publishedDate?: string;
+  status: RegistrationStatus;
+  entityDescription: {
+    mainTitle: string;
+    abstract: string;
+    description: string;
+    publicationDate?: RegistrationDate;
+    contributorsPreview?: Contributor[];
+    contributorsCount?: number;
+    /** @deprecated Use 'contributorsPreview' and/or 'contributorsCount' instead */
+    contributors?: Contributor[]; // TODO: Remove when new format is availble in all enviroments
+    reference: {
+      publicationInstance: {
+        type?: PublicationInstanceType | '';
+      };
+      publicationContext?: {
+        publisher?: ContextPublisher;
+        series?: ContextSeries;
+      };
+    };
+  };
+}
+
 export interface RegistrationDate {
   type: 'PublicationDate' | 'IndexDate';
   year: string;

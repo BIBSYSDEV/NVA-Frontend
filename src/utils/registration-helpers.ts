@@ -56,6 +56,7 @@ import {
   Publisher,
   Registration,
   RegistrationOperation,
+  RegistrationSearchItem,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -295,7 +296,7 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Anthology]: {
-    primaryRoles: [ContributorRole.Editor],
+    primaryRoles: [ContributorRole.Editor, ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Report
@@ -781,7 +782,10 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
-export const registrationsHaveSamePublicationYear = (reg1: Registration, reg2: Registration) => {
+export const registrationsHaveSamePublicationYear = (
+  reg1: Registration | RegistrationSearchItem,
+  reg2: Registration | RegistrationSearchItem
+) => {
   if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
     return false;
   }
@@ -789,7 +793,10 @@ export const registrationsHaveSamePublicationYear = (reg1: Registration, reg2: R
   return reg1.entityDescription.publicationDate.year === reg2.entityDescription.publicationDate.year;
 };
 
-export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registration) => {
+export const registrationsHaveSameCategory = (
+  reg1: Registration | RegistrationSearchItem,
+  reg2: Registration | RegistrationSearchItem
+) => {
   if (
     reg1.entityDescription?.reference?.publicationInstance?.type &&
     reg2.entityDescription?.reference?.publicationInstance?.type
@@ -809,4 +816,45 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
     context.issn ? `${t('registration.resource_type.issn')}: ${context.issn}` : '',
   ].filter(Boolean);
   return issnValues.join(', ');
+};
+
+export const convertToRegistrationSearchItem = (registration: Registration) => {
+  const publisher =
+    registration.entityDescription?.reference?.publicationContext &&
+    'publisher' in registration.entityDescription.reference.publicationContext
+      ? registration.entityDescription.reference.publicationContext.publisher
+      : undefined;
+
+  const series =
+    registration.entityDescription?.reference?.publicationContext &&
+    'series' in registration.entityDescription.reference.publicationContext
+      ? registration.entityDescription.reference.publicationContext.series
+      : undefined;
+
+  const registrationSearchItem: RegistrationSearchItem = {
+    id: registration.id,
+    identifier: registration.identifier,
+    createdDate: registration.createdDate,
+    modifiedDate: registration.modifiedDate,
+    publishedDate: registration.publishedDate,
+    status: registration.status,
+    entityDescription: {
+      mainTitle: registration.entityDescription?.mainTitle ?? '',
+      abstract: registration.entityDescription?.abstract ?? '',
+      description: registration.entityDescription?.description ?? '',
+      publicationDate: registration.entityDescription?.publicationDate,
+      contributorsPreview: registration.entityDescription?.contributors ?? [],
+      contributorsCount: (registration.entityDescription?.contributors ?? []).length,
+      reference: {
+        publicationInstance: {
+          type: registration.entityDescription?.reference?.publicationInstance?.type,
+        },
+        publicationContext: {
+          publisher,
+          series,
+        },
+      },
+    },
+  };
+  return registrationSearchItem;
 };
