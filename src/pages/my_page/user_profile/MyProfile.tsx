@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
@@ -296,22 +296,33 @@ export const MyProfile = () => {
                     </Field>
                   </Grid>
                 </Grid>
-
                 <Box
                   sx={{
                     gridArea: 'profile-picture',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
+                    backgroundColor: 'secondary.light',
+                    padding: '1.75rem 1.25rem',
+                    borderRadius: '0.25rem',
                     mb: { xs: '1rem', lg: 0 },
                   }}>
                   <Typography variant="h3" sx={{ mb: '1rem' }}>
                     {t('my_page.my_profile.profile_picture')}
                   </Typography>
+                  <Trans
+                    i18nKey="my_page.my_profile.upload_is_not_mandatory"
+                    components={[
+                      <Typography key="1" paragraph sx={{ mb: '0.25rem', textAlign: 'center', fontStyle: 'italic' }} />,
+                    ]}
+                  />
                   <ProfilePictureUploader personId={personId} />
+                  <Trans
+                    i18nKey="my_page.my_profile.upload_description"
+                    components={[<Typography key="1" gutterBottom sx={{ textAlign: 'center', fontStyle: 'italic' }} />]}
+                  />
                 </Box>
               </Box>
-
               <Box
                 sx={{
                   display: 'flex',
