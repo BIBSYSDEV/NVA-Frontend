@@ -93,7 +93,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
               <OpenInNewIcon />
             </StyledMuiLink>
             <Trans i18nKey="registration.support.self_help.institution_help_description">
-              <Typography key="1" fontStyle="italic" />
+              <Typography fontStyle="italic" />
             </Trans>
           </Grid>
         )}
