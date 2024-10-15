@@ -234,7 +234,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           {scientificIndexFacet
             .sort((a, b) => +b.key - +a.key)
             .map((facet) => {
-              const isSelected = !!registrationParams.scientificIndex?.includes(facet.key);
+              const isSelected = !!registrationParams.scientificReportPeriodSince?.includes(facet.key);
 
               return (
                 <FacetListItem
@@ -245,11 +245,14 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                   isSelected={isSelected}
                   label={facet.key}
                   count={facet.count}
-                  onClickFacet={() =>
-                    isSelected
-                      ? removeFacetFilter(ResultParam.ScientificIndex, facet.key)
-                      : addFacetFilter(ResultParam.ScientificIndex, facet.key)
-                  }
+                  onClickFacet={() => {
+                    if (isSelected) {
+                      removeFacetFilter(ResultParam.ScientificReportPeriodSinceParam, facet.key);
+                    } else {
+                      addFacetFilter(ResultParam.ScientificReportPeriodSinceParam, facet.key);
+                      addFacetFilter(ResultParam.ScientificReportPeriodBeforeParam, (+facet.key + 1).toString());
+                    }
+                  }}
                 />
               );
             })}

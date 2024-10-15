@@ -10,10 +10,6 @@ export const isProjectManagerRole = (role: ProjectContributorRole) => {
   return role.type === 'ProjectManager';
 };
 
-export const isNonProjectManagerRole = (role: ProjectContributorRole) => {
-  return role.type !== 'ProjectManager';
-};
-
 export const contributorHasNonEmptyAffiliation = (roles: ProjectContributorRole[]) => {
   return roles.some((role) => role.affiliation !== undefined);
 };
@@ -54,32 +50,30 @@ export const deleteProjectManagerRoleFromContributor = (contributors: ProjectCon
     : contributors;
 };
 
-export const getRelevantContributorRoles = (contributor: ProjectContributor, isProjectManager: boolean) => {
-  return contributor.roles.filter((role) =>
-    isProjectManager ? isProjectManagerRole(role) : isNonProjectManagerRole(role)
-  );
+export const getRelevantContributorRoles = (contributor: ProjectContributor, roleType: ProjectContributorType) => {
+  return contributor.roles.filter((role) => role.type === roleType);
 };
 
 const checkIfSameAffiliationOnSameRoleType = (
   newAffiliationId: string,
   role: ProjectContributorRole,
-  isProjectManager: boolean
+  roleType: ProjectContributorType
 ) => {
-  const isSameRoleType =
-    (isProjectManager && isProjectManagerRole(role)) || (!isProjectManager && isNonProjectManagerRole(role));
-  return role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId && isSameRoleType;
+  return (
+    role.affiliation?.type === 'Organization' && role.affiliation?.id === newAffiliationId && roleType === role.type
+  );
 };
 
-const findProjectManagerRoleThatHasAffiliation = (roles: ProjectContributorRole[], affiliationId: string) => {
-  return roles.findIndex((role) => role.affiliation?.id === affiliationId && isProjectManagerRole(role));
+const findAffiliationOnCorrectRoleType = (
+  roles: ProjectContributorRole[],
+  affiliationId: string,
+  roleType: ProjectContributorType
+) => {
+  return roles.findIndex((role) => role.affiliation?.id === affiliationId && role.type === roleType);
 };
 
-const findNonProjectManagerRoleThatHasAffiliation = (roles: ProjectContributorRole[], affiliationId: string) => {
-  return roles.findIndex((role) => role.affiliation?.id === affiliationId && isNonProjectManagerRole(role));
-};
-
-const isAlreadyInExistingRoles = (existingRoles: ProjectContributorRole[], role: ProjectContributorRole) => {
-  const existingRole = existingRoles.find((r) => r.affiliation?.id === role.affiliation?.id);
+export const isAlreadyInExistingRoles = (existingRoles: ProjectContributorRole[], role: ProjectContributorRole) => {
+  const existingRole = existingRoles.find((r) => r.affiliation?.id === role.affiliation?.id && r.type === role.type);
   return existingRole !== undefined;
 };
 
@@ -88,22 +82,13 @@ export const addRoles = (
   rolesToAdd: ProjectContributorRole[],
   roleToAddTo: ProjectContributorType
 ) => {
+  // Not adding roles of same type that are empty or roles that already exist in the array
   return existingRoles.concat(
     rolesToAdd.filter(
       (role) =>
         !isAlreadyInExistingRoles(existingRoles, role) && (role.type !== roleToAddTo || !hasEmptyAffiliation(role))
     )
   );
-};
-
-const findRoleIndexForAffiliation = (
-  asProjectManager: boolean,
-  roles: ProjectContributorRole[],
-  affiliationId: string
-) => {
-  return asProjectManager
-    ? findProjectManagerRoleThatHasAffiliation(roles, affiliationId)
-    : findNonProjectManagerRoleThatHasAffiliation(roles, affiliationId);
 };
 
 const notLastOfItsRoleType = (
@@ -126,9 +111,11 @@ export enum AffiliationErrors {
 export const addAffiliation = (
   newAffiliationId: string,
   contributorRoles: ProjectContributorRole[],
-  asProjectManager = false,
+  roleType: ProjectContributorType,
   labels?: LanguageString
 ): { newContributorRoles?: ProjectContributorRole[]; error?: AffiliationErrors } => {
+  const asProjectManager = roleType === 'ProjectManager';
+
   if (!newAffiliationId) {
     return {
       newContributorRoles: contributorRoles,
@@ -145,19 +132,14 @@ export const addAffiliation = (
   }
 
   // Avoid adding same unit twice
-  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))) {
+  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, roleType))) {
     return {
       newContributorRoles: contributorRoles,
       error: AffiliationErrors.ADD_DUPLICATE_AFFILIATION,
     };
   }
 
-  const emptyRoleIndex = contributorRoles.findIndex(
-    (role) =>
-      hasEmptyAffiliation(role) &&
-      ((asProjectManager && role.type === 'ProjectManager') ||
-        (!asProjectManager && role.type === 'ProjectParticipant'))
-  );
+  const emptyRoleIndex = contributorRoles.findIndex((role) => hasEmptyAffiliation(role) && role.type === roleType);
 
   const newAffiliation: ProjectOrganization = {
     type: 'Organization',
@@ -169,7 +151,7 @@ export const addAffiliation = (
 
   if (emptyRoleIndex < 0) {
     newContributorRoles.push({
-      type: asProjectManager ? 'ProjectManager' : 'ProjectParticipant',
+      type: roleType,
       affiliation: newAffiliation,
     } as ProjectContributorRole);
   } else {
@@ -186,7 +168,7 @@ export const editAffiliation = (
   newAffiliationId: string,
   contributorRoles: ProjectContributorRole[],
   affiliationToEditId: string,
-  asProjectManager = false,
+  roleType: ProjectContributorType,
   labels?: LanguageString
 ): { newContributorRoles?: ProjectContributorRole[]; error?: AffiliationErrors } => {
   if (!newAffiliationId) {
@@ -196,7 +178,9 @@ export const editAffiliation = (
     };
   }
 
-  const roleToChangeIndex = contributorRoles.findIndex((role) => role.affiliation?.id === affiliationToEditId);
+  const roleToChangeIndex = contributorRoles.findIndex(
+    (role) => role.affiliation?.id === affiliationToEditId && role.type === roleType
+  );
 
   if (roleToChangeIndex < 0) {
     return {
@@ -206,7 +190,7 @@ export const editAffiliation = (
   }
 
   // If user tries to change affiliation to an already existing affiliation
-  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, asProjectManager))) {
+  if (contributorRoles.some((role) => checkIfSameAffiliationOnSameRoleType(newAffiliationId, role, roleType))) {
     return {
       newContributorRoles: contributorRoles,
       error: AffiliationErrors.ADD_DUPLICATE_AFFILIATION,
@@ -232,7 +216,7 @@ export const editAffiliation = (
 export const removeAffiliation = (
   affiliationId: string,
   contributorRoles: ProjectContributorRole[],
-  asProjectManager = false
+  roleType: ProjectContributorType
 ) => {
   if (!affiliationId) {
     return {
@@ -240,8 +224,7 @@ export const removeAffiliation = (
       error: AffiliationErrors.NO_AFFILIATION_ID,
     };
   }
-
-  const indexOfRoleThatHasAffiliation = findRoleIndexForAffiliation(asProjectManager, contributorRoles, affiliationId);
+  const indexOfRoleThatHasAffiliation = findAffiliationOnCorrectRoleType(contributorRoles, affiliationId, roleType);
 
   if (indexOfRoleThatHasAffiliation < 0) {
     return {

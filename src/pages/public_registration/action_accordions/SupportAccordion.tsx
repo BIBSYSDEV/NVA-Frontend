@@ -40,15 +40,13 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   });
 
   const createSupportTicket = async (message: string) => {
-    const createTicketResponse = await createTicket(registration.id, 'GeneralSupportCase', true);
+    const createTicketResponse = await createTicket(registration.id, 'GeneralSupportCase', message);
 
     if (isErrorStatus(createTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(createTicketResponse.status)) {
-      const ticketId = createTicketResponse.data?.id;
-      if (ticketId) {
-        await addMessage(ticketId, message);
-      }
+      await refetchData();
+      dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
     }
   };
 

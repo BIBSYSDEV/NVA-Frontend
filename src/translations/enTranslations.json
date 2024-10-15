@@ -231,6 +231,8 @@
     "other": "Other",
     "overview": "Overview",
     "page_title": "Norwegian Research Information Repository (NVA)",
+    "pagination_project_search": "",
+    "pagination_result_search": "",
     "pagination_rows_per_page": "Number of results per page:",
     "pagination_showing_interval": "Showing {{start}}-{{end}} of {{total}}",
     "person": "Person",
@@ -770,6 +772,8 @@
         "upload_profile_photo": "Upload profile picture",
         "upload_profile_photo_info": "Maximum size: 1 MB. Supported file types: .jpg or .jpeg"
       },
+      "link_to_projects_search": "",
+      "link_to_results_search": "",
       "list_contains_all_registration_you_have_created": "The list shows all the projects you have registered",
       "my_projects": "My projects",
       "my_research_results": "My research results",
@@ -799,7 +803,6 @@
       "remove_profile_picture_info": "Are you sure you want to remove the profile picture?",
       "results": "Results",
       "telephone": "Telephone",
-      "user_profile": "User profile",
       "user_role_and_help": {
         "application_help_helper_text": "If you need guidance to register, this may be helpful.",
         "application_help_text": "Guide to register a result",
@@ -1126,11 +1129,12 @@
   },
   "project": {
     "add_affiliation": "Add affiliation",
-    "add_contributor": "",
+    "add_contributor": "Add project participant",
+    "add_local_manager": "",
     "add_project_contributor": "Add project participant",
     "add_project_manager": "Add project leader",
-    "add_unidentified_contributor": "",
-    "add_unidentified_project_manager": "",
+    "add_unidentified_contributor": "Add unidentified project participant",
+    "add_unidentified_project_manager": "Add unidentified project manager",
     "affiliation_modal": {
       "add_new_affiliation_helper_text": "<0>Only institutions that the project has been carried out in collaboration with should be added as affiliation to the project participant.</0> <0>Add affiliation to the project participant by first searching for the institution and any units.</0> <0>If the project participant belongs to multiple different units under the same institution, you must add this as a new affiliation.</0>",
       "delete_affiliation": "Remove affiliation",
@@ -1138,10 +1142,12 @@
     },
     "close_view": "Close view",
     "close_view_description": "Unsaved data you have entered will be lost if you close this view. Do you still want to close the view?",
-    "contributor_is_unidentified": "",
+    "contributor_is_unidentified": "Project participant is unidentified",
     "coordinating_institution": "Coordinating institution",
     "create_new_project": "Create new project",
     "create_project": "New project",
+    "duplicate_project_warning": "",
+    "duplicate_title_warning": "",
     "edit_project": "Edit project",
     "error": {
       "contributor_already_added_with_same_role_and_affiliation": "The project participant has already been added with the same role and affiliation."
@@ -1152,8 +1158,12 @@
       "category": "Category",
       "date": "Date",
       "keywords": "Keywords",
+      "no_related_projects_description": "",
+      "no_related_registrations_description": "",
       "related_projects": "Related projects",
       "related_projects_description": "Add other projects that are related to this project",
+      "related_registrations": "",
+      "related_registrations_description": "",
       "remove_participant": "Remove project participant",
       "remove_participant_text": "Are you sure you want to remove {{name}}?",
       "remove_project": "Remove project",
@@ -1174,11 +1184,13 @@
       "members": "Members"
     },
     "keywords": "Keywords",
+    "local_managers": "",
     "new_project": {
       "nfr_project": "NFR project",
       "search_for_project_name_or_placeholder": "Search for project name or project leader"
     },
-    "no_affiliation": "",
+    "no_affiliation": "No affiliation",
+    "no_duplicate_title": "No results found with the same title",
     "no_participants": "No registered participants.",
     "no_related_projects": "No related projects.",
     "no_results": "No published results.",
@@ -1195,12 +1207,13 @@
     "project_info": "Project info",
     "project_manager": "Project manager",
     "project_manager_from_nfr": "Project manager from NFR: {{name}}",
-    "project_manager_is_unidentified": "",
+    "project_manager_is_unidentified": "Project manager is unidentified",
     "project_participant": "Project participant",
     "project_participants": "Project participants",
     "remove_project_manager": "Delete project leader",
     "results": "Results",
     "role_types": {
+      "LocalProjectManager": "",
       "ProjectManager": "Project leader",
       "ProjectParticipant": "Project participant"
     },
@@ -1214,8 +1227,8 @@
       "NOTSTARTED": "Not started"
     },
     "summary": "Summary",
-    "verify_contributor": "",
-    "verify_project_manager": ""
+    "verify_contributor": "Identify project participant",
+    "verify_project_manager": "Identify project manager"
   },
   "registration": {
     "citation_points_to": "The citation refers to",
@@ -2003,8 +2016,8 @@
       "approve_nvi_candidate_description": "<0>As curator you can approve or reject a research result for reporting to the NVI</0> <0> If the research result is to be reported, select \"{{buttonText}}\".</0>",
       "completed_count": "Finished checking ({{completed}} of {{total}})",
       "correction_list_type": {
-        "anthology_with_applicable_chapter": "",
-        "anthology_without_chapter": "",
+        "anthology_with_applicable_chapter": "Anthologies with academic chapters",
+        "anthology_without_chapter": "Anthologies without a chapter",
         "applicable_category_in_non_applicable_channel": "Counting categories in non-counting channels",
         "book_with_less_than_50_pages": "Books with fewer than 50 pages",
         "non_applicable_category_in_applicable_channel": "Non-counting categories in counting channels"

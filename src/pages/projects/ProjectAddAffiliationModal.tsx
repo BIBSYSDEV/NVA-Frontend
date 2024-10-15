@@ -7,7 +7,7 @@ import { SelectInstitutionForm } from '../../components/institution/SelectInstit
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { LanguageString } from '../../types/common.types';
-import { CristinProject, ProjectContributorRole } from '../../types/project.types';
+import { CristinProject, ProjectContributorRole, ProjectContributorType } from '../../types/project.types';
 import { addAffiliation, AffiliationErrors } from '../project/helpers/projectRoleHelpers';
 
 interface ProjectAddAffiliationModalProps {
@@ -16,7 +16,7 @@ interface ProjectAddAffiliationModalProps {
   authorName: string;
   baseFieldName: string;
   contributorRoles: ProjectContributorRole[];
-  asProjectManager?: boolean;
+  roleType: ProjectContributorType;
 }
 
 export const ProjectAddAffiliationModal = ({
@@ -25,19 +25,14 @@ export const ProjectAddAffiliationModal = ({
   authorName,
   baseFieldName,
   contributorRoles,
-  asProjectManager = false,
+  roleType,
 }: ProjectAddAffiliationModalProps) => {
   const { t } = useTranslation();
   const { setFieldValue } = useFormikContext<CristinProject>();
   const dispatch = useDispatch();
 
   const onAddAffiliation = (newAffiliationId: string, labels?: LanguageString) => {
-    const newContributorRolesObject = addAffiliation(
-      newAffiliationId,
-      contributorRoles,
-      asProjectManager,
-      labels || {}
-    );
+    const newContributorRolesObject = addAffiliation(newAffiliationId, contributorRoles, roleType, labels || {});
 
     if (newContributorRolesObject.error === AffiliationErrors.NO_AFFILIATION_ID) {
       return;

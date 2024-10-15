@@ -11,14 +11,19 @@ import {
   WizardStartPageWrapper,
 } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { emptyProject } from '../../../types/project.types';
+import { CristinProject, emptyProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { CreateNfrProject } from './CreateNfrProject';
 import { EmptyProjectForm } from './EmptyProjectForm';
 import { ProjectForm } from './ProjectForm';
 
-const CreateProject = () => {
+interface CreateProjectProps {
+  toggleModal?: () => void;
+  onProjectCreated?: (value: CristinProject) => void;
+}
+
+const CreateProject = ({ toggleModal, onProjectCreated }: CreateProjectProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const user = useSelector((store: RootState) => store.user);
@@ -31,10 +36,15 @@ const CreateProject = () => {
   return (
     <StyledPageContent>
       {showProjectForm ? (
-        <ProjectForm project={newProject} suggestedProjectManager={suggestedProjectManager} />
+        <ProjectForm
+          project={newProject}
+          suggestedProjectManager={suggestedProjectManager}
+          toggleModal={toggleModal}
+          onProjectCreated={onProjectCreated}
+        />
       ) : (
         <>
-          <PageHeader>{t('project.create_project')}</PageHeader>
+          {!toggleModal && <PageHeader>{t('project.create_project')}</PageHeader>}
           <WizardStartPageWrapper>
             <CreateNfrProject
               newProject={newProject}
@@ -52,7 +62,7 @@ const CreateProject = () => {
           <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
             <CancelButton
               testId={dataTestId.projectForm.cancelNewProjectButton}
-              onClick={() => navigate(UrlPathTemplate.MyPageMyProjectRegistrations)}
+              onClick={() => (toggleModal ? toggleModal() : navigate(UrlPathTemplate.MyPageMyProjectRegistrations))}
             />
           </StyledRightAlignedFooter>
         </>

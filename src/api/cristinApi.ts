@@ -200,13 +200,17 @@ export const searchForPerson = async (
   return fetchPersonResponse.data;
 };
 
+export enum ProjectSearchOrder {
+  Name = 'name',
+}
+
 export interface ProjectsSearchParams {
   categoryFacet?: string | null;
   coordinatingFacet?: string | null;
   creator?: string | null;
   fundingSourceFacet?: string | null;
   healthProjectFacet?: string | null;
-  orderBy?: string | null;
+  orderBy?: ProjectSearchOrder | null;
   participant?: string | null;
   participantFacet?: string | null;
   participantOrgFacet?: string | null;

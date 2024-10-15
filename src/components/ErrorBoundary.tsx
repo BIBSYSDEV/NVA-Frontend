@@ -16,13 +16,24 @@ enum ErrorType {
   Other,
 }
 
+/**
+ * Browsers have different error messages when a chunk is not found.
+ * This error is often triggered when a new version of the app is deployed with different chunk names than the current version.
+ * When this happens the user must reload the page to get the new chunks.
+ */
+const chunkNotFoundErrorMessages = [
+  'TypeError: Failed to fetch dynamically imported module', // Chrome, Edge
+  'TypeError: Importing a module script failed', // Safari
+  'TypeError: error loading dynamically imported module', // Firefox
+];
+
 class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassProps>> {
   state = { error: ErrorType.None };
 
   static getDerivedStateFromError(error: any) {
-    return /TypeError: error loading dynamically imported module/.test(error)
-      ? { error: ErrorType.Chunk }
-      : { error: ErrorType.Other };
+    const errorString = error.toString().toLowerCase();
+    const isUpdatedAppError = chunkNotFoundErrorMessages.some((message) => errorString.includes(message.toLowerCase()));
+    return isUpdatedAppError ? { error: ErrorType.Chunk } : { error: ErrorType.Other };
   }
 
   componentDidUpdate(prevProps: ErrorBoundaryClassProps) {
