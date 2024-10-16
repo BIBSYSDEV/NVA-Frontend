@@ -98,7 +98,7 @@ export const OrganizationHierarchyFilter = ({ organization, open, onClose }: Org
               organization={org}
               searchId={searchId}
               selectedId={selectedId}
-              setSelectedOrganization={setSelectedId}
+              setSelectedOrganization={(org) => setSelectedId(org.id)}
               displayOrgId
               displaySubunitsCount
             />
