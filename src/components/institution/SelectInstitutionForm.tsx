@@ -64,9 +64,6 @@ export const SelectInstitutionForm = ({
 }: SelectInstitutionFormProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSubunitId, setSelectedSubunitId] = useState(initialValues?.subunit?.id || '');
-  const [selectedSubunitLabels, setSelectedSubunitLabels] = useState(initialValues?.subunit?.labels || undefined);
-
   const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const debouncedQuery = useDebounce(searchTerm);
   const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
@@ -80,9 +77,6 @@ export const SelectInstitutionForm = ({
         if (values.selectedSuggestedAffiliationId) {
           // When we select from a list of suggested affiliations
           saveAffiliation(values.selectedSuggestedAffiliationId);
-        } else if (selectedSubunitId) {
-          // When we select from the list below the subunit search field
-          saveAffiliation(selectedSubunitId, selectedSubunitLabels);
         } else if (values.subunit?.id) {
           // When we select from the subunit search field
           saveAffiliation(values.subunit.id, values.subunit.labels);
@@ -161,13 +155,8 @@ export const SelectInstitutionForm = ({
                       }
                     }}
                     onChange={(_, value) => {
-                      resetForm({
-                        values: initialValuesOrganizationForm,
-                      });
-
+                      resetForm({ values: initialValuesOrganizationForm });
                       setFieldValue(field.name, value);
-                      setSelectedSubunitId('');
-                      setSelectedSubunitLabels(undefined);
                     }}
                     loading={organizationSearchQuery.isPending}
                     renderInput={(params) => (
@@ -199,11 +188,7 @@ export const SelectInstitutionForm = ({
                         renderOption={({ key, ...props }, option) => (
                           <OrganizationRenderOption key={option.id} props={props} option={option} />
                         )}
-                        onChange={(_, value) => {
-                          setFieldValue(field.name, value);
-                          setSelectedSubunitId(value?.id ?? '');
-                          setSelectedSubunitLabels(value?.labels ?? undefined);
-                        }}
+                        onChange={(_, value) => setFieldValue(field.name, value)}
                         filterOptions={(options, state) =>
                           options.filter((option) =>
                             Object.values(option.labels).some((label) =>
@@ -226,9 +211,8 @@ export const SelectInstitutionForm = ({
                           key={organization.id}
                           organization={organization}
                           searchId={values.subunit?.id ?? ''}
-                          selectedId={selectedSubunitId}
-                          setSelectedId={setSelectedSubunitId}
-                          setSelectedLabels={setSelectedSubunitLabels}
+                          selectedId={values.subunit?.id ?? ''}
+                          setSelectedOrganization={(organization) => setFieldValue(field.name, organization)}
                         />
                       ))}
                     </>
