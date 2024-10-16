@@ -182,7 +182,6 @@ export const SelectInstitutionForm = ({
                   {({ field }: FieldProps<Organization>) => (
                     <>
                       <Autocomplete
-                        value={field.value}
                         options={getSortedSubUnits(values.unit?.hasPart)}
                         getOptionLabel={(option) => getLanguageString(option.labels)}
                         renderOption={({ key, ...props }, option) => (
