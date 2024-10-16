@@ -114,7 +114,7 @@ export const MyProfile = () => {
                   m: '1rem',
                 }}>
                 <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
-                  <Grid item sx={{ width: '100%' }}>
+                  <Grid item xs={16}>
                     <ProfileBox>
                       <Typography fontWeight="bold" sx={{ mb: '0.5rem' }}>
                         {t('my_page.my_profile.name')}
@@ -188,7 +188,7 @@ export const MyProfile = () => {
                       </Grid>
                     </ProfileBox>
                   </Grid>
-                  <Grid item sx={{ width: '100%' }}>
+                  <Grid item xs={16}>
                     <ProfileBox>
                       <Typography fontWeight="bold" sx={{ mb: '0.5rem' }}>
                         {t('my_page.my_profile.identity.identity_numbers')}
@@ -208,7 +208,7 @@ export const MyProfile = () => {
                       </StyledGridBox>
                     </ProfileBox>
                   </Grid>
-                  <Grid item sx={{ width: '100%' }}>
+                  <Grid item xs={16}>
                     <ProfileBox>
                       <Box sx={{ display: 'flex', alignItems: 'center', mb: '0.5rem' }}>
                         <Typography fontWeight="bold">{t('common.orcid')}</Typography>
@@ -221,7 +221,7 @@ export const MyProfile = () => {
                       <UserOrcid user={user} sx={{ mt: '1rem' }} />
                     </ProfileBox>
                   </Grid>
-                  <Grid item sx={{ width: '100%' }}>
+                  <Grid item xs={16}>
                     <ProfileBox>
                       <Typography sx={{ mb: '0.5rem' }} fontWeight="bold">
                         {t('my_page.my_profile.contact_information')}
