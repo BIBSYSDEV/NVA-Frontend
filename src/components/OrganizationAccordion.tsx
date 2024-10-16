@@ -12,8 +12,8 @@ import { getLanguageString } from '../utils/translation-helpers';
 
 interface OrganizationAccordionProps {
   organization: Organization;
-  searchId: string;
-  selectedId: string;
+  searchId?: string;
+  selectedId?: string;
   setSelectedOrganization: (organization: Organization) => void;
   level?: number;
   includeAllSubunits?: boolean;

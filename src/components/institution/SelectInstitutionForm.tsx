@@ -182,6 +182,7 @@ export const SelectInstitutionForm = ({
                   {({ field }: FieldProps<Organization>) => (
                     <>
                       <Autocomplete
+                        value={field.value}
                         options={getSortedSubUnits(values.unit?.hasPart)}
                         getOptionLabel={(option) => getLanguageString(option.labels)}
                         renderOption={({ key, ...props }, option) => (
@@ -209,8 +210,8 @@ export const SelectInstitutionForm = ({
                         <OrganizationAccordion
                           key={organization.id}
                           organization={organization}
-                          searchId={values.subunit?.id ?? ''}
-                          selectedId={values.subunit?.id ?? ''}
+                          searchId={values.subunit?.id}
+                          selectedId={values.subunit?.id}
                           setSelectedOrganization={(organization) => setFieldValue(field.name, organization)}
                         />
                       ))}
