@@ -2024,7 +2024,8 @@
         "anthology_without_chapter": "Antologier uten kapittel",
         "applicable_category_in_non_applicable_channel": "Tellende kategorier i ikke-tellende kanaler",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
-        "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler"
+        "non_applicable_category_in_applicable_channel": "Ikke-tellende kategorier i tellende kanaler",
+        "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsyter med identifisert institusjon"
       },
       "delete_note": "Slett melding",
       "delete_note_description": "Er du sikker på at du vil slette denne meldingen?",
