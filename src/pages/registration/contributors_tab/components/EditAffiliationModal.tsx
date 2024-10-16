@@ -80,9 +80,7 @@ export const EditAffiliationModal = ({
   return (
     <Modal
       open={affiliationModalIsOpen}
-      onClose={() => {
-        toggleAffiliationModal();
-      }}
+      onClose={toggleAffiliationModal}
       maxWidth="md"
       fullWidth
       headingText={t('registration.contributors.edit_affiliation')}>
