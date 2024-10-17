@@ -146,34 +146,6 @@ export const NviCandidatePage = () => {
           {nviCandidate && (
             <NviCandidateActionPanel nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
           )}
-
-          {/* <Paper
-            elevation={0}
-            sx={{
-              gridArea: 'nvi',
-              bgcolor: 'nvi.light',
-              height: 'fit-content',
-              minHeight: { sm: '85vh' },
-              display: 'flex',
-              flexDirection: 'column',
-            }}>
-            <StyledPaperHeader>
-              <Typography color="inherit" variant="h1">
-                {t('common.dialogue')}
-              </Typography>
-            </StyledPaperHeader>
-
-            {periodStatus === 'OpenPeriod' && nviCandidate ? (
-              <NviCandidateActions nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
-            ) : periodStatus === 'ClosedPeriod' ? (
-              <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_closed')}</Typography>
-            ) : periodStatus === 'NoPeriod' ? (
-              <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_missing')}</Typography>
-            ) : null}
-
-            <Divider sx={{ mt: 'auto' }} />
-            <NviApprovals approvals={nviCandidate?.approvals ?? []} totalPoints={pointsSum} />
-          </Paper> */}
         </ErrorBoundary>
       )}
     </Box>
