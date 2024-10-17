@@ -346,11 +346,13 @@ export interface RegistrationAggregations {
 export interface ConfirmedDocument {
   type: 'ConfirmedDocument';
   identifier: string;
+  sequence?: number;
 }
 
 export interface UnconfirmedDocument {
   type: 'UnconfirmedDocument';
   text: string;
+  sequence?: number;
 }
 
 export const emptyUnconfirmedDocument: UnconfirmedDocument = {
