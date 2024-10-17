@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { useFetchRegistrationTickets } from '../../../api/hooks/useFetchRegistrationTickets';
 import { NviCandidate } from '../../../types/nvi.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { LogPanel } from '../../public_registration/LogPanel';
 import { NviApprovals } from './NviApprovals';
@@ -52,8 +53,12 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
           sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', px: '0.5rem' }}
           textColor="inherit"
           TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
-          <Tab label={t('common.dialogue')} value={TabValue.Dialogue} />
-          <Tab label={t('common.log')} value={TabValue.Log} />
+          <Tab
+            label={t('common.dialogue')}
+            value={TabValue.Dialogue}
+            data-testid={dataTestId.tasksPage.nvi.dialogTabButton}
+          />
+          <Tab label={t('common.log')} value={TabValue.Log} data-testid={dataTestId.tasksPage.nvi.logTabButton} />
         </TabList>
 
         <StyledTabPanel value={TabValue.Dialogue}>
