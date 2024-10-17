@@ -62,9 +62,9 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
             <ProjectListItem project={titleSearch.duplicateProject} />
           </Box>
         )}
-        {debouncedTitle && !titleSearch.isPending && titleSearch.duplicateProject && (
+        {debouncedTitle && !titleSearch.isPending && !titleSearch.duplicateProject && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>{t('project.duplicate_project_heading')}</Typography>
             <Typography>{t('project.no_duplicate_title')}</Typography>
           </Box>
         )}
