@@ -34,6 +34,9 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Legg til ansatt",
+      "have_you_informed": "Har du informert vedkommende om at personopplysninger legges til i NVA?",
+      "have_you_informed_description": "<0>Ved å opprette personen i NVA, bekrefter du at du har lovlig grunnlag for å legge inn personopplysningene på vegne av denne personen.</0><0>Før personen opprettes i NVA, trenger vi at du bekrefter at personen har blitt informert om at det legges inn personopplysninger om dem i NVA.</0>",
+      "have_you_informed_confirmation_text": "Har du informert personen om at det legges til personopplysninger om dem i NVA?",
       "create_person": "Opprett person",
       "missing_nin_description": "<0>Vi trenger at du bekrefter identiteten på personen uten nasjonalt identitetsnummer som fødselsnummer eller D-nummer.</0><0>For å skille personen fra andre med liknende navn så må det registreres minst ett forskningsresultat tilknyttet denne personen.</0><0>Merk at du ikke bare bekrefter personen for din institusjon, men også for andre institusjoner i systemet.</0><0>Hvem som gir bekreftelse på unntak, vil derfor være synlig i systemet som dokumentasjon.</0><0>Bekrefter du at denne personen eksisterer og har bidratt på minst ett forskningsresultat ved din institusjon?</0>",
       "missing_nin_title": "Bekrefte identitet for person uten nasjonalt identitetsnummer",
