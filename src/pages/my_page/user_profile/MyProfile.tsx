@@ -32,8 +32,6 @@ export const MyProfile = () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
 
-  console.log('user', user);
-
   const personId = user?.cristinId ?? '';
 
   const personQuery = useQuery({

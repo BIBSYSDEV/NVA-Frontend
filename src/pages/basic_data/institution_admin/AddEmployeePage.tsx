@@ -106,6 +106,7 @@ export const AddEmployeePage = () => {
         dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
       }
     }
+    setOpenConfirmationDialog(false);
   };
 
   return (
@@ -165,9 +166,9 @@ export const AddEmployeePage = () => {
                 <Button
                   variant="contained"
                   size="large"
-                  disabled={isValid}
+                  disabled={!isValid}
                   onClick={() => {
-                    const shouldShowConfirmDialog = true; // TODO
+                    const shouldShowConfirmDialog = !values.person.id; // Only confirm consent when creating a new user
                     if (shouldShowConfirmDialog) {
                       setOpenConfirmationDialog(true);
                     } else {
@@ -183,7 +184,6 @@ export const AddEmployeePage = () => {
                 title={t('basic_data.add_employee.have_you_informed')}
                 onAccept={() => {
                   submitForm();
-                  setOpenConfirmationDialog(false);
                 }}
                 isLoading={isSubmitting}
                 onCancel={() => setOpenConfirmationDialog(false)}
