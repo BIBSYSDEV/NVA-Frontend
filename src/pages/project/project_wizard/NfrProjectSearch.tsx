@@ -47,7 +47,7 @@ export const NfrProjectSearch = ({ selectedProject, setSelectedProject }: NfrPro
         renderInput={(params) => (
           <AutocompleteTextField
             {...params}
-            label={t('project.new_project.nfr_project')}
+            label={t('project.new_project.nfr_grant')}
             isLoading={isLoadingNfrProjectSearch}
             placeholder={t('project.new_project.search_for_project_name_or_placeholder')}
             showSearchIcon={debouncedSearchTerm.length === 0}
@@ -61,7 +61,7 @@ export const NfrProjectSearch = ({ selectedProject, setSelectedProject }: NfrPro
       />
       {selectedProject && (
         <>
-          <Typography sx={{ fontWeight: 'bold', mt: '1rem' }}>{t('common.project')}</Typography>
+          <Typography sx={{ fontWeight: 'bold', mt: '1rem' }}>{t('project.grant')}</Typography>
           <Typography>{getLanguageString(selectedProject.labels)}</Typography>
         </>
       )}
