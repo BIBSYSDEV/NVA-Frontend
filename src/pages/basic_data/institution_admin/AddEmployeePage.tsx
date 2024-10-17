@@ -1,6 +1,6 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, Divider, Typography } from '@mui/material';
-import { Form, Formik, FormikErrors, FormikHelpers, FormikProps, FormikState } from 'formik';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
@@ -49,11 +49,7 @@ export const AddEmployeePage = () => {
   const customerId = useSelector((store: RootState) => store.user?.customerId);
   const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
 
-  const onSubmit = async (
-    values: AddEmployeeData,
-    resetForm: (nextState?: Partial<FormikState<AddEmployeeData>>) => void,
-    validateForm: (values?: any) => Promise<FormikErrors<AddEmployeeData>>
-  ) => {
+  const onSubmit = async (values: AddEmployeeData, { resetForm }: FormikHelpers<AddEmployeeData>) => {
     if (!customerId) {
       return;
     }
@@ -106,7 +102,6 @@ export const AddEmployeePage = () => {
       if (isSuccessStatus(createUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
         resetForm();
-        validateForm();
       } else if (isErrorStatus(createUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.add_role'), variant: 'error' }));
       }
@@ -122,20 +117,9 @@ export const AddEmployeePage = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={addEmployeeValidationSchema}
-        onSubmit={(values: AddEmployeeData, formikHelpers: FormikHelpers<AddEmployeeData>) =>
-          onSubmit(values, formikHelpers.resetForm, formikHelpers.validateForm)
-        }
+        onSubmit={onSubmit}
         validateOnMount>
-        {({
-          submitForm,
-          isSubmitting,
-          values,
-          setFieldValue,
-          errors,
-          isValid,
-          resetForm,
-          validateForm,
-        }: FormikProps<AddEmployeeData>) => {
+        {({ submitForm, isSubmitting, values, setFieldValue, errors, isValid }: FormikProps<AddEmployeeData>) => {
           return (
             <Form noValidate>
               <Box
@@ -183,8 +167,12 @@ export const AddEmployeePage = () => {
                   size="large"
                   disabled={isValid}
                   onClick={() => {
-                    submitForm();
-                    setOpenConfirmationDialog(true);
+                    const shouldShowConfirmDialog = true; // TODO
+                    if (shouldShowConfirmDialog) {
+                      setOpenConfirmationDialog(true);
+                    } else {
+                      submitForm();
+                    }
                   }}
                   startIcon={<AddCircleOutlineIcon />}>
                   {t('common.create')}
@@ -194,7 +182,7 @@ export const AddEmployeePage = () => {
                 open={openConfirmationDialog}
                 title={t('basic_data.add_employee.have_you_informed')}
                 onAccept={() => {
-                  onSubmit(values, resetForm, validateForm);
+                  submitForm();
                   setOpenConfirmationDialog(false);
                 }}
                 isLoading={isSubmitting}
