@@ -106,10 +106,10 @@ export const MyFieldAndBackground = () => {
             <Box sx={{ display: 'flex', flexDirection: 'column', m: '1rem', maxWidth: '60rem', gap: '1rem' }}>
               <Typography variant="h2">{t('my_page.my_profile.field_and_background.field_and_background')}</Typography>
               <ProfileBox>
-                <Typography variant="h3">{t('my_page.my_profile.field_and_background.field')}</Typography>
-                <Typography sx={{ mb: '1.5rem', mt: '0.5rem' }}>
-                  {t('my_page.my_profile.field_and_background.field_text')}
+                <Typography variant="h3" gutterBottom>
+                  {t('my_page.my_profile.field_and_background.field')}
                 </Typography>
+                <Typography paragraph>{t('my_page.my_profile.field_and_background.field_text')}</Typography>
                 <Field name={'keywords'}>
                   {({ field }: FieldProps<Keywords[]>) => (
                     <Autocomplete
@@ -160,7 +160,7 @@ export const MyFieldAndBackground = () => {
                 </Typography>
               </ProfileBox>
               <ProfileBox>
-                <Typography variant="h3" sx={{ mb: '1rem' }}>
+                <Typography variant="h3" gutterBottom>
                   {t('my_page.my_profile.background')}
                 </Typography>
                 <Trans

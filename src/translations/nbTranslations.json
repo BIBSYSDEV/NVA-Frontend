@@ -749,8 +749,8 @@
     "my_profile": {
       "background": "Bakgrunn",
       "background_no": "Bakgrunn på norsk",
-      "background_en": "Bakgrunn på englesk",
-      "background_description": "<0>Det er frivillig å fylle ut informasjon i feltene nedenfor.</0><0>Du kan når som helst trekke samtykket ved å slette teksten fra feltene.</0><0>Ved å fylle ut informasjonen i feltene nedenfor så samtykker du til at den legges til din offentlige profilen din i Nasjonalt vitenarkiv. Profilen din er offentlig synlig for alle som benytter Nasjonalt vitenarkiv.</0><0>Ikke oppgi sensitive personopplysninger i feltene da dette vil vises på den offentlige profilen din.</0>",
+      "background_en": "Bakgrunn på engelsk",
+      "background_description": "<0>Det er frivillig å fylle ut informasjon i feltene nedenfor.</0><0>Du kan når som helst trekke samtykket ved å slette teksten fra feltene.</0><0>Ved å fylle ut informasjonen i feltene nedenfor så samtykker du til at den legges til i din offentlige profil i Nasjonalt vitenarkiv. Profilen din er offentlig synlig for alle som benytter Nasjonalt vitenarkiv.</0><0>Ikke oppgi sensitive personopplysninger i feltene da dette vil vises på den offentlige profilen din.</0>",
       "contact_information": "Kontaktinformasjon",
       "edit_promoted_publication": "Legg til/fjern som favoritt",
       "edit_research_profile": "Rediger forskerprofil",
