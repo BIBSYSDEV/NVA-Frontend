@@ -1,4 +1,4 @@
-import { Box, Divider, Paper, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +8,6 @@ import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
@@ -17,8 +16,7 @@ import { Forbidden } from '../../errorpages/Forbidden';
 import NotFound from '../../errorpages/NotFound';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NavigationIconButton } from './NavigationIconButton';
-import { NviApprovals } from './NviApprovals';
-import { NviCandidateActions } from './NviCandidateActions';
+import { NviCandidateActionPanel } from './NviCandidateActionPanel';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
@@ -145,7 +143,11 @@ export const NviCandidatePage = () => {
             )}
           </ErrorBoundary>
 
-          <Paper
+          {nviCandidate && (
+            <NviCandidateActionPanel nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
+          )}
+
+          {/* <Paper
             elevation={0}
             sx={{
               gridArea: 'nvi',
@@ -171,7 +173,7 @@ export const NviCandidatePage = () => {
 
             <Divider sx={{ mt: 'auto' }} />
             <NviApprovals approvals={nviCandidate?.approvals ?? []} totalPoints={pointsSum} />
-          </Paper>
+          </Paper> */}
         </ErrorBoundary>
       )}
     </Box>
