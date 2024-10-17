@@ -1196,7 +1196,7 @@
     "keywords": "Nøkkelord",
     "local_managers": "Lokalt ansvarlige",
     "new_project": {
-      "nfr_project": "NFR-prosjekt",
+      "nfr_grant": "NFR-tilskudd",
       "search_for_project_name_or_placeholder": "Søk etter prosjektnavn eller prosjektleder"
     },
     "no_affiliation": "Ingen tilknytning",
@@ -1211,6 +1211,7 @@
     "popular_science_summary_english": "$t(project.popular_science_summary) (engelsk)",
     "popular_science_summary_norwegian": "$t(project.popular_science_summary) (norsk)",
     "project": "Prosjekt",
+    "grant": "Tilskudd",
     "project_category": "Prosjektkategori",
     "project_has_no_funding": "Prosjektet har ingen finansiering",
     "project_id": "Prosjekt-ID",
