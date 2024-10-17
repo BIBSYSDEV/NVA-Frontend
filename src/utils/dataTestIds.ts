@@ -697,6 +697,8 @@ export const dataTestId = {
       approveButton: 'approve-button',
       candidatesList: 'nvi-candidates-list',
       deleteNoteButton: 'delete-note-button',
+      dialogTabButton: 'dialog-tab-button',
+      logTabButton: 'log-tab-button',
       nextCandidateButton: 'next-candidate-button',
       noteOptionsButton: 'note-options-button',
       previousCandidateButton: 'previous-nvi-candidate-button',
