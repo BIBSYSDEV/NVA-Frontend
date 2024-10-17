@@ -68,7 +68,7 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
           <Divider sx={{ mt: 'auto' }} />
           <NviApprovals approvals={nviCandidate?.approvals ?? []} totalPoints={pointsSum} />
         </StyledTabPanel>
-        <StyledTabPanel value={TabValue.Log} sx={{ p: 0 }}>
+        <StyledTabPanel value={TabValue.Log}>
           {registrationQuery.data && <LogPanel tickets={tickets} registration={registrationQuery.data} />}
         </StyledTabPanel>
       </TabContext>
