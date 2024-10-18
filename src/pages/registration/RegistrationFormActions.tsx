@@ -1,7 +1,7 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, TooltipProps, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
-import { Registration, RegistrationTab } from '../../types/registration.types';
+import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
@@ -40,7 +40,7 @@ export const RegistrationFormActions = ({
   const history = useHistory<RegistrationFormLocationState>();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { values, setTouched, resetForm } = useFormikContext<Registration>();
+  const { values, setTouched, resetForm, isValid } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
@@ -93,6 +93,10 @@ export const RegistrationFormActions = ({
       await saveRegistration(values);
     }
   };
+
+  const disableSaving =
+    (values.status === RegistrationStatus.Published || values.status === RegistrationStatus.PublishedMetadata) &&
+    !isValid;
 
   return (
     <>
@@ -147,13 +151,17 @@ export const RegistrationFormActions = ({
               justifyContent: 'end',
               alignItems: 'center',
             }}>
-            <LoadingButton
-              variant="outlined"
-              loading={isSaving}
-              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={handleSaveClick}>
-              {t('common.save')}
-            </LoadingButton>
+            <TooltipButtonWrapper
+              title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+              <LoadingButton
+                variant="outlined"
+                disabled={disableSaving}
+                loading={isSaving}
+                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                onClick={handleSaveClick}>
+                {t('common.save')}
+              </LoadingButton>
+            </TooltipButtonWrapper>
             <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
               <IconButton
                 onClick={() => setTabNumber(tabNumber + 1)}
@@ -171,14 +179,19 @@ export const RegistrationFormActions = ({
             </Tooltip>
           </Box>
         ) : (
-          <LoadingButton
-            variant="contained"
-            loading={isSaving}
-            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-            onClick={handleSaveClick}
-            sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
-            {t('common.save_and_view')}
-          </LoadingButton>
+          <Box sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
+            <TooltipButtonWrapper
+              title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+              <LoadingButton
+                variant="contained"
+                disabled={disableSaving}
+                loading={isSaving}
+                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                onClick={handleSaveClick}>
+                {t('common.save_and_view')}
+              </LoadingButton>
+            </TooltipButtonWrapper>
+          </Box>
         )}
       </Box>
 
@@ -207,3 +220,13 @@ export const RegistrationFormActions = ({
     </>
   );
 };
+
+// Wraps disabled buttons in <div> to ensure tooltips display correctly
+const TooltipButtonWrapper = ({ children, title }: TooltipProps) =>
+  title ? (
+    <Tooltip title={title}>
+      <div>{children}</div>
+    </Tooltip>
+  ) : (
+    children
+  );
