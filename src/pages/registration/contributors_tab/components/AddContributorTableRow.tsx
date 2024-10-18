@@ -95,7 +95,7 @@ export const CristinPersonTableRow = ({
                     />
                   ) : (
                     <SelectAffiliationsCheckbox
-                      personIsSelected={personIsSelected}
+                      cristinPerson={cristinPerson}
                       affiliation={affiliation}
                       selectedPerson={selectedPerson}
                       setSelectedPerson={setSelectedPerson}
