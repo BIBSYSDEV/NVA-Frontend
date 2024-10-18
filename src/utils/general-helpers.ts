@@ -44,9 +44,22 @@ export const getTimePeriodString = (date1: Date, date2: Date, t: TFunction) => {
 
   if (Number.isNaN(dateDiff) || Number.isNaN(daysCount)) {
     return '';
-  } else if (daysCount === 0) {
+  }
+
+  const isSameDay = date1.toLocaleDateString() === date2.toLocaleDateString();
+  if (isSameDay) {
     return t('common.today');
-  } else if (daysCount < 31) {
+  }
+
+  const isYesterday =
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate() - 1;
+  if (isYesterday) {
+    return t('common.yesterday');
+  }
+
+  if (daysCount < 31) {
     return t('common.x_days', { count: daysCount });
   } else if (daysCount < 365) {
     const monthsCount = Math.floor(daysCount / 31);
