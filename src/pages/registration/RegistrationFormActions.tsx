@@ -13,7 +13,7 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
-import { Registration, RegistrationTab } from '../../types/registration.types';
+import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
@@ -40,7 +40,7 @@ export const RegistrationFormActions = ({
   const history = useHistory<RegistrationFormLocationState>();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { values, setTouched, resetForm } = useFormikContext<Registration>();
+  const { values, setTouched, resetForm, isValid } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
@@ -93,6 +93,10 @@ export const RegistrationFormActions = ({
       await saveRegistration(values);
     }
   };
+
+  const disableSaving =
+    (values.status === RegistrationStatus.Published || values.status === RegistrationStatus.PublishedMetadata) &&
+    !isValid;
 
   return (
     <>
@@ -149,6 +153,7 @@ export const RegistrationFormActions = ({
             }}>
             <LoadingButton
               variant="outlined"
+              disabled={disableSaving}
               loading={isSaving}
               data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
               onClick={handleSaveClick}>
@@ -173,6 +178,7 @@ export const RegistrationFormActions = ({
         ) : (
           <LoadingButton
             variant="contained"
+            disabled={disableSaving}
             loading={isSaving}
             data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
             onClick={handleSaveClick}
