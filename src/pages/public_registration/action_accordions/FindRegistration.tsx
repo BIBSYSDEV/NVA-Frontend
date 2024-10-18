@@ -7,7 +7,7 @@ import { FetchResultsParams, fetchResults } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
-import { Registration } from '../../../types/registration.types';
+import { RegistrationSearchItem } from '../../../types/registration.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
 function isDoi(query: string) {
@@ -15,8 +15,8 @@ function isDoi(query: string) {
 }
 
 interface FindRegistrationProps {
-  setSelectedRegistration: (registration?: Registration) => void;
-  selectedRegistration?: Registration;
+  setSelectedRegistration: (registration?: RegistrationSearchItem) => void;
+  selectedRegistration?: RegistrationSearchItem;
   filteredRegistrationIdentifier: string;
 }
 export const FindRegistration = ({
@@ -51,7 +51,7 @@ export const FindRegistration = ({
       <Typography variant="h3">{t('unpublish_actions.search_for_duplicate')}</Typography>
       <Autocomplete
         options={searchResultNotContainingToBeDeleted}
-        getOptionLabel={(option: Registration | string) => {
+        getOptionLabel={(option: RegistrationSearchItem | string) => {
           if (typeof option === 'string') {
             return option;
           }

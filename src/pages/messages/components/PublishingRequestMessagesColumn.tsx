@@ -31,13 +31,13 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
-          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-            <Typography>
-              {ticket.filesForApproval.length
-                ? t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })
-                : t('registration.files_and_license.files_awaits_approval_unknown')}
-            </Typography>
-          </StyledStatusMessageBox>
+          {ticket.filesForApproval.length > 0 && (
+            <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+              <Typography>
+                {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
+              </Typography>
+            </StyledStatusMessageBox>
+          )}
         </>
       ) : (
         <>
@@ -47,10 +47,14 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
               <Typography>
                 {ticket.approvedFiles.length
                   ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
-                  : t('my_page.messages.files_published_unknown')}
+                  : t('my_page.messages.metadata_published')}
               </Typography>
             ) : (
-              ticket.status === 'Closed' && <Typography>{t('my_page.messages.files_rejected')}</Typography>
+              ticket.status === 'Closed' && (
+                <Typography>
+                  {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
+                </Typography>
+              )
             )}
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>

@@ -52,7 +52,12 @@ export const EditAffiliationModal = ({
 
     // If user tries to change it into already existing affiliation
     if (
-      affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === newAffiliationId)
+      affiliations.some(
+        (affiliation, index) =>
+          index !== affiliationToChangeIndex &&
+          affiliation.type === 'Organization' &&
+          affiliation.id === newAffiliationId
+      )
     ) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
@@ -75,9 +80,7 @@ export const EditAffiliationModal = ({
   return (
     <Modal
       open={affiliationModalIsOpen}
-      onClose={() => {
-        toggleAffiliationModal();
-      }}
+      onClose={toggleAffiliationModal}
       maxWidth="md"
       fullWidth
       headingText={t('registration.contributors.edit_affiliation')}>
