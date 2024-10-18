@@ -151,14 +151,18 @@ export const RegistrationFormActions = ({
               justifyContent: 'end',
               alignItems: 'center',
             }}>
-            <LoadingButton
-              variant="outlined"
-              disabled={disableSaving}
-              loading={isSaving}
-              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={handleSaveClick}>
-              {t('common.save')}
-            </LoadingButton>
+            <Tooltip title={t('registration.cannot_update_published_result_with_validation_errors')}>
+              <span>
+                <LoadingButton
+                  variant="outlined"
+                  disabled={disableSaving}
+                  loading={isSaving}
+                  data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                  onClick={handleSaveClick}>
+                  {t('common.save')}
+                </LoadingButton>
+              </span>
+            </Tooltip>
             <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
               <IconButton
                 onClick={() => setTabNumber(tabNumber + 1)}
@@ -176,15 +180,19 @@ export const RegistrationFormActions = ({
             </Tooltip>
           </Box>
         ) : (
-          <LoadingButton
-            variant="contained"
-            disabled={disableSaving}
-            loading={isSaving}
-            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-            onClick={handleSaveClick}
-            sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
-            {t('common.save_and_view')}
-          </LoadingButton>
+          <Tooltip title={t('registration.cannot_update_published_result_with_validation_errors')}>
+            <span>
+              <LoadingButton
+                variant="contained"
+                disabled={disableSaving}
+                loading={isSaving}
+                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                onClick={handleSaveClick}
+                sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
+                {t('common.save_and_view')}
+              </LoadingButton>
+            </span>
+          </Tooltip>
         )}
       </Box>
 
