@@ -1245,6 +1245,7 @@
     "verify_project_manager": "Identifiser prosjektleder"
   },
   "registration": {
+    "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil",
     "citation_points_to": "Siteringen viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
@@ -1961,8 +1962,7 @@
         "institution_help_description": "<0>Har du tekniske problemer?</0><0>Se og eventuelt meld inn feil til brukerstøtte</0>"
       }
     },
-    "year_published": "Publiseringsår",
-    "cannot_update_published_result_with_validation_errors": "Kan ikke lagre fordi resultatet er publisert og inneholder valideringsfeil"
+    "year_published": "Publiseringsår"
   },
   "search": {
     "additional_participants_one": "+{{count}} deltaker",
