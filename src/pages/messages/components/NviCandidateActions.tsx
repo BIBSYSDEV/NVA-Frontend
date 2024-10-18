@@ -263,6 +263,9 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           </>
         )}
 
+        <Typography variant="h3" gutterBottom component="h2">
+          {t('tasks.nvi.note')}
+        </Typography>
         <Typography paragraph>{t('tasks.nvi.message_description')}</Typography>
         <MessageForm
           hideRequiredAsterisk
