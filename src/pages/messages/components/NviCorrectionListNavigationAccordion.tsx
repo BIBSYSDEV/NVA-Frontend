@@ -71,6 +71,12 @@ export const NviCorrectionListNavigationAccordion = () => {
           onClick={() => openNewCorrectionList('BooksWithLessThan50Pages')}>
           {t('tasks.nvi.correction_list_type.book_with_less_than_50_pages')}
         </SelectableButton>
+        <SelectableButton
+          data-testid={dataTestId.tasksPage.correctionList.unidentifiedContributorWithIdentifiedAffiliationButton}
+          isSelected={selectedNviList === 'UnidentifiedContributorWithIdentifiedAffiliation'}
+          onClick={() => openNewCorrectionList('UnidentifiedContributorWithIdentifiedAffiliation')}>
+          {t('tasks.nvi.correction_list_type.unidentified_contributor_with_identified_affiliation')}
+        </SelectableButton>
       </NavigationList>
     </NavigationListAccordion>
   );

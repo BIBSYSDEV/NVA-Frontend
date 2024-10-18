@@ -77,7 +77,8 @@ const goFromRegistrationWizardToLandingPage = (currentPath: string, newPath: str
   const splittedPath = UrlPathTemplate.RegistrationWizard.split(':identifier');
   const currentPathIsRegistrationWizard =
     currentPath.startsWith(splittedPath[0]) && currentPath.endsWith(splittedPath[1]);
-  const newPathIsLandingPage = currentPath.startsWith(newPath) && !newPath.endsWith(splittedPath[1]);
+  const newPathIsLandingPage =
+    currentPath.startsWith(newPath) && !newPath.endsWith(splittedPath[1]) && newPath !== UrlPathTemplate.Home;
 
   return currentPathIsRegistrationWizard && newPathIsLandingPage;
 };

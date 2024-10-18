@@ -21,7 +21,8 @@ export type CorrectionListId =
   | 'NonApplicableCategoriesWithApplicableChannel'
   | 'AnthologyWithoutChapter'
   | 'AnthologyWithApplicableChapter'
-  | 'BooksWithLessThan50Pages';
+  | 'BooksWithLessThan50Pages'
+  | 'UnidentifiedContributorWithIdentifiedAffiliation';
 
 type CorrectionListSearchConfig = {
   [key in CorrectionListId]: {
@@ -70,6 +71,13 @@ export const correctionListConfig: CorrectionListSearchConfig = {
       categoryShould: [BookType.Anthology],
       hasChildren: true,
       scientificValue: [ScientificValueLevels.LevelOne, ScientificValueLevels.LevelTwo].join(','),
+    },
+    disabledFilters: [],
+  },
+  UnidentifiedContributorWithIdentifiedAffiliation: {
+    i18nKey: 'tasks.nvi.correction_list_type.unidentified_contributor_with_identified_affiliation',
+    queryParams: {
+      unidentifiedNorwegian: true,
     },
     disabledFilters: [],
   },
