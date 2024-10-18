@@ -159,51 +159,55 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
       <Box sx={{ m: '1rem' }}>
         {sortedNotes.length > 0 && (
-          <Box
-            component="ul"
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              listStyleType: 'none',
-              p: 0,
-              m: '0 0 1rem 0',
-              gap: '0.25rem',
-            }}>
-            {sortedNotes.map((note) => {
-              let deleteFunction: (() => Promise<void>) | undefined = undefined;
-              const noteIdentifier = note.identifier;
+          <>
+            <Box
+              component="ul"
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                listStyleType: 'none',
+                p: 0,
+                m: 0,
+                gap: '0.25rem',
+              }}>
+              {sortedNotes.map((note) => {
+                let deleteFunction: (() => Promise<void>) | undefined = undefined;
+                const noteIdentifier = note.identifier;
 
-              if (user?.nvaUsername && note.username === user.nvaUsername) {
-                if (note.type === 'FinalizedNote') {
-                  deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
-                } else if (note.type === 'GeneralNote' && noteIdentifier) {
-                  deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
+                if (user?.nvaUsername && note.username === user.nvaUsername) {
+                  if (note.type === 'FinalizedNote') {
+                    deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
+                  } else if (note.type === 'GeneralNote' && noteIdentifier) {
+                    deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
+                  }
                 }
-              }
 
-              const isDeleting =
-                (statusMutation.isPending && statusMutation.variables?.status === 'Pending') ||
-                (deleteNoteMutation.isPending && deleteNoteMutation.variables === noteIdentifier);
+                const isDeleting =
+                  (statusMutation.isPending && statusMutation.variables?.status === 'Pending') ||
+                  (deleteNoteMutation.isPending && deleteNoteMutation.variables === noteIdentifier);
 
-              return (
-                <ErrorBoundary key={noteIdentifier ?? note.date}>
-                  <MessageItem
-                    text={note.content}
-                    date={note.date}
-                    username={note.username}
-                    backgroundColor="nvi.main"
-                    showOrganization
-                    menuElement={
-                      !!user &&
-                      user.nvaUsername === note.username && (
-                        <NviNoteMenu onDelete={deleteFunction} isDeleting={isDeleting} />
-                      )
-                    }
-                  />
-                </ErrorBoundary>
-              );
-            })}
-          </Box>
+                return (
+                  <ErrorBoundary key={noteIdentifier ?? note.date}>
+                    <MessageItem
+                      text={note.content}
+                      date={note.date}
+                      username={note.username}
+                      backgroundColor="nvi.main"
+                      showOrganization
+                      menuElement={
+                        !!user &&
+                        user.nvaUsername === note.username && (
+                          <NviNoteMenu onDelete={deleteFunction} isDeleting={isDeleting} />
+                        )
+                      }
+                    />
+                  </ErrorBoundary>
+                );
+              })}
+            </Box>
+
+            <Divider sx={{ my: '1rem' }} />
+          </>
         )}
 
         {myApproval?.status !== 'Approved' && (
@@ -263,7 +267,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         <MessageForm
           hideRequiredAsterisk
           confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
-          fieldLabel={t('common.message')}
+          fieldLabel={t('tasks.nvi.note')}
           buttonTitle={t('tasks.nvi.save_note')}
         />
       </Box>
