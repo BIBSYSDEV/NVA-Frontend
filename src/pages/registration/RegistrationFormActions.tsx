@@ -1,7 +1,7 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, TooltipProps, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -151,18 +151,17 @@ export const RegistrationFormActions = ({
               justifyContent: 'end',
               alignItems: 'center',
             }}>
-            <Tooltip title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
-              <div>
-                <LoadingButton
-                  variant="outlined"
-                  disabled={disableSaving}
-                  loading={isSaving}
-                  data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-                  onClick={handleSaveClick}>
-                  {t('common.save')}
-                </LoadingButton>
-              </div>
-            </Tooltip>
+            <TooltipWrapper
+              title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+              <LoadingButton
+                variant="outlined"
+                disabled={disableSaving}
+                loading={isSaving}
+                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                onClick={handleSaveClick}>
+                {t('common.save')}
+              </LoadingButton>
+            </TooltipWrapper>
             <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
               <IconButton
                 onClick={() => setTabNumber(tabNumber + 1)}
@@ -180,18 +179,19 @@ export const RegistrationFormActions = ({
             </Tooltip>
           </Box>
         ) : (
-          <Tooltip title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
-            <Box sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
-              <LoadingButton
-                variant="contained"
-                disabled={disableSaving}
-                loading={isSaving}
-                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-                onClick={handleSaveClick}>
-                {t('common.save_and_view')}
-              </LoadingButton>
-            </Box>
-          </Tooltip>
+          <TooltipWrapper
+            title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}
+            sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
+            <LoadingButton
+              variant="contained"
+              disabled={disableSaving}
+              loading={isSaving}
+              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+              onClick={handleSaveClick}
+              sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
+              {t('common.save_and_view')}
+            </LoadingButton>
+          </TooltipWrapper>
         )}
       </Box>
 
@@ -220,3 +220,12 @@ export const RegistrationFormActions = ({
     </>
   );
 };
+
+const TooltipWrapper = ({ children, title, sx }: TooltipProps) =>
+  title ? (
+    <Tooltip title={title}>
+      <Box sx={sx}>{children}</Box>
+    </Tooltip>
+  ) : (
+    children
+  );
