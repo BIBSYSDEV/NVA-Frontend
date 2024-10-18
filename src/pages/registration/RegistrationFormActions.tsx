@@ -151,8 +151,8 @@ export const RegistrationFormActions = ({
               justifyContent: 'end',
               alignItems: 'center',
             }}>
-            <Tooltip title={t('registration.cannot_update_published_result_with_validation_errors')}>
-              <span>
+            <Tooltip title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+              <div>
                 <LoadingButton
                   variant="outlined"
                   disabled={disableSaving}
@@ -161,7 +161,7 @@ export const RegistrationFormActions = ({
                   onClick={handleSaveClick}>
                   {t('common.save')}
                 </LoadingButton>
-              </span>
+              </div>
             </Tooltip>
             <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
               <IconButton
@@ -180,18 +180,17 @@ export const RegistrationFormActions = ({
             </Tooltip>
           </Box>
         ) : (
-          <Tooltip title={t('registration.cannot_update_published_result_with_validation_errors')}>
-            <span>
+          <Tooltip title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+            <Box sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
               <LoadingButton
                 variant="contained"
                 disabled={disableSaving}
                 loading={isSaving}
                 data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-                onClick={handleSaveClick}
-                sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
+                onClick={handleSaveClick}>
                 {t('common.save_and_view')}
               </LoadingButton>
-            </span>
+            </Box>
           </Tooltip>
         )}
       </Box>
