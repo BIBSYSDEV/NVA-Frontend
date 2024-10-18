@@ -64,7 +64,6 @@ export const RegistrationFormActions = ({
         ['registration', updateRegistrationResponse.data.identifier],
         updateRegistrationResponse.data
       );
-      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
 
       const newErrors = validateForm(updateRegistrationResponse.data);
       resetForm({
@@ -72,6 +71,12 @@ export const RegistrationFormActions = ({
         errors: newErrors,
         touched: setNestedObjectValues(newErrors, true),
       });
+
+      // Add a fixed wait to ensure that Formik has updated the form before navigating.
+      // Without this we experienced some issues with RouteLeavingGuard on some browsers (NP-47920).
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
 
       if (isLastTab) {
         if (history.location.state?.previousPath) {
