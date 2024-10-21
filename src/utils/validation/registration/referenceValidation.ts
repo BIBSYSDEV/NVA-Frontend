@@ -54,7 +54,7 @@ import {
   ResearchDataPublicationContext,
   ResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
-import { ContextPublisher, PublicationChannelType } from '../../../types/registration.types';
+import { ContextPublisher, PublicationChannelType, UnconfirmedDocument } from '../../../types/registration.types';
 import { isPeriodicalMediaContribution } from '../../registration-helpers';
 import { YupShape } from '../validationHelpers';
 
@@ -304,8 +304,22 @@ export const reportReference = baseReference.shape({
 });
 
 // Degree
+const unconfirmedDocumentSchema = Yup.object({
+  type: Yup.string(),
+  text: Yup.string().nonNullable().required(resourceErrorMessage.typeRequired),
+});
+
+const confirmedDocumentSchema = Yup.object({
+  type: Yup.string(),
+  identifier: Yup.string().url().required(),
+  sequence: Yup.number().required(),
+});
+
 const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
+  related: Yup.array().of(
+    Yup.lazy((item) => (item.type === 'UnconfirmedDocument' ? unconfirmedDocumentSchema : confirmedDocumentSchema))
+  ),
 });
 
 const degreePublicationContext = Yup.object<YupShape<DegreePublicationContext>>({

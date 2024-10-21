@@ -1,7 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Box, Button, List, TextField, Typography } from '@mui/material';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
@@ -14,7 +14,6 @@ import { SearchRelatedResultField } from '../../components/SearchRelatedResultFi
 import { SeriesFields } from '../../components/SeriesFields';
 import { IsbnAndPages } from '../../components/isbn_and_pages/IsbnAndPages';
 import { RelatedResourceRow } from '../research_data_types/RelatedResourceRow';
-import i18n from '../../../../../translations/i18n';
 
 export const PhdForm = () => {
   const { t } = useTranslation();
@@ -69,12 +68,8 @@ export const PhdForm = () => {
                     gap: '0.25rem 1rem',
                     mb: '0.5rem',
                   }}>
-                  <Field
-                    name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}
-                    validate={(value: string) =>
-                      !value ? t('feedback.validation.is_required', { field: t('common.result') }) : undefined
-                    }>
-                    {({ field, meta }: FieldProps<string>) => (
+                  <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
+                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <TextField
                         {...field}
                         label={t('registration.resource_type.related_result')}
@@ -82,8 +77,8 @@ export const PhdForm = () => {
                         multiline
                         fullWidth
                         required
-                        error={!!meta.error}
-                        helperText={meta.error ? meta.error : ''}
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
                       />
                     )}
                   </Field>
