@@ -116,6 +116,13 @@ export interface UnpublishingNote {
   createdDate: string;
 }
 
+interface GeneralPublicationNote {
+  type: 'PublicationNote';
+  note: string;
+}
+
+type PublicationNote = UnpublishingNote | GeneralPublicationNote;
+
 export interface BaseRegistration {
   readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
@@ -133,7 +140,7 @@ export interface BaseRegistration {
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
   readonly allowedOperations?: RegistrationOperation[];
-  readonly publicationNotes?: UnpublishingNote[];
+  readonly publicationNotes?: PublicationNote[];
   readonly importDetails?: ImportDetail[];
   subjects: string[];
   projects: ResearchProject[];

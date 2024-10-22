@@ -18,8 +18,8 @@ const logBackgroundColor = {
   DoiRequest: 'doiRequest.light',
   GeneralSupportCase: 'generalSupportCase.light',
   Import: 'centralImport.light',
-  Created: 'publishingRequest.light',
-  MetadataPublished: 'publishingRequest.light',
+  Created: 'publishingRequest.main',
+  MetadataPublished: 'publishingRequest.main',
   Unpublished: 'publishingRequest.light',
   Republished: 'publishingRequest.light',
 };
