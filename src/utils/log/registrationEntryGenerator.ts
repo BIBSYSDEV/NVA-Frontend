@@ -13,12 +13,16 @@ export function generateRegistrationLogEntries(
   const entries = [
     generateCreatedEntry(registration, t),
     generateMetadataPublishedEntry(registration, tickets, t),
-    ...generateUnpublishedEntries(registration, tickets, t),
+    ...generateUnpublishedAndRepublishingEntries(registration, tickets, t),
   ];
   return entries.filter((entry) => entry !== undefined);
 }
 
-const generateUnpublishedEntries = (registration: Registration, tickets: Ticket[], t: TFunction): LogEntry[] => {
+const generateUnpublishedAndRepublishingEntries = (
+  registration: Registration,
+  tickets: Ticket[],
+  t: TFunction
+): LogEntry[] => {
   const unpublishingNotes = registration.publicationNotes?.filter((note) => note.type === 'UnpublishingNote');
 
   if (!unpublishingNotes || unpublishingNotes.length === 0) {
@@ -38,6 +42,7 @@ const generateUnpublishedEntries = (registration: Registration, tickets: Ticket[
   }));
 
   unpublishingNotes.forEach((unpublishingNote) => {
+    // Assume that a newer and completed publishing ticket means that the result has been republished
     const republishingTicket = tickets.find(
       (ticket) =>
         ticket.type === 'PublishingRequest' &&
