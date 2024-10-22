@@ -318,15 +318,7 @@ const confirmedDocumentSchema = Yup.object({
 const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
   related: Yup.array()
-    .of(
-      Yup.lazy((item) => {
-        if (item.type === 'UnconfirmedDocument') {
-          return unconfirmedDocumentSchema;
-        } else {
-          return confirmedDocumentSchema;
-        }
-      })
-    )
+    .of(Yup.lazy((item) => (item.type === 'UnconfirmedDocument' ? unconfirmedDocumentSchema : confirmedDocumentSchema)))
     .when('$publicationInstanceType', {
       is: DegreeType.Phd,
       then: (schema) => schema.required(),
