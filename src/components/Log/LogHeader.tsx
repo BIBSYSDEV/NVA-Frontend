@@ -27,7 +27,7 @@ export const LogHeader = ({ title, type, modifiedDate }: Pick<LogEntryType, 'tit
 const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
   const { t } = useTranslation();
   return (
-    <AvatarMui sx={{ mr: '0.5rem' }} alt={t('log.header_icon', { type: type })}>
+    <AvatarMui sx={{ mr: '0.5rem', bgcolor: iconBackgroundColor[type] }} alt={t('log.header_icon', { type: type })}>
       {type === 'PublishingRequest' ? (
         <InsertDriveFileOutlined color="primary" />
       ) : type === 'DoiRequest' ? (
@@ -43,4 +43,15 @@ const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
       ) : undefined}
     </AvatarMui>
   );
+};
+
+const iconBackgroundColor = {
+  PublishingRequest: 'publishingRequest.main',
+  DoiRequest: 'doiRequest.main',
+  GeneralSupportCase: 'generalSupportCase.main',
+  Import: 'centralImport.main',
+  Created: 'primary.light',
+  MetadataPublished: 'publishingRequest.main',
+  Unpublished: 'publishingRequest.main',
+  Republished: 'publishingRequest.main',
 };
