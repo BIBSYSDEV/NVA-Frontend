@@ -19,40 +19,34 @@ export function generateRegistrationLogEntries(
 }
 
 const generateUnpublishedEntries = (registration: Registration, tickets: Ticket[], t: TFunction): LogEntry[] => {
-  const publicationNotes = registration.publicationNotes ?? [];
-  const unpublishingNotes = publicationNotes.filter((note) => note.type === 'UnpublishingNote');
+  const unpublishingNotes = registration.publicationNotes?.filter((note) => note.type === 'UnpublishingNote');
 
-  if (unpublishingNotes.length === 0) {
+  if (!unpublishingNotes || unpublishingNotes.length === 0) {
     return [];
   }
 
-  const unpublishingLogEntries = unpublishingNotes.map((note) => {
-    const unpublishingLogEntry: LogEntry = {
-      type: 'Unpublished',
-      title: t('log.titles.result_unpublished'),
-      modifiedDate: note.createdDate,
-      actions: [
-        {
-          actor: note.createdBy,
-          items: [{ description: note.note }],
-        },
-      ],
-    };
-    return unpublishingLogEntry;
-  });
+  const logEntries: LogEntry[] = unpublishingNotes.map((note) => ({
+    type: 'Unpublished',
+    title: t('log.titles.result_unpublished'),
+    modifiedDate: note.createdDate,
+    actions: [
+      {
+        actor: note.createdBy,
+        items: [{ description: note.note }],
+      },
+    ],
+  }));
 
-  const completedPublishingTickets = tickets.filter(
-    (ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Completed'
-  );
-
-  const republishingLogEntries: LogEntry[] = [];
   unpublishingNotes.forEach((unpublishingNote) => {
-    const republishingTicket = completedPublishingTickets.find(
-      (ticket) => new Date(ticket.createdDate) > new Date(unpublishingNote.createdDate)
+    const republishingTicket = tickets.find(
+      (ticket) =>
+        ticket.type === 'PublishingRequest' &&
+        ticket.status === 'Completed' &&
+        new Date(ticket.createdDate) > new Date(unpublishingNote.createdDate)
     );
 
     if (republishingTicket) {
-      const republihsingLogEntry: LogEntry = {
+      const republishingLogEntry: LogEntry = {
         type: 'Republished',
         title: t('log.titles.result_republished'),
         modifiedDate: republishingTicket.createdDate,
@@ -63,11 +57,11 @@ const generateUnpublishedEntries = (registration: Registration, tickets: Ticket[
           },
         ],
       };
-      republishingLogEntries.push(republihsingLogEntry);
+      logEntries.push(republishingLogEntry);
     }
   });
 
-  return [...unpublishingLogEntries, ...republishingLogEntries];
+  return logEntries;
 };
 
 function generateMetadataPublishedEntry(
