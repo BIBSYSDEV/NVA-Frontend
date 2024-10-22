@@ -1,9 +1,7 @@
-import {
-  CloseOutlined,
-  DoNotDisturbOutlined,
-  InsertDriveFileOutlined,
-  InsertPageBreakOutlined,
-} from '@mui/icons-material';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import DoNotDisturbOutlinedIcon from '@mui/icons-material/DoNotDisturbOutlined';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import InsertPageBreakOutlinedIcon from '@mui/icons-material/InsertPageBreakOutlined';
 import { Box, SvgIconProps, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LogActionItem as LogActionItemType } from '../../types/log.types';
@@ -50,13 +48,13 @@ const LogActionItemIcon = ({ fileIcon }: Pick<LogActionItemType, 'fileIcon'>) =>
   const iconProps: SvgIconProps = { color: 'primary', sx: { height: '1rem', width: '1rem' } };
   switch (fileIcon) {
     case 'file':
-      return <InsertDriveFileOutlined {...iconProps} />;
+      return <InsertDriveFileOutlinedIcon {...iconProps} />;
     case 'archivedFile':
-      return <InsertPageBreakOutlined {...iconProps} />;
+      return <InsertPageBreakOutlinedIcon {...iconProps} />;
     case 'deletedFile':
-      return <CloseOutlined {...iconProps} />;
+      return <CloseOutlinedIcon {...iconProps} />;
     case 'rejectedFile':
-      return <DoNotDisturbOutlined {...iconProps} />;
+      return <DoNotDisturbOutlinedIcon {...iconProps} />;
     default:
       return;
   }

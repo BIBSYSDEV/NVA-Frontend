@@ -1,10 +1,8 @@
-import {
-  AddLinkOutlined,
-  AddRounded,
-  CloudOutlined,
-  InsertDriveFileOutlined,
-  LocalOfferOutlined,
-} from '@mui/icons-material';
+import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
 import { Avatar as AvatarMui, Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -29,15 +27,15 @@ const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
   return (
     <AvatarMui sx={{ mr: '0.5rem', bgcolor: iconBackgroundColor[type] }} alt={t('log.header_icon', { type: type })}>
       {type === 'PublishingRequest' ? (
-        <InsertDriveFileOutlined color="primary" />
+        <InsertDriveFileOutlinedIcon color="primary" />
       ) : type === 'DoiRequest' ? (
-        <AddLinkOutlined color="primary" />
+        <AddLinkOutlinedIcon color="primary" />
       ) : type === 'Import' ? (
-        <CloudOutlined color="primary" />
+        <CloudOutlinedIcon color="primary" />
       ) : type === 'Created' ? (
-        <AddRounded color="secondary" />
+        <AddRoundedIcon color="secondary" />
       ) : type === 'MetadataPublished' ? (
-        <LocalOfferOutlined color="primary" />
+        <LocalOfferOutlinedIcon color="primary" />
       ) : type === 'Unpublished' || type === 'Republished' ? (
         <NotesIcon color="primary" />
       ) : undefined}
