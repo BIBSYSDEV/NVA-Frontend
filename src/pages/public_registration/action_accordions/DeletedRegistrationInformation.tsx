@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { ProfilePicture } from '../../../components/ProfilePicture';
-import { PublicationNote, Registration } from '../../../types/registration.types';
+import { Registration } from '../../../types/registration.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
@@ -11,7 +11,7 @@ import { StyledStatusMessageBox } from '../../messages/components/PublishingRequ
 
 interface DeletedRegistrationInformationProps {
   registration: Registration;
-  unpublishingNote: PublicationNote;
+  unpublishingNote: UnpublishingNote;
 }
 
 export const DeletedRegistrationInformation = ({

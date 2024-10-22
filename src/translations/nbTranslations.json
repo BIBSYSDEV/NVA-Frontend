@@ -712,7 +712,8 @@
       "metadata_published": "Metadata publisert",
       "metadata_published_in_nva": "Metadata publisert i NVA",
       "metadata_updated": "Metadata oppdatert",
-      "result_unpublished": "Resultat avpublisert"
+      "result_unpublished": "Resultat avpublisert",
+      "result_republished": "Resultat republisert"
     },
     "unknown_filename": "Ukjent filnavn"
   },

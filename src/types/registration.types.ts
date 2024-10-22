@@ -109,11 +109,11 @@ export type RegistrationOperation =
   | 'support-request-create'
   | 'support-request-approve';
 
-export interface PublicationNote {
-  type: 'UnpublishingNote' | 'PublicationNote';
+export interface UnpublishingNote {
+  type: 'UnpublishingNote';
   note: string;
-  createdBy?: string;
-  createdDate?: string;
+  createdBy: string;
+  createdDate: string;
 }
 
 export interface BaseRegistration {
@@ -133,7 +133,7 @@ export interface BaseRegistration {
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
   readonly allowedOperations?: RegistrationOperation[];
-  readonly publicationNotes?: PublicationNote[];
+  readonly publicationNotes?: UnpublishingNote[];
   readonly importDetails?: ImportDetail[];
   subjects: string[];
   projects: ResearchProject[];
