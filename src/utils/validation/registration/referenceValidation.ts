@@ -306,7 +306,7 @@ export const reportReference = baseReference.shape({
 // Degree
 const unconfirmedDocumentSchema = Yup.object({
   type: Yup.string(),
-  text: Yup.string().nonNullable().required(resourceErrorMessage.typeRequired),
+  text: Yup.string().required(resourceErrorMessage.typeRequired),
 });
 
 const confirmedDocumentSchema = Yup.object({
@@ -317,9 +317,21 @@ const confirmedDocumentSchema = Yup.object({
 
 const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
-  related: Yup.array().of(
-    Yup.lazy((item) => (item.type === 'UnconfirmedDocument' ? unconfirmedDocumentSchema : confirmedDocumentSchema))
-  ),
+  related: Yup.array()
+    .of(
+      Yup.lazy((item) => {
+        if (item.type === 'UnconfirmedDocument') {
+          return unconfirmedDocumentSchema;
+        } else {
+          return confirmedDocumentSchema;
+        }
+      })
+    )
+    .when('$publicationInstanceType', {
+      is: DegreeType.Phd,
+      then: (schema) => schema.required(),
+      otherwise: (schema) => schema.nullable(),
+    }),
 });
 
 const degreePublicationContext = Yup.object<YupShape<DegreePublicationContext>>({
