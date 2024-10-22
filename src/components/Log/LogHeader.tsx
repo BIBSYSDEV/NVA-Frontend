@@ -5,6 +5,7 @@ import {
   InsertDriveFileOutlined,
   LocalOfferOutlined,
 } from '@mui/icons-material';
+import NotesIcon from '@mui/icons-material/Notes';
 import { Avatar as AvatarMui, Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LogEntry as LogEntryType } from '../../types/log.types';
@@ -37,6 +38,8 @@ const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
         <AddRounded color="secondary" />
       ) : type === 'MetadataPublished' ? (
         <LocalOfferOutlined color="primary" />
+      ) : type === 'Unpublished' || type === 'Republished' ? (
+        <NotesIcon color="primary" />
       ) : undefined}
     </AvatarMui>
   );
@@ -49,4 +52,6 @@ const iconBackgroundColor = {
   Import: 'centralImport.main',
   Created: 'primary.light',
   MetadataPublished: 'publishingRequest.main',
+  Unpublished: 'publishingRequest.main',
+  Republished: 'publishingRequest.main',
 };

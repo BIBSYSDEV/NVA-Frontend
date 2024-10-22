@@ -1,18 +1,44 @@
 import { TFunction } from 'i18next';
-import { SiktIdentifier } from '../constants';
 import { CristinApiPath } from '../../api/apiPaths';
 import { LogEntry } from '../../types/log.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
+import { SiktIdentifier } from '../constants';
 
 export function generateRegistrationLogEntries(
   registration: Registration,
   tickets: Ticket[],
   t: TFunction
 ): LogEntry[] {
-  const entries = [generateCreatedEntry(registration, t), generateMetadataPublishedEntry(registration, tickets, t)];
+  const entries = [
+    generateCreatedEntry(registration, t),
+    generateMetadataPublishedEntry(registration, tickets, t),
+    ...generateUnpublishedEntries(registration, t),
+  ];
   return entries.filter((entry) => entry !== undefined);
 }
+
+const generateUnpublishedEntries = (registration: Registration, t: TFunction): LogEntry[] => {
+  const publicationNotes = registration.publicationNotes ?? [];
+  const unpublishingNotes = publicationNotes
+    .filter((note) => note.type === 'UnpublishingNote')
+    .map(
+      (note) =>
+        ({
+          type: 'Unpublished',
+          title: t('log.titles.result_unpublished'),
+          modifiedDate: note.createdDate,
+          actions: [
+            {
+              actor: note.createdBy,
+              items: [{ description: note.note }],
+            },
+          ],
+        }) as LogEntry
+    );
+
+  return unpublishingNotes;
+};
 
 function generateMetadataPublishedEntry(
   registration: Registration,
