@@ -106,6 +106,8 @@ export const ActionPanelContent = ({
     },
   });
 
+  console.log(canCreatePublishingTicket, canApprovePublishingTicket, hasOtherPublishingRights);
+
   return (
     <>
       {(canCreatePublishingTicket || canApprovePublishingTicket || hasOtherPublishingRights) && (
