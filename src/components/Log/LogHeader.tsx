@@ -37,7 +37,7 @@ const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
         <AddRoundedIcon color="secondary" />
       ) : type === 'MetadataPublished' ? (
         <LocalOfferOutlinedIcon color="primary" />
-      ) : type === 'Republished' || type === 'UnpublishRequest' ? (
+      ) : type === 'UnpublishRequest' || type === 'Republished' ? (
         <NotesIcon color="primary" />
       ) : type === 'Deleted' ? (
         <DeleteOutlineIcon color="primary" />
