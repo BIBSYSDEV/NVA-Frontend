@@ -3,7 +3,7 @@
     "availability_statement": "Tilgjengelegheitserklæring",
     "description": {
       "paragraph0": {
-        "bullet_point0": "Oppfyll krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit ope vitenarkiv.",
+        "bullet_point0": "Oppfyll krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit ope vitenarkiv",
         "bullet_point1": "Publisere rapportar sjølv, studentoppgåver og anna materiale produsert ved institusjonen",
         "intro": "Med NVA får norske forskingsinstitusjonar ei teneste for å:"
       },
@@ -462,14 +462,14 @@
       "registrator_publishes_without_curator_description": "Institusjonen bestemmer kven som er Registrator."
     },
     "retention_strategy": {
-      "creator_can_override_rrs_text": "<0>Institusjonen har opna opp for at registrator sjølv kan velje å ikkje følgje institusjonen sin rettspolitikk (RRS). Med å følgje rettspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></0> <1>I NVA fjernar registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å fjerne avkryssinga av RRS, blir lisensen som er sett på fila fjerna og lisensen må settast på nytt.</1>",
-      "curator_can_override_rrs_text": "<0>Publiseringskurator har tilgang til å setje at filer ikkje følgjer institusjonen sin rettspolitikk (RRS).</0> <0>Om registrator ikkje ynskjer å følgje institusjonen sin rettspolitikk (RRS), sjå på vilkår for ikkje å følgje RRS på informasjonssida om institusjonen sin rettspolitikk.</0> <1>Med å følgje rettspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S</0>.</1>",
-      "customer_has_no_rrs": "<0>Institusjonen har ikkje oppgitt ein rettspolitikk (RRS) i NVA.</0> <0>Utan institusjonell rettspolitikk er det opp til registrator å setje korrekt lisens på akseptert versjon av filer i registrering av vitskaplege artiklar.</0> <1>Det er opp til registrator å eventuelt merke at publikasjonen skal følgje ein RRS. Ved å følgje rettspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></1> <0>Om publikasjonen er finansiert av ein aktør som pålegg å følgje RRS (ref. Plan S), må RRS settast. I NVA set registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å avkrysse for RRS så setjast lisens på fila til CC-BY.</0>",
-      "customer_has_rrs_text": "<0>Institusjonen har oppgitt ein rettspolitikk (RRS) i NVA.</0> <0>Lisens CC-BY blir sett når du vel akseptert versjon på fila i registreringa av ein vitskapleg artikkel i NVA.</0>",
-      "possible_not_to_follow_rrs": "Mogleg å ikkje følgje institusjonen sin rettspolitikk",
+      "creator_can_override_rrs_text": "<0>Institusjonen har opna opp for at registrator sjølv kan velje å ikkje følgje institusjonen sin rettigheitspolitikk (RRS). Med å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></0> <1>I NVA fjernar registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å fjerne avkryssinga av RRS, blir lisensen som er sett på fila fjerna og lisensen må settast på nytt.</1>",
+      "curator_can_override_rrs_text": "<0>Publiseringskurator har tilgang til å setje at filer ikkje følgjer institusjonen sin rettigheitspolitikk (RRS).</0> <0>Om registrator ikkje ynskjer å følgje institusjonen sin rettigheitspolitikk (RRS), sjå på vilkår for ikkje å følgje RRS på informasjonssida om institusjonen sin rettigheitspolitikk.</0> <1>Med å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S</0>.</1>",
+      "customer_has_no_rrs": "<0>Institusjonen har ikkje oppgitt ein rettigheitspolitikk (RRS) i NVA.</0> <0>Utan institusjonell rettigheitspolitikk er det opp til registrator å setje korrekt lisens på akseptert versjon av filer i registrering av vitskaplege artiklar.</0> <1>Det er opp til registrator å eventuelt merke at publikasjonen skal følgje ein RRS. Ved å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></1> <0>Om publikasjonen er finansiert av ein aktør som pålegg å følgje RRS (ref. Plan S), må RRS settast. I NVA set registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å avkrysse for RRS så setjast lisens på fila til CC-BY.</0>",
+      "customer_has_rrs_text": "<0>Institusjonen har oppgitt ein rettigheitspolitikk (RRS) i NVA.</0> <0>Lisens CC-BY blir sett når du vel akseptert versjon på fila i registreringa av ein vitskapleg artikkel i NVA.</0>",
+      "possible_not_to_follow_rrs": "Mogleg å ikkje følgje institusjonen sin rettigheitspolitikk",
       "rights_retention_strategy": "Rights Retention Strategy (RRS)",
-      "rrs": "Rettspolitikk",
-      "rrs_info_page": "Institusjonane si informasjonsside om rettspolitikk",
+      "rrs": "Rettigheitspolitikk",
+      "rrs_info_page": "Institusjonane si informasjonsside om rettigheitspolitikk",
       "rrs_link": "Skriv inn lenkje",
       "rrs_override": "Registrator kan fråskrive seg RRS",
       "rrs_required_link": "*Felt med stjerne er obligatorisk"
@@ -570,7 +570,7 @@
       "update_publish_strategy": "Kunne ikkje oppdatere publiseringsstrategi",
       "update_publishing_request": "Kunne ikkje oppdatere publiseringsførespurnad",
       "update_registration": "Kunne ikkje oppdatere registrering",
-      "update_rights_retention_strategy": "Kunne ikkje oppdatere rettspolitikk",
+      "update_rights_retention_strategy": "Kunne ikkje oppdatere rettigheitspolitikk",
       "update_ticket_assignee": "Kunne ikkje setje kurator",
       "update_ticket_status": "Kunne ikkje oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feila"
@@ -612,7 +612,7 @@
       "update_promoted_publication": "Favorittmarkering blei oppdatert",
       "update_publish_strategy": "Publiseringsstrategi vart oppdatert",
       "update_registration": "Registreringa er oppdatert",
-      "update_rights_retention_strategy": "Rettspolitikk blei oppdatert",
+      "update_rights_retention_strategy": "Rettigheitspolitikk blei oppdatert",
       "update_ticket_assignee": "Kurator blei oppdatert",
       "update_vocabulary": "{{vocabulary}} er no {{status}}"
     },
@@ -1156,7 +1156,7 @@
     "create_new_project": "Oppret nytt prosjekt",
     "create_project": "Nytt prosjekt",
     "duplicate_project_heading": "Søkjeresultat",
-    "duplicate_project_warning": "Det er eit prosjekt i NVA med same tittel. Ver venleg og ikkje registrer prosjektetviss det er det same prosjektet, slik at du ikkje opprettar duplikat.",
+    "duplicate_project_warning": "Det er eit prosjekt i NVA med same tittel. Ver venleg og ikkje registrer prosjektet viss det er det same prosjektet, slik at du ikkje opprettar duplikat.",
     "duplicate_title_warning": "Det er eit prosjekt i NVA med same tittel. Ver venleg og avbryt registreringa viss det er det same prosjektet du prøver å registrere, slik at du ikkje opprettar duplikat.",
     "edit_project": "Endre prosjekt",
     "error": {
@@ -1168,7 +1168,7 @@
       "category": "Kategori",
       "date": "Dato",
       "keywords": "Nøkkelord",
-      "no_related_projects_description": "Prosjektet har ingen tilknytte prosjekt enda.",
+      "no_related_projects_description": "Prosjektet er ikkje knytte til andre prosjekt enno.",
       "no_related_registrations_description": "Prosjektet må lagrast før det kan bli knytt til forskingsresultat",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekt som er relatert til dette prosjektet",
@@ -1201,7 +1201,7 @@
       "search_for_project_name_or_placeholder": "Søk etter prosjektnamn eller prosjektleiar"
     },
     "no_affiliation": "Inga tilknyting",
-    "no_duplicate_title": "Ingen resultat funne med same tittel",
+    "no_duplicate_title": "Ingen prosjekt funne med same tittel.",
     "no_participants": "Ingen registrerte deltakarar.",
     "no_related_projects": "Ingen relaterte prosjekt.",
     "no_results": "Ingen publiserte resultat.",
@@ -1244,6 +1244,7 @@
     "verify_project_manager": "Identifiser prosjektleiar"
   },
   "registration": {
+    "cannot_update_published_result_with_validation_errors": "Kan ikkje lagre fordi resultatet er publisert og inneheld valideringsfeil",
     "citation_points_to": "Siteringa viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknyting",
@@ -1404,10 +1405,10 @@
       "find_journal_in_channel_register": "Sjå informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Sjå informasjon om utgjevaren i Kanalregisteret",
       "find_series_in_channel_register": "Sjå informasjon om serien i Kanalregisteret",
-      "follow_institution_rights_policy": "Eg ønskjer å følgje <0>rettspolitikken</0> til institusjonen min.",
+      "follow_institution_rights_policy": "Eg ønskjer å følgje <0>rettigheitspolitikken</0> til institusjonen min.",
       "info_from_channel_register": "Meir informasjon om vald publiseringskanal",
-      "institution_prefers_cc_by": "Din institusjon har ein <0>rettspolitikk</0> som anbefaler CC-BY.",
-      "institution_rights_policy_opt_out_instructions": "Om du ønskjer å reservere deg frå institusjonen sin rettspolitikk, må du sjekke om det er mogleg ved din institusjon. Kontakt kuratorstøtte.",
+      "institution_prefers_cc_by": "Din institusjon har ein <0>rettigheitspolitikk</0> som anbefaler CC-BY.",
+      "institution_rights_policy_opt_out_instructions": "Om du ønskjer å reservere deg frå institusjonen sin rettigheitspolitikk, må du sjekke om det er mogleg ved din institusjon. Kontakt kuratorstøtte.",
       "license": "Lisens",
       "licenses": "Lisensar",
       "link_to_resource": "Lenkje til ressurs",
@@ -1416,7 +1417,7 @@
       "no_duplicates": "Kunne ikkje leggje til \"{{fileName}}\", sidan ei fil med same namn allereie finst",
       "no_files_or_links_present_in_this_registration": "Det er ikkje lagt til fil eller lenkje for registreringa",
       "open_file": "Opne fil",
-      "opted_out_of_rrs": "Du har valt å ikkje følgje vedtatt <0>rettspolitikk</0>",
+      "opted_out_of_rrs": "Du har valt å ikkje følgje vedtatt <0>rettigheitspolitikk</0>",
       "public_note": "Offentleg kommentar",
       "published": "Publisert",
       "published_files": "Publiserte filer",
