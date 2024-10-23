@@ -27,7 +27,7 @@
     "forbidden_description": "Du er ikke autorisert til å se innholdet på denne siden. Kontakt administrator om dette ikke stemmer.",
     "login": "Logg inn",
     "logout": "Logg ut",
-    "registration_not_published": "Denne registreringen er ikke publisert enda.",
+    "registration_not_published": "Denne registreringen er ikke publisert ennå.",
     "signed_out": "Du er utlogget",
     "your_user_profile": "Din brukerprofil"
   },
@@ -1171,7 +1171,7 @@
       "category": "Kategori",
       "date": "Dato",
       "keywords": "Nøkkelord",
-      "no_related_projects_description": "Prosjektet har ingen tilknyttede prosjekter enda.",
+      "no_related_projects_description": "Prosjektet har ingen tilknyttede prosjekter ennå.",
       "no_related_registrations_description": "Prosjektet må lagres før det kan tilknyttes forskningsresultater",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekter som er relatert til dette prosjektet",
