@@ -1,4 +1,4 @@
-import { Box, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { ContributorIndicators } from '../../../../components/ContributorIndicators';
@@ -6,7 +6,8 @@ import { SearchListItem } from '../../../../components/styled/Wrappers';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { PreviousSearchLocationState } from '../../../../types/locationState.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getIdentifierFromId, getTimePeriodString } from '../../../../utils/general-helpers';
+import { toDateString, toDateStringWithTime } from '../../../../utils/date-helpers';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getResearchProfilePath } from '../../../../utils/urlPaths';
@@ -27,7 +28,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
   const verifiedContributorCount = importCandidate.totalVerifiedContributors;
   const contributorsCount = importCandidate.totalContributors;
 
-  const periodString = getTimePeriodString(new Date(importCandidate.createdDate), new Date(), t);
+  const importCandidateCreatedDate = new Date(importCandidate.createdDate);
 
   return (
     <SearchListItem
@@ -100,7 +101,9 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
           <ImportCandidateChannelName importCandidate={importCandidate} />
         </Box>
       </div>
-      <Typography sx={{ whiteSpace: 'nowrap' }}>{periodString}</Typography>
+      <Tooltip title={toDateStringWithTime(importCandidate.createdDate)}>
+        <Typography sx={{ whiteSpace: 'nowrap' }}>{toDateString(importCandidate.createdDate)}</Typography>
+      </Tooltip>
     </SearchListItem>
   );
 };
