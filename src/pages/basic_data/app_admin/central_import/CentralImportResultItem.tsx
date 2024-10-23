@@ -28,8 +28,6 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
   const verifiedContributorCount = importCandidate.totalVerifiedContributors;
   const contributorsCount = importCandidate.totalContributors;
 
-  const importCandidateCreatedDate = new Date(importCandidate.createdDate);
-
   return (
     <SearchListItem
       sx={{

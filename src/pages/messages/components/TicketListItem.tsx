@@ -61,8 +61,6 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const isOnTasksPage = window.location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnMyPageMessages = window.location.pathname === UrlPathTemplate.MyPageMyMessages;
 
-  const ticketCreatedDate = new Date(ticket.createdDate);
-
   return (
     <SearchListItem
       key={ticket.id}
