@@ -16,7 +16,7 @@ export const LogHeader = ({ title, type, modifiedDate }: Pick<LogEntryType, 'tit
     <Box sx={{ display: 'flex' }}>
       <LogHeaderIcon type={type} />
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Typography fontWeight={900}>{title.toUpperCase()}</Typography>
+        <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>{title}</Typography>
         <Typography>{toDateStringWithTime(date)}</Typography>
       </Box>
     </Box>
