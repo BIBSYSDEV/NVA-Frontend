@@ -37,7 +37,7 @@ const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
         <AddRoundedIcon color="secondary" />
       ) : type === 'MetadataPublished' ? (
         <LocalOfferOutlinedIcon color="primary" />
-      ) : type === 'Unpublished' || type === 'Republished' || type === 'UnpublishRequest' ? (
+      ) : type === 'Republished' || type === 'UnpublishRequest' ? (
         <NotesIcon color="primary" />
       ) : type === 'Deleted' ? (
         <DeleteOutlineIcon color="primary" />
@@ -53,7 +53,6 @@ const iconBackgroundColor = {
   Import: 'centralImport.main',
   Created: 'primary.light',
   MetadataPublished: 'publishingRequest.main',
-  Unpublished: 'publishingRequest.main',
   UnpublishRequest: 'publishingRequest.main',
   Republished: 'publishingRequest.main',
   Deleted: 'publishingRequest.main',

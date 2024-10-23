@@ -34,7 +34,7 @@ const generateUnpublishedAndRepublishingEntries = (
 
   unpublishingNotes.forEach((unpublishingNote) => {
     const unpublishLogEntry: LogEntry = {
-      type: 'Unpublished',
+      type: 'UnpublishRequest',
       title: t('log.titles.result_unpublished'),
       modifiedDate: unpublishingNote.createdDate,
       actions: [
@@ -49,7 +49,7 @@ const generateUnpublishedAndRepublishingEntries = (
 
   unpublishingTickets.forEach((unpublishingTicket) => {
     const unpublishLogEntry: LogEntry = {
-      type: 'Unpublished',
+      type: 'UnpublishRequest',
       title: t('log.titles.result_unpublished'),
       modifiedDate: unpublishingTicket.createdDate,
       actions: [
