@@ -23,31 +23,52 @@ const generateUnpublishedAndRepublishingEntries = (
   tickets: Ticket[],
   t: TFunction
 ): LogEntry[] => {
-  const unpublishingNotes = registration.publicationNotes?.filter((note) => note.type === 'UnpublishingNote');
+  const unpublishingNotes = registration.publicationNotes?.filter((note) => note.type === 'UnpublishingNote') ?? [];
+  const unpublishingTickets = tickets.filter((ticket) => ticket.type === 'UnpublishRequest');
 
-  if (!unpublishingNotes || unpublishingNotes.length === 0) {
+  if (unpublishingNotes.length === 0 && unpublishingTickets.length === 0) {
     return [];
   }
 
-  const logEntries: LogEntry[] = unpublishingNotes.map((note) => ({
-    type: 'Unpublished',
-    title: t('log.titles.result_unpublished'),
-    modifiedDate: note.createdDate,
-    actions: [
-      {
-        actor: note.createdBy,
-        items: [{ description: note.note }],
-      },
-    ],
-  }));
+  const logEntries: LogEntry[] = [];
 
   unpublishingNotes.forEach((unpublishingNote) => {
+    const unpublishLogEntry: LogEntry = {
+      type: 'Unpublished',
+      title: t('log.titles.result_unpublished'),
+      modifiedDate: unpublishingNote.createdDate,
+      actions: [
+        {
+          actor: unpublishingNote.createdBy,
+          items: [{ description: unpublishingNote.note }],
+        },
+      ],
+    };
+    return unpublishLogEntry;
+  });
+
+  unpublishingTickets.forEach((unpublishingTicket) => {
+    const unpublishLogEntry: LogEntry = {
+      type: 'Unpublished',
+      title: t('log.titles.result_unpublished'),
+      modifiedDate: unpublishingTicket.createdDate,
+      actions: [
+        {
+          actor: unpublishingTicket.owner,
+          items: [],
+        },
+      ],
+    };
+    logEntries.push(unpublishLogEntry);
+  });
+
+  logEntries.forEach((unpublishingNote) => {
     // Assume that a newer and completed publishing ticket means that the result has been republished
     const republishingTicket = tickets.find(
       (ticket) =>
         ticket.type === 'PublishingRequest' &&
         ticket.status === 'Completed' &&
-        new Date(ticket.createdDate) > new Date(unpublishingNote.createdDate)
+        new Date(ticket.createdDate) > new Date(unpublishingNote.modifiedDate)
     );
 
     if (republishingTicket) {
