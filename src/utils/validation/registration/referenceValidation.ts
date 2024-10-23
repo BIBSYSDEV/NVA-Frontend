@@ -133,6 +133,7 @@ const resourceErrorMessage = {
   seriesNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.series'),
   }),
+  titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.title') }),
   toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
     field: i18n.t('registration.resource_type.date_to'),
     limitField: i18n.t('registration.resource_type.date_from').toLowerCase(),
@@ -306,24 +307,26 @@ export const reportReference = baseReference.shape({
 // Degree
 const unconfirmedDocumentSchema = Yup.object({
   type: Yup.string(),
-  text: Yup.string().required(resourceErrorMessage.typeRequired),
+  text: Yup.string().required(resourceErrorMessage.titleRequired),
 });
 
 const confirmedDocumentSchema = Yup.object({
   type: Yup.string(),
-  identifier: Yup.string().url().required(),
-  sequence: Yup.number().required(),
+  identifier: Yup.string().url(),
 });
 
 const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
-  related: Yup.array()
-    .of(Yup.lazy((item) => (item.type === 'UnconfirmedDocument' ? unconfirmedDocumentSchema : confirmedDocumentSchema)))
-    .when('$publicationInstanceType', {
-      is: DegreeType.Phd,
-      then: (schema) => schema.required(),
-      otherwise: (schema) => schema.nullable(),
-    }),
+  related: Yup.array().when('$publicationInstanceType', {
+    is: DegreeType.Phd,
+    then: (schema) =>
+      schema.of(
+        Yup.lazy((related) =>
+          related.type === 'UnconfirmedDocument' ? unconfirmedDocumentSchema : confirmedDocumentSchema
+        )
+      ),
+    otherwise: (schema) => schema.nullable(),
+  }),
 });
 
 const degreePublicationContext = Yup.object<YupShape<DegreePublicationContext>>({
