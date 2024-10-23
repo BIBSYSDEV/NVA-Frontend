@@ -87,6 +87,16 @@ const generateUnpublishedAndRepublishingEntries = (
     }
   });
 
+  if (registration.status === 'DELETED') {
+    const deletedLogEntry: LogEntry = {
+      type: 'Deleted',
+      title: t('log.titles.result_deleted'),
+      modifiedDate: registration.modifiedDate,
+      actions: [],
+    };
+    logEntries.push(deletedLogEntry);
+  }
+
   return logEntries;
 };
 

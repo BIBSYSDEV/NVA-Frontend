@@ -1,6 +1,7 @@
 import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
@@ -36,8 +37,10 @@ const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
         <AddRoundedIcon color="secondary" />
       ) : type === 'MetadataPublished' ? (
         <LocalOfferOutlinedIcon color="primary" />
-      ) : type === 'Unpublished' || type === 'Republished' ? (
+      ) : type === 'Unpublished' || type === 'Republished' || type === 'UnpublishRequest' ? (
         <NotesIcon color="primary" />
+      ) : type === 'Deleted' ? (
+        <DeleteOutlineIcon color="primary" />
       ) : undefined}
     </AvatarMui>
   );
@@ -51,5 +54,7 @@ const iconBackgroundColor = {
   Created: 'primary.light',
   MetadataPublished: 'publishingRequest.main',
   Unpublished: 'publishingRequest.main',
+  UnpublishRequest: 'publishingRequest.main',
   Republished: 'publishingRequest.main',
+  Deleted: 'publishingRequest.main',
 };
