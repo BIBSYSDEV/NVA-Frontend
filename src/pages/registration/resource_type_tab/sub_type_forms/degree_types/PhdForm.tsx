@@ -1,13 +1,13 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Box, Button, List, TextField, Typography } from '@mui/material';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps, move, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { DegreeRegistration } from '../../../../../types/publication_types/degreeRegistration.types';
-import { emptyUnconfirmedDocument } from '../../../../../types/registration.types';
+import { ConfirmedDocument, emptyUnconfirmedDocument } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { PublisherField } from '../../components/PublisherField';
 import { SearchRelatedResultField } from '../../components/SearchRelatedResultField';
@@ -19,11 +19,34 @@ export const PhdForm = () => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<DegreeRegistration>();
   const [indexToRemove, setIndexToRemove] = useState<number | null>(null);
-  const related = values.entityDescription.reference?.publicationInstance.related;
+  const related = values.entityDescription.reference?.publicationInstance.related ?? [];
+  const [sequenceValue, setSequenceValue] = useState(`${related[index].sequence}`);
 
   const removeRelatedItem = (indexToRemove: number) => {
     const newRelated = related?.filter((_, thisIndex) => thisIndex !== indexToRemove);
     setFieldValue(ResourceFieldNames.PublicationInstanceRelated, newRelated);
+  };
+
+  const handleMoveRelatedResult = (newSequence: number, oldSequence: number) => {
+    const oldIndex = related.findIndex((related) => related.sequence === oldSequence);
+    const minNewIndex = 0;
+    const maxNewIndex = related.length - 1;
+
+    const newIndex =
+      newSequence - 1 > maxNewIndex
+        ? maxNewIndex
+        : newSequence < minNewIndex
+          ? minNewIndex
+          : related.findIndex((related) => related.sequence === newSequence);
+
+    const orderedRelatedResults = newIndex >= 0 ? (move(related, oldIndex, newIndex) as ConfirmedDocument[]) : related;
+
+    // Ensure incrementing sequence values
+    const newRelatedResults = orderedRelatedResults.map((related, index) => ({
+      ...related,
+      sequence: index + 1,
+    }));
+    setFieldValue(ResourceFieldNames.PublicationInstanceRelated, newRelatedResults);
   };
 
   return (
