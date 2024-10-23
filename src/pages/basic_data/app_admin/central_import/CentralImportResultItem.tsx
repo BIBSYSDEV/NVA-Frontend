@@ -101,7 +101,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
           <ImportCandidateChannelName importCandidate={importCandidate} />
         </Box>
       </div>
-      <Tooltip title={toDateStringWithTime(importCandidate.createdDate)}>
+      <Tooltip title={t('common.created_at', { date: toDateStringWithTime(importCandidate.createdDate) })}>
         <Typography sx={{ whiteSpace: 'nowrap' }}>{toDateString(importCandidate.createdDate)}</Typography>
       </Tooltip>
     </SearchListItem>

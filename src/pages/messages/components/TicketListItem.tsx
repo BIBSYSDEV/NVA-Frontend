@@ -117,7 +117,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
               : t(`my_page.messages.ticket_types.${ticket.status}`)}
           </Typography>
           <Typography lineHeight="2rem">
-            <Tooltip title={toDateStringWithTime(ticket.createdDate)}>
+            <Tooltip title={t('common.created_at', { date: toDateStringWithTime(ticket.createdDate) })}>
               <span>{toDateString(ticket.createdDate)}</span>
             </Tooltip>
           </Typography>

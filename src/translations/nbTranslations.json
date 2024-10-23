@@ -181,6 +181,7 @@
     },
     "country": "Land",
     "create": "Opprett",
+    "created_at": "Opprettet: {{date}}",
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskrivelse",
