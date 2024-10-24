@@ -21,6 +21,7 @@ import {
 } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { AddAffiliationSection } from './AddAffiliationSection';
@@ -90,8 +91,9 @@ export const AddEmployeePage = () => {
 
     if (personId && nationalId) {
       // Create NVA User with roles
+      const cristinIdentifier = values.person.cristinIdentifier || getIdentifierFromId(personId);
       const createUserResponse = await createUser({
-        cristinIdentifier: values.person.cristinIdentifier,
+        cristinIdentifier,
         customerId,
         roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
         viewingScope: {
