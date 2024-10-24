@@ -68,7 +68,7 @@ export const getTabErrors = (
   const tabErrors: TabErrors = {
     [RegistrationTab.Description]: getErrorMessages(getAllDescriptionFields(values.fundings), errors, touched),
     [RegistrationTab.ResourceType]: getErrorMessages(
-      getAllResourceFields(values.entityDescription?.reference?.publicationInstance ?? {}),
+      getAllResourceFields(values.entityDescription?.reference?.publicationInstance),
       errors,
       touched
     ),
@@ -110,11 +110,11 @@ const getAllDescriptionFields = (fundings: Funding[]) => {
   return descriptionFieldNames;
 };
 
-const getAllResourceFields = (publicationInstance: PublicationInstance | {}) => {
+const getAllResourceFields = (publicationInstance: any) => {
   const resourceFieldNames: string[] = Object.values(ResourceFieldNames);
 
-  if ('type' in publicationInstance && publicationInstance.type === DegreeType.Phd) {
-    publicationInstance.related?.forEach((document, index) => {
+  if (publicationInstance && 'type' in publicationInstance && publicationInstance.type === DegreeType.Phd) {
+    publicationInstance.related?.forEach((document: RelatedDocument, index: number) => {
       if (document.type === 'UnconfirmedDocument') {
         resourceFieldNames.push(`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`);
       }
