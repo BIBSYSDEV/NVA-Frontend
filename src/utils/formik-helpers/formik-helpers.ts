@@ -10,6 +10,7 @@ import {
 import { Contributor } from '../../types/contributor.types';
 import { HighestTouchedTab } from '../../types/locationState.types';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
+import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ExhibitionRegistration } from '../../types/publication_types/exhibitionContent.types';
 import { MapRegistration } from '../../types/publication_types/otherRegistration.types';
 import {
@@ -24,10 +25,9 @@ import {
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../../types/publicationFieldNames';
-import { Funding, Registration, RegistrationTab, RelatedDocument } from '../../types/registration.types';
+import { Funding, PublicationInstance, Registration, RegistrationTab } from '../../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from '../registration-helpers';
 import { registrationValidationSchema } from '../validation/registration/registrationValidation';
-import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -103,11 +103,11 @@ const getAllDescriptionFields = (fundings: Funding[]) => {
   return descriptionFieldNames;
 };
 
-const getAllResourceFields = (publicationInstance: any) => {
+const getAllResourceFields = (publicationInstance?: PublicationInstance) => {
   const resourceFieldNames: string[] = Object.values(ResourceFieldNames);
 
-  if (publicationInstance && 'type' in publicationInstance && publicationInstance.type === DegreeType.Phd) {
-    publicationInstance.related?.forEach((document: RelatedDocument, index: number) => {
+  if (publicationInstance?.type === DegreeType.Phd) {
+    publicationInstance.related?.forEach((document, index) => {
       if (document.type === 'UnconfirmedDocument') {
         resourceFieldNames.push(`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`);
       }
