@@ -70,11 +70,7 @@ export const ActionPanel = ({
   const canSeeTasksPanel =
     shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion || shouldSeeDelete;
 
-  if (!canSeeTasksPanel) {
-    return null;
-  }
-
-  const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? 0 : 1);
 
   return (
     <Paper
@@ -87,13 +83,17 @@ export const ActionPanel = ({
         sx={{ bgcolor: 'primary.main', px: '0.5rem' }}
         textColor="inherit"
         TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
+        {canSeeTasksPanel && (
+          <Tab
+            value={0}
+            label={t('common.tasks')}
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelTasks}
+            id="action-panel-tab-0"
+            aria-controls="action-panel-tab-panel-0"
+          />
+        )}
         <Tab
-          label={t('common.tasks')}
-          data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelTasks}
-          id="action-panel-tab-0"
-          aria-controls="action-panel-tab-panel-0"
-        />
-        <Tab
+          value={1}
           label={t('common.log')}
           data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
           id="action-panel-tab-1"
