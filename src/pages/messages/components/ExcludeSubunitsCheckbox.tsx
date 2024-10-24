@@ -21,6 +21,7 @@ export const ExcludeSubunitsCheckbox = () => {
         } else {
           searchParams.delete(NviCandidatesSearchParam.ExcludeSubUnits);
         }
+        searchParams.delete(NviCandidatesSearchParam.Offset);
         history.push({ search: searchParams.toString() });
       }}
       disabled={disableExcludeSubUnits}
