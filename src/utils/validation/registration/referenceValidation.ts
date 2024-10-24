@@ -54,7 +54,7 @@ import {
   ResearchDataPublicationContext,
   ResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
-import { ContextPublisher, PublicationChannelType, UnconfirmedDocument } from '../../../types/registration.types';
+import { ContextPublisher, PublicationChannelType } from '../../../types/registration.types';
 import { isPeriodicalMediaContribution } from '../../registration-helpers';
 import { YupShape } from '../validationHelpers';
 
