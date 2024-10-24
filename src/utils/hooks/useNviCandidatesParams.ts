@@ -12,6 +12,7 @@ export const useNviCandidatesParams = () => {
   const affiliations = searchParams.get(NviCandidatesSearchParam.Affiliations)?.split(',') ?? null;
   const aggregation = searchParams.get(NviCandidatesSearchParam.Aggregation) as 'all' | NviCandidateSearchStatus | null;
   const assignee = searchParams.get(NviCandidatesSearchParam.Assignee);
+  const excludeSubUnits = searchParams.get(NviCandidatesSearchParam.ExcludeSubUnits) === 'true';
   const filter = (searchParams.get(NviCandidatesSearchParam.Filter) as NviCandidateSearchStatus | null) ?? 'pending';
   const offset = (searchParams.get(NviCandidatesSearchParam.Offset) as number | null) ?? 0;
   const orderBy = searchParams.get(NviCandidatesSearchParam.OrderBy) as NviCandidateOrderBy | null;
@@ -24,6 +25,7 @@ export const useNviCandidatesParams = () => {
     affiliations,
     aggregation,
     assignee,
+    excludeSubUnits,
     filter,
     offset,
     orderBy,
