@@ -80,9 +80,10 @@ export const NviCandidatesList = () => {
           <AreaOfResponsibilitySelector
             sx={{ flex: '1 15rem' }}
             paramName={NviCandidatesSearchParam.Affiliations}
-            resetPagination={() => {
-              if (nviParams.offset) {
-                searchParams.delete(NviCandidatesSearchParam.Offset);
+            resetPagination={(params) => {
+              params.delete(NviCandidatesSearchParam.Offset);
+              if (!params.has(NviCandidatesSearchParam.Affiliations)) {
+                params.delete(NviCandidatesSearchParam.ExcludeSubUnits);
               }
             }}
           />
