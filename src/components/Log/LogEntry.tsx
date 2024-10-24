@@ -20,4 +20,6 @@ const logBackgroundColor = {
   Import: 'centralImport.light',
   Created: 'publishingRequest.light',
   MetadataPublished: 'publishingRequest.light',
+  Unpublished: 'publishingRequest.light',
+  Republished: 'publishingRequest.light',
 };

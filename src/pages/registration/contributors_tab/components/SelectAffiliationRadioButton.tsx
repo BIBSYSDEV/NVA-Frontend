@@ -6,7 +6,7 @@ import { CristinPerson, CristinPersonAffiliation } from '../../../../types/user.
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface SelectAffiliationRadioButtonProps {
-  personIsSelected: boolean;
+  cristinPerson: CristinPerson;
   affiliation: CristinPersonAffiliation;
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson | undefined) => void;
@@ -15,27 +15,37 @@ interface SelectAffiliationRadioButtonProps {
 }
 
 export const SelectAffiliationRadioButton = ({
+  cristinPerson,
   affiliation,
   selectedPerson,
   setSelectedPerson,
   affiliationIsSelected,
-  personIsSelected,
   disabled = false,
 }: SelectAffiliationRadioButtonProps) => {
   const { t } = useTranslation();
 
   const selectAffiliation = () => {
-    if (!selectedPerson) {
-      return;
-    }
-    const newAffiliations = affiliationIsSelected
-      ? selectedPerson.affiliations.filter((a) => a.organization !== affiliation.organization)
-      : [affiliation];
+    let newAffiliations: CristinPersonAffiliation[];
+    let personWithAffiliation: CristinPerson;
 
-    const personWithAffiliation: CristinPerson = {
-      ...selectedPerson,
-      affiliations: newAffiliations,
-    };
+    if (selectedPerson && selectedPerson.id === cristinPerson.id) {
+      newAffiliations = affiliationIsSelected
+        ? selectedPerson.affiliations.filter((a) => a.organization !== affiliation.organization)
+        : [affiliation];
+
+      personWithAffiliation = {
+        ...selectedPerson,
+        affiliations: newAffiliations,
+      };
+    } else {
+      newAffiliations = [affiliation];
+
+      personWithAffiliation = {
+        ...cristinPerson,
+        affiliations: newAffiliations,
+      };
+    }
+
     setSelectedPerson(personWithAffiliation);
   };
 
@@ -45,7 +55,7 @@ export const SelectAffiliationRadioButton = ({
       onClick={selectAffiliation}
       color="primary"
       size="small"
-      disabled={!personIsSelected || disabled}
+      disabled={disabled}
       title={t('registration.contributors.select_affiliation')}>
       {affiliationIsSelected ? <CheckCircle fontSize="small" color="info" /> : <CircleOutlined fontSize="small" />}
     </IconButton>

@@ -140,7 +140,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   const sortedNotes = [...generalNotes, ...rejectionNotes, ...approvalNotes].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
-    return dateB.getTime() - dateA.getTime();
+    return dateA.getTime() - dateB.getTime();
   });
 
   return (
@@ -158,54 +158,6 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
       <Divider />
 
       <Box sx={{ m: '1rem' }}>
-        {sortedNotes.length > 0 && (
-          <Box
-            component="ul"
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              listStyleType: 'none',
-              p: 0,
-              m: '0 0 1rem 0',
-              gap: '0.25rem',
-            }}>
-            {sortedNotes.map((note) => {
-              let deleteFunction: (() => Promise<void>) | undefined = undefined;
-              const noteIdentifier = note.identifier;
-
-              if (user?.nvaUsername && note.username === user.nvaUsername) {
-                if (note.type === 'FinalizedNote') {
-                  deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
-                } else if (note.type === 'GeneralNote' && noteIdentifier) {
-                  deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
-                }
-              }
-
-              const isDeleting =
-                (statusMutation.isPending && statusMutation.variables?.status === 'Pending') ||
-                (deleteNoteMutation.isPending && deleteNoteMutation.variables === noteIdentifier);
-
-              return (
-                <ErrorBoundary key={noteIdentifier ?? note.date}>
-                  <MessageItem
-                    text={note.content}
-                    date={note.date}
-                    username={note.username}
-                    backgroundColor="nvi.main"
-                    showOrganization
-                    menuElement={
-                      !!user &&
-                      user.nvaUsername === note.username && (
-                        <NviNoteMenu onDelete={deleteFunction} isDeleting={isDeleting} />
-                      )
-                    }
-                  />
-                </ErrorBoundary>
-              );
-            })}
-          </Box>
-        )}
-
         {myApproval?.status !== 'Approved' && (
           <>
             <Trans
@@ -259,13 +211,64 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           </>
         )}
 
+        <Typography variant="h3" gutterBottom component="h2">
+          {t('tasks.nvi.note')}
+        </Typography>
         <Typography paragraph>{t('tasks.nvi.message_description')}</Typography>
         <MessageForm
           hideRequiredAsterisk
           confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
-          fieldLabel={t('common.message')}
+          fieldLabel={t('tasks.nvi.note')}
           buttonTitle={t('tasks.nvi.save_note')}
         />
+
+        {sortedNotes.length > 0 && (
+          <Box
+            component="ul"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              listStyleType: 'none',
+              p: 0,
+              m: 0,
+              gap: '0.25rem',
+            }}>
+            {sortedNotes.map((note) => {
+              let deleteFunction: (() => Promise<void>) | undefined = undefined;
+              const noteIdentifier = note.identifier;
+
+              if (user?.nvaUsername && note.username === user.nvaUsername) {
+                if (note.type === 'FinalizedNote') {
+                  deleteFunction = () => statusMutation.mutateAsync({ status: 'Pending' });
+                } else if (note.type === 'GeneralNote' && noteIdentifier) {
+                  deleteFunction = () => deleteNoteMutation.mutateAsync(noteIdentifier);
+                }
+              }
+
+              const isDeleting =
+                (statusMutation.isPending && statusMutation.variables?.status === 'Pending') ||
+                (deleteNoteMutation.isPending && deleteNoteMutation.variables === noteIdentifier);
+
+              return (
+                <ErrorBoundary key={noteIdentifier ?? note.date}>
+                  <MessageItem
+                    text={note.content}
+                    date={note.date}
+                    username={note.username}
+                    backgroundColor="nvi.main"
+                    showOrganization
+                    menuElement={
+                      !!user &&
+                      user.nvaUsername === note.username && (
+                        <NviNoteMenu onDelete={deleteFunction} isDeleting={isDeleting} />
+                      )
+                    }
+                  />
+                </ErrorBoundary>
+              );
+            })}
+          </Box>
+        )}
       </Box>
     </>
   );
