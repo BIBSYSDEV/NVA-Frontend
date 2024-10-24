@@ -23,7 +23,7 @@ import {
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../../types/publicationFieldNames';
-import { Funding, Registration, RegistrationTab } from '../../types/registration.types';
+import { Funding, Registration, RegistrationTab, RelatedDocument } from '../../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from '../registration-helpers';
 import { registrationValidationSchema } from '../validation/registration/registrationValidation';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
@@ -59,7 +59,11 @@ export const getTabErrors = (
 ) => {
   const tabErrors: TabErrors = {
     [RegistrationTab.Description]: getErrorMessages(getAllDescriptionFields(values.fundings), errors, touched),
-    [RegistrationTab.ResourceType]: getErrorMessages(resourceFieldNames, errors, touched),
+    [RegistrationTab.ResourceType]: getErrorMessages(
+      getAllResourceFields(values.entityDescription?.reference?.publicationInstance),
+      errors,
+      touched
+    ),
     [RegistrationTab.Contributors]: getErrorMessages(
       getAllContributorFields(values.entityDescription?.contributors ?? []),
       errors,
@@ -84,8 +88,6 @@ export const getFirstErrorTab = (tabErrors: TabErrors | null) =>
             : -1
     : -1;
 
-const resourceFieldNames = Object.values(ResourceFieldNames);
-
 const getAllDescriptionFields = (fundings: Funding[]) => {
   const descriptionFieldNames: string[] = Object.values(DescriptionFieldNames);
   fundings.forEach((_, index) => {
@@ -98,6 +100,20 @@ const getAllDescriptionFields = (fundings: Funding[]) => {
     descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Amount}`);
   });
   return descriptionFieldNames;
+};
+
+const getAllResourceFields = (publicationInstance: any) => {
+  const resourceFieldNames: string[] = Object.values(ResourceFieldNames);
+
+  if (publicationInstance) {
+    publicationInstance.related?.forEach((document: RelatedDocument, index: number) => {
+      if (document.type === 'UnconfirmedDocument') {
+        resourceFieldNames.push(`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`);
+      }
+    });
+  }
+
+  return resourceFieldNames;
 };
 
 const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] => {
