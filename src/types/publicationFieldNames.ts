@@ -29,6 +29,7 @@ export enum JournalType {
 
 export enum BookType {
   AcademicMonograph = 'AcademicMonograph',
+  AcademicCommentary = 'AcademicCommentary',
   NonFictionMonograph = 'NonFictionMonograph',
   PopularScienceMonograph = 'PopularScienceMonograph',
   Textbook = 'Textbook',

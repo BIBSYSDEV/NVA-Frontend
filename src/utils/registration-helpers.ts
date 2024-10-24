@@ -116,6 +116,7 @@ export const nviApplicableTypes: PublicationInstanceType[] = [
   JournalType.AcademicArticle,
   JournalType.AcademicLiteratureReview,
   BookType.AcademicMonograph,
+  BookType.AcademicCommentary,
   ChapterType.AcademicChapter,
 ];
 
@@ -272,6 +273,10 @@ export const contributorConfig: ContributorConfig = {
   },
   // Book
   [BookType.AcademicMonograph]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.AcademicCommentary]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
