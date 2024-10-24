@@ -2,6 +2,7 @@ import { Checkbox, FormControlLabel } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
 export const ExcludeSubunitsCheckbox = () => {
@@ -15,6 +16,7 @@ export const ExcludeSubunitsCheckbox = () => {
 
   return (
     <FormControlLabel
+      data-testid={dataTestId.tasksPage.nvi.excludeSubunitsCheckbox}
       onChange={(_, checked) => {
         if (checked) {
           searchParams.set(NviCandidatesSearchParam.ExcludeSubUnits, checked.toString());
