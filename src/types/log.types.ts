@@ -6,7 +6,7 @@ export interface Log {
   numberOfArchivedFiles: number;
 }
 
-export type LogEntryType = TicketType | 'Import' | 'Created' | 'MetadataPublished' | 'Unpublished' | 'Republished';
+export type LogEntryType = TicketType | 'Import' | 'Created' | 'MetadataPublished' | 'Republished' | 'Deleted';
 
 export interface LogEntry {
   type: LogEntryType;
