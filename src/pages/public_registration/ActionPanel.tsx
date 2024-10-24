@@ -12,6 +12,11 @@ import { ActionPanelContent } from './ActionPanelContent';
 import { LogPanel } from './LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
+enum TabValue {
+  Tasks,
+  Log,
+}
+
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
   refetchRegistrationAndTickets: () => Promise<void>;
@@ -70,7 +75,7 @@ export const ActionPanel = ({
   const canSeeTasksPanel =
     shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion || shouldSeeDelete;
 
-  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? 0 : 1);
+  const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
 
   return (
     <Paper
@@ -85,7 +90,7 @@ export const ActionPanel = ({
         TabIndicatorProps={{ style: { backgroundColor: 'white', height: '0.4rem' } }}>
         {canSeeTasksPanel && (
           <Tab
-            value={0}
+            value={TabValue.Tasks}
             label={t('common.tasks')}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelTasks}
             id="action-panel-tab-0"
@@ -93,7 +98,7 @@ export const ActionPanel = ({
           />
         )}
         <Tab
-          value={1}
+          value={TabValue.Log}
           label={t('common.log')}
           data-testid={dataTestId.registrationLandingPage.tasksPanel.tabPanelLog}
           id="action-panel-tab-1"
@@ -123,7 +128,7 @@ export const ActionPanel = ({
 
 interface TabPanelProps {
   children: ReactNode;
-  tabValue: number;
+  tabValue: TabValue;
   index: number;
 }
 
