@@ -1,8 +1,13 @@
 import { Paper, Tab, Tabs } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Ticket } from '../../types/publication_types/ticket.types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { userHasAccessRight } from '../../utils/registration-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
 import { LogPanel } from './LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
@@ -20,6 +25,55 @@ export const ActionPanel = ({
   isLoadingData,
 }: ActionPanelProps) => {
   const { t } = useTranslation();
+  const customer = useSelector((store: RootState) => store.customer);
+
+  const publishingRequestTickets = tickets.filter(
+    (ticket) => ticket.type === 'PublishingRequest'
+  ) as PublishingTicket[];
+  const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
+  const newestSupportTicket = tickets.findLast((ticket) => ticket.type === 'GeneralSupportCase');
+
+  const isPublishedOrDraft =
+    registration.status === RegistrationStatus.Published ||
+    registration.status === RegistrationStatus.Draft ||
+    registration.status === RegistrationStatus.PublishedMetadata;
+
+  const isNotOnTasksDialoguePage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
+
+  const canCreatePublishingTicket =
+    isNotOnTasksDialoguePage && userHasAccessRight(registration, 'publishing-request-create');
+  const canApprovePublishingTicket =
+    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
+  const hasOtherPublishingRights =
+    userHasAccessRight(registration, 'unpublish') ||
+    userHasAccessRight(registration, 'republish') ||
+    userHasAccessRight(registration, 'terminate');
+
+  const customerHasConfiguredDoi = customer?.doiAgent.username;
+  const canCreateDoiTicket =
+    isPublishedOrDraft && isNotOnTasksDialoguePage && userHasAccessRight(registration, 'doi-request-create');
+  const canApproveDoiTicket =
+    !!newestDoiRequestTicket && isPublishedOrDraft && userHasAccessRight(registration, 'doi-request-approve');
+
+  const canCreateSupportTicket = isNotOnTasksDialoguePage && userHasAccessRight(registration, 'support-request-create');
+  const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
+
+  const shouldSeePublishingAccordion =
+    canCreatePublishingTicket || canApprovePublishingTicket || hasOtherPublishingRights;
+  const shouldSeeDoiAccordion =
+    !registration.entityDescription?.reference?.doi &&
+    !!customerHasConfiguredDoi &&
+    (canCreateDoiTicket || canApproveDoiTicket);
+  const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket;
+  const shouldSeeDelete = userHasAccessRight(registration, 'delete');
+
+  const canSeeTasksPanel =
+    shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion || shouldSeeDelete;
+
+  if (!canSeeTasksPanel) {
+    return null;
+  }
+
   const [tabValue, setTabValue] = useState(0);
 
   return (
@@ -48,10 +102,16 @@ export const ActionPanel = ({
       </Tabs>
       <TabPanel tabValue={tabValue} index={0}>
         <ActionPanelContent
-          tickets={tickets}
           refetchData={refetchRegistrationAndTickets}
           isLoadingData={isLoadingData}
           registration={registration}
+          shouldSeePublishingAccordion={shouldSeePublishingAccordion}
+          shouldSeeDoiAccordion={shouldSeeDoiAccordion}
+          shouldSeeSupportAccordion={shouldSeeSupportAccordion}
+          shouldSeeDelete={shouldSeeDelete}
+          publishingRequestTickets={publishingRequestTickets}
+          newestDoiRequestTicket={newestDoiRequestTicket}
+          newestSupportTicket={newestSupportTicket}
         />
       </TabPanel>
       <TabPanel tabValue={tabValue} index={1}>
