@@ -15,6 +15,7 @@ import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
 import { NviYearSelector } from './NviYearSelector';
@@ -85,6 +86,8 @@ export const NviCandidatesList = () => {
               }
             }}
           />
+
+          <ExcludeSubunitsCheckbox />
 
           <NviYearSelector sx={{ ml: 'auto' }} />
         </Box>
