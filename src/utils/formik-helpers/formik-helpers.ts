@@ -24,17 +24,10 @@ import {
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../../types/publicationFieldNames';
-import {
-  Funding,
-  PublicationInstanceType,
-  Registration,
-  RegistrationTab,
-  RelatedDocument,
-} from '../../types/registration.types';
+import { Funding, Registration, RegistrationTab, RelatedDocument } from '../../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from '../registration-helpers';
 import { registrationValidationSchema } from '../validation/registration/registrationValidation';
 import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
-import { PublicationInstance } from '../../types/importCandidate.types';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -210,7 +203,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           },
         },
       };
-    case PublicationType.Degree:
+    case PublicationType.Degree: {
       const publicationInstance = registration.entityDescription?.reference
         ?.publicationInstance as DegreePublicationInstance;
       return {
@@ -232,6 +225,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           },
         },
       };
+    }
     case PublicationType.Report:
       return {
         entityDescription: {

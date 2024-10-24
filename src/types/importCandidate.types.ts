@@ -57,7 +57,7 @@ export interface ImportCandidateSummary {
   onlineIssn?: string;
 }
 
-export type PublicationInstance =
+type PublicationInstance =
   | JournalPublicationInstance
   | DegreePublicationInstance
   | BookPublicationInstance
