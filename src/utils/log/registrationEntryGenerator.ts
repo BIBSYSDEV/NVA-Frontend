@@ -44,7 +44,7 @@ const generateUnpublishedAndRepublishingEntries = (
         },
       ],
     };
-    return unpublishLogEntry;
+    logEntries.push(unpublishLogEntry);
   });
 
   unpublishingTickets.forEach((unpublishingTicket) => {
