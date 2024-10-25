@@ -21,6 +21,7 @@ import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColu
 import { SupportMessagesColumn } from './SupportMessagesColumn';
 
 export const ticketColor = {
+  UnpublishRequest: 'publishingRequest.main',
   PublishingRequest: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
