@@ -631,7 +631,8 @@
       "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
-      "project_manager_required_project": "Prosjektet må ha en prosjektleder"
+      "project_manager_required_project": "Prosjektet må ha en prosjektleder",
+      "reference_required": "Oppgi referanse på resultat"
     }
   },
   "footer": {
