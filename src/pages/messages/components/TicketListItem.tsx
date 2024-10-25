@@ -10,7 +10,8 @@ import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration } from '../../../types/registration.types';
-import { getInitials, getTimePeriodString } from '../../../utils/general-helpers';
+import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
+import { getInitials } from '../../../utils/general-helpers';
 import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
 import { getMyMessagesRegistrationPath, getTasksRegistrationPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
@@ -47,8 +48,6 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
     },
   } as Registration;
-
-  const ticketAge = getTimePeriodString(new Date(ticket.createdDate), new Date(), t);
 
   const assigneeFullName = ticket.assignee
     ? getFullName(
@@ -116,7 +115,12 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
                 : t('common.unread')
               : t(`my_page.messages.ticket_types.${ticket.status}`)}
           </Typography>
-          <Typography lineHeight="2rem">{ticketAge}</Typography>
+          <Typography lineHeight="2rem">
+            <Tooltip title={t('common.created_at', { date: toDateStringWithTime(ticket.createdDate) })}>
+              <span>{toDateString(ticket.createdDate)}</span>
+            </Tooltip>
+          </Typography>
+
           {assigneeFullName && (
             <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
               <StyledVerifiedContributor>{getInitials(assigneeFullName)}</StyledVerifiedContributor>
