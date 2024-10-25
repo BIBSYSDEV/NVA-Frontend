@@ -3,7 +3,7 @@
     "availability_statement": "Accessibility statement",
     "description": {
       "paragraph0": {
-        "bullet_point0": "Meet the requirement for open access to articles and other research results by depositing in an open research repositories",
+        "bullet_point0": "Meet the requirement for open access to articles and other research results by depositing in an open research repository",
         "bullet_point1": "Publish reports, student theses and other material produced at the institution",
         "intro": "By using NVA, Norwegian research institutions are able to:"
       },
@@ -14,7 +14,7 @@
       "paragraph5": "Although NVA is established and used by several institutions, the service will be in continuous development throughout its lifetime. Institutions that do not have a knowledge archive can contact <0>Sikt</0> to start using NVA as a pilot institution."
     },
     "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector.",
-    "short_description": "The Norwegian Research Information Repositories (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
+    "short_description": "The Norwegian Research Information Repository (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
   },
   "authorization": {
     "accept_terms_to_create_user": "I consent to being created as a user in NVA",
@@ -181,6 +181,7 @@
     },
     "country": "Country",
     "create": "Create",
+    "created_at": "Created: {{date}}",
     "date": "Date",
     "delete": "Delete",
     "description": "Description",
@@ -224,7 +225,7 @@
     "not_decided": "Not decided",
     "number_of_rows_per_page": "Number of rows per page",
     "number_short": "No.",
-    "nva_tagline": "Norwegian Research Information Repositories (NVA)",
+    "nva_tagline": "Norwegian Research Information Repository (NVA)",
     "nvi": "Norwegian Science Index (NVI)",
     "open": "Open",
     "or": "Or",
@@ -233,7 +234,7 @@
     "order": "Order",
     "other": "Other",
     "overview": "Overview",
-    "page_title": "Norwegian Research Information Repositories (NVA)",
+    "page_title": "Norwegian Research Information Repository (NVA)",
     "pagination_project_search": "Pagination for project search",
     "pagination_result_search": "Pagination for result search",
     "pagination_rows_per_page": "Number of results per page:",
@@ -294,7 +295,6 @@
     "test_environment": "Test environment",
     "time_string": "{{date}}, at {{time}}",
     "title": "Title",
-    "today": "Today",
     "total_number": "Total number",
     "type": "Type",
     "unknown": "Unknown",
@@ -304,14 +304,8 @@
     "use": "Use",
     "version": "Version",
     "will_be_available": "Becomes available",
-    "x_days_one": "{{count}} day",
-    "x_days_other": "{{count}} days",
-    "x_months_one": "{{count}} month",
-    "x_months_other": "{{count}} months",
     "x_others_one": "+ {{count}} other",
     "x_others_other": "+ {{count}} others",
-    "x_years_one": "{{count}} year",
-    "x_years_other": "{{count}} years",
     "year": "Year",
     "yes": "Yes"
   },
@@ -637,12 +631,13 @@
       "must_be_bigger_than": "{{field}} cannot be less than {{limit}}",
       "must_be_smaller_than": "{{field}} cannot be greater than {{limit}}",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
-      "project_manager_required_project": "The project needs a project leader"
+      "project_manager_required_project": "The project needs a project leader",
+      "reference_required": "Reference required"
     }
   },
   "footer": {
-    "about_nva": "About The Norwegian Research Information Repositories (NVA)",
-    "about_nva_text": "The Norwegian Research Information Repositories (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
+    "about_nva": "About The Norwegian Research Information Repository (NVA)",
+    "about_nva_text": "The Norwegian Research Information Repository (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
     "about_sikt": "About Sikt",
     "about_sikt_text": "Sikt enters into an agreement with each institution about the use of the service. Our customers are typically universities, colleges, research institutes and organizations in the health sector.",
     "become_customer": "How to become a customer?",
@@ -711,7 +706,10 @@
       "imported": "Imported",
       "metadata_published": "Metadata published",
       "metadata_published_in_nva": "Metadata published in NVA",
-      "metadata_updated": "Metadata updated"
+      "metadata_updated": "Metadata updated",
+      "result_deleted": "Result deleted",
+      "result_republished": "Result is republished",
+      "result_unpublished": "Result is unpublished"
     },
     "unknown_filename": "Unknown file name"
   },
@@ -751,11 +749,11 @@
     "my_page": "My page",
     "my_profile": {
       "background": "Background",
-      "background_description": "<0>It is voluntary to fill out the information in the fields below.</0><0>You can withdraw your consent at any time by deleting the text from the fields.</0><0>By filling out the information in the fields below, you consent to it being added to your public profile in the Norwegian Research Information Repositories. Your profile is publicly visible to anyone using the Norwegian Research Information Repositories.</0><0>Do not provide sensitive personal data in the fields as this will be visible on your public profile.</0>",
+      "background_description": "<0>It is voluntary to fill out the information in the fields below.</0><0>You can withdraw your consent at any time by deleting the text from the fields.</0><0>By filling out the information in the fields below, you consent to it being added to your public profile in the Norwegian Research Information Repository. Your profile is publicly visible to anyone using the Norwegian Research Information Repository.</0><0>Do not provide sensitive personal data in the fields as this will be visible on your public profile.</0>",
       "background_en": "Background in English",
       "background_no": "Background in Norwegian",
       "contact_information": "Contact information",
-      "contact_information_is_voluntary": "<0>It is voluntary to provide the information in the fields below.</0><0>You can withdraw your consent at any time by deleting the information.</0><0>By filling out the fields below, you consent to the information being added to your profile in the Norwegian Research Information Repositories and that the information will be publicly visible to anyone using the Norwegian Research Information Repositories.</0>",
+      "contact_information_is_voluntary": "<0>It is voluntary to provide the information in the fields below.</0><0>You can withdraw your consent at any time by deleting the information.</0><0>By filling out the fields below, you consent to the information being added to your profile in the Norwegian Research Information Repository and that the information will be publicly visible to anyone using the Norwegian Research Information Repository.</0>",
       "edit_promoted_publication": "Add/remove favourite",
       "edit_research_profile": "Edit researcher profile",
       "field_and_background": {
@@ -809,7 +807,7 @@
       "remove_profile_picture_info": "Are you sure you want to remove the profile picture?",
       "results": "Results",
       "telephone": "Telephone",
-      "upload_description": "<0>By uploading a picture you consent to having the picture added as a profile picture on your public profile in the Norwegian Research Information Repositories.</0><0>The profile picture is publicly visible to anyone who uses the Norwegian Research Information Repositories.</0>",
+      "upload_description": "<0>By uploading a picture you consent to having the picture added as a profile picture on your public profile in the Norwegian Research Information Repository.</0><0>The profile picture is publicly visible to anyone who uses the Norwegian Research Information Repository.</0>",
       "upload_is_not_mandatory": "<0>Uploading a picture is optional.</0><0>You may at any time withdraw your consent by deleting the picture.</0>",
       "user_role_and_help": {
         "application_help_helper_text": "If you need guidance to register, this may be helpful.",
@@ -1546,6 +1544,7 @@
     "publication_types": {
       "AcademicArticle": "Academic article",
       "AcademicChapter": "Academic chapter",
+      "AcademicCommentary": "Academic commentary",
       "AcademicLiteratureReview": "Academic review article",
       "AcademicMonograph": "Academic monograph",
       "Anthology": "Part of book or report",
