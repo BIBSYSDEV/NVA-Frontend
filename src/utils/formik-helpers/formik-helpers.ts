@@ -204,7 +204,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
         },
       };
     case PublicationType.Degree: {
-      const publicationInstance = registration.entityDescription?.reference
+      const degreePublicationInstance = registration.entityDescription?.reference
         ?.publicationInstance as DegreePublicationInstance;
       return {
         entityDescription: {
@@ -217,8 +217,8 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
             publicationInstance: {
               type: true,
               related:
-                publicationInstance.related &&
-                publicationInstance.related.map((document) =>
+                degreePublicationInstance.related &&
+                degreePublicationInstance.related.map((document) =>
                   document.type === 'UnconfirmedDocument' ? { text: true } : { identifier: true }
                 ),
             },
