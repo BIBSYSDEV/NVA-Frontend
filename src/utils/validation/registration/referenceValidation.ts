@@ -130,10 +130,10 @@ const resourceErrorMessage = {
   publisherRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.publisher'),
   }),
+  referenceRequired: i18n.t('feedback.validation.reference_required'),
   seriesNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.series'),
   }),
-  titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.title') }),
   toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
     field: i18n.t('registration.resource_type.date_to'),
     limitField: i18n.t('registration.resource_type.date_from').toLowerCase(),
@@ -307,7 +307,7 @@ export const reportReference = baseReference.shape({
 // Degree
 const unconfirmedDocumentSchema = Yup.object({
   type: Yup.string(),
-  text: Yup.string().required(resourceErrorMessage.titleRequired),
+  text: Yup.string().required(resourceErrorMessage.referenceRequired),
 });
 
 const confirmedDocumentSchema = Yup.object({
