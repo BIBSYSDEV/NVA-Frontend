@@ -1542,6 +1542,7 @@
     "publication_types": {
       "AcademicArticle": "Vitenskapelig artikkel",
       "AcademicChapter": "Vitenskapelig kapittel",
+      "AcademicCommentary": "Vitenskapelig kommentarutgave",
       "AcademicLiteratureReview": "Vitenskapelig oversiktsartikkel",
       "AcademicMonograph": "Vitenskapelig monografi",
       "Anthology": "Del av bok eller rapport",
