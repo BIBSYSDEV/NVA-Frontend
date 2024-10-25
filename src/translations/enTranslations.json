@@ -14,7 +14,7 @@
       "paragraph5": "Although NVA is established and used by several institutions, the service will be in continuous development throughout its lifetime. Institutions that do not have a knowledge archive can contact <0>Sikt</0> to start using NVA as a pilot institution."
     },
     "footer_text": "The service is provided by Sikt — Norwegian Agency for Shared Services in Education and Research. Sikt provides shared services to the Norwegian knowledge sector.",
-    "short_description": "The Norwegian Research Information Repository (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
+    "short_description": "The Norwegian Research Information Repositories (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
   },
   "authorization": {
     "accept_terms_to_create_user": "I consent to being created as a user in NVA",
@@ -225,7 +225,7 @@
     "not_decided": "Not decided",
     "number_of_rows_per_page": "Number of rows per page",
     "number_short": "No.",
-    "nva_tagline": "Norwegian Research Information Repository (NVA)",
+    "nva_tagline": "Norwegian Research Information Repositories (NVA)",
     "nvi": "Norwegian Science Index (NVI)",
     "open": "Open",
     "or": "Or",
@@ -636,8 +636,8 @@
     }
   },
   "footer": {
-    "about_nva": "About The Norwegian Research Information Repository (NVA)",
-    "about_nva_text": "The Norwegian Research Information Repository (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
+    "about_nva": "About The Norwegian Research Information Repositories (NVA)",
+    "about_nva_text": "The Norwegian Research Information Repositories (NVA) collects publications and other research results, and makes them openly available in a common national solution. This makes results from Norwegian research available in a single service.",
     "about_sikt": "About Sikt",
     "about_sikt_text": "Sikt enters into an agreement with each institution about the use of the service. Our customers are typically universities, colleges, research institutes and organizations in the health sector.",
     "become_customer": "How to become a customer?",
