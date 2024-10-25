@@ -38,8 +38,6 @@ export const NviCandidatePage = () => {
   });
 
   const nviCandidate = nviCandidateQuery.data;
-  const pointsSum = nviCandidate?.approvals.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
-  const periodStatus = nviCandidate?.period.status;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
