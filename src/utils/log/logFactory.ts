@@ -86,7 +86,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
   filePublishingTickets.forEach((ticket) => {
     entries.push({
       text: t('my_page.messages.files_published', { count: ticket.approvedFiles.length }),
-      date: ticket.modifiedDate,
+      date: ticket.finalizedDate ?? ticket.modifiedDate,
     });
   });
 
