@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next';
 import { Log, LogEntry, LogEntryType } from '../../types/log.types';
-import { Ticket } from '../../types/publication_types/ticket.types';
+import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
 import { getArchivedFiles } from '../registration-helpers';
 import { generateImportLogEntries } from './importEntryGenerator';
@@ -41,4 +41,54 @@ const sortLogEntries = (a: LogEntry, b: LogEntry) => {
   const indexA = logTypeOrder.indexOf(a.type);
   const indexB = logTypeOrder.indexOf(b.type);
   return indexA - indexB;
+};
+
+interface SimpleLogItemEntry {
+  text: string;
+  date: string;
+}
+
+export const generateSimplePublishingLog = (registration: Registration, tickets: Ticket[], t: TFunction) => {
+  const entries: SimpleLogItemEntry[] = [];
+
+  if (registration.publishedDate) {
+    entries.push({
+      text: t('registration.status.PUBLISHED_METADATA'),
+      date: registration.publishedDate,
+    });
+  }
+
+  if (registration.status === 'UNPUBLISHED') {
+    const unpublishingNotes = registration.publicationNotes?.filter((note) => note.type === 'UnpublishingNote') ?? [];
+    const lastUnpublishingNote = unpublishingNotes.pop();
+    if (lastUnpublishingNote) {
+      entries.push({
+        text: t('registration.status.UNPUBLISHED'),
+        date: lastUnpublishingNote.createdDate,
+      });
+    }
+    return entries;
+  }
+
+  if (registration.status === 'DELETED') {
+    entries.push({
+      text: t('registration.status.DELETED'),
+      date: registration.modifiedDate,
+    });
+    return entries;
+  }
+
+  const publishingTickets = tickets.filter(
+    (ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Completed'
+  ) as PublishingTicket[];
+  const filePublishingTickets = publishingTickets.filter((ticket) => ticket.approvedFiles.length > 0);
+
+  filePublishingTickets.forEach((ticket) => {
+    entries.push({
+      text: t('my_page.messages.files_published', { count: ticket.approvedFiles.length }),
+      date: ticket.modifiedDate,
+    });
+  });
+
+  return entries;
 };
