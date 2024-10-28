@@ -63,7 +63,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
     const lastUnpublishingNote = unpublishingNotes.pop();
     if (lastUnpublishingNote) {
       entries.push({
-        text: t('registration.status.UNPUBLISHED'),
+        text: t('log.titles.result_unpublished'),
         date: lastUnpublishingNote.createdDate,
       });
     }
@@ -72,7 +72,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
 
   if (registration.status === 'DELETED') {
     entries.push({
-      text: t('registration.status.DELETED'),
+      text: t('log.titles.result_deleted'),
       date: registration.modifiedDate,
     });
     return entries;
