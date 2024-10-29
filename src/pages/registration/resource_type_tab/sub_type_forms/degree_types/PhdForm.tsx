@@ -1,7 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Box, Button, List, TextField, Typography } from '@mui/material';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps, move, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, move, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
@@ -92,13 +92,16 @@ export const PhdForm = () => {
                     mb: '0.5rem',
                   }}>
                   <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
-                    {({ field }: FieldProps<string>) => (
+                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <TextField
                         {...field}
                         label={t('registration.resource_type.related_result')}
                         variant="filled"
                         multiline
                         fullWidth
+                        required
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
                       />
                     )}
                   </Field>

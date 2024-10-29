@@ -57,6 +57,7 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
               name={duplicateProjectSearch.duplicateProject.title}
               linkTo={getProjectPath(duplicateProjectSearch.duplicateProject.id)}
               warning={t('project.duplicate_title_warning')}
+              listHeader={t('project.duplicate_project_heading')}
             />
           )}
           <Field name={ProjectFieldName.AcademicSummaryNo}>

@@ -3,7 +3,7 @@
     "availability_statement": "Tilgjengelegheitserklæring",
     "description": {
       "paragraph0": {
-        "bullet_point0": "Oppfyll krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit ope vitenarkiv.",
+        "bullet_point0": "Oppfyll krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit ope vitenarkiv",
         "bullet_point1": "Publisere rapportar sjølv, studentoppgåver og anna materiale produsert ved institusjonen",
         "intro": "Med NVA får norske forskingsinstitusjonar ei teneste for å:"
       },
@@ -35,6 +35,9 @@
     "add_employee": {
       "add_employee": "Legg til tilsett",
       "create_person": "Opprett person",
+      "have_you_informed": "Har du informert vedkomande om at det vert lagt til personinformasjon i NVA?",
+      "have_you_informed_confirmation_text": "Har du informert personen om at det vert lagt til personopplysingar om dei i NVA?",
+      "have_you_informed_description": "<0>Ved å opprette personen i NVA, stadfestar du at du har lovleg grunnlag for å leggje inn personopplysningane på vegner av denne personen.</0><0>Før personen blir oppretta i NVA, treng vi at du stadfestar at personen har blitt informert om at det blir lagt inn personopplysningar om vedkomande i NVA.</0>",
       "missing_nin_description": "<0>Vi treng at du bekreftar identiteten til personen utan nasjonalt identitetsnummer som fødselsnummer eller D-nummer.</0><0>For å skilje personen frå andre med liknande namn så må det registrerast minst eitt forskingsresultat knytt til denne personen.</0><0>Merk at du ikkje berre stadfestar personen for din institusjon, men også for andre institusjonar i systemet.</0><0>Kven som gir bekreftinga på unntak, vil difor vere synleg i systemet som dokumentasjon.</0><0>Bekreftar du at denne personen eksisterer og har bidradd på minst eitt forskingsresultat ved din institusjon?</0>",
       "missing_nin_title": "Bekrefte identitet for person utan nasjonalt identitetsnummer",
       "name_or_nin": "Namn eller fødselsnummer",
@@ -178,6 +181,7 @@
     },
     "country": "Land",
     "create": "Opprett",
+    "created_at": "Oppretta: {{date}}",
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskriving",
@@ -231,8 +235,8 @@
     "other": "Annan",
     "overview": "Oversyn",
     "page_title": "Nasjonalt vitenarkiv",
-    "pagination_project_search": "",
-    "pagination_result_search": "",
+    "pagination_project_search": "Paginering for prosjektsøk",
+    "pagination_result_search": "Paginering for resultatsøk",
     "pagination_rows_per_page": "Antal resultat per side:",
     "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
     "person": "Person",
@@ -291,7 +295,6 @@
     "test_environment": "Testmiljø",
     "time_string": "{{date}}, kl. {{time}}",
     "title": "Tittel",
-    "today": "I dag",
     "total_number": "Totalt antal",
     "type": "Type",
     "unknown": "Ukjend",
@@ -301,14 +304,8 @@
     "use": "Bruk",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengeleg",
-    "x_days_one": "{{count}} dag",
-    "x_days_other": "{{count}} dagar",
-    "x_months_one": "{{count}} månad",
-    "x_months_other": "{{count}} månader",
     "x_others_one": "+ {{count}} annan",
     "x_others_other": "+ {{count}} andre",
-    "x_years_one": "{{count}} år",
-    "x_years_other": "{{count}} år",
     "year": "År",
     "yes": "Ja"
   },
@@ -459,14 +456,14 @@
       "registrator_publishes_without_curator_description": "Institusjonen bestemmer kven som er Registrator."
     },
     "retention_strategy": {
-      "creator_can_override_rrs_text": "<0>Institusjonen har opna opp for at registrator sjølv kan velje å ikkje følgje institusjonen sin rettspolitikk (RRS). Med å følgje rettspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></0> <1>I NVA fjernar registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å fjerne avkryssinga av RRS, blir lisensen som er sett på fila fjerna og lisensen må settast på nytt.</1>",
-      "curator_can_override_rrs_text": "<0>Publiseringskurator har tilgang til å setje at filer ikkje følgjer institusjonen sin rettspolitikk (RRS).</0> <0>Om registrator ikkje ynskjer å følgje institusjonen sin rettspolitikk (RRS), sjå på vilkår for ikkje å følgje RRS på informasjonssida om institusjonen sin rettspolitikk.</0> <1>Med å følgje rettspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S</0>.</1>",
-      "customer_has_no_rrs": "<0>Institusjonen har ikkje oppgitt ein rettspolitikk (RRS) i NVA.</0> <0>Utan institusjonell rettspolitikk er det opp til registrator å setje korrekt lisens på akseptert versjon av filer i registrering av vitskaplege artiklar.</0> <1>Det er opp til registrator å eventuelt merke at publikasjonen skal følgje ein RRS. Ved å følgje rettspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></1> <0>Om publikasjonen er finansiert av ein aktør som pålegg å følgje RRS (ref. Plan S), må RRS settast. I NVA set registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å avkrysse for RRS så setjast lisens på fila til CC-BY.</0>",
-      "customer_has_rrs_text": "<0>Institusjonen har oppgitt ein rettspolitikk (RRS) i NVA.</0> <0>Lisens CC-BY blir sett når du vel akseptert versjon på fila i registreringa av ein vitskapleg artikkel i NVA.</0>",
-      "possible_not_to_follow_rrs": "Mogleg å ikkje følgje institusjonen sin rettspolitikk",
+      "creator_can_override_rrs_text": "<0>Institusjonen har opna opp for at registrator sjølv kan velje å ikkje følgje institusjonen sin rettigheitspolitikk (RRS). Med å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></0> <1>I NVA fjernar registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å fjerne avkryssinga av RRS, blir lisensen som er sett på fila fjerna og lisensen må settast på nytt.</1>",
+      "curator_can_override_rrs_text": "<0>Publiseringskurator har tilgang til å setje at filer ikkje følgjer institusjonen sin rettigheitspolitikk (RRS).</0> <0>Om registrator ikkje ynskjer å følgje institusjonen sin rettigheitspolitikk (RRS), sjå på vilkår for ikkje å følgje RRS på informasjonssida om institusjonen sin rettigheitspolitikk.</0> <1>Med å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S</0>.</1>",
+      "customer_has_no_rrs": "<0>Institusjonen har ikkje oppgitt ein rettigheitspolitikk (RRS) i NVA.</0> <0>Utan institusjonell rettigheitspolitikk er det opp til registrator å setje korrekt lisens på akseptert versjon av filer i registrering av vitskaplege artiklar.</0> <1>Det er opp til registrator å eventuelt merke at publikasjonen skal følgje ein RRS. Ved å følgje rettigheitspolitikk (RRS) blir vitskaplege artiklar opent tilgjengelege straks, utan embargo. <0>Sjå cOAlition S si nettside for informasjon om RRS og Plan S.</0></1> <0>Om publikasjonen er finansiert av ein aktør som pålegg å følgje RRS (ref. Plan S), må RRS settast. I NVA set registrator RRS på den aksepterte versjonen av fila i registreringa av ein vitskapleg artikkel. Avkryssinga av RRS kjem fram ved å trykkje på pil-ikonet under den aksepterte versjonen av fila. Ved å avkrysse for RRS så setjast lisens på fila til CC-BY.</0>",
+      "customer_has_rrs_text": "<0>Institusjonen har oppgitt ein rettigheitspolitikk (RRS) i NVA.</0> <0>Lisens CC-BY blir sett når du vel akseptert versjon på fila i registreringa av ein vitskapleg artikkel i NVA.</0>",
+      "possible_not_to_follow_rrs": "Mogleg å ikkje følgje institusjonen sin rettigheitspolitikk",
       "rights_retention_strategy": "Rights Retention Strategy (RRS)",
-      "rrs": "Rettspolitikk",
-      "rrs_info_page": "Institusjonane si informasjonsside om rettspolitikk",
+      "rrs": "Rettigheitspolitikk",
+      "rrs_info_page": "Institusjonane si informasjonsside om rettigheitspolitikk",
       "rrs_link": "Skriv inn lenkje",
       "rrs_override": "Registrator kan fråskrive seg RRS",
       "rrs_required_link": "*Felt med stjerne er obligatorisk"
@@ -497,11 +494,10 @@
       "create_customer": "Kunne ikkje opprette institusjon",
       "create_doi_request": "Kunne ikkje opprette DOI-førespurnad",
       "create_journal": "Kunne ikkje opprette tidsskrift",
-      "create_note": "Kunne ikkje lagre melding",
+      "create_note": "Kunne ikkje lagre kommentar",
       "create_nvi_period": "Kunne ikkje opprette NVI-periode",
       "create_project": "Kunne ikkje opprette prosjekt",
       "create_publisher": "Kunne ikkje opprette utgjevar",
-      "create_publishing_request": "Kunne ikkje opprette publiseringsførespurnad",
       "create_registration": "Kunne ikkje opprette registrering",
       "create_series": "Kunne ikkje opprette serie",
       "create_user": "Kunne ikkje opprette person",
@@ -547,6 +543,7 @@
       "get_vocabularies": "Kunne ikkje hente kontrollerte vokabular",
       "orcid_login": "Kunne ikkje logge inn på ORCID",
       "project_search": "Søk på prosjekt feila",
+      "publish_registration": "Kunne ikkje publisere registrering",
       "reject_doi_request": "Kunne ikkje avvise DOI-førespurnad",
       "remove_role": "Kunne ikkje fjerne rolle",
       "reserve_doi": "Reservasjon av DOI feila",
@@ -567,7 +564,7 @@
       "update_publish_strategy": "Kunne ikkje oppdatere publiseringsstrategi",
       "update_publishing_request": "Kunne ikkje oppdatere publiseringsførespurnad",
       "update_registration": "Kunne ikkje oppdatere registrering",
-      "update_rights_retention_strategy": "Kunne ikkje oppdatere rettspolitikk",
+      "update_rights_retention_strategy": "Kunne ikkje oppdatere rettigheitspolitikk",
       "update_ticket_assignee": "Kunne ikkje setje kurator",
       "update_ticket_status": "Kunne ikkje oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feila"
@@ -576,12 +573,11 @@
       "add_employment": "Tilsetjing lagt til",
       "admin_added": "Brukar lagt til som administrator",
       "create_journal": "Tiddskriftet vart oppretta",
-      "create_note": "Meldinga vart lagra",
+      "create_note": "Kommentaren vart lagra",
       "create_nvi_period": "NVI-periode blei oppretta",
       "create_person": "Person vart oppretta",
       "create_project": "Prosjekt er oppretta",
       "create_publisher": "Utgjevaren blei oppretta",
-      "create_publishing_request": "Publiseringsførespurnad blei oppretta",
       "create_registration": "Publikasjon er oppretta",
       "create_series": "Serien vart oppretta",
       "create_user": "Din brukar vart oppretta",
@@ -593,8 +589,8 @@
       "doi_request_rejected": "DOI-førespurnaden blei avvist",
       "doi_request_sent": "DOI-førespurnad sendt",
       "merge_import_candidate": "Importdata blei slått saman med resultatdata",
-      "publish_as_curator": "Registreringa blei publisert (inga godkjenning nødvendig sidan du er kurator)",
-      "publishing_request_approved": "Registreringa blei publisert",
+      "published_metadata_waiting_for_files": "Metadata blei publisert og filer er sendt til godkjenning",
+      "published_registration": "Registreringa blei publisert",
       "publishing_request_rejected": "Publiseringsførespurnaden blei avvist",
       "removed_role": "Rolla vart fjerna",
       "reserve_doi": "DOI er reservert",
@@ -610,7 +606,7 @@
       "update_promoted_publication": "Favorittmarkering blei oppdatert",
       "update_publish_strategy": "Publiseringsstrategi vart oppdatert",
       "update_registration": "Registreringa er oppdatert",
-      "update_rights_retention_strategy": "Rettspolitikk blei oppdatert",
+      "update_rights_retention_strategy": "Rettigheitspolitikk blei oppdatert",
       "update_ticket_assignee": "Kurator blei oppdatert",
       "update_vocabulary": "{{vocabulary}} er no {{status}}"
     },
@@ -635,7 +631,8 @@
       "must_be_bigger_than": "{{field}} kan ikkje vere mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikkje vere større enn {{limit}}",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
-      "project_manager_required_project": "Prosjektet må ha ein prosjektleiar"
+      "project_manager_required_project": "Prosjektet må ha ein prosjektleiar",
+      "reference_required": "Oppgi referanse på resultat"
     }
   },
   "footer": {
@@ -648,7 +645,7 @@
     "language_selector": "Valt språk",
     "news_link": "Nyheitsbrev",
     "system_status_link": "Driftsmeldingar",
-    "technical_support_link": "Ved teknisk støtte kontakt <0>kontakt@sikt.no</0>"
+    "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>"
   },
   "licenses": {
     "description": {
@@ -709,7 +706,10 @@
       "imported": "Importert",
       "metadata_published": "Metadata publisert",
       "metadata_published_in_nva": "Metadata publisert i NVA",
-      "metadata_updated": "Metadata oppdatert"
+      "metadata_updated": "Metadata oppdatert",
+      "result_deleted": "Resultat sletta",
+      "result_republished": "Resultat republisert",
+      "result_unpublished": "Resultat avpublisert"
     },
     "unknown_filename": "Ukjend filnamn"
   },
@@ -724,14 +724,14 @@
       "doi_pending": "Ventar på DOI-tildeling",
       "files_published_one": "{{count}} fil publisert",
       "files_published_other": "{{count}} filer publisert",
-      "files_published_unknown": "Fil(er) publisert",
-      "files_rejected": "Fil(er) avvist",
+      "files_rejected": "{\"one\":\"{{count}} fil avvist\",\"other\":\"{{count}} filer avvist\"}",
       "files_uploaded_one": "{{count}} fil lasta opp",
       "files_uploaded_other": "{{count}} filer lasta opp",
       "general_support_pending": "Ventar på oppfølging",
       "get_curator_support": "Få hjelp av kurator",
       "mark_as_completed": "Sett til ferdig",
       "message_deleted": "Meldinga er sletta",
+      "metadata_published": "Metadata publisert",
       "no_messages": "Du har ingen meldingar",
       "ticket_types": {
         "Closed": "Avvist",
@@ -749,17 +749,19 @@
     "my_page": "Mi side",
     "my_profile": {
       "background": "Bakgrunn",
+      "background_description": "<0>Det er frivillig å fylle ut informasjon i felta nedanfor.</0><0>Du kan når som helst trekkje samtykket ved å slette teksten frå felta.</0><0>Ved å fylle ut informasjonen i felta nedanfor, samtykkjer du til at den blir lagt til i din offentlege profil i Nasjonalt vitenarkiv. Profilen din er offentleg synleg for alle som nyttar Nasjonalt vitenarkiv.</0><0>Ikkje oppgi sensitive personopplysningar i felta då dette vil bli vist på den offentlege profilen din.</0>",
+      "background_en": "Bakgrunn på engelsk",
+      "background_no": "Bakgrunn på norsk",
       "contact_information": "Kontaktinformasjon",
+      "contact_information_is_voluntary": "<0>Det er frivillig å oppgi informasjonen i felta nedanfor.</0><0>Du kan når som helst trekkje samtykket ved å slette informasjonen.</0><0>Ved å fylle ut felta nedanfor, samtykkjer du til at informasjonen blir lagt til profilen din i Nasjonalt vitenarkiv, og at informasjonen vil vere offentleg synleg for alle som nyttar Nasjonalt vitenarkiv.</0>",
       "edit_promoted_publication": "Legg til/fjern som favoritt",
       "edit_research_profile": "Rediger forskarprofil",
       "field_and_background": {
         "background_placeholder": "Skriv inn",
-        "english": "Engelsk",
         "field": "Fagfelt",
         "field_and_background": "Fagfelt og bakgrunn",
-        "field_text": "Nøkkelord som kan beskrive fagfelt",
-        "keywords_search_text": "Du kan leggje til fleire nøkkelord om gongen",
-        "norwegian": "Norsk"
+        "field_text": "Oppgi nøkkelord som kan beskrive fagfeltet ditt.",
+        "keywords_search_text": "Du kan leggje til fleire nøkkelord om gongen"
       },
       "heading": {
         "affiliations": "Tilknytingar",
@@ -772,11 +774,14 @@
         "upload_profile_photo": "Last opp profilbilete",
         "upload_profile_photo_info": "Maksimum storleik: 1 MB. Støtta filtypar: .jpg eller .jpeg"
       },
-      "link_to_projects_search": "",
-      "link_to_results_search": "",
+      "identity_numbers_description": "Identitetsnummer blir henta frå innlogginga.",
+      "link_to_projects_search": "Sjå <0>søkesida</0> for å filtrere blant alle prosjekt.",
+      "link_to_results_search": "Sjå <0>søkesida</0> for å filtrere blant alle resultat.",
       "list_contains_all_registration_you_have_created": "Lista viser alle prosjekt du har registrert",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskingsresultat",
+      "name": "Namn",
+      "name_description": "Personnamn blir henta frå innlogging.",
       "orcid": {
         "connect_orcid": "Kople/oprette ORCID iD",
         "delete_orcid": "Fjern ORCID-kopling",
@@ -791,23 +796,25 @@
         "remove_connection": "Fjern kopling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koplinga til ORCID?\n\nDersom du ønskjer å trekkje Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
+      "orcid_is_voluntary": "<0>Det er valgfritt å kople ORCID til din profil i NVA. Med ORCID blir det lettare for andre å identifisere deg.</0><0>Det er du som eig og kontrollerar din ORCID. Du kan når som helst kople eller kople frå ORCID til din profil i NVA.</0>",
       "overview_and_settings": "Oversyn og innstillingar",
-      "person_name": "Personnamn",
       "personal_web_page": "Personleg nettside",
       "preferred_first_name": "Føretrekt fornamn",
       "preferred_last_name": "Føretrekt etternamn",
-      "preferred_name": "Forfattarnamn",
       "profile_picture": "Profilbilete",
       "projects": "Prosjekt",
       "remove_profile_picture": "Fjern profilbilete?",
       "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbiletet?",
       "results": "Resultat",
       "telephone": "Telefon",
+      "upload_description": "<0>Lastar du opp eit bilete samtykkjer du til at biletet blir lagt inn som profilbilete på din offentlege profil i Nasjonalt vitenarkiv.</0><0>Profilbiletet er offentleg synleg for alle som nyttar Nasjonalt vitenarkiv.</0>",
+      "upload_is_not_mandatory": "<0>Det er frivillig å laste opp eit bilete.</0><0>Du kan når som helst trekkje tilbake samtykket ved å slette biletet.</0>",
       "user_role_and_help": {
         "application_help_helper_text": "Om du treng rettleiing til utfylling, kan denne vere til hjelp.",
         "application_help_text": "Rettleiing for å registrere eit resultat",
         "user_role_and_help": "Brukarrolle og hjelp"
-      }
+      },
+      "writer_name_description": "Forfattarnamnet er namnet som er vist på profilen din i NVA og på resultat og prosjekt som du er knytt til i NVA. Du kan sjølv endre forfattarnamn til ditt føretrekte namn."
     },
     "no_employments": "Ingen tilsetjingar",
     "project_registrations": "Prosjektregistreringar",
@@ -1130,7 +1137,7 @@
   "project": {
     "add_affiliation": "Legg til tilknyting",
     "add_contributor": "Legg til prosjektdeltakar",
-    "add_local_manager": "",
+    "add_local_manager": "Legg til lokalt ansvarleg",
     "add_project_contributor": "Legg til prosjektdeltakar",
     "add_project_manager": "Legg til prosjektleiar",
     "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltakar",
@@ -1146,8 +1153,9 @@
     "coordinating_institution": "Koordinerande institusjon",
     "create_new_project": "Oppret nytt prosjekt",
     "create_project": "Nytt prosjekt",
-    "duplicate_project_warning": "",
-    "duplicate_title_warning": "",
+    "duplicate_project_heading": "Søkjeresultat",
+    "duplicate_project_warning": "Det er eit prosjekt i NVA med same tittel. Ver venleg og ikkje registrer prosjektet viss det er det same prosjektet, slik at du ikkje opprettar duplikat.",
+    "duplicate_title_warning": "Det er eit prosjekt i NVA med same tittel. Ver venleg og avbryt registreringa viss det er det same prosjektet du prøver å registrere, slik at du ikkje opprettar duplikat.",
     "edit_project": "Endre prosjekt",
     "error": {
       "contributor_already_added_with_same_role_and_affiliation": "Prosjektdeltakar er allereie lagt til med same rolle og tilknyting."
@@ -1158,12 +1166,12 @@
       "category": "Kategori",
       "date": "Dato",
       "keywords": "Nøkkelord",
-      "no_related_projects_description": "",
-      "no_related_registrations_description": "",
+      "no_related_projects_description": "Prosjektet er ikkje knytte til andre prosjekt enno.",
+      "no_related_registrations_description": "Prosjektet må lagrast før det kan bli knytt til forskingsresultat",
       "related_projects": "Relaterte prosjekt",
       "related_projects_description": "Legg til andre prosjekt som er relatert til dette prosjektet",
-      "related_registrations": "",
-      "related_registrations_description": "",
+      "related_registrations": "Relaterte forskingsresultat",
+      "related_registrations_description": "Sjå forskingsresultat relatert til prosjektet",
       "remove_participant": "Fjern prosjektdeltakar",
       "remove_participant_text": "Er du sikker på at du ønskjer å fjerne {{name}}?",
       "remove_project": "Fjern prosjekt",
@@ -1176,6 +1184,7 @@
       "title_and_description": "Tittel og beskriving",
       "write_project_title": "Skriv inn tittel på prosjekt"
     },
+    "grant": "Tilskot",
     "grant_id": "Tilskots-ID",
     "heading": {
       "connections": "Koplingar",
@@ -1184,13 +1193,13 @@
       "members": "Medlemmar"
     },
     "keywords": "Nøkkelord",
-    "local_managers": "",
+    "local_managers": "Lokalt ansvarlege",
     "new_project": {
-      "nfr_project": "NFR-prosjekt",
+      "nfr_grant": "NFR-tilskot",
       "search_for_project_name_or_placeholder": "Søk etter prosjektnamn eller prosjektleiar"
     },
     "no_affiliation": "Inga tilknyting",
-    "no_duplicate_title": "Ingen resultat funne med same tittel",
+    "no_duplicate_title": "Ingen prosjekt funne med same tittel.",
     "no_participants": "Ingen registrerte deltakarar.",
     "no_related_projects": "Ingen relaterte prosjekt.",
     "no_results": "Ingen publiserte resultat.",
@@ -1208,15 +1217,17 @@
     "project_manager": "Prosjektleiar",
     "project_manager_from_nfr": "Prosjektleiar frå NFR: {{name}}",
     "project_manager_is_unidentified": "Prosjektleiar er uidentifisert",
+    "project_modal_title": "Nytt prosjekt",
     "project_participant": "Prosjektdeltakar",
     "project_participants": "Prosjektdeltakarar",
     "remove_project_manager": "Slett prosjektleiar",
     "results": "Resultat",
     "role_types": {
-      "LocalProjectManager": "",
+      "LocalProjectManager": "Lokalt ansvarleg",
       "ProjectManager": "Prosjektleiar",
       "ProjectParticipant": "Prosjektdeltakar"
     },
+    "save_and_close": "Lagre og lukk",
     "scientific_summary": "Vitskapleg samandrag",
     "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",
     "scientific_summary_norwegian": "$t(project.scientific_summary) (norsk)",
@@ -1231,6 +1242,7 @@
     "verify_project_manager": "Identifiser prosjektleiar"
   },
   "registration": {
+    "cannot_update_published_result_with_validation_errors": "Kan ikkje lagre fordi resultatet er publisert og inneheld valideringsfeil",
     "citation_points_to": "Siteringa viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknyting",
@@ -1386,16 +1398,15 @@
       "files_are_not_published": "Filer blir ikkje publisert",
       "files_awaits_approval_one": "{{count}} fil og vald lisens ventar på å bli verifisert",
       "files_awaits_approval_other": "{{count}} filer og valde lisensar ventar på å bli verifiserte",
-      "files_awaits_approval_unknown": "Ventar på verifisering av fil(er)",
       "files_count": "Filer ({{count}})",
       "files_to_publish": "Ventar på publisering",
       "find_journal_in_channel_register": "Sjå informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Sjå informasjon om utgjevaren i Kanalregisteret",
       "find_series_in_channel_register": "Sjå informasjon om serien i Kanalregisteret",
-      "follow_institution_rights_policy": "Eg ønskjer å følgje <0>rettspolitikken</0> til institusjonen min.",
+      "follow_institution_rights_policy": "Eg ønskjer å følgje <0>rettigheitspolitikken</0> til institusjonen min.",
       "info_from_channel_register": "Meir informasjon om vald publiseringskanal",
-      "institution_prefers_cc_by": "Din institusjon har ein <0>rettspolitikk</0> som anbefaler CC-BY.",
-      "institution_rights_policy_opt_out_instructions": "Om du ønskjer å reservere deg frå institusjonen sin rettspolitikk, må du sjekke om det er mogleg ved din institusjon. Kontakt kuratorstøtte.",
+      "institution_prefers_cc_by": "Din institusjon har ein <0>rettigheitspolitikk</0> som anbefaler CC-BY.",
+      "institution_rights_policy_opt_out_instructions": "Om du ønskjer å reservere deg frå institusjonen sin rettigheitspolitikk, må du sjekke om det er mogleg ved din institusjon. Kontakt kuratorstøtte.",
       "license": "Lisens",
       "licenses": "Lisensar",
       "link_to_resource": "Lenkje til ressurs",
@@ -1404,7 +1415,7 @@
       "no_duplicates": "Kunne ikkje leggje til \"{{fileName}}\", sidan ei fil med same namn allereie finst",
       "no_files_or_links_present_in_this_registration": "Det er ikkje lagt til fil eller lenkje for registreringa",
       "open_file": "Opne fil",
-      "opted_out_of_rrs": "Du har valt å ikkje følgje vedtatt <0>rettspolitikk</0>",
+      "opted_out_of_rrs": "Du har valt å ikkje følgje vedtatt <0>rettigheitspolitikk</0>",
       "public_note": "Offentleg kommentar",
       "published": "Publisert",
       "published_files": "Publiserte filer",
@@ -1533,6 +1544,7 @@
     "publication_types": {
       "AcademicArticle": "Vitskapleg artikkel",
       "AcademicChapter": "Vitskapleg kapittel",
+      "AcademicCommentary": "Vitskapleg kommentarutgåve",
       "AcademicLiteratureReview": "Vitskapleg oversynsartikkel",
       "AcademicMonograph": "Vitskapleg monografi",
       "Anthology": "Del av bok eller rapport",
@@ -1583,13 +1595,13 @@
       "MovingPicture": "Film",
       "MusicPerformance": "Musikk",
       "NonFictionChapter": "Fagleg kapittel",
-      "NonFictionMonograph": "Fagleg monografi",
+      "NonFictionMonograph": "Fagbok",
       "OtherPresentation": "Annan presentasjon",
       "OtherStudentWork": "Anna studentoppgåve",
       "PerformingArts": "Scenekunst",
       "PopularScienceArticle": "Populærvitskapleg artikkel",
       "PopularScienceChapter": "Populærvitskapleg kapittel",
-      "PopularScienceMonograph": "Populærvitskapleg monografi",
+      "PopularScienceMonograph": "Populærvitskapleg bok",
       "ProfessionalArticle": "Fagartikkel",
       "Report": "Rapport",
       "ReportBasic": "Annan rapport",
@@ -1944,7 +1956,8 @@
       "need_help": "Treng du hjelp?",
       "self_help": {
         "description": "Treng du hjelp? Sjå om du kan løyse problemet sjølv ved å sjå på brukarrettleiingane.",
-        "header": "Rettleiing for å registrere eit forskingsresultat"
+        "header": "Rettleiing for å registrere eit forskingsresultat",
+        "institution_help_description": "<0>Har du tekniske problem?</0><0>Sjå og eventuelt meld inn feil til brukarstøtte</0>"
       }
     },
     "year_published": "Publiseringsår"
@@ -2020,15 +2033,17 @@
         "anthology_without_chapter": "Antologiar utan kapittel",
         "applicable_category_in_non_applicable_channel": "Teljande katgoriar i ikkje-teljande kanalar",
         "book_with_less_than_50_pages": "Bøker med færre enn 50 sider",
-        "non_applicable_category_in_applicable_channel": "Ikkje-teljande kategoriar i teljande kanalar"
+        "non_applicable_category_in_applicable_channel": "Ikkje-teljande kategoriar i teljande kanalar",
+        "unidentified_contributor_with_identified_affiliation": "Uidentifisert bidragsytar med identifisert institusjon"
       },
-      "delete_note": "Slett melding",
-      "delete_note_description": "Er du sikker på at du vil slette denne meldinga?",
+      "delete_note": "Slett kommentar",
+      "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",
       "exclude_subunits": "Ekskluder undereiningar",
       "institution_nvi_status": "Status NVI-rapportering",
-      "message_description": "Treng du avklåring, ta kontakt med andre NVI-kuratorar via meldingsfeltet.",
+      "message_description": "Du kan skrive ein kommentar, som blir synleg for alle andre NVI-kuratorar med tilgang til denne registreringa.",
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidatar",
+      "note": "Kommentar",
       "previous_candidate": "Gå til førre kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
@@ -2037,7 +2052,7 @@
       "reject_nvi_candidate_modal_text": "Ver venleg og gje ei detaljert grunngjeving for kvifor du avviser. Grunngjevinga må innehalde minst 10 teikn.",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukka.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikkje open.",
-      "save_note": "Lagre melding",
+      "save_note": "Lagre kommentar",
       "show_candidate_search": "Vis kandidatsøk",
       "show_reporting_status": "Vis rapporteringsstatus",
       "show_subunits": "Vis undereiningar",

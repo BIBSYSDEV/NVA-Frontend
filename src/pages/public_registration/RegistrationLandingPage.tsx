@@ -1,9 +1,8 @@
 import { Box } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
-import { fetchRegistrationTickets } from '../../api/registrationApi';
+import { useFetchRegistrationTickets } from '../../api/hooks/useFetchRegistrationTickets';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RegistrationStatus } from '../../types/registration.types';
@@ -38,12 +37,7 @@ export const RegistrationLandingPage = () => {
     registration?.status === RegistrationStatus.DraftForDeletion ||
     registration?.status === RegistrationStatus.Unpublished;
 
-  const ticketsQuery = useQuery({
-    enabled: canEditRegistration && !!registrationId,
-    queryKey: ['registrationTickets', registrationId],
-    queryFn: () => (registrationId ? fetchRegistrationTickets(registrationId) : null),
-    meta: { errorMessage: t('feedback.error.get_tickets') },
-  });
+  const ticketsQuery = useFetchRegistrationTickets(registrationId, { enabled: canEditRegistration });
 
   const refetchRegistrationAndTickets = async () => {
     await Promise.all([ticketsQuery.refetch(), registrationQuery.refetch()]);
@@ -69,11 +63,7 @@ export const RegistrationLandingPage = () => {
               <ActionPanel
                 registration={registration}
                 refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                tickets={
-                  ticketsQuery.data?.tickets
-                    ? ticketsQuery.data.tickets.filter((ticket) => ticket.status !== 'NotApplicable')
-                    : []
-                }
+                tickets={ticketsQuery.data?.tickets ?? []}
                 isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
               />
             )}
