@@ -7,7 +7,11 @@ import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { DegreeRegistration } from '../../../../../types/publication_types/degreeRegistration.types';
-import { ConfirmedDocument, emptyUnconfirmedDocument } from '../../../../../types/registration.types';
+import {
+  ConfirmedDocument,
+  emptyUnconfirmedDocument,
+  UnconfirmedDocument,
+} from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { PublisherField } from '../../components/PublisherField';
 import { SearchRelatedResultField } from '../../components/SearchRelatedResultField';
@@ -20,7 +24,6 @@ export const PhdForm = () => {
   const { values, setFieldValue } = useFormikContext<DegreeRegistration>();
   const [indexToRemove, setIndexToRemove] = useState<number | null>(null);
   const related = values.entityDescription.reference?.publicationInstance.related ?? [];
-  const [sequenceValue, setSequenceValue] = useState(`${related[index].sequence}`);
 
   const removeRelatedItem = (indexToRemove: number) => {
     const newRelated = related?.filter((_, thisIndex) => thisIndex !== indexToRemove);
@@ -28,7 +31,7 @@ export const PhdForm = () => {
   };
 
   const handleMoveRelatedResult = (newSequence: number, oldSequence: number) => {
-    const oldIndex = related.findIndex((related) => related.sequence === oldSequence);
+    const oldIndex = related.findIndex((r) => r.sequence === oldSequence);
     const minNewIndex = 0;
     const maxNewIndex = related.length - 1;
 
@@ -37,9 +40,10 @@ export const PhdForm = () => {
         ? maxNewIndex
         : newSequence < minNewIndex
           ? minNewIndex
-          : related.findIndex((related) => related.sequence === newSequence);
+          : related.findIndex((r) => r.sequence === newSequence);
 
-    const orderedRelatedResults = newIndex >= 0 ? (move(related, oldIndex, newIndex) as ConfirmedDocument[]) : related;
+    const orderedRelatedResults =
+      newIndex >= 0 ? (move(related, oldIndex, newIndex) as (ConfirmedDocument | UnconfirmedDocument)[]) : related;
 
     // Ensure incrementing sequence values
     const newRelatedResults = orderedRelatedResults.map((related, index) => ({
