@@ -1,32 +1,40 @@
 # Authentication
 
-The following mermaid flowchart depicts the authentication flow for the frontend.
+The following flowchart depicts the authentication flow for the frontend app.
 
 ```mermaid
 ---
 title: Authentication flow
 ---
 flowchart TD
-    A[User logs in] --> B{User has previously accepted current terms and conditions?}
+    login[User logs in]
+    hasAcceptedTerms{Previously accepted current terms?}
+    acceptTerms{Accept current terms?}
+    existsInCristin{Exists in Cristin Person Register?}
+    logout[User is logged out]
+    hasMultipleCustomers{Has multiple allowed customers?}
+    createUser[Create Cristin Person and NVA User]
+    loggedIn[User is logged in to NVA]
+    hasSelectedInstitution{Selected institution during login?}
+    selectCustomer[Select desired customer]
 
-    B -- No --> C{User accepts current terms and conditions?}
-    B -- Yes --> D{User exists in Cristin Person Register?}
+    login --> hasAcceptedTerms
 
-    C -- No --> E[User is logged out]
-    C -- Yes --> D
+    hasAcceptedTerms -- No --> acceptTerms
+    hasAcceptedTerms -- Yes --> hasMultipleCustomers
 
-    D -- No --> F{User accepts terms for being added to Cristin Person Register?}
-    D -- Yes --> G{User has more than one allowed customer?}
+    acceptTerms -- No --> logout
+    acceptTerms -- Yes --> existsInCristin
 
-    F -- No --> E
-    F -- Yes --> H[User creates Cristin Person and NVA User]
+    existsInCristin -- No --> createUser
+    existsInCristin -- Yes --> hasMultipleCustomers
 
-    G -- No --> I[User is logged in to NVA]
-    G -- Yes --> J{User has selected Institution during login?}
+    hasMultipleCustomers -- No --> loggedIn
+    hasMultipleCustomers -- Yes --> hasSelectedInstitution
 
-    J -- No --> K[User selects desired customer]
-    J -- Yes --> I
+    hasSelectedInstitution -- No --> selectCustomer
+    hasSelectedInstitution -- Yes --> loggedIn
 
-    K --> I
-    H --> I
+    selectCustomer --> loggedIn
+    createUser --> loggedIn
 ```
