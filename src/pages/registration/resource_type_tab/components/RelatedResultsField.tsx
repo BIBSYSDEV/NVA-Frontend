@@ -32,7 +32,7 @@ export const RelatedResultsField = () => {
   const handleMoveRelatedResult = (newSequence?: number, oldSequence?: number) => {
     if (!newSequence || !oldSequence) return;
 
-    const oldIndex = related.findIndex((r) => r.sequence === oldSequence);
+    const oldIndex = related.findIndex((related) => related.sequence === oldSequence);
     const minNewIndex = 0;
     const maxNewIndex = related ? related.length - 1 : 0;
 
