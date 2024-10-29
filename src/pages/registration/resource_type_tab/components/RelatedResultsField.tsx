@@ -1,4 +1,4 @@
-import { Box, Button, List, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, List, TextField, Tooltip, Typography } from '@mui/material';
 import { SearchRelatedResultField } from './SearchRelatedResultField';
 import { RelatedResourceRow } from '../sub_type_forms/research_data_types/RelatedResourceRow';
 import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, move, useFormikContext } from 'formik';
@@ -15,6 +15,8 @@ import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { useTranslation } from 'react-i18next';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
 import { useState } from 'react';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 export const RelatedResultsField = () => {
   const { t } = useTranslation();
@@ -98,22 +100,34 @@ export const RelatedResultsField = () => {
                       gap: '0.25rem 1rem',
                       mb: '0.5rem',
                     }}>
-                    <Button
-                      onClick={() =>
-                        !!document.sequence && document.sequence > 0
-                          ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
-                          : null
-                      }>
-                      Up
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        !!document.sequence && document.sequence < related.length
-                          ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
-                          : null
-                      }>
-                      Down
-                    </Button>
+                    {related.length !== document.sequence && (
+                      <Tooltip title={t('common.move_down')}>
+                        <IconButton
+                          size="small"
+                          sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
+                          onClick={() =>
+                            !!document.sequence && document.sequence > 0
+                              ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
+                              : null
+                          }>
+                          <ArrowDownwardIcon color="primary" />
+                        </IconButton>
+                      </Tooltip>
+                    )}
+                    {document.sequence !== 1 && (
+                      <Tooltip title={t('common.move_up')}>
+                        <IconButton
+                          size="small"
+                          sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
+                          onClick={() =>
+                            !!document.sequence && document.sequence > 0
+                              ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
+                              : null
+                          }>
+                          <ArrowUpwardIcon color="primary" />
+                        </IconButton>
+                      </Tooltip>
+                    )}
 
                     <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
                       {({ field, meta: { touched, error } }: FieldProps<string>) => (
