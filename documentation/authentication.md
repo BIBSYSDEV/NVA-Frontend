@@ -19,22 +19,16 @@ flowchart TD
     selectCustomer[Select desired customer]
 
     login --> hasAcceptedTerms
-
     hasAcceptedTerms -- No --> acceptTerms
     hasAcceptedTerms -- Yes --> hasMultipleCustomers
-
     acceptTerms -- No --> logout
     acceptTerms -- Yes --> existsInCristin
-
     existsInCristin -- No --> createUser
     existsInCristin -- Yes --> hasMultipleCustomers
-
     hasMultipleCustomers -- No --> loggedIn
     hasMultipleCustomers -- Yes --> hasSelectedInstitution
-
     hasSelectedInstitution -- No --> selectCustomer
     hasSelectedInstitution -- Yes --> loggedIn
-
     selectCustomer --> loggedIn
     createUser --> loggedIn
 ```
