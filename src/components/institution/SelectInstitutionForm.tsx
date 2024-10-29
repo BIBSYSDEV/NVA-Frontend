@@ -66,7 +66,11 @@ export const SelectInstitutionForm = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const debouncedQuery = useDebounce(searchTerm);
-  const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
+  const organizationSearchQuery = useSearchForOrganizations({
+    query: debouncedQuery,
+    results: searchSize,
+    fullTree: true,
+  });
 
   const institutionOptions = organizationSearchQuery.data?.hits ?? [];
 
