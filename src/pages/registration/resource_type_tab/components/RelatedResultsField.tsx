@@ -75,73 +75,75 @@ export const RelatedResultsField = () => {
 
       {related && related.length > 0 && (
         <List disablePadding>
-          {related?.map((document, index) => {
-            if (document.type === 'ConfirmedDocument') {
-              return (
-                <RelatedResourceRow
-                  key={document.identifier}
-                  uri={document.identifier}
-                  removeRelatedResource={() => removeRelatedItem(index)}
-                />
-              );
-            } else if (document.type === 'UnconfirmedDocument') {
-              return (
-                <Box
-                  key={index}
-                  component="li"
-                  sx={{
-                    display: 'flex',
-                    flexDirection: { xs: 'column', sm: 'row' },
-                    alignItems: 'center',
-                    gap: '0.25rem 1rem',
-                    mb: '0.5rem',
-                  }}>
-                  <Button
-                    onClick={() =>
-                      !!document.sequence && document.sequence > 0
-                        ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
-                        : null
-                    }>
-                    Up
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      !!document.sequence && document.sequence < related.length
-                        ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
-                        : null
-                    }>
-                    Down
-                  </Button>
+          {related
+            ?.sort((a, b) => (a.sequence && b.sequence ? a.sequence - b.sequence : 0))
+            .map((document, index) => {
+              if (document.type === 'ConfirmedDocument') {
+                return (
+                  <RelatedResourceRow
+                    key={document.identifier}
+                    uri={document.identifier}
+                    removeRelatedResource={() => removeRelatedItem(index)}
+                  />
+                );
+              } else if (document.type === 'UnconfirmedDocument') {
+                return (
+                  <Box
+                    key={index}
+                    component="li"
+                    sx={{
+                      display: 'flex',
+                      flexDirection: { xs: 'column', sm: 'row' },
+                      alignItems: 'center',
+                      gap: '0.25rem 1rem',
+                      mb: '0.5rem',
+                    }}>
+                    <Button
+                      onClick={() =>
+                        !!document.sequence && document.sequence > 0
+                          ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
+                          : null
+                      }>
+                      Up
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        !!document.sequence && document.sequence < related.length
+                          ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
+                          : null
+                      }>
+                      Down
+                    </Button>
 
-                  <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
-                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                      <TextField
-                        {...field}
-                        label={t('registration.resource_type.related_result')}
-                        variant="filled"
-                        multiline
-                        fullWidth
-                        required
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
-                  </Field>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    color="error"
-                    data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
-                    onClick={() => setIndexToRemove(index)}
-                    startIcon={<RemoveCircleOutlineIcon />}>
-                    {t('registration.resource_type.research_data.remove_relation')}
-                  </Button>
-                </Box>
-              );
-            } else {
-              return null;
-            }
-          })}
+                    <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
+                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          label={t('registration.resource_type.related_result')}
+                          variant="filled"
+                          multiline
+                          fullWidth
+                          required
+                          error={touched && !!error}
+                          helperText={<ErrorMessage name={field.name} />}
+                        />
+                      )}
+                    </Field>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="error"
+                      data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
+                      onClick={() => setIndexToRemove(index)}
+                      startIcon={<RemoveCircleOutlineIcon />}>
+                      {t('registration.resource_type.research_data.remove_relation')}
+                    </Button>
+                  </Box>
+                );
+              } else {
+                return null;
+              }
+            })}
         </List>
       )}
 
