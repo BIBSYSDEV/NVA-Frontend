@@ -5,7 +5,11 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, mov
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { ConfirmedDocument, emptyUnconfirmedDocument, UnconfirmedDocument } from '../../../../types/registration.types';
+import {
+  ConfirmedDocument,
+  createEmptyUnconfirmedDocument,
+  UnconfirmedDocument,
+} from '../../../../types/registration.types';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { useTranslation } from 'react-i18next';
@@ -23,28 +27,38 @@ export const RelatedResultsField = () => {
     setFieldValue(ResourceFieldNames.PublicationInstanceRelated, newRelated);
   };
 
-  const handleMoveRelatedResult = (newSequence: number, oldSequence: number) => {
+  const handleMoveRelatedResult = (newSequence?: number, oldSequence?: number) => {
+    if (!newSequence || !oldSequence) return;
+
     const oldIndex = related.findIndex((r) => r.sequence === oldSequence);
     const minNewIndex = 0;
-    const maxNewIndex = related.length - 1;
+    const maxNewIndex = related ? related.length - 1 : 0;
 
     const newIndex =
       newSequence - 1 > maxNewIndex
         ? maxNewIndex
         : newSequence < minNewIndex
           ? minNewIndex
-          : related.findIndex((r) => r.sequence === newSequence);
+          : related
+            ? related.findIndex((r) => r.sequence === newSequence)
+            : 0;
 
     const orderedRelatedResults =
-      newIndex >= 0 ? (move(related, oldIndex, newIndex) as (ConfirmedDocument | UnconfirmedDocument)[]) : related;
+      newIndex >= 0 && related
+        ? (move(related, oldIndex, newIndex) as (ConfirmedDocument | UnconfirmedDocument)[])
+        : related;
 
     // Ensure incrementing sequence values
-    const newRelatedResults = orderedRelatedResults.map((related, index) => ({
-      ...related,
-      sequence: index + 1,
-    }));
+    const newRelatedResults = orderedRelatedResults
+      ? orderedRelatedResults.map((related, index) => ({
+          ...related,
+          sequence: index + 1,
+        }))
+      : [];
+
     setFieldValue(ResourceFieldNames.PublicationInstanceRelated, newRelatedResults);
   };
+
   return (
     <Box
       sx={{
@@ -82,6 +96,23 @@ export const RelatedResultsField = () => {
                     gap: '0.25rem 1rem',
                     mb: '0.5rem',
                   }}>
+                  <Button
+                    onClick={() =>
+                      document.sequence !== undefined && document.sequence > 0
+                        ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
+                        : null
+                    }>
+                    Up
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      document.sequence !== undefined && document.sequence < related.length
+                        ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
+                        : null
+                    }>
+                    Down
+                  </Button>
+
                   <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <TextField
@@ -118,7 +149,7 @@ export const RelatedResultsField = () => {
         {({ push }: FieldArrayRenderProps) => (
           <Button
             data-testid={dataTestId.registrationWizard.resourceType.addRelatedButton}
-            onClick={() => push(emptyUnconfirmedDocument)}
+            onClick={() => push(createEmptyUnconfirmedDocument(related.length))}
             startIcon={<AddCircleOutlineIcon />}
             sx={{ alignSelf: 'start' }}>
             {t('common.add_custom', { name: t('registration.resource_type.related_result').toLocaleLowerCase() })}

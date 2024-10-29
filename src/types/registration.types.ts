@@ -381,19 +381,22 @@ export interface RegistrationAggregations {
 export interface ConfirmedDocument {
   type: 'ConfirmedDocument';
   identifier: string;
-  sequence?: number;
+  sequence?: number | undefined;
 }
 
 export interface UnconfirmedDocument {
   type: 'UnconfirmedDocument';
   text: string;
-  sequence?: number;
+  sequence?: number | undefined;
 }
 
-export const emptyUnconfirmedDocument: UnconfirmedDocument = {
-  type: 'UnconfirmedDocument',
-  text: '',
-};
+export function createEmptyUnconfirmedDocument(index: number): UnconfirmedDocument {
+  return {
+    type: 'UnconfirmedDocument',
+    text: '',
+    sequence: index + 1,
+  };
+}
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
 
