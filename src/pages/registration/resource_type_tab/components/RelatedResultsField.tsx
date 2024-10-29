@@ -98,7 +98,7 @@ export const RelatedResultsField = () => {
                   }}>
                   <Button
                     onClick={() =>
-                      document.sequence !== undefined && document.sequence > 0
+                      !!document.sequence && document.sequence > 0
                         ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
                         : null
                     }>
@@ -106,7 +106,7 @@ export const RelatedResultsField = () => {
                   </Button>
                   <Button
                     onClick={() =>
-                      document.sequence !== undefined && document.sequence < related.length
+                      !!document.sequence && document.sequence < related.length
                         ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
                         : null
                     }>
