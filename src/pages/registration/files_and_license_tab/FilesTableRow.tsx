@@ -167,9 +167,9 @@ export const FilesTableRow = ({
                 inputProps={{ 'aria-labelledby': markForPublishId }}
                 onChange={(_, checked) => {
                   if (!checked) {
-                    setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
+                    setFieldValue(fileTypeFieldName, FileType.PendingInternalFile);
                   } else {
-                    setFieldValue(fileTypeFieldName, FileType.UnpublishedFile);
+                    setFieldValue(fileTypeFieldName, FileType.PendingOpenFile);
                   }
                 }}
               />

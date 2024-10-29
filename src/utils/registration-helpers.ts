@@ -708,7 +708,7 @@ export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[], tick
   const archivedFiles = associatedArtifacts.filter(
     (file) =>
       file.type === FileType.InternalFile ||
-      (file.type === 'UnpublishableFile' && !rejectedFileIdentifiers.includes(file.identifier))
+      (file.type === FileType.UnpublishableFile && !rejectedFileIdentifiers.includes(file.identifier))
   );
   return archivedFiles.length;
 };
