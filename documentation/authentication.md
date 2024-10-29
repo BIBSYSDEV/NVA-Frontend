@@ -15,7 +15,7 @@ flowchart TD
     C -- No --> E[User is logged out]
     C -- Yes --> D
 
-    D -- No --> F{User accepts terms for being created as a User?}
+    D -- No --> F{User accepts terms for being added to Cristin Person Register?}
     D -- Yes --> G{User has more than one allowed customer?}
 
     F -- No --> E
