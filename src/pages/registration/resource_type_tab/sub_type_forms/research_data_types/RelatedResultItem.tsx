@@ -1,10 +1,11 @@
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { Box, Button, Link, ListItem, Skeleton, Typography } from '@mui/material';
+import { Box, Link, ListItem, Skeleton, TextField, Typography } from '@mui/material';
+import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
-import { Registration } from '../../../../../types/registration.types';
+import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
+import { Registration, RelatedDocument } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
@@ -12,28 +13,25 @@ import { getTitleString } from '../../../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
 
 interface RelatedResourceRowRowProps {
-  uri: string;
   removeRelatedResource: () => void;
+  document: RelatedDocument;
+  index: number;
 }
 
-export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResourceRowRowProps) => {
+export const RelatedResultItem = ({ removeRelatedResource, document, index }: RelatedResourceRowRowProps) => {
   const { t } = useTranslation();
+  const uri = document.type === 'ConfirmedDocument' ? document.identifier : '';
   const isInternalRegistration = uri.includes(API_URL);
   const [registration, isLoadingRegistration] = useFetch<Registration>({ url: isInternalRegistration ? uri : '' });
   const [confirmRemoveRelation, setConfirmRemoveRelation] = useState(false);
+  const isConfirmedDocument = document.type === 'ConfirmedDocument';
 
-  return (
+  return isConfirmedDocument ? (
     <ListItem disableGutters>
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', sm: 'row' },
-            alignItems: 'center',
-            gap: '0.25rem 1rem',
-          }}>
+        <>
           {isInternalRegistration ? (
             <Link
               data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationLink(
@@ -48,18 +46,7 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
               {uri}
             </Link>
           )}
-          <Button
-            size="small"
-            variant="outlined"
-            color="error"
-            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(
-              registration?.identifier ?? ''
-            )}
-            onClick={() => setConfirmRemoveRelation(true)}
-            startIcon={<RemoveCircleOutlineIcon />}>
-            {t('registration.resource_type.research_data.remove_relation')}
-          </Button>
-        </Box>
+        </>
       )}
       <ConfirmDialog
         open={confirmRemoveRelation}
@@ -69,5 +56,32 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
         <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
       </ConfirmDialog>
     </ListItem>
+  ) : (
+    <Box
+      key={index}
+      component="li"
+      sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        alignItems: 'center',
+        gap: '0.25rem 1rem',
+        mb: '0.5rem',
+        width: '100%',
+      }}>
+      <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
+        {({ field, meta: { touched, error } }: FieldProps<string>) => (
+          <TextField
+            {...field}
+            label={t('registration.resource_type.related_result')}
+            variant="filled"
+            multiline
+            fullWidth
+            required
+            error={touched && !!error}
+            helperText={<ErrorMessage name={field.name} />}
+          />
+        )}
+      </Field>
+    </Box>
   );
 };
