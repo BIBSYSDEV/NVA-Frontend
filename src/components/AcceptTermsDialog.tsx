@@ -24,7 +24,7 @@ export const AcceptTermsDialog = (props: DialogProps) => {
       </DialogTitle>
       <DialogContent>
         <Typography paragraph>{t('authorization.accept_terms_intro')} </Typography>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h3" gutterBottom>
           {t('authorization.about_terms')}
         </Typography>
         <Trans t={t} i18nKey="authorization.about_terms_description">
