@@ -1,4 +1,4 @@
-import { Box, Link, ListItem, Skeleton, TextField, Typography } from '@mui/material';
+import { Box, Link, Skeleton, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +27,7 @@ export const RelatedResultItem = ({ removeRelatedResource, document, index }: Re
   const isConfirmedDocument = document.type === 'ConfirmedDocument';
 
   return isConfirmedDocument ? (
-    <ListItem disableGutters>
+    <>
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : (
@@ -55,11 +55,9 @@ export const RelatedResultItem = ({ removeRelatedResource, document, index }: Re
         onCancel={() => setConfirmRemoveRelation(false)}>
         <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
       </ConfirmDialog>
-    </ListItem>
+    </>
   ) : (
     <Box
-      key={index}
-      component="li"
       sx={{
         display: 'flex',
         flexDirection: { xs: 'column', sm: 'row' },

@@ -2,7 +2,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, IconButton, List, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, List, ListItem, Tooltip, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, move, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -81,7 +81,7 @@ export const RelatedResultsField = () => {
             ?.sort((a, b) => (a.sequence && b.sequence ? a.sequence - b.sequence : 0))
             .map((document, index) => {
               return (
-                <Box
+                <ListItem
                   key={index}
                   sx={{
                     display: 'flex',
@@ -133,6 +133,7 @@ export const RelatedResultsField = () => {
                   />
 
                   <IconButton
+                    title={t('registration.resource_type.research_data.remove_relation')}
                     data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
                     onClick={() => setIndexToRemove(index)}>
                     <CloseIcon
@@ -144,7 +145,7 @@ export const RelatedResultsField = () => {
                       }}
                     />
                   </IconButton>
-                </Box>
+                </ListItem>
               );
             })}
         </List>
