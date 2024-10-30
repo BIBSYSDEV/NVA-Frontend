@@ -24,7 +24,7 @@ export const RelatedResultsField = () => {
     setFieldValue(ResourceFieldNames.PublicationInstanceRelated, newRelated);
   };
 
-  const handleMoveRelatedResult = (newSequence?: number, oldSequence?: number) => {
+  const moveRelatedResult = (newSequence?: number, oldSequence?: number) => {
     if (!newSequence || !oldSequence) return;
 
     const oldIndex = related.findIndex((document) => document.sequence === oldSequence);
@@ -102,7 +102,7 @@ export const RelatedResultsField = () => {
                   document={document}
                   index={index}
                   relatedLength={related.length}
-                  onMoveRelatedResult={handleMoveRelatedResult}
+                  onMoveRelatedResult={moveRelatedResult}
                   onRemoveDocument={removeRelatedItem}
                 />
               );
