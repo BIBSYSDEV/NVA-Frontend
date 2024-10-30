@@ -31,7 +31,7 @@ export const RelatedResultItem = ({ removeRelatedResource, document, index }: Re
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : (
-        <>
+        <Box sx={{ width: '100%' }}>
           {isInternalRegistration ? (
             <Link
               data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationLink(
@@ -46,7 +46,7 @@ export const RelatedResultItem = ({ removeRelatedResource, document, index }: Re
               {uri}
             </Link>
           )}
-        </>
+        </Box>
       )}
       <ConfirmDialog
         open={confirmRemoveRelation}
@@ -62,7 +62,7 @@ export const RelatedResultItem = ({ removeRelatedResource, document, index }: Re
         display: 'flex',
         flexDirection: { xs: 'column', sm: 'row' },
         alignItems: 'center',
-        gap: '0.25rem 1rem',
+        gap: '0.25rem ',
         mb: '0.5rem',
         width: '100%',
       }}>
