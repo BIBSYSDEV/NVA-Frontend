@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { LanguageSelector } from '../layout/header/LanguageSelector';
+import { dataTestId } from '../utils/dataTestIds';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 
 export const AcceptTermsDialog = (props: DialogProps) => {
@@ -41,8 +42,13 @@ export const AcceptTermsDialog = (props: DialogProps) => {
         </Trans>
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'center' }}>
-        <Button onClick={handleLogout}>{t('authorization.reject')}</Button>
-        <Button variant="contained" onClick={() => console.log('accept terms')}>
+        <Button data-testid={dataTestId.authorization.rejectTermsButton} onClick={handleLogout}>
+          {t('authorization.reject')}
+        </Button>
+        <Button
+          data-testid={dataTestId.authorization.acceptTermsButton}
+          variant="contained"
+          onClick={() => console.log('accept terms')}>
           {t('authorization.accept')}
         </Button>
       </DialogActions>
