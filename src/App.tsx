@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRoutes } from './AppRoutes';
 import { getUserAttributes } from './api/authApi';
+import { AcceptTermsDialog } from './components/AcceptTermsDialog';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 import { EnvironmentBanner } from './components/EnvironmentBanner';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -62,6 +63,7 @@ export const App = () => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
       const feideUser = await getUserAttributes();
+      console.log('feideUser', feideUser);
       if (feideUser) {
         dispatch(setUser(feideUser));
       }
@@ -76,6 +78,7 @@ export const App = () => {
     }
   }, [dispatch]);
 
+  const mustAcceptTerms = !!user; //&& user.currentTerms !== user.acceptedTerms;
   const mustCreatePerson = user && !user.cristinId;
   const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
 
@@ -85,6 +88,7 @@ export const App = () => {
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
 
+      {mustAcceptTerms && <AcceptTermsDialog open={mustAcceptTerms} />}
       {mustCreatePerson && <CreateCristinPersonDialog user={user} />}
       {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}
 

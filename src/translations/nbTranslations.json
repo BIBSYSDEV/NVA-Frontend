@@ -17,6 +17,10 @@
     "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
   },
   "authorization": {
+    "about_terms": "Om brukervilkår",
+    "about_terms_description": "<0>For å bruke tjenesten Nasjonalt vitenarkiv må du akseptere <0>Sikt Brukervilkår</0> for Nasjonalt vitenarkiv.</0><0>Om du legger inn personopplysninger om andre personer må du ha deres tillatelse eller annet lovlig grunnlag. Du må sikre at vedkommende er informert om at personopplysningene publiseres i Nasjonalt vitenarkiv.</0><0>Du kan ikke tilgjengeliggjøre/laste opp opphavsrettslig materiale/åndsverk uten å ha tillatelse fra alle opphavere.</0><0>Du er ansvarlig for at din bruk av Nasjonalt vitenarkiv ikke er i strid med gjeldende rett.</0><0>For mer informasjon, se Sikt Brukervilkår i sin helhet.</0>",
+    "accept": "Godta",
+    "accept_terms_intro": "Takk for at du ønsker å gjøre forskning åpent tilgjengelig i Nasjonalt vitenarkiv. Sammen skal vi nå Regjeringen sitt mål om at alle norsk forskning finansiert av offentlige midler blir åpent tilgjengelig for allmennheten.",
     "accept_terms_to_create_user": "Jeg samtykker til å bli opprettet som bruker i NVA",
     "back_to_home": "Tilbake til startsiden",
     "cancel_create_user_text": "Du må opprette bruker for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
@@ -28,7 +32,9 @@
     "login": "Logg inn",
     "logout": "Logg ut",
     "registration_not_published": "Denne registreringen er ikke publisert ennå.",
+    "reject": "Avslå",
     "signed_out": "Du er utlogget",
+    "welcome": "Velkommen!",
     "your_user_profile": "Din brukerprofil"
   },
   "basic_data": {
@@ -310,10 +316,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -385,7 +387,11 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
