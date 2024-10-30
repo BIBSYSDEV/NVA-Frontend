@@ -58,7 +58,6 @@ interface FilesTableRowProps {
   showFileVersion: boolean;
   showRrs: boolean;
   disabled: boolean;
-  archived?: boolean;
 }
 
 export const FilesTableRow = ({
@@ -68,7 +67,6 @@ export const FilesTableRow = ({
   showFileVersion,
   showRrs,
   disabled,
-  archived,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
@@ -112,6 +110,7 @@ export const FilesTableRow = ({
   const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
 
   const isCompletedFile = isOpenFile(file) || file.type === FileType.InternalFile;
+  const isAnyInternalFile = file.type === FileType.InternalFile || file.type === FileType.PendingInternalFile;
 
   return (
     <>
@@ -120,7 +119,7 @@ export const FilesTableRow = ({
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
         sx={{
           bgcolor: disabled ? 'grey.400' : '',
-          td: { verticalAlign: 'top', borderBottom: !archived ? 'unset' : '' },
+          td: { verticalAlign: 'top', borderBottom: !isAnyInternalFile ? 'unset' : '' },
         }}>
         <VerticalAlignedTableCell>
           <Box sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem', alignItems: 'center' }}>
@@ -174,7 +173,7 @@ export const FilesTableRow = ({
                     setFieldValue(fileTypeFieldName, newValue);
                   }
                 }}>
-                <MenuItem disabled value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
+                <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
                   {t('registration.files_and_license.file_type.open_file')}
                 </MenuItem>
                 <MenuItem value={isCompletedFile ? FileType.InternalFile : FileType.PendingInternalFile}>
@@ -189,7 +188,7 @@ export const FilesTableRow = ({
             )}
           </Field>
         </VerticalAlignedTableCell>
-        {!archived && (
+        {!isAnyInternalFile && (
           <>
             {showFileVersion && (
               <VerticalAlignedTableCell>
@@ -352,7 +351,7 @@ export const FilesTableRow = ({
           </>
         )}
       </TableRow>
-      {!archived && (
+      {!isAnyInternalFile && (
         <TableRow
           sx={{ bgcolor: disabled ? 'grey.400' : '' }}
           title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}>
