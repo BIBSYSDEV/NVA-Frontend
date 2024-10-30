@@ -1,10 +1,12 @@
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, IconButton, Link, ListItem, Skeleton, TextField, Tooltip } from '@mui/material';
+import { Box, IconButton, Link, ListItem, Skeleton, TextField, Tooltip, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
+import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { Registration, RelatedDocument } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
@@ -18,7 +20,7 @@ interface RelatedResourceRowRowProps {
   index: number;
   relatedLength: number;
   onMoveRelatedResult: (newSequence?: number, oldSequence?: number) => void;
-  onRemoveContributor: (index: number) => void;
+  onRemoveDocument: (index: number) => void;
 }
 
 export const RelatedResultItem = ({
@@ -26,9 +28,10 @@ export const RelatedResultItem = ({
   index,
   relatedLength,
   onMoveRelatedResult,
-  onRemoveContributor,
+  onRemoveDocument,
 }: RelatedResourceRowRowProps) => {
   const { t } = useTranslation();
+  const [indexToRemove, setIndexToRemove] = useState<number | null>(null);
   const uri = document.type === 'ConfirmedDocument' ? document.identifier : '';
   const isInternalRegistration = uri.includes(API_URL);
   const [registration, isLoadingRegistration] = useFetch<Registration>({ url: isInternalRegistration ? uri : '' });
@@ -138,7 +141,7 @@ export const RelatedResultItem = ({
       <IconButton
         title={t('registration.resource_type.research_data.remove_relation')}
         data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
-        onClick={() => onRemoveContributor(index)}>
+        onClick={() => setIndexToRemove(index)}>
         <CloseIcon
           fontSize="small"
           sx={{
@@ -148,6 +151,19 @@ export const RelatedResultItem = ({
           }}
         />
       </IconButton>
+
+      <ConfirmDialog
+        open={indexToRemove !== null}
+        title={t('registration.resource_type.research_data.remove_relation')}
+        onAccept={() => {
+          if (indexToRemove !== null) {
+            onRemoveDocument(indexToRemove);
+            setIndexToRemove(null);
+          }
+        }}
+        onCancel={() => setIndexToRemove(null)}>
+        <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
+      </ConfirmDialog>
     </ListItem>
   );
 };

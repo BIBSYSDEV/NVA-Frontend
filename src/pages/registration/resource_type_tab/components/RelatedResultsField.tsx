@@ -1,9 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, List, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import {
@@ -18,7 +16,7 @@ import { SearchRelatedResultField } from './SearchRelatedResultField';
 export const RelatedResultsField = () => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<DegreeRegistration>();
-  const [indexToRemove, setIndexToRemove] = useState<number | null>(null);
+
   const related = values.entityDescription.reference?.publicationInstance.related ?? [];
 
   const removeRelatedItem = (indexToRemove: number) => {
@@ -105,25 +103,12 @@ export const RelatedResultsField = () => {
                   index={index}
                   relatedLength={related.length}
                   onMoveRelatedResult={handleMoveRelatedResult}
-                  onRemoveContributor={removeRelatedItem}
+                  onRemoveDocument={removeRelatedItem}
                 />
               );
             })}
         </List>
       )}
-
-      <ConfirmDialog
-        open={indexToRemove !== null}
-        title={t('registration.resource_type.research_data.remove_relation')}
-        onAccept={() => {
-          if (indexToRemove !== null) {
-            removeRelatedItem(indexToRemove);
-            setIndexToRemove(null);
-          }
-        }}
-        onCancel={() => setIndexToRemove(null)}>
-        <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
-      </ConfirmDialog>
     </Box>
   );
 };
