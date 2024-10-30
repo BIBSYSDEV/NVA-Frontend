@@ -32,7 +32,7 @@ export const RelatedResultsField = () => {
   const handleMoveRelatedResult = (newSequence?: number, oldSequence?: number) => {
     if (!newSequence || !oldSequence) return;
 
-    const oldIndex = related.findIndex((related) => related.sequence === oldSequence);
+    const oldIndex = related.findIndex((document) => document.sequence === oldSequence);
     const minNewIndex = 0;
     const maxNewIndex = related ? related.length : 0;
 
@@ -42,7 +42,7 @@ export const RelatedResultsField = () => {
         : newSequence < minNewIndex
           ? minNewIndex
           : related
-            ? related.findIndex((r) => r.sequence === newSequence)
+            ? related.findIndex((document) => document.sequence === newSequence)
             : 0;
 
     const orderedRelatedResults =
@@ -83,7 +83,6 @@ export const RelatedResultsField = () => {
           </Typography>,
         ]}
       />
-
       <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
         {({ push }: FieldArrayRenderProps) => (
           <Button
@@ -126,7 +125,7 @@ export const RelatedResultsField = () => {
                         <Tooltip title={t('common.move_down')}>
                           <IconButton
                             size="small"
-                            sx={{ minWidth: 'auto', height: 'fit-content', gridArea: 'down-arrow' }}
+                            sx={{ minWidth: 'auto', height: 'fit-content' }}
                             onClick={() =>
                               !!document.sequence && document.sequence > 0
                                 ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
@@ -142,7 +141,7 @@ export const RelatedResultsField = () => {
                         <Tooltip title={t('common.move_up')}>
                           <IconButton
                             size="small"
-                            sx={{ minWidth: 'auto', height: 'fit-content', gridArea: 'up-arrow' }}
+                            sx={{ minWidth: 'auto', height: 'fit-content' }}
                             onClick={() =>
                               !!document.sequence && document.sequence > 0
                                 ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
