@@ -1,10 +1,9 @@
-import { Box, Button, IconButton, List, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, List, Tooltip, Typography } from '@mui/material';
 import { SearchRelatedResultField } from './SearchRelatedResultField';
 import { RelatedResourceRow } from '../sub_type_forms/research_data_types/RelatedResourceRow';
-import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, move, useFormikContext } from 'formik';
+import { FieldArray, FieldArrayRenderProps, move, useFormikContext } from 'formik';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import {
   ConfirmedDocument,
   createEmptyUnconfirmedDocument,
@@ -17,6 +16,7 @@ import { DegreeRegistration } from '../../../../types/publication_types/degreeRe
 import { useState } from 'react';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const RelatedResultsField = () => {
   const { t } = useTranslation();
@@ -80,31 +80,28 @@ export const RelatedResultsField = () => {
           {related
             ?.sort((a, b) => (a.sequence && b.sequence ? a.sequence - b.sequence : 0))
             .map((document, index) => {
-              if (document.type === 'ConfirmedDocument') {
-                return (
-                  <RelatedResourceRow
-                    key={document.identifier}
-                    uri={document.identifier}
-                    removeRelatedResource={() => removeRelatedItem(index)}
-                  />
-                );
-              } else if (document.type === 'UnconfirmedDocument') {
-                return (
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    gap: '1rem',
+                    bgcolor: 'white',
+                    borderRadius: '0.25rem',
+                    border: '1px solid lightgray',
+                    my: '0.25rem',
+                  }}>
                   <Box
-                    key={index}
-                    component="li"
                     sx={{
                       display: 'flex',
-                      flexDirection: { xs: 'column', sm: 'row' },
                       alignItems: 'center',
-                      gap: '0.25rem 1rem',
-                      mb: '0.5rem',
+                      minWidth: '4rem',
                     }}>
                     {related.length !== document.sequence && (
                       <Tooltip title={t('common.move_down')}>
                         <IconButton
                           size="small"
-                          sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
+                          sx={{ minWidth: 'auto', height: 'fit-content', gridArea: 'down-arrow' }}
                           onClick={() =>
                             !!document.sequence && document.sequence > 0
                               ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
@@ -118,7 +115,7 @@ export const RelatedResultsField = () => {
                       <Tooltip title={t('common.move_up')}>
                         <IconButton
                           size="small"
-                          sx={{ minWidth: 'auto', height: 'fit-content', marginTop: '0.6rem' }}
+                          sx={{ minWidth: 'auto', height: 'fit-content', gridArea: 'up-arrow' }}
                           onClick={() =>
                             !!document.sequence && document.sequence > 0
                               ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
@@ -128,35 +125,27 @@ export const RelatedResultsField = () => {
                         </IconButton>
                       </Tooltip>
                     )}
-
-                    <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
-                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                        <TextField
-                          {...field}
-                          label={t('registration.resource_type.related_result')}
-                          variant="filled"
-                          multiline
-                          fullWidth
-                          required
-                          error={touched && !!error}
-                          helperText={<ErrorMessage name={field.name} />}
-                        />
-                      )}
-                    </Field>
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      color="error"
-                      data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
-                      onClick={() => setIndexToRemove(index)}
-                      startIcon={<RemoveCircleOutlineIcon />}>
-                      {t('registration.resource_type.research_data.remove_relation')}
-                    </Button>
                   </Box>
-                );
-              } else {
-                return null;
-              }
+                  <RelatedResourceRow
+                    index={index}
+                    document={document}
+                    removeRelatedResource={() => removeRelatedItem(index)}
+                  />
+
+                  <IconButton
+                    data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
+                    onClick={() => setIndexToRemove(index)}>
+                    <CloseIcon
+                      fontSize="small"
+                      sx={{
+                        color: 'white',
+                        borderRadius: '50%',
+                        bgcolor: 'primary.main',
+                      }}
+                    />
+                  </IconButton>
+                </Box>
+              );
             })}
         </List>
       )}
@@ -164,6 +153,7 @@ export const RelatedResultsField = () => {
       <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
         {({ push }: FieldArrayRenderProps) => (
           <Button
+            variant="outlined"
             data-testid={dataTestId.registrationWizard.resourceType.addRelatedButton}
             onClick={() => push(createEmptyUnconfirmedDocument(related.length))}
             startIcon={<AddCircleOutlineIcon />}
