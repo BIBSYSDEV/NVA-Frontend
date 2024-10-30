@@ -63,7 +63,6 @@ export const App = () => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
       const feideUser = await getUserAttributes();
-      console.log('feideUser', feideUser);
       if (feideUser) {
         dispatch(setUser(feideUser));
       }

@@ -1,4 +1,14 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, Typography } from '@mui/material';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogProps,
+  DialogTitle,
+  Link,
+  Typography,
+} from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -20,7 +30,16 @@ export const AcceptTermsDialog = (props: DialogProps) => {
         </Typography>
 
         <Trans t={t} i18nKey="authorization.about_terms_description">
-          <Typography paragraph />
+          <Typography paragraph>
+            <Link
+              href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ display: 'inline-flex', alignItems: 'center' }}>
+              <OpenInNewIcon fontSize="small" />
+            </Link>
+          </Typography>
+          <Typography sx={{ textAlign: 'center' }} />
         </Trans>
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'center' }}>
