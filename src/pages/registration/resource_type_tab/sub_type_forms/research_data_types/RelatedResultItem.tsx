@@ -1,4 +1,7 @@
-import { Box, Link, Skeleton, TextField } from '@mui/material';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, IconButton, Link, ListItem, Skeleton, TextField, Tooltip } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
@@ -13,62 +16,138 @@ import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
 interface RelatedResourceRowRowProps {
   document: RelatedDocument;
   index: number;
+  relatedLength: number;
+  onMoveRelatedResult: (newSequence?: number, oldSequence?: number) => void;
+  onRemoveContributor: (index: number) => void;
 }
 
-export const RelatedResultItem = ({ document, index }: RelatedResourceRowRowProps) => {
+export const RelatedResultItem = ({
+  document,
+  index,
+  relatedLength,
+  onMoveRelatedResult,
+  onRemoveContributor,
+}: RelatedResourceRowRowProps) => {
   const { t } = useTranslation();
   const uri = document.type === 'ConfirmedDocument' ? document.identifier : '';
   const isInternalRegistration = uri.includes(API_URL);
   const [registration, isLoadingRegistration] = useFetch<Registration>({ url: isInternalRegistration ? uri : '' });
   const isConfirmedDocument = document.type === 'ConfirmedDocument';
 
-  return isConfirmedDocument ? (
-    <>
-      {isLoadingRegistration ? (
-        <Skeleton width="30%" />
-      ) : (
-        <Box sx={{ width: '100%' }}>
-          {isInternalRegistration ? (
-            <Link
-              data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationLink(
-                registration?.identifier ?? ''
-              )}
-              component={RouterLink}
-              to={getRegistrationLandingPagePath(registration?.identifier ?? '')}>
-              {getTitleString(registration?.entityDescription?.mainTitle)}
-            </Link>
-          ) : (
-            <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
-              {uri}
-            </Link>
-          )}
-        </Box>
-      )}
-    </>
-  ) : (
-    <Box
+  return (
+    <ListItem
       sx={{
         display: 'flex',
-        flexDirection: { xs: 'column', sm: 'row' },
-        alignItems: 'center',
-        gap: '0.25rem ',
-        mb: '0.5rem',
-        width: '100%',
+        gap: '1rem',
+        bgcolor: 'white',
+        borderRadius: '0.25rem',
+        border: '1px solid lightgray',
+        my: '0.25rem',
+        minHeight: '5rem',
       }}>
-      <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
-        {({ field, meta: { touched, error } }: FieldProps<string>) => (
-          <TextField
-            {...field}
-            label={t('registration.resource_type.related_result')}
-            variant="filled"
-            multiline
-            fullWidth
-            required
-            error={touched && !!error}
-            helperText={<ErrorMessage name={field.name} />}
-          />
-        )}
-      </Field>
-    </Box>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          alignItems: 'center',
+          minWidth: '4rem',
+        }}>
+        <div>
+          {document.sequence !== relatedLength && (
+            <Tooltip title={t('common.move_down')}>
+              <IconButton
+                size="small"
+                sx={{ minWidth: 'auto', height: 'fit-content' }}
+                onClick={() =>
+                  !!document.sequence && document.sequence > 0
+                    ? onMoveRelatedResult(document.sequence + 1, document.sequence)
+                    : null
+                }>
+                <ArrowDownwardIcon color="primary" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </div>
+        <div>
+          {document.sequence !== 1 && (
+            <Tooltip title={t('common.move_up')}>
+              <IconButton
+                size="small"
+                sx={{ minWidth: 'auto', height: 'fit-content' }}
+                onClick={() =>
+                  !!document.sequence && document.sequence > 0
+                    ? onMoveRelatedResult(document.sequence - 1, document.sequence)
+                    : null
+                }>
+                <ArrowUpwardIcon color="primary" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </div>
+      </Box>
+      {isConfirmedDocument ? (
+        <>
+          {isLoadingRegistration ? (
+            <Skeleton width="30%" />
+          ) : (
+            <Box sx={{ width: '100%' }}>
+              {isInternalRegistration ? (
+                <Link
+                  data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationLink(
+                    registration?.identifier ?? ''
+                  )}
+                  component={RouterLink}
+                  to={getRegistrationLandingPagePath(registration?.identifier ?? '')}>
+                  {getTitleString(registration?.entityDescription?.mainTitle)}
+                </Link>
+              ) : (
+                <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
+                  {uri}
+                </Link>
+              )}
+            </Box>
+          )}
+        </>
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: 'center',
+            gap: '0.25rem ',
+            mb: '0.5rem',
+            width: '100%',
+          }}>
+          <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
+            {({ field, meta: { touched, error } }: FieldProps<string>) => (
+              <TextField
+                {...field}
+                label={t('registration.resource_type.related_result')}
+                variant="filled"
+                multiline
+                fullWidth
+                required
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
+              />
+            )}
+          </Field>
+        </Box>
+      )}
+
+      <IconButton
+        title={t('registration.resource_type.research_data.remove_relation')}
+        data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
+        onClick={() => onRemoveContributor(index)}>
+        <CloseIcon
+          fontSize="small"
+          sx={{
+            color: 'white',
+            borderRadius: '50%',
+            bgcolor: 'primary.main',
+          }}
+        />
+      </IconButton>
+    </ListItem>
   );
 };

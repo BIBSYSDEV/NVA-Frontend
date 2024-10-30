@@ -1,8 +1,5 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, IconButton, List, ListItem, Tooltip, Typography } from '@mui/material';
+import { Box, Button, List, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, move, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -102,74 +99,14 @@ export const RelatedResultsField = () => {
             ?.sort((a, b) => (a.sequence && b.sequence ? a.sequence - b.sequence : 0))
             .map((document, index) => {
               return (
-                <ListItem
+                <RelatedResultItem
                   key={index}
-                  sx={{
-                    display: 'flex',
-                    gap: '1rem',
-                    bgcolor: 'white',
-                    borderRadius: '0.25rem',
-                    border: '1px solid lightgray',
-                    my: '0.25rem',
-                    minHeight: '5rem',
-                  }}>
-                  <Box
-                    sx={{
-                      display: 'grid',
-                      gridTemplateColumns: '1fr 1fr',
-                      alignItems: 'center',
-                      minWidth: '4rem',
-                    }}>
-                    <div>
-                      {document.sequence !== related.length && (
-                        <Tooltip title={t('common.move_down')}>
-                          <IconButton
-                            size="small"
-                            sx={{ minWidth: 'auto', height: 'fit-content' }}
-                            onClick={() =>
-                              !!document.sequence && document.sequence > 0
-                                ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
-                                : null
-                            }>
-                            <ArrowDownwardIcon color="primary" />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                    </div>
-                    <div>
-                      {document.sequence !== 1 && (
-                        <Tooltip title={t('common.move_up')}>
-                          <IconButton
-                            size="small"
-                            sx={{ minWidth: 'auto', height: 'fit-content' }}
-                            onClick={() =>
-                              !!document.sequence && document.sequence > 0
-                                ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
-                                : null
-                            }>
-                            <ArrowUpwardIcon color="primary" />
-                          </IconButton>
-                        </Tooltip>
-                      )}
-                    </div>
-                  </Box>
-
-                  <RelatedResultItem index={index} document={document} />
-
-                  <IconButton
-                    title={t('registration.resource_type.research_data.remove_relation')}
-                    data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
-                    onClick={() => setIndexToRemove(index)}>
-                    <CloseIcon
-                      fontSize="small"
-                      sx={{
-                        color: 'white',
-                        borderRadius: '50%',
-                        bgcolor: 'primary.main',
-                      }}
-                    />
-                  </IconButton>
-                </ListItem>
+                  document={document}
+                  index={index}
+                  relatedLength={related.length}
+                  onMoveRelatedResult={handleMoveRelatedResult}
+                  onRemoveContributor={removeRelatedItem}
+                />
               );
             })}
         </List>
