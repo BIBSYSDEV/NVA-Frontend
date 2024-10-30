@@ -1,9 +1,7 @@
-import { Box, Link, Skeleton, TextField, Typography } from '@mui/material';
+import { Box, Link, Skeleton, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { Registration, RelatedDocument } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
@@ -13,17 +11,15 @@ import { getTitleString } from '../../../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
 
 interface RelatedResourceRowRowProps {
-  removeRelatedResource: () => void;
   document: RelatedDocument;
   index: number;
 }
 
-export const RelatedResultItem = ({ removeRelatedResource, document, index }: RelatedResourceRowRowProps) => {
+export const RelatedResultItem = ({ document, index }: RelatedResourceRowRowProps) => {
   const { t } = useTranslation();
   const uri = document.type === 'ConfirmedDocument' ? document.identifier : '';
   const isInternalRegistration = uri.includes(API_URL);
   const [registration, isLoadingRegistration] = useFetch<Registration>({ url: isInternalRegistration ? uri : '' });
-  const [confirmRemoveRelation, setConfirmRemoveRelation] = useState(false);
   const isConfirmedDocument = document.type === 'ConfirmedDocument';
 
   return isConfirmedDocument ? (
@@ -48,13 +44,6 @@ export const RelatedResultItem = ({ removeRelatedResource, document, index }: Re
           )}
         </Box>
       )}
-      <ConfirmDialog
-        open={confirmRemoveRelation}
-        title={t('registration.resource_type.research_data.remove_relation')}
-        onAccept={removeRelatedResource}
-        onCancel={() => setConfirmRemoveRelation(false)}>
-        <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
-      </ConfirmDialog>
     </>
   ) : (
     <Box

@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, IconButton, List, ListItem, Tooltip, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, move, useFormikContext } from 'formik';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
@@ -75,6 +75,28 @@ export const RelatedResultsField = () => {
 
       <SearchRelatedResultField />
 
+      <Trans
+        i18nKey={'registration.resource_type.related_results_description'}
+        components={[
+          <Typography key={0}>
+            <span style={{ fontWeight: 'bold' }} />
+          </Typography>,
+        ]}
+      />
+
+      <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
+        {({ push }: FieldArrayRenderProps) => (
+          <Button
+            variant="outlined"
+            data-testid={dataTestId.registrationWizard.resourceType.addRelatedButton}
+            onClick={() => push(createEmptyUnconfirmedDocument(related.length))}
+            startIcon={<AddCircleOutlineIcon />}
+            sx={{ alignSelf: 'start' }}>
+            {t('common.add_custom', { name: t('registration.resource_type.related_result').toLocaleLowerCase() })}
+          </Button>
+        )}
+      </FieldArray>
+
       {related && related.length > 0 && (
         <List disablePadding>
           {related
@@ -90,6 +112,7 @@ export const RelatedResultsField = () => {
                     borderRadius: '0.25rem',
                     border: '1px solid lightgray',
                     my: '0.25rem',
+                    minHeight: '5rem',
                   }}>
                   <Box
                     sx={{
@@ -126,11 +149,7 @@ export const RelatedResultsField = () => {
                       </Tooltip>
                     )}
                   </Box>
-                  <RelatedResultItem
-                    index={index}
-                    document={document}
-                    removeRelatedResource={() => removeRelatedItem(index)}
-                  />
+                  <RelatedResultItem index={index} document={document} />
 
                   <IconButton
                     title={t('registration.resource_type.research_data.remove_relation')}
@@ -150,19 +169,6 @@ export const RelatedResultsField = () => {
             })}
         </List>
       )}
-
-      <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
-        {({ push }: FieldArrayRenderProps) => (
-          <Button
-            variant="outlined"
-            data-testid={dataTestId.registrationWizard.resourceType.addRelatedButton}
-            onClick={() => push(createEmptyUnconfirmedDocument(related.length))}
-            startIcon={<AddCircleOutlineIcon />}
-            sx={{ alignSelf: 'start' }}>
-            {t('common.add_custom', { name: t('registration.resource_type.related_result').toLocaleLowerCase() })}
-          </Button>
-        )}
-      </FieldArray>
 
       <ConfirmDialog
         open={indexToRemove !== null}
