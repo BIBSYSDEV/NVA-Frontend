@@ -34,7 +34,7 @@ export const RelatedResultsField = () => {
 
     const oldIndex = related.findIndex((related) => related.sequence === oldSequence);
     const minNewIndex = 0;
-    const maxNewIndex = related ? related.length - 1 : 0;
+    const maxNewIndex = related ? related.length : 0;
 
     const newIndex =
       newSequence - 1 > maxNewIndex
@@ -89,7 +89,7 @@ export const RelatedResultsField = () => {
           <Button
             variant="outlined"
             data-testid={dataTestId.registrationWizard.resourceType.addRelatedButton}
-            onClick={() => push(createEmptyUnconfirmedDocument(related.length))}
+            onClick={() => push(createEmptyUnconfirmedDocument(related.length + 1))}
             startIcon={<AddCircleOutlineIcon />}
             sx={{ alignSelf: 'start' }}>
             {t('common.add_custom', { name: t('registration.resource_type.related_result').toLocaleLowerCase() })}
@@ -116,39 +116,45 @@ export const RelatedResultsField = () => {
                   }}>
                   <Box
                     sx={{
-                      display: 'flex',
+                      display: 'grid',
+                      gridTemplateColumns: '1fr 1fr',
                       alignItems: 'center',
                       minWidth: '4rem',
                     }}>
-                    {related.length !== document.sequence && (
-                      <Tooltip title={t('common.move_down')}>
-                        <IconButton
-                          size="small"
-                          sx={{ minWidth: 'auto', height: 'fit-content', gridArea: 'down-arrow' }}
-                          onClick={() =>
-                            !!document.sequence && document.sequence > 0
-                              ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
-                              : null
-                          }>
-                          <ArrowDownwardIcon color="primary" />
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                    {document.sequence !== 1 && (
-                      <Tooltip title={t('common.move_up')}>
-                        <IconButton
-                          size="small"
-                          sx={{ minWidth: 'auto', height: 'fit-content', gridArea: 'up-arrow' }}
-                          onClick={() =>
-                            !!document.sequence && document.sequence > 0
-                              ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
-                              : null
-                          }>
-                          <ArrowUpwardIcon color="primary" />
-                        </IconButton>
-                      </Tooltip>
-                    )}
+                    <div>
+                      {document.sequence !== related.length && (
+                        <Tooltip title={t('common.move_down')}>
+                          <IconButton
+                            size="small"
+                            sx={{ minWidth: 'auto', height: 'fit-content', gridArea: 'down-arrow' }}
+                            onClick={() =>
+                              !!document.sequence && document.sequence > 0
+                                ? handleMoveRelatedResult(document.sequence + 1, document.sequence)
+                                : null
+                            }>
+                            <ArrowDownwardIcon color="primary" />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                    </div>
+                    <div>
+                      {document.sequence !== 1 && (
+                        <Tooltip title={t('common.move_up')}>
+                          <IconButton
+                            size="small"
+                            sx={{ minWidth: 'auto', height: 'fit-content', gridArea: 'up-arrow' }}
+                            onClick={() =>
+                              !!document.sequence && document.sequence > 0
+                                ? handleMoveRelatedResult(document.sequence - 1, document.sequence)
+                                : null
+                            }>
+                            <ArrowUpwardIcon color="primary" />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                    </div>
                   </Box>
+
                   <RelatedResultItem index={index} document={document} />
 
                   <IconButton

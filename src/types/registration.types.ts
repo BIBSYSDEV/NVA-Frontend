@@ -390,11 +390,11 @@ export interface UnconfirmedDocument {
   sequence?: number | null;
 }
 
-export function createEmptyUnconfirmedDocument(index: number): UnconfirmedDocument {
+export function createEmptyUnconfirmedDocument(newIndex: number): UnconfirmedDocument {
   return {
     type: 'UnconfirmedDocument',
     text: '',
-    sequence: index + 1,
+    sequence: newIndex,
   };
 }
 
