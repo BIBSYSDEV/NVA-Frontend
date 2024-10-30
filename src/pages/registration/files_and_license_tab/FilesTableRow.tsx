@@ -41,6 +41,7 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
+import { isOpenFile } from '../../../utils/registration-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
@@ -110,6 +111,8 @@ export const FilesTableRow = ({
   );
   const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
 
+  const isCompletedFile = isOpenFile(file) || file.type === FileType.InternalFile;
+
   return (
     <>
       <TableRow
@@ -154,25 +157,35 @@ export const FilesTableRow = ({
         <VerticalAlignedTableCell>
           <Field name={fileTypeFieldName}>
             {({ field }: FieldProps<FileType>) => (
-              <Checkbox
-                {...field}
-                data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
-                checked={
-                  field.value === FileType.UnpublishedFile ||
-                  field.value === FileType.PublishedFile ||
-                  field.value === FileType.OpenFile ||
-                  field.value === FileType.PendingOpenFile
-                }
-                disabled={disabled}
-                inputProps={{ 'aria-labelledby': markForPublishId }}
-                onChange={(_, checked) => {
-                  if (!checked) {
+              <TextField
+                data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
+                SelectProps={{ inputProps: { 'aria-label': t('registration.files_and_license.availability') } }}
+                select
+                fullWidth
+                value={field.value}
+                onChange={(event) => {
+                  const newValue = event.target.value as FileType;
+                  // Ensure new file type is not directly set to a completed file type
+                  if (newValue === FileType.OpenFile) {
+                    setFieldValue(fileTypeFieldName, FileType.PendingOpenFile);
+                  } else if (newValue === FileType.InternalFile) {
                     setFieldValue(fileTypeFieldName, FileType.PendingInternalFile);
                   } else {
-                    setFieldValue(fileTypeFieldName, FileType.PendingOpenFile);
+                    setFieldValue(fileTypeFieldName, newValue);
                   }
-                }}
-              />
+                }}>
+                <MenuItem disabled value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
+                  {t('registration.files_and_license.file_type.open_file')}
+                </MenuItem>
+                <MenuItem value={isCompletedFile ? FileType.InternalFile : FileType.PendingInternalFile}>
+                  {t('registration.files_and_license.file_type.internal_file')}
+                </MenuItem>
+                {field.value === FileType.RejectedFile && (
+                  <MenuItem value={FileType.RejectedFile} disabled>
+                    {t('registration.files_and_license.file_type.rejected_file')}
+                  </MenuItem>
+                )}
+              </TextField>
             )}
           </Field>
         </VerticalAlignedTableCell>

@@ -1437,7 +1437,13 @@
       "version_publishing_agreement_helper_text": "<0>Forfatteravtalen</0> er en kontrakt mellom en utgiver og en artist eller forfatter. Den spesifiserer forhold som intellektuelt eierskap, hvor og hvordan verket kan offentliggjøres, betalinger, ansvarsbeskyttelse, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorer når de gjør vurderinger om lisens og publiseringsdato (embargo). Slike dokumenter vil ikke være synlig for andre.",
       "version_publishing_agreement_helper_text_metadata_only": "<0>Forfatteravtalen</0> er en kontrakt mellom en utgiver og en artist eller forfatter. Den spesifiserer forhold som intellektuelt eierskap, hvor og hvordan verket kan offentliggjøres, betalinger, ansvarsbeskyttelse, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorer når de gjør vurderinger om lisens og publiseringsdato (embargo). Slike dokumenter vil ikke være synlig for andre.",
       "files_in_progress": "Under behandling",
-      "files_completed": "Ferdig"
+      "files_completed": "Ferdig",
+      "file_type": {
+        "open_file": "Åpen fil",
+        "internal_file": "Intern fil",
+        "rejected_file": "Avvist fil"
+      },
+      "availability": "Tilgjengelighet"
     },
     "heading": {
       "contributors": "Bidragsytere",
