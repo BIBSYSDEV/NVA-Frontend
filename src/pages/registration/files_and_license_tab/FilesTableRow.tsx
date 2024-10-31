@@ -186,6 +186,13 @@ export const FilesTableRow = ({
                     {t('registration.files_and_license.file_type.rejected_file')}
                   </MenuItem>
                 )}
+                {(field.value === FileType.PublishedFile ||
+                  field.value === FileType.UnpublishedFile ||
+                  field.value === FileType.UnpublishableFile) && (
+                  <MenuItem value={field.value} disabled>
+                    {field.value}
+                  </MenuItem>
+                )}
               </TextField>
             )}
           </Field>
