@@ -1,6 +1,6 @@
 import { List, ListItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ConfirmedDocument, RelatedDocument, UnconfirmedDocument } from '../../../types/registration.types';
+import { ConfirmedDocument, RelatedDocument } from '../../../types/registration.types';
 import { ShowRelatedRegistrationUris } from './ShowRelatedRegistrationUris';
 
 interface ShowRelatedDocumentsProps {
@@ -10,32 +10,20 @@ interface ShowRelatedDocumentsProps {
 export const ShowRelatedDocuments = ({ related }: ShowRelatedDocumentsProps) => {
   const { t } = useTranslation();
 
-  const confirmedDocuments = related
-    .filter((document) => document.type === 'ConfirmedDocument')
-    .map((document) => (document as ConfirmedDocument).identifier);
-
-  const unconfirmedDocuments = related
-    .filter((document) => document.type === 'UnconfirmedDocument')
-    .map((document) => (document as UnconfirmedDocument).text);
-
-  return (
-    <>
-      {confirmedDocuments.length > 0 && (
+  return related
+    ?.sort((a, b) => (a.sequence && b.sequence ? a.sequence - b.sequence : 0))
+    .map((document, index) => {
+      return document.type === 'ConfirmedDocument' ? (
         <ShowRelatedRegistrationUris
-          links={confirmedDocuments}
+          links={[document.identifier]}
           loadingLabel={t('registration.resource_type.related_results')}
         />
-      )}
-
-      {unconfirmedDocuments.length > 0 && (
+      ) : (
         <List disablePadding>
-          {unconfirmedDocuments.map((text, index) => (
-            <ListItem key={index} disableGutters>
-              {text}
-            </ListItem>
-          ))}
+          <ListItem key={index} disableGutters>
+            {document.text}
+          </ListItem>
         </List>
-      )}
-    </>
-  );
+      );
+    });
 };
