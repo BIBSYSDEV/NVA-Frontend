@@ -3,6 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActiveOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import { AppBar, Badge, Box, Theme, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -171,7 +172,13 @@ export const Header = () => {
                   isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
                   to={UrlPathTemplate.Tasks}
                   startIcon={
-                    <Badge badgeContent={pendingTasksCount + unassignedTasksCount}>
+                    <Badge
+                      badgeContent={
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          {unassignedTasksCount > 0 && <NotificationsActiveIcon fontSize="small" />}
+                          {pendingTasksCount > 0 ? pendingTasksCount : ''}
+                        </Box>
+                      }>
                       <AssignmentIcon fontSize="small" />
                     </Badge>
                   }>
