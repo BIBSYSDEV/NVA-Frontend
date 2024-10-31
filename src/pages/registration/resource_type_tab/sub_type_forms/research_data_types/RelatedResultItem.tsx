@@ -55,38 +55,42 @@ export const RelatedResultItem = ({
           alignItems: 'center',
           minWidth: '4rem',
         }}>
-        <div>
-          {document.sequence !== relatedLength && (
-            <Tooltip title={t('common.move_down')}>
-              <IconButton
-                size="small"
-                sx={{ minWidth: 'auto', height: 'fit-content' }}
-                onClick={() =>
-                  !!document.sequence && document.sequence > 0
-                    ? onMoveRelatedResult(document.sequence + 1, document.sequence)
-                    : null
-                }>
-                <ArrowDownwardIcon color="primary" />
-              </IconButton>
-            </Tooltip>
-          )}
-        </div>
-        <div>
-          {document.sequence !== 1 && (
-            <Tooltip title={t('common.move_up')}>
-              <IconButton
-                size="small"
-                sx={{ minWidth: 'auto', height: 'fit-content' }}
-                onClick={() =>
-                  !!document.sequence && document.sequence > 0
-                    ? onMoveRelatedResult(document.sequence - 1, document.sequence)
-                    : null
-                }>
-                <ArrowUpwardIcon color="primary" />
-              </IconButton>
-            </Tooltip>
-          )}
-        </div>
+        {relatedLength > 1 && (
+          <>
+            <div>
+              {document.sequence !== relatedLength && (
+                <Tooltip title={t('common.move_down')}>
+                  <IconButton
+                    size="small"
+                    sx={{ minWidth: 'auto', height: 'fit-content' }}
+                    onClick={() =>
+                      !!document.sequence && document.sequence > 0
+                        ? onMoveRelatedResult(document.sequence + 1, document.sequence)
+                        : null
+                    }>
+                    <ArrowDownwardIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </div>
+            <div>
+              {document.sequence !== 1 && (
+                <Tooltip title={t('common.move_up')}>
+                  <IconButton
+                    size="small"
+                    sx={{ minWidth: 'auto', height: 'fit-content' }}
+                    onClick={() =>
+                      !!document.sequence && document.sequence > 0
+                        ? onMoveRelatedResult(document.sequence - 1, document.sequence)
+                        : null
+                    }>
+                    <ArrowUpwardIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </div>
+          </>
+        )}
       </Box>
       {isConfirmedDocument ? (
         <>
