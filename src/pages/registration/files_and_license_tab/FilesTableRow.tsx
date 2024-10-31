@@ -41,7 +41,7 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
-import { isOpenFile } from '../../../utils/registration-helpers';
+import { isOpenFile, isPendingOpenFile } from '../../../utils/registration-helpers';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
@@ -112,7 +112,7 @@ export const FilesTableRow = ({
   const inactiveLicenses = licenses.filter((license) => license.version && license.version !== 4);
 
   const isCompletedFile = isOpenFile(file) || file.type === FileType.InternalFile;
-  const isAnyInternalFile = file.type === FileType.InternalFile || file.type === FileType.PendingInternalFile;
+  const isOpenableFile = isOpenFile(file) || isPendingOpenFile(file);
 
   return (
     <>
@@ -121,7 +121,7 @@ export const FilesTableRow = ({
         title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}
         sx={{
           bgcolor: disabled ? 'grey.400' : '',
-          td: { verticalAlign: 'top', borderBottom: !isAnyInternalFile ? 'unset' : '' },
+          td: { verticalAlign: 'top', borderBottom: isOpenableFile ? 'unset' : '' },
         }}>
         <VerticalAlignedTableCell>
           <Box sx={{ display: 'flex', minWidth: '13rem', gap: '0.75rem', alignItems: 'center' }}>
@@ -207,7 +207,7 @@ export const FilesTableRow = ({
         </VerticalAlignedTableCell>
         {includeAllCells && (
           <>
-            {!isAnyInternalFile && showFileVersion && (
+            {isOpenableFile && showFileVersion && (
               <VerticalAlignedTableCell>
                 <Field name={publisherVersionFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
@@ -264,7 +264,7 @@ export const FilesTableRow = ({
               </VerticalAlignedTableCell>
             )}
             <VerticalAlignedTableCell>
-              {!isAnyInternalFile && (
+              {isOpenableFile && (
                 <>
                   <Field name={licenseFieldName}>
                     {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -363,7 +363,7 @@ export const FilesTableRow = ({
             </VerticalAlignedTableCell>
 
             <VerticalAlignedTableCell>
-              {!isAnyInternalFile && (
+              {isOpenableFile && (
                 <IconButton
                   onClick={() => setOpenCollapsable(!openCollapsable)}
                   data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
@@ -374,7 +374,7 @@ export const FilesTableRow = ({
           </>
         )}
       </TableRow>
-      {!isAnyInternalFile && (
+      {isOpenableFile && (
         <TableRow
           sx={{ bgcolor: disabled ? 'grey.400' : '' }}
           title={disabled ? t('registration.files_and_license.disabled_helper_text') : ''}>

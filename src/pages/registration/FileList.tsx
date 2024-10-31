@@ -79,7 +79,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
     return true;
   }
 
-  const hasAnyOpenFiles = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
+  const hasAnyOpenableFiles = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -92,7 +92,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
             <TableRow>
               <StyledTableCell>{t('common.name')}</StyledTableCell>
               <StyledTableCell>{t('registration.files_and_license.availability')}</StyledTableCell>
-              {hasAnyOpenFiles && (
+              {hasAnyOpenableFiles && (
                 <>
                   {showFileVersion && (
                     <StyledTableCell>
@@ -245,7 +245,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   baseFieldName={`${baseFieldName}[${associatedFileIndex}]`}
                   showFileVersion={showFileVersion}
                   showRrs={isTypeWithRrs(publicationInstanceType)}
-                  includeAllCells={hasAnyOpenFiles}
+                  includeAllCells={hasAnyOpenableFiles}
                 />
               );
             })}
