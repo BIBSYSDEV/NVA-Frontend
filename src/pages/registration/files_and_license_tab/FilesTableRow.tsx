@@ -58,6 +58,7 @@ interface FilesTableRowProps {
   showFileVersion: boolean;
   showRrs: boolean;
   disabled: boolean;
+  includeAllCells: boolean;
 }
 
 export const FilesTableRow = ({
@@ -67,6 +68,7 @@ export const FilesTableRow = ({
   showFileVersion,
   showRrs,
   disabled,
+  includeAllCells,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
@@ -188,9 +190,9 @@ export const FilesTableRow = ({
             )}
           </Field>
         </VerticalAlignedTableCell>
-        {!isAnyInternalFile && (
+        {includeAllCells && (
           <>
-            {showFileVersion && (
+            {!isAnyInternalFile && showFileVersion && (
               <VerticalAlignedTableCell>
                 <Field name={publisherVersionFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
@@ -247,106 +249,112 @@ export const FilesTableRow = ({
               </VerticalAlignedTableCell>
             )}
             <VerticalAlignedTableCell>
-              <Field name={licenseFieldName}>
-                {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                  <TextField
-                    id={field.name}
-                    data-testid={dataTestId.registrationWizard.files.selectLicenseField}
-                    sx={{ minWidth: '15rem' }}
-                    select
-                    disabled={disabled}
-                    SelectProps={{
-                      renderValue: (option) => {
-                        const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
-                        return selectedLicense ? (
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
-                            <span>{selectedLicense.name}</span>
-                          </Box>
-                        ) : null;
-                      },
-                    }}
-                    variant="filled"
-                    value={licenses.find((license) => equalUris(license.id, field.value))?.id ?? ''}
-                    error={!!error && touched}
-                    helperText={<ErrorMessage name={field.name} />}
-                    label={t('registration.files_and_license.conditions_for_using_file')}
-                    required
-                    onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
-                    {activeLicenses.map((license) => (
-                      <MenuItem
-                        data-testid={dataTestId.registrationWizard.files.licenseItem}
-                        key={license.id}
-                        value={license.id}
-                        divider
-                        dense
-                        sx={{ gap: '1rem' }}>
-                        <ListItemIcon>
-                          <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                        </ListItemIcon>
-                        <ListItemText>
-                          <Typography>{license.name}</Typography>
-                        </ListItemText>
-                      </MenuItem>
-                    ))}
-                    {!inactiveLicensesOpen && (
-                      <MenuItem
-                        data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
-                        sx={{ display: 'flex', justifyContent: 'center' }}
-                        onClickCapture={(e) => {
-                          e.stopPropagation();
-                          setInactiveLicensesOpen(!inactiveLicensesOpen);
-                        }}>
-                        <Typography sx={{ fontStyle: 'italic' }}>
-                          {t('registration.files_and_license.show_all_older_versions')}
-                        </Typography>
-                      </MenuItem>
-                    )}
-                    {inactiveLicenses.map((license) => (
-                      <MenuItem
-                        data-testid={dataTestId.registrationWizard.files.licenseItem}
-                        key={license.id}
-                        value={license.id}
-                        divider
-                        dense
-                        sx={{ gap: '1rem', display: inactiveLicensesOpen ? 'flex' : 'none' }}>
-                        <ListItemIcon>
-                          <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                        </ListItemIcon>
-                        <ListItemText>
-                          <Typography>{license.name}</Typography>
-                        </ListItemText>
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              </Field>
-              {showRrs && (
+              {!isAnyInternalFile && (
                 <>
-                  {fileHasCustomerRrs && (
-                    <Typography>
-                      <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
-                        {rrsPolicyLink}
-                      </Trans>
-                    </Typography>
-                  )}
-                  {fileHasOverriddenRrs && (
-                    <Typography>
-                      <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
-                        {rrsPolicyLink}
-                      </Trans>
-                    </Typography>
+                  <Field name={licenseFieldName}>
+                    {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                      <TextField
+                        id={field.name}
+                        data-testid={dataTestId.registrationWizard.files.selectLicenseField}
+                        sx={{ minWidth: '15rem' }}
+                        select
+                        disabled={disabled}
+                        SelectProps={{
+                          renderValue: (option) => {
+                            const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
+                            return selectedLicense ? (
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
+                                <span>{selectedLicense.name}</span>
+                              </Box>
+                            ) : null;
+                          },
+                        }}
+                        variant="filled"
+                        value={licenses.find((license) => equalUris(license.id, field.value))?.id ?? ''}
+                        error={!!error && touched}
+                        helperText={<ErrorMessage name={field.name} />}
+                        label={t('registration.files_and_license.conditions_for_using_file')}
+                        required
+                        onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
+                        {activeLicenses.map((license) => (
+                          <MenuItem
+                            data-testid={dataTestId.registrationWizard.files.licenseItem}
+                            key={license.id}
+                            value={license.id}
+                            divider
+                            dense
+                            sx={{ gap: '1rem' }}>
+                            <ListItemIcon>
+                              <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                            </ListItemIcon>
+                            <ListItemText>
+                              <Typography>{license.name}</Typography>
+                            </ListItemText>
+                          </MenuItem>
+                        ))}
+                        {!inactiveLicensesOpen && (
+                          <MenuItem
+                            data-testid={dataTestId.registrationWizard.files.licenseItemShowOlderVersion}
+                            sx={{ display: 'flex', justifyContent: 'center' }}
+                            onClickCapture={(e) => {
+                              e.stopPropagation();
+                              setInactiveLicensesOpen(!inactiveLicensesOpen);
+                            }}>
+                            <Typography sx={{ fontStyle: 'italic' }}>
+                              {t('registration.files_and_license.show_all_older_versions')}
+                            </Typography>
+                          </MenuItem>
+                        )}
+                        {inactiveLicenses.map((license) => (
+                          <MenuItem
+                            data-testid={dataTestId.registrationWizard.files.licenseItem}
+                            key={license.id}
+                            value={license.id}
+                            divider
+                            dense
+                            sx={{ gap: '1rem', display: inactiveLicensesOpen ? 'flex' : 'none' }}>
+                            <ListItemIcon>
+                              <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                            </ListItemIcon>
+                            <ListItemText>
+                              <Typography>{license.name}</Typography>
+                            </ListItemText>
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  </Field>
+                  {showRrs && (
+                    <>
+                      {fileHasCustomerRrs && (
+                        <Typography>
+                          <Trans t={t} i18nKey="registration.files_and_license.institution_prefers_cc_by">
+                            {rrsPolicyLink}
+                          </Trans>
+                        </Typography>
+                      )}
+                      {fileHasOverriddenRrs && (
+                        <Typography>
+                          <Trans t={t} i18nKey="registration.files_and_license.opted_out_of_rrs">
+                            {rrsPolicyLink}
+                          </Trans>
+                        </Typography>
+                      )}
+                    </>
                   )}
                 </>
               )}
             </VerticalAlignedTableCell>
 
             <VerticalAlignedTableCell>
-              <IconButton
-                onClick={() => setOpenCollapsable(!openCollapsable)}
-                data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
-                {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-              </IconButton>
+              {!isAnyInternalFile && (
+                <IconButton
+                  onClick={() => setOpenCollapsable(!openCollapsable)}
+                  data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
+                  {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                </IconButton>
+              )}
             </VerticalAlignedTableCell>
           </>
         )}

@@ -245,6 +245,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   baseFieldName={`${baseFieldName}[${associatedFileIndex}]`}
                   showFileVersion={showFileVersion}
                   showRrs={isTypeWithRrs(publicationInstanceType)}
+                  includeAllCells={hasAnyOpenFiles}
                 />
               );
             })}
