@@ -1,6 +1,6 @@
 import { List, ListItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ConfirmedDocument, RelatedDocument } from '../../../types/registration.types';
+import { RelatedDocument } from '../../../types/registration.types';
 import { ShowRelatedRegistrationUris } from './ShowRelatedRegistrationUris';
 
 interface ShowRelatedDocumentsProps {
