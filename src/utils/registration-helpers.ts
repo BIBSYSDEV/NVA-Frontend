@@ -25,11 +25,7 @@ import {
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
 import { DegreeRegistration } from '../types/publication_types/degreeRegistration.types';
-import {
-  ExhibitionBasic,
-  ExhibitionMentionInPublication,
-  ExhibitionOtherPresentation,
-} from '../types/publication_types/exhibitionContent.types';
+import { ExhibitionBasic } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
@@ -656,10 +652,6 @@ export const getOutputName = (item: OutputItem): string => {
       return (item as LiteraryArtsWeb).publisher.name;
     case 'ExhibitionBasic':
       return (item as ExhibitionBasic).organization.name;
-    case 'ExhibitionOtherPresentation':
-      return (item as ExhibitionOtherPresentation).typeDescription;
-    case 'ExhibitionMentionInPublication':
-      return (item as ExhibitionMentionInPublication).title;
     default:
       return '';
   }
