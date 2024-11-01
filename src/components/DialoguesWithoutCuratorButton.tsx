@@ -1,5 +1,6 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActiveOutlined';
 import { Badge, Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -28,9 +29,8 @@ export const DialoguesWithoutCuratorButton = () => {
     meta: { errorMessage: false },
   });
 
-  const unassignedNotificationsCount = notificationsQuery.data?.aggregations?.status?.find(
-    (notification) => notification.key === 'New'
-  )?.count;
+  const unassignedNotificationsCount =
+    notificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
 
   const toggleDialoguesWithoutCurators = () => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
@@ -55,7 +55,11 @@ export const DialoguesWithoutCuratorButton = () => {
       color="primary"
       sx={{ textTransform: 'none' }}
       startIcon={newStatusIsSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-      endIcon={<Badge badgeContent={unassignedNotificationsCount} sx={{ ml: '1rem' }} />}
+      endIcon={
+        unassignedNotificationsCount > 0 ? (
+          <Badge badgeContent={<NotificationsActiveIcon fontSize="small" />} sx={{ ml: '1rem' }} />
+        ) : undefined
+      }
       onClick={toggleDialoguesWithoutCurators}
       title={t('tasks.include_tasks_without_curator')}
       data-testid={dataTestId.tasksPage.dialoguesWithoutCuratorButton}>
