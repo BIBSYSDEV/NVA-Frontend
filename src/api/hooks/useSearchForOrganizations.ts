@@ -5,14 +5,10 @@ import { OrganizationSearchParams, searchForOrganizations } from '../cristinApi'
 export const useSearchForOrganizations = (params: OrganizationSearchParams) => {
   const { t } = useTranslation();
 
-  const organizationQueryParams: OrganizationSearchParams = {
-    ...params,
-    includeSubunits: true,
-  };
   return useQuery({
-    enabled: !!organizationQueryParams.query,
-    queryKey: ['organization', organizationQueryParams],
-    queryFn: () => searchForOrganizations(organizationQueryParams),
+    enabled: !!params.query,
+    queryKey: ['organization', params],
+    queryFn: () => searchForOrganizations(params),
     meta: { errorMessage: t('feedback.error.get_institutions') },
     placeholderData: keepPreviousData,
   });

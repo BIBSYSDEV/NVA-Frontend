@@ -37,14 +37,11 @@ import { PublishingTicket } from '../../../types/publication_types/ticket.types'
 import { Registration, RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { toDateString } from '../../../utils/date-helpers';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
 import { isOpenFile, isPendingOpenFile, userHasAccessRight } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
-import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
-import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
+import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { TicketAssignee } from './TicketAssignee';
@@ -80,8 +77,8 @@ export const PublishingAccordion = ({
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const isDeletedRegistration = registration.status === RegistrationStatus.Deleted;
-  const isUnpublisehdRegistration = registration.status === RegistrationStatus.Unpublished;
-  const isUnpublishedOrDeletedRegistration = isDeletedRegistration || isUnpublisehdRegistration;
+  const isUnpublishedRegistration = registration.status === RegistrationStatus.Unpublished;
+  const isUnpublishedOrDeletedRegistration = isDeletedRegistration || isUnpublishedRegistration;
 
   const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch({
     enabled: isDraftRegistration && !!registration.entityDescription?.mainTitle,
@@ -94,7 +91,6 @@ export const PublishingAccordion = ({
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
   const registrationHasOpenFile = registration.associatedArtifacts.some(isOpenFile);
-  const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
   const userCanApprovePublishingRequest = userHasAccessRight(registration, 'publishing-request-approve');
@@ -244,7 +240,7 @@ export const PublishingAccordion = ({
             ? t(`registration.status.${registration.status}`)
             : t('registration.public_page.publication')}
           {lastPublishingRequest &&
-            !isUnpublisehdRegistration &&
+            !isUnpublishedRegistration &&
             !isDeletedRegistration &&
             ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         </Typography>
@@ -272,25 +268,8 @@ export const PublishingAccordion = ({
         )}
 
         {/* Show approval history */}
-        {(isPublishedRegistration || isDeletedRegistration || isUnpublisehdRegistration) && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mb: '0.5rem' }}>
-            <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-              <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
-              {registration.publishedDate && <Typography>{toDateString(registration.publishedDate)}</Typography>}
-            </StyledStatusMessageBox>
-            {completedTickets.map((ticket) => (
-              <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket} />
-            ))}
-            {registration.publicationNotes
-              ?.filter((note) => note.type === 'UnpublishingNote')
-              .map((note, index) => (
-                <DeletedRegistrationInformation
-                  key={note.createdDate ?? index}
-                  registration={registration}
-                  unpublishingNote={note}
-                />
-              ))}
-          </Box>
+        {(isPublishedRegistration || isDeletedRegistration || isUnpublishedRegistration) && (
+          <PublishingLogPreview registration={registration} tickets={publishingRequestTickets} />
         )}
 
         {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}

@@ -79,7 +79,7 @@ export interface OrganizationSearchParams {
   query?: string;
   page?: number;
   results?: number;
-  includeSubunits?: boolean;
+  fullTree?: boolean;
 }
 export const defaultOrganizationSearchSize = 20;
 
@@ -90,8 +90,9 @@ export const searchForOrganizations = async (params: OrganizationSearchParams) =
   if (params.query) {
     searchParams.set('query', params.query);
   }
-  if (params.includeSubunits) {
-    headers.set('Accept', 'application/json; version=1');
+
+  if (params.fullTree) {
+    searchParams.set('fullTree', params.fullTree.toString());
   }
 
   searchParams.set('results', (params.results ?? defaultOrganizationSearchSize).toString());

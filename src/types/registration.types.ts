@@ -123,7 +123,7 @@ export type RegistrationOperation =
   | 'support-request-create'
   | 'support-request-approve';
 
-export interface UnpublishingNote {
+interface UnpublishingNote {
   type: 'UnpublishingNote';
   note: string;
   createdBy: string;
