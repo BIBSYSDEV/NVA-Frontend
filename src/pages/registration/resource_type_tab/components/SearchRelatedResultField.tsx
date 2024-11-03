@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResults, FetchResultsParams } from '../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ConfirmedDocument } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -49,7 +49,7 @@ export const SearchRelatedResultField = () => {
                 const newRelation: ConfirmedDocument = {
                   type: 'ConfirmedDocument',
                   identifier: value.id,
-                  sequence: related ? related?.length + 1 : null,
+                  sequence: related ? related.length + 1 : null,
                 };
                 push(newRelation);
               }
