@@ -108,16 +108,16 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
           }}
           onChange={(_, selectedInstitution) => {
             if (selectedInstitution !== topLevelOrganizationId) {
-              const params = new URLSearchParams(history.location.search);
+              const syncedParams = syncParamsWithSearchFields(params);
               if (selectedInstitution) {
-                params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
+                syncedParams.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
               } else {
-                params.delete(ResultParam.TopLevelOrganization);
-                params.delete(ResultParam.ExcludeSubunits);
+                syncedParams.delete(ResultParam.TopLevelOrganization);
+                syncedParams.delete(ResultParam.ExcludeSubunits);
               }
-              params.set(ResultParam.From, '0');
-              params.delete(ResultParam.Unit);
-              history.push({ search: params.toString() });
+              syncedParams.delete(ResultParam.From);
+              syncedParams.delete(ResultParam.Unit);
+              history.push({ search: syncedParams.toString() });
               setSearchTerm('');
             }
           }}

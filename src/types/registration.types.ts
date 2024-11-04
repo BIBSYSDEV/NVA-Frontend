@@ -123,7 +123,7 @@ export type RegistrationOperation =
   | 'support-request-create'
   | 'support-request-approve';
 
-export interface UnpublishingNote {
+interface UnpublishingNote {
   type: 'UnpublishingNote';
   note: string;
   createdBy: string;
@@ -381,11 +381,13 @@ export interface RegistrationAggregations {
 export interface ConfirmedDocument {
   type: 'ConfirmedDocument';
   identifier: string;
+  sequence?: number | null;
 }
 
 export interface UnconfirmedDocument {
   type: 'UnconfirmedDocument';
   text: string;
+  sequence?: number | null;
 }
 
 export const emptyUnconfirmedDocument: UnconfirmedDocument = {

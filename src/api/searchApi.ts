@@ -539,14 +539,12 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.title) {
     searchParams.set(ResultParam.Title, params.title);
   }
-  if (params.topLevelOrganization) {
-    searchParams.set(ResultParam.TopLevelOrganization, encodeURIComponent(params.topLevelOrganization));
+  if (params.topLevelOrganization || params.unit) {
+    const unitParam = params.unit || params.topLevelOrganization || '';
+    searchParams.set(ResultParam.Unit, encodeURIComponent(unitParam));
   }
   if (params.unidentifiedNorwegian) {
     searchParams.set(ResultParam.UnidentifiedNorwegian, params.unidentifiedNorwegian.toString());
-  }
-  if (params.unit) {
-    searchParams.set(ResultParam.Unit, params.unit);
   }
   if (params.vocabulary) {
     searchParams.set(ResultParam.Vocabulary, params.vocabulary);

@@ -1289,7 +1289,7 @@
         "ArchitecturalPlanner": "Planlegger",
         "Artist": "Kunstner",
         "ArtisticDirector": "Kunstnerisk leder",
-        "AudioVisualContributor": "Audio Visuell bidragsyter",
+        "AudioVisualContributor": "Audiovisuell bidragsyter",
         "Choreographer": "Koreograf",
         "CollaborationPartner": "Samarbeidspartner",
         "Composer": "Komponist",
@@ -1573,7 +1573,7 @@
       "ExhibitionCatalog": "Utstillingskatalog",
       "ExhibitionCatalogChapter": "Kapittel i utstillingskatalog",
       "ExhibitionContent": "Utstilling",
-      "ExhibitionProduction": "Utstillingsproduksjon",
+      "ExhibitionProduction": "Utstilling",
       "GeographicalContent": "Annen publikasjon",
       "Introduction": "Innledning i antologi",
       "Journal": "Tidsskriftspublikasjon",
@@ -1819,15 +1819,11 @@
         "add_exhibition_basic": "Legg til visningssted",
         "add_exhibition_catalog": "Legg til utstillingskatalog",
         "add_exhibition_other_presentation": "Legg til formidling",
-        "add_mention_in_publication": "Legg til publisering/omtale",
         "edit_exhibition_basic": "Endre visningssted",
         "edit_exhibition_catalog": "Endre utstillingskatalog",
         "edit_exhibition_other_presentation": "Endre formidling",
-        "edit_mention_in_publication": "Endre til publisering/omtale",
         "institution_name": "Arrangørens navn",
-        "more_info_about_elementet": "Mer om elementet",
         "place": "Visningssted",
-        "presentation_type": "Type formidlingsform",
         "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
         "subtype": {
           "AmbulatingExhibition": "Vandreutstilling",
@@ -1886,9 +1882,9 @@
       "print_issn": "Print ISSN",
       "protected_degree_type": "Du mangler tilgang. Det er kun studentoppgavekurator som har tilganger til å registrere denne kategorien. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
       "protected_file_type": "Din institusjon har valgt å ikke støtte filer for denne kategorien.",
-      "publisher_or_organizer": "Utgiver/arrangør eller lignende",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
+      "related_results_description": "<0><0>Er ikke og skal ikke resultatet registreres i NVA?</0> Legg til tittel på resultat.</0>",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
       "research_data": {
@@ -2023,6 +2019,7 @@
   "tasks": {
     "correction_list": "Retteliste",
     "include_tasks_without_curator": "Inkluder oppgaver uten kurator",
+    "new_tasks": "Innmeldte oppgaver: {{count}}",
     "nvi": {
       "approval_status_count": "Kontrollert ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
@@ -2070,7 +2067,8 @@
     "select_other_unit_filter": "Velg andre",
     "status": "Status",
     "unread": "Uleste",
-    "user_dialog": "Brukerdialog"
+    "user_dialog": "Brukerdialog",
+    "your_tasks": "Oppgaver du behandler: {{count}}"
   },
   "unpublish_actions": {
     "duplicate": "Duplikat",

@@ -26,6 +26,7 @@ export const NfrProjectSearch = ({ selectedProject, setSelectedProject }: NfrPro
       <Autocomplete
         data-testid={dataTestId.newProjectPage.nrfProjectSearchInput}
         options={nfrProjects}
+        filterOptions={(options) => options}
         getOptionLabel={(option) => getLanguageString(option.labels)}
         onInputChange={(_, newInputValue, reason) => {
           if (reason !== 'reset') {
