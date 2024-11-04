@@ -4,10 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ConfirmedDocument } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -16,10 +16,8 @@ import { YearAndContributorsText } from './SearchContainerField';
 
 export const SearchRelatedResultField = () => {
   const { t } = useTranslation();
-
   const { values } = useFormikContext<DegreeRegistration>();
   const related = values.entityDescription.reference?.publicationInstance.related;
-
   const [relatedRegistrationsQuery, setRelatedRegistrationsQuery] = useState('');
   const debouncedRelatedRegistrationsQuery = useDebounce(relatedRegistrationsQuery);
 
@@ -49,6 +47,7 @@ export const SearchRelatedResultField = () => {
                 const newRelation: ConfirmedDocument = {
                   type: 'ConfirmedDocument',
                   identifier: value.id,
+                  sequence: related ? related.length + 1 : null,
                 };
                 push(newRelation);
               }

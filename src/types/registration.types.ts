@@ -381,11 +381,13 @@ export interface RegistrationAggregations {
 export interface ConfirmedDocument {
   type: 'ConfirmedDocument';
   identifier: string;
+  sequence?: number | null;
 }
 
 export interface UnconfirmedDocument {
   type: 'UnconfirmedDocument';
   text: string;
+  sequence?: number | null;
 }
 
 export const emptyUnconfirmedDocument: UnconfirmedDocument = {
