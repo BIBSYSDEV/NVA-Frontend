@@ -65,7 +65,7 @@ export const RelatedResultsField = () => {
       <SearchRelatedResultField />
 
       <Trans
-        i18nKey={'registration.resource_type.related_results_description'}
+        i18nKey="registration.resource_type.related_results_description"
         components={[
           <Typography key={0}>
             <span style={{ fontWeight: 'bold' }} />
