@@ -19,7 +19,7 @@ interface RelatedResourceRowRowProps {
   document: RelatedDocument;
   index: number;
   relatedLength: number;
-  onMoveRelatedResult: (newSequence?: number, oldSequence?: number) => void;
+  onMoveRelatedResult: (newSequence: number, oldSequence: number) => void;
   onRemoveDocument: (index: number) => void;
 }
 

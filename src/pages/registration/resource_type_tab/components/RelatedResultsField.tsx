@@ -20,9 +20,7 @@ export const RelatedResultsField = () => {
     setFieldValue(ResourceFieldNames.PublicationInstanceRelated, newRelated);
   };
 
-  const moveRelatedResult = (newSequence?: number, oldSequence?: number) => {
-    if (!newSequence || !oldSequence) return;
-
+  const moveRelatedResult = (newSequence: number, oldSequence: number) => {
     const oldIndex = related.findIndex((document) => document.sequence === oldSequence);
     const minNewIndex = 0;
     const maxNewIndex = related ? related.length : 0;
