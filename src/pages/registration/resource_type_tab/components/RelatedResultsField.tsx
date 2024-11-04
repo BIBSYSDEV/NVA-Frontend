@@ -15,8 +15,6 @@ export const RelatedResultsField = () => {
 
   const related = values.entityDescription.reference?.publicationInstance.related ?? [];
 
-  console.log(related);
-
   const removeRelatedItem = (indexToRemove: number) => {
     const newRelated = related?.filter((_, thisIndex) => thisIndex !== indexToRemove);
     setFieldValue(ResourceFieldNames.PublicationInstanceRelated, newRelated);
