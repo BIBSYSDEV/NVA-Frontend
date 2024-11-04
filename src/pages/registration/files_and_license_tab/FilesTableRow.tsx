@@ -49,8 +49,6 @@ import { isOpenFile, isPendingOpenFile } from '../../../utils/registration-helpe
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
-export const markForPublishId = 'mark-for-publish';
-
 const StyledFileTypeMenuItemContent = styled('div')({
   display: 'flex',
   gap: '0.25rem',
