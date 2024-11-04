@@ -1,5 +1,8 @@
+import BlockIcon from '@mui/icons-material/Block';
+import CheckIcon from '@mui/icons-material/Check';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import InsertPageBreakOutlinedIcon from '@mui/icons-material/InsertPageBreakOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
@@ -18,6 +21,7 @@ import {
   Popover,
   Radio,
   RadioGroup,
+  styled,
   TableCell,
   TableCellProps,
   TableRow,
@@ -46,6 +50,12 @@ import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
 export const markForPublishId = 'mark-for-publish';
+
+const StyledFileTypeMenuItemContent = styled('div')({
+  display: 'flex',
+  gap: '0.25rem',
+  alignItems: 'center',
+});
 
 const VerticalAlignedTableCell = (props: TableCellProps) => (
   <TableCell style={{ verticalAlign: 'middle' }} {...props} />
@@ -163,13 +173,7 @@ export const FilesTableRow = ({
                 SelectProps={{ inputProps: { 'aria-label': t('registration.files_and_license.availability') } }}
                 select
                 variant="filled"
-                InputProps={{
-                  sx: {
-                    '.MuiSelect-select': {
-                      py: '0.75rem',
-                    },
-                  },
-                }}
+                InputProps={{ sx: { '.MuiSelect-select': { py: '0.75rem' } } }}
                 fullWidth
                 value={field.value}
                 onChange={(event) => {
@@ -184,14 +188,23 @@ export const FilesTableRow = ({
                   }
                 }}>
                 <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
-                  {t('registration.files_and_license.file_type.open_file')}
+                  <StyledFileTypeMenuItemContent>
+                    <CheckIcon fontSize="small" />
+                    {t('registration.files_and_license.file_type.open_file')}
+                  </StyledFileTypeMenuItemContent>
                 </MenuItem>
                 <MenuItem value={isCompletedFile ? FileType.InternalFile : FileType.PendingInternalFile}>
-                  {t('registration.files_and_license.file_type.internal_file')}
+                  <StyledFileTypeMenuItemContent>
+                    <InsertPageBreakOutlinedIcon fontSize="small" />
+                    {t('registration.files_and_license.file_type.internal_file')}
+                  </StyledFileTypeMenuItemContent>
                 </MenuItem>
                 {field.value === FileType.RejectedFile && (
                   <MenuItem value={FileType.RejectedFile} disabled>
-                    {t('registration.files_and_license.file_type.rejected_file')}
+                    <StyledFileTypeMenuItemContent>
+                      <BlockIcon fontSize="small" />
+                      {t('registration.files_and_license.file_type.rejected_file')}
+                    </StyledFileTypeMenuItemContent>
                   </MenuItem>
                 )}
                 {(field.value === FileType.PublishedFile ||
