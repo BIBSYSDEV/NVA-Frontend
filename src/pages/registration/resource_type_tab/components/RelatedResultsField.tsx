@@ -4,11 +4,7 @@ import { FieldArray, FieldArrayRenderProps, move, useFormikContext } from 'formi
 import { Trans, useTranslation } from 'react-i18next';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import {
-  ConfirmedDocument,
-  createEmptyUnconfirmedDocument,
-  UnconfirmedDocument,
-} from '../../../../types/registration.types';
+import { ConfirmedDocument, emptyUnconfirmedDocument, UnconfirmedDocument } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { RelatedResultItem } from '../sub_type_forms/research_data_types/RelatedResultItem';
 import { SearchRelatedResultField } from './SearchRelatedResultField';
@@ -18,6 +14,8 @@ export const RelatedResultsField = () => {
   const { values, setFieldValue } = useFormikContext<DegreeRegistration>();
 
   const related = values.entityDescription.reference?.publicationInstance.related ?? [];
+
+  console.log(related);
 
   const removeRelatedItem = (indexToRemove: number) => {
     const newRelated = related?.filter((_, thisIndex) => thisIndex !== indexToRemove);
@@ -83,7 +81,12 @@ export const RelatedResultsField = () => {
           <Button
             variant="outlined"
             data-testid={dataTestId.registrationWizard.resourceType.addRelatedButton}
-            onClick={() => push(createEmptyUnconfirmedDocument(related.length + 1))}
+            onClick={() =>
+              push({
+                ...emptyUnconfirmedDocument,
+                sequence: related.length + 1,
+              })
+            }
             startIcon={<AddCircleOutlineIcon />}
             sx={{ alignSelf: 'start' }}>
             {t('common.add_custom', { name: t('registration.resource_type.related_result').toLocaleLowerCase() })}
@@ -94,19 +97,17 @@ export const RelatedResultsField = () => {
       {related && related.length > 0 && (
         <List disablePadding>
           {related
-            ?.sort((a, b) => (a.sequence && b.sequence ? a.sequence - b.sequence : 0))
-            .map((document, index) => {
-              return (
-                <RelatedResultItem
-                  key={index}
-                  document={document}
-                  index={index}
-                  relatedLength={related.length}
-                  onMoveRelatedResult={moveRelatedResult}
-                  onRemoveDocument={removeRelatedItem}
-                />
-              );
-            })}
+            .sort((a, b) => (a.sequence && b.sequence ? a.sequence - b.sequence : 0))
+            .map((document, index) => (
+              <RelatedResultItem
+                key={index}
+                document={document}
+                index={index}
+                relatedLength={related.length}
+                onMoveRelatedResult={moveRelatedResult}
+                onRemoveDocument={removeRelatedItem}
+              />
+            ))}
         </List>
       )}
     </Box>

@@ -16,10 +16,8 @@ import { YearAndContributorsText } from './SearchContainerField';
 
 export const SearchRelatedResultField = () => {
   const { t } = useTranslation();
-
   const { values } = useFormikContext<DegreeRegistration>();
   const related = values.entityDescription.reference?.publicationInstance.related;
-
   const [relatedRegistrationsQuery, setRelatedRegistrationsQuery] = useState('');
   const debouncedRelatedRegistrationsQuery = useDebounce(relatedRegistrationsQuery);
 

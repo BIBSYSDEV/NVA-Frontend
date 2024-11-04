@@ -57,38 +57,34 @@ export const RelatedResultItem = ({
         }}>
         {relatedLength > 1 && (
           <>
-            <div>
-              {document.sequence !== relatedLength && (
-                <Tooltip title={t('common.move_down')}>
-                  <IconButton
-                    size="small"
-                    sx={{ minWidth: 'auto', height: 'fit-content' }}
-                    onClick={() =>
-                      !!document.sequence && document.sequence > 0
-                        ? onMoveRelatedResult(document.sequence + 1, document.sequence)
-                        : null
-                    }>
-                    <ArrowDownwardIcon color="primary" />
-                  </IconButton>
-                </Tooltip>
-              )}
-            </div>
-            <div>
-              {document.sequence !== 1 && (
-                <Tooltip title={t('common.move_up')}>
-                  <IconButton
-                    size="small"
-                    sx={{ minWidth: 'auto', height: 'fit-content' }}
-                    onClick={() =>
-                      !!document.sequence && document.sequence > 0
-                        ? onMoveRelatedResult(document.sequence - 1, document.sequence)
-                        : null
-                    }>
-                    <ArrowUpwardIcon color="primary" />
-                  </IconButton>
-                </Tooltip>
-              )}
-            </div>
+            {document.sequence !== relatedLength && (
+              <Tooltip title={t('common.move_down')}>
+                <IconButton
+                  size="small"
+                  sx={{ minWidth: 'auto', height: 'fit-content', gridColumn: 1 }}
+                  onClick={() =>
+                    !!document.sequence && document.sequence > 0
+                      ? onMoveRelatedResult(document.sequence + 1, document.sequence)
+                      : null
+                  }>
+                  <ArrowDownwardIcon color="primary" />
+                </IconButton>
+              </Tooltip>
+            )}
+            {document.sequence !== 1 && (
+              <Tooltip title={t('common.move_up')}>
+                <IconButton
+                  size="small"
+                  sx={{ minWidth: 'auto', height: 'fit-content', gridColumn: 2 }}
+                  onClick={() =>
+                    !!document.sequence && document.sequence > 0
+                      ? onMoveRelatedResult(document.sequence - 1, document.sequence)
+                      : null
+                  }>
+                  <ArrowUpwardIcon color="primary" />
+                </IconButton>
+              </Tooltip>
+            )}
           </>
         )}
       </Box>
@@ -116,30 +112,20 @@ export const RelatedResultItem = ({
           )}
         </>
       ) : (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', sm: 'row' },
-            alignItems: 'center',
-            gap: '0.25rem ',
-            mb: '0.5rem',
-            width: '100%',
-          }}>
-          <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
-            {({ field, meta: { touched, error } }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                label={t('registration.resource_type.related_result')}
-                variant="filled"
-                multiline
-                fullWidth
-                required
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-            )}
-          </Field>
-        </Box>
+        <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
+          {({ field, meta: { touched, error } }: FieldProps<string>) => (
+            <TextField
+              {...field}
+              label={t('registration.resource_type.related_result')}
+              variant="filled"
+              multiline
+              fullWidth
+              required
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
+            />
+          )}
+        </Field>
       )}
 
       <IconButton

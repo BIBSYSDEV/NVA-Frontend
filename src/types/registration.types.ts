@@ -390,13 +390,10 @@ export interface UnconfirmedDocument {
   sequence?: number | null;
 }
 
-export function createEmptyUnconfirmedDocument(sequence: number): UnconfirmedDocument {
-  return {
-    type: 'UnconfirmedDocument',
-    text: '',
-    sequence: sequence,
-  };
-}
+export const emptyUnconfirmedDocument: UnconfirmedDocument = {
+  type: 'UnconfirmedDocument',
+  text: '',
+};
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
 
