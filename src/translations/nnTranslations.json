@@ -1884,6 +1884,7 @@
       "protected_file_type": "Din institusjon har valt å ikkje støtte opplasting av filer for denne kategorien.",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
+      "related_results_description": "",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som blei brukt ved registeringsstart. Ønskjer du å fjerne kopling til original DOI?",
       "research_data": {
@@ -2018,7 +2019,7 @@
   "tasks": {
     "correction_list": "Retteliste",
     "include_tasks_without_curator": "Inkluder oppgåver utan kurator",
-    "new_tasks": "",
+    "new_tasks": "Innmelde oppgåver: {{count}}",
     "nvi": {
       "approval_status_count": "Kontrollert ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
@@ -2067,7 +2068,7 @@
     "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukardialog",
-    "your_tasks": ""
+    "your_tasks": "Oppgåver du behandlar: {{count}}"
   },
   "unpublish_actions": {
     "duplicate": "Duplikat",
