@@ -1884,6 +1884,7 @@
       "protected_file_type": "Din institusjon har valgt å ikke støtte filer for denne kategorien.",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
+      "related_results_description": "<0><0>Er ikke og skal ikke resultatet registreres i NVA?</0> Legg til tittel på resultat.</0>",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
       "research_data": {
