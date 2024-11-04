@@ -682,7 +682,6 @@
     }
   },
   "log": {
-    "archived_afterwards": "Arkivert i etterkant",
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",

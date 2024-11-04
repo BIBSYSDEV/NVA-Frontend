@@ -32,7 +32,9 @@ export const LogActionItem = ({ description, date, fileIcon }: LogActionItemType
             <Typography>{description}</Typography>
           )}
           {fileIcon === 'deletedFile' && <Typography fontSize="x-small">{t('log.deleted_afterwards')}</Typography>}
-          {fileIcon === 'archivedFile' && <Typography fontSize="x-small">{t('log.archived_afterwards')}</Typography>}
+          {fileIcon === 'archivedFile' && (
+            <Typography fontSize="x-small">{t('registration.files_and_license.file_type.internal_file')}</Typography>
+          )}
         </Box>
       </Box>
       {date && (
