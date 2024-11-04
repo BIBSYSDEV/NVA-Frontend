@@ -100,7 +100,9 @@ export const PublishingAccordion = ({
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
 
-  const lastPublishingRequest = publishingRequestTickets.at(-1);
+  const lastPublishingRequest =
+    publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
+    publishingRequestTickets.at(-1);
 
   const ticketMutation = useMutation({
     mutationFn: lastPublishingRequest
