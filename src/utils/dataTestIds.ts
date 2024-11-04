@@ -107,6 +107,7 @@ export const dataTestId = {
     pagination: 'pagination',
     save: 'save',
     showMoreButton: 'show-more-button',
+    skeleton: 'skeleton',
     previousButton: 'previous-button',
     nextButton: 'next-button',
     doubleNextButton: 'double-next-button',
