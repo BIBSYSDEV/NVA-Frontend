@@ -19,7 +19,9 @@ export function generatePublishingRequestLogEntry(
       return generateMetadataUpdatedLogEntry(ticket, t);
     }
     case 'Closed': {
-      return generateRejectedFilesLogEntry(ticket, filesOnRegistration, t);
+      const uploeadedFilesEntry = generateFilesUploadedLogEntry(ticket, filesOnRegistration, t);
+      const rejectedFilesEntry = generateRejectedFilesLogEntry(ticket, filesOnRegistration, t);
+      return [uploeadedFilesEntry, rejectedFilesEntry];
     }
     case 'New':
     case 'Pending': {
