@@ -191,19 +191,17 @@ export const RegistrationFormActions = ({
               </Tooltip>
             </>
           ) : (
-            <>
-              <TooltipButtonWrapper
-                title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
-                <LoadingButton
-                  variant="contained"
-                  disabled={disableSaving}
-                  loading={isSaving}
-                  data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-                  onClick={handleSaveClick}>
-                  {t('common.save_and_view')}
-                </LoadingButton>
-              </TooltipButtonWrapper>
-            </>
+            <TooltipButtonWrapper
+              title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+              <LoadingButton
+                variant="contained"
+                disabled={disableSaving}
+                loading={isSaving}
+                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                onClick={handleSaveClick}>
+                {t('common.save_and_view')}
+              </LoadingButton>
+            </TooltipButtonWrapper>
           )}
         </Box>
       </Box>

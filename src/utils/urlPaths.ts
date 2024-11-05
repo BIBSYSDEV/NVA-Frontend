@@ -80,13 +80,13 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 export const getImportCandidatePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidate.replace(':identifier', encodeURIComponent(identifier));
 
+export const getRegistrationWizardPath = (identifier: string) =>
+  UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
+
 interface RegistrationWizardOptions {
   highestValidatedTab?: number;
   tab?: number;
 }
-
-export const getRegistrationWizardPath = (identifier: string) =>
-  UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
 
 export const getRegistrationWizardLink = (identifier: string, options: RegistrationWizardOptions = {}) => {
   return {
