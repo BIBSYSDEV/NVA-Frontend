@@ -254,6 +254,7 @@
     "read_more": "Les mer",
     "read_more_about_nva": "Les mer om NVA",
     "read_past_tense": "Lest",
+    "reference": "Referanse",
     "reject": "Avvis",
     "reject_doi": "Avvis DOI",
     "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
@@ -1628,6 +1629,7 @@
     },
     "registration_id": "Resultat-ID",
     "resource_type": {
+      "add_related_results_reference": "Hvis du ikke finner resultatet, og det ikke skal registreres i NVA, trykk på knappen for å skrive inn referanse:",
       "article_number": "Artikkelnummer",
       "artistic": {
         "add_announcement": "Legg til offentliggjøring",
@@ -1884,7 +1886,7 @@
       "protected_file_type": "Din institusjon har valgt å ikke støtte filer for denne kategorien.",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
-      "related_results_description": "<0><0>Er ikke og skal ikke resultatet registreres i NVA?</0> Legg til tittel på resultat.</0>",
+      "related_results_description": "Søk opp og velg resultat i søkefeltet for å knytte relaterte resultater til dette resultatet.",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
       "research_data": {
@@ -1912,7 +1914,7 @@
         "remove_relation": "Fjern relasjon",
         "remove_relation_confirm_text": "Ønsker du å fjerne denne relasjonen?",
         "search_for_related_dmps": "Søk etter relaterte datahåndteringsplaner",
-        "search_for_related_registrations": "Søk etter relaterte registreringer",
+        "search_for_related_registrations": "Søk etter resultat med bruk av tittel eller DOI",
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
       "resource_type": "Kategori",
