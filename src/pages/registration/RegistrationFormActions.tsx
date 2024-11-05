@@ -138,15 +138,7 @@ export const RegistrationFormActions = ({
               <IconButton
                 onClick={() => setTabNumber(tabNumber - 1)}
                 data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
-                <KeyboardArrowLeftIcon
-                  sx={{
-                    color: 'white',
-                    borderRadius: '50%',
-                    bgcolor: 'primary.light',
-                    height: '1.875rem',
-                    width: '1.875rem',
-                  }}
-                />
+                <KeyboardArrowLeftIcon sx={navigationButtonStyling} />
               </IconButton>
             </Tooltip>
           </Box>
@@ -166,81 +158,6 @@ export const RegistrationFormActions = ({
             {t('my_page.messages.get_curator_support')}
           </Button>
         )}
-
-        {!isLastTab ? (
-          <Box
-            sx={{
-              gridArea: 'save-button',
-              display: 'flex',
-              justifyContent: 'end',
-              alignItems: 'center',
-            }}>
-            <TooltipButtonWrapper
-              title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
-              <LoadingButton
-                variant="outlined"
-                disabled={disableSaving}
-                loading={isSaving}
-                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-                onClick={handleSaveClick}>
-                {t('common.save')}
-              </LoadingButton>
-            </TooltipButtonWrapper>
-            <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
-              <IconButton
-                onClick={() => setTabNumber(tabNumber + 1)}
-                data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
-                <KeyboardArrowRightIcon
-                  sx={{
-                    color: 'white',
-                    borderRadius: '50%',
-                    bgcolor: 'primary.light',
-                    height: '1.875rem',
-                    width: '1.875rem',
-                  }}
-                />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        ) : (
-          <Box sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
-            <TooltipButtonWrapper
-              title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
-              <LoadingButton
-                variant="contained"
-                disabled={disableSaving}
-                loading={isSaving}
-                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-                onClick={handleSaveClick}>
-                {t('common.save_and_view')}
-              </LoadingButton>
-            </TooltipButtonWrapper>
-          </Box>
-        )}
-        <Box sx={{ gridArea: 'back-button' }}>
-          <Tooltip title={!isFirstTab ? t('common.previous') : ''}>
-            <IconButton
-              disabled={isFirstTab}
-              onClick={() => setTabNumber(tabNumber - 1)}
-              data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
-              <KeyboardArrowLeftIcon sx={{ ...navigationButtonStyling, opacity: isFirstTab ? 0.5 : 1 }} />
-            </IconButton>
-          </Tooltip>
-        </Box>
-
-        <Button
-          sx={{
-            gridArea: 'support-button',
-            width: 'fit-content',
-            justifySelf: 'center',
-          }}
-          variant="contained"
-          size="small"
-          data-testid={dataTestId.registrationWizard.formActions.openSupportButton}
-          onClick={toggleSupportModal}>
-          {t('my_page.messages.get_curator_support')}
-        </Button>
-
         <Box
           sx={{
             gridArea: 'action-buttons',
@@ -253,30 +170,41 @@ export const RegistrationFormActions = ({
             {t('common.cancel')}
           </Button>
           {!isLastTab ? (
-            <LoadingButton
-              variant="outlined"
-              loading={isSaving}
-              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={handleSaveClick}>
-              {t('common.save')}
-            </LoadingButton>
+            <>
+              <TooltipButtonWrapper
+                title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+                <LoadingButton
+                  variant="outlined"
+                  disabled={disableSaving}
+                  loading={isSaving}
+                  data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                  onClick={handleSaveClick}>
+                  {t('common.save')}
+                </LoadingButton>
+              </TooltipButtonWrapper>
+              <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
+                <IconButton
+                  onClick={() => setTabNumber(tabNumber + 1)}
+                  data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
+                  <KeyboardArrowRightIcon sx={navigationButtonStyling} />
+                </IconButton>
+              </Tooltip>
+            </>
           ) : (
-            <LoadingButton
-              variant="contained"
-              loading={isSaving}
-              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={handleSaveClick}>
-              {t('common.save_and_view')}
-            </LoadingButton>
+            <>
+              <TooltipButtonWrapper
+                title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+                <LoadingButton
+                  variant="contained"
+                  disabled={disableSaving}
+                  loading={isSaving}
+                  data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                  onClick={handleSaveClick}>
+                  {t('common.save_and_view')}
+                </LoadingButton>
+              </TooltipButtonWrapper>
+            </>
           )}
-          <Tooltip title={!isLastTab ? t('common.next') : ''}>
-            <IconButton
-              disabled={isLastTab}
-              onClick={() => setTabNumber(tabNumber + 1)}
-              data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
-              <KeyboardArrowRightIcon sx={{ ...navigationButtonStyling, opacity: isLastTab ? 0.5 : 1 }} />
-            </IconButton>
-          </Tooltip>
         </Box>
       </Box>
 
