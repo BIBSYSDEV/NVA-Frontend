@@ -6,6 +6,7 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { HrcsActivityOption } from '../../../components/HrcsActivityAutocompleteOption';
 import { hrcsCategories } from '../../../resources/vocabularies/hrcsCategories';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { hrcsActivityOptions } from '../../registration/description_tab/vocabularies/HrcsActivityInput';
 
@@ -29,12 +30,14 @@ export const VocabularSearchField = () => {
       value={selectedValue}
       renderOption={({ key, ...props }, option) => <HrcsActivityOption key={option.id} props={props} option={option} />}
       onChange={(_, value) => {
+        const syncedParams = syncParamsWithSearchFields(searchParams);
         if (value) {
-          searchParams.set(ResultParam.Vocabulary, value.id);
+          syncedParams.set(ResultParam.Vocabulary, value.id);
         } else {
-          searchParams.delete(ResultParam.Vocabulary);
+          syncedParams.delete(ResultParam.Vocabulary);
         }
-        history.push({ search: searchParams.toString() });
+        syncedParams.delete(ResultParam.From);
+        history.push({ search: syncedParams.toString() });
       }}
       getOptionLabel={(option) => getLanguageString(option.label)}
       groupBy={(option) =>

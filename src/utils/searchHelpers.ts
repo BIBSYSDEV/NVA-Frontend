@@ -117,6 +117,9 @@ export const removeSearchParamValue = (params: URLSearchParams, key: string, val
   const newValues = selectedValues.filter((selectedValue) => selectedValue !== value);
   if (newValues.length === 0) {
     params.delete(key);
+    if (key === ResultParam.ScientificReportPeriodSinceParam) {
+      params.delete(ResultParam.ScientificReportPeriodBeforeParam);
+    }
   } else {
     params.set(key, newValues.join(','));
   }
@@ -155,4 +158,28 @@ export const keepSimilarPreviousData = <T>(
   if (searchTerm && query?.queryKey.includes(searchTerm)) {
     return previousData;
   }
+};
+
+export const dataSearchFieldAttributeName = 'data-searchfield';
+/**
+ * Takes one URLSearchParams object and adds or removes values from other HTML input nodes with
+ * the "data-searchfield" attribute to ensure that all params are in sync with the HTML.
+ */
+export const syncParamsWithSearchFields = (params: URLSearchParams) => {
+  const searchFieldElements = document.querySelectorAll(
+    `input[${dataSearchFieldAttributeName}]`
+  ) as NodeListOf<HTMLInputElement>;
+
+  searchFieldElements.forEach((element) => {
+    const fieldName = element.getAttribute(dataSearchFieldAttributeName);
+    if (fieldName) {
+      if (element.value) {
+        params.set(fieldName, element.value);
+      } else if (params.has(fieldName)) {
+        params.delete(fieldName);
+      }
+    }
+  });
+
+  return params;
 };

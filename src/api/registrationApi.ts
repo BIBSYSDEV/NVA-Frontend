@@ -1,10 +1,10 @@
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
-import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
+import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import {
   DoiPreview,
   MyRegistrationsResponse,
   Registration,
-  UnpublishPublicationRequest,
+  UpdateRegistrationStatusRequest,
 } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
@@ -24,14 +24,14 @@ export const updateRegistration = async (registration: Registration) =>
     data: registration,
   });
 
-export const unpublishRegistration = async (
+export const updateRegistrationStatus = async (
   registrationIdentifier: string,
-  unpublishingRequest: UnpublishPublicationRequest
+  updateRequest: UpdateRegistrationStatusRequest
 ) =>
   await authenticatedApiRequest2<Registration>({
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
     method: 'PUT',
-    data: unpublishingRequest,
+    data: updateRequest,
   });
 
 export const getRegistrationByDoi = async (doiUrl: string) => {
@@ -71,28 +71,12 @@ export const deleteTicketMessage = async (ticketId: string, messageId: string) =
   });
 };
 
-export const createTicket = async (registrationId: string, type: TicketType, returnCreatedTicket = false) => {
-  const createTicketResponse = await authenticatedApiRequest<null>({
+export const createTicket = async (registrationId: string, type: TicketType, message?: string) => {
+  return authenticatedApiRequest<null>({
     url: `${registrationId}/ticket`,
     method: 'POST',
-    data: { type },
+    data: message && message.length > 0 ? { type, messages: [{ type: 'Message', text: message }] } : { type },
   });
-
-  // Must handle redirects manually since the browser denies the app access to the response's location header
-  if (!returnCreatedTicket) {
-    return createTicketResponse;
-  } else {
-    const getTickets = await authenticatedApiRequest<TicketCollection>({
-      url: `${registrationId}/tickets`,
-    });
-    const createdTicketId =
-      getTickets.data.tickets
-        .sort((a, b) => (a.createdDate < b.createdDate ? 1 : -1))
-        .find((ticket) => ticket.type === type)?.id ?? '';
-    return await authenticatedApiRequest<Ticket>({
-      url: createdTicketId,
-    });
-  }
 };
 
 export const createDraftDoi = async (registrationId: string) =>

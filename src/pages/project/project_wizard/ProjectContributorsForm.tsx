@@ -1,10 +1,27 @@
 import { Box } from '@mui/material';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { ProjectParticipants } from '../../projects/form/ProjectParticipants';
+import { ProjectManager } from './ProjectManager';
+import { FormBox } from './styles';
 
-export const ProjectContributorsForm = () => {
+interface ProjectContributorsFormProps {
+  suggestedProjectManager?: string;
+}
+
+export const ProjectContributorsForm = ({ suggestedProjectManager }: ProjectContributorsFormProps) => {
   return (
     <ErrorBoundary>
-      <Box sx={{ bgcolor: 'secondary.light', padding: '1.75rem 1.25rem' }}>test 3</Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <FormBox>
+          <ProjectManager suggestedProjectManager={suggestedProjectManager} />
+        </FormBox>
+        <FormBox>
+          <ProjectParticipants roleType={'LocalProjectManager'} />
+        </FormBox>
+        <FormBox>
+          <ProjectParticipants roleType={'ProjectParticipant'} />
+        </FormBox>
+      </Box>
     </ErrorBoundary>
   );
 };

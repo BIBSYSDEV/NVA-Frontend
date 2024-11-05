@@ -2,7 +2,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,29 +11,26 @@ import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
-import { Registration, RegistrationStatus } from '../types/registration.types';
+import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
-import {
-  getContributorsWithPrimaryRole,
-  getTitleString,
-  userCanDeleteRegistration,
-} from '../utils/registration-helpers';
+import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
   getRegistrationWizardLink,
   getResearchProfilePath,
   UrlPathTemplate,
 } from '../utils/urlPaths';
+import { RegistrationIcon } from './atoms/RegistrationIcon';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
 import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps extends Pick<LinkProps, 'target'> {
-  registrations: Registration[];
+  registrations: RegistrationSearchItem[];
   canEditRegistration?: boolean;
-  onDeleteDraftRegistration?: (registration: Registration) => void;
+  onDeleteDraftRegistration?: (registration: RegistrationSearchItem) => void;
   promotedPublications?: string[];
 }
 
@@ -50,7 +47,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 );
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
-  registration: Registration;
+  registration: RegistrationSearchItem;
   ticketView?: boolean;
 }
 
@@ -73,19 +70,16 @@ export const RegistrationListItemContent = ({
   const mutationKey = ['person-preferences', userCristinId];
 
   const registrationType = entityDescription?.reference?.publicationInstance?.type;
-  const contributors = entityDescription?.contributors ?? [];
+  const contributors = entityDescription?.contributorsPreview ?? entityDescription.contributors ?? [];
 
   const primaryContributors = registrationType
     ? getContributorsWithPrimaryRole(contributors, registrationType)
     : contributors;
 
   const focusedContributors = primaryContributors.slice(0, 5);
-  const countRestContributors = primaryContributors.length - focusedContributors.length;
-
-  const typeString = registrationType ? t(`registration.publication_types.${registrationType}`) : '';
-
-  const publicationDate = displayDate(entityDescription?.publicationDate);
-  const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
+  const countRestContributors =
+    (registration.entityDescription.contributorsCount ?? (entityDescription.contributors ?? []).length) -
+    focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
 
@@ -106,13 +100,20 @@ export const RegistrationListItemContent = ({
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' } }}>
-          {heading && (
-            <Typography variant="overline" sx={{ color: 'primary.main' }}>
-              {heading}
-            </Typography>
-          )}
-
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' }, marginBottom: '0.5rem' }}>
+          <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+            <RegistrationIcon />
+            {registrationType && (
+              <Typography sx={{ color: 'primary.main' }}>
+                {t(`registration.publication_types.${registrationType}`)}
+              </Typography>
+            )}
+            {entityDescription?.publicationDate && (
+              <Typography sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                {displayDate(entityDescription?.publicationDate)}
+              </Typography>
+            )}
+          </Box>
           {ticketView &&
             (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
               <Typography
@@ -176,11 +177,9 @@ export const RegistrationListItemContent = ({
           </TruncatableTypography>
         )}
       </ListItemText>
-
       {location.pathname.includes(UrlPathTemplate.ResearchProfile) && isPromotedPublication && (
         <StarIcon fontSize="small" />
       )}
-
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
           {location.pathname === UrlPathTemplate.MyPageResults && (
@@ -213,7 +212,7 @@ export const RegistrationListItemContent = ({
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
-          {registration.status === 'DRAFT' && onDeleteDraftRegistration && userCanDeleteRegistration(registration) && (
+          {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
             <Tooltip title={t('common.delete')}>
               <IconButton
                 data-testid={`delete-registration-${identifier}`}

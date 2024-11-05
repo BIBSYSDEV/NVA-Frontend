@@ -41,16 +41,16 @@ export type ProjectStatus = 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
 
 export interface ProjectContributorIdentity {
   type: 'Person';
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
 }
 
-export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
+export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant' | 'LocalProjectManager';
 
 export interface ProjectContributorRole {
   type: ProjectContributorType;
-  affiliation: ProjectOrganization;
+  affiliation: ProjectOrganization | undefined;
 }
 
 export interface ProjectContributor {
@@ -175,7 +175,7 @@ export enum ProjectFieldName {
   Keywords = 'keywords',
   RelatedProjects = 'relatedProjects',
   RoleType = 'roles[0].type',
-  RoleAffiliation = 'roles[0].affiliation',
+  Type = 'type',
 }
 
 export enum ProjectContributorFieldName {

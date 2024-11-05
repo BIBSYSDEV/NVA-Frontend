@@ -15,6 +15,7 @@ import {
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { defaultOrganizationSearchSize } from '../../api/cristinApi';
 import { useSearchForOrganizations } from '../../api/hooks/useSearchForOrganizations';
 import { LanguageString } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
@@ -22,6 +23,10 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../AutocompleteListboxWithExpansion';
 import { OrganizationAccordion } from '../OrganizationAccordion';
 import { OrganizationRenderOption } from '../OrganizationRenderOption';
 import { OrganizationBox } from './OrganizationBox';
@@ -59,11 +64,15 @@ export const SelectInstitutionForm = ({
 }: SelectInstitutionFormProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSubunitId, setSelectedSubunitId] = useState(initialValues?.subunit?.id || '');
-  const [selectedSubunitLabels, setSelectedSubunitLabels] = useState(initialValues?.subunit?.labels || undefined);
-
+  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const debouncedQuery = useDebounce(searchTerm);
-  const organizationSearchQuery = useSearchForOrganizations(debouncedQuery);
+  const organizationSearchQuery = useSearchForOrganizations({
+    query: debouncedQuery,
+    results: searchSize,
+    fullTree: true,
+  });
+
+  const institutionOptions = organizationSearchQuery.data?.hits ?? [];
 
   return (
     <Formik
@@ -75,9 +84,6 @@ export const SelectInstitutionForm = ({
         } else if (values.subunit?.id) {
           // When we select from the subunit search field
           saveAffiliation(values.subunit.id, values.subunit.labels);
-        } else if (selectedSubunitId) {
-          // When we select from the list below the subunit search field
-          saveAffiliation(selectedSubunitId, selectedSubunitLabels);
         } else if (values.unit?.id) {
           // When we only select from the unit search field (no sub-organization)
           saveAffiliation(values.unit?.id, values.unit?.labels);
@@ -128,12 +134,21 @@ export const SelectInstitutionForm = ({
                 {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
                     {...field}
-                    options={organizationSearchQuery.data?.hits ?? []}
+                    options={institutionOptions}
                     inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
                     getOptionLabel={(option) => getLanguageString(option.labels)}
                     renderOption={({ key, ...props }, option) => (
                       <OrganizationRenderOption key={option.id} props={props} option={option} />
                     )}
+                    ListboxComponent={AutocompleteListboxWithExpansion}
+                    ListboxProps={
+                      {
+                        hasMoreHits:
+                          !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
+                        onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
+                        isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > institutionOptions.length,
+                      } satisfies AutocompleteListboxWithExpansionProps as any
+                    }
                     filterOptions={(options) => options}
                     onInputChange={(_, value, reason) => {
                       if (field.value) {
@@ -144,13 +159,8 @@ export const SelectInstitutionForm = ({
                       }
                     }}
                     onChange={(_, value) => {
-                      resetForm({
-                        values: initialValuesOrganizationForm,
-                      });
-
+                      resetForm({ values: initialValuesOrganizationForm });
                       setFieldValue(field.name, value);
-                      setSelectedSubunitId('');
-                      setSelectedSubunitLabels(undefined);
                     }}
                     loading={organizationSearchQuery.isPending}
                     renderInput={(params) => (
@@ -182,11 +192,7 @@ export const SelectInstitutionForm = ({
                         renderOption={({ key, ...props }, option) => (
                           <OrganizationRenderOption key={option.id} props={props} option={option} />
                         )}
-                        onChange={(_, value) => {
-                          setFieldValue(field.name, value);
-                          setSelectedSubunitId(value?.id ?? '');
-                          setSelectedSubunitLabels(value?.labels ?? undefined);
-                        }}
+                        onChange={(_, value) => setFieldValue(field.name, value)}
                         filterOptions={(options, state) =>
                           options.filter((option) =>
                             Object.values(option.labels).some((label) =>
@@ -208,10 +214,9 @@ export const SelectInstitutionForm = ({
                         <OrganizationAccordion
                           key={organization.id}
                           organization={organization}
-                          searchId={values.subunit?.id ?? ''}
-                          selectedId={selectedSubunitId}
-                          setSelectedId={setSelectedSubunitId}
-                          setSelectedLabels={setSelectedSubunitLabels}
+                          searchId={values.subunit?.id}
+                          selectedId={values.subunit?.id}
+                          setSelectedOrganization={(organization) => setFieldValue(field.name, organization)}
                         />
                       ))}
                     </>

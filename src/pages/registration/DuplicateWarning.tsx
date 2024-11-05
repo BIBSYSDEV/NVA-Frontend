@@ -1,18 +1,18 @@
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import { Box, Typography } from '@mui/material';
+import { Box, BoxProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { StyledInfoBanner } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
-interface DuplicateWarningProps {
+interface DuplicateWarningProps extends Pick<BoxProps, 'sx'> {
   warning: string;
-  identifier?: string;
+  linkTo?: string;
   name?: string;
+  listHeader?: string;
 }
 
-export const DuplicateWarning = ({ name, identifier, warning }: DuplicateWarningProps) => {
+export const DuplicateWarning = ({ name, listHeader, linkTo, warning, sx }: DuplicateWarningProps) => {
   const { t } = useTranslation();
   return (
     <Box
@@ -24,15 +24,13 @@ export const DuplicateWarning = ({ name, identifier, warning }: DuplicateWarning
         display: 'flex',
         flexDirection: 'column',
         gap: '0.5rem',
+        ...sx,
       }}>
       <StyledInfoBanner>{warning}</StyledInfoBanner>
-      {name && identifier && (
+      {name && linkTo && (
         <>
-          <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
-          <Link
-            target="_blank"
-            data-testid={dataTestId.registrationLandingPage.duplicateRegistrationLink}
-            to={getRegistrationLandingPagePath(identifier)}>
+          <Typography sx={{ fontWeight: 'bold' }}>{listHeader ? listHeader : t('common.result')}</Typography>
+          <Link target="_blank" data-testid={dataTestId.registrationLandingPage.duplicateRegistrationLink} to={linkTo}>
             <Box sx={{ display: 'flex', gap: '0.5rem' }}>
               <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>{name}</Typography>
               <OpenInNewOutlinedIcon

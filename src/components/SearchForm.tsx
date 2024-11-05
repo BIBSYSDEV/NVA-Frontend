@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../api/searchApi';
 import { SearchTextField } from '../pages/search/SearchTextField';
-import { SearchParam } from '../utils/searchHelpers';
+import { dataSearchFieldAttributeName, SearchParam, syncParamsWithSearchFields } from '../utils/searchHelpers';
 
 interface SearchFormProps extends Pick<BoxProps, 'sx'>, Pick<TextFieldProps, 'label' | 'placeholder'> {
   paramName?: string;
@@ -28,21 +28,20 @@ export const SearchForm = ({ sx, label, placeholder, dataTestId, paramName = 'qu
       component="form"
       onSubmit={(event) => {
         event.preventDefault();
+        const syncedParams = syncParamsWithSearchFields(searchParams);
         if (inputValue) {
-          searchParams.set(paramName, inputValue);
+          syncedParams.set(paramName, inputValue);
         } else {
-          searchParams.delete(paramName);
+          syncedParams.delete(paramName);
         }
 
-        if (searchParams.get(ResultParam.From)) {
-          searchParams.delete(ResultParam.From);
-        } else if (searchParams.get(SearchParam.Page)) {
-          searchParams.delete(SearchParam.Page);
-        }
+        syncedParams.delete(ResultParam.From);
+        syncedParams.delete(SearchParam.Page);
 
         history.push({ search: searchParams.toString() });
       }}>
       <SearchTextField
+        inputProps={{ [dataSearchFieldAttributeName]: paramName }}
         dataTestId={dataTestId}
         name={paramName}
         label={label}

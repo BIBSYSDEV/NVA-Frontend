@@ -11,12 +11,12 @@ import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { Contributor } from '../../../../types/contributor.types';
-import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import {
   PublicationInstanceType,
   Publisher,
   Registration,
   RegistrationDate,
+  RegistrationSearchItem,
   Series,
 } from '../../../../types/registration.types';
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
@@ -24,7 +24,7 @@ import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { getTitleString } from '../../../../utils/registration-helpers';
+import { convertToRegistrationSearchItem, getTitleString } from '../../../../utils/registration-helpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 
 interface SearchContainerFieldProps {
@@ -103,7 +103,7 @@ export const SearchContainerField = ({
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
-            value={field.value && selectedContainer ? [selectedContainer] : []}
+            value={field.value && selectedContainer ? [convertToRegistrationSearchItem(selectedContainer)] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
                 setFieldValue(field.name, inputValue.pop()?.id);
@@ -194,15 +194,15 @@ export const YearAndContributorsText = ({ date, contributors }: YearAndContribut
 };
 
 interface ContainerAndLevelTextProps {
-  registration: Registration;
+  registration: RegistrationSearchItem;
 }
 
 const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
   const { t } = useTranslation();
 
-  const publicationContext = registration.entityDescription?.reference?.publicationContext as BookPublicationContext;
-  const publisherId = publicationContext.publisher?.id ?? '';
-  const seriesId = publicationContext.series?.id ?? '';
+  const publicationContext = registration.entityDescription?.reference?.publicationContext;
+  const publisherId = publicationContext?.publisher?.id ?? '';
+  const seriesId = publicationContext?.series?.id ?? '';
 
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],

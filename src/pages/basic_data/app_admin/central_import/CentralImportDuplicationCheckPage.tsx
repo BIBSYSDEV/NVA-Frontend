@@ -1,10 +1,12 @@
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { fetchImportCandidate, fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
+import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
+import { fetchImportCandidate, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { FetchImportCandidatesParams, fetchImportCandidates } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { PageSpinner } from '../../../../components/PageSpinner';
@@ -16,6 +18,7 @@ import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTyp
 import { PreviousSearchLocationState } from '../../../../types/locationState.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
+import { convertToRegistrationSearchItem } from '../../../../utils/registration-helpers';
 import {
   IdentifierParams,
   UrlPathTemplate,
@@ -70,12 +73,9 @@ export const CentralImportDuplicationCheckPage = () => {
       ),
   });
 
-  const importedRegistrationId = importCandidate?.importStatus.nvaPublicationId ?? '';
-  const importedRegistrationQuery = useQuery({
-    queryKey: ['registration', importedRegistrationId],
-    enabled: importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importedRegistrationId,
-    queryFn: () => fetchRegistration(getIdentifierFromId(importedRegistrationId)),
-    meta: { errorMessage: t('feedback.error.get_registration') },
+  const importedRegistrationIdentifier = getIdentifierFromId(importCandidate?.importStatus.nvaPublicationId ?? '');
+  const importedRegistrationQuery = useFetchRegistration(importedRegistrationIdentifier, {
+    enabled: importCandidate?.importStatus.candidateStatus === 'IMPORTED',
   });
 
   useEffect(() => {
@@ -100,6 +100,9 @@ export const CentralImportDuplicationCheckPage = () => {
         gridTemplateAreas: { xs: '"actions" "main"', sm: '"main actions"' },
         gap: '1rem',
       }}>
+      <Helmet>
+        <title>{t('basic_data.central_import.central_import')}</title>
+      </Helmet>
       <BackgroundDiv>
         {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
@@ -132,7 +135,9 @@ export const CentralImportDuplicationCheckPage = () => {
                 </Typography>
                 {importedRegistrationQuery.data && (
                   <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
-                    <RegistrationListItemContent registration={importedRegistrationQuery.data} />
+                    <RegistrationListItemContent
+                      registration={convertToRegistrationSearchItem(importedRegistrationQuery.data)}
+                    />
                   </SearchListItem>
                 )}
               </>

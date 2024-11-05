@@ -1,111 +1,103 @@
-import { Box, Button, MenuItem, TextField } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
-import {
-  CristinProject,
-  ProjectContributor,
-  ProjectContributorType,
-  ProjectFieldName,
-} from '../../types/project.types';
+import { CristinProject, ProjectContributorType, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getValueByKey } from '../../utils/user-helpers';
-
-const roles: ProjectContributorType[] = ['ProjectManager', 'ProjectParticipant'];
+import {
+  addContributor,
+  AddContributorErrors,
+  addUnidentifiedProjectContributor,
+} from '../project/helpers/projectContributorHelpers';
 
 interface AddProjectContributorFormProps {
-  hasProjectManager: boolean;
   toggleModal: () => void;
+  roleType: ProjectContributorType;
+  initialSearchTerm?: string;
+  indexToReplace?: number;
 }
 
-export const AddProjectContributorForm = ({ hasProjectManager, toggleModal }: AddProjectContributorFormProps) => {
+export const AddProjectContributorForm = ({
+  toggleModal,
+  roleType,
+  initialSearchTerm = '',
+  indexToReplace = -1,
+}: AddProjectContributorFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext<CristinProject>();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedContributorRole, setSelectedContributorRole] = useState<ProjectContributorType>(
-    hasProjectManager ? 'ProjectParticipant' : 'ProjectManager'
-  );
+  const { contributors } = values;
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
 
-  const addContributor = () => {
-    if (!selectedPerson || !selectedContributorRole) {
-      return;
-    }
+  const addParticipant = () => {
+    const { newContributors, error } = addContributor(selectedPerson, contributors, roleType, indexToReplace);
 
-    if (selectedContributorRole === 'ProjectManager' && hasProjectManager) {
+    if (error === AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION) {
       dispatch(
         setNotification({
-          message: t('project.error.there_can_only_be_one_project_manager_choose_different_role'),
+          message: t('project.error.contributor_already_added_with_same_role_and_affiliation'),
           variant: 'error',
         })
       );
       return;
     }
 
-    const newContributor: ProjectContributor = {
-      identity: {
-        type: 'Person',
-        id: selectedPerson.id,
-        firstName: getValueByKey('FirstName', selectedPerson.names),
-        lastName: getValueByKey('LastName', selectedPerson.names),
-      },
-      roles: selectedPerson.affiliations.map((affiliation, index) => {
-        return {
-          type: selectedContributorRole === 'ProjectManager' && index === 0 ? 'ProjectManager' : 'ProjectParticipant', // Backend only supports one ProjectManager role per project
-          affiliation: { type: 'Organization', id: affiliation.organization, labels: {} },
-        };
-      }),
-    };
+    if (newContributors) {
+      setFieldValue(ProjectFieldName.Contributors, newContributors);
+      toggleModal();
+    }
+  };
 
-    const newContributors = values.contributors ? [...values.contributors, newContributor] : [newContributor];
+  const addUnidentifiedParticipant = () => {
+    const { newContributors, error } = addUnidentifiedProjectContributor(
+      searchTerm,
+      contributors,
+      roleType,
+      indexToReplace
+    );
 
-    setFieldValue(ProjectFieldName.Contributors, newContributors);
-    toggleModal();
+    if (error === AddContributorErrors.NO_SEARCH_TERM) {
+      return;
+    }
+
+    if (newContributors) {
+      setFieldValue(ProjectFieldName.Contributors, newContributors);
+      toggleModal();
+    }
   };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <TextField
-        data-testid={dataTestId.projectWizard.selectContributorType}
-        sx={{ maxWidth: '15rem' }}
-        value={selectedContributorRole}
-        onChange={(event) => {
-          const role = (event.target.value as ProjectContributorType) ?? '';
-          setSelectedContributorRole(role);
-        }}
-        fullWidth
-        select
-        label={t('project.form.select_project_role')}
-        variant="outlined">
-        {roles.map((role) => (
-          <MenuItem
-            key={role}
-            value={role}
-            disabled={hasProjectManager ? role === 'ProjectManager' : role === 'ProjectParticipant'}>
-            {t(`project.role_types.${role}`)}
-          </MenuItem>
-        ))}
-      </TextField>
       <ContributorSearchField
         selectedPerson={selectedPerson}
         setSelectedPerson={setSelectedPerson}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledRightAlignedFooter>
+      <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
+        <Button
+          sx={{ mr: 'auto' }}
+          data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
+          disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
+          onClick={addUnidentifiedParticipant}
+          size="large">
+          {t('project.add_unidentified_contributor')}
+        </Button>
+        <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
         <Button
           data-testid={dataTestId.projectForm.selectContributorButton}
           disabled={!selectedPerson}
-          onClick={addContributor}
+          onClick={addParticipant}
           size="large"
           variant="contained">
-          {t('registration.contributors.add_contributor')}
+          {roleType === 'LocalProjectManager' ? t('project.add_local_manager') : t('project.add_contributor')}
         </Button>
       </StyledRightAlignedFooter>
     </Box>

@@ -97,7 +97,7 @@ const resourceErrorMessage = {
     field: i18n.t('registration.resource_type.isbn'),
   }),
   isbnTooShort: i18n.t('feedback.validation.isbn_too_short'),
-  journalNotSelected: i18n.t('feedback.validation.not_selected', {
+  journalNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.journal'),
   }),
   journalRequired: i18n.t('feedback.validation.is_required', {
@@ -124,13 +124,14 @@ const resourceErrorMessage = {
   publishedInRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.chapter.published_in'),
   }),
-  publisherNotSelected: i18n.t('feedback.validation.not_selected', {
+  publisherNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('common.publisher'),
   }),
   publisherRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.publisher'),
   }),
-  seriesNotSelected: i18n.t('feedback.validation.not_selected', {
+  referenceRequired: i18n.t('feedback.validation.reference_required'),
+  seriesNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.series'),
   }),
   toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
@@ -304,8 +305,28 @@ export const reportReference = baseReference.shape({
 });
 
 // Degree
+const unconfirmedDocumentSchema = Yup.object({
+  type: Yup.string(),
+  text: Yup.string().required(resourceErrorMessage.referenceRequired),
+});
+
+const confirmedDocumentSchema = Yup.object({
+  type: Yup.string(),
+  identifier: Yup.string().url(),
+});
+
 const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
+  related: Yup.array().when('$publicationInstanceType', {
+    is: DegreeType.Phd,
+    then: (schema) =>
+      schema.of(
+        Yup.lazy((related) =>
+          related.type === 'UnconfirmedDocument' ? unconfirmedDocumentSchema : confirmedDocumentSchema
+        )
+      ),
+    otherwise: (schema) => schema.nullable(),
+  }),
 });
 
 const degreePublicationContext = Yup.object<YupShape<DegreePublicationContext>>({
@@ -467,11 +488,7 @@ export const mediaContributionReference = baseReference.shape({
 
 // Research Data
 const researchDataPublicationContext = Yup.object<YupShape<ResearchDataPublicationContext>>({
-  publisher: Yup.object()
-    .nullable()
-    .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
-      publicationInstanceType === ResearchDataType.DataManagementPlan ? publisherField : schema
-    ),
+  publisher: publisherField,
 });
 
 const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicationInstance>>({

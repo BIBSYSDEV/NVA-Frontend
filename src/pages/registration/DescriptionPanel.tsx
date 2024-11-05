@@ -12,6 +12,7 @@ import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { registrationLanguageOptions, registrationsHaveSamePublicationYear } from '../../utils/registration-helpers';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
@@ -23,10 +24,10 @@ export const DescriptionPanel = () => {
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
-  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch(
-    debouncedTitle || values.entityDescription?.mainTitle,
-    values.identifier
-  );
+  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch({
+    title: debouncedTitle || values.entityDescription?.mainTitle,
+    identifier: values.identifier,
+  });
 
   return (
     <InputContainerBox>
@@ -66,7 +67,7 @@ export const DescriptionPanel = () => {
         {duplicateRegistration && (
           <DuplicateWarning
             name={duplicateRegistration.entityDescription?.mainTitle}
-            identifier={duplicateRegistration.identifier}
+            linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
             warning={t('registration.description.duplicate_title_warning')}
           />
         )}
@@ -229,7 +230,7 @@ export const DescriptionPanel = () => {
       {duplicateRegistration && registrationsHaveSamePublicationYear(duplicateRegistration, values) && (
         <DuplicateWarning
           name={duplicateRegistration.entityDescription?.mainTitle}
-          identifier={duplicateRegistration.identifier}
+          linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
           warning={t('registration.description.duplicate_publication_date_warning')}
         />
       )}

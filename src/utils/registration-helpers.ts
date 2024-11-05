@@ -24,11 +24,8 @@ import {
   OtherRelease,
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
-import {
-  ExhibitionBasic,
-  ExhibitionMentionInPublication,
-  ExhibitionOtherPresentation,
-} from '../types/publication_types/exhibitionContent.types';
+import { DegreeRegistration } from '../types/publication_types/degreeRegistration.types';
+import { ExhibitionBasic } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
 import { PublishingTicket, Ticket } from '../types/publication_types/ticket.types';
@@ -54,6 +51,8 @@ import {
   PublicationInstanceType,
   Publisher,
   Registration,
+  RegistrationOperation,
+  RegistrationSearchItem,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -113,11 +112,9 @@ export const nviApplicableTypes: PublicationInstanceType[] = [
   JournalType.AcademicArticle,
   JournalType.AcademicLiteratureReview,
   BookType.AcademicMonograph,
+  BookType.AcademicCommentary,
   ChapterType.AcademicChapter,
 ];
-
-export const userHasSameCustomerAsRegistration = (user: User | null, registration?: Registration) =>
-  !!user?.customerId && registration?.publisher.id === user.customerId;
 
 export const userIsValidImporter = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
@@ -194,6 +191,23 @@ export const getFormattedRegistration = (registration: Registration) => {
         },
       },
     };
+  } else if (isDegree(type)) {
+    const degreeRegistration = formattedRegistration as DegreeRegistration;
+    const { course } = degreeRegistration.entityDescription.reference.publicationContext;
+
+    formattedRegistration = {
+      ...degreeRegistration,
+      entityDescription: {
+        ...degreeRegistration.entityDescription,
+        reference: {
+          ...degreeRegistration.entityDescription.reference,
+          publicationContext: {
+            ...degreeRegistration.entityDescription.reference.publicationContext,
+            course: course?.code ? { ...course, type: 'UnconfirmedCourse' } : undefined,
+          },
+        },
+      },
+    };
   }
 
   return formattedRegistration;
@@ -258,6 +272,10 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
+  [BookType.AcademicCommentary]: {
+    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   [BookType.NonFictionMonograph]: {
     primaryRoles: [ContributorRole.Creator, ContributorRole.Editor],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
@@ -279,7 +297,7 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [BookType.Anthology]: {
-    primaryRoles: [ContributorRole.Editor],
+    primaryRoles: [ContributorRole.Editor, ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Report
@@ -634,40 +652,21 @@ export const getOutputName = (item: OutputItem): string => {
       return (item as LiteraryArtsWeb).publisher.name;
     case 'ExhibitionBasic':
       return (item as ExhibitionBasic).organization.name;
-    case 'ExhibitionOtherPresentation':
-      return (item as ExhibitionOtherPresentation).typeDescription;
-    case 'ExhibitionMentionInPublication':
-      return (item as ExhibitionMentionInPublication).title;
     default:
       return '';
   }
 };
 
-export const userCanEditRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('update') ?? false;
-
-export const userCanUnpublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('unpublish') ?? false;
-
-export const userCanPublishRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('ticket/publish') ?? false;
-
-export const userCanDeleteRegistration = (registration: Registration) =>
-  registration.allowedOperations?.includes('delete') ?? false;
-
-export const userCanEditPublishedFile = (registration: Registration) =>
-  registration.allowedOperations?.includes('update-including-files') ?? false;
+export const userHasAccessRight = (registration: Registration | undefined, operation: RegistrationOperation) =>
+  registration?.allowedOperations?.includes(operation) ?? false;
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
 
 export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;
 
-export const associatedArtifactIsFile = ({ type }: { type: string }) =>
-  type === 'File' ||
-  type === FileType.UnpublishedFile ||
-  type === FileType.PublishedFile ||
-  type === FileType.UnpublishableFile;
+const allFileTypes: string[] = Object.values(FileType);
+export const associatedArtifactIsFile = ({ type }: { type: string }) => allFileTypes.includes(type);
 
 export const associatedArtifactIsLink = ({ type }: { type: string }) => type === 'AssociatedLink';
 
@@ -679,11 +678,14 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
-export const getPublishedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
-  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.PublishedFile);
+export const getOpenFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  associatedArtifacts.filter(isOpenFile) as AssociatedFile[];
 
-export const getUnpublishableFiles = (associatedArtifacts: AssociatedArtifact[]) =>
-  getAssociatedFiles(associatedArtifacts).filter((file) => file.type === FileType.UnpublishableFile);
+export const isPendingOpenFile = (artifact: AssociatedArtifact) =>
+  artifact.type === FileType.PendingOpenFile || artifact.type === FileType.UnpublishedFile;
+
+export const isOpenFile = (artifact: AssociatedArtifact) =>
+  artifact.type === FileType.OpenFile || artifact.type === FileType.PublishedFile;
 
 const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
   const rejectedFileIdentifiers = tickets
@@ -695,9 +697,12 @@ const getRejectedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ti
 
 export const getArchivedFiles = (associatedArtifacts: AssociatedArtifact[], tickets: Ticket[]) => {
   const rejectedFileIdentifiers = getRejectedFiles(associatedArtifacts, tickets).map((file) => file.identifier);
-  return getAssociatedFiles(associatedArtifacts).filter(
-    (file) => file.type === 'UnpublishableFile' && !rejectedFileIdentifiers.includes(file.identifier)
+  const archivedFiles = associatedArtifacts.filter(
+    (file) =>
+      file.type === FileType.InternalFile ||
+      (file.type === 'UnpublishableFile' && !rejectedFileIdentifiers.includes(file.identifier))
   );
+  return archivedFiles.length;
 };
 
 export const isTypeWithRrs = (publicationInstanceType?: string) =>
@@ -777,7 +782,10 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
-export const registrationsHaveSamePublicationYear = (reg1: Registration, reg2: Registration) => {
+export const registrationsHaveSamePublicationYear = (
+  reg1: Registration | RegistrationSearchItem,
+  reg2: Registration | RegistrationSearchItem
+) => {
   if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
     return false;
   }
@@ -785,7 +793,10 @@ export const registrationsHaveSamePublicationYear = (reg1: Registration, reg2: R
   return reg1.entityDescription.publicationDate.year === reg2.entityDescription.publicationDate.year;
 };
 
-export const registrationsHaveSameCategory = (reg1: Registration, reg2: Registration) => {
+export const registrationsHaveSameCategory = (
+  reg1: Registration | RegistrationSearchItem,
+  reg2: Registration | RegistrationSearchItem
+) => {
   if (
     reg1.entityDescription?.reference?.publicationInstance?.type &&
     reg2.entityDescription?.reference?.publicationInstance?.type
@@ -805,4 +816,45 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
     context.issn ? `${t('registration.resource_type.issn')}: ${context.issn}` : '',
   ].filter(Boolean);
   return issnValues.join(', ');
+};
+
+export const convertToRegistrationSearchItem = (registration: Registration) => {
+  const publisher =
+    registration.entityDescription?.reference?.publicationContext &&
+    'publisher' in registration.entityDescription.reference.publicationContext
+      ? registration.entityDescription.reference.publicationContext.publisher
+      : undefined;
+
+  const series =
+    registration.entityDescription?.reference?.publicationContext &&
+    'series' in registration.entityDescription.reference.publicationContext
+      ? registration.entityDescription.reference.publicationContext.series
+      : undefined;
+
+  const registrationSearchItem: RegistrationSearchItem = {
+    id: registration.id,
+    identifier: registration.identifier,
+    createdDate: registration.createdDate,
+    modifiedDate: registration.modifiedDate,
+    publishedDate: registration.publishedDate,
+    status: registration.status,
+    entityDescription: {
+      mainTitle: registration.entityDescription?.mainTitle ?? '',
+      abstract: registration.entityDescription?.abstract ?? '',
+      description: registration.entityDescription?.description ?? '',
+      publicationDate: registration.entityDescription?.publicationDate,
+      contributorsPreview: registration.entityDescription?.contributors ?? [],
+      contributorsCount: (registration.entityDescription?.contributors ?? []).length,
+      reference: {
+        publicationInstance: {
+          type: registration.entityDescription?.reference?.publicationInstance?.type,
+        },
+        publicationContext: {
+          publisher,
+          series,
+        },
+      },
+    },
+  };
+  return registrationSearchItem;
 };

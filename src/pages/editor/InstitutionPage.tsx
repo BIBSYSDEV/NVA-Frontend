@@ -23,8 +23,10 @@ import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
 import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
+import { PortfolioSearchPage } from './PortfolioSearchPage';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { PublishingStrategyOverview } from './PublishingStrategyOverview';
+import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
 import { VocabularyOverview } from './VocabularyOverview';
 import { VocabularySettings } from './VocabularySettings';
 import { OrganizationCurators } from './curators/OrganizationCurators';
@@ -111,45 +113,49 @@ const InstitutionPage = () => {
           </NavigationList>
         </NavigationListAccordion>
         {isEditor && (
-          <NavigationListAccordion
-            dataTestId={dataTestId.editor.settingsAccordion}
-            title={t('common.settings')}
-            startIcon={<GavelIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
-            accordionPath={UrlPathTemplate.InstitutionSettings}
-            defaultPath={UrlPathTemplate.InstitutionCurators}>
-            <NavigationList>
-              <SelectableButton
-                isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
-                data-testid={dataTestId.editor.curatorsSettingsLinkButton}
-                to={UrlPathTemplate.InstitutionCurators}>
-                {t('editor.curators.administer_curators')}
-              </SelectableButton>
-              <SelectableButton
-                isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategy}
-                data-testid={dataTestId.editor.publishStrategyLinkButton}
-                to={UrlPathTemplate.InstitutionPublishStrategy}>
-                {t('editor.publish_strategy.publish_strategy')}
-              </SelectableButton>
-              <SelectableButton
-                isSelected={currentPath === UrlPathTemplate.InstitutionVocabulary}
-                data-testid={dataTestId.editor.vocabularyLinkButton}
-                to={UrlPathTemplate.InstitutionVocabulary}>
-                {t('editor.vocabulary')}
-              </SelectableButton>
-              <SelectableButton
-                isSelected={currentPath === UrlPathTemplate.InstitutionCategories}
-                data-testid={dataTestId.editor.categoriesLinkButton}
-                to={UrlPathTemplate.InstitutionCategories}>
-                {t('editor.categories_with_files')}
-              </SelectableButton>
-              <SelectableButton
-                isSelected={currentPath === UrlPathTemplate.InstitutionSupport}
-                data-testid={dataTestId.editor.supportLinkButton}
-                to={UrlPathTemplate.InstitutionSupport}>
-                {t('editor.institution.change_institution_support')}
-              </SelectableButton>
-            </NavigationList>
-          </NavigationListAccordion>
+          <>
+            <NavigationListAccordion
+              dataTestId={dataTestId.editor.settingsAccordion}
+              title={t('common.settings')}
+              startIcon={<GavelIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
+              accordionPath={UrlPathTemplate.InstitutionSettings}
+              defaultPath={UrlPathTemplate.InstitutionCurators}>
+              <NavigationList>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionCurators}
+                  data-testid={dataTestId.editor.curatorsSettingsLinkButton}
+                  to={UrlPathTemplate.InstitutionCurators}>
+                  {t('editor.curators.administer_curators')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionPublishStrategy}
+                  data-testid={dataTestId.editor.publishStrategyLinkButton}
+                  to={UrlPathTemplate.InstitutionPublishStrategy}>
+                  {t('editor.publish_strategy.publish_strategy')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionVocabulary}
+                  data-testid={dataTestId.editor.vocabularyLinkButton}
+                  to={UrlPathTemplate.InstitutionVocabulary}>
+                  {t('editor.vocabulary')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionCategories}
+                  data-testid={dataTestId.editor.categoriesLinkButton}
+                  to={UrlPathTemplate.InstitutionCategories}>
+                  {t('editor.categories_with_files')}
+                </SelectableButton>
+                <SelectableButton
+                  isSelected={currentPath === UrlPathTemplate.InstitutionSupport}
+                  data-testid={dataTestId.editor.supportLinkButton}
+                  to={UrlPathTemplate.InstitutionSupport}>
+                  {t('editor.institution.change_institution_support')}
+                </SelectableButton>
+              </NavigationList>
+            </NavigationListAccordion>
+
+            <ResultsPortfolioNavigationListAccodion />
+          </>
         )}
       </SideMenu>
       <BackgroundDiv>
@@ -214,6 +220,9 @@ const InstitutionPage = () => {
             component={InstitutionSupport}
             isAuthorized={isEditor}
           />
+          <PrivateRoute exact path={UrlPathTemplate.InstitutionPortfolio} isAuthorized={isEditor}>
+            <PortfolioSearchPage title={t('common.result_portfolio')} />
+          </PrivateRoute>
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>
       </BackgroundDiv>

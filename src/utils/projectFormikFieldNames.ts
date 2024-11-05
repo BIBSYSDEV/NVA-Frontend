@@ -14,3 +14,11 @@ export enum ProjectDetailsFieldNames {
   Categories = 'projectCategories',
   Funding = 'funding',
 }
+
+export enum ProjectContributorsFieldNames {
+  Contributors = 'contributors',
+}
+
+export enum FundingFieldNames {
+  Source = 'source',
+}

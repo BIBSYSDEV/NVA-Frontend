@@ -14,7 +14,9 @@ import {
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
-  userCanEditRegistration,
+  isOpenFile,
+  isPendingOpenFile,
+  userHasAccessRight,
   userIsValidImporter,
 } from '../../utils/registration-helpers';
 
@@ -41,8 +43,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
-  const publishedFiles = files.filter((file) => file.type === FileType.PublishedFile);
-  const filesToPublish = files.filter((file) => file.type === FileType.UnpublishedFile);
+  const openFiles = files.filter(isOpenFile);
+  const pendingOpenFiles = files.filter(isPendingOpenFile);
   const filesNotToPublish = files.filter((file) => file.type === FileType.UnpublishableFile);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
@@ -86,7 +88,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const originalDoi = entityDescription?.reference?.doi;
 
-  const canEditFiles = userCanEditRegistration(values) || userIsValidImporter(user, values);
+  const canEditFiles = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -143,10 +145,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     disabled={!canEditFiles}
                   />
                 )}
-                {filesToPublish.length > 0 && (
+                {pendingOpenFiles.length > 0 && (
                   <FileList
                     title={t('registration.files_and_license.files_to_publish')}
-                    files={filesToPublish}
+                    files={pendingOpenFiles}
                     uppy={uppy}
                     remove={remove}
                     baseFieldName={name}
@@ -162,10 +164,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     archived
                   />
                 )}
-                {publishedFiles.length > 0 && (
+                {openFiles.length > 0 && (
                   <FileList
                     title={t('registration.files_and_license.published_files')}
-                    files={publishedFiles}
+                    files={openFiles}
                     uppy={uppy}
                     remove={remove}
                     baseFieldName={name}

@@ -9,9 +9,29 @@ export const StyledRightAlignedFooter = styled(Box)({
   mt: '1rem',
 });
 
+export const StyledFormFooter = styled(Box)({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: '0.25rem',
+});
+
+export const HorizontalBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+});
+
 export const StyledRightAlignedWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
+});
+
+export const WizardStartPageWrapper = styled(Box)({
+  maxWidth: '55rem',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.25rem',
 });
 
 export const StyledSelectWrapper = styled(Box)(({ theme }) => ({
@@ -96,3 +116,8 @@ export const StyledInfoBanner = styled(Box)(({ theme }) => ({
   borderRadius: '0.25rem',
   color: 'white',
 }));
+
+export const StyledFilterHeading = styled(Typography)({
+  marginBottom: '0.2rem',
+  fontWeight: 'bold',
+});

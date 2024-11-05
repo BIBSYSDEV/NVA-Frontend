@@ -25,16 +25,9 @@ import { dataTestId } from '../../../../../utils/dataTestIds';
 import { OutputRow } from '../artistic_types/OutputRow';
 import { ExhibitionBasicModal } from './ExhibitionBasicModal';
 import { ExhibitionCatalogModal } from './ExhibitionCatalogModal';
-import { ExhibitionMentionInPublicationModal } from './ExhibitionMentionInPublication';
-import { ExhibitionOtherPresentationModal } from './ExhibitionOtherPresentationModal';
 
 const exhibitionSubtypes = Object.values(ExhibitionProductionSubtype);
-type ExhibitionProductioModalType =
-  | ''
-  | 'ExhibitionBasic'
-  | 'ExhibitionOtherPresentation'
-  | 'ExhibitionMentionInPublication'
-  | 'ExhibitionCatalog';
+type ExhibitionProductioModalType = '' | 'ExhibitionBasic' | 'ExhibitionCatalog';
 
 export const ExhibitionProductionForm = () => {
   const { t } = useTranslation();
@@ -135,20 +128,6 @@ export const ExhibitionProductionForm = () => {
                   {t('registration.resource_type.exhibition_production.add_exhibition_basic')}
                 </Button>
                 <Button
-                  data-testid={dataTestId.registrationWizard.resourceType.addPublicationMentionButton}
-                  onClick={() => setOpenModal('ExhibitionMentionInPublication')}
-                  variant="outlined"
-                  startIcon={<AddCircleOutlineIcon />}>
-                  {t('registration.resource_type.exhibition_production.add_mention_in_publication')}
-                </Button>
-                <Button
-                  data-testid={dataTestId.registrationWizard.resourceType.addExhibitionOtherPresentationButton}
-                  onClick={() => setOpenModal('ExhibitionOtherPresentation')}
-                  variant="outlined"
-                  startIcon={<AddCircleOutlineIcon />}>
-                  {t('registration.resource_type.exhibition_production.add_exhibition_other_presentation')}
-                </Button>
-                <Button
                   data-testid={dataTestId.registrationWizard.resourceType.addExhibitionCatalogButton}
                   onClick={() => setOpenModal('ExhibitionCatalog')}
                   variant="outlined"
@@ -160,16 +139,6 @@ export const ExhibitionProductionForm = () => {
               <ExhibitionBasicModal
                 onSubmit={(newExhibitionBasic) => push(newExhibitionBasic)}
                 open={openModal === 'ExhibitionBasic'}
-                closeModal={() => setOpenModal('')}
-              />
-              <ExhibitionMentionInPublicationModal
-                onSubmit={(newMention) => push(newMention)}
-                open={openModal === 'ExhibitionMentionInPublication'}
-                closeModal={() => setOpenModal('')}
-              />
-              <ExhibitionOtherPresentationModal
-                onSubmit={(newExhibitionOtherPresentation) => push(newExhibitionOtherPresentation)}
-                open={openModal === 'ExhibitionOtherPresentation'}
                 closeModal={() => setOpenModal('')}
               />
               <ExhibitionCatalogModal

@@ -1,7 +1,7 @@
-import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import AddIcon from '@mui/icons-material/Add';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { searchForProjects } from '../../../../api/cristinApi';
@@ -9,15 +9,17 @@ import { AutocompleteProjectOption } from '../../../../components/AutocompletePr
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
+import { Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
+import { ProjectModal } from '../../../project/ProjectModal';
 import { HelperTextModal } from '../../HelperTextModal';
 import { ProjectItem } from './ProjectItem';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
-  const [openNewProjectDialog, setOpenNewProjectDialog] = useState(false);
+  const { values, setFieldValue } = useFormikContext<Registration>();
+  const [openNewProject, setOpenNewProject] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -27,6 +29,17 @@ export const ProjectsField = () => {
     queryFn: () => searchForProjects(10, 1, { query: debouncedSearchTerm }),
     meta: { errorMessage: t('feedback.error.project_search') },
   });
+
+  const toggleOpenNewProject = () => setOpenNewProject(!openNewProject);
+
+  const addProject = (value: CristinProject | ResearchProject) => {
+    const projectToPersist: ResearchProject = {
+      type: 'ResearchProject',
+      id: value.id,
+      name: 'title' in value ? value.title : 'name' in value ? value.name : '',
+    };
+    setFieldValue(DescriptionFieldNames.Projects, values.projects.concat([projectToPersist]));
+  };
 
   const projects = projectsQuery.data?.hits ?? [];
 
@@ -103,22 +116,11 @@ export const ProjectsField = () => {
                   renderTags={() => null}
                 />
 
-                <Trans
-                  i18nKey="registration.description.new_project_helper_text"
-                  components={[
-                    <Typography key="1">
-                      <span style={{ fontWeight: 'bold' }} />
-                    </Typography>,
-                  ]}
-                />
+                <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', mt: '0.5rem' }}>
+                  <Typography sx={{ fontWeight: 'bold' }}>
+                    {t('registration.description.new_project_helper_text')}
+                  </Typography>
 
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Button
-                    data-testid={dataTestId.registrationWizard.description.createProjectButton}
-                    onClick={() => setOpenNewProjectDialog(true)}
-                    startIcon={<AddIcon />}>
-                    {t('project.create_new_project')}
-                  </Button>
                   <HelperTextModal
                     modalTitle={t('project.create_project')}
                     modalDataTestId={dataTestId.registrationWizard.description.createProjectModal}>
@@ -128,20 +130,14 @@ export const ProjectsField = () => {
                     />
                   </HelperTextModal>
                 </Box>
-                <ProjectFormDialog
-                  open={openNewProjectDialog}
-                  onClose={() => setOpenNewProjectDialog(false)}
-                  onCreateProject={(project) => {
-                    const newProject: ResearchProject = {
-                      type: 'ResearchProject',
-                      id: project.id,
-                      name: project.title,
-                    };
-                    const newProjects = field.value ? [...field.value, newProject] : [newProject];
-                    setFieldValue(field.name, newProjects);
-                  }}
-                />
-
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Button
+                    data-testid={dataTestId.registrationWizard.description.createProjectButton}
+                    onClick={toggleOpenNewProject}
+                    startIcon={<AddIcon />}>
+                    {t('project.create_new_project')}
+                  </Button>
+                </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {field.value.map((project) => (
                     <ProjectItem key={project.id} projectId={project.id} removeProject={removeProject} />
@@ -152,6 +148,7 @@ export const ProjectsField = () => {
           }}
         </Field>
       </Box>
+      <ProjectModal isOpen={openNewProject} toggleModal={toggleOpenNewProject} onProjectCreated={addProject} />
     </>
   );
 };

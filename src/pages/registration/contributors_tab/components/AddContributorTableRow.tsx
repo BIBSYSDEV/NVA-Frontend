@@ -7,17 +7,27 @@ import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 import { LastRegistrationTableCellContent } from './LastRegistrationTableCellContent';
+import { SelectAffiliationRadioButton } from './SelectAffiliationRadioButton';
+import { SelectAffiliationsCheckbox } from './SelectAffiliationsCheckbox';
+
+export enum SelectAffiliations {
+  'MULTIPLE',
+  'SINGLE',
+  'NO_SELECT',
+}
 
 interface CristinPersonTableRowProps {
   cristinPerson: CristinPerson;
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson | undefined) => void;
+  selectAffiliations?: SelectAffiliations;
 }
 
 export const CristinPersonTableRow = ({
   cristinPerson,
   setSelectedPerson,
   selectedPerson,
+  selectAffiliations = SelectAffiliations.MULTIPLE,
 }: CristinPersonTableRowProps) => {
   const { t } = useTranslation();
   const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
@@ -37,7 +47,14 @@ export const CristinPersonTableRow = ({
               } else {
                 setSelectedPerson({
                   ...cristinPerson,
-                  affiliations: activeAffiliations,
+                  affiliations:
+                    selectAffiliations === SelectAffiliations.SINGLE
+                      ? activeAffiliations.length > 0
+                        ? [activeAffiliations[0]]
+                        : []
+                      : selectAffiliations === SelectAffiliations.MULTIPLE
+                        ? activeAffiliations
+                        : [],
                 });
               }
             }}
@@ -66,32 +83,25 @@ export const CristinPersonTableRow = ({
                     alignItems: 'center',
                     gap: '0.25rem',
                   }}>
-                  <IconButton
-                    data-testid={dataTestId.registrationWizard.contributors.selectAffiliationForContributor}
-                    onClick={() => {
-                      if (!selectedPerson) {
-                        return;
-                      }
-                      const newAffiliations = affiliationIsSelected
-                        ? selectedPerson.affiliations.filter((a) => a.organization !== affiliation.organization)
-                        : [...selectedPerson.affiliations, affiliation];
-
-                      const personWithAffiliation: CristinPerson = {
-                        ...selectedPerson,
-                        affiliations: newAffiliations,
-                      };
-                      setSelectedPerson(personWithAffiliation);
-                    }}
-                    color="primary"
-                    size="small"
-                    disabled={!personIsSelected}
-                    title={t('registration.contributors.select_affiliation')}>
-                    {affiliationIsSelected ? (
-                      <CheckCircle fontSize="small" color="info" />
-                    ) : (
-                      <CircleOutlined fontSize="small" />
-                    )}
-                  </IconButton>
+                  {selectAffiliations === SelectAffiliations.SINGLE ||
+                  selectAffiliations === SelectAffiliations.NO_SELECT ? (
+                    <SelectAffiliationRadioButton
+                      cristinPerson={cristinPerson}
+                      affiliation={affiliation}
+                      selectedPerson={selectedPerson}
+                      setSelectedPerson={setSelectedPerson}
+                      affiliationIsSelected={affiliationIsSelected}
+                      disabled={selectAffiliations === SelectAffiliations.NO_SELECT}
+                    />
+                  ) : (
+                    <SelectAffiliationsCheckbox
+                      cristinPerson={cristinPerson}
+                      affiliation={affiliation}
+                      selectedPerson={selectedPerson}
+                      setSelectedPerson={setSelectedPerson}
+                      affiliationIsSelected={affiliationIsSelected}
+                    />
+                  )}
                   <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                 </Box>
               );

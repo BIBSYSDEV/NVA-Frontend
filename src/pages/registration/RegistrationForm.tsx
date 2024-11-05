@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { fetchRegistration } from '../../api/registrationApi';
+import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { fetchNviCandidateForRegistration } from '../../api/scientificIndexApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -22,7 +22,7 @@ import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { isApprovedAndOpenNviCandidate } from '../../utils/nviHelpers';
-import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
+import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
@@ -47,12 +47,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const highestValidatedTab =
     useLocation<RegistrationFormLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
-  const registrationQuery = useQuery({
-    enabled: !!identifier,
-    queryKey: ['registration', identifier],
-    queryFn: () => fetchRegistration(identifier),
-    meta: { errorMessage: t('feedback.error.get_registration') },
-  });
+  const registrationQuery = useFetchRegistration(identifier);
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
   const canHaveNviCandidate =
@@ -68,12 +63,14 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   });
   const isNviCandidate =
     nviCandidateQuery.data?.period.status === 'OpenPeriod' &&
-    nviCandidateQuery.data.approvals.some((status) => status.status !== 'Pending');
+    nviCandidateQuery.data.approvals.some(
+      (approval) => approval.status === 'Approved' || approval.status === 'Rejected'
+    );
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
-  const canEditRegistration = registration && userCanEditRegistration(registration);
+  const canEditRegistration = userHasAccessRight(registration, 'update');
 
   return registrationQuery.isPending || (canHaveNviCandidate && nviCandidateQuery.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />

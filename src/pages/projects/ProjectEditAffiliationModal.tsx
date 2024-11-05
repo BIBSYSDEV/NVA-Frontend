@@ -10,8 +10,9 @@ import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { LanguageString } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
-import { CristinProject, ProjectContributorRole, ProjectOrganization } from '../../types/project.types';
+import { CristinProject, ProjectContributorRole, ProjectContributorType } from '../../types/project.types';
 import { findDescendantWithId, getTopLevelOrganization } from '../../utils/institutions-helpers';
+import { AffiliationErrors, editAffiliation } from '../project/helpers/projectRoleHelpers';
 
 interface EditProjectAffiliationModalProps {
   affiliationModalIsOpen: boolean;
@@ -20,6 +21,7 @@ interface EditProjectAffiliationModalProps {
   authorName: string;
   baseFieldName: string;
   contributorRoles: ProjectContributorRole[];
+  roleType: ProjectContributorType;
 }
 
 export const ProjectEditAffiliationModal = ({
@@ -29,6 +31,7 @@ export const ProjectEditAffiliationModal = ({
   preselectedOrganization,
   baseFieldName,
   contributorRoles,
+  roleType,
 }: EditProjectAffiliationModalProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -36,42 +39,28 @@ export const ProjectEditAffiliationModal = ({
   const institution = getTopLevelOrganization(preselectedOrganization);
   const institutionQuery = useFetchOrganization(institution.id);
 
-  const editAffiliation = (newAffiliationId: string, labels?: LanguageString) => {
-    if (!newAffiliationId || !labels) {
-      return;
-    }
-    const roleToChangeIndex = contributorRoles.findIndex(
-      (role) => role.affiliation.type === 'Organization' && role.affiliation.id === preselectedOrganization.id
+  const onEditAffiliation = (newAffiliationId: string, labels?: LanguageString) => {
+    const newContributorRolesObject = editAffiliation(
+      newAffiliationId,
+      contributorRoles,
+      preselectedOrganization.id,
+      roleType,
+      labels || {}
     );
 
-    if (roleToChangeIndex < 0) {
+    if (newContributorRolesObject.error === AffiliationErrors.NO_AFFILIATION_ID) {
       return;
     }
 
-    // If user tries to change affiliation to an already existing affiliation
-    if (
-      contributorRoles.some(
-        (role) => role.affiliation.type === 'Organization' && role.affiliation.id === newAffiliationId
-      )
-    ) {
+    if (newContributorRolesObject.error === AffiliationErrors.ADD_DUPLICATE_AFFILIATION) {
       dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 
-    const newAffiliation: ProjectOrganization = {
-      type: 'Organization',
-      id: newAffiliationId,
-      labels: labels,
-    };
+    if (newContributorRolesObject.newContributorRoles) {
+      setFieldValue(baseFieldName, newContributorRolesObject.newContributorRoles);
+    }
 
-    const newContributorRoles = [...contributorRoles];
-
-    newContributorRoles[roleToChangeIndex] = {
-      ...contributorRoles[roleToChangeIndex],
-      affiliation: newAffiliation,
-    };
-
-    setFieldValue(baseFieldName, newContributorRoles);
     toggleAffiliationModal();
   };
 
@@ -93,7 +82,7 @@ export const ProjectEditAffiliationModal = ({
         <SelectInstitutionSkeleton />
       ) : institutionQuery.data ? (
         <SelectInstitutionForm
-          saveAffiliation={editAffiliation}
+          saveAffiliation={onEditAffiliation}
           onCancel={toggleAffiliationModal}
           initialValues={{
             unit: institutionQuery.data,

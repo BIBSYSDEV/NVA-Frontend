@@ -6,4 +6,4 @@ batch:
     - identifier: build
       buildspec: buildspecs/production_build.yml
     - identifier: tests
-      buildspec: buildspecs/cypress_tests.yml
+      buildspec: buildspecs/testsruns.yml

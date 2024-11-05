@@ -1,35 +1,31 @@
-import { Step, StepButton, StepLabel, Stepper } from '@mui/material';
+import { Step, StepButton, StepLabel, Stepper, Theme, useMediaQuery } from '@mui/material';
 import { useFormikContext } from 'formik';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinProject, ProjectTabs } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getProjectTabErrors } from '../../../utils/formik-helpers/project-form-helpers';
 
 interface ProjectFormStepperProps {
-  setTabNumber: (newTab: ProjectTabs) => void;
+  onTabClicked: (newTab: ProjectTabs) => void;
   tabNumber: ProjectTabs;
+  maxVisitedTab: ProjectTabs;
 }
 
-export const ProjectFormStepper = ({ tabNumber, setTabNumber }: ProjectFormStepperProps) => {
+export const ProjectFormStepper = ({ tabNumber, maxVisitedTab, onTabClicked }: ProjectFormStepperProps) => {
   const { t } = useTranslation();
-  const { errors, touched } = useFormikContext<CristinProject>();
-  const [maxVisitedTab, setMaxVisitedTab] = useState(ProjectTabs.Description);
-
-  const tabErrors = getProjectTabErrors(errors, touched);
+  const { values, errors, touched } = useFormikContext<CristinProject>();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const tabErrors = getProjectTabErrors(values, errors, touched);
   const descriptionTabHasError = tabErrors[ProjectTabs.Description].length > 0;
   const detailsTabHasError = tabErrors[ProjectTabs.Details].length > 0;
-  const contributorTabHasError = false;
+  const contributorTabHasError = tabErrors[ProjectTabs.Contributors].length > 0;
   const connectionTabHasError = false;
 
   const onClickStep = (stepNumber: ProjectTabs) => {
-    setTabNumber(stepNumber);
-    if (stepNumber > maxVisitedTab) {
-      setMaxVisitedTab(stepNumber);
-    }
+    onTabClicked(stepNumber);
   };
 
-  return (
+  return isMobile ? null : (
     <Stepper nonLinear activeStep={tabNumber}>
       <Step completed={maxVisitedTab >= ProjectTabs.Description}>
         <StepButton
@@ -60,7 +56,7 @@ export const ProjectFormStepper = ({ tabNumber, setTabNumber }: ProjectFormStepp
           <StepLabel
             error={contributorTabHasError}
             data-testid={contributorTabHasError ? dataTestId.projectWizard.stepper.projectErrorStep : undefined}>
-            {t('project.heading.project_participants')}
+            {t('project.heading.members')}
           </StepLabel>
         </StepButton>
       </Step>

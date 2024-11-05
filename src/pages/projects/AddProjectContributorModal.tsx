@@ -1,29 +1,57 @@
 import { useTranslation } from 'react-i18next';
 import { Modal } from '../../components/Modal';
+import { ProjectContributorType } from '../../types/project.types';
 import { AddProjectContributorForm } from './AddProjectContributorForm';
+import { AddProjectManagerForm } from './AddProjectManagerForm';
 
 interface AddProjectContributorModalProps {
   open: boolean;
-  hasProjectManager: boolean;
   toggleModal: () => void;
+  roleType: ProjectContributorType;
+  suggestedProjectManager?: string;
+  initialSearchTerm?: string;
+  indexToReplace?: number;
 }
 
 export const AddProjectContributorModal = ({
   open,
-  hasProjectManager,
   toggleModal,
+  roleType,
+  suggestedProjectManager = '',
+  initialSearchTerm = '',
+  indexToReplace = -1,
 }: AddProjectContributorModalProps) => {
   const { t } = useTranslation();
+  const addProjectManager = roleType === 'ProjectManager';
+  const addText = addProjectManager
+    ? t('project.add_project_manager')
+    : roleType === 'LocalProjectManager'
+      ? t('project.add_local_manager')
+      : t('project.add_project_contributor');
 
   return (
     <Modal
-      headingText={t('project.add_project_contributor')}
+      headingText={addText}
       open={open}
       onClose={toggleModal}
       fullWidth
       maxWidth="md"
       dataTestId="contributor-modal">
-      <AddProjectContributorForm hasProjectManager={hasProjectManager} toggleModal={toggleModal} />
+      {addProjectManager ? (
+        <AddProjectManagerForm
+          toggleModal={toggleModal}
+          suggestedProjectManager={suggestedProjectManager}
+          initialSearchTerm={initialSearchTerm}
+          indexToReplace={indexToReplace}
+        />
+      ) : (
+        <AddProjectContributorForm
+          toggleModal={toggleModal}
+          initialSearchTerm={initialSearchTerm}
+          indexToReplace={indexToReplace}
+          roleType={roleType}
+        />
+      )}
     </Modal>
   );
 };

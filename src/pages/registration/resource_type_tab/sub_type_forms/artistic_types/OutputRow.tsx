@@ -3,10 +3,9 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Skeleton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchRegistration } from '../../../../../api/registrationApi';
+import { useFetchRegistration } from '../../../../../api/hooks/useFetchRegistration';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import {
   ArtisticOutputItem,
@@ -31,15 +30,11 @@ import {
   ExhibitionBasic,
   ExhibitionCatalog,
   ExhibitionManifestation,
-  ExhibitionMentionInPublication,
-  ExhibitionOtherPresentation,
 } from '../../../../../types/publication_types/exhibitionContent.types';
 import { getIdentifierFromId } from '../../../../../utils/general-helpers';
 import { getOutputName } from '../../../../../utils/registration-helpers';
 import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
 import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
-import { ExhibitionMentionInPublicationModal } from '../exhibition_types/ExhibitionMentionInPublication';
-import { ExhibitionOtherPresentationModal } from '../exhibition_types/ExhibitionOtherPresentationModal';
 import { AwardModal } from './architecture/AwardModal';
 import { CompetitionModal } from './architecture/CompetitionModal';
 import { ExhibitionModal } from './architecture/ExhibitionModal';
@@ -85,12 +80,7 @@ export const OutputRow = ({
   const shouldFetchItem = item.type === 'ExhibitionCatalog';
   const exhibitionCatalogIdentifier = shouldFetchItem && item.id ? getIdentifierFromId(item.id) : '';
 
-  const exhibitionCatalogQuery = useQuery({
-    enabled: !!exhibitionCatalogIdentifier,
-    queryKey: ['registration', exhibitionCatalogIdentifier],
-    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
-    meta: { errorMessage: t('feedback.error.get_registration') },
-  });
+  const exhibitionCatalogQuery = useFetchRegistration(exhibitionCatalogIdentifier);
 
   const title = shouldFetchItem ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle : getOutputName(item);
 
@@ -261,20 +251,6 @@ export const OutputRow = ({
       ) : item.type === 'ExhibitionBasic' ? (
         <ExhibitionBasicModal
           exhibitionBasic={item as ExhibitionBasic}
-          onSubmit={updateItem}
-          open={openEditItem}
-          closeModal={() => setOpenEditItem(false)}
-        />
-      ) : item.type === 'ExhibitionOtherPresentation' ? (
-        <ExhibitionOtherPresentationModal
-          exhibitionOtherPresentation={item as ExhibitionOtherPresentation}
-          onSubmit={updateItem}
-          open={openEditItem}
-          closeModal={() => setOpenEditItem(false)}
-        />
-      ) : item.type === 'ExhibitionMentionInPublication' ? (
-        <ExhibitionMentionInPublicationModal
-          exhibitionMentionInPublication={item as ExhibitionMentionInPublication}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

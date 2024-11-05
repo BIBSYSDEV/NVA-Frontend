@@ -24,7 +24,7 @@ import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../api/commonApi';
-import { fetchRegistration } from '../../api/registrationApi';
+import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
@@ -50,11 +50,7 @@ import {
 } from '../../types/publication_types/artisticRegistration.types';
 import { BookPublicationContext, Revision } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
-import {
-  ExhibitionBasic,
-  ExhibitionMentionInPublication,
-  ExhibitionOtherPresentation,
-} from '../../types/publication_types/exhibitionContent.types';
+import { ExhibitionBasic } from '../../types/publication_types/exhibitionContent.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import {
   MediaContributionPeriodicalPublicationContext,
@@ -314,12 +310,7 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
   const exhibitionCatalogIdentifier =
     output.type === 'ExhibitionCatalog' && output.id ? getIdentifierFromId(output.id) : '';
 
-  const exhibitionCatalogQuery = useQuery({
-    enabled: !!exhibitionCatalogIdentifier,
-    queryKey: ['registration', exhibitionCatalogIdentifier],
-    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
-    meta: { errorMessage: t('feedback.error.get_registration') },
-  });
+  const exhibitionCatalogQuery = useFetchRegistration(exhibitionCatalogIdentifier);
 
   const nameString = exhibitionCatalogIdentifier
     ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle
@@ -380,14 +371,6 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
             <PublicLiteraryArtsAudioVisualDialogContent audioVisual={output as LiteraryArtsAudioVisual} />
           ) : output.type === 'ExhibitionBasic' ? (
             <PublicExhibitionBasicDialogContent exhibitionBasic={output as ExhibitionBasic} />
-          ) : output.type === 'ExhibitionMentionInPublication' ? (
-            <PublicExhibitionMentionInPublicationDialogContent
-              exhibitionMentionInPublication={output as ExhibitionMentionInPublication}
-            />
-          ) : output.type === 'ExhibitionOtherPresentation' ? (
-            <PublicExhibitionOtherPresentationDialogContent
-              exhibitionOtherPresentation={output as ExhibitionOtherPresentation}
-            />
           ) : null}
         </ErrorBoundary>
 
@@ -421,87 +404,6 @@ const PublicExhibitionBasicDialogContent = ({ exhibitionBasic }: { exhibitionBas
         {t('common.date')}
       </Typography>
       <Typography>{getPeriodString(exhibitionBasic.date?.from, exhibitionBasic.date?.to)}</Typography>
-    </DialogContent>
-  );
-};
-
-const PublicExhibitionMentionInPublicationDialogContent = ({
-  exhibitionMentionInPublication,
-}: {
-  exhibitionMentionInPublication: ExhibitionMentionInPublication;
-}) => {
-  const { t } = useTranslation();
-  return (
-    <DialogContent>
-      <Typography variant="h3" gutterBottom>
-        {t('common.type')}
-      </Typography>
-      <Typography paragraph>
-        {t(`registration.resource_type.artistic.output_type.${exhibitionMentionInPublication.type}`)}
-      </Typography>
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.journal_book_medium')}
-      </Typography>
-      <Typography paragraph>{exhibitionMentionInPublication.title || '-'}</Typography>
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.issue')}
-      </Typography>
-      <Typography paragraph>{exhibitionMentionInPublication.issue || '-'}</Typography>
-      <Typography variant="h3" gutterBottom>
-        {t('common.date')}
-      </Typography>
-      <Typography paragraph>
-        {exhibitionMentionInPublication.date?.value ? toDateString(exhibitionMentionInPublication.date.value) : '-'}
-      </Typography>
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.other_publisher_isbn_etc')}
-      </Typography>
-      <Typography paragraph>{exhibitionMentionInPublication.otherInformation || '-'}</Typography>
-    </DialogContent>
-  );
-};
-
-const PublicExhibitionOtherPresentationDialogContent = ({
-  exhibitionOtherPresentation,
-}: {
-  exhibitionOtherPresentation: ExhibitionOtherPresentation;
-}) => {
-  const { t } = useTranslation();
-  return (
-    <DialogContent>
-      <Typography variant="h3" gutterBottom>
-        {t('common.type')}
-      </Typography>
-      <Typography paragraph>
-        {t(`registration.resource_type.artistic.output_type.${exhibitionOtherPresentation.type}`)}
-      </Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.exhibition_production.presentation_type')}
-      </Typography>
-      <Typography paragraph>{exhibitionOtherPresentation.typeDescription || '-'}</Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('common.place')}
-      </Typography>
-      <Typography paragraph>{exhibitionOtherPresentation.place.label || '-'}</Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.publisher_or_organizer')}
-      </Typography>
-      <Typography paragraph>{exhibitionOtherPresentation.publisher.name || '-'}</Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.exhibition_production.more_info_about_elementet')}
-      </Typography>
-      <Typography paragraph>{exhibitionOtherPresentation.description || '-'}</Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('common.date')}
-      </Typography>
-      <Typography paragraph>
-        {exhibitionOtherPresentation.date?.value ? toDateString(exhibitionOtherPresentation.date.value) : '-'}
-      </Typography>
     </DialogContent>
   );
 };

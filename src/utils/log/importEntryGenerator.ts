@@ -1,11 +1,18 @@
-import { ImportDetail } from '../../types/registration.types';
 import { TFunction } from 'i18next';
-import { SiktIdentifier } from '../constants';
-import { LogEntry } from '../../types/log.types';
 import { CristinApiPath } from '../../api/apiPaths';
+import { AssociatedArtifact, ImportUploadDetails } from '../../types/associatedArtifact.types';
+import { LogEntry } from '../../types/log.types';
+import { ImportDetail, Registration } from '../../types/registration.types';
+import { SiktIdentifier } from '../constants';
+import { getOpenFiles } from '../registration-helpers';
 
-export function generateImportLogEntries(importDetails: ImportDetail[], t: TFunction): LogEntry[] {
-  return importDetails.map((detail) => generateImportLogEntry(detail, t));
+export function generateImportLogEntries(registration: Registration, t: TFunction): LogEntry[] {
+  const importDetails = registration.importDetails ?? [];
+
+  const importLogEntries = importDetails.map((detail) => generateImportLogEntry(detail, t));
+  const importedFilesLogEntries = generateImportedFilesLogEntries(registration.associatedArtifacts, t);
+
+  return [...importLogEntries, ...importedFilesLogEntries];
 }
 
 function generateImportLogEntry(importDetail: ImportDetail, t: TFunction): LogEntry {
@@ -34,4 +41,32 @@ function generateImportLogEntry(importDetail: ImportDetail, t: TFunction): LogEn
       },
     ],
   };
+}
+
+function generateImportedFilesLogEntries(associatedArtifacts: AssociatedArtifact[], t: TFunction): LogEntry[] {
+  const importedFiles = getOpenFiles(associatedArtifacts).filter(
+    (file) => file.uploadDetails?.type === 'ImportUploadDetails'
+  );
+
+  const archives = [...new Set(importedFiles.map((file) => (file.uploadDetails as ImportUploadDetails).archive))];
+
+  const logEntries: LogEntry[] = archives.map((archive) => {
+    const filesFromThisArchive = importedFiles.filter(
+      (file) => (file.uploadDetails as ImportUploadDetails).archive === archive
+    );
+
+    return {
+      type: 'PublishingRequest',
+      title: t('log.titles.files_published', { count: filesFromThisArchive.length }),
+      modifiedDate: filesFromThisArchive[0].publishedDate ?? '',
+      actions: [
+        {
+          organization: archive,
+          items: filesFromThisArchive.map((file) => ({ description: file.name, fileIcon: 'file' })),
+        },
+      ],
+    };
+  });
+
+  return logEntries;
 }

@@ -1,18 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { OrganizationSearchParams, searchForOrganizations } from '../cristinApi';
 
-export const useSearchForOrganizations = (searchTerm: string) => {
+export const useSearchForOrganizations = (params: OrganizationSearchParams) => {
   const { t } = useTranslation();
 
-  const organizationQueryParams: OrganizationSearchParams = {
-    query: searchTerm,
-    includeSubunits: true,
-  };
   return useQuery({
-    enabled: !!searchTerm,
-    queryKey: ['organization', organizationQueryParams],
-    queryFn: () => searchForOrganizations(organizationQueryParams),
+    enabled: !!params.query,
+    queryKey: ['organization', params],
+    queryFn: () => searchForOrganizations(params),
     meta: { errorMessage: t('feedback.error.get_institutions') },
+    placeholderData: keepPreviousData,
   });
 };

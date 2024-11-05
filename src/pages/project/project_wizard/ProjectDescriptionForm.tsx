@@ -1,12 +1,17 @@
-import { Autocomplete, Box, TextField, Typography } from '@mui/material';
+import ErrorIcon from '@mui/icons-material/Error';
+import { Autocomplete, Box, CircularProgress, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useDuplicateProjectSearch } from '../../../api/hooks/useDuplicateProjectSearch';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { cristinKeywords } from '../../../resources/cristinKeywords';
-import { ProjectFieldName, SaveCristinProject, TypedLabel } from '../../../types/project.types';
+import { CristinProject, ProjectFieldName, TypedLabel } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { getProjectPath } from '../../../utils/urlPaths';
+import { DuplicateWarning } from '../../registration/DuplicateWarning';
 import { FormBox } from './styles';
 
 interface ProjectDescriptionFormProps {
@@ -15,7 +20,9 @@ interface ProjectDescriptionFormProps {
 
 export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<CristinProject>();
+  const debouncedTitle = useDebounce(values.title);
+  const duplicateProjectSearch = useDuplicateProjectSearch({ title: debouncedTitle, id: values.id });
 
   return (
     <ErrorBoundary>
@@ -29,6 +36,13 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                 data-testid={dataTestId.projectWizard.descriptionPanel.titleField}
                 label={t('common.title')}
                 disabled={thisIsRekProject}
+                InputProps={{
+                  endAdornment: duplicateProjectSearch.isPending ? (
+                    <CircularProgress size={20} />
+                  ) : duplicateProjectSearch.duplicateProject ? (
+                    <ErrorIcon color="warning" />
+                  ) : undefined,
+                }}
                 required
                 variant="filled"
                 fullWidth
@@ -37,6 +51,15 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
               />
             )}
           </Field>
+          {duplicateProjectSearch.duplicateProject && (
+            <DuplicateWarning
+              sx={{ padding: 0 }}
+              name={duplicateProjectSearch.duplicateProject.title}
+              linkTo={getProjectPath(duplicateProjectSearch.duplicateProject.id)}
+              warning={t('project.duplicate_title_warning')}
+              listHeader={t('project.duplicate_project_heading')}
+            />
+          )}
           <Field name={ProjectFieldName.AcademicSummaryNo}>
             {({ field }: FieldProps<string>) => (
               <TextField
@@ -122,7 +145,9 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                   label={t('common.start_date')}
                   disabled={thisIsRekProject}
                   onChange={(date) => {
-                    !touched && setFieldTouched(field.name, true, false);
+                    if (!touched) {
+                      setFieldTouched(field.name, true, false);
+                    }
                     setFieldValue(field.name, date ?? '');
                   }}
                   value={field.value ? new Date(field.value) : null}
@@ -149,7 +174,9 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                   label={t('common.end_date')}
                   disabled={thisIsRekProject}
                   onChange={(date) => {
-                    !touched && setFieldTouched(field.name, true, false);
+                    if (!touched) {
+                      setFieldTouched(field.name, true, false);
+                    }
                     setFieldValue(field.name, date);
                   }}
                   value={field.value ? new Date(field.value) : null}

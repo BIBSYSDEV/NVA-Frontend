@@ -11,11 +11,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import {
-  getTitleString,
-  userCanDeleteRegistration,
-  userHasSameCustomerAsRegistration,
-} from '../../utils/registration-helpers';
+import { getTitleString } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
@@ -23,45 +19,45 @@ import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { SupportAccordion } from './action_accordions/SupportAccordion';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
-  tickets: Ticket[];
-  refetchData: () => void;
+  refetchData: () => Promise<void>;
   isLoadingData?: boolean;
+  shouldSeePublishingAccordion: boolean;
+  shouldSeeDoiAccordion: boolean;
+  shouldSeeSupportAccordion: boolean;
+  shouldSeeDelete: boolean;
+  publishingRequestTickets: PublishingTicket[];
+  newestDoiRequestTicket?: Ticket;
+  newestSupportTicket?: Ticket;
 }
 
 export const ActionPanelContent = ({
   registration,
-  tickets,
   refetchData,
   isLoadingData = false,
+  shouldSeePublishingAccordion,
+  shouldSeeDoiAccordion,
+  shouldSeeSupportAccordion,
+  shouldSeeDelete,
+  publishingRequestTickets,
+  newestDoiRequestTicket,
+  newestSupportTicket,
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const currentPath = history.location.pathname;
-  const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
-
-  const canBeCuratorForThisCustomer = userHasSameCustomerAsRegistration(user, registration);
-
-  const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
-  const publishingRequestTickets = tickets.filter(
-    (ticket) => ticket.type === 'PublishingRequest'
-  ) as PublishingTicket[];
-  const supportTickets = tickets.filter((ticket) => ticket.type === 'GeneralSupportCase');
-  const currentSupportTicket = supportTickets.pop() ?? null;
 
   const addMessage = async (ticketId: string, message: string) => {
     const addMessageResponse = await addTicketMessage(ticketId, message);
     if (isErrorStatus(addMessageResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(addMessageResponse.status)) {
+      await refetchData();
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
-      refetchData();
       return true;
     }
   };
-
-  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -93,7 +89,7 @@ export const ActionPanelContent = ({
 
   return (
     <>
-      {(canCreateTickets || publishingRequestTickets.length > 0) && (
+      {shouldSeePublishingAccordion && (
         <ErrorBoundary>
           <PublishingAccordion
             refetchData={refetchData}
@@ -105,34 +101,32 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
 
-      {(canCreateTickets || doiRequestTicket) && (
+      {shouldSeeDoiAccordion && (
         <ErrorBoundary>
           {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
             <DoiRequestAccordion
               refetchData={refetchData}
               isLoadingData={isLoadingData}
               registration={registration}
-              doiRequestTicket={doiRequestTicket}
-              userIsCurator={!!user?.isDoiCurator && canBeCuratorForThisCustomer}
+              doiRequestTicket={newestDoiRequestTicket}
               addMessage={addMessage}
             />
           )}
         </ErrorBoundary>
       )}
 
-      {(canCreateTickets || currentSupportTicket) && (
+      {shouldSeeSupportAccordion && (
         <ErrorBoundary>
           <SupportAccordion
-            userIsCurator={!!user?.isSupportCurator && canBeCuratorForThisCustomer}
             registration={registration}
-            supportTicket={currentSupportTicket}
+            supportTicket={newestSupportTicket}
             addMessage={addMessage}
             refetchData={refetchData}
           />
         </ErrorBoundary>
       )}
 
-      {userCanDeleteRegistration(registration) && (
+      {shouldSeeDelete && (
         <Box sx={{ m: '0.5rem', mt: '1rem' }}>
           <Button
             sx={{ bgcolor: 'white' }}

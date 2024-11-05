@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
+import { LogEntry as LogEntryType } from '../../types/log.types';
 import { LogAction } from './LogAction';
 import { LogHeader } from './LogHeader';
-import { LogEntry as LogEntryType } from '../../types/log.types';
 
 export const LogEntry = ({ title, type, modifiedDate, actions }: LogEntryType) => {
   return (
@@ -20,4 +20,7 @@ const logBackgroundColor = {
   Import: 'centralImport.light',
   Created: 'publishingRequest.light',
   MetadataPublished: 'publishingRequest.light',
+  UnpublishRequest: 'publishingRequest.light',
+  Republished: 'publishingRequest.light',
+  Deleted: 'publishingRequest.light',
 };

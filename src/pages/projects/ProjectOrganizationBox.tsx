@@ -5,7 +5,7 @@ import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { AffiliationSkeleton } from '../../components/institution/AffiliationSkeleton';
 import { StyledOrganizationBox } from '../../components/institution/OrganizationBox';
 import { OrganizationHierarchy } from '../../components/institution/OrganizationHierarchy';
-import { ProjectContributorRole } from '../../types/project.types';
+import { ProjectContributorRole, ProjectContributorType } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { DeleteIconButton } from '../messages/components/DeleteIconButton';
 import { EditIconButton } from '../messages/components/EditIconButton';
@@ -17,6 +17,7 @@ interface ProjectOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
   removeAffiliation?: () => void;
   unitUri: string;
   contributorRoles: ProjectContributorRole[];
+  roleType: ProjectContributorType;
   disabledTooltip?: string;
 }
 
@@ -27,6 +28,7 @@ export const ProjectOrganizationBox = ({
   removeAffiliation,
   disabledTooltip,
   contributorRoles,
+  roleType,
   sx,
 }: ProjectOrganizationBoxProps) => {
   const { t } = useTranslation();
@@ -43,7 +45,7 @@ export const ProjectOrganizationBox = ({
       {baseFieldName && (
         <>
           <EditIconButton
-            data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
+            data-testid={dataTestId.projectWizard.contributorsPanel.editAffiliationButton}
             onClick={() => setEditModalIsOpen(true)}
             tooltip={t('registration.contributors.edit_affiliation')}
           />
@@ -54,11 +56,12 @@ export const ProjectOrganizationBox = ({
             preselectedOrganization={organizationQuery.data}
             baseFieldName={baseFieldName}
             contributorRoles={contributorRoles}
+            roleType={roleType}
           />
         </>
       )}
       <DeleteIconButton
-        data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
+        data-testid={dataTestId.projectWizard.contributorsPanel.deleteAffiliationButton}
         onClick={removeAffiliation}
         disabled={!removeAffiliation}
         tooltip={!removeAffiliation ? disabledTooltip : t('project.affiliation_modal.delete_affiliation')}

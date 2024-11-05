@@ -1,8 +1,8 @@
 import { TFunction } from 'i18next';
-import { AssociatedFile } from '../../types/associatedArtifact.types';
+import { AssociatedFile, FileType, UserUploadDetails } from '../../types/associatedArtifact.types';
 import { LogAction, LogActionItem, LogEntry } from '../../types/log.types';
 import { PublishingTicket } from '../../types/publication_types/ticket.types';
-import { getPublishedFiles, getUnpublishableFiles } from '../registration-helpers';
+import { getOpenFiles } from '../registration-helpers';
 
 export function generatePublishingRequestLogEntry(
   ticket: PublishingTicket,
@@ -12,7 +12,7 @@ export function generatePublishingRequestLogEntry(
   switch (ticket.status) {
     case 'Completed': {
       if (ticket.approvedFiles.length > 0) {
-        return generatePublishedFilesLogEntry(ticket, filesOnRegistration, t);
+        return generateApprovedFilesLogEntry(ticket, filesOnRegistration, t);
       }
       return generateMetadataUpdatedLogEntry(ticket, t);
     }
@@ -30,12 +30,12 @@ export function generatePublishingRequestLogEntry(
   }
 }
 
-function generatePublishedFilesLogEntry(
+function generateApprovedFilesLogEntry(
   ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
   t: TFunction
 ): LogEntry {
-  const publishedFilesItems: LogActionItem[] = getPublishedFiles(filesOnRegistration)
+  const openFilesItems: LogActionItem[] = getOpenFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => {
@@ -45,8 +45,12 @@ function generatePublishedFilesLogEntry(
       };
     });
 
-  const archivedFilesItems: LogActionItem[] = getUnpublishableFiles(filesOnRegistration)
-    .filter((file) => ticket.approvedFiles.includes(file.identifier))
+  const archivedFilesItems: LogActionItem[] = filesOnRegistration
+    .filter(
+      (file) =>
+        (file.type === FileType.UnpublishableFile || file.type === FileType.InternalFile) &&
+        ticket.approvedFiles.includes(file.identifier)
+    )
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => {
       return {
@@ -71,7 +75,7 @@ function generatePublishedFilesLogEntry(
     actions: [
       {
         actor: ticket.finalizedBy ?? '',
-        items: [...publishedFilesItems, ...archivedFilesItems, ...deletedFilesItems],
+        items: [...openFilesItems, ...archivedFilesItems, ...deletedFilesItems],
       },
     ],
   };
@@ -155,8 +159,10 @@ function generateFilesUploadedLogEntry(
 
 function groupFilesByUser(files: AssociatedFile[]) {
   const map: Map<string, AssociatedFile[]> = new Map();
-  files.forEach((item: AssociatedFile) => {
-    const key = item.uploadDetails?.uploadedBy ?? '';
+
+  const userUploadedFiles = files.filter((file) => file.uploadDetails?.type === 'UserUploadDetails');
+  userUploadedFiles.forEach((item: AssociatedFile) => {
+    const key = (item.uploadDetails as UserUploadDetails).uploadedBy;
     const collection = map.get(key);
     if (!collection) {
       map.set(key, [item]);
