@@ -137,7 +137,7 @@ function generateFilesUploadedLogEntry(
 
   const logActions: LogAction[] = [];
 
-  filesByUser.forEach((files: AssociatedFile[], user: string) => {
+  filesByUser.forEach((files, username) => {
     const logActionItems: LogActionItem[] = [];
     files.forEach((file) => {
       logActionItems.push({
@@ -147,7 +147,7 @@ function generateFilesUploadedLogEntry(
       });
     });
     logActions.push({
-      actor: user,
+      actor: username,
       items: logActionItems,
     });
   });
