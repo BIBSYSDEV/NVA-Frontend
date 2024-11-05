@@ -9,6 +9,7 @@ export type HighestTouchedTab = RegistrationTab | -1;
 
 export interface RegistrationFormLocationState extends PreviousPathLocationState {
   highestValidatedTab?: HighestTouchedTab;
+  dontGoBackAfterSaveAndSee?: boolean;
 }
 
 export interface PreviousSearchLocationState {

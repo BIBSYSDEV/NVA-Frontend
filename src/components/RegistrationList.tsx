@@ -205,7 +205,7 @@ export const RegistrationListItemContent = ({
             <IconButton
               component={Link}
               target={target}
-              to={getRegistrationWizardLink(identifier)}
+              to={getRegistrationWizardLink(identifier, { dontGoBackAfterSaveAndSee: true })}
               data-testid={`edit-registration-${identifier}`}
               size="small"
               sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
