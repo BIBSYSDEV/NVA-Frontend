@@ -86,7 +86,7 @@ export const getRegistrationWizardPath = (identifier: string) =>
 interface RegistrationWizardOptions {
   highestValidatedTab?: number;
   tab?: number;
-  dontGoBackAfterSaveAndSee?: boolean;
+  goToLandingPageAfterSaveAndSee?: boolean;
 }
 
 export const getRegistrationWizardLink = (identifier: string, options: RegistrationWizardOptions = {}) => {
@@ -95,7 +95,7 @@ export const getRegistrationWizardLink = (identifier: string, options: Registrat
     state: {
       highestValidatedTab: options.highestValidatedTab,
       previousPath: window.location.pathname,
-      dontGoBackAfterSaveAndSee: options.dontGoBackAfterSaveAndSee,
+      goToLandingPageAfterSaveAndSee: options.goToLandingPageAfterSaveAndSee,
     } satisfies RegistrationFormLocationState,
     search: options.tab ? `?tab=${options.tab}` : '',
   };
