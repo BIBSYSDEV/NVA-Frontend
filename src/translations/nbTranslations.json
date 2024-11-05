@@ -703,6 +703,8 @@
       "files_uploaded_one": "Fil lastet opp",
       "files_uploaded_other": "Filer lastet opp",
       "imported": "Importert",
+      "internal_file_approved_one": "Intern fil godkjent",
+      "internal_file_approved_other": "Interne filer godkjent",
       "metadata_published": "Metadata publisert",
       "metadata_published_in_nva": "Metadata publisert i NVA",
       "metadata_updated": "Metadata oppdatert",
