@@ -98,13 +98,21 @@ function generateRejectedFilesLogEntry(
   filesOnRegistration: AssociatedFile[],
   t: TFunction
 ): LogEntry {
-  const rejectedFiles = filesOnRegistration.filter((file) => ticket.filesForApproval.includes(file.identifier));
+  const fileIdentifiersOnTicket = [...ticket.filesForApproval, ...ticket.approvedFiles];
+  const rejectedFiles = filesOnRegistration.filter((file) => fileIdentifiersOnTicket.includes(file.identifier));
 
   const rejectedFileItems: LogActionItem[] = rejectedFiles
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => ({
       description: file.name,
       fileIcon: 'rejectedFile',
+    }));
+
+  const deletedFilesItems: LogActionItem[] = fileIdentifiersOnTicket
+    .filter((identifier) => !filesOnRegistration.some((file) => file.identifier === identifier))
+    .map(() => ({
+      description: t('log.unknown_filename'),
+      fileIcon: 'deletedFile',
     }));
 
   return {
@@ -114,7 +122,7 @@ function generateRejectedFilesLogEntry(
     actions: [
       {
         actor: ticket.finalizedBy ?? '',
-        items: rejectedFileItems,
+        items: [...rejectedFileItems, ...deletedFilesItems],
       },
     ],
   };
