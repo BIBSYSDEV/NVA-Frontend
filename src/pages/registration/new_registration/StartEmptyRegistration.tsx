@@ -8,7 +8,7 @@ import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getRegistrationWizardLink } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
 import { RegistrationAccordion } from './RegistrationAccordion';
 
@@ -27,7 +27,7 @@ export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccor
       dispatch(setNotification({ message: t('feedback.error.create_registration'), variant: 'error' }));
       setIsLoading(false);
     } else if (isSuccessStatus(createRegistrationResponse.status)) {
-      history.push(getRegistrationWizardLink(createRegistrationResponse.data.identifier, { highestValidatedTab: -1 }));
+      history.push(getRegistrationWizardPath(createRegistrationResponse.data.identifier));
     }
   };
 

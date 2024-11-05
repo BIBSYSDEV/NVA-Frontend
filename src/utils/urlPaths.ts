@@ -85,6 +85,9 @@ interface RegistrationWizardOptions {
   tab?: number;
 }
 
+export const getRegistrationWizardPath = (identifier: string) =>
+  UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
+
 export const getRegistrationWizardLink = (identifier: string, options: RegistrationWizardOptions = {}) => {
   return {
     pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
