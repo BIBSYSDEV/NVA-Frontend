@@ -8,11 +8,13 @@ export function generatePublishingRequestLogEntry(
   ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
   t: TFunction
-): LogEntry | undefined {
+): LogEntry[] | LogEntry | undefined {
   switch (ticket.status) {
     case 'Completed': {
       if (ticket.approvedFiles.length > 0) {
-        return generateApprovedFilesLogEntry(ticket, filesOnRegistration, t);
+        const uploadedFilesEntry = generateFilesUploadedLogEntry(ticket, filesOnRegistration, t);
+        const publishedFilesEntry = generateApprovedFilesLogEntry(ticket, filesOnRegistration, t);
+        return [uploadedFilesEntry, publishedFilesEntry];
       }
       return generateMetadataUpdatedLogEntry(ticket, t);
     }
@@ -129,8 +131,9 @@ function generateFilesUploadedLogEntry(
   filesOnRegistration: AssociatedFile[],
   t: TFunction
 ): LogEntry {
-  const filesForApproval = filesOnRegistration.filter((file) => ticket.filesForApproval.includes(file.identifier));
-  const filesByUser = groupFilesByUser(filesForApproval);
+  const fileIdentifiersOnTicket = [...ticket.filesForApproval, ...ticket.approvedFiles];
+  const uploadedFiles = filesOnRegistration.filter((file) => fileIdentifiersOnTicket.includes(file.identifier));
+  const filesByUser = groupFilesByUser(uploadedFiles);
 
   const logActions: LogAction[] = [];
 
@@ -151,7 +154,7 @@ function generateFilesUploadedLogEntry(
 
   return {
     type: 'PublishingRequest',
-    title: t('log.titles.files_uploaded', { count: ticket.filesForApproval.length }),
+    title: t('log.titles.files_uploaded', { count: uploadedFiles.length }),
     modifiedDate: ticket.createdDate,
     actions: logActions,
   };
