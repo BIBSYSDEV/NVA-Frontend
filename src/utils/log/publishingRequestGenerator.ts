@@ -42,12 +42,10 @@ function generateApprovedFilesLogEntry(
   const openFilesItems: LogActionItem[] = getOpenFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((file) => {
-      return {
-        description: file.name,
-        fileIcon: 'file',
-      };
-    });
+    .map((file) => ({
+      description: file.name,
+      fileIcon: 'file',
+    }));
 
   const archivedFilesItems: LogActionItem[] = filesOnRegistration
     .filter(
@@ -56,21 +54,17 @@ function generateApprovedFilesLogEntry(
         ticket.approvedFiles.includes(file.identifier)
     )
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((file) => {
-      return {
-        description: file.name,
-        fileIcon: 'archivedFile',
-      };
-    });
+    .map((file) => ({
+      description: file.name,
+      fileIcon: 'archivedFile',
+    }));
 
   const deletedFilesItems: LogActionItem[] = ticket.approvedFiles
     .filter((identifier) => !filesOnRegistration.some((file) => file.identifier === identifier))
-    .map(() => {
-      return {
-        description: t('log.unknown_filename'),
-        fileIcon: 'deletedFile',
-      };
-    });
+    .map(() => ({
+      description: t('log.unknown_filename'),
+      fileIcon: 'deletedFile',
+    }));
 
   return {
     type: 'PublishingRequest',
@@ -108,12 +102,10 @@ function generateRejectedFilesLogEntry(
 
   const rejectedFileItems: LogActionItem[] = rejectedFiles
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((file) => {
-      return {
-        description: file.name,
-        fileIcon: 'rejectedFile',
-      };
-    });
+    .map((file) => ({
+      description: file.name,
+      fileIcon: 'rejectedFile',
+    }));
 
   return {
     type: 'PublishingRequest',
