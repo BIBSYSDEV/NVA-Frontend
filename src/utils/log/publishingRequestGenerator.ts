@@ -137,24 +137,34 @@ function generateFilesUploadedLogEntry(
 
   const logActions: LogAction[] = [];
 
+  const deletedFilesItems: LogActionItem[] = fileIdentifiersOnTicket
+    .filter((identifier) => !filesOnRegistration.some((file) => file.identifier === identifier))
+    .map(() => ({
+      description: t('log.unknown_filename'),
+      fileIcon: 'deletedFile',
+    }));
+
+  if (deletedFilesItems.length > 0) {
+    logActions.push({
+      actor: ticket.owner,
+      items: deletedFilesItems,
+    });
+  }
+
   filesByUser.forEach((files, username) => {
-    const logActionItems: LogActionItem[] = [];
-    files.forEach((file) => {
-      logActionItems.push({
+    logActions.push({
+      actor: username,
+      items: files.map((file) => ({
         description: file.name,
         date: file.uploadDetails?.uploadedDate ?? '',
         fileIcon: 'file',
-      });
-    });
-    logActions.push({
-      actor: username,
-      items: logActionItems,
+      })),
     });
   });
 
   return {
     type: 'PublishingRequest',
-    title: t('log.titles.files_uploaded', { count: uploadedFiles.length }),
+    title: t('log.titles.files_uploaded', { count: fileIdentifiersOnTicket.length }),
     modifiedDate: ticket.createdDate,
     actions: logActions,
   };
