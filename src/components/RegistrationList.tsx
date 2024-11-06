@@ -17,7 +17,7 @@ import { displayDate } from '../utils/date-helpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
-  getRegistrationWizardPath,
+  getRegistrationWizardLink,
   getResearchProfilePath,
   UrlPathTemplate,
 } from '../utils/urlPaths';
@@ -201,10 +201,10 @@ export const RegistrationListItemContent = ({
           )}
           <Tooltip title={t('common.edit')}>
             <IconButton
-              data-testid={`edit-registration-${identifier}`}
               component={Link}
               target={target}
-              to={getRegistrationWizardPath(identifier)}
+              to={getRegistrationWizardLink(identifier, { goToLandingPageAfterSaveAndSee: true })}
+              data-testid={`edit-registration-${identifier}`}
               size="small"
               sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
               <EditIcon fontSize="inherit" />

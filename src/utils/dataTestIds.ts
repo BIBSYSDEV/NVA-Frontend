@@ -488,6 +488,7 @@ export const dataTestId = {
       startRegistrationButton: 'registration-start-button',
     },
     formActions: {
+      cancelEditButton: 'cancel-edit-button',
       nextTabButton: 'next-tab-button',
       openSupportButton: 'open-support-button',
       previousTabButton: 'previous-tab-button',
