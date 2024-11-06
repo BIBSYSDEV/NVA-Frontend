@@ -18,7 +18,7 @@ import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration, userHasAccessRight } from '../../utils/registration-helpers';
-import { getRegistrationLandingPagePath, UrlPathTemplate } from '../../utils/urlPaths';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 
 interface RegistrationFormActionsProps {
@@ -62,7 +62,7 @@ export const RegistrationFormActions = ({
     if (history.location.state?.previousPath) {
       history.goBack();
     } else {
-      history.push(UrlPathTemplate.Home);
+      history.push(getRegistrationLandingPagePath(values.identifier));
     }
   };
 
