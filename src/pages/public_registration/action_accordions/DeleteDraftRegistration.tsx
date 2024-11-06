@@ -10,6 +10,7 @@ import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { setNotification } from '../../../redux/notificationSlice';
 import { PreviousPathLocationState, PreviousSearchLocationState } from '../../../types/locationState.types';
 import { Registration } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
@@ -54,6 +55,7 @@ export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistratio
       </Trans>
 
       <Button
+        data-testid={dataTestId.registrationLandingPage.tasksPanel.deleteRegistrationButton}
         sx={{ bgcolor: 'white' }}
         size="small"
         fullWidth
