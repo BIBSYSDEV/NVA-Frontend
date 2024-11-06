@@ -14,14 +14,14 @@ export function generatePublishingRequestLogEntry(
       if (ticket.approvedFiles.length > 0) {
         const uploadedFilesEntry = generateFilesUploadedLogEntry(ticket, filesOnRegistration, t);
         const publishedFilesEntry = generateApprovedFilesLogEntry(ticket, filesOnRegistration, t);
-        return [uploadedFilesEntry, publishedFilesEntry];
+        return [uploadedFilesEntry, publishedFilesEntry].filter(Boolean);
       }
       return generateMetadataUpdatedLogEntry(ticket, t);
     }
     case 'Closed': {
-      const uploeadedFilesEntry = generateFilesUploadedLogEntry(ticket, filesOnRegistration, t);
+      const uploadedFilesEntry = generateFilesUploadedLogEntry(ticket, filesOnRegistration, t);
       const rejectedFilesEntry = generateRejectedFilesLogEntry(ticket, filesOnRegistration, t);
-      return [uploeadedFilesEntry, rejectedFilesEntry];
+      return [uploadedFilesEntry, rejectedFilesEntry].filter(Boolean);
     }
     case 'New':
     case 'Pending': {
@@ -117,7 +117,7 @@ function generateRejectedFilesLogEntry(
 
   return {
     type: 'PublishingRequest',
-    title: t('log.titles.files_rejected', { count: ticket.filesForApproval.length }),
+    title: t('log.titles.files_rejected', { count: fileIdentifiersOnTicket.length }),
     modifiedDate: ticket.finalizedDate ?? '',
     actions: [
       {
@@ -148,7 +148,6 @@ function generateFilesUploadedLogEntry(
 
   if (deletedFilesItems.length > 0) {
     logActions.push({
-      actor: ticket.owner,
       items: deletedFilesItems,
     });
   }
