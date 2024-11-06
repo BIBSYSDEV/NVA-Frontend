@@ -234,7 +234,7 @@
     "order": "Order",
     "other": "Other",
     "overview": "Overview",
-    "page_title": "Norwegian Research Information Repository (NVA)",
+    "page_title": "Norwegian Research Information Repository",
     "pagination_project_search": "Pagination for project search",
     "pagination_result_search": "Pagination for result search",
     "pagination_rows_per_page": "Number of results per page:",
@@ -631,7 +631,7 @@
       "must_be_bigger_than": "{{field}} cannot be less than {{limit}}",
       "must_be_smaller_than": "{{field}} cannot be greater than {{limit}}",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
-      "project_manager_required_project": "The project needs a project leader",
+      "project_manager_required_project": "The project needs a project manager",
       "reference_required": "Reference required"
     }
   },
@@ -1139,7 +1139,7 @@
     "add_contributor": "Add project participant",
     "add_local_manager": "Add local manager",
     "add_project_contributor": "Add project participant",
-    "add_project_manager": "Add project leader",
+    "add_project_manager": "Add project manager",
     "add_unidentified_contributor": "Add unidentified project participant",
     "add_unidentified_project_manager": "Add unidentified project manager",
     "affiliation_modal": {
@@ -1196,7 +1196,7 @@
     "local_managers": "Local managers",
     "new_project": {
       "nfr_grant": "NFR grant",
-      "search_for_project_name_or_placeholder": "Search for project name or project leader"
+      "search_for_project_name_or_placeholder": "Search for project name or project manager"
     },
     "no_affiliation": "No affiliation",
     "no_duplicate_title": "No projects found with the same title.",
@@ -1220,11 +1220,11 @@
     "project_modal_title": "New project",
     "project_participant": "Project participant",
     "project_participants": "Project participants",
-    "remove_project_manager": "Delete project leader",
+    "remove_project_manager": "Delete project manager",
     "results": "Results",
     "role_types": {
       "LocalProjectManager": "Local manager",
-      "ProjectManager": "Project leader",
+      "ProjectManager": "Project manager",
       "ProjectParticipant": "Project participant"
     },
     "save_and_close": "Save and close",
@@ -1326,7 +1326,7 @@
         "ProductionDesigner": "Production designer",
         "ProgrammeLeader": "Programme host",
         "ProgrammeParticipant": "Programme participant",
-        "ProjectLeader": "Project leader",
+        "ProjectLeader": "Project manager",
         "Registrar": "Registrar/collection manager",
         "RelatedPerson": "Related person",
         "Researcher": "Researcher",
@@ -1354,7 +1354,7 @@
       "alternative_title": "Alternative title",
       "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
-      "create_project_helper_text": "<0>The researcher defines their own projects.</0> <0>A project must have a title, a project leader, a coordinating institution, a start and an end date. A project can have project participants, funders, approvals or research results.</0> <0>If you have an RCN funding, you can establish a project with that as a starting point. You start by looking up your RCN funding, it is added to the project and all mandatory fields are pre-filled, except for the project leader who must be looked up and confirmed.</0> <0>(Similar functionality is planned based on a REC approval. All projects that are to be part of the KBS reporting must have a REC approval that identifies the project as a clinical treatment study.)</0>",
+      "create_project_helper_text": "<0>The researcher defines their own projects.</0> <0>A project must have a title, a project manager, a coordinating institution, a start and an end date. A project can have project participants, funders, approvals or research results.</0> <0>If you have an RCN funding, you can establish a project with that as a starting point. You start by looking up your RCN funding, it is added to the project and all mandatory fields are pre-filled, except for the project manager who must be looked up and confirmed.</0> <0>(Similar functionality is planned based on a REC approval. All projects that are to be part of the KBS reporting must have a REC approval that identifies the project as a clinical treatment study.)</0>",
       "date_published": "Publication date",
       "description_of_content": "Description of content. Particularly relevant when registering, for example, artistic development work",
       "duplicate_publication_date_warning": "There is already a publication with the same title that has been published this year",
@@ -1368,7 +1368,7 @@
         "funding_without_project": "Funding without project",
         "funding_without_project_description": "<0>If the research receives funding not associated with a project, then click on \"Add funding\" and then search for the funder.</0> <0>Do not register funding that is associated with a project. Funding associated with a project is added when you add the project further up the page. If the funding information does not appear, this must be registered to the project in NVA.</0>",
         "nfr_project": "NFR project",
-        "nfr_project_search": "Search by project name or project leader",
+        "nfr_project_search": "Search by project name or project manager",
         "remove_funding": "Remove funding"
       },
       "hrcs_activities": "HRCS activities",
@@ -1819,15 +1819,11 @@
         "add_exhibition_basic": "Add exhibition venue",
         "add_exhibition_catalog": "Add exhibition catalogue",
         "add_exhibition_other_presentation": "Add exhibition presentation",
-        "add_mention_in_publication": "Add publication/mention",
         "edit_exhibition_basic": "Change exhibition venue",
         "edit_exhibition_catalog": "Change exhibition catalogue",
         "edit_exhibition_other_presentation": "Change dissemination",
-        "edit_mention_in_publication": "Change to publication/mention",
         "institution_name": "Organizer's name",
-        "more_info_about_elementet": "More about the item",
         "place": "Exhibition location",
-        "presentation_type": "Type of dissemination form",
         "search_for_exhibition_catalog": "Search for exhibition catalogue",
         "subtype": {
           "AmbulatingExhibition": "Travelling exhibition",
@@ -1886,9 +1882,9 @@
       "print_issn": "Print ISSN",
       "protected_degree_type": "You do not have access. Contact the institution that awarded you the degree to get it published. If it is foreign, ask for curator support to get help.",
       "protected_file_type": "Your institution has chosen not to support file upload for this category",
-      "publisher_or_organizer": "Publisher/organizer or similar",
       "related_result": "Related result",
       "related_results": "Related results",
+      "related_results_description": "",
       "remove_doi": "Remove DOI",
       "remove_doi_text": "You can remove the DOI that was used at the start of registration.\nDo you want to remove the link to the original DOI?",
       "research_data": {
@@ -2023,6 +2019,7 @@
   "tasks": {
     "correction_list": "Correction list",
     "include_tasks_without_curator": "Include tasks without a curator",
+    "new_tasks": "New tasks: {{count}}",
     "nvi": {
       "approval_status_count": "Checked ({{checked}} of {{total}})",
       "approve_nvi_candidate": "Approve result",
@@ -2070,7 +2067,8 @@
     "select_other_unit_filter": "Select other",
     "status": "Status",
     "unread": "Unread",
-    "user_dialog": "User dialogue"
+    "user_dialog": "User dialogue",
+    "your_tasks": "Tasks you own: {{count}}"
   },
   "unpublish_actions": {
     "duplicate": "Duplicate",

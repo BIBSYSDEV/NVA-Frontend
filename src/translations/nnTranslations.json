@@ -1289,7 +1289,7 @@
         "ArchitecturalPlanner": "Planleggjar",
         "Artist": "Kunstnar",
         "ArtisticDirector": "Kunstnerisk leiar",
-        "AudioVisualContributor": "Audio Visuell bidragsytar",
+        "AudioVisualContributor": "Audiovisuell bidragsytar",
         "Choreographer": "Koreograf",
         "CollaborationPartner": "Samarbeidspartnar",
         "Composer": "Komponist",
@@ -1819,15 +1819,11 @@
         "add_exhibition_basic": "Legg til visingsstad",
         "add_exhibition_catalog": "Legg til utstillingskatalog",
         "add_exhibition_other_presentation": "Legg til formidling",
-        "add_mention_in_publication": "Legg til publisering/omtale",
         "edit_exhibition_basic": "Endre visingsstad",
         "edit_exhibition_catalog": "Endre utstillingskatalog",
         "edit_exhibition_other_presentation": "Endre formidling",
-        "edit_mention_in_publication": "Endre til publisering/omtale",
         "institution_name": "Arrangøren sitt namn",
-        "more_info_about_elementet": "Meir om elementet",
         "place": "Visingsstad",
-        "presentation_type": "Type formidlingsform",
         "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
         "subtype": {
           "AmbulatingExhibition": "Vandreutstilling",
@@ -1886,9 +1882,9 @@
       "print_issn": "Print ISSN",
       "protected_degree_type": "Du manglar tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utanlandsk, be om kuratorstøtte for hjelp til publiseringa.",
       "protected_file_type": "Din institusjon har valt å ikkje støtte opplasting av filer for denne kategorien.",
-      "publisher_or_organizer": "Utgjevar/arrangør eller liknande",
       "related_result": "Relatert resultat",
       "related_results": "Relaterte resultat",
+      "related_results_description": "",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som blei brukt ved registeringsstart. Ønskjer du å fjerne kopling til original DOI?",
       "research_data": {
@@ -2023,6 +2019,7 @@
   "tasks": {
     "correction_list": "Retteliste",
     "include_tasks_without_curator": "Inkluder oppgåver utan kurator",
+    "new_tasks": "Innmelde oppgåver: {{count}}",
     "nvi": {
       "approval_status_count": "Kontrollert ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
@@ -2070,7 +2067,8 @@
     "select_other_unit_filter": "Vel andre",
     "status": "Status",
     "unread": "Uleste",
-    "user_dialog": "Brukardialog"
+    "user_dialog": "Brukardialog",
+    "your_tasks": "Oppgåver du behandlar: {{count}}"
   },
   "unpublish_actions": {
     "duplicate": "Duplikat",
