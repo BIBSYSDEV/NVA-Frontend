@@ -1504,6 +1504,7 @@
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
         "confirm_republish_description": "Republiser resultatet om det skal være tilgjengelig i NVA. Dette vil føre til at resultatet vil vises blant søkeresultater igjen.",
+        "delete_draft_registration_description": "<0>Ved å slette registreringen så er den permanent slettet.</0><0>Det er ikke mulig å gjenopprette informasjon som er registrert, inkludert filer, i etterkant.</0>",
         "describe_doi_rejection_reason": "Du må begrunne avslaget på ønsket om DOI på dette forskningsresultatet.",
         "draft_doi_description": "<0>En reservert DOI gjør at du (og de du deler DOI med) kan sitere forskningsresultatet i andre arbeid før det publiseres.</0><1><0>Les mer om DOI<0></0></0></1><0>Ønsker du DOI på dette resultatet, trykk på \"{{buttonText}}\".</0>",
         "duplicate_title_description_details": "<0>Det skal ikke opprettes duplikater i NVA. Sjekk om din registrering tilsvarer det som alt er publisert.</0><0>Om resultatet som er publisert har feil eller mangler så be registrator eller bidragsyter som er tilknyttet resultatet om å endre det.</0>",
@@ -1537,8 +1538,7 @@
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Beskrivelsen (metadata) av forskningsresultatet og opplastede filer blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
         "you_can_publish_metadata": "Beskrivelsen (metadata) av forskningsresultatet blir offentlig synlig når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".",
-        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig.",
-        "delete_draft_registration_description": "<0>Ved å slette registreringen så er den permanent slettet.</0><0>Det er ikke mulig å gjenopprette informasjon som er registrert, inkludert filer, i etterkant.</0>"
+        "you_can_publish_metadata_files_info": "Når fil(er) og valgt lisens er godkjent av kurator blir de offentlig tilgjengelig."
       },
       "validation_errors": "Valideringsfeil"
     },
