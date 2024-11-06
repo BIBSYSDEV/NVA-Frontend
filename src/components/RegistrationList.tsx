@@ -69,8 +69,8 @@ export const RegistrationListItemContent = ({
   const userCristinId = user?.cristinId ?? '';
   const mutationKey = ['person-preferences', userCristinId];
 
-  const registrationType = entityDescription.reference?.publicationInstance?.type;
-  const contributors = entityDescription.contributorsPreview;
+  const registrationType = entityDescription?.reference?.publicationInstance?.type;
+  const contributors = entityDescription?.contributorsPreview ?? [];
 
   const primaryContributors = registrationType
     ? getContributorsWithPrimaryRole(contributors, registrationType)
