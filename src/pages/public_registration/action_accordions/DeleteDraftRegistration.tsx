@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { deleteRegistration } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { setNotification } from '../../../redux/notificationSlice';
+import { PreviousPathLocationState, PreviousSearchLocationState } from '../../../types/locationState.types';
 import { Registration } from '../../../types/registration.types';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
@@ -19,7 +20,7 @@ interface DeleteDraftRegistrationProps {
 export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistrationProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useHistory<(PreviousSearchLocationState & PreviousPathLocationState) | undefined>();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -29,9 +30,17 @@ export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistratio
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
 
       if (history.location.pathname.startsWith(UrlPathTemplate.MyPageMessages)) {
-        history.push(UrlPathTemplate.MyPageMyMessages);
+        history.push({
+          pathname: UrlPathTemplate.MyPageMyMessages,
+          search: history.location.state?.previousSearch,
+        });
       } else if (history.location.pathname.startsWith(UrlPathTemplate.RegistrationNew)) {
-        history.push(UrlPathTemplate.MyPageMyRegistrations);
+        history.push(history.location.state?.previousPath || UrlPathTemplate.MyPageMyRegistrations);
+      } else if (history.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)) {
+        history.push({
+          pathname: UrlPathTemplate.TasksDialogue,
+          search: history.location.state?.previousSearch,
+        });
       }
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' })),

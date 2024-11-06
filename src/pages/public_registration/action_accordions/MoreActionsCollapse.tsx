@@ -21,9 +21,9 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
 
   const isPublished = registration.status === 'PUBLISHED' || registration.status === 'PUBLISHED_METADATA';
   const isUnpublished = registration.status === 'UNPUBLISHED';
-  const canDeleteDraft = registration.status === 'DRAFT' && userHasAccessRight(registration, 'delete');
+  const canDeleteRegistration = userHasAccessRight(registration, 'delete');
 
-  if (!(isPublished || isUnpublished || canDeleteDraft)) {
+  if (!(isPublished || isUnpublished || canDeleteRegistration)) {
     return null;
   }
 
@@ -48,7 +48,7 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
               <TerminateRegistration registration={registration} />
             </>
           )}
-          {canDeleteDraft && <DeleteDraftRegistration registration={registration} />}
+          {canDeleteRegistration && <DeleteDraftRegistration registration={registration} />}
         </Box>
       )}
     </Box>
