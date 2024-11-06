@@ -37,7 +37,7 @@ export const ShowRelatedRegistrationUris = ({
       const registrations = (await Promise.all(relatedRegistrationsPromises)).filter(
         Boolean
       ) as RegistrationSearchItem[];
-
+      console.log(registrations);
       setRelatedRegistrations(registrations);
       setIsLoadingRegistrations(false);
     };

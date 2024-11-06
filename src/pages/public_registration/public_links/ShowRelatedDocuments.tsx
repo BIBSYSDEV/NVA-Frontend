@@ -1,4 +1,4 @@
-import { List, ListItem, Typography } from '@mui/material';
+import { Box, List, ListItem, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RelatedDocument } from '../../../types/registration.types';
 import { ShowRelatedRegistrationUris } from './ShowRelatedRegistrationUris';
@@ -26,7 +26,18 @@ export const ShowRelatedDocuments = ({ related }: ShowRelatedDocumentsProps) => 
                 loadingLabel={t('registration.resource_type.related_results')}
               />
             ) : (
-              <Typography>{document.text}</Typography>
+              <Box
+                sx={{
+                  border: '2px solid',
+                  borderColor: 'secondary.dark',
+                  alignContent: 'center',
+                  background: 'white',
+                  minHeight: '3rem',
+                  width: '100%',
+                  p: '1rem',
+                }}>
+                <Typography fontWeight="bold">{document.text}</Typography>
+              </Box>
             )}
           </ListItem>
         ))}
