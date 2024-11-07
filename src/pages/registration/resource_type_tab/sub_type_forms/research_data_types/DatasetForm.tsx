@@ -97,7 +97,7 @@ export const DatasetForm = () => {
                     </Typography>
                     <YearAndContributorsText
                       date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributors ?? []}
+                      contributors={option.entityDescription?.contributorsPreview ?? []}
                     />
                   </Box>
                 </li>
@@ -158,7 +158,7 @@ export const DatasetForm = () => {
                     </Typography>
                     <YearAndContributorsText
                       date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributors ?? []}
+                      contributors={option.entityDescription?.contributorsPreview ?? []}
                     />
                   </Box>
                 </li>
