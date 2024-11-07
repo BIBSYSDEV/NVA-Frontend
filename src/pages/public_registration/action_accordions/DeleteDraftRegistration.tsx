@@ -50,7 +50,7 @@ export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistratio
   return (
     <section>
       <Typography fontWeight="bold">{t('common.delete')}</Typography>
-      <Trans t={t} i18nKey="registration.public_page.tasks_panel.delete_draft_registration_description">
+      <Trans i18nKey="registration.public_page.tasks_panel.delete_draft_registration_description">
         <Typography gutterBottom />
       </Trans>
 
@@ -66,7 +66,7 @@ export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistratio
       </Button>
 
       <ConfirmDialog
-        open={!!showDeleteModal}
+        open={showDeleteModal}
         title={t('my_page.registrations.delete_registration')}
         onAccept={draftRegistrationMutation.mutate}
         onCancel={() => setShowDeleteModal(false)}
