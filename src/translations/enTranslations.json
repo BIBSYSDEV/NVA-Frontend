@@ -254,6 +254,7 @@
     "read_more": "Read more",
     "read_more_about_nva": "Read more about NVA",
     "read_past_tense": "Read",
+    "reference": "Reference",
     "reject": "Reject",
     "reject_doi": "Reject DOI",
     "reload_page_info": "A new version of NVA is available and the page needs to be reloaded.",
@@ -612,12 +613,12 @@
     },
     "validation": {
       "announcement_required": "You must have at least one announcement",
+      "author_or_editor_required": "You need at least an author or an editor on this registration",
       "author_required": "You must have at least one author on this registration",
       "cannot_be_after": "{{field}} cannot be after {{limitField}}",
       "cannot_be_before": "{{field}} cannot be before {{limitField}}",
       "contributor_required": "You must have at least one contributor on this registration",
       "contributor_required_project": "You need at least one project participant",
-      "editor_required": "You must have at least one editor on this registration",
       "employments_missing_data": "At least one affiliation does not have position or start date",
       "field_not_confirmed": "{{field}} is not confirmed",
       "has_invalid_format": "{{field}} has an invalid format",
@@ -1512,7 +1513,7 @@
         "files_will_soon_be_published": "The files will be available for others shortly. Wait a bit before you reload the page to see the status.",
         "has_rejected_files_publishing_request": "<0>Description (metadata) is published and publicly available.</0><0>Curator has rejected the file, and it has been removed from the public view of the research result</0>",
         "has_reserved_doi": "<0>You can share the reserved DOI with those who will cite the result. Lookup via DOI is not possible until the DOI is assigned by the curator.</0><0>The DOI request is sent to the curator when the result is published. You publish the registration in the publishing menu.</0>",
-        "metadata_published_waiting_for_files": "Metadata is published and visible to other users, but a curator must approve the files that have been uploaded before they become visible.",
+        "metadata_published_waiting_for_files": "<0>Metadata is published and visible to other users, but a curator must approve the files that have been uploaded before they become visible..</0><0> You will be notified when file(s) and the selected license is approved by the curator and publicly available. The status is visible on \"My page\".</0>",
         "no_access_to_republish": "<0>Should the result not have been unpublished</0><0>Contact the editor to have the result republished.</0>",
         "no_published_files_on_registration": "No published files on the result",
         "no_published_files_on_registration_description": "<0>The result has no published files.</0><0>Check with the registrar if it is correct that the result should not have published files in NVA.</0><0>Do you want to assign a DOI to a result without a file?</0>",
@@ -1628,6 +1629,7 @@
     },
     "registration_id": "Result ID",
     "resource_type": {
+      "add_related_results_reference": "If you cannot find the result, and it will not be registered in NVA, click the button to type in the reference:",
       "article_number": "Article number",
       "artistic": {
         "add_announcement": "Add announcement",
@@ -1884,7 +1886,7 @@
       "protected_file_type": "Your institution has chosen not to support file upload for this category",
       "related_result": "Related result",
       "related_results": "Related results",
-      "related_results_description": "",
+      "related_results_description": "Search for and select results in the search field to link related results to this result",
       "remove_doi": "Remove DOI",
       "remove_doi_text": "You can remove the DOI that was used at the start of registration.\nDo you want to remove the link to the original DOI?",
       "research_data": {
@@ -1912,7 +1914,7 @@
         "remove_relation": "Remove relation",
         "remove_relation_confirm_text": "Do you want to remove this relation?",
         "search_for_related_dmps": "Search for related data management plans",
-        "search_for_related_registrations": "Search for related registrations",
+        "search_for_related_registrations": "Search for results using either title or DOI",
         "search_for_related_registrations_helper": "Choose from registrations that are published in NVA"
       },
       "resource_type": "Category",
