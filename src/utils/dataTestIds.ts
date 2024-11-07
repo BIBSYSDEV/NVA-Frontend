@@ -348,6 +348,7 @@ export const dataTestId = {
       cancelRejectionButton: 'cancel-rejection-button',
       createDoiButton: 'button-create-doi',
       deleteMessageButton: 'delete-message-button',
+      deleteRegistrationButton: 'delete-registration-button',
       doiRequestAccordion: 'doi-request-accordion',
       duplicateRegistrationLink: 'duplicate-registration-link',
       messageOptionsButton: 'message-options-button',
