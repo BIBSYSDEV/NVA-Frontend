@@ -409,7 +409,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {canApprovePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
+        {canApprovePublishingRequest && !hasMismatchingPublishedStatus && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <Trans
               t={t}
