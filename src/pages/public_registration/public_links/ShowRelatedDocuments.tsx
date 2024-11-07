@@ -19,7 +19,7 @@ export const ShowRelatedDocuments = ({ related }: ShowRelatedDocumentsProps) => 
       {related
         .sort((a, b) => (a.sequence && b.sequence ? a.sequence - b.sequence : 0))
         .map((document, index) => (
-          <ListItem key={index} disableGutters>
+          <ListItem key={index} disablePadding>
             {document.type === 'ConfirmedDocument' ? (
               <ShowRelatedRegistrationUris
                 links={[document.identifier]}
