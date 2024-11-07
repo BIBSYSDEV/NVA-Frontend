@@ -16,7 +16,7 @@ export const downloadImportCandidateFile = async (importCandidateIdentifier: str
   return downloadFileResponse.data;
 };
 
-interface DownloadRegistratinoFileResponse {
+interface DownloadRegistrationFileResponse {
   fileIdentifier: string;
   id: string;
   alias: string;
@@ -24,18 +24,12 @@ interface DownloadRegistratinoFileResponse {
 
 export const downloadRegistrationFile = async (registrationIdentifier: string, fileIdentifier: string) => {
   const isAuthenticated = await userIsAuthenticated();
+  const downloadFilePath = `${PublicationsApiPath.Registration}/${registrationIdentifier}/filelink/${fileIdentifier}`;
 
-  if (isAuthenticated) {
-    const downloadFileResponse = await authenticatedApiRequest2<DownloadRegistratinoFileResponse>({
-      url: `${PublicationsApiPath.Registration}/${registrationIdentifier}/filelink/${fileIdentifier}`,
-    });
-    return downloadFileResponse.data;
-  } else {
-    const downloadFileResponse = await apiRequest2<DownloadRegistratinoFileResponse>({
-      url: `${PublicationsApiPath.Registration}/${registrationIdentifier}/filelink/${fileIdentifier}`,
-    });
-    return downloadFileResponse.data;
-  }
+  const downloadFileResponse = isAuthenticated
+    ? await authenticatedApiRequest2<DownloadRegistrationFileResponse>({ url: downloadFilePath })
+    : await apiRequest2<DownloadRegistrationFileResponse>({ url: downloadFilePath });
+  return downloadFileResponse.data;
 };
 
 export const abortMultipartUpload = async (uploadId: string, key: string) => {
