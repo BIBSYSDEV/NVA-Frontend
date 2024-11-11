@@ -6,10 +6,8 @@ export enum FileApiPath {
   Abort = '/upload/abort',
   Complete = '/upload/complete',
   Create = '/upload/create',
-  Download = '/download',
   ListParts = '/upload/listparts',
   Prepare = '/upload/prepare',
-  PublicDownload = '/download/public',
 }
 
 export enum CristinApiPath {

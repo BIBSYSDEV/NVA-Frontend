@@ -8,16 +8,20 @@ export function generatePublishingRequestLogEntry(
   ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
   t: TFunction
-): LogEntry | undefined {
+): LogEntry[] | LogEntry | undefined {
   switch (ticket.status) {
     case 'Completed': {
       if (ticket.approvedFiles.length > 0) {
-        return generateApprovedFilesLogEntry(ticket, filesOnRegistration, t);
+        const uploadedFilesEntry = generateFilesUploadedLogEntry(ticket, filesOnRegistration, t);
+        const publishedFilesEntry = generateApprovedFilesLogEntry(ticket, filesOnRegistration, t);
+        return [uploadedFilesEntry, publishedFilesEntry].filter(Boolean);
       }
       return generateMetadataUpdatedLogEntry(ticket, t);
     }
     case 'Closed': {
-      return generateRejectedFilesLogEntry(ticket, filesOnRegistration, t);
+      const uploadedFilesEntry = generateFilesUploadedLogEntry(ticket, filesOnRegistration, t);
+      const rejectedFilesEntry = generateRejectedFilesLogEntry(ticket, filesOnRegistration, t);
+      return [uploadedFilesEntry, rejectedFilesEntry].filter(Boolean);
     }
     case 'New':
     case 'Pending': {
@@ -38,12 +42,10 @@ function generateApprovedFilesLogEntry(
   const openFilesItems: LogActionItem[] = getOpenFiles(filesOnRegistration)
     .filter((file) => ticket.approvedFiles.includes(file.identifier))
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((file) => {
-      return {
-        description: file.name,
-        fileIcon: 'file',
-      };
-    });
+    .map((file) => ({
+      description: file.name,
+      fileIcon: 'file',
+    }));
 
   const archivedFilesItems: LogActionItem[] = filesOnRegistration
     .filter(
@@ -52,21 +54,17 @@ function generateApprovedFilesLogEntry(
         ticket.approvedFiles.includes(file.identifier)
     )
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((file) => {
-      return {
-        description: file.name,
-        fileIcon: 'archivedFile',
-      };
-    });
+    .map((file) => ({
+      description: file.name,
+      fileIcon: 'archivedFile',
+    }));
 
   const deletedFilesItems: LogActionItem[] = ticket.approvedFiles
     .filter((identifier) => !filesOnRegistration.some((file) => file.identifier === identifier))
-    .map(() => {
-      return {
-        description: t('log.unknown_filename'),
-        fileIcon: 'deletedFile',
-      };
-    });
+    .map(() => ({
+      description: t('log.unknown_filename'),
+      fileIcon: 'deletedFile',
+    }));
 
   return {
     type: 'PublishingRequest',
@@ -100,25 +98,31 @@ function generateRejectedFilesLogEntry(
   filesOnRegistration: AssociatedFile[],
   t: TFunction
 ): LogEntry {
-  const rejectedFiles = filesOnRegistration.filter((file) => ticket.filesForApproval.includes(file.identifier));
+  const fileIdentifiersOnTicket = [...ticket.filesForApproval, ...ticket.approvedFiles];
+  const rejectedFiles = filesOnRegistration.filter((file) => fileIdentifiersOnTicket.includes(file.identifier));
 
   const rejectedFileItems: LogActionItem[] = rejectedFiles
     .sort((a, b) => a.name.localeCompare(b.name))
-    .map((file) => {
-      return {
-        description: file.name,
-        fileIcon: 'rejectedFile',
-      };
-    });
+    .map((file) => ({
+      description: file.name,
+      fileIcon: 'rejectedFile',
+    }));
+
+  const deletedFilesItems: LogActionItem[] = fileIdentifiersOnTicket
+    .filter((identifier) => !filesOnRegistration.some((file) => file.identifier === identifier))
+    .map(() => ({
+      description: t('log.unknown_filename'),
+      fileIcon: 'deletedFile',
+    }));
 
   return {
     type: 'PublishingRequest',
-    title: t('log.titles.files_rejected', { count: ticket.filesForApproval.length }),
+    title: t('log.titles.files_rejected', { count: fileIdentifiersOnTicket.length }),
     modifiedDate: ticket.finalizedDate ?? '',
     actions: [
       {
         actor: ticket.finalizedBy ?? '',
-        items: rejectedFileItems,
+        items: [...rejectedFileItems, ...deletedFilesItems],
       },
     ],
   };
@@ -129,29 +133,39 @@ function generateFilesUploadedLogEntry(
   filesOnRegistration: AssociatedFile[],
   t: TFunction
 ): LogEntry {
-  const filesForApproval = filesOnRegistration.filter((file) => ticket.filesForApproval.includes(file.identifier));
-  const filesByUser = groupFilesByUser(filesForApproval);
+  const fileIdentifiersOnTicket = [...ticket.filesForApproval, ...ticket.approvedFiles];
+  const uploadedFiles = filesOnRegistration.filter((file) => fileIdentifiersOnTicket.includes(file.identifier));
+  const filesByUser = groupFilesByUser(uploadedFiles);
 
   const logActions: LogAction[] = [];
 
-  filesByUser.forEach((files: AssociatedFile[], user: string) => {
-    const logActionItems: LogActionItem[] = [];
-    files.forEach((file) => {
-      logActionItems.push({
+  const deletedFilesItems: LogActionItem[] = fileIdentifiersOnTicket
+    .filter((identifier) => !filesOnRegistration.some((file) => file.identifier === identifier))
+    .map(() => ({
+      description: t('log.unknown_filename'),
+      fileIcon: 'deletedFile',
+    }));
+
+  if (deletedFilesItems.length > 0) {
+    logActions.push({
+      items: deletedFilesItems,
+    });
+  }
+
+  filesByUser.forEach((files, username) => {
+    logActions.push({
+      actor: username,
+      items: files.map((file) => ({
         description: file.name,
         date: file.uploadDetails?.uploadedDate ?? '',
         fileIcon: 'file',
-      });
-    });
-    logActions.push({
-      actor: user,
-      items: logActionItems,
+      })),
     });
   });
 
   return {
     type: 'PublishingRequest',
-    title: t('log.titles.files_uploaded', { count: ticket.filesForApproval.length }),
+    title: t('log.titles.files_uploaded', { count: fileIdentifiersOnTicket.length }),
     modifiedDate: ticket.createdDate,
     actions: logActions,
   };
