@@ -34,6 +34,9 @@ export function generatePublishingRequestLogEntry(
   }
 }
 
+const fileHasBeenRemovedFromRegistration = (file: AssociatedFile, filesOnRegistration: AssociatedFile[]) =>
+  !filesOnRegistration.some((registrationFile) => registrationFile.identifier === file.identifier);
+
 function generateApprovedFilesLogEntry(
   ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
@@ -44,7 +47,7 @@ function generateApprovedFilesLogEntry(
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => ({
       description: file.name,
-      fileIcon: 'file',
+      fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration) ? 'deletedFile' : 'file',
     }));
 
   const archivedFilesItems: LogActionItem[] = ticket.approvedFiles
@@ -52,7 +55,7 @@ function generateApprovedFilesLogEntry(
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => ({
       description: file.name,
-      fileIcon: 'archivedFile',
+      fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration) ? 'deletedFile' : 'archivedFile',
     }));
 
   return {
@@ -91,7 +94,7 @@ function generateRejectedFilesLogEntry(
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((file) => ({
       description: file.name,
-      fileIcon: 'rejectedFile',
+      fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration) ? 'deletedFile' : 'rejectedFile',
     }));
 
   return {
@@ -123,7 +126,7 @@ function generateFilesUploadedLogEntry(
       items: files.map((file) => ({
         description: file.name,
         date: file.uploadDetails?.uploadedDate ?? '',
-        fileIcon: 'file',
+        fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration) ? 'deletedFile' : 'file',
       })),
     });
   });
