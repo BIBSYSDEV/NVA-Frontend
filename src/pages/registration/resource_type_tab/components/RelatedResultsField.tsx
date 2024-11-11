@@ -1,7 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, List, Typography } from '@mui/material';
 import { FieldArray, FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ConfirmedDocument, emptyUnconfirmedDocument, UnconfirmedDocument } from '../../../../types/registration.types';
@@ -61,11 +61,17 @@ export const RelatedResultsField = () => {
         p: '1rem',
       }}>
       <Typography variant="h2">{t('registration.resource_type.related_results')}</Typography>
-      <Typography>{t('registration.resource_type.related_results_description')}</Typography>
 
       <SearchRelatedResultField />
 
-      <Typography fontWeight="bold">{t('registration.resource_type.add_related_results_reference')}</Typography>
+      <Trans
+        i18nKey={'registration.resource_type.related_results_description'}
+        components={[
+          <Typography key={0}>
+            <span style={{ fontWeight: 'bold' }} />
+          </Typography>,
+        ]}
+      />
       <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
         {({ push }: FieldArrayRenderProps) => (
           <Button
@@ -79,7 +85,7 @@ export const RelatedResultsField = () => {
             }
             startIcon={<AddCircleOutlineIcon />}
             sx={{ alignSelf: 'start' }}>
-            {t('common.add_custom', { name: t('common.reference').toLocaleLowerCase() })}
+            {t('common.add_custom', { name: t('registration.resource_type.related_result').toLocaleLowerCase() })}
           </Button>
         )}
       </FieldArray>

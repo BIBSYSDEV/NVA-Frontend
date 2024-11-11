@@ -52,8 +52,7 @@ export const ActionPanel = ({
   const hasOtherPublishingRights =
     userHasAccessRight(registration, 'unpublish') ||
     userHasAccessRight(registration, 'republish') ||
-    userHasAccessRight(registration, 'terminate') ||
-    userHasAccessRight(registration, 'delete');
+    userHasAccessRight(registration, 'terminate');
 
   const customerHasConfiguredDoi = customer?.doiAgent.username;
   const canCreateDoiTicket =
@@ -71,8 +70,10 @@ export const ActionPanel = ({
     !!customerHasConfiguredDoi &&
     (canCreateDoiTicket || canApproveDoiTicket);
   const shouldSeeSupportAccordion = canCreateSupportTicket || canApproveSupportTicket;
+  const shouldSeeDelete = userHasAccessRight(registration, 'delete');
 
-  const canSeeTasksPanel = shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion;
+  const canSeeTasksPanel =
+    shouldSeePublishingAccordion || shouldSeeDoiAccordion || shouldSeeSupportAccordion || shouldSeeDelete;
 
   const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
 
@@ -112,6 +113,7 @@ export const ActionPanel = ({
           shouldSeePublishingAccordion={shouldSeePublishingAccordion}
           shouldSeeDoiAccordion={shouldSeeDoiAccordion}
           shouldSeeSupportAccordion={shouldSeeSupportAccordion}
+          shouldSeeDelete={shouldSeeDelete}
           publishingRequestTickets={publishingRequestTickets}
           newestDoiRequestTicket={newestDoiRequestTicket}
           newestSupportTicket={newestSupportTicket}

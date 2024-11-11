@@ -126,7 +126,7 @@ export const SearchContainerField = ({
                   {descriptionToShow === 'year-and-contributors' ? (
                     <YearAndContributorsText
                       date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributorsPreview ?? []}
+                      contributors={option.entityDescription?.contributors ?? []}
                     />
                   ) : (
                     <ContainerAndLevelText registration={option} />
@@ -146,7 +146,7 @@ export const SearchContainerField = ({
                       {descriptionToShow === 'year-and-contributors' ? (
                         <YearAndContributorsText
                           date={option.entityDescription?.publicationDate}
-                          contributors={option.entityDescription?.contributorsPreview ?? []}
+                          contributors={option.entityDescription?.contributors ?? []}
                         />
                       ) : (
                         <ContainerAndLevelText registration={option} />

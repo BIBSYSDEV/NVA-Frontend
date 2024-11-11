@@ -1,5 +1,3 @@
-import { RegistrationFormLocationState } from '../types/locationState.types';
-
 export interface IdentifierParams {
   identifier: string;
 }
@@ -82,24 +80,6 @@ export const getImportCandidatePath = (identifier: string) =>
 
 export const getRegistrationWizardPath = (identifier: string) =>
   UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
-
-interface RegistrationWizardOptions {
-  highestValidatedTab?: number;
-  tab?: number;
-  goToLandingPageAfterSaveAndSee?: boolean;
-}
-
-export const getRegistrationWizardLink = (identifier: string, options: RegistrationWizardOptions = {}) => {
-  return {
-    pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
-    state: {
-      highestValidatedTab: options.highestValidatedTab,
-      previousPath: window.location.pathname,
-      goToLandingPageAfterSaveAndSee: options.goToLandingPageAfterSaveAndSee,
-    } satisfies RegistrationFormLocationState,
-    search: options.tab ? `?tab=${options.tab}` : '',
-  };
-};
 
 export const getImportCandidateWizardPath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidateWizard.replace(':identifier', encodeURIComponent(identifier));

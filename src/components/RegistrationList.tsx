@@ -17,7 +17,7 @@ import { displayDate } from '../utils/date-helpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
-  getRegistrationWizardLink,
+  getRegistrationWizardPath,
   getResearchProfilePath,
   UrlPathTemplate,
 } from '../utils/urlPaths';
@@ -70,14 +70,16 @@ export const RegistrationListItemContent = ({
   const mutationKey = ['person-preferences', userCristinId];
 
   const registrationType = entityDescription?.reference?.publicationInstance?.type;
-  const contributors = entityDescription?.contributorsPreview ?? [];
+  const contributors = entityDescription?.contributorsPreview ?? entityDescription.contributors ?? [];
 
   const primaryContributors = registrationType
     ? getContributorsWithPrimaryRole(contributors, registrationType)
     : contributors;
 
   const focusedContributors = primaryContributors.slice(0, 5);
-  const countRestContributors = registration.entityDescription.contributorsCount - focusedContributors.length;
+  const countRestContributors =
+    (registration.entityDescription.contributorsCount ?? (entityDescription.contributors ?? []).length) -
+    focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
 
@@ -201,10 +203,10 @@ export const RegistrationListItemContent = ({
           )}
           <Tooltip title={t('common.edit')}>
             <IconButton
+              data-testid={`edit-registration-${identifier}`}
               component={Link}
               target={target}
-              to={getRegistrationWizardLink(identifier, { goToLandingPageAfterSaveAndSee: true })}
-              data-testid={`edit-registration-${identifier}`}
+              to={getRegistrationWizardPath(identifier)}
               size="small"
               sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
               <EditIcon fontSize="inherit" />

@@ -80,7 +80,7 @@ export const DataManagementPlanForm = () => {
                     </Typography>
                     <YearAndContributorsText
                       date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributorsPreview ?? []}
+                      contributors={option.entityDescription?.contributors ?? []}
                     />
                   </Box>
                 </li>
