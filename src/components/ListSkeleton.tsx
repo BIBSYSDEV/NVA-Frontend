@@ -1,5 +1,6 @@
 import { Skeleton } from '@mui/material';
 import { useRef } from 'react';
+import { dataTestId } from '../utils/dataTestIds';
 import { getRandomWidthPercent } from '../utils/skeleton-helpers';
 
 interface ListSkeletonProps {
@@ -15,10 +16,10 @@ export const ListSkeleton = ({ arrayLength, height, minWidth, maxWidth }: ListSk
   );
 
   return (
-    <>
+    <div data-testid={dataTestId.common.skeleton}>
       {widthsRef.current.map((width, index) => (
         <Skeleton key={index} width={width} height={height ?? 40} />
       ))}
-    </>
+    </div>
   );
 };

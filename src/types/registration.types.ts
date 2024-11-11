@@ -276,10 +276,8 @@ export interface RegistrationSearchItem {
     abstract: string;
     description: string;
     publicationDate?: RegistrationDate;
-    contributorsPreview?: Contributor[];
-    contributorsCount?: number;
-    /** @deprecated Use 'contributorsPreview' and/or 'contributorsCount' instead */
-    contributors?: Contributor[]; // TODO: Remove when new format is availble in all enviroments
+    contributorsPreview: Contributor[];
+    contributorsCount: number;
     reference: {
       publicationInstance: {
         type?: PublicationInstanceType | '';

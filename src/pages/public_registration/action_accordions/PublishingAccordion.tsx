@@ -32,14 +32,13 @@ import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
 import { isOpenFile, isPendingOpenFile, userHasAccessRight } from '../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationLandingPagePath, getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
@@ -100,7 +99,9 @@ export const PublishingAccordion = ({
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
 
-  const lastPublishingRequest = publishingRequestTickets.at(-1);
+  const lastPublishingRequest =
+    publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
+    publishingRequestTickets.at(-1);
 
   const ticketMutation = useMutation({
     mutationFn: lastPublishingRequest
@@ -408,7 +409,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {canApprovePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
+        {canApprovePublishingRequest && !hasMismatchingPublishedStatus && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <Trans
               t={t}
@@ -432,11 +433,7 @@ export const PublishingAccordion = ({
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
               endIcon={<EditIcon fontSize="large" />}
               component={RouterLink}
-              to={{
-                pathname: getRegistrationWizardPath(registration.identifier),
-                search: '?tab=' + RegistrationTab.FilesAndLicenses,
-                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
-              }}>
+              to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
               {t('registration.edit_registration')}
             </Button>
 
