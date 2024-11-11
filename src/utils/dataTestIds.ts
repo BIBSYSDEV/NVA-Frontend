@@ -107,7 +107,6 @@ export const dataTestId = {
     pagination: 'pagination',
     save: 'save',
     showMoreButton: 'show-more-button',
-    skeleton: 'skeleton',
     previousButton: 'previous-button',
     nextButton: 'next-button',
     doubleNextButton: 'double-next-button',
@@ -348,7 +347,6 @@ export const dataTestId = {
       cancelRejectionButton: 'cancel-rejection-button',
       createDoiButton: 'button-create-doi',
       deleteMessageButton: 'delete-message-button',
-      deleteRegistrationButton: 'delete-registration-button',
       doiRequestAccordion: 'doi-request-accordion',
       duplicateRegistrationLink: 'duplicate-registration-link',
       messageOptionsButton: 'message-options-button',
@@ -489,7 +487,6 @@ export const dataTestId = {
       startRegistrationButton: 'registration-start-button',
     },
     formActions: {
-      cancelEditButton: 'cancel-edit-button',
       nextTabButton: 'next-tab-button',
       openSupportButton: 'open-support-button',
       previousTabButton: 'previous-tab-button',

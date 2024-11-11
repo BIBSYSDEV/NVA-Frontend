@@ -14,9 +14,10 @@ import {
 import prettyBytes from 'pretty-bytes';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { downloadRegistrationFile } from '../../../api/fileApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
+import { RootState } from '../../../redux/store';
 import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -42,6 +43,7 @@ export const FileRow = ({
 }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
   const [previewFileUrl, setPreviewFileUrl] = useState<DownloadUrl | null>(null);
@@ -51,15 +53,14 @@ export const FileRow = ({
       if (previewFile) {
         setIsLoadingPreviewFile(true);
       }
-      const downloadFileResponse = await downloadRegistrationFile(registrationIdentifier, file.identifier);
+      const downloadFileResponse = user
+        ? await downloadPrivateFile(registrationIdentifier, file.identifier)
+        : await downloadPublicFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
         dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
       } else {
         if (previewFile) {
-          setPreviewFileUrl({
-            id: downloadFileResponse.id,
-            shortenedVersion: downloadFileResponse.alias,
-          });
+          setPreviewFileUrl(downloadFileResponse);
         } else {
           openFileInNewTab(downloadFileResponse.id);
         }
@@ -68,7 +69,7 @@ export const FileRow = ({
         setIsLoadingPreviewFile(false);
       }
     },
-    [t, dispatch, registrationIdentifier, file.identifier]
+    [t, dispatch, user, registrationIdentifier, file.identifier]
   );
 
   const fileIsEmbargoed = isEmbargoed(file.embargoDate);

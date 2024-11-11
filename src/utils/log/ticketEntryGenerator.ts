@@ -1,23 +1,19 @@
 import { TFunction } from 'i18next';
+import { generateDoiRequestLogEntry } from './doiRequestGenerator';
+import { generatePublishingRequestLogEntry } from './publishingRequestGenerator';
+import { getAssociatedFiles } from '../registration-helpers';
 import { LogEntry } from '../../types/log.types';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
-import { getAssociatedFiles } from '../registration-helpers';
-import { generateDoiRequestLogEntry } from './doiRequestGenerator';
-import { generatePublishingRequestLogEntry } from './publishingRequestGenerator';
 
 export function generateTicketLogEntries(tickets: Ticket[], registration: Registration, t: TFunction): LogEntry[] {
   return tickets
     .filter(onlyPublishingRequestsWithFiles)
-    .flatMap((ticket) => generateTicketLogEntry(ticket, registration, t))
+    .map((ticket) => generateTicketLogEntry(ticket, registration, t))
     .filter((entry) => entry !== undefined);
 }
 
-function generateTicketLogEntry(
-  ticket: Ticket,
-  registration: Registration,
-  t: TFunction
-): LogEntry[] | LogEntry | undefined {
+function generateTicketLogEntry(ticket: Ticket, registration: Registration, t: TFunction): LogEntry | undefined {
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
 
   switch (ticket.type) {

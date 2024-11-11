@@ -10,7 +10,7 @@ import {
   mockCustomerInstitutions,
 } from '../utils/testfiles/mockCustomerInstitutions';
 import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
-import { mockCompleteUpload, mockCreateUpload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
+import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
 import { mockNviCandidate } from '../utils/testfiles/mockNviCandidate';
@@ -49,6 +49,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
   mock.onGet(new RegExp(SearchApiPath.ImportCandidates)).reply(200, mockSearchImportCandidates);
   // File
+  mock.onGet(new RegExp(FileApiPath.Download)).reply(200, mockDownload);
   mock.onPost(new RegExp(FileApiPath.Create)).reply(200, mockCreateUpload);
   mock.onPost(new RegExp(FileApiPath.Prepare)).reply(200, mockPrepareUpload);
   mock.onPost(new RegExp(FileApiPath.Complete)).reply(200, mockCompleteUpload);

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { downloadImportCandidateFile, downloadRegistrationFile } from '../../../api/fileApi';
+import { downloadImportCandidateFile, downloadPrivateFile2 } from '../../../api/fileApi';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { Registration } from '../../../types/registration.types';
 import { openFileInNewTab } from '../../../utils/registration-helpers';
@@ -26,7 +26,7 @@ export const DownloadFileButton = ({ file, greyTones }: DownloadFileButtonProps)
     queryFn: async () => {
       const downloadFileResponse =
         values.type === 'Publication'
-          ? await downloadRegistrationFile(values.identifier, file.identifier)
+          ? await downloadPrivateFile2(values.identifier, file.identifier)
           : await downloadImportCandidateFile(values.identifier, file.identifier);
       if (downloadFileResponse.id) {
         openFileInNewTab(downloadFileResponse.id);
