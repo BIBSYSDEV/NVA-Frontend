@@ -282,12 +282,12 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           reference: {
             publicationContext: {
               type: true,
-              label: true,
+              name: true,
               agent: {
                 name: true,
               },
               place: {
-                label: true,
+                name: true,
                 country: true,
               },
               time: {

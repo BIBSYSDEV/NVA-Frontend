@@ -246,7 +246,7 @@ interface PublicPresentationProps {
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
   const { t } = useTranslation();
-  const { type, time, place, label, agent } = publicationContext;
+  const { type, time, place, name: label, agent } = publicationContext;
   const periodString = getPeriodString(time?.from, time?.to);
 
   return (
