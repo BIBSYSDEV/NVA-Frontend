@@ -32,12 +32,18 @@ import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
+import { FileType } from '../../../types/associatedArtifact.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
-import { isOpenFile, isPendingOpenFile, userHasAccessRight } from '../../../utils/registration-helpers';
+import {
+  getAssociatedFiles,
+  isOpenFile,
+  isPendingOpenFile,
+  userHasAccessRight,
+} from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath, getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { PublishingLogPreview } from '../PublishingLogPreview';
@@ -195,7 +201,17 @@ export const PublishingAccordion = ({
   const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
 
   const filesAwaitingApproval = lastPublishingRequest ? lastPublishingRequest.filesForApproval.length : 0;
-  const hasPendingOpenFiles = filesAwaitingApproval > 0;
+  const ticketHasPendingFiles = filesAwaitingApproval > 0;
+
+  const registrationHasPendingFiles =
+    getAssociatedFiles(registration.associatedArtifacts)
+      // Shoud check if the file is related to the current institution. uploadDetails.uploadedBy?
+      .filter(
+        (file) =>
+          file.type === FileType.PendingOpenFile ||
+          file.type === FileType.PendingInternalFile ||
+          file.type === FileType.UnpublishedFile
+      ).length > 0;
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
@@ -209,7 +225,7 @@ export const PublishingAccordion = ({
   const mismatchingPublishedStatusWorkflow2 =
     registratorPublishesMetadataOnly &&
     !!lastPublishingRequest &&
-    (isDraftRegistration || (hasCompletedTicket && hasPendingOpenFiles));
+    (isDraftRegistration || (hasCompletedTicket && (ticketHasPendingFiles || registrationHasPendingFiles)));
 
   const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
 
@@ -279,7 +295,7 @@ export const PublishingAccordion = ({
         {userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus && (
           <>
             <Typography paragraph sx={{ mt: '1rem' }}>
-              {hasPendingOpenFiles && isPublishedRegistration
+              {isPublishedRegistration
                 ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
@@ -333,7 +349,7 @@ export const PublishingAccordion = ({
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
               <>
                 <Typography paragraph>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
-                {hasPendingOpenFiles && (
+                {ticketHasPendingFiles && (
                   <Typography paragraph>
                     {t('registration.public_page.tasks_panel.you_can_publish_metadata_files_info')}
                   </Typography>
