@@ -246,15 +246,15 @@ interface PublicPresentationProps {
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
   const { t } = useTranslation();
-  const { type, time, place, name: label, agent } = publicationContext;
+  const { type, time, place, name, agent } = publicationContext;
   const periodString = getPeriodString(time?.from, time?.to);
 
   return (
     <>
       <Typography variant="h3">{t(`registration.publication_types.${type}`)}</Typography>
-      {label && (
+      {name && (
         <Typography>
-          {t('registration.resource_type.title_of_event')}: {label}
+          {t('registration.resource_type.title_of_event')}: {name}
         </Typography>
       )}
       {agent?.name && (
