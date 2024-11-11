@@ -1,8 +1,8 @@
 import { TFunction } from 'i18next';
+import { FileType } from '../../types/associatedArtifact.types';
 import { Log, LogEntry, LogEntryType } from '../../types/log.types';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
-import { getArchivedFiles } from '../registration-helpers';
 import { generateImportLogEntries } from './importEntryGenerator';
 import { generateRegistrationLogEntries } from './registrationEntryGenerator';
 import { generateTicketLogEntries } from './ticketEntryGenerator';
@@ -14,10 +14,14 @@ export function generateLog(registration: Registration, tickets: Ticket[], t: TF
 
   const entries = [...importLogEntries, ...registrationLogEntries, ...ticketLogEntries];
 
+  const internalFilesCount = registration.associatedArtifacts.filter(
+    (file) => file.type === FileType.InternalFile
+  ).length;
+
   return {
     entries: entries.sort(sortLogEntries),
     metadataUpdated: registration.modifiedDate,
-    numberOfArchivedFiles: getArchivedFiles(registration.associatedArtifacts, tickets),
+    numberOfArchivedFiles: internalFilesCount,
   };
 }
 
