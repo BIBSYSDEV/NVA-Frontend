@@ -186,7 +186,7 @@ export const getFormattedRegistration = (registration: Registration) => {
             ...presentationRegistration.entityDescription.reference.publicationContext,
             time: time?.from || time?.to ? { ...time, type: 'Period' } : null,
             agent: agent?.name ? { ...agent, type: 'UnconfirmedOrganization' } : null,
-            place: place?.label || place?.country ? { ...place, type: 'UnconfirmedPlace' } : null,
+            place: place?.name || place?.country ? { ...place, type: 'UnconfirmedPlace' } : null,
           },
         },
       },
@@ -610,7 +610,7 @@ export const getOutputName = (item: OutputItem): string => {
   switch (item.type) {
     case 'Venue':
     case 'PerformingArtsVenue':
-      return (item as Venue).place?.label ?? '';
+      return (item as Venue).place?.name ?? '';
     case 'Competition':
       return (item as Competition).name;
     case 'MentionInPublication':
@@ -622,22 +622,22 @@ export const getOutputName = (item: OutputItem): string => {
     case 'Broadcast':
       return (item as Broadcast).publisher.name;
     case 'CinematicRelease':
-      return (item as CinematicRelease).place.label;
+      return (item as CinematicRelease).place.name;
     case 'OtherRelease': {
       const otherRelease = item as OtherRelease;
-      return [otherRelease.publisher.name, otherRelease.place.label].filter(Boolean).join('/');
+      return [otherRelease.publisher.name, otherRelease.place.name].filter(Boolean).join('/');
     }
     case 'MusicScore':
       return (item as MusicScore).publisher.name;
     case 'AudioVisualPublication':
       return (item as AudioVisualPublication).publisher.name;
     case 'Concert':
-      return (item as Concert).place.label;
+      return (item as Concert).place.name;
     case 'OtherPerformance': {
       const otherMusicPerformance = item as OtherMusicPerformance;
 
       return (
-        otherMusicPerformance.place?.label ||
+        otherMusicPerformance.place?.name ||
         otherMusicPerformance.performanceType ||
         i18n.t('registration.resource_type.artistic.output_type.OtherPerformance')
       );
@@ -645,7 +645,7 @@ export const getOutputName = (item: OutputItem): string => {
     case 'LiteraryArtsMonograph':
       return (item as LiteraryArtsMonograph).publisher.name;
     case 'LiteraryArtsPerformance':
-      return (item as LiteraryArtsPerformance).place.label;
+      return (item as LiteraryArtsPerformance).place.name;
     case 'LiteraryArtsAudioVisual':
       return (item as LiteraryArtsAudioVisual).publisher.name;
     case 'LiteraryArtsWeb':
