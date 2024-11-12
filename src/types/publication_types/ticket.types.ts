@@ -61,8 +61,8 @@ type TicketPublication = Pick<
   };
 
 export interface PublishingTicket extends Ticket {
-  approvedFiles: string[];
-  filesForApproval: string[];
+  approvedFiles: AssociatedFile[];
+  filesForApproval: AssociatedFile[];
   workflow: PublishStrategy;
 }
 
