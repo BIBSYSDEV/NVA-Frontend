@@ -203,15 +203,18 @@ export const PublishingAccordion = ({
   const filesAwaitingApproval = lastPublishingRequest ? lastPublishingRequest.filesForApproval.length : 0;
   const ticketHasPendingFiles = filesAwaitingApproval > 0;
 
-  const registrationHasPendingFiles =
-    getAssociatedFiles(registration.associatedArtifacts)
-      // Shoud check if the file is related to the current institution. uploadDetails.uploadedBy?
-      .filter(
-        (file) =>
-          file.type === FileType.PendingOpenFile ||
-          file.type === FileType.PendingInternalFile ||
-          file.type === FileType.UnpublishedFile
-      ).length > 0;
+  const approvedFileIdentifiers = publishingRequestTickets
+    .filter((ticket) => ticket.status === 'Completed' && ticket.approvedFiles.length > 0)
+    .flatMap((ticket) => ticket.approvedFiles);
+
+  const registrationHasMismatchingFiles = getAssociatedFiles(registration.associatedArtifacts)
+    .filter((file) => approvedFileIdentifiers.includes(file.identifier))
+    .some(
+      (file) =>
+        file.type === FileType.PendingOpenFile ||
+        file.type === FileType.PendingInternalFile ||
+        file.type === FileType.UnpublishedFile
+    );
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
@@ -225,7 +228,7 @@ export const PublishingAccordion = ({
   const mismatchingPublishedStatusWorkflow2 =
     registratorPublishesMetadataOnly &&
     !!lastPublishingRequest &&
-    (isDraftRegistration || (hasCompletedTicket && (ticketHasPendingFiles || registrationHasPendingFiles)));
+    (isDraftRegistration || (hasCompletedTicket && (ticketHasPendingFiles || registrationHasMismatchingFiles)));
 
   const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
 
@@ -516,7 +519,7 @@ export const PublishingAccordion = ({
           </Box>
         )}
 
-        {userCanHandlePublishingRequest && hasPendingTicket && (
+        {userCanHandlePublishingRequest && hasPendingTicket && !hasMismatchingPublishedStatus && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {ticketMessages.length > 0 ? (
               <TicketMessageList ticket={lastPublishingRequest} />
