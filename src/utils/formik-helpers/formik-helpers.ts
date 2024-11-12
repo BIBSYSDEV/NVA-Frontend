@@ -10,10 +10,12 @@ import {
 import { Contributor } from '../../types/contributor.types';
 import { HighestTouchedTab } from '../../types/locationState.types';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
+import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import { ExhibitionRegistration } from '../../types/publication_types/exhibitionContent.types';
 import { MapRegistration } from '../../types/publication_types/otherRegistration.types';
 import {
   ContributorFieldNames,
+  DegreeType,
   DescriptionFieldNames,
   FileFieldNames,
   PublicationType,
@@ -23,7 +25,7 @@ import {
   SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../../types/publicationFieldNames';
-import { Funding, Registration, RegistrationTab } from '../../types/registration.types';
+import { Funding, PublicationInstance, Registration, RegistrationTab } from '../../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from '../registration-helpers';
 import { registrationValidationSchema } from '../validation/registration/registrationValidation';
 
@@ -58,7 +60,11 @@ export const getTabErrors = (
 ) => {
   const tabErrors: TabErrors = {
     [RegistrationTab.Description]: getErrorMessages(getAllDescriptionFields(values.fundings), errors, touched),
-    [RegistrationTab.ResourceType]: getErrorMessages(resourceFieldNames, errors, touched),
+    [RegistrationTab.ResourceType]: getErrorMessages(
+      getAllResourceFields(values.entityDescription?.reference?.publicationInstance),
+      errors,
+      touched
+    ),
     [RegistrationTab.Contributors]: getErrorMessages(
       getAllContributorFields(values.entityDescription?.contributors ?? []),
       errors,
@@ -83,8 +89,6 @@ export const getFirstErrorTab = (tabErrors: TabErrors | null) =>
             : -1
     : -1;
 
-const resourceFieldNames = Object.values(ResourceFieldNames);
-
 const getAllDescriptionFields = (fundings: Funding[]) => {
   const descriptionFieldNames: string[] = Object.values(DescriptionFieldNames);
   fundings.forEach((_, index) => {
@@ -97,6 +101,20 @@ const getAllDescriptionFields = (fundings: Funding[]) => {
     descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Amount}`);
   });
   return descriptionFieldNames;
+};
+
+const getAllResourceFields = (publicationInstance?: PublicationInstance) => {
+  const resourceFieldNames: string[] = Object.values(ResourceFieldNames);
+
+  if (publicationInstance?.type === DegreeType.Phd) {
+    publicationInstance.related?.forEach((document, index) => {
+      if (document.type === 'UnconfirmedDocument') {
+        resourceFieldNames.push(`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`);
+      }
+    });
+  }
+
+  return resourceFieldNames;
 };
 
 const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] => {
@@ -185,7 +203,9 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           },
         },
       };
-    case PublicationType.Degree:
+    case PublicationType.Degree: {
+      const degreePublicationInstance = registration.entityDescription?.reference
+        ?.publicationInstance as DegreePublicationInstance;
       return {
         entityDescription: {
           reference: {
@@ -196,10 +216,16 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
             },
             publicationInstance: {
               type: true,
+              related:
+                degreePublicationInstance.related &&
+                degreePublicationInstance.related.map((document) =>
+                  document.type === 'UnconfirmedDocument' ? { text: true } : { identifier: true }
+                ),
             },
           },
         },
       };
+    }
     case PublicationType.Report:
       return {
         entityDescription: {

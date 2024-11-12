@@ -6,7 +6,7 @@ import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristin
 import { SearchForm } from '../../components/SearchForm';
 import { SearchResponse, SearchResponse2 } from '../../types/common.types';
 import { CristinProject, ProjectAggregations } from '../../types/project.types';
-import { Registration, RegistrationAggregations } from '../../types/registration.types';
+import { RegistrationAggregations, RegistrationSearchItem } from '../../types/registration.types';
 import { CristinPerson, PersonAggregations } from '../../types/user.types';
 import { SearchParam } from '../../utils/searchHelpers';
 import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
@@ -31,7 +31,7 @@ const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
 }));
 
 export interface SearchPageProps {
-  registrationQuery: UseQueryResult<SearchResponse2<Registration, RegistrationAggregations>>;
+  registrationQuery: UseQueryResult<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>;
   personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
   projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }

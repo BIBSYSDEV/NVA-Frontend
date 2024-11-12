@@ -64,12 +64,13 @@ export const SelectInstitutionForm = ({
 }: SelectInstitutionFormProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSubunitId, setSelectedSubunitId] = useState(initialValues?.subunit?.id || '');
-  const [selectedSubunitLabels, setSelectedSubunitLabels] = useState(initialValues?.subunit?.labels || undefined);
-
   const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const debouncedQuery = useDebounce(searchTerm);
-  const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
+  const organizationSearchQuery = useSearchForOrganizations({
+    query: debouncedQuery,
+    results: searchSize,
+    fullTree: true,
+  });
 
   const institutionOptions = organizationSearchQuery.data?.hits ?? [];
 
@@ -83,9 +84,6 @@ export const SelectInstitutionForm = ({
         } else if (values.subunit?.id) {
           // When we select from the subunit search field
           saveAffiliation(values.subunit.id, values.subunit.labels);
-        } else if (selectedSubunitId) {
-          // When we select from the list below the subunit search field
-          saveAffiliation(selectedSubunitId, selectedSubunitLabels);
         } else if (values.unit?.id) {
           // When we only select from the unit search field (no sub-organization)
           saveAffiliation(values.unit?.id, values.unit?.labels);
@@ -161,13 +159,8 @@ export const SelectInstitutionForm = ({
                       }
                     }}
                     onChange={(_, value) => {
-                      resetForm({
-                        values: initialValuesOrganizationForm,
-                      });
-
+                      resetForm({ values: initialValuesOrganizationForm });
                       setFieldValue(field.name, value);
-                      setSelectedSubunitId('');
-                      setSelectedSubunitLabels(undefined);
                     }}
                     loading={organizationSearchQuery.isPending}
                     renderInput={(params) => (
@@ -199,11 +192,7 @@ export const SelectInstitutionForm = ({
                         renderOption={({ key, ...props }, option) => (
                           <OrganizationRenderOption key={option.id} props={props} option={option} />
                         )}
-                        onChange={(_, value) => {
-                          setFieldValue(field.name, value);
-                          setSelectedSubunitId(value?.id ?? '');
-                          setSelectedSubunitLabels(value?.labels ?? undefined);
-                        }}
+                        onChange={(_, value) => setFieldValue(field.name, value)}
                         filterOptions={(options, state) =>
                           options.filter((option) =>
                             Object.values(option.labels).some((label) =>
@@ -225,10 +214,9 @@ export const SelectInstitutionForm = ({
                         <OrganizationAccordion
                           key={organization.id}
                           organization={organization}
-                          searchId={values.subunit?.id ?? ''}
-                          selectedId={selectedSubunitId}
-                          setSelectedId={setSelectedSubunitId}
-                          setSelectedLabels={setSelectedSubunitLabels}
+                          searchId={values.subunit?.id}
+                          selectedId={values.subunit?.id}
+                          setSelectedOrganization={(organization) => setFieldValue(field.name, organization)}
                         />
                       ))}
                     </>

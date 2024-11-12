@@ -12,7 +12,7 @@ export const NfrProjectOption = ({ project }: NrfProjectOptionProps) => {
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ paddingX: '1rem', paddingY: '0.4rem', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(project.labels)}</Typography>
       <Typography variant="body1">{getPeriodString(project.activeFrom, project.activeTo)}</Typography>
       <Typography variant="body2">{project.lead ? `${t('project.project_manager')}: ${project.lead}` : ''}</Typography>

@@ -15,8 +15,8 @@ import { CustomerTicketSearchResponse } from '../types/publication_types/ticket.
 import {
   AggregationFileKeyType,
   PublicationInstanceType,
-  Registration,
   RegistrationAggregations,
+  RegistrationSearchItem,
   RegistrationStatus,
 } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
@@ -348,7 +348,6 @@ export enum ResultParam {
   Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
-  ScientificIndex = 'scientificIndex',
   ScientificIndexStatus = 'scientificIndexStatus',
   ScientificReportPeriodBeforeParam = 'scientificReportPeriodBefore',
   ScientificReportPeriodSinceParam = 'scientificReportPeriodSince',
@@ -358,6 +357,7 @@ export enum ResultParam {
   Tags = 'tags',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
+  UnidentifiedNorwegian = 'unidentifiedNorwegian',
   Unit = 'unit',
   Vocabulary = 'vocabulary',
 }
@@ -404,15 +404,16 @@ export interface FetchResultsParams {
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
   [ResultParam.Series]?: string | null;
-  [ResultParam.ScientificIndex]?: string | null;
   [ResultParam.ScientificIndexStatus]?: ScientificIndexStatuses | null;
   [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
   [ResultParam.ScientificReportPeriodSinceParam]?: string | null;
+  [ResultParam.ScientificReportPeriodBeforeParam]?: string | null;
   [ResultParam.ScientificValue]?: string | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
+  [ResultParam.UnidentifiedNorwegian]?: boolean | null;
   [ResultParam.Unit]?: string | null;
   [ResultParam.Vocabulary]?: string | null;
 }
@@ -517,9 +518,11 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
   }
-  if (params.scientificIndex) {
-    searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+params.scientificIndex + 1).toString());
-    searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificIndex);
+  if (params.scientificReportPeriodSince) {
+    searchParams.set(ResultParam.ScientificReportPeriodSinceParam, params.scientificReportPeriodSince);
+  }
+  if (params.scientificReportPeriodBefore) {
+    searchParams.set(ResultParam.ScientificReportPeriodBeforeParam, params.scientificReportPeriodBefore);
   }
   if (params.scientificIndexStatus) {
     searchParams.set(ResultParam.ScientificIndexStatus, params.scientificIndexStatus);
@@ -536,11 +539,12 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.title) {
     searchParams.set(ResultParam.Title, params.title);
   }
-  if (params.topLevelOrganization) {
-    searchParams.set(ResultParam.TopLevelOrganization, encodeURIComponent(params.topLevelOrganization));
+  if (params.topLevelOrganization || params.unit) {
+    const unitParam = params.unit || params.topLevelOrganization || '';
+    searchParams.set(ResultParam.Unit, encodeURIComponent(unitParam));
   }
-  if (params.unit) {
-    searchParams.set(ResultParam.Unit, params.unit);
+  if (params.unidentifiedNorwegian) {
+    searchParams.set(ResultParam.UnidentifiedNorwegian, params.unidentifiedNorwegian.toString());
   }
   if (params.vocabulary) {
     searchParams.set(ResultParam.Vocabulary, params.vocabulary);
@@ -551,7 +555,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getResults = await apiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
+  const getResults = await apiRequest2<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
     signal,
   });
@@ -586,7 +590,9 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getCustomerResults = await authenticatedApiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
+  const getCustomerResults = await authenticatedApiRequest2<
+    SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
+  >({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
     signal,
   });

@@ -9,9 +9,10 @@ interface DuplicateWarningProps extends Pick<BoxProps, 'sx'> {
   warning: string;
   linkTo?: string;
   name?: string;
+  listHeader?: string;
 }
 
-export const DuplicateWarning = ({ name, linkTo, warning, sx }: DuplicateWarningProps) => {
+export const DuplicateWarning = ({ name, listHeader, linkTo, warning, sx }: DuplicateWarningProps) => {
   const { t } = useTranslation();
   return (
     <Box
@@ -28,7 +29,7 @@ export const DuplicateWarning = ({ name, linkTo, warning, sx }: DuplicateWarning
       <StyledInfoBanner>{warning}</StyledInfoBanner>
       {name && linkTo && (
         <>
-          <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
+          <Typography sx={{ fontWeight: 'bold' }}>{listHeader ? listHeader : t('common.result')}</Typography>
           <Link target="_blank" data-testid={dataTestId.registrationLandingPage.duplicateRegistrationLink} to={linkTo}>
             <Box sx={{ display: 'flex', gap: '0.5rem' }}>
               <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }}>{name}</Typography>

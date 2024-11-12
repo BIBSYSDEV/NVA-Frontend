@@ -23,7 +23,7 @@ import { PublicationInstanceType, Registration } from '../../../../types/registr
 import { displayDate } from '../../../../utils/date-helpers';
 import { getMainRegistrationType } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
+import { getImportCandidatePath, getRegistrationWizardLink } from '../../../../utils/urlPaths';
 import { CompareDoiField } from './CompareDoiField';
 import { CompareFields } from './CompareFields';
 import { CompareJournalFields } from './CompareJournalFields';
@@ -105,10 +105,7 @@ export const CentralImportCandidateMerge = () => {
         await importCandidateMutation.mutateAsync();
         await registrationQuery.refetch();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
-        history.push(getRegistrationWizardPath(registrationIdentifier), {
-          previousPath: getImportCandidatePath(candidateIdentifier),
-          previousSearch: history.location.state.previousSearch,
-        } satisfies BasicDataLocationState);
+        history.push(getRegistrationWizardLink(registrationIdentifier));
       }}>
       {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (
         <Box

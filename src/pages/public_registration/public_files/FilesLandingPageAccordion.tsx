@@ -3,16 +3,17 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
-import { FileType } from '../../../types/associatedArtifact.types';
-import { RegistrationStatus } from '../../../types/registration.types';
+import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isOpenFile,
+  isPendingOpenFile,
   isTypeWithFileVersionField,
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
-import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { getRegistrationWizardLink } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 
@@ -24,11 +25,11 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const userIsRegistrationAdmin = userHasAccessRight(registration, 'update');
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const publishedFiles = associatedFiles.filter((file) => file.type === FileType.PublishedFile);
-  const unpublishedFiles = associatedFiles.filter((file) => file.type === FileType.UnpublishedFile);
-  const publishableFilesLength = publishedFiles.length + unpublishedFiles.length;
+  const openFiles = associatedFiles.filter(isOpenFile);
+  const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
+  const publishableFilesLength = openFiles.length + pendingOpenFiles.length;
 
-  const filesToShow = userIsRegistrationAdmin ? [...publishedFiles, ...unpublishedFiles] : publishedFiles;
+  const filesToShow = userIsRegistrationAdmin ? [...openFiles, ...pendingOpenFiles] : openFiles;
 
   const showFileVersionField = isTypeWithFileVersionField(
     registration.entityDescription?.reference?.publicationInstance?.type
@@ -61,9 +62,9 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <Typography variant="h2" color="primary">
             {t('registration.files_and_license.files_count', { count: publishableFilesLength })}
           </Typography>
-          {registrationMetadataIsPublished && unpublishedFiles.length > 0 && (
+          {registrationMetadataIsPublished && pendingOpenFiles.length > 0 && (
             <Typography sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
-              {t('registration.files_and_license.files_awaits_approval', { count: unpublishedFiles.length })}
+              {t('registration.files_and_license.files_awaits_approval', { count: pendingOpenFiles.length })}
             </Typography>
           )}
         </Box>
@@ -89,7 +90,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <SelectableButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
-            to={`${getRegistrationWizardPath(registration.identifier)}?tab=3`}>
+            to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
             {t('registration.files_and_license.add_files_or_links')}
           </SelectableButton>
         </Box>

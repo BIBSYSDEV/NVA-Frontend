@@ -1,7 +1,7 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, SxProps, Tooltip, TooltipProps, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
-import { Registration, RegistrationTab } from '../../types/registration.types';
+import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
@@ -29,6 +29,14 @@ interface RegistrationFormActionsProps {
   isNviCandidate: boolean;
 }
 
+const navigationButtonStyling: SxProps = {
+  color: 'white',
+  borderRadius: '50%',
+  bgcolor: 'primary.main',
+  height: '1.875rem',
+  width: '1.875rem',
+};
+
 export const RegistrationFormActions = ({
   tabNumber,
   setTabNumber,
@@ -40,7 +48,7 @@ export const RegistrationFormActions = ({
   const history = useHistory<RegistrationFormLocationState>();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { values, setTouched, resetForm } = useFormikContext<Registration>();
+  const { values, setTouched, resetForm, isValid } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
@@ -49,6 +57,14 @@ export const RegistrationFormActions = ({
 
   const isFirstTab = tabNumber === RegistrationTab.Description;
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
+
+  const cancelEdit = () => {
+    if (history.location.state?.previousPath) {
+      history.goBack();
+    } else {
+      history.push(getRegistrationLandingPagePath(values.identifier));
+    }
+  };
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
@@ -64,7 +80,6 @@ export const RegistrationFormActions = ({
         ['registration', updateRegistrationResponse.data.identifier],
         updateRegistrationResponse.data
       );
-      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
 
       const newErrors = validateForm(updateRegistrationResponse.data);
       resetForm({
@@ -73,8 +88,14 @@ export const RegistrationFormActions = ({
         touched: setNestedObjectValues(newErrors, true),
       });
 
+      // Add a fixed wait to ensure that Formik has updated the form before navigating.
+      // Without this we experienced some issues with RouteLeavingGuard on some browsers (NP-47920).
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
+
       if (isLastTab) {
-        if (history.location.state?.previousPath) {
+        if (history.location.state?.previousPath && !history.location.state?.goToLandingPageAfterSaveAndSee) {
           history.goBack();
         } else {
           history.push(getRegistrationLandingPagePath(values.identifier));
@@ -94,13 +115,20 @@ export const RegistrationFormActions = ({
     }
   };
 
+  const disableSaving =
+    (values.status === RegistrationStatus.Published || values.status === RegistrationStatus.PublishedMetadata) &&
+    !isValid;
+
   return (
     <>
       <Box
         sx={{
           display: 'grid',
-          gridTemplateAreas: "'back-button support-button save-button'",
-          gridTemplateColumns: '1fr 1fr 1fr',
+          gridTemplateAreas: {
+            xs: "'back-button . action-buttons' 'support-button support-button support-button'",
+            md: "'back-button  support-button  action-buttons'",
+          },
+          gridTemplateColumns: { xs: 'auto auto auto', md: '1fr 1fr 1fr' },
           alignItems: 'center',
           gap: '1rem',
         }}>
@@ -110,15 +138,7 @@ export const RegistrationFormActions = ({
               <IconButton
                 onClick={() => setTabNumber(tabNumber - 1)}
                 data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
-                <KeyboardArrowLeftIcon
-                  sx={{
-                    color: 'white',
-                    borderRadius: '50%',
-                    bgcolor: 'primary.light',
-                    height: '1.875rem',
-                    width: '1.875rem',
-                  }}
-                />
+                <KeyboardArrowLeftIcon sx={navigationButtonStyling} />
               </IconButton>
             </Tooltip>
           </Box>
@@ -138,48 +158,52 @@ export const RegistrationFormActions = ({
             {t('my_page.messages.get_curator_support')}
           </Button>
         )}
-
-        {!isLastTab ? (
-          <Box
-            sx={{
-              gridArea: 'save-button',
-              display: 'flex',
-              justifyContent: 'end',
-              alignItems: 'center',
-            }}>
-            <LoadingButton
-              variant="outlined"
-              loading={isSaving}
-              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={handleSaveClick}>
-              {t('common.save')}
-            </LoadingButton>
-            <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
-              <IconButton
-                onClick={() => setTabNumber(tabNumber + 1)}
-                data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
-                <KeyboardArrowRightIcon
-                  sx={{
-                    color: 'white',
-                    borderRadius: '50%',
-                    bgcolor: 'primary.light',
-                    height: '1.875rem',
-                    width: '1.875rem',
-                  }}
-                />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        ) : (
-          <LoadingButton
-            variant="contained"
-            loading={isSaving}
-            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-            onClick={handleSaveClick}
-            sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
-            {t('common.save_and_view')}
-          </LoadingButton>
-        )}
+        <Box
+          sx={{
+            gridArea: 'action-buttons',
+            display: 'flex',
+            justifyContent: 'end',
+            alignItems: 'center',
+            gap: '0.5rem',
+          }}>
+          <Button data-testid={dataTestId.registrationWizard.formActions.cancelEditButton} onClick={cancelEdit}>
+            {t('common.cancel')}
+          </Button>
+          {!isLastTab ? (
+            <>
+              <TooltipButtonWrapper
+                title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+                <LoadingButton
+                  variant="outlined"
+                  disabled={disableSaving}
+                  loading={isSaving}
+                  data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                  onClick={handleSaveClick}>
+                  {t('common.save')}
+                </LoadingButton>
+              </TooltipButtonWrapper>
+              <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
+                <IconButton
+                  onClick={() => setTabNumber(tabNumber + 1)}
+                  data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
+                  <KeyboardArrowRightIcon sx={navigationButtonStyling} />
+                </IconButton>
+              </Tooltip>
+            </>
+          ) : (
+            <TooltipButtonWrapper
+              title={disableSaving && t('registration.cannot_update_published_result_with_validation_errors')}>
+              <LoadingButton
+                variant="contained"
+                disabled={disableSaving}
+                loading={isSaving}
+                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+                onClick={handleSaveClick}>
+                {t('common.save_and_view')}
+              </LoadingButton>
+            </TooltipButtonWrapper>
+          )}
+        </Box>
       </Box>
 
       <Modal
@@ -207,3 +231,13 @@ export const RegistrationFormActions = ({
     </>
   );
 };
+
+// Wraps disabled buttons in <div> to ensure tooltips display correctly
+const TooltipButtonWrapper = ({ children, title }: TooltipProps) =>
+  title ? (
+    <Tooltip title={title}>
+      <div>{children}</div>
+    </Tooltip>
+  ) : (
+    children
+  );

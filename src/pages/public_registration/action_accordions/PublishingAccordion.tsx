@@ -32,20 +32,15 @@ import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { FileType } from '../../../types/associatedArtifact.types';
-import { RegistrationFormLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { toDateString } from '../../../utils/date-helpers';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
-import { userHasAccessRight } from '../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { isOpenFile, isPendingOpenFile, userHasAccessRight } from '../../../utils/registration-helpers';
+import { getRegistrationLandingPagePath, getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { StyledStatusMessageBox } from '../../messages/components/PublishingRequestMessagesColumn';
-import { CompletedPublishingRequestStatusBox } from './CompletedPublishingRequestStatusBox';
-import { DeletedRegistrationInformation } from './DeletedRegistrationInformation';
+import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { TicketAssignee } from './TicketAssignee';
@@ -81,8 +76,8 @@ export const PublishingAccordion = ({
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const isDeletedRegistration = registration.status === RegistrationStatus.Deleted;
-  const isUnpublisehdRegistration = registration.status === RegistrationStatus.Unpublished;
-  const isUnpublishedOrDeletedRegistration = isDeletedRegistration || isUnpublisehdRegistration;
+  const isUnpublishedRegistration = registration.status === RegistrationStatus.Unpublished;
+  const isUnpublishedOrDeletedRegistration = isDeletedRegistration || isUnpublishedRegistration;
 
   const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch({
     enabled: isDraftRegistration && !!registration.entityDescription?.mainTitle,
@@ -94,10 +89,7 @@ export const PublishingAccordion = ({
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
-  const registrationHasFile = registration.associatedArtifacts.some(
-    (artifact) => artifact.type === FileType.PublishedFile
-  );
-  const completedTickets = publishingRequestTickets.filter((ticket) => ticket.status === 'Completed');
+  const registrationHasOpenFile = registration.associatedArtifacts.some(isOpenFile);
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
   const userCanApprovePublishingRequest = userHasAccessRight(registration, 'publishing-request-approve');
@@ -107,7 +99,9 @@ export const PublishingAccordion = ({
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
 
-  const lastPublishingRequest = publishingRequestTickets.at(-1);
+  const lastPublishingRequest =
+    publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
+    publishingRequestTickets.at(-1);
 
   const ticketMutation = useMutation({
     mutationFn: lastPublishingRequest
@@ -125,7 +119,7 @@ export const PublishingAccordion = ({
       if (variables.status === 'Completed') {
         dispatch(
           setNotification({
-            message: t('feedback.success.publishing_request_approved'),
+            message: t('feedback.success.published_registration'),
             variant: 'success',
           })
         );
@@ -154,7 +148,7 @@ export const PublishingAccordion = ({
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(
         setNotification({
-          message: t('feedback.error.create_publishing_request'),
+          message: t('feedback.error.publish_registration'),
           variant: 'error',
         })
       );
@@ -162,17 +156,27 @@ export const PublishingAccordion = ({
       if (userCanApprovePublishingRequest) {
         dispatch(
           setNotification({
-            message: t('feedback.success.publish_as_curator'),
+            message: t('feedback.success.published_registration'),
             variant: 'success',
           })
         );
       } else {
-        dispatch(
-          setNotification({
-            message: t('feedback.success.create_publishing_request'),
-            variant: 'success',
-          })
-        );
+        const hasFilesWaitingForApproval = registration.associatedArtifacts.some(isPendingOpenFile);
+        if (hasFilesWaitingForApproval) {
+          dispatch(
+            setNotification({
+              message: t('feedback.success.published_metadata_waiting_for_files'),
+              variant: 'success',
+            })
+          );
+        } else {
+          dispatch(
+            setNotification({
+              message: t('feedback.success.published_registration'),
+              variant: 'success',
+            })
+          );
+        }
       }
       refetchData();
     }
@@ -191,7 +195,7 @@ export const PublishingAccordion = ({
   const registratorPublishesMetadataOnly = lastPublishingRequest?.workflow === 'RegistratorPublishesMetadataOnly';
 
   const filesAwaitingApproval = lastPublishingRequest ? lastPublishingRequest.filesForApproval.length : 0;
-  const hasUnpublishedFiles = filesAwaitingApproval > 0;
+  const hasPendingOpenFiles = filesAwaitingApproval > 0;
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
@@ -205,7 +209,7 @@ export const PublishingAccordion = ({
   const mismatchingPublishedStatusWorkflow2 =
     registratorPublishesMetadataOnly &&
     !!lastPublishingRequest &&
-    (isDraftRegistration || (hasCompletedTicket && hasUnpublishedFiles));
+    (isDraftRegistration || (hasCompletedTicket && hasPendingOpenFiles));
 
   const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
 
@@ -237,7 +241,7 @@ export const PublishingAccordion = ({
             ? t(`registration.status.${registration.status}`)
             : t('registration.public_page.publication')}
           {lastPublishingRequest &&
-            !isUnpublisehdRegistration &&
+            !isUnpublishedRegistration &&
             !isDeletedRegistration &&
             ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         </Typography>
@@ -265,25 +269,8 @@ export const PublishingAccordion = ({
         )}
 
         {/* Show approval history */}
-        {(isPublishedRegistration || isDeletedRegistration || isUnpublisehdRegistration) && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mb: '0.5rem' }}>
-            <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-              <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
-              {registration.publishedDate && <Typography>{toDateString(registration.publishedDate)}</Typography>}
-            </StyledStatusMessageBox>
-            {completedTickets.map((ticket) => (
-              <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket} />
-            ))}
-            {registration.publicationNotes
-              ?.filter((note) => note.type === 'UnpublishingNote')
-              .map((note, index) => (
-                <DeletedRegistrationInformation
-                  key={note.createdDate ?? index}
-                  registration={registration}
-                  unpublishingNote={note}
-                />
-              ))}
-          </Box>
+        {(isPublishedRegistration || isDeletedRegistration || isUnpublishedRegistration) && (
+          <PublishingLogPreview registration={registration} tickets={publishingRequestTickets} />
         )}
 
         {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
@@ -292,7 +279,7 @@ export const PublishingAccordion = ({
         {userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus && (
           <>
             <Typography paragraph sx={{ mt: '1rem' }}>
-              {hasUnpublishedFiles && isPublishedRegistration
+              {hasPendingOpenFiles && isPublishedRegistration
                 ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
@@ -346,7 +333,7 @@ export const PublishingAccordion = ({
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
               <>
                 <Typography paragraph>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
-                {hasUnpublishedFiles && (
+                {hasPendingOpenFiles && (
                   <Typography paragraph>
                     {t('registration.public_page.tasks_panel.you_can_publish_metadata_files_info')}
                   </Typography>
@@ -399,12 +386,12 @@ export const PublishingAccordion = ({
                       {t('registration.public_page.tasks_panel.published_registration')}
                     </Typography>
                     <Typography paragraph>
-                      {registrationHasFile
+                      {registrationHasOpenFile
                         ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
                         : t('registration.public_page.tasks_panel.registration_is_published')}
                     </Typography>
                   </>
-                ) : registrationHasFile ? (
+                ) : registrationHasOpenFile ? (
                   <Trans
                     t={t}
                     i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
@@ -422,7 +409,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {canApprovePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
+        {canApprovePublishingRequest && !hasMismatchingPublishedStatus && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <Trans
               t={t}
@@ -446,11 +433,7 @@ export const PublishingAccordion = ({
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
               endIcon={<EditIcon fontSize="large" />}
               component={RouterLink}
-              to={{
-                pathname: getRegistrationWizardPath(registration.identifier),
-                search: '?tab=' + RegistrationTab.FilesAndLicenses,
-                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
-              }}>
+              to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
               {t('registration.edit_registration')}
             </Button>
 

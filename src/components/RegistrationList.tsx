@@ -11,13 +11,13 @@ import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
-import { Registration, RegistrationStatus } from '../types/registration.types';
+import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
-  getRegistrationWizardPath,
+  getRegistrationWizardLink,
   getResearchProfilePath,
   UrlPathTemplate,
 } from '../utils/urlPaths';
@@ -28,9 +28,9 @@ import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps extends Pick<LinkProps, 'target'> {
-  registrations: Registration[];
+  registrations: RegistrationSearchItem[];
   canEditRegistration?: boolean;
-  onDeleteDraftRegistration?: (registration: Registration) => void;
+  onDeleteDraftRegistration?: (registration: RegistrationSearchItem) => void;
   promotedPublications?: string[];
 }
 
@@ -47,7 +47,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 );
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
-  registration: Registration;
+  registration: RegistrationSearchItem;
   ticketView?: boolean;
 }
 
@@ -70,14 +70,14 @@ export const RegistrationListItemContent = ({
   const mutationKey = ['person-preferences', userCristinId];
 
   const registrationType = entityDescription?.reference?.publicationInstance?.type;
-  const contributors = entityDescription?.contributors ?? [];
+  const contributors = entityDescription?.contributorsPreview ?? [];
 
   const primaryContributors = registrationType
     ? getContributorsWithPrimaryRole(contributors, registrationType)
     : contributors;
 
   const focusedContributors = primaryContributors.slice(0, 5);
-  const countRestContributors = primaryContributors.length - focusedContributors.length;
+  const countRestContributors = registration.entityDescription.contributorsCount - focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
 
@@ -201,10 +201,10 @@ export const RegistrationListItemContent = ({
           )}
           <Tooltip title={t('common.edit')}>
             <IconButton
-              data-testid={`edit-registration-${identifier}`}
               component={Link}
               target={target}
-              to={getRegistrationWizardPath(identifier)}
+              to={getRegistrationWizardLink(identifier, { goToLandingPageAfterSaveAndSee: true })}
+              data-testid={`edit-registration-${identifier}`}
               size="small"
               sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
               <EditIcon fontSize="inherit" />

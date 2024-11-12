@@ -36,7 +36,8 @@ const facetParams: string[] = [
   ResultParam.Publisher,
   ResultParam.Files,
   ResultParam.FundingSource,
-  ResultParam.ScientificIndex,
+  ResultParam.ScientificReportPeriodSinceParam,
+  ResultParam.ScientificReportPeriodBeforeParam,
   ResultParam.Series,
   ResultParam.TopLevelOrganization,
 ];
@@ -309,7 +310,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     }
                     break;
                   }
-                  case ResultParam.ScientificIndex: {
+                  case ResultParam.ScientificReportPeriodSinceParam: {
                     fieldName = t('basic_data.nvi.nvi_publication_year');
                     fieldValueText = value;
                     break;

@@ -1,8 +1,8 @@
 import { TFunction } from 'i18next';
+import { FileType } from '../../types/associatedArtifact.types';
 import { Log, LogEntry, LogEntryType } from '../../types/log.types';
-import { Ticket } from '../../types/publication_types/ticket.types';
+import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
-import { getArchivedFiles } from '../registration-helpers';
 import { generateImportLogEntries } from './importEntryGenerator';
 import { generateRegistrationLogEntries } from './registrationEntryGenerator';
 import { generateTicketLogEntries } from './ticketEntryGenerator';
@@ -14,10 +14,14 @@ export function generateLog(registration: Registration, tickets: Ticket[], t: TF
 
   const entries = [...importLogEntries, ...registrationLogEntries, ...ticketLogEntries];
 
+  const internalFilesCount = registration.associatedArtifacts.filter(
+    (file) => file.type === FileType.InternalFile
+  ).length;
+
   return {
     entries: entries.sort(sortLogEntries),
     metadataUpdated: registration.modifiedDate,
-    numberOfArchivedFiles: getArchivedFiles(registration.associatedArtifacts, tickets).length,
+    numberOfArchivedFiles: internalFilesCount,
   };
 }
 
@@ -41,4 +45,54 @@ const sortLogEntries = (a: LogEntry, b: LogEntry) => {
   const indexA = logTypeOrder.indexOf(a.type);
   const indexB = logTypeOrder.indexOf(b.type);
   return indexA - indexB;
+};
+
+interface SimpleLogItemEntry {
+  text: string;
+  date: string;
+}
+
+export const generateSimplePublishingLog = (registration: Registration, tickets: Ticket[], t: TFunction) => {
+  const entries: SimpleLogItemEntry[] = [];
+
+  if (registration.publishedDate) {
+    entries.push({
+      text: t('registration.status.PUBLISHED_METADATA'),
+      date: registration.publishedDate,
+    });
+  }
+
+  if (registration.status === 'UNPUBLISHED') {
+    const unpublishingNotes = registration.publicationNotes?.filter((note) => note.type === 'UnpublishingNote') ?? [];
+    const lastUnpublishingNote = unpublishingNotes.pop();
+    if (lastUnpublishingNote) {
+      entries.push({
+        text: t('log.titles.result_unpublished'),
+        date: lastUnpublishingNote.createdDate,
+      });
+    }
+    return entries;
+  }
+
+  if (registration.status === 'DELETED') {
+    entries.push({
+      text: t('log.titles.result_deleted'),
+      date: registration.modifiedDate,
+    });
+    return entries;
+  }
+
+  const publishingTickets = tickets.filter(
+    (ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Completed'
+  ) as PublishingTicket[];
+  const filePublishingTickets = publishingTickets.filter((ticket) => ticket.approvedFiles.length > 0);
+
+  filePublishingTickets.forEach((ticket) => {
+    entries.push({
+      text: t('my_page.messages.files_published', { count: ticket.approvedFiles.length }),
+      date: ticket.finalizedDate ?? ticket.modifiedDate,
+    });
+  });
+
+  return entries;
 };

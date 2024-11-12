@@ -1,5 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, CircularProgress, IconButton, Link as MuiLink, Skeleton, Typography } from '@mui/material';
+import { Box, BoxProps, CircularProgress, IconButton, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,10 +15,10 @@ import { setNotification } from '../../../redux/notificationSlice';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { OrcidCredentials } from '../../../types/orcid.types';
 import { User } from '../../../types/user.types';
-import { ORCID_BASE_URL, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../utils/constants';
 import { getValueByKey } from '../../../utils/user-helpers';
 
-interface UserOrcidProps {
+interface UserOrcidProps extends Pick<BoxProps, 'sx'> {
   user: User;
 }
 
@@ -50,7 +50,7 @@ const getOrcidCredentials = (search: string, orcidUrl: string): OrcidCredentials
     : null;
 };
 
-export const UserOrcid = ({ user }: UserOrcidProps) => {
+export const UserOrcid = ({ user, sx }: UserOrcidProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -142,7 +142,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   };
 
   return (
-    <div>
+    <Box sx={{ ...sx }}>
       {cristinPersonQuery.isPending ? (
         <CircularProgress aria-labelledby="orcid-label" />
       ) : isAddingOrcid ? (
@@ -200,6 +200,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           {t('my_page.my_profile.orcid.connect_orcid')}
         </SelectableButton>
       )}
-    </div>
+    </Box>
   );
 };

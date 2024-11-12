@@ -130,6 +130,7 @@ const resourceErrorMessage = {
   publisherRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.publisher'),
   }),
+  referenceRequired: i18n.t('feedback.validation.reference_required'),
   seriesNotSelected: i18n.t('feedback.validation.field_not_confirmed', {
     field: i18n.t('registration.resource_type.series'),
   }),
@@ -304,8 +305,28 @@ export const reportReference = baseReference.shape({
 });
 
 // Degree
+const unconfirmedDocumentSchema = Yup.object({
+  type: Yup.string(),
+  text: Yup.string().required(resourceErrorMessage.referenceRequired),
+});
+
+const confirmedDocumentSchema = Yup.object({
+  type: Yup.string(),
+  identifier: Yup.string().url(),
+});
+
 const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
+  related: Yup.array().when('$publicationInstanceType', {
+    is: DegreeType.Phd,
+    then: (schema) =>
+      schema.of(
+        Yup.lazy((related) =>
+          related.type === 'UnconfirmedDocument' ? unconfirmedDocumentSchema : confirmedDocumentSchema
+        )
+      ),
+    otherwise: (schema) => schema.nullable(),
+  }),
 });
 
 const degreePublicationContext = Yup.object<YupShape<DegreePublicationContext>>({

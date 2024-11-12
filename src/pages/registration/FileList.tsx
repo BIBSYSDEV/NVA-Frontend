@@ -15,7 +15,7 @@ import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { AssociatedFile, FileType, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedFile, Uppy } from '../../types/associatedArtifact.types';
 import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -23,6 +23,7 @@ import {
   associatedArtifactIsFile,
   isDegree,
   isEmbargoed,
+  isOpenFile,
   isTypeWithFileVersionField,
   isTypeWithRrs,
   userHasAccessRight,
@@ -59,7 +60,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
   const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
 
   function canEditFile(file: AssociatedFile) {
-    if (isProtectedDegree && isEmbargoed(file.embargoDate) && file.type === FileType.PublishedFile) {
+    if (isProtectedDegree && isEmbargoed(file.embargoDate) && isOpenFile(file)) {
       return !!user?.isEmbargoThesisCurator;
     }
 
@@ -71,7 +72,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
       return !!user?.isInternalImporter;
     }
 
-    if (file.type === FileType.PublishedFile) {
+    if (isOpenFile(file)) {
       return userHasAccessRight(values, 'update-including-files');
     }
 

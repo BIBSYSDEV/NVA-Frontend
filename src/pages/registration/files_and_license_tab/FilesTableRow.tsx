@@ -153,15 +153,18 @@ export const FilesTableRow = ({
         </VerticalAlignedTableCell>
         <VerticalAlignedTableCell>
           <Field name={fileTypeFieldName}>
-            {({ field }: FieldProps) => (
+            {({ field }: FieldProps<FileType>) => (
               <Checkbox
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.toPublishCheckbox}
-                checked={field.value === FileType.UnpublishedFile || field.value === FileType.PublishedFile}
+                checked={
+                  field.value === FileType.UnpublishedFile ||
+                  field.value === FileType.PublishedFile ||
+                  field.value === FileType.OpenFile ||
+                  field.value === FileType.PendingOpenFile
+                }
                 disabled={disabled}
-                inputProps={{
-                  'aria-labelledby': markForPublishId,
-                }}
+                inputProps={{ 'aria-labelledby': markForPublishId }}
                 onChange={(_, checked) => {
                   if (!checked) {
                     setFieldValue(fileTypeFieldName, FileType.UnpublishableFile);
