@@ -24,8 +24,11 @@ export const LogActionItem = ({ description, date, fileIcon }: LogActionItemType
         <Box sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
           {itemIsFile ? (
             <Tooltip title={description}>
-              <Typography sx={{ fontStyle: fileIcon === 'deletedFile' ? 'italic' : '' }} noWrap overflow="hidden">
-                {description}
+              <Typography
+                sx={{ fontStyle: fileIcon === 'deletedFile' || !description ? 'italic' : '' }}
+                noWrap
+                overflow="hidden">
+                {description ?? t('log.unknown_filename')}
               </Typography>
             </Tooltip>
           ) : (
