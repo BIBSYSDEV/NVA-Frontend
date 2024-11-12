@@ -205,7 +205,7 @@ export const PublishingAccordion = ({
 
   const approvedFileIdentifiers = publishingRequestTickets
     .filter((ticket) => ticket.status === 'Completed' && ticket.approvedFiles.length > 0)
-    .flatMap((ticket) => ticket.approvedFiles);
+    .flatMap((ticket) => ticket.approvedFiles.map((file) => file.identifier));
 
   const registrationHasMismatchingFiles = getAssociatedFiles(registration.associatedArtifacts)
     .filter((file) => approvedFileIdentifiers.includes(file.identifier))
@@ -303,8 +303,11 @@ export const PublishingAccordion = ({
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
             <LoadingButton
-              variant="outlined"
+              variant="contained"
+              color="info"
+              size="small"
               loading={isLoadingData}
+              fullWidth
               onClick={refetchData}
               startIcon={<RefreshIcon />}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
