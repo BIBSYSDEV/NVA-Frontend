@@ -40,9 +40,15 @@ export const AddAffiliationSection = () => {
               value={organizationOptions.find((option) => option.id === field.value) ?? null}
               options={organizationOptions}
               getOptionLabel={(option) => getLanguageString(option.labels)}
-              renderOption={(props, option) => (
+              renderOption={({ key, ...props }, option) => (
                 <OrganizationRenderOption key={option.id} props={props} option={option} />
               )}
+              filterOptions={(options, state) => {
+                const searchTerm = state.inputValue.toLowerCase();
+                return options.filter((option) =>
+                  Object.values(option.labels).some((label) => label.toLowerCase().includes(searchTerm))
+                );
+              }}
               loading={isLoadingCurrentOrganization}
               onChange={(_, value) => setFieldValue(field.name, value?.id)}
               renderInput={(params) => (
@@ -97,7 +103,9 @@ export const AddAffiliationSection = () => {
                 label={t('common.end_date')}
                 value={field.value ? new Date(field.value) : null}
                 onChange={(date) => {
-                  !touched && setFieldTouched(field.name, true, false);
+                  if (!touched) {
+                    setFieldTouched(field.name, true, false);
+                  }
                   setFieldValue(field.name, date ?? '');
                 }}
                 views={['year', 'month', 'day']}

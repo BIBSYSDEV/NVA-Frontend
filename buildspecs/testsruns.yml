@@ -1,0 +1,21 @@
+# buildspec file for the NVA-frontend-github-check build in AWS (dev). Used to run tests with mock data for PRs in GitHub.
+
+version: 0.2
+
+env:
+  variables:
+    VITE_API_HOST: 'https://my-nva-api.no'
+    VITE_USE_MOCK: 'true'
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      # https://docs.cypress.io/guides/getting-started/installing-cypress#Amazon-Linux-2023
+      - dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib
+      - npm ci
+  build:
+    commands:
+      - npm run test:vitest
+      - npm run test:cypress

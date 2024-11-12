@@ -5,6 +5,7 @@ import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { ResultParam } from '../../../../api/searchApi';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { dataSearchFieldAttributeName } from '../../../../utils/searchHelpers';
 
 interface FilterItem {
   field: string;
@@ -28,10 +29,11 @@ const registrationFilters: FilterItem[] = [
 
 interface AdvancedSearchRowProps {
   baseFieldName: string;
+  queryParam: ResultParam | '';
   removeFilter: () => void;
 }
 
-export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearchRowProps) => {
+export const AdvancedSearchRow = ({ removeFilter, baseFieldName, queryParam }: AdvancedSearchRowProps) => {
   const { t } = useTranslation();
 
   return (
@@ -62,6 +64,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
             variant="standard"
             size="small"
             label={t('search.search_term_label')}
+            inputProps={queryParam ? { [dataSearchFieldAttributeName]: queryParam } : undefined}
             data-testid={dataTestId.startPage.advancedSearch.advancedValueField}
             fullWidth
           />
@@ -72,7 +75,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
         size="small"
         color="primary"
         onClick={removeFilter}
-        title={t('common.remove')}
+        title={t('search.remove_filter')}
         data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
         <ClearIcon />
       </IconButton>

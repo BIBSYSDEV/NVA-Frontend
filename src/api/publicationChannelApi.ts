@@ -1,4 +1,4 @@
-import { SearchResponse } from '../types/common.types';
+import { SearchResponse2 } from '../types/common.types';
 import { Journal, Publisher, Series } from '../types/registration.types';
 import { getYearQuery } from '../utils/registration-helpers';
 import { PublicationChannelApiPath } from './apiPaths';
@@ -71,39 +71,44 @@ export const fetchSeries = async (identifier: string) => {
   return fetchSeriesResponse.data;
 };
 
-export const searchForSeries = async (query: string, year: string) => {
-  const searchForSeriesResponse = await apiRequest2<SearchResponse<Series>>({
+export const defaultChannelSearchSize = 50;
+
+export const searchForSeries = async (query: string, year: string, size = defaultChannelSearchSize) => {
+  const searchForSeriesResponse = await apiRequest2<SearchResponse2<Series>>({
     url: PublicationChannelApiPath.Series,
     method: 'GET',
     params: {
       query,
       year: getYearQuery(year),
+      size,
     },
   });
 
   return searchForSeriesResponse.data;
 };
 
-export const searchForPublishers = async (query: string, year: string) => {
-  const searchForPublishersResponse = await apiRequest2<SearchResponse<Publisher>>({
+export const searchForPublishers = async (query: string, year: string, size = defaultChannelSearchSize) => {
+  const searchForPublishersResponse = await apiRequest2<SearchResponse2<Publisher>>({
     url: PublicationChannelApiPath.Publisher,
     method: 'GET',
     params: {
       query,
       year: getYearQuery(year),
+      size,
     },
   });
 
   return searchForPublishersResponse.data;
 };
 
-export const searchForJournals = async (query: string, year: string) => {
-  const searchForJournalsResponse = await apiRequest2<SearchResponse<Journal>>({
+export const searchForJournals = async (query: string, year: string, size = defaultChannelSearchSize) => {
+  const searchForJournalsResponse = await apiRequest2<SearchResponse2<Journal>>({
     url: PublicationChannelApiPath.Journal,
     method: 'GET',
     params: {
       query,
       year: getYearQuery(year),
+      size,
     },
   });
 

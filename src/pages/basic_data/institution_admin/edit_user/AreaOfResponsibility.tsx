@@ -64,7 +64,9 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
           data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
           options={options}
           getOptionLabel={(option) => getLanguageString(option.labels)}
-          renderOption={(props, option) => <OrganizationRenderOption key={option.id} props={props} option={option} />}
+          renderOption={({ key, ...props }, option) => (
+            <OrganizationRenderOption key={option.id} props={props} option={option} />
+          )}
           disabled={isSubmitting}
           onChange={(_, value) => {
             if (value) {
@@ -81,7 +83,7 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
           startIcon={<AddCircleOutlineIcon />}
           disabled={isSubmitting}
           onClick={() => setAddAreaOfResponsibility(true)}>
-          {t('common.add')}
+          {t('common.add_custom', { name: t('editor.curators.area_of_responsibility').toLocaleLowerCase() })}
         </Button>
       )}
     </section>

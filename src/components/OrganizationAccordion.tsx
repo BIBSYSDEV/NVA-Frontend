@@ -12,9 +12,9 @@ import { getLanguageString } from '../utils/translation-helpers';
 
 interface OrganizationAccordionProps {
   organization: Organization;
-  searchId: string;
-  selectedId: string;
-  setSelectedId: (id: string) => void;
+  searchId?: string;
+  selectedId?: string;
+  setSelectedOrganization: (organization: Organization) => void;
   level?: number;
   includeAllSubunits?: boolean;
   displayOrgId?: boolean;
@@ -25,7 +25,7 @@ export const OrganizationAccordion = ({
   organization,
   searchId,
   selectedId,
-  setSelectedId,
+  setSelectedOrganization,
   level = 0,
   includeAllSubunits = false,
   displayOrgId = false,
@@ -69,7 +69,7 @@ export const OrganizationAccordion = ({
       expanded={expanded}
       onChange={() => {
         setIsExpanded(!expanded);
-        setSelectedId(organization.id);
+        setSelectedOrganization(organization);
       }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
         <Box
@@ -111,7 +111,7 @@ export const OrganizationAccordion = ({
                 searchId={searchId}
                 includeAllSubunits={includeAllSubunits || foundBySearch}
                 selectedId={selectedId}
-                setSelectedId={setSelectedId}
+                setSelectedOrganization={setSelectedOrganization}
                 displayOrgId={displayOrgId}
                 displaySubunitsCount={displaySubunitsCount}
               />

@@ -15,12 +15,18 @@ import {
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { defaultOrganizationSearchSize } from '../../api/cristinApi';
 import { useSearchForOrganizations } from '../../api/hooks/useSearchForOrganizations';
+import { LanguageString } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../AutocompleteListboxWithExpansion';
 import { OrganizationAccordion } from '../OrganizationAccordion';
 import { OrganizationRenderOption } from '../OrganizationRenderOption';
 import { OrganizationBox } from './OrganizationBox';
@@ -44,7 +50,7 @@ const initialValuesOrganizationForm: OrganizationForm = {
 };
 
 interface SelectInstitutionFormProps {
-  saveAffiliation: (id: string) => void;
+  saveAffiliation: (id: string, labels?: LanguageString) => void;
   onCancel?: () => void;
   suggestedInstitutions?: string[];
   initialValues?: OrganizationForm;
@@ -58,23 +64,29 @@ export const SelectInstitutionForm = ({
 }: SelectInstitutionFormProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSubunitId, setSelectedSubunitId] = useState(initialValues?.subunit?.id || '');
-
+  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const debouncedQuery = useDebounce(searchTerm);
-  const organizationSearchQuery = useSearchForOrganizations(debouncedQuery);
+  const organizationSearchQuery = useSearchForOrganizations({
+    query: debouncedQuery,
+    results: searchSize,
+    fullTree: true,
+  });
+
+  const institutionOptions = organizationSearchQuery.data?.hits ?? [];
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={(values, { setSubmitting }) => {
         if (values.selectedSuggestedAffiliationId) {
+          // When we select from a list of suggested affiliations
           saveAffiliation(values.selectedSuggestedAffiliationId);
         } else if (values.subunit?.id) {
-          saveAffiliation(values.subunit.id);
-        } else if (selectedSubunitId) {
-          saveAffiliation(selectedSubunitId);
+          // When we select from the subunit search field
+          saveAffiliation(values.subunit.id, values.subunit.labels);
         } else if (values.unit?.id) {
-          saveAffiliation(values.unit?.id);
+          // When we only select from the unit search field (no sub-organization)
+          saveAffiliation(values.unit?.id, values.unit?.labels);
         }
         setSubmitting(false);
       }}>
@@ -113,53 +125,61 @@ export const SelectInstitutionForm = ({
               </FormControl>
             </Paper>
           )}
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Typography variant="h3" sx={{ fontWeight: 'normal' }}>
-              {t('common.select_institution')}
-            </Typography>
-            <Field name={SelectOrganizationFormField.Unit}>
-              {({ field }: FieldProps<Organization>) => (
-                <Autocomplete
-                  {...field}
-                  options={organizationSearchQuery.data?.hits ?? []}
-                  inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
-                  getOptionLabel={(option) => getLanguageString(option.labels)}
-                  renderOption={(props, option) => (
-                    <OrganizationRenderOption key={option.id} props={props} option={option} />
-                  )}
-                  filterOptions={(options) => options}
-                  onInputChange={(_, value, reason) => {
-                    if (field.value) {
-                      setFieldValue(field.name, null);
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <Typography variant="h3" sx={{ fontWeight: 'normal' }}>
+                {t('common.select_institution')}
+              </Typography>
+              <Field name={SelectOrganizationFormField.Unit}>
+                {({ field }: FieldProps<Organization>) => (
+                  <Autocomplete
+                    {...field}
+                    options={institutionOptions}
+                    inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
+                    getOptionLabel={(option) => getLanguageString(option.labels)}
+                    renderOption={({ key, ...props }, option) => (
+                      <OrganizationRenderOption key={option.id} props={props} option={option} />
+                    )}
+                    ListboxComponent={AutocompleteListboxWithExpansion}
+                    ListboxProps={
+                      {
+                        hasMoreHits:
+                          !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
+                        onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
+                        isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > institutionOptions.length,
+                      } satisfies AutocompleteListboxWithExpansionProps as any
                     }
-                    if (reason !== 'reset') {
-                      setSearchTerm(value);
-                    }
-                  }}
-                  onChange={(_, value) => {
-                    resetForm({
-                      values: initialValuesOrganizationForm,
-                    });
+                    filterOptions={(options) => options}
+                    onInputChange={(_, value, reason) => {
+                      if (field.value) {
+                        setFieldValue(field.name, null);
+                      }
+                      if (reason !== 'reset') {
+                        setSearchTerm(value);
+                      }
+                    }}
+                    onChange={(_, value) => {
+                      resetForm({ values: initialValuesOrganizationForm });
+                      setFieldValue(field.name, value);
+                    }}
+                    loading={organizationSearchQuery.isPending}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        data-testid={dataTestId.organization.searchField}
+                        label={t('registration.contributors.search_for_institution')}
+                        variant="filled"
+                        fullWidth
+                      />
+                    )}
+                  />
+                )}
+              </Field>
+            </Box>
 
-                    setFieldValue(field.name, value);
-                    setSelectedSubunitId('');
-                  }}
-                  loading={organizationSearchQuery.isPending}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      data-testid={dataTestId.organization.searchField}
-                      label={t('registration.contributors.search_for_institution')}
-                      variant="filled"
-                      fullWidth
-                    />
-                  )}
-                />
-              )}
-            </Field>
             {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <Typography variant="h3" sx={{ marginTop: '1rem', fontWeight: 'normal' }}>
+                <Typography variant="h3" sx={{ fontWeight: 'normal' }}>
                   {t('common.select_unit')}
                 </Typography>
                 <Field name={SelectOrganizationFormField.Subunit}>
@@ -169,13 +189,10 @@ export const SelectInstitutionForm = ({
                         value={field.value}
                         options={getSortedSubUnits(values.unit?.hasPart)}
                         getOptionLabel={(option) => getLanguageString(option.labels)}
-                        renderOption={(props, option) => (
+                        renderOption={({ key, ...props }, option) => (
                           <OrganizationRenderOption key={option.id} props={props} option={option} />
                         )}
-                        onChange={(_, value) => {
-                          setFieldValue(field.name, value);
-                          setSelectedSubunitId(value?.id ?? '');
-                        }}
+                        onChange={(_, value) => setFieldValue(field.name, value)}
                         filterOptions={(options, state) =>
                           options.filter((option) =>
                             Object.values(option.labels).some((label) =>
@@ -197,9 +214,9 @@ export const SelectInstitutionForm = ({
                         <OrganizationAccordion
                           key={organization.id}
                           organization={organization}
-                          searchId={values.subunit?.id ?? ''}
-                          selectedId={selectedSubunitId}
-                          setSelectedId={setSelectedSubunitId}
+                          searchId={values.subunit?.id}
+                          selectedId={values.subunit?.id}
+                          setSelectedOrganization={(organization) => setFieldValue(field.name, organization)}
                         />
                       ))}
                     </>
@@ -207,6 +224,7 @@ export const SelectInstitutionForm = ({
                 </Field>
               </Box>
             )}
+
             <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
               {onCancel && (
                 <Button onClick={onCancel} data-testid={dataTestId.confirmDialog.cancelButton}>
@@ -219,7 +237,7 @@ export const SelectInstitutionForm = ({
                 loading={isSubmitting}
                 disabled={!values.unit && !values.selectedSuggestedAffiliationId}
                 data-testid={dataTestId.registrationWizard.contributors.addSelectedAffiliationButton}>
-                {t('common.add')}
+                {t('registration.contributors.add_affiliation')}
               </LoadingButton>
             </Box>
           </Box>

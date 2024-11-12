@@ -1,11 +1,11 @@
 import { Link, List, ListItem } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { Registration } from '../../../types/registration.types';
+import { RegistrationSearchItem } from '../../../types/registration.types';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 
 interface ListRegistrationRelationsProps {
-  registrations: Registration[];
+  registrations: RegistrationSearchItem[];
 }
 
 export const ListRegistrationRelations = ({ registrations }: ListRegistrationRelationsProps) => (

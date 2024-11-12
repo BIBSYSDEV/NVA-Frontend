@@ -14,16 +14,15 @@ import {
 import prettyBytes from 'pretty-bytes';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
+import { useDispatch } from 'react-redux';
+import { downloadRegistrationFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
-import { RootState } from '../../../redux/store';
-import { AssociatedFile, FileType, FileVersion } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { equalUris } from '../../../utils/general-helpers';
-import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
+import { isEmbargoed, isPendingOpenFile, openFileInNewTab } from '../../../utils/registration-helpers';
 import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
@@ -43,29 +42,33 @@ export const FileRow = ({
 }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
   const [previewFileUrl, setPreviewFileUrl] = useState<DownloadUrl | null>(null);
 
   const handleDownload = useCallback(
     async (previewFile = false) => {
-      previewFile && setIsLoadingPreviewFile(true);
-      const downloadFileResponse = user
-        ? await downloadPrivateFile(registrationIdentifier, file.identifier)
-        : await downloadPublicFile(registrationIdentifier, file.identifier);
+      if (previewFile) {
+        setIsLoadingPreviewFile(true);
+      }
+      const downloadFileResponse = await downloadRegistrationFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
         dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
       } else {
         if (previewFile) {
-          setPreviewFileUrl(downloadFileResponse);
+          setPreviewFileUrl({
+            id: downloadFileResponse.id,
+            shortenedVersion: downloadFileResponse.alias,
+          });
         } else {
           openFileInNewTab(downloadFileResponse.id);
         }
       }
-      previewFile && setIsLoadingPreviewFile(false);
+      if (previewFile) {
+        setIsLoadingPreviewFile(false);
+      }
     },
-    [t, dispatch, user, registrationIdentifier, file.identifier]
+    [t, dispatch, registrationIdentifier, file.identifier]
   );
 
   const fileIsEmbargoed = isEmbargoed(file.embargoDate);
@@ -92,7 +95,7 @@ export const FileRow = ({
         gap: '0.5rem 0.75rem',
         alignItems: 'center',
         marginBottom: '2rem',
-        opacity: registrationMetadataIsPublished && file.type === FileType.UnpublishedFile ? 0.6 : 1,
+        opacity: registrationMetadataIsPublished && isPendingOpenFile(file) ? 0.6 : 1,
       }}>
       <Typography
         data-testid={dataTestId.registrationLandingPage.fileName}
@@ -128,7 +131,9 @@ export const FileRow = ({
 
       <Box sx={{ gridArea: 'download' }}>
         {file.embargoDate && fileIsEmbargoed ? (
-          <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
+          <Typography
+            data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}
+            sx={{ display: 'flex', alignItems: 'center' }}>
             <LockIcon />
             {t('common.will_be_available')} {toDateString(file.embargoDate)}
           </Typography>

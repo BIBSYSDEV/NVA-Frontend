@@ -1,21 +1,19 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
-import RuleIcon from '@mui/icons-material/Rule';
-import { Badge, Button, styled } from '@mui/material';
+import { Badge, Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
-import { fetchUser } from '../../api/roleApi';
+import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { SelectableButton } from '../../components/SelectableButton';
+import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
+import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
@@ -24,18 +22,16 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { taskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
+import { NviCandidatesNavigationAccordion } from './components/NviCandidatesNavigationAccordion';
 import { NviCorrectionList } from './components/NviCorrectionList';
-import { NviMenuContent } from './components/NviMenuContent';
+import { NviCorrectionListNavigationAccordion } from './components/NviCorrectionListNavigationAccordion';
 import { NviStatusPage } from './components/NviStatusPage';
+import { ResultRegistrationsNavigationListAccordion } from './components/ResultRegistrationsNavigationListAccordion';
 import { TicketList } from './components/TicketList';
-
-export const StyledSearchModeButton = styled(LinkButton)({
-  borderRadius: '1.5rem',
-  textTransform: 'none',
-});
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -46,27 +42,22 @@ const TasksPage = () => {
   const isPublishingCurator = !!user?.isPublishingCurator;
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
   const isNviCurator = !!user?.isNviCurator;
-  const nvaUsername = user?.nvaUsername ?? '';
+  const isAnyCurator = isSupportCurator || isDoiCurator || isPublishingCurator || isNviCurator;
 
   const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = history.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
   const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = history.location.pathname === UrlPathTemplate.TasksNviStatus;
   const isOnCorrectionListPage = history.location.pathname === UrlPathTemplate.TasksNviCorrectionList;
+  const isOnResultRegistrationsPage = history.location.pathname === UrlPathTemplate.TasksResultRegistrations;
 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const institutionUserQuery = useQuery({
-    enabled: !!nvaUsername,
-    queryKey: ['user', nvaUsername],
-    queryFn: () => fetchUser(nvaUsername),
-    meta: { errorMessage: t('feedback.error.get_person') },
-  });
+  const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
 
   const searchParams = new URLSearchParams(history.location.search);
 
-  // Tickets/dialogue data
   const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
 
   const [ticketTypes, setTicketTypes] = useState({
@@ -130,7 +121,13 @@ const TasksPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={isOnTicketsPage || isOnNviCandidatesPage || isOnNviStatusPage || isOnCorrectionListPage}
+        expanded={
+          isOnTicketsPage ||
+          isOnNviCandidatesPage ||
+          isOnNviStatusPage ||
+          isOnCorrectionListPage ||
+          isOnResultRegistrationsPage
+        }
         minimizedMenu={
           <Link
             to={{
@@ -172,7 +169,7 @@ const TasksPage = () => {
 
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               {isPublishingCurator && (
-                <SelectableButton
+                <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                   endIcon={<Badge badgeContent={publishingNotificationsCount} />}
                   showCheckbox
@@ -182,11 +179,11 @@ const TasksPage = () => {
                   {ticketTypes.publishingRequest && publishingRequestCount
                     ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                     : t('my_page.messages.types.PublishingRequest')}
-                </SelectableButton>
+                </TicketTypeFilterButton>
               )}
 
               {isDoiCurator && (
-                <SelectableButton
+                <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                   endIcon={<Badge badgeContent={doiNotificationsCount} />}
                   showCheckbox
@@ -196,11 +193,11 @@ const TasksPage = () => {
                   {ticketTypes.doiRequest && doiRequestCount
                     ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                     : t('my_page.messages.types.DoiRequest')}
-                </SelectableButton>
+                </TicketTypeFilterButton>
               )}
 
               {isSupportCurator && (
-                <SelectableButton
+                <TicketTypeFilterButton
                   data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                   endIcon={<Badge badgeContent={supportNotificationsCount} />}
                   showCheckbox
@@ -212,38 +209,25 @@ const TasksPage = () => {
                   {ticketTypes.generalSupportCase && generalSupportCaseCount
                     ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                     : t('my_page.messages.types.GeneralSupportCase')}
-                </SelectableButton>
+                </TicketTypeFilterButton>
               )}
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>
         )}
 
+        {isAnyCurator && <ResultRegistrationsNavigationListAccordion />}
+
         {isNviCurator && (
           <>
-            <NviMenuContent />
-
-            <NavigationListAccordion
-              title={t('tasks.correction_list')}
-              startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
-              accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-              dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
-              <NavigationList>
-                <StyledSearchModeButton
-                  sx={{ mx: '1rem', mb: '1rem' }}
-                  data-testid={dataTestId.tasksPage.correctionList.correctionListRadioButton}
-                  isSelected={isOnCorrectionListPage}
-                  startIcon={<RadioButtonCheckedIcon />}>
-                  {t('tasks.correction_list')}
-                </StyledSearchModeButton>
-              </NavigationList>
-            </NavigationListAccordion>
+            <NviCandidatesNavigationAccordion />
+            <NviCorrectionListNavigationAccordion />
           </>
         )}
       </SideMenu>
 
       <ErrorBoundary>
         <Switch>
-          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isTicketCurator || isNviCurator}>
+          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isAnyCurator}>
             {isTicketCurator ? (
               <Redirect to={UrlPathTemplate.TasksDialogue} />
             ) : (
@@ -281,6 +265,9 @@ const TasksPage = () => {
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviCorrectionList} isAuthorized={isNviCurator}>
             <NviCorrectionList />
+          </PrivateRoute>
+          <PrivateRoute exact path={UrlPathTemplate.TasksResultRegistrations} isAuthorized={isAnyCurator}>
+            <PortfolioSearchPage title={t('common.result_registrations')} />
           </PrivateRoute>
         </Switch>
       </ErrorBoundary>

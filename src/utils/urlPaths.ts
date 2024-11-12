@@ -1,3 +1,5 @@
+import { RegistrationFormLocationState } from '../types/locationState.types';
+
 export interface IdentifierParams {
   identifier: string;
 }
@@ -22,6 +24,7 @@ export enum UrlPathTemplate {
   InstitutionSupport = '/institution/settings/support',
   InstitutionOrganizationOverview = '/institution/overview/organization',
   InstitutionOverview = '/institution/overview',
+  InstitutionPortfolio = '/institution/portfolio',
   InstitutionPublishStrategy = '/institution/settings/publish-strategy',
   InstitutionPublishStrategyOverview = '/institution/overview/publish-strategy',
   InstitutionSettings = '/institution/settings',
@@ -48,6 +51,8 @@ export enum UrlPathTemplate {
   MyPageUserRoleAndHelp = '/my-page/profile/user-role-and-help',
   PrivacyPolicy = '/privacy-policy',
   Projects = '/projects',
+  ProjectsNew = '/projects/new',
+  ProjectsEdit = '/project/:identifier/edit',
   RegistrationLandingPage = '/registration/:identifier',
   RegistrationNew = '/registration',
   RegistrationWizard = '/registration/:identifier/edit',
@@ -65,6 +70,7 @@ export enum UrlPathTemplate {
   TasksNviCandidate = '/tasks/nvi/:identifier',
   TasksNviCorrectionList = '/tasks/correction-list',
   TasksNviStatus = '/tasks/nvi/status',
+  TasksResultRegistrations = '/tasks/result-registrations',
   Wildcard = '*',
 }
 
@@ -76,6 +82,24 @@ export const getImportCandidatePath = (identifier: string) =>
 
 export const getRegistrationWizardPath = (identifier: string) =>
   UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
+
+interface RegistrationWizardOptions {
+  highestValidatedTab?: number;
+  tab?: number;
+  goToLandingPageAfterSaveAndSee?: boolean;
+}
+
+export const getRegistrationWizardLink = (identifier: string, options: RegistrationWizardOptions = {}) => {
+  return {
+    pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
+    state: {
+      highestValidatedTab: options.highestValidatedTab,
+      previousPath: window.location.pathname,
+      goToLandingPageAfterSaveAndSee: options.goToLandingPageAfterSaveAndSee,
+    } satisfies RegistrationFormLocationState,
+    search: options.tab ? `?tab=${options.tab}` : '',
+  };
+};
 
 export const getImportCandidateWizardPath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidateWizard.replace(':identifier', encodeURIComponent(identifier));
@@ -93,6 +117,9 @@ export const getAdminInstitutionPath = (id: string) =>
   `${UrlPathTemplate.BasicDataInstitutions}?id=${encodeURIComponent(id)}`;
 
 export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;
+
+export const getEditProjectPath = (id: string) =>
+  UrlPathTemplate.ProjectsEdit.replace(':identifier', encodeURIComponent(id));
 
 export const getTasksRegistrationPath = (identifier: string) =>
   UrlPathTemplate.TasksDialogueRegistration.replace(':identifier', encodeURIComponent(identifier));

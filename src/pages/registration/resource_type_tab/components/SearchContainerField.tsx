@@ -1,20 +1,22 @@
 import { Autocomplete, Box, Chip, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { fetchResults } from '../../../../api/searchApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
+import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { Contributor } from '../../../../types/contributor.types';
-import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import {
   PublicationInstanceType,
   Publisher,
   Registration,
   RegistrationDate,
+  RegistrationSearchItem,
   Series,
 } from '../../../../types/registration.types';
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
@@ -22,7 +24,8 @@ import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { getTitleString } from '../../../../utils/registration-helpers';
+import { convertToRegistrationSearchItem, getTitleString } from '../../../../utils/registration-helpers';
+import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -55,6 +58,8 @@ export const SearchContainerField = ({
     meta: { errorMessage: t('feedback.error.search') },
   });
 
+  const { disableNviCriticalFields } = useContext(NviCandidateContext);
+
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),
     fetchErrorMessage
@@ -70,14 +75,23 @@ export const SearchContainerField = ({
     <Field name={fieldName}>
       {({ field, meta }: FieldProps<string>) => (
         <>
+          {disableNviCriticalFields && (
+            <StyledInfoBanner sx={{ mb: '1rem' }}>
+              <LockedNviFieldDescription fieldLabel={t('registration.resource_type.journal')} />
+            </StyledInfoBanner>
+          )}
+
           <Autocomplete
+            disabled={disableNviCriticalFields}
             multiple
             id={dataTestId}
             data-testid={dataTestId}
             aria-labelledby={`${dataTestId}-label`}
             popupIcon={null}
             options={
-              query === debouncedQuery && !containerOptionsQuery.isPending ? containerOptionsQuery.data?.hits ?? [] : []
+              query === debouncedQuery && !containerOptionsQuery.isPending
+                ? (containerOptionsQuery.data?.hits ?? [])
+                : []
             }
             filterOptions={(options) => options}
             inputValue={query}
@@ -89,7 +103,7 @@ export const SearchContainerField = ({
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
-            value={field.value && selectedContainer ? [selectedContainer] : []}
+            value={field.value && selectedContainer ? [convertToRegistrationSearchItem(selectedContainer)] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
                 setFieldValue(field.name, inputValue.pop()?.id);
@@ -100,8 +114,8 @@ export const SearchContainerField = ({
             }}
             loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
             getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-            renderOption={(props, option, state) => (
-              <li {...props}>
+            renderOption={({ key, ...props }, option, state) => (
+              <li {...props} key={option.identifier}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring
@@ -112,7 +126,7 @@ export const SearchContainerField = ({
                   {descriptionToShow === 'year-and-contributors' ? (
                     <YearAndContributorsText
                       date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributors ?? []}
+                      contributors={option.entityDescription?.contributorsPreview ?? []}
                     />
                   ) : (
                     <ContainerAndLevelText registration={option} />
@@ -124,6 +138,7 @@ export const SearchContainerField = ({
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
+                  key={option.identifier}
                   data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                   label={
                     <>
@@ -131,7 +146,7 @@ export const SearchContainerField = ({
                       {descriptionToShow === 'year-and-contributors' ? (
                         <YearAndContributorsText
                           date={option.entityDescription?.publicationDate}
-                          contributors={option.entityDescription?.contributors ?? []}
+                          contributors={option.entityDescription?.contributorsPreview ?? []}
                         />
                       ) : (
                         <ContainerAndLevelText registration={option} />
@@ -179,15 +194,15 @@ export const YearAndContributorsText = ({ date, contributors }: YearAndContribut
 };
 
 interface ContainerAndLevelTextProps {
-  registration: Registration;
+  registration: RegistrationSearchItem;
 }
 
 const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
   const { t } = useTranslation();
 
-  const publicationContext = registration.entityDescription?.reference?.publicationContext as BookPublicationContext;
-  const publisherId = publicationContext.publisher?.id ?? '';
-  const seriesId = publicationContext.series?.id ?? '';
+  const publicationContext = registration.entityDescription?.reference?.publicationContext;
+  const publisherId = publicationContext?.publisher?.id ?? '';
+  const seriesId = publicationContext?.series?.id ?? '';
 
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],

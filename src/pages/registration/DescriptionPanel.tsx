@@ -5,30 +5,29 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDuplicateTitleSearch } from '../../api/hooks/useDuplicateTitleSearch';
+import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegistrationSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
-import { registrationLanguageOptions } from '../../utils/registration-helpers';
+import { registrationLanguageOptions, registrationsHaveSamePublicationYear } from '../../utils/registration-helpers';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { DatePickerField } from './description_tab/DatePickerField';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
-import { SameNameWarning } from './SameNameWarning';
+import { DuplicateWarning } from './DuplicateWarning';
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [title, setTitle] = useState('');
   const debouncedTitle = useDebounce(title);
-
-  const titleSearch = useDuplicateTitleSearch(debouncedTitle);
-  const registrationsWithSimilarName = titleSearch.data?.hits ?? [];
-  const registrationWithSameName = registrationsWithSimilarName.find(
-    (reg) => reg.entityDescription?.mainTitle.toLowerCase() === debouncedTitle.toLowerCase()
-  );
+  const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch({
+    title: debouncedTitle || values.entityDescription?.mainTitle,
+    identifier: values.identifier,
+  });
 
   return (
     <InputContainerBox>
@@ -54,9 +53,9 @@ export const DescriptionPanel = () => {
               fullWidth
               label={t('common.title')}
               InputProps={{
-                endAdornment: titleSearch.isPending ? (
+                endAdornment: titleSearchPending ? (
                   <CircularProgress size={20} />
-                ) : registrationWithSameName ? (
+                ) : duplicateRegistration ? (
                   <ErrorIcon color="warning" />
                 ) : undefined,
               }}
@@ -65,10 +64,11 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        {registrationWithSameName?.entityDescription?.mainTitle && (
-          <SameNameWarning
-            name={registrationWithSameName.entityDescription?.mainTitle}
-            id={registrationWithSameName.identifier}
+        {duplicateRegistration && (
+          <DuplicateWarning
+            name={duplicateRegistration.entityDescription?.mainTitle}
+            linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
+            warning={t('registration.description.duplicate_title_warning')}
           />
         )}
         <Field name={DescriptionFieldNames.AlternativeTitles}>
@@ -89,7 +89,9 @@ export const DescriptionPanel = () => {
                   startIcon={<AddCircleOutlineIcon />}
                   disabled={!values.entityDescription?.mainTitle}
                   onClick={() => setFieldValue(field.name, '')}>
-                  {t('common.add')}
+                  {t('common.add_custom', {
+                    name: t('registration.description.alternative_title').toLocaleLowerCase(),
+                  })}
                 </Button>
               )}
             </>
@@ -136,7 +138,9 @@ export const DescriptionPanel = () => {
                   startIcon={<AddCircleOutlineIcon />}
                   disabled={!values.entityDescription?.abstract}
                   onClick={() => setFieldValue(field.name, '')}>
-                  {t('common.add')}
+                  {t('common.add_custom', {
+                    name: t('registration.description.alternative_abstract').toLocaleLowerCase(),
+                  })}
                 </Button>
               )}
             </>
@@ -156,7 +160,6 @@ export const DescriptionPanel = () => {
           />
         )}
       </Field>
-
       <Field name={DescriptionFieldNames.Tags}>
         {({ field }: FieldProps) => (
           <Autocomplete
@@ -188,9 +191,7 @@ export const DescriptionPanel = () => {
           />
         )}
       </Field>
-
       <VocabularyBase />
-
       <Box
         sx={{
           display: 'grid',
@@ -226,7 +227,13 @@ export const DescriptionPanel = () => {
           )}
         </Field>
       </Box>
-
+      {duplicateRegistration && registrationsHaveSamePublicationYear(duplicateRegistration, values) && (
+        <DuplicateWarning
+          name={duplicateRegistration.entityDescription?.mainTitle}
+          linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
+          warning={t('registration.description.duplicate_publication_date_warning')}
+        />
+      )}
       <ProjectsField />
       <Divider />
       <RegistrationFunding currentFundings={values.fundings} />

@@ -6,10 +6,8 @@ export enum FileApiPath {
   Abort = '/upload/abort',
   Complete = '/upload/complete',
   Create = '/upload/create',
-  Download = '/download',
   ListParts = '/upload/listparts',
   Prepare = '/upload/prepare',
-  PublicDownload = '/download/public',
 }
 
 export enum CristinApiPath {
@@ -46,6 +44,7 @@ export enum RoleApiPath {
 }
 
 export enum SearchApiPath {
+  CustomerRegistrations = '/search/customer/resources',
   Registrations = '/search/resources',
   RegistrationsExport = '/search/resources/export',
   CustomerTickets = '/search/customer/tickets',
@@ -64,6 +63,7 @@ export enum PersonPreferencesApiPath {
 export enum ScientificIndexApiPath {
   Candidate = '/scientific-index/candidate',
   CandidateForRegistration = '/scientific-index/candidate/publication',
+  InstitutionApprovalReport = '/scientific-index/institution-approval-report',
   InstitutionReport = '/scientific-index/institution-report',
   Period = '/scientific-index/period',
 }

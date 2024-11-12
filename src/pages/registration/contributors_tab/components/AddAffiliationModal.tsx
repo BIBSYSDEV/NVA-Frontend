@@ -42,7 +42,7 @@ export const AddAffiliationModal = ({
     if (
       affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === newAffiliationId)
     ) {
-      dispatch(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
+      dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 
@@ -85,7 +85,7 @@ export const AddAffiliationModal = ({
       dataTestId="affiliation-modal">
       <Trans
         i18nKey="registration.contributors.add_new_affiliation_helper_text"
-        components={[<Typography paragraph />]}
+        components={[<Typography paragraph key="1" />]}
       />
       <Box
         sx={{

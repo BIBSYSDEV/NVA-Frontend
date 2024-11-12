@@ -3,7 +3,8 @@ import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/mat
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, searchForKeywords, updateCristinPerson } from '../../../api/cristinApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
@@ -13,6 +14,7 @@ import { Keywords, KeywordsOld } from '../../../types/keywords.types';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { ProfileBox } from './styles';
 
 type PersonBackgroundFormData = Pick<FlatCristinPerson, 'background' | 'keywords'>;
 
@@ -93,19 +95,21 @@ export const MyFieldAndBackground = () => {
   const maxMessageLength = 500;
 
   return (
-    <Box
-      sx={{
-        bgcolor: 'secondary.main',
-      }}>
+    <Box sx={{ bgcolor: 'secondary.main' }}>
+      <Helmet>
+        <title>{t('my_page.my_profile.field_and_background.field_and_background')}</title>
+      </Helmet>
+
       <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
         {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
           <Form>
-            <Box sx={{ mx: '1rem', mt: '1rem', maxWidth: '60rem' }}>
-              <div>
-                <Typography variant="h2">{t('my_page.my_profile.field_and_background.field')}</Typography>
-                <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
-                  {t('my_page.my_profile.field_and_background.field_text')}
+            <Box sx={{ display: 'flex', flexDirection: 'column', m: '1rem', maxWidth: '60rem', gap: '1rem' }}>
+              <Typography variant="h2">{t('my_page.my_profile.field_and_background.field_and_background')}</Typography>
+              <ProfileBox>
+                <Typography variant="h3" gutterBottom>
+                  {t('my_page.my_profile.field_and_background.field')}
                 </Typography>
+                <Typography paragraph>{t('my_page.my_profile.field_and_background.field_text')}</Typography>
                 <Field name={'keywords'}>
                   {({ field }: FieldProps<Keywords[]>) => (
                     <Autocomplete
@@ -119,14 +123,18 @@ export const MyFieldAndBackground = () => {
                       getOptionDisabled={(option) =>
                         field.value.some((keyword) => keyword.identifier === option.identifier)
                       }
-                      renderOption={(props, option) => (
+                      renderOption={({ key, ...props }, option) => (
                         <li {...props} key={option.identifier}>
                           <Typography>{getLanguageString(option.labels)}</Typography>
                         </li>
                       )}
                       renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
-                          <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.labels)} />
+                          <Chip
+                            {...getTagProps({ index })}
+                            key={option.identifier}
+                            label={getLanguageString(option.labels)}
+                          />
                         ))
                       }
                       filterOptions={(options) => options}
@@ -147,40 +155,40 @@ export const MyFieldAndBackground = () => {
                     />
                   )}
                 </Field>
-                <Typography variant="body1" fontStyle={'italic'} sx={{ mb: '2rem' }}>
+                <Typography variant="body1" sx={{ my: '0.5rem' }}>
                   {t('my_page.my_profile.field_and_background.keywords_search_text')}
                 </Typography>
-              </div>
-
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '4rem' }}>
-                <Typography variant="h2" sx={{ mb: '1rem' }}>
+              </ProfileBox>
+              <ProfileBox>
+                <Typography variant="h3" gutterBottom>
                   {t('my_page.my_profile.background')}
                 </Typography>
-                <Typography variant="h3">{t('my_page.my_profile.field_and_background.norwegian')}</Typography>
+                <Trans
+                  i18nKey="my_page.my_profile.background_description"
+                  components={[<Typography key="1" gutterBottom />]}
+                />
                 <Field name={'background.no'}>
                   {({ field }: FieldProps<string>) => (
                     <TextField
                       {...field}
                       inputProps={{ maxLength: maxMessageLength }}
-                      label={t('my_page.my_profile.background')}
+                      label={t('my_page.my_profile.background_no')}
                       variant="filled"
                       multiline
                       rows="3"
                       placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
                       helperText={`${field.value.length}/${maxMessageLength}`}
                       FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+                      sx={{ my: '1rem' }}
                     />
                   )}
                 </Field>
-              </Box>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-                <Typography variant="h3">{t('my_page.my_profile.field_and_background.english')}</Typography>
                 <Field name={'background.en'}>
                   {({ field }: FieldProps<string>) => (
                     <TextField
                       {...field}
                       inputProps={{ maxLength: maxMessageLength }}
-                      label={t('my_page.my_profile.background')}
+                      label={t('my_page.my_profile.background_en')}
                       variant="filled"
                       multiline
                       rows="3"
@@ -190,7 +198,7 @@ export const MyFieldAndBackground = () => {
                     />
                   )}
                 </Field>
-              </Box>
+              </ProfileBox>
             </Box>
             <Box
               sx={{

@@ -14,6 +14,8 @@ import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
+import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
 import { NviYearSelector } from './NviYearSelector';
@@ -49,13 +51,14 @@ export const NviCandidatesList = () => {
           <CuratorSelector
             selectedUsername={nviParams.assignee}
             onChange={(curator) => {
+              const syncedParams = syncParamsWithSearchFields(searchParams);
               if (curator) {
-                searchParams.set(NviCandidatesSearchParam.Assignee, curator.username);
+                syncedParams.set(NviCandidatesSearchParam.Assignee, curator.username);
                 if (nviParams.offset) {
-                  searchParams.delete(NviCandidatesSearchParam.Offset);
+                  syncedParams.delete(NviCandidatesSearchParam.Offset);
                 }
 
-                const currentStatusFilter = searchParams.get(
+                const currentStatusFilter = syncedParams.get(
                   NviCandidatesSearchParam.Filter
                 ) as NviCandidateSearchStatus | null;
                 if (
@@ -63,12 +66,12 @@ export const NviCandidatesList = () => {
                   currentStatusFilter === 'pending' ||
                   currentStatusFilter === 'pendingCollaboration'
                 ) {
-                  searchParams.set(NviCandidatesSearchParam.Filter, 'assigned' satisfies NviCandidateSearchStatus);
+                  syncedParams.set(NviCandidatesSearchParam.Filter, 'assigned' satisfies NviCandidateSearchStatus);
                 }
               } else {
-                searchParams.delete(NviCandidatesSearchParam.Assignee);
+                syncedParams.delete(NviCandidatesSearchParam.Assignee);
               }
-              history.push({ search: searchParams.toString() });
+              history.push({ search: syncedParams.toString() });
             }}
             roleFilter={[RoleName.NviCurator]}
             sx={{ flex: '1 15rem' }}
@@ -77,12 +80,15 @@ export const NviCandidatesList = () => {
           <AreaOfResponsibilitySelector
             sx={{ flex: '1 15rem' }}
             paramName={NviCandidatesSearchParam.Affiliations}
-            resetPagination={() => {
-              if (nviParams.offset) {
-                searchParams.delete(NviCandidatesSearchParam.Offset);
+            resetPagination={(params) => {
+              params.delete(NviCandidatesSearchParam.Offset);
+              if (!params.has(NviCandidatesSearchParam.Affiliations)) {
+                params.delete(NviCandidatesSearchParam.ExcludeSubUnits);
               }
             }}
           />
+
+          <ExcludeSubunitsCheckbox />
 
           <NviYearSelector sx={{ ml: 'auto' }} />
         </Box>

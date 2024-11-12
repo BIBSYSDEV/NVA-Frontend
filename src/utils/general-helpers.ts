@@ -1,8 +1,7 @@
-import { TFunction } from 'i18next';
 import * as Yup from 'yup';
 import { toDateString } from './date-helpers';
 
-export const isValidUrl = (value: string) => Yup.string().url().isValidSync(value);
+export const isValidUrl = (value: string) => value && Yup.string().url().isValidSync(value);
 
 export const doiUrlBase = 'https://doi.org/';
 const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+)\\b'); // https://stackoverflow.com/a/10324802
@@ -38,25 +37,6 @@ export const equalUris = (uri1: string | null, uri2: string | null) =>
 
 const removeTrailingSlash = (value: string) => (value.endsWith('/') ? value.slice(0, -1) : value);
 
-export const getTimePeriodString = (date1: Date, date2: Date, t: TFunction) => {
-  const dateDiff = Math.abs(date1.getTime() - date2.getTime());
-  const daysCount = Math.floor(dateDiff / 86_400_000);
-
-  if (Number.isNaN(dateDiff) || Number.isNaN(daysCount)) {
-    return '';
-  } else if (daysCount === 0) {
-    return t('common.today');
-  } else if (daysCount < 31) {
-    return t('common.x_days', { count: daysCount });
-  } else if (daysCount < 365) {
-    const monthsCount = Math.floor(daysCount / 31);
-    return t('common.x_months', { count: monthsCount });
-  } else {
-    const yearsCount = Math.floor(daysCount / 365);
-    return t('common.x_years', { count: yearsCount });
-  }
-};
-
 export const getInitials = (name: string) => {
   if (!name) return '';
 
@@ -74,3 +54,6 @@ export const getCurrentPath = () => {
     return pathname;
   }
 };
+
+export const getObjectEntriesWithValue = (object: Record<string, any>) =>
+  Object.fromEntries(Object.entries(object).filter(([, value]) => value !== null && value !== undefined));

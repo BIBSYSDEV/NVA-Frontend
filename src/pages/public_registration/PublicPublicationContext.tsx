@@ -24,7 +24,7 @@ import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../api/commonApi';
-import { fetchRegistration } from '../../api/registrationApi';
+import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
@@ -50,11 +50,7 @@ import {
 } from '../../types/publication_types/artisticRegistration.types';
 import { BookPublicationContext, Revision } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
-import {
-  ExhibitionBasic,
-  ExhibitionMentionInPublication,
-  ExhibitionOtherPresentation,
-} from '../../types/publication_types/exhibitionContent.types';
+import { ExhibitionBasic } from '../../types/publication_types/exhibitionContent.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
 import {
   MediaContributionPeriodicalPublicationContext,
@@ -66,7 +62,7 @@ import { ContextPublisher, Journal, Publisher, Series } from '../../types/regist
 import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
+import { getIssnValuesString, getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import { RegistrationSummary } from './RegistrationSummary';
@@ -74,12 +70,6 @@ import { RegistrationSummary } from './RegistrationSummary';
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
 }
-
-const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler';
-export const getChannelRegisterJournalUrl = (id: string) =>
-  `${channelRegisterBaseUrl}/KanalTidsskriftInfo.action?id=${id}`;
-export const getChannelRegisterPublisherUrl = (id: string) =>
-  `${channelRegisterBaseUrl}/KanalForlagInfo.action?id=${id}`;
 
 export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
   const { t } = useTranslation();
@@ -92,7 +82,10 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
       {publicationContext.id ? (
         <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback.error.get_journal')} />
       ) : (
-        <Typography>{publicationContext.title}</Typography>
+        <>
+          <Typography>{publicationContext.title}</Typography>
+          <Typography>{getIssnValuesString(publicationContext)}</Typography>
+        </>
       )}
     </>
   ) : null;
@@ -106,6 +99,10 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
     t('feedback.error.get_publisher')
   );
 
+  const publisherName = fetchedPublisher?.discontinued
+    ? `${fetchedPublisher.name} (${t('common.discontinued')}: ${fetchedPublisher.discontinued})`
+    : fetchedPublisher?.name;
+
   return publisher?.id || publisher?.name ? (
     <>
       <Typography variant="h3" component="p">
@@ -116,7 +113,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
         <ListSkeleton height={20} />
       ) : fetchedPublisher ? (
         <>
-          <Typography>{fetchedPublisher.name}</Typography>
+          <Typography>{publisherName}</Typography>
           <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} channelId={fetchedPublisher.id} />
           {fetchedPublisher.sameAs && (
             <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
@@ -125,7 +122,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
           )}
         </>
       ) : (
-        <Typography>{publisher.name}</Typography>
+        <Typography gutterBottom>{publisher.name}</Typography>
       )}
     </>
   ) : null;
@@ -165,7 +162,10 @@ export const PublicSeries = ({
       {series.id ? (
         <PublicJournalContent id={series.id} errorMessage={t('feedback.error.get_series')} />
       ) : (
-        <Typography>{series.title}</Typography>
+        <>
+          <Typography>{series.title}</Typography>
+          <Typography>{getIssnValuesString(series)}</Typography>
+        </>
       )}
       {seriesNumber && (
         <Typography>
@@ -220,19 +220,16 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   const isLoadingJournal = (!!id && journalQuery.isPending) || (journalQuery.isError && journalBackupQuery.isPending);
   const journal = journalQuery.data ?? journalBackupQuery.data;
 
+  const journalName = journal?.discontinued
+    ? `${journal.name} (${t('common.discontinued')}: ${journal.discontinued})`
+    : journal?.name;
+
   return isLoadingJournal ? (
     <ListSkeleton height={20} />
   ) : !journal ? null : (
     <>
-      <Typography>{journal.name}</Typography>
-      <Typography>
-        {[
-          journal.printIssn ? `${t('registration.resource_type.print_issn')}: ${journal.printIssn}` : '',
-          journal.onlineIssn ? `${t('registration.resource_type.online_issn')}: ${journal.onlineIssn}` : '',
-        ]
-          .filter((issn) => issn)
-          .join(', ')}
-      </Typography>
+      <Typography>{journalName}</Typography>
+      <Typography>{getIssnValuesString(journal)}</Typography>
       <NpiLevelTypography scientificValue={journal.scientificValue} channelId={journal.id} />
       {journal.sameAs && (
         <Typography component={Link} href={journal.sameAs} target="_blank">
@@ -255,7 +252,11 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
   return (
     <>
       <Typography variant="h3">{t(`registration.publication_types.${type}`)}</Typography>
-      {label && <Typography>{label}</Typography>}
+      {label && (
+        <Typography>
+          {t('registration.resource_type.title_of_event')}: {label}
+        </Typography>
+      )}
       {agent?.name && (
         <Typography>
           {t('registration.resource_type.organizer')}: {agent.name}
@@ -309,12 +310,7 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
   const exhibitionCatalogIdentifier =
     output.type === 'ExhibitionCatalog' && output.id ? getIdentifierFromId(output.id) : '';
 
-  const exhibitionCatalogQuery = useQuery({
-    enabled: !!exhibitionCatalogIdentifier,
-    queryKey: ['registration', exhibitionCatalogIdentifier],
-    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
-    meta: { errorMessage: t('feedback.error.get_registration') },
-  });
+  const exhibitionCatalogQuery = useFetchRegistration(exhibitionCatalogIdentifier);
 
   const nameString = exhibitionCatalogIdentifier
     ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle
@@ -375,14 +371,6 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
             <PublicLiteraryArtsAudioVisualDialogContent audioVisual={output as LiteraryArtsAudioVisual} />
           ) : output.type === 'ExhibitionBasic' ? (
             <PublicExhibitionBasicDialogContent exhibitionBasic={output as ExhibitionBasic} />
-          ) : output.type === 'ExhibitionMentionInPublication' ? (
-            <PublicExhibitionMentionInPublicationDialogContent
-              exhibitionMentionInPublication={output as ExhibitionMentionInPublication}
-            />
-          ) : output.type === 'ExhibitionOtherPresentation' ? (
-            <PublicExhibitionOtherPresentationDialogContent
-              exhibitionOtherPresentation={output as ExhibitionOtherPresentation}
-            />
           ) : null}
         </ErrorBoundary>
 
@@ -416,87 +404,6 @@ const PublicExhibitionBasicDialogContent = ({ exhibitionBasic }: { exhibitionBas
         {t('common.date')}
       </Typography>
       <Typography>{getPeriodString(exhibitionBasic.date?.from, exhibitionBasic.date?.to)}</Typography>
-    </DialogContent>
-  );
-};
-
-const PublicExhibitionMentionInPublicationDialogContent = ({
-  exhibitionMentionInPublication,
-}: {
-  exhibitionMentionInPublication: ExhibitionMentionInPublication;
-}) => {
-  const { t } = useTranslation();
-  return (
-    <DialogContent>
-      <Typography variant="h3" gutterBottom>
-        {t('common.type')}
-      </Typography>
-      <Typography paragraph>
-        {t(`registration.resource_type.artistic.output_type.${exhibitionMentionInPublication.type}`)}
-      </Typography>
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.journal_book_medium')}
-      </Typography>
-      <Typography paragraph>{exhibitionMentionInPublication.title || '-'}</Typography>
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.issue')}
-      </Typography>
-      <Typography paragraph>{exhibitionMentionInPublication.issue || '-'}</Typography>
-      <Typography variant="h3" gutterBottom>
-        {t('common.date')}
-      </Typography>
-      <Typography paragraph>
-        {exhibitionMentionInPublication.date?.value ? toDateString(exhibitionMentionInPublication.date.value) : '-'}
-      </Typography>
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.other_publisher_isbn_etc')}
-      </Typography>
-      <Typography paragraph>{exhibitionMentionInPublication.otherInformation || '-'}</Typography>
-    </DialogContent>
-  );
-};
-
-const PublicExhibitionOtherPresentationDialogContent = ({
-  exhibitionOtherPresentation,
-}: {
-  exhibitionOtherPresentation: ExhibitionOtherPresentation;
-}) => {
-  const { t } = useTranslation();
-  return (
-    <DialogContent>
-      <Typography variant="h3" gutterBottom>
-        {t('common.type')}
-      </Typography>
-      <Typography paragraph>
-        {t(`registration.resource_type.artistic.output_type.${exhibitionOtherPresentation.type}`)}
-      </Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.exhibition_production.presentation_type')}
-      </Typography>
-      <Typography paragraph>{exhibitionOtherPresentation.typeDescription || '-'}</Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('common.place')}
-      </Typography>
-      <Typography paragraph>{exhibitionOtherPresentation.place.label || '-'}</Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.publisher_or_organizer')}
-      </Typography>
-      <Typography paragraph>{exhibitionOtherPresentation.publisher.name || '-'}</Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('registration.resource_type.exhibition_production.more_info_about_elementet')}
-      </Typography>
-      <Typography paragraph>{exhibitionOtherPresentation.description || '-'}</Typography>
-
-      <Typography variant="h3" gutterBottom>
-        {t('common.date')}
-      </Typography>
-      <Typography paragraph>
-        {exhibitionOtherPresentation.date?.value ? toDateString(exhibitionOtherPresentation.date.value) : '-'}
-      </Typography>
     </DialogContent>
   );
 };

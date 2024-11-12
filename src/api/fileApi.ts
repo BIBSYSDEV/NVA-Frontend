@@ -1,46 +1,35 @@
 import { AwsS3Part } from '@uppy/aws-s3-multipart';
 import { UppyFile } from '@uppy/core';
-import { isSuccessStatus } from '../utils/constants';
 import { FileApiPath, PublicationsApiPath } from './apiPaths';
-import { apiRequest, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { userIsAuthenticated } from './authApi';
 
-interface DownloadFileResponse {
+interface DownloadImportCandidateFileResponse {
   id: string;
   shortenedVersion: string;
 }
 
 export const downloadImportCandidateFile = async (importCandidateIdentifier: string, fileIdentifier: string) => {
-  const downloadFileResponse = await authenticatedApiRequest2<DownloadFileResponse>({
+  const downloadFileResponse = await authenticatedApiRequest2<DownloadImportCandidateFileResponse>({
     url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}/file/${fileIdentifier}`,
   });
   return downloadFileResponse.data;
 };
 
-export const downloadPrivateFile2 = async (registrationIdentifier: string, fileIdentifier: string) => {
-  const downloadFileResponse = await authenticatedApiRequest2<DownloadFileResponse>({
-    url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileIdentifier}`,
-  });
+interface DownloadRegistrationFileResponse {
+  fileIdentifier: string;
+  id: string;
+  alias: string;
+}
+
+export const downloadRegistrationFile = async (registrationIdentifier: string, fileIdentifier: string) => {
+  const isAuthenticated = await userIsAuthenticated();
+  const downloadFilePath = `${PublicationsApiPath.Registration}/${registrationIdentifier}/filelink/${fileIdentifier}`;
+
+  const downloadFileResponse = isAuthenticated
+    ? await authenticatedApiRequest2<DownloadRegistrationFileResponse>({ url: downloadFilePath })
+    : await apiRequest2<DownloadRegistrationFileResponse>({ url: downloadFilePath });
   return downloadFileResponse.data;
-};
-
-export const downloadPrivateFile = async (registrationIdentifier: string, fileIdentifier: string) => {
-  const downloadFileResponse = await authenticatedApiRequest<DownloadFileResponse>({
-    url: `${FileApiPath.Download}/${registrationIdentifier}/files/${fileIdentifier}`,
-  });
-  if (isSuccessStatus(downloadFileResponse.status)) {
-    return downloadFileResponse.data;
-  }
-  return null;
-};
-
-export const downloadPublicFile = async (registrationIdentifier: string, fileIdentifier: string) => {
-  const downloadFileResponse = await apiRequest<DownloadFileResponse>({
-    url: `${FileApiPath.PublicDownload}/${registrationIdentifier}/files/${fileIdentifier}`,
-  });
-  if (isSuccessStatus(downloadFileResponse.status)) {
-    return downloadFileResponse.data;
-  }
-  return null;
 };
 
 export const abortMultipartUpload = async (uploadId: string, key: string) => {
