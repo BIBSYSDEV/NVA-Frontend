@@ -1,5 +1,6 @@
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import CircleOutlined from '@mui/icons-material/CircleOutlined';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { Box, IconButton, TableCell, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
@@ -7,36 +8,47 @@ import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { filterActiveAffiliations, getFullCristinName } from '../../../../utils/user-helpers';
 import { LastRegistrationTableCellContent } from './LastRegistrationTableCellContent';
-import { SelectAffiliationRadioButton } from './SelectAffiliationRadioButton';
-import { SelectAffiliationsCheckbox } from './SelectAffiliationsCheckbox';
-
-export enum SelectAffiliations {
-  'MULTIPLE',
-  'SINGLE',
-  'NO_SELECT',
-}
 
 interface CristinPersonTableRowProps {
   cristinPerson: CristinPerson;
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson | undefined) => void;
-  selectAffiliations?: SelectAffiliations;
 }
 
 export const CristinPersonTableRow = ({
   cristinPerson,
   setSelectedPerson,
   selectedPerson,
-  selectAffiliations = SelectAffiliations.MULTIPLE,
 }: CristinPersonTableRowProps) => {
   const { t } = useTranslation();
   const activeAffiliations = filterActiveAffiliations(cristinPerson.affiliations);
   const personIsSelected = cristinPerson.id === selectedPerson?.id;
 
+  const selectedPersonHasAllAffiliations = !activeAffiliations.some(
+    (affiliation) => !selectedPerson?.affiliations.some((a) => a.organization === affiliation.organization)
+  );
+
+  const hasSelectedAll = personIsSelected && selectedPersonHasAllAffiliations;
+
   const resetPersonSelection = () => setSelectedPerson(undefined);
 
   return (
     <TableRow selected={personIsSelected}>
+      <TableCell>
+        <IconButton
+          data-testid={dataTestId.registrationWizard.contributors.selectEverythingForContributor}
+          onClick={() => {
+            if (hasSelectedAll) {
+              resetPersonSelection();
+            } else {
+              setSelectedPerson({ ...cristinPerson, affiliations: activeAffiliations });
+            }
+          }}
+          color="primary"
+          title={t('registration.contributors.select_all')}>
+          {hasSelectedAll ? <CheckCircle color="info" fontSize="large" /> : <ControlPointIcon fontSize="large" />}
+        </IconButton>
+      </TableCell>
       <TableCell>
         <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
           <IconButton
@@ -47,14 +59,7 @@ export const CristinPersonTableRow = ({
               } else {
                 setSelectedPerson({
                   ...cristinPerson,
-                  affiliations:
-                    selectAffiliations === SelectAffiliations.SINGLE
-                      ? activeAffiliations.length > 0
-                        ? [activeAffiliations[0]]
-                        : []
-                      : selectAffiliations === SelectAffiliations.MULTIPLE
-                        ? activeAffiliations
-                        : [],
+                  affiliations: [],
                 });
               }
             }}
@@ -83,25 +88,32 @@ export const CristinPersonTableRow = ({
                     alignItems: 'center',
                     gap: '0.25rem',
                   }}>
-                  {selectAffiliations === SelectAffiliations.SINGLE ||
-                  selectAffiliations === SelectAffiliations.NO_SELECT ? (
-                    <SelectAffiliationRadioButton
-                      personIsSelected={personIsSelected}
-                      affiliation={affiliation}
-                      selectedPerson={selectedPerson}
-                      setSelectedPerson={setSelectedPerson}
-                      affiliationIsSelected={affiliationIsSelected}
-                      disabled={selectAffiliations === SelectAffiliations.NO_SELECT}
-                    />
-                  ) : (
-                    <SelectAffiliationsCheckbox
-                      personIsSelected={personIsSelected}
-                      affiliation={affiliation}
-                      selectedPerson={selectedPerson}
-                      setSelectedPerson={setSelectedPerson}
-                      affiliationIsSelected={affiliationIsSelected}
-                    />
-                  )}
+                  <IconButton
+                    data-testid={dataTestId.registrationWizard.contributors.selectAffiliationForContributor}
+                    onClick={() => {
+                      if (!selectedPerson) {
+                        return;
+                      }
+                      const newAffiliations = affiliationIsSelected
+                        ? selectedPerson.affiliations.filter((a) => a.organization !== affiliation.organization)
+                        : [...selectedPerson.affiliations, affiliation];
+
+                      const personWithAffiliation: CristinPerson = {
+                        ...selectedPerson,
+                        affiliations: newAffiliations,
+                      };
+                      setSelectedPerson(personWithAffiliation);
+                    }}
+                    color="primary"
+                    size="small"
+                    disabled={!personIsSelected}
+                    title={t('registration.contributors.select_affiliation')}>
+                    {affiliationIsSelected ? (
+                      <CheckCircle fontSize="small" color="info" />
+                    ) : (
+                      <CircleOutlined fontSize="small" />
+                    )}
+                  </IconButton>
                   <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
                 </Box>
               );

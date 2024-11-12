@@ -118,7 +118,7 @@ export const AddAdminDialog = ({
                 loading={isSubmitting}
                 startIcon={<AddIcon />}
                 disabled={!cristinPerson}>
-                {t('common.add_custom', { name: t('my_page.roles.institution_admin').toLocaleLowerCase() })}
+                {t('common.add')}
               </LoadingButton>
             </DialogActions>
           </Form>

@@ -10,9 +10,12 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
-import { RegistrationStatus } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
+import {
+  getTitleString,
+  userCanDeleteRegistration,
+  userHasSameCustomerAsRegistration,
+} from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
@@ -21,7 +24,7 @@ import { SupportAccordion } from './action_accordions/SupportAccordion';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
-  refetchData: () => Promise<void>;
+  refetchData: () => void;
   isLoadingData?: boolean;
 }
 
@@ -35,48 +38,34 @@ export const ActionPanelContent = ({
   const dispatch = useDispatch();
   const history = useHistory();
   const currentPath = history.location.pathname;
+  const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
 
+  const canBeCuratorForThisCustomer = userHasSameCustomerAsRegistration(user, registration);
+
+  const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
   const publishingRequestTickets = tickets.filter(
     (ticket) => ticket.type === 'PublishingRequest'
   ) as PublishingTicket[];
-  const newestDoiRequestTicket = tickets.findLast((ticket) => ticket.type === 'DoiRequest');
-  const newestSupportTicket = tickets.findLast((ticket) => ticket.type === 'GeneralSupportCase');
+  const supportTickets = tickets.filter((ticket) => ticket.type === 'GeneralSupportCase');
+  const currentSupportTicket = supportTickets.pop() ?? null;
 
   const addMessage = async (ticketId: string, message: string) => {
     const addMessageResponse = await addTicketMessage(ticketId, message);
     if (isErrorStatus(addMessageResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(addMessageResponse.status)) {
-      await refetchData();
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
+      refetchData();
       return true;
     }
   };
 
-  const isPublishedOrDraft =
-    registration.status === RegistrationStatus.Published ||
-    registration.status === RegistrationStatus.Draft ||
-    registration.status === RegistrationStatus.PublishedMetadata;
+  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const isNotOnTasksDialoguePage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
-
-  const canCreatePublishingTicket =
-    isNotOnTasksDialoguePage && userHasAccessRight(registration, 'publishing-request-create');
-  const canApprovePublishingTicket =
-    publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
-  const hasOtherPublishingRights =
-    userHasAccessRight(registration, 'unpublish') ||
-    userHasAccessRight(registration, 'republish') ||
-    userHasAccessRight(registration, 'terminate');
-
-  const canCreateDoiTicket =
-    isPublishedOrDraft && isNotOnTasksDialoguePage && userHasAccessRight(registration, 'doi-request-create');
-  const canApproveDoiTicket =
-    !!newestDoiRequestTicket && isPublishedOrDraft && userHasAccessRight(registration, 'doi-request-approve');
-
-  const canCreateSupportTicket = isNotOnTasksDialoguePage && userHasAccessRight(registration, 'support-request-create');
-  const canApproveSupportTicket = !!newestSupportTicket && userHasAccessRight(registration, 'support-request-approve');
+  const isInRegistrationWizard =
+    window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
+  const canDeleteRegistration = userCanDeleteRegistration(registration) && isInRegistrationWizard;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -108,51 +97,52 @@ export const ActionPanelContent = ({
 
   return (
     <>
-      {(canCreatePublishingTicket || canApprovePublishingTicket || hasOtherPublishingRights) && (
-        <ErrorBoundary>
-          <PublishingAccordion
-            refetchData={refetchData}
-            isLoadingData={isLoadingData}
-            registration={registration}
-            publishingRequestTickets={publishingRequestTickets}
-            addMessage={addMessage}
-          />
-        </ErrorBoundary>
-      )}
-
-      {(canCreateDoiTicket || canApproveDoiTicket) && (
-        <ErrorBoundary>
-          {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
-            <DoiRequestAccordion
-              refetchData={refetchData}
-              isLoadingData={isLoadingData}
-              registration={registration}
-              doiRequestTicket={newestDoiRequestTicket}
-              addMessage={addMessage}
-            />
+      {!isInRegistrationWizard && (
+        <>
+          {(canCreateTickets || publishingRequestTickets.length > 0) && (
+            <ErrorBoundary>
+              <PublishingAccordion
+                refetchData={refetchData}
+                isLoadingData={isLoadingData}
+                registration={registration}
+                publishingRequestTickets={publishingRequestTickets}
+                addMessage={addMessage}
+              />
+            </ErrorBoundary>
           )}
-        </ErrorBoundary>
+          {(canCreateTickets || doiRequestTicket) && (
+            <ErrorBoundary>
+              {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
+                <DoiRequestAccordion
+                  refetchData={refetchData}
+                  isLoadingData={isLoadingData}
+                  registration={registration}
+                  doiRequestTicket={doiRequestTicket}
+                  userIsCurator={!!user?.isDoiCurator && canBeCuratorForThisCustomer}
+                  addMessage={addMessage}
+                />
+              )}
+            </ErrorBoundary>
+          )}
+        </>
       )}
 
-      {(canCreateSupportTicket || canApproveSupportTicket) && (
+      {(canCreateTickets || currentSupportTicket || isInRegistrationWizard) && (
         <ErrorBoundary>
           <SupportAccordion
+            userIsCurator={!!user?.isSupportCurator && canBeCuratorForThisCustomer}
             registration={registration}
-            supportTicket={newestSupportTicket}
+            supportTicket={currentSupportTicket}
             addMessage={addMessage}
             refetchData={refetchData}
+            isRegistrationWizard={isInRegistrationWizard}
           />
         </ErrorBoundary>
       )}
 
-      {userHasAccessRight(registration, 'delete') && (
+      {canDeleteRegistration && (
         <Box sx={{ m: '0.5rem', mt: '1rem' }}>
-          <Button
-            sx={{ bgcolor: 'white' }}
-            size="small"
-            fullWidth
-            variant="outlined"
-            onClick={() => setShowDeleteModal(true)}>
+          <Button sx={{ bgcolor: 'white' }} fullWidth variant="outlined" onClick={() => setShowDeleteModal(true)}>
             {t('common.delete')}
           </Button>
 

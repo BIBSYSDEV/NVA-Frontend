@@ -38,9 +38,8 @@ export const emptyResearchDataPublicationContext: ResearchDataPublicationContext
   },
 };
 
-export interface ResearchDataPublicationContext {
+export interface ResearchDataPublicationContext extends Partial<DataManagementPlanPublicationContext> {
   type: PublicationType.ResearchData;
-  publisher?: ContextPublisher;
 }
 
 interface ResearchDataContributionReference extends BaseReference {
@@ -54,6 +53,10 @@ export interface ResearchDataEntityDescription extends BaseEntityDescription {
 
 interface DataManagementPlanPublicationInstance {
   related: RelatedDocument[]; // Related Registrations and external links
+}
+
+interface DataManagementPlanPublicationContext {
+  publisher: ContextPublisher;
 }
 
 interface DatasetPublicationInstance {

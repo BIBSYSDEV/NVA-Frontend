@@ -5,31 +5,31 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { fetchResults, FetchResultsParams } from '../../api/searchApi';
-import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getTitleString, isBook, isReport, isResearchData, userHasAccessRight } from '../../utils/registration-helpers';
+import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
 import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
-import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
-import { ListExternalRelations } from './public_links/ListExternalRelations';
-import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
-import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
-import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
 import { PublicFundingsContent } from './PublicFundingsContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
 import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
+import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
+import { ListExternalRelations } from './public_links/ListExternalRelations';
+import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
+import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
+import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -55,8 +55,6 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const userCanEditRegistration = userHasAccessRight(registration, 'update');
-
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
       {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
@@ -75,7 +73,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
           {mainTitle}
         </TruncatableTypography>
-        {userCanEditRegistration && (
+        {userCanEditRegistration(registration) && (
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
               data-testid={dataTestId.registrationLandingPage.editButton}
@@ -112,6 +110,14 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               }}>
               {t('registration.public_page.result_not_published')}
             </Typography>
+          </Box>
+        )}
+        {entityDescription?.alternativeTitles.und && (
+          <Box sx={{ borderTop: '1px solid', py: '1rem' }}>
+            <Typography variant="h3" component="h2">
+              {t('registration.description.alternative_title')}
+            </Typography>
+            <Typography>{entityDescription.alternativeTitles.und}</Typography>
           </Box>
         )}
 
@@ -167,7 +173,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <LandingPageAccordion
               dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
               defaultExpanded
-              heading={t('common.consists_of')}>
+              heading={t('registration.resource_type.related_results')}>
               <ShowRelatedDocuments related={entityDescription.reference.publicationInstance.related} />
             </LandingPageAccordion>
           )}
@@ -255,12 +261,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={`${
-              isBook(entityDescription?.reference?.publicationInstance?.type) ||
-              isReport(entityDescription?.reference?.publicationInstance?.type)
-                ? t('common.chapters')
-                : t('registration.public_page.other_related_registrations')
-            } (${relatedRegistrationsQuery.data.totalHits})`}>
+            heading={`${t('registration.public_page.other_related_registrations')} (${
+              relatedRegistrationsQuery.data.totalHits
+            })`}>
             <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
           </LandingPageAccordion>
         )}

@@ -50,9 +50,7 @@ export const FileRow = ({
 
   const handleDownload = useCallback(
     async (previewFile = false) => {
-      if (previewFile) {
-        setIsLoadingPreviewFile(true);
-      }
+      previewFile && setIsLoadingPreviewFile(true);
       const downloadFileResponse = user
         ? await downloadPrivateFile(registrationIdentifier, file.identifier)
         : await downloadPublicFile(registrationIdentifier, file.identifier);
@@ -65,9 +63,7 @@ export const FileRow = ({
           openFileInNewTab(downloadFileResponse.id);
         }
       }
-      if (previewFile) {
-        setIsLoadingPreviewFile(false);
-      }
+      previewFile && setIsLoadingPreviewFile(false);
     },
     [t, dispatch, user, registrationIdentifier, file.identifier]
   );
@@ -132,9 +128,7 @@ export const FileRow = ({
 
       <Box sx={{ gridArea: 'download' }}>
         {file.embargoDate && fileIsEmbargoed ? (
-          <Typography
-            data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}
-            sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
             <LockIcon />
             {t('common.will_be_available')} {toDateString(file.embargoDate)}
           </Typography>

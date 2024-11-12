@@ -84,9 +84,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                     label={t('registration.resource_type.artistic.premiere_date')}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
-                      if (!touched) {
-                        setFieldTouched(field.name, true, false);
-                      }
+                      !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date);
                     }}
                     slotProps={{

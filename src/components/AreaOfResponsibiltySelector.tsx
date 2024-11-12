@@ -4,11 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchOrganizations } from '../api/cristinApi';
-import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
+import { fetchUser } from '../api/roleApi';
 import { RootState } from '../redux/store';
 import { Organization } from '../types/organization.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../utils/searchHelpers';
 import { getLanguageString } from '../utils/translation-helpers';
 
 interface OrganizationOption extends Organization {
@@ -33,10 +32,17 @@ interface AreaOfResponsibilitySelectorProps extends Pick<BaseTextFieldProps, 'sx
 export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }: AreaOfResponsibilitySelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const nvaUsername = user?.nvaUsername ?? '';
 
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
+
+  const institutionUserQuery = useQuery({
+    enabled: !!nvaUsername,
+    queryKey: ['user', nvaUsername],
+    queryFn: () => fetchUser(nvaUsername),
+    meta: { errorMessage: t('feedback.error.get_person') },
+  });
   const areasOfResponsibilityIds = institutionUserQuery.data?.viewingScope?.includedUnits ?? [];
 
   const organizationQuery = useQuery({
@@ -93,25 +99,23 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
           variant="filled"
           data-testid={dataTestId.registrationWizard.resourceType.journalChip}
           onDelete={() => {
-            const syncedParams = syncParamsWithSearchFields(searchParams);
-            syncedParams.delete(paramName);
+            searchParams.delete(paramName);
             resetPagination();
-            history.push({ search: syncedParams.toString() });
+            history.push({ search: searchParams.toString() });
           }}
         />
       )}
       onChange={(_, values) => {
-        const syncedParams = syncParamsWithSearchFields(searchParams);
         if (values.length) {
-          syncedParams.set(paramName, values.map((org) => org.identifier).join(','));
+          searchParams.set(paramName, values.map((org) => org.identifier).join(','));
         } else {
-          syncedParams.delete(paramName);
+          searchParams.delete(paramName);
         }
         resetPagination();
-        history.push({ search: syncedParams.toString() });
+        history.push({ search: searchParams.toString() });
       }}
-      renderOption={({ key, ...props }, option, { selected }) => (
-        <li {...props} key={option.id}>
+      renderOption={(props, option, { selected }) => (
+        <li {...props} key={option.identifier}>
           <Checkbox sx={{ ml: `${option.level}rem`, mr: '0.5rem' }} checked={selected} size="small" />
           {getLanguageString(option.labels)}
         </li>

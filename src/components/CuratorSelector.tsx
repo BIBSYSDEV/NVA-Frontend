@@ -53,7 +53,7 @@ export const CuratorSelector = ({ roleFilter, selectedUsername, onChange, sx }: 
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
       isOptionEqualToValue={(option, value) => option.username === value?.username}
       onChange={(_, value) => onChange(value)}
-      renderOption={({ key, ...props }, curator) => (
+      renderOption={(props, curator) => (
         <li {...props} key={curator.username}>
           <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             {CuratorAvatar(curator)}

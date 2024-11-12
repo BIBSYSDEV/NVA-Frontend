@@ -1,27 +1,23 @@
 import { LoadingButton } from '@mui/lab';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../utils/dataTestIds';
 
 interface ConfirmMessageDialogProps {
-  children?: ReactNode;
   open: boolean;
   title: string;
   onAccept: (message: string) => Promise<unknown>;
   onCancel: () => void;
   textFieldLabel: string;
-  confirmButtonLabel?: string;
 }
 
 export const ConfirmMessageDialog = ({
-  children,
   open,
   onCancel,
   onAccept,
   title,
   textFieldLabel,
-  confirmButtonLabel,
 }: ConfirmMessageDialogProps) => {
   const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,8 +37,6 @@ export const ConfirmMessageDialog = ({
           }
         }}>
         <DialogContent>
-          {children}
-
           <TextField
             required
             fullWidth
@@ -55,7 +49,11 @@ export const ConfirmMessageDialog = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={onCancel} disabled={isSubmitting}>
+          <Button
+            data-testid={dataTestId.confirmDialog.cancelButton}
+            variant="outlined"
+            onClick={onCancel}
+            disabled={isSubmitting}>
             {t('common.cancel')}
           </Button>
           <LoadingButton
@@ -63,7 +61,7 @@ export const ConfirmMessageDialog = ({
             data-testid={dataTestId.confirmDialog.acceptButton}
             variant="contained"
             loading={isSubmitting}>
-            {confirmButtonLabel ?? t('common.save')}
+            {t('common.save')}
           </LoadingButton>
         </DialogActions>
       </form>

@@ -69,8 +69,8 @@ export const DataManagementPlanForm = () => {
               loading={searchOptionsQuery.isPending}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-              renderOption={({ key, ...props }, option, state) => (
-                <li {...props} key={option.identifier}>
+              renderOption={(props, option, state) => (
+                <li {...props}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">
                       <EmphasizeSubstring

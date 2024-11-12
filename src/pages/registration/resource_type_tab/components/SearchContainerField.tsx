@@ -1,15 +1,13 @@
 import { Autocomplete, Box, Chip, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
 import { fetchResults } from '../../../../api/searchApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
-import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { Contributor } from '../../../../types/contributor.types';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import {
@@ -25,7 +23,6 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
-import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -58,8 +55,6 @@ export const SearchContainerField = ({
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
-
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),
     fetchErrorMessage
@@ -75,23 +70,14 @@ export const SearchContainerField = ({
     <Field name={fieldName}>
       {({ field, meta }: FieldProps<string>) => (
         <>
-          {disableNviCriticalFields && (
-            <StyledInfoBanner sx={{ mb: '1rem' }}>
-              <LockedNviFieldDescription fieldLabel={t('registration.resource_type.journal')} />
-            </StyledInfoBanner>
-          )}
-
           <Autocomplete
-            disabled={disableNviCriticalFields}
             multiple
             id={dataTestId}
             data-testid={dataTestId}
             aria-labelledby={`${dataTestId}-label`}
             popupIcon={null}
             options={
-              query === debouncedQuery && !containerOptionsQuery.isPending
-                ? (containerOptionsQuery.data?.hits ?? [])
-                : []
+              query === debouncedQuery && !containerOptionsQuery.isPending ? containerOptionsQuery.data?.hits ?? [] : []
             }
             filterOptions={(options) => options}
             inputValue={query}
@@ -114,8 +100,8 @@ export const SearchContainerField = ({
             }}
             loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
             getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-            renderOption={({ key, ...props }, option, state) => (
-              <li {...props} key={option.identifier}>
+            renderOption={(props, option, state) => (
+              <li {...props}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring
@@ -138,7 +124,6 @@ export const SearchContainerField = ({
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
-                  key={option.identifier}
                   data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                   label={
                     <>

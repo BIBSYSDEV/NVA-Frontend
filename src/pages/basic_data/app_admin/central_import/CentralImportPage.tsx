@@ -11,7 +11,6 @@ import { SearchForm } from '../../../../components/SearchForm';
 import { SortSelector } from '../../../../components/SortSelector';
 import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { syncParamsWithSearchFields } from '../../../../utils/searchHelpers';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
 export const CentralImportPage = () => {
@@ -22,10 +21,9 @@ export const CentralImportPage = () => {
   const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery();
 
   const updatePath = (from: string, results: string) => {
-    const syncedParams = syncParamsWithSearchFields(params);
-    syncedParams.set(ImportCandidatesSearchParam.From, from);
-    syncedParams.set(ImportCandidatesSearchParam.Size, results);
-    history.push({ search: syncedParams.toString() });
+    params.set(ImportCandidatesSearchParam.From, from);
+    params.set(ImportCandidatesSearchParam.Size, results);
+    history.push({ search: params.toString() });
   };
 
   useEffect(() => {
@@ -64,12 +62,8 @@ export const CentralImportPage = () => {
               size="small"
               variant="standard"
               options={[
-                {
-                  orderBy: 'createdDate',
-                  sortOrder: 'desc',
-                  i18nKey: 'basic_data.central_import.sort_newest_first',
-                },
-                { orderBy: 'createdDate', sortOrder: 'asc', i18nKey: 'basic_data.central_import.sort_oldest_first' },
+                { orderBy: 'createdDate', sortOrder: 'desc', label: t('basic_data.central_import.sort_newest_first') },
+                { orderBy: 'createdDate', sortOrder: 'asc', label: t('basic_data.central_import.sort_oldest_first') },
               ]}
             />
           }>

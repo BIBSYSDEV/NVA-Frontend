@@ -1,12 +1,8 @@
-import { Box, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { ProjectContributor, ProjectContributorType } from '../../types/project.types';
-import { getResearchProfilePath } from '../../utils/urlPaths';
-import { getFullName } from '../../utils/user-helpers';
+import { ProjectContributor } from '../../types/project.types';
+import { getLanguageString } from '../../utils/translation-helpers';
 import {
-  getLocalProjectManagers,
   getProjectManagers,
   getProjectParticipants,
 } from '../registration/description_tab/projects_field/projectHelpers';
@@ -19,7 +15,6 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
   const { t } = useTranslation();
 
   const projectManagers = getProjectManagers(contributors);
-  const localProjectManagers = getLocalProjectManagers(contributors);
   const projectParticipants = getProjectParticipants(contributors);
 
   return (
@@ -35,26 +30,14 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
         <>
           {projectManagers.length > 0 && (
             <div>
-              <Typography variant="h3" gutterBottom>
-                {t('project.project_manager')}
-              </Typography>
-              <ContributorList contributors={projectManagers} projectRole="ProjectManager" />
-            </div>
-          )}
-          {localProjectManagers.length > 0 && (
-            <div>
-              <Typography variant="h3" gutterBottom>
-                {t('project.role_types.LocalProjectManager')}
-              </Typography>
-              <ContributorList contributors={localProjectManagers} projectRole="LocalProjectManager" />
+              <Typography variant="h3">{t('project.project_manager')}</Typography>
+              <ContributorList contributors={projectManagers} />
             </div>
           )}
           {projectParticipants.length > 0 && (
             <div>
-              <Typography variant="h3" gutterBottom>
-                {t('project.project_participants')}
-              </Typography>
-              <ContributorList contributors={projectParticipants} projectRole="ProjectParticipant" />
+              <Typography variant="h3">{t('project.project_participants')}</Typography>
+              <ContributorList contributors={projectParticipants} />
             </div>
           )}
         </>
@@ -65,44 +48,22 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
 
 interface ContributorListProps {
   contributors: ProjectContributor[];
-  projectRole: ProjectContributorType;
 }
 
-const ContributorList = ({ contributors, projectRole }: ContributorListProps) => (
+const ContributorList = ({ contributors }: ContributorListProps) => (
   <Box
     sx={{
       display: 'grid',
       gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)', md: 'repeat(6, 1fr)' },
       gap: '0.75rem',
     }}>
-    {contributors.map((contributor, index) => {
-      return (
-        <div key={index}>
-          <Typography variant="subtitle1" component="p">
-            {contributor.identity.id ? (
-              <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-                {contributor.identity.firstName} {contributor.identity.lastName}
-              </MuiLink>
-            ) : (
-              getFullName(contributor.identity.firstName, contributor.identity.lastName)
-            )}
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {contributor.roles.map((contributorRole) => {
-              if (contributorRole.type === projectRole && contributorRole.affiliation) {
-                return (
-                  <AffiliationHierarchy
-                    key={contributorRole.affiliation!.id}
-                    unitUri={contributorRole.affiliation!.id}
-                    condensed
-                  />
-                );
-              }
-              return null;
-            })}
-          </Box>
-        </div>
-      );
-    })}
+    {contributors.map((contributor, index) => (
+      <div key={index}>
+        <Typography variant="subtitle1" component="p">
+          {contributor.identity.firstName} {contributor.identity.lastName}
+        </Typography>
+        <Typography variant="body2">{getLanguageString(contributor.affiliation?.labels)}</Typography>
+      </div>
+    ))}
   </Box>
 );

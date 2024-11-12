@@ -24,7 +24,7 @@ import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../api/commonApi';
-import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
+import { fetchRegistration } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
@@ -66,7 +66,7 @@ import { ContextPublisher, Journal, Publisher, Series } from '../../types/regist
 import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { getIssnValuesString, getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
+import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import { RegistrationSummary } from './RegistrationSummary';
@@ -74,6 +74,12 @@ import { RegistrationSummary } from './RegistrationSummary';
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
 }
+
+const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler';
+export const getChannelRegisterJournalUrl = (id: string) =>
+  `${channelRegisterBaseUrl}/KanalTidsskriftInfo.action?id=${id}`;
+export const getChannelRegisterPublisherUrl = (id: string) =>
+  `${channelRegisterBaseUrl}/KanalForlagInfo.action?id=${id}`;
 
 export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
   const { t } = useTranslation();
@@ -86,10 +92,7 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
       {publicationContext.id ? (
         <PublicJournalContent id={publicationContext.id} errorMessage={t('feedback.error.get_journal')} />
       ) : (
-        <>
-          <Typography>{publicationContext.title}</Typography>
-          <Typography>{getIssnValuesString(publicationContext)}</Typography>
-        </>
+        <Typography>{publicationContext.title}</Typography>
       )}
     </>
   ) : null;
@@ -103,10 +106,6 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
     t('feedback.error.get_publisher')
   );
 
-  const publisherName = fetchedPublisher?.discontinued
-    ? `${fetchedPublisher.name} (${t('common.discontinued')}: ${fetchedPublisher.discontinued})`
-    : fetchedPublisher?.name;
-
   return publisher?.id || publisher?.name ? (
     <>
       <Typography variant="h3" component="p">
@@ -117,7 +116,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
         <ListSkeleton height={20} />
       ) : fetchedPublisher ? (
         <>
-          <Typography>{publisherName}</Typography>
+          <Typography>{fetchedPublisher.name}</Typography>
           <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} channelId={fetchedPublisher.id} />
           {fetchedPublisher.sameAs && (
             <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
@@ -126,7 +125,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
           )}
         </>
       ) : (
-        <Typography gutterBottom>{publisher.name}</Typography>
+        <Typography>{publisher.name}</Typography>
       )}
     </>
   ) : null;
@@ -166,10 +165,7 @@ export const PublicSeries = ({
       {series.id ? (
         <PublicJournalContent id={series.id} errorMessage={t('feedback.error.get_series')} />
       ) : (
-        <>
-          <Typography>{series.title}</Typography>
-          <Typography>{getIssnValuesString(series)}</Typography>
-        </>
+        <Typography>{series.title}</Typography>
       )}
       {seriesNumber && (
         <Typography>
@@ -224,16 +220,19 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   const isLoadingJournal = (!!id && journalQuery.isPending) || (journalQuery.isError && journalBackupQuery.isPending);
   const journal = journalQuery.data ?? journalBackupQuery.data;
 
-  const journalName = journal?.discontinued
-    ? `${journal.name} (${t('common.discontinued')}: ${journal.discontinued})`
-    : journal?.name;
-
   return isLoadingJournal ? (
     <ListSkeleton height={20} />
   ) : !journal ? null : (
     <>
-      <Typography>{journalName}</Typography>
-      <Typography>{getIssnValuesString(journal)}</Typography>
+      <Typography>{journal.name}</Typography>
+      <Typography>
+        {[
+          journal.printIssn ? `${t('registration.resource_type.print_issn')}: ${journal.printIssn}` : '',
+          journal.onlineIssn ? `${t('registration.resource_type.online_issn')}: ${journal.onlineIssn}` : '',
+        ]
+          .filter((issn) => issn)
+          .join(', ')}
+      </Typography>
       <NpiLevelTypography scientificValue={journal.scientificValue} channelId={journal.id} />
       {journal.sameAs && (
         <Typography component={Link} href={journal.sameAs} target="_blank">
@@ -256,11 +255,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
   return (
     <>
       <Typography variant="h3">{t(`registration.publication_types.${type}`)}</Typography>
-      {label && (
-        <Typography>
-          {t('registration.resource_type.title_of_event')}: {label}
-        </Typography>
-      )}
+      {label && <Typography>{label}</Typography>}
       {agent?.name && (
         <Typography>
           {t('registration.resource_type.organizer')}: {agent.name}
@@ -314,7 +309,12 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
   const exhibitionCatalogIdentifier =
     output.type === 'ExhibitionCatalog' && output.id ? getIdentifierFromId(output.id) : '';
 
-  const exhibitionCatalogQuery = useFetchRegistration(exhibitionCatalogIdentifier);
+  const exhibitionCatalogQuery = useQuery({
+    enabled: !!exhibitionCatalogIdentifier,
+    queryKey: ['registration', exhibitionCatalogIdentifier],
+    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
+    meta: { errorMessage: t('feedback.error.get_registration') },
+  });
 
   const nameString = exhibitionCatalogIdentifier
     ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle

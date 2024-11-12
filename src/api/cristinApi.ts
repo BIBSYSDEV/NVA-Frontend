@@ -81,7 +81,6 @@ export interface OrganizationSearchParams {
   results?: number;
   includeSubunits?: boolean;
 }
-export const defaultOrganizationSearchSize = 20;
 
 export const searchForOrganizations = async (params: OrganizationSearchParams) => {
   const searchParams = new URLSearchParams();
@@ -94,7 +93,7 @@ export const searchForOrganizations = async (params: OrganizationSearchParams) =
     headers.set('Accept', 'application/json; version=1');
   }
 
-  searchParams.set('results', (params.results ?? defaultOrganizationSearchSize).toString());
+  searchParams.set('results', params.results?.toString() ?? '20');
   searchParams.set('page', params.page?.toString() ?? '1');
 
   const queryContent = searchParams.toString();
@@ -200,17 +199,13 @@ export const searchForPerson = async (
   return fetchPersonResponse.data;
 };
 
-export enum ProjectSearchOrder {
-  Name = 'name',
-}
-
 export interface ProjectsSearchParams {
   categoryFacet?: string | null;
   coordinatingFacet?: string | null;
   creator?: string | null;
   fundingSourceFacet?: string | null;
   healthProjectFacet?: string | null;
-  orderBy?: ProjectSearchOrder | null;
+  orderBy?: string | null;
   participant?: string | null;
   participantFacet?: string | null;
   participantOrgFacet?: string | null;
@@ -301,10 +296,10 @@ export const searchForProjects = async (results: number, page: number, params?: 
 };
 
 export const fetchProject = async (projectId: string) => {
-  const fetchProjectResponse = await apiRequest2<CristinProject>({
+  const fetchProjectRespone = await apiRequest2<CristinProject>({
     url: projectId,
   });
-  return fetchProjectResponse.data;
+  return fetchProjectRespone.data;
 };
 
 export const uploadProfilePicture = async (cristinId: string, base64String: string) =>

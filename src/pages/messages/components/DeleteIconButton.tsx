@@ -8,7 +8,7 @@ interface DeleteIconButtonProps extends IconButtonProps {
 }
 
 export const DeleteIconButton = ({ sx, tooltip, disabled, ...rest }: DeleteIconButtonProps) => (
-  <Tooltip title={tooltip}>
+  <Tooltip title={disabled ? '' : tooltip}>
     <IconButton
       sx={{
         bgcolor: disabled ? 'grey.600' : 'primary.main',
@@ -25,8 +25,6 @@ export const DeleteIconButton = ({ sx, tooltip, disabled, ...rest }: DeleteIconB
       <DeleteIcon
         sx={{
           color: 'white',
-          height: '1rem',
-          width: '1rem',
         }}
         fontSize="small"
       />

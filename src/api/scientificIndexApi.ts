@@ -98,14 +98,3 @@ export const fetchNviInstitutionStatus = async (year: number) => {
   });
   return fetchNviStatusResponse.data;
 };
-
-export const fetchNviInstitutionApprovalReport = async (year: number) => {
-  const fetchNviInstitutionApprovalReportResponse = await authenticatedApiRequest2<Blob>({
-    url: `${ScientificIndexApiPath.InstitutionApprovalReport}/${year}`,
-    headers: {
-      Accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    },
-    responseType: 'blob',
-  });
-  return fetchNviInstitutionApprovalReportResponse.data;
-};

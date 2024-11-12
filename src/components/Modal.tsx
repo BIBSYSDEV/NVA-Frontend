@@ -29,7 +29,7 @@ export const Modal = ({
 }: ModalProps) => {
   const { t } = useTranslation();
   const handleClose = () => {
-    onClose?.();
+    onClose && onClose();
   };
 
   return (

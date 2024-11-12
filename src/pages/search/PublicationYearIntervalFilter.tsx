@@ -3,7 +3,6 @@ import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../api/searchApi';
-import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 
 const commonDatepickerProps: Partial<DatePickerProps<Date>> = {
   views: ['year'],
@@ -33,22 +32,21 @@ export const PublicationYearIntervalFilter = ({ datePickerProps, boxProps }: Pub
     newDate: Date | null,
     param: ResultParam.PublicationYearSince | ResultParam.PublicationYearBefore
   ) => {
-    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (newDate) {
       const year = newDate.getFullYear();
       if (year.toString().length === 4) {
         if (param === ResultParam.PublicationYearBefore) {
-          syncedParams.set(param, (year + 1).toString());
+          searchParams.set(param, (year + 1).toString());
         } else {
-          syncedParams.set(param, year.toString());
+          searchParams.set(param, year.toString());
         }
-        syncedParams.delete(ResultParam.From);
-        history.push({ search: syncedParams.toString() });
+        searchParams.delete(ResultParam.From);
+        history.push({ search: searchParams.toString() });
       }
     } else {
-      syncedParams.delete(param);
-      syncedParams.delete(ResultParam.From);
-      history.push({ search: syncedParams.toString() });
+      searchParams.delete(param);
+      searchParams.delete(ResultParam.From);
+      history.push({ search: searchParams.toString() });
     }
   };
 

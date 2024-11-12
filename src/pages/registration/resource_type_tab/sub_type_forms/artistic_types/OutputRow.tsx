@@ -3,9 +3,10 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Skeleton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFetchRegistration } from '../../../../../api/hooks/useFetchRegistration';
+import { fetchRegistration } from '../../../../../api/registrationApi';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import {
   ArtisticOutputItem,
@@ -84,7 +85,12 @@ export const OutputRow = ({
   const shouldFetchItem = item.type === 'ExhibitionCatalog';
   const exhibitionCatalogIdentifier = shouldFetchItem && item.id ? getIdentifierFromId(item.id) : '';
 
-  const exhibitionCatalogQuery = useFetchRegistration(exhibitionCatalogIdentifier);
+  const exhibitionCatalogQuery = useQuery({
+    enabled: !!exhibitionCatalogIdentifier,
+    queryKey: ['registration', exhibitionCatalogIdentifier],
+    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
+    meta: { errorMessage: t('feedback.error.get_registration') },
+  });
 
   const title = shouldFetchItem ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle : getOutputName(item);
 

@@ -13,13 +13,11 @@ import { ResultParam } from '../../../api/searchApi';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
+  PropertySearch,
   createSearchConfigFromSearchParams,
-  dataSearchFieldAttributeName,
   getFileFacetText,
   isValidIsbn,
-  PropertySearch,
   removeSearchParamValue,
-  syncParamsWithSearchFields,
 } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullCristinName } from '../../../utils/user-helpers';
@@ -139,7 +137,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
             {({ field }: FieldProps<string>) => (
               <SearchTextField
                 {...field}
-                inputProps={{ [dataSearchFieldAttributeName]: ResultParam.Query }}
                 placeholder={t('search.search_placeholder')}
                 clearValue={() => {
                   field.onChange({ target: { value: '', id: field.name } });
@@ -161,12 +158,10 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                   {values.properties.map((property, index) => (
                     <AdvancedSearchRow
                       key={index}
-                      queryParam={property.fieldName}
                       removeFilter={() => {
                         remove(index);
                         const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
-                        const syncedParams = syncParamsWithSearchFields(searchParams);
-                        const newParams = removeSearchParamValue(syncedParams, property.fieldName, valueToRemove);
+                        const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
                         newParams.set(ResultParam.From, '0');
                         history.push({ search: newParams.toString() });
                       }}
@@ -181,7 +176,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                         sx={{ borderRadius: '4px', minWidth: '36px', minHeight: '36px' }}
                         size="small"
                         color="primary"
-                        title={t('common.add_custom', { name: t('common.filter').toLocaleLowerCase() })}
+                        title={t('common.add')}
                         data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
                         onClick={() => {
                           const newPropertyFilter: PropertySearch = {
@@ -337,9 +332,8 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     sx={{ textTransform: 'none' }}
                     endIcon={<ClearIcon />}
                     onClick={() => {
-                      const syncedParams = syncParamsWithSearchFields(searchParams);
-                      const newParams = removeSearchParamValue(syncedParams, param, value);
-                      newParams.delete(ResultParam.From);
+                      const newParams = removeSearchParamValue(searchParams, param, value);
+                      newParams.set(ResultParam.From, '0');
                       history.push({ search: newParams.toString() });
                     }}>
                     {fieldName}: {fieldValueText}

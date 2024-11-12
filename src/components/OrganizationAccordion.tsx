@@ -4,7 +4,6 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LanguageString } from '../types/common.types';
 import { Organization } from '../types/organization.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { getIdentifierFromId } from '../utils/general-helpers';
@@ -16,7 +15,6 @@ interface OrganizationAccordionProps {
   searchId: string;
   selectedId: string;
   setSelectedId: (id: string) => void;
-  setSelectedLabels?: (labels: LanguageString) => void;
   level?: number;
   includeAllSubunits?: boolean;
   displayOrgId?: boolean;
@@ -28,7 +26,6 @@ export const OrganizationAccordion = ({
   searchId,
   selectedId,
   setSelectedId,
-  setSelectedLabels,
   level = 0,
   includeAllSubunits = false,
   displayOrgId = false,
@@ -73,7 +70,6 @@ export const OrganizationAccordion = ({
       onChange={() => {
         setIsExpanded(!expanded);
         setSelectedId(organization.id);
-        setSelectedLabels?.(organization.labels);
       }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ visibility: subunitsCount > 0 ? null : 'hidden' }} />}>
         <Box
@@ -116,7 +112,6 @@ export const OrganizationAccordion = ({
                 includeAllSubunits={includeAllSubunits || foundBySearch}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
-                setSelectedLabels={setSelectedLabels}
                 displayOrgId={displayOrgId}
                 displaySubunitsCount={displaySubunitsCount}
               />

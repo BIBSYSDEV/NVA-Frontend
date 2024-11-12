@@ -15,8 +15,8 @@ function isDoi(query: string) {
 }
 
 interface FindRegistrationProps {
-  setSelectedRegistration: (registration?: Registration) => void;
-  selectedRegistration?: Registration;
+  setSelectedRegistration: (registration: Registration | null) => void;
+  selectedRegistration: Registration | null;
   filteredRegistrationIdentifier: string;
 }
 export const FindRegistration = ({
@@ -62,9 +62,9 @@ export const FindRegistration = ({
         value={selectedRegistration}
         onChange={(_, newValue) => {
           if (typeof newValue === 'string') {
-            setSelectedRegistration(undefined);
+            setSelectedRegistration(null);
           } else {
-            setSelectedRegistration(newValue ?? undefined);
+            setSelectedRegistration(newValue);
           }
         }}
         renderInput={(params) => (

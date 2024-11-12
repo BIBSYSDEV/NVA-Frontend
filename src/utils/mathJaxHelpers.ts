@@ -14,5 +14,5 @@ export const typesetMathJax = () => {
 };
 
 export const stringIncludesMathJax = (input = '') => {
-  return input.includes('\\') || input.includes('$');
+  return input.includes('$');
 };

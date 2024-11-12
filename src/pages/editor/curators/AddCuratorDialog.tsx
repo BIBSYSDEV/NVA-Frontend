@@ -118,7 +118,7 @@ export const AddCuratorDialog = ({
       <DialogContent>
         <Autocomplete
           options={employeeSearchQuery.data?.hits ?? []}
-          renderOption={({ key, ...props }, option) => (
+          renderOption={(props, option) => (
             <li {...props} key={option.id}>
               {getFullCristinName(option.names)}
             </li>

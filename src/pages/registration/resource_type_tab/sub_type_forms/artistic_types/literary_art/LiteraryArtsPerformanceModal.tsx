@@ -147,9 +147,7 @@ export const LiteraryArtsPerformanceModal = ({
                     label={t('common.date')}
                     value={field.value.year ? new Date(+field.value.year, +field.value.month, +field.value.day) : null}
                     onChange={(date) => {
-                      if (!touched) {
-                        setFieldTouched(field.name, true, false);
-                      }
+                      !touched && setFieldTouched(field.name, true, false);
                       if (date) {
                         setFieldValue('publicationDate', {
                           ...emptyRegistrationDate,

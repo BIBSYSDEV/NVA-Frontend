@@ -4,15 +4,16 @@ import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Badge, Button, Divider, FormControlLabel, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
+import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
+  LinkButton,
   LinkCreateButton,
   NavigationList,
   SideNavHeader,
@@ -22,7 +23,6 @@ import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
-import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -34,6 +34,7 @@ import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { TicketList } from '../messages/components/TicketList';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
+import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import ResearchProfile from '../research_profile/ResearchProfile';
 import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
@@ -45,14 +46,15 @@ import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
-  const history = useHistory<PreviousSearchLocationState>();
-  const searchParams = new URLSearchParams(history.location.search);
+  const location = useLocation<PreviousSearchLocationState>();
+  const searchParams = new URLSearchParams(location.search);
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
   const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
   const personId = user?.cristinId ?? '';
   const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
 
+  const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const apiPage = page - 1;
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -68,11 +70,11 @@ const MyPagePage = () => {
     publishingRequest: true,
   });
 
+  const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
+
   const selectedTypesArray = Object.entries(selectedTypes)
     .filter(([, selected]) => selected)
     .map(([key]) => key);
-
-  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot);
 
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
@@ -84,14 +86,13 @@ const MyPagePage = () => {
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     status: searchParams.get(TicketSearchParam.Status),
-    viewedByNot: viewedByNotParam,
+    viewedByNot: filterUnreadOnly && user ? user.nvaUsername : '',
     type: selectedTypesArray.join(','),
     publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
 
-  const isOnDialoguePage = history.location.pathname === UrlPathTemplate.MyPageMyMessages;
   const ticketsQuery = useQuery({
-    enabled: isOnDialoguePage && !!user?.isCreator,
+    enabled: !!user?.isCreator,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchCustomerTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
@@ -99,6 +100,7 @@ const MyPagePage = () => {
 
   const dialogueNotificationsParams = getDialogueNotificationsParams(user?.nvaUsername);
 
+  const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
   const notificationsQuery = useQuery({
     enabled: isOnDialoguePage && !!user?.isCreator && !!dialogueNotificationsParams.owner,
     queryKey: ['dialogueNotifications', dialogueNotificationsParams],
@@ -121,12 +123,13 @@ const MyPagePage = () => {
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const [showCreateProject, setShowCreateProject] = useState(false);
 
   // Hide menu when opening a ticket on Messages path
   const expandMenu =
-    !history.location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
-    history.location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+    !location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
+    location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
 
   return (
     <StyledPageWithSideMenu>
@@ -134,7 +137,7 @@ const MyPagePage = () => {
         expanded={expandMenu}
         minimizedMenu={
           <Link
-            to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: history.location.state?.previousSearch }}
+            to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: location.state?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
             <StyledMinimizedMenuButton title={t('my_page.my_page')}>
               <FavoriteBorderIcon />
@@ -150,45 +153,45 @@ const MyPagePage = () => {
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
           <NavigationList>
             <Typography>{t('my_page.public_research_profile')}</Typography>
-            <SelectableButton
+            <LinkButton
               data-testid={dataTestId.myPage.researchProfileLink}
               isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
               to={UrlPathTemplate.MyPageResearchProfile}>
               {fullName}
-            </SelectableButton>
+            </LinkButton>
             <Typography>{t('my_page.my_profile.edit_research_profile')}</Typography>
-            <SelectableButton
+            <LinkButton
               data-testid={dataTestId.myPage.myProfileLink}
               isSelected={currentPath === UrlPathTemplate.MyPagePersonalia}
               to={UrlPathTemplate.MyPagePersonalia}>
               {t('my_page.my_profile.heading.personalia')}
-            </SelectableButton>
-            <SelectableButton
+            </LinkButton>
+            <LinkButton
               data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
               isSelected={currentPath === UrlPathTemplate.MyPageFieldAndBackground}
               to={UrlPathTemplate.MyPageFieldAndBackground}>
               {t('my_page.my_profile.field_and_background.field_and_background')}
-            </SelectableButton>
-            <SelectableButton
+            </LinkButton>
+            <LinkButton
               data-testid={dataTestId.myPage.myResultsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageResults}
               to={UrlPathTemplate.MyPageResults}>
               {t('my_page.my_profile.results')}
-            </SelectableButton>
+            </LinkButton>
 
-            <SelectableButton
+            <LinkButton
               data-testid={dataTestId.myPage.myProjectsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
               to={UrlPathTemplate.MyPageMyProjects}>
               {t('my_page.my_profile.projects')}
-            </SelectableButton>
+            </LinkButton>
             <Typography>{t('my_page.my_profile.overview_and_settings')}</Typography>
-            <SelectableButton
+            <LinkButton
               data-testid={dataTestId.myPage.userRolesAndHelpLink}
               isSelected={currentPath === UrlPathTemplate.MyPageUserRoleAndHelp}
               to={UrlPathTemplate.MyPageUserRoleAndHelp}>
               {t('my_page.my_profile.user_role_and_help.user_role_and_help')}
-            </SelectableButton>
+            </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
 
@@ -203,23 +206,16 @@ const MyPagePage = () => {
             <StyledTicketSearchFormGroup>
               <Button
                 data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-                sx={{ width: 'fit-content', background: viewedByNotParam ? undefined : 'white', textTransform: 'none' }}
-                variant={viewedByNotParam ? 'contained' : 'outlined'}
+                sx={{ width: 'fit-content', background: filterUnreadOnly ? undefined : 'white', textTransform: 'none' }}
+                variant={filterUnreadOnly ? 'contained' : 'outlined'}
                 startIcon={<MarkEmailUnreadIcon />}
-                onClick={() => {
-                  if (viewedByNotParam) {
-                    searchParams.delete(TicketSearchParam.ViewedByNot);
-                  } else if (user.nvaUsername) {
-                    searchParams.set(TicketSearchParam.ViewedByNot, user.nvaUsername);
-                  }
-                  history.push({ search: searchParams.toString() });
-                }}>
+                onClick={() => setFilterUnreadOnly(!filterUnreadOnly)}>
                 {t('tasks.unread')}
               </Button>
             </StyledTicketSearchFormGroup>
 
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
-              <TicketTypeFilterButton
+              <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 endIcon={<Badge badgeContent={unreadPublishingCount} />}
                 showCheckbox
@@ -231,9 +227,9 @@ const MyPagePage = () => {
                 {selectedTypes.publishingRequest && publishingRequestCount
                   ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                   : t('my_page.messages.types.PublishingRequest')}
-              </TicketTypeFilterButton>
+              </SelectableButton>
 
-              <TicketTypeFilterButton
+              <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                 endIcon={<Badge badgeContent={unreadDoiCount} />}
                 showCheckbox
@@ -243,9 +239,9 @@ const MyPagePage = () => {
                 {selectedTypes.doiRequest && doiRequestCount
                   ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                   : t('my_page.messages.types.DoiRequest')}
-              </TicketTypeFilterButton>
+              </SelectableButton>
 
-              <TicketTypeFilterButton
+              <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                 endIcon={<Badge badgeContent={unreadGeneralSupportCount} />}
                 showCheckbox
@@ -257,7 +253,7 @@ const MyPagePage = () => {
                 {selectedTypes.generalSupportCase && generalSupportCaseCount
                   ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                   : t('my_page.messages.types.GeneralSupportCase')}
-              </TicketTypeFilterButton>
+              </SelectableButton>
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>,
 
@@ -268,7 +264,7 @@ const MyPagePage = () => {
             accordionPath={UrlPathTemplate.MyPageRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
-            <NavigationList component="div">
+            <NavigationList>
               <StyledTicketSearchFormGroup>
                 <FormControlLabel
                   data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
@@ -323,7 +319,9 @@ const MyPagePage = () => {
             </Typography>
             <LinkCreateButton
               data-testid={dataTestId.myPage.createProjectButton}
-              to={UrlPathTemplate.ProjectsNew}
+              isSelected={showCreateProject}
+              selectedColor="project.main"
+              onClick={() => setShowCreateProject(true)}
               title={t('project.create_project')}
             />
           </NavigationListAccordion>,
@@ -400,6 +398,19 @@ const MyPagePage = () => {
           <PrivateRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isAuthenticated} />
         </Switch>
       </ErrorBoundary>
+
+      {user?.isCreator && (
+        <ProjectFormDialog
+          open={showCreateProject}
+          onClose={() => setShowCreateProject(false)}
+          onCreateProject={async () => {
+            await new Promise((resolve) => setTimeout(resolve, 10_000));
+            // Wait 10sec before refetching projects, and hope that it is indexed by then
+            // TODO: consider placing the new project in the cache manually instead of a fixed waiting time
+            queryClient.invalidateQueries({ queryKey: ['projects'] });
+          }}
+        />
+      )}
     </StyledPageWithSideMenu>
   );
 };

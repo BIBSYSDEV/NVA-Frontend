@@ -139,7 +139,7 @@ export const FindPersonPanel = () => {
                   <Trans
                     t={t}
                     i18nKey="basic_data.add_employee.missing_nin_description"
-                    components={[<Typography paragraph key="1" />]}
+                    components={[<Typography paragraph />]}
                   />
                 </ConfirmDialog>
               </>

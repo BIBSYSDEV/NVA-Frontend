@@ -17,7 +17,6 @@ import {
   PublicationInstanceType,
   Registration,
   RegistrationAggregations,
-  RegistrationStatus,
 } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
@@ -331,8 +330,6 @@ export enum ResultParam {
   FundingIdentifier = 'fundingIdentifier',
   FundingSource = 'fundingSource',
   Handle = 'handle',
-  HasChildren = 'hasChildren',
-  HasNoChildren = 'hasNoChildren',
   Identifier = 'id',
   IdentifierNot = 'idNot',
   Isbn = 'isbn',
@@ -341,7 +338,6 @@ export enum ResultParam {
   Order = 'order',
   Project = 'project',
   PublicationLanguageShould = 'publicationLanguageShould',
-  PublicationPages = 'publicationPages',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
   PublicationYearShould = 'publicationYearShould',
@@ -359,7 +355,6 @@ export enum ResultParam {
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
   Unit = 'unit',
-  Vocabulary = 'vocabulary',
 }
 
 export enum ResultSearchOrder {
@@ -373,8 +368,8 @@ export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
   [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
-  [ResultParam.CategoryNot]?: PublicationInstanceType | PublicationInstanceType[] | null;
-  [ResultParam.CategoryShould]?: PublicationInstanceType[] | null;
+  [ResultParam.CategoryNot]?: PublicationInstanceType | null;
+  [ResultParam.CategoryShould]?: PublicationInstanceType[];
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorName]?: string | null;
   [ResultParam.Course]?: string | null;
@@ -386,8 +381,6 @@ export interface FetchResultsParams {
   [ResultParam.FundingIdentifier]?: string | null;
   [ResultParam.FundingSource]?: string | null;
   [ResultParam.Handle]?: string | null;
-  [ResultParam.HasChildren]?: boolean | null;
-  [ResultParam.HasNoChildren]?: boolean | null;
   [ResultParam.Identifier]?: string | null;
   [ResultParam.IdentifierNot]?: string | null;
   [ResultParam.Isbn]?: string | null;
@@ -396,7 +389,6 @@ export interface FetchResultsParams {
   [ResultParam.Order]?: ResultSearchOrder | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationLanguageShould]?: string | null;
-  [ResultParam.PublicationPages]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.PublicationYearSince]?: string | null;
   [ResultParam.PublicationYearShould]?: string | null;
@@ -414,7 +406,6 @@ export interface FetchResultsParams {
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
   [ResultParam.Unit]?: string | null;
-  [ResultParam.Vocabulary]?: string | null;
 }
 
 export const fetchResults = async (params: FetchResultsParams, signal?: AbortSignal) => {
@@ -432,8 +423,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.Category, params.category);
   }
   if (params.categoryNot) {
-    const paramValue = Array.isArray(params.categoryNot) ? params.categoryNot.join(',') : params.categoryNot;
-    searchParams.set(ResultParam.CategoryNot, paramValue);
+    searchParams.set(ResultParam.CategoryNot, params.categoryNot);
   }
   if (params.categoryShould && params.categoryShould.length > 0) {
     searchParams.set(ResultParam.CategoryShould, params.categoryShould.join(','));
@@ -468,12 +458,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.handle) {
     searchParams.set(ResultParam.Handle, params.handle);
   }
-  if (params.hasChildren === true || params.hasChildren === false) {
-    searchParams.set(ResultParam.HasChildren, params.hasChildren.toString());
-  }
-  if (params.hasNoChildren === true || params.hasNoChildren === false) {
-    searchParams.set(ResultParam.HasNoChildren, params.hasNoChildren.toString());
-  }
   if (params.id) {
     searchParams.set(ResultParam.Identifier, params.id);
   }
@@ -494,9 +478,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.publicationLanguageShould) {
     searchParams.set(ResultParam.PublicationLanguageShould, params.publicationLanguageShould);
-  }
-  if (params.publicationPages) {
-    searchParams.set(ResultParam.PublicationPages, params.publicationPages);
   }
   if (params.publicationYearBefore) {
     if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
@@ -542,9 +523,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.unit) {
     searchParams.set(ResultParam.Unit, params.unit);
   }
-  if (params.vocabulary) {
-    searchParams.set(ResultParam.Vocabulary, params.vocabulary);
-  }
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
   searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
@@ -557,39 +535,4 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   });
 
   return getResults.data;
-};
-
-export enum CustomerResultParam {
-  Status = 'status',
-}
-
-export interface FetchCustomerResultsParams
-  extends Pick<
-    FetchResultsParams,
-    ResultParam.From | ResultParam.Order | ResultParam.Query | ResultParam.Results | ResultParam.Sort
-  > {
-  [CustomerResultParam.Status]?: RegistrationStatus[] | null;
-}
-
-export const fetchCustomerResults = async (params: FetchCustomerResultsParams, signal?: AbortSignal) => {
-  const searchParams = new URLSearchParams();
-
-  if (params.status && params.status.length > 0) {
-    searchParams.set(CustomerResultParam.Status, params.status.join(','));
-  }
-  if (params.query) {
-    searchParams.set(ResultParam.Title, params.query);
-  }
-
-  searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
-  searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
-  searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
-  searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
-
-  const getCustomerResults = await authenticatedApiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
-    url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
-    signal,
-  });
-
-  return getCustomerResults.data;
 };

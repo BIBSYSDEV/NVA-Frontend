@@ -20,9 +20,7 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false, dataTestI
           label={t('common.start_date')}
           value={field.value ? new Date(field.value) : null}
           onChange={(date) => {
-            if (!touched) {
-              setFieldTouched(field.name, true, false);
-            }
+            !touched && setFieldTouched(field.name, true, false);
             setFieldValue(field.name, date ?? '');
           }}
           views={['year', 'month', 'day']}

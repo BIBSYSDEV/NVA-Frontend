@@ -2,7 +2,7 @@ import { TFunction } from 'i18next';
 import * as Yup from 'yup';
 import { toDateString } from './date-helpers';
 
-export const isValidUrl = (value: string) => value && Yup.string().url().isValidSync(value);
+export const isValidUrl = (value: string) => Yup.string().url().isValidSync(value);
 
 export const doiUrlBase = 'https://doi.org/';
 const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\S)+)\\b'); // https://stackoverflow.com/a/10324802
@@ -74,6 +74,3 @@ export const getCurrentPath = () => {
     return pathname;
   }
 };
-
-export const getObjectEntriesWithValue = (object: Record<string, any>) =>
-  Object.fromEntries(Object.entries(object).filter(([, value]) => value !== null && value !== undefined));

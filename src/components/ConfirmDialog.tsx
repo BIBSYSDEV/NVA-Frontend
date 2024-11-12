@@ -13,8 +13,6 @@ interface ConfirmDialogProps {
   isLoading?: boolean;
   dialogDataTestId?: string;
   ignoreBackdropClick?: boolean;
-  confirmButtonLabel?: string;
-  cancelButtonLabel?: string;
 }
 
 export const ConfirmDialog = ({
@@ -26,8 +24,6 @@ export const ConfirmDialog = ({
   isLoading = false,
   ignoreBackdropClick = false,
   dialogDataTestId,
-  confirmButtonLabel,
-  cancelButtonLabel,
 }: ConfirmDialogProps) => {
   const { t } = useTranslation();
 
@@ -48,14 +44,14 @@ export const ConfirmDialog = ({
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button data-testid={dataTestId.confirmDialog.cancelButton} variant="outlined" onClick={onCancel}>
-          {cancelButtonLabel || t('common.no')}
+          {t('common.no')}
         </Button>
         <LoadingButton
           data-testid={dataTestId.confirmDialog.acceptButton}
           variant="contained"
           loading={isLoading}
           onClick={onAccept}>
-          {confirmButtonLabel || t('common.yes')}
+          {t('common.yes')}
         </LoadingButton>
       </DialogActions>
     </Dialog>

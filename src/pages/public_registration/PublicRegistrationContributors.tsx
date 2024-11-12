@@ -6,11 +6,15 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { Contributor, ContributorRole } from '../../types/contributor.types';
+import { Contributor } from '../../types/contributor.types';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
-import { getContributorsWithPrimaryRole, getContributorsWithSecondaryRole } from '../../utils/registration-helpers';
+import {
+  contributorConfig,
+  getContributorsWithPrimaryRole,
+  getContributorsWithSecondaryRole,
+} from '../../utils/registration-helpers';
 import { getResearchProfilePath } from '../../utils/urlPaths';
 
 interface PublicRegistrationContributorsProps {
@@ -30,6 +34,7 @@ export const PublicRegistrationContributors = ({
   const toggleShowAll = () => setShowAll(!showAll);
 
   const primaryContributorsToShow = showAll ? primaryContributors : primaryContributors.slice(0, 10);
+  const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
   const secondaryContributorsToShow = showAll ? secondaryContributors : [];
 
   const hiddenContributorsCount = useRef(
@@ -52,9 +57,15 @@ export const PublicRegistrationContributors = ({
             contributors={primaryContributorsToShow}
             distinctUnits={distinctUnits}
             hiddenCount={showAll ? undefined : hiddenContributorsCount.current}
+            showRole={primaryRoles.length > 1}
           />
           {showAll && secondaryContributorsToShow.length > 0 && (
-            <ContributorsRow contributors={secondaryContributorsToShow} distinctUnits={distinctUnits} />
+            <ContributorsRow
+              contributors={secondaryContributorsToShow}
+              distinctUnits={distinctUnits}
+              showRole={secondaryRoles.length > 1}
+              label={t('registration.heading.contributors')}
+            />
           )}
         </Box>
         {hiddenContributorsCount.current > 0 && (
@@ -82,65 +93,74 @@ export const PublicRegistrationContributors = ({
 interface ContributorsRowProps {
   contributors: Contributor[];
   distinctUnits: string[];
+  label?: string;
+  showRole?: boolean;
   hiddenCount?: number;
 }
 
-const ContributorsRow = ({ contributors, distinctUnits, hiddenCount }: ContributorsRowProps) => {
+const ContributorsRow = ({
+  contributors,
+  distinctUnits,
+  label,
+  showRole = false,
+  hiddenCount,
+}: ContributorsRowProps) => {
   const { t } = useTranslation();
 
   return (
-    <Box
-      component="ul"
-      sx={{
-        listStyleType: 'none',
-        margin: 0,
-        padding: 0,
-        display: 'inline-flex',
-        flexWrap: 'wrap',
-        alignItems: 'flex-end',
-        '> :not(:first-of-type)': {
-          ml: '1rem', // Use margin instead of gap to indent wrapped elements
-        },
-      }}>
-      {contributors.map((contributor, index) => {
-        const {
-          identity: { id, name },
-        } = contributor;
-        const affiliationIndexes = contributor.affiliations
-          ?.map((affiliation) => affiliation.type === 'Organization' && distinctUnits.indexOf(affiliation.id) + 1)
-          .filter((affiliationIndex) => affiliationIndex)
-          .sort();
+    <div>
+      {label && <Typography sx={{ display: 'inline', mr: '0.5rem' }}>{label}:</Typography>}
+      <Box
+        component="ul"
+        sx={{
+          listStyleType: 'none',
+          margin: 0,
+          padding: 0,
+          display: 'inline-flex',
+          flexWrap: 'wrap',
+          alignItems: 'flex-end',
+          '> :not(:first-of-type)': {
+            ml: '1rem', // Use margin instead of gap to indent wrapped elements
+          },
+        }}>
+        {contributors.map((contributor, index) => {
+          const {
+            identity: { id, name },
+          } = contributor;
+          const affiliationIndexes = contributor.affiliations
+            ?.map((affiliation) => affiliation.type === 'Organization' && distinctUnits.indexOf(affiliation.id) + 1)
+            .filter((affiliationIndex) => affiliationIndex)
+            .sort();
 
-        const showRole = contributor.role.type !== ContributorRole.Creator;
-
-        return (
-          <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
-            <Typography>
-              {id ? (
-                <Link
-                  component={RouterLink}
-                  to={getResearchProfilePath(id)}
-                  data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
-                  {name}
-                </Link>
-              ) : (
-                name
-              )}
-              {showRole && ` (${t(`registration.contributors.types.${contributor.role.type}`)})`}
-              {affiliationIndexes && affiliationIndexes.length > 0 && (
-                <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
-              )}
-            </Typography>
-            <ContributorIndicators contributor={contributor} />
-            {index < contributors.length - 1 && <span>;</span>}
-          </Box>
-        );
-      })}
-      {hiddenCount && hiddenCount > 0 ? (
-        <Typography component="li">
-          {t('registration.public_page.other_contributors', { count: hiddenCount })}
-        </Typography>
-      ) : null}
-    </Box>
+          return (
+            <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
+              <Typography>
+                {id ? (
+                  <Link
+                    component={RouterLink}
+                    to={getResearchProfilePath(id)}
+                    data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
+                    {name}
+                  </Link>
+                ) : (
+                  name
+                )}
+                {showRole && ` (${t(`registration.contributors.types.${contributor.role.type}`)})`}
+                {affiliationIndexes && affiliationIndexes.length > 0 && (
+                  <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
+                )}
+              </Typography>
+              <ContributorIndicators contributor={contributor} />
+              {index < contributors.length - 1 && <span>;</span>}
+            </Box>
+          );
+        })}
+        {hiddenCount && hiddenCount > 0 ? (
+          <Typography component="li">
+            {t('registration.public_page.other_contributors', { count: hiddenCount })}
+          </Typography>
+        ) : null}
+      </Box>
+    </div>
   );
 };

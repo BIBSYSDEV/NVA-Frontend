@@ -12,8 +12,8 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
-      # https://docs.cypress.io/guides/getting-started/installing-cypress#Amazon-Linux-2023
-      - dnf install -y xorg-x11-server-Xvfb gtk3-devel nss alsa-lib
+      # https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies
+      - yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib xdg-utils
       - npm ci
   build:
     commands:

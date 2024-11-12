@@ -112,9 +112,7 @@ export const PublicationMentionModal = ({
                       label={t('common.date')}
                       value={field.value ? new Date(field.value) : null}
                       onChange={(date) => {
-                        if (!touched) {
-                          setFieldTouched(field.name, true, false);
-                        }
+                        !touched && setFieldTouched(field.name, true, false);
                         setFieldValue(field.name, date ?? '');
                       }}
                       views={['year', 'month', 'day']}

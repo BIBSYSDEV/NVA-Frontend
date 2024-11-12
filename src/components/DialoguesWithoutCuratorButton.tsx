@@ -1,6 +1,5 @@
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { Badge, Button } from '@mui/material';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import { Badge, Box, Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -9,7 +8,7 @@ import { TicketSearchParam, fetchCustomerTickets } from '../api/searchApi';
 import { RootState } from '../redux/store';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { syncParamsWithSearchFields, taskNotificationsParams } from '../utils/searchHelpers';
+import { taskNotificationsParams } from '../utils/searchHelpers';
 
 const statusNew: TicketStatus = 'New';
 
@@ -18,8 +17,9 @@ export const DialoguesWithoutCuratorButton = () => {
   const user = useSelector((store: RootState) => store.user);
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const currentStatusFilter = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
-  const newStatusIsSelected = currentStatusFilter.includes(statusNew);
+
+  const dialoguesWithoutCuratorSelected =
+    searchParams.get(TicketSearchParam.Status) === statusNew && !searchParams.get(TicketSearchParam.Assignee);
 
   const notificationsQuery = useQuery({
     enabled: user?.isDoiCurator || user?.isSupportCurator || user?.isPublishingCurator,
@@ -33,33 +33,30 @@ export const DialoguesWithoutCuratorButton = () => {
   )?.count;
 
   const toggleDialoguesWithoutCurators = () => {
-    const syncedParams = syncParamsWithSearchFields(searchParams);
-    if (newStatusIsSelected) {
-      const newValues = currentStatusFilter.filter((status) => status !== statusNew);
-      if (newValues.length > 0) {
-        syncedParams.set(TicketSearchParam.Status, newValues.join(','));
-      } else {
-        syncedParams.delete(TicketSearchParam.Status);
-      }
+    if (dialoguesWithoutCuratorSelected) {
+      searchParams.delete(TicketSearchParam.Status);
     } else {
-      syncedParams.set(TicketSearchParam.Status, [...currentStatusFilter, statusNew].join(','));
+      searchParams.set(TicketSearchParam.Status, statusNew);
+      searchParams.delete(TicketSearchParam.Assignee);
     }
-    history.push({ search: syncedParams.toString() });
+    history.push({ search: searchParams.toString() });
   };
 
   return (
     <Button
       fullWidth
       size="medium"
-      variant="outlined"
+      variant={dialoguesWithoutCuratorSelected ? 'contained' : 'outlined'}
       color="primary"
       sx={{ textTransform: 'none' }}
-      startIcon={newStatusIsSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+      startIcon={<ChatBubbleIcon />}
       endIcon={<Badge badgeContent={unassignedNotificationsCount} sx={{ ml: '1rem' }} />}
       onClick={toggleDialoguesWithoutCurators}
-      title={t('tasks.include_tasks_without_curator')}
+      title={t('tasks.dialogues_without_curator')}
       data-testid={dataTestId.tasksPage.dialoguesWithoutCuratorButton}>
-      {t('tasks.include_tasks_without_curator')}
+      <Box component="span" sx={{ whiteSpace: 'nowrap' }}>
+        {t('tasks.dialogues_without_curator')}
+      </Box>
     </Button>
   );
 };

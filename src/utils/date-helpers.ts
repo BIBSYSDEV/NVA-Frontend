@@ -1,6 +1,5 @@
 import { enUS as englishPickerLocale, nbNO as norwegianPickerLocale } from '@mui/x-date-pickers/locales';
 import { enGB as englishDateLocale, nb as norwegianDateLocale } from 'date-fns/locale';
-import { t } from 'i18next';
 import { RegistrationDate } from '../types/registration.types';
 
 export const displayDate = (date: Omit<RegistrationDate, 'type'> | undefined) => {
@@ -23,8 +22,8 @@ export const getRegistrationDate = (date: Omit<RegistrationDate, 'type'> | undef
     return null;
   }
   const year = date.year.padStart(4, '0'); // Values are padded to handle (erronuous) dates like year=2 etc.
-  const month = (date?.month ? date.month : '1').padStart(2, '0');
-  const day = (date?.day ? date.day : '1').padStart(2, '0');
+  const month = (date?.month ?? '1').padStart(2, '0');
+  const day = (date?.day ?? '1').padStart(2, '0');
 
   return new Date(`${year}-${month}-${day}T12:00:00.000Z`);
 };
@@ -55,16 +54,4 @@ export const toDateString = (date: Date | string | number) => {
   const dateObject = date instanceof Date ? date : new Date(date);
 
   return dateObject.toLocaleDateString('nb-NO', { year: 'numeric', month: '2-digit', day: '2-digit' });
-};
-
-export const toDateStringWithTime = (date: Date | string | number) => {
-  if (!date) {
-    return '';
-  }
-  const dateObject = date instanceof Date ? date : new Date(date);
-
-  const dateString = dateObject.toLocaleDateString('nb-NO', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  const timeString = dateObject.toLocaleTimeString('nb-NO', { hour: '2-digit', minute: '2-digit' });
-
-  return t('common.time_string', { date: dateString, time: timeString });
 };

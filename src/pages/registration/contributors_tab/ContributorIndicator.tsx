@@ -1,6 +1,7 @@
 import { styled, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../../translations/i18n';
+import { Contributor } from '../../../types/contributor.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getInitials } from '../../../utils/general-helpers';
 
@@ -33,19 +34,17 @@ const StyledUnknownContributor = styled(StyledBaseContributorIndicator)(({ theme
 }));
 
 interface ContributorIndicatorProps {
-  contributorName: string;
-  contributorId?: string;
-  hasVerifiedAffiliation: boolean;
+  contributor: Contributor;
 }
 
-export const ContributorIndicator = ({
-  contributorName,
-  contributorId,
-  hasVerifiedAffiliation,
-}: ContributorIndicatorProps) => {
+export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps) => {
   const { t } = useTranslation();
-  const initials = getInitials(contributorName);
-  const hasId = !!contributorId;
+  const initials = getInitials(contributor.identity.name);
+
+  const hasId = !!contributor.identity.id;
+  const hasVerifiedAffiliation =
+    !!contributor.affiliations && contributor.affiliations.some((affiliation) => affiliation.type === 'Organization');
+
   const verifiedContributor = hasId && hasVerifiedAffiliation;
   const verifiedContributorWithoutAffiliation = hasId && !hasVerifiedAffiliation;
 

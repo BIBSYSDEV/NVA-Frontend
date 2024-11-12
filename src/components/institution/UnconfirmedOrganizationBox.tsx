@@ -8,7 +8,7 @@ import { StyledOrganizationBox } from './OrganizationBox';
 
 interface UnconfirmedOrganizationBoxProps extends Pick<BoxProps, 'sx'> {
   name: string;
-  onIdentifyAffiliationClick?: (name: string) => void;
+  onIdentifyAffiliationClick: (name: string) => void;
   removeAffiliation?: () => void;
 }
 
@@ -39,8 +39,7 @@ export const UnconfirmedOrganizationBox = ({
           sx={{ padding: '0.1rem 0.5rem', maxWidth: '14rem', bgcolor: 'secondary.light' }}
           data-testid={dataTestId.registrationWizard.contributors.verifyAffiliationButton}
           startIcon={<SearchIcon />}
-          disabled={!onIdentifyAffiliationClick}
-          onClick={() => name && onIdentifyAffiliationClick?.(name)}>
+          onClick={() => name && onIdentifyAffiliationClick(name)}>
           {t('registration.contributors.verify_affiliation')}
         </Button>
       </Box>

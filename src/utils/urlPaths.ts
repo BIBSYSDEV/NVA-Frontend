@@ -22,7 +22,6 @@ export enum UrlPathTemplate {
   InstitutionSupport = '/institution/settings/support',
   InstitutionOrganizationOverview = '/institution/overview/organization',
   InstitutionOverview = '/institution/overview',
-  InstitutionPortfolio = '/institution/portfolio',
   InstitutionPublishStrategy = '/institution/settings/publish-strategy',
   InstitutionPublishStrategyOverview = '/institution/overview/publish-strategy',
   InstitutionSettings = '/institution/settings',
@@ -49,8 +48,6 @@ export enum UrlPathTemplate {
   MyPageUserRoleAndHelp = '/my-page/profile/user-role-and-help',
   PrivacyPolicy = '/privacy-policy',
   Projects = '/projects',
-  ProjectsNew = '/projects/new',
-  ProjectsEdit = '/project/:identifier/edit',
   RegistrationLandingPage = '/registration/:identifier',
   RegistrationNew = '/registration',
   RegistrationWizard = '/registration/:identifier/edit',
@@ -68,7 +65,6 @@ export enum UrlPathTemplate {
   TasksNviCandidate = '/tasks/nvi/:identifier',
   TasksNviCorrectionList = '/tasks/correction-list',
   TasksNviStatus = '/tasks/nvi/status',
-  TasksResultRegistrations = '/tasks/result-registrations',
   Wildcard = '*',
 }
 
@@ -97,9 +93,6 @@ export const getAdminInstitutionPath = (id: string) =>
   `${UrlPathTemplate.BasicDataInstitutions}?id=${encodeURIComponent(id)}`;
 
 export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;
-
-export const getEditProjectPath = (id: string) =>
-  UrlPathTemplate.ProjectsEdit.replace(':identifier', encodeURIComponent(id));
 
 export const getTasksRegistrationPath = (identifier: string) =>
   UrlPathTemplate.TasksDialogueRegistration.replace(':identifier', encodeURIComponent(identifier));
