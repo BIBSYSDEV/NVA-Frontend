@@ -1,9 +1,10 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
-import { BookType, ReportType, ResearchDataType } from '../../../types/publicationFieldNames';
+import { ReportType, ResearchDataType } from '../../../types/publicationFieldNames';
 import {
   isArtistic,
+  isBook,
   isDegree,
   isExhibitionContent,
   isMediaContribution,
@@ -15,7 +16,6 @@ const contributorErrorMessage = {
   authorOrEditorRequired: i18n.t('feedback.validation.author_or_editor_required'),
   authorRequired: i18n.t('feedback.validation.author_required'),
   contributorRequired: i18n.t('feedback.validation.contributor_required'),
-  editorRequired: i18n.t('feedback.validation.editor_required'),
 };
 
 const contributorValidationSchema = Yup.object().shape({
@@ -36,14 +36,7 @@ export const contributorsValidationSchema = Yup.array().when(
           hasRole(contributors, ContributorRole.Creator)
         )
         .required(contributorErrorMessage.authorRequired);
-    } else if (publicationInstanceType === BookType.Anthology) {
-      return Yup.array()
-        .of(contributorValidationSchema)
-        .test('editor-test', contributorErrorMessage.editorRequired, (contributors) =>
-          hasRole(contributors, ContributorRole.Editor)
-        )
-        .required(contributorErrorMessage.editorRequired);
-    } else if (publicationInstanceType === BookType.Textbook) {
+    } else if (isBook(publicationInstanceType)) {
       return Yup.array()
         .of(contributorValidationSchema)
         .test(

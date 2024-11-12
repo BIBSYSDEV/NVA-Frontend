@@ -116,7 +116,8 @@ export const RelatedResultItem = ({
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
-              label={t('registration.resource_type.related_result')}
+              label={t('common.reference')}
+              placeholder={t('feedback.validation.reference_required')}
               variant="filled"
               multiline
               fullWidth
