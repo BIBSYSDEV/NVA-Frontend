@@ -153,7 +153,11 @@ function generateFilesUploadedLogEntry(
       items: files.map((file) => ({
         description: file.name,
         date: file.uploadDetails?.uploadedDate ?? '',
-        fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration) ? 'deletedFile' : 'file',
+        fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration)
+          ? 'deletedFile'
+          : file.type === FileType.InternalFile
+            ? 'archivedFile'
+            : 'file',
       })),
     });
   });
@@ -170,7 +174,7 @@ function groupFilesByUser(files: AssociatedFile[]) {
   const map: Map<string, AssociatedFile[]> = new Map();
 
   const userUploadedFiles = files.filter((file) => file.uploadDetails?.type === 'UserUploadDetails');
-  userUploadedFiles.forEach((item: AssociatedFile) => {
+  userUploadedFiles.forEach((item) => {
     const key = (item.uploadDetails as UserUploadDetails).uploadedBy;
     const collection = map.get(key);
     if (!collection) {
