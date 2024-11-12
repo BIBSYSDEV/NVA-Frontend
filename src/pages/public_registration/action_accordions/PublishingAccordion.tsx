@@ -208,7 +208,7 @@ export const PublishingAccordion = ({
     .flatMap((ticket) => ticket.approvedFiles.map((file) => file.identifier));
 
   const registrationHasMismatchingFiles = getAssociatedFiles(registration.associatedArtifacts)
-    .filter((file) => approvedFileIdentifiers.includes(file.identifier))
+    .filter((file) => approvedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
     .some(
       (file) =>
         file.type === FileType.PendingOpenFile ||
