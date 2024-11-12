@@ -3,7 +3,7 @@ import { Divider, Grid, Link as MuiLink, Skeleton, Typography } from '@mui/mater
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { createTicket, fetchRegistrationTickets } from '../../api/registrationApi';
+import { addTicketMessage, createTicket, fetchRegistrationTickets } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/notificationSlice';
 import { Registration } from '../../types/registration.types';
@@ -25,7 +25,12 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
   });
 
   const createSupportTicketMutation = useMutation({
-    mutationFn: (message: string) => createTicket(registration.id, 'GeneralSupportCase', message),
+    mutationFn: async (message: string) => {
+      const newTicket = (await createTicket(registration.id, 'GeneralSupportCase', true)).data;
+      if (newTicket) {
+        await addTicketMessage(newTicket.id, message);
+      }
+    },
     onSuccess: () => {
       dispatch(
         setNotification({
@@ -94,7 +99,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
           <Trans
             t={t}
             i18nKey="registration.support.curator_help.description"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography paragraph />]}
           />
           <MessageForm
             confirmAction={async (message) => {

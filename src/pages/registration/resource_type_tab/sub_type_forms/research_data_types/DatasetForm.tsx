@@ -12,7 +12,6 @@ import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
 import { findRelatedDocumentIndex, getTitleString } from '../../../../../utils/registration-helpers';
 import { filterConfirmedDocuments } from '../../../../public_registration/PublicRegistrationContent';
-import { PublisherField } from '../../components/PublisherField';
 import { YearAndContributorsText } from '../../components/SearchContainerField';
 import { ExternalLinkField } from './ExternalLinkField';
 import { RelatedResourceRow } from './RelatedResourceRow';
@@ -56,8 +55,6 @@ export const DatasetForm = () => {
 
   return (
     <>
-      <PublisherField />
-
       <Field name={ResourceFieldNames.PublicationInstanceGeographicDescription}>
         {({ field }: FieldProps<string>) => (
           <TextField
@@ -86,7 +83,7 @@ export const DatasetForm = () => {
               loading={relatedRegistrationsOptionsQuery.isPending}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-              renderOption={({ key, ...props }, option, state) => (
+              renderOption={(props, option, state) => (
                 <li {...props} key={option.identifier}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">
@@ -147,7 +144,7 @@ export const DatasetForm = () => {
               loading={relatedDmpOptionsQuery.isPending}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-              renderOption={({ key, ...props }, option, state) => (
+              renderOption={(props, option, state) => (
                 <li {...props} key={option.identifier}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">

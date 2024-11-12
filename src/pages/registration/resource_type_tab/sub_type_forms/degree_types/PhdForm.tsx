@@ -101,7 +101,7 @@ export const PhdForm = () => {
               onClick={() => push(emptyUnconfirmedDocument)}
               startIcon={<AddCircleOutlineIcon />}
               sx={{ alignSelf: 'start' }}>
-              {t('common.add_custom', { name: t('registration.resource_type.related_result').toLocaleLowerCase() })}
+              {t('common.add')}
             </Button>
           )}
         </FieldArray>

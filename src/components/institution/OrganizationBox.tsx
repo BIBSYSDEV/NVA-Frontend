@@ -52,7 +52,7 @@ export const OrganizationBox = ({
       {canEdit && baseFieldName && (
         <>
           <EditIconButton
-            data-testid={dataTestId.registrationWizard.contributors.editAffiliationButton}
+            data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
             onClick={() => setEditModalIsOpen(true)}
             tooltip={t('registration.contributors.edit_affiliation')}
           />

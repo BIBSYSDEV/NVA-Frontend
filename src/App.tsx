@@ -18,7 +18,6 @@ import { SkipLink } from './components/SkipLink';
 import { Footer } from './layout/Footer';
 import { Notifier } from './layout/Notifier';
 import { Header } from './layout/header/Header';
-import { useMatomoTracking } from './matomo/useMatomoTracking';
 import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
@@ -45,7 +44,6 @@ if (
 }
 
 export const App = () => {
-  useMatomoTracking();
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const user = useSelector((store: RootState) => store.user);

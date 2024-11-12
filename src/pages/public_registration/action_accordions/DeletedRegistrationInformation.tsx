@@ -1,7 +1,8 @@
 import { Box, Link, Skeleton, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
-import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
+import { fetchRegistration } from '../../../api/registrationApi';
+import { fetchUser } from '../../../api/roleApi';
 import { ProfilePicture } from '../../../components/ProfilePicture';
 import { PublicationNote, Registration } from '../../../types/registration.types';
 import { toDateString } from '../../../utils/date-helpers';
@@ -21,9 +22,20 @@ export const DeletedRegistrationInformation = ({
   const { t } = useTranslation();
 
   const duplicateRegistrationIdentifier = getIdentifierFromId(registration.duplicateOf ?? '');
-  const duplicateRegistrationQuery = useFetchRegistration(duplicateRegistrationIdentifier);
 
-  const senderQuery = useFetchUserQuery(unpublishingNote.createdBy ?? '');
+  const duplicateRegistrationQuery = useQuery({
+    enabled: !!duplicateRegistrationIdentifier,
+    queryKey: ['registration', duplicateRegistrationIdentifier],
+    queryFn: () => fetchRegistration(duplicateRegistrationIdentifier),
+    meta: { errorMessage: t('feedback.error.get_registration') },
+  });
+
+  const senderQuery = useQuery({
+    enabled: !!unpublishingNote.createdBy,
+    queryKey: [unpublishingNote.createdBy],
+    queryFn: () => fetchUser(unpublishingNote.createdBy ?? ''),
+    meta: { errorMessage: t('feedback.error.get_person') },
+  });
 
   const person = senderQuery.data;
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);

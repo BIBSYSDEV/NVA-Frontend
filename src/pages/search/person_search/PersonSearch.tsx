@@ -37,12 +37,12 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
         {
           orderBy: 'name',
           sortOrder: 'asc',
-          i18nKey: 'search.sort_by_last_name_asc',
+          label: t('search.sort_by_last_name_asc'),
         },
         {
           orderBy: 'name',
           sortOrder: 'desc',
-          i18nKey: 'search.sort_by_last_name_desc',
+          label: t('search.sort_by_last_name_desc'),
         },
       ]}
     />
@@ -50,7 +50,7 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {personQuery.isFetching ? (
+      {personQuery.isPending ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.length > 0 ? (
         <div>

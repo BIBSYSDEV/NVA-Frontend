@@ -7,7 +7,6 @@ import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSource } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const FundingSourceFilter = () => {
@@ -26,15 +25,13 @@ export const FundingSourceFilter = () => {
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   const handleChange = (selectedValue: FundingSource | null) => {
-    const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
-      syncedParams.set(ResultParam.FundingSource, selectedValue.identifier);
+      searchParams.set(ResultParam.FundingSource, selectedValue.identifier);
     } else {
-      syncedParams.delete(ResultParam.FundingSource);
+      searchParams.delete(ResultParam.FundingSource);
     }
-    syncedParams.delete(ResultParam.From);
 
-    history.push({ search: syncedParams.toString() });
+    history.push({ search: searchParams.toString() });
   };
 
   return (
@@ -48,7 +45,7 @@ export const FundingSourceFilter = () => {
       }}
       options={fundingSourcesList}
       getOptionLabel={(option) => getLanguageString(option.name)}
-      renderOption={({ key, ...props }, option) => (
+      renderOption={(props, option) => (
         <li {...props} key={option.identifier}>
           {getLanguageString(option.name)}
         </li>

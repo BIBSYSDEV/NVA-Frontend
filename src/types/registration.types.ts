@@ -57,7 +57,6 @@ interface PublicationChannel {
   printIssn?: string;
   sameAs: string;
   scientificValue: ScientificValue;
-  discontinued?: string;
 }
 
 export interface Journal extends PublicationChannel {
@@ -76,16 +75,18 @@ export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
 
-type AdditionalIdentifierType = 'CristinIdentifier' | 'ScopusIdentifier' | 'HandleIdentifier';
-type ImportSourceName = 'Cristin' | 'Scopus' | 'handle';
+interface RegistrationPublisher {
+  id: string;
+}
 
-export interface AdditionalIdentifier {
-  type: AdditionalIdentifierType;
+type ImportSourceName = 'Brage' | 'Cristin' | 'Scopus';
+
+interface AdditionalIdentifier {
   sourceName: ImportSourceName;
   value: string;
 }
 
-export interface ImportDetail {
+interface ImportDetail {
   importDate: string;
   importSource: ImportSource;
 }
@@ -95,19 +96,7 @@ interface ImportSource {
   archive?: string;
 }
 
-export type RegistrationOperation =
-  | 'update'
-  | 'delete'
-  | 'unpublish'
-  | 'republish'
-  | 'terminate'
-  | 'update-including-files'
-  | 'publishing-request-create'
-  | 'publishing-request-approve'
-  | 'doi-request-create'
-  | 'doi-request-approve'
-  | 'support-request-create'
-  | 'support-request-approve';
+type RegistrationOperation = 'update' | 'delete' | 'unpublish' | 'ticket/publish' | 'terminate';
 
 export interface PublicationNote {
   type: 'UnpublishingNote' | 'PublicationNote';
@@ -129,6 +118,7 @@ export interface BaseRegistration {
   };
   readonly status: RegistrationStatus;
   readonly doi?: string;
+  readonly publisher: RegistrationPublisher;
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
   readonly duplicateOf?: string;
@@ -275,6 +265,7 @@ export const emptyRegistration: Registration = {
   status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
   projects: [],
+  publisher: { id: '' },
   subjects: [],
   associatedArtifacts: [],
   fundings: [],
@@ -285,9 +276,6 @@ export interface ContextSeries {
   type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
   id?: string;
   title?: string;
-  onlineIssn?: string;
-  printIssn?: string;
-  issn?: string;
 }
 
 export interface ContextPublisher {
@@ -332,24 +320,11 @@ export const emptyUnconfirmedDocument: UnconfirmedDocument = {
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
 
-interface UnpublishPublicationRequest {
+export interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
   duplicateOf?: string;
   comment: string;
 }
-
-interface TerminatePublicationRequest {
-  type: 'DeletePublicationRequest';
-}
-
-interface RepublishPublicationRequest {
-  type: 'RepublishPublicationRequest';
-}
-
-export type UpdateRegistrationStatusRequest =
-  | UnpublishPublicationRequest
-  | TerminatePublicationRequest
-  | RepublishPublicationRequest;
 
 interface NpiSubjectSubdomain {
   id: string;

@@ -1,17 +1,11 @@
 import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { defaultChannelSearchSize, searchForJournals } from '../../../../api/publicationChannelApi';
-import {
-  AutocompleteListboxWithExpansion,
-  AutocompleteListboxWithExpansionProps,
-} from '../../../../components/AutocompleteListboxWithExpansion';
+import { searchForJournals } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
@@ -20,8 +14,6 @@ import {
 import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
-import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -35,7 +27,7 @@ interface JournalFieldProps {
 
 export const StyledChannelContainerBox = styled(Box)(({ theme }) => ({
   display: 'grid',
-  gap: '1rem',
+  columnGap: '1rem',
 
   gridTemplateColumns: '4fr 1fr',
   [theme.breakpoints.down('md')]: {
@@ -62,24 +54,17 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const journalId = reference?.publicationContext.id ?? '';
   const year = publicationDate?.year ?? '';
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
-
   const [showJournalForm, setShowJournalForm] = useState(false);
   const toggleJournalForm = () => setShowJournalForm(!showJournalForm);
 
-  const [query, setQuery] = useState(!journalId ? (reference?.publicationContext.title ?? '') : '');
+  const [query, setQuery] = useState(!journalId ? reference?.publicationContext.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [searchSize, setSearchSize] = useState(defaultChannelSearchSize);
-
-  // Reset search size when query changes
-  useEffect(() => setSearchSize(defaultChannelSearchSize), [debouncedQuery]);
 
   const journalOptionsQuery = useQuery({
-    queryKey: ['journalSearch', debouncedQuery, year, searchSize],
+    queryKey: ['journalSearch', debouncedQuery, year],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForJournals(debouncedQuery, year, searchSize),
+    queryFn: () => searchForJournals(debouncedQuery, year),
     meta: { errorMessage: t('feedback.error.get_journals') },
-    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
 
   // Fetch Journals with matching ISSN
@@ -94,8 +79,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     queryFn: () =>
       searchForJournals(
         reference?.publicationContext.printIssn ?? reference?.publicationContext.onlineIssn ?? '',
-        year,
-        1
+        year
       ),
     meta: { errorMessage: t('feedback.error.get_journals') },
   });
@@ -117,26 +101,22 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     staleTime: Infinity,
   });
 
-  const options = journalOptionsQuery.data?.hits ?? [];
-
   return (
     <StyledChannelContainerBox>
-      {disableNviCriticalFields && (
-        <StyledInfoBanner sx={{ gridColumn: '1/-1' }}>
-          <LockedNviFieldDescription fieldLabel={t('registration.resource_type.journal')} />
-        </StyledInfoBanner>
-      )}
       <Field name={ResourceFieldNames.PublicationContextId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
-            disabled={disableNviCriticalFields}
             fullWidth
             multiple
             id={journalFieldTestId}
             data-testid={journalFieldTestId}
             aria-labelledby={`${journalFieldTestId}-label`}
             popupIcon={null}
-            options={options}
+            options={
+              debouncedQuery && query === debouncedQuery && !journalOptionsQuery.isPending
+                ? journalOptionsQuery.data?.hits ?? []
+                : []
+            }
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
@@ -164,22 +144,13 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             }}
             loading={journalOptionsQuery.isFetching || journalQuery.isFetching}
             getOptionLabel={(option) => option.name}
-            renderOption={({ key, ...props }, option, state) => (
-              <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
+            renderOption={(props, option, state) => (
+              <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
-            ListboxComponent={AutocompleteListboxWithExpansion}
-            ListboxProps={
-              {
-                hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
-                onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
-              } satisfies AutocompleteListboxWithExpansionProps as any
-            }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
-                  key={option.identifier}
                   data-testid={dataTestId.registrationWizard.resourceType.journalChip}
                   label={<PublicationChannelChipLabel value={option} />}
                 />

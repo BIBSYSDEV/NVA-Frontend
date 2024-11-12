@@ -15,10 +15,9 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
-import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
+import { CustomerTicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketDateIntervalFilter } from './TicketDateIntervalFilter';
 import { TicketListItem } from './TicketListItem';
@@ -37,10 +36,6 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
   const history = useHistory();
   const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
 
-  const ticketStatusOptions = isOnTasksPage
-    ? ticketStatusValues.filter((status) => status !== 'New')
-    : ticketStatusValues;
-
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
 
   useEffect(() => {
@@ -58,8 +53,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       size="small"
       variant="standard"
       options={[
-        { i18nKey: 'common.sort_newest_first', orderBy: 'createdDate', sortOrder: 'desc' },
-        { i18nKey: 'common.sort_oldest_first', orderBy: 'createdDate', sortOrder: 'asc' },
+        { label: t('common.sort_newest_first'), orderBy: 'createdDate', sortOrder: 'desc' },
+        { label: t('common.sort_oldest_first'), orderBy: 'createdDate', sortOrder: 'asc' },
       ]}
     />
   );
@@ -74,7 +69,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
 
       <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
         <Grid item xs={16} md={5} lg={4}>
-          <TicketStatusFilter options={ticketStatusOptions} />
+          <TicketStatusFilter />
         </Grid>
         <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
@@ -89,13 +84,12 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
               <CuratorSelector
                 selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
                 onChange={(curator) => {
-                  const syncedParams = syncParamsWithSearchFields(searchParams);
                   if (curator) {
-                    syncedParams.set(TicketSearchParam.Assignee, curator.username);
+                    searchParams.set(TicketSearchParam.Assignee, curator.username);
                   } else {
-                    syncedParams.delete(TicketSearchParam.Assignee);
+                    searchParams.delete(TicketSearchParam.Assignee);
                   }
-                  history.push({ search: syncedParams.toString() });
+                  history.push({ search: searchParams.toString() });
                 }}
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />
@@ -113,12 +107,12 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
           </>
         )}
 
-        <Grid item>
+        <Grid item xs={16} md={6} lg={5}>
           <TicketDateIntervalFilter />
         </Grid>
 
         <Grid item>
-          <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} hideHeading />
+          <CategorySearchFilter searchParam={TicketSearchParam.PublicationType} />
         </Grid>
       </Grid>
 
@@ -144,7 +138,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
               <List disablePadding sx={{ my: '0.5rem' }}>
                 {tickets.map((ticket) => (
                   <ErrorBoundary key={ticket.id}>
-                    <TicketListItem ticket={ticket} />
+                    <TicketListItem key={ticket.id} ticket={ticket} />
                   </ErrorBoundary>
                 ))}
               </List>

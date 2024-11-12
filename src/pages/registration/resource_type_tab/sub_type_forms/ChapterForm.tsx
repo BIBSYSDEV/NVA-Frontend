@@ -34,9 +34,9 @@ export const ChapterForm = () => {
   return (
     <>
       <div>
-        <Box sx={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', mb: '0.25rem', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           <InfoIcon color="primary" />
-          <Typography variant="body1">
+          <Typography variant="body1" gutterBottom>
             {generalChapterTypes.includes(instanceType)
               ? t('registration.resource_type.chapter.info_anthology')
               : instanceType === ChapterType.ConferenceAbstract

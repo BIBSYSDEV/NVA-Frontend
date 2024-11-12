@@ -1,11 +1,11 @@
-import { Box, Link as MuiLink, Skeleton, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
+import { fetchRegistration } from '../../api/registrationApi';
+import { PageSpinner } from '../../components/PageSpinner';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 interface DeletePublicationInformationProps {
   registration: Registration;
@@ -16,7 +16,11 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
 
   const originalIdentifier = registration.duplicateOf ? getIdentifierFromId(registration.duplicateOf) : '';
 
-  const originalRegistrationQuery = useFetchRegistration(originalIdentifier);
+  const originalRegistrationQuery = useQuery({
+    queryKey: ['registration', originalIdentifier],
+    queryFn: () => fetchRegistration(originalIdentifier ?? ''),
+    enabled: !!originalIdentifier,
+  });
   const originalRegistration = originalRegistrationQuery.data;
 
   const originalRegistrationMainTitle = getTitleString(originalRegistration?.entityDescription?.mainTitle);
@@ -53,13 +57,11 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
                 my: '1rem',
               }}>
               {originalRegistrationQuery.isPending ? (
-                <Skeleton sx={{ width: '50%' }} aria-label={t('registration.citation_points_to')} />
+                <PageSpinner aria-label={t('registration.citation_points_to')} />
               ) : (
                 <Typography>
                   {`${t('registration.citation_points_to')} `}
-                  <MuiLink component={Link} to={getRegistrationLandingPagePath(originalIdentifier)}>
-                    {originalRegistrationMainTitle}
-                  </MuiLink>
+                  <Link href={`/registration/${originalIdentifier}`}>{originalRegistrationMainTitle}</Link>
                 </Typography>
               )}
             </Box>

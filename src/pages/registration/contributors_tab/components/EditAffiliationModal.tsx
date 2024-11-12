@@ -1,9 +1,8 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useFetchOrganization } from '../../../../api/hooks/useFetchOrganization';
-import { AuthorName } from '../../../../components/AuthorName';
 import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
 import { SelectInstitutionSkeleton } from '../../../../components/institution/SelectInstitutionSkeleton';
 import { Modal } from '../../../../components/Modal';
@@ -54,7 +53,7 @@ export const EditAffiliationModal = ({
     if (
       affiliations.some((affiliation) => affiliation.type === 'Organization' && affiliation.id === newAffiliationId)
     ) {
-      dispatch(setNotification({ message: t('common.contributors.add_duplicate_affiliation'), variant: 'info' }));
+      dispatch(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 
@@ -81,11 +80,20 @@ export const EditAffiliationModal = ({
       maxWidth="md"
       fullWidth
       headingText={t('registration.contributors.edit_affiliation')}>
-      <Trans
-        i18nKey="registration.contributors.edit_affiliation_helper_text"
-        components={[<Typography key="1" paragraph />]}
-      />
-      {authorName && <AuthorName authorName={authorName} />}
+      <Trans i18nKey="registration.contributors.edit_affiliation_helper_text" components={[<Typography paragraph />]} />
+      {authorName && (
+        <Box
+          sx={{
+            bgcolor: 'secondary.main',
+            borderRadius: '0.25rem',
+            padding: '0.5rem 0.75rem',
+            marginBottom: '2rem',
+          }}>
+          <Typography>
+            {t('common.contributor')}: <b>{authorName}</b>
+          </Typography>
+        </Box>
+      )}
       {institutionQuery.isPending ? (
         <SelectInstitutionSkeleton />
       ) : institutionQuery.data ? (

@@ -1,57 +1,63 @@
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, IconButton, Paper, Tooltip } from '@mui/material';
+import { IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
-import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getEditProjectPath } from '../../utils/urlPaths';
-import { ProjectIconHeader } from '../project/components/ProjectIconHeader';
 import { canEditProject } from '../registration/description_tab/projects_field/projectHelpers';
 import { ProjectContributors } from './ProjectContributors';
 import { ProjectGeneralInfo } from './ProjectGeneralInfo';
 import { ProjectResultsAccordion } from './ProjectResultsAccordion';
 import { ProjectSummary } from './ProjectSummary';
 import { RelatedProjects } from './RelatedProjects';
+import { ProjectFormDialog } from './form/ProjectFormDialog';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
   refetchProject: () => void;
 }
 
-export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
+export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPageProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const userCanEditProject = canEditProject(user, project);
+  const [openEditProject, setOpenEditProject] = useState(false);
 
   return (
     <Paper elevation={0}>
       <Helmet>
         <title>{project.title}</title>
       </Helmet>
-      <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'project.main' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <ProjectIconHeader projectStatus={project.status} />
-          <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
-            {project.title}
-          </TruncatableTypography>
-        </Box>
+      <StyledPaperHeader>
+        <Typography sx={{ color: 'inherit' }}>{t('project.project')}</Typography>
+
+        <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
+          {project.title}
+        </TruncatableTypography>
         {userCanEditProject && (
-          <Tooltip title={t('project.edit_project')}>
-            <IconButton
-              data-testid={dataTestId.projectLandingPage.editProjectButton}
-              component={RouterLink}
-              to={getEditProjectPath(project.id)}
-              sx={{ ml: 'auto', color: 'inherit' }}>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
+          <>
+            <Tooltip title={t('project.edit_project')}>
+              <IconButton
+                data-testid={dataTestId.projectLandingPage.editProjectButton}
+                onClick={() => setOpenEditProject(true)}
+                sx={{ ml: 'auto', color: 'inherit' }}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <ProjectFormDialog
+              open={openEditProject}
+              currentProject={project}
+              onClose={() => setOpenEditProject(false)}
+              refetchData={refetchProject}
+            />
+          </>
         )}
       </StyledPaperHeader>
       <BackgroundDiv>
@@ -68,7 +74,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
         <LandingPageAccordion
           dataTestId={dataTestId.projectLandingPage.participantsAccordion}
-          heading={`${t('project.heading.members')} (${project.contributors.length})`}>
+          heading={`${t('project.project_participants')} (${project.contributors.length})`}>
           <ProjectContributors contributors={project.contributors} />
         </LandingPageAccordion>
 

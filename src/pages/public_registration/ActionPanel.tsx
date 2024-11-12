@@ -1,15 +1,15 @@
 import { Paper, Tab, Tabs } from '@mui/material';
-import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { ActionPanelContent } from './ActionPanelContent';
-import { LogPanel } from './LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+import { ReactNode, useState } from 'react';
+import { LogPanel } from './LogPanel';
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
-  refetchRegistrationAndTickets: () => Promise<void>;
+  refetchRegistrationAndTickets: () => void;
   isLoadingData: boolean;
 }
 

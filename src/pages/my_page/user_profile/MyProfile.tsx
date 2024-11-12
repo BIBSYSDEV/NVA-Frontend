@@ -99,7 +99,7 @@ export const MyProfile = () => {
   return (
     <Box sx={{ bgcolor: 'secondary.main' }}>
       <Helmet>
-        <title>{t('my_page.my_profile.heading.personalia')}</title>
+        <title>{t('my_page.my_profile.user_profile')}</title>
       </Helmet>
 
       <Typography variant="h2" sx={{ margin: '1rem' }}>

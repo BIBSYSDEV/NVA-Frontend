@@ -230,9 +230,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                       label={t('common.date')}
                       value={field.value ? new Date(field.value) : null}
                       onChange={(date) => {
-                        if (!touched) {
-                          setFieldTouched(field.name, true, false);
-                        }
+                        !touched && setFieldTouched(field.name, true, false);
                         setFieldValue(field.name, date ?? '');
                       }}
                       slotProps={{
@@ -349,9 +347,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                       onClick={() => push(emptyMusicalWorkPerformance)}
                       startIcon={<AddIcon />}
                       data-testid={dataTestId.registrationWizard.resourceType.concertAddWork}>
-                      {t('common.add_custom', {
-                        name: t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
-                      })}
+                      {t('common.add')} {t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase()}
                     </Button>
                     {!!touched.concertProgramme && typeof errors.concertProgramme === 'string' && (
                       <FormHelperText error>

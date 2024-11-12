@@ -13,8 +13,6 @@ export interface ListPaginationBottomProps {
   rowsPerPageOptions?: number[];
   maxHits?: number; // Default limit of 10_000 hits in ElasticSearch
   pageCounterComponent: ReactNode;
-  alternativePaginationText?: string;
-  paginationAriaLabel?: string;
 }
 
 export const ListPaginationBottom = ({
@@ -26,8 +24,6 @@ export const ListPaginationBottom = ({
   rowsPerPageOptions = ROWS_PER_PAGE_OPTIONS,
   maxHits,
   pageCounterComponent,
-  alternativePaginationText,
-  paginationAriaLabel,
 }: ListPaginationBottomProps) => {
   const { t } = useTranslation();
 
@@ -54,7 +50,6 @@ export const ListPaginationBottom = ({
             justifyContent: 'center',
           },
         }}
-        aria-label={paginationAriaLabel}
         page={page}
         count={pages}
         onChange={(_, newPage) => onPageChange(newPage)}
@@ -64,7 +59,7 @@ export const ListPaginationBottom = ({
       />
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        <Typography component="label">{alternativePaginationText ?? t('common.pagination_rows_per_page')}</Typography>
+        <Typography component="label">{t('common.pagination_rows_per_page')}</Typography>
         <Select
           inputProps={{
             'aria-label': t('common.pagination_rows_per_page'),

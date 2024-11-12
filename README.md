@@ -15,18 +15,18 @@ VITE_USE_MOCK=true
 
 Info about all environment variables are listed in the table below. Note that you must be authorized to retrieve some of these values if you don't want to use mock data.
 
-| Name                              | Example value                                | Description                                                                                                    |
-| --------------------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| VITE_API_HOST                     | `api.dev.nva.aws.unit.no`                    | Required. Base URL to the API. Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify. |
-| VITE_USE_MOCK                     | `false`                                      | Whether to use local mock data or not. If `true`, no more variables are needed.                                |
-| VITE_REDIRECT_SIGN_IN             | `http://localhost:3000`                      | Callback URI for successfull login.                                                                            |
-| VITE_REDIRECT_SIGN_OUT            | `http://localhost:3000/logout`               | Callback URI for successfull logout.                                                                           |
-| VITE_AWS_USER_POOLS_ID            | `eu-west-1:XXXXXXXXXX`                       | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
-| VITE_AWS_USER_POOLS_WEB_CLIENT_ID | `XXXXXXXXXX`                                 | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
-| VITE_DOMAIN                       | `XXXXXXXXX.auth.eu-west-1.amazoncognito.com` | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
-| VITE_ORCID_BASE_URL               | `https://sandbox.orcid.org`                  | Base URL to ORCID integration.                                                                                 |
-| VITE_ORCID_CLIENT_ID              | `APP-XXXXXXXXX`                              | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
-| VITE_MATOMO_CONTAINER_URL         | `https://matomo.sikt.no/js/container_XXX`    | Value can be found by logging in to the `FRONTEND PROD` account in AWS Amplify.                                |
+| Name                              | Example value                                | Description                                                                                                     |
+| --------------------------------- | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| VITE_API_HOST                     | `api.dev.nva.aws.unit.no`                    | Required. Base URL to the API. Value can be found by logging in to the Parameter Store in AWS. (/NVA/ApiDomain) |
+| VITE_USE_MOCK                     | `false`                                      | Whether to use local mock data or not. If `true`, no more variables are needed.                                 |
+| VITE_REDIRECT_SIGN_IN             | `http://localhost:3000`                      | Callback URI for successfull login.                                                                             |
+| VITE_REDIRECT_SIGN_OUT            | `http://localhost:3000/logout`               | Callback URI for successfull logout.                                                                            |
+| VITE_AWS_USER_POOLS_ID            | `eu-west-1:XXXXXXXXXX`                       | Value can be found by logging in to the Parameter Store in AWS. (CognitoUserPoolId)                             |
+| VITE_AWS_USER_POOLS_WEB_CLIENT_ID | `XXXXXXXXXX`                                 | Value can be found by logging in to the Parameter Store in AWS. (CognitoUserPoolAppClientId)                    |
+| VITE_DOMAIN                       | `XXXXXXXXX.auth.eu-west-1.amazoncognito.com` | Value can be found by logging in to the Parameter Store in AWS. (CognitoAuthenticationDomain)                   |
+| VITE_ORCID_BASE_URL               | `https://sandbox.orcid.org`                  | Base URL to ORCID integration.                                                                                  |
+| VITE_ORCID_CLIENT_ID              | `APP-XXXXXXXXX`                              | Value can be found by logging in to the Secrets Manager in AWS (OrcidClientID) or ORCID Admin dashboard.        |
+| CYPRESS_RECORD_KEY                | `XXXXXXXXXX`                                 | Value can be found by logging in to the Secrets Manager in AWS (CypressRecordKey) or Cypress Dashboard          |
 
 ## Available Scripts
 

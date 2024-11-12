@@ -1,16 +1,15 @@
-import { Divider, Link as MuiLink, Skeleton, Typography } from '@mui/material';
+import { Divider, Link, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { fetchProject } from '../../api/cristinApi';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ResearchProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getProjectPath, getResearchProfilePath } from '../../utils/urlPaths';
+import { getProjectPath } from '../../utils/urlPaths';
 import {
   getProjectCoordinatingInstitutionName,
-  getProjectManagers,
+  getProjectManagerName,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
 
@@ -47,9 +46,7 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
       </StyledProjectGridRow>
 
       {projects.map((project) => (
-        <ErrorBoundary key={project.id}>
-          <ProjectRow project={project} />
-        </ErrorBoundary>
+        <ProjectRow key={project.id} project={project} />
       ))}
     </>
   );
@@ -70,8 +67,6 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
   });
   const fetchedProject = projectQuery.data;
   const projectTitle = fetchedProject?.title ?? project.name;
-  const projectManagers = getProjectManagers(fetchedProject?.contributors ?? []);
-  const projectManager = projectManagers.length > 0 ? projectManagers[0] : null;
 
   return (
     <StyledProjectGridRow sx={{ ':not(:last-of-type)': { mb: '1rem' } }}>
@@ -84,9 +79,9 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
           data-testid={dataTestId.registrationLandingPage.projectTitle}
           sx={{ fontWeight: 500 }}>
           {fetchedProject?.id ? (
-            <MuiLink component={Link} to={getProjectPath(fetchedProject.id)}>
+            <Link component={RouterLink} to={getProjectPath(fetchedProject.id)}>
               {projectTitle}
-            </MuiLink>
+            </Link>
           ) : (
             projectTitle
           )}
@@ -101,18 +96,8 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
       <Divider component="span" orientation="vertical" />
       {projectQuery.isPending ? (
         <Skeleton />
-      ) : projectManager ? (
-        projectManager.identity.id ? (
-          <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
-            {projectManager.identity.firstName} {projectManager.identity.lastName}
-          </MuiLink>
-        ) : (
-          <>
-            {projectManager.identity.firstName} {projectManager.identity.lastName}
-          </>
-        )
       ) : (
-        '-'
+        <Typography variant="body1">{getProjectManagerName(fetchedProject)}</Typography>
       )}
       <Divider component="span" orientation="vertical" />
       {projectQuery.isPending ? (

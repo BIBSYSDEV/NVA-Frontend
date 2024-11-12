@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
+import { fetchOrganization } from '../../api/cristinApi';
 import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
@@ -8,19 +9,22 @@ import { AffiliationSkeleton } from './AffiliationSkeleton';
 interface AffiliationHierarchyProps {
   unitUri: string;
   commaSeparated?: boolean; // Comma separated or line breaks
-  condensed?: boolean; // Display only top and bottom level
-  boldTopLevel?: boolean; // Only relevant if commaSeparated=false and condensed=false
+  boldTopLevel?: boolean; // Only relevant if commaSeparated=false
 }
 
-export const AffiliationHierarchy = ({
-  unitUri,
-  commaSeparated,
-  condensed,
-  boldTopLevel = true,
-}: AffiliationHierarchyProps) => {
+export const AffiliationHierarchy = ({ unitUri, commaSeparated, boldTopLevel = true }: AffiliationHierarchyProps) => {
   const { t } = useTranslation();
-  const organizationQuery = useFetchOrganization(unitUri);
+
+  const organizationQuery = useQuery({
+    enabled: !!unitUri,
+    queryKey: ['organization', unitUri],
+    queryFn: () => fetchOrganization(unitUri),
+    meta: { errorMessage: t('feedback.error.get_institution') },
+    staleTime: Infinity,
+    gcTime: 1_800_000, // 30 minutes
+  });
   const organization = organizationQuery.data;
+
   const unitNames = getOrganizationHierarchy(organizationQuery.data).map((unit) => getLanguageString(unit.labels));
 
   return organizationQuery.isPending ? (
@@ -30,8 +34,6 @@ export const AffiliationHierarchy = ({
       <i>
         <Typography>{unitNames.join(', ')}</Typography>
       </i>
-    ) : condensed ? (
-      <Typography>{`${unitNames[unitNames.length - 1]} ${unitNames.length > 1 ? `${t('common.at').toLowerCase()} ${unitNames[0]}` : ''}`}</Typography>
     ) : (
       <div>
         {unitNames.map((unitName, index) =>

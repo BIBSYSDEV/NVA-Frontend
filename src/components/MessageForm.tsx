@@ -10,7 +10,6 @@ interface MessageFormProps {
   cancelAction?: () => void;
   fieldLabel?: string;
   buttonTitle?: string;
-  hideRequiredAsterisk?: boolean;
 }
 
 interface MessageFormData {
@@ -23,13 +22,7 @@ const initValues: MessageFormData = {
 
 const maxMessageLength = 160;
 
-export const MessageForm = ({
-  confirmAction,
-  cancelAction,
-  fieldLabel,
-  buttonTitle,
-  hideRequiredAsterisk,
-}: MessageFormProps) => {
+export const MessageForm = ({ confirmAction, cancelAction, fieldLabel, buttonTitle }: MessageFormProps) => {
   const { t } = useTranslation();
 
   return (
@@ -47,7 +40,6 @@ export const MessageForm = ({
                 {...field}
                 data-testid={dataTestId.tasksPage.messageField}
                 inputProps={{ maxLength: maxMessageLength }}
-                sx={hideRequiredAsterisk ? { '& .MuiInputLabel-asterisk': { display: 'none' } } : undefined}
                 disabled={isSubmitting}
                 variant="filled"
                 multiline

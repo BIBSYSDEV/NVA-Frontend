@@ -206,9 +206,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                       onClick={() => push(emptyMusicalWork)}
                       data-testid={dataTestId.registrationWizard.resourceType.otherPerfomanceAddWork}
                       startIcon={<AddIcon />}>
-                      {t('common.add_custom', {
-                        name: t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
-                      })}
+                      {t('common.add')} {t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase()}
                     </Button>
                     {!!touched.musicalWorks && typeof errors.musicalWorks === 'string' && (
                       <FormHelperText error>

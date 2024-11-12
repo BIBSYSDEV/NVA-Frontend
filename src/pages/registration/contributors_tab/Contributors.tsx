@@ -15,11 +15,10 @@ import {
   Tooltip,
 } from '@mui/material';
 import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { ListPagination } from '../../../components/ListPagination';
-import { NviCandidateContext } from '../../../context/NviCandidateContext';
 import { setNotification } from '../../../redux/notificationSlice';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
@@ -55,8 +54,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filterInput, setFilterInput] = useState('');
-
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
 
   const contributors = values.entityDescription?.contributors ?? [];
 
@@ -264,7 +261,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       />
 
       <Button
-        disabled={disableNviCriticalFields}
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
         variant="contained"

@@ -1,15 +1,11 @@
 import WarningIcon from '@mui/icons-material/Warning';
 import { Box, FormHelperText, Typography } from '@mui/material';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledInfoBanner } from '../../components/styled/Wrappers';
-import { NviCandidateContext } from '../../context/NviCandidateContext';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
 import { contributorConfig } from '../../utils/registration-helpers';
 import { Contributors } from './contributors_tab/Contributors';
-import { LockedNviFieldDescription } from './LockedNviFieldDescription';
 
 export const ContributorsPanel = () => {
   const { t } = useTranslation();
@@ -22,8 +18,6 @@ export const ContributorsPanel = () => {
   const contributorsTouched = (touched.entityDescription as unknown as FormikTouched<EntityDescription>)?.contributors;
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
-  const { disableNviCriticalFields } = useContext(NviCandidateContext);
-
   const contributorConfigResult = publicationInstanceType ? contributorConfig[publicationInstanceType] : null;
   const primaryRoles = contributorConfigResult?.primaryRoles ?? [];
   const secondaryRoles = contributorConfigResult?.secondaryRoles ?? [];
@@ -31,11 +25,6 @@ export const ContributorsPanel = () => {
 
   return (
     <>
-      {disableNviCriticalFields && (
-        <StyledInfoBanner sx={{ mb: '1rem' }}>
-          <LockedNviFieldDescription fieldLabel={t('registration.heading.contributors')} />
-        </StyledInfoBanner>
-      )}
       <FieldArray name={ContributorFieldNames.Contributors}>
         {({ push, replace }: FieldArrayRenderProps) =>
           publicationInstanceType ? (

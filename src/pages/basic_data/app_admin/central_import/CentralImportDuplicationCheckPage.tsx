@@ -1,12 +1,10 @@
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
-import { fetchImportCandidate, updateImportCandidateStatus } from '../../../../api/registrationApi';
+import { fetchImportCandidate, fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { FetchImportCandidatesParams, fetchImportCandidates } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { PageSpinner } from '../../../../components/PageSpinner';
@@ -72,9 +70,12 @@ export const CentralImportDuplicationCheckPage = () => {
       ),
   });
 
-  const importedRegistrationIdentifier = getIdentifierFromId(importCandidate?.importStatus.nvaPublicationId ?? '');
-  const importedRegistrationQuery = useFetchRegistration(importedRegistrationIdentifier, {
-    enabled: importCandidate?.importStatus.candidateStatus === 'IMPORTED',
+  const importedRegistrationId = importCandidate?.importStatus.nvaPublicationId ?? '';
+  const importedRegistrationQuery = useQuery({
+    queryKey: ['registration', importedRegistrationId],
+    enabled: importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importedRegistrationId,
+    queryFn: () => fetchRegistration(getIdentifierFromId(importedRegistrationId)),
+    meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
   useEffect(() => {
@@ -99,9 +100,6 @@ export const CentralImportDuplicationCheckPage = () => {
         gridTemplateAreas: { xs: '"actions" "main"', sm: '"main actions"' },
         gap: '1rem',
       }}>
-      <Helmet>
-        <title>{t('basic_data.central_import.central_import')}</title>
-      </Helmet>
       <BackgroundDiv>
         {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
@@ -191,11 +189,7 @@ export const CentralImportDuplicationCheckPage = () => {
 
               <Typography gutterBottom>{t('basic_data.central_import.merge_candidate.merge_description')}</Typography>
               {registrationIdentifier ? (
-                <Link
-                  to={{
-                    pathname: getImportCandidateMergePath(identifier, registrationIdentifier),
-                    state: location.state,
-                  }}>
+                <Link to={getImportCandidateMergePath(identifier, registrationIdentifier)}>
                   <Button variant="outlined" fullWidth size="small">
                     {t('basic_data.central_import.merge_candidate.merge')}
                   </Button>
@@ -225,7 +219,7 @@ export const CentralImportDuplicationCheckPage = () => {
                   setShowNotApplicableDialog(false);
                 }}
                 title={t('basic_data.central_import.not_applicable')}
-                textFieldLabel={t('common.message')}
+                textFieldLabel={t('tasks.nvi.note')}
               />
             </>
           )}

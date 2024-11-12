@@ -5,7 +5,6 @@ import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { getNviYearFilterValues } from '../../../utils/nviHelpers';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 const nviYearFilterValues = getNviYearFilterValues();
 
@@ -24,12 +23,11 @@ export const NviYearSelector = (props: Partial<SelectProps>) => {
       value={year}
       onChange={(event) => {
         const selectedYear = event.target.value as number;
-        const syncedParams = syncParamsWithSearchFields(searchParams);
-        syncedParams.set(NviCandidatesSearchParam.Year, selectedYear.toString());
+        searchParams.set(NviCandidatesSearchParam.Year, selectedYear.toString());
         if (offset) {
-          syncedParams.delete(NviCandidatesSearchParam.Offset);
+          searchParams.delete(NviCandidatesSearchParam.Offset);
         }
-        history.push({ search: syncedParams.toString() });
+        history.push({ search: searchParams.toString() });
       }}
       {...props}>
       {nviYearFilterValues.map((year) => (

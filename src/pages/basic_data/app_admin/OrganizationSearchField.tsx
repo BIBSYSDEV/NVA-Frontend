@@ -1,15 +1,10 @@
 import { Autocomplete, TextFieldProps } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { FieldInputProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultOrganizationSearchSize } from '../../../api/cristinApi';
-import { useSearchForOrganizations } from '../../../api/hooks/useSearchForOrganizations';
-import {
-  AutocompleteListboxWithExpansion,
-  AutocompleteListboxWithExpansionProps,
-} from '../../../components/AutocompleteListboxWithExpansion';
+import { OrganizationSearchParams, searchForOrganizations } from '../../../api/cristinApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
-import { OrganizationRenderOption } from '../../../components/OrganizationRenderOption';
 import { Organization } from '../../../types/organization.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
@@ -41,15 +36,21 @@ export const OrganizationSearchField = ({
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
 
-  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
-  const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
+  const organizationQueryParams: OrganizationSearchParams = {
+    query: debouncedQuery,
+  };
+  const organizationSearchQuery = useQuery({
+    enabled: !!debouncedQuery,
+    queryKey: ['organization', organizationQueryParams],
+    queryFn: () => searchForOrganizations(organizationQueryParams),
+    meta: { errorMessage: t('feedback.error.get_institutions') },
+  });
 
   const isLoading = isLoadingDefaultOptions || organizationSearchQuery.isFetching;
-  const options = organizationSearchQuery.data?.hits ?? defaultOptions;
 
   return (
     <Autocomplete
-      options={options}
+      options={organizationSearchQuery.data?.hits ?? defaultOptions}
       inputMode="search"
       disabled={disabled}
       getOptionLabel={(option) => getLanguageString(option.labels)}
@@ -67,17 +68,6 @@ export const OrganizationSearchField = ({
       }}
       value={selectedValue}
       loading={isLoading}
-      renderOption={({ key, ...props }, option) => (
-        <OrganizationRenderOption key={option.id} props={props} option={option} />
-      )}
-      ListboxComponent={AutocompleteListboxWithExpansion}
-      ListboxProps={
-        {
-          hasMoreHits: !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
-          onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
-          isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > options.length,
-        } satisfies AutocompleteListboxWithExpansionProps as any
-      }
       renderInput={(params) => (
         <AutocompleteTextField
           onBlur={fieldInputProps?.onBlur}

@@ -1,12 +1,11 @@
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import { ChangeEvent } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
-export enum ScientificValueLevels {
+enum ScientificValueLevels {
   LevelZero = 'Unassigned,LevelZero',
   LevelOne = 'LevelOne',
   LevelTwo = 'LevelTwo',
@@ -24,7 +23,7 @@ export const ScientificValueFilter = () => {
     levelTwo: scientificValueParam.includes(ScientificValueLevels.LevelTwo),
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name as keyof typeof selectedScientificValues;
     const newSelectedScientificValues = {
       ...selectedScientificValues,
@@ -39,15 +38,12 @@ export const ScientificValueFilter = () => {
       .filter(Boolean)
       .join(',');
 
-    const syncedParams = syncParamsWithSearchFields(searchParams);
-
     if (scientificValues.length > 0) {
-      syncedParams.set(ResultParam.ScientificValue, scientificValues);
+      searchParams.set(ResultParam.ScientificValue, scientificValues);
     } else {
-      syncedParams.delete(ResultParam.ScientificValue);
+      searchParams.delete(ResultParam.ScientificValue);
     }
-    syncedParams.delete(ResultParam.From);
-    history.push({ search: syncedParams.toString() });
+    history.push({ search: searchParams.toString() });
   };
 
   return (

@@ -33,12 +33,12 @@ export const NfrProjectSearch = ({ onSelectProject, errorMessage, ...textFieldPr
       filterOptions={(options) => options}
       onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
       getOptionLabel={(option) => getLanguageString(option.labels)}
-      renderOption={({ key, ...props }, option) => {
+      renderOption={(props, option) => {
         const projectName = getLanguageString(option.labels);
         const period = getPeriodString(option.activeFrom, option.activeTo);
         const manager = option.lead ? `${t('project.project_manager')}: ${option.lead}` : '';
         return (
-          <li {...props} key={option.identifier}>
+          <li {...props}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <Typography sx={{ fontWeight: 600 }}>{projectName}</Typography>
               <Typography variant="body1">{period}</Typography>

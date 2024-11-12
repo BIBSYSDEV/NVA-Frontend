@@ -1,14 +1,12 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
-import { ParseKeys } from 'i18next';
-import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SortOrder } from '../api/searchApi';
 import { dataTestId } from '../utils/dataTestIds';
 
-export interface SortSelectorOption {
+interface SortSelectorOption {
   orderBy: string;
   sortOrder: SortOrder;
-  i18nKey: ParseKeys;
+  label: string;
 }
 
 interface SortSelectorProps extends Pick<TextFieldProps, 'sx' | 'variant' | 'size' | 'label' | 'aria-label'> {
@@ -19,7 +17,6 @@ interface SortSelectorProps extends Pick<TextFieldProps, 'sx' | 'variant' | 'siz
 }
 
 export const SortSelector = ({ orderKey, options, paginationKey, sortKey, ...textFieldProps }: SortSelectorProps) => {
-  const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
@@ -47,8 +44,8 @@ export const SortSelector = ({ orderKey, options, paginationKey, sortKey, ...tex
         history.push({ search: params.toString() });
       }}>
       {options.map((option) => (
-        <MenuItem key={option.i18nKey} value={option as any}>
-          {t(option.i18nKey)}
+        <MenuItem key={option.label} value={option as any}>
+          {option.label}
         </MenuItem>
       ))}
     </TextField>

@@ -5,14 +5,13 @@ import { dataTestId } from '../utils/dataTestIds';
 import { getLanguageString } from '../utils/translation-helpers';
 import { EmphasizeSubstring } from './EmphasizeSubstring';
 
-interface AutocompleteProjectOptionProps {
-  props: HTMLAttributes<HTMLLIElement>;
+interface AutocompleteProjectOptionProps extends HTMLAttributes<HTMLLIElement> {
   project: CristinProject;
   inputValue: string;
 }
 
-export const AutocompleteProjectOption = ({ project, inputValue, props }: AutocompleteProjectOptionProps) => (
-  <li {...props}>
+export const AutocompleteProjectOption = ({ project, inputValue, ...props }: AutocompleteProjectOptionProps) => (
+  <li {...props} key={project.id}>
     <Box
       sx={{ display: 'flex', flexDirection: 'column' }}
       data-testid={dataTestId.registrationWizard.description.projectSearchOption(project.id)}>

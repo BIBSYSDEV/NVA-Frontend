@@ -4,7 +4,7 @@ import { CristinProject } from '../../types/project.types';
 export const mockProject: CristinProject = {
   id: 'https://api.dev.nva.aws.unit.no/cristin/project/1',
   type: 'Project',
-  identifiers: [
+  identifier: [
     {
       type: 'CristinIdentifier',
       value: '1',
@@ -14,24 +14,20 @@ export const mockProject: CristinProject = {
     sourceShortName: 'NVA',
   },
   creator: {
+    type: 'ProjectCreator',
     identity: {
       type: 'Person',
       id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
       firstName: 'Bob',
       lastName: 'Boffaloe',
     },
-    roles: [
-      {
-        type: 'ProjectCreator',
-        affiliation: {
-          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
-          type: 'Organization',
-          labels: {
-            nb: 'Jamaica',
-          },
-        },
+    affiliation: {
+      id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+      type: 'Organization',
+      labels: {
+        nb: 'Jamaica',
       },
-    ],
+    },
   },
   funding: [],
   academicSummary: {},
@@ -55,64 +51,52 @@ export const mockProject: CristinProject = {
   },
   contributors: [
     {
+      type: 'ProjectManager',
       identity: {
         id: 'https://api.dev.nva.aws.unit.no/cristin/person/328549',
         type: 'Person',
         firstName: 'Name',
         lastName: 'Nameson',
       },
-      roles: [
-        {
-          type: 'ProjectManager',
-          affiliation: {
-            id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
-            type: 'Organization',
-            labels: {
-              nb: 'UiT Norges arktiske universitet',
-            },
-          },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'UiT Norges arktiske universitet',
         },
-      ],
+      },
     },
     {
+      type: 'ProjectParticipant',
       identity: {
         id: 'https://api.dev.nva.aws.unit.no/cristin/person/53368',
         type: 'Person',
         firstName: 'arvid',
         lastName: 'viken',
       },
-      roles: [
-        {
-          type: 'ProjectParticipant',
-          affiliation: {
-            id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
-            type: 'Organization',
-            labels: {
-              nb: 'UiT Norges arktiske universitet',
-            },
-          },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'UiT Norges arktiske universitet',
         },
-      ],
+      },
     },
     {
+      type: 'ProjectParticipant',
       identity: {
         id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
         type: 'Person',
         firstName: 'Peder',
         lastName: 'Pedersen',
       },
-      roles: [
-        {
-          type: 'ProjectParticipant',
-          affiliation: {
-            id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
-            type: 'Organization',
-            labels: {
-              nb: 'UiT Norges arktiske universitet',
-            },
-          },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'UiT Norges arktiske universitet',
         },
-      ],
+      },
     },
   ],
   projectCategories: [],
@@ -125,7 +109,7 @@ const mockProjects: CristinProject[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414343',
     type: 'Project',
-    identifiers: [
+    identifier: [
       {
         type: 'CristinIdentifier',
         value: '414343',
@@ -135,24 +119,20 @@ const mockProjects: CristinProject[] = [
       sourceShortName: 'NVA',
     },
     creator: {
+      type: 'ProjectCreator',
       identity: {
         type: 'Person',
         id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
         firstName: 'Bob',
         lastName: 'Boffaloe',
       },
-      roles: [
-        {
-          type: 'ProjectCreator',
-          affiliation: {
-            id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
-            type: 'Organization',
-            labels: {
-              nb: 'Jamaica',
-            },
-          },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'Jamaica',
         },
-      ],
+      },
     },
     funding: [],
     academicSummary: {},
@@ -176,24 +156,20 @@ const mockProjects: CristinProject[] = [
     },
     contributors: [
       {
+        type: 'ProjectManager',
         identity: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/person/319749',
           type: 'Person',
           firstName: 'Kari',
           lastName: 'Karisen',
         },
-        roles: [
-          {
-            type: 'ProjectManager',
-            affiliation: {
-              id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
-              type: 'Organization',
-              labels: {
-                nb: 'Universitetet i Sørøst-Norge',
-              },
-            },
+        affiliation: {
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
+          type: 'Organization',
+          labels: {
+            nb: 'Universitetet i Sørøst-Norge',
           },
-        ],
+        },
       },
     ],
     projectCategories: [],
@@ -203,7 +179,7 @@ const mockProjects: CristinProject[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414392',
     type: 'Project',
-    identifiers: [
+    identifier: [
       {
         type: 'CristinIdentifier',
         value: '414392',
@@ -213,24 +189,20 @@ const mockProjects: CristinProject[] = [
       sourceShortName: 'NVA',
     },
     creator: {
+      type: 'ProjectCreator',
       identity: {
         type: 'Person',
         id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
         firstName: 'Bob',
         lastName: 'Boffaloe',
       },
-      roles: [
-        {
-          type: 'ProjectCreator',
-          affiliation: {
-            id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
-            type: 'Organization',
-            labels: {
-              nb: 'Jamaica',
-            },
-          },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'Jamaica',
         },
-      ],
+      },
     },
     funding: [],
     academicSummary: {},
@@ -254,24 +226,20 @@ const mockProjects: CristinProject[] = [
     },
     contributors: [
       {
+        type: 'ProjectManager',
         identity: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/person/27546',
           type: 'Person',
           firstName: 'Anonym',
           lastName: 'Person',
         },
-        roles: [
-          {
-            type: 'ProjectManager',
-            affiliation: {
-              id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
-              type: 'Organization',
-              labels: {
-                nb: 'Universitetet i Sørøst-Norge',
-              },
-            },
+        affiliation: {
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
+          type: 'Organization',
+          labels: {
+            nb: 'Universitetet i Sørøst-Norge',
           },
-        ],
+        },
       },
     ],
     projectCategories: [],
@@ -281,7 +249,7 @@ const mockProjects: CristinProject[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414451',
     type: 'Project',
-    identifiers: [
+    identifier: [
       {
         type: 'CristinIdentifier',
         value: '414451',
@@ -291,24 +259,20 @@ const mockProjects: CristinProject[] = [
       sourceShortName: 'NVA',
     },
     creator: {
+      type: 'ProjectCreator',
       identity: {
         type: 'Person',
         id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
         firstName: 'Bob',
         lastName: 'Boffaloe',
       },
-      roles: [
-        {
-          type: 'ProjectCreator',
-          affiliation: {
-            id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
-            type: 'Organization',
-            labels: {
-              nb: 'Jamaica',
-            },
-          },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'Jamaica',
         },
-      ],
+      },
     },
     funding: [],
     academicSummary: {},
@@ -332,64 +296,52 @@ const mockProjects: CristinProject[] = [
     },
     contributors: [
       {
+        type: 'ProjectManager',
         identity: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/person/43310',
           type: 'Person',
           firstName: 'Guri',
           lastName: 'Malla',
         },
-        roles: [
-          {
-            type: 'ProjectManager',
-            affiliation: {
-              id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
-              type: 'Organization',
-              labels: {
-                nb: 'Universitetet i Sørøst-Norge',
-              },
-            },
+        affiliation: {
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
+          type: 'Organization',
+          labels: {
+            nb: 'Universitetet i Sørøst-Norge',
           },
-        ],
+        },
       },
       {
+        type: 'ProjectParticipant',
         identity: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/person/26002',
           type: 'Person',
           firstName: 'Sopp',
           lastName: 'Soppesen',
         },
-        roles: [
-          {
-            type: 'ProjectParticipant',
-            affiliation: {
-              id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
-              type: 'Organization',
-              labels: {
-                nb: 'Universitetet i Sørøst-Norge',
-              },
-            },
+        affiliation: {
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
+          type: 'Organization',
+          labels: {
+            nb: 'Universitetet i Sørøst-Norge',
           },
-        ],
+        },
       },
       {
+        type: 'ProjectParticipant',
         identity: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/person/26022',
           type: 'Person',
           firstName: 'Ost',
           lastName: 'Loff',
         },
-        roles: [
-          {
-            type: 'ProjectParticipant',
-            affiliation: {
-              id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
-              type: 'Organization',
-              labels: {
-                nb: 'Universitetet i Sørøst-Norge',
-              },
-            },
+        affiliation: {
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
+          type: 'Organization',
+          labels: {
+            nb: 'Universitetet i Sørøst-Norge',
           },
-        ],
+        },
       },
     ],
     projectCategories: [],
@@ -399,7 +351,7 @@ const mockProjects: CristinProject[] = [
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414803',
     type: 'Project',
-    identifiers: [
+    identifier: [
       {
         type: 'CristinIdentifier',
         value: '414803',
@@ -409,24 +361,20 @@ const mockProjects: CristinProject[] = [
       sourceShortName: 'NVA',
     },
     creator: {
+      type: 'ProjectCreator',
       identity: {
         type: 'Person',
         id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
         firstName: 'Bob',
         lastName: 'Boffaloe',
       },
-      roles: [
-        {
-          type: 'ProjectCreator',
-          affiliation: {
-            id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
-            type: 'Organization',
-            labels: {
-              nb: 'Jamaica',
-            },
-          },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'Jamaica',
         },
-      ],
+      },
     },
     funding: [],
     academicSummary: {},
@@ -450,24 +398,20 @@ const mockProjects: CristinProject[] = [
     },
     contributors: [
       {
+        type: 'ProjectManager',
         identity: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/person/319632',
           type: 'Person',
           firstName: 'Knut',
           lastName: 'Kebab',
         },
-        roles: [
-          {
-            type: 'ProjectManager',
-            affiliation: {
-              id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
-              type: 'Organization',
-              labels: {
-                nb: 'Universitetet i Sørøst-Norge',
-              },
-            },
+        affiliation: {
+          id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
+          type: 'Organization',
+          labels: {
+            nb: 'Universitetet i Sørøst-Norge',
           },
-        ],
+        },
       },
     ],
     projectCategories: [],

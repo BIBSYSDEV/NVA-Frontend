@@ -3,16 +3,18 @@ import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { getLanguageByUri } from 'nva-language';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
-import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
-import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration } from '../../../../api/registrationApi';
+import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
+import {
+  fetchImportCandidate,
+  fetchRegistration,
+  updateImportCandidateStatus,
+  updateRegistration,
+} from '../../../../api/registrationApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { AssociatedLink } from '../../../../types/associatedArtifact.types';
-import { BasicDataLocationState } from '../../../../types/locationState.types';
 import {
   DescriptionFieldNames,
   FileFieldNames,
@@ -36,10 +38,14 @@ interface MergeImportCandidateParams {
 export const CentralImportCandidateMerge = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory<BasicDataLocationState>();
+  const history = useHistory();
   const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
-  const registrationQuery = useFetchRegistration(registrationIdentifier);
+  const registrationQuery = useQuery({
+    queryKey: ['registration', registrationIdentifier],
+    queryFn: () => fetchRegistration(registrationIdentifier),
+    meta: { errorMessage: t('feedback.error.get_registration') },
+  });
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', candidateIdentifier],
@@ -77,7 +83,7 @@ export const CentralImportCandidateMerge = () => {
   const importCandidate = importCandidateQuery.data;
 
   if (importCandidate?.importStatus.candidateStatus === 'IMPORTED') {
-    return <Redirect to={{ pathname: getImportCandidatePath(candidateIdentifier), state: history.location.state }} />;
+    return <Redirect to={getImportCandidatePath(candidateIdentifier)} />;
   }
 
   const getLanguageName = (languageUri?: string) => {
@@ -105,10 +111,7 @@ export const CentralImportCandidateMerge = () => {
         await importCandidateMutation.mutateAsync();
         await registrationQuery.refetch();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
-        history.push(getRegistrationWizardPath(registrationIdentifier), {
-          previousPath: getImportCandidatePath(candidateIdentifier),
-          previousSearch: history.location.state.previousSearch,
-        } satisfies BasicDataLocationState);
+        history.push(getRegistrationWizardPath(registrationIdentifier));
       }}>
       {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (
         <Box
@@ -121,9 +124,6 @@ export const CentralImportCandidateMerge = () => {
             gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
           }}>
-          <Helmet>
-            <title>{t('basic_data.central_import.central_import')}</title>
-          </Helmet>
           <Typography sx={{ gridColumn: '1/-1' }}>
             {t('basic_data.central_import.merge_candidate.merge_details_1')}
           </Typography>
@@ -260,7 +260,9 @@ export const CentralImportCandidateMerge = () => {
             )}
 
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
-            <Button onClick={() => history.goBack()}>{t('common.cancel')}</Button>
+            <Link to={getImportCandidatePath(candidateIdentifier)}>
+              <Button>{t('common.cancel')}</Button>
+            </Link>
             <LoadingButton
               type="submit"
               variant="contained"

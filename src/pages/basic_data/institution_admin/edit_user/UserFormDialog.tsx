@@ -72,7 +72,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
 
   const institutionUserQuery = useQuery({
     enabled: open && !existingUser && !!username,
-    queryKey: ['user', username],
+    queryKey: [username],
     queryFn: () => fetchUser(username),
     meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,

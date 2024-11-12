@@ -14,7 +14,6 @@ import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
-import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
 import { NviYearSelector } from './NviYearSelector';
@@ -50,14 +49,13 @@ export const NviCandidatesList = () => {
           <CuratorSelector
             selectedUsername={nviParams.assignee}
             onChange={(curator) => {
-              const syncedParams = syncParamsWithSearchFields(searchParams);
               if (curator) {
-                syncedParams.set(NviCandidatesSearchParam.Assignee, curator.username);
+                searchParams.set(NviCandidatesSearchParam.Assignee, curator.username);
                 if (nviParams.offset) {
-                  syncedParams.delete(NviCandidatesSearchParam.Offset);
+                  searchParams.delete(NviCandidatesSearchParam.Offset);
                 }
 
-                const currentStatusFilter = syncedParams.get(
+                const currentStatusFilter = searchParams.get(
                   NviCandidatesSearchParam.Filter
                 ) as NviCandidateSearchStatus | null;
                 if (
@@ -65,12 +63,12 @@ export const NviCandidatesList = () => {
                   currentStatusFilter === 'pending' ||
                   currentStatusFilter === 'pendingCollaboration'
                 ) {
-                  syncedParams.set(NviCandidatesSearchParam.Filter, 'assigned' satisfies NviCandidateSearchStatus);
+                  searchParams.set(NviCandidatesSearchParam.Filter, 'assigned' satisfies NviCandidateSearchStatus);
                 }
               } else {
-                syncedParams.delete(NviCandidatesSearchParam.Assignee);
+                searchParams.delete(NviCandidatesSearchParam.Assignee);
               }
-              history.push({ search: syncedParams.toString() });
+              history.push({ search: searchParams.toString() });
             }}
             roleFilter={[RoleName.NviCurator]}
             sx={{ flex: '1 15rem' }}

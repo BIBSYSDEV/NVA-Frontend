@@ -10,7 +10,7 @@ import { fetchPerson } from '../../../api/cristinApi';
 import { getOrcidInfo } from '../../../api/external/orcidApi';
 import { postOrcidCredentials } from '../../../api/orcidApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { SelectableButton } from '../../../components/SelectableButton';
+import { LinkButton } from '../../../components/PageWithSideMenu';
 import { setNotification } from '../../../redux/notificationSlice';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { OrcidCredentials } from '../../../types/orcid.types';
@@ -192,13 +192,13 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           </ConfirmDialog>
         </Box>
       ) : (
-        <SelectableButton
+        <LinkButton
           endIcon={<img src={orcidIcon} height="20" alt="" />}
           data-testid="button-create-connect-orcid"
           href={`${ORCID_BASE_URL}/signin?oauth&client_id=${import.meta.env.VITE_ORCID_CLIENT_ID}&response_type=token&scope=openid&redirect_uri=${window.location.href}`}
           size="small">
           {t('my_page.my_profile.orcid.connect_orcid')}
-        </SelectableButton>
+        </LinkButton>
       )}
     </div>
   );

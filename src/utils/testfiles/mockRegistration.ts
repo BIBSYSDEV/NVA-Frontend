@@ -5,6 +5,7 @@ import { TicketCollection } from '../../types/publication_types/ticket.types';
 import { JournalType } from '../../types/publicationFieldNames';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockUser } from './mock_feide_user';
+import { mockCustomerInstitution } from './mockCustomerInstitutions';
 
 export const mockRegistration: JournalRegistration = {
   type: 'Publication',
@@ -20,6 +21,7 @@ export const mockRegistration: JournalRegistration = {
   projects: [
     { type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/cristin/project/1', name: 'A dummy project' },
   ],
+  publisher: { id: mockCustomerInstitution.id },
   associatedArtifacts: [
     {
       type: FileType.UnpublishedFile,
@@ -113,9 +115,9 @@ export const mockMathJaxRegistration: JournalRegistration = {
   ...mockRegistration,
   entityDescription: {
     ...mockRegistration.entityDescription,
-    mainTitle: 'The title \\(\\sqrt{25} = 5~\\hbox{ost}\\) and \\(A_{FB}^{\\mathrm{b}\\overline{\\mathrm{b}}}\\)',
+    mainTitle: 'The title $$\\sqrt{25} = 5~\\hbox {ost}$$ and $A_{FB}^{\\mathrm{b}\\overline{\\mathrm{b}}}$',
     abstract:
-      'This is abstract -> \\(\\sqrt{25} = 5~\\hbox{ost}\\) and \\(X_{AB}^{\\mathrm{c}\\overline{\\mathrm{d}}}\\) and so on it goes.',
+      'This is abastract -> $$\\sqrt{25} = 5~\\hbox {ost}$$ and $X_{AB}^{\\mathrm{c}\\overline{\\mathrm{d}}}$ and so on it goes.',
   },
 };
 
