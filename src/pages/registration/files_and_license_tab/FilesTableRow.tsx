@@ -76,7 +76,7 @@ export const FilesTableRow = ({
   showFileVersion,
   showRrs,
   disabled,
-  showAllColumns: includeAllCells,
+  showAllColumns,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
@@ -216,7 +216,7 @@ export const FilesTableRow = ({
             )}
           </Field>
         </VerticalAlignedTableCell>
-        {includeAllCells && (
+        {showAllColumns && (
           <>
             {isOpenableFile && showFileVersion && (
               <VerticalAlignedTableCell>

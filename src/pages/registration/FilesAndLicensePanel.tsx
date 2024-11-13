@@ -44,15 +44,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
 
-  const openFiles = files.filter(isOpenFile);
-  const internalFiles = files.filter((file) => file.type === FileType.InternalFile);
-  const unpublishableFiles = files.filter((file) => file.type === FileType.UnpublishableFile);
-  const completedFiles = [...openFiles, ...internalFiles, ...unpublishableFiles];
-
-  const pendingOpenFiles = files.filter(isPendingOpenFile);
-  const pendingInternalFiles = files.filter((file) => file.type === FileType.PendingInternalFile);
-  const rejectedFiles = files.filter((file) => file.type === FileType.RejectedFile);
-  const pendingFiles = [...pendingOpenFiles, ...pendingInternalFiles, ...rejectedFiles];
+  const completedFiles = files.filter(
+    (file) => isOpenFile(file) || file.type === FileType.InternalFile || file.type === FileType.UnpublishableFile
+  );
+  const pendingFiles = files.filter(
+    (file) =>
+      isPendingOpenFile(file) || file.type === FileType.PendingInternalFile || file.type === FileType.RejectedFile
+  );
 
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
