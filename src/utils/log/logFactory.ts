@@ -3,6 +3,7 @@ import { FileType } from '../../types/associatedArtifact.types';
 import { Log, LogEntry, LogEntryType } from '../../types/log.types';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
+import { isOpenFile } from '../registration-helpers';
 import { generateImportLogEntries } from './importEntryGenerator';
 import { generateRegistrationLogEntries } from './registrationEntryGenerator';
 import { generateTicketLogEntries } from './ticketEntryGenerator';
@@ -88,10 +89,21 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
   const filePublishingTickets = publishingTickets.filter((ticket) => ticket.approvedFiles.length > 0);
 
   filePublishingTickets.forEach((ticket) => {
-    entries.push({
-      text: t('my_page.messages.files_published', { count: ticket.approvedFiles.length }),
-      date: ticket.finalizedDate ?? ticket.modifiedDate,
-    });
+    const openFilesCount = ticket.approvedFiles.filter(isOpenFile).length;
+    if (openFilesCount > 0) {
+      entries.push({
+        text: t('log.titles.file_published_count', { count: openFilesCount }),
+        date: ticket.finalizedDate ?? ticket.modifiedDate,
+      });
+    }
+
+    const internalFilesCount = ticket.approvedFiles.filter((file) => file.type === FileType.InternalFile).length;
+    if (internalFilesCount > 0) {
+      entries.push({
+        text: t('log.titles.internal_file_approved_count', { count: internalFilesCount }),
+        date: ticket.finalizedDate ?? ticket.modifiedDate,
+      });
+    }
   });
 
   return entries;
