@@ -1,5 +1,5 @@
 import { TFunction } from 'i18next';
-import { AssociatedFile, FileType, UserUploadDetails } from '../../types/associatedArtifact.types';
+import { AssociatedFile, FileType } from '../../types/associatedArtifact.types';
 import { LogAction, LogActionItem, LogEntry } from '../../types/log.types';
 import { PublishingTicket } from '../../types/publication_types/ticket.types';
 import { isOpenFile } from '../registration-helpers';
@@ -144,7 +144,6 @@ function generateFilesUploadedLogEntry(
 ): LogEntry {
   const uploadedFiles = [...ticket.filesForApproval, ...ticket.approvedFiles];
   const filesByUser = groupFilesByUser(uploadedFiles);
-
   const logActions: LogAction[] = [];
 
   filesByUser.forEach((files, username) => {
@@ -173,14 +172,13 @@ function generateFilesUploadedLogEntry(
 function groupFilesByUser(files: AssociatedFile[]) {
   const map: Map<string, AssociatedFile[]> = new Map();
 
-  const userUploadedFiles = files.filter((file) => file.uploadDetails?.type === 'UserUploadDetails');
-  userUploadedFiles.forEach((item) => {
-    const key = (item.uploadDetails as UserUploadDetails).uploadedBy;
+  files.forEach((file) => {
+    const key = file.uploadDetails?.type === 'UserUploadDetails' ? file.uploadDetails.uploadedBy : 'unknown';
     const collection = map.get(key);
     if (!collection) {
-      map.set(key, [item]);
+      map.set(key, [file]);
     } else {
-      collection.push(item);
+      collection.push(file);
     }
   });
   return map;
