@@ -26,7 +26,13 @@ import {
   SpecificLinkFieldNames,
 } from '../../types/publicationFieldNames';
 import { Funding, PublicationInstance, Registration, RegistrationTab } from '../../types/registration.types';
-import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from '../registration-helpers';
+import {
+  associatedArtifactIsFile,
+  associatedArtifactIsLink,
+  getMainRegistrationType,
+  isOpenFile,
+  isPendingOpenFile,
+} from '../registration-helpers';
 import { registrationValidationSchema } from '../validation/registration/registrationValidation';
 
 export interface TabErrors {
@@ -128,7 +134,7 @@ const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] =
 
       if (associatedArtifactIsFile(artifact)) {
         const file = artifact as AssociatedFile;
-        if (file.type !== FileType.UnpublishableFile) {
+        if (isOpenFile(file) || isPendingOpenFile(file) || file.type === FileType.RejectedFile) {
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);

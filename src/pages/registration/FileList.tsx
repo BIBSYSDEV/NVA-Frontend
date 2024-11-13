@@ -24,12 +24,13 @@ import {
   isDegree,
   isEmbargoed,
   isOpenFile,
+  isPendingOpenFile,
   isTypeWithFileVersionField,
   isTypeWithRrs,
   userHasAccessRight,
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
-import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
+import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -43,10 +44,9 @@ interface FileListProps {
   uppy: Uppy;
   remove: (index: number) => any;
   baseFieldName: string;
-  archived?: boolean;
 }
 
-export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }: FileListProps) => {
+export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileListProps) => {
   const { t } = useTranslation();
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
@@ -79,13 +79,10 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
     return true;
   }
 
+  const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-      }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <Typography component="h3" variant="h4">
         {title}
       </Typography>
@@ -94,19 +91,12 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
           <TableHead sx={{ bgcolor: 'white' }}>
             <TableRow>
               <StyledTableCell>{t('common.name')}</StyledTableCell>
-              <StyledTableCell id={markForPublishId}>
-                {t('registration.files_and_license.mark_for_publish')}
-              </StyledTableCell>
-              {!archived && (
+              <StyledTableCell>{t('registration.files_and_license.availability')}</StyledTableCell>
+              {showAllColumns && (
                 <>
                   {showFileVersion && (
                     <StyledTableCell>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                        }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <Box sx={{ display: 'flex' }}>
                           {t('common.version')}
                           <Typography color="error">*</Typography>
@@ -255,7 +245,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                   baseFieldName={`${baseFieldName}[${associatedFileIndex}]`}
                   showFileVersion={showFileVersion}
                   showRrs={isTypeWithRrs(publicationInstanceType)}
-                  archived={archived}
+                  showAllColumns={showAllColumns}
                 />
               );
             })}
