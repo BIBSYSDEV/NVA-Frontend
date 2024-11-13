@@ -30,7 +30,6 @@ export const ShowRelatedDocuments = ({ related }: ShowRelatedDocumentsProps) => 
                 sx={{
                   border: '2px solid',
                   borderColor: 'secondary.dark',
-                  alignContent: 'center',
                   background: 'white',
                   minHeight: '3rem',
                   width: '100%',
