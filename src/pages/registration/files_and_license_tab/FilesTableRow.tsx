@@ -167,13 +167,13 @@ export const FilesTableRow = ({
           <Field name={fileTypeFieldName}>
             {({ field }: FieldProps<FileType>) => (
               <TextField
+                {...field}
                 data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
                 SelectProps={{ inputProps: { 'aria-label': t('registration.files_and_license.availability') } }}
                 select
                 variant="filled"
                 InputProps={{ sx: { '.MuiSelect-select': { py: '0.75rem' } } }}
                 fullWidth
-                value={field.value}
                 onChange={(event) => {
                   const newValue = event.target.value as FileType;
                   // Ensure new file type is not directly set to a completed file type
