@@ -4,13 +4,13 @@ export interface LanguageString {
 
 export interface Place {
   type: 'UnconfirmedPlace';
-  label: string;
+  name: string;
   country: string;
 }
 
 export const emptyPlace: Place = {
   type: 'UnconfirmedPlace',
-  label: '',
+  name: '',
   country: '',
 };
 

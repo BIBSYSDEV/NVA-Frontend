@@ -246,15 +246,15 @@ interface PublicPresentationProps {
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
   const { t } = useTranslation();
-  const { type, time, place, label, agent } = publicationContext;
+  const { type, time, place, name, agent } = publicationContext;
   const periodString = getPeriodString(time?.from, time?.to);
 
   return (
     <>
       <Typography variant="h3">{t(`registration.publication_types.${type}`)}</Typography>
-      {label && (
+      {name && (
         <Typography>
-          {t('registration.resource_type.title_of_event')}: {label}
+          {t('registration.resource_type.title_of_event')}: {name}
         </Typography>
       )}
       {agent?.name && (
@@ -262,9 +262,9 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
           {t('registration.resource_type.organizer')}: {agent.name}
         </Typography>
       )}
-      {place?.label && (
+      {place?.name && (
         <Typography>
-          {t('registration.resource_type.place_for_event')}: {place.label}
+          {t('registration.resource_type.place_for_event')}: {place.name}
         </Typography>
       )}
       {place?.country && (
@@ -399,7 +399,7 @@ const PublicExhibitionBasicDialogContent = ({ exhibitionBasic }: { exhibitionBas
       <Typography variant="h3" gutterBottom>
         {t('common.place')}
       </Typography>
-      <Typography paragraph>{exhibitionBasic.place?.label || '-'}</Typography>
+      <Typography paragraph>{exhibitionBasic.place?.name || '-'}</Typography>
       <Typography variant="h3" gutterBottom>
         {t('common.date')}
       </Typography>
@@ -413,7 +413,7 @@ const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{venue.place?.label ?? ''}</Typography>
+      <Typography paragraph>{venue.place?.name ?? ''}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{getPeriodString(venue.date?.from, venue.date?.to)}</Typography>
     </DialogContent>
@@ -475,7 +475,7 @@ const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition 
       <Typography variant="h3">{t('registration.resource_type.artistic.exhibition_title')}</Typography>
       <Typography paragraph>{exhibition.name}</Typography>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{exhibition.place?.label ?? ''}</Typography>
+      <Typography paragraph>{exhibition.place?.name ?? ''}</Typography>
       <Typography variant="h3">{t('registration.resource_type.organizer')}</Typography>
       <Typography>{exhibition.organizer}</Typography>
       <Typography variant="h3">{t('common.other')}</Typography>
@@ -505,7 +505,7 @@ const PublicCinematicReleaseDialogContent = ({ cinematicRelease }: { cinematicRe
       <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${cinematicRelease.type}`)}</Typography>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{cinematicRelease.place.label}</Typography>
+      <Typography paragraph>{cinematicRelease.place.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.premiere_date')}</Typography>
       <Typography>{toDateString(cinematicRelease.date.value)}</Typography>
     </DialogContent>
@@ -521,7 +521,7 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
         {t(`registration.resource_type.artistic.output_type.${otherRelease.type}`)}: {otherRelease.description}
       </Typography>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{otherRelease.place.label}</Typography>
+      <Typography paragraph>{otherRelease.place.name}</Typography>
       {otherRelease.publisher.name && (
         <>
           <Typography variant="h3">{t('registration.resource_type.artistic.other_announcement_organizer')}</Typography>
@@ -623,7 +623,7 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
 
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{place.label}</Typography>
+      <Typography paragraph>{place.name}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
       <Typography paragraph>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
@@ -685,7 +685,7 @@ const PublicOtherPerformanceDialogContent = ({ otherPerformance }: { otherPerfor
       <Typography paragraph>{performanceType}</Typography>
 
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{place?.label}</Typography>
+      <Typography paragraph>{place?.name}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{extent}</Typography>
@@ -782,7 +782,7 @@ const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performan
           : '-'}
       </Typography>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{performance.place.label}</Typography>
+      <Typography paragraph>{performance.place.name}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography paragraph>
         {toDateString(

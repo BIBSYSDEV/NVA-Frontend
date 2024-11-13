@@ -16,7 +16,7 @@ export const emptyPresentationPublicationInstance: PresentationPublicationInstan
 
 export const emptyPresentationPublicationContext: PresentationPublicationContext = {
   type: PublicationType.Presentation,
-  label: '',
+  name: '',
   agent: { type: 'UnconfirmedOrganization', name: '' },
   place: emptyPlace,
   time: emptyPeriod,
@@ -24,7 +24,7 @@ export const emptyPresentationPublicationContext: PresentationPublicationContext
 
 export interface PresentationPublicationContext {
   type: PublicationType.Presentation;
-  label: string;
+  name: string;
   agent: UnconfirmedOrganization | null;
   place: Place | null;
   time: Period | null;
