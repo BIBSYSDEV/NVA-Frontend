@@ -66,7 +66,7 @@ interface FilesTableRowProps {
   showFileVersion: boolean;
   showRrs: boolean;
   disabled: boolean;
-  includeAllCells: boolean;
+  showAllColumns: boolean;
 }
 
 export const FilesTableRow = ({
@@ -76,7 +76,7 @@ export const FilesTableRow = ({
   showFileVersion,
   showRrs,
   disabled,
-  includeAllCells,
+  showAllColumns: includeAllCells,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const user = useSelector((state: RootState) => state.user);
