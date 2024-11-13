@@ -15,7 +15,7 @@ import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
 
-interface RelatedResourceRowRowProps {
+interface RelatedResultItemProps {
   document: RelatedDocument;
   index: number;
   relatedLength: number;
@@ -29,7 +29,7 @@ export const RelatedResultItem = ({
   relatedLength,
   onMoveRelatedResult,
   onRemoveDocument,
-}: RelatedResourceRowRowProps) => {
+}: RelatedResultItemProps) => {
   const { t } = useTranslation();
   const [indexToRemove, setIndexToRemove] = useState<number | null>(null);
   const uri = document.type === 'ConfirmedDocument' ? document.identifier : '';

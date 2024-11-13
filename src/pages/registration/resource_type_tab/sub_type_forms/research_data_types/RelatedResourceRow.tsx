@@ -11,12 +11,12 @@ import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
 
-interface RelatedResourceRowRowProps {
+interface RelatedResourceRowProps {
   uri: string;
   removeRelatedResource: () => void;
 }
 
-export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResourceRowRowProps) => {
+export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResourceRowProps) => {
   const { t } = useTranslation();
   const isInternalRegistration = uri.includes(API_URL);
   const [registration, isLoadingRegistration] = useFetch<Registration>({ url: isInternalRegistration ? uri : '' });
