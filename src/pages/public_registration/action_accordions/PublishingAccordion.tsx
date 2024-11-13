@@ -209,12 +209,7 @@ export const PublishingAccordion = ({
 
   const registrationHasMismatchingFiles = getAssociatedFiles(registration.associatedArtifacts)
     .filter((file) => approvedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
-    .some(
-      (file) =>
-        file.type === FileType.PendingOpenFile ||
-        file.type === FileType.PendingInternalFile ||
-        file.type === FileType.UnpublishedFile
-    );
+    .some((file) => file.type === FileType.PendingOpenFile || file.type === FileType.PendingInternalFile);
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
