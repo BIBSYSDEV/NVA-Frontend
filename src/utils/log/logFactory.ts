@@ -95,10 +95,13 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
     return entries;
   }
 
-  const publishingTickets = tickets.filter((ticket) => ticket.type === 'PublishingRequest') as PublishingTicket[];
-  const filePublishingTickets = publishingTickets.filter(
-    (ticket) => ticket.filesForApproval.length + ticket.approvedFiles.length > 0
-  );
+  const filePublishingTickets = tickets.filter((ticket) => {
+    if (ticket.type !== 'PublishingRequest') {
+      return false;
+    }
+    const publishingTicket = ticket as PublishingTicket;
+    return publishingTicket.filesForApproval.length + publishingTicket.approvedFiles.length > 0;
+  }) as PublishingTicket[];
 
   filePublishingTickets.forEach((ticket) => {
     if (ticket.status === 'Completed') {
