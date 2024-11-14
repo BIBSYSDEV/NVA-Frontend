@@ -2,12 +2,13 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { updatePromotedPublications } from '../api/preferencesApi';
+import { DeleteIconButton } from '../pages/messages/components/DeleteIconButton';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
@@ -49,6 +50,8 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
   registration: RegistrationSearchItem;
   ticketView?: boolean;
+  onDelete?: () => void;
+  onDeleteTooltip?: string;
 }
 
 export const RegistrationListItemContent = ({
@@ -58,6 +61,8 @@ export const RegistrationListItemContent = ({
   onDeleteDraftRegistration,
   promotedPublications = [],
   target,
+  onDelete,
+  onDeleteTooltip,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription, id } = registration;
@@ -223,6 +228,7 @@ export const RegistrationListItemContent = ({
           )}
         </Box>
       )}
+      {onDelete && <DeleteIconButton onClick={onDelete} tooltip={onDeleteTooltip} />}
     </Box>
   );
 };

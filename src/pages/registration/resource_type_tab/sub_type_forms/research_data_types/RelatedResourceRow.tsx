@@ -38,24 +38,30 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
           }}>
           {isInternalRegistration && registration ? (
             <SearchListItem sx={{ borderLeftColor: 'registration.main' }} key={registration.identifier}>
-              <RegistrationListItemContent registration={registration} />
+              <RegistrationListItemContent
+                registration={registration}
+                onDelete={() => setConfirmRemoveRelation(true)}
+                onDeleteTooltip={t('registration.resource_type.research_data.remove_relation')}
+              />
             </SearchListItem>
           ) : (
-            <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
-              {uri}
-            </Link>
+            <>
+              <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
+                {uri}
+              </Link>
+              <Button
+                size="small"
+                variant="outlined"
+                color="error"
+                data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(
+                  registration?.identifier ?? ''
+                )}
+                onClick={() => setConfirmRemoveRelation(true)}
+                startIcon={<RemoveCircleOutlineIcon />}>
+                {t('registration.resource_type.research_data.remove_relation')}
+              </Button>
+            </>
           )}
-          <Button
-            size="small"
-            variant="outlined"
-            color="error"
-            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(
-              registration?.identifier ?? ''
-            )}
-            onClick={() => setConfirmRemoveRelation(true)}
-            startIcon={<RemoveCircleOutlineIcon />}>
-            {t('registration.resource_type.research_data.remove_relation')}
-          </Button>
         </Box>
       )}
       <ConfirmDialog
