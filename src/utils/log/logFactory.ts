@@ -1,6 +1,7 @@
-import { SxProps } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import { StandardCSSProperties } from '@mui/system';
 import { TFunction } from 'i18next';
-import { ReactNode } from 'react';
 import { FileType } from '../../types/associatedArtifact.types';
 import { Log, LogEntry, LogEntryType } from '../../types/log.types';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
@@ -52,9 +53,9 @@ const sortLogEntries = (a: LogEntry, b: LogEntry) => {
 
 interface SimpleLogItemEntry {
   text: string;
-  date: string;
-  bgcolor?: Extract<SxProps, 'bgcolor'>;
-  icon?: ReactNode;
+  date?: string;
+  bgcolor: StandardCSSProperties['backgroundColor'];
+  Icon: typeof CheckIcon;
 }
 
 export const generateSimplePublishingLog = (registration: Registration, tickets: Ticket[], t: TFunction) => {
@@ -64,6 +65,8 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
     entries.push({
       text: t('registration.status.PUBLISHED_METADATA'),
       date: registration.publishedDate,
+      bgcolor: 'publishingRequest.main',
+      Icon: CheckIcon,
     });
   }
 
@@ -74,6 +77,8 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       entries.push({
         text: t('log.titles.result_unpublished'),
         date: lastUnpublishingNote.createdDate,
+        bgcolor: 'publishingRequest.main',
+        Icon: CheckIcon,
       });
     }
     return entries;
@@ -83,6 +88,8 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
     entries.push({
       text: t('log.titles.result_deleted'),
       date: registration.modifiedDate,
+      bgcolor: 'publishingRequest.main',
+      Icon: CheckIcon,
     });
     return entries;
   }
@@ -99,6 +106,8 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
         entries.push({
           text: t('log.titles.file_published_count', { count: openFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
+          bgcolor: 'publishingRequest.main',
+          Icon: CheckIcon,
         });
       }
 
@@ -107,6 +116,8 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
         entries.push({
           text: t('log.titles.internal_file_approved_count', { count: internalFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
+          bgcolor: 'publishingRequest.main',
+          Icon: CheckIcon,
         });
       }
     } else if (ticket.status === 'Pending' || ticket.status === 'New') {
@@ -114,7 +125,8 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       if (pendingOpenFilesCount > 0) {
         entries.push({
           text: t('log.titles.open_file_awaiting_approval', { count: pendingOpenFilesCount }),
-          date: ticket.finalizedDate ?? ticket.modifiedDate,
+          bgcolor: 'secondary.dark',
+          Icon: HourglassEmptyIcon,
         });
       }
 
@@ -124,7 +136,8 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       if (pendingInternalFilesCount > 0) {
         entries.push({
           text: t('log.titles.internal_file_awaiting_approval', { count: pendingInternalFilesCount }),
-          date: ticket.finalizedDate ?? ticket.modifiedDate,
+          bgcolor: 'secondary.dark',
+          Icon: HourglassEmptyIcon,
         });
       }
     }
