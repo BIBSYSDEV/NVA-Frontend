@@ -448,6 +448,24 @@ export const PublishingAccordion = ({
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
               {t('registration.public_page.approve_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
+
+            <Trans
+              t={t}
+              i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
+              values={{ count: filesAwaitingApproval }}
+              components={[<Typography key="1" />]}
+            />
+            <LoadingButton
+              sx={{ bgcolor: 'white', mb: '0.5rem' }}
+              variant="outlined"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
+              startIcon={<CloseIcon />}
+              onClick={() => setOpenRejectionDialog(true)}
+              loading={isLoading === LoadingState.RejectPublishingRequest}
+              disabled={isLoadingData || isLoading !== LoadingState.None}>
+              {t('registration.public_page.reject_publish_request')} ({filesAwaitingApproval})
+            </LoadingButton>
+
             <Typography>{t('registration.public_page.tasks_panel.edit_publishing_request_description')}</Typography>
             <Button
               sx={{ bgcolor: 'white', mb: '0.5rem' }}
@@ -458,23 +476,6 @@ export const PublishingAccordion = ({
               to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
               {t('registration.edit_registration')}
             </Button>
-
-            <Trans
-              t={t}
-              i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
-              values={{ count: filesAwaitingApproval }}
-              components={[<Typography key="1" />]}
-            />
-            <LoadingButton
-              sx={{ bgcolor: 'white' }}
-              variant="outlined"
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
-              startIcon={<CloseIcon />}
-              onClick={() => setOpenRejectionDialog(true)}
-              loading={isLoading === LoadingState.RejectPublishingRequest}
-              disabled={isLoadingData || isLoading !== LoadingState.None}>
-              {t('registration.public_page.reject_publish_request')} ({filesAwaitingApproval})
-            </LoadingButton>
 
             <Dialog open={openRejectionDialog} onClose={() => setOpenRejectionDialog(false)}>
               <DialogTitle fontWeight="bold">{t('registration.public_page.reject_publish_request')}</DialogTitle>
