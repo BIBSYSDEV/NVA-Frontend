@@ -1,4 +1,4 @@
-import CloseIcon from '@mui/icons-material/Close';
+import CancelIcon from '@mui/icons-material/Cancel';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
@@ -232,7 +232,7 @@ export const RegistrationListItemContent = ({
             sx={{ alignSelf: 'start' }}
             onClick={onRemoveRelated}
             data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}>
-            <CloseIcon sx={{ bgcolor: 'primary.main', color: 'white', borderRadius: '50%', p: '0.25rem' }} />
+            <CancelIcon color="primary" />
           </IconButton>
         </Tooltip>
       )}

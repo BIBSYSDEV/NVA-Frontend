@@ -1,4 +1,4 @@
-import CloseIcon from '@mui/icons-material/Close';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
@@ -74,7 +74,7 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
               sx={{ alignSelf: 'start' }}
               onClick={onDelete}
               data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(project.id)}>
-              <CloseIcon sx={{ bgcolor: 'primary.main', color: 'white', borderRadius: '50%', p: '0.25rem' }} />
+              <CancelIcon color="primary" />
             </IconButton>
           </Tooltip>
         )}
