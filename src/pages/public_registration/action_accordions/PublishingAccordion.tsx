@@ -1,8 +1,8 @@
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
@@ -442,22 +442,12 @@ export const PublishingAccordion = ({
               sx={{ bgcolor: 'white', mb: '0.5rem' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
-              startIcon={<AttachFileIcon fontSize="large" />}
+              startIcon={<InsertDriveFileIcon />}
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
               {t('registration.public_page.approve_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
-            <Typography>{t('registration.public_page.tasks_panel.edit_publishing_request_description')}</Typography>
-            <Button
-              sx={{ bgcolor: 'white', mb: '0.5rem' }}
-              variant="outlined"
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
-              endIcon={<EditIcon fontSize="large" />}
-              component={RouterLink}
-              to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
-              {t('registration.edit_registration')}
-            </Button>
 
             <Trans
               t={t}
@@ -466,7 +456,7 @@ export const PublishingAccordion = ({
               components={[<Typography key="1" />]}
             />
             <LoadingButton
-              sx={{ bgcolor: 'white' }}
+              sx={{ bgcolor: 'white', mb: '0.5rem' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
               startIcon={<CloseIcon />}
@@ -475,6 +465,17 @@ export const PublishingAccordion = ({
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.reject_publish_request')} ({filesAwaitingApproval})
             </LoadingButton>
+
+            <Typography>{t('registration.public_page.tasks_panel.edit_publishing_request_description')}</Typography>
+            <Button
+              sx={{ bgcolor: 'white', mb: '0.5rem' }}
+              variant="outlined"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
+              endIcon={<EditIcon />}
+              component={RouterLink}
+              to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
+              {t('registration.edit_registration')}
+            </Button>
 
             <Dialog open={openRejectionDialog} onClose={() => setOpenRejectionDialog(false)}>
               <DialogTitle fontWeight="bold">{t('registration.public_page.reject_publish_request')}</DialogTitle>
@@ -523,17 +524,25 @@ export const PublishingAccordion = ({
         )}
 
         {userCanHandlePublishingRequest && hasPendingTicket && !hasMismatchingPublishedStatus && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-            {ticketMessages.length > 0 ? (
-              <TicketMessageList ticket={lastPublishingRequest} />
-            ) : (
-              <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
-            )}
-            <MessageForm
-              confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)}
-              hideRequiredAsterisk
-            />
-          </Box>
+          <>
+            <Divider sx={{ my: '1rem' }} />
+            <Typography fontWeight="bold" gutterBottom>
+              {t('common.messages')}
+            </Typography>
+            <Typography gutterBottom>
+              {isOnTasksPath
+                ? t('registration.public_page.publishing_request_message_about_curator')
+                : t('registration.public_page.publishing_request_message_about')}
+            </Typography>
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <MessageForm
+                confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)}
+                hideRequiredAsterisk
+              />
+              {ticketMessages.length > 0 && <TicketMessageList ticket={lastPublishingRequest} />}
+            </Box>
+          </>
         )}
         <DuplicateWarningDialog
           isOpen={displayDuplicateWarningModal}
