@@ -31,7 +31,10 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
         </ListItem>
       ) : isInternalRegistration && registration ? (
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }} key={registration.identifier}>
-          <RegistrationListItemContent registration={registration} onDelete={() => setConfirmRemoveRelation(true)} />
+          <RegistrationListItemContent
+            registration={registration}
+            onRemoveRelated={() => setConfirmRemoveRelation(true)}
+          />
         </SearchListItem>
       ) : (
         <ListItem sx={{ display: 'flex', gap: '1rem' }}>
