@@ -213,6 +213,7 @@
     "main": "Hoved",
     "menu": "Meny",
     "message": "Melding",
+    "messages": "Meldinger",
     "move_down": "Flytt ned",
     "move_up": "Flytt opp",
     "name": "Navn",
@@ -308,8 +309,7 @@
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
-    "yes": "Ja",
-    "messages": "Meldinger"
+    "yes": "Ja"
   },
   "disciplines": {
     "1003": "Arkeologi og konservering",
