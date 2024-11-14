@@ -69,7 +69,7 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
           />
         )}
         {onDelete && (
-          <Tooltip title={t('registration.resource_type.research_data.remove_relation')}>
+          <Tooltip title={deleteTooltip}>
             <IconButton
               sx={{ alignSelf: 'start' }}
               onClick={onDelete}
