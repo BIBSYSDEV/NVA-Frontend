@@ -524,17 +524,25 @@ export const PublishingAccordion = ({
         )}
 
         {userCanHandlePublishingRequest && hasPendingTicket && !hasMismatchingPublishedStatus && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-            {ticketMessages.length > 0 ? (
-              <TicketMessageList ticket={lastPublishingRequest} />
-            ) : (
-              <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
-            )}
-            <MessageForm
-              confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)}
-              hideRequiredAsterisk
-            />
-          </Box>
+          <>
+            <Divider sx={{ my: '1rem' }} />
+            <Typography fontWeight="bold" gutterBottom>
+              {t('common.messages')}
+            </Typography>
+            <Typography gutterBottom>
+              {isOnTasksPath
+                ? t('registration.public_page.publishing_request_message_about_curator')
+                : t('registration.public_page.publishing_request_message_about')}
+            </Typography>
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <MessageForm
+                confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)}
+                hideRequiredAsterisk
+              />
+              {ticketMessages.length > 0 && <TicketMessageList ticket={lastPublishingRequest} />}
+            </Box>
+          </>
         )}
         <DuplicateWarningDialog
           isOpen={displayDuplicateWarningModal}
