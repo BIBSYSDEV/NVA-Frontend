@@ -1,4 +1,4 @@
-import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton, IconButtonProps, SxProps, Tooltip } from '@mui/material';
 
 interface DeleteIconButtonProps extends IconButtonProps {
@@ -22,7 +22,7 @@ export const DeleteIconButton = ({ sx, tooltip, disabled, ...rest }: DeleteIconB
         ...sx,
       }}
       {...rest}>
-      <CloseIcon
+      <DeleteIcon
         sx={{
           color: 'white',
           height: '1rem',

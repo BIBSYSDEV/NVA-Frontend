@@ -230,7 +230,7 @@ export const RegistrationListItemContent = ({
         <DeleteIconButton
           onClick={onRemoveRelated}
           tooltip={t('registration.resource_type.research_data.remove_relation')}
-          data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration?.identifier ?? '')}
+          data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}
         />
       )}
     </Box>
