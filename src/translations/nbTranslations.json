@@ -715,7 +715,9 @@
       "metadata_updated": "Metadata oppdatert",
       "result_deleted": "Resultat slettet",
       "result_republished": "Resultat republisert",
-      "result_unpublished": "Resultat avpublisert"
+      "result_unpublished": "Resultat avpublisert",
+      "open_file_awaiting_approval": "Åpen fil ({{count}}) venter på godkjenning",
+      "internal_file_awaiting_approval": "Intern fil ({{count}}) venter på godkjenning"
     },
     "unknown_filename": "Ukjent filnavn"
   },
