@@ -712,14 +712,16 @@
       "internal_file_approved_count_other": "{{count}} interne filer godkjent",
       "internal_file_approved_one": "Intern fil godkjent",
       "internal_file_approved_other": "Interne filer godkjent",
+      "internal_file_awaiting_approval_one": "{{count}} intern fil venter på godkjenning",
+      "internal_file_awaiting_approval_other": "{{count}} interne filer venter på godkjenning",
       "metadata_published": "Metadata publisert",
       "metadata_published_in_nva": "Metadata publisert i NVA",
       "metadata_updated": "Metadata oppdatert",
+      "open_file_awaiting_approval_one": "{{count}} åpen fil venter på godkjenning",
+      "open_file_awaiting_approval_other": "{{count}} åpne filer venter på godkjenning",
       "result_deleted": "Resultat slettet",
       "result_republished": "Resultat republisert",
-      "result_unpublished": "Resultat avpublisert",
-      "open_file_awaiting_approval": "Åpen fil ({{count}}) venter på godkjenning",
-      "internal_file_awaiting_approval": "Intern fil ({{count}}) venter på godkjenning"
+      "result_unpublished": "Resultat avpublisert"
     },
     "unknown_filename": "Ukjent filnavn"
   },
