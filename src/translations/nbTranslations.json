@@ -703,6 +703,8 @@
       "files_published_other": "Filer publisert",
       "files_rejected_one": "Fil avvist",
       "files_rejected_other": "Filer avvist",
+      "files_rejected_count_one": "{{count}} fil avvist",
+      "files_rejected_count_other": "{{count}} filer avvist",
       "files_uploaded_one": "Fil lastet opp",
       "files_uploaded_other": "Filer lastet opp",
       "imported": "Importert",

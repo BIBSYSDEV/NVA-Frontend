@@ -1,3 +1,4 @@
+import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { StandardCSSProperties } from '@mui/system';
@@ -138,6 +139,16 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
           text: t('log.titles.internal_file_awaiting_approval', { count: pendingInternalFilesCount }),
           bgcolor: 'secondary.dark',
           Icon: HourglassEmptyIcon,
+        });
+      }
+    } else if (ticket.status === 'Closed') {
+      const rejectedFilesCount = ticket.filesForApproval.length;
+      if (rejectedFilesCount > 0) {
+        entries.push({
+          text: t('log.titles.files_rejected_count', { count: rejectedFilesCount }),
+          date: ticket.finalizedDate ?? ticket.modifiedDate,
+          bgcolor: 'secondary.dark',
+          Icon: BlockIcon,
         });
       }
     }
