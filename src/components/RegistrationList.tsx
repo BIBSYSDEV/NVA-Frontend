@@ -52,6 +52,7 @@ interface RegistrationListItemContentProps extends Omit<RegistrationListProps, '
   ticketView?: boolean;
   onDelete?: () => void;
   onDeleteTooltip?: string;
+  deleteButtonDataTestId?: string;
 }
 
 export const RegistrationListItemContent = ({
@@ -63,6 +64,7 @@ export const RegistrationListItemContent = ({
   target,
   onDelete,
   onDeleteTooltip,
+  deleteButtonDataTestId,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription, id } = registration;
@@ -228,7 +230,9 @@ export const RegistrationListItemContent = ({
           )}
         </Box>
       )}
-      {onDelete && <DeleteIconButton onClick={onDelete} tooltip={onDeleteTooltip} />}
+      {onDelete && (
+        <DeleteIconButton onClick={onDelete} tooltip={onDeleteTooltip} data-testid={deleteButtonDataTestId} />
+      )}
     </Box>
   );
 };

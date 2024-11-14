@@ -35,6 +35,9 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
             registration={registration}
             onDelete={() => setConfirmRemoveRelation(true)}
             onDeleteTooltip={t('registration.resource_type.research_data.remove_relation')}
+            deleteButtonDataTestId={dataTestId.registrationWizard.resourceType.removeRelationButton(
+              registration?.identifier ?? ''
+            )}
           />
         </SearchListItem>
       ) : (
