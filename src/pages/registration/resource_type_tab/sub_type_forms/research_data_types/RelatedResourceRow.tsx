@@ -2,14 +2,13 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Box, Button, Link, ListItem, Skeleton, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
-import { Registration } from '../../../../../types/registration.types';
+import { RegistrationListItemContent } from '../../../../../components/RegistrationList';
+import { SearchListItem } from '../../../../../components/styled/Wrappers';
+import { RegistrationSearchItem } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
-import { getTitleString } from '../../../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
 
 interface RelatedResourceRowProps {
   uri: string;
@@ -19,11 +18,13 @@ interface RelatedResourceRowProps {
 export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResourceRowProps) => {
   const { t } = useTranslation();
   const isInternalRegistration = uri.includes(API_URL);
-  const [registration, isLoadingRegistration] = useFetch<Registration>({ url: isInternalRegistration ? uri : '' });
+  const [registration, isLoadingRegistration] = useFetch<RegistrationSearchItem>({
+    url: isInternalRegistration ? uri : '',
+  });
   const [confirmRemoveRelation, setConfirmRemoveRelation] = useState(false);
 
   return (
-    <ListItem disableGutters>
+    <ListItem disablePadding>
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : (
@@ -32,17 +33,13 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },
             alignItems: 'center',
-            gap: '0.25rem 1rem',
+            gap: '1rem',
+            width: '100%',
           }}>
-          {isInternalRegistration ? (
-            <Link
-              data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationLink(
-                registration?.identifier ?? ''
-              )}
-              component={RouterLink}
-              to={getRegistrationLandingPagePath(registration?.identifier ?? '')}>
-              {getTitleString(registration?.entityDescription?.mainTitle)}
-            </Link>
+          {isInternalRegistration && registration ? (
+            <SearchListItem sx={{ borderLeftColor: 'registration.main' }} key={registration.identifier}>
+              <RegistrationListItemContent registration={registration} />
+            </SearchListItem>
           ) : (
             <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
               {uri}
