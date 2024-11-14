@@ -1,8 +1,8 @@
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
@@ -442,7 +442,7 @@ export const PublishingAccordion = ({
               sx={{ bgcolor: 'white', mb: '0.5rem' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
-              startIcon={<AttachFileIcon fontSize="large" />}
+              startIcon={<InsertDriveFileIcon />}
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
@@ -453,7 +453,7 @@ export const PublishingAccordion = ({
               sx={{ bgcolor: 'white', mb: '0.5rem' }}
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
-              endIcon={<EditIcon fontSize="large" />}
+              endIcon={<EditIcon />}
               component={RouterLink}
               to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
               {t('registration.edit_registration')}

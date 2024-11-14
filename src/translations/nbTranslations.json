@@ -1390,7 +1390,7 @@
       "search_for_npi_discipline": "Søk etter fagfelt",
       "year_only": "Kun årstall"
     },
-    "edit_registration": "Endre registrering",
+    "edit_registration": "Rediger resultat",
     "files_and_license": {
       "accepted": "Akseptert",
       "accepted_version": "Akseptert versjon",
@@ -1469,7 +1469,7 @@
     },
     "public_page": {
       "about_registration": "Om resultatet",
-      "approve_publish_request": "Publiser fil med lisens",
+      "approve_publish_request": "Godkjenn fil",
       "cristin_id": "Cristin-ID",
       "duplicate_warning_modal": {
         "check_duplicate": "Du skal ikke opprette duplikater i NVA. Sjekk om <0>denne publikasjonen <0></0></0> er det samme resultatet som du har registrert.",
@@ -1498,7 +1498,7 @@
       "publishing_request": "Publiseringsgodkjenning",
       "publishing_request_message_about": "Har du spørsmål, ta kontakt med kurator via meldingsfeltet.",
       "reason_for_rejection": "Begrunnelse for avvisning",
-      "reject_publish_request": "Avvis publisering av fil",
+      "reject_publish_request": "Avvis fil",
       "reject_publish_request_description": "<0>Oppgi begrunnelse på hvorfor fil(ene) blir avvist for publisering.</0><0>Denne begrunnelsen blir lagret i NVA og synlig for både registratoren og bidragsytere som er tilknyttet forskningsresultatet.</0><0>Når du avviser fil(ene), så fjernes de fra presentasjonssiden til forskningsresultatet. Du og registrator kan publisere de senere eller slette de, ved å redigere forskningsresultatet.</0>",
       "request_doi": "Be om DOI",
       "request_doi_again": "Be om en ny vurdering av DOI-tildeling.",
