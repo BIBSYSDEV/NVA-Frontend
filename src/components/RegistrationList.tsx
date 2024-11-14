@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
@@ -8,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { updatePromotedPublications } from '../api/preferencesApi';
-import { DeleteIconButton } from '../pages/messages/components/DeleteIconButton';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
@@ -227,11 +227,14 @@ export const RegistrationListItemContent = ({
         </Box>
       )}
       {onRemoveRelated && (
-        <DeleteIconButton
-          onClick={onRemoveRelated}
-          tooltip={t('registration.resource_type.research_data.remove_relation')}
-          data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}
-        />
+        <Tooltip title={t('registration.resource_type.research_data.remove_relation')}>
+          <IconButton
+            sx={{ alignSelf: 'start' }}
+            onClick={onRemoveRelated}
+            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}>
+            <CloseIcon sx={{ bgcolor: 'primary.main', color: 'white', borderRadius: '50%', p: '0.25rem' }} />
+          </IconButton>
+        </Tooltip>
       )}
     </Box>
   );

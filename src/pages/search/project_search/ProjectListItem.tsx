@@ -1,12 +1,13 @@
-import { Box, Link as MuiLink, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getEditProjectPath, getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
-import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { EditIconButton } from '../../messages/components/EditIconButton';
 import { ProjectIconHeader } from '../../project/components/ProjectIconHeader';
 import {
@@ -67,7 +68,16 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
             onClick={() => history.push(getEditProjectPath(project.id))}
           />
         )}
-        {onDelete && <DeleteIconButton sx={{ ml: '0.5rem' }} onClick={onDelete} tooltip={deleteTooltip} />}
+        {onDelete && (
+          <Tooltip title={t('registration.resource_type.research_data.remove_relation')}>
+            <IconButton
+              sx={{ alignSelf: 'start' }}
+              onClick={onDelete}
+              data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(project.id)}>
+              <CloseIcon sx={{ bgcolor: 'primary.main', color: 'white', borderRadius: '50%', p: '0.25rem' }} />
+            </IconButton>
+          </Tooltip>
+        )}
       </>
     </SearchListItem>
   );
