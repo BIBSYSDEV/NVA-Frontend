@@ -596,7 +596,7 @@ export const dataTestId = {
       relatedRegistrationField: 'related-registration-field',
       relatedRegistrationLink: (value: string) => `related-registration-link-${value}`,
       removePublisherButton: 'remove-publisher-button',
-      removeRelationButton: (value: string) => (value ? `remove-relation-button-${value}` : 'remove-relation-button'),
+      removeRelationButton: (value: string) => `remove-relation-button-${value}`,
       resourceTypeChip: (type: string) => `resource-type-chip-${type}`,
       resourceTypeSearchField: 'resource-type-search-field',
       resourceTypeNviHighlightChipButton: 'resource-nvi-highlighted-chip-button',
