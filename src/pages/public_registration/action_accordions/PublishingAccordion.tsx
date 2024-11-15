@@ -382,14 +382,10 @@ export const PublishingAccordion = ({
         {userCanHandlePublishingRequest && (
           <>
             {isPublishedRegistration && hasClosedTicket && (
-              <>
-                <Trans
-                  t={t}
-                  i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
-                  components={[<Typography paragraph key="1" />]}
-                />
-                <TicketMessageList ticket={lastPublishingRequest} />
-              </>
+              <Trans
+                i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
+                components={[<Typography paragraph key="1" />]}
+              />
             )}
 
             {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
@@ -523,7 +519,7 @@ export const PublishingAccordion = ({
           </Box>
         )}
 
-        {userCanHandlePublishingRequest && hasPendingTicket && !hasMismatchingPublishedStatus && (
+        {userCanHandlePublishingRequest && (hasPendingTicket || hasClosedTicket) && !hasMismatchingPublishedStatus && (
           <>
             <Divider sx={{ my: '1rem' }} />
             <Typography fontWeight="bold" gutterBottom>
