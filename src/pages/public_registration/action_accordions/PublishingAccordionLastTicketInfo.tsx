@@ -13,38 +13,35 @@ export const PublishingAccordionLastTicketInfo = ({
   canApprovePublishingRequest,
   registrationHasApprovedFile,
 }: PublishingAccordionLastTicketInfoProps) => {
-  // if (publishingTicket.status === 'Completed') {
-  //   // if (canApprovePublishingRequest) {
-  //   //   return null;
-  //   // }
-  //   return null;
-  // }
-
-  // if (publishingTicket.status === 'New' || publishingTicket.status === 'Pending') {
-  //   // if (canApprovePublishingRequest) {
-  //   //   return null;
-  //   // }
-  //   return (
-  //     <Trans i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files">
-  //       <Typography paragraph />
-  //     </Trans>
-  //   );
-  // }
-
-  // if (publishingTicket.status === 'Closed') {
-  //   // if (canApprovePublishingRequest) {
-  //   //   return null;
-  //   // }
-  //   return null;
-  // }
-
   return (
     <>
-      {publishingTicket.status === 'Completed' && <>{canApprovePublishingRequest ? <></> : <></>}</>}
+      {publishingTicket.status === 'Completed' && (
+        <>
+          {canApprovePublishingRequest ? (
+            registrationHasApprovedFile ? (
+              <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_curator">
+                <Typography paragraph />
+              </Trans>
+            ) : (
+              <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_without_file_description_for_curator">
+                <Typography paragraph />
+              </Trans>
+            )
+          ) : registrationHasApprovedFile ? (
+            <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_registrator">
+              <Typography paragraph />
+            </Trans>
+          ) : (
+            <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_without_file_description_for_registrator">
+              <Typography paragraph />
+            </Trans>
+          )}
+        </>
+      )}
 
       {publishingTicket.status === 'Closed' && (
         <>
-          {!canApprovePublishingRequest ? (
+          {canApprovePublishingRequest ? (
             <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request">
               <Typography paragraph />
             </Trans>
