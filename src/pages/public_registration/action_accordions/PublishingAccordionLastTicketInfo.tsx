@@ -2,18 +2,30 @@ import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { UpdateTicketData } from '../../../api/registrationApi';
+import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getRegistrationWizardLink } from '../../../utils/urlPaths';
+import { getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
+import { TicketMessageList } from '../../messages/components/MessageList';
 
 interface PublishingAccordionLastTicketInfoProps {
   publishingTicket: PublishingTicket;
@@ -30,9 +42,15 @@ export const PublishingAccordionLastTicketInfo = ({
   addMessage,
   refetchData,
 }: PublishingAccordionLastTicketInfoProps) => {
+  const { t } = useTranslation();
+
+  const isCompletedTicket = publishingTicket.status === 'Completed';
+  const isClosedTicket = publishingTicket.status === 'Closed';
+  const isPendingTicket = publishingTicket.status === 'New' || publishingTicket.status === 'Pending';
+
   return (
     <>
-      {publishingTicket.status === 'Completed' && (
+      {isCompletedTicket && (
         <>
           {canApprovePublishingRequest ? (
             registrationHasApprovedFile ? (
@@ -56,7 +74,7 @@ export const PublishingAccordionLastTicketInfo = ({
         </>
       )}
 
-      {publishingTicket.status === 'Closed' && (
+      {isClosedTicket && (
         <>
           {canApprovePublishingRequest ? (
             <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request">
@@ -70,7 +88,7 @@ export const PublishingAccordionLastTicketInfo = ({
         </>
       )}
 
-      {(publishingTicket.status === 'New' || publishingTicket.status === 'Pending') && (
+      {isPendingTicket && (
         <>
           {canApprovePublishingRequest ? (
             <PendingPublishingTicketForCuratorSection
@@ -90,7 +108,27 @@ export const PublishingAccordionLastTicketInfo = ({
         </>
       )}
 
-      {/* TODO: Add message field? */}
+      {(isPendingTicket || isClosedTicket) && (
+        <>
+          <Divider sx={{ my: '1rem' }} />
+          <Typography fontWeight="bold" gutterBottom>
+            {t('common.messages')}
+          </Typography>
+          <Typography gutterBottom>
+            {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)
+              ? t('registration.public_page.publishing_request_message_about_curator')
+              : t('registration.public_page.publishing_request_message_about')}
+          </Typography>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <MessageForm
+              confirmAction={async (message) => await addMessage(publishingTicket.id, message)}
+              hideRequiredAsterisk
+            />
+            {publishingTicket.messages.length > 0 && <TicketMessageList ticket={publishingTicket} />}
+          </Box>
+        </>
+      )}
     </>
   );
 };

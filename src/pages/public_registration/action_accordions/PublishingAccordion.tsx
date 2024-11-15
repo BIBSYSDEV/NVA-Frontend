@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket } from '../../../api/registrationApi';
-import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -27,7 +26,6 @@ import {
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath, UrlPathTemplate } from '../../../utils/urlPaths';
-import { TicketMessageList } from '../../messages/components/MessageList';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
@@ -509,7 +507,7 @@ export const PublishingAccordion = ({
           </Box>
         )} */}
 
-        {userCanHandlePublishingRequest && (hasPendingTicket || hasClosedTicket) && !hasMismatchingPublishedStatus && (
+        {/* {userCanHandlePublishingRequest && (hasPendingTicket || hasClosedTicket) && !hasMismatchingPublishedStatus && (
           <>
             <Divider sx={{ my: '1rem' }} />
             <Typography fontWeight="bold" gutterBottom>
@@ -529,7 +527,7 @@ export const PublishingAccordion = ({
               {ticketMessages.length > 0 && <TicketMessageList ticket={lastPublishingRequest} />}
             </Box>
           </>
-        )}
+        )} */}
         <DuplicateWarningDialog
           isOpen={displayDuplicateWarningModal}
           toggleModal={toggleDuplicateWarningModal}
