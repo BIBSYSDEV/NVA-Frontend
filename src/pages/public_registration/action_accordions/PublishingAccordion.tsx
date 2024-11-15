@@ -383,7 +383,6 @@ export const PublishingAccordion = ({
           <>
             {isPublishedRegistration && hasClosedTicket && (
               <Trans
-                t={t}
                 i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
                 components={[<Typography paragraph key="1" />]}
               />
