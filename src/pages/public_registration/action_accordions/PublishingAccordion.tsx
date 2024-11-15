@@ -1,31 +1,14 @@
-import CloseIcon from '@mui/icons-material/Close';
-import EditIcon from '@mui/icons-material/Edit';
 import ErrorIcon from '@mui/icons-material/Error';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
@@ -34,7 +17,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
-import { Registration, RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
+import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
@@ -44,7 +27,7 @@ import {
   isPendingOpenFile,
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath, getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationLandingPagePath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
@@ -387,7 +370,7 @@ export const PublishingAccordion = ({
           </LoadingButton>
         )}
 
-        {lastPublishingRequest && (
+        {lastPublishingRequest && !hasMismatchingPublishedStatus && (
           <PublishingAccordionLastTicketInfo
             publishingTicket={lastPublishingRequest}
             canApprovePublishingRequest={userCanApprovePublishingRequest}
@@ -395,7 +378,7 @@ export const PublishingAccordion = ({
           />
         )}
 
-        {userCanHandlePublishingRequest && (
+        {/* {userCanHandlePublishingRequest && (
           <>
             {isPublishedRegistration && hasClosedTicket && (
               <Trans
@@ -438,9 +421,9 @@ export const PublishingAccordion = ({
               </Box>
             )}
           </>
-        )}
+        )} */}
 
-        {canApprovePublishingRequest && !hasMismatchingPublishedStatus && (
+        {/* {canApprovePublishingRequest && !hasMismatchingPublishedStatus && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <Trans
               i18nKey="registration.public_page.tasks_panel.approve_publishing_request_description"
@@ -497,7 +480,6 @@ export const PublishingAccordion = ({
                   variant="filled"
                   multiline
                   minRows={3}
-                  maxRows={Infinity}
                   fullWidth
                   required
                   label={t('registration.public_page.reason_for_rejection')}
@@ -528,7 +510,7 @@ export const PublishingAccordion = ({
               </DialogActions>
             </Dialog>
           </Box>
-        )}
+        )} */}
 
         {userCanHandlePublishingRequest && (hasPendingTicket || hasClosedTicket) && !hasMismatchingPublishedStatus && (
           <>

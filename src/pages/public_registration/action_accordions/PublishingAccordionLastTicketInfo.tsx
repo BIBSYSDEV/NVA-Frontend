@@ -13,29 +13,52 @@ export const PublishingAccordionLastTicketInfo = ({
   canApprovePublishingRequest,
   registrationHasApprovedFile,
 }: PublishingAccordionLastTicketInfoProps) => {
-  if (publishingTicket.status === 'Completed') {
-    if (canApprovePublishingRequest) {
-      return null;
-    }
-    return null;
-  }
+  // if (publishingTicket.status === 'Completed') {
+  //   // if (canApprovePublishingRequest) {
+  //   //   return null;
+  //   // }
+  //   return null;
+  // }
 
-  if (publishingTicket.status === 'New' || publishingTicket.status === 'Pending') {
-    // if (canApprovePublishingRequest) {
-    //   return null;
-    // }
-    return (
-      <Trans i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files">
-        <Typography paragraph />
-      </Trans>
-    );
-  }
+  // if (publishingTicket.status === 'New' || publishingTicket.status === 'Pending') {
+  //   // if (canApprovePublishingRequest) {
+  //   //   return null;
+  //   // }
+  //   return (
+  //     <Trans i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files">
+  //       <Typography paragraph />
+  //     </Trans>
+  //   );
+  // }
 
-  if (publishingTicket.status === 'Closed') {
-    if (canApprovePublishingRequest) {
-      return null;
-    }
-    return null;
-  }
-  return null;
+  // if (publishingTicket.status === 'Closed') {
+  //   // if (canApprovePublishingRequest) {
+  //   //   return null;
+  //   // }
+  //   return null;
+  // }
+
+  return (
+    <>
+      {publishingTicket.status === 'Completed' && <>{canApprovePublishingRequest ? <></> : <></>}</>}
+
+      {publishingTicket.status === 'Closed' && (
+        <>
+          {!canApprovePublishingRequest ? (
+            <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request">
+              <Typography paragraph />
+            </Trans>
+          ) : (
+            <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request_registrator">
+              <Typography paragraph />
+            </Trans>
+          )}
+        </>
+      )}
+
+      {(publishingTicket.status === 'New' || publishingTicket.status === 'Pending') && <></>}
+
+      {/* TODO: Add message field? */}
+    </>
+  );
 };
