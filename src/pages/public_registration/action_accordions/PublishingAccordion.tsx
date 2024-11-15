@@ -49,6 +49,7 @@ import { TicketMessageList } from '../../messages/components/MessageList';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
+import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTicketInfo';
 import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
@@ -385,6 +386,14 @@ export const PublishingAccordion = ({
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest || titleSearchPending}>
             {t('registration.public_page.tasks_panel.publish_registration')}
           </LoadingButton>
+        )}
+
+        {lastPublishingRequest && (
+          <PublishingAccordionLastTicketInfo
+            publishingTicket={lastPublishingRequest}
+            canApprovePublishingRequest={userCanApprovePublishingRequest}
+            registrationHasApprovedFile={registrationHasApprovedFile}
+          />
         )}
 
         {userCanHandlePublishingRequest && (
