@@ -4,13 +4,12 @@ import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
-import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
+import { createTicket } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -60,8 +59,8 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
-  const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
-  const [rejectionReason, setRejectionReason] = useState('');
+  // const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
+  // const [rejectionReason, setRejectionReason] = useState('');
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -99,44 +98,44 @@ export const PublishingAccordion = ({
     publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
     publishingRequestTickets.at(-1);
 
-  const ticketMutation = useMutation({
-    mutationFn: lastPublishingRequest
-      ? (newTicketData: UpdateTicketData) => {
-          if (newTicketData.status === 'Completed') {
-            setIsLoading(LoadingState.ApprovePulishingRequest);
-          } else if (newTicketData.status === 'Closed') {
-            setIsLoading(LoadingState.RejectPublishingRequest);
-          }
-          return updateTicket(lastPublishingRequest.id, newTicketData);
-        }
-      : undefined,
-    onSettled: () => setIsLoading(LoadingState.None),
-    onSuccess: (_, variables) => {
-      if (variables.status === 'Completed') {
-        dispatch(
-          setNotification({
-            message: t('feedback.success.published_registration'),
-            variant: 'success',
-          })
-        );
-      } else if (variables.status === 'Closed') {
-        dispatch(
-          setNotification({
-            message: t('feedback.success.publishing_request_rejected'),
-            variant: 'success',
-          })
-        );
-      }
-      refetchData();
-    },
-    onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.update_publishing_request'),
-          variant: 'error',
-        })
-      ),
-  });
+  // const ticketMutation = useMutation({
+  //   mutationFn: lastPublishingRequest
+  //     ? (newTicketData: UpdateTicketData) => {
+  //         if (newTicketData.status === 'Completed') {
+  //           setIsLoading(LoadingState.ApprovePulishingRequest);
+  //         } else if (newTicketData.status === 'Closed') {
+  //           setIsLoading(LoadingState.RejectPublishingRequest);
+  //         }
+  //         return updateTicket(lastPublishingRequest.id, newTicketData);
+  //       }
+  //     : undefined,
+  //   onSettled: () => setIsLoading(LoadingState.None),
+  //   onSuccess: (_, variables) => {
+  //     if (variables.status === 'Completed') {
+  //       dispatch(
+  //         setNotification({
+  //           message: t('feedback.success.published_registration'),
+  //           variant: 'success',
+  //         })
+  //       );
+  //     } else if (variables.status === 'Closed') {
+  //       dispatch(
+  //         setNotification({
+  //           message: t('feedback.success.publishing_request_rejected'),
+  //           variant: 'success',
+  //         })
+  //       );
+  //     }
+  //     refetchData();
+  //   },
+  //   onError: () =>
+  //     dispatch(
+  //       setNotification({
+  //         message: t('feedback.error.update_publishing_request'),
+  //         variant: 'error',
+  //       })
+  //     ),
+  // });
 
   const publishRegistration = async () => {
     setIsLoading(LoadingState.CreatePublishingRequest);
@@ -213,8 +212,6 @@ export const PublishingAccordion = ({
   const canApprovePublishingRequest =
     userCanApprovePublishingRequest && !registratorPublishesMetadataAndFiles && hasPendingTicket;
 
-  console.log(canApprovePublishingRequest);
-
   const mismatchingPublishedStatusWorkflow1 =
     registratorPublishesMetadataAndFiles && !!lastPublishingRequest && isDraftRegistration;
   const mismatchingPublishedStatusWorkflow2 =
@@ -230,15 +227,15 @@ export const PublishingAccordion = ({
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
-  const handleRejectPublishFileRequest = async (message: string) => {
-    if (lastPublishingRequest) {
-      setIsLoading(LoadingState.RejectPublishingRequest);
-      await addMessage(lastPublishingRequest.id, message);
-      await ticketMutation.mutateAsync({ status: 'Closed' });
-      setIsLoading(LoadingState.None);
-      setOpenRejectionDialog(false);
-    }
-  };
+  // const handleRejectPublishFileRequest = async (message: string) => {
+  //   if (lastPublishingRequest) {
+  //     setIsLoading(LoadingState.RejectPublishingRequest);
+  //     await addMessage(lastPublishingRequest.id, message);
+  //     await ticketMutation.mutateAsync({ status: 'Closed' });
+  //     setIsLoading(LoadingState.None);
+  //     setOpenRejectionDialog(false);
+  //   }
+  // };
 
   return (
     <Accordion
@@ -375,6 +372,9 @@ export const PublishingAccordion = ({
             publishingTicket={lastPublishingRequest}
             canApprovePublishingRequest={userCanApprovePublishingRequest}
             registrationHasApprovedFile={registrationHasApprovedFile}
+            addMessage={addMessage}
+            isLoadingData={isLoadingData}
+            refetchData={refetchData}
           />
         )}
 

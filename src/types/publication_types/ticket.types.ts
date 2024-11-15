@@ -33,6 +33,7 @@ interface BaseTicket {
   createdDate: string;
   modifiedDate: string;
   id: string;
+  publicationIdentifier: string;
   publication: TicketPublication;
 }
 
