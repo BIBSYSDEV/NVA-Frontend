@@ -1,10 +1,11 @@
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Button, Link, ListItem, Skeleton, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { RegistrationListItemContent } from '../../../../../components/RegistrationList';
-import { SearchListItem } from '../../../../../components/styled/Wrappers';
+import { SearchListContainer } from '../../../../../components/styled/Wrappers';
 import { Registration } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
 import { dataTestId } from '../../../../../utils/dataTestIds';
@@ -25,20 +26,18 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
   const [confirmRemoveRelation, setConfirmRemoveRelation] = useState(false);
 
   return (
-    <>
+    <ListItem disablePadding>
       {isLoadingRegistration ? (
-        <ListItem disablePadding>
-          <Skeleton width="30%" />
-        </ListItem>
+        <Skeleton width="30%" />
       ) : isInternalRegistration && registration ? (
-        <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+        <SearchListContainer sx={{ borderLeftColor: 'registration.main', width: '100%' }}>
           <RegistrationListItemContent
             registration={convertToRegistrationSearchItem(registration)}
             onRemoveRelated={() => setConfirmRemoveRelation(true)}
           />
-        </SearchListItem>
+        </SearchListContainer>
       ) : (
-        <ListItem sx={{ display: 'flex', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', gap: '1rem' }}>
           <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
             {uri}
           </Link>
@@ -51,7 +50,7 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
             startIcon={<RemoveCircleOutlineIcon />}>
             {t('registration.resource_type.research_data.remove_relation')}
           </Button>
-        </ListItem>
+        </Box>
       )}
       <ConfirmDialog
         open={confirmRemoveRelation}
@@ -60,6 +59,6 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
         onCancel={() => setConfirmRemoveRelation(false)}>
         <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
       </ConfirmDialog>
-    </>
+    </ListItem>
   );
 };
