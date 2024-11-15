@@ -344,7 +344,6 @@ export const PublishingAccordion = ({
               </Box>
             </Link>
             <Trans
-              t={t}
               i18nKey="registration.public_page.tasks_panel.duplicate_title_description_details"
               components={[<Typography paragraph key="1" />]}
             />
@@ -407,7 +406,6 @@ export const PublishingAccordion = ({
 
             {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
               <Trans
-                t={t}
                 i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files"
                 components={[<Typography paragraph key="1" />]}
               />
@@ -428,13 +426,11 @@ export const PublishingAccordion = ({
                   </>
                 ) : registrationHasApprovedFile ? (
                   <Trans
-                    t={t}
                     i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
                     components={[<Typography paragraph key="1" />]}
                   />
                 ) : (
                   <Trans
-                    t={t}
                     i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2_without_file"
                     components={[<Typography paragraph key="1" />]}
                   />
@@ -447,7 +443,6 @@ export const PublishingAccordion = ({
         {canApprovePublishingRequest && !hasMismatchingPublishedStatus && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <Trans
-              t={t}
               i18nKey="registration.public_page.tasks_panel.approve_publishing_request_description"
               components={[<Typography key="1" />]}
             />
@@ -463,7 +458,6 @@ export const PublishingAccordion = ({
             </LoadingButton>
 
             <Trans
-              t={t}
               i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
               values={{ count: filesAwaitingApproval }}
               components={[<Typography key="1" />]}
