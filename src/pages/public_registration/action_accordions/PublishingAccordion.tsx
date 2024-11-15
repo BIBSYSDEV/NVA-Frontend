@@ -36,7 +36,7 @@ import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
   registration: Registration;
-  refetchData: () => void;
+  refetchData: () => Promise<void>;
   publishingRequestTickets: PublishingTicket[];
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
@@ -59,8 +59,6 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
-  // const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
-  // const [rejectionReason, setRejectionReason] = useState('');
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -373,7 +371,6 @@ export const PublishingAccordion = ({
             canApprovePublishingRequest={userCanApprovePublishingRequest}
             registrationHasApprovedFile={registrationHasApprovedFile}
             addMessage={addMessage}
-            isLoadingData={isLoadingData}
             refetchData={refetchData}
           />
         )}

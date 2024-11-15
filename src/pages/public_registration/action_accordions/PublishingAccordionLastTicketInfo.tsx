@@ -19,8 +19,7 @@ interface PublishingAccordionLastTicketInfoProps {
   publishingTicket: PublishingTicket;
   canApprovePublishingRequest: boolean;
   registrationHasApprovedFile: boolean;
-  refetchData: () => void;
-  isLoadingData: boolean;
+  refetchData: () => Promise<void>;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
 
@@ -29,7 +28,6 @@ export const PublishingAccordionLastTicketInfo = ({
   canApprovePublishingRequest,
   registrationHasApprovedFile,
   addMessage,
-  isLoadingData,
   refetchData,
 }: PublishingAccordionLastTicketInfoProps) => {
   return (
@@ -78,7 +76,6 @@ export const PublishingAccordionLastTicketInfo = ({
             <PendingPublishingTicketForCuratorSection
               publishingTicket={publishingTicket}
               addMessage={addMessage}
-              isLoadingData={isLoadingData}
               refetchData={refetchData}
             />
           ) : registrationHasApprovedFile ? (
@@ -98,72 +95,45 @@ export const PublishingAccordionLastTicketInfo = ({
   );
 };
 
-interface CustomUpdateTicketData extends UpdateTicketData {
-  message?: string;
-}
-
 const PendingPublishingTicketForCuratorSection = ({
   publishingTicket,
   addMessage,
-  isLoadingData,
   refetchData,
-}: Pick<
-  PublishingAccordionLastTicketInfoProps,
-  'publishingTicket' | 'addMessage' | 'isLoadingData' | 'refetchData'
->) => {
+}: Pick<PublishingAccordionLastTicketInfoProps, 'publishingTicket' | 'addMessage' | 'refetchData'>) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
+  const isLoadingData = false;
   const [openRejectionDialog, setOpenRejectionDialog] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
 
   const ticketMutation = useMutation({
-    mutationFn: async (newTicketData: CustomUpdateTicketData) => {
-      // if (newTicketData.status === 'Completed') {
-      //   setIsLoading(LoadingState.ApprovePulishingRequest);
-      // } else if (newTicketData.status === 'Closed') {
-      //   setIsLoading(LoadingState.RejectPublishingRequest);
-      // }
+    mutationFn: async (newTicketData: UpdateTicketData) => {
       if (newTicketData.status === 'Closed') {
         if (!rejectionReason) {
           throw new Error('Rejection reason is required');
         }
-        console.log('legg til melding:', `${t('registration.public_page.reason_for_rejection')}: ${rejectionReason}`);
-        // await addMessage(
-        //   publishingTicket.id,
-        //   `${t('registration.public_page.reason_for_rejection')}: ${rejectionReason}`
-        // );
+        await addMessage(
+          publishingTicket.id,
+          `${t('registration.public_page.reason_for_rejection')}: ${rejectionReason}`
+        );
       }
-      return new Promise((resolve) => setTimeout(resolve, 5_000));
-      // return updateTicket(publishingTicket.id, newTicketData);
+      const updateTicketResponse = new Promise((resolve) => setTimeout(resolve, 5_000));
+      // updateTicket(publishingTicket.id, newTicketData);
+      await refetchData();
+
+      return updateTicketResponse;
     },
-    // onSettled: () => setIsLoading(LoadingState.None),
     onSuccess: (_, variables) => {
-      console.log('loading status ferdig');
       if (variables.status === 'Completed') {
         dispatch(setNotification({ message: t('feedback.success.published_registration'), variant: 'success' }));
       } else if (variables.status === 'Closed') {
         setOpenRejectionDialog(false);
         dispatch(setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' }));
       }
-      // refetchData();
     },
     onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.update_publishing_request'),
-          variant: 'error',
-        })
-      ),
+      dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' })),
   });
-
-  // const handleRejectPublishFileRequest = async (message: string) => {
-  //   // setIsLoading(LoadingState.RejectPublishingRequest);
-  //   await addMessage(publishingTicket.id, message);
-  //   await ticketMutation.mutateAsync({ status: 'Closed' });
-  //   // setIsLoading(LoadingState.None);
-  //   setOpenRejectionDialog(false);
-  // };
 
   return (
     <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -243,16 +213,7 @@ const PendingPublishingTicketForCuratorSection = ({
             disabled={!rejectionReason}
             loading={ticketMutation.isPending && ticketMutation.variables?.status === 'Closed'}
             variant="contained"
-            onClick={
-              () =>
-                ticketMutation.mutate({
-                  status: 'Closed',
-                  message: `${t('registration.public_page.reason_for_rejection')}: ${rejectionReason}`,
-                })
-              // handleRejectPublishFileRequest(
-              //   `${t('registration.public_page.reason_for_rejection')}: ${rejectionReason}`
-              // )
-            }>
+            onClick={() => ticketMutation.mutate({ status: 'Closed' })}>
             {t('common.reject')}
           </LoadingButton>
         </DialogActions>
