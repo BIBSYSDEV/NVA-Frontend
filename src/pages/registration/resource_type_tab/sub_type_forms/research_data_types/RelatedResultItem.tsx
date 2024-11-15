@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { RegistrationListItemContent } from '../../../../../components/RegistrationList';
-import { SearchListContainer } from '../../../../../components/styled/Wrappers';
+import { SearchListItemDiv } from '../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { Registration, RelatedDocument } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
@@ -38,14 +38,13 @@ export const RelatedResultItem = ({
   const isConfirmedDocument = document.type === 'ConfirmedDocument';
 
   return (
-    <ListItem disablePadding sx={{ mb: '0.5rem' }}>
+    <ListItem disablePadding sx={{ mb: '0.5rem', gap: '0.5rem' }}>
       <Box
         sx={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           alignItems: 'center',
           minWidth: '4rem',
-          mr: '0.5rem',
         }}>
         {relatedLength > 1 && (
           <>
@@ -80,17 +79,19 @@ export const RelatedResultItem = ({
           </>
         )}
       </Box>
-      {isConfirmedDocument && registration ? (
+      {isConfirmedDocument ? (
         <>
           {isLoadingRegistration ? (
             <Skeleton width="30%" />
           ) : (
-            <SearchListContainer sx={{ borderLeftColor: 'registration.main', width: '100%' }}>
-              <RegistrationListItemContent
-                registration={convertToRegistrationSearchItem(registration)}
-                onRemoveRelated={() => setIndexToRemove(index)}
-              />
-            </SearchListContainer>
+            registration && (
+              <SearchListItemDiv sx={{ borderLeftColor: 'registration.main', width: '100%' }}>
+                <RegistrationListItemContent
+                  registration={convertToRegistrationSearchItem(registration)}
+                  onRemoveRelated={() => setIndexToRemove(index)}
+                />
+              </SearchListItemDiv>
+            )
           )}
         </>
       ) : (

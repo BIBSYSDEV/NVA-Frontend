@@ -95,7 +95,7 @@ export const SearchListItem = styled(ListItem)(({ theme }) => ({
   background: 'white',
 }));
 
-export const SearchListContainer = styled('div')(({ theme }) => ({
+export const SearchListItemDiv = styled('div')(({ theme }) => ({
   border: '2px solid',
   borderColor: theme.palette.secondary.dark,
   borderLeft: '1.25rem solid',

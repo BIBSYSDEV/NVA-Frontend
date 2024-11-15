@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { RegistrationListItemContent } from '../../../../../components/RegistrationList';
-import { SearchListContainer } from '../../../../../components/styled/Wrappers';
+import { SearchListItemDiv } from '../../../../../components/styled/Wrappers';
 import { Registration } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
 import { dataTestId } from '../../../../../utils/dataTestIds';
@@ -29,12 +29,12 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : isInternalRegistration && registration ? (
-        <SearchListContainer sx={{ borderLeftColor: 'registration.main', width: '100%' }}>
+        <SearchListItemDiv sx={{ borderLeftColor: 'registration.main', width: '100%' }}>
           <RegistrationListItemContent
             registration={convertToRegistrationSearchItem(registration)}
             onRemoveRelated={() => setConfirmRemoveRelation(true)}
           />
-        </SearchListContainer>
+        </SearchListItemDiv>
       ) : (
         <Box sx={{ display: 'flex', gap: '1rem' }}>
           <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
