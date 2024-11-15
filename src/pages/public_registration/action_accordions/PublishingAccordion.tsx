@@ -95,7 +95,13 @@ export const PublishingAccordion = ({
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
-  const registrationHasOpenFile = registration.associatedArtifacts.some(isOpenFile);
+  const registrationHasApprovedFile = registration.associatedArtifacts.some(
+    (file) =>
+      isOpenFile(file) ||
+      file.type === FileType.OpenFile ||
+      file.type === FileType.InternalFile ||
+      file.type === FileType.PublishedFile
+  );
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
   const userCanApprovePublishingRequest = userHasAccessRight(registration, 'publishing-request-approve');
@@ -222,6 +228,8 @@ export const PublishingAccordion = ({
 
   const canApprovePublishingRequest =
     userCanApprovePublishingRequest && !registratorPublishesMetadataAndFiles && hasPendingTicket;
+
+  console.log(canApprovePublishingRequest);
 
   const mismatchingPublishedStatusWorkflow1 =
     registratorPublishesMetadataAndFiles && !!lastPublishingRequest && isDraftRegistration;
@@ -408,12 +416,12 @@ export const PublishingAccordion = ({
                       {t('registration.public_page.tasks_panel.published_registration')}
                     </Typography>
                     <Typography paragraph>
-                      {registrationHasOpenFile
+                      {registrationHasApprovedFile
                         ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
                         : t('registration.public_page.tasks_panel.registration_is_published')}
                     </Typography>
                   </>
-                ) : registrationHasOpenFile ? (
+                ) : registrationHasApprovedFile ? (
                   <Trans
                     t={t}
                     i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
