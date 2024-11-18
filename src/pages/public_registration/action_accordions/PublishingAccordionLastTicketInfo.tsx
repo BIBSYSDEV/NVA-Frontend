@@ -49,6 +49,13 @@ export const PublishingAccordionLastTicketInfo = ({
   const isCompletedTicket = publishingTicket.status === 'Completed';
   const isClosedTicket = publishingTicket.status === 'Closed';
   const isPendingTicket = publishingTicket.status === 'New' || publishingTicket.status === 'Pending';
+  if (publishingTicket.workflow === 'RegistratorPublishesMetadataAndFiles' && isCompletedTicket) {
+    return (
+      <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_workflow1">
+        <Typography paragraph />
+      </Trans>
+    );
+  }
 
   return (
     <>

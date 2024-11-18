@@ -1556,7 +1556,8 @@
         "approved_publishing_request_without_file_description_for_curator": "<0>Registrator kan endre på metadata.</0><0>Om registrator laster opp nye filer, eller ønsker ny vurdering av avviste filer, blir det sendt en ny publiseringsforespørsel til kurator.</0>",
         "publish_registration_description_workflow2": "<0>Se over utkast før du publiserer.</0><0>Beskrivelsen av resultatet (metadata) blir synlig for andre når du trykker på \"$t(registration.public_page.tasks_panel.publish_registration)\".</0><0>Eventuelle åpne filer som du har lastet opp blir ikke offentliggjort før kurator har sjekket filversjon og lisens.</0>",
         "publish_registration_description_workflow1": "<0>Se over utkast før du publiserer.</0><0>Beskrivelsen (metadata) av forskningsresultatet og eventuelle opplastede åpne filer blir offentliggjort når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".</0>",
-        "delete_draft_description": "Ønsker du å slette hele registreringen, åpne flere valg nederst i denne menyen."
+        "delete_draft_description": "Ønsker du å slette hele registreringen, åpne flere valg nederst i denne menyen.",
+        "approved_publishing_request_description_for_workflow1": "<0>Beskrivelse av resultatet er publisert og synlig for andre. Eventuelle åpne filer filer er offentliggjort i NVA og interne filer blir arkivert og skjult.</0><0>Du kan fritt endre på fil(er) og beskrivelsen av resultatet (metadata).</0><0>Ønsker du avpublisere forskningsresultatetendre, åpne flere valg nederst i denne menyen.</0>"
       },
       "validation_errors": "Valideringsfeil"
     },
