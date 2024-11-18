@@ -130,6 +130,7 @@ export const mockTicketCollection: TicketCollection = {
       createdDate: new Date(2020, 1).toISOString(),
       modifiedDate: new Date(2020, 1).toISOString(),
       id: `${mockRegistration.id}/ticket/1`,
+      publicationIdentifier: mockRegistration.identifier,
       publication: {
         id: mockRegistration.id,
         identifier: mockRegistration.identifier,

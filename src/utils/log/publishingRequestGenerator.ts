@@ -57,7 +57,7 @@ const generateInternalFilesLogEntry = (
 
   return {
     type: 'PublishingRequest',
-    title: t('log.titles.internal_file_approved', { count: internalFilesItems.length }),
+    title: t('log.titles.file_archived', { count: internalFilesItems.length }),
     modifiedDate: ticket.finalizedDate ?? '',
     actions: [
       {

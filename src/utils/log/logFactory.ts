@@ -118,7 +118,7 @@ export const generateSimplePublishingLog = (registration: Registration, tickets:
       const internalFilesCount = ticket.approvedFiles.filter((file) => file.type === FileType.InternalFile).length;
       if (internalFilesCount > 0) {
         entries.push({
-          text: t('log.titles.internal_file_approved_count', { count: internalFilesCount }),
+          text: t('log.titles.file_archived_count', { count: internalFilesCount }),
           date: ticket.finalizedDate ?? ticket.modifiedDate,
           bgcolor: 'publishingRequest.main',
           Icon: CheckIcon,
