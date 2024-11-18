@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { UpdateTicketData } from '../../../api/registrationApi';
+import { updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
@@ -179,10 +179,8 @@ const PendingPublishingTicketForCuratorSection = ({
           `${t('registration.public_page.reason_for_rejection')}: ${rejectionReason}`
         );
       }
-      const updateTicketResponse = new Promise((resolve) => setTimeout(resolve, 5_000));
-      // updateTicket(publishingTicket.id, newTicketData);
+      const updateTicketResponse = await updateTicket(publishingTicket.id, newTicketData);
       await refetchData();
-
       return updateTicketResponse;
     },
     onSuccess: (_, variables) => {
