@@ -1,19 +1,19 @@
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import CloseIcon from '@mui/icons-material/Close';
-import { Box, IconButton, Link, ListItem, Skeleton, TextField, Tooltip, Typography } from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Box, IconButton, ListItem, Skeleton, TextField, Tooltip, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
+import { RegistrationListItemContent } from '../../../../../components/RegistrationList';
+import { SearchListItemDiv } from '../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { Registration, RelatedDocument } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
-import { getTitleString } from '../../../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
+import { convertToRegistrationSearchItem } from '../../../../../utils/registration-helpers';
 
 interface RelatedResultItemProps {
   document: RelatedDocument;
@@ -38,16 +38,7 @@ export const RelatedResultItem = ({
   const isConfirmedDocument = document.type === 'ConfirmedDocument';
 
   return (
-    <ListItem
-      sx={{
-        display: 'flex',
-        gap: '1rem',
-        bgcolor: 'white',
-        borderRadius: '0.25rem',
-        border: '1px solid lightgray',
-        my: '0.25rem',
-        minHeight: '5rem',
-      }}>
+    <ListItem disablePadding sx={{ mb: '0.5rem', gap: '0.5rem' }}>
       <Box
         sx={{
           display: 'grid',
@@ -93,55 +84,50 @@ export const RelatedResultItem = ({
           {isLoadingRegistration ? (
             <Skeleton width="30%" />
           ) : (
-            <Box sx={{ width: '100%' }}>
-              {isInternalRegistration ? (
-                <Link
-                  data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationLink(
-                    registration?.identifier ?? ''
-                  )}
-                  component={RouterLink}
-                  to={getRegistrationLandingPagePath(registration?.identifier ?? '')}>
-                  {getTitleString(registration?.entityDescription?.mainTitle)}
-                </Link>
-              ) : (
-                <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
-                  {uri}
-                </Link>
-              )}
-            </Box>
+            registration && (
+              <SearchListItemDiv sx={{ borderLeftColor: 'registration.main', width: '100%' }}>
+                <RegistrationListItemContent
+                  registration={convertToRegistrationSearchItem(registration)}
+                  onRemoveRelated={() => setIndexToRemove(index)}
+                />
+              </SearchListItemDiv>
+            )
           )}
         </>
       ) : (
-        <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
-          {({ field, meta: { touched, error } }: FieldProps<string>) => (
-            <TextField
-              {...field}
-              label={t('common.reference')}
-              placeholder={t('feedback.validation.reference_required')}
-              variant="filled"
-              multiline
-              fullWidth
-              required
-              error={touched && !!error}
-              helperText={<ErrorMessage name={field.name} />}
-            />
-          )}
-        </Field>
-      )}
-
-      <IconButton
-        title={t('registration.resource_type.research_data.remove_relation')}
-        data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
-        onClick={() => setIndexToRemove(index)}>
-        <CloseIcon
-          fontSize="small"
+        <Box
           sx={{
-            color: 'white',
-            borderRadius: '50%',
-            bgcolor: 'primary.main',
-          }}
-        />
-      </IconButton>
+            display: 'flex',
+            gap: '1rem',
+            bgcolor: 'white',
+            borderRadius: '0.25rem',
+            border: '1px solid lightgray',
+            p: '0.5rem 1rem',
+            width: '100%',
+          }}>
+          <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
+            {({ field, meta: { touched, error } }: FieldProps<string>) => (
+              <TextField
+                {...field}
+                label={t('common.reference')}
+                placeholder={t('feedback.validation.reference_required')}
+                variant="filled"
+                multiline
+                fullWidth
+                required
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
+              />
+            )}
+          </Field>
+          <IconButton
+            title={t('registration.resource_type.research_data.remove_relation')}
+            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
+            onClick={() => setIndexToRemove(index)}>
+            <CancelIcon color="primary" />
+          </IconButton>
+        </Box>
+      )}
 
       <ConfirmDialog
         open={indexToRemove !== null}
