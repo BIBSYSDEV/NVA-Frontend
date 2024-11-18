@@ -328,39 +328,38 @@ export const PublishingAccordion = ({
         )}
 
         {/* Tell user what they can publish */}
-        {userCanHandlePublishingRequest && !lastPublishingRequest && isDraftRegistration && registrationIsValid && (
+        {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && registrationIsValid && (
           <>
-            <Typography paragraph>
-              {t('registration.public_page.tasks_panel.review_preview_before_publishing')}
-            </Typography>
-
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
-              <Typography paragraph>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
+              <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow_1">
+                <Typography paragraph />
+              </Trans>
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
-              <>
-                <Typography paragraph>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
-                {ticketHasPendingFiles && (
-                  <Typography paragraph>
-                    {t('registration.public_page.tasks_panel.you_can_publish_metadata_files_info')}
-                  </Typography>
-                )}
-              </>
+              <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow_2">
+                <Typography paragraph />
+              </Trans>
             ) : null}
           </>
         )}
 
-        {userCanCreatePublishingRequest && isDraftRegistration && !lastPublishingRequest && (
-          <LoadingButton
-            disabled={isLoading !== LoadingState.None || !registrationIsValid || titleSearchPending}
-            data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
-            sx={{ mt: '1rem' }}
-            variant="contained"
-            color="info"
-            fullWidth
-            onClick={duplicateRegistration ? toggleDuplicateWarningModal : publishRegistration}
-            loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest || titleSearchPending}>
-            {t('registration.public_page.tasks_panel.publish_registration')}
-          </LoadingButton>
+        {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && (
+          <>
+            <LoadingButton
+              disabled={isLoading !== LoadingState.None || !registrationIsValid || titleSearchPending}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
+              sx={{ mt: '1rem' }}
+              variant="contained"
+              color="info"
+              fullWidth
+              onClick={duplicateRegistration ? toggleDuplicateWarningModal : publishRegistration}
+              loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest || titleSearchPending}>
+              {t('registration.public_page.tasks_panel.publish_registration')}
+            </LoadingButton>
+
+            <Typography paragraph sx={{ mt: '1rem' }}>
+              {t('registration.public_page.tasks_panel.delete_draft_description')}
+            </Typography>
+          </>
         )}
 
         {lastPublishingRequest && !hasMismatchingPublishedStatus && (
