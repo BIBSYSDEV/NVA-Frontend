@@ -1538,11 +1538,6 @@
         "no_published_files_on_registration": "Ingen publiserte filer på resultatet",
         "no_published_files_on_registration_description": "<0>Resultatet har ingen publiserte filer.</0><0>Sjekk med registrator om det er korrekt at resultatet ikke skal ha publiserte filer i NVA.</0><0>Ønsker du å tildele DOI på resultat uten fil?</0>",
         "publish_registration": "Publiser registrering",
-        "published_registration": "Registreringen er publisert.",
-        "registration_is_published": "Forskningsresultatet er publisert og offentlig tilgjengelig i NVA.",
-        "registration_is_published_with_files": "Forskningsresultatet er publisert med fil(er) og offentlig tilgjengelig i NVA.",
-        "registration_is_published_workflow2": "<0>Fil(er) er sjekket og godkjent av kurator. Åpne filer er offentliggjort i NVA og interne filer er arkivert og skjult.</0><0>Du kan fritt endre på beskrivelsen av resultatet (metadata). Nye filer som du laster opp, må sendes til kurator for godkjenning.</0><0>Ønsker du å få endret eller slettet filer som allerede er godkjent, ta kontakt med kurator via meldingsfeltet.</0>",
-        "registration_is_published_workflow2_without_file": "<0>Du kan fritt endre på beskrivelsen av resultatet (metadata). Nye filer som du laster opp, må sendes til kurator for godkjenning.</0>",
         "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Vent litt før du oppdaterer siden på nytt for å se status.",
         "reject_publishing_request_description_one": "<0>Trykker du på \"$t(registration.public_page.reject_publish_request)\", blir ikke den opplastede filen offentliggjort eller arkivert, og registrator får beskjed om at filen er \"Avvist\". De kan da slette filen eller sende til ny godkjenning.",
         "reject_publishing_request_description_other": "<0>Trykker du på \"$t(registration.public_page.reject_publish_request)\", blir ingen av de opplastede filene offentliggjort eller arkivert, og registrator får beskjed om at filene er \"Avvist\". De kan da slette filer eller sende til ny godkjenning.",
@@ -1559,8 +1554,8 @@
         "approved_publishing_request_without_file_description_for_registrator": "<0>Du kan fritt endre på beskrivelsen av resultatet (metadata). Nye filer som du laster opp, må sendes til kurator for godkjenning.</0>",
         "approved_publishing_request_description_for_curator": "<0>Åpne filer er offentliggjort i NVA og interne filer er arkivert og skjult.</0><0>Registrator kan endre på metadata, men ikke filer som kurator har godkjent.</0><0>Om registrator laster opp nye filer, eller ønsker ny vurdering av avviste filer, blir det sendt en ny publiseringsforespørsel til kurator.</0>",
         "approved_publishing_request_without_file_description_for_curator": "<0>Registrator kan endre på metadata.</0><0>Om registrator laster opp nye filer, eller ønsker ny vurdering av avviste filer, blir det sendt en ny publiseringsforespørsel til kurator.</0>",
-        "publish_registration_description_workflow_2": "<0>Se over utkast før du publiserer.</0><0>Beskrivelsen av resultatet (metadata) blir synlig for andre når du trykker på \"$t(registration.public_page.tasks_panel.publish_registration)\".</0><0>Eventuelle åpne filer som du har lastet opp blir ikke offentliggjort før kurator har sjekket filversjon og lisens.</0>",
-        "publish_registration_description_workflow_1": "<0>Se over utkast før du publiserer.</0><0>Beskrivelsen (metadata) av forskningsresultatet og eventuelle opplastede åpne filer blir offentliggjort når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".</0>",
+        "publish_registration_description_workflow2": "<0>Se over utkast før du publiserer.</0><0>Beskrivelsen av resultatet (metadata) blir synlig for andre når du trykker på \"$t(registration.public_page.tasks_panel.publish_registration)\".</0><0>Eventuelle åpne filer som du har lastet opp blir ikke offentliggjort før kurator har sjekket filversjon og lisens.</0>",
+        "publish_registration_description_workflow1": "<0>Se over utkast før du publiserer.</0><0>Beskrivelsen (metadata) av forskningsresultatet og eventuelle opplastede åpne filer blir offentliggjort når du velger \"$t(registration.public_page.tasks_panel.publish_registration)\".</0>",
         "delete_draft_description": "Ønsker du å slette hele registreringen, åpne flere valg nederst i denne menyen."
       },
       "validation_errors": "Valideringsfeil"

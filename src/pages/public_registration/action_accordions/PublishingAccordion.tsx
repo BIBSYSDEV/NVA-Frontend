@@ -25,7 +25,7 @@ import {
   isPendingOpenFile,
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
@@ -86,45 +86,6 @@ export const PublishingAccordion = ({
   const lastPublishingRequest =
     publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
     publishingRequestTickets.at(-1);
-
-  // const ticketMutation = useMutation({
-  //   mutationFn: lastPublishingRequest
-  //     ? (newTicketData: UpdateTicketData) => {
-  //         if (newTicketData.status === 'Completed') {
-  //           setIsLoading(LoadingState.ApprovePulishingRequest);
-  //         } else if (newTicketData.status === 'Closed') {
-  //           setIsLoading(LoadingState.RejectPublishingRequest);
-  //         }
-  //         return updateTicket(lastPublishingRequest.id, newTicketData);
-  //       }
-  //     : undefined,
-  //   onSettled: () => setIsLoading(LoadingState.None),
-  //   onSuccess: (_, variables) => {
-  //     if (variables.status === 'Completed') {
-  //       dispatch(
-  //         setNotification({
-  //           message: t('feedback.success.published_registration'),
-  //           variant: 'success',
-  //         })
-  //       );
-  //     } else if (variables.status === 'Closed') {
-  //       dispatch(
-  //         setNotification({
-  //           message: t('feedback.success.publishing_request_rejected'),
-  //           variant: 'success',
-  //         })
-  //       );
-  //     }
-  //     refetchData();
-  //   },
-  //   onError: () =>
-  //     dispatch(
-  //       setNotification({
-  //         message: t('feedback.error.update_publishing_request'),
-  //         variant: 'error',
-  //       })
-  //     ),
-  // });
 
   const publishRegistration = async () => {
     setIsCreatingPublishingRequest(true);
@@ -198,9 +159,6 @@ export const PublishingAccordion = ({
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
   const hasCompletedTicket = lastPublishingRequest?.status === 'Completed';
 
-  const canApprovePublishingRequest =
-    userCanApprovePublishingRequest && !registratorPublishesMetadataAndFiles && hasPendingTicket;
-
   const mismatchingPublishedStatusWorkflow1 =
     registratorPublishesMetadataAndFiles && !!lastPublishingRequest && isDraftRegistration;
   const mismatchingPublishedStatusWorkflow2 =
@@ -210,21 +168,7 @@ export const PublishingAccordion = ({
 
   const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
 
-  const ticketMessages = lastPublishingRequest?.messages ?? [];
-
-  const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
-
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
-
-  // const handleRejectPublishFileRequest = async (message: string) => {
-  //   if (lastPublishingRequest) {
-  //     setIsLoading(LoadingState.RejectPublishingRequest);
-  //     await addMessage(lastPublishingRequest.id, message);
-  //     await ticketMutation.mutateAsync({ status: 'Closed' });
-  //     setIsLoading(LoadingState.None);
-  //     setOpenRejectionDialog(false);
-  //   }
-  // };
 
   return (
     <Accordion
@@ -324,11 +268,11 @@ export const PublishingAccordion = ({
         {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && registrationIsValid && (
           <>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
-              <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow_1">
+              <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow1">
                 <Typography paragraph />
               </Trans>
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
-              <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow_2">
+              <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow2">
                 <Typography paragraph />
               </Trans>
             ) : null}
@@ -366,161 +310,6 @@ export const PublishingAccordion = ({
           />
         )}
 
-        {/* {userCanHandlePublishingRequest && (
-          <>
-            {isPublishedRegistration && hasClosedTicket && (
-              <Trans
-                i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request"
-                components={[<Typography paragraph key="1" />]}
-              />
-            )}
-
-            {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
-              <Trans
-                i18nKey="registration.public_page.tasks_panel.metadata_published_waiting_for_files"
-                components={[<Typography paragraph key="1" />]}
-              />
-            )}
-
-            {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
-              <Box sx={{ mt: '0.5rem' }}>
-                {registratorPublishesMetadataAndFiles ? (
-                  <>
-                    <Typography paragraph>
-                      {t('registration.public_page.tasks_panel.published_registration')}
-                    </Typography>
-                    <Typography paragraph>
-                      {registrationHasApprovedFile
-                        ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
-                        : t('registration.public_page.tasks_panel.registration_is_published')}
-                    </Typography>
-                  </>
-                ) : registrationHasApprovedFile ? (
-                  <Trans
-                    i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2"
-                    components={[<Typography paragraph key="1" />]}
-                  />
-                ) : (
-                  <Trans
-                    i18nKey="registration.public_page.tasks_panel.registration_is_published_workflow2_without_file"
-                    components={[<Typography paragraph key="1" />]}
-                  />
-                )}
-              </Box>
-            )}
-          </>
-        )} */}
-
-        {/* {canApprovePublishingRequest && !hasMismatchingPublishedStatus && (
-          <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <Trans
-              i18nKey="registration.public_page.tasks_panel.approve_publishing_request_description"
-              components={[<Typography key="1" />]}
-            />
-            <LoadingButton
-              sx={{ bgcolor: 'white', mb: '0.5rem' }}
-              variant="outlined"
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
-              startIcon={<InsertDriveFileIcon />}
-              onClick={() => ticketMutation.mutate({ status: 'Completed' })}
-              loading={isLoading === LoadingState.ApprovePulishingRequest}
-              disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-              {t('registration.public_page.approve_publish_request')} ({filesAwaitingApproval})
-            </LoadingButton>
-
-            <Trans
-              i18nKey="registration.public_page.tasks_panel.reject_publishing_request_description"
-              values={{ count: filesAwaitingApproval }}
-              components={[<Typography key="1" />]}
-            />
-            <LoadingButton
-              sx={{ bgcolor: 'white', mb: '0.5rem' }}
-              variant="outlined"
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
-              startIcon={<CloseIcon />}
-              onClick={() => setOpenRejectionDialog(true)}
-              loading={isLoading === LoadingState.RejectPublishingRequest}
-              disabled={isLoadingData || isLoading !== LoadingState.None}>
-              {t('registration.public_page.reject_publish_request')} ({filesAwaitingApproval})
-            </LoadingButton>
-
-            <Typography>{t('registration.public_page.tasks_panel.edit_publishing_request_description')}</Typography>
-            <Button
-              sx={{ bgcolor: 'white', mb: '0.5rem' }}
-              variant="outlined"
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
-              endIcon={<EditIcon />}
-              component={RouterLink}
-              to={getRegistrationWizardLink(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
-              {t('registration.edit_registration')}
-            </Button>
-
-            <Dialog open={openRejectionDialog} onClose={() => setOpenRejectionDialog(false)}>
-              <DialogTitle fontWeight="bold">{t('registration.public_page.reject_publish_request')}</DialogTitle>
-              <DialogContent>
-                <Trans
-                  i18nKey="registration.public_page.reject_publish_request_description"
-                  components={[<Typography paragraph key="1" />]}
-                />
-                <TextField
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectionMessageTextField}
-                  inputProps={{ maxLength: 160 }}
-                  variant="filled"
-                  multiline
-                  minRows={3}
-                  fullWidth
-                  required
-                  label={t('registration.public_page.reason_for_rejection')}
-                  FormHelperTextProps={{ sx: { textAlign: 'end' } }}
-                  helperText={`${rejectionReason.length}/160`}
-                  value={rejectionReason}
-                  onChange={(event) => setRejectionReason(event.target.value)}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.cancelRejectionButton}
-                  onClick={() => setOpenRejectionDialog(false)}>
-                  {t('common.cancel')}
-                </Button>
-                <LoadingButton
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.rejectionDialogConfirmButton}
-                  disabled={!rejectionReason}
-                  loading={isLoading === LoadingState.RejectPublishingRequest}
-                  variant="contained"
-                  onClick={() =>
-                    handleRejectPublishFileRequest(
-                      `${t('registration.public_page.reason_for_rejection')}: ${rejectionReason}`
-                    )
-                  }>
-                  {t('common.reject')}
-                </LoadingButton>
-              </DialogActions>
-            </Dialog>
-          </Box>
-        )} */}
-
-        {/* {userCanHandlePublishingRequest && (hasPendingTicket || hasClosedTicket) && !hasMismatchingPublishedStatus && (
-          <>
-            <Divider sx={{ my: '1rem' }} />
-            <Typography fontWeight="bold" gutterBottom>
-              {t('common.messages')}
-            </Typography>
-            <Typography gutterBottom>
-              {isOnTasksPath
-                ? t('registration.public_page.publishing_request_message_about_curator')
-                : t('registration.public_page.publishing_request_message_about')}
-            </Typography>
-
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <MessageForm
-                confirmAction={async (message) => await addMessage(lastPublishingRequest.id, message)}
-                hideRequiredAsterisk
-              />
-              {ticketMessages.length > 0 && <TicketMessageList ticket={lastPublishingRequest} />}
-            </Box>
-          </>
-        )} */}
         <DuplicateWarningDialog
           isOpen={displayDuplicateWarningModal}
           toggleModal={toggleDuplicateWarningModal}
