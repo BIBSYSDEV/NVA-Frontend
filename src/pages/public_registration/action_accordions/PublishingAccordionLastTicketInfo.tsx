@@ -33,12 +33,14 @@ interface PublishingAccordionLastTicketInfoProps {
   registrationHasApprovedFile: boolean;
   refetchData: () => Promise<void>;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
+  registrationIsValid: boolean;
 }
 
 export const PublishingAccordionLastTicketInfo = ({
   publishingTicket,
   canApprovePublishingRequest,
   registrationHasApprovedFile,
+  registrationIsValid,
   addMessage,
   refetchData,
 }: PublishingAccordionLastTicketInfoProps) => {
@@ -81,9 +83,23 @@ export const PublishingAccordionLastTicketInfo = ({
               <Typography paragraph />
             </Trans>
           ) : (
-            <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request_registrator">
-              <Typography paragraph />
-            </Trans>
+            <>
+              <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request_registrator">
+                <Typography paragraph />
+              </Trans>
+              <Button
+                sx={{ bgcolor: 'white' }}
+                variant="outlined"
+                fullWidth
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
+                endIcon={<EditIcon />}
+                component={RouterLink}
+                to={getRegistrationWizardLink(publishingTicket.publicationIdentifier, {
+                  tab: RegistrationTab.FilesAndLicenses,
+                })}>
+                {t('registration.edit_registration')}
+              </Button>
+            </>
           )}
         </>
       )}
@@ -95,6 +111,7 @@ export const PublishingAccordionLastTicketInfo = ({
               publishingTicket={publishingTicket}
               addMessage={addMessage}
               refetchData={refetchData}
+              registrationIsValid={registrationIsValid}
             />
           ) : registrationHasApprovedFile ? (
             <Trans i18nKey="registration.public_page.tasks_panel.pending_publishing_request_with_file_description_for_registrator">
@@ -108,27 +125,23 @@ export const PublishingAccordionLastTicketInfo = ({
         </>
       )}
 
-      {(isPendingTicket || isClosedTicket) && (
-        <>
-          <Divider sx={{ my: '1rem' }} />
-          <Typography fontWeight="bold" gutterBottom>
-            {t('common.messages')}
-          </Typography>
-          <Typography gutterBottom>
-            {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)
-              ? t('registration.public_page.publishing_request_message_about_curator')
-              : t('registration.public_page.publishing_request_message_about')}
-          </Typography>
+      <Divider sx={{ my: '1rem' }} />
+      <Typography fontWeight="bold" gutterBottom>
+        {t('common.messages')}
+      </Typography>
+      <Typography gutterBottom>
+        {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)
+          ? t('registration.public_page.publishing_request_message_about_curator')
+          : t('registration.public_page.publishing_request_message_about')}
+      </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <MessageForm
-              confirmAction={async (message) => await addMessage(publishingTicket.id, message)}
-              hideRequiredAsterisk
-            />
-            {publishingTicket.messages.length > 0 && <TicketMessageList ticket={publishingTicket} />}
-          </Box>
-        </>
-      )}
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <MessageForm
+          confirmAction={async (message) => await addMessage(publishingTicket.id, message)}
+          hideRequiredAsterisk
+        />
+        {publishingTicket.messages.length > 0 && <TicketMessageList ticket={publishingTicket} />}
+      </Box>
     </>
   );
 };
@@ -137,7 +150,11 @@ const PendingPublishingTicketForCuratorSection = ({
   publishingTicket,
   addMessage,
   refetchData,
-}: Pick<PublishingAccordionLastTicketInfoProps, 'publishingTicket' | 'addMessage' | 'refetchData'>) => {
+  registrationIsValid,
+}: Pick<
+  PublishingAccordionLastTicketInfoProps,
+  'publishingTicket' | 'addMessage' | 'refetchData' | 'registrationIsValid'
+>) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const isLoadingData = false;
@@ -186,7 +203,7 @@ const PendingPublishingTicketForCuratorSection = ({
         startIcon={<InsertDriveFileIcon />}
         onClick={() => ticketMutation.mutate({ status: 'Completed' })}
         loading={ticketMutation.isPending && ticketMutation.variables?.status === 'Completed'}
-        disabled={isLoadingData || ticketMutation.isPending /* || !registrationIsValid*/}>
+        disabled={isLoadingData || ticketMutation.isPending || !registrationIsValid}>
         {t('registration.public_page.approve_publish_request')} ({publishingTicket.filesForApproval.length})
       </LoadingButton>
 
@@ -209,6 +226,7 @@ const PendingPublishingTicketForCuratorSection = ({
       <Button
         sx={{ bgcolor: 'white', mb: '0.5rem' }}
         variant="outlined"
+        fullWidth
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
         endIcon={<EditIcon />}
         component={RouterLink}

@@ -368,6 +368,7 @@ export const PublishingAccordion = ({
             publishingTicket={lastPublishingRequest}
             canApprovePublishingRequest={userCanApprovePublishingRequest}
             registrationHasApprovedFile={registrationHasApprovedFile}
+            registrationIsValid={registrationIsValid}
             addMessage={addMessage}
             refetchData={refetchData}
           />
