@@ -1,8 +1,9 @@
-import { Grid, List, Typography } from '@mui/material';
+import { FormControl, Grid, InputLabel, List, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
@@ -15,8 +16,10 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
+import { RootState } from '../../../redux/store';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
@@ -36,6 +39,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
   const { t } = useTranslation();
   const history = useHistory();
   const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
+  const user = useSelector((store: RootState) => store.user);
 
   const ticketStatusOptions = isOnTasksPage
     ? ticketStatusValues.filter((status) => status !== 'New')
@@ -65,6 +69,17 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
   );
 
   const searchParams = new URLSearchParams(history.location.search);
+  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || 'show-all';
+
+  const handleChange = (event: SelectChangeEvent) => {
+    const value = event.target.value;
+    if (value === 'show-all') {
+      searchParams.delete(TicketSearchParam.ViewedByNot);
+    } else {
+      searchParams.set(TicketSearchParam.ViewedByNot, value);
+    }
+    history.push({ search: searchParams.toString() });
+  };
 
   return (
     <section>
@@ -76,9 +91,27 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <Grid item xs={16} md={5} lg={4}>
           <TicketStatusFilter options={ticketStatusOptions} />
         </Grid>
-        <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
+        <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 10}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
+
+        {user && !isOnTasksPage && (
+          <Grid item xs={16} md={5} lg={2}>
+            <FormControl sx={{ width: '100%' }}>
+              <InputLabel id={'viewed-by-select'}>{t('tasks.display_options')}</InputLabel>
+              <Select
+                data-testid={dataTestId.tasksPage.unreadSearchSelect}
+                size="small"
+                value={viewedByNotParam}
+                id="viewed-by-select"
+                label={t('tasks.display_options')}
+                onChange={handleChange}>
+                <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
+                <MenuItem value={user.nvaUsername}>{t('tasks.unread_only')}</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        )}
 
         {isOnTasksPage && (
           <>

@@ -2038,6 +2038,7 @@
   },
   "tasks": {
     "correction_list": "Retteliste",
+    "display_options": "Visningsalternativer",
     "include_tasks_without_curator": "Inkluder oppgaver uten kurator",
     "new_tasks": "Innmeldte oppgaver: {{count}}",
     "nvi": {
@@ -2087,6 +2088,7 @@
     "select_other_unit_filter": "Velg andre",
     "status": "Status",
     "unread": "Uleste",
+    "unread_only": "Vis kun uleste",
     "user_dialog": "Brukerdialog",
     "your_tasks": "Oppgaver du behandler: {{count}}"
   },

@@ -743,7 +743,7 @@ export const dataTestId = {
       publishingButton: 'publishing-request-button',
       supportButton: 'support-button',
     },
-    unreadSearchCheckbox: 'unread-search-checkbox',
+    unreadSearchSelect: 'unread-search-select',
     userDialogAccordion: 'user-dialog-accordion',
   },
   unpublishActions: {
