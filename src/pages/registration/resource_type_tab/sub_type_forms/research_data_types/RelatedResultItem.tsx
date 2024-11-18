@@ -102,7 +102,7 @@ export const RelatedResultItem = ({
             bgcolor: 'white',
             borderRadius: '0.25rem',
             border: '1px solid lightgray',
-            p: '0.5rem',
+            p: '0.5rem 1rem',
             width: '100%',
           }}>
           <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
@@ -121,7 +121,6 @@ export const RelatedResultItem = ({
             )}
           </Field>
           <IconButton
-            sx={{ mr: '0.5rem' }}
             title={t('registration.resource_type.research_data.remove_relation')}
             data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
             onClick={() => setIndexToRemove(index)}>
