@@ -40,13 +40,6 @@ interface PublishingAccordionProps {
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
 
-enum LoadingState {
-  CreatePublishingRequest,
-  ApprovePulishingRequest,
-  RejectPublishingRequest,
-  None,
-}
-
 export const PublishingAccordion = ({
   publishingRequestTickets,
   registration,
@@ -72,7 +65,7 @@ export const PublishingAccordion = ({
     category: registration.entityDescription?.reference?.publicationInstance?.type,
   });
 
-  const [isLoading, setIsLoading] = useState(LoadingState.None);
+  const [isCreatingPublishingRequest, setIsCreatingPublishingRequest] = useState(false);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
   const registrationHasApprovedFile = registration.associatedArtifacts.some(
     (file) =>
@@ -134,7 +127,7 @@ export const PublishingAccordion = ({
   // });
 
   const publishRegistration = async () => {
-    setIsLoading(LoadingState.CreatePublishingRequest);
+    setIsCreatingPublishingRequest(true);
     const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(
@@ -169,9 +162,9 @@ export const PublishingAccordion = ({
           );
         }
       }
-      refetchData();
+      await refetchData();
     }
-    setIsLoading(LoadingState.None);
+    setIsCreatingPublishingRequest(false);
   };
 
   const onConfirmNotDuplicate = () => {
@@ -345,14 +338,14 @@ export const PublishingAccordion = ({
         {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && (
           <>
             <LoadingButton
-              disabled={isLoading !== LoadingState.None || !registrationIsValid || titleSearchPending}
+              disabled={isCreatingPublishingRequest || !registrationIsValid || titleSearchPending}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
-              sx={{ mt: '1rem' }}
+              sx={{ mt: '0.5rem' }}
               variant="contained"
               color="info"
               fullWidth
               onClick={duplicateRegistration ? toggleDuplicateWarningModal : publishRegistration}
-              loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest || titleSearchPending}>
+              loading={isLoadingData || isCreatingPublishingRequest || titleSearchPending}>
               {t('registration.public_page.tasks_panel.publish_registration')}
             </LoadingButton>
 
