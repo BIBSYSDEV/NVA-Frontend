@@ -3,7 +3,6 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
@@ -16,9 +15,8 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
-import { RootState } from '../../../redux/store';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
-import { RoleName } from '../../../types/user.types';
+import { RoleName, User } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -33,13 +31,21 @@ interface TicketListProps {
   setPage: Dispatch<SetStateAction<number>>;
   page: number;
   title: string;
+  user: User | null;
 }
 
-export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
+export const TicketList = ({
+  ticketsQuery,
+  setRowsPerPage,
+  rowsPerPage,
+  setPage,
+  page,
+  title,
+  user,
+}: TicketListProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
-  const user = useSelector((store: RootState) => store.user);
 
   const ticketStatusOptions = isOnTasksPage
     ? ticketStatusValues.filter((status) => status !== 'New')

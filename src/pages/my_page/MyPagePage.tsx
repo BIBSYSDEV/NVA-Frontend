@@ -323,6 +323,7 @@ const MyPagePage = () => {
               page={page}
               setPage={setPage}
               title={t('common.dialogue')}
+              user={user}
             />
           </PrivateRoute>
           <PrivateRoute
