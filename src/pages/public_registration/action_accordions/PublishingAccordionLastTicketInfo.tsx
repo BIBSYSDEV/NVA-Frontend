@@ -8,7 +8,7 @@ import { RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { PendingPublishingTicketForCuratorSection } from './PendingPublishingTicketForCuratorSection';
+import { PendingPublishingTicketForCuratorSection } from './PendingPublishingTIcketForCuratorSection';
 
 interface PublishingAccordionLastTicketInfoProps {
   publishingTicket: PublishingTicket;
