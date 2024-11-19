@@ -83,11 +83,11 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <Grid item xs={16} md={5} lg={4}>
           <TicketStatusFilter options={ticketStatusOptions} />
         </Grid>
-        <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 10}>
+        <Grid item xs={16} md={11} lg={10}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
 
-        {user && !isOnTasksPage && (
+        {user && (
           <Grid item xs={16} md={5} lg={2}>
             <FormControl fullWidth>
               <InputLabel id={viewedByLabelId}>{t('tasks.display_options')}</InputLabel>
@@ -117,10 +117,10 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
 
         {isOnTasksPage && (
           <>
-            <Grid item xs={16} md={5} lg={4}>
+            <Grid item xs={16} md={6} lg={4}>
               <DialoguesWithoutCuratorButton />
             </Grid>
-            <Grid item xs={16} md={5} lg={4}>
+            <Grid item xs={16} md={4} lg={4}>
               <CuratorSelector
                 selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
                 onChange={(curator) => {
