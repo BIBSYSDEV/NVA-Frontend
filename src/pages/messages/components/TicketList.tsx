@@ -1,4 +1,4 @@
-import { FormControl, Grid, InputLabel, List, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -69,17 +69,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
   );
 
   const searchParams = new URLSearchParams(history.location.search);
-  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || '';
-
-  const handleChange = (event: SelectChangeEvent) => {
-    const value = event.target.value;
-    if (value === '') {
-      searchParams.delete(TicketSearchParam.ViewedByNot);
-    } else {
-      searchParams.set(TicketSearchParam.ViewedByNot, value);
-    }
-    history.push({ search: searchParams.toString() });
-  };
+  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || 'show-all';
 
   return (
     <section>
@@ -97,17 +87,27 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
 
         {user && !isOnTasksPage && (
           <Grid item xs={16} md={5} lg={2}>
-            <FormControl sx={{ width: '100%' }}>
+            <FormControl fullWidth>
               <InputLabel id={'viewed-by-select'}>{t('tasks.display_options')}</InputLabel>
               <Select
-                defaultValue={''}
+                defaultValue={'show-all'}
                 data-testid={dataTestId.tasksPage.unreadSearchSelect}
                 size="small"
                 value={viewedByNotParam}
-                id="viewed-by-select"
+                labelId="viewed-by-select"
                 label={t('tasks.display_options')}
-                onChange={handleChange}>
-                <MenuItem value={''}>{t('common.show_all')}</MenuItem>
+                onChange={(event) => {
+                  const value = event.target.value;
+                  const syncedParams = syncParamsWithSearchFields(searchParams);
+                  if (value === 'show-all') {
+                    syncedParams.delete(TicketSearchParam.ViewedByNot);
+                  } else {
+                    syncedParams.set(TicketSearchParam.ViewedByNot, value);
+                  }
+                  syncedParams.delete(TicketSearchParam.From);
+                  history.push({ search: syncedParams.toString() });
+                }}>
+                <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
                 <MenuItem value={user.nvaUsername}>{t('tasks.unread_only')}</MenuItem>
               </Select>
             </FormControl>
