@@ -1,4 +1,5 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
+import ReplyIcon from '@mui/icons-material/Reply';
 import { Badge } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -132,6 +133,7 @@ const TasksPage = () => {
               search: history.location.state?.previousSearch,
             }}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
+              <ReplyIcon />
               <AssignmentIcon />
             </StyledMinimizedMenuButton>
           </Link>

@@ -1,3 +1,4 @@
+import ReplyIcon from '@mui/icons-material/Reply';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +24,7 @@ const PublicRegistration = () => {
       {previousPath && (
         <Box sx={{ alignSelf: 'start', justifySelf: 'start' }} component={Link} to={previousPath}>
           <StyledMinimizedMenuButton title={t('common.search')}>
+            <ReplyIcon />
             <SearchIcon />
           </StyledMinimizedMenuButton>
         </Box>

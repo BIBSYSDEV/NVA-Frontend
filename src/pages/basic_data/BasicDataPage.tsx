@@ -3,6 +3,7 @@ import AdjustIcon from '@mui/icons-material/Adjust';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
+import ReplyIcon from '@mui/icons-material/Reply';
 import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -22,14 +23,14 @@ import { ImportCandidateStatus } from '../../types/importCandidate.types';
 import { BasicDataLocationState } from '../../types/locationState.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
+import { getAdminInstitutionPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
-import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
 import { CentralImportCandidateForm } from './app_admin/central_import/CentralImportCandidateForm';
 import { CentralImportCandidateMerge } from './app_admin/central_import/CentralImportCandidateMerge';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
 import { ImportCandidatesMenuFilters } from './app_admin/central_import/ImportCandidatesMenuFilters';
+import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 
@@ -65,6 +66,7 @@ const BasicDataPage = () => {
         minimizedMenu={
           simpleGoBack ? (
             <StyledMinimizedMenuButton title={t('basic_data.basic_data')} onClick={() => history.goBack()}>
+              <ReplyIcon />
               <BusinessCenterIcon />
             </StyledMinimizedMenuButton>
           ) : (
@@ -74,6 +76,7 @@ const BasicDataPage = () => {
                 search: history.location.state?.previousSearch,
               }}>
               <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
+                <ReplyIcon />
                 <BusinessCenterIcon />
               </StyledMinimizedMenuButton>
             </Link>
