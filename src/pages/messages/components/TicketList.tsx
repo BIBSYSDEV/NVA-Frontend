@@ -35,6 +35,8 @@ interface TicketListProps {
   title: string;
 }
 
+const viewedByLabelId = 'viewed-by-select';
+
 export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -88,13 +90,13 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         {user && !isOnTasksPage && (
           <Grid item xs={16} md={5} lg={2}>
             <FormControl fullWidth>
-              <InputLabel id={'viewed-by-select'}>{t('tasks.display_options')}</InputLabel>
+              <InputLabel id={viewedByLabelId}>{t('tasks.display_options')}</InputLabel>
               <Select
                 defaultValue={'show-all'}
                 data-testid={dataTestId.tasksPage.unreadSearchSelect}
                 size="small"
                 value={viewedByNotParam}
-                labelId="viewed-by-select"
+                labelId={viewedByLabelId}
                 label={t('tasks.display_options')}
                 onChange={(event) => {
                   const value = event.target.value;
