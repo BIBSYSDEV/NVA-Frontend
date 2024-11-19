@@ -244,7 +244,6 @@ const TasksPage = () => {
                 page={page}
                 setPage={setPage}
                 title={t('common.tasks')}
-                user={user}
               />
             </TicketListDefaultValuesWrapper>
           </PrivateRoute>
