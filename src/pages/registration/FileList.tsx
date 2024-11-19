@@ -15,22 +15,20 @@ import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { AssociatedFile, FileType, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedFile, Uppy } from '../../types/associatedArtifact.types';
 import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,
-  isDegree,
-  isEmbargoed,
   isOpenFile,
   isPendingOpenFile,
   isTypeWithFileVersionField,
   isTypeWithRrs,
-  userHasAccessRight,
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { userCanEditFile } from './helpers/fileHelpers';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -57,66 +55,6 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
   const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
-
-  function canEditFile(file: AssociatedFile) {
-    const isImportFile = file.uploadDetails?.type === 'ImportUploadDetails';
-    if (isImportFile) {
-      // Publishing curator can edit imported files
-      return !!user?.isPublishingCurator;
-    }
-
-    if (values.type === 'ImportCandidate') {
-      // Importer can change file before the candidate is imported
-      return !!user?.isInternalImporter;
-    }
-
-    const userIsOnSameInstitutionAsFileUploader =
-      file.uploadDetails?.type === 'UserUploadDetails' &&
-      file.uploadDetails?.uploadedBy &&
-      user?.nvaUsername &&
-      file.uploadDetails.uploadedBy.split('@').pop() === user.nvaUsername.split('@').pop();
-
-    const isProtectedDegree = isDegree(publicationInstanceType);
-    if (isProtectedDegree) {
-      // Files on degree types require thesis curator rights to update files
-      if (isEmbargoed(file.embargoDate) && isOpenFile(file)) {
-        return !!user?.isEmbargoThesisCurator && userIsOnSameInstitutionAsFileUploader;
-      } else {
-        return !!user?.isThesisCurator && userIsOnSameInstitutionAsFileUploader;
-      }
-    }
-
-    const isPublishingCuratorForUploader =
-      userHasAccessRight(values, 'update-including-files') &&
-      !!user?.isPublishingCurator &&
-      userIsOnSameInstitutionAsFileUploader;
-
-    const isPendingFile = isPendingOpenFile(file) || file.type === FileType.PendingInternalFile;
-
-    if (isPendingFile) {
-      const isFileUploader =
-        user?.nvaUsername &&
-        file.uploadDetails?.type === 'UserUploadDetails' &&
-        file.uploadDetails.uploadedBy === user.nvaUsername;
-      if (isFileUploader) {
-        // Uploader can update their own files until it is approved by a curator
-        return true;
-      }
-
-      if (isPublishingCuratorForUploader) {
-        // Publishing curator can edit files uploaded by users from the same institution
-        return true;
-      }
-      return false;
-    }
-
-    const isApprovedFile = isOpenFile(file) || file.type === FileType.InternalFile;
-    if (isApprovedFile) {
-      return isPublishingCuratorForUploader;
-    }
-
-    return false;
-  }
 
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
 
@@ -262,7 +200,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                 <FilesTableRow
                   key={file.identifier}
                   file={file}
-                  disabled={!canEditFile(file)}
+                  disabled={!userCanEditFile(file, user, values)}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                     const remainingFiles = uppy
