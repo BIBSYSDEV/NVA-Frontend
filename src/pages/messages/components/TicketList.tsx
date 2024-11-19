@@ -92,7 +92,6 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             <FormControl fullWidth>
               <InputLabel id={viewedByLabelId}>{t('tasks.display_options')}</InputLabel>
               <Select
-                defaultValue={'show-all'}
                 data-testid={dataTestId.tasksPage.unreadSearchSelect}
                 size="small"
                 value={viewedByNotParam}
