@@ -3,7 +3,6 @@ import AdjustIcon from '@mui/icons-material/Adjust';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
-import ReplyIcon from '@mui/icons-material/Reply';
 import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -17,7 +16,7 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
-import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
 import { BasicDataLocationState } from '../../types/locationState.types';
@@ -65,20 +64,18 @@ const BasicDataPage = () => {
         expanded={expandedMenu}
         minimizedMenu={
           simpleGoBack ? (
-            <StyledMinimizedMenuButton title={t('basic_data.basic_data')} onClick={() => history.goBack()}>
-              <ReplyIcon />
+            <MinimizedMenuIconButton title={t('basic_data.basic_data')} onClick={() => history.goBack()}>
               <BusinessCenterIcon />
-            </StyledMinimizedMenuButton>
+            </MinimizedMenuIconButton>
           ) : (
             <Link
               to={{
                 pathname: UrlPathTemplate.BasicDataCentralImport,
                 search: history.location.state?.previousSearch,
               }}>
-              <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
-                <ReplyIcon />
+              <MinimizedMenuIconButton title={t('basic_data.basic_data')}>
                 <BusinessCenterIcon />
-              </StyledMinimizedMenuButton>
+              </MinimizedMenuIconButton>
             </Link>
           )
         }>

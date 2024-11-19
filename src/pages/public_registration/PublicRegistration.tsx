@@ -1,9 +1,8 @@
-import ReplyIcon from '@mui/icons-material/Reply';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
-import { StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MinimizedMenuIconButton } from '../../components/SideMenu';
 import { PreviousPathLocationState } from '../../types/locationState.types';
 import { RegistrationLandingPage } from './RegistrationLandingPage';
 
@@ -23,10 +22,9 @@ const PublicRegistration = () => {
       }}>
       {previousPath && (
         <Box sx={{ alignSelf: 'start', justifySelf: 'start' }} component={Link} to={previousPath}>
-          <StyledMinimizedMenuButton title={t('common.search')}>
-            <ReplyIcon />
+          <MinimizedMenuIconButton title={t('common.search')}>
             <SearchIcon />
-          </StyledMinimizedMenuButton>
+          </MinimizedMenuIconButton>
         </Box>
       )}
       <Box sx={{ gridColumn: { md: '2' } }}>

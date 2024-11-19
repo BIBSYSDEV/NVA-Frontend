@@ -1,7 +1,6 @@
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import NotesIcon from '@mui/icons-material/Notes';
-import ReplyIcon from '@mui/icons-material/Reply';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Badge, Divider, FormControlLabel, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -20,7 +19,7 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
-import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
@@ -134,10 +133,9 @@ const MyPagePage = () => {
           <Link
             to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: history.location.state?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
-            <StyledMinimizedMenuButton title={t('my_page.my_page')}>
-              <ReplyIcon />
+            <MinimizedMenuIconButton title={t('my_page.my_page')}>
               <FavoriteBorderIcon />
-            </StyledMinimizedMenuButton>
+            </MinimizedMenuIconButton>
           </Link>
         }>
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />

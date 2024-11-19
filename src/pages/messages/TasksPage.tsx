@@ -1,5 +1,4 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import ReplyIcon from '@mui/icons-material/Reply';
 import { Badge } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -11,7 +10,7 @@ import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
@@ -132,10 +131,9 @@ const TasksPage = () => {
               pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
               search: history.location.state?.previousSearch,
             }}>
-            <StyledMinimizedMenuButton title={t('common.tasks')}>
-              <ReplyIcon />
+            <MinimizedMenuIconButton title={t('common.tasks')}>
               <AssignmentIcon />
-            </StyledMinimizedMenuButton>
+            </MinimizedMenuIconButton>
           </Link>
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
