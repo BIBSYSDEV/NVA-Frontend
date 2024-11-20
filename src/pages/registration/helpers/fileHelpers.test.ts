@@ -27,7 +27,7 @@ const emptyUser: User = {
 };
 
 describe('userCanEditFile', () => {
-  test('returnerer false når brukeren er null', () => {
+  test('returns false when the user is null', () => {
     const result = userCanEditFile(emptyFile, null, emptyRegistration);
     expect(result).toBe(false);
   });
