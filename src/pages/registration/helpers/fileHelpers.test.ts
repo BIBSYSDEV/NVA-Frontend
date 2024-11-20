@@ -217,4 +217,14 @@ describe('userCanEditFile', () => {
     const result = userCanEditFile(file, user, emptyRegistration);
     expect(result).toBe(false);
   });
+
+  test('returns true for a file that lacks upload details', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      type: FileType.PendingOpenFile,
+    };
+
+    const result = userCanEditFile(file, emptyUser, emptyRegistration);
+    expect(result).toBe(true);
+  });
 });

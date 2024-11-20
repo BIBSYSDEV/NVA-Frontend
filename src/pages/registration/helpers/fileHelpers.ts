@@ -14,20 +14,25 @@ export const userCanEditFile = (file: AssociatedFile, user: User | null, registr
     return false;
   }
 
-  const isImportFile = file.uploadDetails?.type === 'ImportUploadDetails';
-  if (isImportFile) {
-    // Publishing curator can edit imported files
-    return user.isPublishingCurator;
-  }
-
   if (registration.type === 'ImportCandidate') {
     // Importer can change file before the candidate is imported
     return user.isInternalImporter;
   }
 
+  if (!file.uploadDetails) {
+    // If file lacks upload details it is uploaded by the current user, but not yet persisted on the result
+    return true;
+  }
+
+  const isImportFile = file.uploadDetails.type === 'ImportUploadDetails';
+  if (isImportFile) {
+    // Publishing curator can edit imported files
+    return user.isPublishingCurator;
+  }
+
   const userIsOnSameInstitutionAsFileUploader =
-    file.uploadDetails?.type === 'UserUploadDetails' &&
-    !!file.uploadDetails?.uploadedBy &&
+    file.uploadDetails.type === 'UserUploadDetails' &&
+    !!file.uploadDetails.uploadedBy &&
     !!user.nvaUsername &&
     file.uploadDetails.uploadedBy.split('@').pop() === user.nvaUsername.split('@').pop();
 
@@ -46,12 +51,13 @@ export const userCanEditFile = (file: AssociatedFile, user: User | null, registr
     user.isPublishingCurator &&
     userIsOnSameInstitutionAsFileUploader;
 
-  const isPendingFile = isPendingOpenFile(file) || file.type === FileType.PendingInternalFile;
+  const isPendingFile =
+    isPendingOpenFile(file) || file.type === FileType.PendingInternalFile || file.type === FileType.RejectedFile;
 
   if (isPendingFile) {
     const isFileUploader =
       user.nvaUsername &&
-      file.uploadDetails?.type === 'UserUploadDetails' &&
+      file.uploadDetails.type === 'UserUploadDetails' &&
       file.uploadDetails.uploadedBy === user.nvaUsername;
     if (isFileUploader) {
       // Uploader can update their own files until it is approved by a curator
