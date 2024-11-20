@@ -21,16 +21,14 @@ import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,
-  isDegree,
-  isEmbargoed,
   isOpenFile,
   isPendingOpenFile,
   isTypeWithFileVersionField,
   isTypeWithRrs,
-  userHasAccessRight,
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { userCanEditFile } from './helpers/fileHelpers';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -55,29 +53,8 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
   const customer = useSelector((store: RootState) => store.customer);
 
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
-  const isProtectedDegree = isDegree(publicationInstanceType);
   const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
   const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
-
-  function canEditFile(file: AssociatedFile) {
-    if (isProtectedDegree && isEmbargoed(file.embargoDate) && isOpenFile(file)) {
-      return !!user?.isEmbargoThesisCurator;
-    }
-
-    if (isProtectedDegree) {
-      return !!user?.isThesisCurator;
-    }
-
-    if (values.type === 'ImportCandidate') {
-      return !!user?.isInternalImporter;
-    }
-
-    if (isOpenFile(file)) {
-      return userHasAccessRight(values, 'update-including-files');
-    }
-
-    return true;
-  }
 
   const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
 
@@ -173,12 +150,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   )}
 
                   <StyledTableCell>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        gap: '0.5rem',
-                        alignItems: 'center',
-                      }}>
+                    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                       {t('registration.files_and_license.license')}
                       <HelperTextModal
                         modalTitle={t('registration.files_and_license.licenses')}
@@ -228,7 +200,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                 <FilesTableRow
                   key={file.identifier}
                   file={file}
-                  disabled={!canEditFile(file)}
+                  disabled={!userCanEditFile(file, user, values)}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                     const remainingFiles = uppy

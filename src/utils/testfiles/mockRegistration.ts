@@ -30,6 +30,7 @@ export const mockRegistration: JournalRegistration = {
       publisherVersion: FileVersion.Published,
       embargoDate: null,
       license: null,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '1@20754.0.0.0', uploadedDate: '' },
       rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },
     },
   ],
