@@ -5,28 +5,28 @@ import { emptyRegistration, Registration } from '../../../types/registration.typ
 import { User } from '../../../types/user.types';
 import { userCanEditFile } from './fileHelpers';
 
-describe('userCanEditFile', () => {
-  const emptyUser: User = {
-    nationalIdNumber: '',
-    familyName: '',
-    givenName: '',
-    feideId: '',
-    isAppAdmin: false,
-    isInternalImporter: false,
-    isDoiCurator: false,
-    isPublishingCurator: false,
-    isSupportCurator: false,
-    isThesisCurator: false,
-    isEmbargoThesisCurator: false,
-    isInstitutionAdmin: false,
-    isCreator: false,
-    isEditor: false,
-    isNviCurator: false,
-    roles: [],
-    nvaUsername: '',
-    allowedCustomers: [],
-  };
+const emptyUser: User = {
+  nationalIdNumber: '',
+  familyName: '',
+  givenName: '',
+  feideId: '',
+  isAppAdmin: false,
+  isInternalImporter: false,
+  isDoiCurator: false,
+  isPublishingCurator: false,
+  isSupportCurator: false,
+  isThesisCurator: false,
+  isEmbargoThesisCurator: false,
+  isInstitutionAdmin: false,
+  isCreator: false,
+  isEditor: false,
+  isNviCurator: false,
+  roles: [],
+  nvaUsername: '',
+  allowedCustomers: [],
+};
 
+describe('userCanEditFile', () => {
   test('returnerer false når brukeren er null', () => {
     const result = userCanEditFile(emptyFile, null, emptyRegistration);
     expect(result).toBe(false);
@@ -158,30 +158,63 @@ describe('userCanEditFile', () => {
     expect(result).toBe(true);
   });
 
-  // test('returns true for a pending file if the user is the uploader', () => {
-  //   vi.mocked(isPendingOpenFile).mockReturnValue(true);
-  //   const file: AssociatedFile = {
-  //     ...emptyFile,
-  //     uploadDetails: { type: 'UserUploadDetails', uploadedBy: 'user@institution.edu' },
-  //     type: FileType.PendingInternalFile,
-  //   };
-  //   const user: User = { ...emptyUser, nvaUsername: 'user@institution.edu' };
+  test('returns true for a pending file if the user is the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.PendingOpenFile,
+    };
+    const user: User = { ...emptyUser, nvaUsername: '123@1.0.0.0' };
 
-  //   const result = userCanEditFile(file, user, emptyRegistration);
-  //   expect(result).toBe(true);
-  // });
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(true);
+  });
 
-  // test('returns false for an approved file if the user is not a publishing curator for the uploader', () => {
-  //   vi.mocked(isOpenFile).mockReturnValue(true);
-  //   const file: AssociatedFile = {
-  //     ...emptyFile,
-  //     uploadDetails: { type: 'UserUploadDetails', uploadedBy: 'user@institution.edu' },
-  //   };
-  //   const user: User = { ...emptyUser, isPublishingCurator: false, nvaUsername: 'curator@other.edu' };
+  test('returns false for a pending file if the user is not the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.PendingOpenFile,
+    };
+    const user: User = { ...emptyUser, nvaUsername: '1234@1.0.0.0' };
 
-  //   const result = userCanEditFile(file, user, emptyRegistration);
-  //   expect(result).toBe(false);
-  // });
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(false);
+  });
 
-  // Test returns true if curator
+  test('returns false for an open file if the user is the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.OpenFile,
+    };
+    const user: User = { ...emptyUser, nvaUsername: '123@1.0.0.0' };
+
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(false);
+  });
+
+  test('returns false for a file if the user is not a publishing curator for the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.PendingOpenFile,
+    };
+    const user: User = { ...emptyUser, isPublishingCurator: true, nvaUsername: '123@2.0.0.0' };
+
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(false);
+  });
+
+  test('returns true for a file if the user is a publishing curator for the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.OpenFile,
+    };
+    const user: User = { ...emptyUser, isPublishingCurator: true, nvaUsername: '123@1.0.0.0' };
+
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(false);
+  });
 });
