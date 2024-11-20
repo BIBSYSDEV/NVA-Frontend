@@ -165,7 +165,7 @@ const ResearchProfile = () => {
             <PersonIcon sx={{ bgcolor: 'person.main', borderRadius: '0.25rem' }} />
             <Typography color="primary.contrastText">{t('common.person')}</Typography>
           </Box>
-          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+          <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             <Typography variant="h1" color="primary.contrastText">
               {fullName}
             </Typography>
