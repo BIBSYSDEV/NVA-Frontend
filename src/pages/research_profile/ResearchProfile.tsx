@@ -1,6 +1,5 @@
 import LinkIcon from '@mui/icons-material/Link';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import PersonIcon from '@mui/icons-material/Person';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -36,6 +35,7 @@ import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperMod
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 import { registrationSortOptions } from '../search/registration_search/RegistrationSortSelector';
+import { PersonIconHeader } from './PersonIconHeader';
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
@@ -161,10 +161,7 @@ const ResearchProfile = () => {
           }}
         />
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', ml: '7rem' }}>
-          <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-            <PersonIcon sx={{ bgcolor: 'person.main', borderRadius: '0.25rem' }} />
-            <Typography color="primary.contrastText">{t('common.person')}</Typography>
-          </Box>
+          <PersonIconHeader textColor="primary.contrastText" />
           <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             <Typography variant="h1" color="primary.contrastText">
               {fullName}
