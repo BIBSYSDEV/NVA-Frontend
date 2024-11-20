@@ -11,7 +11,7 @@ export const PersonIconHeader = ({ textColor }: PersonIconHeaderProps) => {
 
   return (
     <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
-      <PersonIcon sx={{ bgcolor: 'person.main', borderRadius: '0.25rem' }} />
+      <PersonIcon sx={{ bgcolor: 'person.main', borderRadius: '0.4rem' }} />
       <Typography color={textColor}>{t('common.person')}</Typography>
     </Box>
   );
