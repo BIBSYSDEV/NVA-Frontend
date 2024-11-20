@@ -1,4 +1,6 @@
+import PersonIcon from '@mui/icons-material/Person';
 import { Box, IconButton, ListItemText, Link as MuiLink, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { SearchListItem } from '../../../components/styled/Wrappers';
@@ -13,12 +15,18 @@ interface PersonListItemProps {
 }
 
 export const PersonListItem = ({ person }: PersonListItemProps) => {
+  const { t } = useTranslation();
   const orcid = getValueByKey('ORCID', person.identifiers);
   const personName = getFullCristinName(person.names);
   const activeAffiliations = filterActiveAffiliations(person.affiliations);
 
   return (
     <SearchListItem sx={{ borderLeftColor: 'person.main' }}>
+      <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+        <PersonIcon sx={{ bgcolor: 'person.main', borderRadius: '0.25rem' }} />
+        <Typography>{t('common.person')}</Typography>
+      </Box>
+
       <Box sx={{ display: 'flex', gap: '0.5rem' }}>
         <ListItemText disableTypography>
           <Typography sx={{ fontSize: '1rem', fontWeight: '600' }}>
