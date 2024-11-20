@@ -20,15 +20,12 @@ export const LogActionActor = ({ actor = '', organization }: Pick<LogActionType,
         ) : (
           <Tooltip title={fullName}>
             <Typography noWrap overflow="hidden">
-              {fullName ? fullName : <i>{t('common.unknown')}</i>}
+              {fullName ? fullName : <i>{t('common.unknown')}</i>},
             </Typography>
           </Tooltip>
         )}
       </Box>
-      <OrganizationNameAndIcon
-        id={organization ?? userQuery.data?.institutionCristinId ?? ''}
-        sx={{ justifyContent: 'flex-end' }}
-      />
+      <OrganizationNameAndIcon id={organization ?? userQuery.data?.institutionCristinId ?? ''} />
     </>
   );
 };
