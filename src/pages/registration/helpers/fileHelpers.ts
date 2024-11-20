@@ -17,40 +17,40 @@ export const userCanEditFile = (file: AssociatedFile, user: User | null, registr
   const isImportFile = file.uploadDetails?.type === 'ImportUploadDetails';
   if (isImportFile) {
     // Publishing curator can edit imported files
-    return !!user?.isPublishingCurator;
+    return user.isPublishingCurator;
   }
 
   if (registration.type === 'ImportCandidate') {
     // Importer can change file before the candidate is imported
-    return !!user?.isInternalImporter;
+    return user.isInternalImporter;
   }
 
   const userIsOnSameInstitutionAsFileUploader =
     file.uploadDetails?.type === 'UserUploadDetails' &&
-    file.uploadDetails?.uploadedBy &&
-    user?.nvaUsername &&
+    !!file.uploadDetails?.uploadedBy &&
+    !!user.nvaUsername &&
     file.uploadDetails.uploadedBy.split('@').pop() === user.nvaUsername.split('@').pop();
 
   const isProtectedDegree = isDegree(registration.entityDescription?.reference?.publicationInstance.type);
   if (isProtectedDegree) {
     // Files on degree types require thesis curator rights to update files
     if (isEmbargoed(file.embargoDate) && isOpenFile(file)) {
-      return !!user?.isEmbargoThesisCurator && userIsOnSameInstitutionAsFileUploader;
+      return user.isEmbargoThesisCurator && userIsOnSameInstitutionAsFileUploader;
     } else {
-      return !!user?.isThesisCurator && userIsOnSameInstitutionAsFileUploader;
+      return user.isThesisCurator && userIsOnSameInstitutionAsFileUploader;
     }
   }
 
   const isPublishingCuratorForUploader =
     userHasAccessRight(registration, 'update-including-files') &&
-    !!user?.isPublishingCurator &&
+    user.isPublishingCurator &&
     userIsOnSameInstitutionAsFileUploader;
 
   const isPendingFile = isPendingOpenFile(file) || file.type === FileType.PendingInternalFile;
 
   if (isPendingFile) {
     const isFileUploader =
-      user?.nvaUsername &&
+      user.nvaUsername &&
       file.uploadDetails?.type === 'UserUploadDetails' &&
       file.uploadDetails.uploadedBy === user.nvaUsername;
     if (isFileUploader) {
