@@ -1,5 +1,6 @@
 import LinkIcon from '@mui/icons-material/Link';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import PersonIcon from '@mui/icons-material/Person';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -159,10 +160,18 @@ const ResearchProfile = () => {
             fontWeight: 'bold',
           }}
         />
-        <Typography variant="h1" sx={{ ml: '7rem', color: 'primary.contrastText' }}>
-          {fullName}
-        </Typography>
-        {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', ml: '7rem' }}>
+          <Box sx={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
+            <PersonIcon sx={{ bgcolor: 'person.main', borderRadius: '0.25rem' }} />
+            <Typography color="primary.contrastText">{t('common.person')}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+            <Typography variant="h1" color="primary.contrastText">
+              {fullName}
+            </Typography>
+            {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
+          </Box>
+        </Box>
       </Box>
       <BackgroundDiv>
         <Helmet>
