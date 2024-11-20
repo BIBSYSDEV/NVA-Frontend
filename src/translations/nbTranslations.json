@@ -1369,7 +1369,7 @@
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
       "create_project_helper_text": "<0>Forskeren definerer selv sine prosjekter.</0> <0>Et prosjekt må ha en tittel, en prosjektleder, en koordinerende institusjon, en start- og sluttdato. Et prosjekt kan ha prosjektdeltakere, finansiørerer, godkjenninger eller forskningsresultat.</0> <0>Om du har en NFR finansiering så kan du etablere et prosjekt med den som utgangspunkt. Da starter du med å søke opp din NFR finansiering, den blir lagt til prosjektet og alle obligatoriske felt er ferdig utfylt, foruten prosjektleder som må søkes opp og bekreftes.</0> <0>(Det planlegges tilsvarende funksjonalitet med utgangspunkt i en REK-godkjenning. Alle prosjekter som skal være del av KBS-rapporteringen må ha en REK-godkjenning som identifiserer prosjektet som en klinisk behandlingsstudie.)</0>",
       "date_published": "Publiseringsdato",
-      "description_of_content": "Beskrivelse av innhold, spesielt viktig for blant annet kunstnerisk resultat",
+      "description_of_content": "Beskrivelse av innhold",
       "duplicate_publication_date_warning": "Det finnes alt en publikasjon med samme tittel som er publisert dette året",
       "duplicate_title_warning": "Det finnes en registrering i NVA med samme tittel. Vennligst avbryt registreringen dersom det er det samme resultatet som du prøver å registrere, slik at du ikke oppretter duplikater.",
       "funding": {
