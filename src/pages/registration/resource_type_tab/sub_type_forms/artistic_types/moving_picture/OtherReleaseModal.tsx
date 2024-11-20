@@ -35,7 +35,7 @@ const validationSchema = Yup.object<YupShape<OtherRelease>>({
     })
   ),
   place: Yup.object().shape({
-    label: Yup.string().required(
+    name: Yup.string().required(
       i18n.t('feedback.validation.is_required', {
         field: i18n.t('common.place'),
       })
@@ -93,7 +93,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                   />
                 )}
               </Field>
-              <Field name="place.label">
+              <Field name="place.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}

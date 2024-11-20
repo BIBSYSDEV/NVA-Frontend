@@ -27,7 +27,7 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       {entityDescription.description && (
         <>
           <Typography variant="h3" color="primary" gutterBottom>
-            {t('common.description')}
+            {t('registration.description.description_of_content')}
           </Typography>
           <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} paragraph>
             {entityDescription.description}

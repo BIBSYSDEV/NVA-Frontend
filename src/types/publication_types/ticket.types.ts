@@ -33,6 +33,7 @@ interface BaseTicket {
   createdDate: string;
   modifiedDate: string;
   id: string;
+  publicationIdentifier: string;
   publication: TicketPublication;
 }
 
@@ -61,8 +62,8 @@ type TicketPublication = Pick<
   };
 
 export interface PublishingTicket extends Ticket {
-  approvedFiles: string[];
-  filesForApproval: string[];
+  approvedFiles: AssociatedFile[];
+  filesForApproval: AssociatedFile[];
   workflow: PublishStrategy;
 }
 

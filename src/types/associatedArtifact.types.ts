@@ -47,7 +47,7 @@ export interface AssociatedFile {
   publishedDate?: string;
 }
 
-export interface UserUploadDetails {
+interface UserUploadDetails {
   type: 'UserUploadDetails';
   uploadedBy: string;
   uploadedDate: string;
@@ -61,7 +61,7 @@ export interface ImportUploadDetails {
 }
 
 export const emptyFile: AssociatedFile = {
-  type: FileType.UnpublishedFile,
+  type: FileType.PendingOpenFile,
   identifier: '',
   name: '',
   size: 0,

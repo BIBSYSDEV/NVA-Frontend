@@ -1,8 +1,9 @@
+import CancelIcon from '@mui/icons-material/Cancel';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,6 +50,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
   registration: RegistrationSearchItem;
   ticketView?: boolean;
+  onRemoveRelated?: () => void;
 }
 
 export const RegistrationListItemContent = ({
@@ -58,6 +60,7 @@ export const RegistrationListItemContent = ({
   onDeleteDraftRegistration,
   promotedPublications = [],
   target,
+  onRemoveRelated,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription, id } = registration;
@@ -222,6 +225,16 @@ export const RegistrationListItemContent = ({
             </Tooltip>
           )}
         </Box>
+      )}
+      {onRemoveRelated && (
+        <Tooltip title={t('registration.resource_type.research_data.remove_relation')}>
+          <IconButton
+            sx={{ alignSelf: 'start' }}
+            onClick={onRemoveRelated}
+            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}>
+            <CancelIcon color="primary" />
+          </IconButton>
+        </Tooltip>
       )}
     </Box>
   );
