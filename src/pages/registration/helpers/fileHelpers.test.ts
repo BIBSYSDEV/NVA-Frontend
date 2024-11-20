@@ -170,6 +170,18 @@ describe('userCanEditFile', () => {
     expect(result).toBe(true);
   });
 
+  test('returns true for a pending file if the user is publishing curator for the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.PendingOpenFile,
+    };
+    const user: User = { ...emptyUser, isPublishingCurator: true, nvaUsername: '1234@1.0.0.0' };
+
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(true);
+  });
+
   test('returns true for a rejected file if the user is the uploader', () => {
     const file: AssociatedFile = {
       ...emptyFile,
@@ -227,7 +239,7 @@ describe('userCanEditFile', () => {
     const user: User = { ...emptyUser, isPublishingCurator: true, nvaUsername: '123@1.0.0.0' };
 
     const result = userCanEditFile(file, user, emptyRegistration);
-    expect(result).toBe(false);
+    expect(result).toBe(true);
   });
 
   test('returns true for a file that lacks upload details', () => {

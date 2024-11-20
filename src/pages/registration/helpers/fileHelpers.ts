@@ -1,13 +1,7 @@
 import { AssociatedFile, FileType } from '../../../types/associatedArtifact.types';
 import { Registration } from '../../../types/registration.types';
 import { User } from '../../../types/user.types';
-import {
-  isDegree,
-  isEmbargoed,
-  isOpenFile,
-  isPendingOpenFile,
-  userHasAccessRight,
-} from '../../../utils/registration-helpers';
+import { isDegree, isEmbargoed, isOpenFile, isPendingOpenFile } from '../../../utils/registration-helpers';
 
 export const userCanEditFile = (file: AssociatedFile, user: User | null, registration: Registration) => {
   if (!user) {
@@ -45,11 +39,7 @@ export const userCanEditFile = (file: AssociatedFile, user: User | null, registr
       return user.isThesisCurator && userIsOnSameInstitutionAsFileUploader;
     }
   }
-
-  const isPublishingCuratorForUploader =
-    userHasAccessRight(registration, 'update-including-files') &&
-    user.isPublishingCurator &&
-    userIsOnSameInstitutionAsFileUploader;
+  const isPublishingCuratorForUploader = user.isPublishingCurator && userIsOnSameInstitutionAsFileUploader;
 
   const isPendingFile =
     isPendingOpenFile(file) || file.type === FileType.PendingInternalFile || file.type === FileType.RejectedFile;
@@ -59,6 +49,7 @@ export const userCanEditFile = (file: AssociatedFile, user: User | null, registr
       user.nvaUsername &&
       file.uploadDetails.type === 'UserUploadDetails' &&
       file.uploadDetails.uploadedBy === user.nvaUsername;
+
     if (isFileUploader) {
       // Uploader can update their own files until it is approved by a curator
       return true;
