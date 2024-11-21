@@ -26,8 +26,8 @@ interface RegistrationTypeElement {
   value: PublicationInstanceType;
   text: string;
   selected: boolean;
+  showNoFilesIcon: boolean;
   disableText?: string;
-  showNoFilesIcon?: boolean;
 }
 
 interface RegistrationRowConfig {
@@ -162,7 +162,7 @@ export const CategorySelector = ({
                 text: t(`registration.publication_types.${registrationType}`),
                 selected: selectedCategories.includes(registrationType),
                 disableText: disabledCategories?.find((category) => category.type === registrationType)?.text,
-                showNoFilesIcon: categoriesWithoutFiles?.includes(registrationType),
+                showNoFilesIcon: !!categoriesWithoutFiles?.includes(registrationType),
               }))
             )}
             onChangeType={onCategoryClick}
