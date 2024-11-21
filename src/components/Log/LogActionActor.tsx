@@ -13,7 +13,7 @@ export const LogActionActor = ({ actor = '', organization }: Pick<LogActionType,
 
   return (
     <Box sx={{ display: 'flex', gap: '0.25rem' }}>
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.5rem', alignItems: 'center' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.3rem', alignItems: 'center' }}>
         {<Avatar username={actor} sx={{ height: '1.5rem', width: '1.5rem' }} />}
         {userQuery.isLoading ? (
           <Skeleton sx={{ width: '6rem' }} />
