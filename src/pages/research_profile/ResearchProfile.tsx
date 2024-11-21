@@ -35,7 +35,6 @@ import { UserOrcidHelperModal } from '../my_page/user_profile/UserOrcidHelperMod
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 import { registrationSortOptions } from '../search/registration_search/RegistrationSortSelector';
-import { PersonIconHeader } from './PersonIconHeader';
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
@@ -160,15 +159,10 @@ const ResearchProfile = () => {
             fontWeight: 'bold',
           }}
         />
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', ml: '7rem' }}>
-          <PersonIconHeader textColor="primary.contrastText" />
-          <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <Typography variant="h1" color="primary.contrastText">
-              {fullName}
-            </Typography>
-            {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
-          </Box>
-        </Box>
+        <Typography variant="h1" sx={{ ml: '7rem', color: 'primary.contrastText' }}>
+          {fullName}
+        </Typography>
+        {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
       <BackgroundDiv>
         <Helmet>
