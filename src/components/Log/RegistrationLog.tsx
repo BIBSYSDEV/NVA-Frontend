@@ -1,8 +1,7 @@
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Log as LogType } from '../../types/log.types';
-import { toDateStringWithTime } from '../../utils/date-helpers';
+import { LogDateItem } from './LogDateItem';
 import { LogEntry } from './LogEntry';
 
 interface LogProps {
@@ -30,12 +29,7 @@ const MetaDataLastUpdatedEntry = ({ metadataUpdated }: Pick<LogType, 'metadataUp
       <Typography color="grey.700" sx={{ textAlign: 'center' }}>
         {t('log.metadata_last_updated')}
       </Typography>
-      <Box sx={{ display: 'flex' }}>
-        <CalendarMonthIcon color="primary" fontSize="small" />
-        <Typography color="grey.700" sx={{ textAlign: 'center' }}>
-          {toDateStringWithTime(lastUpdated)}
-        </Typography>
-      </Box>
+      <LogDateItem date={lastUpdated} />
     </Box>
   );
 };
