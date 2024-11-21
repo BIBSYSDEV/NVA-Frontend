@@ -132,10 +132,16 @@ export const CategorySelector = ({
               />
               <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
             </Box>
-            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <FolderOffIcon color="primary" titleAccess={t('editor.does_not_support_file_upload')} fontSize="small" />
-              <Typography>{t('editor.does_not_support_file_upload')}</Typography>
-            </Box>
+            {showNoFilesIcon && (
+              <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <FolderOffIcon
+                  color="primary"
+                  titleAccess={t('editor.does_not_support_file_upload')}
+                  fontSize="small"
+                />
+                <Typography>{t('editor.does_not_support_file_upload')}</Typography>
+              </Box>
+            )}
           </Box>
         )}
       </Box>
