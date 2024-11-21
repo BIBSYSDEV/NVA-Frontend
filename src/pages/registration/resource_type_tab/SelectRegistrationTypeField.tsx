@@ -39,6 +39,7 @@ import {
   emptyResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
 import {
+  allPublicationInstanceTypes,
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
   PublicationType,
@@ -275,6 +276,10 @@ export const SelectRegistrationTypeField = () => {
 
   const disabledCategories = getDisabledCategories(user, customer, values, t);
 
+  const categoriesWithoutFiles = customer?.allowFileUploadForTypes
+    ? allPublicationInstanceTypes.filter((type) => !customer.allowFileUploadForTypes.includes(type))
+    : [];
+
   return openSelectType || !currentInstanceType ? (
     <>
       <Paper sx={{ p: '1rem' }} elevation={10}>
@@ -294,6 +299,7 @@ export const SelectRegistrationTypeField = () => {
           selectedCategories={currentInstanceType ? [currentInstanceType] : []}
           onCategoryClick={onChangeType}
           disabledCategories={disabledCategories}
+          categoriesWithoutFiles={categoriesWithoutFiles}
         />
 
         {!currentInstanceType && (

@@ -27,6 +27,7 @@ interface RegistrationTypeElement {
   text: string;
   selected: boolean;
   disableText?: string;
+  showNoFilesIcon?: boolean;
 }
 
 interface RegistrationRowConfig {
@@ -58,7 +59,7 @@ interface CategorySelectorProps {
   setSelectedCategories?: (categories: PublicationInstanceType[]) => void;
   onCategoryClick?: (category: PublicationInstanceType) => void;
   disabledCategories?: DisabledCategory[];
-  showNoFilesIcon?: boolean;
+  categoriesWithoutFiles?: PublicationInstanceType[];
 }
 
 export const CategorySelector = ({
@@ -66,7 +67,7 @@ export const CategorySelector = ({
   onCategoryClick,
   selectedCategories,
   setSelectedCategories,
-  showNoFilesIcon = false,
+  categoriesWithoutFiles,
 }: CategorySelectorProps) => {
   const { t } = useTranslation();
 
@@ -132,7 +133,7 @@ export const CategorySelector = ({
               />
               <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
             </Box>
-            {showNoFilesIcon && (
+            {categoriesWithoutFiles && (
               <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <FolderOffIcon
                   color="primary"
@@ -162,10 +163,10 @@ export const CategorySelector = ({
                 text: t(`registration.publication_types.${registrationType}`),
                 selected: selectedCategories.includes(registrationType),
                 disableText: disabledCategories?.find((category) => category.type === registrationType)?.text,
+                showNoFilesIcon: categoriesWithoutFiles?.includes(registrationType),
               }))
             )}
             onChangeType={onCategoryClick}
-            showNoFilesIcon={showNoFilesIcon}
           />
         ))}
       </Box>
@@ -177,15 +178,9 @@ interface RegistrationTypesRowProps {
   onChangeType?: (type: PublicationInstanceType) => void;
   mainType: PublicationType;
   registrationTypes: RegistrationTypeElement[];
-  showNoFilesIcon: boolean;
 }
 
-const RegistrationTypesRow = ({
-  mainType,
-  registrationTypes,
-  onChangeType,
-  showNoFilesIcon,
-}: RegistrationTypesRowProps) => {
+const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: RegistrationTypesRowProps) => {
   const { t } = useTranslation();
 
   return registrationTypes.length > 0 ? (
@@ -195,12 +190,7 @@ const RegistrationTypesRow = ({
       </Typography>
       <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
         {registrationTypes.map((registrationType) => (
-          <CategoryChip
-            key={registrationType.value}
-            category={registrationType}
-            onClickChip={onChangeType}
-            showNoFilesIcon={showNoFilesIcon}
-          />
+          <CategoryChip key={registrationType.value} category={registrationType} onClickChip={onChangeType} />
         ))}
       </Box>
     </>
@@ -211,19 +201,12 @@ interface CategoryChipProps {
   category: RegistrationTypeElement;
   onClickChip?: (type: PublicationInstanceType) => void;
   disabled?: boolean;
-  showNoFilesIcon?: boolean;
 }
 
-export const CategoryChip = ({
-  category,
-  onClickChip,
-  disabled = !!category.disableText,
-  showNoFilesIcon = false,
-}: CategoryChipProps) => {
+export const CategoryChip = ({ category, onClickChip, disabled = !!category.disableText }: CategoryChipProps) => {
   const { t } = useTranslation();
 
-  const shouldShowNviIcon = nviApplicableTypes.includes(category.value);
-  const shouldShowNoFilesIcon = showNoFilesIcon && !category.selected;
+  const showNviIcon = nviApplicableTypes.includes(category.value);
 
   return (
     <Tooltip title={category.disableText}>
@@ -232,15 +215,15 @@ export const CategoryChip = ({
           data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
           disabled={disabled}
           icon={
-            shouldShowNviIcon || shouldShowNoFilesIcon ? (
+            showNviIcon || category.showNoFilesIcon ? (
               <Box sx={{ display: 'flex' }}>
-                {shouldShowNviIcon && (
+                {showNviIcon && (
                   <FilterVintageIcon
                     titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
                     fontSize="small"
                   />
                 )}
-                {shouldShowNoFilesIcon && (
+                {category.showNoFilesIcon && (
                   <FolderOffIcon titleAccess={t('editor.does_not_support_file_upload')} fontSize="small" />
                 )}
               </Box>
