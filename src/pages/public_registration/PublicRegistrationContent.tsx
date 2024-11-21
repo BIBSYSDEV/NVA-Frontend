@@ -66,7 +66,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />
       </Box>
-      <StyledPaperHeader>
+      <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <RegistrationIconHeader
             publicationInstanceType={entityDescription?.reference?.publicationInstance.type}
