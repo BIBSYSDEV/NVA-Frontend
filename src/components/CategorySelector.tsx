@@ -1,4 +1,5 @@
 import FilterVintageIcon from '@mui/icons-material/FilterVintage';
+import FolderOffIcon from '@mui/icons-material/FolderOff';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Chip, TextField, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -57,6 +58,7 @@ interface CategorySelectorProps {
   setSelectedCategories?: (categories: PublicationInstanceType[]) => void;
   onCategoryClick?: (category: PublicationInstanceType) => void;
   disabledCategories?: DisabledCategory[];
+  showNoFilesIcon?: boolean;
 }
 
 export const CategorySelector = ({
@@ -64,6 +66,7 @@ export const CategorySelector = ({
   onCategoryClick,
   selectedCategories,
   setSelectedCategories,
+  showNoFilesIcon = false,
 }: CategorySelectorProps) => {
   const { t } = useTranslation();
 
@@ -120,18 +123,19 @@ export const CategorySelector = ({
             label={t('registration.resource_type.nvi.can_give_publication_points')}
           />
         ) : (
-          <Box
-            sx={{
-              display: 'flex',
-              gap: '0.5rem',
-              alignItems: 'center',
-            }}>
-            <FilterVintageIcon
-              color="primary"
-              titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-              fontSize="small"
-            />
-            <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <FilterVintageIcon
+                color="primary"
+                titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+                fontSize="small"
+              />
+              <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <FolderOffIcon color="primary" titleAccess={t('editor.does_not_support_file_upload')} fontSize="small" />
+              <Typography>{t('editor.does_not_support_file_upload')}</Typography>
+            </Box>
           </Box>
         )}
       </Box>
@@ -155,6 +159,7 @@ export const CategorySelector = ({
               }))
             )}
             onChangeType={onCategoryClick}
+            showNoFilesIcon={showNoFilesIcon}
           />
         ))}
       </Box>
@@ -166,9 +171,15 @@ interface RegistrationTypesRowProps {
   onChangeType?: (type: PublicationInstanceType) => void;
   mainType: PublicationType;
   registrationTypes: RegistrationTypeElement[];
+  showNoFilesIcon: boolean;
 }
 
-const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: RegistrationTypesRowProps) => {
+const RegistrationTypesRow = ({
+  mainType,
+  registrationTypes,
+  onChangeType,
+  showNoFilesIcon,
+}: RegistrationTypesRowProps) => {
   const { t } = useTranslation();
 
   return registrationTypes.length > 0 ? (
@@ -178,7 +189,12 @@ const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: Reg
       </Typography>
       <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
         {registrationTypes.map((registrationType) => (
-          <CategoryChip key={registrationType.value} category={registrationType} onClickChip={onChangeType} />
+          <CategoryChip
+            key={registrationType.value}
+            category={registrationType}
+            onClickChip={onChangeType}
+            showNoFilesIcon={showNoFilesIcon}
+          />
         ))}
       </Box>
     </>
@@ -189,10 +205,19 @@ interface CategoryChipProps {
   category: RegistrationTypeElement;
   onClickChip?: (type: PublicationInstanceType) => void;
   disabled?: boolean;
+  showNoFilesIcon?: boolean;
 }
 
-export const CategoryChip = ({ category, onClickChip, disabled = !!category.disableText }: CategoryChipProps) => {
+export const CategoryChip = ({
+  category,
+  onClickChip,
+  disabled = !!category.disableText,
+  showNoFilesIcon = false,
+}: CategoryChipProps) => {
   const { t } = useTranslation();
+
+  const shouldShowNviIcon = nviApplicableTypes.includes(category.value);
+  const shouldShowNoFilesIcon = showNoFilesIcon && !category.selected;
 
   return (
     <Tooltip title={category.disableText}>
@@ -201,11 +226,18 @@ export const CategoryChip = ({ category, onClickChip, disabled = !!category.disa
           data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
           disabled={disabled}
           icon={
-            nviApplicableTypes.includes(category.value) ? (
-              <FilterVintageIcon
-                titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-                fontSize="small"
-              />
+            shouldShowNviIcon || shouldShowNoFilesIcon ? (
+              <Box sx={{ display: 'flex' }}>
+                {shouldShowNviIcon && (
+                  <FilterVintageIcon
+                    titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+                    fontSize="small"
+                  />
+                )}
+                {shouldShowNoFilesIcon && (
+                  <FolderOffIcon titleAccess={t('editor.does_not_support_file_upload')} fontSize="small" />
+                )}
+              </Box>
             ) : undefined
           }
           variant={category.selected ? 'filled' : 'outlined'}
