@@ -271,6 +271,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
     case PublicationType.Anthology:
       return {
         entityDescription: {
+          npiSubjectHeading: true,
           reference: {
             publicationContext: {
               type: true,
