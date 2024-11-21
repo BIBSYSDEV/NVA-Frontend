@@ -3,7 +3,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,6 @@ import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
 import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { displayDate } from '../utils/date-helpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
@@ -22,9 +21,9 @@ import {
   getResearchProfilePath,
   UrlPathTemplate,
 } from '../utils/urlPaths';
-import { RegistrationIcon } from './atoms/RegistrationIcon';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
+import { RegistrationIconHeader } from './RegistrationIconHeader';
 import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
 
@@ -102,19 +101,10 @@ export const RegistrationListItemContent = ({
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' }, marginBottom: '0.5rem' }}>
-          <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
-            <RegistrationIcon />
-            {registrationType && (
-              <Typography sx={{ color: 'primary.main' }}>
-                {t(`registration.publication_types.${registrationType}`)}
-              </Typography>
-            )}
-            {entityDescription?.publicationDate && (
-              <Typography sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-                {displayDate(entityDescription?.publicationDate)}
-              </Typography>
-            )}
-          </Box>
+          <RegistrationIconHeader
+            publicationInstanceType={registration.entityDescription.reference.publicationInstance.type}
+            publicationDate={registration.entityDescription.publicationDate}
+          />
           {ticketView &&
             (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
               <Typography
