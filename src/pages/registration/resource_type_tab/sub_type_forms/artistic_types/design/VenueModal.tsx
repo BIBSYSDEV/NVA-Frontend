@@ -26,7 +26,7 @@ const emptyVenue: Venue = {
 
 const validationSchema = Yup.object<YupShape<Venue>>({
   place: Yup.object().shape({
-    label: Yup.string()
+    name: Yup.string()
       .nullable()
       .required(
         i18n.t('feedback.validation.is_required', {
@@ -57,7 +57,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
         {({ isSubmitting }: FormikProps<Venue>) => (
           <Form noValidate>
             <DialogContent>
-              <Field name="place.label">
+              <Field name="place.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}

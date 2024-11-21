@@ -21,15 +21,14 @@ import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,
-  isDegree,
-  isEmbargoed,
   isOpenFile,
+  isPendingOpenFile,
   isTypeWithFileVersionField,
   isTypeWithRrs,
-  userHasAccessRight,
 } from '../../utils/registration-helpers';
 import { HelperTextModal } from './HelperTextModal';
-import { FilesTableRow, markForPublishId } from './files_and_license_tab/FilesTableRow';
+import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { userCanEditFile } from './helpers/fileHelpers';
 
 const StyledTableCell = styled(TableCell)({
   pt: '0.75rem',
@@ -43,10 +42,9 @@ interface FileListProps {
   uppy: Uppy;
   remove: (index: number) => any;
   baseFieldName: string;
-  archived?: boolean;
 }
 
-export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }: FileListProps) => {
+export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileListProps) => {
   const { t } = useTranslation();
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
@@ -55,37 +53,13 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
   const customer = useSelector((store: RootState) => store.customer);
 
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
-  const isProtectedDegree = isDegree(publicationInstanceType);
   const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
   const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
 
-  function canEditFile(file: AssociatedFile) {
-    if (isProtectedDegree && isEmbargoed(file.embargoDate) && isOpenFile(file)) {
-      return !!user?.isEmbargoThesisCurator;
-    }
-
-    if (isProtectedDegree) {
-      return !!user?.isThesisCurator;
-    }
-
-    if (values.type === 'ImportCandidate') {
-      return !!user?.isInternalImporter;
-    }
-
-    if (isOpenFile(file)) {
-      return userHasAccessRight(values, 'update-including-files');
-    }
-
-    return true;
-  }
+  const showAllColumns = files.some((file) => isOpenFile(file) || isPendingOpenFile(file));
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-      }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <Typography component="h3" variant="h4">
         {title}
       </Typography>
@@ -94,19 +68,12 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
           <TableHead sx={{ bgcolor: 'white' }}>
             <TableRow>
               <StyledTableCell>{t('common.name')}</StyledTableCell>
-              <StyledTableCell id={markForPublishId}>
-                {t('registration.files_and_license.mark_for_publish')}
-              </StyledTableCell>
-              {!archived && (
+              <StyledTableCell>{t('registration.files_and_license.availability')}</StyledTableCell>
+              {showAllColumns && (
                 <>
                   {showFileVersion && (
                     <StyledTableCell>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                        }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <Box sx={{ display: 'flex' }}>
                           {t('common.version')}
                           <Typography color="error">*</Typography>
@@ -183,12 +150,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                   )}
 
                   <StyledTableCell>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        gap: '0.5rem',
-                        alignItems: 'center',
-                      }}>
+                    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                       {t('registration.files_and_license.license')}
                       <HelperTextModal
                         modalTitle={t('registration.files_and_license.licenses')}
@@ -238,7 +200,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                 <FilesTableRow
                   key={file.identifier}
                   file={file}
-                  disabled={!canEditFile(file)}
+                  disabled={!userCanEditFile(file, user, values)}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                     const remainingFiles = uppy
@@ -255,7 +217,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName, archived }
                   baseFieldName={`${baseFieldName}[${associatedFileIndex}]`}
                   showFileVersion={showFileVersion}
                   showRrs={isTypeWithRrs(publicationInstanceType)}
-                  archived={archived}
+                  showAllColumns={showAllColumns}
                 />
               );
             })}

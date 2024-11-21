@@ -110,7 +110,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                   />
                 )}
               </Field>
-              <Field name="place.label">
+              <Field name="place.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}

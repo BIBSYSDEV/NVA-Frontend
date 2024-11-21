@@ -1,8 +1,8 @@
 import { TFunction } from 'i18next';
-import { AssociatedFile, FileType, UserUploadDetails } from '../../types/associatedArtifact.types';
+import { AssociatedFile, FileType } from '../../types/associatedArtifact.types';
 import { LogAction, LogActionItem, LogEntry } from '../../types/log.types';
 import { PublishingTicket } from '../../types/publication_types/ticket.types';
-import { getOpenFiles } from '../registration-helpers';
+import { isOpenFile } from '../registration-helpers';
 
 export function generatePublishingRequestLogEntry(
   ticket: PublishingTicket,
@@ -13,8 +13,9 @@ export function generatePublishingRequestLogEntry(
     case 'Completed': {
       if (ticket.approvedFiles.length > 0) {
         const uploadedFilesEntry = generateFilesUploadedLogEntry(ticket, filesOnRegistration, t);
-        const publishedFilesEntry = generateApprovedFilesLogEntry(ticket, filesOnRegistration, t);
-        return [uploadedFilesEntry, publishedFilesEntry].filter(Boolean);
+        const openFilesEntry = generateOpenFilesLogEntry(ticket, filesOnRegistration, t);
+        const internalFilesEntry = generateInternalFilesLogEntry(ticket, filesOnRegistration, t);
+        return [uploadedFilesEntry, openFilesEntry, internalFilesEntry].filter(Boolean) as LogEntry[];
       }
       return generateMetadataUpdatedLogEntry(ticket, t);
     }
@@ -34,46 +35,64 @@ export function generatePublishingRequestLogEntry(
   }
 }
 
-function generateApprovedFilesLogEntry(
+const fileHasBeenRemovedFromRegistration = (file: AssociatedFile, filesOnRegistration: AssociatedFile[]) =>
+  !filesOnRegistration.some((registrationFile) => registrationFile.identifier === file.identifier);
+
+const generateInternalFilesLogEntry = (
   ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
   t: TFunction
-): LogEntry {
-  const openFilesItems: LogActionItem[] = getOpenFiles(filesOnRegistration)
-    .filter((file) => ticket.approvedFiles.includes(file.identifier))
-    .sort((a, b) => a.name.localeCompare(b.name))
+): LogEntry | null => {
+  const internalFilesItems: LogActionItem[] = ticket.approvedFiles
+    .filter((file) => file.type === FileType.InternalFile)
+    .sort((a, b) => a.name?.localeCompare(b.name))
     .map((file) => ({
       description: file.name,
-      fileIcon: 'file',
+      fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration) ? 'deletedFile' : 'archivedFile',
     }));
 
-  const archivedFilesItems: LogActionItem[] = filesOnRegistration
-    .filter(
-      (file) =>
-        (file.type === FileType.UnpublishableFile || file.type === FileType.InternalFile) &&
-        ticket.approvedFiles.includes(file.identifier)
-    )
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .map((file) => ({
-      description: file.name,
-      fileIcon: 'archivedFile',
-    }));
-
-  const deletedFilesItems: LogActionItem[] = ticket.approvedFiles
-    .filter((identifier) => !filesOnRegistration.some((file) => file.identifier === identifier))
-    .map(() => ({
-      description: t('log.unknown_filename'),
-      fileIcon: 'deletedFile',
-    }));
+  if (internalFilesItems.length === 0) {
+    return null;
+  }
 
   return {
     type: 'PublishingRequest',
-    title: t('log.titles.files_published', { count: ticket.approvedFiles.length }),
+    title: t('log.titles.file_archived', { count: internalFilesItems.length }),
     modifiedDate: ticket.finalizedDate ?? '',
     actions: [
       {
         actor: ticket.finalizedBy ?? '',
-        items: [...openFilesItems, ...archivedFilesItems, ...deletedFilesItems],
+        items: internalFilesItems,
+      },
+    ],
+  };
+};
+
+function generateOpenFilesLogEntry(
+  ticket: PublishingTicket,
+  filesOnRegistration: AssociatedFile[],
+  t: TFunction
+): LogEntry | null {
+  const openFilesItems: LogActionItem[] = ticket.approvedFiles
+    .filter(isOpenFile)
+    .sort((a, b) => a.name?.localeCompare(b.name))
+    .map((file) => ({
+      description: file.name,
+      fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration) ? 'deletedFile' : 'file',
+    }));
+
+  if (openFilesItems.length === 0) {
+    return null;
+  }
+
+  return {
+    type: 'PublishingRequest',
+    title: t('log.titles.files_published', { count: openFilesItems.length }),
+    modifiedDate: ticket.finalizedDate ?? '',
+    actions: [
+      {
+        actor: ticket.finalizedBy ?? '',
+        items: openFilesItems,
       },
     ],
   };
@@ -98,31 +117,21 @@ function generateRejectedFilesLogEntry(
   filesOnRegistration: AssociatedFile[],
   t: TFunction
 ): LogEntry {
-  const fileIdentifiersOnTicket = [...ticket.filesForApproval, ...ticket.approvedFiles];
-  const rejectedFiles = filesOnRegistration.filter((file) => fileIdentifiersOnTicket.includes(file.identifier));
-
-  const rejectedFileItems: LogActionItem[] = rejectedFiles
-    .sort((a, b) => a.name.localeCompare(b.name))
+  const rejectedFileItems: LogActionItem[] = ticket.filesForApproval
+    .sort((a, b) => a.name?.localeCompare(b.name))
     .map((file) => ({
       description: file.name,
-      fileIcon: 'rejectedFile',
-    }));
-
-  const deletedFilesItems: LogActionItem[] = fileIdentifiersOnTicket
-    .filter((identifier) => !filesOnRegistration.some((file) => file.identifier === identifier))
-    .map(() => ({
-      description: t('log.unknown_filename'),
-      fileIcon: 'deletedFile',
+      fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration) ? 'deletedFile' : 'rejectedFile',
     }));
 
   return {
     type: 'PublishingRequest',
-    title: t('log.titles.files_rejected', { count: fileIdentifiersOnTicket.length }),
+    title: t('log.titles.files_rejected', { count: rejectedFileItems.length }),
     modifiedDate: ticket.finalizedDate ?? '',
     actions: [
       {
         actor: ticket.finalizedBy ?? '',
-        items: [...rejectedFileItems, ...deletedFilesItems],
+        items: rejectedFileItems,
       },
     ],
   };
@@ -133,24 +142,9 @@ function generateFilesUploadedLogEntry(
   filesOnRegistration: AssociatedFile[],
   t: TFunction
 ): LogEntry {
-  const fileIdentifiersOnTicket = [...ticket.filesForApproval, ...ticket.approvedFiles];
-  const uploadedFiles = filesOnRegistration.filter((file) => fileIdentifiersOnTicket.includes(file.identifier));
+  const uploadedFiles = [...ticket.filesForApproval, ...ticket.approvedFiles];
   const filesByUser = groupFilesByUser(uploadedFiles);
-
   const logActions: LogAction[] = [];
-
-  const deletedFilesItems: LogActionItem[] = fileIdentifiersOnTicket
-    .filter((identifier) => !filesOnRegistration.some((file) => file.identifier === identifier))
-    .map(() => ({
-      description: t('log.unknown_filename'),
-      fileIcon: 'deletedFile',
-    }));
-
-  if (deletedFilesItems.length > 0) {
-    logActions.push({
-      items: deletedFilesItems,
-    });
-  }
 
   filesByUser.forEach((files, username) => {
     logActions.push({
@@ -158,14 +152,18 @@ function generateFilesUploadedLogEntry(
       items: files.map((file) => ({
         description: file.name,
         date: file.uploadDetails?.uploadedDate ?? '',
-        fileIcon: 'file',
+        fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration)
+          ? 'deletedFile'
+          : file.type === FileType.InternalFile
+            ? 'archivedFile'
+            : 'file',
       })),
     });
   });
 
   return {
     type: 'PublishingRequest',
-    title: t('log.titles.files_uploaded', { count: fileIdentifiersOnTicket.length }),
+    title: t('log.titles.files_uploaded', { count: uploadedFiles.length }),
     modifiedDate: ticket.createdDate,
     actions: logActions,
   };
@@ -174,14 +172,13 @@ function generateFilesUploadedLogEntry(
 function groupFilesByUser(files: AssociatedFile[]) {
   const map: Map<string, AssociatedFile[]> = new Map();
 
-  const userUploadedFiles = files.filter((file) => file.uploadDetails?.type === 'UserUploadDetails');
-  userUploadedFiles.forEach((item: AssociatedFile) => {
-    const key = (item.uploadDetails as UserUploadDetails).uploadedBy;
+  files.forEach((file) => {
+    const key = file.uploadDetails?.type === 'UserUploadDetails' ? file.uploadDetails.uploadedBy : 'unknown';
     const collection = map.get(key);
     if (!collection) {
-      map.set(key, [item]);
+      map.set(key, [file]);
     } else {
-      collection.push(item);
+      collection.push(file);
     }
   });
   return map;

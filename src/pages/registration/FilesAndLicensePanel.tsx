@@ -43,9 +43,15 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
-  const openFiles = files.filter(isOpenFile);
-  const pendingOpenFiles = files.filter(isPendingOpenFile);
-  const filesNotToPublish = files.filter((file) => file.type === FileType.UnpublishableFile);
+
+  const completedFiles = files.filter(
+    (file) => isOpenFile(file) || file.type === FileType.InternalFile || file.type === FileType.UnpublishableFile
+  );
+  const pendingFiles = files.filter(
+    (file) =>
+      isPendingOpenFile(file) || file.type === FileType.PendingInternalFile || file.type === FileType.RejectedFile
+  );
+
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
     associatedLinkIndex >= 0 &&
@@ -145,29 +151,20 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     disabled={!canEditFiles}
                   />
                 )}
-                {pendingOpenFiles.length > 0 && (
+                {pendingFiles.length > 0 && (
                   <FileList
-                    title={t('registration.files_and_license.files_to_publish')}
-                    files={pendingOpenFiles}
+                    title={t('registration.files_and_license.files_in_progress')}
+                    files={pendingFiles}
                     uppy={uppy}
                     remove={remove}
                     baseFieldName={name}
                   />
                 )}
-                {filesNotToPublish.length > 0 && (
+
+                {completedFiles.length > 0 && (
                   <FileList
-                    title={t('registration.files_and_license.files_are_not_published')}
-                    files={filesNotToPublish}
-                    uppy={uppy}
-                    remove={remove}
-                    baseFieldName={name}
-                    archived
-                  />
-                )}
-                {openFiles.length > 0 && (
-                  <FileList
-                    title={t('registration.files_and_license.published_files')}
-                    files={openFiles}
+                    title={t('registration.files_and_license.files_completed')}
+                    files={completedFiles}
                     uppy={uppy}
                     remove={remove}
                     baseFieldName={name}
