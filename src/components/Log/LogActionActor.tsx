@@ -12,7 +12,7 @@ export const LogActionActor = ({ actor = '', organization }: Pick<LogActionType,
   const fullName = getFullName(userQuery.data?.givenName, userQuery.data?.familyName);
 
   return (
-    <>
+    <Box sx={{ display: 'flex', gap: '0.25rem' }}>
       <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '0.5rem', alignItems: 'center' }}>
         {<Avatar username={actor} sx={{ height: '1.5rem', width: '1.5rem' }} />}
         {userQuery.isLoading ? (
@@ -26,6 +26,6 @@ export const LogActionActor = ({ actor = '', organization }: Pick<LogActionType,
         )}
       </Box>
       <OrganizationNameAndIcon id={organization ?? userQuery.data?.institutionCristinId ?? ''} />
-    </>
+    </Box>
   );
 };
