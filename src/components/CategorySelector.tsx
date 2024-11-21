@@ -124,24 +124,23 @@ export const CategorySelector = ({
             label={t('registration.resource_type.nvi.can_give_publication_points')}
           />
         ) : (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <FilterVintageIcon
-                color="primary"
-                titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-                fontSize="small"
-              />
-              <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
-            </Box>
+          <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.25rem 0.5rem' }}>
+            <FilterVintageIcon
+              color="primary"
+              titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+              fontSize="small"
+            />
+            <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
+
             {categoriesWithoutFiles && (
-              <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <>
                 <FolderOffIcon
                   color="primary"
                   titleAccess={t('editor.does_not_support_file_upload')}
                   fontSize="small"
                 />
                 <Typography>{t('editor.does_not_support_file_upload')}</Typography>
-              </Box>
+              </>
             )}
           </Box>
         )}
