@@ -12,7 +12,7 @@ export const LogActionItem = ({ description, date, fileIcon }: LogActionItemType
   const itemIsFile = !!fileIcon;
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', ml: '0.2rem' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
       <Box
         sx={{
           display: 'grid',
