@@ -1,3 +1,5 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CancelIcon from '@mui/icons-material/Cancel';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Chip, TextField, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -191,6 +193,8 @@ interface CategoryChipProps {
 export const CategoryChip = ({ category, onClickChip, disabled = !!category.disableText }: CategoryChipProps) => {
   const showNviIcon = nviApplicableTypes.includes(category.value);
 
+  const toggleCategory = onClickChip ? () => onClickChip(category.value) : undefined;
+
   return (
     <Tooltip title={category.disableText}>
       <span>
@@ -205,9 +209,11 @@ export const CategoryChip = ({ category, onClickChip, disabled = !!category.disa
               </Box>
             ) : undefined
           }
+          deleteIcon={category.selected ? <CancelIcon /> : <AddCircleOutlineIcon />}
           variant={category.selected ? 'filled' : 'outlined'}
           color="primary"
-          onClick={onClickChip ? () => onClickChip(category.value) : undefined}
+          onDelete={toggleCategory}
+          onClick={toggleCategory}
           label={category.text}
         />
       </span>
