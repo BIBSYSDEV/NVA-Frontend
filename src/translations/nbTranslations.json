@@ -222,6 +222,7 @@
     "next": "Neste",
     "no": "Nei",
     "no_hits": "Ingen treff",
+    "no_search_hits": "Ingen søketreff",
     "none": "Ingen",
     "not_decided": "Ikke bestemt",
     "number_of_rows_per_page": "Antall rader per side",
@@ -775,7 +776,7 @@
         "field": "Fagfelt",
         "field_and_background": "Fagfelt og bakgrunn",
         "field_text": "Oppgi nøkkelord som kan beskrive fagfeltet ditt.",
-        "keywords_search_text": "Du kan legge til flere nøkkelord av gangen"
+        "keywords_search_text": "Søk etter nøkkelord. Du kan legge til flere nøkkelord av gangen."
       },
       "heading": {
         "affiliations": "Tilknytninger",

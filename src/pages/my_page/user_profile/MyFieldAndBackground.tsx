@@ -53,26 +53,22 @@ export const MyFieldAndBackground = () => {
       no: personBackground.no ?? '',
       en: personBackground.en ?? '',
     },
-    keywords: personKeywords.map((keyword) => {
-      return {
-        type: 'Keyword',
-        id: '',
-        identifier: keyword.type,
-        labels: keyword.label,
-      };
-    }),
+    keywords: personKeywords.map((keyword) => ({
+      type: 'Keyword',
+      id: '',
+      identifier: keyword.type,
+      labels: keyword.label,
+    })),
   };
 
   const updatePerson = useMutation({
     mutationFn: async (values: PersonBackgroundFormData) => {
       if (personId) {
         const keywords = values.keywords as Keywords[];
-        const mappedKeywords: KeywordsOld[] = keywords.map((keyword) => {
-          return {
-            type: keyword.identifier,
-            label: keyword.labels,
-          };
-        });
+        const mappedKeywords: KeywordsOld[] = keywords.map((keyword) => ({
+          type: keyword.identifier,
+          label: keyword.labels,
+        }));
         const payload: PersonBackgroundFormData = {
           background: {
             no: values.background.no === '' ? null : values.background.no,
@@ -137,6 +133,7 @@ export const MyFieldAndBackground = () => {
                           />
                         ))
                       }
+                      noOptionsText={t('common.no_search_hits')}
                       filterOptions={(options) => options}
                       autoComplete
                       onInputChange={(_, newInputValue) => setKeywordSearchTerm(newInputValue)}
