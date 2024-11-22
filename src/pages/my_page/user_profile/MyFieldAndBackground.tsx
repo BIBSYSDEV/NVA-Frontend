@@ -154,7 +154,11 @@ export const MyFieldAndBackground = () => {
                       noOptionsText={t('common.no_search_hits')}
                       filterOptions={(options) => options}
                       autoComplete
-                      onInputChange={(_, newInputValue) => setKeywordSearchTerm(newInputValue)}
+                      onInputChange={(_, newInputValue, reason) => {
+                        if (reason !== 'reset') {
+                          setKeywordSearchTerm(newInputValue);
+                        }
+                      }}
                       onChange={(_, value) => {
                         setFieldValue(field.name, value);
                       }}
