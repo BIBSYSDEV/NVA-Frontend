@@ -1,4 +1,3 @@
-import FilterVintageIcon from '@mui/icons-material/FilterVintage';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Chip, TextField, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -20,12 +19,15 @@ import {
 import { PublicationInstanceType } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { nviApplicableTypes } from '../utils/registration-helpers';
+import { DoesNotSupportFileIcon } from './atoms/DoesNotSupportFileIcon';
+import { NviApplicableIcon } from './atoms/NviApplicableIcon';
 
 interface RegistrationTypeElement {
   value: PublicationInstanceType;
   text: string;
   selected: boolean;
   disableText?: string;
+  showNoFilesIcon?: boolean;
 }
 
 interface RegistrationRowConfig {
@@ -57,6 +59,7 @@ interface CategorySelectorProps {
   setSelectedCategories?: (categories: PublicationInstanceType[]) => void;
   onCategoryClick?: (category: PublicationInstanceType) => void;
   disabledCategories?: DisabledCategory[];
+  categoriesWithoutFiles?: PublicationInstanceType[];
 }
 
 export const CategorySelector = ({
@@ -64,6 +67,7 @@ export const CategorySelector = ({
   onCategoryClick,
   selectedCategories,
   setSelectedCategories,
+  categoriesWithoutFiles,
 }: CategorySelectorProps) => {
   const { t } = useTranslation();
 
@@ -98,13 +102,7 @@ export const CategorySelector = ({
         />
         {setSelectedCategories ? (
           <Chip
-            icon={
-              <FilterVintageIcon
-                color="primary"
-                titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-                fontSize="small"
-              />
-            }
+            icon={<NviApplicableIcon />}
             color="primary"
             title={t('registration.resource_type.nvi.select_all_nvi_categories')}
             onClick={() => {
@@ -120,18 +118,16 @@ export const CategorySelector = ({
             label={t('registration.resource_type.nvi.can_give_publication_points')}
           />
         ) : (
-          <Box
-            sx={{
-              display: 'flex',
-              gap: '0.5rem',
-              alignItems: 'center',
-            }}>
-            <FilterVintageIcon
-              color="primary"
-              titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-              fontSize="small"
-            />
+          <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.25rem 0.5rem' }}>
+            <NviApplicableIcon />
             <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
+
+            {categoriesWithoutFiles && (
+              <>
+                <DoesNotSupportFileIcon />
+                <Typography>{t('editor.does_not_support_file_upload')}</Typography>
+              </>
+            )}
           </Box>
         )}
       </Box>
@@ -152,6 +148,7 @@ export const CategorySelector = ({
                 text: t(`registration.publication_types.${registrationType}`),
                 selected: selectedCategories.includes(registrationType),
                 disableText: disabledCategories?.find((category) => category.type === registrationType)?.text,
+                showNoFilesIcon: categoriesWithoutFiles?.includes(registrationType),
               }))
             )}
             onChangeType={onCategoryClick}
@@ -192,7 +189,7 @@ interface CategoryChipProps {
 }
 
 export const CategoryChip = ({ category, onClickChip, disabled = !!category.disableText }: CategoryChipProps) => {
-  const { t } = useTranslation();
+  const showNviIcon = nviApplicableTypes.includes(category.value);
 
   return (
     <Tooltip title={category.disableText}>
@@ -201,11 +198,11 @@ export const CategoryChip = ({ category, onClickChip, disabled = !!category.disa
           data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
           disabled={disabled}
           icon={
-            nviApplicableTypes.includes(category.value) ? (
-              <FilterVintageIcon
-                titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-                fontSize="small"
-              />
+            showNviIcon || category.showNoFilesIcon ? (
+              <Box sx={{ display: 'flex' }}>
+                {showNviIcon && <NviApplicableIcon />}
+                {category.showNoFilesIcon && <DoesNotSupportFileIcon />}
+              </Box>
             ) : undefined
           }
           variant={category.selected ? 'filled' : 'outlined'}
