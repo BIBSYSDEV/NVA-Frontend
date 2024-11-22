@@ -5,8 +5,7 @@ import { LogHeader } from './LogHeader';
 
 export const LogEntry = ({ title, type, modifiedDate, actions }: LogEntryType) => {
   return (
-    <Box
-      sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', p: '0.5rem', bgcolor: logBackgroundColor[type] }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', p: '0.5rem', bgcolor: logBackgroundColor[type] }}>
       <LogHeader title={title} type={type} modifiedDate={modifiedDate} />
       {actions && actions.map((action, index) => <LogAction {...action} key={index} />)}
     </Box>

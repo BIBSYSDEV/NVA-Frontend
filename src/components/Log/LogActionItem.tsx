@@ -10,8 +10,9 @@ import { toDateString } from '../../utils/date-helpers';
 export const LogActionItem = ({ description, date, fileIcon }: LogActionItemType) => {
   const { t } = useTranslation();
   const itemIsFile = !!fileIcon;
+
   return (
-    <>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
       <Box
         sx={{
           display: 'grid',
@@ -39,7 +40,7 @@ export const LogActionItem = ({ description, date, fileIcon }: LogActionItemType
           <Typography>{toDateString(new Date(date))}</Typography>
         </Tooltip>
       )}
-    </>
+    </Box>
   );
 };
 
