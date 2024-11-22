@@ -1,3 +1,5 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CancelIcon from '@mui/icons-material/Cancel';
 import FilterVintageIcon from '@mui/icons-material/FilterVintage';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Chip, TextField, Tooltip, Typography } from '@mui/material';
@@ -194,6 +196,8 @@ interface CategoryChipProps {
 export const CategoryChip = ({ category, onClickChip, disabled = !!category.disableText }: CategoryChipProps) => {
   const { t } = useTranslation();
 
+  const toggleCategory = onClickChip ? () => onClickChip(category.value) : undefined;
+
   return (
     <Tooltip title={category.disableText}>
       <span>
@@ -208,9 +212,11 @@ export const CategoryChip = ({ category, onClickChip, disabled = !!category.disa
               />
             ) : undefined
           }
+          deleteIcon={category.selected ? <CancelIcon /> : <AddCircleOutlineIcon />}
           variant={category.selected ? 'filled' : 'outlined'}
           color="primary"
-          onClick={onClickChip ? () => onClickChip(category.value) : undefined}
+          onDelete={toggleCategory}
+          onClick={toggleCategory}
           label={category.text}
         />
       </span>
