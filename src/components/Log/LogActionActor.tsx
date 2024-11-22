@@ -20,7 +20,7 @@ export const LogActionActor = ({ actor = '', organization }: Pick<LogActionType,
         ) : (
           <Tooltip title={fullName}>
             <Typography noWrap overflow="hidden">
-              {fullName ? fullName : <i>{t('common.unknown')}</i>},
+              {fullName ? fullName : <i>{t('common.unknown')}</i>}
             </Typography>
           </Tooltip>
         )}
