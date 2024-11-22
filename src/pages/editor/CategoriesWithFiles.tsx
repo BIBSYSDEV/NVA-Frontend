@@ -11,6 +11,7 @@ import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { allPublicationInstanceTypes } from '../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../types/registration.types';
 
 export const CategoriesWithFiles = () => {
@@ -60,9 +61,18 @@ const CategoriesWithFilesForCustomer = ({ customer }: CategoriesWithFilesForCust
     }
   };
 
+  const categoriesWithoutFiles =
+    selectedCategories.length > 0
+      ? allPublicationInstanceTypes.filter((type) => !selectedCategories.includes(type))
+      : [];
+
   return (
     <>
-      <CategorySelector selectedCategories={selectedCategories} onCategoryClick={onSelectType} />
+      <CategorySelector
+        selectedCategories={selectedCategories}
+        onCategoryClick={onSelectType}
+        categoriesWithoutFiles={categoriesWithoutFiles}
+      />
 
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem', mt: '2rem' }}>
         <Button onClick={() => setSelectedCategories(customer.allowFileUploadForTypes)}>{t('common.cancel')}</Button>
