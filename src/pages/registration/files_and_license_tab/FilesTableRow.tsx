@@ -171,6 +171,7 @@ export const FilesTableRow = ({
                 data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
                 SelectProps={{ inputProps: { 'aria-label': t('registration.files_and_license.availability') } }}
                 select
+                disabled={disabled}
                 variant="filled"
                 InputProps={{ sx: { '.MuiSelect-select': { py: '0.75rem' } } }}
                 fullWidth
