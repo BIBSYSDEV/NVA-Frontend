@@ -67,5 +67,10 @@ export const userCanEditFile = (file: AssociatedFile, user: User | null, registr
     return isPublishingCuratorForUploader;
   }
 
+  const isHiddenFile = file.type === FileType.HiddenFile;
+  if (isHiddenFile) {
+    return isPublishingCuratorForUploader;
+  }
+
   return false;
 };

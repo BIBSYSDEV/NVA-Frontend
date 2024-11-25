@@ -1410,6 +1410,7 @@
       "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "file_type": {
+        "hidden_file": "Skjult fil",
         "internal_file": "Intern fil",
         "open_file": "Åpen fil",
         "rejected_file": "Avvist fil"

@@ -5,6 +5,7 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
   Box,
   Checkbox,
@@ -197,6 +198,14 @@ export const FilesTableRow = ({
                     {t('registration.files_and_license.file_type.internal_file')}
                   </StyledFileTypeMenuItemContent>
                 </MenuItem>
+                {user?.isPublishingCurator && (
+                  <MenuItem value={FileType.HiddenFile}>
+                    <StyledFileTypeMenuItemContent>
+                      <VisibilityOffOutlinedIcon fontSize="small" />
+                      {t('registration.files_and_license.file_type.hidden_file')}
+                    </StyledFileTypeMenuItemContent>
+                  </MenuItem>
+                )}
                 {field.value === FileType.RejectedFile && (
                   <MenuItem value={FileType.RejectedFile} disabled>
                     <StyledFileTypeMenuItemContent>
