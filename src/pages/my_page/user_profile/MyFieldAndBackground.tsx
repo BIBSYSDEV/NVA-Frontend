@@ -1,12 +1,21 @@
 import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPerson, searchForKeywords, updateCristinPerson } from '../../../api/cristinApi';
+import {
+  defaultOrganizationSearchSize,
+  fetchPerson,
+  searchForKeywords,
+  updateCristinPerson,
+} from '../../../api/cristinApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -39,11 +48,12 @@ export const MyFieldAndBackground = () => {
   const personBackground = person?.background ?? {};
   const personKeywords = person?.keywords ?? [];
 
+  const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const keywordsQuery = useQuery({
-    enabled: !!debouncedKeywordsSearchTerm,
-    queryKey: ['keywords', debouncedKeywordsSearchTerm],
-    queryFn: () => searchForKeywords(25, 1, debouncedKeywordsSearchTerm),
+    queryKey: ['keywords', debouncedKeywordsSearchTerm, searchSize],
+    queryFn: () => searchForKeywords(searchSize, 1, debouncedKeywordsSearchTerm),
     meta: { errorMessage: t('feedback.error.get_keywords') },
+    placeholderData: keepPreviousData,
   });
 
   const keywordsResult = keywordsQuery.data?.hits ?? [];
@@ -53,26 +63,22 @@ export const MyFieldAndBackground = () => {
       no: personBackground.no ?? '',
       en: personBackground.en ?? '',
     },
-    keywords: personKeywords.map((keyword) => {
-      return {
-        type: 'Keyword',
-        id: '',
-        identifier: keyword.type,
-        labels: keyword.label,
-      };
-    }),
+    keywords: personKeywords.map((keyword) => ({
+      type: 'Keyword',
+      id: '',
+      identifier: keyword.type,
+      labels: keyword.label,
+    })),
   };
 
   const updatePerson = useMutation({
     mutationFn: async (values: PersonBackgroundFormData) => {
       if (personId) {
         const keywords = values.keywords as Keywords[];
-        const mappedKeywords: KeywordsOld[] = keywords.map((keyword) => {
-          return {
-            type: keyword.identifier,
-            label: keyword.labels,
-          };
-        });
+        const mappedKeywords: KeywordsOld[] = keywords.map((keyword) => ({
+          type: keyword.identifier,
+          label: keyword.labels,
+        }));
         const payload: PersonBackgroundFormData = {
           background: {
             no: values.background.no === '' ? null : values.background.no,
@@ -128,6 +134,14 @@ export const MyFieldAndBackground = () => {
                           <Typography>{getLanguageString(option.labels)}</Typography>
                         </li>
                       )}
+                      ListboxComponent={AutocompleteListboxWithExpansion}
+                      ListboxProps={
+                        {
+                          hasMoreHits: !!keywordsQuery.data?.size && keywordsQuery.data.size > searchSize,
+                          onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
+                          isLoadingMoreHits: keywordsQuery.isFetching && searchSize > keywordsResult.length,
+                        } satisfies AutocompleteListboxWithExpansionProps as any
+                      }
                       renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
                           <Chip
@@ -137,9 +151,14 @@ export const MyFieldAndBackground = () => {
                           />
                         ))
                       }
+                      noOptionsText={t('common.no_search_hits')}
                       filterOptions={(options) => options}
                       autoComplete
-                      onInputChange={(_, newInputValue) => setKeywordSearchTerm(newInputValue)}
+                      onInputChange={(_, newInputValue, reason) => {
+                        if (reason !== 'reset') {
+                          setKeywordSearchTerm(newInputValue);
+                        }
+                      }}
                       onChange={(_, value) => {
                         setFieldValue(field.name, value);
                       }}

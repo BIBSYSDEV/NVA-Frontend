@@ -1,10 +1,11 @@
 import CloseIcon from '@mui/icons-material/Close';
-import FilterVintageIcon from '@mui/icons-material/FilterVintage';
 import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, Typography } from '@mui/material';
 import { ErrorMessage, useFormikContext } from 'formik';
 import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { DoesNotSupportFileIcon } from '../../../components/atoms/DoesNotSupportFileIcon';
+import { NviApplicableIcon } from '../../../components/atoms/NviApplicableIcon';
 import { CategorySelector } from '../../../components/CategorySelector';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { StyledInfoBanner } from '../../../components/styled/Wrappers';
@@ -39,6 +40,7 @@ import {
   emptyResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
 import {
+  allPublicationInstanceTypes,
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
   PublicationType,
@@ -275,6 +277,10 @@ export const SelectRegistrationTypeField = () => {
 
   const disabledCategories = getDisabledCategories(user, customer, values, t);
 
+  const categoriesWithoutFiles = customer?.allowFileUploadForTypes
+    ? allPublicationInstanceTypes.filter((type) => !customer.allowFileUploadForTypes.includes(type))
+    : [];
+
   return openSelectType || !currentInstanceType ? (
     <>
       <Paper sx={{ p: '1rem' }} elevation={10}>
@@ -294,6 +300,7 @@ export const SelectRegistrationTypeField = () => {
           selectedCategories={currentInstanceType ? [currentInstanceType] : []}
           onCategoryClick={onChangeType}
           disabledCategories={disabledCategories}
+          categoriesWithoutFiles={categoriesWithoutFiles}
         />
 
         {!currentInstanceType && (
@@ -372,11 +379,11 @@ export const SelectRegistrationTypeField = () => {
         data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(currentInstanceType)}
         disabled={disableNviCriticalFields}
         icon={
-          nviApplicableTypes.includes(currentInstanceType) ? (
-            <FilterVintageIcon
-              titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-              fontSize="small"
-            />
+          nviApplicableTypes.includes(currentInstanceType) || categoriesWithoutFiles.includes(currentInstanceType) ? (
+            <Box sx={{ display: 'flex' }}>
+              {nviApplicableTypes.includes(currentInstanceType) && <NviApplicableIcon />}
+              {categoriesWithoutFiles.includes(currentInstanceType) && <DoesNotSupportFileIcon />}
+            </Box>
           ) : undefined
         }
         variant="filled"

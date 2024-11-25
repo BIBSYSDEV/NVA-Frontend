@@ -12,6 +12,7 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
+import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
 import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
@@ -99,7 +100,14 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               modalHeading={t('registration.modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
-            <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <RegistrationIconHeader
+                publicationInstanceType={values.entityDescription?.reference?.publicationInstance.type}
+                publicationDate={values.entityDescription?.publicationDate}
+                showYearOnly
+              />
+              <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
+            </Box>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />
             <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
