@@ -2,7 +2,7 @@ import BlockIcon from '@mui/icons-material/Block';
 import CheckIcon from '@mui/icons-material/Check';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import InsertPageBreakOutlinedIcon from '@mui/icons-material/InsertPageBreakOutlined';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
@@ -193,7 +193,7 @@ export const FilesTableRow = ({
                 </MenuItem>
                 <MenuItem value={isCompletedFile ? FileType.InternalFile : FileType.PendingInternalFile}>
                   <StyledFileTypeMenuItemContent>
-                    <InsertPageBreakOutlinedIcon fontSize="small" />
+                    <Inventory2OutlinedIcon fontSize="small" />
                     {t('registration.files_and_license.file_type.internal_file')}
                   </StyledFileTypeMenuItemContent>
                 </MenuItem>

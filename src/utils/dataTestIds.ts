@@ -334,7 +334,6 @@ export const dataTestId = {
     projectsAccordion: 'projects-accordion',
     projectTitle: 'project-title',
     publicationsUsingDatasetAccordion: 'publications-using-dataset-accordion',
-    registrationSubtype: 'public-registration-registration-subtype',
     rejectDoiButton: 'button-reject-doi',
     relatedPublicationsAccordion: 'related-publications-accordion',
     relatedRegistrationsAccordion: 'related-registrations-accordion',

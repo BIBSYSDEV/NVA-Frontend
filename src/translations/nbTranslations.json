@@ -222,6 +222,7 @@
     "next": "Neste",
     "no": "Nei",
     "no_hits": "Ingen treff",
+    "no_search_hits": "Ingen søketreff",
     "none": "Ingen",
     "not_decided": "Ikke bestemt",
     "number_of_rows_per_page": "Antall rader per side",
@@ -312,10 +313,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -387,11 +384,15 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur"
+    "1170": "Kunst, design og arkitektur",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
-    "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting",
+    "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting.",
     "curators": {
       "active_area_of_responsibilities": "Tilknyttede ansvarsområder",
       "add_curator": "Legg til kurator",
@@ -416,6 +417,7 @@
       "search_for_curator": "Søk etter kurator",
       "search_for_unit": "Søk etter enhet"
     },
+    "does_not_support_file_upload": "Støtter ikke filopplasting",
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er en persistent identifikator.|Gjør det enklere å sitere publikasjoner korrekt.|Metadata om resultatet blir delt internasjonalt.|Synligheten til resultatet øker.|Bidrar til å oppfylle FAIR-prinsippene.|Understøtter åpen forskning.",
       "doi_information_bullet_points_2": "Tjenesten har støtte for å tildele $t(common.doi_long) til resultater.|Institusjonen som tildeler $t(common.doi_long) blir utgiver av resultatet.|Grundig sjekk av metadata, innhold i filer og lisenser er nødvendig før tildeling av $t(common.doi_long). Feil metadata er tidkrevende å rette i ettertid.",
@@ -687,7 +689,6 @@
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
-    "header_icon": "Log header icon {{type}}",
     "imported_from_source": "Importert fra {{source}}",
     "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert:",
@@ -774,7 +775,7 @@
         "field": "Fagfelt",
         "field_and_background": "Fagfelt og bakgrunn",
         "field_text": "Oppgi nøkkelord som kan beskrive fagfeltet ditt.",
-        "keywords_search_text": "Du kan legge til flere nøkkelord av gangen"
+        "keywords_search_text": "Søk etter nøkkelord. Du kan legge til flere nøkkelord av gangen."
       },
       "heading": {
         "affiliations": "Tilknytninger",
