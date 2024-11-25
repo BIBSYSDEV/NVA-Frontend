@@ -146,7 +146,7 @@ export const FilesTableRow = ({
             {!disabled && (
               <DeleteIconButton
                 data-testid={dataTestId.registrationWizard.files.deleteFile}
-                onClick={disabled ? undefined : toggleOpenConfirmDialog}
+                onClick={toggleOpenConfirmDialog}
                 tooltip={t('registration.files_and_license.remove_file')}
               />
             )}
