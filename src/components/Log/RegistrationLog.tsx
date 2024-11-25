@@ -9,6 +9,7 @@ interface LogProps {
 }
 
 export const RegistrationLog = ({ log }: LogProps) => {
+  console.log(log.entries);
   return (
     <>
       <MetaDataLastUpdatedEntry metadataUpdated={log.metadataUpdated} />

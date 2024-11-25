@@ -134,6 +134,7 @@ function generateRejectedFilesLogEntry(
         items: rejectedFileItems,
       },
     ],
+    messages: ticket.messages,
   };
 }
 
@@ -166,6 +167,7 @@ function generateFilesUploadedLogEntry(
     title: t('log.titles.files_uploaded', { count: uploadedFiles.length }),
     modifiedDate: ticket.createdDate,
     actions: logActions,
+    messages: ticket.messages,
   };
 }
 
