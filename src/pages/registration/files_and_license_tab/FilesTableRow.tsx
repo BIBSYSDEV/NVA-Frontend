@@ -377,6 +377,7 @@ export const FilesTableRow = ({
             <VerticalAlignedTableCell>
               {isOpenableFile && (
                 <IconButton
+                  title={openCollapsable ? t('common.show_fewer_options') : t('common.show_more_options')}
                   onClick={() => setOpenCollapsable(!openCollapsable)}
                   data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
                   {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
