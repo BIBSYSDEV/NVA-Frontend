@@ -11,10 +11,9 @@ import { openFileInNewTab } from '../../../utils/registration-helpers';
 
 interface DownloadFileButtonProps {
   file: AssociatedFile;
-  greyTones?: boolean;
 }
 
-export const DownloadFileButton = ({ file, greyTones }: DownloadFileButtonProps) => {
+export const DownloadFileButton = ({ file }: DownloadFileButtonProps) => {
   const { t } = useTranslation();
   const { values } = useFormikContext<Registration>();
 
@@ -43,7 +42,7 @@ export const DownloadFileButton = ({ file, greyTones }: DownloadFileButtonProps)
   ) : (
     <Tooltip title={t('registration.files_and_license.open_file')}>
       <IconButton size="small" style={{ height: '1.5rem', padding: 0 }} onClick={() => setDownloadFile(true)}>
-        <OpenInNewOutlinedIcon color="primary" sx={{ color: greyTones ? 'grey.600' : '' }} />
+        <OpenInNewOutlinedIcon color="primary" />
       </IconButton>
     </Tooltip>
   );

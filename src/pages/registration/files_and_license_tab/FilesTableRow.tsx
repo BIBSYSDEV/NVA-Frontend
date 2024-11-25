@@ -140,15 +140,16 @@ export const FilesTableRow = ({
               </TruncatableTypography>
               <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
             </Box>
-            <Box sx={{ minWidth: '1.5rem' }}>
-              <DownloadFileButton file={file} greyTones={disabled} />
+            <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>
+              <DownloadFileButton file={file} />
             </Box>
-            <DeleteIconButton
-              data-testid={dataTestId.registrationWizard.files.deleteFile}
-              onClick={disabled ? undefined : toggleOpenConfirmDialog}
-              tooltip={t('registration.files_and_license.remove_file')}
-              disabled={disabled}
-            />
+            {!disabled && (
+              <DeleteIconButton
+                data-testid={dataTestId.registrationWizard.files.deleteFile}
+                onClick={toggleOpenConfirmDialog}
+                tooltip={t('registration.files_and_license.remove_file')}
+              />
+            )}
             <ConfirmDialog
               open={openConfirmDialog}
               title={t('registration.files_and_license.remove_file')}
@@ -171,6 +172,7 @@ export const FilesTableRow = ({
                 data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
                 SelectProps={{ inputProps: { 'aria-label': t('registration.files_and_license.availability') } }}
                 select
+                disabled={disabled}
                 variant="filled"
                 InputProps={{ sx: { '.MuiSelect-select': { py: '0.75rem' } } }}
                 fullWidth
@@ -218,8 +220,8 @@ export const FilesTableRow = ({
         </VerticalAlignedTableCell>
         {showAllColumns && (
           <>
-            {isOpenableFile && showFileVersion && (
-              <VerticalAlignedTableCell>
+            <VerticalAlignedTableCell>
+              {isOpenableFile && showFileVersion && (
                 <Field name={publisherVersionFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                     <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
@@ -272,8 +274,8 @@ export const FilesTableRow = ({
                     </FormControl>
                   )}
                 </Field>
-              </VerticalAlignedTableCell>
-            )}
+              )}
+            </VerticalAlignedTableCell>
             <VerticalAlignedTableCell>
               {isOpenableFile && (
                 <>
@@ -372,10 +374,10 @@ export const FilesTableRow = ({
                 </>
               )}
             </VerticalAlignedTableCell>
-
             <VerticalAlignedTableCell>
               {isOpenableFile && (
                 <IconButton
+                  title={openCollapsable ? t('common.show_fewer_options') : t('common.show_more_options')}
                   onClick={() => setOpenCollapsable(!openCollapsable)}
                   data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
                   {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
