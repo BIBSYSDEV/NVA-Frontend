@@ -140,15 +140,16 @@ export const FilesTableRow = ({
               </TruncatableTypography>
               <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
             </Box>
-            <Box sx={{ minWidth: '1.5rem' }}>
+            <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>
               <DownloadFileButton file={file} />
             </Box>
-            <DeleteIconButton
-              data-testid={dataTestId.registrationWizard.files.deleteFile}
-              onClick={disabled ? undefined : toggleOpenConfirmDialog}
-              tooltip={t('registration.files_and_license.remove_file')}
-              disabled={disabled}
-            />
+            {!disabled && (
+              <DeleteIconButton
+                data-testid={dataTestId.registrationWizard.files.deleteFile}
+                onClick={disabled ? undefined : toggleOpenConfirmDialog}
+                tooltip={t('registration.files_and_license.remove_file')}
+              />
+            )}
             <ConfirmDialog
               open={openConfirmDialog}
               title={t('registration.files_and_license.remove_file')}
