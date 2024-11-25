@@ -141,7 +141,7 @@ export const FilesTableRow = ({
               <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
             </Box>
             <Box sx={{ minWidth: '1.5rem' }}>
-              <DownloadFileButton file={file} greyTones={disabled} />
+              <DownloadFileButton file={file} />
             </Box>
             <DeleteIconButton
               data-testid={dataTestId.registrationWizard.files.deleteFile}
