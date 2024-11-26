@@ -15,7 +15,10 @@ export const LogMessageAccordion = ({ messages }: LogMessageAccordionProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Accordion elevation={0} sx={{ mt: '0.5rem', bgcolor: '#fff0d3' }} onClick={() => setIsExpanded(!isExpanded)}>
+    <Accordion
+      elevation={0}
+      sx={{ mt: '0.5rem', bgcolor: 'publishingRequest.light' }}
+      onClick={() => setIsExpanded(!isExpanded)}>
       <AccordionSummary sx={{ width: '100%' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
           <Typography>{isExpanded ? t('log.hide_messages') : t('log.show_messages')}</Typography>
