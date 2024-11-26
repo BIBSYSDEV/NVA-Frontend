@@ -11,7 +11,7 @@ import { logBackgroundColor } from './LogEntry';
 
 interface LogMessageAccordionProps {
   messages: Message[];
-  type: Extract<LogEntryType, 'PublishingRequest' | 'DoiRequest' | 'GeneralSupportCase'>;
+  type: Extract<LogEntryType, 'PublishingRequest' | 'DoiRequest'>;
 }
 
 export const LogMessageAccordion = ({ messages, type }: LogMessageAccordionProps) => {
@@ -56,11 +56,10 @@ export const LogMessageAccordion = ({ messages, type }: LogMessageAccordionProps
 };
 
 type TicketMessageColorType = {
-  [key in Extract<LogEntryType, 'PublishingRequest' | 'DoiRequest' | 'GeneralSupportCase'>]: BoxProps['bgcolor'];
+  [key in Extract<LogEntryType, 'PublishingRequest' | 'DoiRequest'>]: BoxProps['bgcolor'];
 };
 
 const ticketMessageColor: TicketMessageColorType = {
   PublishingRequest: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
-  GeneralSupportCase: 'generalSupportCase.main',
 };
