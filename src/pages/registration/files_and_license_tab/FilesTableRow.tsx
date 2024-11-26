@@ -200,7 +200,7 @@ export const FilesTableRow = ({
                     {t('registration.files_and_license.file_type.internal_file')}
                   </StyledFileTypeMenuItemContent>
                 </MenuItem>
-                {user?.isPublishingCurator && (
+                {(user?.isPublishingCurator || field.value === FileType.HiddenFile) && (
                   <MenuItem value={FileType.HiddenFile}>
                     <StyledFileTypeMenuItemContent>
                       <VisibilityOffOutlinedIcon fontSize="small" />
