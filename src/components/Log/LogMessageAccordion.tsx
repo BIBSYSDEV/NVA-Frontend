@@ -19,7 +19,7 @@ export const LogMessageAccordion = ({ messages }: LogMessageAccordionProps) => {
       elevation={0}
       sx={{ mt: '0.5rem', bgcolor: 'publishingRequest.light' }}
       onClick={() => setIsExpanded(!isExpanded)}>
-      <AccordionSummary sx={{ width: '100%' }}>
+      <AccordionSummary>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
           <Typography>{isExpanded ? t('log.hide_messages') : t('log.show_messages')}</Typography>
           {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -31,9 +31,7 @@ export const LogMessageAccordion = ({ messages }: LogMessageAccordionProps) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            listStyleType: 'none',
             p: 0,
-            m: 0,
             gap: '0.25rem',
           }}>
           {messages.map((message) => (
