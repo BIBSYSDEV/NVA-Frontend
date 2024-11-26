@@ -19,12 +19,28 @@ export const getAccessToken = async () => {
   }
   try {
     const currentSession = await fetchAuthSession();
-    if (currentSession.tokens) {
+    if (currentSession.tokens?.accessToken) {
       return currentSession.tokens.accessToken.toString();
     } else {
       const searchParams = new URLSearchParams();
       searchParams.set(LocalStorageKey.RedirectPath, getCurrentPath());
       window.location.href = `${UrlPathTemplate.SignedOut}?${searchParams.toString()}`;
+      return null;
+    }
+  } catch {
+    return null;
+  }
+};
+
+export const getIdTokenPayload = async () => {
+  if (USE_MOCK_DATA) {
+    return '';
+  }
+  try {
+    const currentSession = await fetchAuthSession();
+    if (currentSession.tokens?.idToken) {
+      return currentSession.tokens.idToken.payload as FeideUser;
+    } else {
       return null;
     }
   } catch {

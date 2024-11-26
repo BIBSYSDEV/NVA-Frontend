@@ -1,16 +1,17 @@
 import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { fetchAuthSession } from 'aws-amplify/auth';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
 import { authenticatedApiRequest } from '../api/apiRequest';
-import { getUserAttributes } from '../api/authApi';
 import { fetchOrganizations } from '../api/cristinApi';
 import { setNotification } from '../redux/notificationSlice';
 import { setUser } from '../redux/userSlice';
 import { CustomerInstitution } from '../types/customerInstitution.types';
+import { FeideUser } from '../types/user.types';
 import { isSuccessStatus } from '../utils/constants';
 import { sortCustomerInstitutions } from '../utils/institutions-helpers';
 import { OrganizationRenderOption } from './OrganizationRenderOption';
@@ -22,6 +23,7 @@ interface SelectCustomerInstitutionDialogProps {
 export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCustomerInstitutionDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  // const { handleLogin, handleLogout } = useAuthentication();
   const [openDialog, setOpenDialog] = useState(allowedCustomerIds.length > 1);
   const [allowedCustomers, setAllowedCustomers] = useState<CustomerInstitution[]>([]);
   const [isLoadingCustomers, setIsLoadingCustomers] = useState(true);
@@ -60,10 +62,12 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
           data: { customerId },
         });
         if (isSuccessStatus(response.status)) {
-          const newUserInfo = await getUserAttributes();
-          if (newUserInfo) {
-            dispatch(setUser(newUserInfo));
+          const newSession = await fetchAuthSession({ forceRefresh: true });
+          const userAttributes = newSession.tokens?.idToken?.payload as FeideUser | undefined;
+          if (userAttributes) {
+            dispatch(setUser(userAttributes));
           }
+
           setOpenDialog(false);
         }
       } catch {
