@@ -30,7 +30,7 @@ export const LogMessageAccordion = ({ messages, type }: LogMessageAccordionProps
           {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </Box>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails sx={{ p: 0 }}>
         <Box
           component="ul"
           sx={{
