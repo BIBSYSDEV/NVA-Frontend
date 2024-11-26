@@ -327,6 +327,9 @@ export const dataTestId = {
     handleLink: 'handle-link',
     keywords: 'public-registration-keywords',
     license: 'public-registration-license',
+    logPanel: {
+      logMessageAccordion: 'log-message-accordion',
+    },
     noLinkOrFilesWarning: 'no-link-or-files-warning-typhography',
     npi: 'public-registration-npi',
     openFileButton: 'open-file-button',

@@ -9,12 +9,12 @@ export const LogEntry = ({ title, type, modifiedDate, actions, messages }: LogEn
     <Box sx={{ display: 'flex', flexDirection: 'column', p: '0.5rem', bgcolor: logBackgroundColor[type] }}>
       <LogHeader title={title} type={type} modifiedDate={modifiedDate} />
       {actions && actions.map((action, index) => <LogAction {...action} key={index} />)}
-      {messages && messages.length > 0 && <LogMessageAccordion messages={messages} />}
+      {messages && messages.length > 0 && <LogMessageAccordion messages={messages} type={type} />}
     </Box>
   );
 };
 
-const logBackgroundColor = {
+export const logBackgroundColor = {
   PublishingRequest: 'publishingRequest.light',
   DoiRequest: 'doiRequest.light',
   GeneralSupportCase: 'generalSupportCase.light',
