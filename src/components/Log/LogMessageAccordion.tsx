@@ -31,6 +31,7 @@ export const LogMessageAccordion = ({ messages }: LogMessageAccordionProps) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
+            listStyleType: 'none',
             p: 0,
             gap: '0.25rem',
           }}>
