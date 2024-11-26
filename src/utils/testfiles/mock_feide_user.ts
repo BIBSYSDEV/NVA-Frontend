@@ -1,6 +1,6 @@
-import { FeideUser, InstitutionUser, RoleName } from '../../types/user.types';
+import { InstitutionUser, RoleName, UserAttributes } from '../../types/user.types';
 
-export const mockUser: FeideUser = {
+export const mockUser: UserAttributes = {
   'custom:feideId': 'tu@sikt.no',
   'custom:firstName': 'Test',
   'custom:lastName': 'User',

@@ -1,12 +1,12 @@
 import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
-import { FeideUser } from '../types/user.types';
+import { UserAttributes } from '../types/user.types';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { getCurrentPath } from '../utils/general-helpers';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
-export const getUserAttributes = async (): Promise<FeideUser | null> => {
+export const getUserAttributes = async (): Promise<UserAttributes | null> => {
   try {
-    const userAttributes = (await fetchUserAttributes()) as FeideUser;
+    const userAttributes = (await fetchUserAttributes()) as UserAttributes;
     return userAttributes;
   } catch {
     return null;
@@ -39,7 +39,7 @@ export const getIdTokenPayload = async () => {
   try {
     const currentSession = await fetchAuthSession();
     if (currentSession.tokens?.idToken) {
-      return currentSession.tokens.idToken.payload as FeideUser;
+      return currentSession.tokens.idToken.payload as UserAttributes;
     } else {
       return null;
     }

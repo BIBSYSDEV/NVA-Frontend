@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FeideUser, RoleName, User } from '../types/user.types';
+import { RoleName, User, UserAttributes } from '../types/user.types';
 
 const getStringValue = (text: string | undefined | null) => (text ? (text === 'null' ? '' : text) : '');
 
@@ -9,7 +9,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<FeideUser>) => {
+    setUser: (state, action: PayloadAction<UserAttributes>) => {
       const firstName = action.payload['custom:firstName'] ?? '';
       const lastName = action.payload['custom:lastName'] ?? '';
       const customerId = getStringValue(action.payload['custom:customerId']);

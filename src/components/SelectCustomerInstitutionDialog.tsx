@@ -11,7 +11,7 @@ import { fetchOrganizations } from '../api/cristinApi';
 import { setNotification } from '../redux/notificationSlice';
 import { setUser } from '../redux/userSlice';
 import { CustomerInstitution } from '../types/customerInstitution.types';
-import { FeideUser } from '../types/user.types';
+import { UserAttributes } from '../types/user.types';
 import { isSuccessStatus } from '../utils/constants';
 import { sortCustomerInstitutions } from '../utils/institutions-helpers';
 import { OrganizationRenderOption } from './OrganizationRenderOption';
@@ -63,7 +63,7 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
         });
         if (isSuccessStatus(response.status)) {
           const newSession = await fetchAuthSession({ forceRefresh: true });
-          const userAttributes = newSession.tokens?.idToken?.payload as FeideUser | undefined;
+          const userAttributes = newSession.tokens?.idToken?.payload as UserAttributes | undefined;
           if (userAttributes) {
             dispatch(setUser(userAttributes));
           }
