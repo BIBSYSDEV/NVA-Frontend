@@ -46,11 +46,7 @@ export const LogMessageAccordion = ({ messages, type }: LogMessageAccordionProps
               text={message.text}
               date={message.createdDate}
               username={message.sender}
-              backgroundColor={
-                type === 'PublishingRequest' || type === 'DoiRequest' || type === 'GeneralSupportCase'
-                  ? ticketMessageColor[type]
-                  : 'secondary.main'
-              }
+              backgroundColor={ticketMessageColor[type] ?? 'secondary.main'}
             />
           ))}
         </Box>
@@ -59,12 +55,7 @@ export const LogMessageAccordion = ({ messages, type }: LogMessageAccordionProps
   );
 };
 
-type TicketMessageColorType = {
-  [key in Extract<LogEntryType, 'PublishingRequest' | 'DoiRequest' | 'GeneralSupportCase'>]: BoxProps['bgcolor'];
-};
-
-const ticketMessageColor: TicketMessageColorType = {
+const ticketMessageColor: { [key: string]: BoxProps['bgcolor'] } = {
   PublishingRequest: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
-  GeneralSupportCase: 'generalSupportCase.main',
 };
