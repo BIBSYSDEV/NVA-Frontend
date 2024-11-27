@@ -83,7 +83,12 @@ export const PublishingAccordion = ({
   const formErrors = validateRegistrationForm(registration);
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
-  const canPublishResult = isDraftRegistration && registrationPublishValidationSchema.isValidSync(registration);
+
+  const canPublishMetadata =
+    isDraftRegistration &&
+    ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' &&
+      registrationPublishValidationSchema.isValidSync(registration)) ||
+      (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && registrationIsValid));
 
   const lastPublishingRequest =
     publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
@@ -240,7 +245,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {canPublishResult && showRegistrationWithSameNameWarning && (
+        {canPublishMetadata && showRegistrationWithSameNameWarning && (
           <div>
             <Typography paragraph>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
@@ -267,7 +272,7 @@ export const PublishingAccordion = ({
         )}
 
         {/* Tell user what they can publish */}
-        {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && canPublishResult && (
+        {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && canPublishMetadata && (
           <>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
               <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow1">
@@ -284,7 +289,7 @@ export const PublishingAccordion = ({
         {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && (
           <>
             <LoadingButton
-              disabled={isCreatingPublishingRequest || !canPublishResult || titleSearchPending}
+              disabled={isCreatingPublishingRequest || !canPublishMetadata || titleSearchPending}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
               sx={{ mt: '0.5rem' }}
               variant="contained"
