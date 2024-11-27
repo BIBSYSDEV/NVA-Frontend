@@ -313,6 +313,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -384,11 +388,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -689,11 +689,13 @@
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
+    "hide_messages": "Skjul meldinger",
     "imported_from_source": "Importert fra {{source}}",
     "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert:",
     "number_of_archivedFiles_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "number_of_archivedFiles_on_registration_other": "Registreringen har {{count}} arkiverte filer",
+    "show_messages": "Vis meldinger",
     "titles": {
       "created_in_nva": "Opprettet i NVA",
       "doi_given": "DOI tildelt",
@@ -1410,6 +1412,7 @@
       "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "file_type": {
+        "hidden_file": "Skjult fil",
         "internal_file": "Intern fil",
         "open_file": "Åpen fil",
         "rejected_file": "Avvist fil"

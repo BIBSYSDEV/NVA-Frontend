@@ -5,6 +5,7 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
   Box,
   Checkbox,
@@ -140,15 +141,16 @@ export const FilesTableRow = ({
               </TruncatableTypography>
               <Typography sx={{ color: disabled ? 'grey.600' : '' }}>{prettyBytes(file.size)}</Typography>
             </Box>
-            <Box sx={{ minWidth: '1.5rem' }}>
-              <DownloadFileButton file={file} greyTones={disabled} />
+            <Box sx={{ minWidth: '1.5rem', ml: 'auto' }}>
+              <DownloadFileButton file={file} />
             </Box>
-            <DeleteIconButton
-              data-testid={dataTestId.registrationWizard.files.deleteFile}
-              onClick={disabled ? undefined : toggleOpenConfirmDialog}
-              tooltip={t('registration.files_and_license.remove_file')}
-              disabled={disabled}
-            />
+            {!disabled && (
+              <DeleteIconButton
+                data-testid={dataTestId.registrationWizard.files.deleteFile}
+                onClick={toggleOpenConfirmDialog}
+                tooltip={t('registration.files_and_license.remove_file')}
+              />
+            )}
             <ConfirmDialog
               open={openConfirmDialog}
               title={t('registration.files_and_license.remove_file')}
@@ -171,6 +173,7 @@ export const FilesTableRow = ({
                 data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
                 SelectProps={{ inputProps: { 'aria-label': t('registration.files_and_license.availability') } }}
                 select
+                disabled={disabled}
                 variant="filled"
                 InputProps={{ sx: { '.MuiSelect-select': { py: '0.75rem' } } }}
                 fullWidth
@@ -197,6 +200,14 @@ export const FilesTableRow = ({
                     {t('registration.files_and_license.file_type.internal_file')}
                   </StyledFileTypeMenuItemContent>
                 </MenuItem>
+                {(user?.isPublishingCurator || field.value === FileType.HiddenFile) && (
+                  <MenuItem value={FileType.HiddenFile}>
+                    <StyledFileTypeMenuItemContent>
+                      <VisibilityOffOutlinedIcon fontSize="small" />
+                      {t('registration.files_and_license.file_type.hidden_file')}
+                    </StyledFileTypeMenuItemContent>
+                  </MenuItem>
+                )}
                 {field.value === FileType.RejectedFile && (
                   <MenuItem value={FileType.RejectedFile} disabled>
                     <StyledFileTypeMenuItemContent>
@@ -218,8 +229,8 @@ export const FilesTableRow = ({
         </VerticalAlignedTableCell>
         {showAllColumns && (
           <>
-            {isOpenableFile && showFileVersion && (
-              <VerticalAlignedTableCell>
+            <VerticalAlignedTableCell>
+              {isOpenableFile && showFileVersion && (
                 <Field name={publisherVersionFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                     <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
@@ -272,8 +283,8 @@ export const FilesTableRow = ({
                     </FormControl>
                   )}
                 </Field>
-              </VerticalAlignedTableCell>
-            )}
+              )}
+            </VerticalAlignedTableCell>
             <VerticalAlignedTableCell>
               {isOpenableFile && (
                 <>
@@ -372,10 +383,10 @@ export const FilesTableRow = ({
                 </>
               )}
             </VerticalAlignedTableCell>
-
             <VerticalAlignedTableCell>
               {isOpenableFile && (
                 <IconButton
+                  title={openCollapsable ? t('common.show_fewer_options') : t('common.show_more_options')}
                   onClick={() => setOpenCollapsable(!openCollapsable)}
                   data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
                   {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

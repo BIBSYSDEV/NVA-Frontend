@@ -222,6 +222,7 @@
     "next": "Neste",
     "no": "Nei",
     "no_hits": "Ingen treff",
+    "no_search_hits": "Ingen søkjetreff",
     "none": "Ingen",
     "not_decided": "Ikkje bestemt",
     "number_of_rows_per_page": "Tal på rader per side",
@@ -416,6 +417,7 @@
       "search_for_curator": "Søk etter kurator",
       "search_for_unit": "Søk etter eining"
     },
+    "does_not_support_file_upload": "Støttar ikkje filopplasting",
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er ein persistent identifikator.|Gjer det enklare å sitere publikasjonar korrekt.|Metadata om resultatet blir delt internasjonalt.|Synlegheita til resultatet aukar.|Bidreg til å oppfylle FAIR-prinsippa.|Støttar open forsking.",
       "doi_information_bullet_points_2": "Tenesta har støtte for å tildele $t(common.doi_long) til resultat.|Institusjonen som tildeler $t(common.doi_long) blir utgjevar av resultatet.|Grundig sjekk av metadata, innhald i filer og lisensar er nødvendig før tildeling av $t(common.doi_long). Feil metadata er tidkrevjande å rette i ettertid.",
@@ -687,12 +689,13 @@
     "archived_files_on_registration_one": "Registreringa har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringa har {{count}} arkiverte filer",
     "deleted_afterwards": "Sletta i etterkant",
-    "header_icon": "Ikon for logghode {{type}}",
+    "hide_messages": "",
     "imported_from_source": "Importert frå {{source}}",
     "imported_from_source_and_archive": "Importert frå {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert:",
     "number_of_archivedFiles_on_registration_one": "Registreringa har {{count}} arkivert fil",
     "number_of_archivedFiles_on_registration_other": "Registreringa har {{count}} arkiverte filer",
+    "show_messages": "",
     "titles": {
       "created_in_nva": "Oppretta i NVA",
       "doi_given": "DOI tildelt",
@@ -1409,6 +1412,7 @@
       "file_and_license_info": "Kvar fil i NVA må ha ein lisens, slik at lesaren er informert om kva dei har lov å gjere med innhaldet.",
       "file_publish_date_helper_text": "Fila er låst fram til angitt dato",
       "file_type": {
+        "hidden_file": "",
         "internal_file": "Intern fil",
         "open_file": "Open fil",
         "rejected_file": "Avvist fil"
