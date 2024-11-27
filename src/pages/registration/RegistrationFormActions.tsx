@@ -19,6 +19,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration, userHasAccessRight } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { registrationPublishValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { SupportModalContent } from './SupportModalContent';
 
 interface RegistrationFormActionsProps {
@@ -48,7 +49,7 @@ export const RegistrationFormActions = ({
   const history = useHistory<RegistrationFormLocationState>();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { values, setTouched, resetForm, isValid } = useFormikContext<Registration>();
+  const { values, setTouched, resetForm } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
@@ -117,7 +118,7 @@ export const RegistrationFormActions = ({
 
   const disableSaving =
     (values.status === RegistrationStatus.Published || values.status === RegistrationStatus.PublishedMetadata) &&
-    !isValid;
+    !registrationPublishValidationSchema.isValidSync(values);
 
   return (
     <>
