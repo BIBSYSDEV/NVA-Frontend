@@ -328,7 +328,7 @@ export const dataTestId = {
     keywords: 'public-registration-keywords',
     license: 'public-registration-license',
     logPanel: {
-      logMessageAccordion: 'log-message-accordion',
+      logMessageButton: 'log-message-button',
     },
     noLinkOrFilesWarning: 'no-link-or-files-warning-typhography',
     npi: 'public-registration-npi',

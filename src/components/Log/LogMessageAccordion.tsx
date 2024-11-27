@@ -1,13 +1,12 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, Box, BoxProps, Typography } from '@mui/material';
+import { Box, BoxProps, Button, Collapse, Divider } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MessageItem } from '../../pages/messages/components/MessageList';
 import { LogEntryType } from '../../types/log.types';
 import { Message } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { logBackgroundColor } from './LogEntry';
 
 interface LogMessageAccordionProps {
   messages: Message[];
@@ -19,18 +18,17 @@ export const LogMessageAccordion = ({ messages, type }: LogMessageAccordionProps
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Accordion
-      data-testid={dataTestId.registrationLandingPage.logPanel.logMessageAccordion}
-      elevation={0}
-      sx={{ mt: '0.5rem', bgcolor: logBackgroundColor[type] }}
-      onChange={() => setIsExpanded(!isExpanded)}>
-      <AccordionSummary>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-          <Typography>{isExpanded ? t('log.hide_messages') : t('log.show_messages')}</Typography>
-          {isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </Box>
-      </AccordionSummary>
-      <AccordionDetails sx={{ p: 0 }}>
+    <Box sx={{ mt: '1rem' }}>
+      <Divider />
+      <Button
+        data-testid={dataTestId.registrationLandingPage.logPanel.logMessageButton}
+        size="small"
+        onClick={() => setIsExpanded(!isExpanded)}
+        sx={{ width: '100%', mt: '0.5rem' }}
+        endIcon={isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}>
+        {isExpanded ? t('log.hide_messages') : t('log.show_messages')}
+      </Button>
+      <Collapse in={isExpanded}>
         <Box
           component="ul"
           sx={{
@@ -50,8 +48,8 @@ export const LogMessageAccordion = ({ messages, type }: LogMessageAccordionProps
             />
           ))}
         </Box>
-      </AccordionDetails>
-    </Accordion>
+      </Collapse>
+    </Box>
   );
 };
 
