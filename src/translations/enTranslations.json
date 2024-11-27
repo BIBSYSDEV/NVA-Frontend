@@ -222,6 +222,7 @@
     "next": "Next",
     "no": "No",
     "no_hits": "No hits",
+    "no_search_hits": "No search results",
     "none": "None",
     "not_decided": "Not decided",
     "number_of_rows_per_page": "Number of rows per page",
@@ -416,6 +417,7 @@
       "search_for_curator": "Search for curator",
       "search_for_unit": "Search for unit"
     },
+    "does_not_support_file_upload": "Does not support file upload",
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about the result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
       "doi_information_bullet_points_2": "The service has support for assigning $t(common.doi_long) to results.|The institution that assigns $t(common.doi_long) becomes the publisher of the result.|Thorough checking of metadata, contents of files and licences is necessary before assigning $t(common.doi_long). Incorrect metadata is time-consuming to correct afterwards.",
@@ -687,12 +689,13 @@
     "archived_files_on_registration_one": "The registration has {{count}} archived file",
     "archived_files_on_registration_other": "The registration has {{count}} archived files",
     "deleted_afterwards": "Deleted afterwards",
-    "header_icon": "Log header icon {{type}}",
+    "hide_messages": "",
     "imported_from_source": "Imported from {{source}}",
     "imported_from_source_and_archive": "Imported from {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata last updated:",
     "number_of_archivedFiles_on_registration_one": "The registration has {{count}} archived file",
     "number_of_archivedFiles_on_registration_other": "The registration has {{count}} archived files",
+    "show_messages": "",
     "titles": {
       "created_in_nva": "Created in NVA",
       "doi_given": "DOI given",
@@ -1409,6 +1412,7 @@
       "file_and_license_info": "Every file in NVA must have a licence, to inform the reader about what they are allowed to do with the content.",
       "file_publish_date_helper_text": "The file is locked until the specified date",
       "file_type": {
+        "hidden_file": "",
         "internal_file": "Internal file",
         "open_file": "Open file",
         "rejected_file": "Rejected file"
