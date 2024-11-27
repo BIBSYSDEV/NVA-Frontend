@@ -45,7 +45,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
 
   const completedFiles = files.filter(
-    (file) => isOpenFile(file) || file.type === FileType.InternalFile || file.type === FileType.UnpublishableFile
+    (file) =>
+      isOpenFile(file) ||
+      file.type === FileType.InternalFile ||
+      file.type === FileType.HiddenFile ||
+      file.type === FileType.UnpublishableFile
   );
   const pendingFiles = files.filter(
     (file) =>

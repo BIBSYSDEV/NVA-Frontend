@@ -251,4 +251,28 @@ describe('userCanEditFile', () => {
     const result = userCanEditFile(file, emptyUser, emptyRegistration);
     expect(result).toBe(true);
   });
+
+  test('returns true for a hidden file if the user is a publishing curator for the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.HiddenFile,
+    };
+    const user: User = { ...emptyUser, isPublishingCurator: true, nvaUsername: '1234@1.0.0.0' };
+
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(true);
+  });
+
+  test('returns false for a hidden file if the user is not a publishing curator for the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.HiddenFile,
+    };
+    const user: User = { ...emptyUser, isPublishingCurator: true, nvaUsername: '1234@2.0.0.0' };
+
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(false);
+  });
 });

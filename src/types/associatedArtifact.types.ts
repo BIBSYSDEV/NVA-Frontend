@@ -30,6 +30,7 @@ export enum FileType {
   RejectedFile = 'RejectedFile',
   InternalFile = 'InternalFile',
   PendingInternalFile = 'PendingInternalFile',
+  HiddenFile = 'HiddenFile',
 }
 
 export interface AssociatedFile {
