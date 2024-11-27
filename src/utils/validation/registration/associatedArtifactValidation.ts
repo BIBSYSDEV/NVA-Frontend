@@ -25,7 +25,7 @@ const associatedArtifactErrorMessage = {
   }),
 };
 
-export const associatedFileValidationSchema = Yup.object({
+export const associatedArtifactValidationSchema = Yup.object({
   type: Yup.string(),
 
   // File validation
@@ -55,6 +55,15 @@ export const associatedFileValidationSchema = Yup.object({
         : schema
     ),
   // Link validation
+  id: Yup.string()
+    .nullable()
+    .when('type', ([type], schema) =>
+      associatedArtifactIsLink({ type }) ? schema.url(associatedArtifactErrorMessage.linkInvalid) : schema
+    ),
+});
+
+export const associatedArtifactPublishValidationSchema = Yup.object({
+  type: Yup.string(),
   id: Yup.string()
     .nullable()
     .when('type', ([type], schema) =>
