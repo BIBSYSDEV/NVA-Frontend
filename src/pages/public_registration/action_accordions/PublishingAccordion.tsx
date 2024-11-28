@@ -26,7 +26,7 @@ import {
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
-import { registrationPublishValidationSchema } from '../../../utils/validation/registration/registrationValidation';
+import { registrationPublishableValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
@@ -87,7 +87,7 @@ export const PublishingAccordion = ({
   const canPublishMetadata =
     isDraftRegistration &&
     ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' &&
-      registrationPublishValidationSchema.isValidSync(registration)) ||
+      registrationPublishableValidationSchema.isValidSync(registration)) ||
       (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && registrationIsValid));
 
   const lastPublishingRequest =

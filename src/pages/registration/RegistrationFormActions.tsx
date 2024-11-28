@@ -20,7 +20,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration, userHasAccessRight } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
-import { registrationPublishValidationSchema } from '../../utils/validation/registration/registrationValidation';
+import { registrationPublishableValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { SupportModalContent } from './SupportModalContent';
 
 interface RegistrationFormActionsProps {
@@ -121,7 +121,7 @@ export const RegistrationFormActions = ({
   const disableSaving =
     (values.status === RegistrationStatus.Published || values.status === RegistrationStatus.PublishedMetadata) &&
     ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' &&
-      !registrationPublishValidationSchema.isValidSync(values)) ||
+      !registrationPublishableValidationSchema.isValidSync(values)) ||
       (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && !isValid));
 
   return (

@@ -97,6 +97,6 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
   fundings: Yup.array().of(fundingValidationSchema),
 });
 
-export const registrationPublishValidationSchema = registrationValidationSchema.shape({
+export const registrationPublishableValidationSchema = registrationValidationSchema.shape({
   associatedArtifacts: Yup.array().of(associatedArtifactPublishValidationSchema),
 });
