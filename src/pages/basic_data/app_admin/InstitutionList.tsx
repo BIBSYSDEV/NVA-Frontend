@@ -35,6 +35,8 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
   const [customerStatus, setCustomerStatus] = useState('show-all');
   const activeCustomers = institutions.filter((customer) => customer.active);
   const inactiveCustomers = institutions.filter((customer) => !customer.active);
+  const customers =
+    customerStatus === 'active' ? activeCustomers : customerStatus === 'inactive' ? inactiveCustomers : institutions;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -47,7 +49,8 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             size="small"
             value={customerStatus}
             labelId={'customer-active-select'}
-            label={t('tasks.display_options')}>
+            label={t('tasks.display_options')}
+            onChange={(event) => setCustomerStatus(event.target.value)}>
             <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
             <MenuItem value={'active'}>Kun aktive</MenuItem>
             <MenuItem value={'inactive'}>Kun inaktive</MenuItem>
@@ -67,7 +70,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {institutions.map((institution) => (
+            {customers.map((institution) => (
               <TableRow key={institution.id}>
                 <TableCell>
                   <Typography>{institution.displayName ?? institution.id}</Typography>
