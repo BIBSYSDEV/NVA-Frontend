@@ -1,5 +1,5 @@
 import { AwsS3Part } from '@uppy/aws-s3';
-import { UppyFile } from '@uppy/core';
+import { Body, Meta, UppyFile } from '@uppy/core';
 import { FileApiPath, PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 import { userIsAuthenticated } from './authApi';
@@ -61,7 +61,7 @@ export const completeMultipartUpload = async (uploadId: string, key: string, par
   return completeResponse.data;
 };
 
-export const createMultipartUpload = async (file: UppyFile<any, any>) => {
+export const createMultipartUpload = async (file: UppyFile<Meta, Body>) => {
   const payload = {
     filename: file.name,
     size: file.data.size,
