@@ -194,6 +194,11 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiMenu: {
+        defaultProps: {
+          disablePortal: true,
+        },
+      },
       MuiBadge: {
         defaultProps: { color: 'info' },
       },
