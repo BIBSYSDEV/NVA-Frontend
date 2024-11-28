@@ -183,6 +183,9 @@ export const mainTheme = createTheme(
       },
     },
     components: {
+      MuiAccordion: {
+        defaultProps: { slotProps: { heading: { component: 'div' } } },
+      },
       MuiAutocomplete: {
         styleOverrides: {
           inputRoot: {
