@@ -75,7 +75,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     // Avoid adding duplicated file names to an existing registration,
     // since files could have been uploaded in another session without being in uppy's current state
     uppy.setOptions({
-      onBeforeFileAdded: (currentFile: UppyFile) => {
+      onBeforeFileAdded: (currentFile: UppyFile<any, any>) => {
         if (filesRef.current.some((file) => file.name === currentFile.name)) {
           uppy.info(t('registration.files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
           return false;

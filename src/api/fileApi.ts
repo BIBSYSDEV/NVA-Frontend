@@ -61,7 +61,7 @@ export const completeMultipartUpload = async (uploadId: string, key: string, par
   return completeResponse.data;
 };
 
-export const createMultipartUpload = async (file: UppyFile) => {
+export const createMultipartUpload = async (file: UppyFile<any, any>) => {
   const payload = {
     filename: file.name,
     size: file.data.size,
