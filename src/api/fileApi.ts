@@ -1,4 +1,4 @@
-import { AwsS3Part } from '@uppy/aws-s3-multipart';
+import { AwsS3Part } from '@uppy/aws-s3';
 import { UppyFile } from '@uppy/core';
 import { FileApiPath, PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
@@ -60,6 +60,7 @@ export const completeMultipartUpload = async (uploadId: string, key: string, par
   });
   return completeResponse.data;
 };
+
 export const createMultipartUpload = async (file: UppyFile) => {
   const payload = {
     filename: file.name,
