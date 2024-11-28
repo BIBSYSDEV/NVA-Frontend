@@ -14,7 +14,7 @@ export const LogEntry = ({ title, type, modifiedDate, actions, messages }: LogEn
   );
 };
 
-export const logBackgroundColor = {
+const logBackgroundColor = {
   PublishingRequest: 'publishingRequest.light',
   DoiRequest: 'doiRequest.light',
   GeneralSupportCase: 'generalSupportCase.light',
