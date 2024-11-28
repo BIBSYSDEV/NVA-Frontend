@@ -12,7 +12,7 @@ import {
 
 const getUppyLocale = (language: string) => (language === 'nob' ? norwegianLocale : englishLocale);
 
-export const createUppy = (language: string) => () =>
+export const createUppy = (language: string) =>
   new Uppy({
     locale: getUppyLocale(language),
     autoProceed: true,

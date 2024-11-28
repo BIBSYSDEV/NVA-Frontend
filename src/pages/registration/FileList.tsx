@@ -11,11 +11,12 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import Uppy from '@uppy/core';
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { AssociatedFile, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -206,7 +207,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                     const remainingFiles = uppy
                       .getFiles()
                       .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                    uppy.setState({ files: remainingFiles });
+                    // uppy.setState({ files: remainingFiles });
                     remove(associatedFileIndex);
 
                     if (associatedArtifactsBeforeRemoval === 1) {

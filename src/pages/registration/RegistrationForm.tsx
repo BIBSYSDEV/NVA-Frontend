@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useUppy } from '@uppy/react';
 import { Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -42,7 +41,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t, i18n } = useTranslation();
   const history = useHistory();
   const user = useSelector((state: RootState) => state.user);
-  const uppy = useUppy(createUppy(i18n.language));
+  const [uppy] = useState(() => createUppy(i18n.language));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
 
   const highestValidatedTab =

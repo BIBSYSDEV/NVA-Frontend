@@ -1,12 +1,12 @@
 import { Box, Checkbox, FormControlLabel, Link, Paper, TextField, Typography } from '@mui/material';
-import { UppyFile } from '@uppy/core';
+import Uppy, { UppyFile } from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { AssociatedLink, FileType, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedLink, FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';

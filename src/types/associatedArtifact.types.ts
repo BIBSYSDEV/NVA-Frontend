@@ -1,4 +1,3 @@
-import { Uppy as UppyType } from '@uppy/core';
 import { CustomerRrsType } from './customerInstitution.types';
 
 type FileRrsType =
@@ -84,10 +83,6 @@ export interface AssociatedLink {
 
 export interface NullAssociatedArtifact {
   type: 'NullAssociatedArtifact';
-}
-
-export interface Uppy extends UppyType {
-  hasUploadSuccessEventListener?: boolean;
 }
 
 export type AssociatedArtifact = AssociatedFile | AssociatedLink | NullAssociatedArtifact;
