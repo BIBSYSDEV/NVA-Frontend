@@ -159,7 +159,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <FileList
                     title={t('registration.files_and_license.files_in_progress')}
                     files={pendingFiles}
-                    uppy={uppy}
                     remove={remove}
                     baseFieldName={name}
                   />
@@ -169,7 +168,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <FileList
                     title={t('registration.files_and_license.files_completed')}
                     files={completedFiles}
-                    uppy={uppy}
                     remove={remove}
                     baseFieldName={name}
                   />
