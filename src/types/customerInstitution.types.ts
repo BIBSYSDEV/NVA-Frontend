@@ -2,6 +2,7 @@ import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
+  active: boolean;
   id: string;
   createdDate: string;
   displayName: string;

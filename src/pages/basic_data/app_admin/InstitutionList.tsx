@@ -16,7 +16,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { toDateString } from '../../../utils/date-helpers';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 
 interface InstitutionListProps {
@@ -34,7 +33,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
           <TableRow>
             <TableCell>{t('common.name')}</TableCell>
             <TableCell>{t('basic_data.institutions.doi_prefix')}</TableCell>
-            <TableCell>{t('common.date')}</TableCell>
+            <TableCell>{t('common.status')}</TableCell>
             <TableCell>{t('common.actions')}</TableCell>
           </TableRow>
         </TableHead>
@@ -48,7 +47,9 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
                 <Typography>{institution.doiPrefix}</Typography>
               </TableCell>
               <TableCell>
-                <Typography>{toDateString(institution.createdDate)}</Typography>
+                <Typography>
+                  {institution.active ? t('basic_data.institutions.active') : t('basic_data.institutions.not_active')}
+                </Typography>
               </TableCell>
               <TableCell>
                 <Button
