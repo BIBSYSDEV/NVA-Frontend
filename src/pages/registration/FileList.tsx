@@ -45,7 +45,7 @@ interface FileListProps {
   baseFieldName: string;
 }
 
-export const FileList = ({ title, files, remove, baseFieldName, uppy }: FileListProps) => {
+export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileListProps) => {
   const { t } = useTranslation();
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
