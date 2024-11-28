@@ -11,6 +11,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import Uppy from '@uppy/core';
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -39,11 +40,12 @@ const StyledTableCell = styled(TableCell)({
 interface FileListProps {
   title: string;
   files: AssociatedFile[];
+  uppy: Uppy;
   remove: (index: number) => any;
   baseFieldName: string;
 }
 
-export const FileList = ({ title, files, remove, baseFieldName }: FileListProps) => {
+export const FileList = ({ title, files, remove, baseFieldName, uppy }: FileListProps) => {
   const { t } = useTranslation();
   const { values, setFieldTouched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
@@ -202,6 +204,12 @@ export const FileList = ({ title, files, remove, baseFieldName }: FileListProps)
                   disabled={!userCanEditFile(file, user, values)}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+
+                    const uppyFiles = uppy.getFiles();
+                    const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
+                    if (uppyId) {
+                      uppy.removeFile(uppyId);
+                    }
                     remove(associatedFileIndex);
 
                     if (associatedArtifactsBeforeRemoval === 1) {

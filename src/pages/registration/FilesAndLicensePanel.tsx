@@ -1,5 +1,5 @@
 import { Box, Checkbox, FormControlLabel, Link, Paper, TextField, Typography } from '@mui/material';
-import Uppy, { UppyFile } from '@uppy/core';
+import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -75,7 +75,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     // Avoid adding duplicated file names to an existing registration,
     // since files could have been uploaded in another session without being in uppy's current state
     uppy.setOptions({
-      onBeforeFileAdded: (currentFile: UppyFile<any, any>) => {
+      onBeforeFileAdded: (currentFile) => {
         if (filesRef.current.some((file) => file.name === currentFile.name)) {
           uppy.info(t('registration.files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
           return false;
@@ -159,6 +159,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <FileList
                     title={t('registration.files_and_license.files_in_progress')}
                     files={pendingFiles}
+                    uppy={uppy}
                     remove={remove}
                     baseFieldName={name}
                   />
@@ -168,6 +169,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <FileList
                     title={t('registration.files_and_license.files_completed')}
                     files={completedFiles}
+                    uppy={uppy}
                     remove={remove}
                     baseFieldName={name}
                   />

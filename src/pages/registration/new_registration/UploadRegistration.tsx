@@ -67,7 +67,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                     file={file}
                     removeFile={() => {
                       const uppyFiles = uppy.getFiles();
-                      const uppyId = uppyFiles.find((uppyFile) => uppyFile.response?.uploadURL === file.identifier)?.id;
+                      const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
                       if (uppyId) {
                         uppy.removeFile(uppyId);
                       }
