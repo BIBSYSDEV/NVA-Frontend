@@ -48,6 +48,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
       <Box
         sx={{ display: 'grid', gridTemplateColumns: '4fr 1fr', columnGap: '0.5rem', width: { lg: '100%', xl: '50%' } }}>
         <SearchTextField
+          data-testid={dataTestId.basicData.customers.customerNameSearchField}
           placeholder={t('basic_data.institutions.search_for_name')}
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
@@ -55,7 +56,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
         <FormControl fullWidth>
           <InputLabel id={'customer-active-select'}>{t('tasks.display_options')}</InputLabel>
           <Select
-            data-testid={dataTestId.tasksPage.unreadSearchSelect}
+            data-testid={dataTestId.basicData.customers.customerStatusSelect}
             size="small"
             value={customerStatus}
             labelId={'customer-active-select'}
