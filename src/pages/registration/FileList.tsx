@@ -11,11 +11,12 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import Uppy from '@uppy/core';
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { AssociatedFile, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedFile } from '../../types/associatedArtifact.types';
 import { licenses, LicenseUri } from '../../types/license.types';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -203,10 +204,12 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   disabled={!userCanEditFile(file, user, values)}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                    const remainingFiles = uppy
-                      .getFiles()
-                      .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                    uppy.setState({ files: remainingFiles });
+
+                    const uppyFiles = uppy.getFiles();
+                    const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
+                    if (uppyId) {
+                      uppy.removeFile(uppyId);
+                    }
                     remove(associatedFileIndex);
 
                     if (associatedArtifactsBeforeRemoval === 1) {
