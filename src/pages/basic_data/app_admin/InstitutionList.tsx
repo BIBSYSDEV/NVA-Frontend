@@ -33,15 +33,24 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
   const { t } = useTranslation();
 
   const [customerStatus, setCustomerStatus] = useState('show-all');
+  const [searchTerm, setSearchTerm] = useState('');
   const activeCustomers = institutions.filter((customer) => customer.active);
   const inactiveCustomers = institutions.filter((customer) => !customer.active);
-  const customers =
+  let customers =
     customerStatus === 'active' ? activeCustomers : customerStatus === 'inactive' ? inactiveCustomers : institutions;
+
+  if (searchTerm) {
+    customers = customers.filter((customer) => customer.displayName.toLowerCase().includes(searchTerm.toLowerCase()));
+  }
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <Box sx={{ display: 'grid', gridTemplateColumns: '4fr 1fr', columnGap: '0.5rem', width: '50%' }}>
-        <SearchTextField />
+        <SearchTextField
+          placeholder={t('basic_data.institutions.search_for_name')}
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
         <FormControl fullWidth>
           <InputLabel id={'customer-active-select'}>{t('tasks.display_options')}</InputLabel>
           <Select
@@ -52,8 +61,8 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             label={t('tasks.display_options')}
             onChange={(event) => setCustomerStatus(event.target.value)}>
             <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
-            <MenuItem value={'active'}>Kun aktive</MenuItem>
-            <MenuItem value={'inactive'}>Kun inaktive</MenuItem>
+            <MenuItem value={'active'}>{t('basic_data.institutions.show_only_active')}</MenuItem>
+            <MenuItem value={'inactive'}>{t('basic_data.institutions.show_only_inactive')}</MenuItem>
           </Select>
         </FormControl>
       </Box>

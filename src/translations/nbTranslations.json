@@ -119,6 +119,7 @@
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
+      "search_for_name": "Søk etter navn",
       "sector": "Sektor",
       "sector_values": {
         "ABM": "Arkiv, Bibliotek og Museum",
@@ -126,7 +127,9 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
         "UHI": "Universitet og høyskoler (UH)"
-      }
+      },
+      "show_only_active": "Vis kun aktive",
+      "show_only_inactive": "Vis kun inaktive"
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
