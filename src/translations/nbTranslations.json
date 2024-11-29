@@ -95,6 +95,7 @@
       "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} identifisert)"
     },
     "institutions": {
+      "active": "Aktiv",
       "add_institution": "Opprett institusjon",
       "admin_institutions": "Administrer institusjoner",
       "administators_list_explanation": "Genereres fra Personregisteret og rolletildeling",
@@ -112,11 +113,13 @@
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "loading_institution_information": "Laster institusjonsdata",
+      "not_active": "Ikke aktiv",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
+      "search_for_name": "Søk etter navn",
       "sector": "Sektor",
       "sector_values": {
         "ABM": "Arkiv, Bibliotek og Museum",
@@ -124,7 +127,9 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
         "UHI": "Universitet og høyskoler (UH)"
-      }
+      },
+      "show_only_active": "Vis kun aktive",
+      "show_only_inactive": "Vis kun inaktive"
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
@@ -294,6 +299,7 @@
     "start": "Start",
     "start_date": "Startdato",
     "start_page": "Startside",
+    "status": "Status",
     "tasks": "Oppgaver",
     "test_environment": "Testmiljø",
     "time_string": "{{date}}, kl. {{time}}",
