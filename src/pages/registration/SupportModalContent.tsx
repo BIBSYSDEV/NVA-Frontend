@@ -1,14 +1,14 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Divider, Grid, Link as MuiLink, Skeleton, Typography } from '@mui/material';
+import { styled } from '@mui/system';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createTicket, fetchRegistrationTickets } from '../../api/registrationApi';
 import { MessageForm } from '../../components/MessageForm';
 import { setNotification } from '../../redux/notificationSlice';
-import { Registration } from '../../types/registration.types';
 import { RootState } from '../../redux/store';
-import { styled } from '@mui/system';
+import { Registration } from '../../types/registration.types';
 
 interface SupportModalContentProps {
   closeModal: () => void;
@@ -113,7 +113,7 @@ export const SupportModalContent = ({ closeModal, registration }: SupportModalCo
           <Trans
             t={t}
             i18nKey="registration.support.curator_help.description"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
           <MessageForm
             confirmAction={async (message) => {

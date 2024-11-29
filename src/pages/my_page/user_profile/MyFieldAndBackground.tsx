@@ -115,7 +115,7 @@ export const MyFieldAndBackground = () => {
                 <Typography variant="h3" gutterBottom>
                   {t('my_page.my_profile.field_and_background.field')}
                 </Typography>
-                <Typography paragraph>{t('my_page.my_profile.field_and_background.field_text')}</Typography>
+                <Typography sx={{ mb: '1rem' }}>{t('my_page.my_profile.field_and_background.field_text')}</Typography>
                 <Field name={'keywords'}>
                   {({ field }: FieldProps<Keywords[]>) => (
                     <Autocomplete

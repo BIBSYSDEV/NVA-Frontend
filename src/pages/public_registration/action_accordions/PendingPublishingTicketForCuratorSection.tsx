@@ -112,7 +112,7 @@ export const PendingPublishingTicketForCuratorSection = ({
         <DialogContent>
           <Trans
             i18nKey="registration.public_page.reject_publish_request_description"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
           <TextField
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectionMessageTextField}

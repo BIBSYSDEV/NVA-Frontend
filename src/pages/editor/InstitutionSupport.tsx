@@ -42,7 +42,7 @@ export const InstitutionSupport = () => {
               <Typography gutterBottom variant="h2">
                 {t('editor.institution.institution_support')}
               </Typography>
-              <Typography paragraph>{t('editor.institution.institution_support_description')}</Typography>
+              <Typography sx={{ mb: '1rem' }}>{t('editor.institution.institution_support_description')}</Typography>
 
               <Field name={'serviceCenter.uri'}>
                 {({ field }: FieldProps<string>) => (

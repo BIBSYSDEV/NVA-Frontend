@@ -21,13 +21,13 @@ export const EditorDoi = () => {
       ) : (
         <>
           {!customer.doiAgent.username ? (
-            <Typography paragraph fontWeight="bold">
+            <Typography sx={{ mb: '1rem' }} fontWeight="bold">
               <Trans t={t} i18nKey="editor.doi.institution_cannot_create_doi">
                 <MuiLink href={'mailto:kontakt@sikt.no'} target="_blank" rel="noopener noreferrer" />
               </Trans>
             </Typography>
           ) : (
-            <Typography paragraph fontWeight="bold">
+            <Typography sx={{ mb: '1rem' }} fontWeight="bold">
               {t('editor.doi.institution_can_create_doi')}
             </Typography>
           )}
