@@ -99,7 +99,7 @@ export const CategorySelector = ({
           type="search"
           variant="filled"
           label={t('common.search')}
-          InputProps={{ endAdornment: <SearchIcon /> }}
+          slotProps={{ input: { endAdornment: <SearchIcon /> } }}
           onChange={(event) => setSearchValue(event.target.value)}
         />
         {setSelectedCategories ? (
