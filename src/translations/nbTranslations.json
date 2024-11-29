@@ -1488,8 +1488,10 @@
         "if_same_press_no_in_box": "Om dette er samme resultat som din registrering, må du trykke 'NEI' i denne boksen for å unngå å publisere.",
         "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel, år og kategori som din registrering."
       },
-      "error_description": "Følgende feil må rettes opp før publisering av resultat:",
-      "error_description_published_result": "Registreringen er publisert. Ved redigering må følgende mangler rettes opp:",
+      "error_description_workflow1": "Følgende feil må rettes opp før publisering av resultat:",
+      "error_description_workflow2": "Resultatet har følgende mangler:",
+      "error_description_published_result_workflow1": "Registreringen er publisert. Ved redigering må følgende mangler rettes opp:",
+      "error_description_published_result_workflow2": "Registreringen er publisert, men har følgende mangler:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",
