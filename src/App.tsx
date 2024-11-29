@@ -74,9 +74,7 @@ export const App = () => {
     } else {
       getUser();
     }
-  }, []);
-
-  const asd = 'asfd';
+  }, [dispatch]);
 
   const mustCreatePerson = user && !user.cristinId;
   const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
