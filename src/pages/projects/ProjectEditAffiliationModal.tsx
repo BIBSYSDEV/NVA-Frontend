@@ -75,7 +75,7 @@ export const ProjectEditAffiliationModal = ({
       headingText={t('project.affiliation_modal.edit_affiliation')}>
       <Trans
         i18nKey="project.affiliation_modal.add_new_affiliation_helper_text"
-        components={[<Typography key="1" paragraph />]}
+        components={[<Typography key="1" sx={{ mb: '1rem' }} />]}
       />
       {authorName && <AuthorName authorName={authorName} description={t('project.project_participant')} />}
       {institutionQuery.isPending ? (

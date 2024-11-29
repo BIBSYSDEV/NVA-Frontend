@@ -67,12 +67,12 @@ export const AffiliationFormSection = () => {
                   disabled={isSubmitting}
                   fullWidth
                   type="number"
-                  inputProps={{ min: '0', max: '100' }}
                   variant="filled"
                   label={t('basic_data.add_employee.position_percent')}
                   error={touched && !!error}
                   helperText={touched && error}
                   data-testid={dataTestId.basicData.personAdmin.positionPercent}
+                  slotProps={{ htmlInput: { min: '0', max: '100' } }}
                 />
               )}
             </Field>

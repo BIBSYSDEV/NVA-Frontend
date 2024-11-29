@@ -74,7 +74,6 @@ export const DuplicateSearchFilterForm = ({
               {({ field }: FieldProps<string>) => (
                 <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
                   <TextField
-                    inputProps={{ 'aria-labelledby': 'doi-label' }}
                     data-testid={dataTestId.basicData.centralImport.textFieldDoi}
                     variant="outlined"
                     {...field}
@@ -83,6 +82,7 @@ export const DuplicateSearchFilterForm = ({
                     size="small"
                     multiline
                     disabled={!values.isDoiChecked}
+                    slotProps={{ htmlInput: { 'aria-labelledby': 'doi-label' } }}
                   />
                   {field.value && isValidUrl(field.value) && (
                     <Button
@@ -119,7 +119,6 @@ export const DuplicateSearchFilterForm = ({
             <Field name={'title'}>
               {({ field }: FieldProps<string>) => (
                 <TextField
-                  inputProps={{ 'aria-labelledby': 'title-label' }}
                   data-testid={dataTestId.basicData.centralImport.textFieldTitle}
                   fullWidth
                   {...field}
@@ -127,6 +126,7 @@ export const DuplicateSearchFilterForm = ({
                   size="small"
                   multiline
                   disabled={!values.isTitleChecked}
+                  slotProps={{ htmlInput: { 'aria-labelledby': 'title-label' } }}
                 />
               )}
             </Field>
@@ -148,7 +148,6 @@ export const DuplicateSearchFilterForm = ({
             <Field name={'author'}>
               {({ field }: FieldProps<string>) => (
                 <TextField
-                  inputProps={{ 'aria-labelledby': 'author-label' }}
                   data-testid={dataTestId.basicData.centralImport.textFieldAuthor}
                   fullWidth
                   {...field}
@@ -156,6 +155,7 @@ export const DuplicateSearchFilterForm = ({
                   size="small"
                   multiline
                   disabled={!values.isAuthorChecked}
+                  slotProps={{ htmlInput: { 'aria-labelledby': 'author-label' } }}
                 />
               )}
             </Field>
@@ -177,13 +177,13 @@ export const DuplicateSearchFilterForm = ({
             <Field name={'issn'}>
               {({ field }: FieldProps<string>) => (
                 <TextField
-                  inputProps={{ 'aria-labelledby': 'issn-label' }}
                   data-testid={dataTestId.basicData.centralImport.textFieldIssn}
                   fullWidth
                   {...field}
                   variant="outlined"
                   size="small"
                   disabled={!values.isIssnChecked}
+                  slotProps={{ htmlInput: { 'aria-labelledby': 'issn-label' } }}
                 />
               )}
             </Field>
@@ -205,13 +205,13 @@ export const DuplicateSearchFilterForm = ({
             <Field name={'yearPublished'}>
               {({ field }: FieldProps<string>) => (
                 <TextField
-                  inputProps={{ 'aria-labelledby': 'year-label' }}
                   data-testid={dataTestId.basicData.centralImport.textFieldYear}
                   fullWidth
                   {...field}
                   variant="outlined"
                   size="small"
                   disabled={!values.isYearPublishedChecked}
+                  slotProps={{ htmlInput: { 'aria-labelledby': 'year-label' } }}
                 />
               )}
             </Field>

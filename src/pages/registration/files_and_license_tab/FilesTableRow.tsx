@@ -171,11 +171,9 @@ export const FilesTableRow = ({
               <TextField
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
-                SelectProps={{ inputProps: { 'aria-label': t('registration.files_and_license.availability') } }}
                 select
                 disabled={disabled}
                 variant="filled"
-                InputProps={{ sx: { '.MuiSelect-select': { py: '0.75rem' } } }}
                 fullWidth
                 onChange={(event) => {
                   const newValue = event.target.value as FileType;
@@ -187,6 +185,10 @@ export const FilesTableRow = ({
                   } else {
                     setFieldValue(fileTypeFieldName, newValue);
                   }
+                }}
+                slotProps={{
+                  input: { sx: { '.MuiSelect-select': { py: '0.75rem' } } },
+                  select: { inputProps: { 'aria-label': t('registration.files_and_license.availability') } },
                 }}>
                 <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
                   <StyledFileTypeMenuItemContent>
@@ -296,15 +298,23 @@ export const FilesTableRow = ({
                         sx={{ minWidth: '15rem' }}
                         select
                         disabled={disabled}
-                        SelectProps={{
-                          renderValue: (option) => {
-                            const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
-                            return selectedLicense ? (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
-                                <span>{selectedLicense.name}</span>
-                              </Box>
-                            ) : null;
+                        slotProps={{
+                          select: {
+                            renderValue: (option) => {
+                              const selectedLicense = licenses.find((license) =>
+                                equalUris(license.id, option as string)
+                              );
+                              return selectedLicense ? (
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                  <img
+                                    style={{ width: '5rem' }}
+                                    src={selectedLicense.logo}
+                                    alt={selectedLicense.name}
+                                  />
+                                  <span>{selectedLicense.name}</span>
+                                </Box>
+                              ) : null;
+                            },
                           },
                         }}
                         variant="filled"

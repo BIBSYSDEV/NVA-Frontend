@@ -85,22 +85,22 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                           buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
                           {registratorPublishesMetadataOnly ? (
                             <>
-                              <Typography paragraph>
+                              <Typography sx={{ mb: '1rem' }}>
                                 {t('registration.files_and_license.version_helper_text_metadata_only')}
                               </Typography>
-                              <Typography paragraph>
+                              <Typography sx={{ mb: '1rem' }}>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_accepted_helper_text_metadata_only"
                                   components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
-                              <Typography paragraph>
+                              <Typography sx={{ mb: '1rem' }}>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_published_helper_text_metadata_only"
                                   components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
-                              <Typography paragraph>
+                              <Typography sx={{ mb: '1rem' }}>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_publishing_agreement_helper_text_metadata_only"
                                   components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
@@ -112,32 +112,32 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                               <Trans
                                 i18nKey="registration.files_and_license.version_helper_text"
                                 components={[
-                                  <Typography paragraph key="1" />,
-                                  <Typography paragraph key="2">
+                                  <Typography sx={{ mb: '1rem' }} key="1" />,
+                                  <Typography sx={{ mb: '1rem' }} key="2">
                                     <Box component="span" sx={{ textDecoration: 'underline' }} />
                                   </Typography>,
                                 ]}
                               />
 
-                              <Typography paragraph>
+                              <Typography sx={{ mb: '1rem' }}>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_accepted_helper_text"
                                   components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
-                              <Typography paragraph>
+                              <Typography sx={{ mb: '1rem' }}>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_published_helper_text"
                                   components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
-                              <Typography paragraph>
+                              <Typography sx={{ mb: '1rem' }}>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
                                   components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
                                 />
                               </Typography>
-                              <Typography paragraph>
+                              <Typography sx={{ mb: '1rem' }}>
                                 <Trans
                                   i18nKey="registration.files_and_license.version_embargo_helper_text"
                                   components={[<Box key="1" component="span" sx={{ fontWeight: 'bold' }} />]}
@@ -157,7 +157,9 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                         modalTitle={t('registration.files_and_license.licenses')}
                         modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
                         buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
-                        <Typography paragraph>{t('registration.files_and_license.file_and_license_info')}</Typography>
+                        <Typography sx={{ mb: '1rem' }}>
+                          {t('registration.files_and_license.file_and_license_info')}
+                        </Typography>
                         {licenses
                           .filter(
                             (license) =>
@@ -171,7 +173,7 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                                 {license.name}
                               </Typography>
                               <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-                              <Typography paragraph>{license.description}</Typography>
+                              <Typography sx={{ mb: '1rem' }}>{license.description}</Typography>
                               {license.link && (
                                 <Link href={license.link} target="blank">
                                   {license.link}

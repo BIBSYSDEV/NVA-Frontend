@@ -36,18 +36,20 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                 data-testid={dataTestId.projectWizard.descriptionPanel.titleField}
                 label={t('common.title')}
                 disabled={thisIsRekProject}
-                InputProps={{
-                  endAdornment: duplicateProjectSearch.isPending ? (
-                    <CircularProgress size={20} />
-                  ) : duplicateProjectSearch.duplicateProject ? (
-                    <ErrorIcon color="warning" />
-                  ) : undefined,
-                }}
                 required
                 variant="filled"
                 fullWidth
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
+                slotProps={{
+                  input: {
+                    endAdornment: duplicateProjectSearch.isPending ? (
+                      <CircularProgress size={20} />
+                    ) : duplicateProjectSearch.duplicateProject ? (
+                      <ErrorIcon color="warning" />
+                    ) : undefined,
+                  },
+                }}
               />
             )}
           </Field>

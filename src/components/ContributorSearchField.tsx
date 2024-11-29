@@ -63,9 +63,7 @@ export const ContributorSearchField = ({
         }}
         placeholder={t('common.search_placeholder')}
         label={t('common.search')}
-        InputProps={{
-          startAdornment: <SearchIcon />,
-        }}
+        slotProps={{ input: { startAdornment: <SearchIcon /> } }}
         sx={{ my: '1rem' }}
       />
       {personQuery.isFetching ? (

@@ -74,10 +74,12 @@ export const FindRegistration = ({
             variant="filled"
             label={t('unpublish_actions.duplicate')}
             onChange={(event) => setSearchBeforeDebounce(event.target.value)}
-            InputProps={{
-              ...params.InputProps,
-              type: 'search',
-              startAdornment: <SearchIcon />,
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                type: 'search',
+                startAdornment: <SearchIcon />,
+              },
             }}
           />
         )}

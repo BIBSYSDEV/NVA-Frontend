@@ -352,14 +352,14 @@ export const SelectRegistrationTypeField = () => {
         <Typography fontWeight={500}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data')}
         </Typography>
-        <Typography paragraph>
+        <Typography sx={{ mb: '1rem' }}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data_description')}
         </Typography>
 
         <Typography fontWeight={500}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data')}
         </Typography>
-        <Typography paragraph>
+        <Typography sx={{ mb: '1rem' }}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_sensitive_data_description')}
         </Typography>
 

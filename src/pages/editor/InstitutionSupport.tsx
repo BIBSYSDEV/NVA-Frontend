@@ -42,7 +42,7 @@ export const InstitutionSupport = () => {
               <Typography gutterBottom variant="h2">
                 {t('editor.institution.institution_support')}
               </Typography>
-              <Typography paragraph>{t('editor.institution.institution_support_description')}</Typography>
+              <Typography sx={{ mb: '1rem' }}>{t('editor.institution.institution_support_description')}</Typography>
 
               <Field name={'serviceCenter.uri'}>
                 {({ field }: FieldProps<string>) => (
@@ -55,12 +55,14 @@ export const InstitutionSupport = () => {
                     label={t('common.url')}
                     placeholder={t('editor.retention_strategy.rrs_link')}
                     variant="filled"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <LinkIcon />
-                        </InputAdornment>
-                      ),
+                    slotProps={{
+                      input: {
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LinkIcon />
+                          </InputAdornment>
+                        ),
+                      },
                     }}
                   />
                 )}
