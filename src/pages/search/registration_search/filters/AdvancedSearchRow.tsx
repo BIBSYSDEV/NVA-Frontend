@@ -66,9 +66,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, queryParam }: A
             label={t('search.search_term_label')}
             data-testid={dataTestId.startPage.advancedSearch.advancedValueField}
             fullWidth
-            slotProps={{
-              htmlInput: queryParam ? { [dataSearchFieldAttributeName]: queryParam } : undefined,
-            }}
+            slotProps={{ htmlInput: queryParam ? { [dataSearchFieldAttributeName]: queryParam } : undefined }}
           />
         )}
       </Field>

@@ -1,6 +1,5 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Divider, Grid, Link as MuiLink, Skeleton, Typography } from '@mui/material';
-import { styled } from '@mui/system';
+import { Divider, Grid, Link as MuiLink, Skeleton, styled, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
