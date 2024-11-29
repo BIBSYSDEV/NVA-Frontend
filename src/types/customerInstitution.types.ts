@@ -2,7 +2,7 @@ import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
-  active?: boolean;
+  active: boolean;
   id: string;
   createdDate: string;
   displayName: string;
@@ -19,7 +19,8 @@ export enum Sector {
   Other = 'OTHER',
 }
 
-export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName'> {
+export interface CustomerInstitution
+  extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName' | 'active'> {
   type?: 'Customer';
   archiveName: string;
   cristinId: string;
@@ -97,6 +98,7 @@ export const defaultHrcsCategory: CustomerVocabulary = {
 };
 
 export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
+  active: true,
   type: 'Customer',
   id: '',
   archiveName: '',
