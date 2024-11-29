@@ -38,20 +38,19 @@ enum CustomerStatusFilter {
 export const InstitutionList = ({ institutions }: InstitutionListProps) => {
   const { t } = useTranslation();
 
-  const [customerStatus, setCustomerStatus] = useState(CustomerStatusFilter.ShowAll);
+  const [customerStatus, setCustomerStatus] = useState<CustomerStatusFilter>(CustomerStatusFilter.ShowAll);
   const [searchTerm, setSearchTerm] = useState('');
-  const activeCustomers = institutions.filter((customer) => customer.active);
-  const inactiveCustomers = institutions.filter((customer) => !customer.active);
-  let customers =
+  const statusFilteredCustomers =
     customerStatus === CustomerStatusFilter.Active
-      ? activeCustomers
+      ? institutions.filter((customer) => customer.active)
       : customerStatus === CustomerStatusFilter.Inactive
-        ? inactiveCustomers
+        ? institutions.filter((customer) => !customer.active)
         : institutions;
-
-  if (searchTerm) {
-    customers = customers.filter((customer) => customer.displayName.toLowerCase().includes(searchTerm.toLowerCase()));
-  }
+  const filteredCustomers = searchTerm
+    ? statusFilteredCustomers.filter((customer) =>
+        customer.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : statusFilteredCustomers;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -71,7 +70,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             value={customerStatus}
             labelId={'customer-active-select'}
             label={t('tasks.display_options')}
-            onChange={(event) => setCustomerStatus(event.target.value)}>
+            onChange={(event) => setCustomerStatus(event.target.value as CustomerStatusFilter)}>
             <MenuItem value={CustomerStatusFilter.ShowAll}>{t('common.show_all')}</MenuItem>
             <MenuItem value={CustomerStatusFilter.Active}>{t('basic_data.institutions.show_only_active')}</MenuItem>
             <MenuItem value={CustomerStatusFilter.Inactive}>{t('basic_data.institutions.show_only_inactive')}</MenuItem>
@@ -91,7 +90,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {customers.map((institution) => (
+            {filteredCustomers.map((institution) => (
               <TableRow key={institution.id}>
                 <TableCell>
                   <Typography>{institution.displayName ?? institution.id}</Typography>
