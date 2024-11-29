@@ -1,5 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import {
+  Box,
   Button,
   FormControl,
   InputLabel,
@@ -14,7 +15,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { Box } from '@mui/system';
+
 import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +39,7 @@ enum CustomerStatusFilter {
 export const CustomerInstitutionList = ({ customerInstitutions }: CustomerInstitutionListProps) => {
   const { t } = useTranslation();
 
-  const [customerStatus, setCustomerStatus] = useState<CustomerStatusFilter>(CustomerStatusFilter.ShowAll);
+  const [customerStatus, setCustomerStatus] = useState(CustomerStatusFilter.ShowAll);
   const [searchTerm, setSearchTerm] = useState('');
   const statusFilteredCustomers =
     customerStatus === CustomerStatusFilter.Active
@@ -55,7 +56,12 @@ export const CustomerInstitutionList = ({ customerInstitutions }: CustomerInstit
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <Box
-        sx={{ display: 'grid', gridTemplateColumns: '4fr 1fr', columnGap: '0.5rem', width: { lg: '100%', xl: '50%' } }}>
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '3fr 2fr', sm: '4fr 1fr' },
+          columnGap: '0.5rem',
+          width: { lg: '100%', xl: '50%' },
+        }}>
         <SearchTextField
           data-testid={dataTestId.basicData.customers.customerNameSearchField}
           placeholder={t('basic_data.institutions.search_for_name')}
