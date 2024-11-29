@@ -70,7 +70,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.61.4",
+    "@tanstack/eslint-plugin-query": "^5.61.6",
     "@tanstack/react-query-devtools": "^5.61.5",
     "@types/isbn-utils": "^1.1.6",
     "@types/jest": "^29.5.14",
