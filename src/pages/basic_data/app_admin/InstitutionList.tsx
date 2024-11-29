@@ -45,7 +45,8 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '4fr 1fr', columnGap: '0.5rem', width: '50%' }}>
+      <Box
+        sx={{ display: 'grid', gridTemplateColumns: '4fr 1fr', columnGap: '0.5rem', width: { lg: '100%', xl: '50%' } }}>
         <SearchTextField
           placeholder={t('basic_data.institutions.search_for_name')}
           value={searchTerm}
@@ -72,10 +73,10 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
           <caption style={visuallyHidden}>{t('basic_data.institutions.admin_institutions')}</caption>
           <TableHead>
             <TableRow>
-              <TableCell>{t('common.name')}</TableCell>
-              <TableCell>{t('basic_data.institutions.doi_prefix')}</TableCell>
-              <TableCell>{t('common.status')}</TableCell>
-              <TableCell>{t('common.actions')}</TableCell>
+              <TableCell sx={{ width: { md: '40%', lg: '50%' } }}>{t('common.name')}</TableCell>
+              <TableCell sx={{ width: '10%' }}>{t('basic_data.institutions.doi_prefix')}</TableCell>
+              <TableCell sx={{ width: '10%' }}>{t('common.status')}</TableCell>
+              <TableCell sx={{ width: '10%' }}>{t('common.actions')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
