@@ -25,7 +25,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 import { SearchTextField } from '../../search/SearchTextField';
 
-interface CustomerListProps {
+interface CustomerInstitutionListProps {
   customerInstitutions: SimpleCustomerInstitution[];
 }
 
@@ -35,7 +35,7 @@ enum CustomerStatusFilter {
   Inactive,
 }
 
-export const CustomerList = ({ customerInstitutions }: CustomerListProps) => {
+export const CustomerInstitutionList = ({ customerInstitutions }: CustomerInstitutionListProps) => {
   const { t } = useTranslation();
 
   const [customerStatus, setCustomerStatus] = useState<CustomerStatusFilter>(CustomerStatusFilter.ShowAll);
