@@ -145,10 +145,10 @@ export const JournalFormDialog = ({
                     {...field}
                     variant="filled"
                     label={t('registration.resource_type.print_issn')}
-                    inputProps={{ maxLength: 9 }}
                     disabled={isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    slotProps={{ htmlInput: { maxLength: 9 } }}
                   />
                 )}
               </Field>
@@ -158,10 +158,10 @@ export const JournalFormDialog = ({
                     {...field}
                     variant="filled"
                     label={t('registration.resource_type.online_issn')}
-                    inputProps={{ maxLength: 9 }}
                     disabled={isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    slotProps={{ htmlInput: { maxLength: 9 } }}
                   />
                 )}
               </Field>

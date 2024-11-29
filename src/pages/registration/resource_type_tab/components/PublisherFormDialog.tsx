@@ -112,10 +112,10 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
                     {...field}
                     variant="filled"
                     label={t('registration.resource_type.isbn_prefix')}
-                    inputProps={{ maxLength: 13 }}
                     disabled={publisherMutation.isPending}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    slotProps={{ htmlInput: { maxLength: 13 } }}
                   />
                 )}
               </Field>

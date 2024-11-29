@@ -124,14 +124,6 @@ export const SeriesField = () => {
             renderOption={({ key, ...props }, option, state) => (
               <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
-            ListboxComponent={AutocompleteListboxWithExpansion}
-            ListboxProps={
-              {
-                hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
-                onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
-              } satisfies AutocompleteListboxWithExpansionProps as any
-            }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
@@ -152,6 +144,17 @@ export const SeriesField = () => {
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
             )}
+            slotProps={{
+              listbox: {
+                component: AutocompleteListboxWithExpansion,
+
+                ...({
+                  hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
+                  onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+                  isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
+                } satisfies AutocompleteListboxWithExpansionProps as any),
+              },
+            }}
           />
         )}
       </Field>

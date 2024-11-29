@@ -55,12 +55,14 @@ export const InstitutionSupport = () => {
                     label={t('common.url')}
                     placeholder={t('editor.retention_strategy.rrs_link')}
                     variant="filled"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <LinkIcon />
-                        </InputAdornment>
-                      ),
+                    slotProps={{
+                      input: {
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LinkIcon />
+                          </InputAdornment>
+                        ),
+                      },
                     }}
                   />
                 )}

@@ -87,14 +87,6 @@ export const SeriesFilter = () => {
             hideScientificLevel
           />
         )}
-        ListboxComponent={AutocompleteListboxWithExpansion}
-        ListboxProps={
-          {
-            hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
-            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-            isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
-          } satisfies AutocompleteListboxWithExpansionProps as any
-        }
         data-testid={dataTestId.startPage.advancedSearch.seriesField}
         renderInput={(params) => (
           <AutocompleteTextField
@@ -106,6 +98,17 @@ export const SeriesFilter = () => {
             multiline
           />
         )}
+        slotProps={{
+          listbox: {
+            component: AutocompleteListboxWithExpansion,
+
+            ...({
+              hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
+              onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+              isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
+            } satisfies AutocompleteListboxWithExpansionProps as any),
+          },
+        }}
       />
     </section>
   );
