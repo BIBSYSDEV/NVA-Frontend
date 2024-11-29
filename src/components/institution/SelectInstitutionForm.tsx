@@ -66,7 +66,11 @@ export const SelectInstitutionForm = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [searchSize, setSearchSize] = useState(defaultOrganizationSearchSize);
   const debouncedQuery = useDebounce(searchTerm);
-  const organizationSearchQuery = useSearchForOrganizations({ query: debouncedQuery, results: searchSize });
+  const organizationSearchQuery = useSearchForOrganizations({
+    query: debouncedQuery,
+    results: searchSize,
+    fullTree: true,
+  });
 
   const institutionOptions = organizationSearchQuery.data?.hits ?? [];
 
@@ -136,15 +140,6 @@ export const SelectInstitutionForm = ({
                     renderOption={({ key, ...props }, option) => (
                       <OrganizationRenderOption key={option.id} props={props} option={option} />
                     )}
-                    ListboxComponent={AutocompleteListboxWithExpansion}
-                    ListboxProps={
-                      {
-                        hasMoreHits:
-                          !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
-                        onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
-                        isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > institutionOptions.length,
-                      } satisfies AutocompleteListboxWithExpansionProps as any
-                    }
                     filterOptions={(options) => options}
                     onInputChange={(_, value, reason) => {
                       if (field.value) {
@@ -168,6 +163,18 @@ export const SelectInstitutionForm = ({
                         fullWidth
                       />
                     )}
+                    slotProps={{
+                      listbox: {
+                        component: AutocompleteListboxWithExpansion,
+                        ...({
+                          hasMoreHits:
+                            !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
+                          onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
+                          isLoadingMoreHits:
+                            organizationSearchQuery.isFetching && searchSize > institutionOptions.length,
+                        } satisfies AutocompleteListboxWithExpansionProps),
+                      },
+                    }}
                   />
                 )}
               </Field>

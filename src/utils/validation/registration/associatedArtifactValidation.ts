@@ -1,9 +1,11 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
-import { FileType, FileVersion } from '../../../types/associatedArtifact.types';
+import { FileVersion } from '../../../types/associatedArtifact.types';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
+  isOpenFile,
+  isPendingOpenFile,
   isTypeWithFileVersionField,
 } from '../../registration-helpers';
 
@@ -30,7 +32,7 @@ export const associatedFileValidationSchema = Yup.object({
   embargoDate: Yup.date()
     .nullable()
     .when(['type'], ([type], schema) =>
-      associatedArtifactIsFile({ type }) && type !== FileType.UnpublishableFile
+      associatedArtifactIsFile({ type }) && (isOpenFile({ type }) || isPendingOpenFile({ type }))
         ? schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid)
         : schema
     ),
@@ -38,7 +40,7 @@ export const associatedFileValidationSchema = Yup.object({
     .nullable()
     .when(['type', '$publicationInstanceType'], ([type, publicationInstanceType], schema) =>
       associatedArtifactIsFile({ type }) &&
-      type !== FileType.UnpublishableFile &&
+      (isOpenFile({ type }) || isPendingOpenFile({ type })) &&
       isTypeWithFileVersionField(publicationInstanceType)
         ? schema
             .required(associatedArtifactErrorMessage.fileVersionRequired)
@@ -48,7 +50,7 @@ export const associatedFileValidationSchema = Yup.object({
   license: Yup.string()
     .nullable()
     .when(['type'], ([type], schema) =>
-      associatedArtifactIsFile({ type }) && type !== FileType.UnpublishableFile
+      associatedArtifactIsFile({ type }) && (isOpenFile({ type }) || isPendingOpenFile({ type }))
         ? schema.required(associatedArtifactErrorMessage.licenseRequired)
         : schema
     ),

@@ -27,7 +27,7 @@ function buildOrganizationOption(org: Organization, level: number): Organization
 
 interface AreaOfResponsibilitySelectorProps extends Pick<BaseTextFieldProps, 'sx'> {
   paramName: string;
-  resetPagination: () => void;
+  resetPagination: (params: URLSearchParams) => void;
 }
 
 export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }: AreaOfResponsibilitySelectorProps) => {
@@ -64,13 +64,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
       defaultValue={getLanguageString(organizationOptions[0].labels)}
       title={getLanguageString(organizationOptions[0].labels)}
       label={t('editor.curators.area_of_responsibility')}
-      InputLabelProps={{ shrink: true }}
-      inputProps={{
-        style: {
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-        },
-      }}
+      slotProps={{ htmlInput: { style: { overflow: 'hidden', textOverflow: 'ellipsis' } } }}
     />
   ) : (
     <Autocomplete
@@ -95,7 +89,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
           onDelete={() => {
             const syncedParams = syncParamsWithSearchFields(searchParams);
             syncedParams.delete(paramName);
-            resetPagination();
+            resetPagination(syncedParams);
             history.push({ search: syncedParams.toString() });
           }}
         />
@@ -107,7 +101,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
         } else {
           syncedParams.delete(paramName);
         }
-        resetPagination();
+        resetPagination(syncedParams);
         history.push({ search: syncedParams.toString() });
       }}
       renderOption={({ key, ...props }, option, { selected }) => (

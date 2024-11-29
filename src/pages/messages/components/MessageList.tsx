@@ -1,4 +1,4 @@
-import { Box, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
+import { Box, BoxProps, Divider, Skeleton, Tooltip, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -65,7 +65,7 @@ interface MessageItemProps {
   text: ReactNode;
   date: string;
   username: string;
-  backgroundColor: string;
+  backgroundColor: BoxProps['bgcolor'];
   menuElement?: ReactNode;
   showOrganization?: boolean;
 }

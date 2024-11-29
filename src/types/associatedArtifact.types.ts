@@ -1,4 +1,3 @@
-import { Uppy as UppyType } from '@uppy/core';
 import { CustomerRrsType } from './customerInstitution.types';
 
 type FileRrsType =
@@ -30,6 +29,7 @@ export enum FileType {
   RejectedFile = 'RejectedFile',
   InternalFile = 'InternalFile',
   PendingInternalFile = 'PendingInternalFile',
+  HiddenFile = 'HiddenFile',
 }
 
 export interface AssociatedFile {
@@ -47,7 +47,7 @@ export interface AssociatedFile {
   publishedDate?: string;
 }
 
-export interface UserUploadDetails {
+interface UserUploadDetails {
   type: 'UserUploadDetails';
   uploadedBy: string;
   uploadedDate: string;
@@ -61,7 +61,7 @@ export interface ImportUploadDetails {
 }
 
 export const emptyFile: AssociatedFile = {
-  type: FileType.UnpublishedFile,
+  type: FileType.PendingOpenFile,
   identifier: '',
   name: '',
   size: 0,
@@ -83,10 +83,6 @@ export interface AssociatedLink {
 
 export interface NullAssociatedArtifact {
   type: 'NullAssociatedArtifact';
-}
-
-export interface Uppy extends UppyType {
-  hasUploadSuccessEventListener?: boolean;
 }
 
 export type AssociatedArtifact = AssociatedFile | AssociatedLink | NullAssociatedArtifact;

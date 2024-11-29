@@ -21,7 +21,7 @@ export const ProjectSummary = ({ academicSummary, popularScienceSummary }: Proje
       {academicSummaryString && (
         <>
           <Typography variant="h3">{t('project.scientific_summary')}</Typography>
-          <Typography paragraph>{academicSummaryString}</Typography>
+          <Typography sx={{ mb: '1rem' }}>{academicSummaryString}</Typography>
         </>
       )}
       {popularScienceSummaryString && (

@@ -104,7 +104,7 @@ export const JournalFormDialog = ({
         }>
         <Form>
           <DialogContent>
-            <Typography paragraph>
+            <Typography sx={{ mb: '1rem' }}>
               <Trans t={t} i18nKey="registration.resource_type.search_for_channel">
                 <MuiLink href="https://portal.issn.org" target="_blank" rel="noopener noreferrer">
                   https://portal.issn.org
@@ -145,10 +145,10 @@ export const JournalFormDialog = ({
                     {...field}
                     variant="filled"
                     label={t('registration.resource_type.print_issn')}
-                    inputProps={{ maxLength: 9 }}
                     disabled={isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    slotProps={{ htmlInput: { maxLength: 9 } }}
                   />
                 )}
               </Field>
@@ -158,10 +158,10 @@ export const JournalFormDialog = ({
                     {...field}
                     variant="filled"
                     label={t('registration.resource_type.online_issn')}
-                    inputProps={{ maxLength: 9 }}
                     disabled={isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    slotProps={{ htmlInput: { maxLength: 9 } }}
                   />
                 )}
               </Field>

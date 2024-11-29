@@ -1,9 +1,8 @@
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Badge, Button, Divider, FormControlLabel, Typography } from '@mui/material';
+import { Badge, Divider, FormControlLabel, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +19,7 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
-import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
@@ -72,8 +71,6 @@ const MyPagePage = () => {
     .filter(([, selected]) => selected)
     .map(([key]) => key);
 
-  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot);
-
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
@@ -84,7 +81,7 @@ const MyPagePage = () => {
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     status: searchParams.get(TicketSearchParam.Status),
-    viewedByNot: viewedByNotParam,
+    viewedByNot: searchParams.get(TicketSearchParam.ViewedByNot),
     type: selectedTypesArray.join(','),
     publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
@@ -136,9 +133,9 @@ const MyPagePage = () => {
           <Link
             to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: history.location.state?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
-            <StyledMinimizedMenuButton title={t('my_page.my_page')}>
+            <MinimizedMenuIconButton title={t('my_page.my_page')}>
               <FavoriteBorderIcon />
-            </StyledMinimizedMenuButton>
+            </MinimizedMenuIconButton>
           </Link>
         }>
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
@@ -200,24 +197,6 @@ const MyPagePage = () => {
             startIcon={<ChatBubbleIcon fontSize="small" sx={{ color: 'white', bgcolor: 'primary.main' }} />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
-            <StyledTicketSearchFormGroup>
-              <Button
-                data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-                sx={{ width: 'fit-content', background: viewedByNotParam ? undefined : 'white', textTransform: 'none' }}
-                variant={viewedByNotParam ? 'contained' : 'outlined'}
-                startIcon={<MarkEmailUnreadIcon />}
-                onClick={() => {
-                  if (viewedByNotParam) {
-                    searchParams.delete(TicketSearchParam.ViewedByNot);
-                  } else if (user.nvaUsername) {
-                    searchParams.set(TicketSearchParam.ViewedByNot, user.nvaUsername);
-                  }
-                  history.push({ search: searchParams.toString() });
-                }}>
-                {t('tasks.unread')}
-              </Button>
-            </StyledTicketSearchFormGroup>
-
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}

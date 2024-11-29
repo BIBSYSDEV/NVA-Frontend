@@ -15,6 +15,7 @@ import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+import { ExcludeSubunitsCheckbox } from './ExcludeSubunitsCheckbox';
 import { NviCandidateListItem } from './NviCandidateListItem';
 import { NviSortSelector } from './NviSortSelector';
 import { NviYearSelector } from './NviYearSelector';
@@ -79,12 +80,15 @@ export const NviCandidatesList = () => {
           <AreaOfResponsibilitySelector
             sx={{ flex: '1 15rem' }}
             paramName={NviCandidatesSearchParam.Affiliations}
-            resetPagination={() => {
-              if (nviParams.offset) {
-                searchParams.delete(NviCandidatesSearchParam.Offset);
+            resetPagination={(params) => {
+              params.delete(NviCandidatesSearchParam.Offset);
+              if (!params.has(NviCandidatesSearchParam.Affiliations)) {
+                params.delete(NviCandidatesSearchParam.ExcludeSubUnits);
               }
             }}
           />
+
+          <ExcludeSubunitsCheckbox />
 
           <NviYearSelector sx={{ ml: 'auto' }} />
         </Box>
