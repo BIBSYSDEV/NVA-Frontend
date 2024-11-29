@@ -166,14 +166,13 @@ export const SelectInstitutionForm = ({
                     slotProps={{
                       listbox: {
                         component: AutocompleteListboxWithExpansion,
-
                         ...({
                           hasMoreHits:
                             !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
                           onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
                           isLoadingMoreHits:
                             organizationSearchQuery.isFetching && searchSize > institutionOptions.length,
-                        } satisfies AutocompleteListboxWithExpansionProps as any),
+                        } satisfies AutocompleteListboxWithExpansionProps),
                       },
                     }}
                   />

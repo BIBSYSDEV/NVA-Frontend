@@ -166,12 +166,11 @@ export const MyFieldAndBackground = () => {
                       slotProps={{
                         listbox: {
                           component: AutocompleteListboxWithExpansion,
-
                           ...({
                             hasMoreHits: !!keywordsQuery.data?.size && keywordsQuery.data.size > searchSize,
                             onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
                             isLoadingMoreHits: keywordsQuery.isFetching && searchSize > keywordsResult.length,
-                          } satisfies AutocompleteListboxWithExpansionProps as any),
+                          } satisfies AutocompleteListboxWithExpansionProps),
                         },
                       }}
                     />

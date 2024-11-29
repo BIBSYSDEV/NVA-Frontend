@@ -147,12 +147,11 @@ export const SeriesField = () => {
             slotProps={{
               listbox: {
                 component: AutocompleteListboxWithExpansion,
-
                 ...({
                   hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
                   onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
                   isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
-                } satisfies AutocompleteListboxWithExpansionProps as any),
+                } satisfies AutocompleteListboxWithExpansionProps),
               },
             }}
           />

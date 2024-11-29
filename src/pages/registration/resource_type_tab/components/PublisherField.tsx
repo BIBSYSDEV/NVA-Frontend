@@ -151,13 +151,12 @@ export const PublisherField = () => {
             slotProps={{
               listbox: {
                 component: AutocompleteListboxWithExpansion,
-
                 ...({
                   hasMoreHits:
                     !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
                   onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
                   isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
-                } satisfies AutocompleteListboxWithExpansionProps as any),
+                } satisfies AutocompleteListboxWithExpansionProps),
               },
             }}
           />

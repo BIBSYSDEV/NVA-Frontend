@@ -193,12 +193,11 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             slotProps={{
               listbox: {
                 component: AutocompleteListboxWithExpansion,
-
                 ...({
                   hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
                   onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
                   isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
-                } satisfies AutocompleteListboxWithExpansionProps as any),
+                } satisfies AutocompleteListboxWithExpansionProps),
               },
             }}
           />
