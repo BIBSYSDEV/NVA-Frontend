@@ -29,15 +29,25 @@ interface InstitutionListProps {
   institutions: SimpleCustomerInstitution[];
 }
 
+enum CustomerStatusFilter {
+  ShowAll,
+  Active,
+  Inactive,
+}
+
 export const InstitutionList = ({ institutions }: InstitutionListProps) => {
   const { t } = useTranslation();
 
-  const [customerStatus, setCustomerStatus] = useState('show-all');
+  const [customerStatus, setCustomerStatus] = useState(CustomerStatusFilter.ShowAll);
   const [searchTerm, setSearchTerm] = useState('');
   const activeCustomers = institutions.filter((customer) => customer.active);
   const inactiveCustomers = institutions.filter((customer) => !customer.active);
   let customers =
-    customerStatus === 'active' ? activeCustomers : customerStatus === 'inactive' ? inactiveCustomers : institutions;
+    customerStatus === CustomerStatusFilter.Active
+      ? activeCustomers
+      : customerStatus === CustomerStatusFilter.Inactive
+        ? inactiveCustomers
+        : institutions;
 
   if (searchTerm) {
     customers = customers.filter((customer) => customer.displayName.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -62,9 +72,9 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             labelId={'customer-active-select'}
             label={t('tasks.display_options')}
             onChange={(event) => setCustomerStatus(event.target.value)}>
-            <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
-            <MenuItem value={'active'}>{t('basic_data.institutions.show_only_active')}</MenuItem>
-            <MenuItem value={'inactive'}>{t('basic_data.institutions.show_only_inactive')}</MenuItem>
+            <MenuItem value={CustomerStatusFilter.ShowAll}>{t('common.show_all')}</MenuItem>
+            <MenuItem value={CustomerStatusFilter.Active}>{t('basic_data.institutions.show_only_active')}</MenuItem>
+            <MenuItem value={CustomerStatusFilter.Inactive}>{t('basic_data.institutions.show_only_inactive')}</MenuItem>
           </Select>
         </FormControl>
       </Box>
