@@ -5,7 +5,7 @@ import { PageSpinner } from '../../../components/PageSpinner';
 import { CustomerList } from '../../../types/customerInstitution.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { sortCustomerInstitutions } from '../../../utils/institutions-helpers';
-import { InstitutionList } from './InstitutionList';
+import { CustomerList } from './CustomerList';
 
 export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ export const AdminCustomerInstitutions = () => {
         <PageSpinner aria-labelledby="admin-institutions-label" />
       ) : (
         customerInstitutions && (
-          <InstitutionList institutions={sortCustomerInstitutions(customerInstitutions.customers)} />
+          <CustomerList customerInstitutions={sortCustomerInstitutions(customerInstitutions.customers)} />
         )
       )}
     </>

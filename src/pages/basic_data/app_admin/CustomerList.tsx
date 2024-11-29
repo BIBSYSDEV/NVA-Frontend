@@ -25,32 +25,32 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 import { SearchTextField } from '../../search/SearchTextField';
 
-interface InstitutionListProps {
-  institutions: SimpleCustomerInstitution[];
+interface CustomerListProps {
+  customerInstitutions: SimpleCustomerInstitution[];
 }
 
-enum InstitutionStatusFilter {
+enum CustomerStatusFilter {
   ShowAll,
   Active,
   Inactive,
 }
 
-export const InstitutionList = ({ institutions }: InstitutionListProps) => {
+export const CustomerList = ({ customerInstitutions }: CustomerListProps) => {
   const { t } = useTranslation();
 
-  const [customerStatus, setCustomerStatus] = useState<InstitutionStatusFilter>(InstitutionStatusFilter.ShowAll);
+  const [customerStatus, setCustomerStatus] = useState<CustomerStatusFilter>(CustomerStatusFilter.ShowAll);
   const [searchTerm, setSearchTerm] = useState('');
-  const statusFilteredInstitutions =
-    customerStatus === InstitutionStatusFilter.Active
-      ? institutions.filter((customer) => customer.active)
-      : customerStatus === InstitutionStatusFilter.Inactive
-        ? institutions.filter((customer) => !customer.active)
-        : institutions;
-  const filteredInstitutions = searchTerm
-    ? statusFilteredInstitutions.filter((customer) =>
+  const statusFilteredCustomers =
+    customerStatus === CustomerStatusFilter.Active
+      ? customerInstitutions.filter((customer) => customer.active)
+      : customerStatus === CustomerStatusFilter.Inactive
+        ? customerInstitutions.filter((customer) => !customer.active)
+        : customerInstitutions;
+  const filteredCustomers = searchTerm
+    ? statusFilteredCustomers.filter((customer) =>
         customer.displayName.toLowerCase().includes(searchTerm.toLowerCase())
       )
-    : statusFilteredInstitutions;
+    : statusFilteredCustomers;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -70,12 +70,10 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             value={customerStatus}
             labelId={'customer-active-select'}
             label={t('tasks.display_options')}
-            onChange={(event) => setCustomerStatus(event.target.value as InstitutionStatusFilter)}>
-            <MenuItem value={InstitutionStatusFilter.ShowAll}>{t('common.show_all')}</MenuItem>
-            <MenuItem value={InstitutionStatusFilter.Active}>{t('basic_data.institutions.show_only_active')}</MenuItem>
-            <MenuItem value={InstitutionStatusFilter.Inactive}>
-              {t('basic_data.institutions.show_only_inactive')}
-            </MenuItem>
+            onChange={(event) => setCustomerStatus(event.target.value as CustomerStatusFilter)}>
+            <MenuItem value={CustomerStatusFilter.ShowAll}>{t('common.show_all')}</MenuItem>
+            <MenuItem value={CustomerStatusFilter.Active}>{t('basic_data.institutions.show_only_active')}</MenuItem>
+            <MenuItem value={CustomerStatusFilter.Inactive}>{t('basic_data.institutions.show_only_inactive')}</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -92,7 +90,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredInstitutions.map((institution) => (
+            {filteredCustomers.map((institution) => (
               <TableRow key={institution.id}>
                 <TableCell>
                   <Typography>{institution.displayName ?? institution.id}</Typography>
