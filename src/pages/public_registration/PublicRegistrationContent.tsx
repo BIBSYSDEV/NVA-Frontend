@@ -8,16 +8,16 @@ import { Link as RouterLink } from 'react-router-dom';
 import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
+import { RegistrationIconHeader } from '../../components/RegistrationIconHeader';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
-import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString, isBook, isReport, isResearchData, userHasAccessRight } from '../../utils/registration-helpers';
-import { getRegistrationWizardPath } from '../../utils/urlPaths';
+import { getRegistrationWizardLink } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
@@ -66,25 +66,26 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       <Box sx={visuallyHidden}>
         <DeletedPublicationInformation registration={registration} />
       </Box>
-      <StyledPaperHeader>
-        {entityDescription?.reference?.publicationInstance?.type ? (
-          <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype} sx={{ color: 'inherit' }}>
-            {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
-          </Typography>
-        ) : null}
-        <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
-          {mainTitle}
-        </TruncatableTypography>
+      <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'registration.main' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <RegistrationIconHeader
+            publicationInstanceType={entityDescription?.reference?.publicationInstance.type}
+            publicationDate={entityDescription?.publicationDate}
+            showYearOnly
+            textColor="primary.contrastText"
+          />
+          <TruncatableTypography variant="h1" sx={{ color: 'primary.contrastText' }}>
+            {mainTitle}
+          </TruncatableTypography>
+        </Box>
+
         {userCanEditRegistration && (
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
-              data-testid={dataTestId.registrationLandingPage.editButton}
-              sx={{ ml: 'auto', color: 'inherit' }}
               component={RouterLink}
-              to={{
-                pathname: getRegistrationWizardPath(identifier),
-                state: { previousPath: window.location.pathname } satisfies RegistrationFormLocationState,
-              }}>
+              to={getRegistrationWizardLink(identifier)}
+              data-testid={dataTestId.registrationLandingPage.editButton}
+              sx={{ ml: 'auto', color: 'inherit' }}>
               <EditIcon />
             </IconButton>
           </Tooltip>

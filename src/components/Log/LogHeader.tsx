@@ -1,59 +1,41 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddLinkOutlinedIcon from '@mui/icons-material/AddLinkOutlined';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
-import { Avatar as AvatarMui, Box, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Box, Typography } from '@mui/material';
 import { LogEntry as LogEntryType } from '../../types/log.types';
-import { toDateStringWithTime } from '../../utils/date-helpers';
+import { LogDateItem } from './LogDateItem';
 
 export const LogHeader = ({ title, type, modifiedDate }: Pick<LogEntryType, 'title' | 'type' | 'modifiedDate'>) => {
   const date = new Date(modifiedDate);
   return (
-    <Box sx={{ display: 'flex' }}>
-      <LogHeaderIcon type={type} />
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <LogHeaderIcon type={type} />
         <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>{title}</Typography>
-        <Typography>{toDateStringWithTime(date)}</Typography>
       </Box>
+      <LogDateItem date={date} />
     </Box>
   );
 };
 
 const LogHeaderIcon = ({ type }: Pick<LogEntryType, 'type'>) => {
-  const { t } = useTranslation();
-  return (
-    <AvatarMui sx={{ mr: '0.5rem', bgcolor: iconBackgroundColor[type] }} alt={t('log.header_icon', { type: type })}>
-      {type === 'PublishingRequest' ? (
-        <InsertDriveFileOutlinedIcon color="primary" />
-      ) : type === 'DoiRequest' ? (
-        <AddLinkOutlinedIcon color="primary" />
-      ) : type === 'Import' ? (
-        <CloudOutlinedIcon color="primary" />
-      ) : type === 'Created' ? (
-        <AddRoundedIcon color="secondary" />
-      ) : type === 'MetadataPublished' ? (
-        <LocalOfferOutlinedIcon color="primary" />
-      ) : type === 'UnpublishRequest' || type === 'Republished' ? (
-        <NotesIcon color="primary" />
-      ) : type === 'Deleted' ? (
-        <DeleteOutlineIcon color="primary" />
-      ) : undefined}
-    </AvatarMui>
-  );
-};
-
-const iconBackgroundColor = {
-  PublishingRequest: 'publishingRequest.main',
-  DoiRequest: 'doiRequest.main',
-  GeneralSupportCase: 'generalSupportCase.main',
-  Import: 'centralImport.main',
-  Created: 'primary.light',
-  MetadataPublished: 'publishingRequest.main',
-  UnpublishRequest: 'publishingRequest.main',
-  Republished: 'publishingRequest.main',
-  Deleted: 'publishingRequest.main',
+  return type === 'PublishingRequest' ? (
+    <InsertDriveFileOutlinedIcon color="primary" fontSize="small" />
+  ) : type === 'DoiRequest' ? (
+    <AddLinkOutlinedIcon color="primary" fontSize="small" />
+  ) : type === 'Import' ? (
+    <CloudOutlinedIcon color="primary" fontSize="small" />
+  ) : type === 'Created' ? (
+    <AddCircleOutlineIcon color="primary" fontSize="small" />
+  ) : type === 'MetadataPublished' ? (
+    <LocalOfferOutlinedIcon color="primary" fontSize="small" />
+  ) : type === 'UnpublishRequest' || type === 'Republished' ? (
+    <NotesIcon color="primary" fontSize="small" />
+  ) : type === 'Deleted' ? (
+    <DeleteOutlineIcon color="primary" fontSize="small" />
+  ) : undefined;
 };

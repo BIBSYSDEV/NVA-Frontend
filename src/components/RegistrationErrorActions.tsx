@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ErrorList } from '../pages/registration/ErrorList';
 import { dataTestId } from '../utils/dataTestIds';
 import { getFirstErrorTab, TabErrors } from '../utils/formik-helpers/formik-helpers';
-import { getRegistrationWizardPath } from '../utils/urlPaths';
+import { getRegistrationWizardLink } from '../utils/urlPaths';
 
 interface RegistrationErrorActionsProps extends BoxProps {
   tabErrors: TabErrors;
@@ -36,7 +36,7 @@ export const RegistrationErrorActions = ({
         variant="outlined"
         component={Link}
         size="small"
-        to={`${getRegistrationWizardPath(registrationIdentifier)}?tab=${firstErrorTab}`}
+        to={getRegistrationWizardLink(registrationIdentifier, { tab: firstErrorTab })}
         endIcon={<EditIcon />}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
         {t('registration.public_page.go_back_to_wizard')}

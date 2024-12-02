@@ -35,7 +35,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
           modalDataTestId={dataTestId.registrationWizard.description.fundingModal}>
           <Trans
             i18nKey="registration.description.funding.funding_helper_text"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
         </HelperTextModal>
       </Box>
@@ -70,7 +70,6 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                     alignItems: 'center',
                   }}>
                   <FundingSourceField fieldName={`${baseFieldName}.${SpecificFundingFieldNames.Source}`} />
-
                   {hasSelectedNfrSource &&
                     (hasSelectedNfrProject ? (
                       <>
@@ -178,15 +177,17 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                             label={t('registration.description.funding.funding_sum')}
                             fullWidth
                             variant="filled"
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
-                              ),
-                            }}
                             sx={getTextFieldMargin(touched && !!error)}
                             error={touched && !!error}
                             helperText={touched && !!error ? error : undefined}
                             data-testid={dataTestId.registrationWizard.description.fundingSumField}
+                            slotProps={{
+                              input: {
+                                startAdornment: (
+                                  <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
+                                ),
+                              },
+                            }}
                           />
                         )}
                       </Field>

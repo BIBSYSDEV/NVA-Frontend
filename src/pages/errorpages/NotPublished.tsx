@@ -8,7 +8,7 @@ export const NotPublished = () => {
 
   return (
     <Box data-testid="not_published" sx={{ mt: '4rem' }}>
-      <Typography variant="h2" component="h1" paragraph>
+      <Typography variant="h2" component="h1" sx={{ mb: '1rem' }}>
         {t('authorization.registration_not_published')}
       </Typography>
       <MuiLink component={Link} to={UrlPathTemplate.Home}>

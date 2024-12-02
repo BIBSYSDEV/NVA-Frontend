@@ -35,7 +35,7 @@ export const CompareFields = ({
           multiline
           label={candidateLabel}
           value={candidateValue}
-          InputLabelProps={{ shrink: true }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
       )}
       {onOverwrite ? (
@@ -59,7 +59,7 @@ export const CompareFields = ({
           multiline
           label={registrationLabel}
           value={registrationValue}
-          InputLabelProps={{ shrink: true }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
       )}
     </>

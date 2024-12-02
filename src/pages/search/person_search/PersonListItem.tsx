@@ -7,6 +7,7 @@ import { CristinPerson } from '../../../types/user.types';
 import { ORCID_BASE_URL } from '../../../utils/constants';
 import { getResearchProfilePath } from '../../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
+import { PersonIconHeader } from '../../research_profile/PersonIconHeader';
 
 interface PersonListItemProps {
   person: CristinPerson;
@@ -19,6 +20,8 @@ export const PersonListItem = ({ person }: PersonListItemProps) => {
 
   return (
     <SearchListItem sx={{ borderLeftColor: 'person.main' }}>
+      <PersonIconHeader />
+
       <Box sx={{ display: 'flex', gap: '0.5rem' }}>
         <ListItemText disableTypography>
           <Typography sx={{ fontSize: '1rem', fontWeight: '600' }}>
@@ -34,7 +37,7 @@ export const PersonListItem = ({ person }: PersonListItemProps) => {
         )}
       </Box>
 
-      <Box sx={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', width: '100%' }}>
+      <Box sx={{ display: 'flex', gap: '0.75rem 1.5rem', flexWrap: 'wrap', width: '100%' }}>
         {activeAffiliations.map((affiliation) => (
           <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
         ))}

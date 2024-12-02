@@ -29,7 +29,6 @@ export const MyProfile = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
 
   const personId = user?.cristinId ?? '';
