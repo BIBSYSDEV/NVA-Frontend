@@ -4,7 +4,10 @@ import { PublicationType } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
 import { getMainRegistrationType, isBook, isChapter, nviApplicableTypes } from '../../registration-helpers';
 import { YupShape } from '../validationHelpers';
-import { associatedFileValidationSchema } from './associatedArtifactValidation';
+import {
+  associatedArtifactPublishValidationSchema,
+  associatedArtifactValidationSchema,
+} from './associatedArtifactValidation';
 import { contributorsValidationSchema } from './contributorValidation';
 import { fundingValidationSchema } from './fundingValidation';
 import {
@@ -90,6 +93,10 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     }),
   }),
   projects: Yup.array().of(Yup.object()),
-  associatedArtifacts: Yup.array().of(associatedFileValidationSchema),
+  associatedArtifacts: Yup.array().of(associatedArtifactValidationSchema),
   fundings: Yup.array().of(fundingValidationSchema),
+});
+
+export const registrationPublishableValidationSchema = registrationValidationSchema.shape({
+  associatedArtifacts: Yup.array().of(associatedArtifactPublishValidationSchema),
 });
