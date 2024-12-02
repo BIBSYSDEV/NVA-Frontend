@@ -63,7 +63,6 @@ export const App = () => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
       const feideUser = await getUserAttributes();
-      console.log('feideUser', feideUser);
       if (feideUser) {
         dispatch(setUser(feideUser));
       }
@@ -78,9 +77,10 @@ export const App = () => {
     }
   }, [dispatch]);
 
-  const mustAcceptTerms = !!user; //&& user.currentTerms !== user.acceptedTerms;
-  const mustCreatePerson = user && !user.cristinId;
-  const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
+  const mustAcceptTerms = user && user.currentTerms !== user.acceptedTerms;
+  const mustCreatePerson = user && !user.cristinId && !mustAcceptTerms;
+  const mustSelectCustomer =
+    user && !mustAcceptTerms && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
 
   return (
     <>
