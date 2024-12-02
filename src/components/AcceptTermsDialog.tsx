@@ -4,9 +4,11 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, Typogr
 import { useMutation } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { getUserAttributes } from '../api/authApi';
 import { acceptTermsAndConditions } from '../api/roleApi';
 import { LanguageSelector } from '../layout/header/LanguageSelector';
 import { setNotification } from '../redux/notificationSlice';
+import { setUser } from '../redux/userSlice';
 import { dataTestId } from '../utils/dataTestIds';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 
@@ -20,7 +22,15 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
   const { handleLogout } = useAuthentication();
 
   const acceptTermsMutation = useMutation({
-    mutationFn: () => acceptTermsAndConditions(newTermsUri),
+    mutationFn: async () => {
+      const acceptTermsResponse = await acceptTermsAndConditions(newTermsUri);
+      if (acceptTermsResponse.data.termsConditionsUri) {
+        const newUserInfo = await getUserAttributes();
+        if (newUserInfo) {
+          dispatch(setUser(newUserInfo));
+        }
+      }
+    },
     onError: () => dispatch(setNotification({ message: t('feedback.error.accept_terms'), variant: 'error' })),
   });
 
