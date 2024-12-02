@@ -35,34 +35,3 @@ export default [
     },
   },
 ];
-
-// export default [
-//   //   eslintPluginReact.configs.recommended,
-//   //   eslintPluginReactHooks.configs.recommended,
-//   //   eslintPluginTypeScript.configs.recommended,
-//   eslintPluginReact.configs.flat.recommended,
-//   eslintPluginReact.configs.flat['jsx-runtime'],
-//   ...eslintPluginTanstackQuery.configs['flat/recommended'],
-//   eslintPluginJsxA11y.flatConfigs.recommended,
-
-//   {
-//     files: ['**/*.{ts,tsx}'],
-//     languageOptions: {
-//       parser: eslintParserTypeScript,
-//     },
-//     plugins: {
-//       // react: eslintPluginReact,
-//       'react-hooks': eslintPluginReactHooks,
-//       '@typescript-eslint': eslintPluginTypeScript,
-//     },
-//     rules: {
-//       ...eslintPluginReactHooks.configs.recommended.rules,
-//       // ...eslintPluginTypeScript.configs.rules,
-//       // ...eslintPluginReact.configs.recommended.rules,
-//       '@typescript-eslint/no-explicit-any': 'off',
-//       '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
-//       'no-console': 'warn',
-//       'no-debugger': 'warn',
-//     },
-//   },
-// ];
