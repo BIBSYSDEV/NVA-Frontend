@@ -7,7 +7,8 @@ import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 // Until the endpoint supports search without year
 const publicationChannelYearWorkaround = '2023';
 
-export interface CreateJournalPayload {
+export interface CreateSerialPublicationPayload {
+  type: 'Journal' | 'Series';
   name: string;
   homepage: string;
   printIssn?: string;
@@ -20,24 +21,14 @@ export interface CreatePublisherPayload {
   isbnPrefix?: string;
 }
 
-export const createJournal = async (newJournal: CreateJournalPayload) => {
-  const createJournalResponse = await authenticatedApiRequest2<Journal>({
-    url: PublicationChannelApiPath.Journal,
+export const createSerialPublication = async (newSerialPublication: CreateSerialPublicationPayload) => {
+  const createSerialPublicationResponse = await authenticatedApiRequest2<Journal>({
+    url: PublicationChannelApiPath.SerialPublication,
     method: 'POST',
-    data: newJournal,
+    data: newSerialPublication,
   });
 
-  return createJournalResponse.data;
-};
-
-export const createSeries = async (newSeries: CreateJournalPayload) => {
-  const createSeriesResponse = await authenticatedApiRequest2<Series>({
-    url: PublicationChannelApiPath.Series,
-    method: 'POST',
-    data: newSeries,
-  });
-
-  return createSeriesResponse.data;
+  return createSerialPublicationResponse.data;
 };
 
 export const createPublisher = async (newPublisher: CreatePublisherPayload) => {
@@ -52,7 +43,7 @@ export const createPublisher = async (newPublisher: CreatePublisherPayload) => {
 
 export const fetchJournal = async (identifier: string) => {
   const fetchJournalResponse = await apiRequest2<Journal>({
-    url: `${PublicationChannelApiPath.Journal}/${identifier}/${publicationChannelYearWorkaround}`,
+    url: `${PublicationChannelApiPath.SerialPublication}/${identifier}/${publicationChannelYearWorkaround}`,
   });
   return fetchJournalResponse.data;
 };
@@ -66,7 +57,7 @@ export const fetchPublisher = async (identifier: string) => {
 
 export const fetchSeries = async (identifier: string) => {
   const fetchSeriesResponse = await apiRequest2<Series>({
-    url: `${PublicationChannelApiPath.Series}/${identifier}/${publicationChannelYearWorkaround}`,
+    url: `${PublicationChannelApiPath.SerialPublication}/${identifier}/${publicationChannelYearWorkaround}`,
   });
   return fetchSeriesResponse.data;
 };
@@ -75,7 +66,7 @@ export const defaultChannelSearchSize = 50;
 
 export const searchForSeries = async (query: string, year: string, size = defaultChannelSearchSize) => {
   const searchForSeriesResponse = await apiRequest2<SearchResponse2<Series>>({
-    url: PublicationChannelApiPath.Series,
+    url: PublicationChannelApiPath.SerialPublication,
     method: 'GET',
     params: {
       query,
@@ -103,7 +94,7 @@ export const searchForPublishers = async (query: string, year: string, size = de
 
 export const searchForJournals = async (query: string, year: string, size = defaultChannelSearchSize) => {
   const searchForJournalsResponse = await apiRequest2<SearchResponse2<Journal>>({
-    url: PublicationChannelApiPath.Journal,
+    url: PublicationChannelApiPath.SerialPublication,
     method: 'GET',
     params: {
       query,
