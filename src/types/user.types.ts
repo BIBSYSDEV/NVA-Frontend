@@ -65,7 +65,7 @@ export interface UserList {
   users: InstitutionUser[];
 }
 
-export interface FeideUser {
+export interface UserAttributes {
   'custom:feideId'?: string;
   'custom:firstName'?: string;
   'custom:lastName'?: string;
