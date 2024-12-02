@@ -1162,6 +1162,7 @@
     "add_local_manager": "Legg til lokalt ansvarlig",
     "add_project_contributor": "Legg til prosjektdeltaker",
     "add_project_manager": "Legg til prosjektleder",
+    "add_self_as_project_manager": "Legg meg til som prosjektleder",
     "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltaker",
     "add_unidentified_project_manager": "Legg til uidentifisert prosjektleder",
     "affiliation_modal": {

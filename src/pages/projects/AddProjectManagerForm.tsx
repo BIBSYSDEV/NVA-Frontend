@@ -1,15 +1,20 @@
+import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { apiRequest2 } from '../../api/apiRequest';
 import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
+import { RootState } from '../../redux/store';
 import { CristinProject, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getFullCristinName } from '../../utils/user-helpers';
 import {
   addContributor,
   AddContributorErrors,
@@ -39,9 +44,11 @@ export const AddProjectManagerForm = ({
   const hasAffiliation = contributorToReplace && contributorHasNonEmptyAffiliation(contributorToReplace.roles);
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
+  const user = useSelector((store: RootState) => store.user);
+  const [isAddingSelf, setIsAddingSelf] = useState(false);
 
-  const addProjectManager = () => {
-    const { newContributors, error } = addContributor(selectedPerson, contributors, 'ProjectManager', indexToReplace);
+  const addProjectManager = (person: CristinPerson) => {
+    const { newContributors, error } = addContributor(person, contributors, 'ProjectManager', indexToReplace);
 
     if (error === AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION) {
       dispatch(
@@ -77,6 +84,24 @@ export const AddProjectManagerForm = ({
     }
   };
 
+  const addSelfAsProjectManager = async () => {
+    if (user?.cristinId) {
+      setIsAddingSelf(true);
+      const getCurrentPersonResponse = await apiRequest2<CristinPerson>({ url: user.cristinId });
+      if (isErrorStatus(getCurrentPersonResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.add_contributor'), variant: 'error' }));
+      } else if (isSuccessStatus(getCurrentPersonResponse.status)) {
+        if (getCurrentPersonResponse.data.affiliations.length > 1) {
+          setSearchTerm(getFullCristinName(getCurrentPersonResponse.data.names));
+        } else {
+          addProjectManager(getCurrentPersonResponse.data);
+          toggleModal();
+        }
+      }
+      setIsAddingSelf(false);
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       {suggestedProjectManager && (
@@ -100,11 +125,17 @@ export const AddProjectManagerForm = ({
           size="large">
           {t('project.add_unidentified_project_manager')}
         </Button>
+        <LoadingButton
+          data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
+          onClick={addSelfAsProjectManager}
+          loading={isAddingSelf}>
+          {t('project.add_self_as_project_manager')}
+        </LoadingButton>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
         <Button
           data-testid={dataTestId.projectForm.addProjectManagerButton}
           disabled={!selectedPerson}
-          onClick={addProjectManager}
+          onClick={() => selectedPerson && addProjectManager(selectedPerson)}
           size="large"
           variant="contained">
           {t('project.add_project_manager')}

@@ -235,6 +235,7 @@ export const dataTestId = {
     scientificSummaryEnglishField: 'scientific-summary-english-field',
     scientificSummaryNorwegianField: 'scientific-summary-norwegian-field',
     titleField: 'project-title-field',
+    addSelfAsProjectManagerButton: 'add-self-as-project-manager-button',
     addUnidentifiedContributorButton: 'add-unidentified-contributor-button',
     addUnidentifiedProjectManagerButton: 'add-unidentified-project-manager-button',
     selectContributorButton: 'select-contributor-button',
