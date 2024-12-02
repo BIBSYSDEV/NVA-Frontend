@@ -128,6 +128,7 @@ export const AddProjectManagerForm = ({
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
           onClick={addSelfAsProjectManager}
+          disabled={!!selectedPerson}
           loading={isAddingSelf}>
           {t('project.add_self_as_project_manager')}
         </LoadingButton>
