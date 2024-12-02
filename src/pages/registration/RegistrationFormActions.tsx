@@ -17,10 +17,10 @@ import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { isPublishableForWorkflow2 } from '../../utils/formik-helpers/formik-helpers';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration, userHasAccessRight } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
-import { registrationPublishableValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { SupportModalContent } from './SupportModalContent';
 
 interface RegistrationFormActionsProps {
@@ -120,8 +120,7 @@ export const RegistrationFormActions = ({
 
   const disableSaving =
     (values.status === RegistrationStatus.Published || values.status === RegistrationStatus.PublishedMetadata) &&
-    ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' &&
-      !registrationPublishableValidationSchema.isValidSync(values)) ||
+    ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' && !isPublishableForWorkflow2(values)) ||
       (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && !isValid));
 
   return (
