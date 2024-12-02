@@ -36,7 +36,7 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
 
   return (
     <Dialog open={true}>
-      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
         {t('authorization.welcome')} <LanguageSelector />
       </DialogTitle>
       <DialogContent>
