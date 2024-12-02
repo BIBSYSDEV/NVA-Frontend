@@ -1,8 +1,4 @@
 export const dataTestId = {
-  authorization: {
-    acceptTermsButton: 'accept-terms-button',
-    rejectTermsButton: 'reject-terms-button',
-  },
   aggregations: {
     categoryFacets: 'category-facets',
     collaboardationTypeFacets: 'collaboration-type-facets',

@@ -58,11 +58,11 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
         </Trans>
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'center' }}>
-        <Button data-testid={dataTestId.authorization.rejectTermsButton} onClick={handleLogout}>
+        <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={handleLogout}>
           {t('authorization.reject')}
         </Button>
         <LoadingButton
-          data-testid={dataTestId.authorization.acceptTermsButton}
+          data-testid={dataTestId.confirmDialog.acceptButton}
           loading={acceptTermsMutation.isPending}
           variant="contained"
           onClick={() => acceptTermsMutation.mutate()}>

@@ -60,7 +60,7 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
   };
 
   return (
-    <Dialog open={!!user} fullWidth maxWidth="xs">
+    <Dialog open={true} fullWidth maxWidth="xs">
       <DialogTitle>{t('authorization.your_user_profile')}</DialogTitle>
       <Formik
         initialValues={{
