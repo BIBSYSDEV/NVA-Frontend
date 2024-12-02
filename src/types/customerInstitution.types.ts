@@ -128,8 +128,6 @@ export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
 };
 
 export enum CustomerInstitutionFieldNames {
-  ArchiveName = 'customer.archiveName',
-  CristinId = 'customer.cristinId',
   DisplayName = 'customer.displayName',
   DoiUsername = 'doiAgent.username',
   DoiPassword = 'doiAgent.password',
@@ -137,7 +135,6 @@ export enum CustomerInstitutionFieldNames {
   FeideOrganizationDomain = 'customer.feideOrganizationDomain',
   Identifier = 'customer.identifier',
   InactiveFrom = 'customer.inactiveFrom',
-  InstitutionDns = 'customer.institutionDns',
   Name = 'customer.name',
   RorId = 'customer.rorId',
   Sector = 'customer.sector',
