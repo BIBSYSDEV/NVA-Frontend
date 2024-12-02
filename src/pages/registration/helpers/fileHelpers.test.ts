@@ -24,6 +24,8 @@ const emptyUser: User = {
   roles: [],
   nvaUsername: '',
   allowedCustomers: [],
+  currentTerms: '',
+  acceptedTerms: '',
 };
 
 describe('userCanEditFile', () => {
