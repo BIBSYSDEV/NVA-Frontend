@@ -88,7 +88,7 @@ export const App = () => {
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
 
-      {mustAcceptTerms && <AcceptTermsDialog open={mustAcceptTerms} />}
+      {mustAcceptTerms && <AcceptTermsDialog newTermsUri={user.currentTerms} />}
       {mustCreatePerson && <CreateCristinPersonDialog user={user} />}
       {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}
 

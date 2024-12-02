@@ -502,6 +502,7 @@
   "feedback": {
     "error": {
       "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
+      "accept_terms": "Kunne ikke godt nye brukervilkår",
       "add_contributor": "Kunne ikke legge til bidragsyter",
       "add_employment": "Kunne ikke legge til ansettelse",
       "add_role": "Kunne ikke legge til rolle",

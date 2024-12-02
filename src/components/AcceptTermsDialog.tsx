@@ -1,35 +1,41 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogProps,
-  DialogTitle,
-  Link,
-  Typography,
-} from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { acceptTermsAndConditions } from '../api/roleApi';
 import { LanguageSelector } from '../layout/header/LanguageSelector';
+import { setNotification } from '../redux/notificationSlice';
 import { dataTestId } from '../utils/dataTestIds';
 import { useAuthentication } from '../utils/hooks/useAuthentication';
 
-export const AcceptTermsDialog = (props: DialogProps) => {
+interface AcceptTermsDialogProps {
+  newTermsUri: string;
+}
+
+export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const { handleLogout } = useAuthentication();
 
+  const acceptTermsMutation = useMutation({
+    mutationFn: () => acceptTermsAndConditions(newTermsUri),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.accept_terms'), variant: 'error' })),
+  });
+
   return (
-    <Dialog {...props} open={true}>
+    <Dialog open={true}>
       <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
         {t('authorization.welcome')} <LanguageSelector />
       </DialogTitle>
       <DialogContent>
-        <Typography paragraph>{t('authorization.accept_terms_intro')} </Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('authorization.accept_terms_intro')} </Typography>
         <Typography variant="h3" gutterBottom>
           {t('authorization.about_terms')}
         </Typography>
         <Trans t={t} i18nKey="authorization.about_terms_description">
-          <Typography paragraph>
+          <Typography sx={{ mb: '1rem' }}>
             <Link
               href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv"
               target="_blank"
@@ -45,12 +51,13 @@ export const AcceptTermsDialog = (props: DialogProps) => {
         <Button data-testid={dataTestId.authorization.rejectTermsButton} onClick={handleLogout}>
           {t('authorization.reject')}
         </Button>
-        <Button
+        <LoadingButton
           data-testid={dataTestId.authorization.acceptTermsButton}
+          loading={acceptTermsMutation.isPending}
           variant="contained"
-          onClick={() => console.log('accept terms')}>
+          onClick={() => acceptTermsMutation.mutate()}>
           {t('authorization.accept')}
-        </Button>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );
