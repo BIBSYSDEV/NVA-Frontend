@@ -12,7 +12,7 @@ export const SeriesFields = () => {
   return (
     <div>
       <Typography variant="h2">{t('registration.resource_type.series')}</Typography>
-      <Typography paragraph>{t('registration.resource_type.series_info')}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{t('registration.resource_type.series_info')}</Typography>
 
       <InputContainerBox>
         <SeriesField />

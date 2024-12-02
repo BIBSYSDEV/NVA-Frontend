@@ -32,9 +32,9 @@ export const DegreeForm = ({ subType }: DegreeFormProps) => {
               data-testid={dataTestId.registrationWizard.resourceType.courseCodeField}
               variant="filled"
               sx={{ width: 'fit-content' }}
-              inputProps={{ maxLength: 15 }}
               label={t('registration.resource_type.course_code')}
               value={field.value ?? ''}
+              slotProps={{ htmlInput: { maxLength: 15 } }}
             />
           )}
         </Field>

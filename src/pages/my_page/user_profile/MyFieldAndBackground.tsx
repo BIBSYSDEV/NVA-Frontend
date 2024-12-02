@@ -115,7 +115,7 @@ export const MyFieldAndBackground = () => {
                 <Typography variant="h3" gutterBottom>
                   {t('my_page.my_profile.field_and_background.field')}
                 </Typography>
-                <Typography paragraph>{t('my_page.my_profile.field_and_background.field_text')}</Typography>
+                <Typography sx={{ mb: '1rem' }}>{t('my_page.my_profile.field_and_background.field_text')}</Typography>
                 <Field name={'keywords'}>
                   {({ field }: FieldProps<Keywords[]>) => (
                     <Autocomplete
@@ -134,14 +134,6 @@ export const MyFieldAndBackground = () => {
                           <Typography>{getLanguageString(option.labels)}</Typography>
                         </li>
                       )}
-                      ListboxComponent={AutocompleteListboxWithExpansion}
-                      ListboxProps={
-                        {
-                          hasMoreHits: !!keywordsQuery.data?.size && keywordsQuery.data.size > searchSize,
-                          onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
-                          isLoadingMoreHits: keywordsQuery.isFetching && searchSize > keywordsResult.length,
-                        } satisfies AutocompleteListboxWithExpansionProps as any
-                      }
                       renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
                           <Chip
@@ -171,6 +163,16 @@ export const MyFieldAndBackground = () => {
                           showSearchIcon={field.value.length === 0}
                         />
                       )}
+                      slotProps={{
+                        listbox: {
+                          component: AutocompleteListboxWithExpansion,
+                          ...({
+                            hasMoreHits: !!keywordsQuery.data?.size && keywordsQuery.data.size > searchSize,
+                            onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
+                            isLoadingMoreHits: keywordsQuery.isFetching && searchSize > keywordsResult.length,
+                          } satisfies AutocompleteListboxWithExpansionProps),
+                        },
+                      }}
                     />
                   )}
                 </Field>
@@ -190,15 +192,17 @@ export const MyFieldAndBackground = () => {
                   {({ field }: FieldProps<string>) => (
                     <TextField
                       {...field}
-                      inputProps={{ maxLength: maxMessageLength }}
                       label={t('my_page.my_profile.background_no')}
                       variant="filled"
                       multiline
                       rows="3"
                       placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
                       helperText={`${field.value.length}/${maxMessageLength}`}
-                      FormHelperTextProps={{ sx: { textAlign: 'end' } }}
                       sx={{ my: '1rem' }}
+                      slotProps={{
+                        htmlInput: { maxLength: maxMessageLength },
+                        formHelperText: { sx: { textAlign: 'end' } },
+                      }}
                     />
                   )}
                 </Field>
@@ -206,14 +210,16 @@ export const MyFieldAndBackground = () => {
                   {({ field }: FieldProps<string>) => (
                     <TextField
                       {...field}
-                      inputProps={{ maxLength: maxMessageLength }}
                       label={t('my_page.my_profile.background_en')}
                       variant="filled"
                       multiline
                       rows="3"
                       placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
                       helperText={`${field.value.length}/${maxMessageLength}`}
-                      FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+                      slotProps={{
+                        htmlInput: { maxLength: maxMessageLength },
+                        formHelperText: { sx: { textAlign: 'end' } },
+                      }}
                     />
                   )}
                 </Field>

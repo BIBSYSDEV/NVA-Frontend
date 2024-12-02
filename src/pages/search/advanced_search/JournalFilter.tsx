@@ -87,14 +87,6 @@ export const JournalFilter = () => {
             hideScientificLevel
           />
         )}
-        ListboxComponent={AutocompleteListboxWithExpansion}
-        ListboxProps={
-          {
-            hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
-            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-            isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
-          } satisfies AutocompleteListboxWithExpansionProps as any
-        }
         data-testid={dataTestId.startPage.advancedSearch.journalField}
         renderInput={(params) => (
           <AutocompleteTextField
@@ -106,6 +98,16 @@ export const JournalFilter = () => {
             multiline
           />
         )}
+        slotProps={{
+          listbox: {
+            component: AutocompleteListboxWithExpansion,
+            ...({
+              hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
+              onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+              isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
+            } satisfies AutocompleteListboxWithExpansionProps),
+          },
+        }}
       />
     </section>
   );

@@ -226,7 +226,7 @@ export const PublishingAccordion = ({
         {/* Option to reload data if status is not up to date with ticket */}
         {userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus && (
           <>
-            <Typography paragraph sx={{ mt: '1rem' }}>
+            <Typography sx={{ my: '1rem' }}>
               {isPublishedRegistration
                 ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
@@ -247,7 +247,7 @@ export const PublishingAccordion = ({
 
         {canPublishMetadata && showRegistrationWithSameNameWarning && (
           <div>
-            <Typography paragraph>
+            <Typography sx={{ mb: '1rem' }}>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
             </Typography>
             <Link
@@ -265,7 +265,7 @@ export const PublishingAccordion = ({
             </Link>
             <Trans
               i18nKey="registration.public_page.tasks_panel.duplicate_title_description_details"
-              components={[<Typography paragraph key="1" />]}
+              components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
             />
             <Divider sx={{ bgcolor: 'grey.400', mb: '0.5rem' }} />
           </div>
@@ -276,11 +276,11 @@ export const PublishingAccordion = ({
           <>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
               <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow1">
-                <Typography paragraph />
+                <Typography sx={{ mb: '1rem' }} />
               </Trans>
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
               <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow2">
-                <Typography paragraph />
+                <Typography sx={{ mb: '1rem' }} />
               </Trans>
             ) : null}
           </>
@@ -300,7 +300,7 @@ export const PublishingAccordion = ({
               {t('registration.public_page.tasks_panel.publish_registration')}
             </LoadingButton>
 
-            <Typography paragraph sx={{ mt: '1rem' }}>
+            <Typography sx={{ my: '1rem' }}>
               {t('registration.public_page.tasks_panel.delete_draft_description')}
             </Typography>
           </>

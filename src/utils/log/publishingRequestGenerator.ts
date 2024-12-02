@@ -95,6 +95,7 @@ function generateOpenFilesLogEntry(
         items: openFilesItems,
       },
     ],
+    messages: ticket.messages,
   };
 }
 
@@ -134,6 +135,7 @@ function generateRejectedFilesLogEntry(
         items: rejectedFileItems,
       },
     ],
+    messages: ticket.messages,
   };
 }
 

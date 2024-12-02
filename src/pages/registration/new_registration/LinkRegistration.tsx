@@ -106,8 +106,8 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                       disabled={isSubmitting}
                       {...field}
                       error={!!error && touched}
-                      InputLabelProps={{ shrink: true }}
                       placeholder={doiUrlPlaceholder}
+                      slotProps={{ inputLabel: { shrink: true } }}
                     />
                   )}
                 </Field>

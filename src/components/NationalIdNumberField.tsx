@@ -23,19 +23,21 @@ export const NationalIdNumberField = ({ nationalId }: NationIdNumberFieldProps) 
       disabled
       value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}
       label={t('common.national_id_number')}
-      InputProps={{
-        endAdornment: (
-          <Tooltip
-            title={
-              showFullNin
-                ? t('basic_data.person_register.hide_full_nin')
-                : t('basic_data.person_register.show_full_nin')
-            }>
-            <IconButton onClick={() => setShowFullNin(!showFullNin)}>
-              {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
-            </IconButton>
-          </Tooltip>
-        ),
+      slotProps={{
+        input: {
+          endAdornment: (
+            <Tooltip
+              title={
+                showFullNin
+                  ? t('basic_data.person_register.hide_full_nin')
+                  : t('basic_data.person_register.show_full_nin')
+              }>
+              <IconButton onClick={() => setShowFullNin(!showFullNin)}>
+                {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </IconButton>
+            </Tooltip>
+          ),
+        },
       }}
     />
   );

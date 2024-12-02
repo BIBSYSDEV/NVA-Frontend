@@ -86,7 +86,7 @@ export const EditAffiliationModal = ({
       headingText={t('registration.contributors.edit_affiliation')}>
       <Trans
         i18nKey="registration.contributors.edit_affiliation_helper_text"
-        components={[<Typography key="1" paragraph />]}
+        components={[<Typography key="1" sx={{ mb: '1rem' }} />]}
       />
       {authorName && <AuthorName authorName={authorName} />}
       {institutionQuery.isPending ? (

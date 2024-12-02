@@ -229,7 +229,7 @@ export const RegistrationFormActions = ({
           await saveRegistration(values);
         }}
         onCancel={() => setOpenNviApprovalResetDialog(false)}>
-        <Typography paragraph>{t('registration.nvi_warning.approval_override_warning')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.approval_override_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.confirm_saving_registration')}</Typography>
       </ConfirmDialog>
     </>

@@ -112,21 +112,23 @@ export const PendingPublishingTicketForCuratorSection = ({
         <DialogContent>
           <Trans
             i18nKey="registration.public_page.reject_publish_request_description"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
           <TextField
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectionMessageTextField}
-            inputProps={{ maxLength: 160 }}
             variant="filled"
             multiline
             minRows={3}
             fullWidth
             required
             label={t('registration.public_page.reason_for_rejection')}
-            FormHelperTextProps={{ sx: { textAlign: 'end' } }}
             helperText={`${rejectionReason.length}/160`}
             value={rejectionReason}
             onChange={(event) => setRejectionReason(event.target.value)}
+            slotProps={{
+              htmlInput: { maxLength: 160 },
+              formHelperText: { sx: { textAlign: 'end' } },
+            }}
           />
         </DialogContent>
         <DialogActions>

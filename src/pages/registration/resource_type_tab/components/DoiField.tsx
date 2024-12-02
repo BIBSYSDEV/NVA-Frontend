@@ -34,7 +34,6 @@ export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
         flexWrap: 'wrap',
       }}>
       <TextField
-        InputProps={{ startAdornment: <LinkIcon sx={{ mr: '0.5rem' }} /> }}
         data-testid="doi-field"
         variant="filled"
         fullWidth
@@ -43,6 +42,7 @@ export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
         disabled
         value={doi || referenceDoi}
         multiline
+        slotProps={{ input: { startAdornment: <LinkIcon sx={{ mr: '0.5rem' }} /> } }}
       />
 
       {referenceDoi && (
