@@ -95,13 +95,11 @@ export const AddProjectManagerForm = ({
   };
 
   const addSelfAsProjectManager = (person: CristinPerson) => {
-    if (person) {
-      if (person.affiliations.length > 1) {
-        setSearchTerm(getFullCristinName(person.names));
-      } else {
-        addProjectManager(person);
-        toggleModal();
-      }
+    if (person.affiliations.length > 1) {
+      setSearchTerm(getFullCristinName(person.names));
+    } else {
+      addProjectManager(person);
+      toggleModal();
     }
   };
 
