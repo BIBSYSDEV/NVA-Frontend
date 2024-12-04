@@ -1,10 +1,11 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { apiRequest2 } from '../../api/apiRequest';
+import { fetchPerson } from '../../api/cristinApi';
 import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
@@ -12,7 +13,6 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { CristinProject, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getFullCristinName } from '../../utils/user-helpers';
 import {
@@ -45,7 +45,21 @@ export const AddProjectManagerForm = ({
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
   const user = useSelector((store: RootState) => store.user);
-  const [isAddingSelf, setIsAddingSelf] = useState(false);
+  const userCristinId = user?.cristinId ?? '';
+
+  const {
+    data: currentUser,
+    isFetching,
+    refetch: refetchCurrentUser,
+  } = useQuery({
+    enabled: false,
+    queryKey: ['currentUser', userCristinId],
+    queryFn: async () => {
+      const data = await fetchPerson(userCristinId);
+      addSelfAsProjectManager(data);
+    },
+    meta: { errorMessage: t('feedback.error.add_contributor') },
+  });
 
   const addProjectManager = (person: CristinPerson) => {
     const { newContributors, error } = addContributor(person, contributors, 'ProjectManager', indexToReplace);
@@ -84,21 +98,14 @@ export const AddProjectManagerForm = ({
     }
   };
 
-  const addSelfAsProjectManager = async () => {
-    if (user?.cristinId) {
-      setIsAddingSelf(true);
-      const getCurrentPersonResponse = await apiRequest2<CristinPerson>({ url: user.cristinId });
-      if (isErrorStatus(getCurrentPersonResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.add_contributor'), variant: 'error' }));
-      } else if (isSuccessStatus(getCurrentPersonResponse.status)) {
-        if (getCurrentPersonResponse.data.affiliations.length > 1) {
-          setSearchTerm(getFullCristinName(getCurrentPersonResponse.data.names));
-        } else {
-          addProjectManager(getCurrentPersonResponse.data);
-          toggleModal();
-        }
+  const addSelfAsProjectManager = (person: CristinPerson) => {
+    if (person) {
+      if (person.affiliations.length > 1) {
+        setSearchTerm(getFullCristinName(person.names));
+      } else {
+        addProjectManager(person);
+        toggleModal();
       }
-      setIsAddingSelf(false);
     }
   };
 
@@ -127,9 +134,11 @@ export const AddProjectManagerForm = ({
         </Button>
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
-          onClick={addSelfAsProjectManager}
+          onClick={() => {
+            refetchCurrentUser();
+          }}
           disabled={!!selectedPerson}
-          loading={isAddingSelf}>
+          loading={isFetching}>
           {t('project.add_self_as_project_manager')}
         </LoadingButton>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
