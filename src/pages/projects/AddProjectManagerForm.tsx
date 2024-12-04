@@ -1,11 +1,10 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPerson } from '../../api/cristinApi';
+import { useRefetchPerson } from '../../api/hooks/useRefetchPerson';
 import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
@@ -46,16 +45,6 @@ export const AddProjectManagerForm = ({
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = user?.cristinId ?? '';
-
-  const currentUserQuery = useQuery({
-    enabled: false,
-    queryKey: ['currentUser', userCristinId],
-    queryFn: async () => {
-      const data = await fetchPerson(userCristinId);
-      addSelfAsProjectManager(data);
-    },
-    meta: { errorMessage: t('feedback.error.add_contributor') },
-  });
 
   const addProjectManager = (person: CristinPerson) => {
     const { newContributors, error } = addContributor(person, contributors, 'ProjectManager', indexToReplace);
@@ -102,6 +91,12 @@ export const AddProjectManagerForm = ({
       toggleModal();
     }
   };
+
+  const currentUserQuery = useRefetchPerson({
+    userCristinId: userCristinId,
+    sideEffect: addSelfAsProjectManager,
+    errorMessage: t('feedback.error.add_project_manager'),
+  });
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
