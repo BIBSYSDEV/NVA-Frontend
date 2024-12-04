@@ -47,11 +47,7 @@ export const AddProjectManagerForm = ({
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = user?.cristinId ?? '';
 
-  const {
-    data: currentUser,
-    isFetching,
-    refetch: refetchCurrentUser,
-  } = useQuery({
+  const currentUserQuery = useQuery({
     enabled: false,
     queryKey: ['currentUser', userCristinId],
     queryFn: async () => {
@@ -134,11 +130,9 @@ export const AddProjectManagerForm = ({
         </Button>
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
-          onClick={() => {
-            refetchCurrentUser();
-          }}
+          onClick={() => currentUserQuery.refetch()}
           disabled={!!selectedPerson}
-          loading={isFetching}>
+          loading={currentUserQuery.isFetching}>
           {t('project.add_self_as_project_manager')}
         </LoadingButton>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
