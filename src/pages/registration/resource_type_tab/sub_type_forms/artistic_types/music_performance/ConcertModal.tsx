@@ -73,7 +73,7 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       : schema.optional()
   ),
   place: Yup.object().shape({
-    label: Yup.string().required(
+    name: Yup.string().required(
       i18n.t('feedback.validation.is_required', {
         field: i18n.t('common.place'),
       })
@@ -204,7 +204,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                   )}
                 </Field>
               )}
-              <Field name="place.label">
+              <Field name="place.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}

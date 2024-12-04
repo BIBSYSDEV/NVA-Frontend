@@ -12,11 +12,11 @@ export const AboutContent = () => {
         <Typography component="li">{t('about.description.paragraph0.bullet_point1')}</Typography>
       </ul>
 
-      <Typography paragraph>{t('about.description.paragraph1')}</Typography>
-      <Typography paragraph>{t('about.description.paragraph2')}</Typography>
-      <Typography paragraph>{t('about.description.paragraph3')}</Typography>
-      <Typography paragraph>{t('about.description.paragraph4')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>{t('about.description.paragraph1')}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{t('about.description.paragraph2')}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{t('about.description.paragraph3')}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{t('about.description.paragraph4')}</Typography>
+      <Typography sx={{ mb: '1rem' }}>
         <Trans t={t} i18nKey="about.description.paragraph5">
           <MuiLink href={'mailto:kontakt@sikt.no'} target="_blank" rel="noopener noreferrer">
             (i18n content: support email)

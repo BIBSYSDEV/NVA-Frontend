@@ -35,9 +35,6 @@ export const SortSelector = ({ orderKey, options, paginationKey, sortKey, ...tex
       data-testid={dataTestId.startPage.orderBySelect}
       select
       value={selectedOption}
-      inputProps={{
-        'aria-label': textFieldProps['aria-label'],
-      }}
       onChange={(event) => {
         // These typing workarounds are needed because of the way MenuItem handle object values: https://github.com/mui/material-ui/issues/14286
         const value = event.target.value as unknown as SortSelectorOption;
@@ -45,7 +42,8 @@ export const SortSelector = ({ orderKey, options, paginationKey, sortKey, ...tex
         params.set(sortKey, value.sortOrder);
         params.delete(paginationKey);
         history.push({ search: params.toString() });
-      }}>
+      }}
+      slotProps={{ htmlInput: { 'aria-label': textFieldProps['aria-label'] } }}>
       {options.map((option) => (
         <MenuItem key={option.i18nKey} value={option as any}>
           {t(option.i18nKey)}

@@ -23,7 +23,7 @@ const SignedOutPage = () => {
       <Typography variant="h1" gutterBottom>
         {t('authorization.signed_out')}
       </Typography>
-      <Typography paragraph>{t('authorization.expired_token_info')}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{t('authorization.expired_token_info')}</Typography>
 
       <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
         <Button

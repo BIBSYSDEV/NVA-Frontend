@@ -1,9 +1,11 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
-import { FileType, FileVersion } from '../../../types/associatedArtifact.types';
+import { FileVersion } from '../../../types/associatedArtifact.types';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
+  isOpenFile,
+  isPendingOpenFile,
   isTypeWithFileVersionField,
 } from '../../registration-helpers';
 
@@ -23,14 +25,20 @@ const associatedArtifactErrorMessage = {
   }),
 };
 
-export const associatedFileValidationSchema = Yup.object({
+const linkValidation = Yup.string()
+  .nullable()
+  .when('type', ([type], schema) =>
+    associatedArtifactIsLink({ type }) ? schema.url(associatedArtifactErrorMessage.linkInvalid) : schema
+  );
+
+export const associatedArtifactValidationSchema = Yup.object({
   type: Yup.string(),
 
   // File validation
   embargoDate: Yup.date()
     .nullable()
     .when(['type'], ([type], schema) =>
-      associatedArtifactIsFile({ type }) && type !== FileType.UnpublishableFile
+      associatedArtifactIsFile({ type }) && (isOpenFile({ type }) || isPendingOpenFile({ type }))
         ? schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid)
         : schema
     ),
@@ -38,7 +46,7 @@ export const associatedFileValidationSchema = Yup.object({
     .nullable()
     .when(['type', '$publicationInstanceType'], ([type, publicationInstanceType], schema) =>
       associatedArtifactIsFile({ type }) &&
-      type !== FileType.UnpublishableFile &&
+      (isOpenFile({ type }) || isPendingOpenFile({ type })) &&
       isTypeWithFileVersionField(publicationInstanceType)
         ? schema
             .required(associatedArtifactErrorMessage.fileVersionRequired)
@@ -48,14 +56,14 @@ export const associatedFileValidationSchema = Yup.object({
   license: Yup.string()
     .nullable()
     .when(['type'], ([type], schema) =>
-      associatedArtifactIsFile({ type }) && type !== FileType.UnpublishableFile
+      associatedArtifactIsFile({ type }) && (isOpenFile({ type }) || isPendingOpenFile({ type }))
         ? schema.required(associatedArtifactErrorMessage.licenseRequired)
         : schema
     ),
-  // Link validation
-  id: Yup.string()
-    .nullable()
-    .when('type', ([type], schema) =>
-      associatedArtifactIsLink({ type }) ? schema.url(associatedArtifactErrorMessage.linkInvalid) : schema
-    ),
+  id: linkValidation,
+});
+
+export const associatedArtifactPublishValidationSchema = Yup.object({
+  type: Yup.string(),
+  id: linkValidation,
 });

@@ -26,8 +26,17 @@ import {
   SpecificLinkFieldNames,
 } from '../../types/publicationFieldNames';
 import { Funding, PublicationInstance, Registration, RegistrationTab } from '../../types/registration.types';
-import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from '../registration-helpers';
-import { registrationValidationSchema } from '../validation/registration/registrationValidation';
+import {
+  associatedArtifactIsFile,
+  associatedArtifactIsLink,
+  getMainRegistrationType,
+  isOpenFile,
+  isPendingOpenFile,
+} from '../registration-helpers';
+import {
+  registrationPublishableValidationSchema,
+  registrationValidationSchema,
+} from '../validation/registration/registrationValidation';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -128,7 +137,7 @@ const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] =
 
       if (associatedArtifactIsFile(artifact)) {
         const file = artifact as AssociatedFile;
-        if (file.type !== FileType.UnpublishableFile) {
+        if (isOpenFile(file) || isPendingOpenFile(file) || file.type === FileType.RejectedFile) {
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherVersion}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);
@@ -265,6 +274,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
     case PublicationType.Anthology:
       return {
         entityDescription: {
+          npiSubjectHeading: true,
           reference: {
             publicationContext: {
               type: true,
@@ -282,12 +292,12 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           reference: {
             publicationContext: {
               type: true,
-              label: true,
+              name: true,
               agent: {
                 name: true,
               },
               place: {
-                label: true,
+                name: true,
                 country: true,
               },
               time: {
@@ -488,4 +498,13 @@ export const validateRegistrationForm = (registration: Registration): FormikErro
     return yupToFormErrors(err);
   }
   return {};
+};
+
+export const isPublishableForWorkflow2 = (registration: Registration) => {
+  const isValid = registrationPublishableValidationSchema.isValidSync(registration, {
+    context: {
+      publicationInstanceType: registration.entityDescription?.reference?.publicationInstance.type ?? '',
+    } as any,
+  });
+  return isValid;
 };

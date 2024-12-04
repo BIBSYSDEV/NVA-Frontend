@@ -85,7 +85,7 @@ const resourceErrorMessage = {
   doiInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.registration.link_to_resource'),
   }),
-  eventTitleRequired: i18n.t('feedback.validation.is_required', {
+  eventNameRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.title_of_event'),
   }),
   exhibitionRequired: i18n.t('feedback.validation.announcement_required'),
@@ -360,9 +360,9 @@ const presentationPublicationInstance = Yup.object<YupShape<PresentationPublicat
 });
 
 const presentationPublicationContext = Yup.object<YupShape<PresentationPublicationContext>>({
-  label: Yup.string().nullable().required(resourceErrorMessage.eventTitleRequired),
+  name: Yup.string().nullable().required(resourceErrorMessage.eventNameRequired),
   place: Yup.object().shape({
-    label: Yup.string().nullable(),
+    name: Yup.string().nullable(),
     country: Yup.string().nullable(),
   }),
   agent: Yup.object().shape({

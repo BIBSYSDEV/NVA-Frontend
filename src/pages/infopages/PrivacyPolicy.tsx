@@ -11,20 +11,12 @@ const PrivacyPolicy = () => {
     <StyledPageContent>
       <PageHeader>{t('privacy.privacy_statement')}</PageHeader>
 
-      <Box
-        sx={{
-          table: {
-            mt: '0.5rem',
-          },
-          ul: {
-            marginTop: '0',
-          },
-        }}>
+      <Box sx={{ table: { mt: '0.5rem' }, ul: { marginTop: '0' } }}>
         <Typography variant="h2">{t('privacy.about.heading')}</Typography>
-        <Typography paragraph>{t('privacy.about.paragraph')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.about.paragraph')}</Typography>
 
         <Typography variant="h2">{t('privacy.what_are_personal_data.heading')}</Typography>
-        <Typography paragraph>
+        <Typography sx={{ mb: '1rem' }}>
           <Trans t={t} i18nKey="privacy.what_are_personal_data.paragraph">
             <a target="_blank" rel="noreferrer" href="https://lovdata.no/lov/2018-06-15-38/§2">
               (i18n content: Personal Data Act Section 2)
@@ -36,9 +28,9 @@ const PrivacyPolicy = () => {
         </Typography>
 
         <Typography variant="h2">{t('privacy.service_in_brief.heading')}</Typography>
-        <Typography paragraph>{t('privacy.service_in_brief.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.service_in_brief.paragraph1')}</Typography>
-        <Typography paragraph>{t('privacy.service_in_brief.paragraph2')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.service_in_brief.paragraph0')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.service_in_brief.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.service_in_brief.paragraph2')}</Typography>
 
         <Typography variant="h2">{t('privacy.purpose.heading')}</Typography>
         <Typography>{t('privacy.purpose.paragraph')}</Typography>
@@ -65,22 +57,22 @@ const PrivacyPolicy = () => {
         </TableContainer>
 
         <Typography variant="h2">{t('privacy.registered_personal_data.heading')}</Typography>
-        <Typography paragraph>
+        <Typography sx={{ mb: '1rem' }}>
           <Trans t={t} i18nKey="privacy.registered_personal_data.paragraph0">
             <a target="_blank" rel="noreferrer" href="https://lovdata.no/lov/2018-06-15-38/gdpr/a6">
               (i18n content: GDPR Article 6)
             </a>
           </Trans>
         </Typography>
-        <Typography paragraph>
+        <Typography sx={{ mb: '1rem' }}>
           <Trans t={t} i18nKey="privacy.registered_personal_data.paragraph1">
             <a target="_blank" rel="noreferrer" href="https://lovdata.no/lov/2018-06-15-38/gdpr/a6">
               (i18n content: GDPR Article 6)
             </a>
           </Trans>
         </Typography>
-        <Typography paragraph>{t('privacy.registered_personal_data.paragraph2')}</Typography>
-        <Typography paragraph>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.registered_personal_data.paragraph2')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>
           <Trans t={t} i18nKey="privacy.registered_personal_data.paragraph3">
             <a target="_blank" rel="noreferrer" href="https://lovdata.no/lov/2018-06-15-38/§8">
               (i18n content: Personal Data Act Section 8)
@@ -90,7 +82,7 @@ const PrivacyPolicy = () => {
             </a>
           </Trans>
         </Typography>
-        <Typography paragraph>{t('privacy.registered_personal_data.paragraph4')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.registered_personal_data.paragraph4')}</Typography>
 
         <Typography variant="h3">{t('privacy.registered_personal_data.table.user_data.heading')}</Typography>
         <TableContainer sx={{ mb: '2rem' }}>
@@ -177,7 +169,7 @@ const PrivacyPolicy = () => {
           </Table>
         </TableContainer>
 
-        <Typography paragraph>{t('privacy.registered_personal_data.paragraph5')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.registered_personal_data.paragraph5')}</Typography>
         <Typography>{t('privacy.registered_personal_data.paragraph6.intro')}</Typography>
         <ul>
           {[...Array(3)].map((_, index) => (
@@ -186,17 +178,17 @@ const PrivacyPolicy = () => {
             </Typography>
           ))}
         </ul>
-        <Typography paragraph>{t('privacy.registered_personal_data.paragraph7')}</Typography>
-        <Typography paragraph>{t('privacy.registered_personal_data.paragraph8')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.registered_personal_data.paragraph7')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.registered_personal_data.paragraph8')}</Typography>
 
         <Typography variant="h2">{t('privacy.automatic_case_processing.heading')}</Typography>
-        <Typography paragraph>{t('privacy.automatic_case_processing.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.automatic_case_processing.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.automatic_case_processing.paragraph0')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.automatic_case_processing.paragraph1')}</Typography>
 
         <Typography variant="h2">{t('privacy.disclosure_of_data.heading')}</Typography>
-        <Typography paragraph>{t('privacy.disclosure_of_data.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.disclosure_of_data.paragraph1')}</Typography>
-        <Typography paragraph>{t('privacy.disclosure_of_data.paragraph2')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.disclosure_of_data.paragraph0')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.disclosure_of_data.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.disclosure_of_data.paragraph2')}</Typography>
         <Typography>{t('privacy.disclosure_of_data.paragraph3.intro')}</Typography>
         <TableContainer sx={{ mb: '2rem' }}>
           <Table size="small">
@@ -217,8 +209,8 @@ const PrivacyPolicy = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Typography paragraph>{t('privacy.disclosure_of_data.paragraph4')}</Typography>
-        <Typography paragraph>{t('privacy.disclosure_of_data.paragraph5')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.disclosure_of_data.paragraph4')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.disclosure_of_data.paragraph5')}</Typography>
         <Typography>{t('privacy.disclosure_of_data.paragraph6.intro')}</Typography>
         <TableContainer sx={{ mb: '2rem' }}>
           <Table size="small">
@@ -243,17 +235,17 @@ const PrivacyPolicy = () => {
         </TableContainer>
 
         <Typography variant="h2">{t('privacy.security_for_personal_data.heading')}</Typography>
-        <Typography paragraph>{t('privacy.security_for_personal_data.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.security_for_personal_data.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.security_for_personal_data.paragraph0')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.security_for_personal_data.paragraph1')}</Typography>
 
         <Typography variant="h2">{t('privacy.your_rights.heading')}</Typography>
         <Typography variant="h3">{t('privacy.your_rights.section0.heading')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section0.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section0.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section0.paragraph0')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section0.paragraph1')}</Typography>
 
         <Typography variant="h3">{t('privacy.your_rights.section1.heading')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section1.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section1.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section1.paragraph0')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section1.paragraph1')}</Typography>
 
         <Typography variant="h3">{t('privacy.your_rights.section2.heading')}</Typography>
         <Typography>
@@ -268,12 +260,12 @@ const PrivacyPolicy = () => {
           <Typography component="li">{t('privacy.your_rights.section2.paragraph0.bullet_point1')}</Typography>
           <Typography component="li">{t('privacy.your_rights.section2.paragraph0.bullet_point2')}</Typography>
         </ul>
-        <Typography paragraph>{t('privacy.your_rights.section2.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section2.paragraph1')}</Typography>
 
         <Typography variant="h3">{t('privacy.your_rights.section3.heading')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section3.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section3.paragraph1')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section3.paragraph2')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section3.paragraph0')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section3.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section3.paragraph2')}</Typography>
 
         <Typography variant="h3">{t('privacy.your_rights.section4.heading')}</Typography>
         <Typography>
@@ -288,7 +280,7 @@ const PrivacyPolicy = () => {
           <Typography component="li">{t('privacy.your_rights.section4.paragraph0.bullet_point1')}</Typography>
           <Typography component="li">{t('privacy.your_rights.section4.paragraph0.bullet_point2')}</Typography>
         </ul>
-        <Typography paragraph>{t('privacy.your_rights.section4.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section4.paragraph1')}</Typography>
         <Typography>{t('privacy.your_rights.section4.paragraph2.intro')}</Typography>
         <ul>
           <Typography component="li">{t('privacy.your_rights.section4.paragraph2.bullet_point0')}</Typography>
@@ -296,14 +288,14 @@ const PrivacyPolicy = () => {
         </ul>
 
         <Typography variant="h3">{t('privacy.your_rights.section5.heading')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section5.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section5.paragraph1')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section5.paragraph0')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.your_rights.section5.paragraph1')}</Typography>
 
         <Typography variant="h2">{t('privacy.contact.heading')}</Typography>
         <Typography variant="h3">{t('privacy.contact.section0.heading')}</Typography>
-        <Typography paragraph>{t('privacy.contact.section0.paragraph')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.contact.section0.paragraph')}</Typography>
         <Typography variant="h3">{t('privacy.contact.section1.heading')}</Typography>
-        <Typography paragraph>{t('privacy.contact.section1.paragraph')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('privacy.contact.section1.paragraph')}</Typography>
 
         <Typography>{t('privacy.contact.section2.intro')}</Typography>
         <Typography>

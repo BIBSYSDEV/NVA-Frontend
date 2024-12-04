@@ -71,7 +71,7 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
         onSubmit={async (values) => await publisherMutation.mutateAsync(values)}>
         <Form>
           <DialogContent>
-            <Typography paragraph>
+            <Typography sx={{ mb: '1rem' }}>
               <Trans t={t} i18nKey="registration.resource_type.search_for_channel">
                 <MuiLink href="https://portal.issn.org" target="_blank" rel="noopener noreferrer">
                   https://portal.issn.org
@@ -112,10 +112,10 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initi
                     {...field}
                     variant="filled"
                     label={t('registration.resource_type.isbn_prefix')}
-                    inputProps={{ maxLength: 13 }}
                     disabled={publisherMutation.isPending}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
+                    slotProps={{ htmlInput: { maxLength: 13 } }}
                   />
                 )}
               </Field>

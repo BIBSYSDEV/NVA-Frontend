@@ -246,15 +246,15 @@ interface PublicPresentationProps {
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
   const { t } = useTranslation();
-  const { type, time, place, label, agent } = publicationContext;
+  const { type, time, place, name, agent } = publicationContext;
   const periodString = getPeriodString(time?.from, time?.to);
 
   return (
     <>
       <Typography variant="h3">{t(`registration.publication_types.${type}`)}</Typography>
-      {label && (
+      {name && (
         <Typography>
-          {t('registration.resource_type.title_of_event')}: {label}
+          {t('registration.resource_type.title_of_event')}: {name}
         </Typography>
       )}
       {agent?.name && (
@@ -262,9 +262,9 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
           {t('registration.resource_type.organizer')}: {agent.name}
         </Typography>
       )}
-      {place?.label && (
+      {place?.name && (
         <Typography>
-          {t('registration.resource_type.place_for_event')}: {place.label}
+          {t('registration.resource_type.place_for_event')}: {place.name}
         </Typography>
       )}
       {place?.country && (
@@ -391,15 +391,17 @@ const PublicExhibitionBasicDialogContent = ({ exhibitionBasic }: { exhibitionBas
       <Typography variant="h3" gutterBottom>
         {t('common.type')}
       </Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${exhibitionBasic.type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>
+        {t(`registration.resource_type.artistic.output_type.${exhibitionBasic.type}`)}
+      </Typography>
       <Typography variant="h3" gutterBottom>
         {t('registration.resource_type.exhibition_production.institution_name')}
       </Typography>
-      <Typography paragraph>{exhibitionBasic.organization.name || '-'}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{exhibitionBasic.organization.name || '-'}</Typography>
       <Typography variant="h3" gutterBottom>
         {t('common.place')}
       </Typography>
-      <Typography paragraph>{exhibitionBasic.place?.label || '-'}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{exhibitionBasic.place?.name || '-'}</Typography>
       <Typography variant="h3" gutterBottom>
         {t('common.date')}
       </Typography>
@@ -413,7 +415,7 @@ const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{venue.place?.label ?? ''}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{venue.place?.name ?? ''}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{getPeriodString(venue.date?.from, venue.date?.to)}</Typography>
     </DialogContent>
@@ -425,9 +427,9 @@ const PublicCompetitionDialogContent = ({ competition }: { competition: Competit
   return (
     <DialogContent>
       <Typography variant="h3">{t('registration.resource_type.artistic.competition_name')}</Typography>
-      <Typography paragraph>{competition.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{competition.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.competition_rank')}</Typography>
-      <Typography paragraph>{competition.description}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{competition.description}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{toDateString(competition.date.value)}</Typography>
     </DialogContent>
@@ -439,15 +441,15 @@ const PublicAwardDialogContent = ({ award }: { award: Award }) => {
   return (
     <DialogContent>
       <Typography variant="h3">{t('registration.resource_type.artistic.competition_name')}</Typography>
-      <Typography paragraph>{award.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{award.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.award_organizer')}</Typography>
-      <Typography paragraph>{award.organizer}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{award.organizer}</Typography>
       <Typography variant="h3">{t('common.year')}</Typography>
       <Typography>{new Date(award.date.value).getFullYear()}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.award_ranking')}</Typography>
-      <Typography paragraph>{award.ranking}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{award.ranking}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.award_other_type')}</Typography>
-      <Typography paragraph>{award.otherInformation}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{award.otherInformation}</Typography>
     </DialogContent>
   );
 };
@@ -457,13 +459,13 @@ const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication
   return (
     <DialogContent>
       <Typography variant="h3">{t('registration.resource_type.journal_book_medium')}</Typography>
-      <Typography paragraph>{mention.title}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{mention.title}</Typography>
       <Typography variant="h3">{t('registration.resource_type.issue')}</Typography>
-      <Typography paragraph>{mention.issue}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{mention.issue}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{toDateString(mention.date.value)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.other_publisher_isbn_etc')}</Typography>
-      <Typography paragraph>{mention.otherInformation}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{mention.otherInformation}</Typography>
     </DialogContent>
   );
 };
@@ -473,13 +475,13 @@ const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition 
   return (
     <DialogContent>
       <Typography variant="h3">{t('registration.resource_type.artistic.exhibition_title')}</Typography>
-      <Typography paragraph>{exhibition.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{exhibition.name}</Typography>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{exhibition.place?.label ?? ''}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{exhibition.place?.name ?? ''}</Typography>
       <Typography variant="h3">{t('registration.resource_type.organizer')}</Typography>
       <Typography>{exhibition.organizer}</Typography>
       <Typography variant="h3">{t('common.other')}</Typography>
-      <Typography paragraph>{exhibition.otherInformation}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{exhibition.otherInformation}</Typography>
     </DialogContent>
   );
 };
@@ -489,9 +491,11 @@ const PublicBroadcastDialogContent = ({ broadcast }: { broadcast: Broadcast }) =
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${broadcast.type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>
+        {t(`registration.resource_type.artistic.output_type.${broadcast.type}`)}
+      </Typography>
       <Typography variant="h3">{t('common.publisher')}</Typography>
-      <Typography paragraph>{broadcast.publisher.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{broadcast.publisher.name}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{toDateString(broadcast.date.value)}</Typography>
     </DialogContent>
@@ -503,9 +507,11 @@ const PublicCinematicReleaseDialogContent = ({ cinematicRelease }: { cinematicRe
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${cinematicRelease.type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>
+        {t(`registration.resource_type.artistic.output_type.${cinematicRelease.type}`)}
+      </Typography>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{cinematicRelease.place.label}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{cinematicRelease.place.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.premiere_date')}</Typography>
       <Typography>{toDateString(cinematicRelease.date.value)}</Typography>
     </DialogContent>
@@ -517,15 +523,15 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
   return (
     <DialogContent>
       <Typography variant="h3">{t('registration.resource_type.artistic.other_release_description')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>
         {t(`registration.resource_type.artistic.output_type.${otherRelease.type}`)}: {otherRelease.description}
       </Typography>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{otherRelease.place.label}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{otherRelease.place.name}</Typography>
       {otherRelease.publisher.name && (
         <>
           <Typography variant="h3">{t('registration.resource_type.artistic.other_announcement_organizer')}</Typography>
-          <Typography paragraph>{otherRelease.publisher.name}</Typography>
+          <Typography sx={{ mb: '1rem' }}>{otherRelease.publisher.name}</Typography>
         </>
       )}
       <Typography variant="h3">{t('registration.resource_type.artistic.premiere_date')}</Typography>
@@ -541,17 +547,17 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ensemble')}</Typography>
-      <Typography paragraph>{ensemble}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{ensemble}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_movements')}</Typography>
-      <Typography paragraph>{movements}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{movements}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.extent')}</Typography>
-      <Typography paragraph>{extent}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{extent}</Typography>
       <Typography variant="h3">{t('common.publisher')}</Typography>
-      <Typography paragraph>{publisher.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
-      <Typography paragraph>{ismn?.formatted ?? ismn?.value ?? '-'}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{ismn?.formatted ?? ismn?.value ?? '-'}</Typography>
     </DialogContent>
   );
 };
@@ -567,9 +573,9 @@ const PublicAudioVisualPublicationDialogContent = ({
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.media_type')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>
         {mediaType.type
           ? mediaType.type !== 'MusicMediaOther'
             ? t(`registration.resource_type.artistic.music_media_type.${mediaType.type}`)
@@ -577,11 +583,11 @@ const PublicAudioVisualPublicationDialogContent = ({
           : ''}
       </Typography>
       <Typography variant="h3">{t('common.publisher')}</Typography>
-      <Typography paragraph>{publisher.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
-      <Typography paragraph>{catalogueNumber ? catalogueNumber : '-'}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{catalogueNumber ? catalogueNumber : '-'}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
-      <Typography paragraph>{isrc?.value ? hyphenateIsrc(isrc?.value) : '-'}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{isrc?.value ? hyphenateIsrc(isrc?.value) : '-'}</Typography>
       <Typography variant="h3" id="tracks-heading">
         {t('registration.resource_type.artistic.content_track')}
       </Typography>
@@ -620,29 +626,29 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
 
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{place.label}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{place.name}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
-      <Typography paragraph>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
+      <Typography sx={{ mb: '1rem' }}>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
       {concertSeries && (
         <>
           <Typography variant="h3">{t('common.description')} </Typography>
-          <Typography paragraph>{concertSeries}</Typography>
+          <Typography sx={{ mb: '1rem' }}>{concertSeries}</Typography>
         </>
       )}
 
       <Typography variant="h3">{t('common.date')}</Typography>
       {time.type === 'Instant' ? (
-        <Typography paragraph>{toDateString(time.value)}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{toDateString(time.value)}</Typography>
       ) : (
-        <Typography paragraph>{getPeriodString(time.from, time.to)}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{getPeriodString(time.from, time.to)}</Typography>
       )}
 
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
-      <Typography paragraph>{extent}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{extent}</Typography>
 
       <Typography variant="h3" id="program-heading">
         {t('registration.resource_type.artistic.program')}
@@ -679,16 +685,16 @@ const PublicOtherPerformanceDialogContent = ({ otherPerformance }: { otherPerfor
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.performance_type')}</Typography>
-      <Typography paragraph>{performanceType}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{performanceType}</Typography>
 
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{place?.label}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{place?.name}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
-      <Typography paragraph>{extent}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{extent}</Typography>
 
       <Typography variant="h3" id="works-heading">
         {t('registration.resource_type.artistic.musical_works')}
@@ -727,15 +733,15 @@ const PublicLiteraryArtsMonographDialogContent = ({
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>
         {t(`registration.resource_type.artistic.output_type.${literaryArtsMonograph.type}`)}
       </Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.publisher')}</Typography>
-      <Typography paragraph>{literaryArtsMonograph.publisher.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{literaryArtsMonograph.publisher.name}</Typography>
       <Typography variant="h3">{t('common.year')}</Typography>
-      <Typography paragraph>{literaryArtsMonograph.publicationDate.year}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{literaryArtsMonograph.publicationDate.year}</Typography>
       <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>
         {literaryArtsMonograph.isbnList
           .filter((isbn) => isbn)
           .map((isbn) => hyphenate(isbn))
@@ -752,17 +758,19 @@ const PublicLiteraryArtsWebPublicationDialogContent = ({ webPublication }: { web
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${webPublication.type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>
+        {t(`registration.resource_type.artistic.output_type.${webPublication.type}`)}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.web_link')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>
         <Link href={webPublication.id} target="_blank" rel="noopener noreferrer">
           {webPublication.id}
         </Link>
       </Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.publisher')}</Typography>
-      <Typography paragraph>{webPublication.publisher.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{webPublication.publisher.name}</Typography>
       <Typography variant="h3">{t('common.year')}</Typography>
-      <Typography paragraph>{webPublication.publicationDate.year}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{webPublication.publicationDate.year}</Typography>
     </DialogContent>
   );
 };
@@ -772,9 +780,11 @@ const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performan
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${performance.type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>
+        {t(`registration.resource_type.artistic.output_type.${performance.type}`)}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.type_work')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>
         {performance.subtype.type
           ? performance.subtype.type === LiteraryArtsPerformanceSubtype.Other
             ? performance.subtype.description
@@ -782,9 +792,9 @@ const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performan
           : '-'}
       </Typography>
       <Typography variant="h3">{t('common.place')}</Typography>
-      <Typography paragraph>{performance.place.label}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{performance.place.name}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>
         {toDateString(
           new Date(
             +performance.publicationDate.year,
@@ -802,9 +812,11 @@ const PublicLiteraryArtsAudioVisualDialogContent = ({ audioVisual }: { audioVisu
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${audioVisual.type}`)}</Typography>
+      <Typography sx={{ mb: '1rem' }}>
+        {t(`registration.resource_type.artistic.output_type.${audioVisual.type}`)}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.type_work')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>
         {audioVisual.subtype.type
           ? audioVisual.subtype.type === LiteraryArtsAudioVisualSubtype.Other
             ? audioVisual.subtype.description
@@ -812,18 +824,18 @@ const PublicLiteraryArtsAudioVisualDialogContent = ({ audioVisual }: { audioVisu
           : '-'}
       </Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.publisher')}</Typography>
-      <Typography paragraph>{audioVisual.publisher.name}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{audioVisual.publisher.name}</Typography>
       <Typography variant="h3">{t('common.year')}</Typography>
-      <Typography paragraph>{audioVisual.publicationDate.year ?? '-'}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{audioVisual.publicationDate.year ?? '-'}</Typography>
       <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
-      <Typography paragraph>
+      <Typography sx={{ mb: '1rem' }}>
         {audioVisual.isbnList
           .filter((isbn) => isbn)
           .map((isbn) => hyphenate(isbn))
           .join(', ')}
       </Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
-      <Typography paragraph>{audioVisual.extent ?? '-'}</Typography>
+      <Typography sx={{ mb: '1rem' }}>{audioVisual.extent ?? '-'}</Typography>
     </DialogContent>
   );
 };

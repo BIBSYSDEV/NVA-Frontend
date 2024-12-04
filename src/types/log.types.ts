@@ -1,4 +1,4 @@
-import { TicketType } from './publication_types/ticket.types';
+import { Message, TicketType } from './publication_types/ticket.types';
 
 export interface Log {
   entries: LogEntry[];
@@ -13,6 +13,7 @@ export interface LogEntry {
   title: string;
   modifiedDate: string;
   actions: LogAction[];
+  messages?: Message[];
 }
 
 export interface LogAction {

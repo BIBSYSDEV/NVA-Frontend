@@ -226,7 +226,7 @@ export const DoiRequestAccordion = ({
           <Trans
             t={t}
             i18nKey="registration.public_page.tasks_panel.has_reserved_doi"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
         )}
 
@@ -253,8 +253,8 @@ export const DoiRequestAccordion = ({
                   i18nKey="registration.public_page.tasks_panel.request_doi_description"
                   values={{ buttonText: t('registration.public_page.request_doi') }}
                   components={[
-                    <Typography paragraph key="1" />,
-                    <Typography paragraph key="2">
+                    <Typography sx={{ mb: '1rem' }} key="1" />,
+                    <Typography sx={{ mb: '1rem' }} key="2">
                       {doiLink}
                     </Typography>,
                   ]}
@@ -270,8 +270,8 @@ export const DoiRequestAccordion = ({
                   i18nKey="registration.public_page.tasks_panel.draft_doi_description"
                   values={{ buttonText: t('registration.public_page.reserve_doi') }}
                   components={[
-                    <Typography paragraph key="1" />,
-                    <Typography paragraph key="2">
+                    <Typography sx={{ mb: '1rem' }} key="1" />,
+                    <Typography sx={{ mb: '1rem' }} key="2">
                       {doiLink}
                     </Typography>,
                   ]}
@@ -297,7 +297,10 @@ export const DoiRequestAccordion = ({
                   <Trans
                     t={t}
                     i18nKey="registration.public_page.tasks_panel.reserve_doi_confirmation"
-                    components={[<Typography paragraph key="1" />, <Typography paragraph key="2" fontWeight={700} />]}
+                    components={[
+                      <Typography sx={{ mb: '1rem' }} key="1" />,
+                      <Typography sx={{ mb: '1rem' }} key="2" fontWeight={700} />,
+                    ]}
                   />
                 </ConfirmDialog>
               </>
@@ -313,7 +316,7 @@ export const DoiRequestAccordion = ({
           <Trans
             t={t}
             i18nKey="registration.public_page.request_doi_description"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
           <TextField
             variant="outlined"
@@ -348,7 +351,7 @@ export const DoiRequestAccordion = ({
           <Trans
             t={t}
             i18nKey="registration.public_page.tasks_panel.no_published_files_on_registration_description"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
         </ConfirmDialog>
 
@@ -379,7 +382,7 @@ export const DoiRequestAccordion = ({
               onCancel={toggleRejectDoiDialog}
               textFieldLabel={t('common.message')}
               confirmButtonLabel={t('common.reject_doi')}>
-              <Typography paragraph>
+              <Typography sx={{ mb: '1rem' }}>
                 {t('registration.public_page.tasks_panel.describe_doi_rejection_reason')}
               </Typography>
             </ConfirmMessageDialog>
@@ -430,7 +433,7 @@ export const DoiRequestAccordion = ({
                   <Typography variant="h2" gutterBottom>
                     {t('registration.public_page.request_doi')}
                   </Typography>
-                  <Typography paragraph>{t('registration.public_page.request_doi_again')}</Typography>
+                  <Typography sx={{ mb: '1rem' }}>{t('registration.public_page.request_doi_again')}</Typography>
                   {requestDoiButton}
                 </>
               )}
