@@ -26,6 +26,7 @@ import {
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
+import { registrationPublishableValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
@@ -82,6 +83,12 @@ export const PublishingAccordion = ({
   const formErrors = validateRegistrationForm(registration);
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
+
+  const canPublishMetadata =
+    isDraftRegistration &&
+    ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' &&
+      registrationPublishableValidationSchema.isValidSync(registration)) ||
+      (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && registrationIsValid));
 
   const lastPublishingRequest =
     publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
@@ -238,7 +245,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {registrationIsValid && showRegistrationWithSameNameWarning && (
+        {canPublishMetadata && showRegistrationWithSameNameWarning && (
           <div>
             <Typography sx={{ mb: '1rem' }}>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
@@ -265,7 +272,7 @@ export const PublishingAccordion = ({
         )}
 
         {/* Tell user what they can publish */}
-        {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && registrationIsValid && (
+        {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && canPublishMetadata && (
           <>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
               <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow1">
@@ -282,7 +289,7 @@ export const PublishingAccordion = ({
         {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && (
           <>
             <LoadingButton
-              disabled={isCreatingPublishingRequest || !registrationIsValid || titleSearchPending}
+              disabled={isCreatingPublishingRequest || !canPublishMetadata || titleSearchPending}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
               sx={{ mt: '0.5rem' }}
               variant="contained"

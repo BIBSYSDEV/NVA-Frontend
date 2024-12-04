@@ -45,7 +45,7 @@ const ErrorListGroup = ({ heading, errorMessages }: ErrorListProps) => {
   return (
     <li>
       <Typography sx={{ fontWeight: 500 }}>{heading}:</Typography>
-      <ul style={{ listStyleType: 'disc' }}>
+      <ul style={{ listStyleType: 'disc', paddingLeft: '2rem' }}>
         {errorMessages.map((errorMessage) => (
           <li key={errorMessage}>
             <Typography>{errorMessage}</Typography>
