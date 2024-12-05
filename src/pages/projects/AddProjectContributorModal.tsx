@@ -35,7 +35,7 @@ export const AddProjectContributorModal = ({
       open={open}
       onClose={toggleModal}
       fullWidth
-      maxWidth="md"
+      maxWidth="lg"
       dataTestId="contributor-modal">
       {addProjectManager ? (
         <AddProjectManagerForm
