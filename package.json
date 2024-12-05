@@ -42,7 +42,7 @@
     "@reduxjs/toolkit": "^2.4.0",
     "@tanstack/react-query": "^5.62.2",
     "@uppy/aws-s3": "^4.1.2",
-    "@uppy/core": "^4.2.3",
+    "@uppy/core": "^4.3.0",
     "@uppy/dashboard": "^4.1.2",
     "@uppy/drag-drop": "^4.0.4",
     "@uppy/file-input": "^4.0.3",
