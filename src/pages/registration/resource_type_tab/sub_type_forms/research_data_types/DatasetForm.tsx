@@ -3,10 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
-import { ResearchDataType, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
+import { ResearchDataType, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ConfirmedDocument } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
@@ -69,7 +69,7 @@ export const DatasetForm = () => {
         )}
       </Field>
 
-      <Typography variant="h2">{t('registration.resource_type.research_data.related_links')}</Typography>
+      <Typography variant="h2">{t('registration.resource_type.research_data.external_links')}</Typography>
       <FieldArray name={ResourceFieldNames.PublicationInstanceReferencedBy}>
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
