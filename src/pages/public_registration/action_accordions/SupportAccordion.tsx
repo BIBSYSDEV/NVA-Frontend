@@ -14,7 +14,6 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
@@ -31,8 +30,9 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const userCristinIdentifier = user && getIdentifierFromId(user.nvaUsername);
-  const userIsTicketOwner = supportTicket?.owner === userCristinIdentifier;
+  const userIsTicketOwner = user && supportTicket?.owner === user.nvaUsername;
+
+  console.log(user?.nvaUsername);
 
   const ticketMutation = useMutation({
     mutationFn: supportTicket
