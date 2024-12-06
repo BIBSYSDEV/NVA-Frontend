@@ -2093,7 +2093,7 @@
         "Approved": "Godkjent",
         "Dispute": "Tvist",
         "New": "Kandidat",
-        "Pending": "Sjekkes",
+        "Pending": "Kontrolleres",
         "Rejected": "Avvist"
       },
       "waiting_for_other_institutions": "Venter på andre institusjoner",
