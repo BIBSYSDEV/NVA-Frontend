@@ -82,7 +82,7 @@ export const NviCandidatesNavigationAccordion = () => {
 
   return (
     <NavigationListAccordion
-      title={t('common.nvi')}
+      title={t('tasks.nvi.nvi_control')}
       startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
       accordionPath={UrlPathTemplate.TasksNvi}
       dataTestId={dataTestId.tasksPage.nviAccordion}>
