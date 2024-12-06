@@ -13,9 +13,12 @@ export const RegistrationLog = ({ log }: LogProps) => {
     <>
       <MetaDataLastUpdatedEntry metadataUpdated={log.metadataUpdated} />
       <ArchivedFilesEntry numberOfArchivedFiles={log.numberOfArchivedFiles} />
-      {log.entries.map((entry, index) => (
-        <LogEntry {...entry} key={index} />
-      ))}
+      {log.entries
+        .slice()
+        .reverse()
+        .map((entry, index) => (
+          <LogEntry {...entry} key={index} />
+        ))}
     </>
   );
 };
