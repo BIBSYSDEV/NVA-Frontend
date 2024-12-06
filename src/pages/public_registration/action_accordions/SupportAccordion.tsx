@@ -32,8 +32,6 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   const user = useSelector((store: RootState) => store.user);
   const userIsTicketOwner = user && supportTicket?.owner === user.nvaUsername;
 
-  console.log(user?.nvaUsername);
-
   const ticketMutation = useMutation({
     mutationFn: supportTicket
       ? (newTicketData: UpdateTicketData) => updateTicket(supportTicket.id, newTicketData)
