@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRefetchPerson } from '../../api/hooks/useRefetchPerson';
+import { useAddSelfAsContributor } from '../../api/hooks/useAddSelfAsContributor';
 import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
@@ -78,10 +78,9 @@ export const AddProjectContributorForm = ({
     }
   };
 
-  const currentPersonQuery = useRefetchPerson({
+  const currentPersonQuery = useAddSelfAsContributor({
     cristinId: userCristinId,
-    sideEffect: addParticipant,
-    errorMessage: t('feedback.error.add_project_participant'),
+    addContributorFn: addParticipant,
   });
 
   return (
@@ -103,7 +102,7 @@ export const AddProjectContributorForm = ({
         </Button>
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
-          onClick={() => currentPersonQuery.refetch()}
+          onClick={() => currentPersonQuery.addSelf()}
           disabled={!!selectedPerson}
           loading={currentPersonQuery.isFetching}>
           {roleType === 'LocalProjectManager'
