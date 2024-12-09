@@ -2075,6 +2075,7 @@
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Kommentar",
+      "nvi_control": "NVI-kontroll (Norsk vitenskapsindeks)",
       "previous_candidate": "Gå til forrige kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
@@ -2091,7 +2092,7 @@
         "Approved": "Godkjent",
         "Dispute": "Tvist",
         "New": "Kandidat",
-        "Pending": "Sjekkes",
+        "Pending": "Kontrolleres",
         "Rejected": "Avvist"
       },
       "waiting_for_other_institutions": "Venter på andre institusjoner",
