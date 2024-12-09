@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { defaultChannelSearchSize, fetchSeries, searchForSeries } from '../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, fetchSeries, searchForSerialPublications } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -11,7 +11,7 @@ import {
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
-import { Series } from '../../../types/registration.types';
+import { SerialPublication } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -32,7 +32,7 @@ export const SeriesFilter = () => {
   const seriesOptionsQuery = useQuery({
     queryKey: ['seriesSearch', debouncedQuery, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === seriesQuery,
-    queryFn: () => searchForSeries(debouncedQuery, '2023', searchSize),
+    queryFn: () => searchForSerialPublications(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_series') },
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
@@ -47,7 +47,7 @@ export const SeriesFilter = () => {
     staleTime: Infinity,
   });
 
-  const handleChange = (selectedValue: Series | null) => {
+  const handleChange = (selectedValue: SerialPublication | null) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
       syncedParams.set(ResultParam.Series, selectedValue.identifier);

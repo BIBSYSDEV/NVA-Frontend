@@ -1,5 +1,5 @@
 import { SearchResponse2 } from '../types/common.types';
-import { Journal, Publisher, Series } from '../types/registration.types';
+import { Journal, Publisher, SerialPublication, Series } from '../types/registration.types';
 import { getYearQuery } from '../utils/registration-helpers';
 import { PublicationChannelApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
@@ -22,7 +22,7 @@ export interface CreatePublisherPayload {
 }
 
 export const createSerialPublication = async (newSerialPublication: CreateSerialPublicationPayload) => {
-  const createSerialPublicationResponse = await authenticatedApiRequest2<Journal>({
+  const createSerialPublicationResponse = await authenticatedApiRequest2<SerialPublication>({
     url: PublicationChannelApiPath.SerialPublication,
     method: 'POST',
     data: newSerialPublication,
@@ -64,20 +64,6 @@ export const fetchSeries = async (identifier: string) => {
 
 export const defaultChannelSearchSize = 50;
 
-export const searchForSeries = async (query: string, year: string, size = defaultChannelSearchSize) => {
-  const searchForSeriesResponse = await apiRequest2<SearchResponse2<Series>>({
-    url: PublicationChannelApiPath.SerialPublication,
-    method: 'GET',
-    params: {
-      query,
-      year: getYearQuery(year),
-      size,
-    },
-  });
-
-  return searchForSeriesResponse.data;
-};
-
 export const searchForPublishers = async (query: string, year: string, size = defaultChannelSearchSize) => {
   const searchForPublishersResponse = await apiRequest2<SearchResponse2<Publisher>>({
     url: PublicationChannelApiPath.Publisher,
@@ -92,8 +78,8 @@ export const searchForPublishers = async (query: string, year: string, size = de
   return searchForPublishersResponse.data;
 };
 
-export const searchForJournals = async (query: string, year: string, size = defaultChannelSearchSize) => {
-  const searchForJournalsResponse = await apiRequest2<SearchResponse2<Journal>>({
+export const searchForSerialPublications = async (query: string, year: string, size = defaultChannelSearchSize) => {
+  const searchForJournalsResponse = await apiRequest2<SearchResponse2<SerialPublication>>({
     url: PublicationChannelApiPath.SerialPublication,
     method: 'GET',
     params: {

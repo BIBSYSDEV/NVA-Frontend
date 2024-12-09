@@ -4,7 +4,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { defaultChannelSearchSize, searchForSeries } from '../../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, searchForSerialPublications } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
@@ -48,7 +48,7 @@ export const SeriesField = () => {
   const seriesOptionsQuery = useQuery({
     queryKey: ['seriesSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForSeries(debouncedQuery, year, searchSize),
+    queryFn: () => searchForSerialPublications(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_series') },
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });

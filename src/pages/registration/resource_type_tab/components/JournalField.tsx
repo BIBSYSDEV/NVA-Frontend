@@ -4,7 +4,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { defaultChannelSearchSize, searchForJournals } from '../../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, searchForSerialPublications } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
@@ -77,7 +77,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForJournals(debouncedQuery, year, searchSize),
+    queryFn: () => searchForSerialPublications(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
@@ -92,7 +92,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     ],
     enabled: !journalId && !!(reference?.publicationContext.printIssn || reference?.publicationContext.onlineIssn),
     queryFn: () =>
-      searchForJournals(
+      searchForSerialPublications(
         reference?.publicationContext.printIssn ?? reference?.publicationContext.onlineIssn ?? '',
         year,
         1
