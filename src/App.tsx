@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRoutes } from './AppRoutes';
-import { getUserAttributes } from './api/authApi';
+import { getIdTokenPayload } from './api/authApi';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 import { EnvironmentBanner } from './components/EnvironmentBanner';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -61,9 +61,9 @@ export const App = () => {
   useEffect(() => {
     // Fetch attributes of authenticated user
     const getUser = async () => {
-      const feideUser = await getUserAttributes();
-      if (feideUser) {
-        dispatch(setUser(feideUser));
+      const idTokenPayload = await getIdTokenPayload();
+      if (idTokenPayload) {
+        dispatch(setUser(idTokenPayload));
       }
       setIsLoadingUserAttributes(false);
     };
