@@ -60,7 +60,7 @@ export const ProjectAddAffiliationModal = ({
       dataTestId="affiliation-modal">
       <Trans
         i18nKey="project.affiliation_modal.add_new_affiliation_helper_text"
-        components={[<Typography paragraph key="1" />]}
+        components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
       />
       {authorName && <AuthorName authorName={authorName} description={t('project.project_participant')} />}
       <SelectInstitutionForm saveAffiliation={onAddAffiliation} onCancel={toggleAffiliationModal} />

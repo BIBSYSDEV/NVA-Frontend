@@ -162,7 +162,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           <>
             <Trans
               i18nKey="tasks.nvi.approve_nvi_candidate_description"
-              components={[<Typography paragraph key="1" />]}
+              components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
               values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
             />
             <LoadingButton
@@ -182,7 +182,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {myApproval?.status !== 'Rejected' && (
           <>
-            <Typography paragraph>
+            <Typography sx={{ mb: '1rem' }}>
               {t('tasks.nvi.reject_nvi_candidate_description', { buttonText: t('tasks.nvi.reject_nvi_candidate') })}
             </Typography>
             <Button
@@ -214,7 +214,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
         <Typography variant="h3" gutterBottom component="h2">
           {t('tasks.nvi.note')}
         </Typography>
-        <Typography paragraph>{t('tasks.nvi.message_description')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('tasks.nvi.message_description')}</Typography>
         <MessageForm
           hideRequiredAsterisk
           confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}

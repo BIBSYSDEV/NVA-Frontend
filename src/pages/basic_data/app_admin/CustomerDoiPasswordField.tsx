@@ -81,19 +81,21 @@ export const CustomerDoiPasswordField = ({ doiAgentId, disabled }: CustomerDoiPa
                 variant="filled"
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
-                InputProps={{
-                  endAdornment: (
-                    <Tooltip
-                      title={
-                        showPassword
-                          ? t('basic_data.institutions.password_hide')
-                          : t('basic_data.institutions.password_show')
-                      }>
-                      <IconButton onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                      </IconButton>
-                    </Tooltip>
-                  ),
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <Tooltip
+                        title={
+                          showPassword
+                            ? t('basic_data.institutions.password_hide')
+                            : t('basic_data.institutions.password_show')
+                        }>
+                        <IconButton onClick={() => setShowPassword(!showPassword)}>
+                          {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                        </IconButton>
+                      </Tooltip>
+                    ),
+                  },
                 }}
               />
             )}

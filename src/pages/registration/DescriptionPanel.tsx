@@ -52,15 +52,17 @@ export const DescriptionPanel = () => {
               }}
               fullWidth
               label={t('common.title')}
-              InputProps={{
-                endAdornment: titleSearchPending ? (
-                  <CircularProgress size={20} />
-                ) : duplicateRegistration ? (
-                  <ErrorIcon color="warning" />
-                ) : undefined,
-              }}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
+              slotProps={{
+                input: {
+                  endAdornment: titleSearchPending ? (
+                    <CircularProgress size={20} />
+                  ) : duplicateRegistration ? (
+                    <ErrorIcon color="warning" />
+                  ) : undefined,
+                },
+              }}
             />
           )}
         </Field>

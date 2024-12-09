@@ -15,7 +15,7 @@ export const CompareDoiField = ({ doi }: { doi: string }) => {
         disabled
         multiline
         value={doi}
-        InputLabelProps={{ shrink: true }}
+        slotProps={{ inputLabel: { shrink: true } }}
       />
       {doi && (
         <Button

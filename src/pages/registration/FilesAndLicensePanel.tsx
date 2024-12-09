@@ -1,12 +1,12 @@
 import { Box, Checkbox, FormControlLabel, Link, Paper, TextField, Typography } from '@mui/material';
-import { UppyFile } from '@uppy/core';
+import Uppy from '@uppy/core';
 import { FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { AssociatedLink, FileType, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
+import { AssociatedLink, FileType, NullAssociatedArtifact } from '../../types/associatedArtifact.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -75,7 +75,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     // Avoid adding duplicated file names to an existing registration,
     // since files could have been uploaded in another session without being in uppy's current state
     uppy.setOptions({
-      onBeforeFileAdded: (currentFile: UppyFile) => {
+      onBeforeFileAdded: (currentFile) => {
         if (filesRef.current.some((file) => file.name === currentFile.name)) {
           uppy.info(t('registration.files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
           return false;
@@ -112,7 +112,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           </Typography>
           {journalIdentifier && (
             <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
-              <Typography paragraph>{t('registration.files_and_license.find_journal_in_channel_register')}</Typography>
+              <Typography sx={{ mb: '1rem' }}>
+                {t('registration.files_and_license.find_journal_in_channel_register')}
+              </Typography>
             </Link>
           )}
           {publisherIdentifier && (
@@ -125,7 +127,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
           {seriesIdentifier && (
             <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
-              <Typography paragraph>{t('registration.files_and_license.find_series_in_channel_register')}</Typography>
+              <Typography sx={{ mb: '1rem' }}>
+                {t('registration.files_and_license.find_series_in_channel_register')}
+              </Typography>
             </Link>
           )}
         </Paper>
@@ -175,7 +179,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   />
                 )}
                 <Paper elevation={5} component={BackgroundDiv}>
-                  <Typography variant="h2" paragraph>
+                  <Typography variant="h2" sx={{ mb: '1rem' }}>
                     {t('common.link')}
                   </Typography>
                   {originalDoi ? (
@@ -233,7 +237,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
             {(associatedArtifacts.length === 0 || isNullAssociatedArtifact) && !originalDoi && (
               <Paper elevation={5} component={BackgroundDiv}>
-                <Typography variant="h2" paragraph>
+                <Typography variant="h2" sx={{ mb: '1rem' }}>
                   {t('registration.files_and_license.resource_is_a_reference')}
                 </Typography>
                 <Box sx={{ backgroundColor: 'white', width: '100%', p: '0.25rem 1rem' }}>

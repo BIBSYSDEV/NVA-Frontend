@@ -127,15 +127,6 @@ export const PublisherField = () => {
             renderOption={({ key, ...props }, option, state) => (
               <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
-            ListboxComponent={AutocompleteListboxWithExpansion}
-            ListboxProps={
-              {
-                hasMoreHits:
-                  !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
-                onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
-              } satisfies AutocompleteListboxWithExpansionProps as any
-            }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
@@ -157,6 +148,17 @@ export const PublisherField = () => {
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
             )}
+            slotProps={{
+              listbox: {
+                component: AutocompleteListboxWithExpansion,
+                ...({
+                  hasMoreHits:
+                    !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
+                  onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+                  isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
+                } satisfies AutocompleteListboxWithExpansionProps),
+              },
+            }}
           />
         )}
       </Field>

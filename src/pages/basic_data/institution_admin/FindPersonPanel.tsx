@@ -88,11 +88,11 @@ export const FindPersonPanel = () => {
                       disabled={isSubmitting || confirmedIdentity}
                       required={!confirmedIdentity}
                       fullWidth
-                      inputProps={{ maxLength: 11 }}
                       variant="filled"
                       label={t('common.national_id_number')}
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
+                      slotProps={{ htmlInput: { maxLength: 11 } }}
                     />
                   )}
                 </Field>
@@ -139,7 +139,7 @@ export const FindPersonPanel = () => {
                   <Trans
                     t={t}
                     i18nKey="basic_data.add_employee.missing_nin_description"
-                    components={[<Typography paragraph key="1" />]}
+                    components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
                   />
                 </ConfirmDialog>
               </>

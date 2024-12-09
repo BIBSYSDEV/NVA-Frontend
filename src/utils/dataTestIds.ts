@@ -52,6 +52,8 @@ export const dataTestId = {
     centralImportAccordion: 'central-import-accordion',
     customers: {
       customerList: 'customer-institutions-list',
+      customerNameSearchField: 'customer-name-searchfield',
+      customerStatusSelect: 'customer-status-select',
       editInstitutionButton: (id: string) => `edit-institution-button-${id}`,
     },
     institutionsAccordion: 'institutions-accordion',

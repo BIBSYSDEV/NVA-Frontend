@@ -25,7 +25,13 @@ const associatedArtifactErrorMessage = {
   }),
 };
 
-export const associatedFileValidationSchema = Yup.object({
+const linkValidation = Yup.string()
+  .nullable()
+  .when('type', ([type], schema) =>
+    associatedArtifactIsLink({ type }) ? schema.url(associatedArtifactErrorMessage.linkInvalid) : schema
+  );
+
+export const associatedArtifactValidationSchema = Yup.object({
   type: Yup.string(),
 
   // File validation
@@ -54,10 +60,10 @@ export const associatedFileValidationSchema = Yup.object({
         ? schema.required(associatedArtifactErrorMessage.licenseRequired)
         : schema
     ),
-  // Link validation
-  id: Yup.string()
-    .nullable()
-    .when('type', ([type], schema) =>
-      associatedArtifactIsLink({ type }) ? schema.url(associatedArtifactErrorMessage.linkInvalid) : schema
-    ),
+  id: linkValidation,
+});
+
+export const associatedArtifactPublishValidationSchema = Yup.object({
+  type: Yup.string(),
+  id: linkValidation,
 });

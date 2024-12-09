@@ -34,7 +34,7 @@ export const PublishingAccordionLastTicketInfo = ({
   if (publishingTicket.workflow === 'RegistratorPublishesMetadataAndFiles' && isCompletedTicket) {
     return (
       <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_workflow1">
-        <Typography paragraph />
+        <Typography sx={{ mb: '1rem' }} />
       </Trans>
     );
   }
@@ -49,20 +49,20 @@ export const PublishingAccordionLastTicketInfo = ({
           {canApprovePublishingRequest ? (
             registrationHasApprovedFile ? (
               <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_curator">
-                <Typography paragraph />
+                <Typography sx={{ mb: '1rem' }} />
               </Trans>
             ) : (
               <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_without_file_description_for_curator">
-                <Typography paragraph />
+                <Typography sx={{ mb: '1rem' }} />
               </Trans>
             )
           ) : registrationHasApprovedFile ? (
             <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_description_for_registrator">
-              <Typography paragraph />
+              <Typography sx={{ mb: '1rem' }} />
             </Trans>
           ) : (
             <Trans i18nKey="registration.public_page.tasks_panel.approved_publishing_request_without_file_description_for_registrator">
-              <Typography paragraph />
+              <Typography sx={{ mb: '1rem' }} />
             </Trans>
           )}
         </>
@@ -72,12 +72,12 @@ export const PublishingAccordionLastTicketInfo = ({
         <>
           {canApprovePublishingRequest ? (
             <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request">
-              <Typography paragraph />
+              <Typography sx={{ mb: '1rem' }} />
             </Trans>
           ) : (
             <>
               <Trans i18nKey="registration.public_page.tasks_panel.has_rejected_files_publishing_request_registrator">
-                <Typography paragraph />
+                <Typography sx={{ mb: '1rem' }} />
               </Trans>
               <Button
                 sx={{ bgcolor: 'white' }}
@@ -107,11 +107,11 @@ export const PublishingAccordionLastTicketInfo = ({
             />
           ) : registrationHasApprovedFile ? (
             <Trans i18nKey="registration.public_page.tasks_panel.pending_publishing_request_with_file_description_for_registrator">
-              <Typography paragraph />
+              <Typography sx={{ mb: '1rem' }} />
             </Trans>
           ) : (
             <Trans i18nKey="registration.public_page.tasks_panel.pending_publishing_request_without_file_description_for_registrator">
-              <Typography paragraph />
+              <Typography sx={{ mb: '1rem' }} />
             </Trans>
           )}
         </>

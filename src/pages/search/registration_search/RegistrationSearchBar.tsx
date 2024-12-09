@@ -140,7 +140,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
             {({ field }: FieldProps<string>) => (
               <SearchTextField
                 {...field}
-                inputProps={{ [dataSearchFieldAttributeName]: ResultParam.Query }}
+                slotProps={{ htmlInput: { [dataSearchFieldAttributeName]: ResultParam.Query } }}
                 placeholder={t('search.search_placeholder')}
                 clearValue={() => {
                   field.onChange({ target: { value: '', id: field.name } });
