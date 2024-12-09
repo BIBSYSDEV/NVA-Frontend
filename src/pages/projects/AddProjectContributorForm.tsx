@@ -78,8 +78,8 @@ export const AddProjectContributorForm = ({
     }
   };
 
-  const currentUserQuery = useRefetchPerson({
-    userCristinId: userCristinId,
+  const currentPersonQuery = useRefetchPerson({
+    cristinId: userCristinId,
     sideEffect: addParticipant,
     errorMessage: t('feedback.error.add_project_participant'),
   });
@@ -92,7 +92,7 @@ export const AddProjectContributorForm = ({
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledRightAlignedFooter sx={{ mt: '2rem', flexWrap: 'nowrap' }}>
+      <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
         <Button
           sx={{ mr: 'auto' }}
           data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
@@ -103,9 +103,9 @@ export const AddProjectContributorForm = ({
         </Button>
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
-          onClick={() => currentUserQuery.refetch()}
+          onClick={() => currentPersonQuery.refetch()}
           disabled={!!selectedPerson}
-          loading={currentUserQuery.isFetching}>
+          loading={currentPersonQuery.isFetching}>
           {roleType === 'LocalProjectManager'
             ? t('project.add_self_as_local_project_manager')
             : t('project.add_self_as_project_participant')}

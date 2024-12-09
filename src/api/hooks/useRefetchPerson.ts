@@ -3,17 +3,17 @@ import { CristinPerson } from '../../types/user.types';
 import { fetchPerson } from '../cristinApi';
 
 interface UseRefetchPersonProps {
-  userCristinId: string;
+  cristinId: string;
   sideEffect: (data: CristinPerson) => void;
   errorMessage: string;
 }
 
-export const useRefetchPerson = ({ userCristinId, sideEffect, errorMessage }: UseRefetchPersonProps) => {
+export const useRefetchPerson = ({ cristinId, sideEffect, errorMessage }: UseRefetchPersonProps) => {
   return useQuery({
     enabled: false,
-    queryKey: ['currentUser', userCristinId],
+    queryKey: ['person', cristinId],
     queryFn: async () => {
-      const data = await fetchPerson(userCristinId);
+      const data = await fetchPerson(cristinId);
       sideEffect(data);
       return data;
     },

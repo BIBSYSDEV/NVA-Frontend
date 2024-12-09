@@ -92,8 +92,8 @@ export const AddProjectManagerForm = ({
     }
   };
 
-  const currentUserQuery = useRefetchPerson({
-    userCristinId: userCristinId,
+  const currentPersonQuery = useRefetchPerson({
+    cristinId: userCristinId,
     sideEffect: addSelfAsProjectManager,
     errorMessage: t('feedback.error.add_project_manager'),
   });
@@ -123,9 +123,9 @@ export const AddProjectManagerForm = ({
         </Button>
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
-          onClick={() => currentUserQuery.refetch()}
+          onClick={() => currentPersonQuery.refetch()}
           disabled={!!selectedPerson}
-          loading={currentUserQuery.isFetching}>
+          loading={currentPersonQuery.isFetching}>
           {t('project.add_self_as_project_manager')}
         </LoadingButton>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
