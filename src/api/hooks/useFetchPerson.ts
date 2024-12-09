@@ -1,14 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import { PersonSearchParams, searchForPerson } from '../cristinApi';
+import { useTranslation } from 'react-i18next';
+import { fetchPerson } from '../cristinApi';
 
-export const useFetchPerson = (searchTerm: string, rowsPerPage = 20, page = 1, errorMessage = '') => {
-  const personQueryParams: PersonSearchParams = {
-    name: searchTerm,
-  };
+interface UseFetchPersonProps {
+  enabled?: boolean;
+}
+
+export const useFetchPerson = (cristinId: string, { enabled }: UseFetchPersonProps) => {
+  const { t } = useTranslation();
+
   return useQuery({
-    enabled: searchTerm.length > 0,
-    queryKey: ['person', rowsPerPage, page, personQueryParams],
-    queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
-    meta: { errorMessage: errorMessage },
+    enabled,
+    queryKey: ['person', cristinId],
+    queryFn: () => fetchPerson(cristinId),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 };
