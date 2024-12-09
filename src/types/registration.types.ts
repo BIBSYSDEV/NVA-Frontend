@@ -74,14 +74,6 @@ interface PublicationChannel {
   discontinued?: string;
 }
 
-export interface Journal extends PublicationChannel {
-  type: 'Journal';
-}
-
-export interface Series extends PublicationChannel {
-  type: 'Series';
-}
-
 export interface SerialPublication extends PublicationChannel {
   type: 'Journal' | 'Series';
 }

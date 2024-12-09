@@ -19,7 +19,7 @@ import * as Yup from 'yup';
 import { CreateSerialPublicationPayload, createSerialPublication } from '../../../../api/publicationChannelApi';
 import { setNotification } from '../../../../redux/notificationSlice';
 import i18n from '../../../../translations/i18n';
-import { Journal, Series } from '../../../../types/registration.types';
+import { SerialPublication } from '../../../../types/registration.types';
 
 const issnRegex = /^\d{4}-\d{3}[\dXx]$/;
 
@@ -44,7 +44,7 @@ const journalValidationSchema: Yup.ObjectSchema<Omit<CreateSerialPublicationPayl
 
 interface JournalFormDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
-  onCreatedChannel: (createdChannel: Journal | Series) => void;
+  onCreatedChannel: (createdChannel: SerialPublication) => void;
   isSeries?: boolean;
   initialName: string;
 }

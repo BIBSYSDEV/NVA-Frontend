@@ -17,7 +17,7 @@ import {
   JournalEntityDescription,
   JournalRegistration,
 } from '../../../../types/publication_types/journalRegistration.types';
-import { Journal, PublicationChannelType } from '../../../../types/registration.types';
+import { PublicationChannelType, SerialPublication } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
@@ -112,7 +112,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const journalQuery = useQuery({
     queryKey: ['channel', journalId],
     enabled: !!journalId,
-    queryFn: () => fetchResource<Journal>(journalId),
+    queryFn: () => fetchResource<SerialPublication>(journalId),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });

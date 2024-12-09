@@ -14,7 +14,7 @@ import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
-import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
+import { PublicationChannelType, Registration, SerialPublication } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
@@ -70,7 +70,7 @@ export const SeriesField = () => {
   const seriesQuery = useQuery({
     queryKey: ['channel', series?.id],
     enabled: !!series?.id,
-    queryFn: () => fetchResource<Series>(series?.id ?? ''),
+    queryFn: () => fetchResource<SerialPublication>(series?.id ?? ''),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
