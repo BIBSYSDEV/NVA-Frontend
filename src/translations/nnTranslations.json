@@ -9,7 +9,7 @@
       },
       "paragraph1": "NVA blir òg utvikla til bruk ved rapportering og vitskapleg publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskingsadministrative oppgåver.",
       "paragraph2": "Sikt er databehandlar. Den einskilde institusjon er behandlingsansvarleg, og registrerer og vedlikeheld eige innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett osv.). Tenesta får òg overført innhald frå andre datakjelder.",
-      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det innebér at ei registrering kan fullførast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angitt dato. Tenesta tillèt ikkje behandling av sensitive personopplysingar.",
+      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det innebér at ei registrering kan fullførast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angjeve dato. Tenesta tillèt ikkje behandling av sensitive personopplysingar.",
       "paragraph4": "NVA vil gjere institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med intensjonen om å gjere det kjent og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
       "paragraph5": "Sjølv om NVA er etablert og i bruk av fleire institusjonar, vil tenesta vere i kontinuerleg utvikling i heile si levetid. Institusjonar som ikkje har eit vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
     },
@@ -398,7 +398,7 @@
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
-    "categories_with_files_description": "Angi kategoriane der institusjonen din tillèt filopplasting.",
+    "categories_with_files_description": "Angje kategoriane der institusjonen din tillèt filopplasting.",
     "curators": {
       "active_area_of_responsibilities": "Tilknytta ansvarsområder",
       "add_curator": "Legg til kurator",
@@ -746,7 +746,8 @@
       "doi_pending": "Ventar på DOI-tildeling",
       "files_published_one": "{{count}} fil publisert",
       "files_published_other": "{{count}} filer publisert",
-      "files_rejected": "{\"one\":\"{{count}} fil avvist\",\"other\":\"{{count}} filer avvist\"}",
+      "files_rejected_one": "{{count}} fil avvist",
+      "files_rejected_other": "{{count}} filer avvist",
       "files_uploaded_one": "{{count}} fil lasta opp",
       "files_uploaded_other": "{{count}} filer lasta opp",
       "general_support_pending": "Ventar på oppfølging",
@@ -1099,7 +1100,7 @@
     "service_in_brief": {
       "heading": "Kort om tenesta",
       "paragraph0": "NVA er ei teneste for å samle og gjere tilgjengeleg informasjon om, og resultat frå, norsk forsking. Institusjonen (den behandlingsansvarlege) registrerar og vedlikeheld eige innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett osv.). Tenesta får også overført innhald som høyrer til institusjonen frå andre datakjelder. NVA gjer institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med hensikt å gjere dette kjend og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
-      "paragraph1": "NVA har støtte for utsett publisering av ressursar. Det tyder at registreringa kan ferdigstillast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angitt dato.",
+      "paragraph1": "NVA har støtte for utsett publisering av ressursar. Det tyder at registreringa kan ferdigstillast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angjeve dato.",
       "paragraph2": "Tenesta tillèt ikkje behandling av sensitive personopplysingar."
     },
     "what_are_personal_data": {
@@ -1416,7 +1417,7 @@
       "disabled_helper_text": "Denne fila er allereie publisert med ein godkjent lisens. Ta kontakt med kurator om du vil endre eller slette fila",
       "embargo": "Embargo/utsett publisering",
       "file_and_license_info": "Kvar fil i NVA må ha ein lisens, slik at lesaren er informert om kva dei har lov å gjere med innhaldet.",
-      "file_publish_date_helper_text": "Fila er låst fram til angitt dato",
+      "file_publish_date_helper_text": "Fila er låst fram til angjeve dato",
       "file_type": {
         "hidden_file": "Skjult fil",
         "internal_file": "Intern fil",
@@ -1496,7 +1497,7 @@
         "if_same_press_no_in_box": "Viss dette er det same resultatet som di registrering, må du trykkje 'NEI' i denne boksen for å unngå å publisere.",
         "publication_already_exists": "Det fins allereie ein publikasjon med same tittel og år som di registrering."
       },
-      "error_description_published_result_workflow1": "Registreringa er publisert. Ved redigering må følgjande rettast opp:",
+      "error_description_published_result_workflow1": "Registreringa er publisert. Ved redigering må følgjande manglar rettast opp:",
       "error_description_published_result_workflow2": "Registreringa er publisert, men manglar følgjande:",
       "error_description_workflow1": "Følgjande feil må rettast opp før publisering av resultat:",
       "error_description_workflow2": "Resultatet har følgjande manglar:",
@@ -2075,6 +2076,7 @@
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidatar",
       "note": "Kommentar",
+      "nvi_control": "",
       "previous_candidate": "Gå til førre kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
