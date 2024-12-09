@@ -1,7 +1,13 @@
 import { AggregationValue, UnconfirmedOrganization } from './common.types';
 import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
-import { Journal, PublicationInstance, Publisher, Registration, RegistrationAggregations } from './registration.types';
+import {
+  PublicationInstance,
+  Publisher,
+  Registration,
+  RegistrationAggregations,
+  SerialPublication,
+} from './registration.types';
 
 export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
 
@@ -39,7 +45,7 @@ export interface ImportCandidateSummary {
   totalVerifiedContributors: number;
   organizations: (Pick<Organization, 'type' | 'id' | 'labels'> | UnconfirmedOrganization)[];
   publisher?: Partial<Publisher>;
-  journal?: Partial<Journal>;
+  journal?: Partial<SerialPublication>;
   publicationInstance: PublicationInstance;
   contributors: Contributor[];
   printIssn?: string;

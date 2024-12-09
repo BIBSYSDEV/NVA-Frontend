@@ -7,7 +7,7 @@ import { BookType, ChapterType, JournalType } from '../../../../types/publicatio
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
-import { Journal, Publisher, Registration, ScientificValue, Series } from '../../../../types/registration.types';
+import { Publisher, Registration, ScientificValue, SerialPublication } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface NviValidationProps {
@@ -46,7 +46,7 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
   const journalQuery = useQuery({
     queryKey: ['channel', journalId],
     enabled: !!journalId,
-    queryFn: () => fetchResource<Journal>(journalId),
+    queryFn: () => fetchResource<SerialPublication>(journalId),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });
@@ -76,7 +76,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
   const seriesQuery = useQuery({
     queryKey: ['channel', seriesId],
     enabled: !!seriesId,
-    queryFn: () => fetchResource<Series>(seriesId),
+    queryFn: () => fetchResource<SerialPublication>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
@@ -124,7 +124,7 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
   const seriesQuery = useQuery({
     queryKey: ['channel', seriesId],
     enabled: !!seriesId,
-    queryFn: () => fetchResource<Series>(seriesId),
+    queryFn: () => fetchResource<SerialPublication>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });

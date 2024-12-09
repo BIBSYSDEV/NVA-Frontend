@@ -1,7 +1,7 @@
 import { SearchResponse } from '../../types/common.types';
-import { Journal } from '../../types/registration.types';
+import { SerialPublication } from '../../types/registration.types';
 
-export const mockJournalsSearch: SearchResponse<Journal> = {
+export const mockJournalsSearch: SearchResponse<SerialPublication> = {
   processingTime: 10,
   size: 3,
   hits: [

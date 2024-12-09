@@ -4,7 +4,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { defaultChannelSearchSize, searchForSeries } from '../../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, searchForSerialPublications } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
@@ -14,7 +14,7 @@ import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
-import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
+import { PublicationChannelType, Registration, SerialPublication } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
@@ -48,7 +48,7 @@ export const SeriesField = () => {
   const seriesOptionsQuery = useQuery({
     queryKey: ['seriesSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForSeries(debouncedQuery, year, searchSize),
+    queryFn: () => searchForSerialPublications(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_series') },
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
@@ -70,7 +70,7 @@ export const SeriesField = () => {
   const seriesQuery = useQuery({
     queryKey: ['channel', series?.id],
     enabled: !!series?.id,
-    queryFn: () => fetchResource<Series>(series?.id ?? ''),
+    queryFn: () => fetchResource<SerialPublication>(series?.id ?? ''),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
@@ -98,7 +98,7 @@ export const SeriesField = () => {
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
-              if (reason !== 'reset') {
+              if (reason !== 'reset' && reason !== 'blur') {
                 setQuery(newInputValue);
               }
               if (reason === 'input' && !newInputValue && series?.title) {

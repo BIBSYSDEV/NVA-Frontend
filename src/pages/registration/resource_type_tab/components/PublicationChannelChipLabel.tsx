@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
-import { Journal, Publisher, Series } from '../../../../types/registration.types';
+import { Publisher, SerialPublication } from '../../../../types/registration.types';
 import { getPublicationChannelString } from '../../../../utils/registration-helpers';
 
 interface PublicationChannelChipProps {
-  value: Journal | Series | Publisher;
+  value: SerialPublication | Publisher;
 }
 
 export const PublicationChannelChipLabel = ({ value }: PublicationChannelChipProps) => (

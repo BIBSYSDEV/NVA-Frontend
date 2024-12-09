@@ -58,7 +58,7 @@ import {
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { ContextPublisher, Journal, Publisher, Series } from '../../types/registration.types';
+import { ContextPublisher, Publisher, SerialPublication } from '../../types/registration.types';
 import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -191,7 +191,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   const journalQuery = useQuery({
     enabled: !!id,
     queryKey: ['channel', id],
-    queryFn: () => fetchResource<Journal | Series>(id),
+    queryFn: () => fetchResource<SerialPublication>(id),
     retry: 1,
     meta: {
       errorMessage: false,
@@ -212,7 +212,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
   const journalBackupQuery = useQuery({
     enabled: journalQuery.isError && !!alternativeJournalId,
     queryKey: ['channel', alternativeJournalId],
-    queryFn: () => fetchResource<Journal | Series>(alternativeJournalId),
+    queryFn: () => fetchResource<SerialPublication>(alternativeJournalId),
     retry: 1,
     meta: { errorMessage },
   });
