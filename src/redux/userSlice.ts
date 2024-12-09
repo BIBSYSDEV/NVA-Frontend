@@ -22,6 +22,8 @@ const userSlice = createSlice({
       const allowedCustomersString = getStringValue(action.payload['custom:allowedCustomers']);
       const roles = rolesString.split(',') as RoleName[];
       const allowedCustomers = allowedCustomersString.split(',').filter((customer) => customer);
+      const currentTerms = getStringValue(action.payload['custom:currentTerms']);
+      const acceptedTerms = getStringValue(action.payload['custom:acceptedTerms']);
 
       const user: User = {
         givenName: firstName,
@@ -34,6 +36,8 @@ const userSlice = createSlice({
         roles,
         topOrgCristinId,
         allowedCustomers,
+        currentTerms,
+        acceptedTerms,
         isCreator: !!customerId && roles.includes(RoleName.Creator),
         isAppAdmin: !!customerId && roles.includes(RoleName.AppAdmin),
         isInternalImporter: !!customerId && roles.includes(RoleName.InternalImporter),
