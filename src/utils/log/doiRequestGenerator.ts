@@ -32,6 +32,7 @@ function generateDoiGivenLogEntry(ticket: Ticket, t: TFunction): LogEntry {
         items: [],
       },
     ],
+    messages: ticket.messages,
   };
 }
 
@@ -46,6 +47,7 @@ function generateDoiRejectedLogEntry(ticket: Ticket, t: TFunction): LogEntry {
         items: [],
       },
     ],
+    messages: ticket.messages,
   };
 }
 

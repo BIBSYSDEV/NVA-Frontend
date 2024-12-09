@@ -95,6 +95,16 @@ export const SearchListItem = styled(ListItem)(({ theme }) => ({
   background: 'white',
 }));
 
+export const SearchListItemDiv = styled('div')(({ theme }) => ({
+  border: '2px solid',
+  borderColor: theme.palette.secondary.dark,
+  borderLeft: '1.25rem solid',
+  flexDirection: 'column',
+  alignItems: 'start',
+  background: 'white',
+  padding: '0.5rem 1rem',
+}));
+
 export const StyledStatusCheckbox = styled(Checkbox)({
   paddingTop: '0.2rem',
   paddingBottom: '0.2rem',

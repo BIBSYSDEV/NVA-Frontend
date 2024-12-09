@@ -37,7 +37,7 @@ export const SearchTypeField = ({ sx = {} }: Pick<TextFieldProps, 'sx'>) => {
         },
         ...sx,
       }}
-      inputProps={{ 'aria-label': t('common.type') }}>
+      slotProps={{ htmlInput: { 'aria-label': t('common.type') } }}>
       <MenuItem
         sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
         value={SearchTypeValue.Result}

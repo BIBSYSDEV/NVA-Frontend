@@ -1,20 +1,19 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import { Badge, Button } from '@mui/material';
+import { Badge } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
-import { FetchTicketsParams, TicketSearchParam, fetchCustomerTickets } from '../../api/searchApi';
+import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
+import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketListDefaultValuesWrapper } from '../../components/TicketListDefaultValuesWrapper';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
-import { StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -58,8 +57,6 @@ const TasksPage = () => {
 
   const searchParams = new URLSearchParams(history.location.search);
 
-  const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
-
   const [ticketTypes, setTicketTypes] = useState({
     doiRequest: isDoiCurator,
     generalSupportCase: isSupportCurator,
@@ -84,7 +81,7 @@ const TasksPage = () => {
     assignee: searchParams.get(TicketSearchParam.Assignee),
     status: searchParams.get(TicketSearchParam.Status),
     type: selectedTicketTypes.join(','),
-    viewedByNot: ticketUnreadFilter && user ? user.nvaUsername : '',
+    viewedByNot: searchParams.get(TicketSearchParam.ViewedByNot),
     createdDate: searchParams.get(TicketSearchParam.CreatedDate),
     publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
@@ -134,9 +131,9 @@ const TasksPage = () => {
               pathname: isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi,
               search: history.location.state?.previousSearch,
             }}>
-            <StyledMinimizedMenuButton title={t('common.tasks')}>
+            <MinimizedMenuIconButton title={t('common.tasks')}>
               <AssignmentIcon />
-            </StyledMinimizedMenuButton>
+            </MinimizedMenuIconButton>
           </Link>
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
@@ -152,21 +149,6 @@ const TasksPage = () => {
               }
             }}
             dataTestId={dataTestId.tasksPage.userDialogAccordion}>
-            <StyledTicketSearchFormGroup>
-              <Button
-                data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-                sx={{
-                  width: 'fit-content',
-                  background: ticketUnreadFilter ? undefined : 'white',
-                  textTransform: 'none',
-                }}
-                variant={ticketUnreadFilter ? 'contained' : 'outlined'}
-                startIcon={<MarkEmailUnreadIcon />}
-                onClick={() => setTicketUnreadFilter(!ticketUnreadFilter)}>
-                {t('tasks.unread')}
-              </Button>
-            </StyledTicketSearchFormGroup>
-
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               {isPublishingCurator && (
                 <TicketTypeFilterButton

@@ -1,8 +1,9 @@
-import { Grid, List, Typography } from '@mui/material';
+import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
@@ -15,8 +16,10 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
+import { RootState } from '../../../redux/store';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
@@ -32,10 +35,13 @@ interface TicketListProps {
   title: string;
 }
 
+const viewedByLabelId = 'viewed-by-select';
+
 export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
+  const user = useSelector((store: RootState) => store.user);
 
   const ticketStatusOptions = isOnTasksPage
     ? ticketStatusValues.filter((status) => status !== 'New')
@@ -65,6 +71,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
   );
 
   const searchParams = new URLSearchParams(history.location.search);
+  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || 'show-all';
 
   return (
     <section>
@@ -76,16 +83,44 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         <Grid item xs={16} md={5} lg={4}>
           <TicketStatusFilter options={ticketStatusOptions} />
         </Grid>
-        <Grid item xs={16} md={isOnTasksPage ? 6 : 11} lg={isOnTasksPage ? 8 : 12}>
+        <Grid item xs={16} md={11} lg={10}>
           <SearchForm placeholder={t('tasks.search_placeholder')} />
         </Grid>
 
+        {user && (
+          <Grid item xs={16} md={5} lg={2}>
+            <FormControl fullWidth>
+              <InputLabel id={viewedByLabelId}>{t('tasks.display_options')}</InputLabel>
+              <Select
+                data-testid={dataTestId.tasksPage.unreadSearchSelect}
+                size="small"
+                value={viewedByNotParam}
+                labelId={viewedByLabelId}
+                label={t('tasks.display_options')}
+                onChange={(event) => {
+                  const value = event.target.value;
+                  const syncedParams = syncParamsWithSearchFields(searchParams);
+                  if (value === 'show-all') {
+                    syncedParams.delete(TicketSearchParam.ViewedByNot);
+                  } else {
+                    syncedParams.set(TicketSearchParam.ViewedByNot, value);
+                  }
+                  syncedParams.delete(TicketSearchParam.From);
+                  history.push({ search: syncedParams.toString() });
+                }}>
+                <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
+                <MenuItem value={user.nvaUsername}>{t('tasks.unread_only')}</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        )}
+
         {isOnTasksPage && (
           <>
-            <Grid item xs={16} md={5} lg={4}>
+            <Grid item xs={16} md={6} lg={4}>
               <DialoguesWithoutCuratorButton />
             </Grid>
-            <Grid item xs={16} md={5} lg={4}>
+            <Grid item xs={16} md={4} lg={4}>
               <CuratorSelector
                 selectedUsername={searchParams.get(TicketSearchParam.Assignee)}
                 onChange={(curator) => {

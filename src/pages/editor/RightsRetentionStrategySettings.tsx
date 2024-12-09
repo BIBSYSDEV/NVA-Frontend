@@ -100,12 +100,14 @@ export const RightsRetentionStrategySettings = () => {
                         variant="filled"
                         fullWidth
                         disabled={isNullRrs || isSubmitting}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <LinkIcon />
-                            </InputAdornment>
-                          ),
+                        slotProps={{
+                          input: {
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <LinkIcon />
+                              </InputAdornment>
+                            ),
+                          },
                         }}
                       />
                     </FormLabel>
