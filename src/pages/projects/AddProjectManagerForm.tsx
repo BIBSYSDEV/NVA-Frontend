@@ -92,7 +92,7 @@ export const AddProjectManagerForm = ({
     }
   };
 
-  const currentPersonQuery = useAddSelfAsContributor({
+  const addSelfAsContributor = useAddSelfAsContributor({
     cristinId: userCristinId,
     addContributorFn: addSelfAsProjectManager,
   });
@@ -122,9 +122,9 @@ export const AddProjectManagerForm = ({
         </Button>
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
-          onClick={() => currentPersonQuery.addSelf()}
+          onClick={() => addSelfAsContributor.addSelf()}
           disabled={!!selectedPerson}
-          loading={currentPersonQuery.isFetching}>
+          loading={addSelfAsContributor.isFetching}>
           {t('project.add_self_as_project_manager')}
         </LoadingButton>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />

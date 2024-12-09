@@ -78,7 +78,7 @@ export const AddProjectContributorForm = ({
     }
   };
 
-  const currentPersonQuery = useAddSelfAsContributor({
+  const addSelfAsContributor = useAddSelfAsContributor({
     cristinId: userCristinId,
     addContributorFn: addParticipant,
   });
@@ -102,9 +102,9 @@ export const AddProjectContributorForm = ({
         </Button>
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
-          onClick={() => currentPersonQuery.addSelf()}
+          onClick={() => addSelfAsContributor.addSelf()}
           disabled={!!selectedPerson}
-          loading={currentPersonQuery.isFetching}>
+          loading={addSelfAsContributor.isFetching}>
           {roleType === 'LocalProjectManager'
             ? t('project.add_self_as_local_project_manager')
             : t('project.add_self_as_project_participant')}
