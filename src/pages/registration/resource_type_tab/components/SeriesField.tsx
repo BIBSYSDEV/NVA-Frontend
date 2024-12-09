@@ -98,7 +98,7 @@ export const SeriesField = () => {
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
-              if (reason !== 'reset') {
+              if (reason !== 'reset' && reason !== 'blur') {
                 setQuery(newInputValue);
               }
               if (reason === 'input' && !newInputValue && series?.title) {
