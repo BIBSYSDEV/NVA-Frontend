@@ -6,16 +6,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { updateRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
+import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { isPublishableForWorkflow2 } from '../../utils/formik-helpers/formik-helpers';
 import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration, userHasAccessRight } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
@@ -45,6 +47,7 @@ export const RegistrationFormActions = ({
   isNviCandidate,
 }: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
+  const customer = useSelector((store: RootState) => store.customer);
   const history = useHistory<RegistrationFormLocationState>();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -117,7 +120,8 @@ export const RegistrationFormActions = ({
 
   const disableSaving =
     (values.status === RegistrationStatus.Published || values.status === RegistrationStatus.PublishedMetadata) &&
-    !isValid;
+    ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' && !isPublishableForWorkflow2(values)) ||
+      (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && !isValid));
 
   return (
     <>

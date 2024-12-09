@@ -44,12 +44,12 @@ const sortLogEntries = (a: LogEntry, b: LogEntry) => {
   const timeDiff = Math.abs(timeA - timeB);
 
   if (timeDiff > msMargin) {
-    return timeA - timeB;
+    return timeB - timeA;
   }
 
   const indexA = logTypeOrder.indexOf(a.type);
   const indexB = logTypeOrder.indexOf(b.type);
-  return indexA - indexB;
+  return indexB - indexA;
 };
 
 interface SimpleLogItemEntry {

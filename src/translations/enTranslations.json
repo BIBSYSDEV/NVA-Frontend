@@ -95,6 +95,7 @@
       "verified_contributor_count": "({{verifiedContributorCount}} of {{contributorsCount}} verified)"
     },
     "institutions": {
+      "active": "Active",
       "add_institution": "Create institution",
       "admin_institutions": "Manage institutions",
       "administators_list_explanation": "Generated from the Person Register and role assignment",
@@ -112,11 +113,13 @@
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
       "loading_institution_information": "Loading institutional data",
+      "not_active": "Inactive",
       "password_hide": "Hide password",
       "password_show": "Show password",
       "remove_role_text": "Are you sure you want to remove this role?",
       "remove_role_title": "Remove role?",
       "ror": "Research Organization Registry (ROR)",
+      "search_for_name": "Search with name",
       "sector": "Sector",
       "sector_values": {
         "ABM": "Archives, Libraries and Museums",
@@ -124,7 +127,9 @@
         "INSTITUTE": "Institute sector",
         "OTHER": "Others",
         "UHI": "Universities and colleges (HEI)"
-      }
+      },
+      "show_only_active": "Show only active",
+      "show_only_inactive": "Show only inactive"
     },
     "nvi": {
       "add_reporting_period": "Add reporting period",
@@ -294,6 +299,7 @@
     "start": "Start",
     "start_date": "Start date",
     "start_page": "Start page",
+    "status": "Status",
     "tasks": "Tasks",
     "test_environment": "Test environment",
     "time_string": "{{date}}, at {{time}}",
@@ -392,7 +398,7 @@
   },
   "editor": {
     "categories_with_files": "Categories with File Upload",
-    "categories_with_files_description": "Specify which categories your institution will allow file upload for",
+    "categories_with_files_description": "Specify the categories your institution will allow file upload for.",
     "curators": {
       "active_area_of_responsibilities": "Active areas of responsibility",
       "add_curator": "Add curator",
@@ -689,13 +695,13 @@
     "archived_files_on_registration_one": "The registration has {{count}} archived file",
     "archived_files_on_registration_other": "The registration has {{count}} archived files",
     "deleted_afterwards": "Deleted afterwards",
-    "hide_messages": "",
+    "hide_messages": "Hide messages",
     "imported_from_source": "Imported from {{source}}",
     "imported_from_source_and_archive": "Imported from {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata last updated:",
     "number_of_archivedFiles_on_registration_one": "The registration has {{count}} archived file",
     "number_of_archivedFiles_on_registration_other": "The registration has {{count}} archived files",
-    "show_messages": "",
+    "show_messages": "Show messages",
     "titles": {
       "created_in_nva": "Created in NVA",
       "doi_given": "DOI given",
@@ -740,7 +746,8 @@
       "doi_pending": "Waiting for DOI",
       "files_published_one": "{{count}} file published",
       "files_published_other": "{{count}} files published",
-      "files_rejected": "{\"one\":\"{{count}} file rejected\",\"other\":\"{{count}} files rejected\"}",
+      "files_rejected_one": "{{count}} file rejected",
+      "files_rejected_other": "{{count}} filees rejected",
       "files_uploaded_one": "{{count}} file is uploaded",
       "files_uploaded_other": "{{count}} files are uploaded",
       "general_support_pending": "Waiting for follow-up",
@@ -777,7 +784,7 @@
         "field": "Field of study",
         "field_and_background": "Field of study and background",
         "field_text": "List keywords that can describe your field of study.",
-        "keywords_search_text": "You can add multiple keywords at a time"
+        "keywords_search_text": "Search for keywords. You may add multiple keywords at a time."
       },
       "heading": {
         "affiliations": "Affiliations",
@@ -1412,7 +1419,7 @@
       "file_and_license_info": "Every file in NVA must have a licence, to inform the reader about what they are allowed to do with the content.",
       "file_publish_date_helper_text": "The file is locked until the specified date",
       "file_type": {
-        "hidden_file": "",
+        "hidden_file": "Hidden file",
         "internal_file": "Internal file",
         "open_file": "Open file",
         "rejected_file": "Rejected file"
@@ -1490,8 +1497,10 @@
         "if_same_press_no_in_box": "If this is the same result as your registration, you must press 'NO' in this box to avoid publishing.",
         "publication_already_exists": "There is already a publication with the same title and year as your registration."
       },
-      "error_description": "The following errors must be corrected before publishing the result:",
-      "error_description_published_result": "The registration is published. The following deficiencies must be corrected when editing:",
+      "error_description_published_result_workflow1": "The registration is published. The following deficiencies must be corrected when editing:",
+      "error_description_published_result_workflow2": "The registration is published, but lacks the following:",
+      "error_description_workflow1": "The following errors must be corrected before publishing the result:",
+      "error_description_workflow2": "The result lacks the following:",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
       "go_back_to_wizard": "Go back to the form",
       "handle": "Handle",
@@ -2067,6 +2076,7 @@
       "next_candidate": "Go to the next candidate",
       "no_nvi_candidates": "No NVI candidates",
       "note": "Comment",
+      "nvi_control": "",
       "previous_candidate": "Go to previous candidate",
       "publication_points": "Publication points",
       "reject_nvi_candidate": "Reject result",

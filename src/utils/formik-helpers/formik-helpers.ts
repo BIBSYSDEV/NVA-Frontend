@@ -33,7 +33,10 @@ import {
   isOpenFile,
   isPendingOpenFile,
 } from '../registration-helpers';
-import { registrationValidationSchema } from '../validation/registration/registrationValidation';
+import {
+  registrationPublishableValidationSchema,
+  registrationValidationSchema,
+} from '../validation/registration/registrationValidation';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -495,4 +498,13 @@ export const validateRegistrationForm = (registration: Registration): FormikErro
     return yupToFormErrors(err);
   }
   return {};
+};
+
+export const isPublishableForWorkflow2 = (registration: Registration) => {
+  const isValid = registrationPublishableValidationSchema.isValidSync(registration, {
+    context: {
+      publicationInstanceType: registration.entityDescription?.reference?.publicationInstance.type ?? '',
+    } as any,
+  });
+  return isValid;
 };
