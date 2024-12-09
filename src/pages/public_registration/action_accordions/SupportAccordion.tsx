@@ -30,6 +30,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const userIsTicketOwner = user && supportTicket?.owner === user.nvaUsername;
 
   const ticketMutation = useMutation({
     mutationFn: supportTicket
@@ -115,7 +116,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             if (message) {
               if (supportTicket) {
                 await addMessage(supportTicket.id, message);
-                if (userCanCompleteTicket) {
+                if (userCanCompleteTicket && !userIsTicketOwner) {
                   await updateTicket(supportTicket.id, { status: 'Completed' });
                 }
               } else {
