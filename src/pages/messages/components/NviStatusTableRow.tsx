@@ -44,7 +44,7 @@ export const NviStatusTableRow = ({ organization, aggregations, level = 0 }: Nvi
         </TableCell>
         <TableCell align="center">
           {aggregations ? (
-            (orgAggregations?.points.value.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0)
+            (orgAggregations?.points.total.value.toLocaleString(undefined, { maximumFractionDigits: 2 }) ?? 0)
           ) : (
             <StyledSkeleton />
           )}

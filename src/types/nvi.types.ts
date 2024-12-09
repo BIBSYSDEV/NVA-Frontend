@@ -38,7 +38,7 @@ interface AggregationCount {
 
 interface OrganizationDetail extends AggregationCount {
   dispute: AggregationCount;
-  points: { value: number };
+  points: { total: { value: number } };
   status: { [status in NviCandidateStatus]?: AggregationCount };
 }
 
