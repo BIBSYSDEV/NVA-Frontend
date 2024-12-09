@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import {
   defaultChannelSearchSize,
-  fetchJournal,
+  fetchSerialPublication,
   searchForSerialPublications,
 } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
@@ -46,7 +46,7 @@ export const JournalFilter = () => {
   const selectedJournalQuery = useQuery({
     enabled: !!journalParam,
     queryKey: ['channel', journalParam],
-    queryFn: () => (journalParam ? fetchJournal(journalParam) : undefined),
+    queryFn: () => (journalParam ? fetchSerialPublication(journalParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });

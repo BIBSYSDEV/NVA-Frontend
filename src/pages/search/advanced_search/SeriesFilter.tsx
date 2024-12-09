@@ -3,7 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { defaultChannelSearchSize, fetchSeries, searchForSerialPublications } from '../../../api/publicationChannelApi';
+import {
+  defaultChannelSearchSize,
+  fetchSerialPublication,
+  searchForSerialPublications,
+} from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -42,7 +46,7 @@ export const SeriesFilter = () => {
   const selectedSeriesQuery = useQuery({
     enabled: !!seriesParam,
     queryKey: ['channel', seriesParam],
-    queryFn: () => (seriesParam ? fetchSeries(seriesParam) : undefined),
+    queryFn: () => (seriesParam ? fetchSerialPublication(seriesParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });

@@ -1,5 +1,5 @@
 import { SearchResponse2 } from '../types/common.types';
-import { Journal, Publisher, SerialPublication, Series } from '../types/registration.types';
+import { Publisher, SerialPublication } from '../types/registration.types';
 import { getYearQuery } from '../utils/registration-helpers';
 import { PublicationChannelApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
@@ -41,11 +41,11 @@ export const createPublisher = async (newPublisher: CreatePublisherPayload) => {
   return createPublisherResponse.data;
 };
 
-export const fetchJournal = async (identifier: string) => {
-  const fetchJournalResponse = await apiRequest2<Journal>({
+export const fetchSerialPublication = async (identifier: string) => {
+  const fetchSerialPublicationResponse = await apiRequest2<SerialPublication>({
     url: `${PublicationChannelApiPath.SerialPublication}/${identifier}/${publicationChannelYearWorkaround}`,
   });
-  return fetchJournalResponse.data;
+  return fetchSerialPublicationResponse.data;
 };
 
 export const fetchPublisher = async (identifier: string) => {
@@ -53,13 +53,6 @@ export const fetchPublisher = async (identifier: string) => {
     url: `${PublicationChannelApiPath.Publisher}/${identifier}/${publicationChannelYearWorkaround}`,
   });
   return fetchPublisherResponse.data;
-};
-
-export const fetchSeries = async (identifier: string) => {
-  const fetchSeriesResponse = await apiRequest2<Series>({
-    url: `${PublicationChannelApiPath.SerialPublication}/${identifier}/${publicationChannelYearWorkaround}`,
-  });
-  return fetchSeriesResponse.data;
 };
 
 export const defaultChannelSearchSize = 50;
