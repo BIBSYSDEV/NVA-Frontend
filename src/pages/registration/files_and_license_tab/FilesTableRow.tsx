@@ -218,13 +218,6 @@ export const FilesTableRow = ({
                     </StyledFileTypeMenuItemContent>
                   </MenuItem>
                 )}
-                {(field.value === FileType.PublishedFile ||
-                  field.value === FileType.UnpublishedFile ||
-                  field.value === FileType.UnpublishableFile) && (
-                  <MenuItem value={field.value} disabled>
-                    {field.value}
-                  </MenuItem>
-                )}
               </TextField>
             )}
           </Field>
