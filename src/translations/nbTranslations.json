@@ -95,6 +95,7 @@
       "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} identifisert)"
     },
     "institutions": {
+      "active": "Aktiv",
       "add_institution": "Opprett institusjon",
       "admin_institutions": "Administrer institusjoner",
       "administators_list_explanation": "Genereres fra Personregisteret og rolletildeling",
@@ -112,11 +113,13 @@
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "loading_institution_information": "Laster institusjonsdata",
+      "not_active": "Ikke aktiv",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
+      "search_for_name": "Søk etter navn",
       "sector": "Sektor",
       "sector_values": {
         "ABM": "Arkiv, Bibliotek og Museum",
@@ -124,7 +127,9 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
         "UHI": "Universitet og høyskoler (UH)"
-      }
+      },
+      "show_only_active": "Vis kun aktive",
+      "show_only_inactive": "Vis kun inaktive"
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
@@ -294,6 +299,7 @@
     "start": "Start",
     "start_date": "Startdato",
     "start_page": "Startside",
+    "status": "Status",
     "tasks": "Oppgaver",
     "test_environment": "Testmiljø",
     "time_string": "{{date}}, kl. {{time}}",
@@ -313,6 +319,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -384,11 +394,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -689,11 +695,13 @@
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
+    "hide_messages": "Skjul meldinger",
     "imported_from_source": "Importert fra {{source}}",
     "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert:",
     "number_of_archivedFiles_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "number_of_archivedFiles_on_registration_other": "Registreringen har {{count}} arkiverte filer",
+    "show_messages": "Vis meldinger",
     "titles": {
       "created_in_nva": "Opprettet i NVA",
       "doi_given": "DOI tildelt",
@@ -1410,6 +1418,7 @@
       "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "file_type": {
+        "hidden_file": "Skjult fil",
         "internal_file": "Intern fil",
         "open_file": "Åpen fil",
         "rejected_file": "Avvist fil"
@@ -1487,8 +1496,10 @@
         "if_same_press_no_in_box": "Om dette er samme resultat som din registrering, må du trykke 'NEI' i denne boksen for å unngå å publisere.",
         "publication_already_exists": "Det finnes allerede en publikasjon med samme tittel, år og kategori som din registrering."
       },
-      "error_description": "Følgende feil må rettes opp før publisering av resultat:",
-      "error_description_published_result": "Registreringen er publisert. Ved redigering må følgende mangler rettes opp:",
+      "error_description_published_result_workflow1": "Registreringen er publisert. Ved redigering må følgende mangler rettes opp:",
+      "error_description_published_result_workflow2": "Registreringen er publisert, men har følgende mangler:",
+      "error_description_workflow1": "Følgende feil må rettes opp før publisering av resultat:",
+      "error_description_workflow2": "Resultatet har følgende mangler:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",

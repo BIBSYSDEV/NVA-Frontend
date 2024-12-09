@@ -55,14 +55,16 @@ export const NpiDisciplineField = ({ required }: NpiDisciplineFieldProps) => {
                 placeholder={!value ? t('registration.description.search_for_npi_discipline') : ''}
                 error={!!error && touched}
                 helperText={<ErrorMessage name={name} />}
-                InputProps={{
-                  ...params.InputProps,
-                  startAdornment: (
-                    <>
-                      {params.InputProps.startAdornment}
-                      {!value && <SearchIcon color="disabled" sx={{ marginLeft: '0.5rem' }} />}
-                    </>
-                  ),
+                slotProps={{
+                  input: {
+                    ...params.InputProps,
+                    startAdornment: (
+                      <>
+                        {params.InputProps.startAdornment}
+                        {!value && <SearchIcon color="disabled" sx={{ marginLeft: '0.5rem' }} />}
+                      </>
+                    ),
+                  },
                 }}
               />
             )}

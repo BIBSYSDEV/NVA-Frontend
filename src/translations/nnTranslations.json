@@ -95,6 +95,7 @@
       "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
     },
     "institutions": {
+      "active": "Aktiv",
       "add_institution": "Opprett institusjon",
       "admin_institutions": "Administrer institusjonar",
       "administators_list_explanation": "Blir generert frå Personregisteret og rolletildeling",
@@ -112,11 +113,13 @@
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "loading_institution_information": "Lastar institusjonsdata",
+      "not_active": "Ikkje aktiv",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rolla?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
+      "search_for_name": "Søk etter namn",
       "sector": "Sektor",
       "sector_values": {
         "ABM": "Arkiv, Bibliotek og Museum",
@@ -124,7 +127,9 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Andre",
         "UHI": "Universitet og høgskuler (UH)"
-      }
+      },
+      "show_only_active": "Vis berre aktive",
+      "show_only_inactive": "Vis berre inaktive"
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
@@ -222,6 +227,7 @@
     "next": "Neste",
     "no": "Nei",
     "no_hits": "Ingen treff",
+    "no_search_hits": "Ingen søkjetreff",
     "none": "Ingen",
     "not_decided": "Ikkje bestemt",
     "number_of_rows_per_page": "Tal på rader per side",
@@ -293,6 +299,7 @@
     "start": "Start",
     "start_date": "Startdato",
     "start_page": "Startside",
+    "status": "Status",
     "tasks": "Oppgåver",
     "test_environment": "Testmiljø",
     "time_string": "{{date}}, kl. {{time}}",
@@ -391,7 +398,7 @@
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
-    "categories_with_files_description": "Angi kategoriane der institusjonen din tillèt filopplasting",
+    "categories_with_files_description": "Angi kategoriane der institusjonen din tillèt filopplasting.",
     "curators": {
       "active_area_of_responsibilities": "Tilknytta ansvarsområder",
       "add_curator": "Legg til kurator",
@@ -416,6 +423,7 @@
       "search_for_curator": "Søk etter kurator",
       "search_for_unit": "Søk etter eining"
     },
+    "does_not_support_file_upload": "Støttar ikkje filopplasting",
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er ein persistent identifikator.|Gjer det enklare å sitere publikasjonar korrekt.|Metadata om resultatet blir delt internasjonalt.|Synlegheita til resultatet aukar.|Bidreg til å oppfylle FAIR-prinsippa.|Støttar open forsking.",
       "doi_information_bullet_points_2": "Tenesta har støtte for å tildele $t(common.doi_long) til resultat.|Institusjonen som tildeler $t(common.doi_long) blir utgjevar av resultatet.|Grundig sjekk av metadata, innhald i filer og lisensar er nødvendig før tildeling av $t(common.doi_long). Feil metadata er tidkrevjande å rette i ettertid.",
@@ -687,12 +695,13 @@
     "archived_files_on_registration_one": "Registreringa har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringa har {{count}} arkiverte filer",
     "deleted_afterwards": "Sletta i etterkant",
-    "header_icon": "Ikon for logghode {{type}}",
+    "hide_messages": "Skjul meldingar",
     "imported_from_source": "Importert frå {{source}}",
     "imported_from_source_and_archive": "Importert frå {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert:",
     "number_of_archivedFiles_on_registration_one": "Registreringa har {{count}} arkivert fil",
     "number_of_archivedFiles_on_registration_other": "Registreringa har {{count}} arkiverte filer",
+    "show_messages": "Vis meldingar",
     "titles": {
       "created_in_nva": "Oppretta i NVA",
       "doi_given": "DOI tildelt",
@@ -774,7 +783,7 @@
         "field": "Fagfelt",
         "field_and_background": "Fagfelt og bakgrunn",
         "field_text": "Oppgi nøkkelord som kan beskrive fagfeltet ditt.",
-        "keywords_search_text": "Du kan leggje til fleire nøkkelord om gongen"
+        "keywords_search_text": "Søk etter nøkkelord. Du kan leggje til fleire nøkkelord om gongen."
       },
       "heading": {
         "affiliations": "Tilknytingar",
@@ -1409,6 +1418,7 @@
       "file_and_license_info": "Kvar fil i NVA må ha ein lisens, slik at lesaren er informert om kva dei har lov å gjere med innhaldet.",
       "file_publish_date_helper_text": "Fila er låst fram til angitt dato",
       "file_type": {
+        "hidden_file": "Skjult fil",
         "internal_file": "Intern fil",
         "open_file": "Open fil",
         "rejected_file": "Avvist fil"
@@ -1486,8 +1496,10 @@
         "if_same_press_no_in_box": "Viss dette er det same resultatet som di registrering, må du trykkje 'NEI' i denne boksen for å unngå å publisere.",
         "publication_already_exists": "Det fins allereie ein publikasjon med same tittel og år som di registrering."
       },
-      "error_description": "Følgjande feil må rettast opp før publisering av resultat:",
-      "error_description_published_result": "Registreringa er publisert. Ved redigering må følgjande rettast opp:",
+      "error_description_published_result_workflow1": "Registreringa er publisert. Ved redigering må følgjande rettast opp:",
+      "error_description_published_result_workflow2": "Registreringa er publisert, men manglar følgjande:",
+      "error_description_workflow1": "Følgjande feil må rettast opp før publisering av resultat:",
+      "error_description_workflow2": "Resultatet har følgjande manglar:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",

@@ -21,14 +21,16 @@ export const SearchTextField = ({ clearValue, dataTestId, ...props }: SearchText
         variant="outlined"
         size="small"
         aria-label={t('common.search')}
-        InputProps={{
-          startAdornment: <SearchIcon color="disabled" />,
-          endAdornment:
-            props.value && clearValue ? (
-              <IconButton onClick={clearValue} title={t('common.clear')} size="small">
-                <ClearIcon />
-              </IconButton>
-            ) : null,
+        slotProps={{
+          input: {
+            startAdornment: <SearchIcon color="disabled" />,
+            endAdornment:
+              props.value && clearValue ? (
+                <IconButton onClick={clearValue} title={t('common.clear')} size="small">
+                  <ClearIcon />
+                </IconButton>
+              ) : null,
+          },
         }}
       />
       <input type="submit" hidden />

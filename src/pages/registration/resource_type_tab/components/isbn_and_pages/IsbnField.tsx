@@ -53,11 +53,9 @@ export const IsbnField = ({ fieldName }: IsbnFieldProps) => {
               label={t('registration.resource_type.isbn')}
               placeholder={isbnFormat}
               variant="filled"
-              InputProps={{
-                inputComponent: MaskIsbnInput as any,
-              }}
               error={!!meta.error && meta.touched}
               helperText={<ErrorMessage name={field.name} />}
+              slotProps={{ input: { inputComponent: MaskIsbnInput as any } }}
             />
           )}
         </Field>

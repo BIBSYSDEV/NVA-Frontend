@@ -1,5 +1,6 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, BoxProps, styled, SvgIcon, Typography } from '@mui/material';
+import { ElementType } from 'react';
 import { SelectableButton, SelectableButtonProps } from './SelectableButton';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
@@ -49,7 +50,11 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
   );
 };
 
-export const NavigationList = ({ sx, ...props }: BoxProps) => (
+interface NavigationListProps extends BoxProps {
+  component?: ElementType;
+}
+
+export const NavigationList = ({ sx, ...props }: NavigationListProps) => (
   <Box
     component="nav"
     sx={{

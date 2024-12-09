@@ -43,7 +43,6 @@ export const NviCandidateRejectionDialog = ({
             value={reason}
             onChange={(event) => setReason(event.target.value)}
             data-testid={dataTestId.tasksPage.nvi.rejectionModalTextField}
-            inputProps={{ minLength: minReasonLength, maxLength: maxReasonLength }}
             variant="filled"
             multiline
             minRows={3}
@@ -51,7 +50,10 @@ export const NviCandidateRejectionDialog = ({
             required
             label={t('tasks.nvi.reject_nvi_candidate_form_label')}
             helperText={`${reason.length}/${maxReasonLength}`}
-            FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+            slotProps={{
+              htmlInput: { minLength: minReasonLength, maxLength: maxReasonLength },
+              formHelperText: { sx: { textAlign: 'end' } },
+            }}
           />
         </DialogContent>
 
