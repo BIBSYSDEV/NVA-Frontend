@@ -17,7 +17,7 @@ export interface PreviousSearchLocationState {
   previousSearch?: string;
 }
 
-export interface TicketLocationState {
+export interface SelectedTicketTypeLocationState {
   selectedTicketType?: TicketType;
 }
 
