@@ -4,11 +4,13 @@ import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
+import { TicketLocationState } from '../../../types/locationState.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -23,12 +25,14 @@ interface SupportAccordionProps {
   registration: Registration;
   supportTicket?: Ticket;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
-  refetchData: () => void;
+  refetchData: () => Promise<void>;
 }
 
 export const SupportAccordion = ({ registration, supportTicket, addMessage, refetchData }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const location = useLocation<TicketLocationState>();
+
   const user = useSelector((store: RootState) => store.user);
   const userIsTicketOwner = user && supportTicket?.owner === user.nvaUsername;
 
@@ -63,12 +67,16 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
 
   const userCanCompleteTicket = userHasAccessRight(registration, 'support-request-approve');
 
+  const defaultExpanded = location.state?.selectedTicketType
+    ? location.state.selectedTicketType === 'GeneralSupportCase'
+    : isPendingSupportTicket || !userHasReadTicket;
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{ bgcolor: 'generalSupportCase.light' }}
       elevation={3}
-      defaultExpanded={isPendingSupportTicket || !userHasReadTicket}>
+      defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
         {statusText && ` - ${statusText}`}
