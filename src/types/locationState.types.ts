@@ -1,4 +1,5 @@
 import { FetchNviCandidatesParams } from '../api/searchApi';
+import { TicketType } from './publication_types/ticket.types';
 import { RegistrationTab } from './registration.types';
 
 export interface PreviousPathLocationState {
@@ -14,6 +15,10 @@ export interface RegistrationFormLocationState extends PreviousPathLocationState
 
 export interface PreviousSearchLocationState {
   previousSearch?: string;
+}
+
+export interface TicketLocationState {
+  selectedTicketType?: TicketType;
 }
 
 export type BasicDataLocationState = PreviousPathLocationState & PreviousSearchLocationState;
