@@ -22,11 +22,9 @@ export enum Sector {
 export interface CustomerInstitution
   extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName' | 'active'> {
   type?: 'Customer';
-  archiveName: string;
   cristinId: string;
   feideOrganizationDomain: string;
   identifier: string;
-  institutionDns: string;
   name: string;
   modifiedDate?: string;
   vocabularies: CustomerVocabulary[];
@@ -101,13 +99,11 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   active: true,
   type: 'Customer',
   id: '',
-  archiveName: '',
   createdDate: '',
   cristinId: '',
   displayName: '',
   feideOrganizationDomain: '',
   identifier: '',
-  institutionDns: '',
   name: '',
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',

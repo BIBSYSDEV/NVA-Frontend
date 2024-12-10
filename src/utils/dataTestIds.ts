@@ -58,7 +58,6 @@ export const dataTestId = {
     },
     institutionsAccordion: 'institutions-accordion',
     institutionAdmin: {
-      archiveNameField: 'archive-field',
       canAssignDoiCheckbox: 'can-assign-doi-checkbox',
       displayNameField: 'display-name-field',
       doiUsernameField: 'doi-username-field',
