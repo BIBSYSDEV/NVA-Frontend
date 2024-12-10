@@ -63,7 +63,8 @@ export const RegistrationListItemContent = ({
   onRemoveRelated,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
-  const { identifier, id } = registration;
+  const { id } = registration;
+  const identifier = getIdentifierFromId(id);
   const location = useLocation();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -163,9 +164,9 @@ export const RegistrationListItemContent = ({
           </Box>
         </Box>
 
-        {(entityDescription?.abstract || entityDescription?.description) && (
+        {(registration.abstract || registration.description) && (
           <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
-            {entityDescription?.abstract || entityDescription?.description}
+            {registration.abstract || registration.description}
           </TruncatableTypography>
         )}
       </ListItemText>
