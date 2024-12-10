@@ -2,6 +2,7 @@ import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { getNviYearFilterValues } from '../../../utils/nviHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -17,6 +18,7 @@ export const NviReportedYearFilter = () => {
 
   return (
     <TextField
+      data-testid={dataTestId.startPage.advancedSearch.nviReportedYearField}
       select
       disabled={!scientificIndexStatus}
       value={scientificReportPeriodSince ?? ''}

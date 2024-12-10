@@ -192,6 +192,7 @@ export const dataTestId = {
       fileStatusSelect: 'file-status-select',
       fundingSourceField: 'funding-source-field',
       journalField: 'journal-field',
+      nviReportedYearField: 'nvi-reported-year-field',
       publicationLanguageField: 'publication-language-field',
       publisherField: 'publisher-field',
       removeFacetButton: 'remove-facet-button',

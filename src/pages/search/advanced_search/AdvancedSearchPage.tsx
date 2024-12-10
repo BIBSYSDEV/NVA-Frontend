@@ -121,7 +121,6 @@ export const AdvancedSearchPage = () => {
                 checked={registrationParams.scientificIndexStatus === ScientificIndexStatuses.Reported}
                 label={t('search.advanced_search.reported')}
               />
-
               <NviReportedYearFilter />
             </Box>
           </Grid>
