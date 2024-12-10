@@ -122,7 +122,7 @@ export const AddProjectManagerForm = ({
         </Button>
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
-          onClick={() => addSelfAsContributor.addSelf()}
+          onClick={addSelfAsContributor.addSelf}
           disabled={!!selectedPerson}
           loading={addSelfAsContributor.isFetching}>
           {t('project.add_self_as_project_manager')}

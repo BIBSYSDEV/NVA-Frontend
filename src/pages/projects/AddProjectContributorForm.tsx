@@ -102,7 +102,7 @@ export const AddProjectContributorForm = ({
         </Button>
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
-          onClick={() => addSelfAsContributor.addSelf()}
+          onClick={addSelfAsContributor.addSelf}
           disabled={!!selectedPerson}
           loading={addSelfAsContributor.isFetching}>
           {roleType === 'LocalProjectManager'
