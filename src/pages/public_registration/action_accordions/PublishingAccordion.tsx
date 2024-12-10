@@ -69,7 +69,7 @@ export const PublishingAccordion = ({
   const [isCreatingPublishingRequest, setIsCreatingPublishingRequest] = useState(false);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
   const registrationHasApprovedFile = registration.associatedArtifacts.some(
-    (file) => isOpenFile(file) || file.type === FileType.OpenFile || file.type === FileType.InternalFile
+    (file) => isOpenFile(file) || file.type === FileType.InternalFile
   );
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
@@ -151,7 +151,7 @@ export const PublishingAccordion = ({
 
   const registrationHasMismatchingFiles = getAssociatedFiles(registration.associatedArtifacts)
     .filter((file) => approvedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
-    .some((file) => file.type === FileType.PendingOpenFile || file.type === FileType.PendingInternalFile);
+    .some((file) => isPendingOpenFile(file) || file.type === FileType.PendingInternalFile);
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
