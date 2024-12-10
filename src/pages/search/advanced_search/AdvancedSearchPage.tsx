@@ -5,8 +5,6 @@ import {
   Divider,
   FormControlLabel,
   Grid,
-  MenuItem,
-  TextField,
   Theme,
   Typography,
   useMediaQuery,
@@ -30,6 +28,7 @@ import { FileStatusSelect } from './FileStatusSelect';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
+import { NviReportedYearFilter } from './NviReportedYearFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 import { ScientificValueFilter } from './ScientificValueFilter';
@@ -123,27 +122,7 @@ export const AdvancedSearchPage = () => {
                 label={t('search.advanced_search.reported')}
               />
 
-              <TextField
-                select
-                disabled={!registrationParams.scientificIndexStatus}
-                value={registrationParams.scientificReportPeriodSince}
-                size="small"
-                label="Rapporteringsår"
-                sx={{ width: '10rem' }}
-                onChange={(event) => {
-                  const selectedYear = event.target.value;
-                  const syncedParams = syncParamsWithSearchFields(params);
-                  if (selectedYear) {
-                    syncedParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+selectedYear + 1).toString());
-                    syncedParams.set(ResultParam.ScientificReportPeriodSinceParam, selectedYear);
-                  }
-                  syncedParams.delete(ResultParam.From);
-                  history.push({ search: syncedParams.toString() });
-                }}>
-                <MenuItem value={2022}>2022</MenuItem>
-                <MenuItem value={2021}>2021</MenuItem>
-                <MenuItem value={2020}>2020</MenuItem>
-              </TextField>
+              <NviReportedYearFilter />
             </Box>
           </Grid>
 
