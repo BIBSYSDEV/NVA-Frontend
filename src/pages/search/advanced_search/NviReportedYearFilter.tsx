@@ -1,4 +1,5 @@
 import { MenuItem, TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
@@ -8,6 +9,7 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 const relevantNviYears = getNviYearFilterValues(new Date().getFullYear() - 1);
 
 export const NviReportedYearFilter = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
@@ -17,9 +19,9 @@ export const NviReportedYearFilter = () => {
     <TextField
       select
       disabled={!scientificIndexStatus}
-      value={scientificReportPeriodSince}
+      value={scientificReportPeriodSince ?? ''}
       size="small"
-      label="Rapporteringsår"
+      label={t('search.advanced_search.nvi_reported_year')}
       sx={{ width: '10rem' }}
       onChange={(event) => {
         const selectedYear = event.target.value;
