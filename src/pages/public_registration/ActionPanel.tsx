@@ -45,8 +45,7 @@ export const ActionPanel = ({
 
   const isNotOnTasksDialoguePage = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const canCreatePublishingTicket =
-    isNotOnTasksDialoguePage && userHasAccessRight(registration, 'publishing-request-create');
+  const canCreatePublishingTicket = userHasAccessRight(registration, 'publishing-request-create');
   const canApprovePublishingTicket =
     publishingRequestTickets.length > 0 && userHasAccessRight(registration, 'publishing-request-approve');
   const hasOtherPublishingRights =
