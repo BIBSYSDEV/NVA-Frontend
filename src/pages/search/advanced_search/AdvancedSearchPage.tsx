@@ -5,6 +5,8 @@ import {
   Divider,
   FormControlLabel,
   Grid,
+  MenuItem,
+  TextField,
   Theme,
   Typography,
   useMediaQuery,
@@ -63,7 +65,11 @@ export const AdvancedSearchPage = () => {
       syncedParams.set(ResultParam.ScientificIndexStatus, ScientificIndexStatuses.Reported);
     } else {
       syncedParams.delete(ResultParam.ScientificIndexStatus);
+      syncedParams.delete(ResultParam.ScientificReportPeriodBeforeParam);
+      syncedParams.delete(ResultParam.ScientificReportPeriodSinceParam);
     }
+
+    syncedParams.delete(ResultParam.From);
 
     history.push({ search: syncedParams.toString() });
   };
@@ -108,13 +114,37 @@ export const AdvancedSearchPage = () => {
 
           <Grid item>
             <StyledFilterHeading>{t('common.nvi')}</StyledFilterHeading>
-            <FormControlLabel
-              data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
-              control={<Checkbox name="scientificIndexStatus" />}
-              onChange={handleNviReportedCheckbox}
-              checked={registrationParams.scientificIndexStatus === ScientificIndexStatuses.Reported}
-              label={t('search.advanced_search.reported')}
-            />
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <FormControlLabel
+                data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
+                control={<Checkbox name="scientificIndexStatus" />}
+                onChange={handleNviReportedCheckbox}
+                checked={registrationParams.scientificIndexStatus === ScientificIndexStatuses.Reported}
+                label={t('search.advanced_search.reported')}
+              />
+
+              <TextField
+                select
+                disabled={!registrationParams.scientificIndexStatus}
+                value={registrationParams.scientificReportPeriodSince}
+                size="small"
+                label="Rapporteringsår"
+                sx={{ width: '10rem' }}
+                onChange={(event) => {
+                  const selectedYear = event.target.value;
+                  const syncedParams = syncParamsWithSearchFields(params);
+                  if (selectedYear) {
+                    syncedParams.set(ResultParam.ScientificReportPeriodBeforeParam, (+selectedYear + 1).toString());
+                    syncedParams.set(ResultParam.ScientificReportPeriodSinceParam, selectedYear);
+                  }
+                  syncedParams.delete(ResultParam.From);
+                  history.push({ search: syncedParams.toString() });
+                }}>
+                <MenuItem value={2022}>2022</MenuItem>
+                <MenuItem value={2021}>2021</MenuItem>
+                <MenuItem value={2020}>2020</MenuItem>
+              </TextField>
+            </Box>
           </Grid>
 
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}
