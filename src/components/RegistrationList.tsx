@@ -12,8 +12,9 @@ import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
-import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
+import { RegistrationSearchItem2, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
+import { getIdentifierFromId } from '../utils/general-helpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
@@ -28,9 +29,9 @@ import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps extends Pick<LinkProps, 'target'> {
-  registrations: RegistrationSearchItem[];
+  registrations: RegistrationSearchItem2[];
   canEditRegistration?: boolean;
-  onDeleteDraftRegistration?: (registration: RegistrationSearchItem) => void;
+  onDeleteDraftRegistration?: (registration: RegistrationSearchItem2) => void;
   promotedPublications?: string[];
 }
 
@@ -47,7 +48,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 );
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
-  registration: RegistrationSearchItem;
+  registration: RegistrationSearchItem2;
   ticketView?: boolean;
   onRemoveRelated?: () => void;
 }
@@ -62,7 +63,7 @@ export const RegistrationListItemContent = ({
   onRemoveRelated,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
-  const { identifier, entityDescription, id } = registration;
+  const { identifier, id } = registration;
   const location = useLocation();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -71,15 +72,15 @@ export const RegistrationListItemContent = ({
   const userCristinId = user?.cristinId ?? '';
   const mutationKey = ['person-preferences', userCristinId];
 
-  const registrationType = entityDescription?.reference?.publicationInstance?.type;
-  const contributors = entityDescription?.contributorsPreview ?? [];
+  const registrationType = registration.type;
+  const contributors = registration.contributorsPreview ?? [];
 
   const primaryContributors = registrationType
     ? getContributorsWithPrimaryRole(contributors, registrationType)
     : contributors;
 
   const focusedContributors = primaryContributors.slice(0, 5);
-  const countRestContributors = registration.entityDescription.contributorsCount - focusedContributors.length;
+  const countRestContributors = registration.contributorsCount - focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
 
@@ -102,8 +103,8 @@ export const RegistrationListItemContent = ({
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' }, marginBottom: '0.5rem' }}>
           <RegistrationIconHeader
-            publicationInstanceType={registration.entityDescription.reference.publicationInstance.type}
-            publicationDate={registration.entityDescription.publicationDate}
+            publicationInstanceType={registration.type}
+            publicationDate={registration.publicationDate}
           />
           {ticketView &&
             (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
@@ -119,7 +120,7 @@ export const RegistrationListItemContent = ({
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
           {ticketView ? (
-            getTitleString(entityDescription?.mainTitle)
+            getTitleString(registration.mainTitle)
           ) : (
             <MuiLink
               target={target}
@@ -128,7 +129,7 @@ export const RegistrationListItemContent = ({
                 pathname: getRegistrationLandingPagePath(identifier),
                 state: { previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState,
               }}>
-              {getTitleString(entityDescription?.mainTitle)}
+              {getTitleString(registration.mainTitle)}
             </MuiLink>
           )}
         </Typography>
@@ -221,7 +222,9 @@ export const RegistrationListItemContent = ({
           <IconButton
             sx={{ alignSelf: 'start' }}
             onClick={onRemoveRelated}
-            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}>
+            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(
+              getIdentifierFromId(registration.id)
+            )}>
             <CancelIcon color="primary" />
           </IconButton>
         </Tooltip>
