@@ -2,12 +2,12 @@ import { AutocompleteRenderOptionState, Box, Typography } from '@mui/material';
 import { HTMLAttributes } from 'react';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
-import { Journal, Publisher, Series } from '../../../../types/registration.types';
+import { Publisher, SerialPublication } from '../../../../types/registration.types';
 import { getPublicationChannelString } from '../../../../utils/registration-helpers';
 
 interface PublicationChannelOptionProps {
   props: HTMLAttributes<HTMLLIElement>;
-  option: Journal | Series | Publisher;
+  option: SerialPublication | Publisher;
   state: AutocompleteRenderOptionState;
   hideScientificLevel?: boolean;
 }
