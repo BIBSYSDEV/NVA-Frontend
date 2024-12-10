@@ -3,10 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
-import { ResearchDataType, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
+import { ResearchDataType, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ConfirmedDocument } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
@@ -69,156 +69,166 @@ export const DatasetForm = () => {
         )}
       </Field>
 
-      <Typography variant="h2">{t('registration.resource_type.research_data.related_links')}</Typography>
-      <FieldArray name={ResourceFieldNames.PublicationInstanceReferencedBy}>
-        {({ push, remove }: FieldArrayRenderProps) => (
-          <>
-            <Autocomplete
-              options={relatedRegistrationsOptionsQuery.data?.hits ?? []}
-              value={null}
-              onChange={(_, value) => {
-                if (value?.id && !referencedBy?.includes(value.id)) {
-                  push(value.id);
-                }
-                setRelatedRegistrationsQuery('');
-              }}
-              blurOnSelect
-              loading={relatedRegistrationsOptionsQuery.isPending}
-              filterOptions={(options) => options}
-              getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-              renderOption={({ key, ...props }, option, state) => (
-                <li {...props} key={option.identifier}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant="subtitle1">
-                      <EmphasizeSubstring
-                        text={getTitleString(option.entityDescription?.mainTitle)}
-                        emphasized={state.inputValue}
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <FieldArray name={ResourceFieldNames.PublicationInstanceReferencedBy}>
+          {({ push, remove }: FieldArrayRenderProps) => (
+            <div>
+              <Typography gutterBottom fontWeight="bold">
+                {t('registration.resource_type.research_data.publications_using_dataset')}
+              </Typography>
+              <Autocomplete
+                options={relatedRegistrationsOptionsQuery.data?.hits ?? []}
+                value={null}
+                onChange={(_, value) => {
+                  if (value?.id && !referencedBy?.includes(value.id)) {
+                    push(value.id);
+                  }
+                  setRelatedRegistrationsQuery('');
+                }}
+                blurOnSelect
+                loading={relatedRegistrationsOptionsQuery.isPending}
+                filterOptions={(options) => options}
+                getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+                renderOption={({ key, ...props }, option, state) => (
+                  <li {...props} key={option.identifier}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      <Typography variant="subtitle1">
+                        <EmphasizeSubstring
+                          text={getTitleString(option.entityDescription?.mainTitle)}
+                          emphasized={state.inputValue}
+                        />
+                      </Typography>
+                      <YearAndContributorsText
+                        date={option.entityDescription?.publicationDate}
+                        contributors={option.entityDescription?.contributorsPreview ?? []}
                       />
-                    </Typography>
-                    <YearAndContributorsText
-                      date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributorsPreview ?? []}
-                    />
-                  </Box>
-                </li>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationField}
-                  sx={{ maxWidth: '40rem' }}
-                  onChange={(event) => {
-                    setRelatedRegistrationsQuery(event.target.value);
-                  }}
-                  variant="filled"
-                  label={t('registration.resource_type.research_data.search_for_related_registrations')}
-                />
-              )}
-            />
-
-            {referencedBy && referencedBy.length > 0 && (
-              <List>
-                {referencedBy.map((uri) => (
-                  <RelatedResourceRow
-                    key={uri}
-                    uri={uri}
-                    removeRelatedResource={() => remove(referencedBy.indexOf(uri))}
+                    </Box>
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationField}
+                    sx={{ maxWidth: '40rem' }}
+                    onChange={(event) => {
+                      setRelatedRegistrationsQuery(event.target.value);
+                    }}
+                    variant="filled"
+                    label={t('registration.resource_type.research_data.search_for_related_registrations')}
                   />
-                ))}
-              </List>
-            )}
-          </>
-        )}
-      </FieldArray>
+                )}
+              />
 
-      <FieldArray name={ResourceFieldNames.PublicationInstanceCompliesWith}>
-        {({ push, remove }: FieldArrayRenderProps) => (
-          <>
-            <Autocomplete
-              options={relatedDmpOptionsQuery.data?.hits ?? []}
-              value={null}
-              onChange={(_, value) => {
-                if (value?.id && !compliesWith?.includes(value.id)) {
-                  push(value.id);
-                }
-                setRelatedDmpQuery('');
-              }}
-              blurOnSelect
-              loading={relatedDmpOptionsQuery.isPending}
-              filterOptions={(options) => options}
-              getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
-              renderOption={({ key, ...props }, option, state) => (
-                <li {...props} key={option.identifier}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant="subtitle1">
-                      <EmphasizeSubstring
-                        text={getTitleString(option.entityDescription?.mainTitle)}
-                        emphasized={state.inputValue}
+              {referencedBy && referencedBy.length > 0 && (
+                <List>
+                  {referencedBy.map((uri) => (
+                    <RelatedResourceRow
+                      key={uri}
+                      uri={uri}
+                      removeRelatedResource={() => remove(referencedBy.indexOf(uri))}
+                    />
+                  ))}
+                </List>
+              )}
+            </div>
+          )}
+        </FieldArray>
+
+        <FieldArray name={ResourceFieldNames.PublicationInstanceCompliesWith}>
+          {({ push, remove }: FieldArrayRenderProps) => (
+            <div>
+              <Typography gutterBottom fontWeight="bold">
+                {t('registration.publication_types.DataManagementPlan')}
+              </Typography>
+              <Autocomplete
+                options={relatedDmpOptionsQuery.data?.hits ?? []}
+                value={null}
+                onChange={(_, value) => {
+                  if (value?.id && !compliesWith?.includes(value.id)) {
+                    push(value.id);
+                  }
+                  setRelatedDmpQuery('');
+                }}
+                blurOnSelect
+                loading={relatedDmpOptionsQuery.isPending}
+                filterOptions={(options) => options}
+                getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+                renderOption={({ key, ...props }, option, state) => (
+                  <li {...props} key={option.identifier}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                      <Typography variant="subtitle1">
+                        <EmphasizeSubstring
+                          text={getTitleString(option.entityDescription?.mainTitle)}
+                          emphasized={state.inputValue}
+                        />
+                      </Typography>
+                      <YearAndContributorsText
+                        date={option.entityDescription?.publicationDate}
+                        contributors={option.entityDescription?.contributorsPreview ?? []}
                       />
-                    </Typography>
-                    <YearAndContributorsText
-                      date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributorsPreview ?? []}
+                    </Box>
+                  </li>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    data-testid={dataTestId.registrationWizard.resourceType.compliesWithField}
+                    sx={{ maxWidth: '40rem' }}
+                    onChange={(event) => setRelatedDmpQuery(event.target.value)}
+                    variant="filled"
+                    label={t('registration.resource_type.research_data.search_for_related_dmps')}
+                  />
+                )}
+              />
+
+              {compliesWith && compliesWith.length > 0 && (
+                <List>
+                  {compliesWith.map((uri) => (
+                    <RelatedResourceRow
+                      key={uri}
+                      uri={uri}
+                      removeRelatedResource={() => remove(compliesWith.indexOf(uri))}
                     />
-                  </Box>
-                </li>
+                  ))}
+                </List>
               )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  data-testid={dataTestId.registrationWizard.resourceType.compliesWithField}
-                  sx={{ maxWidth: '40rem' }}
-                  onChange={(event) => setRelatedDmpQuery(event.target.value)}
-                  variant="filled"
-                  label={t('registration.resource_type.research_data.search_for_related_dmps')}
-                />
+            </div>
+          )}
+        </FieldArray>
+
+        <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
+          {({ push, remove }: FieldArrayRenderProps) => (
+            <div>
+              <Typography gutterBottom fontWeight="bold">
+                {t('registration.resource_type.research_data.external_links')}
+              </Typography>
+              <ExternalLinkField
+                onAddClick={(url) => {
+                  if (url && !confirmedRelatedResources.includes(url)) {
+                    const confirmedDocument: ConfirmedDocument = {
+                      type: 'ConfirmedDocument',
+                      identifier: url,
+                    };
+                    push(confirmedDocument);
+                  }
+                }}
+              />
+
+              {confirmedRelatedResources.length > 0 && (
+                <List>
+                  {confirmedRelatedResources.map((uri) => (
+                    <RelatedResourceRow
+                      key={uri}
+                      uri={uri}
+                      removeRelatedResource={() => remove(findRelatedDocumentIndex(relatedResources, uri))}
+                    />
+                  ))}
+                </List>
               )}
-            />
-
-            {compliesWith && compliesWith.length > 0 && (
-              <List>
-                {compliesWith.map((uri) => (
-                  <RelatedResourceRow
-                    key={uri}
-                    uri={uri}
-                    removeRelatedResource={() => remove(compliesWith.indexOf(uri))}
-                  />
-                ))}
-              </List>
-            )}
-          </>
-        )}
-      </FieldArray>
-
-      <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
-        {({ push, remove }: FieldArrayRenderProps) => (
-          <>
-            <ExternalLinkField
-              onAddClick={(url) => {
-                if (url && !confirmedRelatedResources.includes(url)) {
-                  const confirmedDocument: ConfirmedDocument = {
-                    type: 'ConfirmedDocument',
-                    identifier: url,
-                  };
-                  push(confirmedDocument);
-                }
-              }}
-            />
-
-            {confirmedRelatedResources.length > 0 && (
-              <List>
-                {confirmedRelatedResources.map((uri) => (
-                  <RelatedResourceRow
-                    key={uri}
-                    uri={uri}
-                    removeRelatedResource={() => remove(findRelatedDocumentIndex(relatedResources, uri))}
-                  />
-                ))}
-              </List>
-            )}
-          </>
-        )}
-      </FieldArray>
+            </div>
+          )}
+        </FieldArray>
+      </Box>
     </>
   );
 };
