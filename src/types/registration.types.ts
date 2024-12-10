@@ -290,6 +290,21 @@ export interface RegistrationSearchItem {
   };
 }
 
+export interface RegistrationSearchItem2 {
+  id: string;
+  type: PublicationInstanceType | '';
+  otherIdentifiers: {
+    scopus: string[];
+    cristin: string[];
+    handle: string[];
+  };
+  mainTitle: string;
+  publicationDate?: RegistrationDate;
+  contributorsPreview: Contributor[];
+  contributorsCount: number;
+  publishingDetails: ContextPublisher;
+}
+
 export interface RegistrationDate {
   type: 'PublicationDate' | 'IndexDate';
   year: string;

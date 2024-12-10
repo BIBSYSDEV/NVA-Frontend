@@ -557,6 +557,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
 
   const getResults = await apiRequest2<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
+    headers: { accept: 'application/json; version=2024-12-01' },
     signal,
   });
 
