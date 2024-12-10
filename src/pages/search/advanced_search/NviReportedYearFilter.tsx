@@ -2,7 +2,10 @@ import { MenuItem, TextField } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
+import { getNviYearFilterValues } from '../../../utils/nviHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
+
+const relevantNviYears = getNviYearFilterValues(new Date().getFullYear() - 1);
 
 export const NviReportedYearFilter = () => {
   const history = useHistory();
@@ -28,9 +31,11 @@ export const NviReportedYearFilter = () => {
         syncedParams.delete(ResultParam.From);
         history.push({ search: syncedParams.toString() });
       }}>
-      <MenuItem value={2022}>2022</MenuItem>
-      <MenuItem value={2021}>2021</MenuItem>
-      <MenuItem value={2020}>2020</MenuItem>
+      {relevantNviYears.map((year) => (
+        <MenuItem key={year} value={year}>
+          {year}
+        </MenuItem>
+      ))}
     </TextField>
   );
 };
