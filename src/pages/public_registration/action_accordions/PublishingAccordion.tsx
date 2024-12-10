@@ -69,11 +69,7 @@ export const PublishingAccordion = ({
   const [isCreatingPublishingRequest, setIsCreatingPublishingRequest] = useState(false);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
   const registrationHasApprovedFile = registration.associatedArtifacts.some(
-    (file) =>
-      isOpenFile(file) ||
-      file.type === FileType.OpenFile ||
-      file.type === FileType.InternalFile ||
-      file.type === FileType.PublishedFile
+    (file) => isOpenFile(file) || file.type === FileType.OpenFile || file.type === FileType.InternalFile
   );
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
