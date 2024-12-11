@@ -40,6 +40,7 @@ import { MyProfile } from './user_profile/MyProfile';
 import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
+import { Terms } from './user_profile/Terms';
 import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 const MyPagePage = () => {
@@ -185,6 +186,12 @@ const MyPagePage = () => {
               isSelected={currentPath === UrlPathTemplate.MyPageUserRoleAndHelp}
               to={UrlPathTemplate.MyPageUserRoleAndHelp}>
               {t('my_page.my_profile.user_role_and_help.user_role_and_help')}
+            </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.myPage.termsLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageTerms}
+              to={UrlPathTemplate.MyPageTerms}>
+              {t('common.terms')}
             </SelectableButton>
           </NavigationList>
         </NavigationListAccordion>
@@ -376,6 +383,7 @@ const MyPagePage = () => {
             component={UserRoleAndHelp}
             isAuthorized={isAuthenticated}
           />
+          <PrivateRoute exact path={UrlPathTemplate.MyPageTerms} component={Terms} isAuthorized={isAuthenticated} />
           <PrivateRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isAuthenticated} />
         </Switch>
       </ErrorBoundary>
