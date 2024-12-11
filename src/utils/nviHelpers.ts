@@ -9,15 +9,8 @@ import { getTopLevelOrganization } from './institutions-helpers';
 import { nviApplicableTypes } from './registration-helpers';
 
 const minNviYear = 2011;
-
-export const getNviYearFilterValues = () => {
-  const thisYear = new Date().getFullYear();
-  const nviYearFilterValues = [];
-  for (let year = thisYear + 1; year >= minNviYear; year--) {
-    nviYearFilterValues.push(year);
-  }
-  return nviYearFilterValues;
-};
+export const getNviYearFilterValues = (maxYear: number) =>
+  Array.from({ length: maxYear - minNviYear + 1 }, (_, i) => maxYear - i);
 
 const isEqualSets = (set1: Set<string>, set2: Set<string>) => {
   if (set1.size !== set2.size) {
