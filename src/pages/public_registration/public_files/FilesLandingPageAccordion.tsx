@@ -123,8 +123,8 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
                 onChange={(_, value) => setSelectedTab(value)}
                 aria-label="lab API tabs example (TODO)"
                 variant="fullWidth">
-                <Tab label="Offentlige filer" value={FileTab.OpenFiles} />
-                <Tab label="Interne filer" value={FileTab.InternalFiles} />
+                <Tab label={`Offentlige filer (${openFilesToShow.length})`} value={FileTab.OpenFiles} />
+                <Tab label={`Interne filer (${internalFilesToShow.length})`} value={FileTab.InternalFiles} />
               </TabList>
             </Box>
             <TabPanel value={FileTab.OpenFiles}>
