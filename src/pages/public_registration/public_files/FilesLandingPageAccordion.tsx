@@ -3,11 +3,9 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, Tab, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
 import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
-import { LocalStorageKey } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   associatedArtifactIsNullArtifact,
@@ -31,8 +29,6 @@ enum FileTab {
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
 
-  const betaEnabled = localStorage.getItem(LocalStorageKey.Beta) === 'true';
-
   const userIsRegistrationAdmin = userHasAccessRight(registration, 'update');
   const [selectedTab, setSelectedTab] = useState(FileTab.OpenFiles);
 
@@ -42,13 +38,14 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   );
   const openFiles = associatedFiles.filter(isOpenFile);
   const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
-  const publishableFilesLength = openFiles.length + pendingOpenFiles.length;
   const openFilesToShow = userIsRegistrationAdmin ? [...openFiles, ...pendingOpenFiles] : openFiles;
 
   const internalFiles = associatedFiles.filter((file) => file.type === 'InternalFile');
   const pendingInternalFiles = associatedFiles.filter((file) => file.type === 'PendingInternalFile');
   const hiddenFiles = associatedFiles.filter((file) => file.type === 'HiddenFile');
   const internalFilesToShow = [...internalFiles, ...pendingInternalFiles, ...hiddenFiles];
+
+  const publishableFilesLength = openFilesToShow.length + internalFilesToShow.length;
 
   const showFileVersionField = isTypeWithFileVersionField(
     registration.entityDescription?.reference?.publicationInstance?.type
@@ -115,59 +112,59 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
         </Box>
       )}
 
-      {canSeeInternalFile && (
-        <BetaFunctionality>
-          <TabContext value={selectedTab}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <TabList
-                onChange={(_, value) => setSelectedTab(value)}
-                aria-label="lab API tabs example (TODO)"
-                variant="fullWidth">
-                <Tab label={`Offentlige filer (${openFilesToShow.length})`} value={FileTab.OpenFiles} />
-                <Tab label={`Interne filer (${internalFilesToShow.length})`} value={FileTab.InternalFiles} />
-              </TabList>
-            </Box>
-            <TabPanel value={FileTab.OpenFiles}>
-              {openFilesToShow.map((file, index) => (
-                <FileRow
-                  key={file.identifier}
-                  file={file}
-                  registrationIdentifier={registration.identifier}
-                  openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
-                  showFileVersionField={showFileVersionField}
-                  registrationMetadataIsPublished={registrationMetadataIsPublished}
-                />
-              ))}
-            </TabPanel>
-            <TabPanel value={FileTab.InternalFiles}>
-              {internalFilesToShow.map((file, index) => (
-                <FileRow
-                  key={file.identifier}
-                  file={file}
-                  registrationIdentifier={registration.identifier}
-                  openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
-                  showFileVersionField={showFileVersionField}
-                  registrationMetadataIsPublished={registrationMetadataIsPublished}
-                />
-              ))}
-            </TabPanel>
-          </TabContext>
-        </BetaFunctionality>
-      )}
-
-      {(!betaEnabled || !canSeeInternalFile) && (
-        <>
-          {openFilesToShow.map((file, index) => (
-            <FileRow
-              key={file.identifier}
-              file={file}
-              registrationIdentifier={registration.identifier}
-              openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
-              showFileVersionField={showFileVersionField}
-              registrationMetadataIsPublished={registrationMetadataIsPublished}
-            />
-          ))}
-        </>
+      {canSeeInternalFile ? (
+        <TabContext value={selectedTab}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <TabList
+              onChange={(_, value) => setSelectedTab(value)}
+              aria-label="lab API tabs example (TODO)"
+              variant="fullWidth">
+              <Tab
+                label={t('registration.public_page.public_files', { count: openFilesToShow.length })}
+                value={FileTab.OpenFiles}
+              />
+              <Tab
+                label={t('registration.public_page.internal_files', { count: internalFilesToShow.length })}
+                value={FileTab.InternalFiles}
+              />
+            </TabList>
+          </Box>
+          <TabPanel value={FileTab.OpenFiles}>
+            {openFilesToShow.map((file, index) => (
+              <FileRow
+                key={file.identifier}
+                file={file}
+                registrationIdentifier={registration.identifier}
+                openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
+                showFileVersionField={showFileVersionField}
+                registrationMetadataIsPublished={registrationMetadataIsPublished}
+              />
+            ))}
+          </TabPanel>
+          <TabPanel value={FileTab.InternalFiles}>
+            {internalFilesToShow.map((file, index) => (
+              <FileRow
+                key={file.identifier}
+                file={file}
+                registrationIdentifier={registration.identifier}
+                openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
+                showFileVersionField={showFileVersionField}
+                registrationMetadataIsPublished={registrationMetadataIsPublished}
+              />
+            ))}
+          </TabPanel>
+        </TabContext>
+      ) : (
+        openFilesToShow.map((file, index) => (
+          <FileRow
+            key={file.identifier}
+            file={file}
+            registrationIdentifier={registration.identifier}
+            openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
+            showFileVersionField={showFileVersionField}
+            registrationMetadataIsPublished={registrationMetadataIsPublished}
+          />
+        ))
       )}
     </LandingPageAccordion>
   ) : null;
