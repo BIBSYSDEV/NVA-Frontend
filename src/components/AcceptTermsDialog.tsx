@@ -44,7 +44,7 @@ export const AcceptTermsDialog = ({ newTermsUri }: AcceptTermsDialogProps) => {
         <Typography variant="h3" gutterBottom>
           {t('authorization.about_terms')}
         </Typography>
-        <Trans t={t} i18nKey="authorization.about_terms_description">
+        <Trans i18nKey="authorization.about_terms_description">
           <Typography sx={{ mb: '1rem' }}>
             <Link
               href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/brukervilkar-nasjonalt-vitenarkiv"
