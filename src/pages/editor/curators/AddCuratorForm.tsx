@@ -25,7 +25,6 @@ const StyledViewingScopeChipContainer = styled('div')({
 const StyledAreOfResponsibilityHeading = styled(Typography)({
   marginTop: '0.5rem',
 });
-StyledAreOfResponsibilityHeading.defaultProps = { variant: 'h4', gutterBottom: true };
 
 interface AddCuratorFormProps extends Pick<OrganizationCuratorsAccordionProps, 'refetchCurators'> {
   closeDialog: () => void;
@@ -92,7 +91,7 @@ export const AddCuratorForm = ({
 
           {activeViewingScopes.length > 0 && (
             <>
-              <StyledAreOfResponsibilityHeading>
+              <StyledAreOfResponsibilityHeading variant="h4" gutterBottom>
                 {t('editor.curators.active_area_of_responsibilities')}
               </StyledAreOfResponsibilityHeading>
               <StyledViewingScopeChipContainer>
@@ -111,7 +110,7 @@ export const AddCuratorForm = ({
 
           {removedViewingScopes.length > 0 && (
             <>
-              <StyledAreOfResponsibilityHeading>
+              <StyledAreOfResponsibilityHeading variant="h4" gutterBottom>
                 {t('editor.curators.removed_area_of_responsibilities')}
               </StyledAreOfResponsibilityHeading>
               <StyledViewingScopeChipContainer>
@@ -129,7 +128,7 @@ export const AddCuratorForm = ({
 
           {addedViewingScopes.length > 0 && (
             <>
-              <StyledAreOfResponsibilityHeading>
+              <StyledAreOfResponsibilityHeading variant="h4" gutterBottom>
                 {t('editor.curators.added_area_of_responsibilities')}
               </StyledAreOfResponsibilityHeading>
               <StyledViewingScopeChipContainer>

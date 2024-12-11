@@ -1,20 +1,26 @@
-import { styled, Tooltip } from '@mui/material';
+import { Box, BoxProps, styled, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import i18n from '../../../translations/i18n';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getInitials } from '../../../utils/general-helpers';
 
-export const StyledBaseContributorIndicator = styled('div')({
-  width: '1.75rem',
-  height: '1.75rem',
-  borderRadius: '50%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-});
-StyledBaseContributorIndicator.defaultProps = {
-  role: 'img',
-  'aria-label': i18n.t('common.initials'),
+export const StyledBaseContributorIndicator = ({ sx, ...props }: BoxProps) => {
+  const { t } = useTranslation();
+  return (
+    <Box
+      role="img"
+      aria-label={t('common.initials')}
+      sx={{
+        width: '1.75rem',
+        height: '1.75rem',
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        ...sx,
+      }}
+      {...props}
+    />
+  );
 };
 
 export const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
