@@ -10,7 +10,7 @@ export const Terms = () => {
   return (
     <BackgroundDiv>
       <Helmet>
-        <title>{t('my_page.my_profile.heading.personalia')}</title>
+        <title>{t('common.terms')}</title>
       </Helmet>
       <Typography variant="h1" gutterBottom>
         {t('common.terms')}
