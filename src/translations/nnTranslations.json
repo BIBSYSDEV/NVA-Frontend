@@ -9,7 +9,7 @@
       },
       "paragraph1": "NVA blir òg utvikla til bruk ved rapportering og vitskapleg publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskingsadministrative oppgåver.",
       "paragraph2": "Sikt er databehandlar. Den einskilde institusjon er behandlingsansvarleg, og registrerer og vedlikeheld eige innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett osv.). Tenesta får òg overført innhald frå andre datakjelder.",
-      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det innebér at ei registrering kan fullførast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angitt dato. Tenesta tillèt ikkje behandling av sensitive personopplysingar.",
+      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det innebér at ei registrering kan fullførast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angjeve dato. Tenesta tillèt ikkje behandling av sensitive personopplysingar.",
       "paragraph4": "NVA vil gjere institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med intensjonen om å gjere det kjent og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
       "paragraph5": "Sjølv om NVA er etablert og i bruk av fleire institusjonar, vil tenesta vere i kontinuerleg utvikling i heile si levetid. Institusjonar som ikkje har eit vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
     },
@@ -95,6 +95,7 @@
       "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
     },
     "institutions": {
+      "active": "Aktiv",
       "add_institution": "Opprett institusjon",
       "admin_institutions": "Administrer institusjonar",
       "administators_list_explanation": "Blir generert frå Personregisteret og rolletildeling",
@@ -112,11 +113,13 @@
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "loading_institution_information": "Lastar institusjonsdata",
+      "not_active": "Ikkje aktiv",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rolla?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
+      "search_for_name": "Søk etter namn",
       "sector": "Sektor",
       "sector_values": {
         "ABM": "Arkiv, Bibliotek og Museum",
@@ -124,7 +127,9 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Andre",
         "UHI": "Universitet og høgskuler (UH)"
-      }
+      },
+      "show_only_active": "Vis berre aktive",
+      "show_only_inactive": "Vis berre inaktive"
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
@@ -294,6 +299,7 @@
     "start": "Start",
     "start_date": "Startdato",
     "start_page": "Startside",
+    "status": "Status",
     "tasks": "Oppgåver",
     "test_environment": "Testmiljø",
     "time_string": "{{date}}, kl. {{time}}",
@@ -392,7 +398,7 @@
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
-    "categories_with_files_description": "Angi kategoriane der institusjonen din tillèt filopplasting",
+    "categories_with_files_description": "Angje kategoriane der institusjonen din tillèt filopplasting.",
     "curators": {
       "active_area_of_responsibilities": "Tilknytta ansvarsområder",
       "add_curator": "Legg til kurator",
@@ -689,13 +695,13 @@
     "archived_files_on_registration_one": "Registreringa har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringa har {{count}} arkiverte filer",
     "deleted_afterwards": "Sletta i etterkant",
-    "hide_messages": "",
+    "hide_messages": "Skjul meldingar",
     "imported_from_source": "Importert frå {{source}}",
     "imported_from_source_and_archive": "Importert frå {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert:",
     "number_of_archivedFiles_on_registration_one": "Registreringa har {{count}} arkivert fil",
     "number_of_archivedFiles_on_registration_other": "Registreringa har {{count}} arkiverte filer",
-    "show_messages": "",
+    "show_messages": "Vis meldingar",
     "titles": {
       "created_in_nva": "Oppretta i NVA",
       "doi_given": "DOI tildelt",
@@ -740,7 +746,8 @@
       "doi_pending": "Ventar på DOI-tildeling",
       "files_published_one": "{{count}} fil publisert",
       "files_published_other": "{{count}} filer publisert",
-      "files_rejected": "{\"one\":\"{{count}} fil avvist\",\"other\":\"{{count}} filer avvist\"}",
+      "files_rejected_one": "{{count}} fil avvist",
+      "files_rejected_other": "{{count}} filer avvist",
       "files_uploaded_one": "{{count}} fil lasta opp",
       "files_uploaded_other": "{{count}} filer lasta opp",
       "general_support_pending": "Ventar på oppfølging",
@@ -777,7 +784,7 @@
         "field": "Fagfelt",
         "field_and_background": "Fagfelt og bakgrunn",
         "field_text": "Oppgi nøkkelord som kan beskrive fagfeltet ditt.",
-        "keywords_search_text": "Du kan leggje til fleire nøkkelord om gongen"
+        "keywords_search_text": "Søk etter nøkkelord. Du kan leggje til fleire nøkkelord om gongen."
       },
       "heading": {
         "affiliations": "Tilknytingar",
@@ -1093,7 +1100,7 @@
     "service_in_brief": {
       "heading": "Kort om tenesta",
       "paragraph0": "NVA er ei teneste for å samle og gjere tilgjengeleg informasjon om, og resultat frå, norsk forsking. Institusjonen (den behandlingsansvarlege) registrerar og vedlikeheld eige innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett osv.). Tenesta får også overført innhald som høyrer til institusjonen frå andre datakjelder. NVA gjer institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med hensikt å gjere dette kjend og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
-      "paragraph1": "NVA har støtte for utsett publisering av ressursar. Det tyder at registreringa kan ferdigstillast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angitt dato.",
+      "paragraph1": "NVA har støtte for utsett publisering av ressursar. Det tyder at registreringa kan ferdigstillast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angjeve dato.",
       "paragraph2": "Tenesta tillèt ikkje behandling av sensitive personopplysingar."
     },
     "what_are_personal_data": {
@@ -1410,9 +1417,9 @@
       "disabled_helper_text": "Denne fila er allereie publisert med ein godkjent lisens. Ta kontakt med kurator om du vil endre eller slette fila",
       "embargo": "Embargo/utsett publisering",
       "file_and_license_info": "Kvar fil i NVA må ha ein lisens, slik at lesaren er informert om kva dei har lov å gjere med innhaldet.",
-      "file_publish_date_helper_text": "Fila er låst fram til angitt dato",
+      "file_publish_date_helper_text": "Fila er låst fram til angjeve dato",
       "file_type": {
-        "hidden_file": "",
+        "hidden_file": "Skjult fil",
         "internal_file": "Intern fil",
         "open_file": "Open fil",
         "rejected_file": "Avvist fil"
@@ -1490,8 +1497,10 @@
         "if_same_press_no_in_box": "Viss dette er det same resultatet som di registrering, må du trykkje 'NEI' i denne boksen for å unngå å publisere.",
         "publication_already_exists": "Det fins allereie ein publikasjon med same tittel og år som di registrering."
       },
-      "error_description": "Følgjande feil må rettast opp før publisering av resultat:",
-      "error_description_published_result": "Registreringa er publisert. Ved redigering må følgjande rettast opp:",
+      "error_description_published_result_workflow1": "Registreringa er publisert. Ved redigering må følgjande manglar rettast opp:",
+      "error_description_published_result_workflow2": "Registreringa er publisert, men manglar følgjande:",
+      "error_description_workflow1": "Følgjande feil må rettast opp før publisering av resultat:",
+      "error_description_workflow2": "Resultatet har følgjande manglar:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",
@@ -2067,6 +2076,7 @@
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidatar",
       "note": "Kommentar",
+      "nvi_control": "",
       "previous_candidate": "Gå til førre kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
