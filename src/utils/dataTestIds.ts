@@ -676,6 +676,7 @@ export const dataTestId = {
     registrationsAccordion: 'registrations-accordion',
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
+    termsLink: 'terms-link',
     userRolesAndHelp: {
       institutionHelpPage: 'institution-help-page',
       applicationHelpPage: 'application-help-page',

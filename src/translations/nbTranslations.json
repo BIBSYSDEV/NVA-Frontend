@@ -301,6 +301,7 @@
     "start_page": "Startside",
     "status": "Status",
     "tasks": "Oppgaver",
+    "terms": "Brukervilkår",
     "test_environment": "Testmiljø",
     "time_string": "{{date}}, kl. {{time}}",
     "title": "Tittel",
@@ -830,6 +831,7 @@
       "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbildet?",
       "results": "Resultat",
       "telephone": "Telefon",
+      "terms_description": "<0>Du har akseptert <0>Sikt Brukervilkår <0></0></0>.</0><0>Sikt Brukervilkår for Nasjonalt vitenarkiv innebærer blant annet at om du legger inn personopplysninger om andre personer må du ha deres tillatelse eller annet lovlig grunnlag. Du må sikre at vedkommende er informert om at personopplysningene publiser i Nasjonalt vitenarkiv.</0><0>Du kan ikke tilgjengeliggjøre/laste opp opphavsrettslig materiale/åndsverk uten å ha tillatelse fra alle opphavere.</0><0>Du er ansvarlig for at din bruk av Nasjonalt vitenarkiv ikke er i strid med gjeldende rett.</0><0>For mer informasjon, se <0>Sikt Brukervilkår <0></0></0> i sin helhet.</0>",
       "upload_description": "<0>Ved å laste opp et bilde samtykker du til at bildet legges inn som profilbilde på din offentlige profil i Nasjonalt vitenarkiv.</0><0>Profilbildet er offentlig synlig for alle som benytter Nasjonalt vitenarkiv.</0>",
       "upload_is_not_mandatory": "<0>Det er frivillig å laste opp et bilde.</0><0>Du kan når som helst trekke tilbake samtykket ved å slette bildet.</0>",
       "user_role_and_help": {
