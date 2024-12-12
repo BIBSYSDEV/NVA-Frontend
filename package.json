@@ -38,7 +38,7 @@
     "@mui/icons-material": "^6.2.0",
     "@mui/lab": "^6.0.0-beta.19",
     "@mui/material": "^6.2.0",
-    "@mui/x-date-pickers": "^7.23.1",
+    "@mui/x-date-pickers": "^7.23.2",
     "@reduxjs/toolkit": "^2.5.0",
     "@tanstack/react-query": "^5.62.7",
     "@uppy/aws-s3": "^4.1.3",
