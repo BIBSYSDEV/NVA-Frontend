@@ -286,6 +286,26 @@ export interface RegistrationSearchItem {
   };
 }
 
+export interface RegistrationSearchItem2 {
+  status: RegistrationStatus;
+  id: string;
+  type: PublicationInstanceType | '';
+  otherIdentifiers: {
+    scopus: string[];
+    cristin: string[];
+    handle: string[];
+    issn: string[];
+    isbn: string[];
+  };
+  mainTitle: string;
+  publicationDate?: RegistrationDate;
+  contributorsPreview: Contributor[];
+  contributorsCount: number;
+  publishingDetails: ContextPublisher;
+  abstract: string;
+  description: string;
+}
+
 export interface RegistrationDate {
   type: 'PublicationDate' | 'IndexDate';
   year: string;
