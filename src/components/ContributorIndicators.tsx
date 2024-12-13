@@ -2,21 +2,23 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Box, IconButton, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import OrcidLogo from '../resources/images/orcid_logo.svg';
-import { Contributor } from '../types/contributor.types';
+import { PreviewContributor } from '../types/contributor.types';
 
 interface ContributorIndicatorsProps {
-  contributor: Contributor;
+  contributor: PreviewContributor;
   ticketView?: boolean;
 }
 
 export const ContributorIndicators = ({
   contributor: {
-    identity: { orcId },
+    identity: { orcId, name },
     correspondingAuthor,
   },
   ticketView = false,
 }: ContributorIndicatorsProps) => {
   const { t } = useTranslation();
+
+  console.log(name + ': ' + correspondingAuthor);
 
   return orcId || correspondingAuthor ? (
     <Box sx={{ display: 'inline-flex', alignItems: 'center', ml: '0.2rem' }}>

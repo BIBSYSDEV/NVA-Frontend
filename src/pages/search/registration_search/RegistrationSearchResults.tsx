@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { RegistrationList } from '../../../components/RegistrationList';
-import { RegistrationSearchItem } from '../../../types/registration.types';
+import { RegistrationSearchItem2 } from '../../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 
 interface SearchResultsProps {
-  searchResult: RegistrationSearchItem[];
+  searchResult: RegistrationSearchItem2[];
   canEditRegistration?: boolean;
   promotedPublications?: string[];
 }
@@ -17,8 +17,7 @@ export const RegistrationSearchResults = ({
   useEffect(() => {
     if (
       searchResult.some(
-        ({ entityDescription }) =>
-          stringIncludesMathJax(entityDescription?.mainTitle) || stringIncludesMathJax(entityDescription?.abstract)
+        ({ mainTitle, abstract }) => stringIncludesMathJax(mainTitle) || stringIncludesMathJax(abstract)
       )
     ) {
       typesetMathJax();

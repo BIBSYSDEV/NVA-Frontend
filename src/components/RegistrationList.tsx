@@ -108,7 +108,8 @@ export const RegistrationListItemContent = ({
             publicationDate={registration.publicationDate}
           />
           {ticketView &&
-            (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
+            (registration.recordMetadata.status === RegistrationStatus.Draft ||
+              registration.recordMetadata.status === RegistrationStatus.New) && (
               <Typography
                 sx={{
                   p: '0.1rem 0.75rem',
@@ -205,7 +206,7 @@ export const RegistrationListItemContent = ({
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
-          {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
+          {registration.recordMetadata.status === 'DRAFT' && onDeleteDraftRegistration && (
             <Tooltip title={t('common.delete')}>
               <IconButton
                 data-testid={`delete-registration-${identifier}`}

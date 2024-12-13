@@ -4,7 +4,7 @@ import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '../types/associatedArtifact.types';
-import { Contributor, ContributorRole } from '../types/contributor.types';
+import { Contributor, ContributorRole, PreviewContributor } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
   AudioVisualPublication,
@@ -45,6 +45,7 @@ import {
 } from '../types/publicationFieldNames';
 import {
   ContextSeries,
+  emptyContextPublisher,
   Journal,
   NpiSubjectDomain,
   PublicationInstanceType,
@@ -52,6 +53,7 @@ import {
   Registration,
   RegistrationOperation,
   RegistrationSearchItem,
+  RegistrationSearchItem2,
   RelatedDocument,
   Series,
 } from '../types/registration.types';
@@ -590,19 +592,19 @@ export const contributorConfig: ContributorConfig = {
 };
 
 export const getContributorsWithPrimaryRole = (
-  contributors: Contributor[],
+  contributors: PreviewContributor[],
   registrationType: PublicationInstanceType
 ) => {
   const { primaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
+  return contributors.filter((contributor) => primaryRoles.includes(contributor.role));
 };
 
 export const getContributorsWithSecondaryRole = (
-  contributors: Contributor[],
+  contributors: PreviewContributor[],
   registrationType: PublicationInstanceType
 ) => {
   const { secondaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
+  return contributors.filter((contributor) => secondaryRoles.includes(contributor.role));
 };
 
 export const getOutputName = (item: OutputItem): string => {
@@ -799,6 +801,15 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
   return issnValues.join(', ');
 };
 
+const convertToPreviewContributor = (contributor: Contributor) => {
+  return {
+    affiliation: contributor.affiliations,
+    correspondingAuthor: contributor.correspondingAuthor,
+    identity: contributor.identity,
+    role: contributor.role.type,
+  };
+};
+
 export const convertToRegistrationSearchItem = (registration: Registration) => {
   const publisher =
     registration.entityDescription?.reference?.publicationContext &&
@@ -812,30 +823,26 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
       ? registration.entityDescription.reference.publicationContext.series
       : undefined;
 
-  const registrationSearchItem: RegistrationSearchItem = {
+  const contributors = registration.entityDescription?.contributors.map((contributor) =>
+    convertToPreviewContributor(contributor)
+  );
+
+  const registrationSearchItem: RegistrationSearchItem2 = {
+    type: registration.entityDescription?.reference?.publicationInstance.type ?? '',
     id: registration.id,
-    identifier: registration.identifier,
-    createdDate: registration.createdDate,
-    modifiedDate: registration.modifiedDate,
-    publishedDate: registration.publishedDate,
-    status: registration.status,
-    entityDescription: {
-      mainTitle: registration.entityDescription?.mainTitle ?? '',
-      abstract: registration.entityDescription?.abstract ?? '',
-      description: registration.entityDescription?.description ?? '',
-      publicationDate: registration.entityDescription?.publicationDate,
-      contributorsPreview: registration.entityDescription?.contributors ?? [],
-      contributorsCount: (registration.entityDescription?.contributors ?? []).length,
-      reference: {
-        publicationInstance: {
-          type: registration.entityDescription?.reference?.publicationInstance?.type,
-        },
-        publicationContext: {
-          publisher,
-          series,
-        },
-      },
+    recordMetadata: {
+      createdDate: registration.createdDate,
+      modifiedDate: registration.modifiedDate,
+      publishedDate: registration.publishedDate,
+      status: registration.status,
     },
+    mainTitle: registration.entityDescription?.mainTitle ?? '',
+    contributorsCount: (registration.entityDescription?.contributors ?? []).length,
+    abstract: registration.entityDescription?.abstract ?? '',
+    description: registration.entityDescription?.description ?? '',
+    publicationDate: registration.entityDescription?.publicationDate,
+    publishingDetails: publisher ?? emptyContextPublisher,
+    contributorsPreview: contributors ?? [],
   };
   return registrationSearchItem;
 };

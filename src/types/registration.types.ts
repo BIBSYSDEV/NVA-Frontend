@@ -1,6 +1,6 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
 import { AggregationValue, LanguageString } from './common.types';
-import { Contributor } from './contributor.types';
+import { Contributor, PreviewContributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import { ArtisticEntityDescription, ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
 import { BookEntityDescription, BookPublicationInstance } from './publication_types/bookRegistration.types';
@@ -291,10 +291,15 @@ export interface RegistrationSearchItem {
 }
 
 export interface RegistrationSearchItem2 {
-  status: RegistrationStatus;
+  recordMetadata: {
+    status: RegistrationStatus;
+    createdDate: string;
+    modifiedDate: string;
+    publishedDate?: string;
+  };
   id: string;
   type: PublicationInstanceType | '';
-  otherIdentifiers: {
+  otherIdentifiers?: {
     scopus: string[];
     cristin: string[];
     handle: string[];
@@ -303,7 +308,7 @@ export interface RegistrationSearchItem2 {
   };
   mainTitle: string;
   publicationDate?: RegistrationDate;
-  contributorsPreview: Contributor[];
+  contributorsPreview: PreviewContributor[];
   contributorsCount: number;
   publishingDetails: ContextPublisher;
   abstract: string;
