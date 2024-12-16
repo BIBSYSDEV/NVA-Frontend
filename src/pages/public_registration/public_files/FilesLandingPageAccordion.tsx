@@ -119,10 +119,12 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
               aria-label={t('registration.public_page.files_tab_list_label')}
               variant="fullWidth">
               <Tab
+                data-testid={dataTestId.registrationLandingPage.publicFilesTab}
                 label={t('registration.public_page.public_files', { count: openableFilesToShow.length })}
                 value={FileTab.OpenFiles}
               />
               <Tab
+                data-testid={dataTestId.registrationLandingPage.internalFilesTab}
                 label={t('registration.public_page.internal_files', { count: internalFilesToShow.length })}
                 value={FileTab.InternalFiles}
               />

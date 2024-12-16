@@ -329,6 +329,7 @@ export const dataTestId = {
     generalInfo: 'public-registration-general-info',
     geographicAccordion: 'geographic-accordion',
     handleLink: 'handle-link',
+    internalFilesTab: 'internal-files-tab',
     keywords: 'public-registration-keywords',
     license: 'public-registration-license',
     logPanel: {
@@ -341,6 +342,7 @@ export const dataTestId = {
     projectsAccordion: 'projects-accordion',
     projectTitle: 'project-title',
     publicationsUsingDatasetAccordion: 'publications-using-dataset-accordion',
+    publicFilesTab: 'public-files-tab',
     rejectDoiButton: 'button-reject-doi',
     relatedPublicationsAccordion: 'related-publications-accordion',
     relatedRegistrationsAccordion: 'related-registrations-accordion',
