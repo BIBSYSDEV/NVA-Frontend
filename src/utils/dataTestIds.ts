@@ -58,7 +58,6 @@ export const dataTestId = {
     },
     institutionsAccordion: 'institutions-accordion',
     institutionAdmin: {
-      archiveNameField: 'archive-field',
       canAssignDoiCheckbox: 'can-assign-doi-checkbox',
       displayNameField: 'display-name-field',
       doiUsernameField: 'doi-username-field',
@@ -193,6 +192,7 @@ export const dataTestId = {
       fileStatusSelect: 'file-status-select',
       fundingSourceField: 'funding-source-field',
       journalField: 'journal-field',
+      nviReportedYearField: 'nvi-reported-year-field',
       publicationLanguageField: 'publication-language-field',
       publisherField: 'publisher-field',
       removeFacetButton: 'remove-facet-button',
@@ -235,6 +235,8 @@ export const dataTestId = {
     scientificSummaryEnglishField: 'scientific-summary-english-field',
     scientificSummaryNorwegianField: 'scientific-summary-norwegian-field',
     titleField: 'project-title-field',
+    addSelfAsProjectManagerButton: 'add-self-as-project-manager-button',
+    addSelfAsProjectParticipantButton: 'add-self-as-project-participant-button',
     addUnidentifiedContributorButton: 'add-unidentified-contributor-button',
     addUnidentifiedProjectManagerButton: 'add-unidentified-project-manager-button',
     selectContributorButton: 'select-contributor-button',
@@ -674,6 +676,7 @@ export const dataTestId = {
     registrationsAccordion: 'registrations-accordion',
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
+    termsLink: 'terms-link',
     userRolesAndHelp: {
       institutionHelpPage: 'institution-help-page',
       applicationHelpPage: 'application-help-page',

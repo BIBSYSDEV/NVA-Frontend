@@ -17,7 +17,7 @@ import {
   Registration,
   RegistrationDate,
   RegistrationSearchItem2,
-  Series,
+  SerialPublication,
 } from '../../../../types/registration.types';
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { displayDate } from '../../../../utils/date-helpers';
@@ -212,7 +212,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const seriesQuery = useQuery({
     queryKey: ['channel', seriesId],
     enabled: !!seriesId,
-    queryFn: () => fetchResource<Series>(seriesId),
+    queryFn: () => fetchResource<SerialPublication>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
