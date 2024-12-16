@@ -142,13 +142,13 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             ))}
           </TabPanel>
           <TabPanel value={FileTab.InternalFiles}>
-            {internalFilesToShow.map((file, index) => (
+            {internalFilesToShow.map((file) => (
               <FileRow
                 key={file.identifier}
                 file={file}
                 registrationIdentifier={registration.identifier}
-                openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
-                showFileVersionField={showFileVersionField}
+                openPreviewByDefault={false}
+                showFileVersionField={false}
                 registrationMetadataIsPublished={registrationMetadataIsPublished}
               />
             ))}
