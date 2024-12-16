@@ -34,7 +34,8 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
 
-  const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
+  const pendingFiles = associatedFiles.filter((file) => isPendingOpenFile(file) || file.type === 'PendingInternalFile');
+
   const openableFilesToShow = userIsRegistrationAdmin
     ? associatedFiles.filter((file) => isOpenFile(file) || isPendingOpenFile(file))
     : associatedFiles.filter(isOpenFile);
@@ -76,9 +77,9 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <Typography variant="h2" color="primary">
             {t('registration.files_and_license.files_count', { count: totalFiles })}
           </Typography>
-          {registrationMetadataIsPublished && pendingOpenFiles.length > 0 && (
+          {registrationMetadataIsPublished && pendingFiles.length > 0 && (
             <Typography sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
-              {t('registration.files_and_license.files_awaits_approval', { count: pendingOpenFiles.length })}
+              {t('registration.files_and_license.files_awaits_approval', { count: pendingFiles.length })}
             </Typography>
           )}
         </Box>

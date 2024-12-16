@@ -1437,8 +1437,8 @@
         "rejected_file": "Avvist fil"
       },
       "files": "Filer",
-      "files_awaits_approval_one": "{{count}} fil og valgt lisens venter på å bli verifisert",
-      "files_awaits_approval_other": "{{count}} filer og valgte lisenser venter på å bli verifisert",
+      "files_awaits_approval_one": "{{count}} fil venter på å bli godkjent",
+      "files_awaits_approval_other": "{{count}} filer venter på å bli godkjent",
       "files_completed": "Ferdig",
       "files_count": "Filer ({{count}})",
       "files_in_progress": "Under behandling",
