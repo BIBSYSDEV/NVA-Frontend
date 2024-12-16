@@ -33,19 +33,17 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const [selectedTab, setSelectedTab] = useState(FileTab.OpenFiles);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const canSeeInternalFile = associatedFiles.some(
+
+  const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
+  const openableFilesToShow = userIsRegistrationAdmin
+    ? associatedFiles.filter((file) => isOpenFile(file) || isPendingOpenFile(file))
+    : associatedFiles.filter(isOpenFile);
+
+  const internalFilesToShow = associatedFiles.filter(
     (file) => file.type === 'InternalFile' || file.type === 'PendingInternalFile' || file.type === 'HiddenFile'
   );
-  const openFiles = associatedFiles.filter(isOpenFile);
-  const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
-  const openFilesToShow = userIsRegistrationAdmin ? [...openFiles, ...pendingOpenFiles] : openFiles;
 
-  const internalFiles = associatedFiles.filter((file) => file.type === 'InternalFile');
-  const pendingInternalFiles = associatedFiles.filter((file) => file.type === 'PendingInternalFile');
-  const hiddenFiles = associatedFiles.filter((file) => file.type === 'HiddenFile');
-  const internalFilesToShow = [...internalFiles, ...pendingInternalFiles, ...hiddenFiles];
-
-  const publishableFilesLength = openFilesToShow.length + internalFilesToShow.length;
+  const totalFiles = openableFilesToShow.length + internalFilesToShow.length;
 
   const showFileVersionField = isTypeWithFileVersionField(
     registration.entityDescription?.reference?.publicationInstance?.type
@@ -57,10 +55,10 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const showLinkToUploadNewFiles =
     userIsRegistrationAdmin &&
-    publishableFilesLength === 0 &&
+    totalFiles === 0 &&
     !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
-  return publishableFilesLength > 0 ||
+  return totalFiles > 0 ||
     (userIsRegistrationAdmin && associatedFiles.length > 0) ||
     (userIsRegistrationAdmin && registration.associatedArtifacts.length === 0) ? (
     <LandingPageAccordion
@@ -76,7 +74,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             alignItems: 'center',
           }}>
           <Typography variant="h2" color="primary">
-            {t('registration.files_and_license.files_count', { count: publishableFilesLength })}
+            {t('registration.files_and_license.files_count', { count: totalFiles })}
           </Typography>
           {registrationMetadataIsPublished && pendingOpenFiles.length > 0 && (
             <Typography sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
@@ -112,7 +110,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
         </Box>
       )}
 
-      {canSeeInternalFile ? (
+      {internalFilesToShow.length > 0 ? (
         <TabContext value={selectedTab}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList
@@ -120,7 +118,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
               aria-label={t('registration.public_page.files_tab_list_label')}
               variant="fullWidth">
               <Tab
-                label={t('registration.public_page.public_files', { count: openFilesToShow.length })}
+                label={t('registration.public_page.public_files', { count: openableFilesToShow.length })}
                 value={FileTab.OpenFiles}
               />
               <Tab
@@ -130,10 +128,10 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             </TabList>
           </Box>
           <TabPanel value={FileTab.OpenFiles}>
-            {openFilesToShow.length === 0 ? (
+            {openableFilesToShow.length === 0 ? (
               <Typography>{t('registration.public_page.no_public_files')}</Typography>
             ) : (
-              openFilesToShow.map((file, index) => (
+              openableFilesToShow.map((file, index) => (
                 <FileRow
                   key={file.identifier}
                   file={file}
@@ -159,7 +157,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           </TabPanel>
         </TabContext>
       ) : (
-        openFilesToShow.map((file, index) => (
+        openableFilesToShow.map((file, index) => (
           <FileRow
             key={file.identifier}
             file={file}
