@@ -3,11 +3,11 @@ import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
-import { RegistrationSearchItem } from '../../../types/registration.types';
+import { RegistrationSearchItem2 } from '../../../types/registration.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 
 function isDoi(query: string) {
@@ -15,8 +15,8 @@ function isDoi(query: string) {
 }
 
 interface FindRegistrationProps {
-  setSelectedRegistration: (registration?: RegistrationSearchItem) => void;
-  selectedRegistration?: RegistrationSearchItem;
+  setSelectedRegistration: (registration?: RegistrationSearchItem2) => void;
+  selectedRegistration?: RegistrationSearchItem2;
   filteredRegistrationIdentifier: string;
 }
 export const FindRegistration = ({
@@ -51,11 +51,11 @@ export const FindRegistration = ({
       <Typography variant="h3">{t('unpublish_actions.search_for_duplicate')}</Typography>
       <Autocomplete
         options={searchResultNotContainingToBeDeleted}
-        getOptionLabel={(option: RegistrationSearchItem | string) => {
+        getOptionLabel={(option: RegistrationSearchItem2 | string) => {
           if (typeof option === 'string') {
             return option;
           }
-          return option.entityDescription?.mainTitle ?? '';
+          return option.mainTitle ?? '';
         }}
         freeSolo
         loading={duplicateRegistrationSearch.isPending && debouncedSearch.length > 0}

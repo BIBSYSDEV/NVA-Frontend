@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { Contributor, ContributorRole } from '../../types/contributor.types';
+import { ContributorRole, PreviewContributor } from '../../types/contributor.types';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
@@ -14,7 +14,7 @@ import { getContributorsWithPrimaryRole, getContributorsWithSecondaryRole } from
 import { getResearchProfilePath } from '../../utils/urlPaths';
 
 interface PublicRegistrationContributorsProps {
-  contributors: Contributor[];
+  contributors: PreviewContributor[];
   registrationType: PublicationInstanceType;
 }
 
@@ -80,7 +80,7 @@ export const PublicRegistrationContributors = ({
 };
 
 interface ContributorsRowProps {
-  contributors: Contributor[];
+  contributors: PreviewContributor[];
   distinctUnits: string[];
   hiddenCount?: number;
 }
@@ -111,7 +111,7 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount }: Contribut
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
-        const showRole = contributor.role.type !== ContributorRole.Creator;
+        const showRole = contributor.role !== ContributorRole.Creator;
 
         return (
           <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
@@ -126,7 +126,7 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount }: Contribut
               ) : (
                 name
               )}
-              {showRole && ` (${t(`registration.contributors.types.${contributor.role.type}`)})`}
+              {showRole && ` (${t(`registration.contributors.types.${contributor.role}`)})`}
               {affiliationIndexes && affiliationIndexes.length > 0 && (
                 <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
               )}

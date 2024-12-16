@@ -3,10 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
-import { ResearchDataType, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
+import { ResearchDataType, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ConfirmedDocument } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
@@ -85,19 +85,16 @@ export const DatasetForm = () => {
               blurOnSelect
               loading={relatedRegistrationsOptionsQuery.isPending}
               filterOptions={(options) => options}
-              getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+              getOptionLabel={(option) => getTitleString(option.mainTitle)}
               renderOption={({ key, ...props }, option, state) => (
-                <li {...props} key={option.identifier}>
+                <li {...props} key={option.id}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">
-                      <EmphasizeSubstring
-                        text={getTitleString(option.entityDescription?.mainTitle)}
-                        emphasized={state.inputValue}
-                      />
+                      <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
                     </Typography>
                     <YearAndContributorsText
-                      date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributorsPreview ?? []}
+                      date={option.publicationDate}
+                      contributors={option.contributorsPreview ?? []}
                     />
                   </Box>
                 </li>
@@ -146,19 +143,16 @@ export const DatasetForm = () => {
               blurOnSelect
               loading={relatedDmpOptionsQuery.isPending}
               filterOptions={(options) => options}
-              getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+              getOptionLabel={(option) => getTitleString(option.mainTitle)}
               renderOption={({ key, ...props }, option, state) => (
-                <li {...props} key={option.identifier}>
+                <li {...props} key={option.id}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">
-                      <EmphasizeSubstring
-                        text={getTitleString(option.entityDescription?.mainTitle)}
-                        emphasized={state.inputValue}
-                      />
+                      <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
                     </Typography>
                     <YearAndContributorsText
-                      date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributorsPreview ?? []}
+                      date={option.publicationDate}
+                      contributors={option.contributorsPreview ?? []}
                     />
                   </Box>
                 </li>

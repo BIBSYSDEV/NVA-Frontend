@@ -8,7 +8,7 @@ import { PreviousSearchLocationState } from '../../../../types/locationState.typ
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { toDateString, toDateStringWithTime } from '../../../../utils/date-helpers';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { getTitleString } from '../../../../utils/registration-helpers';
+import { convertToPreviewContributor, getTitleString } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getResearchProfilePath } from '../../../../utils/urlPaths';
 import { ImportCandidateChannelName } from './ImportCandidateChannelName';
@@ -73,7 +73,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
                     contributor.identity.name
                   )}
                 </Typography>
-                <ContributorIndicators contributor={contributor} />
+                <ContributorIndicators contributor={convertToPreviewContributor(contributor)} />
               </Box>
             ))}
 

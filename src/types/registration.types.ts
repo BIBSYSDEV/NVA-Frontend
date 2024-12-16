@@ -298,6 +298,7 @@ export interface RegistrationSearchItem2 {
     publishedDate?: string;
   };
   id: string;
+  identifier: string;
   type: PublicationInstanceType | '';
   otherIdentifiers?: {
     scopus: string[];
@@ -310,7 +311,15 @@ export interface RegistrationSearchItem2 {
   publicationDate?: RegistrationDate;
   contributorsPreview: PreviewContributor[];
   contributorsCount: number;
-  publishingDetails: ContextPublisher;
+  publishingDetails: {
+    id: string;
+    type: PublicationChannelType;
+    series: {
+      name: string;
+      id: string;
+    };
+    doi: string;
+  };
   abstract: string;
   description: string;
 }

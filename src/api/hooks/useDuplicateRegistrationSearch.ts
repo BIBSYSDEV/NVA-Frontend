@@ -1,4 +1,5 @@
 import { PublicationInstanceType } from '../../types/registration.types';
+import { getIdentifierFromId } from '../../utils/general-helpers';
 import { useRegistrationSearch } from './useRegistrationSearch';
 
 interface UseDuplicateRegistrationSearchParams {
@@ -25,18 +26,18 @@ export const useDuplicateRegistrationSearch = ({
   const duplicateRegistration = !title
     ? undefined
     : registrationsWithSimilarName.find((reg) => {
-        const isSameRegistration = reg.identifier === identifier;
-        const hasSameName = reg.entityDescription?.mainTitle.toLowerCase() === title.toLowerCase();
+        const isSameRegistration = getIdentifierFromId(reg.id) === identifier;
+        const hasSameName = reg.mainTitle.toLowerCase() === title.toLowerCase();
 
         if (!hasSameName || isSameRegistration) {
           return false;
         }
 
-        if (publishedYear && reg.entityDescription?.publicationDate?.year !== publishedYear) {
+        if (publishedYear && reg.publicationDate?.year !== publishedYear) {
           return false;
         }
 
-        if (category && reg.entityDescription?.reference?.publicationInstance?.type !== category) {
+        if (category && reg.type !== category) {
           return false;
         }
 

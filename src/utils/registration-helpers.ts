@@ -801,7 +801,7 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
   return issnValues.join(', ');
 };
 
-const convertToPreviewContributor = (contributor: Contributor) => {
+export const convertToPreviewContributor = (contributor: Contributor) => {
   return {
     affiliation: contributor.affiliations,
     correspondingAuthor: contributor.correspondingAuthor,

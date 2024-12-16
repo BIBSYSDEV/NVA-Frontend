@@ -11,14 +11,12 @@ interface ContributorIndicatorsProps {
 
 export const ContributorIndicators = ({
   contributor: {
-    identity: { orcId, name },
+    identity: { orcId },
     correspondingAuthor,
   },
   ticketView = false,
 }: ContributorIndicatorsProps) => {
   const { t } = useTranslation();
-
-  console.log(name + ': ' + correspondingAuthor);
 
   return orcId || correspondingAuthor ? (
     <Box sx={{ display: 'inline-flex', alignItems: 'center', ml: '0.2rem' }}>

@@ -1,7 +1,7 @@
 import { CircularProgress, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { apiRequest } from '../../../api/apiRequest';
-import { Registration, RegistrationSearchItem } from '../../../types/registration.types';
+import { Registration, RegistrationSearchItem2 } from '../../../types/registration.types';
 import { isSuccessStatus } from '../../../utils/constants';
 import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
 import { ListRegistrationRelations } from './ListRegistrationRelations';
@@ -18,7 +18,7 @@ export const ShowRelatedRegistrationUris = ({
   loadingLabel,
 }: ShowRelatedRegistrationUrisProps) => {
   const [isLoadingRegistrations, setIsLoadingRegistrations] = useState(true);
-  const [relatedRegistrations, setRelatedRegistrations] = useState<RegistrationSearchItem[]>([]);
+  const [relatedRegistrations, setRelatedRegistrations] = useState<RegistrationSearchItem2[]>([]);
 
   const linksRef = useRef(links); // Avoid triggering fetching of Registrations multiple times
 
@@ -36,7 +36,7 @@ export const ShowRelatedRegistrationUris = ({
 
       const registrations = (await Promise.all(relatedRegistrationsPromises)).filter(
         Boolean
-      ) as RegistrationSearchItem[];
+      ) as RegistrationSearchItem2[];
       setRelatedRegistrations(registrations);
       setIsLoadingRegistrations(false);
     };
