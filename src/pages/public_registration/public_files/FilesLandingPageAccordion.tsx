@@ -117,7 +117,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList
               onChange={(_, value) => setSelectedTab(value)}
-              aria-label="lab API tabs example (TODO)"
+              aria-label={t('registration.public_page.files_tab_list_label')}
               variant="fullWidth">
               <Tab
                 label={t('registration.public_page.public_files', { count: openFilesToShow.length })}
@@ -130,16 +130,20 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             </TabList>
           </Box>
           <TabPanel value={FileTab.OpenFiles}>
-            {openFilesToShow.map((file, index) => (
-              <FileRow
-                key={file.identifier}
-                file={file}
-                registrationIdentifier={registration.identifier}
-                openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
-                showFileVersionField={showFileVersionField}
-                registrationMetadataIsPublished={registrationMetadataIsPublished}
-              />
-            ))}
+            {openFilesToShow.length === 0 ? (
+              <Typography>{t('registration.public_page.no_public_files')}</Typography>
+            ) : (
+              openFilesToShow.map((file, index) => (
+                <FileRow
+                  key={file.identifier}
+                  file={file}
+                  registrationIdentifier={registration.identifier}
+                  openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
+                  showFileVersionField={showFileVersionField}
+                  registrationMetadataIsPublished={registrationMetadataIsPublished}
+                />
+              ))
+            )}
           </TabPanel>
           <TabPanel value={FileTab.InternalFiles}>
             {internalFilesToShow.map((file) => (
