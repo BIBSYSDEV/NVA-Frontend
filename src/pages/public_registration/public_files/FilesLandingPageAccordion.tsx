@@ -74,16 +74,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     totalFiles === 0 &&
     !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
-  if (
-    userCanUpdateRegistration &&
-    totalFiles === 0 &&
-    registration.associatedArtifacts.some((artifact) => artifact.type === 'NullAssociatedArtifact')
-  ) {
-    return null;
-  } else if (
-    !userCanUpdateRegistration &&
-    !associatedFiles.some((file) => file.type === 'OpenFile' || file.type === 'PendingOpenFile')
-  ) {
+  if (associatedFiles.length === 0 && !showLinkToUploadNewFiles) {
     return null;
   }
 
