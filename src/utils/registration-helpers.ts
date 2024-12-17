@@ -45,12 +45,12 @@ import {
 } from '../types/publicationFieldNames';
 import {
   ContextSeries,
+  emptyContextPublisher,
   NpiSubjectDomain,
   PublicationInstanceType,
   Publisher,
   Registration,
   RegistrationOperation,
-  RegistrationSearchItem,
   RegistrationSearchItem2,
   RelatedDocument,
   SerialPublication,
@@ -761,31 +761,46 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
+const isRegistration = (reg: Registration | RegistrationSearchItem2): reg is Registration => {
+  return (reg as Registration).entityDescription !== undefined;
+};
+
 export const registrationsHaveSamePublicationYear = (
-  reg1: Registration | RegistrationSearchItem,
-  reg2: Registration | RegistrationSearchItem
+  reg1: Registration | RegistrationSearchItem2,
+  reg2: Registration | RegistrationSearchItem2
 ) => {
-  if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
+  const reg1PublicationYear = isRegistration(reg1)
+    ? reg1.entityDescription?.publicationDate?.year
+    : (reg1 as RegistrationSearchItem2).publicationDate?.year;
+
+  const reg2PublicationYear = isRegistration(reg2)
+    ? reg2.entityDescription?.publicationDate?.year
+    : (reg2 as RegistrationSearchItem2).publicationDate?.year;
+
+  if (reg1PublicationYear === undefined || reg2PublicationYear === undefined) {
     return false;
   }
 
-  return reg1.entityDescription.publicationDate.year === reg2.entityDescription.publicationDate.year;
+  return reg1PublicationYear === reg2PublicationYear;
 };
 
 export const registrationsHaveSameCategory = (
-  reg1: Registration | RegistrationSearchItem,
-  reg2: Registration | RegistrationSearchItem
+  reg1: Registration | RegistrationSearchItem2,
+  reg2: Registration | RegistrationSearchItem2
 ) => {
-  if (
-    reg1.entityDescription?.reference?.publicationInstance?.type &&
-    reg2.entityDescription?.reference?.publicationInstance?.type
-  ) {
-    return (
-      reg1.entityDescription.reference.publicationInstance.type ===
-      reg2.entityDescription.reference.publicationInstance.type
-    );
+  const reg1Category = isRegistration(reg1)
+    ? reg1.entityDescription?.reference?.publicationInstance?.type
+    : (reg1 as RegistrationSearchItem2).type;
+
+  const reg2Category = isRegistration(reg2)
+    ? reg2.entityDescription?.reference?.publicationInstance?.type
+    : (reg2 as RegistrationSearchItem2).type;
+
+  if (!reg1Category || !reg2Category) {
+    return false;
   }
-  return false;
+
+  return reg1Category === reg2Category;
 };
 
 export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'onlineIssn' | 'printIssn' | 'issn'>>) => {
