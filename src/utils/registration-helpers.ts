@@ -351,6 +351,15 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.Other,
     ],
   },
+  [DegreeType.ArtisticPhd]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
+  },
   [DegreeType.Licentiate]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [
