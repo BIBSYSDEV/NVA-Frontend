@@ -35,7 +35,8 @@ const StyledTab = styled(Tab)({
 const StyledTabLabelContainer = styled('div')({
   display: 'flex',
   alignItems: 'center',
-  gap: '1rem',
+  gap: '0.5rem 1rem',
+  flexWrap: 'wrap',
 });
 
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
