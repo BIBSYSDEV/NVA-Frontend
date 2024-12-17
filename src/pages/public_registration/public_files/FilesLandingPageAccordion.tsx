@@ -42,7 +42,7 @@ const StyledTabLabelContainer = styled('div')({
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
 
-  const userIsRegistrationAdmin = userHasAccessRight(registration, 'update');
+  const userCanUpdateRegistration = userHasAccessRight(registration, 'update');
   const [selectedTab, setSelectedTab] = useState(FileTab.OpenFiles);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
@@ -51,7 +51,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const pendingInternalFiles = associatedFiles.filter((file) => file.type === 'PendingInternalFile');
   const totalPendingFiles = pendingOpenFiles.length + pendingInternalFiles.length;
 
-  const openableFilesToShow = userIsRegistrationAdmin
+  const openableFilesToShow = userCanUpdateRegistration
     ? associatedFiles.filter((file) => isOpenFile(file) || isPendingOpenFile(file))
     : associatedFiles.filter(isOpenFile);
 
@@ -70,18 +70,18 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     registration.status === RegistrationStatus.PublishedMetadata;
 
   const showLinkToUploadNewFiles =
-    userIsRegistrationAdmin &&
+    userCanUpdateRegistration &&
     totalFiles === 0 &&
     !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
   if (
-    userIsRegistrationAdmin &&
+    userCanUpdateRegistration &&
     totalFiles === 0 &&
     registration.associatedArtifacts.some((artifact) => artifact.type === 'NullAssociatedArtifact')
   ) {
     return null;
   } else if (
-    !userIsRegistrationAdmin &&
+    !userCanUpdateRegistration &&
     !associatedFiles.some((file) => file.type === 'OpenFile' || file.type === 'PendingOpenFile')
   ) {
     return null;
