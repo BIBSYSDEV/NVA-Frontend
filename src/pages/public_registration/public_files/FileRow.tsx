@@ -22,7 +22,8 @@ import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { equalUris } from '../../../utils/general-helpers';
-import { isEmbargoed, isPendingOpenFile, openFileInNewTab } from '../../../utils/registration-helpers';
+import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
+import { PendingFilesInfo } from './PendingFilesInfo';
 import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
@@ -82,6 +83,10 @@ export const FileRow = ({
   const licenseData = licenses.find((license) => equalUris(license.id, file.license));
   const licenseTitle = licenseData?.name ?? '';
 
+  const isOpenableFile = file.type === 'OpenFile' || file.type === 'PendingOpenFile';
+  const isPendingFile = file.type === 'PendingOpenFile' || file.type === 'PendingInternalFile';
+  const fileAwaitsApproval = registrationMetadataIsPublished && isPendingFile;
+
   return (
     <Box
       data-testid={dataTestId.registrationLandingPage.file}
@@ -95,13 +100,15 @@ export const FileRow = ({
         gap: '0.5rem 0.75rem',
         alignItems: 'center',
         marginBottom: '2rem',
-        opacity: registrationMetadataIsPublished && isPendingOpenFile(file) ? 0.6 : 1,
       }}>
-      <Typography
-        data-testid={dataTestId.registrationLandingPage.fileName}
-        sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere', minWidth: '6rem' }}>
-        {file.name}
-      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+        <Typography
+          data-testid={dataTestId.registrationLandingPage.fileName}
+          sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere', minWidth: '6rem' }}>
+          {file.name}
+        </Typography>
+        {fileAwaitsApproval && <PendingFilesInfo text={t('registration.public_page.files.file_awaits_approval')} />}
+      </Box>
       <Typography data-testid={dataTestId.registrationLandingPage.fileSize} sx={{ gridArea: 'size' }}>
         {prettyBytes(file.size, { locale: true })}
       </Typography>
@@ -115,19 +122,21 @@ export const FileRow = ({
         </Typography>
       )}
 
-      <Link
-        href={licenseData?.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
-        <Box
-          component="img"
-          alt={licenseTitle}
-          title={licenseTitle}
-          src={licenseData?.logo}
-          data-testid={dataTestId.registrationLandingPage.license}
-        />
-      </Link>
+      {isOpenableFile && (
+        <Link
+          href={licenseData?.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
+          <Box
+            component="img"
+            alt={licenseTitle}
+            title={licenseTitle}
+            src={licenseData?.logo}
+            data-testid={dataTestId.registrationLandingPage.license}
+          />
+        </Link>
+      )}
 
       <Box sx={{ gridArea: 'download' }}>
         {file.embargoDate && fileIsEmbargoed ? (
@@ -169,7 +178,7 @@ export const FileRow = ({
               {t('registration.public_page.preview_of', { fileName: file.name })}
             </Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails sx={{ opacity: fileAwaitsApproval ? 0.6 : 1 }}>
             {isLoadingPreviewFile ? (
               <CircularProgress aria-labelledby={`preview-label-${file.identifier}`} />
             ) : (
