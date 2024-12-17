@@ -74,9 +74,20 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     totalFiles === 0 &&
     !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
-  return totalFiles > 0 ||
-    (userIsRegistrationAdmin && associatedFiles.length > 0) ||
-    (userIsRegistrationAdmin && registration.associatedArtifacts.length === 0) ? (
+  if (
+    userIsRegistrationAdmin &&
+    totalFiles === 0 &&
+    registration.associatedArtifacts.some((artifact) => artifact.type === 'NullAssociatedArtifact')
+  ) {
+    return null;
+  } else if (
+    !userIsRegistrationAdmin &&
+    !associatedFiles.some((file) => file.type === 'OpenFile' || file.type === 'PendingOpenFile')
+  ) {
+    return null;
+  }
+
+  return (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
       defaultExpanded
@@ -208,5 +219,5 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
         ))
       )}
     </LandingPageAccordion>
-  ) : null;
+  );
 };
