@@ -4,7 +4,7 @@ import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '../types/associatedArtifact.types';
-import { Contributor, ContributorRole, PreviewContributor } from '../types/contributor.types';
+import { Contributor, ContributorRole } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
   AudioVisualPublication,
@@ -590,7 +590,7 @@ export const contributorConfig: ContributorConfig = {
 };
 
 export const getContributorsWithPrimaryRole = (
-  contributors: PreviewContributor[],
+  contributors: Contributor[],
   registrationType: PublicationInstanceType
 ) => {
   const { primaryRoles } = contributorConfig[registrationType];
@@ -598,7 +598,7 @@ export const getContributorsWithPrimaryRole = (
 };
 
 export const getContributorsWithSecondaryRole = (
-  contributors: PreviewContributor[],
+  contributors: Contributor[],
   registrationType: PublicationInstanceType
 ) => {
   const { secondaryRoles } = contributorConfig[registrationType];
@@ -812,15 +812,6 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
   return issnValues.join(', ');
 };
 
-export const convertToPreviewContributor = (contributor: Contributor) => {
-  return {
-    affiliation: contributor.affiliations,
-    correspondingAuthor: contributor.correspondingAuthor,
-    identity: contributor.identity,
-    role: contributor.role.type,
-  };
-};
-
 export const convertToRegistrationSearchItem = (registration: Registration) => {
   const publisher =
     registration.entityDescription?.reference?.publicationContext &&
@@ -833,10 +824,6 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     'series' in registration.entityDescription.reference.publicationContext
       ? registration.entityDescription.reference.publicationContext.series
       : undefined;
-
-  const contributors = registration.entityDescription?.contributors.map((contributor) =>
-    convertToPreviewContributor(contributor)
-  );
 
   const registrationSearchItem: RegistrationSearchItem2 = {
     type: registration.entityDescription?.reference?.publicationInstance.type ?? '',
@@ -853,7 +840,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     description: registration.entityDescription?.description ?? '',
     publicationDate: registration.entityDescription?.publicationDate,
     publishingDetails: publisher ?? emptyContextPublisher,
-    contributorsPreview: contributors ?? [],
+    contributorsPreview: registration.entityDescription?.contributors ?? [],
   };
   return registrationSearchItem;
 };

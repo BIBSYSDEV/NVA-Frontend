@@ -57,7 +57,6 @@ export const mockRegistration: JournalRegistration = {
     },
     contributors: [
       {
-        type: 'Contributor',
         affiliations: [],
         correspondingAuthor: true,
         identity: {
@@ -65,11 +64,10 @@ export const mockRegistration: JournalRegistration = {
           id: '901790000000',
           name: 'Test User',
         },
-        role: { type: ContributorRole.Creator },
+        role: ContributorRole.Creator,
         sequence: 1,
       },
       {
-        type: 'Contributor',
         affiliations: [
           {
             type: 'UnconfirmedOrganization',
@@ -81,7 +79,7 @@ export const mockRegistration: JournalRegistration = {
           type: 'Identity',
           name: 'Osteloff, Oddny',
         },
-        role: { type: ContributorRole.Creator },
+        role: ContributorRole.Creator,
         sequence: 2,
       },
     ],

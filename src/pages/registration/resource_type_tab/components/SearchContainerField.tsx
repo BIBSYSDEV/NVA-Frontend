@@ -10,7 +10,7 @@ import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
-import { PreviewContributor } from '../../../../types/contributor.types';
+import { Contributor } from '../../../../types/contributor.types';
 import {
   PublicationInstanceType,
   Publisher,
@@ -173,7 +173,7 @@ export const SearchContainerField = ({
 
 interface YearAndContributorsTextProps {
   date?: RegistrationDate;
-  contributors: PreviewContributor[];
+  contributors: Contributor[];
 }
 
 export const YearAndContributorsText = ({ date, contributors }: YearAndContributorsTextProps) => {

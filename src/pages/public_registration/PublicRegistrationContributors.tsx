@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { ContributorRole, PreviewContributor } from '../../types/contributor.types';
+import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
@@ -14,7 +14,7 @@ import { getContributorsWithPrimaryRole, getContributorsWithSecondaryRole } from
 import { getResearchProfilePath } from '../../utils/urlPaths';
 
 interface PublicRegistrationContributorsProps {
-  contributors: PreviewContributor[];
+  contributors: Contributor[];
   registrationType: PublicationInstanceType;
 }
 
@@ -80,7 +80,7 @@ export const PublicRegistrationContributors = ({
 };
 
 interface ContributorsRowProps {
-  contributors: PreviewContributor[];
+  contributors: Contributor[];
   distinctUnits: string[];
   hiddenCount?: number;
 }

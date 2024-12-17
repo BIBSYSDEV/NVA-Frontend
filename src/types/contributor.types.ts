@@ -84,22 +84,11 @@ interface AdditionalIdentifier {
 }
 
 export interface Contributor {
-  type: 'Contributor';
-  affiliations?: Affiliation[];
-  correspondingAuthor?: boolean;
-  identity: Identity;
-  role: {
-    type: ContributorRole;
-    description?: string;
-  };
-  sequence: number;
-}
-
-export interface PreviewContributor {
   affiliations?: Affiliation[];
   correspondingAuthor?: boolean;
   identity: Identity;
   role: ContributorRole;
+  sequence: number;
 }
 
 export type ConfirmedAffiliation = Pick<Organization, 'type' | 'id'>;
@@ -114,7 +103,6 @@ export const emptyContributor: Contributor = {
     name: '',
     verificationStatus: VerificationStatus.NotVerified,
   },
-  role: { type: ContributorRole.Creator },
+  role: ContributorRole.Creator,
   sequence: 0,
-  type: 'Contributor',
 };
