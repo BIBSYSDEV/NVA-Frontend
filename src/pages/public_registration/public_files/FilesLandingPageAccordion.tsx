@@ -3,8 +3,10 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, styled, Tab, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
+import { RootState } from '../../../redux/store';
 import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
@@ -41,6 +43,7 @@ const StyledTabLabelContainer = styled('div')({
 
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
+  const customer = useSelector((store: RootState) => store.customer);
 
   const userCanUpdateRegistration = userHasAccessRight(registration, 'update');
   const [selectedTab, setSelectedTab] = useState(FileTab.OpenFiles);
@@ -72,7 +75,9 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const showLinkToUploadNewFiles =
     userCanUpdateRegistration &&
     totalFiles === 0 &&
-    !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact);
+    !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact) &&
+    registration.entityDescription?.reference?.publicationInstance?.type &&
+    customer?.allowFileUploadForTypes.includes(registration.entityDescription.reference.publicationInstance.type);
 
   if (associatedFiles.length === 0 && !showLinkToUploadNewFiles) {
     return null;
