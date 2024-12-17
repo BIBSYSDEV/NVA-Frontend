@@ -11,6 +11,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils';
 import Uppy from '@uppy/core';
 import { useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
@@ -184,7 +185,9 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                       </HelperTextModal>
                     </Box>
                   </StyledTableCell>
-                  <TableCell />
+                  <TableCell>
+                    <span style={visuallyHidden}>{t('common.actions')}</span>
+                  </TableCell>
                 </>
               )}
             </TableRow>
