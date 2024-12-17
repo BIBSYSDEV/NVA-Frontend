@@ -1,5 +1,4 @@
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, styled, Tab, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -19,6 +18,7 @@ import {
 import { getRegistrationWizardLink } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
+import { PendingFilesInfo } from './PendingFilesInfo';
 
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
@@ -37,14 +37,6 @@ const StyledTabLabelContainer = styled('div')({
   alignItems: 'center',
   gap: '1rem',
 });
-
-const StyledPendingFilesInfo = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  backgroundColor: theme.palette.secondary.dark,
-  padding: '0.25rem 0.5rem',
-}));
 
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
@@ -100,12 +92,10 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             {t('registration.files_and_license.files_count', { count: totalFiles })}
           </Typography>
           {registrationMetadataIsPublished && totalPendingFiles > 0 && (
-            <StyledPendingFilesInfo sx={{ px: { xs: '0.5rem', sm: '3rem' } }}>
-              <HourglassEmptyIcon fontSize="small" />
-              <Typography>
-                {t('registration.files_and_license.files_awaits_approval', { count: totalPendingFiles })}
-              </Typography>
-            </StyledPendingFilesInfo>
+            <PendingFilesInfo
+              sx={{ px: { xs: '0.5rem', sm: '3rem' } }}
+              text={t('registration.files_and_license.files_awaits_approval', { count: totalPendingFiles })}
+            />
           )}
         </Box>
       }>
@@ -149,12 +139,9 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
                   <StyledTabLabelContainer>
                     {t('registration.public_page.public_files', { count: openableFilesToShow.length })}
                     {pendingOpenFiles.length > 0 && (
-                      <StyledPendingFilesInfo>
-                        <HourglassEmptyIcon fontSize="small" />
-                        <Typography>
-                          {t('registration.public_page.files.awaits_approval', { count: pendingOpenFiles.length })}
-                        </Typography>
-                      </StyledPendingFilesInfo>
+                      <PendingFilesInfo
+                        text={t('registration.public_page.files.awaits_approval', { count: pendingOpenFiles.length })}
+                      />
                     )}
                   </StyledTabLabelContainer>
                 }
@@ -166,12 +153,11 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
                   <StyledTabLabelContainer>
                     {t('registration.public_page.internal_files', { count: internalFilesToShow.length })}
                     {pendingInternalFiles.length > 0 && (
-                      <StyledPendingFilesInfo>
-                        <HourglassEmptyIcon fontSize="small" />
-                        <Typography>
-                          {t('registration.public_page.files.awaits_approval', { count: pendingInternalFiles.length })}
-                        </Typography>
-                      </StyledPendingFilesInfo>
+                      <PendingFilesInfo
+                        text={t('registration.public_page.files.awaits_approval', {
+                          count: pendingInternalFiles.length,
+                        })}
+                      />
                     )}
                   </StyledTabLabelContainer>
                 }

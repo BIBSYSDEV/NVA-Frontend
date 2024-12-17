@@ -1514,7 +1514,8 @@
       "error_description_workflow1": "Følgende feil må rettes opp før publisering av resultat:",
       "error_description_workflow2": "Resultatet har følgende mangler:",
       "files": {
-        "awaits_approval": "{{count}} venter på godkjenning"
+        "awaits_approval": "{{count}} venter på godkjenning",
+        "file_awaits_approval": "Fil venter på godkjenning"
       },
       "files_tab_list_label": "Velg synlighet for filer",
       "find_in_channel_registry": "Finn i kanalregisteret",
