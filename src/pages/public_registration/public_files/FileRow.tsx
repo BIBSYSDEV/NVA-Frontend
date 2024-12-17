@@ -178,7 +178,7 @@ export const FileRow = ({
               {t('registration.public_page.preview_of', { fileName: file.name })}
             </Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{ opacity: fileAwaitsApproval ? 0.6 : 1 }}>
+          <AccordionDetails sx={{ opacity: fileAwaitsApproval ? 0.7 : 1 }}>
             {isLoadingPreviewFile ? (
               <CircularProgress aria-labelledby={`preview-label-${file.identifier}`} />
             ) : (
