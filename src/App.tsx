@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRoutes } from './AppRoutes';
 import { getIdTokenPayload } from './api/authApi';
+import { AcceptTermsDialog } from './components/AcceptTermsDialog';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 import { EnvironmentBanner } from './components/EnvironmentBanner';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -76,8 +77,10 @@ export const App = () => {
     }
   }, [dispatch]);
 
-  const mustCreatePerson = user && !user.cristinId;
-  const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
+  const mustAcceptTerms = user && user.currentTerms !== user.acceptedTerms;
+  const mustCreatePerson = user && !user.cristinId && !mustAcceptTerms;
+  const mustSelectCustomer =
+    user && !mustAcceptTerms && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
 
   return (
     <>
@@ -85,6 +88,7 @@ export const App = () => {
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
 
+      {mustAcceptTerms && <AcceptTermsDialog newTermsUri={user.currentTerms} />}
       {mustCreatePerson && <CreateCristinPersonDialog user={user} />}
       {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}
 

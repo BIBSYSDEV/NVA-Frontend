@@ -5,6 +5,7 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
   Box,
   Checkbox,
@@ -170,11 +171,9 @@ export const FilesTableRow = ({
               <TextField
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
-                SelectProps={{ inputProps: { 'aria-label': t('registration.files_and_license.availability') } }}
                 select
                 disabled={disabled}
                 variant="filled"
-                InputProps={{ sx: { '.MuiSelect-select': { py: '0.75rem' } } }}
                 fullWidth
                 onChange={(event) => {
                   const newValue = event.target.value as FileType;
@@ -186,6 +185,10 @@ export const FilesTableRow = ({
                   } else {
                     setFieldValue(fileTypeFieldName, newValue);
                   }
+                }}
+                slotProps={{
+                  input: { sx: { '.MuiSelect-select': { py: '0.75rem' } } },
+                  select: { inputProps: { 'aria-label': t('registration.files_and_license.availability') } },
                 }}>
                 <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
                   <StyledFileTypeMenuItemContent>
@@ -199,19 +202,20 @@ export const FilesTableRow = ({
                     {t('registration.files_and_license.file_type.internal_file')}
                   </StyledFileTypeMenuItemContent>
                 </MenuItem>
+                {(user?.isPublishingCurator || field.value === FileType.HiddenFile) && (
+                  <MenuItem value={FileType.HiddenFile}>
+                    <StyledFileTypeMenuItemContent>
+                      <VisibilityOffOutlinedIcon fontSize="small" />
+                      {t('registration.files_and_license.file_type.hidden_file')}
+                    </StyledFileTypeMenuItemContent>
+                  </MenuItem>
+                )}
                 {field.value === FileType.RejectedFile && (
                   <MenuItem value={FileType.RejectedFile} disabled>
                     <StyledFileTypeMenuItemContent>
                       <BlockIcon fontSize="small" />
                       {t('registration.files_and_license.file_type.rejected_file')}
                     </StyledFileTypeMenuItemContent>
-                  </MenuItem>
-                )}
-                {(field.value === FileType.PublishedFile ||
-                  field.value === FileType.UnpublishedFile ||
-                  field.value === FileType.UnpublishableFile) && (
-                  <MenuItem value={field.value} disabled>
-                    {field.value}
                   </MenuItem>
                 )}
               </TextField>
@@ -287,15 +291,23 @@ export const FilesTableRow = ({
                         sx={{ minWidth: '15rem' }}
                         select
                         disabled={disabled}
-                        SelectProps={{
-                          renderValue: (option) => {
-                            const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
-                            return selectedLicense ? (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
-                                <span>{selectedLicense.name}</span>
-                              </Box>
-                            ) : null;
+                        slotProps={{
+                          select: {
+                            renderValue: (option) => {
+                              const selectedLicense = licenses.find((license) =>
+                                equalUris(license.id, option as string)
+                              );
+                              return selectedLicense ? (
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                  <img
+                                    style={{ width: '5rem' }}
+                                    src={selectedLicense.logo}
+                                    alt={selectedLicense.name}
+                                  />
+                                  <span>{selectedLicense.name}</span>
+                                </Box>
+                              ) : null;
+                            },
                           },
                         }}
                         variant="filled"

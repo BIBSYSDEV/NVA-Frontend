@@ -1,6 +1,7 @@
+import Uppy from '@uppy/core';
 import { useEffect } from 'react';
 import { UppyDashboard } from '../../../components/UppyDashboard';
-import { AssociatedFile, emptyFile, Uppy } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, emptyFile } from '../../../types/associatedArtifact.types';
 
 interface FileUploaderProps {
   addFile: (file: AssociatedFile) => void;
@@ -10,7 +11,7 @@ interface FileUploaderProps {
 
 export const FileUploader = ({ addFile, uppy, disabled = false }: FileUploaderProps) => {
   useEffect(() => {
-    if (uppy && !uppy.hasUploadSuccessEventListener) {
+    if (uppy && !uppy.opts.meta.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {
         const newFile: AssociatedFile = {
           ...emptyFile,
@@ -23,7 +24,7 @@ export const FileUploader = ({ addFile, uppy, disabled = false }: FileUploaderPr
         addFile(newFile);
       });
       // Avoid duplicating event listener
-      uppy.hasUploadSuccessEventListener = true;
+      uppy.opts.meta.hasUploadSuccessEventListener = true;
     }
   }, [addFile, uppy]);
 

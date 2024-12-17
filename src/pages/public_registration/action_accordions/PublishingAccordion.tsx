@@ -7,13 +7,14 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, T
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
+import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -26,6 +27,7 @@ import {
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
+import { registrationPublishableValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
@@ -50,6 +52,7 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
+  const location = useLocation<SelectedTicketTypeLocationState>();
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -68,11 +71,7 @@ export const PublishingAccordion = ({
   const [isCreatingPublishingRequest, setIsCreatingPublishingRequest] = useState(false);
   const [displayDuplicateWarningModal, setDisplayDuplicateWarningModal] = useState(false);
   const registrationHasApprovedFile = registration.associatedArtifacts.some(
-    (file) =>
-      isOpenFile(file) ||
-      file.type === FileType.OpenFile ||
-      file.type === FileType.InternalFile ||
-      file.type === FileType.PublishedFile
+    (file) => isOpenFile(file) || file.type === FileType.InternalFile
   );
 
   const userCanCreatePublishingRequest = userHasAccessRight(registration, 'publishing-request-create');
@@ -82,6 +81,12 @@ export const PublishingAccordion = ({
   const formErrors = validateRegistrationForm(registration);
   const registrationIsValid = Object.keys(formErrors).length === 0;
   const tabErrors = !registrationIsValid ? getTabErrors(registration, formErrors) : null;
+
+  const canPublishMetadata =
+    isDraftRegistration &&
+    ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' &&
+      registrationPublishableValidationSchema.isValidSync(registration)) ||
+      (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && registrationIsValid));
 
   const lastPublishingRequest =
     publishingRequestTickets.find((ticket) => ticket.status === 'New' || ticket.status === 'Pending') ??
@@ -148,12 +153,7 @@ export const PublishingAccordion = ({
 
   const registrationHasMismatchingFiles = getAssociatedFiles(registration.associatedArtifacts)
     .filter((file) => approvedFileIdentifiers.includes(file.identifier)) // Find files handled by current institution
-    .some(
-      (file) =>
-        file.type === FileType.PendingOpenFile ||
-        file.type === FileType.PendingInternalFile ||
-        file.type === FileType.UnpublishedFile
-    );
+    .some((file) => isPendingOpenFile(file) || file.type === FileType.PendingInternalFile);
 
   const hasClosedTicket = lastPublishingRequest?.status === 'Closed';
   const hasPendingTicket = lastPublishingRequest?.status === 'Pending' || lastPublishingRequest?.status === 'New';
@@ -170,12 +170,16 @@ export const PublishingAccordion = ({
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
+  const defaultExpanded = location.state?.selectedTicketType
+    ? location.state.selectedTicketType === 'PublishingRequest'
+    : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       sx={{ bgcolor: 'publishingRequest.light' }}
       elevation={3}
-      defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket}>
+      defaultExpanded={defaultExpanded}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
           {isUnpublishedOrDeletedRegistration
@@ -219,7 +223,7 @@ export const PublishingAccordion = ({
         {/* Option to reload data if status is not up to date with ticket */}
         {userCanHandlePublishingRequest && !tabErrors && hasMismatchingPublishedStatus && (
           <>
-            <Typography paragraph sx={{ mt: '1rem' }}>
+            <Typography sx={{ my: '1rem' }}>
               {isPublishedRegistration
                 ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
@@ -238,9 +242,9 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {registrationIsValid && showRegistrationWithSameNameWarning && (
+        {canPublishMetadata && showRegistrationWithSameNameWarning && (
           <div>
-            <Typography paragraph>
+            <Typography sx={{ mb: '1rem' }}>
               {t('registration.public_page.tasks_panel.duplicate_title_description_introduction')}
             </Typography>
             <Link
@@ -258,22 +262,22 @@ export const PublishingAccordion = ({
             </Link>
             <Trans
               i18nKey="registration.public_page.tasks_panel.duplicate_title_description_details"
-              components={[<Typography paragraph key="1" />]}
+              components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
             />
             <Divider sx={{ bgcolor: 'grey.400', mb: '0.5rem' }} />
           </div>
         )}
 
         {/* Tell user what they can publish */}
-        {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && registrationIsValid && (
+        {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && canPublishMetadata && (
           <>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
               <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow1">
-                <Typography paragraph />
+                <Typography sx={{ mb: '1rem' }} />
               </Trans>
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
               <Trans i18nKey="registration.public_page.tasks_panel.publish_registration_description_workflow2">
-                <Typography paragraph />
+                <Typography sx={{ mb: '1rem' }} />
               </Trans>
             ) : null}
           </>
@@ -282,7 +286,7 @@ export const PublishingAccordion = ({
         {userCanCreatePublishingRequest && !lastPublishingRequest && isDraftRegistration && (
           <>
             <LoadingButton
-              disabled={isCreatingPublishingRequest || !registrationIsValid || titleSearchPending}
+              disabled={isCreatingPublishingRequest || !canPublishMetadata || titleSearchPending}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
               sx={{ mt: '0.5rem' }}
               variant="contained"
@@ -293,7 +297,7 @@ export const PublishingAccordion = ({
               {t('registration.public_page.tasks_panel.publish_registration')}
             </LoadingButton>
 
-            <Typography paragraph sx={{ mt: '1rem' }}>
+            <Typography sx={{ my: '1rem' }}>
               {t('registration.public_page.tasks_panel.delete_draft_description')}
             </Typography>
           </>

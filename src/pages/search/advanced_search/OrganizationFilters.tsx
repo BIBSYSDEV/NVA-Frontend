@@ -128,14 +128,6 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
           renderOption={({ key, ...props }, option) => (
             <OrganizationRenderOption key={option.id} props={props} option={option} />
           )}
-          ListboxComponent={AutocompleteListboxWithExpansion}
-          ListboxProps={
-            {
-              hasMoreHits: !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
-              onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
-              isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > options.length,
-            } satisfies AutocompleteListboxWithExpansionProps as any
-          }
           renderInput={(params) => (
             <AutocompleteTextField
               {...params}
@@ -147,6 +139,16 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
               showSearchIcon
             />
           )}
+          slotProps={{
+            listbox: {
+              component: AutocompleteListboxWithExpansion,
+              ...({
+                hasMoreHits: !!organizationSearchQuery.data?.size && organizationSearchQuery.data.size > searchSize,
+                onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
+                isLoadingMoreHits: organizationSearchQuery.isFetching && searchSize > options.length,
+              } satisfies AutocompleteListboxWithExpansionProps),
+            },
+          }}
         />
 
         <Chip

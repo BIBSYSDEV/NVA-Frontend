@@ -39,6 +39,8 @@ export interface User {
   nvaUsername: string;
   orcid?: string;
   allowedCustomers: string[];
+  currentTerms: string;
+  acceptedTerms: string;
 }
 
 export interface UserRole {
@@ -79,6 +81,8 @@ export interface UserAttributes {
   'custom:allowedCustomers'?: string;
   'custom:feideIdNin'?: string;
   'custom:nin'?: string;
+  'custom:currentTerms'?: string;
+  'custom:acceptedTerms'?: string;
 }
 
 export interface CristinPersonAffiliation {

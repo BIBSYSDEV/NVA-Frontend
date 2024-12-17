@@ -3,7 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { defaultChannelSearchSize, fetchSeries, searchForSeries } from '../../../api/publicationChannelApi';
+import {
+  defaultChannelSearchSize,
+  fetchSerialPublication,
+  searchForSerialPublications,
+} from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -11,7 +15,7 @@ import {
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
-import { Series } from '../../../types/registration.types';
+import { SerialPublication } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -32,7 +36,7 @@ export const SeriesFilter = () => {
   const seriesOptionsQuery = useQuery({
     queryKey: ['seriesSearch', debouncedQuery, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === seriesQuery,
-    queryFn: () => searchForSeries(debouncedQuery, '2023', searchSize),
+    queryFn: () => searchForSerialPublications(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_series') },
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
@@ -42,12 +46,12 @@ export const SeriesFilter = () => {
   const selectedSeriesQuery = useQuery({
     enabled: !!seriesParam,
     queryKey: ['channel', seriesParam],
-    queryFn: () => (seriesParam ? fetchSeries(seriesParam) : undefined),
+    queryFn: () => (seriesParam ? fetchSerialPublication(seriesParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });
 
-  const handleChange = (selectedValue: Series | null) => {
+  const handleChange = (selectedValue: SerialPublication | null) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
       syncedParams.set(ResultParam.Series, selectedValue.identifier);
@@ -87,14 +91,6 @@ export const SeriesFilter = () => {
             hideScientificLevel
           />
         )}
-        ListboxComponent={AutocompleteListboxWithExpansion}
-        ListboxProps={
-          {
-            hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
-            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-            isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
-          } satisfies AutocompleteListboxWithExpansionProps as any
-        }
         data-testid={dataTestId.startPage.advancedSearch.seriesField}
         renderInput={(params) => (
           <AutocompleteTextField
@@ -106,6 +102,16 @@ export const SeriesFilter = () => {
             multiline
           />
         )}
+        slotProps={{
+          listbox: {
+            component: AutocompleteListboxWithExpansion,
+            ...({
+              hasMoreHits: !!seriesOptionsQuery.data?.totalHits && seriesOptionsQuery.data.totalHits > searchSize,
+              onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+              isLoadingMoreHits: seriesOptionsQuery.isFetching && searchSize > options.length,
+            } satisfies AutocompleteListboxWithExpansionProps),
+          },
+        }}
       />
     </section>
   );

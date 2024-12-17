@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useUppy } from '@uppy/react';
 import { Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -42,7 +41,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t, i18n } = useTranslation();
   const history = useHistory();
   const user = useSelector((state: RootState) => state.user);
-  const uppy = useUppy(createUppy(i18n.language));
+  const [uppy] = useState(() => createUppy(i18n.language));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
 
   const highestValidatedTab =
@@ -149,7 +148,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
         onCancel={() => (history.length > 1 ? history.goBack() : history.push(UrlPathTemplate.Home))}>
-        <Typography paragraph>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
     </NviCandidateContext.Provider>

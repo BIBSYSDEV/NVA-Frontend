@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
-import { fetchJournal, fetchPublisher, fetchSeries } from '../../../api/publicationChannelApi';
+import { fetchPublisher, fetchSerialPublication } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -140,7 +140,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
             {({ field }: FieldProps<string>) => (
               <SearchTextField
                 {...field}
-                inputProps={{ [dataSearchFieldAttributeName]: ResultParam.Query }}
+                slotProps={{ htmlInput: { [dataSearchFieldAttributeName]: ResultParam.Query } }}
                 placeholder={t('search.search_placeholder')}
                 clearValue={() => {
                   field.onChange({ target: { value: '', id: field.name } });
@@ -443,7 +443,7 @@ const SelectedSeriesFacetButton = ({ seriesIdentifier }: SelectedSeriesFacetButt
 
   const seriesQuery = useQuery({
     queryKey: [seriesIdentifier],
-    queryFn: () => (seriesIdentifier ? fetchSeries(seriesIdentifier) : undefined),
+    queryFn: () => (seriesIdentifier ? fetchSerialPublication(seriesIdentifier) : undefined),
     staleTime: Infinity,
     gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_series') },
@@ -463,7 +463,7 @@ const SelectedJournalFacetButton = ({ journalIdentifier }: SelectedJournalFacetB
 
   const journalQuery = useQuery({
     queryKey: [journalIdentifier],
-    queryFn: () => (journalIdentifier ? fetchJournal(journalIdentifier) : undefined),
+    queryFn: () => (journalIdentifier ? fetchSerialPublication(journalIdentifier) : undefined),
     staleTime: Infinity,
     gcTime: 1_800_000,
     meta: { errorMessage: t('feedback.error.get_journal') },

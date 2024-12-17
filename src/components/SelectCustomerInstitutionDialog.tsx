@@ -112,10 +112,8 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
           renderInput={(params) => (
             <TextField
               {...params}
-              InputLabelProps={{
-                'aria-label': t('common.select_institution'),
-              }}
               placeholder={t('project.search_for_institution')}
+              slotProps={{ inputLabel: { 'aria-label': t('common.select_institution') } }}
             />
           )}
         />

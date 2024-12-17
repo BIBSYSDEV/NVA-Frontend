@@ -64,13 +64,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
       defaultValue={getLanguageString(organizationOptions[0].labels)}
       title={getLanguageString(organizationOptions[0].labels)}
       label={t('editor.curators.area_of_responsibility')}
-      InputLabelProps={{ shrink: true }}
-      inputProps={{
-        style: {
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-        },
-      }}
+      slotProps={{ htmlInput: { style: { overflow: 'hidden', textOverflow: 'ellipsis' } } }}
     />
   ) : (
     <Autocomplete

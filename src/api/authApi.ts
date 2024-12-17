@@ -4,6 +4,14 @@ import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { getCurrentPath } from '../utils/general-helpers';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
+export const refreshSession = async () => {
+  try {
+    return await fetchAuthSession({ forceRefresh: true });
+  } catch {
+    return null;
+  }
+};
+
 export const getUserAttributes = async (): Promise<UserAttributes | null> => {
   try {
     const userAttributes = (await fetchUserAttributes()) as UserAttributes;

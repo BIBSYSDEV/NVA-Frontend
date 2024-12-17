@@ -43,18 +43,20 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
           data-testid={dataTestId.newProjectPage.titleInput}
           variant="filled"
           onChange={(event) => setTitle(event.target.value)}
-          InputProps={{
-            endAdornment: titleSearch.isPending ? (
-              <CircularProgress size={20} />
-            ) : titleSearch.duplicateProject ? (
-              <ErrorIcon color="warning" />
-            ) : debouncedTitle && !titleSearch.duplicateProject ? (
-              <CheckCircleIcon color="success" />
-            ) : undefined,
-          }}
           fullWidth
           placeholder={t('project.form.write_project_title')}
           label={t('common.title')}
+          slotProps={{
+            input: {
+              endAdornment: titleSearch.isPending ? (
+                <CircularProgress size={20} />
+              ) : titleSearch.duplicateProject ? (
+                <ErrorIcon color="warning" />
+              ) : debouncedTitle && !titleSearch.duplicateProject ? (
+                <CheckCircleIcon color="success" />
+              ) : undefined,
+            },
+          }}
         />
         {titleSearch.duplicateProject && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

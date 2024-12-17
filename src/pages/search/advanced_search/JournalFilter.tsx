@@ -3,7 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { defaultChannelSearchSize, fetchJournal, searchForJournals } from '../../../api/publicationChannelApi';
+import {
+  defaultChannelSearchSize,
+  fetchSerialPublication,
+  searchForSerialPublications,
+} from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';
 import {
   AutocompleteListboxWithExpansion,
@@ -11,7 +15,7 @@ import {
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { StyledFilterHeading } from '../../../components/styled/Wrappers';
-import { Journal } from '../../../types/registration.types';
+import { SerialPublication } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData, syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -32,7 +36,7 @@ export const JournalFilter = () => {
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === journalQuery,
-    queryFn: () => searchForJournals(debouncedQuery, '2023', searchSize),
+    queryFn: () => searchForSerialPublications(debouncedQuery, '2023', searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
@@ -42,12 +46,12 @@ export const JournalFilter = () => {
   const selectedJournalQuery = useQuery({
     enabled: !!journalParam,
     queryKey: ['channel', journalParam],
-    queryFn: () => (journalParam ? fetchJournal(journalParam) : undefined),
+    queryFn: () => (journalParam ? fetchSerialPublication(journalParam) : undefined),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });
 
-  const handleChange = (selectedValue: Journal | null) => {
+  const handleChange = (selectedValue: SerialPublication | null) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     if (selectedValue) {
       syncedParams.set(ResultParam.Journal, selectedValue.identifier);
@@ -87,14 +91,6 @@ export const JournalFilter = () => {
             hideScientificLevel
           />
         )}
-        ListboxComponent={AutocompleteListboxWithExpansion}
-        ListboxProps={
-          {
-            hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
-            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-            isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
-          } satisfies AutocompleteListboxWithExpansionProps as any
-        }
         data-testid={dataTestId.startPage.advancedSearch.journalField}
         renderInput={(params) => (
           <AutocompleteTextField
@@ -106,6 +102,16 @@ export const JournalFilter = () => {
             multiline
           />
         )}
+        slotProps={{
+          listbox: {
+            component: AutocompleteListboxWithExpansion,
+            ...({
+              hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
+              onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+              isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
+            } satisfies AutocompleteListboxWithExpansionProps),
+          },
+        }}
       />
     </section>
   );

@@ -1,4 +1,3 @@
-import { Uppy as UppyType } from '@uppy/core';
 import { CustomerRrsType } from './customerInstitution.types';
 
 type FileRrsType =
@@ -18,18 +17,12 @@ export enum FileVersion {
 }
 
 export enum FileType {
-  /** @deprecated Use PendingOpenFile instead */
-  UnpublishedFile = 'UnpublishedFile',
-  /** @deprecated Use RejectedFile|InternalFile|PendingInternalFile instead */
-  UnpublishableFile = 'UnpublishableFile',
-  /** @deprecated Use OpenFile instead */
-  PublishedFile = 'PublishedFile',
-
   OpenFile = 'OpenFile',
   PendingOpenFile = 'PendingOpenFile',
   RejectedFile = 'RejectedFile',
   InternalFile = 'InternalFile',
   PendingInternalFile = 'PendingInternalFile',
+  HiddenFile = 'HiddenFile',
 }
 
 export interface AssociatedFile {
@@ -83,10 +76,6 @@ export interface AssociatedLink {
 
 export interface NullAssociatedArtifact {
   type: 'NullAssociatedArtifact';
-}
-
-export interface Uppy extends UppyType {
-  hasUploadSuccessEventListener?: boolean;
 }
 
 export type AssociatedArtifact = AssociatedFile | AssociatedLink | NullAssociatedArtifact;

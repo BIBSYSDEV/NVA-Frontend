@@ -45,7 +45,6 @@ import {
 } from '../types/publicationFieldNames';
 import {
   ContextSeries,
-  Journal,
   NpiSubjectDomain,
   PublicationInstanceType,
   Publisher,
@@ -53,7 +52,7 @@ import {
   RegistrationOperation,
   RegistrationSearchItem,
   RelatedDocument,
-  Series,
+  SerialPublication,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
 
@@ -135,7 +134,7 @@ const getChannelMetadataString = (discontinued?: string, onlineIssn?: string | n
   return metadataString;
 };
 
-export const getPublicationChannelString = (channel: Journal | Series | Publisher) => {
+export const getPublicationChannelString = (channel: SerialPublication | SerialPublication | Publisher) => {
   const channelMetadata = getChannelMetadataString(channel.discontinued, channel.onlineIssn, channel.printIssn);
   return channelMetadata ? `${channel.name} (${channelMetadata})` : channel.name;
 };
@@ -680,11 +679,9 @@ export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
 export const getOpenFiles = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(isOpenFile) as AssociatedFile[];
 
-export const isPendingOpenFile = (artifact: AssociatedArtifact) =>
-  artifact.type === FileType.PendingOpenFile || artifact.type === FileType.UnpublishedFile;
+export const isPendingOpenFile = (artifact: AssociatedArtifact) => artifact.type === FileType.PendingOpenFile;
 
-export const isOpenFile = (artifact: AssociatedArtifact) =>
-  artifact.type === FileType.OpenFile || artifact.type === FileType.PublishedFile;
+export const isOpenFile = (artifact: AssociatedArtifact) => artifact.type === FileType.OpenFile;
 
 export const isTypeWithRrs = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||

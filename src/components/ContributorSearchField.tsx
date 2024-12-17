@@ -13,7 +13,7 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFetchPerson } from '../api/hooks/useFetchPerson';
+import { useSearchForPerson } from '../api/hooks/useSearchForPerson';
 import {
   CristinPersonTableRow,
   SelectAffiliations,
@@ -44,7 +44,7 @@ export const ContributorSearchField = ({
   const debouncedSearchTerm = useDebounce(searchTerm);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const personQuery = useFetchPerson(debouncedSearchTerm, rowsPerPage, page, t('feedback.error.search'));
+  const personQuery = useSearchForPerson(debouncedSearchTerm, rowsPerPage, page, t('feedback.error.search'));
   const userSearch = personQuery.data?.hits ?? [];
 
   return (
@@ -63,9 +63,7 @@ export const ContributorSearchField = ({
         }}
         placeholder={t('common.search_placeholder')}
         label={t('common.search')}
-        InputProps={{
-          startAdornment: <SearchIcon />,
-        }}
+        slotProps={{ input: { startAdornment: <SearchIcon /> } }}
         sx={{ my: '1rem' }}
       />
       {personQuery.isFetching ? (
