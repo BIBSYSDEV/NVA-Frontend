@@ -22,7 +22,7 @@ import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { equalUris } from '../../../utils/general-helpers';
-import { isEmbargoed, isPendingOpenFile, openFileInNewTab } from '../../../utils/registration-helpers';
+import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
 import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
@@ -82,6 +82,9 @@ export const FileRow = ({
   const licenseData = licenses.find((license) => equalUris(license.id, file.license));
   const licenseTitle = licenseData?.name ?? '';
 
+  const isOpenableFile = file.type === 'OpenFile' || file.type === 'PendingOpenFile';
+  const isPendingFile = file.type === 'PendingOpenFile' || file.type === 'PendingInternalFile';
+
   return (
     <Box
       data-testid={dataTestId.registrationLandingPage.file}
@@ -95,7 +98,7 @@ export const FileRow = ({
         gap: '0.5rem 0.75rem',
         alignItems: 'center',
         marginBottom: '2rem',
-        opacity: registrationMetadataIsPublished && isPendingOpenFile(file) ? 0.6 : 1,
+        opacity: registrationMetadataIsPublished && isPendingFile ? 0.6 : 1,
       }}>
       <Typography
         data-testid={dataTestId.registrationLandingPage.fileName}
@@ -115,19 +118,21 @@ export const FileRow = ({
         </Typography>
       )}
 
-      <Link
-        href={licenseData?.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
-        <Box
-          component="img"
-          alt={licenseTitle}
-          title={licenseTitle}
-          src={licenseData?.logo}
-          data-testid={dataTestId.registrationLandingPage.license}
-        />
-      </Link>
+      {isOpenableFile && (
+        <Link
+          href={licenseData?.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
+          <Box
+            component="img"
+            alt={licenseTitle}
+            title={licenseTitle}
+            src={licenseData?.logo}
+            data-testid={dataTestId.registrationLandingPage.license}
+          />
+        </Link>
+      )}
 
       <Box sx={{ gridArea: 'download' }}>
         {file.embargoDate && fileIsEmbargoed ? (
