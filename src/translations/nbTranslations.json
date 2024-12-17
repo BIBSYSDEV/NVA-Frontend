@@ -1513,6 +1513,9 @@
       "error_description_published_result_workflow2": "Registreringen er publisert, men har følgende mangler:",
       "error_description_workflow1": "Følgende feil må rettes opp før publisering av resultat:",
       "error_description_workflow2": "Resultatet har følgende mangler:",
+      "files": {
+        "awaits_approval": "{{count}} venter på godkjenning"
+      },
       "files_tab_list_label": "Velg synlighet for filer",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
