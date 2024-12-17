@@ -79,7 +79,7 @@ export const AddContributorModal = ({
           <AddUnverifiedContributorForm
             searchTerm={searchTerm}
             addUnverifiedContributor={(newContributor) => {
-              newContributor.role = selectedContributorRole;
+              newContributor.role.type = selectedContributorRole;
               addUnverifiedContributor?.(newContributor);
             }}
             handleCloseModal={handleCloseModal}

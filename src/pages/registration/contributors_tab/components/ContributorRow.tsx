@@ -107,7 +107,7 @@ export const ContributorRow = ({
       </TableCell>
       <TableCell align="left" width="1">
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-          {!contributorRoles.includes(contributor.role) && (
+          {!contributorRoles.includes(contributor.role.type) && (
             <Tooltip title={t('registration.contributors.invalid_role')}>
               <WarningIcon color="warning" />
             </Tooltip>

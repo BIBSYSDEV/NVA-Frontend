@@ -72,4 +72,4 @@ export const contributorsValidationSchema = Yup.array().when(
 );
 
 const hasRole = (contributors: any, role: ContributorRole) =>
-  !!contributors && contributors.some((contributor: Contributor) => contributor.role === role);
+  !!contributors && contributors.some((contributor: Contributor) => contributor.role.type === role);
