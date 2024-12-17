@@ -1,6 +1,6 @@
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Box, Tab, Typography } from '@mui/material';
+import { Box, styled, Tab, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
@@ -18,6 +18,7 @@ import {
 import { getRegistrationWizardLink } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
+import { PendingFilesInfo } from './PendingFilesInfo';
 
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
@@ -25,6 +26,18 @@ enum FileTab {
   OpenFiles,
   InternalFiles,
 }
+
+const StyledTab = styled(Tab)({
+  textTransform: 'none',
+  fontSize: '1rem',
+});
+
+const StyledTabLabelContainer = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem 1rem',
+  flexWrap: 'wrap',
+});
 
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
@@ -34,7 +47,9 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
 
-  const pendingFiles = associatedFiles.filter((file) => isPendingOpenFile(file) || file.type === 'PendingInternalFile');
+  const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
+  const pendingInternalFiles = associatedFiles.filter((file) => file.type === 'PendingInternalFile');
+  const totalPendingFiles = pendingOpenFiles.length + pendingInternalFiles.length;
 
   const openableFilesToShow = userIsRegistrationAdmin
     ? associatedFiles.filter((file) => isOpenFile(file) || isPendingOpenFile(file))
@@ -77,10 +92,11 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <Typography variant="h2" color="primary">
             {t('registration.files_and_license.files_count', { count: totalFiles })}
           </Typography>
-          {registrationMetadataIsPublished && pendingFiles.length > 0 && (
-            <Typography sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
-              {t('registration.files_and_license.files_awaits_approval', { count: pendingFiles.length })}
-            </Typography>
+          {registrationMetadataIsPublished && totalPendingFiles > 0 && (
+            <PendingFilesInfo
+              sx={{ px: { xs: '0.5rem', sm: '3rem' } }}
+              text={t('registration.files_and_license.files_awaits_approval', { count: totalPendingFiles })}
+            />
           )}
         </Box>
       }>
@@ -118,14 +134,34 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
               onChange={(_, value) => setSelectedTab(value)}
               aria-label={t('registration.public_page.files_tab_list_label')}
               variant="fullWidth">
-              <Tab
+              <StyledTab
                 data-testid={dataTestId.registrationLandingPage.publicFilesTab}
-                label={t('registration.public_page.public_files', { count: openableFilesToShow.length })}
+                label={
+                  <StyledTabLabelContainer>
+                    {t('registration.public_page.public_files', { count: openableFilesToShow.length })}
+                    {pendingOpenFiles.length > 0 && (
+                      <PendingFilesInfo
+                        text={t('registration.public_page.files.awaits_approval', { count: pendingOpenFiles.length })}
+                      />
+                    )}
+                  </StyledTabLabelContainer>
+                }
                 value={FileTab.OpenFiles}
               />
-              <Tab
+              <StyledTab
                 data-testid={dataTestId.registrationLandingPage.internalFilesTab}
-                label={t('registration.public_page.internal_files', { count: internalFilesToShow.length })}
+                label={
+                  <StyledTabLabelContainer>
+                    {t('registration.public_page.internal_files', { count: internalFilesToShow.length })}
+                    {pendingInternalFiles.length > 0 && (
+                      <PendingFilesInfo
+                        text={t('registration.public_page.files.awaits_approval', {
+                          count: pendingInternalFiles.length,
+                        })}
+                      />
+                    )}
+                  </StyledTabLabelContainer>
+                }
                 value={FileTab.InternalFiles}
               />
             </TabList>
