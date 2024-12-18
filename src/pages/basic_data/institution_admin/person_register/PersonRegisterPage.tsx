@@ -104,7 +104,9 @@ export const PersonRegisterPage = () => {
                     <TableCell>{t('common.national_id_number')}</TableCell>
                     <TableCell>{t('common.name')}</TableCell>
                     <TableCell>{t('common.employments')}</TableCell>
-                    <TableCell />
+                    <TableCell>
+                      <span style={visuallyHidden}>{t('common.actions')}</span>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
