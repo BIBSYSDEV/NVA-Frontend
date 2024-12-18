@@ -16,7 +16,14 @@ import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames'
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getTitleString, isBook, isReport, isResearchData, userHasAccessRight } from '../../utils/registration-helpers';
+import {
+  convertToPreviewContributor,
+  getTitleString,
+  isBook,
+  isReport,
+  isResearchData,
+  userHasAccessRight,
+} from '../../utils/registration-helpers';
 import { getRegistrationWizardLink } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
@@ -39,7 +46,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   const { t } = useTranslation();
 
   const { identifier, entityDescription, projects, subjects, fundings } = registration;
-  const contributors = entityDescription?.contributors ?? [];
+  const contributors =
+    entityDescription?.contributors.map((contributor) => convertToPreviewContributor(contributor)) ?? [];
   const mainTitle = getTitleString(entityDescription?.mainTitle);
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
