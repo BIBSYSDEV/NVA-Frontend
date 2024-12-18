@@ -841,6 +841,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
   const registrationSearchItem: RegistrationSearchItem2 = {
     type: registration.entityDescription?.reference?.publicationInstance.type ?? '',
     id: registration.id,
+    identifier: registration.identifier,
     recordMetadata: {
       createdDate: registration.createdDate,
       modifiedDate: registration.modifiedDate,
@@ -852,7 +853,17 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     abstract: registration.entityDescription?.abstract ?? '',
     description: registration.entityDescription?.description ?? '',
     publicationDate: registration.entityDescription?.publicationDate,
-    publishingDetails: publisher ?? emptyContextPublisher,
+    publishingDetails: publisher
+      ? {
+          id: publisher.id,
+          type: publisher.type,
+          series: {
+            name: series?.title,
+            id: series?.id,
+          },
+          doi: registration.entityDescription?.reference?.doi,
+        }
+      : emptyContextPublisher,
     contributorsPreview: contributors ?? [],
   };
   return registrationSearchItem;

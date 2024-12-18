@@ -308,13 +308,13 @@ export interface RegistrationSearchItem2 {
   contributorsPreview: PreviewContributor[];
   contributorsCount: number;
   publishingDetails: {
-    id: string;
-    type: PublicationChannelType;
-    series: {
-      name: string;
-      id: string;
+    id?: string;
+    type?: PublicationChannelType;
+    series?: {
+      name?: string;
+      id?: string;
     };
-    doi: string;
+    doi?: string;
   };
   abstract: string;
   description: string;
