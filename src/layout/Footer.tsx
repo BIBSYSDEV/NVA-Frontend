@@ -196,6 +196,22 @@ export const Footer = () => {
 
         <StyledArrowLinkContainer>
           <ArrowRightAltIcon />
+          <MuiLink
+            sx={{
+              color: 'primary.main',
+              display: 'flex',
+              gap: '0.5rem',
+            }}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={'https://sikt.no/om-sikt/kontakt-oss?service=e588691c-22eb-49c3-ac50-755f5513a3f5#skjema'}>
+            {t('about.copyright_inquiries')}
+            <LaunchIcon fontSize="small" />
+          </MuiLink>
+        </StyledArrowLinkContainer>
+
+        <StyledArrowLinkContainer>
+          <ArrowRightAltIcon />
 
           <Typography color="primary">
             <Trans t={t} i18nKey="footer.technical_support_link">
