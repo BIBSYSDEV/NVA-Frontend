@@ -26,7 +26,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const [uppy] = useState(() => createUppy(i18n.language));
+  const [uppy] = useState(() => createUppy(i18n.language, 'TODO'));
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);

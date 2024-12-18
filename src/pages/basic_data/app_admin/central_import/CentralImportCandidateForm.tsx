@@ -32,7 +32,7 @@ export const CentralImportCandidateForm = () => {
   const { t, i18n } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
   const history = useHistory();
-  const [uppy] = useState(createUppy(i18n.language));
+  const [uppy] = useState(createUppy(i18n.language, 'TODO'));
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', identifier],

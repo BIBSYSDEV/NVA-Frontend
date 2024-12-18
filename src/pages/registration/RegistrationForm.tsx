@@ -41,7 +41,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t, i18n } = useTranslation();
   const history = useHistory();
   const user = useSelector((state: RootState) => state.user);
-  const [uppy] = useState(() => createUppy(i18n.language));
+  const [uppy] = useState(() => createUppy(i18n.language, identifier));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
 
   const highestValidatedTab =
