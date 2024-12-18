@@ -2,6 +2,7 @@ import { Query } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
 import { FetchTicketsParams, ResultParam } from '../api/searchApi';
 import { AggregationFileKeyType } from '../types/registration.types';
+import { User } from '../types/user.types';
 
 export enum SearchParam {
   From = 'from',
@@ -138,13 +139,28 @@ export const getFileFacetText = (key: AggregationFileKeyType, t: TFunction<'tran
       : t('registration.missing_name');
 };
 
-export const taskNotificationsParams: FetchTicketsParams = {
+const commonTaskNotificationsParams: FetchTicketsParams = {
   results: 0,
   aggregation: 'all',
 };
 
+export const getTaskNotificationsParams = (user: User | null): FetchTicketsParams => {
+  const typeParam = [
+    user?.isPublishingCurator && 'publishingRequest',
+    user?.isDoiCurator && 'doiRequest',
+    user?.isSupportCurator && 'publishingRequest',
+  ]
+    .filter(Boolean)
+    .join(',');
+
+  return {
+    ...commonTaskNotificationsParams,
+    type: typeParam,
+  };
+};
+
 export const getDialogueNotificationsParams = (username?: string): FetchTicketsParams => ({
-  ...taskNotificationsParams,
+  ...commonTaskNotificationsParams,
   owner: username,
   viewedByNot: username,
 });

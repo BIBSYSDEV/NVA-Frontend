@@ -19,7 +19,7 @@ import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { taskNotificationsParams } from '../../utils/searchHelpers';
+import { getTaskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
@@ -93,10 +93,11 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
+  const tasksNotificationParams = getTaskNotificationsParams(user);
   const notificationsQuery = useQuery({
     enabled: isOnTicketsPage && !institutionUserQuery.isPending,
-    queryKey: ['taskNotifications', taskNotificationsParams],
-    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
+    queryKey: ['taskNotifications', tasksNotificationParams],
+    queryFn: () => fetchCustomerTickets(tasksNotificationParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 

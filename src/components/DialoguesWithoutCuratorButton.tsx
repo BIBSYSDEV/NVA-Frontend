@@ -10,7 +10,7 @@ import { TicketSearchParam, fetchCustomerTickets } from '../api/searchApi';
 import { RootState } from '../redux/store';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { syncParamsWithSearchFields, taskNotificationsParams } from '../utils/searchHelpers';
+import { getTaskNotificationsParams, syncParamsWithSearchFields } from '../utils/searchHelpers';
 
 const statusNew: TicketStatus = 'New';
 
@@ -22,10 +22,11 @@ export const DialoguesWithoutCuratorButton = () => {
   const currentStatusFilter = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
   const newStatusIsSelected = currentStatusFilter.includes(statusNew);
 
+  const tasksNotificationParams = getTaskNotificationsParams(user);
   const notificationsQuery = useQuery({
     enabled: user?.isDoiCurator || user?.isSupportCurator || user?.isPublishingCurator,
-    queryKey: ['taskNotifications', taskNotificationsParams],
-    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
+    queryKey: ['taskNotifications', tasksNotificationParams],
+    queryFn: () => fetchCustomerTickets(tasksNotificationParams),
     meta: { errorMessage: false },
   });
 
