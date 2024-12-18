@@ -3,8 +3,10 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { Box, styled, Tab, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
+import { RootState } from '../../../redux/store';
 import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
@@ -41,8 +43,9 @@ const StyledTabLabelContainer = styled('div')({
 
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
+  const customer = useSelector((store: RootState) => store.customer);
 
-  const userIsRegistrationAdmin = userHasAccessRight(registration, 'update');
+  const userCanUpdateRegistration = userHasAccessRight(registration, 'update');
   const [selectedTab, setSelectedTab] = useState(FileTab.OpenFiles);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
@@ -51,7 +54,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const pendingInternalFiles = associatedFiles.filter((file) => file.type === 'PendingInternalFile');
   const totalPendingFiles = pendingOpenFiles.length + pendingInternalFiles.length;
 
-  const openableFilesToShow = userIsRegistrationAdmin
+  const openableFilesToShow = userCanUpdateRegistration
     ? associatedFiles.filter((file) => isOpenFile(file) || isPendingOpenFile(file))
     : associatedFiles.filter(isOpenFile);
 
@@ -70,13 +73,17 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     registration.status === RegistrationStatus.PublishedMetadata;
 
   const showLinkToUploadNewFiles =
-    userIsRegistrationAdmin &&
+    userCanUpdateRegistration &&
     totalFiles === 0 &&
-    !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact);
+    !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact) &&
+    registration.entityDescription?.reference?.publicationInstance?.type &&
+    customer?.allowFileUploadForTypes.includes(registration.entityDescription.reference.publicationInstance.type);
 
-  return totalFiles > 0 ||
-    (userIsRegistrationAdmin && associatedFiles.length > 0) ||
-    (userIsRegistrationAdmin && registration.associatedArtifacts.length === 0) ? (
+  if (associatedFiles.length === 0 && !showLinkToUploadNewFiles) {
+    return null;
+  }
+
+  return (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
       defaultExpanded
@@ -208,5 +215,5 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
         ))
       )}
     </LandingPageAccordion>
-  ) : null;
+  );
 };
