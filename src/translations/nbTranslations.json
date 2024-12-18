@@ -1,6 +1,7 @@
 {
   "about": {
     "availability_statement": "Tilgjengelighetserklæring",
+    "copyright_inquiries": "Henvendelser om opphavsrett",
     "description": {
       "paragraph0": {
         "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
@@ -14,8 +15,7 @@
       "paragraph5": "Selv om NVA er etablert og i bruk av flere institusjoner, vil tjenesten være i kontinuerlig utvikling i hele sin levetid. Institusjoner som ikke har et vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
     },
     "footer_text": "Tjenesten blir levert av Sikt – Kunnskapssektorens tjenesteleverandør. Sikt er leverandør av fellestjenester til norsk kunnskapssektor.",
-    "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig.",
-    "copyright_inquiries": "Henvendelser om opphavsrett"
+    "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
   },
   "authorization": {
     "about_terms": "Om brukervilkår",
