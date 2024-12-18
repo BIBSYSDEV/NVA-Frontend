@@ -24,6 +24,8 @@ export const RegistrationSearchResults = ({
     }
   }, [searchResult]);
 
+  console.log(searchResult);
+
   return (
     <RegistrationList
       canEditRegistration={canEditRegistration}

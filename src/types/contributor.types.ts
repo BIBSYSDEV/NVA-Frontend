@@ -100,6 +100,7 @@ export interface PreviewContributor {
   correspondingAuthor?: boolean;
   identity: Identity;
   role: ContributorRole;
+  sequence?: number;
 }
 
 export type ConfirmedAffiliation = Pick<Organization, 'type' | 'id'>;
