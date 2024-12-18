@@ -39,7 +39,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
-  const [uppy] = useState(() => createUppy(i18n.language));
+  const [uppy] = useState(() => createUppy(i18n.language, identifier));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
   const location = useLocation();
   const locationState = location.state as RegistrationFormLocationState;
