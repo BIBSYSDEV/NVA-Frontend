@@ -19,7 +19,11 @@ import { PublishingTicket } from '../../../types/publication_types/ticket.types'
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
+import {
+  getTabErrors,
+  isPublishableForWorkflow2,
+  validateRegistrationForm,
+} from '../../../utils/formik-helpers/formik-helpers';
 import {
   getAssociatedFiles,
   isOpenFile,
@@ -27,7 +31,6 @@ import {
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
-import { registrationPublishableValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
@@ -85,7 +88,7 @@ export const PublishingAccordion = ({
   const canPublishMetadata =
     isDraftRegistration &&
     ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' &&
-      registrationPublishableValidationSchema.isValidSync(registration)) ||
+      isPublishableForWorkflow2(registration)) ||
       (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && registrationIsValid));
 
   const lastPublishingRequest =
