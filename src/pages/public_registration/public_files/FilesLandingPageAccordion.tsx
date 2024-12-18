@@ -1,8 +1,12 @@
 import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { Box, Typography } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { Box, styled, Tab, Typography } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
+import { RootState } from '../../../redux/store';
 import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
@@ -16,20 +20,49 @@ import {
 import { getRegistrationWizardLink } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
+import { PendingFilesInfo } from './PendingFilesInfo';
 
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
+enum FileTab {
+  OpenFiles,
+  InternalFiles,
+}
+
+const StyledTab = styled(Tab)({
+  textTransform: 'none',
+  fontSize: '1rem',
+});
+
+const StyledTabLabelContainer = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem 1rem',
+  flexWrap: 'wrap',
+});
+
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
+  const customer = useSelector((store: RootState) => store.customer);
 
-  const userIsRegistrationAdmin = userHasAccessRight(registration, 'update');
+  const userCanUpdateRegistration = userHasAccessRight(registration, 'update');
+  const [selectedTab, setSelectedTab] = useState(FileTab.OpenFiles);
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const openFiles = associatedFiles.filter(isOpenFile);
-  const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
-  const publishableFilesLength = openFiles.length + pendingOpenFiles.length;
 
-  const filesToShow = userIsRegistrationAdmin ? [...openFiles, ...pendingOpenFiles] : openFiles;
+  const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
+  const pendingInternalFiles = associatedFiles.filter((file) => file.type === 'PendingInternalFile');
+  const totalPendingFiles = pendingOpenFiles.length + pendingInternalFiles.length;
+
+  const openableFilesToShow = userCanUpdateRegistration
+    ? associatedFiles.filter((file) => isOpenFile(file) || isPendingOpenFile(file))
+    : associatedFiles.filter(isOpenFile);
+
+  const internalFilesToShow = associatedFiles.filter(
+    (file) => file.type === 'InternalFile' || file.type === 'PendingInternalFile' || file.type === 'HiddenFile'
+  );
+
+  const totalFiles = openableFilesToShow.length + internalFilesToShow.length;
 
   const showFileVersionField = isTypeWithFileVersionField(
     registration.entityDescription?.reference?.publicationInstance?.type
@@ -40,13 +73,17 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     registration.status === RegistrationStatus.PublishedMetadata;
 
   const showLinkToUploadNewFiles =
-    userIsRegistrationAdmin &&
-    publishableFilesLength === 0 &&
-    !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact);
+    userCanUpdateRegistration &&
+    totalFiles === 0 &&
+    !registration.associatedArtifacts.some(associatedArtifactIsNullArtifact) &&
+    registration.entityDescription?.reference?.publicationInstance?.type &&
+    customer?.allowFileUploadForTypes.includes(registration.entityDescription.reference.publicationInstance.type);
 
-  return publishableFilesLength > 0 ||
-    (userIsRegistrationAdmin && associatedFiles.length > 0) ||
-    (userIsRegistrationAdmin && registration.associatedArtifacts.length === 0) ? (
+  if (associatedFiles.length === 0 && !showLinkToUploadNewFiles) {
+    return null;
+  }
+
+  return (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
       defaultExpanded
@@ -60,12 +97,13 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
             alignItems: 'center',
           }}>
           <Typography variant="h2" color="primary">
-            {t('registration.files_and_license.files_count', { count: publishableFilesLength })}
+            {t('registration.files_and_license.files_count', { count: totalFiles })}
           </Typography>
-          {registrationMetadataIsPublished && pendingOpenFiles.length > 0 && (
-            <Typography sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
-              {t('registration.files_and_license.files_awaits_approval', { count: pendingOpenFiles.length })}
-            </Typography>
+          {registrationMetadataIsPublished && totalPendingFiles > 0 && (
+            <PendingFilesInfo
+              sx={{ px: { xs: '0.5rem', sm: '3rem' } }}
+              text={t('registration.files_and_license.files_awaits_approval', { count: totalPendingFiles })}
+            />
           )}
         </Box>
       }>
@@ -95,16 +133,87 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           </SelectableButton>
         </Box>
       )}
-      {filesToShow.map((file, index) => (
-        <FileRow
-          key={file.identifier}
-          file={file}
-          registrationIdentifier={registration.identifier}
-          openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
-          showFileVersionField={showFileVersionField}
-          registrationMetadataIsPublished={registrationMetadataIsPublished}
-        />
-      ))}
+
+      {internalFilesToShow.length > 0 ? (
+        <TabContext value={selectedTab}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <TabList
+              onChange={(_, value) => setSelectedTab(value)}
+              aria-label={t('registration.public_page.files_tab_list_label')}
+              variant="fullWidth">
+              <StyledTab
+                data-testid={dataTestId.registrationLandingPage.publicFilesTab}
+                label={
+                  <StyledTabLabelContainer>
+                    {t('registration.public_page.public_files', { count: openableFilesToShow.length })}
+                    {pendingOpenFiles.length > 0 && (
+                      <PendingFilesInfo
+                        text={t('registration.public_page.files.awaits_approval', { count: pendingOpenFiles.length })}
+                      />
+                    )}
+                  </StyledTabLabelContainer>
+                }
+                value={FileTab.OpenFiles}
+              />
+              <StyledTab
+                data-testid={dataTestId.registrationLandingPage.internalFilesTab}
+                label={
+                  <StyledTabLabelContainer>
+                    {t('registration.public_page.internal_files', { count: internalFilesToShow.length })}
+                    {pendingInternalFiles.length > 0 && (
+                      <PendingFilesInfo
+                        text={t('registration.public_page.files.awaits_approval', {
+                          count: pendingInternalFiles.length,
+                        })}
+                      />
+                    )}
+                  </StyledTabLabelContainer>
+                }
+                value={FileTab.InternalFiles}
+              />
+            </TabList>
+          </Box>
+          <TabPanel value={FileTab.OpenFiles}>
+            {openableFilesToShow.length === 0 ? (
+              <Typography>{t('registration.public_page.no_public_files')}</Typography>
+            ) : (
+              openableFilesToShow.map((file, index) => (
+                <FileRow
+                  key={file.identifier}
+                  file={file}
+                  registrationIdentifier={registration.identifier}
+                  openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
+                  showFileVersionField={showFileVersionField}
+                  registrationMetadataIsPublished={registrationMetadataIsPublished}
+                />
+              ))
+            )}
+          </TabPanel>
+          <TabPanel value={FileTab.InternalFiles}>
+            {internalFilesToShow.map((file) => (
+              <FileRow
+                key={file.identifier}
+                file={file}
+                registrationIdentifier={registration.identifier}
+                openPreviewByDefault={false}
+                showFileVersionField={false}
+                registrationMetadataIsPublished={registrationMetadataIsPublished}
+              />
+            ))}
+          </TabPanel>
+        </TabContext>
+      ) : (
+        openableFilesToShow.map((file, index) => (
+          <FileRow
+            key={file.identifier}
+            file={file}
+            registrationIdentifier={registration.identifier}
+            openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
+            showFileVersionField={showFileVersionField}
+            registrationMetadataIsPublished={registrationMetadataIsPublished}
+          />
+        ))
+      )}
     </LandingPageAccordion>
-  ) : null;
+  );
 };

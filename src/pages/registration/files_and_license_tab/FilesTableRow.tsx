@@ -218,21 +218,14 @@ export const FilesTableRow = ({
                     </StyledFileTypeMenuItemContent>
                   </MenuItem>
                 )}
-                {(field.value === FileType.PublishedFile ||
-                  field.value === FileType.UnpublishedFile ||
-                  field.value === FileType.UnpublishableFile) && (
-                  <MenuItem value={field.value} disabled>
-                    {field.value}
-                  </MenuItem>
-                )}
               </TextField>
             )}
           </Field>
         </VerticalAlignedTableCell>
         {showAllColumns && (
           <>
-            <VerticalAlignedTableCell>
-              {isOpenableFile && showFileVersion && (
+            {isOpenableFile && showFileVersion && (
+              <VerticalAlignedTableCell>
                 <Field name={publisherVersionFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                     <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
@@ -285,8 +278,8 @@ export const FilesTableRow = ({
                     </FormControl>
                   )}
                 </Field>
-              )}
-            </VerticalAlignedTableCell>
+              </VerticalAlignedTableCell>
+            )}
             <VerticalAlignedTableCell>
               {isOpenableFile && (
                 <>

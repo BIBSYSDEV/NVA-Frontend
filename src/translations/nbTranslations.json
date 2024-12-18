@@ -17,6 +17,10 @@
     "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
   },
   "authorization": {
+    "about_terms": "Om brukervilkår",
+    "about_terms_description": "<0>For å bruke tjenesten Nasjonalt vitenarkiv må du akseptere <0>Sikts brukervilkår<0></0></0> for Nasjonalt vitenarkiv.</0><0>Om du legger inn personopplysninger om andre personer må du ha deres tillatelse eller annet lovlig grunnlag. Du må sikre at vedkommende er informert om at personopplysningene publiseres i Nasjonalt vitenarkiv.</0><0>Du kan ikke tilgjengeliggjøre/laste opp opphavsrettslig materiale/åndsverk uten å ha tillatelse fra alle opphavere.</0><0>Du er ansvarlig for at din bruk av Nasjonalt vitenarkiv ikke er i strid med gjeldende rett.</0><0>For mer informasjon, se <0>Sikts brukervilkår<0></0></0> i sin helhet.</0><1>Ved å trykke \"$t(authorization.accept)\" aksepterer du Sikt sine brukervilkår.</1>",
+    "accept": "Godta",
+    "accept_terms_intro": "Takk for at du ønsker å gjøre forskning åpent tilgjengelig i Nasjonalt vitenarkiv. Sammen skal vi nå Regjeringen sitt mål om at all norsk forskning finansiert av offentlige midler blir åpent tilgjengelig for allmennheten.",
     "accept_terms_to_create_user": "Jeg samtykker til å bli opprettet som bruker i NVA",
     "back_to_home": "Tilbake til startsiden",
     "cancel_create_user_text": "Du må opprette bruker for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
@@ -28,7 +32,9 @@
     "login": "Logg inn",
     "logout": "Logg ut",
     "registration_not_published": "Denne registreringen er ikke publisert ennå.",
+    "reject": "Avslå",
     "signed_out": "Du er utlogget",
+    "welcome": "Velkommen!",
     "your_user_profile": "Din brukerprofil"
   },
   "basic_data": {
@@ -301,6 +307,7 @@
     "start_page": "Startside",
     "status": "Status",
     "tasks": "Oppgaver",
+    "terms": "Brukervilkår",
     "test_environment": "Testmiljø",
     "time_string": "{{date}}, kl. {{time}}",
     "title": "Tittel",
@@ -496,6 +503,7 @@
   "feedback": {
     "error": {
       "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
+      "accept_terms": "Godkjenning av brukervilkår feilet",
       "add_contributor": "Kunne ikke legge til bidragsyter",
       "add_employment": "Kunne ikke legge til ansettelse",
       "add_role": "Kunne ikke legge til rolle",
@@ -746,7 +754,8 @@
       "doi_pending": "Venter på DOI-tildeling",
       "files_published_one": "{{count}} fil publisert",
       "files_published_other": "{{count}} filer publisert",
-      "files_rejected": "{\"one\":\"{{count}} fil avvist\",\"other\":\"{{count}} filer avvist\"}",
+      "files_rejected_one": "{{count}} fil avvist",
+      "files_rejected_other": "{{count}} filer avvist",
       "files_uploaded_one": "{{count}} fil lastet opp",
       "files_uploaded_other": "{{count}} filer lastet opp",
       "general_support_pending": "Venter på oppfølging",
@@ -829,6 +838,7 @@
       "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbildet?",
       "results": "Resultat",
       "telephone": "Telefon",
+      "terms_description": "<0>Du har akseptert <0>Sikt Brukervilkår <0></0></0>.</0><0>Sikt Brukervilkår for Nasjonalt vitenarkiv innebærer blant annet at om du legger inn personopplysninger om andre personer må du ha deres tillatelse eller annet lovlig grunnlag. Du må sikre at vedkommende er informert om at personopplysningene publiser i Nasjonalt vitenarkiv.</0><0>Du kan ikke tilgjengeliggjøre/laste opp opphavsrettslig materiale/åndsverk uten å ha tillatelse fra alle opphavere.</0><0>Du er ansvarlig for at din bruk av Nasjonalt vitenarkiv ikke er i strid med gjeldende rett.</0><0>For mer informasjon, se <0>Sikt Brukervilkår <0></0></0> i sin helhet.</0>",
       "upload_description": "<0>Ved å laste opp et bilde samtykker du til at bildet legges inn som profilbilde på din offentlige profil i Nasjonalt vitenarkiv.</0><0>Profilbildet er offentlig synlig for alle som benytter Nasjonalt vitenarkiv.</0>",
       "upload_is_not_mandatory": "<0>Det er frivillig å laste opp et bilde.</0><0>Du kan når som helst trekke tilbake samtykket ved å slette bildet.</0>",
       "user_role_and_help": {
@@ -1162,6 +1172,9 @@
     "add_local_manager": "Legg til lokalt ansvarlig",
     "add_project_contributor": "Legg til prosjektdeltaker",
     "add_project_manager": "Legg til prosjektleder",
+    "add_self_as_local_project_manager": "Legg meg til som lokalt ansvarlig",
+    "add_self_as_project_manager": "Legg meg til som prosjektleder",
+    "add_self_as_project_participant": "Legg meg til som prosjektdeltaker",
     "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltaker",
     "add_unidentified_project_manager": "Legg til uidentifisert prosjektleder",
     "affiliation_modal": {
@@ -1424,8 +1437,8 @@
         "rejected_file": "Avvist fil"
       },
       "files": "Filer",
-      "files_awaits_approval_one": "{{count}} fil og valgt lisens venter på å bli verifisert",
-      "files_awaits_approval_other": "{{count}} filer og valgte lisenser venter på å bli verifisert",
+      "files_awaits_approval_one": "{{count}} fil venter på å bli godkjent",
+      "files_awaits_approval_other": "{{count}} filer venter på å bli godkjent",
       "files_completed": "Ferdig",
       "files_count": "Filer ({{count}})",
       "files_in_progress": "Under behandling",
@@ -1500,11 +1513,18 @@
       "error_description_published_result_workflow2": "Registreringen er publisert, men har følgende mangler:",
       "error_description_workflow1": "Følgende feil må rettes opp før publisering av resultat:",
       "error_description_workflow2": "Resultatet har følgende mangler:",
+      "files": {
+        "awaits_approval": "{{count}} venter på godkjenning",
+        "file_awaits_approval": "Fil venter på godkjenning"
+      },
+      "files_tab_list_label": "Velg synlighet for filer",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",
       "in_progress": "Under behandling",
+      "internal_files": "Interne filer ({{count}})",
       "message_to_curator": "Melding til kurator",
+      "no_public_files": "Resultatet har ingen offentlige filer.",
       "other_contributors_one": "(+{{count}} annen)",
       "other_contributors_other": "(+{{count}} andre)",
       "other_related_registrations": "Andre relaterte registreringer",
@@ -1513,6 +1533,7 @@
       "potential_duplicate": "Potensiell duplikat",
       "preview_of": "Forhåndsvisning av {{fileName}}",
       "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
+      "public_files": "Offentlige filer ({{count}})",
       "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
       "publishing_request_message_about": "Har du spørsmål, ta kontakt med kurator via meldingsfeltet.",
@@ -1582,6 +1603,7 @@
       "Anthology": "Del av bok eller rapport",
       "Architecture": "Arkitektur",
       "Artistic": "Kunstnerisk resultat",
+      "ArtisticDegreePhd": "Kunstnerisk doktorgradsresultat",
       "ArtisticDesign": "Design",
       "Book": "Bokpublikasjon",
       "BookAnthology": "Antologi",
@@ -1998,6 +2020,7 @@
       "advanced_search": "Avansert søk",
       "advanced_search_description": "Søk blant alle publiserte resultater",
       "choose_one_or_more": "Velg ett eller flere",
+      "nvi_reported_year": "Rapporteringsår",
       "publishing_period": "Publiseringsperiode",
       "reported": "Rapporterte",
       "scientific_value": {
@@ -2075,6 +2098,7 @@
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Kommentar",
+      "nvi_control": "NVI-kontroll (Norsk vitenskapsindeks)",
       "previous_candidate": "Gå til forrige kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
@@ -2091,7 +2115,7 @@
         "Approved": "Godkjent",
         "Dispute": "Tvist",
         "New": "Kandidat",
-        "Pending": "Sjekkes",
+        "Pending": "Kontrolleres",
         "Rejected": "Avvist"
       },
       "waiting_for_other_institutions": "Venter på andre institusjoner",

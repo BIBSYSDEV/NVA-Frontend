@@ -233,7 +233,7 @@ export const mainTheme = createTheme(
         styleOverrides: {
           root: {
             fill: Color.PrimaryLight,
-            opacity: 0.6,
+            opacity: 0.7,
             '&.Mui-active': {
               opacity: 1,
             },
@@ -246,7 +246,7 @@ export const mainTheme = createTheme(
       MuiStepLabel: {
         styleOverrides: {
           label: {
-            opacity: 0.6,
+            opacity: 0.7,
             textTransform: 'uppercase',
             fontSize: '1rem',
             color: Color.PrimaryLight,
