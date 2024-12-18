@@ -30,9 +30,9 @@ interface PublishStrategyButtonProps {
 const PublishStrategyButton = styled(ButtonBase, { shouldForwardProp: (prop) => prop !== 'isSelected' })(
   ({ isSelected }: PublishStrategyButtonProps) => ({
     padding: '0.5rem',
-    border: isSelected ? '2px solid' : '1px solid',
+    border: isSelected ? '3px solid' : '1px solid',
     borderRadius: '0.5rem',
-    opacity: isSelected ? 1 : 0.5,
+    opacity: isSelected ? 1 : 0.7,
   })
 );
 

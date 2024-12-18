@@ -318,7 +318,7 @@ const confirmedDocumentSchema = Yup.object({
 const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
   related: Yup.array().when('$publicationInstanceType', {
-    is: DegreeType.Phd,
+    is: (type: string) => type === DegreeType.Phd || type === DegreeType.ArtisticPhd,
     then: (schema) =>
       schema.of(
         Yup.lazy((related) =>

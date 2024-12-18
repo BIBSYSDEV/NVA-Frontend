@@ -24,12 +24,14 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
+import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
@@ -74,6 +76,8 @@ export const DoiRequestAccordion = ({
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
+
+  const location = useLocation<SelectedTicketTypeLocationState>();
 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
@@ -207,12 +211,16 @@ export const DoiRequestAccordion = ({
   const userCanRequestDoi = userHasAccessRight(registration, 'doi-request-create');
   const userCanAssignDoi = userHasAccessRight(registration, 'doi-request-approve');
 
+  const defaultExpanded = location.state?.selectedTicketType
+    ? location.state.selectedTicketType === 'DoiRequest'
+    : waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest;
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
       sx={{ bgcolor: 'doiRequest.light' }}
       elevation={3}
-      defaultExpanded={waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest}>
+      defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi')}
         {status && ` - ${status}`}

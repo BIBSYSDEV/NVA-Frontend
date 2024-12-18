@@ -74,3 +74,14 @@ export const fetchUsersByCustomer = async (customerId: string, role?: RoleName |
     return nameA.localeCompare(nameB);
   });
 };
+
+interface AcceptTermsData {
+  termsConditionsUri: string;
+}
+
+export const acceptTermsAndConditions = async (termsConditionsUri: string) =>
+  await authenticatedApiRequest2<AcceptTermsData>({
+    url: `${RoleApiPath.Users}/mine/accepted-terms`,
+    method: 'PUT',
+    data: { termsConditionsUri } satisfies AcceptTermsData,
+  });

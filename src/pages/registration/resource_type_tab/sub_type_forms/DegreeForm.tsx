@@ -16,8 +16,8 @@ interface DegreeFormProps {
 export const DegreeForm = ({ subType }: DegreeFormProps) => {
   const { t } = useTranslation();
 
-  if (subType === DegreeType.Phd) {
-    return <PhdForm />;
+  if (subType === DegreeType.Phd || subType === DegreeType.ArtisticPhd) {
+    return <PhdForm subType={subType} />;
   }
 
   return (
