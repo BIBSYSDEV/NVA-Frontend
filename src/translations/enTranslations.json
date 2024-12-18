@@ -17,6 +17,10 @@
     "short_description": "The Norwegian Research Information Repository (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
   },
   "authorization": {
+    "about_terms": "About user terms",
+    "about_terms_description": "<0>In order to use the Norwegian Research Information Repository service, you must accept <0>Sikt's user terms<0></0></0> for the Norwegian Research Information Repository.</0><0>If you enter personal data about other people, you must have their permission or another legal basis. You must ensure that the person concerned is informed that their personal data is published in the Norwegian Research Information Repository.</0><0>You cannot make available/upload copyrighted material/works of art without having permission from all authors.</0><0>You are responsible for ensuring that your use of the Norwegian Research Information Repository is not in violation of applicable law.</0><0>For more information, see <0>Sikt's user terms<0></0></0> in their entirety.</0><1>By pressing \"$t(authorization.accept)\" you accept Sikt's user terms.</1>",
+    "accept": "Accept",
+    "accept_terms_intro": "Thank you for wanting to make research openly available in the Norwegian Research Information Repository. Together, we will achieve the Government's goal that all Norwegian research funded by public funds becomes openly available to the public.",
     "accept_terms_to_create_user": "I consent to being created as a user in NVA",
     "back_to_home": "Back to the home page",
     "cancel_create_user_text": "You must create a user to proceed. If you cancel, you will be logged out. Do you wish to cancel?",
@@ -28,7 +32,9 @@
     "login": "Log in",
     "logout": "Log out",
     "registration_not_published": "This registration has not been published yet.",
+    "reject": "Reject",
     "signed_out": "You are logged out",
+    "welcome": "Welcome!",
     "your_user_profile": "Your user profile"
   },
   "basic_data": {
@@ -301,6 +307,7 @@
     "start_page": "Start page",
     "status": "Status",
     "tasks": "Tasks",
+    "terms": "User terms",
     "test_environment": "Test environment",
     "time_string": "{{date}}, at {{time}}",
     "title": "Title",
@@ -496,6 +503,7 @@
   "feedback": {
     "error": {
       "404_page": "Sorry, we can't find the page you're looking for",
+      "accept_terms": "Accepting user terms failed",
       "add_contributor": "Failed to add contributor",
       "add_employment": "Failed to add employment",
       "add_role": "Failed to add role",
@@ -747,7 +755,7 @@
       "files_published_one": "{{count}} file published",
       "files_published_other": "{{count}} files published",
       "files_rejected_one": "{{count}} file rejected",
-      "files_rejected_other": "{{count}} filees rejected",
+      "files_rejected_other": "{{count}} files rejected",
       "files_uploaded_one": "{{count}} file is uploaded",
       "files_uploaded_other": "{{count}} files are uploaded",
       "general_support_pending": "Waiting for follow-up",
@@ -830,6 +838,7 @@
       "remove_profile_picture_info": "Are you sure you want to remove the profile picture?",
       "results": "Results",
       "telephone": "Telephone",
+      "terms_description": "<0>You have accepted <0>Sikt's User Terms<0></0></0>.</0><0>Sikt's User Terms for the Norwegian Research Information Repository include, among other things, that if you enter personal data about other people, you must have their permission or another legal basis. You must ensure that the person concerned is informed that their personal data is published in the Norwegian Research Information Repository.</0><0>You cannot make available/upload copyrighted material/works of art without having permission from all authors.</0><0>You are responsible for ensuring that your use of the Norwegian Research Information Repository is not in violation of applicable law.</0><0>For more information, see the <0>Sikt's User Terms<0></0></0> in their entirety.</0>",
       "upload_description": "<0>By uploading a picture you consent to having the picture added as a profile picture on your public profile in the Norwegian Research Information Repository.</0><0>The profile picture is publicly visible to anyone who uses the Norwegian Research Information Repository.</0>",
       "upload_is_not_mandatory": "<0>Uploading a picture is optional.</0><0>You may at any time withdraw your consent by deleting the picture.</0>",
       "user_role_and_help": {
@@ -1163,6 +1172,9 @@
     "add_local_manager": "Add local manager",
     "add_project_contributor": "Add project participant",
     "add_project_manager": "Add project manager",
+    "add_self_as_local_project_manager": "Add me as the local manager",
+    "add_self_as_project_manager": "Add me as project manager",
+    "add_self_as_project_participant": "Add me as project participant",
     "add_unidentified_contributor": "Add unidentified project participant",
     "add_unidentified_project_manager": "Add unidentified project manager",
     "affiliation_modal": {
@@ -1501,11 +1513,18 @@
       "error_description_published_result_workflow2": "The registration is published, but lacks the following:",
       "error_description_workflow1": "The following errors must be corrected before publishing the result:",
       "error_description_workflow2": "The result lacks the following:",
+      "files": {
+        "awaits_approval": "{{count}} waiting for approval",
+        "file_awaits_approval": "File waiting for approval"
+      },
+      "files_tab_list_label": "Choose visibility for files",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
       "go_back_to_wizard": "Go back to the form",
       "handle": "Handle",
       "in_progress": "In progress",
+      "internal_files": "Internal files ({{count}})",
       "message_to_curator": "Message to curator",
+      "no_public_files": "The result has no public files.",
       "other_contributors_one": "(+{{count}} other)",
       "other_contributors_other": "(+{{count}} others)",
       "other_related_registrations": "Other related registrations",
@@ -1514,6 +1533,7 @@
       "potential_duplicate": "Potential duplicate",
       "preview_of": "Preview of {{fileName}}",
       "preview_unavailable": "Preview not available. Open the file in a suitable program.",
+      "public_files": "Public files ({{count}})",
       "publication": "Publication",
       "publishing_request": "Publication approval",
       "publishing_request_message_about": "If you have questions, contact the curator via the message field.",
@@ -1583,6 +1603,7 @@
       "Anthology": "Part of book or report",
       "Architecture": "Architecture",
       "Artistic": "Artistic result",
+      "ArtisticDegreePhd": "",
       "ArtisticDesign": "Design",
       "Book": "Book",
       "BookAnthology": "Anthology",
@@ -1999,6 +2020,7 @@
       "advanced_search": "Advanced search",
       "advanced_search_description": "Search among all published results",
       "choose_one_or_more": "Chose one or more",
+      "nvi_reported_year": "Reporting year",
       "publishing_period": "Publication period",
       "reported": "Reported",
       "scientific_value": {
@@ -2076,7 +2098,7 @@
       "next_candidate": "Go to the next candidate",
       "no_nvi_candidates": "No NVI candidates",
       "note": "Comment",
-      "nvi_control": "",
+      "nvi_control": "NVI control (Norwegian Science Index)",
       "previous_candidate": "Go to previous candidate",
       "publication_points": "Publication points",
       "reject_nvi_candidate": "Reject result",
