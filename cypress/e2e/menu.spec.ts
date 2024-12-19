@@ -109,9 +109,22 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.basicData.centralImportAccordion}]`).should('not.exist');
   });
 
-  // it('User sees Editor Page menu options', () => {
-  //   cy.visit(UrlPathTemplate.Home);
+  it('Internal-importer sees Basic Data menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([RoleName.InternalImporter]);
+    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
+
+    cy.get(`[data-testid=${dataTestId.basicData.personRegisterAccordion}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.addEmployeeLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.institutionsAccordion}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.nviPeriodsLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.centralImportAccordion}]`).should('be.visible');
+  });
+
+  // it('User sees Institution Page menu options', () => {
   //   cy.mocklogin();
+  //   cy.wait(waitBeforeUserUpdate);
   //   cy.setUserRolesInRedux([RoleName.Editor]);
   //   cy.get(`[data-testid=${dataTestId.header.editorLink}]`).click();
 
