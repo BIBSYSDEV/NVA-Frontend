@@ -1,6 +1,7 @@
 import { Query } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
 import { FetchTicketsParams, ResultParam } from '../api/searchApi';
+import { TicketType } from '../types/publication_types/ticket.types';
 import { AggregationFileKeyType } from '../types/registration.types';
 import { User } from '../types/user.types';
 
@@ -146,9 +147,9 @@ const commonTaskNotificationsParams: FetchTicketsParams = {
 
 export const getTaskNotificationsParams = (user: User | null): FetchTicketsParams => {
   const typeParam = [
-    user?.isPublishingCurator && 'publishingRequest',
-    user?.isDoiCurator && 'doiRequest',
-    user?.isSupportCurator && 'publishingRequest',
+    user?.isPublishingCurator && ('PublishingRequest' satisfies TicketType),
+    user?.isDoiCurator && ('DoiRequest' satisfies TicketType),
+    user?.isSupportCurator && ('GeneralSupportCase' satisfies TicketType),
   ]
     .filter(Boolean)
     .join(',');
