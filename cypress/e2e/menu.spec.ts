@@ -150,6 +150,30 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.editor.resultsPortfolioAccordion}]`).should('be.visible');
   });
 
+  it('Curator sees Tasks Page menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([RoleName.SupportCurator, RoleName.DoiCurator, RoleName.PublishingCurator]);
+    cy.get(`[data-testid=${dataTestId.header.tasksLink}]`).click();
+
+    cy.get(`[data-testid=${dataTestId.tasksPage.userDialogAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.resultRegistrationsAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.nviAccordion}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.tasksPage.correctionList.correctionListAccordion}]`).should('not.exist');
+  });
+
+  it('Curator sees Tasks Page menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([RoleName.NviCurator]);
+    cy.get(`[data-testid=${dataTestId.header.tasksLink}]`).click();
+
+    cy.get(`[data-testid=${dataTestId.tasksPage.userDialogAccordion}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.tasksPage.resultRegistrationsAccordion}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.tasksPage.nviAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.correctionList.correctionListAccordion}]`).should('be.visible');
+  });
+
   // it('Unauthorized user should see Forbidden page when visiting new registration', () => {
   //   cy.visit(UrlPathTemplate.RegistrationNew);
   //   cy.get('[data-testid=forbidden]').should('be.visible');
