@@ -21,7 +21,6 @@ if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
 }
 
-// TODO: only for dev env
 // Expose redux store to cypress tests
 if ((window as any).Cypress) {
   (window as any).store = store;
