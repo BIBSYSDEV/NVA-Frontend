@@ -1,6 +1,7 @@
 {
   "about": {
     "availability_statement": "Tilgjengelighetserklæring",
+    "copyright_inquiries": "Henvendelser om opphavsrett",
     "description": {
       "paragraph0": {
         "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
@@ -1437,8 +1438,8 @@
         "rejected_file": "Avvist fil"
       },
       "files": "Filer",
-      "files_awaits_approval_one": "{{count}} fil og valgt lisens venter på å bli verifisert",
-      "files_awaits_approval_other": "{{count}} filer og valgte lisenser venter på å bli verifisert",
+      "files_awaits_approval_one": "{{count}} fil venter på å bli godkjent",
+      "files_awaits_approval_other": "{{count}} filer venter på å bli godkjent",
       "files_completed": "Ferdig",
       "files_count": "Filer ({{count}})",
       "files_in_progress": "Under behandling",
@@ -1513,11 +1514,18 @@
       "error_description_published_result_workflow2": "Registreringen er publisert, men har følgende mangler:",
       "error_description_workflow1": "Følgende feil må rettes opp før publisering av resultat:",
       "error_description_workflow2": "Resultatet har følgende mangler:",
+      "files": {
+        "awaits_approval": "{{count}} venter på godkjenning",
+        "file_awaits_approval": "Fil venter på godkjenning"
+      },
+      "files_tab_list_label": "Velg synlighet for filer",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",
       "in_progress": "Under behandling",
+      "internal_files": "Interne filer ({{count}})",
       "message_to_curator": "Melding til kurator",
+      "no_public_files": "Resultatet har ingen offentlige filer.",
       "other_contributors_one": "(+{{count}} annen)",
       "other_contributors_other": "(+{{count}} andre)",
       "other_related_registrations": "Andre relaterte registreringer",
@@ -1526,6 +1534,7 @@
       "potential_duplicate": "Potensiell duplikat",
       "preview_of": "Forhåndsvisning av {{fileName}}",
       "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
+      "public_files": "Offentlige filer ({{count}})",
       "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
       "publishing_request_message_about": "Har du spørsmål, ta kontakt med kurator via meldingsfeltet.",
@@ -1595,6 +1604,7 @@
       "Anthology": "Del av bok eller rapport",
       "Architecture": "Arkitektur",
       "Artistic": "Kunstnerisk resultat",
+      "ArtisticDegreePhd": "Kunstnerisk doktorgradsresultat",
       "ArtisticDesign": "Design",
       "Book": "Bokpublikasjon",
       "BookAnthology": "Antologi",

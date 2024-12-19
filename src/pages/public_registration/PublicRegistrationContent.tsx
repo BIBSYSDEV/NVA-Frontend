@@ -170,7 +170,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </>
         )}
 
-        {entityDescription?.reference?.publicationInstance?.type === DegreeType.Phd &&
+        {(entityDescription?.reference?.publicationInstance?.type === DegreeType.Phd ||
+          entityDescription?.reference?.publicationInstance?.type === DegreeType.ArtisticPhd) &&
           entityDescription.reference.publicationInstance.related &&
           entityDescription.reference.publicationInstance.related.length > 0 && (
             <LandingPageAccordion
