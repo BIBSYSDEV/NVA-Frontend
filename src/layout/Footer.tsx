@@ -13,6 +13,12 @@ const StyledArrowLinkContainer = styled(Box)({
   marginBottom: '0.3rem',
 });
 
+const StyledExternalLink = styled(MuiLink)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  display: 'flex',
+  gap: '0.5rem',
+}));
+
 export const Footer = () => {
   const { t } = useTranslation();
 
@@ -33,15 +39,14 @@ export const Footer = () => {
             {t('footer.about_nva')}
           </Typography>
 
-          <MuiLink
-            sx={{ color: 'primary.main', display: 'flex', gap: '0.5rem' }}
+          <StyledExternalLink
             data-testid={dataTestId.footer.aboutLink}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva'}>
             {t('common.read_more')}
             <LaunchIcon fontSize="small" />
-          </MuiLink>
+          </StyledExternalLink>
         </Box>
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
@@ -74,19 +79,14 @@ export const Footer = () => {
             {t('footer.become_customer')}
           </Typography>
 
-          <MuiLink
-            sx={{
-              color: 'primary.main',
-              display: 'flex',
-              gap: '0.5rem',
-            }}
+          <StyledExternalLink
             data-testid={dataTestId.footer.becomeCustomer}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva#Tjenestebetingelser'}>
             {t('common.read_more')}
             <LaunchIcon fontSize="small" />
-          </MuiLink>
+          </StyledExternalLink>
         </Box>
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
@@ -98,15 +98,14 @@ export const Footer = () => {
             {t('footer.about_sikt')}
           </Typography>
 
-          <MuiLink
-            sx={{ color: 'primary.main', display: 'flex', gap: '0.5rem' }}
+          <StyledExternalLink
             data-testid={dataTestId.footer.aboutSikt}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/'}>
             {t('common.read_more')}
             <LaunchIcon fontSize="small" />
-          </MuiLink>
+          </StyledExternalLink>
         </Box>
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
@@ -115,55 +114,38 @@ export const Footer = () => {
       </div>
 
       <div>
-        <MuiLink
-          sx={{
-            fontWeight: 'bold',
-            color: 'primary.main',
-            display: 'flex',
-            gap: '0.5rem',
-            mb: '1rem',
-          }}
+        <StyledExternalLink
+          sx={{ fontWeight: 'bold', mb: '1rem' }}
           data-testid={dataTestId.footer.helpPage}
           target="_blank"
           rel="noopener noreferrer"
           href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva'}>
           {t('footer.help_page')}
           <LaunchIcon fontSize="small" />
-        </MuiLink>
+        </StyledExternalLink>
 
-        <MuiLink
-          sx={{
-            fontWeight: 'bold',
-            color: 'primary.main',
-            display: 'flex',
-            gap: '0.5rem',
-            mb: '1rem',
-          }}
+        <StyledExternalLink
+          sx={{ fontWeight: 'bold', mb: '1rem' }}
           data-testid={dataTestId.footer.systemStatusLink}
           target="_blank"
           rel="noopener noreferrer"
           href={'https://sikt.no/driftsmeldinger'}>
           {t('footer.system_status_link')}
           <LaunchIcon fontSize="small" />
-        </MuiLink>
+        </StyledExternalLink>
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.8rem' }} />
 
         <StyledArrowLinkContainer>
           <ArrowRightAltIcon />
-          <MuiLink
-            sx={{
-              color: 'primary.main',
-              display: 'flex',
-              gap: '0.5rem',
-            }}
+          <StyledExternalLink
             data-testid={dataTestId.footer.newsLink}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://pub.dialogapi.no/s/MjI2NDQ6MWVmZmQxOTktMGVkZi00YjZhLWE2ZjQtNzNmZWU2NjI2ZmFi'}>
             {t('footer.news_link')}
             <LaunchIcon fontSize="small" />
-          </MuiLink>
+          </StyledExternalLink>
         </StyledArrowLinkContainer>
 
         <StyledArrowLinkContainer>
@@ -179,29 +161,35 @@ export const Footer = () => {
 
         <StyledArrowLinkContainer>
           <ArrowRightAltIcon />
-          <MuiLink
-            sx={{
-              color: 'primary.main',
-              display: 'flex',
-              gap: '0.5rem',
-            }}
+          <StyledExternalLink
             data-testid={dataTestId.footer.availabilityStatement}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://uustatus.no/nb/erklaringer/publisert/bffb4b1d-25eb-4fe0-bac7-2f0b4a8e0fd9'}>
             {t('about.availability_statement')}
             <LaunchIcon fontSize="small" />
-          </MuiLink>
+          </StyledExternalLink>
+        </StyledArrowLinkContainer>
+
+        <StyledArrowLinkContainer>
+          <ArrowRightAltIcon />
+          <StyledExternalLink
+            target="_blank"
+            rel="noopener noreferrer"
+            href={'https://sikt.no/om-sikt/kontakt-oss?service=e588691c-22eb-49c3-ac50-755f5513a3f5#skjema'}>
+            {t('about.copyright_inquiries')}
+            <LaunchIcon fontSize="small" />
+          </StyledExternalLink>
         </StyledArrowLinkContainer>
 
         <StyledArrowLinkContainer>
           <ArrowRightAltIcon />
 
           <Typography color="primary">
-            <Trans t={t} i18nKey="footer.technical_support_link">
+            <Trans i18nKey="footer.technical_support_link">
               <MuiLink
-                color="primary"
-                href={'mailto:kontakt@sikt.no'}
+                sx={{ color: 'primary.main' }}
+                href="mailto:kontakt@sikt.no"
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid={dataTestId.footer.technicalSupportLink}>
