@@ -6,11 +6,8 @@ const allRoles = Object.values(RoleName);
 const waitBeforeUserUpdate = 500;
 
 describe('Menu', () => {
-  beforeEach(() => {
-    cy.visit(UrlPathTemplate.Home);
-  });
-
   it('Unauthenticated user should not see protected menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('not.exist');
@@ -22,6 +19,7 @@ describe('Menu', () => {
   });
 
   it('Authorized user should see protected menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux(allRoles);
@@ -37,6 +35,7 @@ describe('Menu', () => {
   });
 
   it('Unauthorized user should not see protected menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([]);
@@ -52,6 +51,7 @@ describe('Menu', () => {
   });
 
   it('User without roles sees My Page menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([]);
@@ -69,6 +69,7 @@ describe('Menu', () => {
   });
 
   it('Creator without roles sees My Page menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.Creator]);
@@ -85,6 +86,7 @@ describe('Menu', () => {
   });
 
   it('App-admin sees Basic Data menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.AppAdmin]);
@@ -97,6 +99,7 @@ describe('Menu', () => {
   });
 
   it('Insitution-admin sees Basic Data menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.InstitutionAdmin]);
@@ -110,6 +113,7 @@ describe('Menu', () => {
   });
 
   it('Internal-importer sees Basic Data menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.InternalImporter]);
@@ -123,6 +127,7 @@ describe('Menu', () => {
   });
 
   it('User sees Institution Page menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([]);
@@ -140,6 +145,7 @@ describe('Menu', () => {
   });
 
   it('Editor sees Institution Page menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.Editor]);
@@ -151,6 +157,7 @@ describe('Menu', () => {
   });
 
   it('Curator sees Tasks Page menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.SupportCurator, RoleName.DoiCurator, RoleName.PublishingCurator]);
@@ -163,6 +170,7 @@ describe('Menu', () => {
   });
 
   it('Curator sees Tasks Page menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.NviCurator]);
@@ -178,6 +186,7 @@ describe('Menu', () => {
     cy.visit(UrlPathTemplate.RegistrationNew);
     cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
     cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
@@ -187,6 +196,7 @@ describe('Menu', () => {
     cy.visit(UrlPathTemplate.MyPageMyRegistrations);
     cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
     cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
@@ -196,6 +206,7 @@ describe('Menu', () => {
     cy.visit(UrlPathTemplate.Tasks);
     cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
     cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
@@ -205,6 +216,7 @@ describe('Menu', () => {
     cy.visit(UrlPathTemplate.BasicData);
     cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
     cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
@@ -214,6 +226,7 @@ describe('Menu', () => {
     cy.visit(UrlPathTemplate.InstitutionOverviewPage);
     cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
     cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('not.exist');
