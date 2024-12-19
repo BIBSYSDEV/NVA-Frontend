@@ -68,47 +68,46 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.myPage.termsLink}]`).should('be.visible');
   });
 
-  // it('Creator without roles sees My Page menu options', () => {
-  //   cy.visit(UrlPathTemplate.Home);
-  //   cy.mocklogin();
-  //   cy.setUserRolesInRedux([RoleName.Creator]);
-  //   cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
+  it('Creator without roles sees My Page menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([RoleName.Creator]);
+    cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
 
-  //   cy.get(`[data-testid=${dataTestId.myPage.messagesAccordion}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.publishingButton}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.doiButton}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.supportButton}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.myPage.registrationsAccordion}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsPublishedCheckbox}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsUnpublishedCheckbox}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.myPage.researchProfileAccordion}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.myPage.researchProfileLink}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.myPage.myProfileAccordion}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).should('be.visible');
-  // });
+    cy.get(`[data-testid=${dataTestId.myPage.messagesAccordion}]`).click();
+    cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.publishingButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.doiButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.supportButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.registrationsAccordion}]`).click();
+    cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsPublishedCheckbox}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsUnpublishedCheckbox}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.researchProfileAccordion}]`).click();
+  });
 
-  // it('App-admin sees Basic Data menu options', () => {
-  //   cy.visit(UrlPathTemplate.Home);
-  //   cy.mocklogin();
-  //   cy.setUserRolesInRedux([RoleName.AppAdmin]);
-  //   cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.basicData.personRegisterLink}]`).should('not.exist');
-  //   cy.get(`[data-testid=${dataTestId.basicData.addEmployeeLink}]`).should('not.exist');
-  //   cy.get(`[data-testid=${dataTestId.basicData.centralImportLink}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).should('be.visible');
-  // });
+  it('App-admin sees Basic Data menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([RoleName.AppAdmin]);
+    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
 
-  // it('Insitution-admin sees Basic Data menu options', () => {
-  //   cy.visit(UrlPathTemplate.Home);
-  //   cy.mocklogin();
-  //   cy.setUserRolesInRedux([RoleName.InstitutionAdmin]);
-  //   cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.basicData.personRegisterLink}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.basicData.addEmployeeLink}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.basicData.centralImportLink}]`).should('not.exist');
-  //   cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).should('not.exist');
-  // });
+    cy.get(`[data-testid=${dataTestId.basicData.personRegisterAccordion}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.institutionsAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.basicData.nviPeriodsLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.basicData.centralImportAccordion}]`).should('not.exist');
+  });
+
+  it('Insitution-admin sees Basic Data menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([RoleName.InstitutionAdmin]);
+    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
+
+    cy.get(`[data-testid=${dataTestId.basicData.personRegisterAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.basicData.addEmployeeLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.basicData.institutionsAccordion}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.nviPeriodsLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.basicData.centralImportAccordion}]`).should('not.exist');
+  });
 
   // it('User sees Editor Page menu options', () => {
   //   cy.visit(UrlPathTemplate.Home);
