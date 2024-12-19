@@ -122,20 +122,33 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.basicData.centralImportAccordion}]`).should('be.visible');
   });
 
-  // it('User sees Institution Page menu options', () => {
-  //   cy.mocklogin();
-  //   cy.wait(waitBeforeUserUpdate);
-  //   cy.setUserRolesInRedux([RoleName.Editor]);
-  //   cy.get(`[data-testid=${dataTestId.header.editorLink}]`).click();
+  it('User sees Institution Page menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([]);
+    cy.get(`[data-testid=${dataTestId.header.editorLink}]`).click();
 
-  //   cy.get(`[data-testid=${dataTestId.editor.overviewAccordion}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.editor.areaOfResponsibilityLinkButton}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.editor.settingsAccordion}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.editor.institutionsNameLinkButton}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.editor.vocabularyLinkButton}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.editor.publishStrategyLinkButton}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.editor.doiLinkButton}]`).should('be.visible');
-  // });
+    cy.get(`[data-testid=${dataTestId.editor.institutionsNameLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.organizationOverviewLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.curatorsOverviewLinkButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.editor.doiLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.publishStrategyOverviewLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.vocabularyOverviewLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.categoriesLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.settingsAccordion}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.editor.resultsPortfolioAccordion}]`).should('not.exist');
+  });
+
+  it('Editor sees Institution Page menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([RoleName.Editor]);
+    cy.get(`[data-testid=${dataTestId.header.editorLink}]`).click();
+
+    cy.get(`[data-testid=${dataTestId.editor.overviewAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.settingsAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.resultsPortfolioAccordion}]`).should('be.visible');
+  });
 
   // it('Unauthorized user should see Forbidden page when visiting new registration', () => {
   //   cy.visit(UrlPathTemplate.RegistrationNew);
