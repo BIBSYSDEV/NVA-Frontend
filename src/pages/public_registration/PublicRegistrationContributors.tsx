@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { ContributorRole, PreviewContributor } from '../../types/contributor.types';
+import { Contributor, ContributorRole } from '../../types/contributor.types';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
@@ -14,7 +14,7 @@ import { getContributorsWithPrimaryRole, getContributorsWithSecondaryRole } from
 import { getResearchProfilePath } from '../../utils/urlPaths';
 
 interface PublicRegistrationContributorsProps {
-  contributors: PreviewContributor[];
+  contributors: Contributor[];
   registrationType: PublicationInstanceType;
 }
 
@@ -49,12 +49,15 @@ export const PublicRegistrationContributors = ({
         }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <ContributorsRow
-            contributors={primaryContributorsToShow}
+            contributors={primaryContributorsToShow as Contributor[]}
             distinctUnits={distinctUnits}
             hiddenCount={showAll ? undefined : hiddenContributorsCount.current}
           />
           {showAll && secondaryContributorsToShow.length > 0 && (
-            <ContributorsRow contributors={secondaryContributorsToShow} distinctUnits={distinctUnits} />
+            <ContributorsRow
+              contributors={secondaryContributorsToShow as Contributor[]}
+              distinctUnits={distinctUnits}
+            />
           )}
         </Box>
         {hiddenContributorsCount.current > 0 && (
@@ -80,7 +83,7 @@ export const PublicRegistrationContributors = ({
 };
 
 interface ContributorsRowProps {
-  contributors: PreviewContributor[];
+  contributors: Contributor[];
   distinctUnits: string[];
   hiddenCount?: number;
 }
@@ -111,7 +114,7 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount }: Contribut
           .filter((affiliationIndex) => affiliationIndex)
           .sort();
 
-        const showRole = contributor.role !== ContributorRole.Creator;
+        const showRole = contributor.role.type !== ContributorRole.Creator;
 
         return (
           <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
@@ -126,7 +129,7 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount }: Contribut
               ) : (
                 name
               )}
-              {showRole && ` (${t(`registration.contributors.types.${contributor.role}`)})`}
+              {showRole && ` (${t(`registration.contributors.types.${contributor.role.type}`)})`}
               {affiliationIndexes && affiliationIndexes.length > 0 && (
                 <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
               )}

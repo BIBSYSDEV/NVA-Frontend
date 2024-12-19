@@ -599,19 +599,26 @@ export const contributorConfig: ContributorConfig = {
 };
 
 export const getContributorsWithPrimaryRole = (
-  contributors: PreviewContributor[],
+  contributors: PreviewContributor[] | Contributor[],
   registrationType: PublicationInstanceType
 ) => {
   const { primaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => primaryRoles.includes(contributor.role));
+
+  return contributors.filter((contributor) => {
+    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
+    return primaryRoles.includes(roleValue);
+  });
 };
 
 export const getContributorsWithSecondaryRole = (
-  contributors: PreviewContributor[],
+  contributors: PreviewContributor[] | Contributor[],
   registrationType: PublicationInstanceType
 ) => {
   const { secondaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => secondaryRoles.includes(contributor.role));
+  return contributors.filter((contributor) => {
+    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
+    return secondaryRoles.includes(roleValue);
+  });
 };
 
 export const getOutputName = (item: OutputItem): string => {

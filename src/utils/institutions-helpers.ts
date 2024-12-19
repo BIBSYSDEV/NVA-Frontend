@@ -7,7 +7,7 @@ import { getLanguageString } from './translation-helpers';
 
 // Find distinct unit URIs for a set of contributors' affiliations
 const unitIdToIgnore = `${API_URL}${CristinApiPath.Organization.substring(1)}/0.0.0.0`;
-export const getDistinctContributorUnits = (contributors: PreviewContributor[] | Contributor[]) => {
+export const getDistinctContributorUnits = (contributors: (PreviewContributor | Contributor)[]) => {
   const unitIds = contributors
     .flatMap((contributor) => contributor.affiliations)
     .filter((affiliation) => affiliation?.type === 'Organization' && affiliation.id !== unitIdToIgnore)
