@@ -4,7 +4,6 @@ import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegi
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { ArtisticType, PublicationType, ResearchDataType } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import { getIdentifierFromId } from '../../utils/general-helpers';
 import {
   getMainRegistrationType,
   isPeriodicalMediaContribution,
@@ -50,7 +49,7 @@ export const ResourceTypePanel = () => {
       {duplicateRegistration && registrationsHaveSameCategory(values, duplicateRegistration) && (
         <DuplicateWarning
           name={duplicateRegistration.mainTitle}
-          linkTo={getRegistrationLandingPagePath(getIdentifierFromId(duplicateRegistration.id))}
+          linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
           warning={t('registration.resource_type.duplicate_category_warning', {
             sameFields: registrationsHaveSamePublicationYear(values, duplicateRegistration)
               ? t('registration.resource_type.same_title_and_date').toLowerCase()

@@ -64,7 +64,7 @@ export const mockRegistrationSearchItem: RegistrationSearchItem2 = {
       correspondingAuthor: false,
       identity: {
         type: 'Identity',
-        name: 'Osteloff, Oddny',
+        name: 'Osteloff, Oddvar',
       },
       role: ContributorRole.Other,
       sequence: 3,

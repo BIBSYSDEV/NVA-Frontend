@@ -778,7 +778,7 @@ export const registrationLanguageOptions = [
 ];
 
 const isRegistration = (reg: Registration | RegistrationSearchItem2): reg is Registration => {
-  return (reg as Registration).entityDescription !== undefined;
+  return reg.type === 'Publication';
 };
 
 export const registrationsHaveSamePublicationYear = (
@@ -787,11 +787,11 @@ export const registrationsHaveSamePublicationYear = (
 ) => {
   const reg1PublicationYear = isRegistration(reg1)
     ? reg1.entityDescription?.publicationDate?.year
-    : (reg1 as RegistrationSearchItem2).publicationDate?.year;
+    : reg1.publicationDate?.year;
 
   const reg2PublicationYear = isRegistration(reg2)
     ? reg2.entityDescription?.publicationDate?.year
-    : (reg2 as RegistrationSearchItem2).publicationDate?.year;
+    : reg2.publicationDate?.year;
 
   if (reg1PublicationYear === undefined || reg2PublicationYear === undefined) {
     return false;

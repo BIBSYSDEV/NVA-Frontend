@@ -14,7 +14,6 @@ import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
 import { RegistrationSearchItem2, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { getIdentifierFromId } from '../utils/general-helpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
@@ -227,9 +226,7 @@ export const RegistrationListItemContent = ({
           <IconButton
             sx={{ alignSelf: 'start' }}
             onClick={onRemoveRelated}
-            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(
-              getIdentifierFromId(registration.id)
-            )}>
+            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}>
             <CancelIcon color="primary" />
           </IconButton>
         </Tooltip>
