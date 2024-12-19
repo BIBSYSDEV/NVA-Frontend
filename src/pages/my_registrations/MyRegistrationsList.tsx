@@ -11,7 +11,7 @@ import {
   emptyRegistration,
   Registration,
   RegistrationPreview,
-  RegistrationSearchItem2,
+  RegistrationSearchItem,
 } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
@@ -40,7 +40,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
 
   const registrationsOnPage = registrations.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
-  const registrationSearchItems: RegistrationSearchItem2[] = registrationsOnPage.map((registrationPreview) => {
+  const registrationSearchItems: RegistrationSearchItem[] = registrationsOnPage.map((registrationPreview) => {
     const { identifier, id, contributors, mainTitle, publicationInstance, status, abstract } = registrationPreview;
     const registration = {
       ...emptyRegistration,
@@ -58,7 +58,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
   });
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationSearchItem2>();
+  const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationSearchItem>();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const deleteDraftRegistration = async () => {
@@ -79,7 +79,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     }
   };
 
-  const onClickDeleteRegistration = (registration: RegistrationSearchItem2) => {
+  const onClickDeleteRegistration = (registration: RegistrationSearchItem) => {
     setRegistrationToDelete(registration);
     setShowDeleteModal(true);
   };

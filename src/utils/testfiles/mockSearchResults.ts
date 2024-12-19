@@ -2,12 +2,12 @@ import { SearchResponse, SearchResponse2 } from '../../types/common.types';
 import { ImportCandidateSummary } from '../../types/importCandidate.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { JournalType } from '../../types/publicationFieldNames';
-import { RegistrationAggregations, RegistrationSearchItem2 } from '../../types/registration.types';
+import { RegistrationAggregations, RegistrationSearchItem } from '../../types/registration.types';
 import { mockImportCandidate } from './mockImportCandidate';
 import { mockTicketCollection } from './mockRegistration';
 import { mockRegistrationSearchItem, mockRegistrationSearchItemWithMathJax } from './mockRegistrationSearchItem';
 
-export const mockSearchResults: SearchResponse2<RegistrationSearchItem2, RegistrationAggregations> = {
+export const mockSearchResults: SearchResponse2<RegistrationSearchItem, RegistrationAggregations> = {
   totalHits: 50,
   hits: [
     mockRegistrationSearchItemWithMathJax,

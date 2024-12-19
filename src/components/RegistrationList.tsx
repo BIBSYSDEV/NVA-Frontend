@@ -12,7 +12,7 @@ import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
-import { RegistrationSearchItem2, RegistrationStatus } from '../types/registration.types';
+import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
@@ -28,9 +28,9 @@ import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps extends Pick<LinkProps, 'target'> {
-  registrations: RegistrationSearchItem2[];
+  registrations: RegistrationSearchItem[];
   canEditRegistration?: boolean;
-  onDeleteDraftRegistration?: (registration: RegistrationSearchItem2) => void;
+  onDeleteDraftRegistration?: (registration: RegistrationSearchItem) => void;
   promotedPublications?: string[];
 }
 
@@ -47,7 +47,7 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 );
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
-  registration: RegistrationSearchItem2;
+  registration: RegistrationSearchItem;
   ticketView?: boolean;
   onRemoveRelated?: () => void;
 }

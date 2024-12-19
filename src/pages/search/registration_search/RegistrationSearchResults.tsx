@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { RegistrationList } from '../../../components/RegistrationList';
-import { RegistrationSearchItem2 } from '../../../types/registration.types';
+import { RegistrationSearchItem } from '../../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 
 interface SearchResultsProps {
-  searchResult: RegistrationSearchItem2[];
+  searchResult: RegistrationSearchItem[];
   canEditRegistration?: boolean;
   promotedPublications?: string[];
 }

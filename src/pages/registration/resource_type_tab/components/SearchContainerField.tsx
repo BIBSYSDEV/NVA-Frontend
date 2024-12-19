@@ -16,7 +16,7 @@ import {
   Publisher,
   Registration,
   RegistrationDate,
-  RegistrationSearchItem2,
+  RegistrationSearchItem,
   SerialPublication,
 } from '../../../../types/registration.types';
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
@@ -191,7 +191,7 @@ export const YearAndContributorsText = ({ date, contributors }: YearAndContribut
 };
 
 interface ContainerAndLevelTextProps {
-  registration: RegistrationSearchItem2;
+  registration: RegistrationSearchItem;
 }
 
 const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {

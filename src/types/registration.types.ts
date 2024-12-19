@@ -263,45 +263,12 @@ export interface Registration extends BaseRegistration {
 export interface RegistrationSearchItem {
   id: string;
   identifier: string;
-  createdDate: string;
-  modifiedDate: string;
-  publishedDate?: string;
-  status: RegistrationStatus;
-  entityDescription: {
-    mainTitle: string;
-    abstract: string;
-    description: string;
-    publicationDate?: RegistrationDate;
-    contributorsPreview: Contributor[];
-    contributorsCount: number;
-    reference: {
-      publicationInstance: {
-        type?: PublicationInstanceType | '';
-      };
-      publicationContext?: {
-        publisher?: ContextPublisher;
-        series?: ContextSeries;
-      };
-    };
-  };
-}
-
-export interface RegistrationSearchItem2 {
+  type: PublicationInstanceType | '';
   recordMetadata: {
     status: RegistrationStatus;
     createdDate: string;
     modifiedDate: string;
     publishedDate?: string;
-  };
-  id: string;
-  identifier: string;
-  type: PublicationInstanceType | '';
-  otherIdentifiers?: {
-    scopus: string[];
-    cristin: string[];
-    handle: string[];
-    issn: string[];
-    isbn: string[];
   };
   mainTitle: string;
   publicationDate?: RegistrationDate;

@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
 import { Modal } from '../../../components/Modal';
 import { RequiredDescription } from '../../../components/RequiredDescription';
-import { Registration, RegistrationSearchItem2 } from '../../../types/registration.types';
+import { Registration, RegistrationSearchItem } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { FindRegistration } from './FindRegistration';
@@ -24,7 +24,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
   const [showUnpublishModal, setShowUnpublishModal] = useState(false);
   const toggleUnpublishModal = () => setShowUnpublishModal(!showUnpublishModal);
 
-  const [selectedDuplicate, setSelectedDuplicate] = useState<RegistrationSearchItem2>();
+  const [selectedDuplicate, setSelectedDuplicate] = useState<RegistrationSearchItem>();
 
   const userCanUnpublish = userHasAccessRight(registration, 'unpublish');
 

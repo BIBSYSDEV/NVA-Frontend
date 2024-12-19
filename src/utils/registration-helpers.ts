@@ -51,7 +51,7 @@ import {
   Publisher,
   Registration,
   RegistrationOperation,
-  RegistrationSearchItem2,
+  RegistrationSearchItem,
   RelatedDocument,
   SerialPublication,
 } from '../types/registration.types';
@@ -777,13 +777,13 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
-const isRegistration = (reg: Registration | RegistrationSearchItem2): reg is Registration => {
+const isRegistration = (reg: Registration | RegistrationSearchItem): reg is Registration => {
   return reg.type === 'Publication';
 };
 
 export const registrationsHaveSamePublicationYear = (
-  reg1: Registration | RegistrationSearchItem2,
-  reg2: Registration | RegistrationSearchItem2
+  reg1: Registration | RegistrationSearchItem,
+  reg2: Registration | RegistrationSearchItem
 ) => {
   const reg1PublicationYear = isRegistration(reg1)
     ? reg1.entityDescription?.publicationDate?.year
@@ -801,16 +801,16 @@ export const registrationsHaveSamePublicationYear = (
 };
 
 export const registrationsHaveSameCategory = (
-  reg1: Registration | RegistrationSearchItem2,
-  reg2: Registration | RegistrationSearchItem2
+  reg1: Registration | RegistrationSearchItem,
+  reg2: Registration | RegistrationSearchItem
 ) => {
   const reg1Category = isRegistration(reg1)
     ? reg1.entityDescription?.reference?.publicationInstance?.type
-    : (reg1 as RegistrationSearchItem2).type;
+    : (reg1 as RegistrationSearchItem).type;
 
   const reg2Category = isRegistration(reg2)
     ? reg2.entityDescription?.reference?.publicationInstance?.type
-    : (reg2 as RegistrationSearchItem2).type;
+    : (reg2 as RegistrationSearchItem).type;
 
   if (!reg1Category || !reg2Category) {
     return false;
@@ -828,15 +828,6 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
   return issnValues.join(', ');
 };
 
-export const convertToPreviewContributor = (contributor: Contributor) => {
-  return {
-    affiliation: contributor.affiliations,
-    correspondingAuthor: contributor.correspondingAuthor,
-    identity: contributor.identity,
-    role: contributor.role.type,
-  };
-};
-
 export const convertToRegistrationSearchItem = (registration: Registration) => {
   const publisher =
     registration.entityDescription?.reference?.publicationContext &&
@@ -850,11 +841,14 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
       ? registration.entityDescription.reference.publicationContext.series
       : undefined;
 
-  const contributors = registration.entityDescription?.contributors.map((contributor) =>
-    convertToPreviewContributor(contributor)
-  );
+  const contributors = registration.entityDescription?.contributors.map((contributor) => ({
+    affiliation: contributor.affiliations,
+    correspondingAuthor: contributor.correspondingAuthor,
+    identity: contributor.identity,
+    role: contributor.role.type,
+  }));
 
-  const registrationSearchItem: RegistrationSearchItem2 = {
+  const registrationSearchItem: RegistrationSearchItem = {
     type: registration.entityDescription?.reference?.publicationInstance.type ?? '',
     id: registration.id,
     identifier: registration.identifier,

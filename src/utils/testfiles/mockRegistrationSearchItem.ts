@@ -1,8 +1,8 @@
 import { ContributorRole } from '../../types/contributor.types';
 import { JournalType } from '../../types/publicationFieldNames';
-import { PublicationChannelType, RegistrationSearchItem2, RegistrationStatus } from '../../types/registration.types';
+import { PublicationChannelType, RegistrationSearchItem, RegistrationStatus } from '../../types/registration.types';
 
-export const mockRegistrationSearchItem: RegistrationSearchItem2 = {
+export const mockRegistrationSearchItem: RegistrationSearchItem = {
   recordMetadata: {
     status: RegistrationStatus.Published,
     createdDate: new Date(2020, 1).toISOString(),
@@ -12,13 +12,6 @@ export const mockRegistrationSearchItem: RegistrationSearchItem2 = {
   id: 'https://api.dev.nva.aws.unit.no/registration/12345679',
   identifier: '12345679',
   type: JournalType.AcademicArticle,
-  otherIdentifiers: {
-    scopus: [''],
-    cristin: [''],
-    handle: [''],
-    issn: [''],
-    isbn: [''],
-  },
   mainTitle:
     'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting',
   publicationDate: {

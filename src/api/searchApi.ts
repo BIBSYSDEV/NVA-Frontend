@@ -16,7 +16,7 @@ import {
   AggregationFileKeyType,
   PublicationInstanceType,
   RegistrationAggregations,
-  RegistrationSearchItem2,
+  RegistrationSearchItem,
   RegistrationStatus,
 } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
@@ -555,7 +555,7 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   searchParams.set(ResultParam.Order, params.order ?? ResultSearchOrder.Relevance);
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
-  const getResults = await apiRequest2<SearchResponse2<RegistrationSearchItem2, RegistrationAggregations>>({
+  const getResults = await apiRequest2<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
     headers: { accept: 'application/json; version=2024-12-01' },
     signal,
@@ -592,7 +592,7 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 
   const getCustomerResults = await authenticatedApiRequest2<
-    SearchResponse2<RegistrationSearchItem2, RegistrationAggregations>
+    SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
   >({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
     signal,

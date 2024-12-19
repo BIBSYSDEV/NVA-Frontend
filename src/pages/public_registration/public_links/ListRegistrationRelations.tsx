@@ -1,10 +1,10 @@
 import { List } from '@mui/material';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
-import { RegistrationSearchItem2 } from '../../../types/registration.types';
+import { RegistrationSearchItem } from '../../../types/registration.types';
 
 interface ListRegistrationRelationsProps {
-  registrations: RegistrationSearchItem2[];
+  registrations: RegistrationSearchItem[];
 }
 
 export const ListRegistrationRelations = ({ registrations }: ListRegistrationRelationsProps) => (
