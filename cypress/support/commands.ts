@@ -27,6 +27,9 @@ Cypress.Commands.add('selectNpiDiscipline', (npiDiscipline) => {
 });
 
 Cypress.Commands.add('setUserRolesInRedux', (roles) => {
+  console.log('HHHEI');
+  console.log(cy.window().its('store'));
+
   cy.window()
     .its('store') // Redux store must be exposed via window.store
     .then((store) =>

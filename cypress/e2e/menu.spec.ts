@@ -3,6 +3,7 @@ import { dataTestId } from '../../src/utils/dataTestIds';
 import { UrlPathTemplate } from '../../src/utils/urlPaths';
 
 const allRoles = Object.values(RoleName);
+const waitBeforeUserUpdate = 500;
 
 describe('Menu', () => {
   beforeEach(() => {
@@ -22,7 +23,9 @@ describe('Menu', () => {
 
   it('Authorized user should see protected menu options', () => {
     cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux(allRoles);
+
     cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('be.visible');
@@ -33,31 +36,37 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('be.visible');
   });
 
-  // it('Unauthorized user should not see protected menu options', () => {
-  //   cy.visit(UrlPathTemplate.Home);
-  //   cy.mocklogin();
-  //   cy.setUserRolesInRedux([]);
-  //   cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('not.exist');
-  //   cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).should('not.exist');
-  //   cy.get(`[data-testid=${dataTestId.header.editorLink}]`).should('not.exist');
-  //   cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('be.visible');
-  // });
+  it('Unauthorized user should not see protected menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([]);
 
-  // it('User without roles sees My Page menu options', () => {
-  //   cy.visit(UrlPathTemplate.Home);
-  //   cy.mocklogin();
-  //   cy.setUserRolesInRedux([]);
-  //   cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.tasksLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.editorLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('be.visible');
+  });
 
-  //   cy.get(`[data-testid=${dataTestId.myPage.messagesAccordion}]`).should('not.exist');
-  //   cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).should('not.exist');
-  //   cy.get(`[data-testid=${dataTestId.myPage.myProfileAccordion}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).should('be.visible');
-  //   cy.get(`[data-testid=${dataTestId.myPage.researchProfileAccordion}]`).click();
-  //   cy.get(`[data-testid=${dataTestId.myPage.researchProfileLink}]`).should('be.visible');
-  // });
+  it('User without roles sees My Page menu options', () => {
+    cy.mocklogin();
+    cy.wait(waitBeforeUserUpdate);
+    cy.setUserRolesInRedux([]);
+    cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
+
+    cy.get(`[data-testid=${dataTestId.myPage.messagesAccordion}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.myPage.researchProfileAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.myFieldAndBackgroundLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.myResultsLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.myProjectsLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.userRolesAndHelpLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.termsLink}]`).should('be.visible');
+  });
 
   // it('Creator without roles sees My Page menu options', () => {
   //   cy.visit(UrlPathTemplate.Home);

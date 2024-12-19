@@ -666,7 +666,6 @@ export const dataTestId = {
       webPageField: 'web-page-field',
     },
     myFieldAndBackgroundLink: 'my-field-and-background-link',
-    myProfileAccordion: 'my-profile-accordion',
     myProjectRegistrationsLink: 'my-project-registrations-link',
     myProjectsLink: 'my-projects-link',
     myRegistrationsLink: 'my-registrations-link',
