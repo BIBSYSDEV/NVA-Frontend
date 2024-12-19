@@ -208,7 +208,7 @@ export const RegistrationListItemContent = ({
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
-          {registration.recordMetadata.status === 'DRAFT' && onDeleteDraftRegistration && (
+          {registration.recordMetadata.status === RegistrationStatus.Draft && onDeleteDraftRegistration && (
             <Tooltip title={t('common.delete')}>
               <IconButton
                 data-testid={`delete-registration-${identifier}`}

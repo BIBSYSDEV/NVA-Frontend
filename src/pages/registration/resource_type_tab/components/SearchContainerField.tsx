@@ -115,7 +115,7 @@ export const SearchContainerField = ({
             loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
             getOptionLabel={(option) => getTitleString(option.mainTitle)}
             renderOption={({ key, ...props }, option, state) => (
-              <li {...props} key={option.id}>
+              <li {...props} key={option.identifier}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
                     <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
@@ -135,7 +135,7 @@ export const SearchContainerField = ({
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
-                  key={option.id}
+                  key={option.identifier}
                   data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                   label={
                     <>

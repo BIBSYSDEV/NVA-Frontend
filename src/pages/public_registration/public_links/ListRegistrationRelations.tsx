@@ -10,7 +10,7 @@ interface ListRegistrationRelationsProps {
 export const ListRegistrationRelations = ({ registrations }: ListRegistrationRelationsProps) => (
   <List disablePadding sx={{ width: '100%' }}>
     {registrations.map((registration) => (
-      <SearchListItem sx={{ borderLeftColor: 'registration.main' }} key={registration.id}>
+      <SearchListItem sx={{ borderLeftColor: 'registration.main' }} key={registration.identifier}>
         <RegistrationListItemContent registration={registration} />
       </SearchListItem>
     ))}
