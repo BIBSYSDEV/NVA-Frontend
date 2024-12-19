@@ -506,6 +506,5 @@ export const isPublishableForWorkflow2 = (registration: Registration) => {
       publicationInstanceType: registration.entityDescription?.reference?.publicationInstance.type ?? '',
     } as any,
   });
-
   return isValid;
 };
