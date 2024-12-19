@@ -131,7 +131,10 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount }: Contribut
                 <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
               )}
             </Typography>
-            <ContributorIndicators contributor={contributor} />
+            <ContributorIndicators
+              orcId={contributor.identity.orcId}
+              correspondingAuthor={contributor.correspondingAuthor}
+            />
             {index < contributors.length - 1 && <span>;</span>}
           </Box>
         );

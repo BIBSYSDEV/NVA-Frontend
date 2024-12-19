@@ -63,8 +63,7 @@ export const RegistrationListItemContent = ({
   onRemoveRelated,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
-  const { id } = registration;
-  const identifier = getIdentifierFromId(id);
+  const { id, identifier } = registration;
   const location = useLocation();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -156,7 +155,11 @@ export const RegistrationListItemContent = ({
                     contributor.identity.name
                   )}
                 </Typography>
-                <ContributorIndicators contributor={contributor} ticketView={ticketView} />
+                <ContributorIndicators
+                  orcId={contributor.identity.orcId}
+                  correspondingAuthor={contributor.correspondingAuthor}
+                  ticketView={ticketView}
+                />
               </Box>
             ))}
             {countRestContributors > 0 && (
