@@ -68,7 +68,7 @@ export const DescriptionPanel = () => {
         </Field>
         {duplicateRegistration && (
           <DuplicateWarning
-            name={duplicateRegistration.entityDescription?.mainTitle}
+            name={duplicateRegistration.mainTitle}
             linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
             warning={t('registration.description.duplicate_title_warning')}
           />
@@ -231,7 +231,7 @@ export const DescriptionPanel = () => {
       </Box>
       {duplicateRegistration && registrationsHaveSamePublicationYear(duplicateRegistration, values) && (
         <DuplicateWarning
-          name={duplicateRegistration.entityDescription?.mainTitle}
+          name={duplicateRegistration.mainTitle}
           linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
           warning={t('registration.description.duplicate_publication_date_warning')}
         />

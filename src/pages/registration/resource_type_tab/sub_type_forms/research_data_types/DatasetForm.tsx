@@ -88,19 +88,16 @@ export const DatasetForm = () => {
                 blurOnSelect
                 loading={relatedRegistrationsOptionsQuery.isPending}
                 filterOptions={(options) => options}
-                getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+                getOptionLabel={(option) => getTitleString(option.mainTitle)}
                 renderOption={({ key, ...props }, option, state) => (
                   <li {...props} key={option.identifier}>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                       <Typography variant="subtitle1">
-                        <EmphasizeSubstring
-                          text={getTitleString(option.entityDescription?.mainTitle)}
-                          emphasized={state.inputValue}
-                        />
+                        <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
                       </Typography>
                       <YearAndContributorsText
-                        date={option.entityDescription?.publicationDate}
-                        contributors={option.entityDescription?.contributorsPreview ?? []}
+                        date={option.publicationDate}
+                        contributors={option.contributorsPreview ?? []}
                       />
                     </Box>
                   </li>
@@ -152,19 +149,16 @@ export const DatasetForm = () => {
                 blurOnSelect
                 loading={relatedDmpOptionsQuery.isPending}
                 filterOptions={(options) => options}
-                getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+                getOptionLabel={(option) => getTitleString(option.mainTitle)}
                 renderOption={({ key, ...props }, option, state) => (
                   <li {...props} key={option.identifier}>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                       <Typography variant="subtitle1">
-                        <EmphasizeSubstring
-                          text={getTitleString(option.entityDescription?.mainTitle)}
-                          emphasized={state.inputValue}
-                        />
+                        <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
                       </Typography>
                       <YearAndContributorsText
-                        date={option.entityDescription?.publicationDate}
-                        contributors={option.entityDescription?.contributorsPreview ?? []}
+                        date={option.publicationDate}
+                        contributors={option.contributorsPreview ?? []}
                       />
                     </Box>
                   </li>

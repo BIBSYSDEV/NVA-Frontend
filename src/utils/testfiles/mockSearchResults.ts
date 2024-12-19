@@ -1,24 +1,25 @@
 import { SearchResponse, SearchResponse2 } from '../../types/common.types';
 import { ImportCandidateSummary } from '../../types/importCandidate.types';
-import { JournalType } from '../../types/publicationFieldNames';
 import { Ticket } from '../../types/publication_types/ticket.types';
-import { Registration, RegistrationAggregations } from '../../types/registration.types';
+import { JournalType } from '../../types/publicationFieldNames';
+import { RegistrationAggregations, RegistrationSearchItem } from '../../types/registration.types';
 import { mockImportCandidate } from './mockImportCandidate';
-import { mockMathJaxRegistration, mockRegistration, mockTicketCollection } from './mockRegistration';
+import { mockTicketCollection } from './mockRegistration';
+import { mockRegistrationSearchItem, mockRegistrationSearchItemWithMathJax } from './mockRegistrationSearchItem';
 
-export const mockSearchResults: SearchResponse2<Registration, RegistrationAggregations> = {
+export const mockSearchResults: SearchResponse2<RegistrationSearchItem, RegistrationAggregations> = {
   totalHits: 50,
   hits: [
-    mockMathJaxRegistration,
-    mockRegistration,
-    mockRegistration,
-    mockRegistration,
-    mockRegistration,
-    mockRegistration,
-    mockRegistration,
-    mockRegistration,
-    mockRegistration,
-    mockRegistration,
+    mockRegistrationSearchItemWithMathJax,
+    mockRegistrationSearchItem,
+    mockRegistrationSearchItem,
+    mockRegistrationSearchItem,
+    mockRegistrationSearchItem,
+    mockRegistrationSearchItem,
+    mockRegistrationSearchItem,
+    mockRegistrationSearchItem,
+    mockRegistrationSearchItem,
+    mockRegistrationSearchItem,
   ],
   aggregations: {
     type: [{ id: 'asd', key: JournalType.AcademicArticle, count: 3 }],

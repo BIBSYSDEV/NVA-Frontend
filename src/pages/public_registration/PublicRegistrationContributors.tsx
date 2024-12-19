@@ -49,12 +49,15 @@ export const PublicRegistrationContributors = ({
         }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <ContributorsRow
-            contributors={primaryContributorsToShow}
+            contributors={primaryContributorsToShow as Contributor[]}
             distinctUnits={distinctUnits}
             hiddenCount={showAll ? undefined : hiddenContributorsCount.current}
           />
           {showAll && secondaryContributorsToShow.length > 0 && (
-            <ContributorsRow contributors={secondaryContributorsToShow} distinctUnits={distinctUnits} />
+            <ContributorsRow
+              contributors={secondaryContributorsToShow as Contributor[]}
+              distinctUnits={distinctUnits}
+            />
           )}
         </Box>
         {hiddenContributorsCount.current > 0 && (
@@ -131,7 +134,10 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount }: Contribut
                 <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
               )}
             </Typography>
-            <ContributorIndicators contributor={contributor} />
+            <ContributorIndicators
+              orcId={contributor.identity.orcId}
+              correspondingAuthor={contributor.correspondingAuthor}
+            />
             {index < contributors.length - 1 && <span>;</span>}
           </Box>
         );
