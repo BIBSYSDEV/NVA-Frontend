@@ -1,6 +1,7 @@
 {
   "about": {
     "availability_statement": "Accessibility statement",
+    "copyright_inquiries": "",
     "description": {
       "paragraph0": {
         "bullet_point0": "Meet the requirement for open access to articles and other research results by depositing in an open research repository",
@@ -1603,7 +1604,7 @@
       "Anthology": "Part of book or report",
       "Architecture": "Architecture",
       "Artistic": "Artistic result",
-      "ArtisticDegreePhd": "",
+      "ArtisticDegreePhd": "Artistic doctoral result",
       "ArtisticDesign": "Design",
       "Book": "Book",
       "BookAnthology": "Anthology",

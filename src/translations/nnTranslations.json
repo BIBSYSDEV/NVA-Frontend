@@ -1,6 +1,7 @@
 {
   "about": {
     "availability_statement": "Tilgjengelegheitserklæring",
+    "copyright_inquiries": "",
     "description": {
       "paragraph0": {
         "bullet_point0": "Oppfyll krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit ope vitenarkiv",
@@ -1603,7 +1604,7 @@
       "Anthology": "Del av bok eller rapport",
       "Architecture": "Arkitektur",
       "Artistic": "Kunstnerisk resultat",
-      "ArtisticDegreePhd": "",
+      "ArtisticDegreePhd": "Kunstnerisk doktorgradsresultat",
       "ArtisticDesign": "Design",
       "Book": "Bokpublikasjon",
       "BookAnthology": "Antologi",
