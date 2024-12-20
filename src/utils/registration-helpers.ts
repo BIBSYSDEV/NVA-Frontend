@@ -829,12 +829,13 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
       ? registration.entityDescription.reference.publicationContext.series
       : undefined;
 
-  const contributors = registration.entityDescription?.contributors.map((contributor) => ({
-    affiliation: contributor.affiliations,
-    correspondingAuthor: contributor.correspondingAuthor,
-    identity: contributor.identity,
-    role: contributor.role.type,
-  }));
+  const contributors =
+    registration.entityDescription?.contributors.map((contributor) => ({
+      affiliation: contributor.affiliations,
+      correspondingAuthor: contributor.correspondingAuthor,
+      identity: contributor.identity,
+      role: contributor.role.type,
+    })) ?? [];
 
   const registrationSearchItem: RegistrationSearchItem = {
     type: registration.entityDescription?.reference?.publicationInstance.type ?? '',
@@ -847,7 +848,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
       status: registration.status,
     },
     mainTitle: registration.entityDescription?.mainTitle ?? '',
-    contributorsCount: (registration.entityDescription?.contributors ?? []).length,
+    contributorsCount: contributors.length,
     abstract: registration.entityDescription?.abstract ?? '',
     description: registration.entityDescription?.description ?? '',
     publicationDate: registration.entityDescription?.publicationDate,
@@ -862,7 +863,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
           doi: registration.entityDescription?.reference?.doi,
         }
       : emptyContextPublisher,
-    contributorsPreview: contributors ?? [],
+    contributorsPreview: contributors,
   };
   return registrationSearchItem;
 };
