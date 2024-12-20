@@ -280,6 +280,7 @@ export interface RegistrationSearchItem {
     series?: {
       name?: string;
       id?: string;
+      scientificValue?: string;
     };
     publisher?: {
       name?: string;
