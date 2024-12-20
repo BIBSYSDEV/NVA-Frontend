@@ -281,6 +281,11 @@ export interface RegistrationSearchItem {
       name?: string;
       id?: string;
     };
+    publisher?: {
+      name?: string;
+      id?: string;
+      scientificValue?: string;
+    };
     doi?: string;
   };
   abstract: string;
@@ -352,6 +357,7 @@ export interface ContextPublisher {
   type: PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher;
   name?: string;
   id?: string;
+  scientificValue?: string;
 }
 
 export const emptyContextPublisher: ContextPublisher = {

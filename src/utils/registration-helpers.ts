@@ -45,8 +45,8 @@ import {
 } from '../types/publicationFieldNames';
 import {
   ContextSeries,
-  emptyContextPublisher,
   NpiSubjectDomain,
+  PublicationChannelType,
   PublicationInstanceType,
   Publisher,
   Registration,
@@ -817,10 +817,28 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
 };
 
 export const convertToRegistrationSearchItem = (registration: Registration) => {
+  const basePublishingDetails = registration.entityDescription?.reference?.publicationContext
+    ? 'publisher' in registration.entityDescription.reference.publicationContext
+      ? {
+          id: registration.entityDescription.reference.publicationContext.publisher?.id ?? '',
+          type: PublicationChannelType.Publisher,
+        }
+      : 'id' in registration.entityDescription.reference.publicationContext
+        ? {
+            id: registration.entityDescription.reference.publicationContext.id ?? undefined,
+            type: PublicationChannelType.Journal,
+          }
+        : {}
+    : {};
+
   const publisher =
     registration.entityDescription?.reference?.publicationContext &&
     'publisher' in registration.entityDescription.reference.publicationContext
-      ? registration.entityDescription.reference.publicationContext.publisher
+      ? {
+          id: registration.entityDescription.reference.publicationContext.publisher?.id,
+          name: registration.entityDescription.reference.publicationContext.publisher?.name,
+          scientificValue: registration.entityDescription.reference.publicationContext.publisher?.scientificValue,
+        }
       : undefined;
 
   const series =
@@ -852,17 +870,15 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     abstract: registration.entityDescription?.abstract ?? '',
     description: registration.entityDescription?.description ?? '',
     publicationDate: registration.entityDescription?.publicationDate,
-    publishingDetails: publisher
-      ? {
-          id: publisher.id,
-          type: publisher.type,
-          series: {
-            name: series?.title,
-            id: series?.id,
-          },
-          doi: registration.entityDescription?.reference?.doi,
-        }
-      : emptyContextPublisher,
+    publishingDetails: {
+      ...basePublishingDetails,
+      series: {
+        name: series?.title,
+        id: series?.id,
+      },
+      publisher: publisher,
+      doi: registration.entityDescription?.reference?.doi,
+    },
     contributorsPreview: contributors,
   };
   return registrationSearchItem;

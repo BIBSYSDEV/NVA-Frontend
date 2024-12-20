@@ -197,9 +197,11 @@ interface ContainerAndLevelTextProps {
 const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
   const { t } = useTranslation();
 
-  const publicationContext = registration.publishingDetails;
-  const publisherId = publicationContext?.id ?? '';
-  const seriesId = publicationContext?.series?.id ?? '';
+  const publishingDetails = registration.publishingDetails;
+  const publisherId = publishingDetails?.publisher?.id ?? '';
+  const seriesId = publishingDetails?.series?.id ?? '';
+
+  console.log(registration);
 
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],
