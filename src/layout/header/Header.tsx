@@ -156,7 +156,7 @@ export const Header = () => {
                 </MenuButton>
               )}
 
-              {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
+              {(user?.isInstitutionAdmin || user?.isAppAdmin || user?.isInternalImporter) && (
                 <MenuButton
                   color="inherit"
                   isSelected={currentPath.startsWith(UrlPathTemplate.BasicData)}

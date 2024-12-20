@@ -171,11 +171,16 @@ const BasicDataPage = () => {
 
       <Switch>
         <ErrorBoundary>
-          <PrivateRoute exact path={UrlPathTemplate.BasicData} isAuthorized={isAppAdmin || isInstitutionAdmin}>
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicData}
+            isAuthorized={isAppAdmin || isInstitutionAdmin || isInternalImporter}>
             {isInstitutionAdmin ? (
               <Redirect to={UrlPathTemplate.BasicDataPersonRegister} />
             ) : isAppAdmin ? (
               <Redirect to={UrlPathTemplate.BasicDataInstitutions} />
+            ) : isInternalImporter ? (
+              <Redirect to={UrlPathTemplate.BasicDataCentralImport} />
             ) : null}
           </PrivateRoute>
 
