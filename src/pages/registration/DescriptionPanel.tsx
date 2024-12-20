@@ -229,7 +229,7 @@ export const DescriptionPanel = () => {
           )}
         </Field>
       </Box>
-      {duplicateRegistration && registrationsHaveSamePublicationYear(duplicateRegistration, values) && (
+      {duplicateRegistration && registrationsHaveSamePublicationYear(values, duplicateRegistration) && (
         <DuplicateWarning
           name={duplicateRegistration.mainTitle}
           linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}

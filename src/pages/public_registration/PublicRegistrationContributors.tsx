@@ -23,8 +23,8 @@ export const PublicRegistrationContributors = ({
   registrationType,
 }: PublicRegistrationContributorsProps) => {
   const { t } = useTranslation();
-  const primaryContributors = getContributorsWithPrimaryRole(contributors, registrationType);
-  const secondaryContributors = getContributorsWithSecondaryRole(contributors, registrationType);
+  const primaryContributors = getContributorsWithPrimaryRole(contributors, registrationType) as Contributor[];
+  const secondaryContributors = getContributorsWithSecondaryRole(contributors, registrationType) as Contributor[];
 
   const [showAll, setShowAll] = useState(primaryContributors.length === 0);
   const toggleShowAll = () => setShowAll(!showAll);
@@ -49,15 +49,12 @@ export const PublicRegistrationContributors = ({
         }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <ContributorsRow
-            contributors={primaryContributorsToShow as Contributor[]}
+            contributors={primaryContributorsToShow}
             distinctUnits={distinctUnits}
             hiddenCount={showAll ? undefined : hiddenContributorsCount.current}
           />
           {showAll && secondaryContributorsToShow.length > 0 && (
-            <ContributorsRow
-              contributors={secondaryContributorsToShow as Contributor[]}
-              distinctUnits={distinctUnits}
-            />
+            <ContributorsRow contributors={secondaryContributorsToShow} distinctUnits={distinctUnits} />
           )}
         </Box>
         {hiddenContributorsCount.current > 0 && (

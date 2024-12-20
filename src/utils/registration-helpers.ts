@@ -777,46 +777,34 @@ export const registrationLanguageOptions = [
   getLanguageByIso6393Code('mis'),
 ];
 
-const isRegistration = (reg: Registration | RegistrationSearchItem): reg is Registration => {
-  return reg.type === 'Publication';
-};
-
 export const registrationsHaveSamePublicationYear = (
-  reg1: Registration | RegistrationSearchItem,
-  reg2: Registration | RegistrationSearchItem
+  registration: Registration,
+  registrationSearchItem: RegistrationSearchItem
 ) => {
-  const reg1PublicationYear = isRegistration(reg1)
-    ? reg1.entityDescription?.publicationDate?.year
-    : reg1.publicationDate?.year;
+  const registrationPublicationYear = registration.entityDescription?.publicationDate?.year;
 
-  const reg2PublicationYear = isRegistration(reg2)
-    ? reg2.entityDescription?.publicationDate?.year
-    : reg2.publicationDate?.year;
+  const registrationSearchItemPublicationYear = registrationSearchItem.publicationDate?.year;
 
-  if (reg1PublicationYear === undefined || reg2PublicationYear === undefined) {
+  if (registrationPublicationYear === undefined || registrationSearchItemPublicationYear === undefined) {
     return false;
   }
 
-  return reg1PublicationYear === reg2PublicationYear;
+  return registrationPublicationYear === registrationSearchItemPublicationYear;
 };
 
 export const registrationsHaveSameCategory = (
-  reg1: Registration | RegistrationSearchItem,
-  reg2: Registration | RegistrationSearchItem
+  registration: Registration,
+  registrationSearchItem: RegistrationSearchItem
 ) => {
-  const reg1Category = isRegistration(reg1)
-    ? reg1.entityDescription?.reference?.publicationInstance?.type
-    : (reg1 as RegistrationSearchItem).type;
+  const registrationCategory = registration.entityDescription?.reference?.publicationInstance?.type;
 
-  const reg2Category = isRegistration(reg2)
-    ? reg2.entityDescription?.reference?.publicationInstance?.type
-    : (reg2 as RegistrationSearchItem).type;
+  const registrationSearchItemCategory = registrationSearchItem.type;
 
-  if (!reg1Category || !reg2Category) {
+  if (!registrationCategory || !registrationSearchItemCategory) {
     return false;
   }
 
-  return reg1Category === reg2Category;
+  return registrationCategory === registrationSearchItemCategory;
 };
 
 export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'onlineIssn' | 'printIssn' | 'issn'>>) => {
