@@ -40,6 +40,7 @@ import {
   MediaType,
   OtherRegistrationType,
   PresentationType,
+  PublicationType,
   ReportType,
   ResearchDataType,
 } from './publicationFieldNames';
@@ -261,7 +262,7 @@ export interface Registration extends BaseRegistration {
 }
 
 export interface RegistrationSearchItem {
-  id: string;
+  id?: string;
   identifier: string;
   type: PublicationInstanceType | '';
   recordMetadata: {
@@ -276,7 +277,7 @@ export interface RegistrationSearchItem {
   contributorsCount: number;
   publishingDetails: {
     id?: string;
-    type?: PublicationChannelType;
+    type?: PublicationType;
     series?: {
       name?: string;
       id?: string;

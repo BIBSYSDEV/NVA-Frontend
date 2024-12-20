@@ -46,7 +46,6 @@ import {
 import {
   ContextSeries,
   NpiSubjectDomain,
-  PublicationChannelType,
   PublicationInstanceType,
   Publisher,
   Registration,
@@ -817,20 +816,6 @@ export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'online
 };
 
 export const convertToRegistrationSearchItem = (registration: Registration) => {
-  const basePublishingDetails = registration.entityDescription?.reference?.publicationContext
-    ? 'publisher' in registration.entityDescription.reference.publicationContext
-      ? {
-          id: registration.entityDescription.reference.publicationContext.publisher?.id ?? '',
-          type: PublicationChannelType.Publisher,
-        }
-      : 'id' in registration.entityDescription.reference.publicationContext
-        ? {
-            id: registration.entityDescription.reference.publicationContext.id ?? undefined,
-            type: PublicationChannelType.Journal,
-          }
-        : {}
-    : {};
-
   const publisher =
     registration.entityDescription?.reference?.publicationContext &&
     'publisher' in registration.entityDescription.reference.publicationContext
@@ -839,6 +824,12 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
           name: registration.entityDescription.reference.publicationContext.publisher?.name,
           scientificValue: registration.entityDescription.reference.publicationContext.publisher?.scientificValue,
         }
+      : undefined;
+
+  const contextId =
+    registration.entityDescription?.reference?.publicationContext &&
+    'id' in registration.entityDescription.reference.publicationContext
+      ? (registration.entityDescription.reference.publicationContext.id ?? undefined)
       : undefined;
 
   const series =
@@ -871,7 +862,10 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     description: registration.entityDescription?.description ?? '',
     publicationDate: registration.entityDescription?.publicationDate,
     publishingDetails: {
-      ...basePublishingDetails,
+      id: contextId,
+      type: (registration.entityDescription?.reference?.publicationContext.type ?? undefined) as
+        | PublicationType
+        | undefined,
       series: {
         name: series?.title,
         id: series?.id,
