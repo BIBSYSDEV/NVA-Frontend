@@ -217,7 +217,6 @@ const publisherField: Yup.ObjectSchema<ContextPublisher> = Yup.object({
       ? schema.required(resourceErrorMessage.publisherNotSelected)
       : schema.required(resourceErrorMessage.publisherRequired)
   ),
-  scientificIndex: Yup.string().optional(),
 });
 
 const seriesField = Yup.object().shape({

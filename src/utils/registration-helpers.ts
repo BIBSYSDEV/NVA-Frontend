@@ -825,7 +825,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
         }
       : undefined;
 
-  const contextId =
+  const journalId =
     registration.entityDescription?.reference?.publicationContext &&
     'id' in registration.entityDescription.reference.publicationContext
       ? (registration.entityDescription.reference.publicationContext.id ?? undefined)
@@ -861,7 +861,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     description: registration.entityDescription?.description ?? '',
     publicationDate: registration.entityDescription?.publicationDate,
     publishingDetails: {
-      id: contextId,
+      id: journalId,
       type: (registration.entityDescription?.reference?.publicationContext.type ?? undefined) as
         | PublicationType
         | undefined,

@@ -262,7 +262,7 @@ export interface Registration extends BaseRegistration {
 }
 
 export interface RegistrationSearchItem {
-  id?: string;
+  id: string;
   identifier: string;
   type: PublicationInstanceType | '';
   recordMetadata: {
