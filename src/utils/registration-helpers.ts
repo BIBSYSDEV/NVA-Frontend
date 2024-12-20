@@ -825,6 +825,12 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
         }
       : undefined;
 
+  const publishingContextType =
+    registration.entityDescription?.reference?.publicationContext &&
+    'type' in registration.entityDescription.reference.publicationContext
+      ? registration.entityDescription.reference.publicationContext.type
+      : undefined;
+
   const journalId =
     registration.entityDescription?.reference?.publicationContext &&
     'id' in registration.entityDescription.reference.publicationContext
@@ -862,9 +868,7 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
     publicationDate: registration.entityDescription?.publicationDate,
     publishingDetails: {
       id: journalId,
-      type: (registration.entityDescription?.reference?.publicationContext.type ?? undefined) as
-        | PublicationType
-        | undefined,
+      type: publishingContextType as PublicationType,
       series: {
         name: series?.title,
         id: series?.id,
