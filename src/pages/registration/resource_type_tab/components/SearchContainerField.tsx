@@ -201,8 +201,6 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const publisherId = publishingDetails?.publisher?.id ?? '';
   const seriesId = publishingDetails?.series?.id ?? '';
 
-  console.log(registration);
-
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],
     enabled: !!publisherId,
