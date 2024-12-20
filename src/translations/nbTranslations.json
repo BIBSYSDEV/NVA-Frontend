@@ -552,6 +552,7 @@
       "get_person": "Kunne ikke hente person",
       "get_positions": "Kunne ikke hente stillinger",
       "get_project": "Kunne ikke hente prosjekt",
+      "get_project_categories": "Kunne ikke hente prosjektkategorier",
       "get_publisher": "Kunne ikke hente utgiver",
       "get_publishers": "Søk på utgivere feilet",
       "get_registration": "Kunne ikke laste inn registrering",

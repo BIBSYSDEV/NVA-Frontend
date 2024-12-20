@@ -18,6 +18,7 @@ export enum CristinApiPath {
   PersonIdentityNumber = '/cristin/person/identityNumber',
   Position = '/cristin/position',
   Project = '/cristin/project',
+  ProjectCategories = '/cristin/category/project',
 }
 
 export enum PublicationChannelApiPath {

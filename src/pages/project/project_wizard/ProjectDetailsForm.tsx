@@ -1,8 +1,8 @@
 import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { Trans, useTranslation } from 'react-i18next';
+import { useFetchProjectCategoriesQuery } from '../../../api/hooks/useFetchProjectCategoriesQuery';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { cristinCategories } from '../../../resources/cristinCategories';
 import { ProjectFieldName, ProjectOrganization, SaveCristinProject, TypedLabel } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -17,6 +17,8 @@ interface ProjectDescriptionFormProps {
 export const ProjectDetailsForm = ({ thisIsRekProject }: ProjectDescriptionFormProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
+
+  const fetchProjectCategoriesQuery = useFetchProjectCategoriesQuery();
 
   return (
     <ErrorBoundary>
@@ -58,8 +60,9 @@ export const ProjectDetailsForm = ({ thisIsRekProject }: ProjectDescriptionFormP
           <Field name={ProjectFieldName.Categories}>
             {({ field }: FieldProps<TypedLabel[]>) => (
               <Autocomplete
-                options={cristinCategories}
+                options={fetchProjectCategoriesQuery.data?.hits ?? []}
                 multiple
+                loading={fetchProjectCategoriesQuery.isLoading}
                 data-testid={dataTestId.projectWizard.detailsPanel.projectCategoryField}
                 getOptionLabel={(option) => getLanguageString(option.label)}
                 isOptionEqualToValue={(option, value) => option.type === value.type}
