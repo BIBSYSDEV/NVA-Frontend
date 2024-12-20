@@ -18,7 +18,7 @@ import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
+import { getDialogueNotificationsParams, getTaskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
@@ -45,7 +45,6 @@ export const Header = () => {
   useEffect(() => {
     if (customer) {
       // This is needed to ensure user has correct publish workflow etc from Customer.
-      // TODO: Should be moved away from redux at one point.
       dispatch(setCustomer(customer));
     }
   }, [dispatch, customer]);
@@ -61,10 +60,11 @@ export const Header = () => {
   });
   const dialogueNotificationsCount = dialogueNotificationsQuery.data?.totalHits ?? 0;
 
+  const tasksNotificationParams = getTaskNotificationsParams(user);
   const taskNotificationsQuery = useQuery({
     enabled: isTicketCurator,
-    queryKey: ['taskNotifications', taskNotificationsParams],
-    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
+    queryKey: ['taskNotifications', tasksNotificationParams],
+    queryFn: () => fetchCustomerTickets(tasksNotificationParams),
     meta: { errorMessage: false },
   });
 
@@ -156,7 +156,7 @@ export const Header = () => {
                 </MenuButton>
               )}
 
-              {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
+              {(user?.isInstitutionAdmin || user?.isAppAdmin || user?.isInternalImporter) && (
                 <MenuButton
                   color="inherit"
                   isSelected={currentPath.startsWith(UrlPathTemplate.BasicData)}
