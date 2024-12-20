@@ -104,7 +104,6 @@ export const fetchNviReportStatusForRegistration = async (registrationId: string
   const fetchNviReportHistoryForRegistrationResponse = await apiRequest2<ReportStatusResponse>({
     url: `${ScientificIndexApiPath.Publication}/${encodeURIComponent(registrationId)}/report-status`,
   });
-
   return fetchNviReportHistoryForRegistrationResponse.data;
 };
 
