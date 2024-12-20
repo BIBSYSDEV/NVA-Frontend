@@ -1,7 +1,7 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import { Badge, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -58,7 +58,16 @@ export const DialoguesWithoutCuratorButton = () => {
       startIcon={newStatusIsSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
       endIcon={
         unassignedNotificationsCount > 0 ? (
-          <Badge badgeContent={<NotificationsActiveIcon fontSize="small" />} sx={{ ml: '1rem' }} />
+          <NotificationsActiveIcon
+            sx={{
+              width: '1.5rem',
+              height: '1.5rem',
+              bgcolor: 'info.main',
+              color: 'white',
+              borderRadius: '50%',
+              padding: '3px',
+            }}
+          />
         ) : undefined
       }
       onClick={toggleDialoguesWithoutCurators}
