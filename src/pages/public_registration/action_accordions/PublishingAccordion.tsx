@@ -256,7 +256,7 @@ export const PublishingAccordion = ({
               to={getRegistrationLandingPagePath(duplicateRegistration.identifier)}>
               <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem' }}>
                 <Typography sx={{ textDecoration: 'underline', cursor: 'pointer', color: 'primary.light' }}>
-                  {duplicateRegistration.entityDescription?.mainTitle}
+                  {duplicateRegistration.mainTitle}
                 </Typography>
                 <OpenInNewOutlinedIcon
                   sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }}
