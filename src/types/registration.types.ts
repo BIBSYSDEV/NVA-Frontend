@@ -359,7 +359,6 @@ export interface ContextPublisher {
   type: PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher;
   name?: string;
   id?: string;
-  scientificValue?: string;
 }
 
 export const emptyContextPublisher: ContextPublisher = {

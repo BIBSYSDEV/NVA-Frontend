@@ -822,7 +822,6 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
       ? {
           id: registration.entityDescription.reference.publicationContext.publisher?.id,
           name: registration.entityDescription.reference.publicationContext.publisher?.name,
-          scientificValue: registration.entityDescription.reference.publicationContext.publisher?.scientificValue,
         }
       : undefined;
 
