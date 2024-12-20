@@ -1,6 +1,6 @@
 import { ContributorRole } from '../../types/contributor.types';
-import { JournalType } from '../../types/publicationFieldNames';
-import { PublicationChannelType, RegistrationSearchItem, RegistrationStatus } from '../../types/registration.types';
+import { JournalType, PublicationType } from '../../types/publicationFieldNames';
+import { RegistrationSearchItem, RegistrationStatus } from '../../types/registration.types';
 
 export const mockRegistrationSearchItem: RegistrationSearchItem = {
   recordMetadata: {
@@ -66,7 +66,7 @@ export const mockRegistrationSearchItem: RegistrationSearchItem = {
   contributorsCount: 3,
   publishingDetails: {
     id: '1234',
-    type: PublicationChannelType.Journal,
+    type: PublicationType.Report,
     series: {
       name: 'Test series',
       id: '12345',
