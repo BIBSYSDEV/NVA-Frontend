@@ -10,7 +10,7 @@ import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
-import { Contributor } from '../../../../types/contributor.types';
+import { PreviewContributor } from '../../../../types/contributor.types';
 import {
   PublicationInstanceType,
   Publisher,
@@ -113,20 +113,17 @@ export const SearchContainerField = ({
               setQuery('');
             }}
             loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
-            getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+            getOptionLabel={(option) => getTitleString(option.mainTitle)}
             renderOption={({ key, ...props }, option, state) => (
               <li {...props} key={option.identifier}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
-                    <EmphasizeSubstring
-                      text={getTitleString(option.entityDescription?.mainTitle)}
-                      emphasized={state.inputValue}
-                    />
+                    <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
                   </Typography>
                   {descriptionToShow === 'year-and-contributors' ? (
                     <YearAndContributorsText
-                      date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributorsPreview ?? []}
+                      date={option.publicationDate}
+                      contributors={option.contributorsPreview ?? []}
                     />
                   ) : (
                     <ContainerAndLevelText registration={option} />
@@ -142,11 +139,11 @@ export const SearchContainerField = ({
                   data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                   label={
                     <>
-                      <Typography variant="subtitle1">{getTitleString(option.entityDescription?.mainTitle)}</Typography>
+                      <Typography variant="subtitle1">{getTitleString(option.mainTitle)}</Typography>
                       {descriptionToShow === 'year-and-contributors' ? (
                         <YearAndContributorsText
-                          date={option.entityDescription?.publicationDate}
-                          contributors={option.entityDescription?.contributorsPreview ?? []}
+                          date={option.publicationDate}
+                          contributors={option.contributorsPreview ?? []}
                         />
                       ) : (
                         <ContainerAndLevelText registration={option} />
@@ -176,7 +173,7 @@ export const SearchContainerField = ({
 
 interface YearAndContributorsTextProps {
   date?: RegistrationDate;
-  contributors: Contributor[];
+  contributors: PreviewContributor[];
 }
 
 export const YearAndContributorsText = ({ date, contributors }: YearAndContributorsTextProps) => {
@@ -200,9 +197,9 @@ interface ContainerAndLevelTextProps {
 const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
   const { t } = useTranslation();
 
-  const publicationContext = registration.entityDescription?.reference?.publicationContext;
-  const publisherId = publicationContext?.publisher?.id ?? '';
-  const seriesId = publicationContext?.series?.id ?? '';
+  const publishingDetails = registration.publishingDetails;
+  const publisherId = publishingDetails?.publisher?.id ?? '';
+  const seriesId = publishingDetails?.series?.id ?? '';
 
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],

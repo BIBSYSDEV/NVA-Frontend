@@ -73,7 +73,10 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
                     contributor.identity.name
                   )}
                 </Typography>
-                <ContributorIndicators contributor={contributor} />
+                <ContributorIndicators
+                  orcId={contributor.identity.orcId}
+                  correspondingAuthor={contributor.correspondingAuthor}
+                />
               </Box>
             ))}
 

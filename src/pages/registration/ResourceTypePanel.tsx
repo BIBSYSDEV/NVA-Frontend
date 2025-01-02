@@ -48,7 +48,7 @@ export const ResourceTypePanel = () => {
       <SelectRegistrationTypeField />
       {duplicateRegistration && registrationsHaveSameCategory(values, duplicateRegistration) && (
         <DuplicateWarning
-          name={duplicateRegistration.entityDescription?.mainTitle}
+          name={duplicateRegistration.mainTitle}
           linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
           warning={t('registration.resource_type.duplicate_category_warning', {
             sameFields: registrationsHaveSamePublicationYear(values, duplicateRegistration)
