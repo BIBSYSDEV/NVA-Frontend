@@ -115,7 +115,7 @@ const getAllDescriptionFields = (fundings: Funding[]) => {
 const getAllResourceFields = (publicationInstance?: PublicationInstance) => {
   const resourceFieldNames: string[] = Object.values(ResourceFieldNames);
 
-  if (publicationInstance?.type === DegreeType.Phd) {
+  if (publicationInstance?.type === DegreeType.Phd || publicationInstance?.type === DegreeType.ArtisticPhd) {
     publicationInstance.related?.forEach((document, index) => {
       if (document.type === 'UnconfirmedDocument') {
         resourceFieldNames.push(`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`);
