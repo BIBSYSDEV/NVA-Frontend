@@ -48,7 +48,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const registrationQuery = useFetchRegistration(identifier);
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
-  const canHaveNviCandidate = registration?.status && registration?.status !== RegistrationStatus.Draft;
+  const canHaveNviCandidate =
+    registration?.status === RegistrationStatus.Published ||
+    registration?.status === RegistrationStatus.PublishedMetadata;
 
   const nviReportedStatus = useFetchNviReportedStatus(registrationId, registration?.status);
   const isNviCandidateUnderReview = nviReportedStatus.data?.reportStatus.status === 'UNDER_REVIEW';
