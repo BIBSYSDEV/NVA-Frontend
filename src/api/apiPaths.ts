@@ -66,4 +66,5 @@ export enum ScientificIndexApiPath {
   InstitutionApprovalReport = '/scientific-index/institution-approval-report',
   InstitutionReport = '/scientific-index/institution-report',
   Period = '/scientific-index/period',
+  Publication = '/scientific-index/publication',
 }
