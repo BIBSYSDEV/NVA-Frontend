@@ -48,9 +48,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const registrationQuery = useFetchRegistration(identifier);
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
-  const canHaveNviCandidate =
-    registration?.status === RegistrationStatus.Published ||
-    registration?.status === RegistrationStatus.PublishedMetadata;
+  const canHaveNviCandidate = registration?.status && registration?.status !== RegistrationStatus.Draft;
 
   const nviReportedStatus = useFetchNviReportedStatus(registrationId, registration?.status);
   const isNviCandidate = nviReportedStatus.data?.reportStatus.status === 'UNDER_REVIEW';
@@ -60,7 +58,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const canEditRegistration = userHasAccessRight(registration, 'update');
 
-  return registrationQuery.isPending || (canHaveNviCandidate && nviReportedStatus.isFetching) ? (
+  return registrationQuery.isPending || (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />
@@ -68,7 +66,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     <NviCandidateContext.Provider
       value={{
         disableNviCriticalFields:
-          !!nviReportedStatus.data && nviReportedStatus.data?.reportStatus.status === 'APPROVED' && !user?.isNviCurator,
+          !!nviReportedStatus.data && nviReportedStatus.data.reportStatus.status === 'APPROVED' && !user?.isNviCurator,
       }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
