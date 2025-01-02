@@ -101,10 +101,10 @@ interface ReportStatusResponse {
 }
 
 export const fetchNviReportStatusForRegistration = async (registrationId: string) => {
-  const fetchNviReportHistoryForRegistrationResponse = await apiRequest2<ReportStatusResponse>({
+  const fetchNviReportStatusResponse = await apiRequest2<ReportStatusResponse>({
     url: `${ScientificIndexApiPath.Publication}/${encodeURIComponent(registrationId)}/report-status`,
   });
-  return fetchNviReportHistoryForRegistrationResponse.data;
+  return fetchNviReportStatusResponse.data;
 };
 
 export const fetchNviInstitutionStatus = async (year: number) => {
