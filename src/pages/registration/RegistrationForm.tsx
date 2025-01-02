@@ -51,7 +51,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const canHaveNviCandidate = registration?.status && registration?.status !== RegistrationStatus.Draft;
 
   const nviReportedStatus = useFetchNviReportedStatus(registrationId, registration?.status);
-  const isNviCandidate = nviReportedStatus.data?.reportStatus.status === 'UNDER_REVIEW';
+  const isNviCandidateUnderReview = nviReportedStatus.data?.reportStatus.status === 'UNDER_REVIEW';
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -122,14 +122,14 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                 setTabNumber={setTabNumber}
                 validateForm={validateRegistrationForm}
                 persistedRegistration={registration}
-                isNviCandidate={isNviCandidate}
+                isNviCandidateUnderReview={isNviCandidateUnderReview}
               />
             </BackgroundDiv>
           </Form>
         )}
       </Formik>
       <ConfirmDialog
-        open={isNviCandidate && !hasAcceptedNviWarning}
+        open={isNviCandidateUnderReview && !hasAcceptedNviWarning}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
         onCancel={() => (history.length > 1 ? history.goBack() : history.push(UrlPathTemplate.Home))}>
