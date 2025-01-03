@@ -25,6 +25,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { convertToRegistrationSearchItem, getTitleString } from '../../../../utils/registration-helpers';
+import { isValidIsbn } from '../../../../utils/searchHelpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 
 interface SearchContainerFieldProps {
@@ -51,10 +52,12 @@ export const SearchContainerField = ({
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
 
+  const formattedDebouncedQuery = isValidIsbn(debouncedQuery) ? debouncedQuery.replaceAll('-', '') : debouncedQuery;
+
   const containerOptionsQuery = useQuery({
     enabled: debouncedQuery === query,
-    queryKey: ['container', debouncedQuery, searchSubtypes],
-    queryFn: () => fetchResults({ title: debouncedQuery, categoryShould: searchSubtypes, results: 25 }),
+    queryKey: ['container', formattedDebouncedQuery, searchSubtypes],
+    queryFn: () => fetchResults({ query: formattedDebouncedQuery, categoryShould: searchSubtypes, results: 25 }),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
