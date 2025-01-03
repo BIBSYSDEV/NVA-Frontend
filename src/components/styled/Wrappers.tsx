@@ -131,3 +131,10 @@ export const StyledFilterHeading = styled(Typography)({
   marginBottom: '0.2rem',
   fontWeight: 'bold',
 });
+
+export const StyledContributorModalActions = styled(Box)({
+  mt: '2rem',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr 1fr',
+  columnGap: '1rem',
+});
