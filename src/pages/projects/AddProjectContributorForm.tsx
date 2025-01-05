@@ -91,8 +91,8 @@ export const AddProjectContributorForm = ({
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledContributorModalActions>
-        <Box>
+      <StyledContributorModalActions sx={{ gridTemplateColumns: { md: '1fr', lg: '1fr 1fr 1fr' } }}>
+        <div>
           <Button
             data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
             disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
@@ -101,8 +101,8 @@ export const AddProjectContributorForm = ({
             size="large">
             {t('project.add_unidentified_contributor')}
           </Button>
-        </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        </div>
+        <Box sx={{ display: 'flex', justifyContent: { lg: 'center' } }}>
           <LoadingButton
             data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
             onClick={addSelfAsContributor.addSelf}
@@ -112,7 +112,7 @@ export const AddProjectContributorForm = ({
             {t('project.add_self')}
           </LoadingButton>
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'right', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', justifyContent: { lg: 'right' }, gap: '1rem' }}>
           <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
           <Button
             data-testid={dataTestId.projectForm.selectContributorButton}
