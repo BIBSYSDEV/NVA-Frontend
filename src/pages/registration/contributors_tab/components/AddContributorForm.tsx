@@ -1,12 +1,12 @@
 import { LoadingButton } from '@mui/lab';
-import { Button, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequest } from '../../../../api/apiRequest';
 import { ContributorSearchField } from '../../../../components/ContributorSearchField';
-import { StyledRightAlignedFooter } from '../../../../components/styled/Wrappers';
+import { StyledContributorModalActions } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { ContributorRole } from '../../../../types/contributor.types';
@@ -69,21 +69,25 @@ export const AddContributorForm = ({
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledRightAlignedFooter>
-        {!isSelfAdded && !initialSearchTerm && (
-          <LoadingButton
-            data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
-            onClick={addSelfAsContributor}
-            loading={isAddingSelf}>
-            {t('registration.contributors.add_self_as_contributor')}
-          </LoadingButton>
-        )}
+      <StyledContributorModalActions sx={{ gridTemplateColumns: { md: '1fr', lg: '1fr 1fr 1fr' } }}>
         {!initialSearchTerm && (
           <Button
             data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
+            variant="outlined"
             onClick={openAddUnverifiedContributor}>
             {t('registration.contributors.add_new_contributor')}
           </Button>
+        )}
+        {!isSelfAdded && !initialSearchTerm && (
+          <Box sx={{ display: 'flex', justifyContent: { lg: 'center' } }}>
+            <LoadingButton
+              data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
+              onClick={addSelfAsContributor}
+              variant="outlined"
+              loading={isAddingSelf}>
+              {t('project.add_self')}
+            </LoadingButton>
+          </Box>
         )}
         <Button
           data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
@@ -95,7 +99,7 @@ export const AddContributorForm = ({
             ? t('registration.contributors.verify_contributor')
             : t('registration.contributors.add_contributor')}
         </Button>
-      </StyledRightAlignedFooter>
+      </StyledContributorModalActions>
     </>
   );
 };
