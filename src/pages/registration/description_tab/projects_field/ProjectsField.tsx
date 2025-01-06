@@ -106,6 +106,7 @@ export const ProjectsField = () => {
                   }}
                   popupIcon={null}
                   multiple
+                  disableClearable
                   value={(field.value ?? []) as any[]}
                   getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
                   loading={projectsQuery.isFetching}
