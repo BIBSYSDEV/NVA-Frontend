@@ -133,7 +133,7 @@ export const StyledFilterHeading = styled(Typography)({
 });
 
 export const StyledContributorModalActions = styled(Box)({
-  mt: '2rem',
+  marginTop: '2rem',
   display: 'grid',
   columnGap: '1rem',
   rowGap: '1rem',
