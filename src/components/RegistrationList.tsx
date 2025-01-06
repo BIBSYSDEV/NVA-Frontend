@@ -125,10 +125,8 @@ export const RegistrationListItemContent = ({
             <MuiLink
               target={target}
               component={Link}
-              to={{
-                pathname: getRegistrationLandingPagePath(identifier),
-                state: { previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState,
-              }}>
+              state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
+              to={{ pathname: getRegistrationLandingPagePath(identifier) }}>
               {getTitleString(registration.mainTitle)}
             </MuiLink>
           )}
