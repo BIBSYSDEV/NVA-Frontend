@@ -15,7 +15,7 @@ import { USE_MOCK_DATA } from './utils/constants';
 // Fonts
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
-import { App } from './Root';
+import { App } from './App';
 
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
