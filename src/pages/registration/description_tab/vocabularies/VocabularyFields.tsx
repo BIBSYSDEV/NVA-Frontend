@@ -82,12 +82,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                 <Box
                   key={vocabulary}
                   data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', sm: '4fr auto' },
-                    columnGap: '2rem',
-                    rowGap: '0.5rem',
-                  }}>
+                  sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
                   <VocabularyComponent
                     selectedIds={selectedIds}
                     addValue={push}
@@ -102,7 +97,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                   {!defaultVocabularyKeys.includes(vocabulary) && (
                     <>
                       <Button
-                        sx={{ height: 'fit-content', alignSelf: 'center' }}
+                        sx={{ ml: { xs: '0', sm: '2rem' }, minWidth: 'max-content' }}
                         color="error"
                         startIcon={<RemoveCircleIcon />}
                         onClick={() => setVocabularyToRemove(vocabulary)}>

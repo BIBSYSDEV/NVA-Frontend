@@ -1,7 +1,7 @@
 {
   "about": {
     "availability_statement": "Tilgjengelegheitserklæring",
-    "copyright_inquiries": "",
+    "copyright_inquiries": "Førespurnad om opphavsrett",
     "description": {
       "paragraph0": {
         "bullet_point0": "Oppfyll krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit ope vitenarkiv",
@@ -552,6 +552,7 @@
       "get_person": "Kunne ikkje hente person",
       "get_positions": "Kunne ikkje hente stillingar",
       "get_project": "Kunne ikkje hente prosjekt",
+      "get_project_categories": "Kunne ikkje hente prosjektkategoriar",
       "get_publisher": "Kunne ikkje hente utgjevar",
       "get_publishers": "Søk på utgjevarar feila",
       "get_registration": "Kunne ikkje laste inn registrering",
