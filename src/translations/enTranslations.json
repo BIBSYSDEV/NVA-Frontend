@@ -1,7 +1,7 @@
 {
   "about": {
     "availability_statement": "Accessibility statement",
-    "copyright_inquiries": "",
+    "copyright_inquiries": "Inquires about copyright",
     "description": {
       "paragraph0": {
         "bullet_point0": "Meet the requirement for open access to articles and other research results by depositing in an open research repository",
@@ -552,6 +552,7 @@
       "get_person": "Failed to retrieve person",
       "get_positions": "Failed to retrieve positions",
       "get_project": "Failed to retrieve project",
+      "get_project_categories": "Could not retrieve project categories",
       "get_publisher": "Failed to retrieve publisher",
       "get_publishers": "Publisher search failed",
       "get_registration": "Failed to load registration",
