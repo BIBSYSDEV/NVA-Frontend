@@ -1,6 +1,6 @@
 import { MenuItem, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
@@ -11,8 +11,9 @@ const relevantNviYears = getNviYearFilterValues(new Date().getFullYear() - 1);
 
 export const NviReportedYearFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const { scientificReportPeriodSince, scientificIndexStatus } = useRegistrationsQueryParams();
 
@@ -33,7 +34,7 @@ export const NviReportedYearFilter = () => {
           syncedParams.set(ResultParam.ScientificReportPeriodSinceParam, selectedYear);
         }
         syncedParams.delete(ResultParam.From);
-        history.push({ search: syncedParams.toString() });
+        navigate({ search: syncedParams.toString() });
       }}>
       {relevantNviYears.map((year) => (
         <MenuItem key={year} value={year}>

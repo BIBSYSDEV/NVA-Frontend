@@ -77,7 +77,8 @@ export const DoiRequestAccordion = ({
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
 
-  const location = useLocation<SelectedTicketTypeLocationState>();
+  const location = useLocation();
+  const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
@@ -211,8 +212,8 @@ export const DoiRequestAccordion = ({
   const userCanRequestDoi = userHasAccessRight(registration, 'doi-request-create');
   const userCanAssignDoi = userHasAccessRight(registration, 'doi-request-approve');
 
-  const defaultExpanded = location.state?.selectedTicketType
-    ? location.state.selectedTicketType === 'DoiRequest'
+  const defaultExpanded = locationState?.selectedTicketType
+    ? locationState.selectedTicketType === 'DoiRequest'
     : waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest;
 
   return (
