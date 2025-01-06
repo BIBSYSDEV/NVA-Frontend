@@ -117,8 +117,7 @@ export const AddProjectManagerForm = ({
           data-testid={dataTestId.projectForm.addUnidentifiedProjectManagerButton}
           disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
           onClick={addUnidentifiedManager}
-          variant="outlined"
-          s>
+          variant="outlined">
           {t('project.add_unidentified_project_manager')}
         </Button>
         <Box sx={{ display: 'flex', justifyContent: { lg: 'center' } }}>
