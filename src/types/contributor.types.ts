@@ -95,6 +95,14 @@ export interface Contributor {
   sequence: number;
 }
 
+export interface PreviewContributor {
+  affiliations?: Affiliation[];
+  correspondingAuthor?: boolean;
+  identity: Identity;
+  role: ContributorRole;
+  sequence?: number;
+}
+
 export type ConfirmedAffiliation = Pick<Organization, 'type' | 'id'>;
 
 export type Affiliation = ConfirmedAffiliation | UnconfirmedOrganization;

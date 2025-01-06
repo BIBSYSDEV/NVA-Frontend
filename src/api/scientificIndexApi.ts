@@ -92,6 +92,21 @@ export const fetchNviCandidateForRegistration = async (registrationId: string) =
   return fetchNviCandidateForRegistrationResponse.data;
 };
 
+interface ReportStatusResponse {
+  publicationId: string;
+  reportStatus: {
+    status: 'PENDING_REVIEW' | 'REPORTED' | 'UNDER_REVIEW' | 'NOT_REPORTED' | 'NOT_CANDIDATE';
+  };
+  period: string;
+}
+
+export const fetchNviReportStatusForRegistration = async (registrationId: string) => {
+  const fetchNviReportStatusResponse = await apiRequest2<ReportStatusResponse>({
+    url: `${ScientificIndexApiPath.Publication}/${encodeURIComponent(registrationId)}/report-status`,
+  });
+  return fetchNviReportStatusResponse.data;
+};
+
 export const fetchNviInstitutionStatus = async (year: number) => {
   const fetchNviStatusResponse = await authenticatedApiRequest2<NviInstitutionStatusResponse>({
     url: `${ScientificIndexApiPath.InstitutionReport}/${year}`,

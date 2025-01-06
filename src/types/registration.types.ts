@@ -1,6 +1,6 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
 import { AggregationValue, LanguageString } from './common.types';
-import { Contributor } from './contributor.types';
+import { Contributor, PreviewContributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import { ArtisticEntityDescription, ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
 import { BookEntityDescription, BookPublicationInstance } from './publication_types/bookRegistration.types';
@@ -40,6 +40,7 @@ import {
   MediaType,
   OtherRegistrationType,
   PresentationType,
+  PublicationType,
   ReportType,
   ResearchDataType,
 } from './publicationFieldNames';
@@ -263,27 +264,34 @@ export interface Registration extends BaseRegistration {
 export interface RegistrationSearchItem {
   id: string;
   identifier: string;
-  createdDate: string;
-  modifiedDate: string;
-  publishedDate?: string;
-  status: RegistrationStatus;
-  entityDescription: {
-    mainTitle: string;
-    abstract: string;
-    description: string;
-    publicationDate?: RegistrationDate;
-    contributorsPreview: Contributor[];
-    contributorsCount: number;
-    reference: {
-      publicationInstance: {
-        type?: PublicationInstanceType | '';
-      };
-      publicationContext?: {
-        publisher?: ContextPublisher;
-        series?: ContextSeries;
-      };
-    };
+  type: PublicationInstanceType | '';
+  recordMetadata: {
+    status: RegistrationStatus;
+    createdDate: string;
+    modifiedDate: string;
+    publishedDate?: string;
   };
+  mainTitle: string;
+  publicationDate?: RegistrationDate;
+  contributorsPreview: PreviewContributor[];
+  contributorsCount: number;
+  publishingDetails: {
+    id?: string;
+    type?: PublicationType;
+    series?: {
+      name?: string;
+      id?: string;
+      scientificValue?: string;
+    };
+    publisher?: {
+      name?: string;
+      id?: string;
+      scientificValue?: string;
+    };
+    doi?: string;
+  };
+  abstract: string;
+  description: string;
 }
 
 export interface RegistrationDate {
