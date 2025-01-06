@@ -9,11 +9,11 @@ import { CristinProject, ProjectAggregations } from '../../types/project.types';
 import { RegistrationAggregations, RegistrationSearchItem } from '../../types/registration.types';
 import { CristinPerson, PersonAggregations } from '../../types/user.types';
 import { SearchParam } from '../../utils/searchHelpers';
-import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
+import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
 
 const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
   display: 'grid',

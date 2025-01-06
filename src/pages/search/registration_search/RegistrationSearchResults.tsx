@@ -17,8 +17,7 @@ export const RegistrationSearchResults = ({
   useEffect(() => {
     if (
       searchResult.some(
-        ({ entityDescription }) =>
-          stringIncludesMathJax(entityDescription?.mainTitle) || stringIncludesMathJax(entityDescription?.abstract)
+        ({ mainTitle, abstract }) => stringIncludesMathJax(mainTitle) || stringIncludesMathJax(abstract)
       )
     ) {
       typesetMathJax();

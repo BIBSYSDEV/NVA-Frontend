@@ -3,7 +3,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -62,7 +62,7 @@ export const RegistrationListItemContent = ({
   onRemoveRelated,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
-  const { identifier, entityDescription, id } = registration;
+  const { id, identifier } = registration;
   const location = useLocation();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -71,15 +71,15 @@ export const RegistrationListItemContent = ({
   const userCristinId = user?.cristinId ?? '';
   const mutationKey = ['person-preferences', userCristinId];
 
-  const registrationType = entityDescription?.reference?.publicationInstance?.type;
-  const contributors = entityDescription?.contributorsPreview ?? [];
+  const registrationType = registration.type;
+  const contributors = registration.contributorsPreview ?? [];
 
   const primaryContributors = registrationType
     ? getContributorsWithPrimaryRole(contributors, registrationType)
     : contributors;
 
   const focusedContributors = primaryContributors.slice(0, 5);
-  const countRestContributors = registration.entityDescription.contributorsCount - focusedContributors.length;
+  const countRestContributors = registration.contributorsCount - focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
 
@@ -102,11 +102,12 @@ export const RegistrationListItemContent = ({
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' }, marginBottom: '0.5rem' }}>
           <RegistrationIconHeader
-            publicationInstanceType={registration.entityDescription.reference.publicationInstance.type}
-            publicationDate={registration.entityDescription.publicationDate}
+            publicationInstanceType={registration.type}
+            publicationDate={registration.publicationDate}
           />
           {ticketView &&
-            (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
+            (registration.recordMetadata.status === RegistrationStatus.Draft ||
+              registration.recordMetadata.status === RegistrationStatus.New) && (
               <Typography
                 sx={{
                   p: '0.1rem 0.75rem',
@@ -119,7 +120,7 @@ export const RegistrationListItemContent = ({
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
           {ticketView ? (
-            getTitleString(entityDescription?.mainTitle)
+            getTitleString(registration.mainTitle)
           ) : (
             <MuiLink
               target={target}
@@ -128,7 +129,7 @@ export const RegistrationListItemContent = ({
                 pathname: getRegistrationLandingPagePath(identifier),
                 state: { previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState,
               }}>
-              {getTitleString(entityDescription?.mainTitle)}
+              {getTitleString(registration.mainTitle)}
             </MuiLink>
           )}
         </Typography>
@@ -153,7 +154,11 @@ export const RegistrationListItemContent = ({
                     contributor.identity.name
                   )}
                 </Typography>
-                <ContributorIndicators contributor={contributor} ticketView={ticketView} />
+                <ContributorIndicators
+                  orcId={contributor.identity.orcId}
+                  correspondingAuthor={contributor.correspondingAuthor}
+                  ticketView={ticketView}
+                />
               </Box>
             ))}
             {countRestContributors > 0 && (
@@ -162,9 +167,9 @@ export const RegistrationListItemContent = ({
           </Box>
         </Box>
 
-        {(entityDescription?.abstract || entityDescription?.description) && (
+        {(registration.abstract || registration.description) && (
           <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
-            {entityDescription?.abstract || entityDescription?.description}
+            {registration.abstract || registration.description}
           </TruncatableTypography>
         )}
       </ListItemText>
@@ -203,7 +208,7 @@ export const RegistrationListItemContent = ({
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
-          {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
+          {registration.recordMetadata.status === RegistrationStatus.Draft && onDeleteDraftRegistration && (
             <Tooltip title={t('common.delete')}>
               <IconButton
                 data-testid={`delete-registration-${identifier}`}

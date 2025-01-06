@@ -18,6 +18,7 @@ export enum CristinApiPath {
   PersonIdentityNumber = '/cristin/person/identityNumber',
   Position = '/cristin/position',
   Project = '/cristin/project',
+  ProjectCategories = '/cristin/category/project',
 }
 
 export enum PublicationChannelApiPath {
@@ -65,4 +66,5 @@ export enum ScientificIndexApiPath {
   InstitutionApprovalReport = '/scientific-index/institution-approval-report',
   InstitutionReport = '/scientific-index/institution-report',
   Period = '/scientific-index/period',
+  Publication = '/scientific-index/publication',
 }
