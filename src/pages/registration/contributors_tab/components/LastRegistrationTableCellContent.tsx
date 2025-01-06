@@ -1,7 +1,7 @@
 import { Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../../api/searchApi';
 import { TruncatableTypography } from '../../../../components/TruncatableTypography';
 import { getTitleString } from '../../../../utils/registration-helpers';
 
@@ -31,9 +31,7 @@ export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationT
     <Skeleton />
   ) : registration ? (
     <>
-      <TruncatableTypography lines={2}>
-        {getTitleString(registration.entityDescription?.mainTitle)}
-      </TruncatableTypography>
+      <TruncatableTypography lines={2}>{getTitleString(registration.mainTitle)}</TruncatableTypography>
       {totalHits > 1 && (
         <Typography fontStyle="italic">
           {t('registration.contributors.other_registrations', { count: totalHits - 1 })}

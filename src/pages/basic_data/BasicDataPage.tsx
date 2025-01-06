@@ -16,19 +16,19 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
-import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
-import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
 import { CentralImportCandidateForm } from './app_admin/central_import/CentralImportCandidateForm';
 import { CentralImportCandidateMerge } from './app_admin/central_import/CentralImportCandidateMerge';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
 import { ImportCandidatesMenuFilters } from './app_admin/central_import/ImportCandidatesMenuFilters';
+import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 
@@ -63,18 +63,18 @@ const BasicDataPage = () => {
         expanded={expandedMenu}
         minimizedMenu={
           simpleGoBack ? (
-            <StyledMinimizedMenuButton title={t('basic_data.basic_data')} onClick={() => navigate(-1)}>
+            <MinimizedMenuIconButton title={t('basic_data.basic_data')} onClick={() => navigate(-1)}>
               <BusinessCenterIcon />
-            </StyledMinimizedMenuButton>
+            </MinimizedMenuIconButton>
           ) : (
             <Link
               to={{
                 pathname: UrlPathTemplate.BasicDataCentralImport,
                 search: location.state?.previousSearch,
               }}>
-              <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
+              <MinimizedMenuIconButton title={t('basic_data.basic_data')}>
                 <BusinessCenterIcon />
-              </StyledMinimizedMenuButton>
+              </MinimizedMenuIconButton>
             </Link>
           )
         }>
@@ -176,12 +176,14 @@ const BasicDataPage = () => {
             path={UrlPathTemplate.Root}
             element={
               <PrivateRoute
-                isAuthorized={isAppAdmin || isInstitutionAdmin}
+                isAuthorized={isAppAdmin || isInstitutionAdmin || isInternalImporter}
                 element={
                   isInstitutionAdmin ? (
                     <Navigate to={UrlPathTemplate.BasicDataPersonRegister} />
                   ) : isAppAdmin ? (
                     <Navigate to={UrlPathTemplate.BasicDataInstitutions} />
+                  ) : isInternalImporter ? (
+                    <Navigate to={UrlPathTemplate.BasicDataCentralImport} />
                   ) : (
                     <Navigate to="/forbidden" replace />
                   )

@@ -24,17 +24,19 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
+import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getAssociatedFiles, userHasAccessRight } from '../../../utils/registration-helpers';
+import { getOpenFiles, userHasAccessRight } from '../../../utils/registration-helpers';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
@@ -74,6 +76,8 @@ export const DoiRequestAccordion = ({
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
+
+  const location = useLocation<SelectedTicketTypeLocationState>();
 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
@@ -160,9 +164,7 @@ export const DoiRequestAccordion = ({
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
   const messages = doiRequestTicket?.messages ?? [];
 
-  const publishedFilesOnRegistration = getAssociatedFiles(registration.associatedArtifacts).filter(
-    (file) => file.type === 'PublishedFile'
-  );
+  const openFilesOnRegistration = getOpenFiles(registration.associatedArtifacts);
 
   const hasReservedDoi = !doiRequestTicket && registration.doi;
   const status = doiRequestTicket
@@ -194,7 +196,7 @@ export const DoiRequestAccordion = ({
       data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
       endIcon={<CheckIcon />}
       onClick={() => {
-        if (publishedFilesOnRegistration.length > 0) {
+        if (openFilesOnRegistration.length > 0) {
           approveTicketMutation.mutate();
         } else {
           toggleConfirmDialogAssignDoi();
@@ -209,12 +211,16 @@ export const DoiRequestAccordion = ({
   const userCanRequestDoi = userHasAccessRight(registration, 'doi-request-create');
   const userCanAssignDoi = userHasAccessRight(registration, 'doi-request-approve');
 
+  const defaultExpanded = location.state?.selectedTicketType
+    ? location.state.selectedTicketType === 'DoiRequest'
+    : waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest;
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
       sx={{ bgcolor: 'doiRequest.light' }}
       elevation={3}
-      defaultExpanded={waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest}>
+      defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi')}
         {status && ` - ${status}`}
@@ -228,7 +234,7 @@ export const DoiRequestAccordion = ({
           <Trans
             t={t}
             i18nKey="registration.public_page.tasks_panel.has_reserved_doi"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
         )}
 
@@ -255,8 +261,8 @@ export const DoiRequestAccordion = ({
                   i18nKey="registration.public_page.tasks_panel.request_doi_description"
                   values={{ buttonText: t('registration.public_page.request_doi') }}
                   components={[
-                    <Typography paragraph key="1" />,
-                    <Typography paragraph key="2">
+                    <Typography sx={{ mb: '1rem' }} key="1" />,
+                    <Typography sx={{ mb: '1rem' }} key="2">
                       {doiLink}
                     </Typography>,
                   ]}
@@ -272,8 +278,8 @@ export const DoiRequestAccordion = ({
                   i18nKey="registration.public_page.tasks_panel.draft_doi_description"
                   values={{ buttonText: t('registration.public_page.reserve_doi') }}
                   components={[
-                    <Typography paragraph key="1" />,
-                    <Typography paragraph key="2">
+                    <Typography sx={{ mb: '1rem' }} key="1" />,
+                    <Typography sx={{ mb: '1rem' }} key="2">
                       {doiLink}
                     </Typography>,
                   ]}
@@ -299,7 +305,10 @@ export const DoiRequestAccordion = ({
                   <Trans
                     t={t}
                     i18nKey="registration.public_page.tasks_panel.reserve_doi_confirmation"
-                    components={[<Typography paragraph key="1" />, <Typography paragraph key="2" fontWeight={700} />]}
+                    components={[
+                      <Typography sx={{ mb: '1rem' }} key="1" />,
+                      <Typography sx={{ mb: '1rem' }} key="2" fontWeight={700} />,
+                    ]}
                   />
                 </ConfirmDialog>
               </>
@@ -315,7 +324,7 @@ export const DoiRequestAccordion = ({
           <Trans
             t={t}
             i18nKey="registration.public_page.request_doi_description"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
           <TextField
             variant="outlined"
@@ -350,7 +359,7 @@ export const DoiRequestAccordion = ({
           <Trans
             t={t}
             i18nKey="registration.public_page.tasks_panel.no_published_files_on_registration_description"
-            components={[<Typography paragraph key="1" />]}
+            components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
           />
         </ConfirmDialog>
 
@@ -381,7 +390,7 @@ export const DoiRequestAccordion = ({
               onCancel={toggleRejectDoiDialog}
               textFieldLabel={t('common.message')}
               confirmButtonLabel={t('common.reject_doi')}>
-              <Typography paragraph>
+              <Typography sx={{ mb: '1rem' }}>
                 {t('registration.public_page.tasks_panel.describe_doi_rejection_reason')}
               </Typography>
             </ConfirmMessageDialog>
@@ -432,7 +441,7 @@ export const DoiRequestAccordion = ({
                   <Typography variant="h2" gutterBottom>
                     {t('registration.public_page.request_doi')}
                   </Typography>
-                  <Typography paragraph>{t('registration.public_page.request_doi_again')}</Typography>
+                  <Typography sx={{ mb: '1rem' }}>{t('registration.public_page.request_doi_again')}</Typography>
                   {requestDoiButton}
                 </>
               )}

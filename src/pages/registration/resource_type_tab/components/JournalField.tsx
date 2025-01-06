@@ -4,7 +4,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResource } from '../../../../api/commonApi';
-import { defaultChannelSearchSize, searchForJournals } from '../../../../api/publicationChannelApi';
+import { defaultChannelSearchSize, searchForSerialPublications } from '../../../../api/publicationChannelApi';
 import {
   AutocompleteListboxWithExpansion,
   AutocompleteListboxWithExpansionProps,
@@ -17,7 +17,7 @@ import {
   JournalEntityDescription,
   JournalRegistration,
 } from '../../../../types/publication_types/journalRegistration.types';
-import { Journal, PublicationChannelType } from '../../../../types/registration.types';
+import { PublicationChannelType, SerialPublication } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
@@ -77,7 +77,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, year, searchSize],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
-    queryFn: () => searchForJournals(debouncedQuery, year, searchSize),
+    queryFn: () => searchForSerialPublications(debouncedQuery, year, searchSize),
     meta: { errorMessage: t('feedback.error.get_journals') },
     placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedQuery),
   });
@@ -92,7 +92,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     ],
     enabled: !journalId && !!(reference?.publicationContext.printIssn || reference?.publicationContext.onlineIssn),
     queryFn: () =>
-      searchForJournals(
+      searchForSerialPublications(
         reference?.publicationContext.printIssn ?? reference?.publicationContext.onlineIssn ?? '',
         year,
         1
@@ -112,7 +112,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const journalQuery = useQuery({
     queryKey: ['channel', journalId],
     enabled: !!journalId,
-    queryFn: () => fetchResource<Journal>(journalId),
+    queryFn: () => fetchResource<SerialPublication>(journalId),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
   });
@@ -140,7 +140,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             filterOptions={(options) => options}
             inputValue={query}
             onInputChange={(_, newInputValue, reason) => {
-              if (reason !== 'reset') {
+              if (reason !== 'reset' && reason !== 'blur') {
                 setQuery(newInputValue);
               }
               if (reason === 'input' && !newInputValue && reference?.publicationContext.title) {
@@ -167,14 +167,6 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             renderOption={({ key, ...props }, option, state) => (
               <PublicationChannelOption key={option.identifier} props={props} option={option} state={state} />
             )}
-            ListboxComponent={AutocompleteListboxWithExpansion}
-            ListboxProps={
-              {
-                hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
-                onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-                isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
-              } satisfies AutocompleteListboxWithExpansionProps as any
-            }
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
@@ -198,6 +190,16 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
             )}
+            slotProps={{
+              listbox: {
+                component: AutocompleteListboxWithExpansion,
+                ...({
+                  hasMoreHits: !!journalOptionsQuery.data?.totalHits && journalOptionsQuery.data.totalHits > searchSize,
+                  onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+                  isLoadingMoreHits: journalOptionsQuery.isFetching && searchSize > options.length,
+                } satisfies AutocompleteListboxWithExpansionProps),
+              },
+            }}
           />
         )}
       </Field>

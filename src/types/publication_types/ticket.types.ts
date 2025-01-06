@@ -10,7 +10,7 @@ interface BaseMessage {
   createdDate: string;
 }
 
-interface Message extends BaseMessage {
+export interface Message extends BaseMessage {
   sender: string;
 }
 
@@ -23,7 +23,7 @@ export interface TicketCollection {
   tickets: Ticket[];
 }
 
-export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
+export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest' | 'UnpublishRequest';
 export type TicketStatus = 'New' | 'Pending' | 'Closed' | 'Completed' | 'NotApplicable';
 export const ticketStatusValues: TicketStatus[] = ['New', 'Pending', 'Closed', 'Completed'];
 
@@ -33,6 +33,7 @@ interface BaseTicket {
   createdDate: string;
   modifiedDate: string;
   id: string;
+  publicationIdentifier: string;
   publication: TicketPublication;
 }
 
@@ -61,8 +62,8 @@ type TicketPublication = Pick<
   };
 
 export interface PublishingTicket extends Ticket {
-  approvedFiles: string[];
-  filesForApproval: string[];
+  approvedFiles: AssociatedFile[];
+  filesForApproval: AssociatedFile[];
   workflow: PublishStrategy;
 }
 

@@ -1,21 +1,35 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
 import { AggregationValue, LanguageString } from './common.types';
-import { Contributor } from './contributor.types';
+import { Contributor, PreviewContributor } from './contributor.types';
 import { ResearchProject } from './project.types';
-import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
-import { BookEntityDescription } from './publication_types/bookRegistration.types';
-import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
-import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
-import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
+import { ArtisticEntityDescription, ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
+import { BookEntityDescription, BookPublicationInstance } from './publication_types/bookRegistration.types';
+import { ChapterEntityDescription, ChapterPublicationInstance } from './publication_types/chapterRegistration.types';
+import { DegreeEntityDescription, DegreePublicationInstance } from './publication_types/degreeRegistration.types';
+import {
+  ExhibitionEntityDescription,
+  ExhibitionPublicationInstance,
+} from './publication_types/exhibitionContent.types';
 import {
   emptyRegistrationEntityDescription,
   JournalEntityDescription,
+  JournalPublicationInstance,
 } from './publication_types/journalRegistration.types';
-import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration.types';
-import { MapEntityDescription } from './publication_types/otherRegistration.types';
-import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
-import { ReportEntityDescription } from './publication_types/reportRegistration.types';
-import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
+import {
+  MediaContributionEntityDescription,
+  MediaContributionPeriodicalPublicationInstance,
+  MediaContributionPublicationInstance,
+} from './publication_types/mediaContributionRegistration.types';
+import { MapEntityDescription, MapPublicationInstance } from './publication_types/otherRegistration.types';
+import {
+  PresentationEntityDescription,
+  PresentationPublicationInstance,
+} from './publication_types/presentationRegistration.types';
+import { ReportEntityDescription, ReportPublicationInstance } from './publication_types/reportRegistration.types';
+import {
+  ResearchDataEntityDescription,
+  ResearchDataPublicationInstance,
+} from './publication_types/researchDataRegistration.types';
 import {
   ArtisticType,
   BookType,
@@ -26,6 +40,7 @@ import {
   MediaType,
   OtherRegistrationType,
   PresentationType,
+  PublicationType,
   ReportType,
   ResearchDataType,
 } from './publicationFieldNames';
@@ -60,12 +75,8 @@ interface PublicationChannel {
   discontinued?: string;
 }
 
-export interface Journal extends PublicationChannel {
-  type: 'Journal';
-}
-
-export interface Series extends PublicationChannel {
-  type: 'Series';
+export interface SerialPublication extends PublicationChannel {
+  type: 'Journal' | 'Series';
 }
 
 export interface Publisher extends PublicationChannel {
@@ -109,12 +120,19 @@ export type RegistrationOperation =
   | 'support-request-create'
   | 'support-request-approve';
 
-export interface PublicationNote {
-  type: 'UnpublishingNote' | 'PublicationNote';
+interface UnpublishingNote {
+  type: 'UnpublishingNote';
   note: string;
-  createdBy?: string;
-  createdDate?: string;
+  createdBy: string;
+  createdDate: string;
 }
+
+interface GeneralPublicationNote {
+  type: 'PublicationNote';
+  note: string;
+}
+
+type PublicationNote = UnpublishingNote | GeneralPublicationNote;
 
 export interface BaseRegistration {
   readonly type: 'Publication' | 'ImportCandidate';
@@ -201,6 +219,20 @@ export type PublicationInstanceType =
   | ExhibitionContentType
   | OtherRegistrationType;
 
+export type PublicationInstance =
+  | JournalPublicationInstance
+  | DegreePublicationInstance
+  | BookPublicationInstance
+  | ReportPublicationInstance
+  | ChapterPublicationInstance
+  | PresentationPublicationInstance
+  | ArtisticPublicationInstance
+  | MediaContributionPublicationInstance
+  | MediaContributionPeriodicalPublicationInstance
+  | ResearchDataPublicationInstance
+  | MapPublicationInstance
+  | ExhibitionPublicationInstance;
+
 export enum PublicationChannelType {
   Journal = 'Journal',
   MediaContributionPeriodical = 'MediaContributionPeriodical',
@@ -227,6 +259,39 @@ export type EntityDescription =
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;
+}
+
+export interface RegistrationSearchItem {
+  id: string;
+  identifier: string;
+  type: PublicationInstanceType | '';
+  recordMetadata: {
+    status: RegistrationStatus;
+    createdDate: string;
+    modifiedDate: string;
+    publishedDate?: string;
+  };
+  mainTitle: string;
+  publicationDate?: RegistrationDate;
+  contributorsPreview: PreviewContributor[];
+  contributorsCount: number;
+  publishingDetails: {
+    id?: string;
+    type?: PublicationType;
+    series?: {
+      name?: string;
+      id?: string;
+      scientificValue?: string;
+    };
+    publisher?: {
+      name?: string;
+      id?: string;
+      scientificValue?: string;
+    };
+    doi?: string;
+  };
+  abstract: string;
+  description: string;
 }
 
 export interface RegistrationDate {
@@ -318,11 +383,13 @@ export interface RegistrationAggregations {
 export interface ConfirmedDocument {
   type: 'ConfirmedDocument';
   identifier: string;
+  sequence?: number | null;
 }
 
 export interface UnconfirmedDocument {
   type: 'UnconfirmedDocument';
   text: string;
+  sequence?: number | null;
 }
 
 export const emptyUnconfirmedDocument: UnconfirmedDocument = {

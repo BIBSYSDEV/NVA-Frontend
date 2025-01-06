@@ -4,10 +4,10 @@ import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
-import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
+import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ConfirmedDocument } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
 import { dataTestId } from '../../../../../utils/dataTestIds';
@@ -68,19 +68,16 @@ export const DataManagementPlanForm = () => {
               blurOnSelect
               loading={searchOptionsQuery.isPending}
               filterOptions={(options) => options}
-              getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+              getOptionLabel={(option) => getTitleString(option.mainTitle)}
               renderOption={({ key, ...props }, option, state) => (
                 <li {...props} key={option.identifier}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">
-                      <EmphasizeSubstring
-                        text={getTitleString(option.entityDescription?.mainTitle)}
-                        emphasized={state.inputValue}
-                      />
+                      <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
                     </Typography>
                     <YearAndContributorsText
-                      date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributors ?? []}
+                      date={option.publicationDate}
+                      contributors={option.contributorsPreview ?? []}
                     />
                   </Box>
                 </li>

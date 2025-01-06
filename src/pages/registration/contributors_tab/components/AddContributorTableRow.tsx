@@ -86,7 +86,7 @@ export const CristinPersonTableRow = ({
                   {selectAffiliations === SelectAffiliations.SINGLE ||
                   selectAffiliations === SelectAffiliations.NO_SELECT ? (
                     <SelectAffiliationRadioButton
-                      personIsSelected={personIsSelected}
+                      cristinPerson={cristinPerson}
                       affiliation={affiliation}
                       selectedPerson={selectedPerson}
                       setSelectedPerson={setSelectedPerson}
@@ -95,7 +95,7 @@ export const CristinPersonTableRow = ({
                     />
                   ) : (
                     <SelectAffiliationsCheckbox
-                      personIsSelected={personIsSelected}
+                      cristinPerson={cristinPerson}
                       affiliation={affiliation}
                       selectedPerson={selectedPerson}
                       setSelectedPerson={setSelectedPerson}

@@ -1,21 +1,18 @@
-import { Link, List, ListItem } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
-import { Registration } from '../../../types/registration.types';
-import { getTitleString } from '../../../utils/registration-helpers';
-import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
+import { List } from '@mui/material';
+import { RegistrationListItemContent } from '../../../components/RegistrationList';
+import { SearchListItem } from '../../../components/styled/Wrappers';
+import { RegistrationSearchItem } from '../../../types/registration.types';
 
 interface ListRegistrationRelationsProps {
-  registrations: Registration[];
+  registrations: RegistrationSearchItem[];
 }
 
 export const ListRegistrationRelations = ({ registrations }: ListRegistrationRelationsProps) => (
-  <List disablePadding>
+  <List disablePadding sx={{ width: '100%' }}>
     {registrations.map((registration) => (
-      <ListItem disableGutters key={registration.identifier}>
-        <Link component={RouterLink} to={getRegistrationLandingPagePath(registration.identifier)}>
-          {getTitleString(registration.entityDescription?.mainTitle)}
-        </Link>
-      </ListItem>
+      <SearchListItem sx={{ borderLeftColor: 'registration.main' }} key={registration.identifier}>
+        <RegistrationListItemContent registration={registration} />
+      </SearchListItem>
     ))}
   </List>
 );

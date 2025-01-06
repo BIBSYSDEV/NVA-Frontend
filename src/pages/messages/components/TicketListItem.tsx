@@ -7,10 +7,12 @@ import { updateTicket } from '../../../api/registrationApi';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { PreviousSearchLocationState } from '../../../types/locationState.types';
+import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { emptyRegistration, Registration } from '../../../types/registration.types';
-import { getInitials, getTimePeriodString } from '../../../utils/general-helpers';
+import { toDateString, toDateStringWithTime } from '../../../utils/date-helpers';
+import { getInitials } from '../../../utils/general-helpers';
+import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
 import { getMyMessagesRegistrationPath, getTasksRegistrationPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
@@ -19,6 +21,7 @@ import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColu
 import { SupportMessagesColumn } from './SupportMessagesColumn';
 
 export const ticketColor = {
+  UnpublishRequest: 'publishingRequest.main',
   PublishingRequest: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
@@ -46,8 +49,6 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     },
   } as Registration;
 
-  const ticketAge = getTimePeriodString(new Date(ticket.createdDate), new Date(), t);
-
   const assigneeFullName = ticket.assignee
     ? getFullName(
         ticket.assignee.preferredFirstName || ticket.assignee.firstName,
@@ -71,13 +72,16 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       }}>
       <MuiLink
         component={Link}
-        state={{ previousSearch: window.location.search } satisfies PreviousSearchLocationState}
         to={{
           pathname: isOnTasksPage
             ? getTasksRegistrationPath(identifier)
             : isOnMyPageMessages
               ? getMyMessagesRegistrationPath(identifier)
               : '',
+          state: {
+            previousSearch: window.location.search,
+            selectedTicketType: ticket.type,
+          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState,
         }}
         onClick={() => {
           if (!viewedByUser) {
@@ -97,7 +101,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             gap: '0 1rem',
             gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
           }}>
-          <RegistrationListItemContent registration={registrationCopy} ticketView />
+          <RegistrationListItemContent registration={convertToRegistrationSearchItem(registrationCopy)} ticketView />
           {ticket.type === 'PublishingRequest' ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} showLastMessage />
           ) : ticket.type === 'DoiRequest' ? (
@@ -114,7 +118,12 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
                 : t('common.unread')
               : t(`my_page.messages.ticket_types.${ticket.status}`)}
           </Typography>
-          <Typography lineHeight="2rem">{ticketAge}</Typography>
+          <Typography lineHeight="2rem">
+            <Tooltip title={t('common.created_at', { date: toDateStringWithTime(ticket.createdDate) })}>
+              <span>{toDateString(ticket.createdDate)}</span>
+            </Tooltip>
+          </Typography>
+
           {assigneeFullName && (
             <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
               <StyledVerifiedContributor>{getInitials(assigneeFullName)}</StyledVerifiedContributor>

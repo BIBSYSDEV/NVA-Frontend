@@ -1,7 +1,7 @@
 import { Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
-import { useFetchNviCandidateQuery } from '../../api/hooks/useFetchNviCandidateQuery';
+import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import disciplines from '../../resources/disciplines.json';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
@@ -95,7 +95,7 @@ const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: Additional
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
   const { entityDescription, id, status } = registration;
-  const nviCandidateQuery = useFetchNviCandidateQuery(id, status);
+  const nviReportedStatus = useFetchNviReportedStatus(id, status);
 
   const publicationContext = entityDescription?.reference?.publicationContext;
   const publicationInstance = entityDescription?.reference?.publicationInstance;
@@ -113,10 +113,13 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     (identifier) => identifier.type === 'ScopusIdentifier' || identifier.sourceName === 'Scopus'
   )?.value;
 
-  const isNviReported = nviCandidateQuery.isSuccess && nviCandidateQuery.data.status === 'Reported';
-  const reportedYear = nviCandidateQuery.data?.period.year;
+  const publicationDateString = displayDate(entityDescription?.publicationDate);
+  const nviReportedYearString =
+    nviReportedStatus.data?.reportStatus.status === 'REPORTED' && nviReportedStatus.data.period
+      ? `(${t('basic_data.nvi.nvi_reporting_year')}: ${nviReportedStatus.data.period})`
+      : '';
 
-  const dateString = `${displayDate(entityDescription?.publicationDate)}${isNviReported && reportedYear ? ` (${t('basic_data.nvi.nvi_reporting_year')}: ${reportedYear})` : ''}`;
+  const dateString = [publicationDateString, nviReportedYearString].filter(Boolean).join(' ');
   const alternativeTitles = Object.values(registration.entityDescription?.alternativeTitles ?? {});
 
   return (

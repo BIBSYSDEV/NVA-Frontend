@@ -2,6 +2,7 @@ import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
+  active: boolean;
   id: string;
   createdDate: string;
   displayName: string;
@@ -18,13 +19,12 @@ export enum Sector {
   Other = 'OTHER',
 }
 
-export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName'> {
+export interface CustomerInstitution
+  extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName' | 'active'> {
   type?: 'Customer';
-  archiveName: string;
   cristinId: string;
   feideOrganizationDomain: string;
   identifier: string;
-  institutionDns: string;
   name: string;
   modifiedDate?: string;
   vocabularies: CustomerVocabulary[];
@@ -96,15 +96,14 @@ export const defaultHrcsCategory: CustomerVocabulary = {
 };
 
 export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
+  active: true,
   type: 'Customer',
   id: '',
-  archiveName: '',
   createdDate: '',
   cristinId: '',
   displayName: '',
   feideOrganizationDomain: '',
   identifier: '',
-  institutionDns: '',
   name: '',
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
@@ -125,8 +124,6 @@ export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
 };
 
 export enum CustomerInstitutionFieldNames {
-  ArchiveName = 'customer.archiveName',
-  CristinId = 'customer.cristinId',
   DisplayName = 'customer.displayName',
   DoiUsername = 'doiAgent.username',
   DoiPassword = 'doiAgent.password',
@@ -134,7 +131,6 @@ export enum CustomerInstitutionFieldNames {
   FeideOrganizationDomain = 'customer.feideOrganizationDomain',
   Identifier = 'customer.identifier',
   InactiveFrom = 'customer.inactiveFrom',
-  InstitutionDns = 'customer.institutionDns',
   Name = 'customer.name',
   RorId = 'customer.rorId',
   Sector = 'customer.sector',

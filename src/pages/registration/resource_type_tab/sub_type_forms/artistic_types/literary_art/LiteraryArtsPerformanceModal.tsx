@@ -49,7 +49,7 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsPerformance>>({
     ),
   }),
   place: Yup.object({
-    label: Yup.string().required(
+    name: Yup.string().required(
       i18n.t('feedback.validation.is_required', {
         field: i18n.t('common.place'),
       })
@@ -126,7 +126,7 @@ export const LiteraryArtsPerformanceModal = ({
                 </Field>
               ) : null}
 
-              <Field name="place.label">
+              <Field name="place.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}

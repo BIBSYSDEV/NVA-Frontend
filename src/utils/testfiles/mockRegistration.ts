@@ -22,7 +22,7 @@ export const mockRegistration: JournalRegistration = {
   ],
   associatedArtifacts: [
     {
-      type: FileType.UnpublishedFile,
+      type: FileType.PendingOpenFile,
       identifier: '3214324',
       name: 'filename.pdf',
       size: 10,
@@ -30,6 +30,7 @@ export const mockRegistration: JournalRegistration = {
       publisherVersion: FileVersion.Published,
       embargoDate: null,
       license: null,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '1@20754.0.0.0', uploadedDate: '' },
       rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },
     },
   ],
@@ -109,16 +110,6 @@ export const mockRegistration: JournalRegistration = {
   allowedOperations: ['update', 'delete', 'unpublish'],
 };
 
-export const mockMathJaxRegistration: JournalRegistration = {
-  ...mockRegistration,
-  entityDescription: {
-    ...mockRegistration.entityDescription,
-    mainTitle: 'The title \\(\\sqrt{25} = 5~\\hbox{ost}\\) and \\(A_{FB}^{\\mathrm{b}\\overline{\\mathrm{b}}}\\)',
-    abstract:
-      'This is abstract -> \\(\\sqrt{25} = 5~\\hbox{ost}\\) and \\(X_{AB}^{\\mathrm{c}\\overline{\\mathrm{d}}}\\) and so on it goes.',
-  },
-};
-
 export const mockTicketCollection: TicketCollection = {
   type: 'TicketCollection',
   tickets: [
@@ -130,6 +121,7 @@ export const mockTicketCollection: TicketCollection = {
       createdDate: new Date(2020, 1).toISOString(),
       modifiedDate: new Date(2020, 1).toISOString(),
       id: `${mockRegistration.id}/ticket/1`,
+      publicationIdentifier: mockRegistration.identifier,
       publication: {
         id: mockRegistration.id,
         identifier: mockRegistration.identifier,

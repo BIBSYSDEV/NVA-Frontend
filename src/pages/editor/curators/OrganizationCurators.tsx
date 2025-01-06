@@ -76,13 +76,15 @@ export const OrganizationCurators = ({ heading, canEditUsers = false }: Organiza
             <TextField
               select
               sx={{ width: '9rem', '.MuiSelect-select': { display: 'flex', gap: '0.5rem' } }}
-              SelectProps={{ sx: { bgcolor: 'registration.main' } }}
               size="small"
               value={searchType}
-              inputProps={{ 'aria-label': t('common.type') }}
               onChange={(event) => {
                 setSearchType(event.target.value as unknown as SearchTypeValue);
                 setSearchValue('');
+              }}
+              slotProps={{
+                htmlInput: { 'aria-label': t('common.type') },
+                select: { sx: { bgcolor: 'registration.main' } },
               }}>
               <MenuItem value={SearchTypeValue.Unit} sx={{ display: 'flex', gap: '0.5rem' }}>
                 <AccountBalanceIcon fontSize="small" />

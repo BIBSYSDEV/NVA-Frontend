@@ -1,9 +1,8 @@
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Badge, Button, Divider, FormControlLabel, Typography } from '@mui/material';
+import { Badge, Divider, FormControlLabel, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,28 +18,29 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
-import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MinimizedMenuIconButton, SideMenu } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketTypeFilterButton } from '../../components/TicketTypeFilterButton';
 import { RootState } from '../../redux/store';
 import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { PrivateRoute } from '../../utils/routes/Routes';
 import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
-import { PrivateRoute } from '../../utils/routes/Routes';
-import { MyProfile } from './user_profile/MyProfile';
-import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
-import { MyProjects } from './user_profile/MyProjects';
-import ResearchProfile from '../research_profile/ResearchProfile';
-import { MyResults } from './user_profile/MyResults';
-import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
-import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
-import { TicketList } from '../messages/components/TicketList';
-import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
-import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import NotFound from '../errorpages/NotFound';
+import { TicketList } from '../messages/components/TicketList';
+import { MyRegistrations } from '../my_registrations/MyRegistrations';
+import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import ResearchProfile from '../research_profile/ResearchProfile';
+import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
+import { MyProfile } from './user_profile/MyProfile';
+import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
+import { MyProjects } from './user_profile/MyProjects';
+import { MyResults } from './user_profile/MyResults';
+import { Terms } from './user_profile/Terms';
+import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -73,8 +73,6 @@ const MyPagePage = () => {
     .filter(([, selected]) => selected)
     .map(([key]) => key);
 
-  const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot);
-
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
@@ -85,7 +83,7 @@ const MyPagePage = () => {
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     status: searchParams.get(TicketSearchParam.Status),
-    viewedByNot: viewedByNotParam,
+    viewedByNot: searchParams.get(TicketSearchParam.ViewedByNot),
     type: selectedTypesArray.join(','),
     publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
@@ -137,9 +135,9 @@ const MyPagePage = () => {
           <Link
             to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: locationState?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
-            <StyledMinimizedMenuButton title={t('my_page.my_page')}>
+            <MinimizedMenuIconButton title={t('my_page.my_page')}>
               <FavoriteBorderIcon />
-            </StyledMinimizedMenuButton>
+            </MinimizedMenuIconButton>
           </Link>
         }>
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
@@ -190,6 +188,12 @@ const MyPagePage = () => {
               to={UrlPathTemplate.MyPageUserRoleAndHelp}>
               {t('my_page.my_profile.user_role_and_help.user_role_and_help')}
             </SelectableButton>
+            <SelectableButton
+              data-testid={dataTestId.myPage.termsLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageTerms}
+              to={UrlPathTemplate.MyPageTerms}>
+              {t('common.terms')}
+            </SelectableButton>
           </NavigationList>
         </NavigationListAccordion>
 
@@ -201,24 +205,6 @@ const MyPagePage = () => {
             startIcon={<ChatBubbleIcon fontSize="small" sx={{ color: 'white', bgcolor: 'primary.main' }} />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
-            <StyledTicketSearchFormGroup>
-              <Button
-                data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-                sx={{ width: 'fit-content', background: viewedByNotParam ? undefined : 'white', textTransform: 'none' }}
-                variant={viewedByNotParam ? 'contained' : 'outlined'}
-                startIcon={<MarkEmailUnreadIcon />}
-                onClick={() => {
-                  if (viewedByNotParam) {
-                    searchParams.delete(TicketSearchParam.ViewedByNot);
-                  } else if (user.nvaUsername) {
-                    searchParams.set(TicketSearchParam.ViewedByNot, user.nvaUsername);
-                  }
-                  navigate({ search: searchParams.toString() });
-                }}>
-                {t('tasks.unread')}
-              </Button>
-            </StyledTicketSearchFormGroup>
-
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <TicketTypeFilterButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
@@ -375,6 +361,8 @@ const MyPagePage = () => {
           element={<PrivateRoute element={<UserRoleAndHelp />} isAuthorized={isAuthenticated} />}
         />
 
+        <Route path={'/profile/terms'} element={<PrivateRoute element={<Terms />} isAuthorized={isAuthenticated} />} />
+
         <Route
           path={'messages/my-messages'}
           element={
@@ -411,6 +399,7 @@ const MyPagePage = () => {
             />
           }
         />
+
         <Route path={'/*'} element={<PrivateRoute element={<NotFound />} isAuthorized={isAuthenticated} />} />
       </Routes>
     </StyledPageWithSideMenu>

@@ -2,9 +2,13 @@ import AddIcon from '@mui/icons-material/Add';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { searchForProjects } from '../../../../api/cristinApi';
+import {
+  AutocompleteListboxWithExpansion,
+  AutocompleteListboxWithExpansionProps,
+} from '../../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
@@ -12,9 +16,12 @@ import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { keepSimilarPreviousData } from '../../../../utils/searchHelpers';
 import { ProjectModal } from '../../../project/ProjectModal';
 import { HelperTextModal } from '../../HelperTextModal';
 import { ProjectItem } from './ProjectItem';
+
+const defaultProjectSearchSize = 10;
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
@@ -23,11 +30,17 @@ export const ProjectsField = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
+  const [searchSize, setSearchSize] = useState(defaultProjectSearchSize);
+
+  // Reset search size when query changes
+  useEffect(() => setSearchSize(defaultProjectSearchSize), [debouncedSearchTerm]);
+
   const projectsQuery = useQuery({
     enabled: debouncedSearchTerm.length > 0,
-    queryKey: ['projects', 10, 1, debouncedSearchTerm],
-    queryFn: () => searchForProjects(10, 1, { query: debouncedSearchTerm }),
+    queryKey: ['projects', searchSize, 1, debouncedSearchTerm],
+    queryFn: () => searchForProjects(searchSize, 1, { query: debouncedSearchTerm }),
     meta: { errorMessage: t('feedback.error.project_search') },
+    placeholderData: (data, query) => keepSimilarPreviousData(data, query, debouncedSearchTerm),
   });
 
   const toggleOpenNewProject = () => setOpenNewProject(!openNewProject);
@@ -53,7 +66,7 @@ export const ProjectsField = () => {
           modalDataTestId={dataTestId.registrationWizard.description.projectModal}>
           <Trans
             i18nKey="registration.description.project_helper_text"
-            components={[<Typography key="1" paragraph />]}
+            components={[<Typography key="1" sx={{ mb: '1rem' }} />]}
           />
         </HelperTextModal>
       </Box>
@@ -93,9 +106,20 @@ export const ProjectsField = () => {
                   }}
                   popupIcon={null}
                   multiple
+                  disableClearable
                   value={(field.value ?? []) as any[]}
                   getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
                   loading={projectsQuery.isFetching}
+                  slotProps={{
+                    listbox: {
+                      component: AutocompleteListboxWithExpansion,
+                      ...({
+                        hasMoreHits: !!projectsQuery.data?.size && projectsQuery.data.size > searchSize,
+                        onShowMoreHits: () => setSearchSize(searchSize + defaultProjectSearchSize),
+                        isLoadingMoreHits: projectsQuery.isFetching && searchSize > projects.length,
+                      } satisfies AutocompleteListboxWithExpansionProps),
+                    },
+                  }}
                   renderOption={({ key, ...props }, option: CristinProject, state) => (
                     <AutocompleteProjectOption
                       key={option.id}
@@ -108,9 +132,9 @@ export const ProjectsField = () => {
                     <AutocompleteTextField
                       {...params}
                       label={t('registration.description.project_association')}
-                      isLoading={projectsQuery.isFetching}
+                      isLoading={projectsQuery.isLoading}
                       placeholder={t('search.search_project_placeholder')}
-                      showSearchIcon={field.value.length === 0}
+                      showSearchIcon
                     />
                   )}
                   renderTags={() => null}
@@ -126,7 +150,7 @@ export const ProjectsField = () => {
                     modalDataTestId={dataTestId.registrationWizard.description.createProjectModal}>
                     <Trans
                       i18nKey="registration.description.create_project_helper_text"
-                      components={[<Typography key="1" paragraph />]}
+                      components={[<Typography key="1" sx={{ mb: '1rem' }} />]}
                     />
                   </HelperTextModal>
                 </Box>

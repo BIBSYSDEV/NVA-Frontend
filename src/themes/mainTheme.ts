@@ -183,6 +183,9 @@ export const mainTheme = createTheme(
       },
     },
     components: {
+      MuiAccordion: {
+        defaultProps: { slotProps: { heading: { component: 'div' } } },
+      },
       MuiAutocomplete: {
         styleOverrides: {
           inputRoot: {
@@ -192,6 +195,11 @@ export const mainTheme = createTheme(
             marginTop: '0.4rem',
             marginBottom: '0.4rem',
           },
+        },
+      },
+      MuiMenu: {
+        defaultProps: {
+          disablePortal: true,
         },
       },
       MuiBadge: {
@@ -225,7 +233,7 @@ export const mainTheme = createTheme(
         styleOverrides: {
           root: {
             fill: Color.PrimaryLight,
-            opacity: 0.6,
+            opacity: 0.7,
             '&.Mui-active': {
               opacity: 1,
             },
@@ -238,7 +246,7 @@ export const mainTheme = createTheme(
       MuiStepLabel: {
         styleOverrides: {
           label: {
-            opacity: 0.6,
+            opacity: 0.7,
             textTransform: 'uppercase',
             fontSize: '1rem',
             color: Color.PrimaryLight,

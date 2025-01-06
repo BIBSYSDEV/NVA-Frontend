@@ -6,7 +6,7 @@ import { CristinPerson, CristinPersonAffiliation } from '../../../../types/user.
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface SelectAffiliationsCheckboxProps {
-  personIsSelected: boolean;
+  cristinPerson: CristinPerson;
   affiliation: CristinPersonAffiliation;
   selectedPerson?: CristinPerson;
   setSelectedPerson: (selectedContributor: CristinPerson | undefined) => void;
@@ -14,26 +14,34 @@ interface SelectAffiliationsCheckboxProps {
 }
 
 export const SelectAffiliationsCheckbox = ({
+  cristinPerson,
   affiliation,
   selectedPerson,
   setSelectedPerson,
   affiliationIsSelected,
-  personIsSelected,
 }: SelectAffiliationsCheckboxProps) => {
   const { t } = useTranslation();
 
   const selectAffiliation = () => {
-    if (!selectedPerson) {
-      return;
-    }
-    const newAffiliations = affiliationIsSelected
-      ? selectedPerson.affiliations.filter((a) => a.organization !== affiliation.organization)
-      : [...selectedPerson.affiliations, affiliation];
+    let newAffiliations: CristinPersonAffiliation[];
+    let personWithAffiliation: CristinPerson;
 
-    const personWithAffiliation: CristinPerson = {
-      ...selectedPerson,
-      affiliations: newAffiliations,
-    };
+    if (selectedPerson && selectedPerson.id === cristinPerson.id) {
+      newAffiliations = affiliationIsSelected
+        ? selectedPerson.affiliations.filter((a) => a.organization !== affiliation.organization)
+        : [...selectedPerson.affiliations, affiliation];
+      personWithAffiliation = {
+        ...selectedPerson,
+        affiliations: newAffiliations,
+      };
+    } else {
+      newAffiliations = [affiliation];
+      personWithAffiliation = {
+        ...cristinPerson,
+        affiliations: newAffiliations,
+      };
+    }
+
     setSelectedPerson(personWithAffiliation);
   };
 
@@ -43,7 +51,6 @@ export const SelectAffiliationsCheckbox = ({
       onClick={selectAffiliation}
       color="primary"
       size="small"
-      disabled={!personIsSelected}
       title={t('registration.contributors.select_affiliation')}>
       {affiliationIsSelected ? (
         <CheckBoxIcon fontSize="small" color="info" />

@@ -30,15 +30,11 @@ import {
   ExhibitionBasic,
   ExhibitionCatalog,
   ExhibitionManifestation,
-  ExhibitionMentionInPublication,
-  ExhibitionOtherPresentation,
 } from '../../../../../types/publication_types/exhibitionContent.types';
 import { getIdentifierFromId } from '../../../../../utils/general-helpers';
 import { getOutputName } from '../../../../../utils/registration-helpers';
 import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
 import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
-import { ExhibitionMentionInPublicationModal } from '../exhibition_types/ExhibitionMentionInPublication';
-import { ExhibitionOtherPresentationModal } from '../exhibition_types/ExhibitionOtherPresentationModal';
 import { AwardModal } from './architecture/AwardModal';
 import { CompetitionModal } from './architecture/CompetitionModal';
 import { ExhibitionModal } from './architecture/ExhibitionModal';
@@ -255,20 +251,6 @@ export const OutputRow = ({
       ) : item.type === 'ExhibitionBasic' ? (
         <ExhibitionBasicModal
           exhibitionBasic={item as ExhibitionBasic}
-          onSubmit={updateItem}
-          open={openEditItem}
-          closeModal={() => setOpenEditItem(false)}
-        />
-      ) : item.type === 'ExhibitionOtherPresentation' ? (
-        <ExhibitionOtherPresentationModal
-          exhibitionOtherPresentation={item as ExhibitionOtherPresentation}
-          onSubmit={updateItem}
-          open={openEditItem}
-          closeModal={() => setOpenEditItem(false)}
-        />
-      ) : item.type === 'ExhibitionMentionInPublication' ? (
-        <ExhibitionMentionInPublicationModal
-          exhibitionMentionInPublication={item as ExhibitionMentionInPublication}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

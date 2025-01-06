@@ -22,8 +22,9 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
   const user = useSelector((store: RootState) => store.user);
   const nviParams = useNviCandidatesParams();
 
-  const focusedContributors = nviCandidate.publicationDetails.contributors.slice(0, 5);
-  const countRestContributors = nviCandidate.publicationDetails.contributors.length - focusedContributors.length;
+  const contributors = nviCandidate.publicationDetails.nviContributors;
+  const focusedContributors = contributors.slice(0, 5);
+  const countRestContributors = nviCandidate.publicationDetails.contributorsCount - focusedContributors.length;
 
   const focusedApprovals = nviCandidate.approvals.slice(0, 5);
   const countRestApprovals = nviCandidate.approvals.length - focusedApprovals.length;

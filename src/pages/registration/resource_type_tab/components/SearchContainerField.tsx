@@ -10,21 +10,22 @@ import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { StyledInfoBanner } from '../../../../components/styled/Wrappers';
 import { NviCandidateContext } from '../../../../context/NviCandidateContext';
-import { Contributor } from '../../../../types/contributor.types';
-import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
+import { PreviewContributor } from '../../../../types/contributor.types';
 import {
   PublicationInstanceType,
   Publisher,
   Registration,
   RegistrationDate,
-  Series,
+  RegistrationSearchItem,
+  SerialPublication,
 } from '../../../../types/registration.types';
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { getTitleString } from '../../../../utils/registration-helpers';
+import { convertToRegistrationSearchItem, getTitleString } from '../../../../utils/registration-helpers';
+import { isValidIsbn } from '../../../../utils/searchHelpers';
 import { LockedNviFieldDescription } from '../../LockedNviFieldDescription';
 
 interface SearchContainerFieldProps {
@@ -51,10 +52,12 @@ export const SearchContainerField = ({
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
 
+  const formattedDebouncedQuery = isValidIsbn(debouncedQuery) ? debouncedQuery.replaceAll('-', '') : debouncedQuery;
+
   const containerOptionsQuery = useQuery({
     enabled: debouncedQuery === query,
-    queryKey: ['container', debouncedQuery, searchSubtypes],
-    queryFn: () => fetchResults({ title: debouncedQuery, categoryShould: searchSubtypes, results: 25 }),
+    queryKey: ['container', formattedDebouncedQuery, searchSubtypes],
+    queryFn: () => fetchResults({ query: formattedDebouncedQuery, categoryShould: searchSubtypes, results: 25 }),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
@@ -103,7 +106,7 @@ export const SearchContainerField = ({
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
-            value={field.value && selectedContainer ? [selectedContainer] : []}
+            value={field.value && selectedContainer ? [convertToRegistrationSearchItem(selectedContainer)] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
                 setFieldValue(field.name, inputValue.pop()?.id);
@@ -113,20 +116,17 @@ export const SearchContainerField = ({
               setQuery('');
             }}
             loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
-            getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+            getOptionLabel={(option) => getTitleString(option.mainTitle)}
             renderOption={({ key, ...props }, option, state) => (
               <li {...props} key={option.identifier}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <Typography variant="subtitle1">
-                    <EmphasizeSubstring
-                      text={getTitleString(option.entityDescription?.mainTitle)}
-                      emphasized={state.inputValue}
-                    />
+                    <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
                   </Typography>
                   {descriptionToShow === 'year-and-contributors' ? (
                     <YearAndContributorsText
-                      date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributors ?? []}
+                      date={option.publicationDate}
+                      contributors={option.contributorsPreview ?? []}
                     />
                   ) : (
                     <ContainerAndLevelText registration={option} />
@@ -142,11 +142,11 @@ export const SearchContainerField = ({
                   data-testid={dataTestIds.registrationWizard.resourceType.journalChip}
                   label={
                     <>
-                      <Typography variant="subtitle1">{getTitleString(option.entityDescription?.mainTitle)}</Typography>
+                      <Typography variant="subtitle1">{getTitleString(option.mainTitle)}</Typography>
                       {descriptionToShow === 'year-and-contributors' ? (
                         <YearAndContributorsText
-                          date={option.entityDescription?.publicationDate}
-                          contributors={option.entityDescription?.contributors ?? []}
+                          date={option.publicationDate}
+                          contributors={option.contributorsPreview ?? []}
                         />
                       ) : (
                         <ContainerAndLevelText registration={option} />
@@ -176,7 +176,7 @@ export const SearchContainerField = ({
 
 interface YearAndContributorsTextProps {
   date?: RegistrationDate;
-  contributors: Contributor[];
+  contributors: PreviewContributor[];
 }
 
 export const YearAndContributorsText = ({ date, contributors }: YearAndContributorsTextProps) => {
@@ -194,15 +194,15 @@ export const YearAndContributorsText = ({ date, contributors }: YearAndContribut
 };
 
 interface ContainerAndLevelTextProps {
-  registration: Registration;
+  registration: RegistrationSearchItem;
 }
 
 const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => {
   const { t } = useTranslation();
 
-  const publicationContext = registration.entityDescription?.reference?.publicationContext as BookPublicationContext;
-  const publisherId = publicationContext.publisher?.id ?? '';
-  const seriesId = publicationContext.series?.id ?? '';
+  const publishingDetails = registration.publishingDetails;
+  const publisherId = publishingDetails?.publisher?.id ?? '';
+  const seriesId = publishingDetails?.series?.id ?? '';
 
   const publisherQuery = useQuery({
     queryKey: ['channel', publisherId],
@@ -215,7 +215,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const seriesQuery = useQuery({
     queryKey: ['channel', seriesId],
     enabled: !!seriesId,
-    queryFn: () => fetchResource<Series>(seriesId),
+    queryFn: () => fetchResource<SerialPublication>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
   });

@@ -1,3 +1,4 @@
+import CancelIcon from '@mui/icons-material/Cancel';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
@@ -11,26 +12,25 @@ import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
-import { Registration, RegistrationStatus } from '../types/registration.types';
+import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { displayDate } from '../utils/date-helpers';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
-  getRegistrationWizardPath,
+  getRegistrationWizardLink,
   getResearchProfilePath,
   UrlPathTemplate,
 } from '../utils/urlPaths';
-import { RegistrationIcon } from './atoms/RegistrationIcon';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
+import { RegistrationIconHeader } from './RegistrationIconHeader';
 import { SearchListItem } from './styled/Wrappers';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps extends Pick<LinkProps, 'target'> {
-  registrations: Registration[];
+  registrations: RegistrationSearchItem[];
   canEditRegistration?: boolean;
-  onDeleteDraftRegistration?: (registration: Registration) => void;
+  onDeleteDraftRegistration?: (registration: RegistrationSearchItem) => void;
   promotedPublications?: string[];
 }
 
@@ -47,8 +47,9 @@ export const RegistrationList = ({ registrations, ...rest }: RegistrationListPro
 );
 
 interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
-  registration: Registration;
+  registration: RegistrationSearchItem;
   ticketView?: boolean;
+  onRemoveRelated?: () => void;
 }
 
 export const RegistrationListItemContent = ({
@@ -58,9 +59,10 @@ export const RegistrationListItemContent = ({
   onDeleteDraftRegistration,
   promotedPublications = [],
   target,
+  onRemoveRelated,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
-  const { identifier, entityDescription, id } = registration;
+  const { id, identifier } = registration;
   const location = useLocation();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
@@ -69,15 +71,15 @@ export const RegistrationListItemContent = ({
   const userCristinId = user?.cristinId ?? '';
   const mutationKey = ['person-preferences', userCristinId];
 
-  const registrationType = entityDescription?.reference?.publicationInstance?.type;
-  const contributors = entityDescription?.contributors ?? [];
+  const registrationType = registration.type;
+  const contributors = registration.contributorsPreview ?? [];
 
   const primaryContributors = registrationType
     ? getContributorsWithPrimaryRole(contributors, registrationType)
     : contributors;
 
   const focusedContributors = primaryContributors.slice(0, 5);
-  const countRestContributors = primaryContributors.length - focusedContributors.length;
+  const countRestContributors = registration.contributorsCount - focusedContributors.length;
 
   const isPromotedPublication = promotedPublications.includes(id);
 
@@ -99,21 +101,13 @@ export const RegistrationListItemContent = ({
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' }, marginBottom: '0.5rem' }}>
-          <Box sx={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
-            <RegistrationIcon />
-            {registrationType && (
-              <Typography sx={{ color: 'primary.main' }}>
-                {t(`registration.publication_types.${registrationType}`)}
-              </Typography>
-            )}
-            {entityDescription?.publicationDate && (
-              <Typography sx={{ fontWeight: 'bold', color: 'primary.main' }}>
-                {displayDate(entityDescription?.publicationDate)}
-              </Typography>
-            )}
-          </Box>
+          <RegistrationIconHeader
+            publicationInstanceType={registration.type}
+            publicationDate={registration.publicationDate}
+          />
           {ticketView &&
-            (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
+            (registration.recordMetadata.status === RegistrationStatus.Draft ||
+              registration.recordMetadata.status === RegistrationStatus.New) && (
               <Typography
                 sx={{
                   p: '0.1rem 0.75rem',
@@ -126,14 +120,16 @@ export const RegistrationListItemContent = ({
         </Box>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
           {ticketView ? (
-            getTitleString(entityDescription?.mainTitle)
+            getTitleString(registration.mainTitle)
           ) : (
             <MuiLink
               target={target}
               component={Link}
-              state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
-              to={getRegistrationLandingPagePath(identifier)}>
-              {getTitleString(entityDescription?.mainTitle)}
+              to={{
+                pathname: getRegistrationLandingPagePath(identifier),
+                state: { previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState,
+              }}>
+              {getTitleString(registration.mainTitle)}
             </MuiLink>
           )}
         </Typography>
@@ -158,7 +154,11 @@ export const RegistrationListItemContent = ({
                     contributor.identity.name
                   )}
                 </Typography>
-                <ContributorIndicators contributor={contributor} ticketView={ticketView} />
+                <ContributorIndicators
+                  orcId={contributor.identity.orcId}
+                  correspondingAuthor={contributor.correspondingAuthor}
+                  ticketView={ticketView}
+                />
               </Box>
             ))}
             {countRestContributors > 0 && (
@@ -167,9 +167,9 @@ export const RegistrationListItemContent = ({
           </Box>
         </Box>
 
-        {(entityDescription?.abstract || entityDescription?.description) && (
+        {(registration.abstract || registration.description) && (
           <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
-            {entityDescription?.abstract || entityDescription?.description}
+            {registration.abstract || registration.description}
           </TruncatableTypography>
         )}
       </ListItemText>
@@ -199,16 +199,16 @@ export const RegistrationListItemContent = ({
           )}
           <Tooltip title={t('common.edit')}>
             <IconButton
-              data-testid={`edit-registration-${identifier}`}
               component={Link}
               target={target}
-              to={getRegistrationWizardPath(identifier)}
+              to={getRegistrationWizardLink(identifier, { goToLandingPageAfterSaveAndSee: true })}
+              data-testid={`edit-registration-${identifier}`}
               size="small"
               sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
               <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
-          {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
+          {registration.recordMetadata.status === RegistrationStatus.Draft && onDeleteDraftRegistration && (
             <Tooltip title={t('common.delete')}>
               <IconButton
                 data-testid={`delete-registration-${identifier}`}
@@ -220,6 +220,16 @@ export const RegistrationListItemContent = ({
             </Tooltip>
           )}
         </Box>
+      )}
+      {onRemoveRelated && (
+        <Tooltip title={t('registration.resource_type.research_data.remove_relation')}>
+          <IconButton
+            sx={{ alignSelf: 'start' }}
+            onClick={onRemoveRelated}
+            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(registration.identifier)}>
+            <CancelIcon color="primary" />
+          </IconButton>
+        </Tooltip>
       )}
     </Box>
   );

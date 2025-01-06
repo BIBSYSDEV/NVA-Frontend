@@ -106,7 +106,7 @@ export const ContributorRow = ({
         </Box>
       </TableCell>
       <TableCell align="left" width="1">
-        <Box sx={{ display: 'flex', alignItems: 'end' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
           {!contributorRoles.includes(contributor.role.type) && (
             <Tooltip title={t('registration.contributors.invalid_role')}>
               <WarningIcon color="warning" />
@@ -120,6 +120,7 @@ export const ContributorRow = ({
                 variant="filled"
                 label={t('common.select_role')}
                 fullWidth
+                sx={{ minWidth: '5rem' }}
                 error={!!error && touched}
                 helperText={<ErrorMessage name={field.name} />}>
                 {contributorRoles.map((role) => (

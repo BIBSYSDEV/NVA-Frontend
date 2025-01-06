@@ -7,7 +7,7 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 import { getNviYearFilterValues } from '../../../utils/nviHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
-const nviYearFilterValues = getNviYearFilterValues();
+const nviYearFilterValues = getNviYearFilterValues(new Date().getFullYear() + 1);
 
 export const NviYearSelector = (props: Partial<SelectProps>) => {
   const { t } = useTranslation();

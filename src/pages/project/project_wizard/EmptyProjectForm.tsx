@@ -43,18 +43,20 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
           data-testid={dataTestId.newProjectPage.titleInput}
           variant="filled"
           onChange={(event) => setTitle(event.target.value)}
-          InputProps={{
-            endAdornment: titleSearch.isPending ? (
-              <CircularProgress size={20} />
-            ) : titleSearch.duplicateProject ? (
-              <ErrorIcon color="warning" />
-            ) : debouncedTitle && !titleSearch.duplicateProject ? (
-              <CheckCircleIcon color="success" />
-            ) : undefined,
-          }}
           fullWidth
           placeholder={t('project.form.write_project_title')}
           label={t('common.title')}
+          slotProps={{
+            input: {
+              endAdornment: titleSearch.isPending ? (
+                <CircularProgress size={20} />
+              ) : titleSearch.duplicateProject ? (
+                <ErrorIcon color="warning" />
+              ) : debouncedTitle && !titleSearch.duplicateProject ? (
+                <CheckCircleIcon color="success" />
+              ) : undefined,
+            },
+          }}
         />
         {titleSearch.duplicateProject && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -62,9 +64,9 @@ export const EmptyProjectForm = ({ newProject, setNewProject, setShowProjectForm
             <ProjectListItem project={titleSearch.duplicateProject} />
           </Box>
         )}
-        {debouncedTitle && !titleSearch.isPending && titleSearch.duplicateProject && (
+        {debouncedTitle && !titleSearch.isPending && !titleSearch.duplicateProject && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            <Typography sx={{ fontWeight: 'bold' }}>{t('common.result')}</Typography>
+            <Typography sx={{ fontWeight: 'bold' }}>{t('project.duplicate_project_heading')}</Typography>
             <Typography>{t('project.no_duplicate_title')}</Typography>
           </Box>
         )}

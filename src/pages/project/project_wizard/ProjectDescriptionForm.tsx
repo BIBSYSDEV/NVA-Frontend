@@ -36,18 +36,20 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
                 data-testid={dataTestId.projectWizard.descriptionPanel.titleField}
                 label={t('common.title')}
                 disabled={thisIsRekProject}
-                InputProps={{
-                  endAdornment: duplicateProjectSearch.isPending ? (
-                    <CircularProgress size={20} />
-                  ) : duplicateProjectSearch.duplicateProject ? (
-                    <ErrorIcon color="warning" />
-                  ) : undefined,
-                }}
                 required
                 variant="filled"
                 fullWidth
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
+                slotProps={{
+                  input: {
+                    endAdornment: duplicateProjectSearch.isPending ? (
+                      <CircularProgress size={20} />
+                    ) : duplicateProjectSearch.duplicateProject ? (
+                      <ErrorIcon color="warning" />
+                    ) : undefined,
+                  },
+                }}
               />
             )}
           </Field>
@@ -57,6 +59,7 @@ export const ProjectDescriptionForm = ({ thisIsRekProject }: ProjectDescriptionF
               name={duplicateProjectSearch.duplicateProject.title}
               linkTo={getProjectPath(duplicateProjectSearch.duplicateProject.id)}
               warning={t('project.duplicate_title_warning')}
+              listHeader={t('project.duplicate_project_heading')}
             />
           )}
           <Field name={ProjectFieldName.AcademicSummaryNo}>

@@ -140,7 +140,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   const sortedNotes = [...generalNotes, ...rejectionNotes, ...approvalNotes].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
-    return dateB.getTime() - dateA.getTime();
+    return dateA.getTime() - dateB.getTime();
   });
 
   return (
@@ -158,6 +158,70 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
       <Divider />
 
       <Box sx={{ m: '1rem' }}>
+        {myApproval?.status !== 'Approved' && (
+          <>
+            <Trans
+              i18nKey="tasks.nvi.approve_nvi_candidate_description"
+              components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
+              values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
+            />
+            <LoadingButton
+              data-testid={dataTestId.tasksPage.nvi.approveButton}
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{ mb: '1rem', bgcolor: 'white' }}
+              loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
+              disabled={isMutating}
+              endIcon={<CheckIcon />}
+              onClick={() => statusMutation.mutate({ status: 'Approved' })}>
+              {t('tasks.nvi.approve_nvi_candidate')}
+            </LoadingButton>
+          </>
+        )}
+
+        {myApproval?.status !== 'Rejected' && (
+          <>
+            <Typography sx={{ mb: '1rem' }}>
+              {t('tasks.nvi.reject_nvi_candidate_description', { buttonText: t('tasks.nvi.reject_nvi_candidate') })}
+            </Typography>
+            <Button
+              data-testid={dataTestId.tasksPage.nvi.rejectButton}
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{ mb: '1rem', bgcolor: 'white' }}
+              disabled={isMutating || hasSelectedRejectCandidate}
+              endIcon={<ClearIcon />}
+              onClick={() => setHasSelectedRejectCandidate(true)}>
+              {t('tasks.nvi.reject_nvi_candidate')}
+            </Button>
+
+            <NviCandidateRejectionDialog
+              open={hasSelectedRejectCandidate}
+              onCancel={() => setHasSelectedRejectCandidate(false)}
+              onAccept={async (reason) => {
+                await statusMutation.mutateAsync({ status: 'Rejected', reason });
+                setHasSelectedRejectCandidate(false);
+              }}
+              isLoading={statusMutation.isPending}
+            />
+
+            <Divider sx={{ mb: '1rem' }} />
+          </>
+        )}
+
+        <Typography variant="h3" gutterBottom component="h2">
+          {t('tasks.nvi.note')}
+        </Typography>
+        <Typography sx={{ mb: '1rem' }}>{t('tasks.nvi.message_description')}</Typography>
+        <MessageForm
+          hideRequiredAsterisk
+          confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
+          fieldLabel={t('tasks.nvi.note')}
+          buttonTitle={t('tasks.nvi.save_note')}
+        />
+
         {sortedNotes.length > 0 && (
           <Box
             component="ul"
@@ -166,7 +230,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               flexDirection: 'column',
               listStyleType: 'none',
               p: 0,
-              m: '0 0 1rem 0',
+              m: 0,
               gap: '0.25rem',
             }}>
             {sortedNotes.map((note) => {
@@ -205,67 +269,6 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
             })}
           </Box>
         )}
-
-        {myApproval?.status !== 'Approved' && (
-          <>
-            <Trans
-              i18nKey="tasks.nvi.approve_nvi_candidate_description"
-              components={[<Typography paragraph key="1" />]}
-              values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
-            />
-            <LoadingButton
-              data-testid={dataTestId.tasksPage.nvi.approveButton}
-              variant="outlined"
-              fullWidth
-              size="small"
-              sx={{ mb: '1rem', bgcolor: 'white' }}
-              loading={statusMutation.isPending && statusMutation.variables?.status === 'Approved'}
-              disabled={isMutating}
-              endIcon={<CheckIcon />}
-              onClick={() => statusMutation.mutate({ status: 'Approved' })}>
-              {t('tasks.nvi.approve_nvi_candidate')}
-            </LoadingButton>
-          </>
-        )}
-
-        {myApproval?.status !== 'Rejected' && (
-          <>
-            <Typography paragraph>
-              {t('tasks.nvi.reject_nvi_candidate_description', { buttonText: t('tasks.nvi.reject_nvi_candidate') })}
-            </Typography>
-            <Button
-              data-testid={dataTestId.tasksPage.nvi.rejectButton}
-              variant="outlined"
-              fullWidth
-              size="small"
-              sx={{ mb: '1rem', bgcolor: 'white' }}
-              disabled={isMutating || hasSelectedRejectCandidate}
-              endIcon={<ClearIcon />}
-              onClick={() => setHasSelectedRejectCandidate(true)}>
-              {t('tasks.nvi.reject_nvi_candidate')}
-            </Button>
-
-            <NviCandidateRejectionDialog
-              open={hasSelectedRejectCandidate}
-              onCancel={() => setHasSelectedRejectCandidate(false)}
-              onAccept={async (reason) => {
-                await statusMutation.mutateAsync({ status: 'Rejected', reason });
-                setHasSelectedRejectCandidate(false);
-              }}
-              isLoading={statusMutation.isPending}
-            />
-
-            <Divider sx={{ mb: '1rem' }} />
-          </>
-        )}
-
-        <Typography paragraph>{t('tasks.nvi.message_description')}</Typography>
-        <MessageForm
-          hideRequiredAsterisk
-          confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
-          fieldLabel={t('common.message')}
-          buttonTitle={t('tasks.nvi.save_note')}
-        />
       </Box>
     </>
   );

@@ -16,8 +16,8 @@ interface DegreeFormProps {
 export const DegreeForm = ({ subType }: DegreeFormProps) => {
   const { t } = useTranslation();
 
-  if (subType === DegreeType.Phd) {
-    return <PhdForm />;
+  if (subType === DegreeType.Phd || subType === DegreeType.ArtisticPhd) {
+    return <PhdForm subType={subType} />;
   }
 
   return (
@@ -32,9 +32,9 @@ export const DegreeForm = ({ subType }: DegreeFormProps) => {
               data-testid={dataTestId.registrationWizard.resourceType.courseCodeField}
               variant="filled"
               sx={{ width: 'fit-content' }}
-              inputProps={{ maxLength: 15 }}
               label={t('registration.resource_type.course_code')}
               value={field.value ?? ''}
+              slotProps={{ htmlInput: { maxLength: 15 } }}
             />
           )}
         </Field>

@@ -6,10 +6,8 @@ export enum FileApiPath {
   Abort = '/upload/abort',
   Complete = '/upload/complete',
   Create = '/upload/create',
-  Download = '/download',
   ListParts = '/upload/listparts',
   Prepare = '/upload/prepare',
-  PublicDownload = '/download/public',
 }
 
 export enum CristinApiPath {
@@ -20,12 +18,12 @@ export enum CristinApiPath {
   PersonIdentityNumber = '/cristin/person/identityNumber',
   Position = '/cristin/position',
   Project = '/cristin/project',
+  ProjectCategories = '/cristin/category/project',
 }
 
 export enum PublicationChannelApiPath {
-  Journal = '/publication-channels-v2/journal',
-  Series = '/publication-channels-v2/series',
   Publisher = '/publication-channels-v2/publisher',
+  SerialPublication = '/publication-channels-v2/serial-publication',
 }
 
 export enum PublicationsApiPath {
@@ -68,4 +66,5 @@ export enum ScientificIndexApiPath {
   InstitutionApprovalReport = '/scientific-index/institution-approval-report',
   InstitutionReport = '/scientific-index/institution-report',
   Period = '/scientific-index/period',
+  Publication = '/scientific-index/publication',
 }

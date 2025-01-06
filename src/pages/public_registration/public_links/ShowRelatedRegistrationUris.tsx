@@ -1,8 +1,9 @@
 import { CircularProgress, Typography } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { apiRequest } from '../../../api/apiRequest';
-import { Registration } from '../../../types/registration.types';
+import { Registration, RegistrationSearchItem } from '../../../types/registration.types';
 import { isSuccessStatus } from '../../../utils/constants';
+import { convertToRegistrationSearchItem } from '../../../utils/registration-helpers';
 import { ListRegistrationRelations } from './ListRegistrationRelations';
 
 interface ShowRelatedRegistrationUrisProps {
@@ -17,7 +18,7 @@ export const ShowRelatedRegistrationUris = ({
   loadingLabel,
 }: ShowRelatedRegistrationUrisProps) => {
   const [isLoadingRegistrations, setIsLoadingRegistrations] = useState(true);
-  const [relatedRegistrations, setRelatedRegistrations] = useState<Registration[]>([]);
+  const [relatedRegistrations, setRelatedRegistrations] = useState<RegistrationSearchItem[]>([]);
 
   const linksRef = useRef(links); // Avoid triggering fetching of Registrations multiple times
 
@@ -27,16 +28,15 @@ export const ShowRelatedRegistrationUris = ({
       const relatedRegistrationsPromises = linksRef.current.map(async (id) => {
         const registrationResponse = await apiRequest<Registration>({ url: id });
         if (isSuccessStatus(registrationResponse.status)) {
-          return registrationResponse.data;
+          return convertToRegistrationSearchItem(registrationResponse.data);
         } else {
           return;
         }
       });
 
       const registrations = (await Promise.all(relatedRegistrationsPromises)).filter(
-        (registration) => registration // Remove null/undefined objects
-      ) as Registration[];
-
+        Boolean
+      ) as RegistrationSearchItem[];
       setRelatedRegistrations(registrations);
       setIsLoadingRegistrations(false);
     };

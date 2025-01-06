@@ -10,7 +10,7 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
   return !entityDescription ? null : (
     <>
       {entityDescription.abstract && (
-        <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} paragraph>
+        <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} sx={{ mb: '1rem' }}>
           {entityDescription.abstract}
         </Typography>
       )}
@@ -19,7 +19,7 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
           <Typography variant="h3" color="primary" gutterBottom>
             {t('registration.description.alternative_abstract')}
           </Typography>
-          <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} paragraph>
+          <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} sx={{ mb: '1rem' }}>
             {entityDescription.alternativeAbstracts.und}
           </Typography>
         </>
@@ -27,9 +27,9 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       {entityDescription.description && (
         <>
           <Typography variant="h3" color="primary" gutterBottom>
-            {t('common.description')}
+            {t('registration.description.description_of_content')}
           </Typography>
-          <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} paragraph>
+          <Typography style={{ whiteSpace: 'pre-line', overflowWrap: 'anywhere' }} sx={{ mb: '1rem' }}>
             {entityDescription.description}
           </Typography>
         </>

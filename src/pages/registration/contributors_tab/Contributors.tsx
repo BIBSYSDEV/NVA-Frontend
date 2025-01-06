@@ -185,12 +185,14 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
           sx={{ display: 'block', mb: '1rem' }}
           label={t('common.search_by_name')}
           variant="filled"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <SearchIcon />
-              </InputAdornment>
-            ),
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            },
           }}
           onChange={(event) => {
             setCurrentPage(1);

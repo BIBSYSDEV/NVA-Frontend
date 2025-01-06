@@ -53,7 +53,7 @@ export const CreateNfrProject = ({
       ],
     };
 
-    if (betaEnabled && selectedProject.lead) {
+    if (selectedProject.lead) {
       const suggestedProjectManagerNames = createNamesFromInput(selectedProject.lead);
       newNFRProject.contributors = [
         {

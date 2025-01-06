@@ -3,7 +3,6 @@ import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { LoadingButton } from '@mui/lab';
 import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
-import { useUppy } from '@uppy/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -27,7 +26,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const uppy = useUppy(createUppy(i18n.language));
+  const [uppy] = useState(() => createUppy(i18n.language));
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);
@@ -70,7 +69,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
                     file={file}
                     removeFile={() => {
                       const uppyFiles = uppy.getFiles();
-                      const uppyId = uppyFiles.find((uppyFile) => uppyFile.response?.uploadURL === file.identifier)?.id;
+                      const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
                       if (uppyId) {
                         uppy.removeFile(uppyId);
                       }

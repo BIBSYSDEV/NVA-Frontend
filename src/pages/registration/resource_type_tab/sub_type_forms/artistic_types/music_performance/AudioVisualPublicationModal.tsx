@@ -236,12 +236,10 @@ export const AudioVisualPublicationModal = ({
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.artistic.music_score_isrc')}
-                    InputProps={{
-                      inputComponent: MaskIsrcInput as any,
-                    }}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.scoreIsrc}
+                    slotProps={{ input: { inputComponent: MaskIsrcInput as any } }}
                   />
                 )}
               </Field>

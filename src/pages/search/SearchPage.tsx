@@ -1,19 +1,19 @@
 import { Box, styled } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
 import { SearchForm } from '../../components/SearchForm';
 import { SearchResponse, SearchResponse2 } from '../../types/common.types';
 import { CristinProject, ProjectAggregations } from '../../types/project.types';
-import { Registration, RegistrationAggregations } from '../../types/registration.types';
+import { RegistrationAggregations, RegistrationSearchItem } from '../../types/registration.types';
 import { CristinPerson, PersonAggregations } from '../../types/user.types';
 import { SearchParam } from '../../utils/searchHelpers';
-import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
-import { useLocation } from 'react-router-dom';
+import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
 
 const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
   display: 'grid',
@@ -31,7 +31,7 @@ const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
 }));
 
 export interface SearchPageProps {
-  registrationQuery: UseQueryResult<SearchResponse2<Registration, RegistrationAggregations>>;
+  registrationQuery: UseQueryResult<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>;
   personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
   projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }

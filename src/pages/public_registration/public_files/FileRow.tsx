@@ -14,16 +14,16 @@ import {
 import prettyBytes from 'pretty-bytes';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
+import { useDispatch } from 'react-redux';
+import { downloadRegistrationFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
-import { RootState } from '../../../redux/store';
-import { AssociatedFile, FileType, FileVersion } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, FileVersion } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { toDateString } from '../../../utils/date-helpers';
 import { equalUris } from '../../../utils/general-helpers';
 import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
+import { PendingFilesInfo } from './PendingFilesInfo';
 import { DownloadUrl, PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
@@ -43,7 +43,6 @@ export const FileRow = ({
 }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
   const [openPreviewAccordion, setOpenPreviewAccordion] = useState(openPreviewByDefault);
   const [isLoadingPreviewFile, setIsLoadingPreviewFile] = useState(false);
   const [previewFileUrl, setPreviewFileUrl] = useState<DownloadUrl | null>(null);
@@ -53,14 +52,15 @@ export const FileRow = ({
       if (previewFile) {
         setIsLoadingPreviewFile(true);
       }
-      const downloadFileResponse = user
-        ? await downloadPrivateFile(registrationIdentifier, file.identifier)
-        : await downloadPublicFile(registrationIdentifier, file.identifier);
+      const downloadFileResponse = await downloadRegistrationFile(registrationIdentifier, file.identifier);
       if (!downloadFileResponse) {
         dispatch(setNotification({ message: t('feedback.error.download_file'), variant: 'error' }));
       } else {
         if (previewFile) {
-          setPreviewFileUrl(downloadFileResponse);
+          setPreviewFileUrl({
+            id: downloadFileResponse.id,
+            shortenedVersion: downloadFileResponse.alias,
+          });
         } else {
           openFileInNewTab(downloadFileResponse.id);
         }
@@ -69,7 +69,7 @@ export const FileRow = ({
         setIsLoadingPreviewFile(false);
       }
     },
-    [t, dispatch, user, registrationIdentifier, file.identifier]
+    [t, dispatch, registrationIdentifier, file.identifier]
   );
 
   const fileIsEmbargoed = isEmbargoed(file.embargoDate);
@@ -82,6 +82,10 @@ export const FileRow = ({
 
   const licenseData = licenses.find((license) => equalUris(license.id, file.license));
   const licenseTitle = licenseData?.name ?? '';
+
+  const isOpenableFile = file.type === 'OpenFile' || file.type === 'PendingOpenFile';
+  const isPendingFile = file.type === 'PendingOpenFile' || file.type === 'PendingInternalFile';
+  const fileAwaitsApproval = registrationMetadataIsPublished && isPendingFile;
 
   return (
     <Box
@@ -96,13 +100,15 @@ export const FileRow = ({
         gap: '0.5rem 0.75rem',
         alignItems: 'center',
         marginBottom: '2rem',
-        opacity: registrationMetadataIsPublished && file.type === FileType.UnpublishedFile ? 0.6 : 1,
       }}>
-      <Typography
-        data-testid={dataTestId.registrationLandingPage.fileName}
-        sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere', minWidth: '6rem' }}>
-        {file.name}
-      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+        <Typography
+          data-testid={dataTestId.registrationLandingPage.fileName}
+          sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere', minWidth: '6rem' }}>
+          {file.name}
+        </Typography>
+        {fileAwaitsApproval && <PendingFilesInfo text={t('registration.public_page.files.file_awaits_approval')} />}
+      </Box>
       <Typography data-testid={dataTestId.registrationLandingPage.fileSize} sx={{ gridArea: 'size' }}>
         {prettyBytes(file.size, { locale: true })}
       </Typography>
@@ -116,19 +122,21 @@ export const FileRow = ({
         </Typography>
       )}
 
-      <Link
-        href={licenseData?.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
-        <Box
-          component="img"
-          alt={licenseTitle}
-          title={licenseTitle}
-          src={licenseData?.logo}
-          data-testid={dataTestId.registrationLandingPage.license}
-        />
-      </Link>
+      {isOpenableFile && (
+        <Link
+          href={licenseData?.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{ gridArea: 'license', maxHeight: '3rem', maxWidth: '8rem' }}>
+          <Box
+            component="img"
+            alt={licenseTitle}
+            title={licenseTitle}
+            src={licenseData?.logo}
+            data-testid={dataTestId.registrationLandingPage.license}
+          />
+        </Link>
+      )}
 
       <Box sx={{ gridArea: 'download' }}>
         {file.embargoDate && fileIsEmbargoed ? (
@@ -170,7 +178,7 @@ export const FileRow = ({
               {t('registration.public_page.preview_of', { fileName: file.name })}
             </Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails sx={{ opacity: fileAwaitsApproval ? 0.7 : 1 }}>
             {isLoadingPreviewFile ? (
               <CircularProgress aria-labelledby={`preview-label-${file.identifier}`} />
             ) : (

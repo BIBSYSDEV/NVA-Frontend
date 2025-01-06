@@ -81,7 +81,7 @@ const VocabularySettings = () => {
       <Helmet>
         <title id="vocabulary-label">{t('editor.vocabulary')}</title>
       </Helmet>
-      <Typography paragraph color="primary" fontWeight="600">
+      <Typography sx={{ mb: '1rem' }} color="primary" fontWeight="600">
         {t('editor.select_vocabulary_description')}
       </Typography>
 

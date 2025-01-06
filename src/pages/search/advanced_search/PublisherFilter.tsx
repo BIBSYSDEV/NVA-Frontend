@@ -88,14 +88,6 @@ export const PublisherFilter = () => {
             hideScientificLevel
           />
         )}
-        ListboxComponent={AutocompleteListboxWithExpansion}
-        ListboxProps={
-          {
-            hasMoreHits: !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
-            onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
-            isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
-          } satisfies AutocompleteListboxWithExpansionProps as any
-        }
         data-testid={dataTestId.startPage.advancedSearch.publisherField}
         renderInput={(params) => (
           <AutocompleteTextField
@@ -107,6 +99,16 @@ export const PublisherFilter = () => {
             multiline
           />
         )}
+        slotProps={{
+          listbox: {
+            component: AutocompleteListboxWithExpansion,
+            ...({
+              hasMoreHits: !!publisherOptionsQuery.data?.totalHits && publisherOptionsQuery.data.totalHits > searchSize,
+              onShowMoreHits: () => setSearchSize(searchSize + defaultChannelSearchSize),
+              isLoadingMoreHits: publisherOptionsQuery.isFetching && searchSize > options.length,
+            } satisfies AutocompleteListboxWithExpansionProps),
+          },
+        }}
       />
     </section>
   );

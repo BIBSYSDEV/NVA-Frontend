@@ -1,4 +1,4 @@
-import { TicketType } from './publication_types/ticket.types';
+import { Message, TicketType } from './publication_types/ticket.types';
 
 export interface Log {
   entries: LogEntry[];
@@ -6,13 +6,14 @@ export interface Log {
   numberOfArchivedFiles: number;
 }
 
-export type LogEntryType = TicketType | 'Import' | 'Created' | 'MetadataPublished';
+export type LogEntryType = TicketType | 'Import' | 'Created' | 'MetadataPublished' | 'Republished' | 'Deleted';
 
 export interface LogEntry {
   type: LogEntryType;
   title: string;
   modifiedDate: string;
   actions: LogAction[];
+  messages?: Message[];
 }
 
 export interface LogAction {

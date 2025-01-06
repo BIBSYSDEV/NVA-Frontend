@@ -22,8 +22,12 @@ export const UserOrcidHelperModal = () => {
         </Button>
         <Collapse in={showMore}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '0.5rem' }}>
-            <Typography paragraph>{t('my_page.my_profile.orcid.helper_text_modal.detailed_paragraph_1')}</Typography>
-            <Typography paragraph>{t('my_page.my_profile.orcid.helper_text_modal.detailed_paragraph_2')}</Typography>
+            <Typography sx={{ mb: '1rem' }}>
+              {t('my_page.my_profile.orcid.helper_text_modal.detailed_paragraph_1')}
+            </Typography>
+            <Typography sx={{ mb: '1rem' }}>
+              {t('my_page.my_profile.orcid.helper_text_modal.detailed_paragraph_2')}
+            </Typography>
 
             <Link
               sx={{

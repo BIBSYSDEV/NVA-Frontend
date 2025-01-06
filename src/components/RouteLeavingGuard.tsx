@@ -44,18 +44,3 @@ export const RouteLeavingGuard = ({
     )
   );
 };
-
-// NOTE:
-// This is a workaround to allow navigating to Landing Page programatically from Wizard, due to changes for React v18(?).
-// This solution may lead to some unexpected behaviour, and should be revisited if we find a better solution.
-{
-  /*
-const goFromRegistrationWizardToLandingPage = (currentPath: string, newPath: string) => {
-  const splittedPath = UrlPathTemplate.RegistrationWizard.split(':identifier');
-  const currentPathIsRegistrationWizard =
-    currentPath.startsWith(splittedPath[0]) && currentPath.endsWith(splittedPath[1]);
-  const newPathIsLandingPage = currentPath.startsWith(newPath) && !newPath.endsWith(splittedPath[1]);
-
-  return currentPathIsRegistrationWizard && newPathIsLandingPage;
-}; */
-}

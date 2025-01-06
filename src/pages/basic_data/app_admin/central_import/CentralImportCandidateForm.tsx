@@ -1,6 +1,5 @@
 import { Box } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useUppy } from '@uppy/react';
 import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -34,7 +33,7 @@ export const CentralImportCandidateForm = () => {
   const { identifier } = useParams<IdentifierParams>();
   const navigate = useNavigate();
   const location = useLocation();
-  const uppy = useUppy(createUppy(i18n.language));
+  const [uppy] = useState(createUppy(i18n.language));
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', identifier],

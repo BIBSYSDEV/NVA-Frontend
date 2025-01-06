@@ -2,7 +2,7 @@ import { AxiosHeaders } from 'axios';
 import { SearchResponse } from '../types/common.types';
 import { Keywords } from '../types/keywords.types';
 import { Organization } from '../types/organization.types';
-import { CristinProject, FundingSource, FundingSources, ProjectAggregations } from '../types/project.types';
+import { CristinProject, FundingSource, FundingSources, ProjectAggregations, TypedLabel } from '../types/project.types';
 import {
   CreateCristinPerson,
   CristinPerson,
@@ -79,7 +79,7 @@ export interface OrganizationSearchParams {
   query?: string;
   page?: number;
   results?: number;
-  includeSubunits?: boolean;
+  fullTree?: boolean;
 }
 export const defaultOrganizationSearchSize = 20;
 
@@ -90,8 +90,9 @@ export const searchForOrganizations = async (params: OrganizationSearchParams) =
   if (params.query) {
     searchParams.set('query', params.query);
   }
-  if (params.includeSubunits) {
-    headers.set('Accept', 'application/json; version=1');
+
+  if (params.fullTree) {
+    searchParams.set('fullTree', params.fullTree.toString());
   }
 
   searchParams.set('results', (params.results ?? defaultOrganizationSearchSize).toString());
@@ -337,4 +338,11 @@ export const searchForKeywords = async (results: number, page: number, query?: s
   });
 
   return fetchKeywordsResponse.data;
+};
+
+export const fetchProjectCategrories = async () => {
+  const fetchProjectCategoriesResponse = await apiRequest2<SearchResponse<TypedLabel>>({
+    url: CristinApiPath.ProjectCategories,
+  });
+  return fetchProjectCategoriesResponse.data;
 };

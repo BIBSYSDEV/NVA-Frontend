@@ -52,21 +52,23 @@ export const DescriptionPanel = () => {
               }}
               fullWidth
               label={t('common.title')}
-              InputProps={{
-                endAdornment: titleSearchPending ? (
-                  <CircularProgress size={20} />
-                ) : duplicateRegistration ? (
-                  <ErrorIcon color="warning" />
-                ) : undefined,
-              }}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
+              slotProps={{
+                input: {
+                  endAdornment: titleSearchPending ? (
+                    <CircularProgress size={20} />
+                  ) : duplicateRegistration ? (
+                    <ErrorIcon color="warning" />
+                  ) : undefined,
+                },
+              }}
             />
           )}
         </Field>
         {duplicateRegistration && (
           <DuplicateWarning
-            name={duplicateRegistration.entityDescription?.mainTitle}
+            name={duplicateRegistration.mainTitle}
             linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
             warning={t('registration.description.duplicate_title_warning')}
           />
@@ -227,9 +229,9 @@ export const DescriptionPanel = () => {
           )}
         </Field>
       </Box>
-      {duplicateRegistration && registrationsHaveSamePublicationYear(duplicateRegistration, values) && (
+      {duplicateRegistration && registrationsHaveSamePublicationYear(values, duplicateRegistration) && (
         <DuplicateWarning
-          name={duplicateRegistration.entityDescription?.mainTitle}
+          name={duplicateRegistration.mainTitle}
           linkTo={getRegistrationLandingPagePath(duplicateRegistration.identifier)}
           warning={t('registration.description.duplicate_publication_date_warning')}
         />

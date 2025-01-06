@@ -28,6 +28,7 @@ import { FileStatusSelect } from './FileStatusSelect';
 import { FundingSourceFilter } from './FundingSourceFilter';
 import { JournalFilter } from './JournalFilter';
 import { LanguageFilter } from './LanguageFilter';
+import { NviReportedYearFilter } from './NviReportedYearFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 import { PublisherFilter } from './PublisherFilter';
 import { ScientificValueFilter } from './ScientificValueFilter';
@@ -64,8 +65,11 @@ export const AdvancedSearchPage = () => {
       syncedParams.set(ResultParam.ScientificIndexStatus, ScientificIndexStatuses.Reported);
     } else {
       syncedParams.delete(ResultParam.ScientificIndexStatus);
+      syncedParams.delete(ResultParam.ScientificReportPeriodBeforeParam);
+      syncedParams.delete(ResultParam.ScientificReportPeriodSinceParam);
     }
 
+    syncedParams.delete(ResultParam.From);
     navigate({ search: syncedParams.toString() });
   };
 
@@ -109,13 +113,16 @@ export const AdvancedSearchPage = () => {
 
           <Grid item>
             <StyledFilterHeading>{t('common.nvi')}</StyledFilterHeading>
-            <FormControlLabel
-              data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
-              control={<Checkbox name="scientificIndexStatus" />}
-              onChange={handleNviReportedCheckbox}
-              checked={registrationParams.scientificIndexStatus === ScientificIndexStatuses.Reported}
-              label={t('search.advanced_search.reported')}
-            />
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <FormControlLabel
+                data-testid={dataTestId.startPage.advancedSearch.scientificIndexStatusCheckbox}
+                control={<Checkbox name="scientificIndexStatus" />}
+                onChange={handleNviReportedCheckbox}
+                checked={registrationParams.scientificIndexStatus === ScientificIndexStatuses.Reported}
+                label={t('search.advanced_search.reported')}
+              />
+              <NviReportedYearFilter />
+            </Box>
           </Grid>
 
           {isLargeScreen && <StyledDivider orientation="vertical" flexItem />}

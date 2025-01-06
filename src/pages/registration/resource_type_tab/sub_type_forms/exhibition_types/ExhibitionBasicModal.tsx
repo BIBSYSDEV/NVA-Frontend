@@ -26,7 +26,7 @@ const validationSchema = Yup.object({
     ),
   }),
   place: Yup.object().shape({
-    label: Yup.string()
+    name: Yup.string()
       .nullable()
       .required(
         i18n.t('feedback.validation.is_required', {
@@ -82,7 +82,7 @@ export const ExhibitionBasicModal = ({ exhibitionBasic, onSubmit, open, closeMod
                   />
                 )}
               </Field>
-              <Field name="place.label">
+              <Field name="place.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}

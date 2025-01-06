@@ -1,13 +1,15 @@
+import { LoadingButton } from '@mui/lab';
 import { Box, Button } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAddSelfAsContributor } from '../../api/hooks/useAddSelfAsContributor';
 import { CancelButton } from '../../components/buttons/CancelButton';
 import { ContributorSearchField } from '../../components/ContributorSearchField';
 import { StyledRightAlignedFooter } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
+import { RootState } from '../../redux/store';
 import { CristinProject, ProjectContributorType, ProjectFieldName } from '../../types/project.types';
 import { CristinPerson } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -36,9 +38,11 @@ export const AddProjectContributorForm = ({
   const { contributors } = values;
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedPerson, setSelectedPerson] = useState<CristinPerson>();
+  const user = useSelector((store: RootState) => store.user);
+  const userCristinId = user?.cristinId ?? '';
 
-  const addParticipant = () => {
-    const { newContributors, error } = addContributor(selectedPerson, contributors, roleType, indexToReplace);
+  const addParticipant = (person: CristinPerson) => {
+    const { newContributors, error } = addContributor(person, contributors, roleType, indexToReplace);
 
     if (error === AddContributorErrors.SAME_ROLE_WITH_SAME_AFFILIATION) {
       dispatch(
@@ -74,6 +78,11 @@ export const AddProjectContributorForm = ({
     }
   };
 
+  const addSelfAsContributor = useAddSelfAsContributor({
+    cristinId: userCristinId,
+    addContributorFn: addParticipant,
+  });
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <ContributorSearchField
@@ -83,21 +92,28 @@ export const AddProjectContributorForm = ({
         setSearchTerm={setSearchTerm}
       />
       <StyledRightAlignedFooter sx={{ mt: '2rem' }}>
-        <BetaFunctionality>
-          <Button
-            sx={{ mr: 'auto' }}
-            data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
-            disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
-            onClick={addUnidentifiedParticipant}
-            size="large">
-            {t('project.add_unidentified_contributor')}
-          </Button>
-        </BetaFunctionality>
+        <Button
+          sx={{ mr: 'auto' }}
+          data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
+          disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
+          onClick={addUnidentifiedParticipant}
+          size="large">
+          {t('project.add_unidentified_contributor')}
+        </Button>
+        <LoadingButton
+          data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
+          onClick={addSelfAsContributor.addSelf}
+          disabled={!!selectedPerson}
+          loading={addSelfAsContributor.isFetching}>
+          {roleType === 'LocalProjectManager'
+            ? t('project.add_self_as_local_project_manager')
+            : t('project.add_self_as_project_participant')}
+        </LoadingButton>
         <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
         <Button
           data-testid={dataTestId.projectForm.selectContributorButton}
           disabled={!selectedPerson}
-          onClick={addParticipant}
+          onClick={() => selectedPerson && addParticipant(selectedPerson)}
           size="large"
           variant="contained">
           {roleType === 'LocalProjectManager' ? t('project.add_local_manager') : t('project.add_contributor')}

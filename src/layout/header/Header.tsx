@@ -3,8 +3,9 @@ import AddIcon from '@mui/icons-material/Add';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActiveOutlined';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Badge, Box, Theme, useMediaQuery } from '@mui/material';
+import { AppBar, Badge, Box, Theme, Tooltip, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +18,7 @@ import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { getDialogueNotificationsParams, taskNotificationsParams } from '../../utils/searchHelpers';
+import { getDialogueNotificationsParams, getTaskNotificationsParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
@@ -44,7 +45,6 @@ export const Header = () => {
   useEffect(() => {
     if (customer) {
       // This is needed to ensure user has correct publish workflow etc from Customer.
-      // TODO: Should be moved away from redux at one point.
       dispatch(setCustomer(customer));
     }
   }, [dispatch, customer]);
@@ -60,10 +60,11 @@ export const Header = () => {
   });
   const dialogueNotificationsCount = dialogueNotificationsQuery.data?.totalHits ?? 0;
 
+  const tasksNotificationParams = getTaskNotificationsParams(user);
   const taskNotificationsQuery = useQuery({
     enabled: isTicketCurator,
-    queryKey: ['taskNotifications', taskNotificationsParams],
-    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
+    queryKey: ['taskNotifications', tasksNotificationParams],
+    queryFn: () => fetchCustomerTickets(tasksNotificationParams),
     meta: { errorMessage: false },
   });
 
@@ -74,6 +75,7 @@ export const Header = () => {
 
   const unassignedTasksCount =
     taskNotificationsQuery.data?.aggregations?.status?.find((notification) => notification.key === 'New')?.count ?? 0;
+  const showTasksCount = pendingTasksCount + unassignedTasksCount > 0;
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
@@ -154,7 +156,7 @@ export const Header = () => {
                 </MenuButton>
               )}
 
-              {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
+              {(user?.isInstitutionAdmin || user?.isAppAdmin || user?.isInternalImporter) && (
                 <MenuButton
                   color="inherit"
                   isSelected={currentPath.startsWith(UrlPathTemplate.BasicData)}
@@ -171,9 +173,31 @@ export const Header = () => {
                   isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
                   to={UrlPathTemplate.Tasks}
                   startIcon={
-                    <Badge badgeContent={pendingTasksCount + unassignedTasksCount}>
-                      <AssignmentIcon fontSize="small" />
-                    </Badge>
+                    <Tooltip
+                      title={
+                        showTasksCount ? (
+                          <>
+                            <Box component="span" sx={{ display: 'block' }}>
+                              {t('tasks.your_tasks', { count: pendingTasksCount })}
+                            </Box>
+                            <Box component="span" sx={{ display: 'block' }}>
+                              {t('tasks.new_tasks', { count: unassignedTasksCount })}
+                            </Box>
+                          </>
+                        ) : null
+                      }>
+                      <Badge
+                        badgeContent={
+                          showTasksCount ? (
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                              {unassignedTasksCount > 0 && <NotificationsActiveIcon fontSize="small" />}
+                              {pendingTasksCount > 0 ? pendingTasksCount : ''}
+                            </Box>
+                          ) : null
+                        }>
+                        <AssignmentIcon fontSize="small" />
+                      </Badge>
+                    </Tooltip>
                   }>
                   {t('common.tasks')}
                 </MenuButton>

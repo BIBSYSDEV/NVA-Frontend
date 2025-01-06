@@ -1,18 +1,13 @@
 import { AggregationValue, UnconfirmedOrganization } from './common.types';
 import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
-import { ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
-import { BookPublicationInstance } from './publication_types/bookRegistration.types';
-import { ChapterPublicationInstance } from './publication_types/chapterRegistration.types';
-import { DegreePublicationInstance } from './publication_types/degreeRegistration.types';
-import { ExhibitionPublicationInstance } from './publication_types/exhibitionContent.types';
-import { JournalPublicationInstance } from './publication_types/journalRegistration.types';
-import { MediaContributionPeriodicalPublicationInstance } from './publication_types/mediaContributionRegistration.types';
-import { MapPublicationInstance } from './publication_types/otherRegistration.types';
-import { PresentationPublicationInstance } from './publication_types/presentationRegistration.types';
-import { ReportPublicationInstance } from './publication_types/reportRegistration.types';
-import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
-import { Journal, Publisher, Registration, RegistrationAggregations } from './registration.types';
+import {
+  PublicationInstance,
+  Publisher,
+  Registration,
+  RegistrationAggregations,
+  SerialPublication,
+} from './registration.types';
 
 export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
 
@@ -50,22 +45,9 @@ export interface ImportCandidateSummary {
   totalVerifiedContributors: number;
   organizations: (Pick<Organization, 'type' | 'id' | 'labels'> | UnconfirmedOrganization)[];
   publisher?: Partial<Publisher>;
-  journal?: Partial<Journal>;
+  journal?: Partial<SerialPublication>;
   publicationInstance: PublicationInstance;
   contributors: Contributor[];
   printIssn?: string;
   onlineIssn?: string;
 }
-
-type PublicationInstance =
-  | JournalPublicationInstance
-  | DegreePublicationInstance
-  | BookPublicationInstance
-  | ReportPublicationInstance
-  | ChapterPublicationInstance
-  | PresentationPublicationInstance
-  | ArtisticPublicationInstance
-  | MediaContributionPeriodicalPublicationInstance
-  | ResearchDataPublicationInstance
-  | MapPublicationInstance
-  | ExhibitionPublicationInstance;

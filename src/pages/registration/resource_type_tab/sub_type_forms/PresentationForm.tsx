@@ -23,7 +23,7 @@ export const PresentationForm = () => {
 
   return (
     <>
-      <Field name={ResourceFieldNames.PublicationContextLabel}>
+      <Field name={ResourceFieldNames.PublicationContextName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <TextField
             {...field}
@@ -63,7 +63,7 @@ export const PresentationForm = () => {
         />
       </Box>
 
-      <Field name={ResourceFieldNames.PublicationContextPlaceLabel}>
+      <Field name={ResourceFieldNames.PublicationContextPlaceName}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <TextField
             {...field}

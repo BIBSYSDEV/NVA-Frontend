@@ -5,23 +5,25 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
 import { getUserAttributes } from './api/authApi';
+import { AcceptTermsDialog } from './components/AcceptTermsDialog';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 import { PageSpinner } from './components/PageSpinner';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
+import { Layout } from './Layout';
+import LoginPage from './layout/LoginPage';
+import Logout from './layout/Logout';
+import { useMatomoTracking } from './matomo/useMatomoTracking';
+import NotFound from './pages/errorpages/NotFound';
+import ProjectsPage from './pages/projects/ProjectsPage';
+import EditRegistration from './pages/registration/new_registration/EditRegistration';
 import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
+import { PrivateRoute } from './utils/routes/Routes';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { SplashRoutes, UrlPathTemplate } from './utils/urlPaths';
-import { Layout } from './Layout';
-import { PrivateRoute } from './utils/routes/Routes';
-import NotFound from './pages/errorpages/NotFound';
 import { hasCuratorRole } from './utils/user-helpers';
-import EditRegistration from './pages/registration/new_registration/EditRegistration';
-import ProjectsPage from './pages/projects/ProjectsPage';
-import LoginPage from './layout/LoginPage';
-import Logout from './layout/Logout';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {
@@ -53,6 +55,7 @@ const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 
 export const Root = () => {
+  useMatomoTracking();
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -83,6 +86,7 @@ export const Root = () => {
     }
   }, [dispatch]);
 
+  const mustAcceptTerms = user && user.currentTerms !== user.acceptedTerms;
   const mustCreatePerson = user && !user.cristinId;
   const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
 
@@ -94,14 +98,13 @@ export const Root = () => {
   const isAdmin = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin);
   const isNviCurator = !!user?.isNviCurator;
 
-  //TASKS PAGE
-
   return (
     <>
       <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
 
+      {mustAcceptTerms && <AcceptTermsDialog newTermsUri={user.currentTerms} />}
       {mustCreatePerson && <CreateCristinPersonDialog user={user} />}
       {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}
 

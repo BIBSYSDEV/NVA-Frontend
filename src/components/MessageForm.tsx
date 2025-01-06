@@ -46,7 +46,27 @@ export const MessageForm = ({
               <TextField
                 {...field}
                 data-testid={dataTestId.tasksPage.messageField}
-                inputProps={{ maxLength: maxMessageLength }}
+                slotProps={{
+                  htmlInput: { maxLength: maxMessageLength },
+                  formHelperText: { sx: { textAlign: 'end' } },
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {isSubmitting ? (
+                          <CircularProgress aria-label={buttonTitle ?? t('common.send')} size="1.5rem" />
+                        ) : (
+                          <IconButton
+                            type="submit"
+                            color="primary"
+                            data-testid={dataTestId.tasksPage.messageSendButton}
+                            title={buttonTitle ?? t('common.send')}>
+                            <SendIcon />
+                          </IconButton>
+                        )}
+                      </InputAdornment>
+                    ),
+                  },
+                }}
                 sx={hideRequiredAsterisk ? { '& .MuiInputLabel-asterisk': { display: 'none' } } : undefined}
                 disabled={isSubmitting}
                 variant="filled"
@@ -57,24 +77,6 @@ export const MessageForm = ({
                 required
                 label={fieldLabel ?? t('common.message')}
                 helperText={`${field.value.length}/${maxMessageLength}`}
-                FormHelperTextProps={{ sx: { textAlign: 'end' } }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      {isSubmitting ? (
-                        <CircularProgress aria-label={buttonTitle ?? t('common.send')} size="1.5rem" />
-                      ) : (
-                        <IconButton
-                          type="submit"
-                          color="primary"
-                          data-testid={dataTestId.tasksPage.messageSendButton}
-                          title={buttonTitle ?? t('common.send')}>
-                          <SendIcon />
-                        </IconButton>
-                      )}
-                    </InputAdornment>
-                  ),
-                }}
               />
             )}
           </Field>

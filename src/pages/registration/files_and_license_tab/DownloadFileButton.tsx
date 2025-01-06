@@ -4,17 +4,16 @@ import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { downloadImportCandidateFile, downloadPrivateFile2 } from '../../../api/fileApi';
+import { downloadImportCandidateFile, downloadRegistrationFile } from '../../../api/fileApi';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { Registration } from '../../../types/registration.types';
 import { openFileInNewTab } from '../../../utils/registration-helpers';
 
 interface DownloadFileButtonProps {
   file: AssociatedFile;
-  greyTones?: boolean;
 }
 
-export const DownloadFileButton = ({ file, greyTones }: DownloadFileButtonProps) => {
+export const DownloadFileButton = ({ file }: DownloadFileButtonProps) => {
   const { t } = useTranslation();
   const { values } = useFormikContext<Registration>();
 
@@ -26,7 +25,7 @@ export const DownloadFileButton = ({ file, greyTones }: DownloadFileButtonProps)
     queryFn: async () => {
       const downloadFileResponse =
         values.type === 'Publication'
-          ? await downloadPrivateFile2(values.identifier, file.identifier)
+          ? await downloadRegistrationFile(values.identifier, file.identifier)
           : await downloadImportCandidateFile(values.identifier, file.identifier);
       if (downloadFileResponse.id) {
         openFileInNewTab(downloadFileResponse.id);
@@ -43,7 +42,7 @@ export const DownloadFileButton = ({ file, greyTones }: DownloadFileButtonProps)
   ) : (
     <Tooltip title={t('registration.files_and_license.open_file')}>
       <IconButton size="small" style={{ height: '1.5rem', padding: 0 }} onClick={() => setDownloadFile(true)}>
-        <OpenInNewOutlinedIcon color="primary" sx={{ color: greyTones ? 'grey.600' : '' }} />
+        <OpenInNewOutlinedIcon color="primary" />
       </IconButton>
     </Tooltip>
   );
