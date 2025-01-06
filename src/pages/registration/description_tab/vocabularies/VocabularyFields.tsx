@@ -82,7 +82,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                 <Box
                   key={vocabulary}
                   data-testid={dataTestId.registrationWizard.description.vocabularyRow(vocabulary)}
-                  sx={{ display: 'flex' }}>
+                  sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
                   <VocabularyComponent
                     selectedIds={selectedIds}
                     addValue={push}
