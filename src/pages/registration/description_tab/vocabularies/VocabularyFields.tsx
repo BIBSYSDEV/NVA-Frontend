@@ -97,7 +97,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                   {!defaultVocabularyKeys.includes(vocabulary) && (
                     <>
                       <Button
-                        sx={{ ml: '2rem', minWidth: 'max-content' }}
+                        sx={{ ml: { xs: '0', sm: '2rem' }, minWidth: 'max-content' }}
                         color="error"
                         startIcon={<RemoveCircleIcon />}
                         onClick={() => setVocabularyToRemove(vocabulary)}>
