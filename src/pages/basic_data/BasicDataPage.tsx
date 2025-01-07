@@ -21,7 +21,8 @@ import { RootState } from '../../redux/store';
 import { ImportCandidateStatus } from '../../types/importCandidate.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { getAdminInstitutionPath, UrlPathTemplate } from '../../utils/urlPaths';
+import { getAdminInstitutionPath, getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import NotFound from '../errorpages/NotFound';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { CentralImportCandidateForm } from './app_admin/central_import/CentralImportCandidateForm';
 import { CentralImportCandidateMerge } from './app_admin/central_import/CentralImportCandidateMerge';
@@ -192,34 +193,39 @@ const BasicDataPage = () => {
             }
           />
           <Route
-            path={'/institutions'}
+            path={getSubUrl(UrlPathTemplate.BasicDataInstitutions, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isAppAdmin} element={<AdminCustomerInstitutionsContainer />} />}
           />
           <Route
-            path={'/central-import'}
+            path={getSubUrl(UrlPathTemplate.BasicDataCentralImport, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportPage />} />}
           />
           <Route
-            path={'/central-import/:identifier'}
+            path={getSubUrl(UrlPathTemplate.BasicDataCentralImportCandidate, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportDuplicationCheckPage />} />}
           />
           <Route
-            path={'/central-import/:identifier/edit'}
+            path={getSubUrl(UrlPathTemplate.BasicDataCentralImportCandidateWizard, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateForm />} />}
           />
           <Route
-            path={'/central-import/:candidateIdentifier/merge/:registrationIdentifier'}
+            path={getSubUrl(UrlPathTemplate.BasicDataCentralImportCandidateMerge, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateMerge />} />}
           />
           <Route
-            path={'/person-register/new'}
+            path={getSubUrl(UrlPathTemplate.BasicDataAddEmployee, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<AddEmployeePage />} />}
           />
           <Route
-            path={'/person-register'}
+            path={getSubUrl(UrlPathTemplate.BasicDataPersonRegister, UrlPathTemplate.BasicData)}
             element={<PrivateRoute isAuthorized={isInstitutionAdmin} element={<PersonRegisterPage />} />}
           />
-          <Route path={'/nvi'} element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />} />
+          <Route
+            path={getSubUrl(UrlPathTemplate.BasicDataNvi, UrlPathTemplate.BasicData, true)}
+            element={<PrivateRoute isAuthorized={isAppAdmin} element={<NviPeriodsPage />} />}
+          />
+
+          <Route path={getSubUrl(UrlPathTemplate.BasicData, UrlPathTemplate.BasicData, true)} element={<NotFound />} />
         </Routes>
       </ErrorBoundary>
     </StyledPageWithSideMenu>

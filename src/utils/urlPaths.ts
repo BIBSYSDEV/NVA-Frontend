@@ -76,6 +76,10 @@ export enum UrlPathTemplate {
   Wildcard = '*',
 }
 
+export const getSubUrl = (path: UrlPathTemplate, basePath: UrlPathTemplate, splashRoute = false) => {
+  return `${path.replace(basePath, '')}${splashRoute ? '/*' : ''}`;
+};
+
 export enum SplashRoutes {
   Home = '/*',
   MyPage = '/my-page/*',
