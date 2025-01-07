@@ -20,8 +20,9 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getTaskNotificationsParams } from '../../utils/searchHelpers';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
+import NotFound from '../errorpages/NotFound';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
@@ -230,7 +231,7 @@ const TasksPage = () => {
           />
 
           <Route
-            path={'/dialogue'}
+            path={getSubUrl(UrlPathTemplate.TasksDialogue, UrlPathTemplate.Tasks)}
             element={
               <PrivateRoute
                 isAuthorized={isTicketCurator}
@@ -251,29 +252,32 @@ const TasksPage = () => {
           />
 
           <Route
-            path={'/dialogue/:identifier'}
+            path={getSubUrl(UrlPathTemplate.TasksDialogueRegistration, UrlPathTemplate.Tasks)}
             element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isTicketCurator} />}
           />
 
-          <Route path={'/nvi'} element={<PrivateRoute element={<NviCandidatesList />} isAuthorized={isNviCurator} />} />
+          <Route
+            path={getSubUrl(UrlPathTemplate.TasksNvi, UrlPathTemplate.Tasks)}
+            element={<PrivateRoute element={<NviCandidatesList />} isAuthorized={isNviCurator} />}
+          />
 
           <Route
-            path={'nvi/status'}
+            path={getSubUrl(UrlPathTemplate.TasksNviStatus, UrlPathTemplate.Tasks)}
             element={<PrivateRoute element={<NviStatusPage />} isAuthorized={isNviCurator} />}
           />
 
           <Route
-            path={'/nvi/:identifier'}
+            path={getSubUrl(UrlPathTemplate.TasksNviCandidate, UrlPathTemplate.Tasks)}
             element={<PrivateRoute element={<NviCandidatePage />} isAuthorized={isNviCurator} />}
           />
 
           <Route
-            path={'/correction-list'}
+            path={getSubUrl(UrlPathTemplate.TasksNviCorrectionList, UrlPathTemplate.Tasks)}
             element={<PrivateRoute element={<NviCorrectionList />} isAuthorized={isNviCurator} />}
           />
 
           <Route
-            path={'/result-registrations'}
+            path={getSubUrl(UrlPathTemplate.TasksResultRegistrations, UrlPathTemplate.Tasks)}
             element={
               <PrivateRoute
                 element={<PortfolioSearchPage title={t('common.result_registrations')} />}
@@ -281,6 +285,8 @@ const TasksPage = () => {
               />
             }
           />
+
+          <Route path={getSubUrl(UrlPathTemplate.Tasks, UrlPathTemplate.Tasks, true)} element={<NotFound />} />
         </Routes>
       </ErrorBoundary>
     </StyledPageWithSideMenu>
