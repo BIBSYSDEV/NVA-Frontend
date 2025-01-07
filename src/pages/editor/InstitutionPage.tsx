@@ -2,6 +2,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import GavelIcon from '@mui/icons-material/Gavel';
 import { useQuery } from '@tanstack/react-query';
+import { lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
@@ -14,22 +15,21 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { lazy } from 'react';
-import { VocabularyOverview } from './VocabularyOverview';
-import { PublishStrategySettings } from './PublishStrategySettings';
-import { PublishingStrategyOverview } from './PublishingStrategyOverview';
-import { EditorInstitution } from './EditorInstitution';
-import { OrganizationCurators } from './curators/OrganizationCurators';
-import { EditorDoi } from './EditorDoi';
+import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import NotFound from '../errorpages/NotFound';
 import { CategoriesWithFiles } from './CategoriesWithFiles';
 import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
+import { EditorDoi } from './EditorDoi';
+import { EditorInstitution } from './EditorInstitution';
+import { InstitutionSupport } from './InstitutionSupport';
 import { OrganizationOverview } from './OrganizationOverview';
 import { PortfolioSearchPage } from './PortfolioSearchPage';
-import { InstitutionSupport } from './InstitutionSupport';
-import NotFound from '../errorpages/NotFound';
+import { PublishStrategySettings } from './PublishStrategySettings';
+import { PublishingStrategyOverview } from './PublishingStrategyOverview';
 import { ResultsPortfolioNavigationListAccodion } from './ResultsPortfolioNavigationListAccodion';
+import { VocabularyOverview } from './VocabularyOverview';
+import { OrganizationCurators } from './curators/OrganizationCurators';
 
 const VocabularySettings = lazy(() => import('./VocabularySettings'));
 
@@ -165,32 +165,32 @@ const InstitutionPage = () => {
 
         <Routes>
           <Route
-            path={'settings/vocabulary'}
+            path={getSubUrl(UrlPathTemplate.InstitutionVocabulary, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<VocabularySettings />} isAuthorized={isEditor} />}
           />
 
           <Route
-            path={'overview/vocabulary'}
+            path={getSubUrl(UrlPathTemplate.InstitutionVocabularyOverview, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<VocabularyOverview />} isAuthorized={hasCustomer} />}
           />
 
           <Route
-            path={'settings/publish-strategy'}
+            path={getSubUrl(UrlPathTemplate.InstitutionPublishStrategy, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<PublishStrategySettings />} isAuthorized={isEditor} />}
           />
 
           <Route
-            path={'overview/publish-strategy'}
+            path={getSubUrl(UrlPathTemplate.InstitutionPublishStrategyOverview, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<PublishingStrategyOverview />} isAuthorized={hasCustomer} />}
           />
 
           <Route
-            path={'/overview/institution'}
+            path={getSubUrl(UrlPathTemplate.InstitutionOverviewPage, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<EditorInstitution />} isAuthorized={hasCustomer} />}
           />
 
           <Route
-            path={'overview/curators'}
+            path={getSubUrl(UrlPathTemplate.InstitutionCuratorsOverview, UrlPathTemplate.Institution)}
             element={
               <PrivateRoute
                 isAuthorized={hasCustomer}
@@ -200,7 +200,7 @@ const InstitutionPage = () => {
           />
 
           <Route
-            path={'settings/curators'}
+            path={getSubUrl(UrlPathTemplate.InstitutionCurators, UrlPathTemplate.Institution)}
             element={
               <PrivateRoute
                 isAuthorized={isEditor}
@@ -209,30 +209,33 @@ const InstitutionPage = () => {
             }
           />
 
-          <Route path={'/overview/doi'} element={<PrivateRoute element={<EditorDoi />} isAuthorized={hasCustomer} />} />
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionDoi, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<EditorDoi />} isAuthorized={hasCustomer} />}
+          />
 
           <Route
-            path={'settings/categories'}
+            path={getSubUrl(UrlPathTemplate.InstitutionCategories, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<CategoriesWithFiles />} isAuthorized={isEditor} />}
           />
 
           <Route
-            path={'overview/categories'}
+            path={getSubUrl(UrlPathTemplate.InstitutionCategoriesOverview, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<CategoriesWithFilesOverview />} isAuthorized={hasCustomer} />}
           />
 
           <Route
-            path={'overview/organization'}
+            path={getSubUrl(UrlPathTemplate.InstitutionOrganizationOverview, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<OrganizationOverview />} isAuthorized={hasCustomer} />}
           />
 
           <Route
-            path={'/settings/support'}
+            path={getSubUrl(UrlPathTemplate.InstitutionSupport, UrlPathTemplate.Institution)}
             element={<PrivateRoute element={<InstitutionSupport />} isAuthorized={isEditor} />}
           />
 
           <Route
-            path={'/portfolio'}
+            path={getSubUrl(UrlPathTemplate.InstitutionPortfolio, UrlPathTemplate.Institution)}
             element={
               <PrivateRoute
                 element={<PortfolioSearchPage title={t('common.result_portfolio')} />}
@@ -241,7 +244,10 @@ const InstitutionPage = () => {
             }
           />
 
-          <Route path={'/*'} element={<PrivateRoute element={<NotFound />} isAuthorized={isEditor} />} />
+          <Route
+            path={getSubUrl(UrlPathTemplate.Institution, UrlPathTemplate.Institution, true)}
+            element={<PrivateRoute element={<NotFound />} isAuthorized={isEditor} />}
+          />
         </Routes>
       </BackgroundDiv>
     </StyledPageWithSideMenu>
