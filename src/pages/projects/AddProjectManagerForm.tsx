@@ -111,7 +111,7 @@ export const AddProjectManagerForm = ({
         setSearchTerm={setSearchTerm}
         selectAffiliations={hasAffiliation ? SelectAffiliations.NO_SELECT : SelectAffiliations.SINGLE}
       />
-      <StyledContributorModalActions sx={{ gridTemplateColumns: { sm: '1fr', md: '1fr 1fr 1fr' } }}>
+      <StyledContributorModalActions>
         <Button
           data-testid={dataTestId.projectForm.addUnidentifiedProjectManagerButton}
           disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
@@ -127,9 +127,15 @@ export const AddProjectManagerForm = ({
           loading={addSelfAsContributor.isFetching}>
           {t('project.add_self')}
         </LoadingButton>
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '1rem',
+            flexDirection: { xs: 'column', md: 'row', alignItems: 'center' },
+          }}>
           <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
           <Button
+            sx={{ width: '100%' }}
             data-testid={dataTestId.projectForm.addProjectManagerButton}
             disabled={!selectedPerson}
             onClick={() => selectedPerson && addProjectManager(selectedPerson)}

@@ -132,10 +132,15 @@ export const StyledFilterHeading = styled(Typography)({
   fontWeight: 'bold',
 });
 
-export const StyledContributorModalActions = styled(Box)({
+export const StyledContributorModalActions = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+  },
+  [theme.breakpoints.up('md')]: {
+    flexDirection: 'row',
+  },
+  justifyContent: 'space-between',
   marginTop: '2rem',
-  display: 'grid',
-  columnGap: '1rem',
-  rowGap: '1rem',
-  justifyItems: 'center',
-});
+  gap: '1rem',
+}));

@@ -69,12 +69,12 @@ export const AddContributorForm = ({
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledContributorModalActions sx={{ gridTemplateColumns: { sm: '1fr', md: '1fr 1fr 1fr' } }}>
+      <StyledContributorModalActions>
         {!initialSearchTerm && (
           <Button
-            sx={{ width: 'fit-content' }}
             data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
             variant="outlined"
+            disabled={!searchTerm || !!selectedPerson}
             onClick={openAddUnverifiedContributor}>
             {t('registration.contributors.add_new_contributor')}
           </Button>
