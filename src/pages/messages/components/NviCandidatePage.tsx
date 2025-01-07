@@ -112,9 +112,7 @@ export const NviCandidatePage = () => {
             {previousCandidateIdentifier && (
               <NavigationIconButton
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
-                to={{
-                  pathname: getNviCandidatePath(previousCandidateIdentifier),
-                }}
+                to={getNviCandidatePath(previousCandidateIdentifier)}
                 state={previousCandidateState}
                 title={t('tasks.nvi.previous_candidate')}
                 navigateTo={'previous'}
@@ -128,9 +126,7 @@ export const NviCandidatePage = () => {
             {nextCandidateIdentifier && (
               <NavigationIconButton
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
-                to={{
-                  pathname: getNviCandidatePath(nextCandidateIdentifier),
-                }}
+                to={getNviCandidatePath(nextCandidateIdentifier)}
                 state={nextCandidateState}
                 title={t('tasks.nvi.next_candidate')}
                 navigateTo={'next'}

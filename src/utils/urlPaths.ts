@@ -1,3 +1,4 @@
+import { To } from 'react-router-dom';
 import { RegistrationFormLocationState } from '../types/locationState.types';
 
 export interface IdentifierParams extends Record<string, string> {
@@ -89,27 +90,28 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 export const getImportCandidatePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidate.replace(':identifier', encodeURIComponent(identifier));
 
-export const getRegistrationWizardPath = (identifier: string) =>
-  UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
+export const getRegistrationWizardPath = (identifier: string, tab?: number): To => {
+  return {
+    pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
+    search: tab ? `?tab=${tab}` : '',
+  };
+};
 
 interface RegistrationWizardOptions {
   highestValidatedTab?: number;
-  tab?: number;
   goToLandingPageAfterSaveAndSee?: boolean;
   previousSearch?: string;
   previousPath?: string;
 }
 
-export const getRegistrationWizardLink = (identifier: string, options: RegistrationWizardOptions = {}) => {
+export const getRegistrationWizardLinkState = (
+  options: RegistrationWizardOptions = {}
+): RegistrationFormLocationState => {
   return {
-    pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
-    state: {
-      highestValidatedTab: options.highestValidatedTab,
-      previousPath: options.previousPath ?? window.location.pathname,
-      goToLandingPageAfterSaveAndSee: options.goToLandingPageAfterSaveAndSee,
-      previousSearch: options.previousSearch,
-    } satisfies RegistrationFormLocationState,
-    search: options.tab ? `?tab=${options.tab}` : '',
+    highestValidatedTab: options.highestValidatedTab,
+    previousPath: options.previousPath ?? window.location.pathname,
+    goToLandingPageAfterSaveAndSee: options.goToLandingPageAfterSaveAndSee,
+    previousSearch: options.previousSearch,
   };
 };
 

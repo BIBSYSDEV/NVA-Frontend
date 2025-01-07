@@ -12,7 +12,7 @@ import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration }
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { AssociatedLink } from '../../../../types/associatedArtifact.types';
-import { BasicDataLocationState } from '../../../../types/locationState.types';
+import { BasicDataLocationState, RegistrationFormLocationState } from '../../../../types/locationState.types';
 import {
   DescriptionFieldNames,
   FileFieldNames,
@@ -23,7 +23,7 @@ import { PublicationInstanceType, Registration } from '../../../../types/registr
 import { displayDate } from '../../../../utils/date-helpers';
 import { getMainRegistrationType } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { getImportCandidatePath, getRegistrationWizardLink } from '../../../../utils/urlPaths';
+import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
 import { CompareDoiField } from './CompareDoiField';
 import { CompareFields } from './CompareFields';
 import { CompareJournalFields } from './CompareJournalFields';
@@ -108,12 +108,12 @@ export const CentralImportCandidateMerge = () => {
         await importCandidateMutation.mutateAsync();
         await registrationQuery.refetch();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
-        navigate(
-          getRegistrationWizardLink(registrationIdentifier ?? '', {
+        navigate(getRegistrationWizardPath(registrationIdentifier ?? ''), {
+          state: {
+            ...locationState,
             previousPath: getImportCandidatePath(candidateIdentifier ?? ''),
-            previousSearch: locationState.previousSearch,
-          })
-        );
+          } satisfies RegistrationFormLocationState,
+        });
       }}>
       {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (
         <Box
