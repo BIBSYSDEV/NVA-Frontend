@@ -5,7 +5,7 @@ import { UrlPathTemplate } from '../../src/utils/urlPaths';
 const allRoles = Object.values(RoleName);
 const waitBeforeUserUpdate = 500;
 
-describe.only('Menu', () => {
+describe('Menu', () => {
   it('Unauthenticated user should not see protected menu options', () => {
     cy.visit(UrlPathTemplate.Root);
     cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('be.visible');
