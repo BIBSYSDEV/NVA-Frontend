@@ -208,7 +208,7 @@ const BasicDataPage = () => {
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateForm />} />}
           />
           <Route
-            path={'/central-import/:identifier/merge/:registrationIdentifier'}
+            path={'/central-import/:candidateIdentifier/merge/:registrationIdentifier'}
             element={<PrivateRoute isAuthorized={isInternalImporter} element={<CentralImportCandidateMerge />} />}
           />
           <Route
