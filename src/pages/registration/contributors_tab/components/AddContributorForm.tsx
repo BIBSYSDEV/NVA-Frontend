@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -69,9 +69,10 @@ export const AddContributorForm = ({
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledContributorModalActions sx={{ gridTemplateColumns: { md: '1fr', lg: '1fr 1fr 1fr' } }}>
+      <StyledContributorModalActions sx={{ gridTemplateColumns: { sm: '1fr', md: '1fr 1fr 1fr' } }}>
         {!initialSearchTerm && (
           <Button
+            sx={{ width: 'fit-content' }}
             data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
             variant="outlined"
             onClick={openAddUnverifiedContributor}>
@@ -79,15 +80,13 @@ export const AddContributorForm = ({
           </Button>
         )}
         {!isSelfAdded && !initialSearchTerm && (
-          <Box sx={{ display: 'flex', justifyContent: { lg: 'center' } }}>
-            <LoadingButton
-              data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
-              onClick={addSelfAsContributor}
-              variant="outlined"
-              loading={isAddingSelf}>
-              {t('project.add_self')}
-            </LoadingButton>
-          </Box>
+          <LoadingButton
+            data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
+            onClick={addSelfAsContributor}
+            variant="outlined"
+            loading={isAddingSelf}>
+            {t('project.add_self')}
+          </LoadingButton>
         )}
         <Button
           data-testid={dataTestId.registrationWizard.contributors.selectUserButton}

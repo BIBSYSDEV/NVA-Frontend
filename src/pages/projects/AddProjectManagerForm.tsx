@@ -97,9 +97,6 @@ export const AddProjectManagerForm = ({
     addContributorFn: addSelfAsProjectManager,
   });
 
-  const disabledAddUnidentifiedContributor =
-    !searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined;
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       {suggestedProjectManager && (
@@ -114,43 +111,27 @@ export const AddProjectManagerForm = ({
         setSearchTerm={setSearchTerm}
         selectAffiliations={hasAffiliation ? SelectAffiliations.NO_SELECT : SelectAffiliations.SINGLE}
       />
-      <StyledContributorModalActions sx={{ gridTemplateColumns: { md: '1fr', lg: '1fr 1fr 1fr' } }}>
+      <StyledContributorModalActions sx={{ gridTemplateColumns: { sm: '1fr', md: '1fr 1fr 1fr' } }}>
         <Button
-          sx={{
-            mr: 'auto',
-            color: disabledAddUnidentifiedContributor ? '#616161' : undefined,
-            bgcolor: disabledAddUnidentifiedContributor ? '#DDDDDD' : undefined,
-            textTransform: 'none',
-          }}
           data-testid={dataTestId.projectForm.addUnidentifiedProjectManagerButton}
           disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
           onClick={addUnidentifiedManager}
           variant="outlined">
           {t('project.add_unidentified_project_manager')}
         </Button>
-        <Box sx={{ display: 'flex', justifyContent: { lg: 'center' } }}>
-          <LoadingButton
-            sx={{ textTransform: 'none' }}
-            data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
-            onClick={addSelfAsContributor.addSelf}
-            disabled={!!selectedPerson}
-            variant="outlined"
-            loading={addSelfAsContributor.isFetching}>
-            {t('project.add_self')}
-          </LoadingButton>
-        </Box>
-        <Box sx={{ display: 'flex', justifyContent: { lg: 'right' }, gap: '1rem' }}>
-          <CancelButton
-            sx={{ textTransform: 'none' }}
-            testId={dataTestId.projectForm.cancelAddParticipantButton}
-            onClick={toggleModal}
-          />
+
+        <LoadingButton
+          data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
+          onClick={addSelfAsContributor.addSelf}
+          disabled={!!selectedPerson}
+          variant="outlined"
+          loading={addSelfAsContributor.isFetching}>
+          {t('project.add_self')}
+        </LoadingButton>
+
+        <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
           <Button
-            sx={{
-              color: !selectedPerson ? '#616161' : undefined,
-              bgcolor: !selectedPerson ? '#DDDDDD' : undefined,
-              textTransform: 'none',
-            }}
             data-testid={dataTestId.projectForm.addProjectManagerButton}
             disabled={!selectedPerson}
             onClick={() => selectedPerson && addProjectManager(selectedPerson)}

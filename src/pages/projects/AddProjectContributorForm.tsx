@@ -91,28 +91,26 @@ export const AddProjectContributorForm = ({
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledContributorModalActions sx={{ gridTemplateColumns: { md: '1fr', lg: '1fr 1fr 1fr' } }}>
-        <div>
-          <Button
-            data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
-            disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
-            onClick={addUnidentifiedParticipant}
-            variant="outlined"
-            size="large">
-            {t('project.add_unidentified_contributor')}
-          </Button>
-        </div>
-        <Box sx={{ display: 'flex', justifyContent: { lg: 'center' } }}>
-          <LoadingButton
-            data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
-            onClick={addSelfAsContributor.addSelf}
-            disabled={!!selectedPerson}
-            variant="outlined"
-            loading={addSelfAsContributor.isFetching}>
-            {t('project.add_self')}
-          </LoadingButton>
-        </Box>
-        <Box sx={{ display: 'flex', justifyContent: { lg: 'right' }, gap: '1rem' }}>
+      <StyledContributorModalActions sx={{ gridTemplateColumns: { sm: '1fr', md: '1fr 1fr 1fr' } }}>
+        <Button
+          data-testid={dataTestId.projectForm.addUnidentifiedContributorButton}
+          disabled={!searchTerm || searchTerm === initialSearchTerm || selectedPerson !== undefined}
+          onClick={addUnidentifiedParticipant}
+          variant="outlined"
+          size="large">
+          {t('project.add_unidentified_contributor')}
+        </Button>
+
+        <LoadingButton
+          data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
+          onClick={addSelfAsContributor.addSelf}
+          disabled={!!selectedPerson}
+          variant="outlined"
+          loading={addSelfAsContributor.isFetching}>
+          {t('project.add_self')}
+        </LoadingButton>
+
+        <Box sx={{ display: 'flex', gap: '1rem' }}>
           <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
           <Button
             data-testid={dataTestId.projectForm.selectContributorButton}

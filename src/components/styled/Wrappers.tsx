@@ -137,4 +137,5 @@ export const StyledContributorModalActions = styled(Box)({
   display: 'grid',
   columnGap: '1rem',
   rowGap: '1rem',
+  justifyItems: 'center',
 });
