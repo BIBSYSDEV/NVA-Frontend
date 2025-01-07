@@ -324,7 +324,12 @@ export const CustomerInstitutionMetadataForm = ({
             )}
             <Divider />
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Button sx={{ marginRight: '1rem' }} onClick={() => resetForm()}>
+              <Button
+                sx={{ marginRight: '1rem' }}
+                onClick={() => {
+                  resetForm();
+                  navigate(-1);
+                }}>
                 {t('common.cancel')}
               </Button>
               <LoadingButton
