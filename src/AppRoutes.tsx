@@ -1,11 +1,7 @@
-import { Logout } from '@mui/icons-material';
 import { lazy } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './Layout';
-import LoginPage from './layout/LoginPage';
-import NotFound from './pages/errorpages/NotFound';
-import EditRegistration from './pages/registration/new_registration/EditRegistration';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
 import { SplashRoutes, UrlPathTemplate } from './utils/urlPaths';
@@ -14,6 +10,7 @@ import { hasCuratorRole } from './utils/user-helpers';
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/InstitutionPage'));
+const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const CreateProject = lazy(() => import('./pages/project/project_wizard/CreateProject'));
 const EditProject = lazy(() => import('./pages/project/project_wizard/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
@@ -23,6 +20,9 @@ const PublicResearchProfile = lazy(() => import('./pages/research_profile/Public
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
+const Logout = lazy(() => import('./layout/Logout'));
+const LoginPage = lazy(() => import('./layout/LoginPage'));
+const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 
 export const AppRoutes = () => {
   const user = useSelector((store: RootState) => store.user);
