@@ -27,7 +27,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { TicketList } from '../messages/components/TicketList';
@@ -329,41 +329,44 @@ const MyPagePage = () => {
           }
         />
         <Route
-          path={'/profile/personalia'}
+          path={getSubUrl(UrlPathTemplate.MyPagePersonalia, UrlPathTemplate.MyPage)}
           element={<PrivateRoute element={<MyProfile />} isAuthorized={isAuthenticated} />}
         />
         <Route
-          path={'/profile/background'}
+          path={getSubUrl(UrlPathTemplate.MyPageFieldAndBackground, UrlPathTemplate.MyPage)}
           element={<PrivateRoute element={<MyFieldAndBackground />} isAuthorized={isAuthenticated} />}
         />
         <Route
-          path={'/profile/projects'}
+          path={getSubUrl(UrlPathTemplate.MyPageMyProjects, UrlPathTemplate.MyPage)}
           element={<PrivateRoute element={<MyProjects />} isAuthorized={isAuthenticated} />}
         />
         <Route
-          path={'/profile/research-profile'}
+          path={getSubUrl(UrlPathTemplate.MyPageResearchProfile, UrlPathTemplate.MyPage)}
           element={<PrivateRoute element={<ResearchProfile />} isAuthorized={isAuthenticated} />}
         />
 
         <Route
-          path={'/profile/results'}
+          path={getSubUrl(UrlPathTemplate.MyPageResults, UrlPathTemplate.MyPage)}
           element={<PrivateRoute element={<MyResults />} isAuthorized={isAuthenticated} />}
         />
 
         <Route
-          path={'/project-registrations/my-project-registrations'}
+          path={getSubUrl(UrlPathTemplate.MyPageMyProjectRegistrations, UrlPathTemplate.MyPage)}
           element={<PrivateRoute element={<MyProjectRegistrations />} isAuthorized={isAuthenticated} />}
         />
 
         <Route
-          path={'/profile/user-role-and-help'}
+          path={getSubUrl(UrlPathTemplate.MyPageUserRoleAndHelp, UrlPathTemplate.MyPage)}
           element={<PrivateRoute element={<UserRoleAndHelp />} isAuthorized={isAuthenticated} />}
         />
 
-        <Route path={'/profile/terms'} element={<PrivateRoute element={<Terms />} isAuthorized={isAuthenticated} />} />
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageTerms, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<Terms />} isAuthorized={isAuthenticated} />}
+        />
 
         <Route
-          path={'messages/my-messages'}
+          path={getSubUrl(UrlPathTemplate.MyPageMyMessages, UrlPathTemplate.MyPage)}
           element={
             <PrivateRoute
               isAuthorized={isCreator}
@@ -381,11 +384,11 @@ const MyPagePage = () => {
           }
         />
         <Route
-          path={'/messages/my-messages/:identifier'}
+          path={getSubUrl(UrlPathTemplate.MyPageMyMessagesRegistration, UrlPathTemplate.MyPage)}
           element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isCreator} />}
         />
         <Route
-          path={'/registrations/my-registrations'}
+          path={getSubUrl(UrlPathTemplate.MyPageMyRegistrations, UrlPathTemplate.MyPage)}
           element={
             <PrivateRoute
               element={
@@ -399,7 +402,7 @@ const MyPagePage = () => {
           }
         />
 
-        <Route path={'/*'} element={<PrivateRoute element={<NotFound />} isAuthorized={isAuthenticated} />} />
+        <Route path={getSubUrl(UrlPathTemplate.MyPage, UrlPathTemplate.MyPage, true)} element={<NotFound />} />
       </Routes>
     </StyledPageWithSideMenu>
   );
