@@ -79,7 +79,7 @@ const BasicDataPage = () => {
           )
         }>
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
-        {user?.isInstitutionAdmin && (
+        {isInstitutionAdmin && (
           <NavigationListAccordion
             title={t('basic_data.person_register.person_register')}
             startIcon={<PeopleIcon sx={{ bgcolor: 'person.main' }} />}
@@ -107,7 +107,7 @@ const BasicDataPage = () => {
           </NavigationListAccordion>
         )}
 
-        {user?.isAppAdmin && (
+        {isAppAdmin && (
           <>
             <NavigationListAccordion
               title={t('common.institutions')}
@@ -157,7 +157,7 @@ const BasicDataPage = () => {
           </>
         )}
 
-        {user?.isInternalImporter && (
+        {isInternalImporter && (
           <NavigationListAccordion
             title={t('basic_data.central_import.central_import')}
             startIcon={<FilterDramaIcon sx={{ bgcolor: 'centralImport.main' }} />}

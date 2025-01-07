@@ -42,7 +42,7 @@ const TasksPage = () => {
   const isPublishingCurator = !!user?.isPublishingCurator;
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
   const isNviCurator = !!user?.isNviCurator;
-  const isAnyCurator = isSupportCurator || isDoiCurator || isPublishingCurator || isNviCurator;
+  const isAnyCurator = isTicketCurator || isNviCurator;
 
   const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
