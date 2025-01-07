@@ -100,7 +100,6 @@ export const AddProjectContributorForm = ({
           size="large">
           {t('project.add_unidentified_contributor')}
         </Button>
-
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectParticipantButton}
           onClick={addSelfAsContributor.addSelf}
@@ -109,14 +108,12 @@ export const AddProjectContributorForm = ({
           loading={addSelfAsContributor.isFetching}>
           {t('project.add_self')}
         </LoadingButton>
-
         <Box sx={{ display: 'flex', gap: '1rem' }}>
           <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
           <Button
             data-testid={dataTestId.projectForm.selectContributorButton}
             disabled={!selectedPerson}
             onClick={() => selectedPerson && addParticipant(selectedPerson)}
-            size="large"
             variant="outlined">
             {roleType === 'LocalProjectManager' ? t('project.add_local_manager') : t('project.add_contributor')}
           </Button>

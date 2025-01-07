@@ -119,7 +119,6 @@ export const AddProjectManagerForm = ({
           variant="outlined">
           {t('project.add_unidentified_project_manager')}
         </Button>
-
         <LoadingButton
           data-testid={dataTestId.projectForm.addSelfAsProjectManagerButton}
           onClick={addSelfAsContributor.addSelf}
@@ -128,7 +127,6 @@ export const AddProjectManagerForm = ({
           loading={addSelfAsContributor.isFetching}>
           {t('project.add_self')}
         </LoadingButton>
-
         <Box sx={{ display: 'flex', gap: '1rem' }}>
           <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
           <Button
