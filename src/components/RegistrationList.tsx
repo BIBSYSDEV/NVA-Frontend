@@ -11,7 +11,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
-import { PreviousPathLocationState, RegistrationFormLocationState } from '../types/locationState.types';
+import { PreviousPathLocationState } from '../types/locationState.types';
 import { RegistrationSearchItem, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
@@ -199,7 +199,6 @@ export const RegistrationListItemContent = ({
             <IconButton
               component={Link}
               target={target}
-              state={{ goToLandingPageAfterSaveAndSee: false } satisfies RegistrationFormLocationState}
               to={getRegistrationWizardPath(identifier)}
               data-testid={`edit-registration-${identifier}`}
               size="small"

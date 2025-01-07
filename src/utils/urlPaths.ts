@@ -99,7 +99,6 @@ export const getRegistrationWizardPath = (identifier: string, tab?: number): To 
 
 interface RegistrationWizardOptions {
   highestValidatedTab?: number;
-  goToLandingPageAfterSaveAndSee?: boolean;
   previousSearch?: string;
   previousPath?: string;
 }
@@ -110,7 +109,6 @@ export const getRegistrationWizardLinkState = (
   return {
     highestValidatedTab: options.highestValidatedTab,
     previousPath: options.previousPath ?? window.location.pathname,
-    goToLandingPageAfterSaveAndSee: options.goToLandingPageAfterSaveAndSee,
     previousSearch: options.previousSearch,
   };
 };

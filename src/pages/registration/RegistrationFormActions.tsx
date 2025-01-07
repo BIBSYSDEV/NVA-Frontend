@@ -102,7 +102,7 @@ export const RegistrationFormActions = ({
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
 
       if (isLastTab) {
-        if (locationState?.previousPath && !locationState.goToLandingPageAfterSaveAndSee) {
+        if (locationState?.previousPath) {
           navigate(-1);
         } else {
           navigate(getRegistrationLandingPagePath(values.identifier));
