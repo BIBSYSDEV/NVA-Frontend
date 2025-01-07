@@ -86,17 +86,14 @@ const Root = () => {
   );
 };
 
-const router = createBrowserRouter([
-  {
-    path: '*',
-    element: <Root />,
-  },
-]);
+const router = createBrowserRouter([{ path: '*', element: <Root /> }], { future: { v7_relativeSplatPath: true } });
 
 export const App = () => {
+  const { t } = useTranslation();
+
   return (
-    <Suspense fallback={<PageSpinner aria-label="Loading" />}>
-      <RouterProvider router={router} />
+    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />
     </Suspense>
   );
 };
