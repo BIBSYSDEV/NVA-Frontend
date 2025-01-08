@@ -1,5 +1,4 @@
 import { To } from 'react-router-dom';
-import { RegistrationFormLocationState } from '../types/locationState.types';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -80,14 +79,6 @@ export const getSubUrl = (path: UrlPathTemplate, basePath: UrlPathTemplate, spla
   return `${path.replace(basePath, '')}${splashRoute ? '/*' : ''}`;
 };
 
-export enum SplashRoutes {
-  Home = '/*',
-  MyPage = '/my-page/*',
-  BasicData = '/basic-data/*',
-  Tasks = '/tasks/*',
-  Institution = '/institution/*',
-}
-
 export const getRegistrationLandingPagePath = (identifier: string) =>
   UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(identifier));
 
@@ -98,22 +89,6 @@ export const getRegistrationWizardPath = (identifier: string, tab?: number): To 
   return {
     pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
     search: tab ? `?tab=${tab}` : '',
-  };
-};
-
-interface RegistrationWizardOptions {
-  highestValidatedTab?: number;
-  previousSearch?: string;
-  previousPath?: string;
-}
-
-export const getRegistrationWizardLinkState = (
-  options: RegistrationWizardOptions = {}
-): RegistrationFormLocationState => {
-  return {
-    highestValidatedTab: options.highestValidatedTab,
-    previousPath: options.previousPath ?? window.location.pathname,
-    previousSearch: options.previousSearch,
   };
 };
 

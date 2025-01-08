@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from './Layout';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
-import { SplashRoutes, UrlPathTemplate } from './utils/urlPaths';
+import { UrlPathTemplate } from './utils/urlPaths';
 import { hasCuratorRole } from './utils/user-helpers';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
@@ -56,7 +56,7 @@ export const AppRoutes = () => {
 
         {/* Authenticated routes */}
         <Route
-          path={SplashRoutes.MyPage}
+          path={`${UrlPathTemplate.MyPage}/*`}
           element={<PrivateRoute element={<MyPagePage />} isAuthorized={isAuthenticated} />}
         />
 
@@ -80,19 +80,19 @@ export const AppRoutes = () => {
 
         {/* Curator routes */}
         <Route
-          path={SplashRoutes.Tasks}
+          path={`${UrlPathTemplate.Tasks}/*`}
           element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}
         />
 
         {/* Basic Data routes */}
         <Route
-          path={SplashRoutes.BasicData}
+          path={`${UrlPathTemplate.BasicData}/*`}
           element={<PrivateRoute isAuthorized={canSeeBasicData} element={<BasicDataPage />} />}
         />
 
         {/* Institution routes */}
         <Route
-          path={SplashRoutes.Institution}
+          path={`${UrlPathTemplate.Institution}/*`}
           element={<PrivateRoute isAuthorized={hasCustomerId} element={<EditorPage />} />}
         />
 
