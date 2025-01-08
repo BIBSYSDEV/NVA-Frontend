@@ -21,7 +21,7 @@ const Dashboard = () => {
     const loginPath = localStorage.getItem(LocalStorageKey.RedirectPath);
     if (loginPath) {
       localStorage.removeItem(LocalStorageKey.RedirectPath);
-      navigate(loginPath);
+      navigate(loginPath, { replace: true });
     }
   }, [navigate]);
 

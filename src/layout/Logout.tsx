@@ -23,7 +23,7 @@ const Logout = () => {
   const redirectPath = previousPath && isPublicPage(previousPath) ? previousPath : UrlPathTemplate.Root;
   useEffect(() => () => localStorage.removeItem(LocalStorageKey.RedirectPath), []);
 
-  return <Navigate to={redirectPath} />;
+  return <Navigate to={redirectPath} replace />;
 };
 
 export default Logout;

@@ -15,7 +15,7 @@ const SignedOutPage = () => {
   const user = useSelector((store: RootState) => store.user);
 
   if (user) {
-    return <Navigate to={UrlPathTemplate.Root} />;
+    return <Navigate to={UrlPathTemplate.Root} replace />;
   }
 
   return (
