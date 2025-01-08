@@ -35,7 +35,6 @@ export const ActionPanelContent = ({
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const customer = useSelector((store: RootState) => store.customer);
 
   const addMessage = async (ticketId: string, message: string) => {

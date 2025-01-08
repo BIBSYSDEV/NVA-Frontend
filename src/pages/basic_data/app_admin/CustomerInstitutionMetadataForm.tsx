@@ -323,9 +323,8 @@ export const CustomerInstitutionMetadataForm = ({
               </>
             )}
             <Divider />
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
               <Button
-                sx={{ marginRight: '1rem' }}
                 onClick={() => {
                   resetForm();
                   navigate(-1);

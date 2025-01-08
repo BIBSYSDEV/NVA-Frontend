@@ -107,12 +107,7 @@ export const UserOrcid = ({ user, sx }: UserOrcidProps) => {
         }
       }
       setIsAddingOrcid(false);
-      navigate(
-        {
-          search: '',
-        },
-        { replace: true }
-      );
+      navigate({ search: '' }, { replace: true });
     };
 
     const searchParams = new URLSearchParams(location.search);

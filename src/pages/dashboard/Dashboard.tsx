@@ -70,12 +70,7 @@ const Dashboard = () => {
             <Typography
               variant="h3"
               variantMapping={{ h3: 'p' }}
-              sx={{
-                mt: '1.5rem',
-                maxWidth: '40rem',
-                gridArea: 'short-description',
-                whiteSpace: 'pre-wrap',
-              }}>
+              sx={{ mt: '1.5rem', maxWidth: '40rem', gridArea: 'short-description', whiteSpace: 'pre-wrap' }}>
               {t('about.short_description')}
             </Typography>
           </Box>

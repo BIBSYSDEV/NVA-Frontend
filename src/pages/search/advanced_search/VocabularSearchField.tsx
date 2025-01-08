@@ -38,7 +38,7 @@ export const VocabularSearchField = () => {
           syncedParams.delete(ResultParam.Vocabulary);
         }
         syncedParams.delete(ResultParam.From);
-        navigate({ search: searchParams.toString() });
+        navigate({ search: syncedParams.toString() });
       }}
       getOptionLabel={(option) => getLanguageString(option.label)}
       groupBy={(option) =>

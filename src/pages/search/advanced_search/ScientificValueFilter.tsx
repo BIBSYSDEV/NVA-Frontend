@@ -48,7 +48,7 @@ export const ScientificValueFilter = () => {
       syncedParams.delete(ResultParam.ScientificValue);
     }
     syncedParams.delete(ResultParam.From);
-    navigate({ search: searchParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (

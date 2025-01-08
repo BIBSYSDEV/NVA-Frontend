@@ -27,7 +27,7 @@ export const FileStatusSelect = () => {
       syncedParams.delete(ResultParam.Files);
     }
     syncedParams.delete(ResultParam.From);
-    navigate({ search: searchParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (
