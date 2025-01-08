@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
+import { App } from './App';
 import { QueryProvider } from './QueryProvider';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { BasicErrorBoundary } from './components/ErrorBoundary';
@@ -15,7 +16,6 @@ import { USE_MOCK_DATA } from './utils/constants';
 // Fonts
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
-import { App } from './App';
 
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();

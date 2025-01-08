@@ -33,7 +33,7 @@ export const AppRoutes = () => {
   const isCurator = hasCuratorRole(user);
   const isEditor = hasCustomerId && user.isEditor;
   const canSeeBasicData = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin || user.isInternalImporter);
-  const isNviCurator = !!user?.isNviCurator;
+  const isNviCurator = hasCustomerId && user.isNviCurator;
 
   return (
     <Routes>

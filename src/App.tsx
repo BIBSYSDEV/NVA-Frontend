@@ -68,8 +68,9 @@ const Root = () => {
   }, [dispatch]);
 
   const mustAcceptTerms = user && user.currentTerms !== user.acceptedTerms;
-  const mustCreatePerson = user && !user.cristinId;
-  const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
+  const mustCreatePerson = user && !user.cristinId && !mustAcceptTerms;
+  const mustSelectCustomer =
+    user && !mustAcceptTerms && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
 
   return (
     <>
