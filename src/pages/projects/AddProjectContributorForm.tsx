@@ -115,7 +115,7 @@ export const AddProjectContributorForm = ({
           }}>
           <CancelButton testId={dataTestId.projectForm.cancelAddParticipantButton} onClick={toggleModal} />
           <Button
-            sx={{ width: '100%' }}
+            fullWidth
             data-testid={dataTestId.projectForm.selectContributorButton}
             disabled={!selectedPerson}
             onClick={() => selectedPerson && addParticipant(selectedPerson)}
