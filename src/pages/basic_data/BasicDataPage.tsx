@@ -180,13 +180,11 @@ const BasicDataPage = () => {
                 isAuthorized={isAppAdmin || isInstitutionAdmin || isInternalImporter}
                 element={
                   isInstitutionAdmin ? (
-                    <Navigate to={UrlPathTemplate.BasicDataPersonRegister} />
+                    <Navigate to={UrlPathTemplate.BasicDataPersonRegister} replace />
                   ) : isAppAdmin ? (
-                    <Navigate to={UrlPathTemplate.BasicDataInstitutions} />
-                  ) : isInternalImporter ? (
-                    <Navigate to={UrlPathTemplate.BasicDataCentralImport} />
+                    <Navigate to={UrlPathTemplate.BasicDataInstitutions} replace />
                   ) : (
-                    <Navigate to="/forbidden" replace />
+                    <Navigate to={UrlPathTemplate.BasicDataCentralImport} replace />
                   )
                 }
               />

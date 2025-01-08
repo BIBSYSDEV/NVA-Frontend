@@ -28,7 +28,7 @@ export const TicketListDefaultValuesWrapper = ({ children }: TicketListDefaultVa
       searchParams.set(TicketSearchParam.Assignee, nvaUsername);
     }
     searchParams.set(TicketSearchParam.Status, defaultStatusFilterItems.join(','));
-    navigate({ search: searchParams.toString() });
+    navigate({ search: searchParams.toString() }, { replace: true });
   }, [navigate, location.search, nvaUsername]);
 
   return children;

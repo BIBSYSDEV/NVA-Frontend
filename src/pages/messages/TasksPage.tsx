@@ -221,9 +221,9 @@ const TasksPage = () => {
                 isAuthorized={isAnyCurator}
                 element={
                   isTicketCurator ? (
-                    <Navigate to={UrlPathTemplate.TasksDialogue} />
+                    <Navigate to={UrlPathTemplate.TasksDialogue} replace />
                   ) : (
-                    <Navigate to={UrlPathTemplate.TasksNvi} />
+                    <Navigate to={UrlPathTemplate.TasksNvi} replace />
                   )
                 }
               />

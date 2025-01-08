@@ -324,7 +324,7 @@ const MyPagePage = () => {
           element={
             <PrivateRoute
               isAuthorized={isAuthenticated}
-              element={<Navigate to={UrlPathTemplate.MyPageResearchProfile} />}
+              element={<Navigate to={UrlPathTemplate.MyPageResearchProfile} replace />}
             />
           }
         />
