@@ -47,10 +47,11 @@ const TasksPage = () => {
 
   const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
+
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnNviStatusPage = location.pathname === UrlPathTemplate.TasksNviStatus;
-  const isOnCorrectionListPage = location.pathname === UrlPathTemplate.TasksNviCorrectionList;
-  const isOnResultRegistrationsPage = location.pathname === UrlPathTemplate.TasksResultRegistrations;
+  const isOnNviCandidatePage =
+    location.pathname.startsWith(UrlPathTemplate.TasksNvi) && !isOnNviCandidatesPage && !isOnNviStatusPage;
 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -121,13 +122,7 @@ const TasksPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={
-          isOnTicketsPage ||
-          isOnNviCandidatesPage ||
-          isOnNviStatusPage ||
-          isOnCorrectionListPage ||
-          isOnResultRegistrationsPage
-        }
+        expanded={!isOnTicketPage && !isOnNviCandidatePage}
         minimizedMenu={
           <Link
             to={{
