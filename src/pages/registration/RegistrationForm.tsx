@@ -52,7 +52,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     registration?.status === RegistrationStatus.Published ||
     registration?.status === RegistrationStatus.PublishedMetadata;
 
-  const nviReportedStatus = useFetchNviReportedStatus(registrationId, registration?.status);
+  const nviReportedStatus = useFetchNviReportedStatus(registrationId, { enabled: canHaveNviCandidate });
   const isNviCandidateUnderReview = nviReportedStatus.data?.reportStatus.status === 'UNDER_REVIEW';
   const isNviCandidateApproved = nviReportedStatus.data?.reportStatus.status === 'APPROVED';
 
