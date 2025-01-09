@@ -37,7 +37,7 @@ import {
 } from '../../types/publication_types/reportRegistration.types';
 import { ResearchDataPublicationContext } from '../../types/publication_types/researchDataRegistration.types';
 import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
-import { AdditionalIdentifier } from '../../types/registration.types';
+import { AdditionalIdentifier, RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
 import {
@@ -95,7 +95,7 @@ const prioritiseIdentifiersFromCristin = (a: AdditionalIdentifier, b: Additional
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
   const { entityDescription, id, status } = registration;
-  const nviReportedStatus = useFetchNviReportedStatus(id, status);
+  const nviReportedStatus = useFetchNviReportedStatus(id, { enabled: status !== RegistrationStatus.Draft });
 
   const publicationContext = entityDescription?.reference?.publicationContext;
   const publicationInstance = entityDescription?.reference?.publicationInstance;
