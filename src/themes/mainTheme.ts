@@ -358,3 +358,23 @@ export const alternatingTableRowColor: SxProps = {
     },
   },
 };
+
+export const alternatingNviTableRowColor: SxProps = {
+  thead: {
+    tr: {
+      bgcolor: 'nvi.main',
+      th: {
+        fontWeight: 'normal',
+        whiteSpace: 'nowrap',
+      },
+    },
+  },
+  tbody: {
+    tr: {
+      bgcolor: 'nvi.light',
+      '&:nth-of-type(even)': {
+        bgcolor: 'white',
+      },
+    },
+  },
+};
