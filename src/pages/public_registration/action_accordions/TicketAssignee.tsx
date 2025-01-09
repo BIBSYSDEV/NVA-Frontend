@@ -29,7 +29,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
       await updateTicket(ticket.id, { assignee: assigneeUsername });
       await refetchTickets();
     },
-    onSuccess: async () => {
+    onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.update_ticket_assignee'), variant: 'success' }));
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
