@@ -596,6 +596,7 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
     SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
   >({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
+    headers: { accept: 'application/json; version=2024-12-01' },
     signal,
   });
 
