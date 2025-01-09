@@ -80,11 +80,11 @@ const Dashboard = () => {
               display: 'grid',
               gridTemplateAreas: {
                 xs: "'button' 'text-description'",
-                md: "'. . button .' '. text-description text-description .'",
+                md: "'. . button .' '. . text-description .'",
               },
               gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 2.5fr 1fr' },
             }}>
-            <Collapse in={readMore} sx={{ gridArea: 'text-description', mt: '1rem' }}>
+            <Collapse in={readMore} sx={{ gridArea: 'text-description', mt: '1rem', maxWidth: '40rem' }}>
               <AboutContent />
             </Collapse>
             <Box sx={{ mt: '1rem', gridArea: 'button' }}>
