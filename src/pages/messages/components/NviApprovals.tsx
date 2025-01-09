@@ -25,7 +25,7 @@ export const NviApprovals = ({ approvals }: NviApprovalsProps) => {
           <TableRow>
             <TableCell>{t('common.institution')}</TableCell>
             <TableCell>{t('tasks.nvi.nvi_status')}</TableCell>
-            <TableCell>{t('tasks.nvi.nvi_points')}</TableCell>
+            <TableCell align="right">{t('tasks.nvi.nvi_points')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
