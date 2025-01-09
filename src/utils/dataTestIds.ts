@@ -349,7 +349,6 @@ export const dataTestId = {
     subtypeFields: 'public-registration-subtype-fields',
     subjectAndClassificationAccordion: 'subject-and-classification-accordion',
     tasksPanel: {
-      assigneeButton: 'assignee-button',
       assigneeIndicator: 'assignee-indicator',
       assigneeSearchField: 'assignee-search-field',
       backToWizard: 'back-to-wizard-button',
