@@ -84,18 +84,17 @@ export const updateNviPeriod = async (data: NviPeriod) => {
   return updateNviPeriodResponse.data;
 };
 
-export const fetchNviCandidateForRegistration = async (registrationId: string) => {
-  const fetchNviCandidateForRegistrationResponse = await apiRequest2<NviCandidate>({
-    url: `${ScientificIndexApiPath.CandidateForRegistration}/${encodeURIComponent(registrationId)}`,
-  });
-
-  return fetchNviCandidateForRegistrationResponse.data;
-};
-
 interface ReportStatusResponse {
   publicationId: string;
   reportStatus: {
-    status: 'PENDING_REVIEW' | 'REPORTED' | 'UNDER_REVIEW' | 'NOT_REPORTED' | 'NOT_CANDIDATE';
+    status:
+      | 'PENDING_REVIEW' // Awaiting approval from all institutions
+      | 'REPORTED' // Reported in closed period
+      | 'UNDER_REVIEW' // At least one institution has approved/rejected
+      | 'NOT_REPORTED' // Rejected by all involved institutions in open period
+      | 'NOT_CANDIDATE' // Not a candidate
+      | 'APPROVED' // Approved by all involved institutions in open period
+      | 'REJECTED'; // Rejected by all involved institutions in open period
   };
   period: string;
 }
