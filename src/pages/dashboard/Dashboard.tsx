@@ -44,7 +44,7 @@ const Dashboard = () => {
               display: 'grid',
               gridTemplateAreas: {
                 xs: "'text-tagline close-button' 'short-description short-description'",
-                md: "'. text-tagline text-tagline close-button' '. . short-description .'",
+                md: "'. . text-tagline close-button' '. . short-description .'",
               },
               gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 2.5fr 1fr' },
             }}>
