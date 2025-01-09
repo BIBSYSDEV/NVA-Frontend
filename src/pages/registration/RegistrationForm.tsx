@@ -54,6 +54,10 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const nviReportedStatus = useFetchNviReportedStatus(registrationId, registration?.status);
   const isNviCandidateUnderReview = nviReportedStatus.data?.reportStatus.status === 'UNDER_REVIEW';
+  const isNviCandidateApproved = nviReportedStatus.data?.reportStatus.status === 'APPROVED';
+
+  const disableNviCriticalFields = isNviCandidateApproved && !user?.isNviCurator;
+  const isResettableNviStatus = isNviCandidateApproved || isNviCandidateUnderReview;
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -65,11 +69,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
-    <NviCandidateContext.Provider
-      value={{
-        disableNviCriticalFields:
-          !!nviReportedStatus.data && nviReportedStatus.data.reportStatus.status === 'APPROVED' && !user?.isNviCurator,
-      }}>
+    <NviCandidateContext.Provider value={{ disableNviCriticalFields }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
@@ -124,14 +124,14 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                 setTabNumber={setTabNumber}
                 validateForm={validateRegistrationForm}
                 persistedRegistration={registration}
-                isNviCandidateUnderReview={isNviCandidateUnderReview}
+                isResettableNviStatus={isResettableNviStatus}
               />
             </BackgroundDiv>
           </Form>
         )}
       </Formik>
       <ConfirmDialog
-        open={isNviCandidateUnderReview && !hasAcceptedNviWarning}
+        open={isResettableNviStatus && !hasAcceptedNviWarning && !disableNviCriticalFields}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
         onCancel={() => (history.length > 1 ? history.goBack() : history.push(UrlPathTemplate.Home))}>
