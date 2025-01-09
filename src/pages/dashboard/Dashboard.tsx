@@ -40,13 +40,14 @@ const Dashboard = () => {
         <Box sx={{ bgcolor: 'secondary.main', p: '1rem 0.5rem', width: '100%' }}>
           <Box
             sx={{
+              justifyItems: 'center',
               gridArea: 'tagline',
               display: 'grid',
               gridTemplateAreas: {
                 xs: "'text-tagline close-button' 'short-description short-description'",
-                md: "'. . text-tagline close-button' '. . short-description .'",
+                md: "'. text-tagline close-button' '. short-description .'",
               },
-              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 2.5fr 1fr' },
+              gridTemplateColumns: { xs: '1fr', md: '1fr 2.5fr 1fr' },
             }}>
             <Typography
               variant="h1"
@@ -70,21 +71,27 @@ const Dashboard = () => {
             <Typography
               variant="h3"
               variantMapping={{ h3: 'p' }}
-              sx={{ mt: '1.5rem', maxWidth: '40rem', gridArea: 'short-description', whiteSpace: 'pre-wrap' }}>
+              sx={{
+                mt: '1.5rem',
+                maxWidth: '45rem',
+                gridArea: 'short-description',
+                whiteSpace: 'pre-wrap',
+              }}>
               {t('about.short_description')}
             </Typography>
           </Box>
           <Box
             sx={{
+              justifyItems: 'center',
               gridArea: 'description',
               display: 'grid',
               gridTemplateAreas: {
                 xs: "'button' 'text-description'",
-                md: "'. . button .' '. . text-description .'",
+                md: "'. button .' '. text-description .'",
               },
-              gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 2.5fr 1fr' },
+              gridTemplateColumns: { xs: '1fr', md: '1fr 2.5fr 1fr' },
             }}>
-            <Collapse in={readMore} sx={{ gridArea: 'text-description', mt: '1rem', maxWidth: '40rem' }}>
+            <Collapse in={readMore} sx={{ gridArea: 'text-description', mt: '1rem', maxWidth: '45rem' }}>
               <AboutContent />
             </Collapse>
             <Box sx={{ mt: '1rem', gridArea: 'button' }}>
