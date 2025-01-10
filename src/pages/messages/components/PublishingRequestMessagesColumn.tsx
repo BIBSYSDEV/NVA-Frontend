@@ -1,3 +1,4 @@
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
@@ -33,9 +34,12 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
           {ticket.filesForApproval.length > 0 && (
             <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-              <Typography>
-                {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <HourglassEmptyIcon fontSize="small" />
+                <Typography>
+                  {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
+                </Typography>
+              </Box>
             </StyledStatusMessageBox>
           )}
         </>

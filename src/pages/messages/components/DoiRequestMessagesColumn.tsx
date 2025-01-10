@@ -1,4 +1,5 @@
-import { Typography } from '@mui/material';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ExpandedTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { toDateString } from '../../../utils/date-helpers';
@@ -19,7 +20,10 @@ export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequest
         <>
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedTicket} />}
           <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-            <Typography>{t('my_page.messages.doi_pending')}</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <HourglassEmptyIcon fontSize="small" />
+              <Typography>{t('my_page.messages.doi_pending')}</Typography>
+            </Box>
           </StyledStatusMessageBox>
         </>
       ) : (
