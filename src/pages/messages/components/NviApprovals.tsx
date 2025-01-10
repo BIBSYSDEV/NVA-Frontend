@@ -1,7 +1,6 @@
 import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
+import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import { Box, Skeleton, SxProps, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -81,14 +80,12 @@ const InstitutionStatus = ({ status }: InstitutionStatusProps) => {
 
   const iconProps: SxProps = { mr: '0.2rem' };
   const icon =
-    status === 'New' ? (
+    status === 'New' || status === 'Pending' ? (
       <HourglassEmptyIcon fontSize="small" sx={iconProps} />
-    ) : status === 'Pending' ? (
-      <PendingOutlinedIcon fontSize="small" sx={iconProps} />
     ) : status === 'Approved' ? (
       <CheckIcon fontSize="small" sx={iconProps} />
     ) : status === 'Rejected' ? (
-      <ClearIcon fontSize="small" sx={iconProps} />
+      <DoNotDisturbIcon fontSize="small" sx={iconProps} />
     ) : null;
 
   return (

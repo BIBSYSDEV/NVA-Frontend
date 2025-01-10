@@ -366,6 +366,7 @@ export const alternatingNviTableRowColor: SxProps = {
       th: {
         fontWeight: 'normal',
         whiteSpace: 'nowrap',
+        p: '0.5rem',
       },
     },
   },
@@ -374,6 +375,9 @@ export const alternatingNviTableRowColor: SxProps = {
       bgcolor: 'nvi.light',
       '&:nth-of-type(even)': {
         bgcolor: 'white',
+      },
+      td: {
+        p: '0.5rem',
       },
     },
   },
