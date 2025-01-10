@@ -765,6 +765,7 @@
       "message_deleted": "Meldingen er slettet",
       "metadata_published": "Metadata publisert",
       "no_messages": "Du har ingen meldinger",
+      "pending_curator": "Venter på kurator",
       "ticket_types": {
         "Closed": "Avvist",
         "Completed": "Ferdig",
