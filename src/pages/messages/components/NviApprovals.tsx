@@ -6,7 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
-import { alternatingNviTableRowColor } from '../../../themes/mainTheme';
 import { Approval, NviCandidateStatus } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
@@ -94,4 +93,28 @@ const InstitutionStatus = ({ status }: InstitutionStatusProps) => {
       <Typography sx={{ whiteSpace: 'nowrap' }}>{t(`tasks.nvi.status.${status}`)}</Typography>
     </Box>
   );
+};
+
+const alternatingNviTableRowColor: SxProps = {
+  thead: {
+    tr: {
+      bgcolor: 'nvi.main',
+      th: {
+        fontWeight: 'normal',
+        whiteSpace: 'nowrap',
+        p: '0.5rem',
+      },
+    },
+  },
+  tbody: {
+    tr: {
+      bgcolor: 'nvi.light',
+      '&:nth-of-type(even)': {
+        bgcolor: 'white',
+      },
+      td: {
+        p: '0.5rem',
+      },
+    },
+  },
 };
