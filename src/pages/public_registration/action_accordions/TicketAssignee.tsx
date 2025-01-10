@@ -8,11 +8,10 @@ import { RootState } from '../../../redux/store';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import { ticketColor } from '../../messages/components/TicketListItem';
 
 interface TicketAssigneeProps {
   ticket: Ticket;
-  refetchTickets: () => void;
+  refetchTickets: () => Promise<void>;
 }
 
 export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) => {
@@ -26,9 +25,11 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
     !!(ticket.type === 'PublishingRequest' && user?.isPublishingCurator);
 
   const ticketMutation = useMutation({
-    mutationFn: async (assigneeUsername: string) => await updateTicket(ticket.id, { assignee: assigneeUsername }),
+    mutationFn: async (assigneeUsername: string) => {
+      await updateTicket(ticket.id, { assignee: assigneeUsername });
+      await refetchTickets();
+    },
     onSuccess: () => {
-      refetchTickets();
       dispatch(setNotification({ message: t('feedback.success.update_ticket_assignee'), variant: 'success' }));
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
@@ -56,7 +57,6 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
             ? RoleName.DoiCurator
             : RoleName.SupportCurator
       }
-      iconBackgroundColor={ticketColor[ticket.type]}
     />
   );
 };
