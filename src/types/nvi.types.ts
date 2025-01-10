@@ -10,7 +10,7 @@ interface NviCandidateContributor {
   name: string;
 }
 
-type NviCandidateStatus = 'New' | 'Pending' | 'Rejected' | 'Approved';
+export type NviCandidateStatus = 'New' | 'Pending' | 'Rejected' | 'Approved';
 
 interface NviCandidateSearchHitApproval {
   institutionId: string;

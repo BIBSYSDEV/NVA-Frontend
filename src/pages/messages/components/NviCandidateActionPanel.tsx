@@ -34,7 +34,6 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
 
   const tickets = ticketsQuery.data?.tickets ?? [];
   const periodStatus = nviCandidate?.period.status;
-  const pointsSum = nviCandidate?.approvals.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
 
   return (
     <Paper
@@ -71,7 +70,7 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
           ) : null}
 
           <Divider sx={{ mt: 'auto' }} />
-          <NviApprovals approvals={nviCandidate?.approvals ?? []} totalPoints={pointsSum} />
+          <NviApprovals approvals={nviCandidate?.approvals ?? []} />
         </StyledTabPanel>
         <StyledTabPanel value={TabValue.Log}>
           {registrationQuery.data && <LogPanel tickets={tickets} registration={registrationQuery.data} />}
