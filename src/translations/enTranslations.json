@@ -1174,9 +1174,7 @@
     "add_local_manager": "Add local manager",
     "add_project_contributor": "Add project participant",
     "add_project_manager": "Add project manager",
-    "add_self_as_local_project_manager": "Add me as the local manager",
-    "add_self_as_project_manager": "Add me as project manager",
-    "add_self_as_project_participant": "Add me as project participant",
+    "add_self": "Add me",
     "add_unidentified_contributor": "Add unidentified project participant",
     "add_unidentified_project_manager": "Add unidentified project manager",
     "affiliation_modal": {
@@ -1287,7 +1285,6 @@
       "add_new_affiliation": "Add new affiliation",
       "add_new_affiliation_helper_text": "<0>Only institutions that the research has been conducted in collaboration with should be added as an affiliation to the contributor.</0> <0>Add affiliation to the contributor by first searching for the institution and possibly the unit.</0> <0>If the contributor belongs to several different units under the same institution, you must add this as a new affiliation.</0>",
       "add_new_contributor": "Add new contributor",
-      "add_self_as_contributor": "Add me as contributor",
       "add_unverified_contributor": "Add a non-identified contributor.",
       "affiliation_is_unidentified": "Affiliation is unidentified",
       "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}}?",

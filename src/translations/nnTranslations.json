@@ -1174,9 +1174,7 @@
     "add_local_manager": "Legg til lokalt ansvarleg",
     "add_project_contributor": "Legg til prosjektdeltakar",
     "add_project_manager": "Legg til prosjektleiar",
-    "add_self_as_local_project_manager": "Legg meg til som lokalt ansvarleg",
-    "add_self_as_project_manager": "Legg meg til som prosjektleiar",
-    "add_self_as_project_participant": "Legg meg til som prosjektdeltakar",
+    "add_self": "Legg til meg",
     "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltakar",
     "add_unidentified_project_manager": "Legg til uidentifisert prosjektleiar",
     "affiliation_modal": {
@@ -1287,7 +1285,6 @@
       "add_new_affiliation": "Legg til ny tilknyting",
       "add_new_affiliation_helper_text": "<0>Det er berre institusjonar som forskinga er gjennomført i samarbeid med som skal leggjast til som tilknyting til bidragsytaren.</0> <0>Legg til tilknyting til bidragsytaren ved å først søkje opp institusjonen og eventuelt eininga.</0> <0>Tilhøyrer bidragsytaren fleire forskjellige einingar under same institusjon, må du leggje til dette som ny tilknyting.</0>",
       "add_new_contributor": "Legg til ny bidragsytar",
-      "add_self_as_contributor": "Legg meg til som bidragsytar",
       "add_unverified_contributor": "Legg til ein uidentifisert bidragsytar.",
       "affiliation_is_unidentified": "Tilknyting er uidentifisert",
       "confirm_remove_author_text": "Er du sikker på at du ønskjer å fjerne {{contributorName}}?",
