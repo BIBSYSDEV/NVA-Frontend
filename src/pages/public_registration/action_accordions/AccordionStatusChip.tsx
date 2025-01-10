@@ -9,9 +9,10 @@ import { TicketStatus } from '../../../types/publication_types/ticket.types';
 interface AccordionStatusChipProps {
   ticketStatus: TicketStatus;
   completedColor: StandardCSSProperties['backgroundColor'];
+  overrideText?: string;
 }
 
-export const AccordionStatusChip = ({ ticketStatus, completedColor }: AccordionStatusChipProps) => {
+export const AccordionStatusChip = ({ ticketStatus, completedColor, overrideText }: AccordionStatusChipProps) => {
   const { t } = useTranslation();
 
   if (ticketStatus === 'NotApplicable') {
@@ -22,6 +23,7 @@ export const AccordionStatusChip = ({ ticketStatus, completedColor }: AccordionS
     <Box
       sx={{
         display: 'flex',
+        gap: '0.2rem',
         alignItems: 'center',
         bgcolor: ticketStatus === 'Completed' ? completedColor : 'secondary.dark',
         p: '0.25rem 0.5rem',
@@ -34,7 +36,7 @@ export const AccordionStatusChip = ({ ticketStatus, completedColor }: AccordionS
       ) : (
         <HourglassEmptyIcon sx={{ fontSize: '1rem' }} />
       )}
-      <Typography>{t(`my_page.messages.ticket_types.${ticketStatus}`)}</Typography>
+      <Typography>{overrideText ?? t(`my_page.messages.ticket_types.${ticketStatus}`)}</Typography>
     </Box>
   );
 };
