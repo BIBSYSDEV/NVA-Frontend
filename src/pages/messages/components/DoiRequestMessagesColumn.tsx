@@ -14,9 +14,10 @@ import {
 
 interface DoiRequestMessagesColumnProps {
   ticket: ExpandedTicket | Ticket;
+  showLastMessage?: boolean;
 }
 
-export const DoiRequestMessagesColumn = ({ ticket }: DoiRequestMessagesColumnProps) => {
+export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
   return (
@@ -29,7 +30,7 @@ export const DoiRequestMessagesColumn = ({ ticket }: DoiRequestMessagesColumnPro
               <Typography>{t('my_page.messages.doi_pending')}</Typography>
             </StyledIconAndTextWrapper>
           </StyledStatusMessageBox>
-          <LastMessageBox ticket={ticket as ExpandedTicket} />
+          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedTicket} />}
         </>
       ) : ticket.status === 'Completed' ? (
         <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
@@ -48,7 +49,7 @@ export const DoiRequestMessagesColumn = ({ ticket }: DoiRequestMessagesColumnPro
             </StyledIconAndTextWrapper>
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
-          <LastMessageBox ticket={ticket as ExpandedTicket} />
+          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedTicket} />}
         </>
       ) : null}
     </StyledMessagesContainer>

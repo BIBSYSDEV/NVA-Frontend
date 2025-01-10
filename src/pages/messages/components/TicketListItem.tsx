@@ -105,7 +105,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           {ticket.type === 'PublishingRequest' ? (
             <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
-            <DoiRequestMessagesColumn ticket={ticket} />
+            <DoiRequestMessagesColumn ticket={ticket} showLastMessage />
           ) : ticket.type === 'GeneralSupportCase' ? (
             <SupportMessagesColumn ticket={ticket} />
           ) : (
