@@ -27,13 +27,13 @@ export const AccordionStatusChip = ({ ticketStatus, completedColor }: AccordionS
         p: '0.25rem 0.5rem',
         borderRadius: '1rem',
       }}>
-      {ticketStatus === 'Pending' || ticketStatus === 'New' ? (
-        <HourglassEmptyIcon sx={{ fontSize: '1rem' }} />
-      ) : ticketStatus === 'Completed' ? (
+      {ticketStatus === 'Completed' ? (
         <CheckIcon sx={{ fontSize: '1rem' }} />
       ) : ticketStatus === 'Closed' ? (
         <BlockIcon sx={{ fontSize: '1rem' }} />
-      ) : null}
+      ) : (
+        <HourglassEmptyIcon sx={{ fontSize: '1rem' }} />
+      )}
       <Typography>{t(`my_page.messages.ticket_types.${ticketStatus}`)}</Typography>
     </Box>
   );

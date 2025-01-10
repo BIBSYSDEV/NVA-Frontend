@@ -19,6 +19,7 @@ import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-he
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
+import { AccordionStatusChip } from './AccordionStatusChip';
 import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {
@@ -63,8 +64,6 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   const userHasReadTicket = !!user?.nvaUsername && !!supportTicket?.viewedBy.includes(user.nvaUsername);
   const isOnTasksPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const statusText = supportTicket && isOnTasksPage ? t(`my_page.messages.ticket_types.${supportTicket.status}`) : '';
-
   const userCanCompleteTicket = userHasAccessRight(registration, 'support-request-approve');
 
   const defaultExpanded = location.state?.selectedTicketType
@@ -78,8 +77,12 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('my_page.messages.types.GeneralSupportCase')}
-        {statusText && ` - ${statusText}`}
+        <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
+          {t('my_page.messages.types.GeneralSupportCase')}
+        </Typography>
+        {supportTicket && isOnTasksPage && (
+          <AccordionStatusChip ticketStatus={supportTicket.status} completedColor="generalSupportCase.main" />
+        )}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {!isOnTasksPage && <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>}
