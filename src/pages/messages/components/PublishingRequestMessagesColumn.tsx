@@ -45,33 +45,30 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
           )}
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
         </>
-      ) : (
+      ) : ticket.status === 'Completed' ? (
+        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+            <CheckIcon fontSize="small" />
+            <Typography>
+              {ticket.approvedFiles.length
+                ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
+                : t('my_page.messages.metadata_published')}
+            </Typography>
+          </Box>
+          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+        </StyledStatusMessageBox>
+      ) : ticket.status === 'Closed' ? (
         <>
-          <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-            {ticket.status === 'Completed' ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-                <CheckIcon fontSize="small" />
-                <Typography>
-                  {ticket.approvedFiles.length
-                    ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
-                    : t('my_page.messages.metadata_published')}
-                </Typography>
-              </Box>
-            ) : (
-              ticket.status === 'Closed' && (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-                  <BlockIcon fontSize="small" />
-                  <Typography>
-                    {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
-                  </Typography>
-                </Box>
-              )
-            )}
+          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+              <BlockIcon fontSize="small" />
+              <Typography>{t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}</Typography>
+            </Box>
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
         </>
-      )}
+      ) : null}
     </StyledMessagesContainer>
   );
 };

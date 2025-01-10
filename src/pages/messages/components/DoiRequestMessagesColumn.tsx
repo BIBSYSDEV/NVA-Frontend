@@ -28,28 +28,26 @@ export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequest
           </StyledStatusMessageBox>
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedTicket} />}
         </>
-      ) : (
+      ) : ticket.status === 'Completed' ? (
+        <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+            <CheckIcon fontSize="small" />
+            <Typography>{t('my_page.messages.doi_completed')}</Typography>
+          </Box>
+          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+        </StyledStatusMessageBox>
+      ) : ticket.status === 'Closed' ? (
         <>
-          {ticket.status === 'Completed' ? (
-            <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-                <CheckIcon fontSize="small" />
-                <Typography>{t('my_page.messages.doi_completed')}</Typography>
-              </Box>
-              {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
-            </StyledStatusMessageBox>
-          ) : ticket.status === 'Closed' ? (
-            <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-                <BlockIcon fontSize="small" />
-                <Typography>{t('my_page.messages.doi_closed')}</Typography>
-              </Box>
-              {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
-            </StyledStatusMessageBox>
-          ) : null}
+          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+              <BlockIcon fontSize="small" />
+              <Typography>{t('my_page.messages.doi_closed')}</Typography>
+            </Box>
+            {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+          </StyledStatusMessageBox>
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedTicket} />}
         </>
-      )}
+      ) : null}
     </StyledMessagesContainer>
   );
 };
