@@ -1,3 +1,5 @@
+import BlockIcon from '@mui/icons-material/Block';
+import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +22,7 @@ export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequest
         <>
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedTicket} />}
           <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
               <HourglassEmptyIcon fontSize="small" />
               <Typography>{t('my_page.messages.doi_pending')}</Typography>
             </Box>
@@ -31,9 +33,15 @@ export const DoiRequestMessagesColumn = ({ ticket, showLastMessage }: DoiRequest
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedTicket} />}
           <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
             {ticket.status === 'Completed' ? (
-              <Typography>{t('my_page.messages.doi_completed')}</Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                <CheckIcon fontSize="small" />
+                <Typography>{t('my_page.messages.doi_completed')}</Typography>
+              </Box>
             ) : ticket.status === 'Closed' ? (
-              <Typography>{t('my_page.messages.doi_closed')}</Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                <BlockIcon fontSize="small" />
+                <Typography>{t('my_page.messages.doi_closed')}</Typography>
+              </Box>
             ) : null}
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>

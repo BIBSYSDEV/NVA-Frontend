@@ -1,3 +1,5 @@
+import BlockIcon from '@mui/icons-material/Block';
+import CheckIcon from '@mui/icons-material/Check';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -34,7 +36,7 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
           {ticket.filesForApproval.length > 0 && (
             <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
                 <HourglassEmptyIcon fontSize="small" />
                 <Typography>
                   {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
@@ -48,16 +50,22 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
           {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
           <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
             {ticket.status === 'Completed' ? (
-              <Typography>
-                {ticket.approvedFiles.length
-                  ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
-                  : t('my_page.messages.metadata_published')}
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                <CheckIcon fontSize="small" />
+                <Typography>
+                  {ticket.approvedFiles.length
+                    ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
+                    : t('my_page.messages.metadata_published')}
+                </Typography>
+              </Box>
             ) : (
               ticket.status === 'Closed' && (
-                <Typography>
-                  {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                  <BlockIcon fontSize="small" />
+                  <Typography>
+                    {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
+                  </Typography>
+                </Box>
               )
             )}
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
