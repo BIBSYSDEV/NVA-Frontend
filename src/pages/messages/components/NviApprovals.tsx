@@ -74,22 +74,20 @@ interface InstitutionStatusProps {
   status: NviCandidateStatus;
 }
 
-const iconProps: SxProps = { mr: '0.2rem' };
-
 const InstitutionStatus = ({ status }: InstitutionStatusProps) => {
   const { t } = useTranslation();
 
   const icon =
     status === 'New' || status === 'Pending' ? (
-      <HourglassEmptyIcon fontSize="small" sx={iconProps} />
+      <HourglassEmptyIcon fontSize="small" />
     ) : status === 'Approved' ? (
-      <CheckIcon fontSize="small" sx={iconProps} />
+      <CheckIcon fontSize="small" />
     ) : status === 'Rejected' ? (
-      <DoNotDisturbIcon fontSize="small" sx={iconProps} />
+      <DoNotDisturbIcon fontSize="small" />
     ) : null;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', gap: '0.2rem' }}>
       {icon}
       <Typography sx={{ whiteSpace: 'nowrap' }}>{t(`tasks.nvi.status.${status}`)}</Typography>
     </Box>
