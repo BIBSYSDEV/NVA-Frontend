@@ -225,9 +225,8 @@ export const DoiRequestAccordion = ({
           <AccordionStatusChip ticketStatus={doiRequestTicket.status} completedColor="doiRequest.main" />
         ) : hasReservedDoi ? (
           <AccordionStatusChip
-            ticketStatus="New"
             completedColor="doiRequest.main"
-            overrideText={t('registration.public_page.tasks_panel.reserved')}
+            text={t('registration.public_page.tasks_panel.reserved')}
           />
         ) : null}
       </AccordionSummary>

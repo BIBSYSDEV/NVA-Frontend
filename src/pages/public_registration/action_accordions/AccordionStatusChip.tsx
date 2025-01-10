@@ -6,16 +6,26 @@ import { StandardCSSProperties } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { TicketStatus } from '../../../types/publication_types/ticket.types';
 
-interface AccordionStatusChipProps {
-  ticketStatus: TicketStatus;
+interface AccordionStatusChipBaseProps {
   completedColor: StandardCSSProperties['backgroundColor'];
-  overrideText?: string;
 }
 
-export const AccordionStatusChip = ({ ticketStatus, completedColor, overrideText }: AccordionStatusChipProps) => {
+interface TicketStatusProps extends AccordionStatusChipBaseProps {
+  ticketStatus: TicketStatus;
+  text?: never;
+}
+
+interface OverrideTextProps extends AccordionStatusChipBaseProps {
+  text: string;
+  ticketStatus?: never;
+}
+
+type AccordionStatusChipProps = TicketStatusProps | OverrideTextProps;
+
+export const AccordionStatusChip = ({ ticketStatus, completedColor, text }: AccordionStatusChipProps) => {
   const { t } = useTranslation();
 
-  if (ticketStatus === 'NotApplicable') {
+  if (ticketStatus === 'NotApplicable' || (!ticketStatus && !text)) {
     return null;
   }
 
@@ -36,7 +46,7 @@ export const AccordionStatusChip = ({ ticketStatus, completedColor, overrideText
       ) : (
         <HourglassEmptyIcon sx={{ fontSize: '1rem' }} />
       )}
-      <Typography>{overrideText ?? t(`my_page.messages.ticket_types.${ticketStatus}`)}</Typography>
+      <Typography>{text ?? t(`my_page.messages.ticket_types.${ticketStatus}`)}</Typography>
     </Box>
   );
 };
