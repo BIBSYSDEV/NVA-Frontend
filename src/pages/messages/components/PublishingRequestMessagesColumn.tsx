@@ -33,7 +33,6 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
     <StyledMessagesContainer>
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
-          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
           {ticket.filesForApproval.length > 0 && (
             <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
@@ -44,10 +43,10 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
               </Box>
             </StyledStatusMessageBox>
           )}
+          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
         </>
       ) : (
         <>
-          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
           <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
             {ticket.status === 'Completed' ? (
               <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
@@ -70,6 +69,7 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
             )}
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
+          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
         </>
       )}
     </StyledMessagesContainer>
