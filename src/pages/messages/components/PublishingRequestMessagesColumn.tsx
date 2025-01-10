@@ -29,10 +29,9 @@ export const StyledIconAndTextWrapper = styled(Box)({
 
 interface PublishingRequestMessagesColumnProps {
   ticket: ExpandedPublishingTicket | PublishingTicket;
-  showLastMessage?: boolean;
 }
 
-export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: PublishingRequestMessagesColumnProps) => {
+export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
   return (
@@ -49,7 +48,7 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
               </StyledIconAndTextWrapper>
             </StyledStatusMessageBox>
           )}
-          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
+          <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />
         </>
       ) : ticket.status === 'Completed' ? (
         <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
@@ -72,7 +71,7 @@ export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: Pub
             </StyledIconAndTextWrapper>
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
-          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
+          <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />
         </>
       ) : null}
     </StyledMessagesContainer>
