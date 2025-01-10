@@ -74,10 +74,11 @@ interface InstitutionStatusProps {
   status: NviCandidateStatus;
 }
 
+const iconProps: SxProps = { mr: '0.2rem' };
+
 const InstitutionStatus = ({ status }: InstitutionStatusProps) => {
   const { t } = useTranslation();
 
-  const iconProps: SxProps = { mr: '0.2rem' };
   const icon =
     status === 'New' || status === 'Pending' ? (
       <HourglassEmptyIcon fontSize="small" sx={iconProps} />
