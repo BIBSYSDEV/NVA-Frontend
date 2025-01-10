@@ -1,12 +1,11 @@
 import { Box, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
-import { fetchNviCandidateForRegistration } from '../../api/scientificIndexApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageHeader } from '../../components/PageHeader';
@@ -21,7 +20,6 @@ import { RootState } from '../../redux/store';
 import { RegistrationFormLocationState } from '../../types/locationState.types';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
-import { isApprovedAndOpenNviCandidate } from '../../utils/nviHelpers';
 import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -55,35 +53,24 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     registration?.status === RegistrationStatus.Published ||
     registration?.status === RegistrationStatus.PublishedMetadata;
 
-  const nviCandidateQuery = useQuery({
-    enabled: !!registrationId && canHaveNviCandidate,
-    queryKey: ['nviCandidateForRegistration', registrationId],
-    queryFn: () => fetchNviCandidateForRegistration(registrationId),
-    retry: false,
-    meta: { errorMessage: false },
-  });
-  const isNviCandidate =
-    nviCandidateQuery.data?.period.status === 'OpenPeriod' &&
-    nviCandidateQuery.data.approvals.some(
-      (approval) => approval.status === 'Approved' || approval.status === 'Rejected'
-    );
+  const nviReportedStatus = useFetchNviReportedStatus(registrationId, { enabled: canHaveNviCandidate });
+  const isNviCandidateUnderReview = nviReportedStatus.data?.reportStatus.status === 'UNDER_REVIEW';
+  const isNviCandidateApproved = nviReportedStatus.data?.reportStatus.status === 'APPROVED';
+
+  const disableNviCriticalFields = isNviCandidateApproved && !user?.isNviCurator;
+  const isResettableNviStatus = isNviCandidateApproved || isNviCandidateUnderReview;
 
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
   const canEditRegistration = userHasAccessRight(registration, 'update');
 
-  return registrationQuery.isPending || (canHaveNviCandidate && nviCandidateQuery.isPending) ? (
+  return registrationQuery.isPending || (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
-    <NviCandidateContext.Provider
-      value={{
-        nviCandidate: nviCandidateQuery.data,
-        disableNviCriticalFields:
-          !!nviCandidateQuery.data && isApprovedAndOpenNviCandidate(nviCandidateQuery.data) && !user?.isNviCurator,
-      }}>
+    <NviCandidateContext.Provider value={{ disableNviCriticalFields }}>
       <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
       <Formik
         initialValues={registration}
@@ -138,14 +125,14 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                 setTabNumber={setTabNumber}
                 validateForm={validateRegistrationForm}
                 persistedRegistration={registration}
-                isNviCandidate={isNviCandidate}
+                isResettableNviStatus={isResettableNviStatus}
               />
             </BackgroundDiv>
           </Form>
         )}
       </Formik>
       <ConfirmDialog
-        open={isNviCandidate && !hasAcceptedNviWarning}
+        open={isResettableNviStatus && !hasAcceptedNviWarning && !disableNviCriticalFields}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
         onCancel={() => (navigate.length > 1 ? navigate(-1) : navigate(UrlPathTemplate.Root))}>

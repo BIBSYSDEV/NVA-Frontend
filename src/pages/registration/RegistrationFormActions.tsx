@@ -28,7 +28,7 @@ interface RegistrationFormActionsProps {
   setTabNumber: (newTab: RegistrationTab) => void;
   validateForm: (values: Registration) => FormikErrors<Registration>;
   persistedRegistration: Registration;
-  isNviCandidate: boolean;
+  isResettableNviStatus: boolean;
 }
 
 const navigationButtonStyling: SxProps = {
@@ -44,7 +44,7 @@ export const RegistrationFormActions = ({
   setTabNumber,
   validateForm,
   persistedRegistration,
-  isNviCandidate,
+  isResettableNviStatus,
 }: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -115,7 +115,7 @@ export const RegistrationFormActions = ({
   };
 
   const handleSaveClick = async () => {
-    if (isNviCandidate && (await willResetNviStatuses(persistedRegistration, values))) {
+    if (isResettableNviStatus && (await willResetNviStatuses(persistedRegistration, values))) {
       setOpenNviApprovalResetDialog(true);
     } else {
       await saveRegistration(values);
