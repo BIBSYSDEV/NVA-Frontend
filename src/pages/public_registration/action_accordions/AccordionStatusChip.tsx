@@ -15,7 +15,7 @@ interface TicketStatusProps extends AccordionStatusChipBaseProps {
   text?: never;
 }
 
-interface OverrideTextProps extends AccordionStatusChipBaseProps {
+interface OverrideTextProps extends Partial<AccordionStatusChipBaseProps> {
   text: string;
   ticketStatus?: never;
 }

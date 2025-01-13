@@ -224,16 +224,13 @@ export const DoiRequestAccordion = ({
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
+        <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
           {t('common.doi')}
         </Typography>
         {doiRequestTicket ? (
           <AccordionStatusChip ticketStatus={doiRequestTicket.status} completedColor="doiRequest.main" />
         ) : hasReservedDoi ? (
-          <AccordionStatusChip
-            completedColor="doiRequest.main"
-            text={t('registration.public_page.tasks_panel.reserved')}
-          />
+          <AccordionStatusChip text={t('registration.public_page.tasks_panel.reserved')} />
         ) : null}
       </AccordionSummary>
       <AccordionDetails>
