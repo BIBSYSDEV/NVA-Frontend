@@ -181,11 +181,17 @@ export const PublishingAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
-      sx={{ bgcolor: 'publishingRequest.light' }}
+      sx={{
+        bgcolor: 'publishingRequest.light',
+        '& .MuiAccordionSummary-content': {
+          alignItems: 'center',
+          gap: '0.5rem',
+        },
+      }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <Typography fontWeight={'bold'} sx={{ flexGrow: '1', alignSelf: 'center' }}>
+        <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
           {isUnpublishedOrDeletedRegistration
             ? t(`registration.status.${registration.status}`)
             : t('registration.public_page.publication')}

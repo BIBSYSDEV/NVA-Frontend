@@ -214,11 +214,17 @@ export const DoiRequestAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
-      sx={{ bgcolor: 'doiRequest.light' }}
+      sx={{
+        bgcolor: 'doiRequest.light',
+        '& .MuiAccordionSummary-content': {
+          alignItems: 'center',
+          gap: '0.5rem',
+        },
+      }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <Typography fontWeight={'bold'} sx={{ flexGrow: '1', alignSelf: 'center' }}>
+        <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
           {t('common.doi')}
         </Typography>
         {doiRequestTicket ? (

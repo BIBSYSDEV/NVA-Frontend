@@ -73,11 +73,17 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
-      sx={{ bgcolor: 'generalSupportCase.light' }}
+      sx={{
+        bgcolor: 'generalSupportCase.light',
+        '& .MuiAccordionSummary-content': {
+          alignItems: 'center',
+          gap: '0.5rem',
+        },
+      }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <Typography fontWeight="bold" sx={{ flexGrow: '1', alignSelf: 'center' }}>
+        <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
           {t('my_page.messages.types.GeneralSupportCase')}
         </Typography>
         {supportTicket && isOnTasksPage && (
@@ -92,11 +98,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {userCanCompleteTicket && isOnTasksPage && supportTicket.status !== 'Completed' && (
               <LoadingButton
-                sx={{
-                  alignSelf: 'center',
-                  width: 'fit-content',
-                  bgcolor: 'white',
-                }}
+                sx={{ alignSelf: 'center', width: 'fit-content', bgcolor: 'white' }}
                 loading={ticketMutation.isPending}
                 variant="outlined"
                 onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
