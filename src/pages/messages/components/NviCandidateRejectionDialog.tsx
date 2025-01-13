@@ -50,7 +50,7 @@ export const NviCandidateRejectionDialog = ({
                   rel="noopener noreferrer"
                 />
               ),
-              launchIcon: <LaunchIcon fontSize="small" sx={{ ml: '0.2rem', verticalAlign: 'bottom' }} />,
+              launchIcon: <LaunchIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />,
             }}
           />
 

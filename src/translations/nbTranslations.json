@@ -2103,7 +2103,7 @@
       "reject_nvi_candidate": "Avvis resultat",
       "reject_nvi_candidate_description": "Klikk på knappen \"{{buttonText}}\" dersom forskningsresultatet ikke skal rapporteres. Du må oppgi en grunn for avvisningen.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
-      "reject_nvi_candidate_modal_text": "<p>Gi en begrunnelse for hvorfor du avviser publikasjonen for NVI-rapportering.</p><p>Er du usikker på kravene, se <hyperlink>Rapporteringsinstruksen<launchIcon/></hyperlink>.</p><p>Begrunnelsen blir lagret i NVA, og vil være synlig for NVI-kuratorer ved de sampubliserende institusjonene.</p><p>Gi en begrunnelse på hvorfor du avviser denne publikasjonen for rapportering. Begrunnelsen må inneholde minst 10 tegn.</p>",
+      "reject_nvi_candidate_modal_text": "<p>Gi en begrunnelse for hvorfor du avviser publikasjonen for NVI-rapportering.</p><p>Er du usikker på kravene, se <hyperlink>Rapporteringsinstruksen <launchIcon/></hyperlink>.</p><p>Begrunnelsen blir lagret i NVA, og vil være synlig for NVI-kuratorer ved de sampubliserende institusjonene.</p><p>Gi en begrunnelse på hvorfor du avviser denne publikasjonen for rapportering. Begrunnelsen må inneholde minst 10 tegn.</p>",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
       "save_note": "Lagre kommentar",
