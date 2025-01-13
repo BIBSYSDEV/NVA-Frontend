@@ -185,7 +185,7 @@ export const PublishingAccordion = ({
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
+        <Typography fontWeight={'bold'} sx={{ flexGrow: '1', alignSelf: 'center' }}>
           {isUnpublishedOrDeletedRegistration
             ? t(`registration.status.${registration.status}`)
             : t('registration.public_page.publication')}

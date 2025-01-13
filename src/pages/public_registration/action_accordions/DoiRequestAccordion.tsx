@@ -218,7 +218,7 @@ export const DoiRequestAccordion = ({
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <Typography fontWeight={'bold'} sx={{ flexGrow: '1' }}>
+        <Typography fontWeight={'bold'} sx={{ flexGrow: '1', alignSelf: 'center' }}>
           {t('common.doi')}
         </Typography>
         {doiRequestTicket ? (

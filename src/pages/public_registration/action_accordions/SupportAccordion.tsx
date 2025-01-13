@@ -77,7 +77,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
+        <Typography fontWeight="bold" sx={{ flexGrow: '1', alignSelf: 'center' }}>
           {t('my_page.messages.types.GeneralSupportCase')}
         </Typography>
         {supportTicket && isOnTasksPage && (
