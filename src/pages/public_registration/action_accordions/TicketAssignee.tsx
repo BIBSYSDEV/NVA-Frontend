@@ -75,7 +75,7 @@ const UnselectableAssignee = ({ assignee }: UnselectableAssigneeProps) => {
   const assigneeFullName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
 
   return (
-    <Box sx={{ display: 'flex', gap: '0.5rem', mb: '0.5rem' }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mb: '0.5rem' }}>
       <Avatar username={assignee ?? ''} />
       <Typography>{assignee ? assigneeFullName : t('my_page.messages.pending_curator')}</Typography>
     </Box>
