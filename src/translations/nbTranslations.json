@@ -2077,7 +2077,7 @@
     "new_tasks": "Innmeldte oppgaver: {{count}}",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn resultat",
-      "approve_nvi_candidate_description": "<0>Kontroll av forskningsresultat for NVI-rapportering.</0><0>Klikk på knappen \"{{buttonText}}\" for å rapportere forskningsresultatet.</0>",
+      "approve_nvi_candidate_description": "<p>Kontroll av forskningsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporteres. Se <hyperlink>Rapporteringsinstruksen<launchIcon/></hyperlink> for mer informasjon.</p>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Antologier med tellende kapittel",
@@ -2101,7 +2101,7 @@
       "previous_candidate": "Gå til forrige kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
-      "reject_nvi_candidate_description": "Klikk på knappen \"{{buttonText}}\" dersom forskningsresultatet ikke skal rapporteres. Du må oppgi en grunn for avvisningen.",
+      "reject_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen ikke kan rapporteres. Du må begrunne avvisningen.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
       "reject_nvi_candidate_modal_text": "Vennligst oppgi en detaljert begrunnelse på hvorfor du avviser. Begrunnelsen må inneholde minst 10 tegn.",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",

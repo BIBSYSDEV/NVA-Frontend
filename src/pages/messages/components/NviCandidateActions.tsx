@@ -1,7 +1,8 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import LaunchIcon from '@mui/icons-material/Launch';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -161,7 +162,18 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           <>
             <Trans
               i18nKey="tasks.nvi.approve_nvi_candidate_description"
-              components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
+              components={{
+                p: <Typography sx={{ mb: '1rem' }} />,
+                hyperlink: (
+                  <MuiLink
+                    href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks'}
+                    sx={{ fontStyle: 'italic' }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
+                ),
+                launchIcon: <LaunchIcon fontSize="small" sx={{ ml: '0.2rem', verticalAlign: 'bottom' }} />,
+              }}
               values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
             />
             <LoadingButton
