@@ -2090,7 +2090,7 @@
       "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",
       "exclude_subunits": "Ekskluder underenheter",
       "institution_nvi_status": "Status NVI-rapportering",
-      "message_description": "Du kan skrive en kommentar, som blir synlig for alle andre NVI-kuratorer med tilgang til denne registreringen.",
+      "message_description": "Har du relevante opplysninger for kontrollen, legg inn en kommentar. Kommentaren er synlig for andre NVI-kuratorer med redigeringstilgang.",
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Kommentar",
