@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequest } from '../../../../api/apiRequest';
 import { ContributorSearchField } from '../../../../components/ContributorSearchField';
-import { StyledRightAlignedFooter } from '../../../../components/styled/Wrappers';
+import { StyledContributorModalActions } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { ContributorRole } from '../../../../types/contributor.types';
@@ -69,21 +69,24 @@ export const AddContributorForm = ({
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledRightAlignedFooter>
+      <StyledContributorModalActions>
+        {!initialSearchTerm && (
+          <Button
+            data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
+            variant="outlined"
+            disabled={!searchTerm || !!selectedPerson}
+            onClick={openAddUnverifiedContributor}>
+            {t('registration.contributors.add_new_contributor')}
+          </Button>
+        )}
         {!isSelfAdded && !initialSearchTerm && (
           <LoadingButton
             data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
             onClick={addSelfAsContributor}
+            variant="outlined"
             loading={isAddingSelf}>
-            {t('registration.contributors.add_self_as_contributor')}
+            {t('project.add_self')}
           </LoadingButton>
-        )}
-        {!initialSearchTerm && (
-          <Button
-            data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
-            onClick={openAddUnverifiedContributor}>
-            {t('registration.contributors.add_new_contributor')}
-          </Button>
         )}
         <Button
           data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
@@ -95,7 +98,7 @@ export const AddContributorForm = ({
             ? t('registration.contributors.verify_contributor')
             : t('registration.contributors.add_contributor')}
         </Button>
-      </StyledRightAlignedFooter>
+      </StyledContributorModalActions>
     </>
   );
 };

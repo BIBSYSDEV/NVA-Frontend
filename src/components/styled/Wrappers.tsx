@@ -131,3 +131,16 @@ export const StyledFilterHeading = styled(Typography)({
   marginBottom: '0.2rem',
   fontWeight: 'bold',
 });
+
+export const StyledContributorModalActions = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+  },
+  [theme.breakpoints.up('md')]: {
+    flexDirection: 'row',
+  },
+  justifyContent: 'space-between',
+  marginTop: '2rem',
+  gap: '1rem',
+}));
