@@ -11,6 +11,7 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { NviStatusChip } from '../../public_registration/action_accordions/AccordionStatusChip';
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
@@ -96,7 +97,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
       </Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
+        {myApproval?.approvalStatus && <NviStatusChip status={myApproval.approvalStatus} />}
       </Box>
     </SearchListItem>
   );
