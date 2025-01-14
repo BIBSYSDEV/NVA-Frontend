@@ -172,7 +172,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     rel="noopener noreferrer"
                   />
                 ),
-                OpenInNewIcon: <OpenInNewIcon fontSize="small" sx={{ ml: '0.2rem', verticalAlign: 'bottom' }} />,
+                icon: <OpenInNewIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />,
               }}
               values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
             />

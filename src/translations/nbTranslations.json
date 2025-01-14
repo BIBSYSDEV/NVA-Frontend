@@ -2078,7 +2078,7 @@
     "new_tasks": "Innmeldte oppgaver: {{count}}",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn resultat",
-      "approve_nvi_candidate_description": "<p>Kontroll av forskningsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporteres. Se <hyperlink>Rapporteringsinstruksen<OpenInNewIcon/></hyperlink> for mer informasjon.</p>",
+      "approve_nvi_candidate_description": "<p>Kontroll av forskningsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporteres. Se <hyperlink>Rapporteringsinstruksen <icon/></hyperlink> for mer informasjon.</p>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Antologier med tellende kapittel",
