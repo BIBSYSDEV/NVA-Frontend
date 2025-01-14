@@ -15,7 +15,7 @@ interface TicketStatusChipProps {
 export const TicketStatusChip = ({ ticketStatus, completedColor }: TicketStatusChipProps) => {
   const { t } = useTranslation();
 
-  if (ticketStatus === 'NotApplicable' || !ticketStatus) {
+  if (ticketStatus === 'NotApplicable') {
     return null;
   }
 
@@ -33,14 +33,9 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
   const { t } = useTranslation();
 
   const icon = status === 'Approved' ? 'check' : status === 'Rejected' ? 'block' : 'hourglass';
+  const color = status === 'Approved' ? 'nvi.main' : 'secondary.dark';
 
-  return (
-    <StatusChip
-      text={t(`tasks.nvi.status.${status}`)}
-      icon={icon}
-      color={status === 'Approved' ? 'nvi.main' : 'secondary.dark'}
-    />
-  );
+  return <StatusChip text={t(`tasks.nvi.status.${status}`)} icon={icon} color={color} />;
 };
 
 interface StatusChipProps {
