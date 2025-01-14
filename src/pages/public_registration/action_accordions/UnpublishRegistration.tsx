@@ -93,6 +93,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
+                      multiline
                       value={field.value ?? ''}
                       required
                       data-testid={dataTestId.unpublishActions.unpublishJustificationTextField}
