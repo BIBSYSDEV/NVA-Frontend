@@ -1,5 +1,5 @@
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import LaunchIcon from '@mui/icons-material/Launch';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Divider, Link as MuiLink, Typography, styled } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -45,7 +45,7 @@ export const Footer = () => {
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva'}>
             {t('common.read_more')}
-            <LaunchIcon fontSize="small" />
+            <OpenInNewIcon fontSize="small" />
           </StyledExternalLink>
         </Box>
 
@@ -85,7 +85,7 @@ export const Footer = () => {
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva#Tjenestebetingelser'}>
             {t('common.read_more')}
-            <LaunchIcon fontSize="small" />
+            <OpenInNewIcon fontSize="small" />
           </StyledExternalLink>
         </Box>
 
@@ -104,7 +104,7 @@ export const Footer = () => {
             rel="noopener noreferrer"
             href={'https://sikt.no/'}>
             {t('common.read_more')}
-            <LaunchIcon fontSize="small" />
+            <OpenInNewIcon fontSize="small" />
           </StyledExternalLink>
         </Box>
 
@@ -121,7 +121,7 @@ export const Footer = () => {
           rel="noopener noreferrer"
           href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva'}>
           {t('footer.help_page')}
-          <LaunchIcon fontSize="small" />
+          <OpenInNewIcon fontSize="small" />
         </StyledExternalLink>
 
         <StyledExternalLink
@@ -131,7 +131,7 @@ export const Footer = () => {
           rel="noopener noreferrer"
           href={'https://sikt.no/driftsmeldinger'}>
           {t('footer.system_status_link')}
-          <LaunchIcon fontSize="small" />
+          <OpenInNewIcon fontSize="small" />
         </StyledExternalLink>
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.8rem' }} />
@@ -144,7 +144,7 @@ export const Footer = () => {
             rel="noopener noreferrer"
             href={'https://pub.dialogapi.no/s/MjI2NDQ6MWVmZmQxOTktMGVkZi00YjZhLWE2ZjQtNzNmZWU2NjI2ZmFi'}>
             {t('footer.news_link')}
-            <LaunchIcon fontSize="small" />
+            <OpenInNewIcon fontSize="small" />
           </StyledExternalLink>
         </StyledArrowLinkContainer>
 
@@ -167,7 +167,7 @@ export const Footer = () => {
             rel="noopener noreferrer"
             href={'https://uustatus.no/nb/erklaringer/publisert/bffb4b1d-25eb-4fe0-bac7-2f0b4a8e0fd9'}>
             {t('about.availability_statement')}
-            <LaunchIcon fontSize="small" />
+            <OpenInNewIcon fontSize="small" />
           </StyledExternalLink>
         </StyledArrowLinkContainer>
 
@@ -178,7 +178,7 @@ export const Footer = () => {
             rel="noopener noreferrer"
             href={'https://sikt.no/om-sikt/kontakt-oss?service=e588691c-22eb-49c3-ac50-755f5513a3f5#skjema'}>
             {t('about.copyright_inquiries')}
-            <LaunchIcon fontSize="small" />
+            <OpenInNewIcon fontSize="small" />
           </StyledExternalLink>
         </StyledArrowLinkContainer>
 

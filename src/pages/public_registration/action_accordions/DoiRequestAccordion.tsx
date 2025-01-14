@@ -1,9 +1,9 @@
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LaunchIcon from '@mui/icons-material/Launch';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -61,7 +61,7 @@ const doiLink = (
     target="_blank"
     rel="noopener noreferrer"
     sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-    <LaunchIcon fontSize="small" />
+    <OpenInNewIcon fontSize="small" />
   </MuiLink>
 );
 

@@ -1,4 +1,4 @@
-import LaunchIcon from '@mui/icons-material/Launch';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { LoadingButton } from '@mui/lab';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -50,7 +50,7 @@ export const NviCandidateRejectionDialog = ({
                   rel="noopener noreferrer"
                 />
               ),
-              launchIcon: <LaunchIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />,
+              icon: <OpenInNewIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />,
             }}
           />
 

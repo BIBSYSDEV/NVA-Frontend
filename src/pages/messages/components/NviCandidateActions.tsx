@@ -1,6 +1,6 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import LaunchIcon from '@mui/icons-material/Launch';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -172,7 +172,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
                     rel="noopener noreferrer"
                   />
                 ),
-                launchIcon: <LaunchIcon fontSize="small" sx={{ ml: '0.2rem', verticalAlign: 'bottom' }} />,
+                icon: <OpenInNewIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />,
               }}
               values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
             />
