@@ -39,6 +39,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getOpenFiles, userHasAccessRight } from '../../../utils/registration-helpers';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
+import { AccordionStatusChip } from './AccordionStatusChip';
 import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {
@@ -166,13 +167,6 @@ export const DoiRequestAccordion = ({
 
   const openFilesOnRegistration = getOpenFiles(registration.associatedArtifacts);
 
-  const hasReservedDoi = !doiRequestTicket && registration.doi;
-  const status = doiRequestTicket
-    ? t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)
-    : hasReservedDoi
-      ? t('registration.public_page.tasks_panel.reserved')
-      : '';
-
   const requestDoiButton = (
     <Button
       data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
@@ -215,15 +209,29 @@ export const DoiRequestAccordion = ({
     ? location.state.selectedTicketType === 'DoiRequest'
     : waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest;
 
+  const hasReservedDoi = !doiRequestTicket && registration.doi;
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
-      sx={{ bgcolor: 'doiRequest.light' }}
+      sx={{
+        bgcolor: 'doiRequest.light',
+        '& .MuiAccordionSummary-content': {
+          alignItems: 'center',
+          gap: '0.5rem',
+        },
+      }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('common.doi')}
-        {status && ` - ${status}`}
+        <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
+          {t('common.doi')}
+        </Typography>
+        {doiRequestTicket ? (
+          <AccordionStatusChip ticketStatus={doiRequestTicket.status} completedColor="doiRequest.main" />
+        ) : hasReservedDoi ? (
+          <AccordionStatusChip text={t('registration.public_page.tasks_panel.reserved')} />
+        ) : null}
       </AccordionSummary>
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
