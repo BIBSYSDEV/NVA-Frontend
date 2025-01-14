@@ -342,9 +342,9 @@ export enum ResultParam {
   Project = 'project',
   PublicationLanguageShould = 'publicationLanguageShould',
   PublicationPages = 'publicationPages',
+  PublicationYear = 'publicationYear',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
-  PublicationYear = 'publicationYear',
   Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
@@ -499,6 +499,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.publicationPages) {
     searchParams.set(ResultParam.PublicationPages, params.publicationPages);
   }
+  if (params.publicationYear) {
+    searchParams.set(ResultParam.PublicationYear, params.publicationYear);
+  }
   if (params.publicationYearBefore) {
     if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
       searchParams.set(ResultParam.PublicationYearBefore, params.publicationYearBefore);
@@ -508,9 +511,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     if (!params.publicationYearBefore || +params.publicationYearSince <= +params.publicationYearBefore) {
       searchParams.set(ResultParam.PublicationYearSince, params.publicationYearSince);
     }
-  }
-  if (params.publicationYear) {
-    searchParams.set(ResultParam.PublicationYear, params.publicationYear);
   }
   if (params.publisher) {
     searchParams.set(ResultParam.Publisher, params.publisher);
