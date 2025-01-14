@@ -2,6 +2,7 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { NviStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
@@ -11,7 +12,6 @@ import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesPar
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
-import { NviStatusChip } from '../../public_registration/action_accordions/AccordionStatusChip';
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;

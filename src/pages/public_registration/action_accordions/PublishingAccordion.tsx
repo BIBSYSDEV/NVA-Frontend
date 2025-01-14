@@ -11,6 +11,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
+import { TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
@@ -32,7 +33,6 @@ import {
 } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 import { PublishingLogPreview } from '../PublishingLogPreview';
-import { TicketStatusChip } from './AccordionStatusChip';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTicketInfo';

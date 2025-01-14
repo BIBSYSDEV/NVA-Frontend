@@ -30,6 +30,7 @@ import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
+import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
@@ -39,7 +40,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getOpenFiles, userHasAccessRight } from '../../../utils/registration-helpers';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { StatusChip, TicketStatusChip } from './AccordionStatusChip';
 import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {

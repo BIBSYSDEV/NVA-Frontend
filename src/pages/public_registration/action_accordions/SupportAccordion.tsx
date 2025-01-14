@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
+import { TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
@@ -19,7 +20,6 @@ import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-he
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { TicketStatusChip } from './AccordionStatusChip';
 import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {

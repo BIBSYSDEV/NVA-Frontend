@@ -4,8 +4,8 @@ import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Typography } from '@mui/material';
 import { StandardCSSProperties } from '@mui/system';
 import { useTranslation } from 'react-i18next';
-import { NviCandidateStatus } from '../../../types/nvi.types';
-import { TicketStatus } from '../../../types/publication_types/ticket.types';
+import { NviCandidateStatus } from '../types/nvi.types';
+import { TicketStatus } from '../types/publication_types/ticket.types';
 
 interface TicketStatusChipProps {
   ticketStatus: TicketStatus;

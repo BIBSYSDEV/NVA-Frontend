@@ -1,9 +1,9 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { NviStatusChip } from '../../../components/StatusChip';
 import { RootState } from '../../../redux/store';
 import { NviCandidate } from '../../../types/nvi.types';
-import { NviStatusChip } from '../../public_registration/action_accordions/AccordionStatusChip';
 import { NviApprovals } from './NviApprovals';
 import { NviCandidateActions } from './NviCandidateActions';
 
