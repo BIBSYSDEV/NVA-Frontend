@@ -1,4 +1,4 @@
-import LaunchIcon from '@mui/icons-material/Launch';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -66,7 +66,7 @@ export const UserRoleAndHelp = () => {
           rel="noopener noreferrer"
           href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva'}>
           {t('footer.help_page')}
-          <LaunchIcon fontSize="small" />
+          <OpenInNewIcon fontSize="small" />
         </MuiLink>
         <Typography fontStyle="italic">
           {t('my_page.my_profile.user_role_and_help.application_help_helper_text')}
