@@ -5,24 +5,32 @@ import { Box, Typography } from '@mui/material';
 import { StandardCSSProperties } from '@mui/system';
 import { useTranslation } from 'react-i18next';
 import { NviCandidateStatus } from '../types/nvi.types';
-import { TicketStatus } from '../types/publication_types/ticket.types';
+import { Ticket } from '../types/publication_types/ticket.types';
+
+const ticketColor = {
+  PublishingRequest: 'publishingRequest.main',
+  DoiRequest: 'doiRequest.main',
+  GeneralSupportCase: 'generalSupportCase.main',
+};
 
 interface TicketStatusChipProps {
-  ticketStatus: TicketStatus;
-  completedColor: StandardCSSProperties['backgroundColor'];
+  ticket: Ticket;
 }
 
-export const TicketStatusChip = ({ ticketStatus, completedColor }: TicketStatusChipProps) => {
+export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
   const { t } = useTranslation();
 
-  if (ticketStatus === 'NotApplicable') {
+  if (ticket.status === 'NotApplicable' || ticket.type === 'UnpublishRequest') {
     return null;
   }
 
-  const icon = ticketStatus === 'Completed' ? 'check' : ticketStatus === 'Closed' ? 'block' : 'hourglass';
-  const color = ticketStatus === 'Completed' ? completedColor : 'secondary.dark';
+  const text = t(`my_page.messages.ticket_types.${ticket.status}`);
 
-  return <StatusChip text={t(`my_page.messages.ticket_types.${ticketStatus}`)} icon={icon} color={color} />;
+  if (ticket.status === 'Completed') {
+    return <StatusChip text={text} icon="check" color={ticketColor[ticket.type]} />;
+  }
+
+  return <StatusChip text={text} icon={ticket.status === 'Closed' ? 'block' : 'hourglass'} color="secondary.dark" />;
 };
 
 interface NviStatusChip {

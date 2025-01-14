@@ -228,7 +228,7 @@ export const DoiRequestAccordion = ({
           {t('common.doi')}
         </Typography>
         {doiRequestTicket ? (
-          <TicketStatusChip ticketStatus={doiRequestTicket.status} completedColor="doiRequest.main" />
+          <TicketStatusChip ticket={doiRequestTicket} />
         ) : hasReservedDoi ? (
           <StatusChip text={t('registration.public_page.tasks_panel.reserved')} icon="hourglass" />
         ) : null}

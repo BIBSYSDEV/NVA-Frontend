@@ -86,9 +86,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
         <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
           {t('my_page.messages.types.GeneralSupportCase')}
         </Typography>
-        {supportTicket && isOnTasksPage && (
-          <TicketStatusChip ticketStatus={supportTicket.status} completedColor="generalSupportCase.main" />
-        )}
+        {supportTicket && isOnTasksPage && <TicketStatusChip ticket={supportTicket} />}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {!isOnTasksPage && <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>}

@@ -198,7 +198,7 @@ export const PublishingAccordion = ({
         </Typography>
 
         {lastPublishingRequest && !isUnpublishedOrDeletedRegistration && (
-          <TicketStatusChip ticketStatus={lastPublishingRequest.status} completedColor="publishingRequest.main" />
+          <TicketStatusChip ticket={lastPublishingRequest} />
         )}
 
         {(!registrationIsValid || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (
