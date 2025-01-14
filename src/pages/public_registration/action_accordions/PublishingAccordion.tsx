@@ -32,7 +32,7 @@ import {
 } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
 import { PublishingLogPreview } from '../PublishingLogPreview';
-import { AccordionStatusChip } from './AccordionStatusChip';
+import { TicketStatusChip } from './AccordionStatusChip';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
 import { PublishingAccordionLastTicketInfo } from './PublishingAccordionLastTicketInfo';
@@ -198,7 +198,7 @@ export const PublishingAccordion = ({
         </Typography>
 
         {lastPublishingRequest && !isUnpublishedOrDeletedRegistration && (
-          <AccordionStatusChip ticketStatus={lastPublishingRequest.status} completedColor="publishingRequest.main" />
+          <TicketStatusChip ticketStatus={lastPublishingRequest.status} completedColor="publishingRequest.main" />
         )}
 
         {(!registrationIsValid || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (

@@ -39,7 +39,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getOpenFiles, userHasAccessRight } from '../../../utils/registration-helpers';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { AccordionStatusChip } from './AccordionStatusChip';
+import { StatusChip, TicketStatusChip } from './AccordionStatusChip';
 import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {
@@ -228,9 +228,9 @@ export const DoiRequestAccordion = ({
           {t('common.doi')}
         </Typography>
         {doiRequestTicket ? (
-          <AccordionStatusChip ticketStatus={doiRequestTicket.status} completedColor="doiRequest.main" />
+          <TicketStatusChip ticketStatus={doiRequestTicket.status} completedColor="doiRequest.main" />
         ) : hasReservedDoi ? (
-          <AccordionStatusChip text={t('registration.public_page.tasks_panel.reserved')} />
+          <StatusChip text={t('registration.public_page.tasks_panel.reserved')} icon="hourglass" />
         ) : null}
       </AccordionSummary>
       <AccordionDetails>

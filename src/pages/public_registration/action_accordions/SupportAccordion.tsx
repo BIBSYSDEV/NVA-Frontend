@@ -19,7 +19,7 @@ import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-he
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { AccordionStatusChip } from './AccordionStatusChip';
+import { TicketStatusChip } from './AccordionStatusChip';
 import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {
@@ -87,7 +87,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
           {t('my_page.messages.types.GeneralSupportCase')}
         </Typography>
         {supportTicket && isOnTasksPage && (
-          <AccordionStatusChip ticketStatus={supportTicket.status} completedColor="generalSupportCase.main" />
+          <TicketStatusChip ticketStatus={supportTicket.status} completedColor="generalSupportCase.main" />
         )}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
