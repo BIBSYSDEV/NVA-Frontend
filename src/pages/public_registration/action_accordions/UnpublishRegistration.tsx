@@ -120,7 +120,12 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
               />
               <FormControlLabel
                 sx={{ my: '1rem' }}
-                control={<Checkbox onChange={() => setConfirmedUnpublish(!confirmedUnpublish)} />}
+                control={
+                  <Checkbox
+                    data-testid={dataTestId.unpublishActions.condirmUnpublishCheckbox}
+                    onChange={() => setConfirmedUnpublish(!confirmedUnpublish)}
+                  />
+                }
                 label={t('unpublish_actions.confirm_unpublish')}
               />
               <DialogActions>
