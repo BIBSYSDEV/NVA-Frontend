@@ -1,9 +1,11 @@
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { LoadingButton } from '@mui/lab';
-import { Button, Typography } from '@mui/material';
+import { Button, Link as MuiLink, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { apiRequest } from '../../../../api/apiRequest';
 import { ContributorSearchField } from '../../../../components/ContributorSearchField';
 import { StyledContributorModalActions } from '../../../../components/styled/Wrappers';
@@ -14,6 +16,7 @@ import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { UrlPathTemplate } from '../../../../utils/urlPaths';
 
 interface AddContributorFormProps {
   addContributor: (selectedUser: CristinPerson) => void;
@@ -59,9 +62,23 @@ export const AddContributorForm = ({
   return (
     <>
       {initialSearchTerm && (
-        <Typography variant="subtitle1">
-          {t('registration.contributors.prefilled_name')}: <b>{initialSearchTerm}</b>
-        </Typography>
+        <Trans
+          i18nKey="registration.contributors.identify_contributor_description"
+          components={{
+            p: <Typography sx={{ mb: '1rem' }} />,
+            strong: <strong />,
+            hyperlink: (
+              <MuiLink
+                component={Link}
+                to={UrlPathTemplate.InstitutionOverviewPage}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            ),
+            icon: <OpenInNewIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />,
+          }}
+          values={{ name: initialSearchTerm }}
+        />
       )}
       <ContributorSearchField
         selectedPerson={selectedPerson}
