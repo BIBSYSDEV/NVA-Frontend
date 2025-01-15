@@ -11,7 +11,7 @@ type OpenInNewLinkProps = MuiLinkProps | OpenInNewLinkWithReactRouterProps;
 export const OpenInNewLink = ({ children, ...muiLinkProps }: OpenInNewLinkProps) => {
   return (
     <MuiLink target="_blank" rel="noopener noreferrer" {...muiLinkProps}>
-      {children} <OpenInNewIcon fontSize="small" />
+      {children} <OpenInNewIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />
     </MuiLink>
   );
 };

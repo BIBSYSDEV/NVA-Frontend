@@ -1,8 +1,8 @@
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { LoadingButton } from '@mui/lab';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, TextField, Typography } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface NviCandidateRejectionDialogProps {
@@ -44,13 +44,8 @@ export const NviCandidateRejectionDialog = ({
             components={{
               p: <Typography sx={{ mb: '1rem' }} />,
               hyperlink: (
-                <Link
-                  href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
+                <OpenInNewLink href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks" />
               ),
-              icon: <OpenInNewIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />,
             }}
           />
 
