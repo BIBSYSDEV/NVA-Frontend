@@ -1,6 +1,5 @@
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { LoadingButton } from '@mui/lab';
-import { Button, Link as MuiLink, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -8,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { apiRequest } from '../../../../api/apiRequest';
 import { ContributorSearchField } from '../../../../components/ContributorSearchField';
+import { OpenInNewLink } from '../../../../components/OpenInNewLink';
 import { StyledContributorModalActions } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
@@ -67,15 +67,7 @@ export const AddContributorForm = ({
           components={{
             p: <Typography sx={{ mb: '1rem' }} />,
             strong: <strong />,
-            hyperlink: (
-              <MuiLink
-                component={Link}
-                to={UrlPathTemplate.InstitutionOverviewPage}
-                target="_blank"
-                rel="noopener noreferrer"
-              />
-            ),
-            icon: <OpenInNewIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />,
+            hyperlink: <OpenInNewLink component={Link} to={UrlPathTemplate.InstitutionOverviewPage} />,
           }}
           values={{ name: initialSearchTerm }}
         />

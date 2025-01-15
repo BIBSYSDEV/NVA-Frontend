@@ -1296,7 +1296,7 @@
       "department": "Enhet",
       "edit_affiliation": "Endre tilknytning",
       "edit_affiliation_helper_text": "<0>Bare institusjoner som forskningen er gjennomført i samarbeid med, skal legges til som tilknytning til bidragsyteren.</0> <0>Hvis tilknytningen ikke er korrekt, endre tilknytninger ved å skrive inn korrekt institusjon eller enhet i tekstfeltene.</0>",
-      "identify_contributor_description": "<p>Velg riktig person fra trefflisten for å endre til identifisert bidragsyter.</p><p>Klikk på rundingen foran personnavnet for å legge dem til med alle registrerte institusjonstilknytninger, eller boksen foran en institusjonsadresse for å legge til personen med den tilknytningen.</p><p>Får du ikke treff på en person som krediterer din institusjon, kontakt <hyperlink>administrator <icon/></hyperlink> slik at de kan registrere dem.</p><p><strong>Forhåndsutfylt navn: {{name}}</strong></p>",
+      "identify_contributor_description": "<p>Velg riktig person fra trefflisten for å endre til identifisert bidragsyter.</p><p>Klikk på rundingen foran personnavnet for å legge dem til med alle registrerte institusjonstilknytninger, eller boksen foran en institusjonsadresse for å legge til personen med den tilknytningen.</p><p>Får du ikke treff på en person som krediterer din institusjon, kontakt <hyperlink>administrator</hyperlink> slik at de kan registrere dem.</p><p><strong>Forhåndsutfylt navn: {{name}}</strong></p>",
       "identity_status": {
         "confirmed_identity": "Identifisert",
         "confirmed_identity_without_affiliation": "Identifisert uten tilknytning",
