@@ -95,6 +95,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const originalDoi = entityDescription?.reference?.doi;
 
   const canEditFiles = userHasAccessRight(values, 'update') || userIsValidImporter(user, values);
+  const canUploadFile = userHasAccessRight(values, 'publishing-request-create') && canEditFiles;
 
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -152,7 +153,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       }
                       push(file);
                     }}
-                    disabled={!canEditFiles}
+                    disabled={!canUploadFile}
                   />
                 )}
                 {pendingFiles.length > 0 && (
