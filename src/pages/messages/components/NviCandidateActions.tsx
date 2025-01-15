@@ -112,9 +112,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     date: rejectionStatus.finalizedDate,
     content: (
       <Typography>
-        <Box component="span" fontWeight={700}>
-          {t('tasks.nvi.status.Rejected')}:
-        </Box>{' '}
+        <Box component="span" fontWeight={700} sx={{ textDecoration: 'underline' }}>
+          {t('tasks.nvi.rejection_reason')}:
+        </Box>
+        <br />
         {rejectionStatus.reason}
       </Typography>
     ),
