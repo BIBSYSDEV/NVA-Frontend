@@ -1,8 +1,7 @@
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -18,6 +17,7 @@ import {
 import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
+import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FinalizedApproval, NviCandidate, RejectedApproval } from '../../../types/nvi.types';
@@ -166,14 +166,11 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               components={{
                 p: <Typography sx={{ mb: '1rem' }} />,
                 hyperlink: (
-                  <MuiLink
-                    href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks'}
+                  <OpenInNewLink
+                    href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks"
                     sx={{ fontStyle: 'italic' }}
-                    target="_blank"
-                    rel="noopener noreferrer"
                   />
                 ),
-                icon: <OpenInNewIcon fontSize="small" sx={{ verticalAlign: 'bottom' }} />,
               }}
               values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
             />

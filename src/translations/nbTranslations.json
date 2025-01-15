@@ -1296,6 +1296,7 @@
       "department": "Enhet",
       "edit_affiliation": "Endre tilknytning",
       "edit_affiliation_helper_text": "<0>Bare institusjoner som forskningen er gjennomført i samarbeid med, skal legges til som tilknytning til bidragsyteren.</0> <0>Hvis tilknytningen ikke er korrekt, endre tilknytninger ved å skrive inn korrekt institusjon eller enhet i tekstfeltene.</0>",
+      "identify_contributor_description": "<p>Velg riktig person fra trefflisten for å endre til identifisert bidragsyter.</p><p>Klikk på rundingen foran personnavnet for å legge dem til med alle registrerte institusjonstilknytninger, eller boksen foran en institusjonsadresse for å legge til personen med den tilknytningen.</p><p>Får du ikke treff på en person som krediterer din institusjon, kontakt <hyperlink>administrator</hyperlink> slik at de kan registrere dem.</p><p><strong>Forhåndsutfylt navn: {{name}}</strong></p>",
       "identity_status": {
         "confirmed_identity": "Identifisert",
         "confirmed_identity_without_affiliation": "Identifisert uten tilknytning",
@@ -1308,7 +1309,6 @@
       "other_registrations_one": "+ {{count}} annen registrering",
       "other_registrations_other": "+ {{count}} andre registreringer",
       "prefilled_affiliation": "Forhåndsutfylt tilknytning",
-      "prefilled_name": "Forhåndsutfylt navn",
       "remove_affiliation": "Fjern tilknytning",
       "remove_contributor": "Fjern bidragsyter",
       "search_for_institution": "Søk etter institusjon",
@@ -2078,7 +2078,7 @@
     "new_tasks": "Innmeldte oppgaver: {{count}}",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn resultat",
-      "approve_nvi_candidate_description": "<p>Kontroll av forskningsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporteres. Se <hyperlink>Rapporteringsinstruksen <icon/></hyperlink> for mer informasjon.</p>",
+      "approve_nvi_candidate_description": "<p>Kontroll av forskningsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporteres. Se <hyperlink>Rapporteringsinstruksen</hyperlink> for mer informasjon.</p>",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Antologier med tellende kapittel",
@@ -2102,7 +2102,7 @@
       "reject_nvi_candidate": "Avvis resultat",
       "reject_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen ikke kan rapporteres. Du må begrunne avvisningen.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
-      "reject_nvi_candidate_modal_text": "<p>Gi en begrunnelse for hvorfor du avviser publikasjonen for NVI-rapportering.</p><p>Er du usikker på kravene, se <hyperlink>Rapporteringsinstruksen <icon/></hyperlink>.</p><p>Begrunnelsen blir lagret i NVA, og vil være synlig for NVI-kuratorer ved de sampubliserende institusjonene.</p><p>Gi en begrunnelse på hvorfor du avviser denne publikasjonen for rapportering. Begrunnelsen må inneholde minst 10 tegn.</p>",
+      "reject_nvi_candidate_modal_text": "<p>Gi en begrunnelse for hvorfor du avviser publikasjonen for NVI-rapportering.</p><p>Er du usikker på kravene, se <hyperlink>Rapporteringsinstruksen</hyperlink>.</p><p>Begrunnelsen blir lagret i NVA, og vil være synlig for NVI-kuratorer ved de sampubliserende institusjonene.</p><p>Gi en begrunnelse på hvorfor du avviser denne publikasjonen for rapportering. Begrunnelsen må inneholde minst 10 tegn.</p>",
       "rejection_reason": "Begrunnelse for avvisning",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
