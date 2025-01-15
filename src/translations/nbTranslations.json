@@ -2129,6 +2129,7 @@
     "your_tasks": "Oppgaver du behandler: {{count}}"
   },
   "unpublish_actions": {
+    "confirm_unpublish": "Jeg bekrefter at informasjonen stemmer, og at resultatet skal avpubliseres.",
     "duplicate": "Duplikat",
     "search_duplicate_facets": "Søk med DOI, handle eller tittel",
     "search_for_duplicate": "Søk etter forskningsresultat",

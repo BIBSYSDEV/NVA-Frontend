@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, DialogActions, FormControlLabel, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -27,6 +27,8 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
   const [selectedDuplicate, setSelectedDuplicate] = useState<RegistrationSearchItem>();
 
   const userCanUnpublish = userHasAccessRight(registration, 'unpublish');
+
+  const [confirmedUnpublish, setConfirmedUnpublish] = useState(false);
 
   const unpublishValidationSchema = Yup.object().shape({
     comment: Yup.string()
@@ -116,12 +118,18 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                 selectedRegistration={selectedDuplicate}
                 filteredRegistrationIdentifier={registration.identifier}
               />
+              <FormControlLabel
+                sx={{ my: '1rem' }}
+                control={<Checkbox onChange={() => setConfirmedUnpublish(!confirmedUnpublish)} />}
+                label={t('unpublish_actions.confirm_unpublish')}
+              />
               <DialogActions>
                 <Button data-testid={dataTestId.confirmDialog.cancelButton} onClick={toggleUnpublishModal}>
                   {t('common.cancel')}
                 </Button>
                 <LoadingButton
                   loading={updateRegistrationStatusMutation.isPending}
+                  disabled={!confirmedUnpublish}
                   type="submit"
                   data-testid={dataTestId.confirmDialog.acceptButton}
                   variant="outlined">
