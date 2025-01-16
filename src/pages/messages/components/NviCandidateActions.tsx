@@ -147,7 +147,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
   return (
     <>
-      <Box sx={{ m: '1rem' }}>
+      <Box sx={{ gridArea: 'curator' }}>
         <AssigneeSelector
           assignee={myApproval?.assignee}
           canSetAssignee={myApproval?.status === 'New' || myApproval?.status === 'Pending'}
@@ -156,9 +156,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           roleFilter={RoleName.NviCurator}
         />
       </Box>
-      <Divider />
 
-      <Box sx={{ m: '1rem' }}>
+      <Divider sx={{ gridArea: 'divider1' }} />
+
+      <Box sx={{ gridArea: 'actions' }}>
         {myApproval && myApproval.status !== 'Approved' && (
           <>
             {myApproval.status === 'Rejected' ? (
@@ -224,11 +225,13 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               }}
               isLoading={statusMutation.isPending}
             />
-
-            <Divider sx={{ mb: '1rem' }} />
           </>
         )}
+      </Box>
 
+      <Divider sx={{ gridArea: 'divider2' }} />
+
+      <Box sx={{ gridArea: 'comment' }}>
         <Typography variant="h3" gutterBottom component="h2">
           {t('tasks.nvi.note')}
         </Typography>
