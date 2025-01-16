@@ -209,7 +209,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               variant="outlined"
               fullWidth
               size="small"
-              sx={{ mb: '1rem', bgcolor: 'white' }}
+              sx={{ bgcolor: 'white' }}
               disabled={isMutating || hasSelectedRejectCandidate}
               endIcon={<ClearIcon />}
               onClick={() => setHasSelectedRejectCandidate(true)}>
