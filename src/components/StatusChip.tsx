@@ -27,7 +27,7 @@ export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
   const text = t(`my_page.messages.ticket_types.${ticket.status}`);
 
   if (ticket.status === 'Completed') {
-    return <StatusChip text={text} icon="check" color={ticketColor[ticket.type]} />;
+    return <StatusChip text={text} icon="check" bgcolor={ticketColor[ticket.type]} />;
   }
 
   return <StatusChip text={text} icon={ticket.status === 'Closed' ? 'block' : 'hourglass'} />;
@@ -43,7 +43,7 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
   const text = t(`tasks.nvi.status.${status}`);
 
   if (status === 'Approved') {
-    return <StatusChip text={text} icon="check" color="nvi.main" />;
+    return <StatusChip text={text} icon="check" bgcolor="nvi.main" />;
   }
 
   return <StatusChip text={text} icon={status === 'Rejected' ? 'block' : 'hourglass'} />;
@@ -52,17 +52,17 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
 interface StatusChipProps {
   text: string;
   icon: 'check' | 'block' | 'hourglass';
-  color?: StandardCSSProperties['backgroundColor'];
+  bgcolor?: StandardCSSProperties['backgroundColor'];
 }
 
-export const StatusChip = ({ text, color, icon }: StatusChipProps) => {
+export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon }: StatusChipProps) => {
   return (
     <Box
       sx={{
+        bgcolor,
         display: 'flex',
         gap: '0.2rem',
         alignItems: 'center',
-        bgcolor: color ?? 'secondary.dark',
         p: '0.25rem 0.75rem 0.25rem 0.5rem',
         borderRadius: '1rem',
       }}>
