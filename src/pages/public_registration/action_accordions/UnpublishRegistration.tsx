@@ -122,7 +122,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                 sx={{ my: '1rem' }}
                 control={
                   <Checkbox
-                    data-testid={dataTestId.unpublishActions.condirmUnpublishCheckbox}
+                    data-testid={dataTestId.unpublishActions.confirmUnpublishCheckbox}
                     onChange={() => setConfirmedUnpublish(!confirmedUnpublish)}
                   />
                 }

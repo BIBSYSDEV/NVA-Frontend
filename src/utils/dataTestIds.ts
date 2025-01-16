@@ -754,7 +754,7 @@ export const dataTestId = {
     userDialogAccordion: 'user-dialog-accordion',
   },
   unpublishActions: {
-    condirmUnpublishCheckbox: 'confirm-unpublish-checkbox',
+    confirmUnpublishCheckbox: 'confirm-unpublish-checkbox',
     openUnpublishModalButton: 'open-unpublish-modal-button',
     unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
   },
