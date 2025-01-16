@@ -63,7 +63,7 @@ export const StatusChip = ({ text, color, icon }: StatusChipProps) => {
         gap: '0.2rem',
         alignItems: 'center',
         bgcolor: color ?? 'secondary.dark',
-        p: '0.25rem 0.5rem',
+        p: '0.25rem 0.75rem 0.25rem 0.5rem',
         borderRadius: '1rem',
       }}>
       {icon === 'check' ? (
