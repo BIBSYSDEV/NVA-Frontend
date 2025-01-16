@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
+import { TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
@@ -63,8 +64,6 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   const userHasReadTicket = !!user?.nvaUsername && !!supportTicket?.viewedBy.includes(user.nvaUsername);
   const isOnTasksPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
-  const statusText = supportTicket && isOnTasksPage ? t(`my_page.messages.ticket_types.${supportTicket.status}`) : '';
-
   const userCanCompleteTicket = userHasAccessRight(registration, 'support-request-approve');
 
   const defaultExpanded = location.state?.selectedTicketType
@@ -74,12 +73,20 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
-      sx={{ bgcolor: 'generalSupportCase.light' }}
+      sx={{
+        bgcolor: 'generalSupportCase.light',
+        '& .MuiAccordionSummary-content': {
+          alignItems: 'center',
+          gap: '0.5rem',
+        },
+      }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('my_page.messages.types.GeneralSupportCase')}
-        {statusText && ` - ${statusText}`}
+        <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
+          {t('my_page.messages.types.GeneralSupportCase')}
+        </Typography>
+        {supportTicket && isOnTasksPage && <TicketStatusChip ticket={supportTicket} />}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {!isOnTasksPage && <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>}
@@ -89,11 +96,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {userCanCompleteTicket && isOnTasksPage && supportTicket.status !== 'Completed' && (
               <LoadingButton
-                sx={{
-                  alignSelf: 'center',
-                  width: 'fit-content',
-                  bgcolor: 'white',
-                }}
+                sx={{ alignSelf: 'center', width: 'fit-content', bgcolor: 'white' }}
                 loading={ticketMutation.isPending}
                 variant="outlined"
                 onClick={() => ticketMutation.mutate({ status: 'Completed' })}>

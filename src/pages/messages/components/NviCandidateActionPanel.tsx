@@ -1,5 +1,5 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Divider, Paper, styled, Tab, Typography } from '@mui/material';
+import { Paper, styled, Tab } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
@@ -8,8 +8,7 @@ import { NviCandidate } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { LogPanel } from '../../public_registration/LogPanel';
-import { NviApprovals } from './NviApprovals';
-import { NviCandidateActions } from './NviCandidateActions';
+import { NviDialoguePanel } from './NviDialoguePanel';
 
 interface NviCandidateActionPanelProps {
   nviCandidate: NviCandidate;
@@ -33,8 +32,6 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
   const registrationQuery = useFetchRegistration(getIdentifierFromId(nviCandidate.publicationId));
 
   const tickets = ticketsQuery.data?.tickets ?? [];
-  const periodStatus = nviCandidate?.period.status;
-  const pointsSum = nviCandidate?.approvals.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
 
   return (
     <Paper
@@ -62,16 +59,7 @@ export const NviCandidateActionPanel = ({ nviCandidate, nviCandidateQueryKey }: 
         </TabList>
 
         <StyledTabPanel value={TabValue.Dialogue}>
-          {periodStatus === 'OpenPeriod' && nviCandidate ? (
-            <NviCandidateActions nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
-          ) : periodStatus === 'ClosedPeriod' ? (
-            <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_closed')}</Typography>
-          ) : periodStatus === 'NoPeriod' ? (
-            <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_missing')}</Typography>
-          ) : null}
-
-          <Divider sx={{ mt: 'auto' }} />
-          <NviApprovals approvals={nviCandidate?.approvals ?? []} totalPoints={pointsSum} />
+          <NviDialoguePanel nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
         </StyledTabPanel>
         <StyledTabPanel value={TabValue.Log}>
           {registrationQuery.data && <LogPanel tickets={tickets} registration={registrationQuery.data} />}

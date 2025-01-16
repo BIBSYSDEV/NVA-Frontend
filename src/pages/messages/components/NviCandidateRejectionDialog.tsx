@@ -1,7 +1,8 @@
 import { LoadingButton } from '@mui/lab';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
+import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface NviCandidateRejectionDialogProps {
@@ -38,7 +39,16 @@ export const NviCandidateRejectionDialog = ({
           setReason('');
         }}>
         <DialogContent>
-          <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_modal_text')}</Typography>
+          <Trans
+            i18nKey="tasks.nvi.reject_nvi_candidate_modal_text"
+            components={{
+              p: <Typography sx={{ mb: '1rem' }} />,
+              hyperlink: (
+                <OpenInNewLink href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks" />
+              ),
+            }}
+          />
+
           <TextField
             value={reason}
             onChange={(event) => setReason(event.target.value)}

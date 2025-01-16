@@ -16,12 +16,12 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
-import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
   ArtisticRegistration,
   LiteraryArtsOutput,
   LiteraryArtsType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { LiteraryArtsAudioVisualModal } from './LiteraryArtsAudioVisualModal';
@@ -135,7 +135,7 @@ export const ArtisticLiteraryArtForm = () => {
                     </Box>
                   )}
 
-                <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+                <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                   <Button
                     data-testid={dataTestId.registrationWizard.resourceType.addBookButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsMonograph')}

@@ -1,3 +1,6 @@
+import BlockIcon from '@mui/icons-material/Block';
+import CheckIcon from '@mui/icons-material/Check';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
@@ -14,52 +17,63 @@ export const StyledStatusMessageBox = styled(Box)({
   display: 'grid',
   gridTemplateColumns: '1fr auto',
   gap: '0.25rem 0.5rem',
-  padding: '0.2rem 1rem',
+  padding: '0.2rem 0.5rem',
   borderRadius: '4px',
+});
+
+export const StyledIconAndTextWrapper = styled(Box)({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.2rem',
 });
 
 interface PublishingRequestMessagesColumnProps {
   ticket: ExpandedPublishingTicket | PublishingTicket;
-  showLastMessage?: boolean;
 }
 
-export const PublishingRequestMessagesColumn = ({ ticket, showLastMessage }: PublishingRequestMessagesColumnProps) => {
+export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
   return (
     <StyledMessagesContainer>
       {ticket.status === 'Pending' || ticket.status === 'New' ? (
         <>
-          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
           {ticket.filesForApproval.length > 0 && (
             <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-              <Typography>
-                {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
-              </Typography>
+              <StyledIconAndTextWrapper>
+                <HourglassEmptyIcon fontSize="small" />
+                <Typography>
+                  {t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })}
+                </Typography>
+              </StyledIconAndTextWrapper>
             </StyledStatusMessageBox>
           )}
+          <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />
         </>
-      ) : (
+      ) : ticket.status === 'Completed' ? (
+        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+          <StyledIconAndTextWrapper>
+            <CheckIcon fontSize="small" />
+            <Typography>
+              {ticket.approvedFiles.length
+                ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
+                : t('my_page.messages.metadata_published')}
+            </Typography>
+          </StyledIconAndTextWrapper>
+          {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
+        </StyledStatusMessageBox>
+      ) : ticket.status === 'Closed' ? (
         <>
-          {showLastMessage && <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />}
-          <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-            {ticket.status === 'Completed' ? (
-              <Typography>
-                {ticket.approvedFiles.length
-                  ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
-                  : t('my_page.messages.metadata_published')}
-              </Typography>
-            ) : (
-              ticket.status === 'Closed' && (
-                <Typography>
-                  {t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}
-                </Typography>
-              )
-            )}
+          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+            <StyledIconAndTextWrapper>
+              <BlockIcon fontSize="small" />
+              <Typography>{t('my_page.messages.files_rejected', { count: ticket.filesForApproval.length })}</Typography>
+            </StyledIconAndTextWrapper>
             {ticket.modifiedDate && <Typography>{toDateString(ticket.modifiedDate)}</Typography>}
           </StyledStatusMessageBox>
+          <LastMessageBox ticket={ticket as ExpandedPublishingTicket} />
         </>
-      )}
+      ) : null}
     </StyledMessagesContainer>
   );
 };
