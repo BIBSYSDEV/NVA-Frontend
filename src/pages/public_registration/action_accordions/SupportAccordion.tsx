@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
+import { TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
@@ -19,7 +20,6 @@ import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-he
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
-import { AccordionStatusChip } from './AccordionStatusChip';
 import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {
@@ -86,9 +86,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
         <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
           {t('my_page.messages.types.GeneralSupportCase')}
         </Typography>
-        {supportTicket && isOnTasksPage && (
-          <AccordionStatusChip ticketStatus={supportTicket.status} completedColor="generalSupportCase.main" />
-        )}
+        {supportTicket && isOnTasksPage && <TicketStatusChip ticket={supportTicket} />}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {!isOnTasksPage && <Typography>{t('my_page.messages.contact_curator_if_you_need_assistance')}</Typography>}
