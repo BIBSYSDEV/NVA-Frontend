@@ -13,6 +13,7 @@ import { PendingPublishingTicketForCuratorSection } from './PendingPublishingTic
 interface PublishingAccordionLastTicketInfoProps {
   publishingTicket: PublishingTicket;
   canApprovePublishingRequest: boolean;
+  canCreatePublishingRequest: boolean;
   registrationHasApprovedFile: boolean;
   refetchData: () => Promise<void>;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
@@ -22,6 +23,7 @@ interface PublishingAccordionLastTicketInfoProps {
 export const PublishingAccordionLastTicketInfo = ({
   publishingTicket,
   canApprovePublishingRequest,
+  canCreatePublishingRequest,
   registrationHasApprovedFile,
   registrationIsValid,
   addMessage,
@@ -41,6 +43,10 @@ export const PublishingAccordionLastTicketInfo = ({
 
   const isClosedTicket = publishingTicket.status === 'Closed';
   const isPendingTicket = publishingTicket.status === 'New' || publishingTicket.status === 'Pending';
+
+  const showMessages =
+    (canCreatePublishingRequest || canApprovePublishingRequest) &&
+    (isPendingTicket || (isClosedTicket && publishingTicket.messages.length > 0));
 
   return (
     <>
@@ -117,23 +123,31 @@ export const PublishingAccordionLastTicketInfo = ({
         </>
       )}
 
-      <Divider sx={{ my: '1rem' }} />
-      <Typography fontWeight="bold" gutterBottom>
-        {t('common.messages')}
-      </Typography>
-      <Typography gutterBottom>
-        {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)
-          ? t('registration.public_page.publishing_request_message_about_curator')
-          : t('registration.public_page.publishing_request_message_about')}
-      </Typography>
+      {showMessages && (
+        <>
+          <Divider sx={{ my: '1rem' }} />
+          <Typography fontWeight="bold" gutterBottom>
+            {t('common.messages')}
+          </Typography>
+          {isPendingTicket && (
+            <Typography gutterBottom>
+              {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)
+                ? t('registration.public_page.publishing_request_message_about_curator')
+                : t('registration.public_page.publishing_request_message_about')}
+            </Typography>
+          )}
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <MessageForm
-          confirmAction={async (message) => await addMessage(publishingTicket.id, message)}
-          hideRequiredAsterisk
-        />
-        {publishingTicket.messages.length > 0 && <TicketMessageList ticket={publishingTicket} />}
-      </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            {isPendingTicket && (
+              <MessageForm
+                confirmAction={async (message) => await addMessage(publishingTicket.id, message)}
+                hideRequiredAsterisk
+              />
+            )}
+            {publishingTicket.messages.length > 0 && <TicketMessageList ticket={publishingTicket} />}
+          </Box>
+        </>
+      )}
     </>
   );
 };

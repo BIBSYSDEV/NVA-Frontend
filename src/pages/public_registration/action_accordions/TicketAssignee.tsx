@@ -39,8 +39,9 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
   });
 
+  const isPendingTicket = ticket.status === 'Pending' || ticket.status === 'New';
   const isOnTaskPage = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
-  const canSetAssignee = isOnTaskPage && canEditTicket && (ticket.status === 'Pending' || ticket.status === 'New');
+  const canSetAssignee = isOnTaskPage && canEditTicket && isPendingTicket;
 
   return isOnTaskPage ? (
     <AssigneeSelector
@@ -60,9 +61,9 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
             : RoleName.SupportCurator
       }
     />
-  ) : (
+  ) : ticket.assignee || isPendingTicket ? (
     <UnselectableAssignee assignee={ticket.assignee} />
-  );
+  ) : null;
 };
 
 interface UnselectableAssigneeProps {
