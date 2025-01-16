@@ -159,21 +159,30 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
       <Divider />
 
       <Box sx={{ m: '1rem' }}>
-        {myApproval?.status !== 'Approved' && (
+        {myApproval && myApproval.status !== 'Approved' && (
           <>
-            <Trans
-              i18nKey="tasks.nvi.approve_nvi_candidate_description"
-              components={{
-                p: <Typography sx={{ mb: '1rem' }} />,
-                hyperlink: (
-                  <OpenInNewLink
-                    href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks"
-                    sx={{ fontStyle: 'italic' }}
-                  />
-                ),
-              }}
-              values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
-            />
+            {myApproval.status === 'Rejected' ? (
+              <Typography sx={{ mb: '1rem' }}>
+                {t('tasks.nvi.approve_rejected_nvi_candidate_description', {
+                  buttonText: t('tasks.nvi.approve_nvi_candidate'),
+                })}
+              </Typography>
+            ) : (
+              <Trans
+                i18nKey="tasks.nvi.approve_nvi_candidate_description"
+                components={{
+                  p: <Typography sx={{ mb: '1rem' }} />,
+                  hyperlink: (
+                    <OpenInNewLink
+                      href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks"
+                      sx={{ fontStyle: 'italic' }}
+                    />
+                  ),
+                }}
+                values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
+              />
+            )}
+
             <LoadingButton
               data-testid={dataTestId.tasksPage.nvi.approveButton}
               variant="outlined"
@@ -189,7 +198,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           </>
         )}
 
-        {myApproval?.status !== 'Rejected' && (
+        {myApproval && myApproval.status !== 'Rejected' && (
           <>
             <Typography sx={{ mb: '1rem' }}>
               {t('tasks.nvi.reject_nvi_candidate_description', { buttonText: t('tasks.nvi.reject_nvi_candidate') })}
