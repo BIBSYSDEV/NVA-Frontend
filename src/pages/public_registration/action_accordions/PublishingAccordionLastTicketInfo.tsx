@@ -46,7 +46,7 @@ export const PublishingAccordionLastTicketInfo = ({
 
   const showMessages =
     (canCreatePublishingRequest || canApprovePublishingRequest) &&
-    (isPendingTicket || publishingTicket.messages.length > 0);
+    (isPendingTicket || (isClosedTicket && publishingTicket.messages.length > 0));
 
   return (
     <>
