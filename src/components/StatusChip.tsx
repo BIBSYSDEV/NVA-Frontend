@@ -30,7 +30,7 @@ export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
     return <StatusChip text={text} icon="check" color={ticketColor[ticket.type]} />;
   }
 
-  return <StatusChip text={text} icon={ticket.status === 'Closed' ? 'block' : 'hourglass'} color="secondary.dark" />;
+  return <StatusChip text={text} icon={ticket.status === 'Closed' ? 'block' : 'hourglass'} />;
 };
 
 interface NviStatusChip {
@@ -46,13 +46,13 @@ export const NviStatusChip = ({ status }: NviStatusChip) => {
     return <StatusChip text={text} icon="check" color="nvi.main" />;
   }
 
-  return <StatusChip text={text} icon={status === 'Rejected' ? 'block' : 'hourglass'} color="secondary.dark" />;
+  return <StatusChip text={text} icon={status === 'Rejected' ? 'block' : 'hourglass'} />;
 };
 
 interface StatusChipProps {
   text: string;
   icon: 'check' | 'block' | 'hourglass';
-  color?: StandardCSSProperties['color'];
+  color?: StandardCSSProperties['backgroundColor'];
 }
 
 export const StatusChip = ({ text, color, icon }: StatusChipProps) => {
