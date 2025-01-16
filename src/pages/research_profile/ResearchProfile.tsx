@@ -3,7 +3,7 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -46,6 +46,12 @@ const ResearchProfile = () => {
   const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [projectSort, setProjectSort] = useState(projectSortOptions[0]);
+
+  useEffect(() => {
+    // Reset pagination when visiting a new research profile
+    setRegistrationsPage(1);
+    setProjectsPage(1);
+  }, [history.location.search]);
 
   const user = useSelector((store: RootState) => store.user);
 
@@ -121,7 +127,13 @@ const ResearchProfile = () => {
       ? `${t('my_page.my_profile.projects')} (${projectsQuery.data.size})`
       : t('my_page.my_profile.projects');
 
-  return personQuery.isPending ? (
+  const isPending =
+    personQuery.isPending ||
+    registrationsQuery.isPending ||
+    projectsQuery.isPending ||
+    promotedPublicationsQuery.isPending;
+
+  return isPending ? (
     <PageSpinner aria-label={t('my_page.research_profile')} />
   ) : !person ? (
     <NotFound />
@@ -276,7 +288,7 @@ const ResearchProfile = () => {
             </Trans>
           </Typography>
         )}
-        {registrationsQuery.isPending || promotedPublicationsQuery.isPending ? (
+        {registrationsQuery.isFetching ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <ListPagination
@@ -325,7 +337,7 @@ const ResearchProfile = () => {
             </Trans>
           </Typography>
         )}
-        {projectsQuery.isPending ? (
+        {projectsQuery.isFetching ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : projects.length > 0 ? (
           <ListPagination
