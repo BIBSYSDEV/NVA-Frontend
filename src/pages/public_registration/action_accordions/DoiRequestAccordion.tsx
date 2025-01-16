@@ -345,7 +345,9 @@ export const DoiRequestAccordion = ({
             onChange={(event) => setMessageToCurator(event.target.value)}
           />
           <DialogActions>
-            <Button onClick={toggleRequestDoiModal}>{t('common.cancel')}</Button>
+            <Button onClick={toggleRequestDoiModal} disabled={isLoadingData || isLoading !== LoadingState.None}>
+              {t('common.cancel')}
+            </Button>
             <LoadingButton
               variant="contained"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}
