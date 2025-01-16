@@ -13,11 +13,11 @@ import {
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
   ArtisticRegistration,
   MusicOutput,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
@@ -96,7 +96,7 @@ export const ArtisticMusicPerformanceForm = () => {
                 closeModal={closeModal}
               />
 
-              <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+              <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                 <Button
                   onClick={() => setOpenModal('Concert')}
                   variant="outlined"
