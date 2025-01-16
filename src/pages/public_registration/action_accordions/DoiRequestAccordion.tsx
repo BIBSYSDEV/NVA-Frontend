@@ -308,6 +308,7 @@ export const DoiRequestAccordion = ({
                 <ConfirmDialog
                   open={openReserveDoiDialog}
                   title={t('registration.public_page.reserve_doi')}
+                  isLoading={isLoading === LoadingState.DraftDoi}
                   onAccept={addDraftDoi}
                   onCancel={toggleReserveDoiDialog}>
                   <Trans
