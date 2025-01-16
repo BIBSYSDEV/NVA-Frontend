@@ -156,6 +156,7 @@ export interface BaseRegistration {
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
+  pendingOpenFileCount?: number;
   fundings: Funding[];
 }
 
