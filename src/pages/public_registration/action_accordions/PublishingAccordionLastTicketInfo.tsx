@@ -44,6 +44,10 @@ export const PublishingAccordionLastTicketInfo = ({
   const isClosedTicket = publishingTicket.status === 'Closed';
   const isPendingTicket = publishingTicket.status === 'New' || publishingTicket.status === 'Pending';
 
+  const showMessages =
+    (canCreatePublishingRequest || canApprovePublishingRequest) &&
+    (isPendingTicket || publishingTicket.messages.length > 0);
+
   return (
     <>
       {isCompletedTicket && (
@@ -119,23 +123,27 @@ export const PublishingAccordionLastTicketInfo = ({
         </>
       )}
 
-      {(canCreatePublishingRequest || canApprovePublishingRequest) && isPendingTicket && (
+      {showMessages && (
         <>
           <Divider sx={{ my: '1rem' }} />
           <Typography fontWeight="bold" gutterBottom>
             {t('common.messages')}
           </Typography>
-          <Typography gutterBottom>
-            {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)
-              ? t('registration.public_page.publishing_request_message_about_curator')
-              : t('registration.public_page.publishing_request_message_about')}
-          </Typography>
+          {isPendingTicket && (
+            <Typography gutterBottom>
+              {window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)
+                ? t('registration.public_page.publishing_request_message_about_curator')
+                : t('registration.public_page.publishing_request_message_about')}
+            </Typography>
+          )}
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <MessageForm
-              confirmAction={async (message) => await addMessage(publishingTicket.id, message)}
-              hideRequiredAsterisk
-            />
+            {isPendingTicket && (
+              <MessageForm
+                confirmAction={async (message) => await addMessage(publishingTicket.id, message)}
+                hideRequiredAsterisk
+              />
+            )}
             {publishingTicket.messages.length > 0 && <TicketMessageList ticket={publishingTicket} />}
           </Box>
         </>
