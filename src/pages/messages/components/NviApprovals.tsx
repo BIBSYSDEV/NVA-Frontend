@@ -1,7 +1,7 @@
 import CheckIcon from '@mui/icons-material/Check';
 import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
-import { Box, Skeleton, SxProps, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
@@ -18,9 +18,9 @@ export const NviApprovals = ({ approvals }: NviApprovalsProps) => {
 
   return (
     <Box sx={{ border: '1px solid', borderColor: 'nvi.main', gridArea: 'approvals' }}>
-      <Table size="small" sx={alternatingNviTableRowColor}>
+      <Table size="small">
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ bgcolor: 'nvi.main' }}>
             <TableCell>{t('common.institution')}</TableCell>
             <TableCell>{t('common.status')}</TableCell>
             <TableCell align="right">{t('common.points')}</TableCell>
@@ -52,7 +52,15 @@ const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalSta
   });
 
   return (
-    <TableRow>
+    <TableRow
+      sx={{
+        bgcolor:
+          approvalStatus.status === 'Approved'
+            ? 'nvi.light'
+            : approvalStatus.status === 'Rejected'
+              ? 'secondary.dark'
+              : 'white',
+      }}>
       <TableCell>
         {institutionQuery.isPending ? (
           <Skeleton />
@@ -92,28 +100,4 @@ const InstitutionStatus = ({ status }: InstitutionStatusProps) => {
       <Typography sx={{ whiteSpace: 'nowrap' }}>{t(`tasks.nvi.status.${status}`)}</Typography>
     </Box>
   );
-};
-
-const alternatingNviTableRowColor: SxProps = {
-  thead: {
-    tr: {
-      bgcolor: 'nvi.main',
-      th: {
-        fontWeight: 'normal',
-        whiteSpace: 'nowrap',
-        p: '0.5rem',
-      },
-    },
-  },
-  tbody: {
-    tr: {
-      bgcolor: 'nvi.light',
-      '&:nth-of-type(even)': {
-        bgcolor: 'white',
-      },
-      td: {
-        p: '0.5rem',
-      },
-    },
-  },
 };
