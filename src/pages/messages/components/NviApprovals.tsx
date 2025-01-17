@@ -2,9 +2,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import DoNotDisturbIcon from '@mui/icons-material/DoNotDisturb';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import { Box, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchOrganization } from '../../../api/cristinApi';
+import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { Approval, NviCandidateStatus } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -41,15 +40,7 @@ interface InstitutionApprovalStatusRowProps {
 }
 
 const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalStatusRowProps) => {
-  const { t } = useTranslation();
-
-  const institutionQuery = useQuery({
-    queryKey: [approvalStatus.institutionId],
-    queryFn: () => fetchOrganization(approvalStatus.institutionId),
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    gcTime: 1_800_000,
-  });
+  const institutionQuery = useFetchOrganization(approvalStatus.institutionId);
 
   return (
     <TableRow
