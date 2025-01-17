@@ -47,7 +47,11 @@ export const ConfirmDialog = ({
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Button data-testid={dataTestId.confirmDialog.cancelButton} variant="outlined" onClick={onCancel}>
+        <Button
+          data-testid={dataTestId.confirmDialog.cancelButton}
+          variant="outlined"
+          disabled={isLoading}
+          onClick={onCancel}>
           {cancelButtonLabel || t('common.no')}
         </Button>
         <LoadingButton

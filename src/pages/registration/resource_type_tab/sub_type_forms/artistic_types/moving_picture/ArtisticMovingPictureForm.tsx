@@ -16,12 +16,12 @@ import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, use
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
-import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
   ArtisticRegistration,
   FilmOutput,
   MovingPictureType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { BroadcastModal } from './BroadcastModal';
@@ -159,7 +159,7 @@ export const ArtisticMovingPictureForm = () => {
                 />
                 <OtherReleaseModal onSubmit={onAddOutput} open={openModal === 'OtherRelease'} closeModal={closeModal} />
 
-                <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+                <Box sx={{ mt: '1rem', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: '1rem' }}>
                   <Button
                     onClick={() => setOpenModal('Broadcast')}
                     variant="outlined"

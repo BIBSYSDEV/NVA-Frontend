@@ -59,6 +59,7 @@ import {
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { ContextPublisher, Publisher, SerialPublication } from '../../types/registration.types';
+import { getCountries } from '../../utils/countryHelpers';
 import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -115,11 +116,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
         <>
           <Typography>{publisherName}</Typography>
           <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} channelId={fetchedPublisher.id} />
-          {fetchedPublisher.sameAs && (
-            <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
-              {t('registration.public_page.find_in_channel_registry')}
-            </Typography>
-          )}
+          {fetchedPublisher.sameAs && <ChannelRegisterLink uri={fetchedPublisher.sameAs} />}
         </>
       ) : (
         <Typography gutterBottom>{publisher.name}</Typography>
@@ -197,6 +194,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
       errorMessage: false,
       handleError: () => {
         // Some IDs are mixed with journal and series, so we must retry with the alternative ID
+        // TODO: Consider removing this when NP-31819 is Done
         const currentId = id?.toLowerCase();
         if (currentId?.includes(journalIdSubstring)) {
           const alternativeId = currentId.replace(journalIdSubstring, seriesIdSubstring);
@@ -231,12 +229,25 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
       <Typography>{journalName}</Typography>
       <Typography>{getIssnValuesString(journal)}</Typography>
       <NpiLevelTypography scientificValue={journal.scientificValue} channelId={journal.id} />
-      {journal.sameAs && (
-        <Typography component={Link} href={journal.sameAs} target="_blank">
-          {t('registration.public_page.find_in_channel_registry')}
-        </Typography>
-      )}
+      {journal.sameAs && <ChannelRegisterLink uri={journal.sameAs} />}
     </>
+  );
+};
+
+const ChannelRegisterLink = ({ uri }: { uri: string }) => {
+  const { t } = useTranslation();
+  if (!uri) {
+    return null;
+  }
+  return (
+    <Link
+      href={uri}
+      target="_blank"
+      rel="noopener noreferrer"
+      sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem', width: 'fit-content' }}>
+      {t('registration.public_page.find_in_channel_registry')}
+      <OpenInNewIcon fontSize="small" />
+    </Link>
   );
 };
 
@@ -245,7 +256,7 @@ interface PublicPresentationProps {
 }
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { type, time, place, name, agent } = publicationContext;
   const periodString = getPeriodString(time?.from, time?.to);
 
@@ -269,7 +280,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
       )}
       {place?.country && (
         <Typography>
-          {t('common.country')}: {place.country}
+          {t('common.country')}: {getCountries(i18n.language)[place.country]}
         </Typography>
       )}
       {periodString && <Typography>{periodString}</Typography>}

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { updateTicket } from '../../../api/registrationApi';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
+import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { PreviousSearchLocationState, SelectedTicketTypeLocationState } from '../../../types/locationState.types';
@@ -103,7 +104,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           }}>
           <RegistrationListItemContent registration={convertToRegistrationSearchItem(registrationCopy)} ticketView />
           {ticket.type === 'PublishingRequest' ? (
-            <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} showLastMessage />
+            <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
             <DoiRequestMessagesColumn ticket={ticket} showLastMessage />
           ) : ticket.type === 'GeneralSupportCase' ? (
@@ -111,13 +112,17 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           ) : (
             <div />
           )}
-          <Typography lineHeight="2rem">
-            {ticket.type === 'GeneralSupportCase' && isOnMyPageMessages
-              ? viewedByUser
-                ? t('common.read_past_tense')
-                : t('common.unread')
-              : t(`my_page.messages.ticket_types.${ticket.status}`)}
-          </Typography>
+
+          {ticket.type === 'GeneralSupportCase' && isOnMyPageMessages ? (
+            viewedByUser ? (
+              <StatusChip text={t('common.read_past_tense')} icon="check" bgcolor="generalSupportCase.main" />
+            ) : (
+              <StatusChip text={t('common.unread')} icon="hourglass" />
+            )
+          ) : (
+            <TicketStatusChip ticket={ticket} />
+          )}
+
           <Typography lineHeight="2rem">
             <Tooltip title={t('common.created_at', { date: toDateStringWithTime(ticket.createdDate) })}>
               <span>{toDateString(ticket.createdDate)}</span>

@@ -17,6 +17,7 @@ import {
 import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
+import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FinalizedApproval, NviCandidate, RejectedApproval } from '../../../types/nvi.types';
@@ -111,9 +112,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     date: rejectionStatus.finalizedDate,
     content: (
       <Typography>
-        <Box component="span" fontWeight={700}>
-          {t('tasks.nvi.status.Rejected')}:
-        </Box>{' '}
+        <Box component="span" fontWeight={700} sx={{ textDecoration: 'underline' }}>
+          {t('tasks.nvi.rejection_reason')}:
+        </Box>
+        <br />
         {rejectionStatus.reason}
       </Typography>
     ),
@@ -145,26 +147,43 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
   return (
     <>
-      <Box sx={{ m: '1rem' }}>
+      <Box sx={{ gridArea: 'curator' }}>
         <AssigneeSelector
           assignee={myApproval?.assignee}
           canSetAssignee={myApproval?.status === 'New' || myApproval?.status === 'Pending'}
           onSelectAssignee={async (assignee) => await assigneeMutation.mutateAsync(assignee)}
           isUpdating={assigneeMutation.isPending}
           roleFilter={RoleName.NviCurator}
-          iconBackgroundColor="nvi.main"
         />
       </Box>
-      <Divider />
 
-      <Box sx={{ m: '1rem' }}>
-        {myApproval?.status !== 'Approved' && (
+      <Divider sx={{ gridArea: 'divider1' }} />
+
+      <Box sx={{ gridArea: 'actions' }}>
+        {myApproval && myApproval.status !== 'Approved' && (
           <>
-            <Trans
-              i18nKey="tasks.nvi.approve_nvi_candidate_description"
-              components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
-              values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
-            />
+            {myApproval.status === 'Rejected' ? (
+              <Typography sx={{ mb: '1rem' }}>
+                {t('tasks.nvi.approve_rejected_nvi_candidate_description', {
+                  buttonText: t('tasks.nvi.approve_nvi_candidate'),
+                })}
+              </Typography>
+            ) : (
+              <Trans
+                i18nKey="tasks.nvi.approve_nvi_candidate_description"
+                components={{
+                  p: <Typography sx={{ mb: '1rem' }} />,
+                  hyperlink: (
+                    <OpenInNewLink
+                      href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks"
+                      sx={{ fontStyle: 'italic' }}
+                    />
+                  ),
+                }}
+                values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
+              />
+            )}
+
             <LoadingButton
               data-testid={dataTestId.tasksPage.nvi.approveButton}
               variant="outlined"
@@ -180,7 +199,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           </>
         )}
 
-        {myApproval?.status !== 'Rejected' && (
+        {myApproval && myApproval.status !== 'Rejected' && (
           <>
             <Typography sx={{ mb: '1rem' }}>
               {t('tasks.nvi.reject_nvi_candidate_description', { buttonText: t('tasks.nvi.reject_nvi_candidate') })}
@@ -190,7 +209,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               variant="outlined"
               fullWidth
               size="small"
-              sx={{ mb: '1rem', bgcolor: 'white' }}
+              sx={{ bgcolor: 'white' }}
               disabled={isMutating || hasSelectedRejectCandidate}
               endIcon={<ClearIcon />}
               onClick={() => setHasSelectedRejectCandidate(true)}>
@@ -206,11 +225,13 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
               }}
               isLoading={statusMutation.isPending}
             />
-
-            <Divider sx={{ mb: '1rem' }} />
           </>
         )}
+      </Box>
 
+      <Divider sx={{ gridArea: 'divider2' }} />
+
+      <Box sx={{ gridArea: 'comment' }}>
         <Typography variant="h3" gutterBottom component="h2">
           {t('tasks.nvi.note')}
         </Typography>
