@@ -93,7 +93,7 @@ export const MessageItem = ({
         display: 'flex',
         flexDirection: 'column',
       }}>
-      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto auto', alignItems: 'center', gap: '0.3rem' }}>
         <Tooltip title={senderName ? senderName : t('common.unknown')}>
           <StyledTruncatableTypography
             data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}
@@ -107,12 +107,14 @@ export const MessageItem = ({
             )}
           </StyledTruncatableTypography>
         </Tooltip>
-        <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-          {toDateString(date)}
-        </Typography>
+        {showOrganization ? (
+          <MessageItemOrganization organizationId={senderQuery.data?.institutionCristinId ?? ''} />
+        ) : (
+          <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
+            {toDateString(date)}
+          </Typography>
+        )}
         {menuElement}
-
-        {showOrganization && <MessageItemOrganization organizationId={senderQuery.data?.institutionCristinId ?? ''} />}
       </Box>
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />

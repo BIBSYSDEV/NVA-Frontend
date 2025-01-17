@@ -168,6 +168,8 @@ export const AddEmployeePage = () => {
                 <Button
                   variant="contained"
                   size="large"
+                  loading={isSubmitting}
+                  loadingPosition="start"
                   disabled={!isValid}
                   onClick={() => {
                     const shouldShowConfirmDialog = !values.person.id; // Only confirm consent when creating a new user

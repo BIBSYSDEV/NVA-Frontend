@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { Form, Formik, FormikProps } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -64,6 +64,10 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
   const canEditRegistration = userHasAccessRight(registration, 'update');
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [tabNumber]);
 
   return registrationQuery.isPending || (canHaveNviCandidate && nviReportedStatus.isPending) ? (
     <PageSpinner aria-label={t('common.result')} />

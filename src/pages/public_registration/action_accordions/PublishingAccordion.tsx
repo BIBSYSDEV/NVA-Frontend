@@ -11,6 +11,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
+import { TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
@@ -181,7 +182,13 @@ export const PublishingAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
-      sx={{ bgcolor: 'publishingRequest.light' }}
+      sx={{
+        bgcolor: 'publishingRequest.light',
+        '& .MuiAccordionSummary-content': {
+          alignItems: 'center',
+          gap: '0.5rem',
+        },
+      }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -189,11 +196,12 @@ export const PublishingAccordion = ({
           {isUnpublishedOrDeletedRegistration
             ? t(`registration.status.${registration.status}`)
             : t('registration.public_page.publication')}
-          {lastPublishingRequest &&
-            !isUnpublishedRegistration &&
-            !isDeletedRegistration &&
-            ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         </Typography>
+
+        {lastPublishingRequest && !isUnpublishedOrDeletedRegistration && (
+          <TicketStatusChip ticket={lastPublishingRequest} />
+        )}
+
         {(!registrationIsValid || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (
           <Tooltip
             title={
@@ -201,7 +209,7 @@ export const PublishingAccordion = ({
                 ? t('registration.public_page.potential_duplicate')
                 : t('registration.public_page.validation_errors')
             }>
-            <ErrorIcon color="warning" sx={{ ml: '0.5rem' }} />
+            <ErrorIcon color="warning" sx={{ ml: '0.2rem' }} />
           </Tooltip>
         )}
       </AccordionSummary>
@@ -310,6 +318,7 @@ export const PublishingAccordion = ({
         {lastPublishingRequest && !hasMismatchingPublishedStatus && (
           <PublishingAccordionLastTicketInfo
             publishingTicket={lastPublishingRequest}
+            canCreatePublishingRequest={userCanCreatePublishingRequest}
             canApprovePublishingRequest={userCanApprovePublishingRequest}
             registrationHasApprovedFile={registrationHasApprovedFile}
             registrationIsValid={registrationIsValid}

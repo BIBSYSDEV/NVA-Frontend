@@ -52,7 +52,10 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const pendingOpenFiles = associatedFiles.filter(isPendingOpenFile);
   const pendingInternalFiles = associatedFiles.filter((file) => file.type === 'PendingInternalFile');
-  const totalPendingFiles = pendingOpenFiles.length + pendingInternalFiles.length;
+  const totalPendingFiles = Math.max(
+    registration.pendingOpenFileCount ?? 0,
+    pendingOpenFiles.length + pendingInternalFiles.length
+  );
 
   const openableFilesToShow = userCanUpdateRegistration
     ? associatedFiles.filter((file) => isOpenFile(file) || isPendingOpenFile(file))

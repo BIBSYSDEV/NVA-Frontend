@@ -2,7 +2,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
@@ -42,12 +42,16 @@ const ResearchProfile = () => {
   const [registrationsPage, setRegistrationsPage] = useState(1);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationSort, setRegistrationSort] = useState(registrationSortOptions[0]);
-  const [totalRegistrations, setTotalRegistrations] = useState<number | null>(null);
 
   const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [projectSort, setProjectSort] = useState(projectSortOptions[0]);
-  const [totalProjects, setTotalProjects] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Reset pagination when visiting a new research profile
+    setRegistrationsPage(1);
+    setProjectsPage(1);
+  }, [location.search]);
 
   const user = useSelector((store: RootState) => store.user);
 
@@ -76,7 +80,11 @@ const ResearchProfile = () => {
     sort: registrationSort.sortOrder,
   };
 
-  const registrationsQuery = useRegistrationSearch({ enabled: !!personId, params: registrationsQueryConfig });
+  const registrationsQuery = useRegistrationSearch({
+    enabled: !!personId,
+    params: registrationsQueryConfig,
+    keepDataWhileLoading: true,
+  });
 
   const projectsQueryConfig: ProjectsSearchParams = {
     participant: personIdNumber,
@@ -88,6 +96,7 @@ const ResearchProfile = () => {
     queryKey: ['projects', projectRowsPerPage, projectsPage, projectsQueryConfig],
     queryFn: () => searchForProjects(projectRowsPerPage, projectsPage, projectsQueryConfig),
     meta: { errorMessage: t('feedback.error.project_search') },
+    placeholderData: keepPreviousData,
   });
 
   const projects = projectsQuery.data?.hits ?? [];
@@ -108,29 +117,23 @@ const ResearchProfile = () => {
   const personBackground = getLanguageString(person?.background);
   const personKeywords = person?.keywords ?? [];
 
-  useEffect(() => {
-    if (totalRegistrations === null && registrationsQuery.data) {
-      setTotalRegistrations(registrationsQuery.data.totalHits);
-    }
-  }, [totalRegistrations, registrationsQuery.data]);
-
-  useEffect(() => {
-    if (totalProjects === null && projectsQuery.data) {
-      setTotalProjects(projectsQuery.data.size);
-    }
-  }, [totalProjects, projectsQuery.data]);
-
   const registrationsHeading =
-    !!totalRegistrations && totalRegistrations > 0
-      ? `${t('my_page.my_profile.results')} (${totalRegistrations})`
+    registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0
+      ? `${t('my_page.my_profile.results')} (${registrationsQuery.data.totalHits})`
       : t('my_page.my_profile.results');
 
   const projectHeading =
-    !!totalProjects && totalProjects > 0
-      ? `${t('my_page.my_profile.projects')} (${totalProjects})`
+    projectsQuery.data?.size && projectsQuery.data.size > 0
+      ? `${t('my_page.my_profile.projects')} (${projectsQuery.data.size})`
       : t('my_page.my_profile.projects');
 
-  return personQuery.isPending ? (
+  const isPending =
+    personQuery.isPending ||
+    registrationsQuery.isPending ||
+    projectsQuery.isPending ||
+    promotedPublicationsQuery.isPending;
+
+  return isPending ? (
     <PageSpinner aria-label={t('my_page.research_profile')} />
   ) : !person ? (
     <NotFound />
@@ -278,14 +281,14 @@ const ResearchProfile = () => {
         <Typography variant="h2" gutterBottom sx={{ mt: '2rem' }}>
           {registrationsHeading}
         </Typography>
-        {!!totalRegistrations && totalRegistrations > 0 && (
+        {registrationsQuery.data?.totalHits && (
           <Typography>
             <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
               <MuiLink component={Link} to={`/?${ResultParam.Contributor}=${encodeURIComponent(personId)}`} />
             </Trans>
           </Typography>
         )}
-        {registrationsQuery.isPending || promotedPublicationsQuery.isPending ? (
+        {registrationsQuery.isFetching ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <ListPagination
@@ -322,7 +325,7 @@ const ResearchProfile = () => {
         <Typography variant="h2" gutterBottom sx={{ mt: '1rem' }}>
           {projectHeading}
         </Typography>
-        {!!totalProjects && totalProjects > 0 && (
+        {projectsQuery.data?.size && (
           <Typography>
             <Trans t={t} i18nKey="my_page.my_profile.link_to_projects_search">
               <MuiLink
@@ -334,7 +337,7 @@ const ResearchProfile = () => {
             </Trans>
           </Typography>
         )}
-        {projectsQuery.isPending ? (
+        {projectsQuery.isFetching ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : projects.length > 0 ? (
           <ListPagination

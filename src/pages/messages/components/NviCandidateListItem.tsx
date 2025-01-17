@@ -2,6 +2,7 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { NviStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidatePageLocationState } from '../../../types/locationState.types';
@@ -91,7 +92,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
       </Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
+        {myApproval?.approvalStatus && <NviStatusChip status={myApproval.approvalStatus} />}
       </Box>
     </SearchListItem>
   );

@@ -349,7 +349,6 @@ export const dataTestId = {
     subtypeFields: 'public-registration-subtype-fields',
     subjectAndClassificationAccordion: 'subject-and-classification-accordion',
     tasksPanel: {
-      assigneeButton: 'assignee-button',
       assigneeIndicator: 'assignee-indicator',
       assigneeSearchField: 'assignee-search-field',
       backToWizard: 'back-to-wizard-button',
@@ -755,6 +754,7 @@ export const dataTestId = {
     userDialogAccordion: 'user-dialog-accordion',
   },
   unpublishActions: {
+    confirmUnpublishCheckbox: 'confirm-unpublish-checkbox',
     openUnpublishModalButton: 'open-unpublish-modal-button',
     unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
   },

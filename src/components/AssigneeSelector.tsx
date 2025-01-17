@@ -1,22 +1,17 @@
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Autocomplete, Box, IconButton, Tooltip } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
 import { fetchUsersByCustomer } from '../api/roleApi';
-import { StyledBaseContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
 import { RootState } from '../redux/store';
 import { RoleName } from '../types/user.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { getInitials } from '../utils/general-helpers';
 import { getFullName } from '../utils/user-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
 
 interface AssigneeSelectorProps {
   assignee: string | undefined;
-  iconBackgroundColor: string;
   roleFilter: RoleName;
   onSelectAssignee: (assignee: string) => Promise<void>;
   canSetAssignee: boolean;
@@ -25,7 +20,6 @@ interface AssigneeSelectorProps {
 
 export const AssigneeSelector = ({
   assignee,
-  iconBackgroundColor,
   roleFilter,
   onSelectAssignee,
   canSetAssignee,
@@ -35,11 +29,9 @@ export const AssigneeSelector = ({
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
 
-  const [showCuratorSearch, setShowCuratorSearch] = useState(false);
-
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId, roleFilter],
-    enabled: showCuratorSearch && !!customerId,
+    enabled: !!customerId,
     queryFn: () => fetchUsersByCustomer(customerId, roleFilter),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
@@ -50,65 +42,35 @@ export const AssigneeSelector = ({
   );
 
   const assigneeQuery = useFetchUserQuery(assignee ?? '');
-
-  const isLoading = isUpdating || curatorsQuery.isPending || assigneeQuery.isFetching;
-
-  const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
-  const assigneeInitials = getInitials(assigneeName);
+  const isLoading = isUpdating || assigneeQuery.isFetching;
 
   return (
-    <Box sx={{ mb: '0.5rem' }}>
-      {showCuratorSearch ? (
-        <Autocomplete
-          options={curatorOptions}
-          renderOption={({ key, ...props }, option) => (
-            <li {...props} key={option.username}>
-              {getFullName(option.givenName, option.familyName)}
-            </li>
-          )}
-          disabled={isLoading}
-          onChange={async (_, value) => {
-            try {
-              await onSelectAssignee(value?.username ?? '');
-            } finally {
-              setShowCuratorSearch(false);
-            }
-          }}
-          onBlur={() => setShowCuratorSearch(false)}
-          getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
-          isOptionEqualToValue={(option, value) => option.username === value?.username}
-          value={assigneeQuery.data ?? null}
-          loading={isUpdating || curatorsQuery.isPending}
-          renderInput={(params) => (
-            <AutocompleteTextField
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeSearchField}
-              {...params}
-              label={t('my_page.roles.curator')}
-              isLoading={isLoading}
-              placeholder={t('common.search')}
-              showSearchIcon
-            />
-          )}
-        />
-      ) : (
-        <Box sx={{ height: '1.75rem', display: 'flex', gap: '0.5rem' }}>
-          <Tooltip title={`${t('my_page.roles.curator')}: ${assignee ? assigneeName : t('common.none')}`}>
-            <StyledBaseContributorIndicator
-              sx={{ bgcolor: iconBackgroundColor }}
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
-              {assignee ? assigneeInitials : ''}
-            </StyledBaseContributorIndicator>
-          </Tooltip>
-          {canSetAssignee && (
-            <IconButton
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeButton}
-              title={t('registration.public_page.tasks_panel.assign_curator')}
-              onClick={() => setShowCuratorSearch(true)}>
-              <MoreHorizIcon />
-            </IconButton>
-          )}
-        </Box>
+    <Autocomplete
+      sx={{ mb: '0.5rem' }}
+      value={assigneeQuery.data ?? null}
+      disabled={!canSetAssignee || isLoading}
+      loading={curatorsQuery.isFetching}
+      options={curatorOptions}
+      getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
+      isOptionEqualToValue={(option, value) => option.username === value?.username}
+      renderOption={({ key, ...props }, option) => (
+        <li {...props} key={option.username}>
+          {getFullName(option.givenName, option.familyName)}
+        </li>
       )}
-    </Box>
+      onChange={async (_, value) => {
+        await onSelectAssignee(value?.username ?? '');
+      }}
+      renderInput={(params) => (
+        <AutocompleteTextField
+          data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeSearchField}
+          {...params}
+          label={t('my_page.roles.curator')}
+          isLoading={isLoading}
+          placeholder={t('common.search')}
+          showSearchIcon
+        />
+      )}
+    />
   );
 };

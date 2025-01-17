@@ -17,6 +17,7 @@ import {
 import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
+import { OpenInNewLink } from '../../../components/OpenInNewLink';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FinalizedApproval, NviCandidate, RejectedApproval } from '../../../types/nvi.types';
@@ -111,9 +112,10 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     date: rejectionStatus.finalizedDate,
     content: (
       <Typography>
-        <Box component="span" fontWeight={700}>
-          {t('tasks.nvi.status.Rejected')}:
-        </Box>{' '}
+        <Box component="span" fontWeight={700} sx={{ textDecoration: 'underline' }}>
+          {t('tasks.nvi.rejection_reason')}:
+        </Box>
+        <br />
         {rejectionStatus.reason}
       </Typography>
     ),
@@ -152,7 +154,6 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           onSelectAssignee={async (assignee) => await assigneeMutation.mutateAsync(assignee)}
           isUpdating={assigneeMutation.isPending}
           roleFilter={RoleName.NviCurator}
-          iconBackgroundColor="nvi.main"
         />
       </Box>
       <Divider />
@@ -162,7 +163,15 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           <>
             <Trans
               i18nKey="tasks.nvi.approve_nvi_candidate_description"
-              components={[<Typography sx={{ mb: '1rem' }} key="1" />]}
+              components={{
+                p: <Typography sx={{ mb: '1rem' }} />,
+                hyperlink: (
+                  <OpenInNewLink
+                    href="https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva/NVI-rapporteringsinstruks"
+                    sx={{ fontStyle: 'italic' }}
+                  />
+                ),
+              }}
               values={{ buttonText: t('tasks.nvi.approve_nvi_candidate') }}
             />
             <LoadingButton
