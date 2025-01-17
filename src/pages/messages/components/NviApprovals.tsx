@@ -17,7 +17,13 @@ export const NviApprovals = ({ approvals }: NviApprovalsProps) => {
 
   return (
     <Box sx={{ border: '1px solid', borderColor: 'nvi.main', gridArea: 'approvals' }}>
-      <Table size="small">
+      <Table
+        size="small"
+        sx={{
+          'th, td': {
+            borderBottomColor: 'nvi.main',
+          },
+        }}>
         <TableHead>
           <TableRow sx={{ bgcolor: 'nvi.main' }}>
             <TableCell>{t('common.institution')}</TableCell>
