@@ -97,6 +97,10 @@ export const RegistrationListItemContent = ({
       dispatch(setNotification({ message: t('feedback.error.update_promoted_publication'), variant: 'error' })),
   });
 
+  const shouldNotRedirect =
+    window.location.pathname === UrlPathTemplate.TasksResultRegistrations &&
+    registration.recordMetadata.status === RegistrationStatus.Unpublished;
+
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
@@ -128,6 +132,7 @@ export const RegistrationListItemContent = ({
               to={{
                 pathname: getRegistrationLandingPagePath(identifier),
                 state: { previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState,
+                search: shouldNotRedirect ? 'shouldNotRedirect' : '',
               }}>
               {getTitleString(registration.mainTitle)}
             </MuiLink>
