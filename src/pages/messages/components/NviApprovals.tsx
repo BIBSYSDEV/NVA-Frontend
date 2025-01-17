@@ -17,7 +17,7 @@ export const NviApprovals = ({ approvals }: NviApprovalsProps) => {
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ m: '1rem', border: '1px solid', borderColor: 'nvi.main' }}>
+    <Box sx={{ border: '1px solid', borderColor: 'nvi.main', gridArea: 'approvals' }}>
       <Table size="small" sx={alternatingNviTableRowColor}>
         <TableHead>
           <TableRow>
