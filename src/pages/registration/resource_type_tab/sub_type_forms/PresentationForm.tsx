@@ -11,7 +11,9 @@ export const PresentationForm = () => {
   const { t, i18n } = useTranslation();
   const { setFieldValue } = useFormikContext<PresentationRegistration>();
 
-  const countryOptions = Object.entries(getCountries(i18n.language)).map(([code, label]) => ({ code, label }));
+  const countryOptions = Object.entries(getCountries(i18n.language))
+    .map(([code, label]) => ({ code, label }))
+    .sort((a, b) => a.label.localeCompare(b.label));
 
   return (
     <>
