@@ -98,7 +98,8 @@ export const RegistrationListItemContent = ({
   });
 
   const shouldNotRedirect =
-    window.location.pathname === UrlPathTemplate.TasksResultRegistrations &&
+    (location.pathname === UrlPathTemplate.TasksResultRegistrations ||
+      location.pathname === UrlPathTemplate.InstitutionPortfolio) &&
     registration.recordMetadata.status === RegistrationStatus.Unpublished;
 
   return (
