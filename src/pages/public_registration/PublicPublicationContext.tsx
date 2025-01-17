@@ -59,6 +59,7 @@ import {
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { ContextPublisher, Publisher, SerialPublication } from '../../types/registration.types';
+import { getCountries } from '../../utils/countryHelpers';
 import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -255,7 +256,7 @@ interface PublicPresentationProps {
 }
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { type, time, place, name, agent } = publicationContext;
   const periodString = getPeriodString(time?.from, time?.to);
 
@@ -279,7 +280,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
       )}
       {place?.country && (
         <Typography>
-          {t('common.country')}: {place.country}
+          {t('common.country')}: {getCountries(i18n.language)[place.country]}
         </Typography>
       )}
       {periodString && <Typography>{periodString}</Typography>}

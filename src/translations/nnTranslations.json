@@ -2080,6 +2080,7 @@
     "nvi": {
       "approve_nvi_candidate": "Godkjenn resultat",
       "approve_nvi_candidate_description": "<p>Kontroll av forskingsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporterast. Sjå <hyperlink>Rapporteringsinstruksen</hyperlink> for meir informasjon.</p>",
+      "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporterast. Då vert også grunngjevinga for avvisinga fjerna.",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Antologiar med teljande kapittel",
