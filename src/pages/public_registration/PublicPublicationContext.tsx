@@ -20,9 +20,6 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
-import countries from 'i18n-iso-countries';
-import enCountries from 'i18n-iso-countries/langs/en.json';
-import nbCountries from 'i18n-iso-countries/langs/nb.json';
 import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -70,9 +67,6 @@ import { getIssnValuesString, getOutputName, hyphenateIsrc } from '../../utils/r
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import { RegistrationSummary } from './RegistrationSummary';
-
-countries.registerLocale(enCountries);
-countries.registerLocale(nbCountries);
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
