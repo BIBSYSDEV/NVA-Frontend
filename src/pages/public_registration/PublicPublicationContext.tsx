@@ -20,6 +20,9 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
+import countries from 'i18n-iso-countries';
+import enCountries from 'i18n-iso-countries/langs/en.json';
+import nbCountries from 'i18n-iso-countries/langs/nb.json';
 import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -59,6 +62,7 @@ import {
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { ContextPublisher, Publisher, SerialPublication } from '../../types/registration.types';
+import { getCountries } from '../../utils/countryHelpers';
 import { toDateString } from '../../utils/date-helpers';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -66,6 +70,9 @@ import { getIssnValuesString, getOutputName, hyphenateIsrc } from '../../utils/r
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import { RegistrationSummary } from './RegistrationSummary';
+
+countries.registerLocale(enCountries);
+countries.registerLocale(nbCountries);
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
@@ -255,7 +262,7 @@ interface PublicPresentationProps {
 }
 
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { type, time, place, name, agent } = publicationContext;
   const periodString = getPeriodString(time?.from, time?.to);
 
@@ -279,7 +286,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
       )}
       {place?.country && (
         <Typography>
-          {t('common.country')}: {place.country}
+          {t('common.country')}: {getCountries(i18n.language)[place.country]}
         </Typography>
       )}
       {periodString && <Typography>{periodString}</Typography>}
