@@ -56,7 +56,8 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
-  const location = useLocation<SelectedTicketTypeLocationState>();
+  const location = useLocation();
+  const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -174,8 +175,8 @@ export const PublishingAccordion = ({
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
-  const defaultExpanded = location.state?.selectedTicketType
-    ? location.state.selectedTicketType === 'PublishingRequest'
+  const defaultExpanded = locationState?.selectedTicketType
+    ? locationState.selectedTicketType === 'PublishingRequest'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
   return (

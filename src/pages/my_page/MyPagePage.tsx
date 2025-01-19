@@ -7,9 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
+import { Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkCreateButton,
@@ -28,7 +27,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getDialogueNotificationsParams } from '../../utils/searchHelpers';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { TicketList } from '../messages/components/TicketList';
@@ -45,8 +44,9 @@ import { UserRoleAndHelp } from './user_profile/UserRoleAndHelp';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
-  const history = useHistory<PreviousSearchLocationState>();
-  const searchParams = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const locationState = location.state as PreviousSearchLocationState;
+  const searchParams = new URLSearchParams(location.search);
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
   const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
@@ -87,7 +87,7 @@ const MyPagePage = () => {
     publicationType: searchParams.get(TicketSearchParam.PublicationType),
   };
 
-  const isOnDialoguePage = history.location.pathname === UrlPathTemplate.MyPageMyMessages;
+  const isOnDialoguePage = location.pathname === UrlPathTemplate.MyPageMyMessages;
   const ticketsQuery = useQuery({
     enabled: isOnDialoguePage && !!user?.isCreator,
     queryKey: ['tickets', ticketSearchParams],
@@ -119,12 +119,12 @@ const MyPagePage = () => {
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.count;
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.count;
 
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   // Hide menu when opening a ticket on Messages path
   const expandMenu =
-    !history.location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
-    history.location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+    !location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
+    location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
 
   return (
     <StyledPageWithSideMenu>
@@ -132,7 +132,7 @@ const MyPagePage = () => {
         expanded={expandMenu}
         minimizedMenu={
           <Link
-            to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: history.location.state?.previousSearch }}
+            to={{ pathname: UrlPathTemplate.MyPageMyMessages, search: locationState?.previousSearch }}
             onClick={() => ticketsQuery.refetch()}>
             <MinimizedMenuIconButton title={t('my_page.my_page')}>
               <FavoriteBorderIcon />
@@ -316,77 +316,94 @@ const MyPagePage = () => {
         ]}
       </SideMenu>
 
-      <ErrorBoundary>
-        <Switch>
-          <PrivateRoute exact path={UrlPathTemplate.MyPage} isAuthorized={isAuthenticated}>
-            <Redirect to={UrlPathTemplate.MyPageResearchProfile} />
-          </PrivateRoute>
+      <Outlet />
 
-          <PrivateRoute exact path={UrlPathTemplate.MyPageMyMessages} isAuthorized={isCreator}>
-            <TicketList
-              ticketsQuery={ticketsQuery}
-              rowsPerPage={rowsPerPage}
-              setRowsPerPage={setRowsPerPage}
-              page={page}
-              setPage={setPage}
-              title={t('common.dialogue')}
+      <Routes>
+        <Route
+          path={UrlPathTemplate.Root}
+          element={
+            <PrivateRoute
+              isAuthorized={isAuthenticated}
+              element={<Navigate to={UrlPathTemplate.MyPageResearchProfile} replace />}
             />
-          </PrivateRoute>
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.MyPageMyMessagesRegistration}
-            component={RegistrationLandingPage}
-            isAuthorized={isCreator}
-          />
-          <PrivateRoute exact path={UrlPathTemplate.MyPageMyRegistrations} isAuthorized={isCreator}>
-            <MyRegistrations
-              selectedPublished={selectedRegistrationStatus.published}
-              selectedUnpublished={selectedRegistrationStatus.unpublished}
+          }
+        />
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPagePersonalia, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<MyProfile />} isAuthorized={isAuthenticated} />}
+        />
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageFieldAndBackground, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<MyFieldAndBackground />} isAuthorized={isAuthenticated} />}
+        />
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageMyProjects, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<MyProjects />} isAuthorized={isAuthenticated} />}
+        />
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageResearchProfile, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<ResearchProfile />} isAuthorized={isAuthenticated} />}
+        />
+
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageResults, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<MyResults />} isAuthorized={isAuthenticated} />}
+        />
+
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageMyProjectRegistrations, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<MyProjectRegistrations />} isAuthorized={isAuthenticated} />}
+        />
+
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageUserRoleAndHelp, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<UserRoleAndHelp />} isAuthorized={isAuthenticated} />}
+        />
+
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageTerms, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<Terms />} isAuthorized={isAuthenticated} />}
+        />
+
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageMyMessages, UrlPathTemplate.MyPage)}
+          element={
+            <PrivateRoute
+              isAuthorized={isCreator}
+              element={
+                <TicketList
+                  ticketsQuery={ticketsQuery}
+                  rowsPerPage={rowsPerPage}
+                  setRowsPerPage={setRowsPerPage}
+                  page={page}
+                  setPage={setPage}
+                  title={t('common.dialogue')}
+                />
+              }
             />
-          </PrivateRoute>
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.MyPagePersonalia}
-            component={MyProfile}
-            isAuthorized={isAuthenticated}
-          />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.MyPageFieldAndBackground}
-            component={MyFieldAndBackground}
-            isAuthorized={isAuthenticated}
-          />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.MyPageMyProjects}
-            component={MyProjects}
-            isAuthorized={isAuthenticated}
-          />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.MyPageResearchProfile}
-            component={ResearchProfile}
-            isAuthorized={isAuthenticated}
-          />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.MyPageResults}
-            component={MyResults}
-            isAuthorized={isAuthenticated}
-          />
-          <PrivateRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} isAuthorized={isAuthenticated}>
-            <MyProjectRegistrations />
-          </PrivateRoute>
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.MyPageUserRoleAndHelp}
-            component={UserRoleAndHelp}
-            isAuthorized={isAuthenticated}
-          />
-          <PrivateRoute exact path={UrlPathTemplate.MyPageTerms} component={Terms} isAuthorized={isAuthenticated} />
-          <PrivateRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isAuthenticated} />
-        </Switch>
-      </ErrorBoundary>
+          }
+        />
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageMyMessagesRegistration, UrlPathTemplate.MyPage)}
+          element={<PrivateRoute element={<RegistrationLandingPage />} isAuthorized={isCreator} />}
+        />
+        <Route
+          path={getSubUrl(UrlPathTemplate.MyPageMyRegistrations, UrlPathTemplate.MyPage)}
+          element={
+            <PrivateRoute
+              element={
+                <MyRegistrations
+                  selectedPublished={selectedRegistrationStatus.published}
+                  selectedUnpublished={selectedRegistrationStatus.unpublished}
+                />
+              }
+              isAuthorized={isCreator}
+            />
+          }
+        />
+
+        <Route path={getSubUrl(UrlPathTemplate.MyPage, UrlPathTemplate.MyPage, true)} element={<NotFound />} />
+      </Routes>
     </StyledPageWithSideMenu>
   );
 };

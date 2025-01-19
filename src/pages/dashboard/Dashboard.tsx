@@ -3,7 +3,7 @@ import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AboutContent } from '../infopages/AboutContent';
@@ -11,7 +11,7 @@ import HomePage from './HomePage';
 
 const Dashboard = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [showBanner, setShowBanner] = useState(localStorage.getItem(LocalStorageKey.ShowTagline) !== 'false');
   const [readMore, setReadMore] = useState(false);
 
@@ -21,9 +21,9 @@ const Dashboard = () => {
     const loginPath = localStorage.getItem(LocalStorageKey.RedirectPath);
     if (loginPath) {
       localStorage.removeItem(LocalStorageKey.RedirectPath);
-      history.push(loginPath);
+      navigate(loginPath, { replace: true });
     }
-  }, [history]);
+  }, [navigate]);
 
   return (
     <Box

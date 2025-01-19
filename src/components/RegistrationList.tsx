@@ -3,7 +3,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +17,7 @@ import { dataTestId } from '../utils/dataTestIds';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
   getRegistrationLandingPagePath,
-  getRegistrationWizardLink,
+  getRegistrationWizardPath,
   getResearchProfilePath,
   UrlPathTemplate,
 } from '../utils/urlPaths';
@@ -125,10 +125,8 @@ export const RegistrationListItemContent = ({
             <MuiLink
               target={target}
               component={Link}
-              to={{
-                pathname: getRegistrationLandingPagePath(identifier),
-                state: { previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState,
-              }}>
+              state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
+              to={{ pathname: getRegistrationLandingPagePath(identifier) }}>
               {getTitleString(registration.mainTitle)}
             </MuiLink>
           )}
@@ -201,7 +199,7 @@ export const RegistrationListItemContent = ({
             <IconButton
               component={Link}
               target={target}
-              to={getRegistrationWizardLink(identifier, { goToLandingPageAfterSaveAndSee: true })}
+              to={getRegistrationWizardPath(identifier)}
               data-testid={`edit-registration-${identifier}`}
               size="small"
               sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>

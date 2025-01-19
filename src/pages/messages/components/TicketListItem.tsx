@@ -73,16 +73,18 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       }}>
       <MuiLink
         component={Link}
+        state={
+          {
+            previousSearch: window.location.search,
+            selectedTicketType: ticket.type,
+          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState
+        }
         to={{
           pathname: isOnTasksPage
             ? getTasksRegistrationPath(identifier)
             : isOnMyPageMessages
               ? getMyMessagesRegistrationPath(identifier)
               : '',
-          state: {
-            previousSearch: window.location.search,
-            selectedTicketType: ticket.type,
-          } satisfies PreviousSearchLocationState & SelectedTicketTypeLocationState,
         }}
         onClick={() => {
           if (!viewedByUser) {

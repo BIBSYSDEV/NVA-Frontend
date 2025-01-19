@@ -2,7 +2,7 @@ import { Autocomplete } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   defaultChannelSearchSize,
   fetchSerialPublication,
@@ -23,8 +23,9 @@ import { PublicationChannelOption } from '../../registration/resource_type_tab/c
 
 export const SeriesFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const seriesParam = searchParams.get(ResultParam.Series);
   const [seriesQuery, setSeriesQuery] = useState('');
   const debouncedQuery = useDebounce(seriesQuery);
@@ -60,7 +61,7 @@ export const SeriesFilter = () => {
     }
     syncedParams.delete(ResultParam.From);
 
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   const isFetching = seriesParam ? selectedSeriesQuery.isPending : seriesOptionsQuery.isFetching;

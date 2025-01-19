@@ -32,7 +32,8 @@ interface SupportAccordionProps {
 export const SupportAccordion = ({ registration, supportTicket, addMessage, refetchData }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const location = useLocation<SelectedTicketTypeLocationState>();
+  const location = useLocation();
+  const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
   const user = useSelector((store: RootState) => store.user);
   const userIsTicketOwner = user && supportTicket?.owner === user.nvaUsername;
@@ -66,8 +67,8 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
 
   const userCanCompleteTicket = userHasAccessRight(registration, 'support-request-approve');
 
-  const defaultExpanded = location.state?.selectedTicketType
-    ? location.state.selectedTicketType === 'GeneralSupportCase'
+  const defaultExpanded = locationState?.selectedTicketType
+    ? locationState.selectedTicketType === 'GeneralSupportCase'
     : isPendingSupportTicket || !userHasReadTicket;
 
   return (

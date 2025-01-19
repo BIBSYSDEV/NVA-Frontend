@@ -7,7 +7,7 @@ import { ErrorList } from '../pages/registration/ErrorList';
 import { RootState } from '../redux/store';
 import { dataTestId } from '../utils/dataTestIds';
 import { getFirstErrorTab, TabErrors } from '../utils/formik-helpers/formik-helpers';
-import { getRegistrationWizardLink } from '../utils/urlPaths';
+import { getRegistrationWizardPath } from '../utils/urlPaths';
 
 interface RegistrationErrorActionsProps extends BoxProps {
   tabErrors: TabErrors;
@@ -43,7 +43,7 @@ export const RegistrationErrorActions = ({
         variant="outlined"
         component={Link}
         size="small"
-        to={getRegistrationWizardLink(registrationIdentifier, { tab: firstErrorTab })}
+        to={getRegistrationWizardPath(registrationIdentifier, firstErrorTab)}
         endIcon={<EditIcon />}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
         {t('registration.public_page.go_back_to_wizard')}
