@@ -1,30 +1,20 @@
-import { Box } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { Amplify } from 'aws-amplify';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import { AppRoutes } from './AppRoutes';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { getUserAttributes } from './api/authApi';
+import { AppRoutes } from './AppRoutes';
 import { AcceptTermsDialog } from './components/AcceptTermsDialog';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
-import { EnvironmentBanner } from './components/EnvironmentBanner';
-import { ErrorBoundary } from './components/ErrorBoundary';
 import { PageSpinner } from './components/PageSpinner';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
-import { SkipLink } from './components/SkipLink';
-import { Footer } from './layout/Footer';
-import { Notifier } from './layout/Notifier';
-import { Header } from './layout/header/Header';
 import { useMatomoTracking } from './matomo/useMatomoTracking';
 import { RootState } from './redux/store';
 import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { USE_MOCK_DATA } from './utils/constants';
-import { getDateFnsLocale, getDatePickerLocaleText } from './utils/date-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
 
@@ -45,7 +35,7 @@ if (
   window.location.href = window.location.href.replace('#', '?');
 }
 
-export const App = () => {
+const Root = () => {
   useMatomoTracking();
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
@@ -92,40 +82,19 @@ export const App = () => {
       {mustCreatePerson && <CreateCristinPersonDialog user={user} />}
       {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}
 
-      {isLoadingUserAttributes ? (
-        <PageSpinner aria-label={t('common.page_title')} />
-      ) : (
-        <BrowserRouter>
-          <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Notifier />
-            <SkipLink href="#main-content">{t('common.skip_to_main_content')}</SkipLink>
-            <Header />
-            <EnvironmentBanner />
-            <Box
-              component="main"
-              id="main-content"
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: '100%',
-                alignItems: 'center',
-                flexGrow: 1,
-                mb: '0.5rem',
-              }}>
-              <ErrorBoundary>
-                <LocalizationProvider
-                  dateAdapter={AdapterDateFns}
-                  adapterLocale={getDateFnsLocale(i18n.language)}
-                  dateFormats={{ keyboardDate: 'dd.MM.yyyy' }}
-                  localeText={getDatePickerLocaleText(i18n.language)}>
-                  <AppRoutes />
-                </LocalizationProvider>
-              </ErrorBoundary>
-            </Box>
-            <Footer />
-          </Box>
-        </BrowserRouter>
-      )}
+      {isLoadingUserAttributes ? <PageSpinner aria-label={t('common.page_title')} /> : <AppRoutes />}
     </>
+  );
+};
+
+const router = createBrowserRouter([{ path: '*', element: <Root /> }], { future: { v7_relativeSplatPath: true } });
+
+export const App = () => {
+  const { t } = useTranslation();
+
+  return (
+    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
+      <RouterProvider router={router} future={{ v7_startTransition: true }} />
+    </Suspense>
   );
 };

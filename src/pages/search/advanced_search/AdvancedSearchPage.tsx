@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
@@ -47,10 +47,11 @@ const gridRowDivider = (
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
 
-  const params = new URLSearchParams(history.location.search);
+  const params = new URLSearchParams(location.search);
 
   const registrationParams = useRegistrationsQueryParams();
   const resultSearchQuery = useRegistrationSearch({
@@ -69,8 +70,7 @@ export const AdvancedSearchPage = () => {
     }
 
     syncedParams.delete(ResultParam.From);
-
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (
@@ -211,7 +211,7 @@ export const AdvancedSearchPage = () => {
         </Grid>
 
         <Grid container item xs={12} sx={{ justifyContent: isLargeScreen ? 'end' : 'center' }}>
-          <Button variant="outlined" onClick={() => history.push(history.location.pathname)}>
+          <Button variant="outlined" onClick={() => navigate(location.pathname)}>
             {t('search.reset_selection')}
           </Button>
         </Grid>

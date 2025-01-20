@@ -1,10 +1,12 @@
 import { Component, PropsWithChildren } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import nbTranslations from '../translations/nbTranslations.json';
 import { LocalStorageKey } from '../utils/constants';
 
-type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
+type ErrorBoundaryClassProps = WithTranslation & {
+  location: ReturnType<typeof useLocation>;
+};
 
 enum ErrorType {
   None,
@@ -82,7 +84,13 @@ class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassP
   }
 }
 
-export const ErrorBoundary = withTranslation()(withRouter(ErrorBoundaryClass));
+// Wrapper functional component to provide routing props
+const ErrorBoundaryClassWrapper = (props: PropsWithChildren<WithTranslation>) => {
+  const location = useLocation();
+  return <ErrorBoundaryClass {...props} location={location} />;
+};
+
+export const ErrorBoundary = withTranslation()(ErrorBoundaryClassWrapper);
 
 export class BasicErrorBoundary extends Component<PropsWithChildren<unknown>> {
   state = { hasError: false };

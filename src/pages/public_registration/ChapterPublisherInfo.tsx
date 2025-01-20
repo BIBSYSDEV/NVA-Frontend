@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import { hyphenate } from 'isbn3';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
@@ -26,9 +27,12 @@ export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInf
       {publisherPublicationContext.isbnList && publisherPublicationContext.isbnList.length > 0 && (
         <Box sx={{ display: 'flex', flexDirection: 'column', mb: '0.5rem' }}>
           <Typography fontWeight="bold">{t('registration.resource_type.isbn')}</Typography>
-          {publisherPublicationContext.isbnList.map((isbn) => (
-            <Typography key={isbn}>{isbn}</Typography>
-          ))}
+          <Typography>
+            {publisherPublicationContext.isbnList
+              .filter(Boolean)
+              .map((isbn) => hyphenate(isbn))
+              .join(', ')}
+          </Typography>
         </Box>
       )}
       <PublicPublisher publisher={publisherPublicationContext.publisher} />

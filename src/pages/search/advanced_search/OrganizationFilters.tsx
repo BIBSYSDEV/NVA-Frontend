@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { defaultOrganizationSearchSize, fetchOrganization } from '../../../api/cristinApi';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { useSearchForOrganizations } from '../../../api/hooks/useSearchForOrganizations';
@@ -29,11 +29,12 @@ interface OrganizationFiltersProps {
 
 export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: OrganizationFiltersProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
   const user = useSelector((store: RootState) => store.user);
-  const params = new URLSearchParams(history.location.search);
+  const params = new URLSearchParams(location.search);
   const excludeSubunits = params.get(ResultParam.ExcludeSubunits) === 'true';
   const topLevelOrgParam = params.get(ResultParam.TopLevelOrganization);
   const [showUnitSelection, setShowUnitSelection] = useState(false);
@@ -79,7 +80,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
       syncedParams.delete(ResultParam.From);
     }
 
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (
@@ -117,7 +118,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
               }
               syncedParams.delete(ResultParam.From);
               syncedParams.delete(ResultParam.Unit);
-              history.push({ search: syncedParams.toString() });
+              navigate({ search: syncedParams.toString() });
               setSearchTerm('');
             }
           }}
@@ -173,7 +174,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
               ? () => {
                   params.delete(ResultParam.From);
                   params.delete(ResultParam.Unit);
-                  history.push({ search: params.toString() });
+                  navigate({ search: params.toString() });
                 }
               : undefined
           }

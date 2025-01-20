@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchPerson, ProjectSearchParameter, ProjectsSearchParams, searchForProjects } from '../../api/cristinApi';
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
@@ -38,7 +38,7 @@ import { registrationSortOptions } from '../search/registration_search/Registrat
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const location = useLocation();
   const [registrationsPage, setRegistrationsPage] = useState(1);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationSort, setRegistrationSort] = useState(registrationSortOptions[0]);
@@ -51,14 +51,14 @@ const ResearchProfile = () => {
     // Reset pagination when visiting a new research profile
     setRegistrationsPage(1);
     setProjectsPage(1);
-  }, [history.location.search]);
+  }, [location.search]);
 
   const user = useSelector((store: RootState) => store.user);
 
   const currentCristinId = user?.cristinId ?? '';
-  const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
+  const isPublicPage = location.pathname === UrlPathTemplate.ResearchProfile;
   const personId = isPublicPage
-    ? (new URLSearchParams(history.location.search).get('id') ?? '') // Page for Research Profile of anyone
+    ? (new URLSearchParams(location.search).get('id') ?? '') // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
 
   const personIdNumber = getIdentifierFromId(personId);
@@ -238,7 +238,7 @@ const ResearchProfile = () => {
           </Box>
         )}
 
-        {!orcidUri && history.location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
+        {!orcidUri && location.pathname.includes(UrlPathTemplate.MyPageResearchProfile) && (
           <Grid
             sx={{
               backgroundColor: 'secondary.dark',

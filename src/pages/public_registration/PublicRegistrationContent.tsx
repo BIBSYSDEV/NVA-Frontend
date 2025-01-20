@@ -12,12 +12,13 @@ import { RegistrationIconHeader } from '../../components/RegistrationIconHeader'
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { PreviousPathLocationState } from '../../types/locationState.types';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString, isBook, isReport, isResearchData, userHasAccessRight } from '../../utils/registration-helpers';
-import { getRegistrationWizardLink } from '../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
@@ -83,7 +84,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <Tooltip title={t('registration.edit_registration')}>
             <IconButton
               component={RouterLink}
-              to={getRegistrationWizardLink(identifier)}
+              state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+              to={getRegistrationWizardPath(identifier)}
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}>
               <EditIcon />

@@ -10,7 +10,7 @@ export const mockUser: FeideUser = {
   'custom:topOrgCristinId': 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
   'custom:nvaUsername': '1@20754.0.0.0',
   'custom:roles':
-    'Creator,Doi-Curator,Support-Curator,Publishing-Curator,Curator-thesis,Curator-thesis-embargo,App-admin,Institution-admin,Editor,Internal-importer',
+    'Creator,Doi-Curator,Support-Curator,Publishing-Curator,Curator-thesis,Curator-thesis-embargo,Nvi-Curator,App-admin,Institution-admin,Editor,Internal-importer',
   'custom:accessRights': '',
   'custom:allowedCustomers': 'https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
 };
@@ -24,6 +24,7 @@ export const mockRoles: InstitutionUser = {
     { type: 'Role', rolename: RoleName.SupportCurator },
     { type: 'Role', rolename: RoleName.CuratorThesis },
     { type: 'Role', rolename: RoleName.CuratorThesisEmbargo },
+    { type: 'Role', rolename: RoleName.NviCurator },
     { type: 'Role', rolename: RoleName.Editor },
     { type: 'Role', rolename: RoleName.InstitutionAdmin },
     { type: 'Role', rolename: RoleName.InternalImporter },

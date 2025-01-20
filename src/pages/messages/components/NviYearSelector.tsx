@@ -1,6 +1,6 @@
 import { MenuItem, Select, SelectProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
@@ -11,10 +11,11 @@ const nviYearFilterValues = getNviYearFilterValues(new Date().getFullYear() + 1)
 
 export const NviYearSelector = (props: Partial<SelectProps>) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { year, offset } = useNviCandidatesParams();
 
-  const searchParams = new URLSearchParams(history.location.search);
+  const searchParams = new URLSearchParams(location.search);
 
   return (
     <Select
@@ -29,7 +30,7 @@ export const NviYearSelector = (props: Partial<SelectProps>) => {
         if (offset) {
           syncedParams.delete(NviCandidatesSearchParam.Offset);
         }
-        history.push({ search: syncedParams.toString() });
+        navigate({ search: syncedParams.toString() });
       }}
       {...props}>
       {nviYearFilterValues.map((year) => (

@@ -6,13 +6,13 @@ import { getLanguageByUri } from 'nva-language';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration } from '../../../../api/registrationApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { AssociatedLink } from '../../../../types/associatedArtifact.types';
-import { BasicDataLocationState } from '../../../../types/locationState.types';
+import { BasicDataLocationState, RegistrationFormLocationState } from '../../../../types/locationState.types';
 import {
   DescriptionFieldNames,
   FileFieldNames,
@@ -23,12 +23,12 @@ import { PublicationInstanceType, Registration } from '../../../../types/registr
 import { displayDate } from '../../../../utils/date-helpers';
 import { getMainRegistrationType } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { getImportCandidatePath, getRegistrationWizardLink } from '../../../../utils/urlPaths';
+import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
 import { CompareDoiField } from './CompareDoiField';
 import { CompareFields } from './CompareFields';
 import { CompareJournalFields } from './CompareJournalFields';
 
-interface MergeImportCandidateParams {
+interface MergeImportCandidateParams extends Record<string, string | undefined> {
   candidateIdentifier: string;
   registrationIdentifier: string;
 }
@@ -36,14 +36,17 @@ interface MergeImportCandidateParams {
 export const CentralImportCandidateMerge = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory<BasicDataLocationState>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const locationState = location.state as BasicDataLocationState;
   const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
   const registrationQuery = useFetchRegistration(registrationIdentifier);
 
   const importCandidateQuery = useQuery({
+    enabled: !!candidateIdentifier,
     queryKey: ['importCandidate', candidateIdentifier],
-    queryFn: () => fetchImportCandidate(candidateIdentifier),
+    queryFn: () => fetchImportCandidate(candidateIdentifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
 
@@ -60,7 +63,7 @@ export const CentralImportCandidateMerge = () => {
 
   const importCandidateMutation = useMutation({
     mutationFn: () =>
-      updateImportCandidateStatus(candidateIdentifier, {
+      updateImportCandidateStatus(candidateIdentifier ?? '', {
         candidateStatus: 'IMPORTED',
         nvaPublicationId: registration?.id,
       }),
@@ -77,7 +80,7 @@ export const CentralImportCandidateMerge = () => {
   const importCandidate = importCandidateQuery.data;
 
   if (importCandidate?.importStatus.candidateStatus === 'IMPORTED') {
-    return <Redirect to={{ pathname: getImportCandidatePath(candidateIdentifier), state: history.location.state }} />;
+    return <Navigate to={{ pathname: getImportCandidatePath(candidateIdentifier ?? '') }} state={locationState} />;
   }
 
   const getLanguageName = (languageUri?: string) => {
@@ -105,7 +108,12 @@ export const CentralImportCandidateMerge = () => {
         await importCandidateMutation.mutateAsync();
         await registrationQuery.refetch();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
-        history.push(getRegistrationWizardLink(registrationIdentifier));
+        navigate(getRegistrationWizardPath(registrationIdentifier ?? ''), {
+          state: {
+            ...locationState,
+            previousPath: getImportCandidatePath(candidateIdentifier ?? ''),
+          } satisfies RegistrationFormLocationState,
+        });
       }}>
       {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (
         <Box
@@ -257,7 +265,7 @@ export const CentralImportCandidateMerge = () => {
             )}
 
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
-            <Button onClick={() => history.goBack()}>{t('common.cancel')}</Button>
+            <Button onClick={() => navigate(-1)}>{t('common.cancel')}</Button>
             <LoadingButton
               type="submit"
               variant="contained"

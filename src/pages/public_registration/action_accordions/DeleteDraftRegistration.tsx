@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { deleteRegistration } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -21,7 +21,10 @@ interface DeleteDraftRegistrationProps {
 export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistrationProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory<(PreviousSearchLocationState & PreviousPathLocationState) | undefined>();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const locationState = location.state as (PreviousSearchLocationState & PreviousPathLocationState) | undefined;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -30,17 +33,17 @@ export const DeleteDraftRegistration = ({ registration }: DeleteDraftRegistratio
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
 
-      if (history.location.pathname.startsWith(UrlPathTemplate.MyPageMessages)) {
-        history.push({
+      if (location.pathname.startsWith(UrlPathTemplate.MyPageMessages)) {
+        navigate({
           pathname: UrlPathTemplate.MyPageMyMessages,
-          search: history.location.state?.previousSearch,
+          search: locationState?.previousSearch,
         });
-      } else if (history.location.pathname.startsWith(UrlPathTemplate.RegistrationNew)) {
-        history.push(history.location.state?.previousPath || UrlPathTemplate.MyPageMyRegistrations);
-      } else if (history.location.pathname.startsWith(UrlPathTemplate.TasksDialogue)) {
-        history.push({
+      } else if (location.pathname.startsWith(UrlPathTemplate.RegistrationNew)) {
+        navigate(locationState?.previousPath || UrlPathTemplate.MyPageMyRegistrations);
+      } else if (location.pathname.startsWith(UrlPathTemplate.TasksDialogue)) {
+        navigate({
           pathname: UrlPathTemplate.TasksDialogue,
-          search: history.location.state?.previousSearch,
+          search: locationState?.previousSearch,
         });
       }
     },

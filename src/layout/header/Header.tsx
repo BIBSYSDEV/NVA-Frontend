@@ -97,8 +97,8 @@ export const Header = () => {
           color="inherit"
           sx={{ gridArea: 'search' }}
           title={t('common.search')}
-          isSelected={location.pathname === UrlPathTemplate.Home || currentPath === UrlPathTemplate.Home}
-          to={UrlPathTemplate.Home}>
+          isSelected={location.pathname === UrlPathTemplate.Root || currentPath === UrlPathTemplate.Root}
+          to={UrlPathTemplate.Root}>
           <SearchIcon fontSize="large" />
         </MenuIconButton>
 

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { formatDateStringToISO } from '../../../utils/date-helpers';
@@ -21,8 +21,9 @@ const startsWithFourDigitYear = (date: string) => {
 
 export const TicketDateIntervalFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const maxDate = new Date();
 
   const selectedDatesParam = searchParams.get(TicketSearchParam.CreatedDate);
@@ -35,7 +36,7 @@ export const TicketDateIntervalFilter = () => {
     } else {
       syncedParams.delete(TicketSearchParam.CreatedDate);
     }
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (

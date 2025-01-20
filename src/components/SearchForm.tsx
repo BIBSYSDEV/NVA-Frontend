@@ -1,6 +1,6 @@
 import { Box, BoxProps, TextFieldProps } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ResultParam } from '../api/searchApi';
 import { SearchTextField } from '../pages/search/SearchTextField';
 import { dataSearchFieldAttributeName, SearchParam, syncParamsWithSearchFields } from '../utils/searchHelpers';
@@ -11,8 +11,9 @@ interface SearchFormProps extends Pick<BoxProps, 'sx'>, Pick<TextFieldProps, 'la
 }
 
 export const SearchForm = ({ sx, label, placeholder, dataTestId, paramName = 'query' }: SearchFormProps) => {
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const currentSearchTerm = searchParams.get(paramName) ?? '';
 
   const [inputValue, setInputValue] = useState(currentSearchTerm);
@@ -38,7 +39,7 @@ export const SearchForm = ({ sx, label, placeholder, dataTestId, paramName = 'qu
         syncedParams.delete(ResultParam.From);
         syncedParams.delete(SearchParam.Page);
 
-        history.push({ search: searchParams.toString() });
+        navigate({ search: searchParams.toString() });
       }}>
       <SearchTextField
         inputProps={{ [dataSearchFieldAttributeName]: paramName }}
