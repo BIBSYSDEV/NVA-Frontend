@@ -3,7 +3,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ConfirmDialog } from '../../components/ConfirmDialog';

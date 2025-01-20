@@ -4,7 +4,7 @@ import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormEr
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { createRegistrationFromImportCandidate, fetchImportCandidate } from '../../../../api/registrationApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { PageHeader } from '../../../../components/PageHeader';

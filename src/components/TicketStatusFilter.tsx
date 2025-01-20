@@ -1,6 +1,6 @@
 import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';

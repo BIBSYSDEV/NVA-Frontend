@@ -7,7 +7,7 @@ import { Box, IconButton, LinkProps, List, ListItemText, Link as MuiLink, Toolti
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';

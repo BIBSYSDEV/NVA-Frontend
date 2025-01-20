@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { createNviPeriod, updateNviPeriod } from '../../../api/scientificIndexApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { NviPeriod } from '../../../types/nvi.types';

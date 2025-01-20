@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { LocalStorageKey } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 

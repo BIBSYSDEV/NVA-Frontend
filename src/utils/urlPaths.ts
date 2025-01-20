@@ -1,4 +1,4 @@
-import { To } from 'react-router-dom';
+import { To } from 'react-router';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;

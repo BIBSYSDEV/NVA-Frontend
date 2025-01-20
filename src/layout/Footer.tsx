@@ -2,7 +2,7 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Divider, Link as MuiLink, Typography, styled } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { dataTestId } from '../utils/dataTestIds';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { LanguageSelector } from './header/LanguageSelector';

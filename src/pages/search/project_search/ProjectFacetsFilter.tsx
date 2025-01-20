@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { removeSearchParamValue, SearchParam } from '../../../utils/searchHelpers';
@@ -7,7 +8,6 @@ import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
 import { SearchPageProps } from '../SearchPage';
 import { ProjectStatusFilter } from './ProjectStatusFilter';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 type ProjectFacetsFilterProps = Pick<SearchPageProps, 'projectQuery'>;
 

@@ -1,5 +1,5 @@
 import { Box, IconButton, ListItemText, Link as MuiLink, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import OrcidLogo from '../../../resources/images/orcid_logo.svg';

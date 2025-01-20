@@ -3,7 +3,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest2 } from '../../../api/apiRequest';
 import { PageHeader } from '../../../components/page_layout_components/PageHeader';

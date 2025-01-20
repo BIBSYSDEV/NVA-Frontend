@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { formatDateStringToISO } from '../../../utils/date-helpers';

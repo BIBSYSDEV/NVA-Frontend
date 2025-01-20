@@ -3,7 +3,7 @@ import { Box, Button, Checkbox, DialogActions, FormControlLabel, TextField, Typo
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
 import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
 import { Modal } from '../../../components/Modal';

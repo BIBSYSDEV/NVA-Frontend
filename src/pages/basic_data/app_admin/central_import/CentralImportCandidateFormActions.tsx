@@ -4,7 +4,7 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';

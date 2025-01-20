@@ -3,7 +3,7 @@ import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AboutContent } from '../infopages/AboutContent';

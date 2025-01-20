@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, useFormikContext } from 'formik';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { fetchPublisher, fetchSerialPublication } from '../../../api/publicationChannelApi';
 import { ResultParam } from '../../../api/searchApi';

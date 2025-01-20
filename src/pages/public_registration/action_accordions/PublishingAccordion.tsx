@@ -7,7 +7,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, T
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';

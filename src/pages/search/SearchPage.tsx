@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
 import { SearchForm } from '../../components/SearchForm';
 import { SearchResponse, SearchResponse2 } from '../../types/common.types';

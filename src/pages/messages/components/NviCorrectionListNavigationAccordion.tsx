@@ -1,6 +1,6 @@
 import RuleIcon from '@mui/icons-material/Rule';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/PageWithSideMenu';

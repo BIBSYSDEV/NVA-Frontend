@@ -2,7 +2,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box, BoxProps, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ErrorList } from '../pages/registration/ErrorList';
 import { RootState } from '../redux/store';
 import { dataTestId } from '../utils/dataTestIds';

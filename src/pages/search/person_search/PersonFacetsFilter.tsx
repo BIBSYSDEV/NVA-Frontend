@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { PersonSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { removeSearchParamValue, SearchParam } from '../../../utils/searchHelpers';

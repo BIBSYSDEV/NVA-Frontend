@@ -6,7 +6,7 @@ import { getLanguageByUri } from 'nva-language';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration } from '../../../../api/registrationApi';
 import { PageSpinner } from '../../../../components/PageSpinner';

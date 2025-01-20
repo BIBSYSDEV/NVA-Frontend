@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { useFetchProject } from '../../../api/hooks/useFetchProject';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPageContent } from '../../../components/styled/Wrappers';

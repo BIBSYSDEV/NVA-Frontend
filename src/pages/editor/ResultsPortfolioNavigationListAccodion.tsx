@@ -2,7 +2,7 @@ import NotesIcon from '@mui/icons-material/Notes';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { CustomerResultParam } from '../../api/searchApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList } from '../../components/PageWithSideMenu';

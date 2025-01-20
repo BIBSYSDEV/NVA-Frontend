@@ -24,7 +24,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';

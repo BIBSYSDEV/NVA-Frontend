@@ -1,7 +1,7 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';

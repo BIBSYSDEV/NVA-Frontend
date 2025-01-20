@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';

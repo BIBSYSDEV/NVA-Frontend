@@ -2,10 +2,10 @@ import { Box, Chip, MenuItem, Select } from '@mui/material';
 import { Language } from 'nva-language';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { registrationLanguageOptions } from '../../../utils/registration-helpers';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 export const LanguageFilter = () => {

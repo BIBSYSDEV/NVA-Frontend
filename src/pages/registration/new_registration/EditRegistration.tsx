@@ -1,14 +1,14 @@
 import { Box } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { PageHeader } from '../../../components/PageHeader';
 import { StyledPageContent } from '../../../components/styled/Wrappers';
+import { IdentifierParams } from '../../../utils/urlPaths';
 import { RegistrationForm } from '../RegistrationForm';
 import { LinkRegistration } from './LinkRegistration';
 import { StartEmptyRegistration } from './StartEmptyRegistration';
 import { UploadRegistration } from './UploadRegistration';
-import { IdentifierParams } from '../../../utils/urlPaths';
 
 enum PanelName {
   Link = 'link-panel',

@@ -1,7 +1,7 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { MessageForm } from '../../../components/MessageForm';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { RegistrationTab } from '../../../types/registration.types';

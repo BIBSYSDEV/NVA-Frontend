@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router';
 import {
   PersonSearchParameter,
   PersonSearchParams,
