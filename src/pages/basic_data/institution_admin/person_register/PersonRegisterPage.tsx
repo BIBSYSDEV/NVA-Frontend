@@ -87,6 +87,7 @@ export const PersonRegisterPage = () => {
       ) : (
         <>
           <ListPagination
+            showPaginationTop
             count={employeeSearchQuery.data?.size ?? 0}
             rowsPerPage={rowsPerPage}
             page={page}

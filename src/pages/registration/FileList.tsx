@@ -41,7 +41,7 @@ const StyledTableCell = styled(TableCell)({
 interface FileListProps {
   title: string;
   files: AssociatedFile[];
-  uppy: Uppy;
+  uppy?: Uppy;
   remove: (index: number) => any;
   baseFieldName: string;
 }
@@ -209,11 +209,12 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                   disabled={!userCanEditFile(file, user, values)}
                   removeFile={() => {
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-
-                    const uppyFiles = uppy.getFiles();
-                    const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
-                    if (uppyId) {
-                      uppy.removeFile(uppyId);
+                    if (uppy) {
+                      const uppyFiles = uppy.getFiles();
+                      const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
+                      if (uppyId) {
+                        uppy.removeFile(uppyId);
+                      }
                     }
                     remove(associatedFileIndex);
 

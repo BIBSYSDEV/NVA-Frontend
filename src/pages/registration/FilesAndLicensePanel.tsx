@@ -29,7 +29,7 @@ const getChannelRegisterJournalUrl = (pid: string) => `${channelRegisterBaseUrl}
 const getChannelRegisterPublisherUrl = (pid: string) => `${channelRegisterBaseUrl}/KanalForlagInfo.action?pid=${pid}`;
 
 interface FilesAndLicensePanelProps {
-  uppy: Uppy;
+  uppy?: Uppy;
 }
 
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
@@ -70,7 +70,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   useEffect(() => {
     // Avoid adding duplicated file names to an existing registration,
     // since files could have been uploaded in another session without being in uppy's current state
-    uppy.setOptions({
+    uppy?.setOptions({
       onBeforeFileAdded: (currentFile) => {
         if (filesRef.current.some((file) => file.name === currentFile.name)) {
           uppy.info(t('registration.files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
@@ -100,7 +100,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   return (
     <Paper elevation={0} component={BackgroundDiv} sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <Typography component="h2" variant="h3">
-        {t('registration.files_and_license.files')}
+        {files.length > 0 || canUploadFile
+          ? t('registration.files_and_license.files')
+          : t('registration.heading.files_and_license')}
       </Typography>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
         <Paper elevation={5} component={BackgroundDiv}>

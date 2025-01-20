@@ -5,11 +5,11 @@ import { AssociatedFile, emptyFile } from '../../../types/associatedArtifact.typ
 
 interface FileUploaderProps {
   addFile: (file: AssociatedFile) => void;
-  uppy: Uppy;
+  uppy?: Uppy;
   disabled?: boolean;
 }
 
-export const FileUploader = ({ addFile, uppy, disabled = false }: FileUploaderProps) => {
+export const FileUploader = ({ addFile, uppy, disabled = !uppy }: FileUploaderProps) => {
   useEffect(() => {
     if (uppy && !uppy.opts.meta.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {
