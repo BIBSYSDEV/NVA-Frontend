@@ -1,7 +1,7 @@
 import { Button, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { RootState } from '../../redux/store';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 

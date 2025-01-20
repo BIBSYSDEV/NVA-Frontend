@@ -1,6 +1,6 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 export const Forbidden = () => {

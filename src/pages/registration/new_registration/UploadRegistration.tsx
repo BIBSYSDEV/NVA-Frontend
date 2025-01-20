@@ -6,7 +6,7 @@ import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';

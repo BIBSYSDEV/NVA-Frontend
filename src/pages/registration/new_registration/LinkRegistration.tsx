@@ -16,7 +16,7 @@ import { AxiosResponse } from 'axios';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
 import { useCreateRegistrationFromDoi } from '../../../api/hooks/useCreateRegistrationFromDoi';
 import { useLookupDoi } from '../../../api/hooks/useLookupDoi';

@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam, TicketSearchParam } from '../../../api/searchApi';
 import { CategorySelector } from '../../../components/CategorySelector';
 import { PublicationInstanceType } from '../../../types/registration.types';

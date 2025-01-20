@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ListPagination } from '../../components/ListPagination';
 import { SearchParam } from '../../utils/searchHelpers';
 

@@ -1,6 +1,6 @@
 import { Box, List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';

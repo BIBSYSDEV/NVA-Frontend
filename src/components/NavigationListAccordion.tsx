@@ -10,7 +10,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { ReactNode } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 interface NavigationListAccordionProps extends AccordionProps {
   title: string;

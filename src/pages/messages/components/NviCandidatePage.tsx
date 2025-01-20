@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { useFetchRegistration } from '../../../api/hooks/useFetchRegistration';
 import { fetchNviCandidate } from '../../../api/searchApi';

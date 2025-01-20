@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { defaultOrganizationSearchSize, fetchOrganization } from '../../../api/cristinApi';
 import { useFetchOrganization } from '../../../api/hooks/useFetchOrganization';
 import { useSearchForOrganizations } from '../../../api/hooks/useSearchForOrganizations';

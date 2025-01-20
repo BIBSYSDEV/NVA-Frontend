@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { MinimizedMenuIconButton } from '../../components/SideMenu';
 import { PreviousPathLocationState } from '../../types/locationState.types';
 import { RegistrationLandingPage } from './RegistrationLandingPage';

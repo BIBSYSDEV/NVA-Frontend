@@ -1,7 +1,7 @@
 import { Box, BoxProps } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../api/searchApi';
 import { syncParamsWithSearchFields } from '../../utils/searchHelpers';
 

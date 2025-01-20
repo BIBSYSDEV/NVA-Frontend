@@ -1,6 +1,6 @@
 import { Box, BoxProps, TextFieldProps } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../api/searchApi';
 import { SearchTextField } from '../pages/search/SearchTextField';
 import { dataSearchFieldAttributeName, SearchParam, syncParamsWithSearchFields } from '../utils/searchHelpers';

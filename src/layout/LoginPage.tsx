@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
 import { LocalStorageKey } from '../utils/constants';

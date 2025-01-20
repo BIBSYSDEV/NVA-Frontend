@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { AdminCustomerInstitution } from './AdminCustomerInstitution';
 import { AdminCustomerInstitutions } from './AdminCustomerInstitutions';

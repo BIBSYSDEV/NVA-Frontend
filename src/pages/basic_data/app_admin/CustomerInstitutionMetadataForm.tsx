@@ -3,7 +3,7 @@ import { Box, Button, Checkbox, Divider, FormControlLabel, FormLabel, MenuItem, 
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import {
   createCustomerInstitution,
   updateCustomerInstitution,

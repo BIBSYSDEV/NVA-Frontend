@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { useEffect } from 'react';
-import { useBlocker } from 'react-router-dom';
+import { useBlocker } from 'react-router';
 import { ConfirmDialog } from './ConfirmDialog';
 
 interface RouteLeavingGuardProps {

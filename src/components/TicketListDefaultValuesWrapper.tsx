@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { TicketSearchParam } from '../api/searchApi';
 import { RootState } from '../redux/store';
 import { TicketStatus } from '../types/publication_types/ticket.types';

@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 import { Layout } from './Layout';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';

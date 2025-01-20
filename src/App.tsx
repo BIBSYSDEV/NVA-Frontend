@@ -3,7 +3,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 import { getUserAttributes } from './api/authApi';
 import { AppRoutes } from './AppRoutes';
 import { AcceptTermsDialog } from './components/AcceptTermsDialog';
@@ -87,14 +87,14 @@ const Root = () => {
   );
 };
 
-const router = createBrowserRouter([{ path: '*', element: <Root /> }], { future: { v7_relativeSplatPath: true } });
+const router = createBrowserRouter([{ path: '*', element: <Root /> }]);
 
 export const App = () => {
   const { t } = useTranslation();
 
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-      <RouterProvider router={router} future={{ v7_startTransition: true }} />
+      <RouterProvider router={router} />
     </Suspense>
   );
 };
