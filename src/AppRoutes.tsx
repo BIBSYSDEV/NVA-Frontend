@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router';
 import { Layout } from './Layout';
+import NotFound from './pages/errorpages/NotFound';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
@@ -22,7 +23,6 @@ const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
-const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 
 export const AppRoutes = () => {
   const user = useSelector((store: RootState) => store.user);
