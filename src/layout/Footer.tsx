@@ -1,6 +1,7 @@
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Divider, Link as MuiLink, Typography, styled } from '@mui/material';
+import { Box, Button, Divider, Link as MuiLink, styled, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { dataTestId } from '../utils/dataTestIds';
@@ -30,9 +31,18 @@ export const Footer = () => {
         bgcolor: 'info.light',
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' },
-        gap: '3rem',
+        gridTemplateRows: { md: 'auto 1fr' },
+        columnGap: '3rem',
         color: 'primary.main',
       }}>
+      <Button
+        sx={{ width: 'fit-content', justifySelf: 'center', gridColumn: { md: '1 / span 3' } }}
+        data-testid={dataTestId.footer.toTopButton}
+        onClick={() => window.scroll({ top: 0, behavior: 'smooth' })}
+        startIcon={<KeyboardArrowUpIcon />}
+        aria-label={t('footer.to_top')}>
+        {t('footer.to_top')}
+      </Button>
       <div>
         <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
           <Typography color="primary" sx={{ fontWeight: 'bold' }}>
