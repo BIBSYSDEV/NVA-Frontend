@@ -1,19 +1,6 @@
 import { parse as parseIsbn } from 'isbn3';
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
-import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  ExhibitionContentType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  ReportType,
-  ResearchDataType,
-} from '../../../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
 import {
   BookPublicationContext,
@@ -54,6 +41,19 @@ import {
   ResearchDataPublicationContext,
   ResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
+import {
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  ReportType,
+  ResearchDataType,
+} from '../../../types/publicationFieldNames';
 import { ContextPublisher, PublicationChannelType } from '../../../types/registration.types';
 import { isPeriodicalMediaContribution } from '../../registration-helpers';
 import { YupShape } from '../validationHelpers';
@@ -318,7 +318,7 @@ const confirmedDocumentSchema = Yup.object({
 const degreePublicationInstance = Yup.object<YupShape<DegreePublicationInstance>>({
   type: Yup.string().oneOf(Object.values(DegreeType)).required(resourceErrorMessage.typeRequired),
   related: Yup.array().when('$publicationInstanceType', {
-    is: DegreeType.Phd,
+    is: (type: string) => type === DegreeType.Phd || type === DegreeType.ArtisticPhd,
     then: (schema) =>
       schema.of(
         Yup.lazy((related) =>

@@ -50,7 +50,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
       }}>
       {affiliations.map((affiliation, index) => (
         <Box
-          key={affiliation.type === 'Organization' ? affiliation.id : `org-${index}`}
+          key={`org-${index}`}
           sx={{
             display: 'flex',
             flexDirection: 'column',

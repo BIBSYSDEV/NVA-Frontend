@@ -349,7 +349,6 @@ export const dataTestId = {
     subtypeFields: 'public-registration-subtype-fields',
     subjectAndClassificationAccordion: 'subject-and-classification-accordion',
     tasksPanel: {
-      assigneeButton: 'assignee-button',
       assigneeIndicator: 'assignee-indicator',
       assigneeSearchField: 'assignee-search-field',
       backToWizard: 'back-to-wizard-button',
@@ -666,7 +665,6 @@ export const dataTestId = {
       webPageField: 'web-page-field',
     },
     myFieldAndBackgroundLink: 'my-field-and-background-link',
-    myProfileAccordion: 'my-profile-accordion',
     myProjectRegistrationsLink: 'my-project-registrations-link',
     myProjectsLink: 'my-projects-link',
     myRegistrationsLink: 'my-registrations-link',
@@ -756,6 +754,7 @@ export const dataTestId = {
     userDialogAccordion: 'user-dialog-accordion',
   },
   unpublishActions: {
+    confirmUnpublishCheckbox: 'confirm-unpublish-checkbox',
     openUnpublishModalButton: 'open-unpublish-modal-button',
     unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
   },

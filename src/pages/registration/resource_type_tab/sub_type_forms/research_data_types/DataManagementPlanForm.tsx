@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { fetchResults, FetchResultsParams } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
@@ -68,19 +68,16 @@ export const DataManagementPlanForm = () => {
               blurOnSelect
               loading={searchOptionsQuery.isPending}
               filterOptions={(options) => options}
-              getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
+              getOptionLabel={(option) => getTitleString(option.mainTitle)}
               renderOption={({ key, ...props }, option, state) => (
                 <li {...props} key={option.identifier}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant="subtitle1">
-                      <EmphasizeSubstring
-                        text={getTitleString(option.entityDescription?.mainTitle)}
-                        emphasized={state.inputValue}
-                      />
+                      <EmphasizeSubstring text={getTitleString(option.mainTitle)} emphasized={state.inputValue} />
                     </Typography>
                     <YearAndContributorsText
-                      date={option.entityDescription?.publicationDate}
-                      contributors={option.entityDescription?.contributorsPreview ?? []}
+                      date={option.publicationDate}
+                      contributors={option.contributorsPreview ?? []}
                     />
                   </Box>
                 </li>

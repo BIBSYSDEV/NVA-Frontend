@@ -1,11 +1,11 @@
 import { Box, FormControlLabel, FormGroup, MenuItem, Radio, RadioGroup, Select } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import {
+  fetchImportCandidates,
   FetchImportCandidatesParams,
   ImportCandidatesSearchParam,
-  fetchImportCandidates,
 } from '../../../../api/searchApi';
 import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -22,9 +22,10 @@ const yearOptions = [thisYear, thisYear - 1, thisYear - 2, thisYear - 3, thisYea
 
 export const ImportCandidatesMenuFilters = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const shouldFetchImportCandidates = history.location.pathname === UrlPathTemplate.BasicDataCentralImport;
+  const shouldFetchImportCandidates = location.pathname === UrlPathTemplate.BasicDataCentralImport;
 
   const { importCandidateQuery, importCandidateParams } = useFetchImportCandidatesQuery(shouldFetchImportCandidates);
 
@@ -41,7 +42,7 @@ export const ImportCandidatesMenuFilters = () => {
   });
 
   const updateSearchParams = (param: ImportCandidatesSearchParam, value: string) => {
-    const searchParams = new URLSearchParams(history.location.search);
+    const searchParams = new URLSearchParams(location.search);
     const syncedParams = syncParamsWithSearchFields(searchParams);
     if (syncedParams.get(param) === value) {
       syncedParams.delete(param);
@@ -49,7 +50,7 @@ export const ImportCandidatesMenuFilters = () => {
       syncedParams.set(param, value);
     }
     syncedParams.delete(ImportCandidatesSearchParam.From);
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   const statusBuckets = importCandidatesFacetsQuery.data?.aggregations?.importStatus;

@@ -7,7 +7,7 @@ import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { updateRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
@@ -28,7 +28,7 @@ interface RegistrationFormActionsProps {
   setTabNumber: (newTab: RegistrationTab) => void;
   validateForm: (values: Registration) => FormikErrors<Registration>;
   persistedRegistration: Registration;
-  isNviCandidate: boolean;
+  isResettableNviStatus: boolean;
 }
 
 const navigationButtonStyling: SxProps = {
@@ -44,12 +44,16 @@ export const RegistrationFormActions = ({
   setTabNumber,
   validateForm,
   persistedRegistration,
-  isNviCandidate,
+  isResettableNviStatus,
 }: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
-  const customer = useSelector((store: RootState) => store.customer);
-  const history = useHistory<RegistrationFormLocationState>();
   const dispatch = useDispatch();
+  const customer = useSelector((store: RootState) => store.customer);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const locationState = location.state as RegistrationFormLocationState;
+
   const queryClient = useQueryClient();
   const { values, setTouched, resetForm, isValid } = useFormikContext<Registration>();
 
@@ -62,10 +66,10 @@ export const RegistrationFormActions = ({
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
 
   const cancelEdit = () => {
-    if (history.location.state?.previousPath) {
-      history.goBack();
+    if (locationState?.previousPath) {
+      navigate(-1);
     } else {
-      history.push(getRegistrationLandingPagePath(values.identifier));
+      navigate(getRegistrationLandingPagePath(values.identifier));
     }
   };
 
@@ -98,10 +102,10 @@ export const RegistrationFormActions = ({
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
 
       if (isLastTab) {
-        if (history.location.state?.previousPath && !history.location.state?.goToLandingPageAfterSaveAndSee) {
-          history.goBack();
+        if (locationState?.previousPath) {
+          navigate(-1);
         } else {
-          history.push(getRegistrationLandingPagePath(values.identifier));
+          navigate(getRegistrationLandingPagePath(values.identifier));
         }
       }
     }
@@ -111,7 +115,7 @@ export const RegistrationFormActions = ({
   };
 
   const handleSaveClick = async () => {
-    if (isNviCandidate && (await willResetNviStatuses(persistedRegistration, values))) {
+    if (isResettableNviStatus && (await willResetNviStatuses(persistedRegistration, values))) {
       setOpenNviApprovalResetDialog(true);
     } else {
       await saveRegistration(values);

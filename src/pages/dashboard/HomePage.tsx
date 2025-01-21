@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router';
 import {
   PersonSearchParameter,
   PersonSearchParams,
@@ -43,13 +43,13 @@ export enum SearchTypeValue {
 
 const HomePage = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const paramsSearchType = params.get(SearchParam.Type);
 
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const isOnFilterPage = history.location.pathname === UrlPathTemplate.Home;
+  const isOnFilterPage = location.pathname === UrlPathTemplate.Root;
   const resultIsSelected = isOnFilterPage && (!paramsSearchType || paramsSearchType === SearchTypeValue.Result);
   const personIsSeleced = isOnFilterPage && paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = isOnFilterPage && paramsSearchType === SearchTypeValue.Project;
@@ -172,26 +172,22 @@ const HomePage = () => {
         </NavigationListAccordion>
       </SideMenu>
 
-      <Switch>
-        <ErrorBoundary>
-          <Route exact path={UrlPathTemplate.Home}>
-            <SearchPage registrationQuery={registrationQuery} personQuery={personQuery} projectQuery={projectQuery} />
-          </Route>
-          <Route exact path={UrlPathTemplate.Search} component={AdvancedSearchPage} />
-          <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
-          <Route exact path={UrlPathTemplate.ReportsNvi} component={NviReports} />
+      <ErrorBoundary>
+        <Routes>
           <Route
-            exact
-            path={UrlPathTemplate.ReportsInternationalCooperation}
-            component={InternationalCooperationReports}
+            index
+            path={UrlPathTemplate.Root}
+            element={
+              <SearchPage registrationQuery={registrationQuery} personQuery={personQuery} projectQuery={projectQuery} />
+            }
           />
-          <Route
-            exact
-            path={UrlPathTemplate.ReportsClinicalTreatmentStudies}
-            component={ClinicalTreatmentStudiesReports}
-          />
-        </ErrorBoundary>
-      </Switch>
+          <Route path={UrlPathTemplate.Search} element={<AdvancedSearchPage />} />
+          <Route path={UrlPathTemplate.Reports} element={<ReportsPage />} />
+          <Route path={UrlPathTemplate.ReportsNvi} element={<NviReports />} />
+          <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<InternationalCooperationReports />} />
+          <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<ClinicalTreatmentStudiesReports />} />
+        </Routes>
+      </ErrorBoundary>
     </StyledPageWithSideMenu>
   );
 };

@@ -4,7 +4,7 @@ import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink, FileType } from '../types/associatedArtifact.types';
-import { Contributor, ContributorRole } from '../types/contributor.types';
+import { Contributor, ContributorRole, PreviewContributor } from '../types/contributor.types';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
   AudioVisualPublication,
@@ -351,6 +351,15 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.Other,
     ],
   },
+  [DegreeType.ArtisticPhd]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
+  },
   [DegreeType.Licentiate]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [
@@ -589,19 +598,26 @@ export const contributorConfig: ContributorConfig = {
 };
 
 export const getContributorsWithPrimaryRole = (
-  contributors: Contributor[],
+  contributors: PreviewContributor[] | Contributor[],
   registrationType: PublicationInstanceType
 ) => {
   const { primaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
+
+  return contributors.filter((contributor) => {
+    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
+    return primaryRoles.includes(roleValue);
+  });
 };
 
 export const getContributorsWithSecondaryRole = (
-  contributors: Contributor[],
+  contributors: PreviewContributor[] | Contributor[],
   registrationType: PublicationInstanceType
 ) => {
   const { secondaryRoles } = contributorConfig[registrationType];
-  return contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
+  return contributors.filter((contributor) => {
+    const roleValue = typeof contributor.role === 'string' ? contributor.role : contributor.role.type;
+    return secondaryRoles.includes(roleValue);
+  });
 };
 
 export const getOutputName = (item: OutputItem): string => {
@@ -761,30 +777,33 @@ export const registrationLanguageOptions = [
 ];
 
 export const registrationsHaveSamePublicationYear = (
-  reg1: Registration | RegistrationSearchItem,
-  reg2: Registration | RegistrationSearchItem
+  registration: Registration,
+  registrationSearchItem: RegistrationSearchItem
 ) => {
-  if (!reg1.entityDescription?.publicationDate || !reg2.entityDescription?.publicationDate) {
+  const registrationPublicationYear = registration.entityDescription?.publicationDate?.year;
+
+  const registrationSearchItemPublicationYear = registrationSearchItem.publicationDate?.year;
+
+  if (registrationPublicationYear === undefined || registrationSearchItemPublicationYear === undefined) {
     return false;
   }
 
-  return reg1.entityDescription.publicationDate.year === reg2.entityDescription.publicationDate.year;
+  return registrationPublicationYear === registrationSearchItemPublicationYear;
 };
 
 export const registrationsHaveSameCategory = (
-  reg1: Registration | RegistrationSearchItem,
-  reg2: Registration | RegistrationSearchItem
+  registration: Registration,
+  registrationSearchItem: RegistrationSearchItem
 ) => {
-  if (
-    reg1.entityDescription?.reference?.publicationInstance?.type &&
-    reg2.entityDescription?.reference?.publicationInstance?.type
-  ) {
-    return (
-      reg1.entityDescription.reference.publicationInstance.type ===
-      reg2.entityDescription.reference.publicationInstance.type
-    );
+  const registrationCategory = registration.entityDescription?.reference?.publicationInstance?.type;
+
+  const registrationSearchItemCategory = registrationSearchItem.type;
+
+  if (!registrationCategory || !registrationSearchItemCategory) {
+    return false;
   }
-  return false;
+
+  return registrationCategory === registrationSearchItemCategory;
 };
 
 export const getIssnValuesString = (context: Partial<Pick<ContextSeries, 'onlineIssn' | 'printIssn' | 'issn'>>) => {
@@ -800,7 +819,22 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
   const publisher =
     registration.entityDescription?.reference?.publicationContext &&
     'publisher' in registration.entityDescription.reference.publicationContext
-      ? registration.entityDescription.reference.publicationContext.publisher
+      ? {
+          id: registration.entityDescription.reference.publicationContext.publisher?.id,
+          name: registration.entityDescription.reference.publicationContext.publisher?.name,
+        }
+      : undefined;
+
+  const publishingContextType =
+    registration.entityDescription?.reference?.publicationContext &&
+    'type' in registration.entityDescription.reference.publicationContext
+      ? (registration.entityDescription.reference.publicationContext.type as PublicationType)
+      : undefined;
+
+  const journalId =
+    registration.entityDescription?.reference?.publicationContext &&
+    'id' in registration.entityDescription.reference.publicationContext
+      ? (registration.entityDescription.reference.publicationContext.id ?? undefined)
       : undefined;
 
   const series =
@@ -809,30 +843,40 @@ export const convertToRegistrationSearchItem = (registration: Registration) => {
       ? registration.entityDescription.reference.publicationContext.series
       : undefined;
 
+  const contributors =
+    registration.entityDescription?.contributors.map((contributor) => ({
+      affiliation: contributor.affiliations,
+      correspondingAuthor: contributor.correspondingAuthor,
+      identity: contributor.identity,
+      role: contributor.role.type,
+    })) ?? [];
+
   const registrationSearchItem: RegistrationSearchItem = {
+    type: registration.entityDescription?.reference?.publicationInstance.type ?? '',
     id: registration.id,
     identifier: registration.identifier,
-    createdDate: registration.createdDate,
-    modifiedDate: registration.modifiedDate,
-    publishedDate: registration.publishedDate,
-    status: registration.status,
-    entityDescription: {
-      mainTitle: registration.entityDescription?.mainTitle ?? '',
-      abstract: registration.entityDescription?.abstract ?? '',
-      description: registration.entityDescription?.description ?? '',
-      publicationDate: registration.entityDescription?.publicationDate,
-      contributorsPreview: registration.entityDescription?.contributors ?? [],
-      contributorsCount: (registration.entityDescription?.contributors ?? []).length,
-      reference: {
-        publicationInstance: {
-          type: registration.entityDescription?.reference?.publicationInstance?.type,
-        },
-        publicationContext: {
-          publisher,
-          series,
-        },
-      },
+    recordMetadata: {
+      createdDate: registration.createdDate,
+      modifiedDate: registration.modifiedDate,
+      publishedDate: registration.publishedDate,
+      status: registration.status,
     },
+    mainTitle: registration.entityDescription?.mainTitle ?? '',
+    contributorsCount: contributors.length,
+    abstract: registration.entityDescription?.abstract ?? '',
+    description: registration.entityDescription?.description ?? '',
+    publicationDate: registration.entityDescription?.publicationDate,
+    publishingDetails: {
+      id: journalId,
+      type: publishingContextType,
+      series: {
+        name: series?.title,
+        id: series?.id,
+      },
+      publisher: publisher,
+      doi: registration.entityDescription?.reference?.doi,
+    },
+    contributorsPreview: contributors,
   };
   return registrationSearchItem;
 };

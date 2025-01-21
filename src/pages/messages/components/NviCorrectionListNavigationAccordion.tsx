@@ -1,6 +1,6 @@
 import RuleIcon from '@mui/icons-material/Rule';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { NavigationListAccordion } from '../../../components/NavigationListAccordion';
 import { NavigationList } from '../../../components/PageWithSideMenu';
@@ -11,8 +11,9 @@ import { correctionListConfig, CorrectionListId, nviCorrectionListQueryKey } fro
 
 export const NviCorrectionListNavigationAccordion = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const selectedNviList = searchParams.get(nviCorrectionListQueryKey) as CorrectionListId | null;
 
   const openNewCorrectionList = (newCorrectionListId: CorrectionListId) => {
@@ -27,7 +28,7 @@ export const NviCorrectionListNavigationAccordion = () => {
       if (currentSearchSize) {
         newSearchParams.set(ResultParam.Results, currentSearchSize);
       }
-      history.push({ search: newSearchParams.toString() });
+      navigate({ search: newSearchParams.toString() });
     }
   };
 

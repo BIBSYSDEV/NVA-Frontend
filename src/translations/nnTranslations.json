@@ -1,6 +1,7 @@
 {
   "about": {
     "availability_statement": "Tilgjengelegheitserklæring",
+    "copyright_inquiries": "Førespurnad om opphavsrett",
     "description": {
       "paragraph0": {
         "bullet_point0": "Oppfyll krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit ope vitenarkiv",
@@ -17,6 +18,10 @@
     "short_description": "Nasjonalt vitenarkiv (NVA) samlar informasjon om norsk forsking, og gjer forskingsresultat og forskingsinformasjon opent tilgjengelege."
   },
   "authorization": {
+    "about_terms": "Om brukarvilkår",
+    "about_terms_description": "<0>For å bruke tenesta Nasjonalt vitenarkiv må du akseptere <0>Sikts brukarvilkår<0></0></0> for Nasjonalt vitenarkiv.</0><0>Om du legg inn personopplysingar om andre personar må du ha deira løyve eller anna lovleg grunnlag. Du må sikre at vedkomande er informert om at personopplysingane blir publisert i Nasjonalt vitenarkiv.</0><0>Du kan ikkje tilgjengeleggjere/laste opp opphavsrettsleg materiale/åndsverk utan å ha løyve frå alle opphavarar.</0><0>Du er ansvarleg for at bruken din av Nasjonalt vitenarkiv ikkje er i strid med gjeldande rett.</0><0>For meir informasjon, sjå <0>Sikts brukarvilkår<0></0></0> i sin heilskap.</0><1>Ved å trykke \"$t(authorization.accept)\" aksepterer du Sikt sine brukarvilkår.</1>",
+    "accept": "Godta",
+    "accept_terms_intro": "Takk for at du ynskjer å gjere forsking opent tilgjengeleg i Nasjonalt vitenarkiv. Saman skal vi nå Regjeringa sitt mål om at all norsk forsking finansiert av offentlege midlar blir opent tilgjengeleg for allmennheita.",
     "accept_terms_to_create_user": "Eg samtykkjer til å bli oppretta som brukar i NVA",
     "back_to_home": "Tilbake til startsida",
     "cancel_create_user_text": "Du må opprette ein brukar for å gå vidare. Viss du avbryt, blir du logga ut. Ønskjer du å avbryte?",
@@ -28,7 +33,9 @@
     "login": "Logg inn",
     "logout": "Logg ut",
     "registration_not_published": "Denne registreringa er ikkje publisert enno.",
+    "reject": "Avslå",
     "signed_out": "Du er utlogga",
+    "welcome": "Velkomen!",
     "your_user_profile": "Din brukarprofil"
   },
   "basic_data": {
@@ -228,12 +235,12 @@
     "no": "Nei",
     "no_hits": "Ingen treff",
     "no_search_hits": "Ingen søkjetreff",
-    "none": "Ingen",
     "not_decided": "Ikkje bestemt",
     "number_of_rows_per_page": "Tal på rader per side",
     "number_short": "Nr.",
     "nva_tagline": "Nasjonalt Vitenarkiv (NVA)",
     "nvi": "Norsk vitskapsindeks (NVI)",
+    "nvi_short": "NVI",
     "open": "Opne",
     "or": "Eller",
     "orcid": "ORCID",
@@ -249,6 +256,7 @@
     "person": "Person",
     "person_id": "Person-ID",
     "place": "Stad",
+    "points": "Poeng",
     "previous": "Førre",
     "project": "Prosjekt",
     "project_status": "Prosjektstatus",
@@ -301,6 +309,7 @@
     "start_page": "Startside",
     "status": "Status",
     "tasks": "Oppgåver",
+    "terms": "Brukarvilkår",
     "test_environment": "Testmiljø",
     "time_string": "{{date}}, kl. {{time}}",
     "title": "Tittel",
@@ -496,6 +505,7 @@
   "feedback": {
     "error": {
       "404_page": "Orsak, men vi kan ikkje finne sida du leitar etter",
+      "accept_terms": "Godkjenning av brukarvilkår feila",
       "add_contributor": "Kunne ikkje leggje til bidragsytar",
       "add_employment": "Kunne ikkje leggje til tilsetjing",
       "add_role": "Kunne ikkje leggje til rolle",
@@ -543,6 +553,7 @@
       "get_person": "Kunne ikkje hente person",
       "get_positions": "Kunne ikkje hente stillingar",
       "get_project": "Kunne ikkje hente prosjekt",
+      "get_project_categories": "Kunne ikkje hente prosjektkategoriar",
       "get_publisher": "Kunne ikkje hente utgjevar",
       "get_publishers": "Søk på utgjevarar feila",
       "get_registration": "Kunne ikkje laste inn registrering",
@@ -756,6 +767,7 @@
       "message_deleted": "Meldinga er sletta",
       "metadata_published": "Metadata publisert",
       "no_messages": "Du har ingen meldingar",
+      "pending_curator": "Ventar på kurator",
       "ticket_types": {
         "Closed": "Avvist",
         "Completed": "Ferdig",
@@ -830,6 +842,7 @@
       "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbiletet?",
       "results": "Resultat",
       "telephone": "Telefon",
+      "terms_description": "<0>Du har akseptert <0>Sikt Brukarvilkår <0></0></0>.</0><0>Sikt Brukarvilkår for Nasjonalt vitenarkiv inneber mellom anna at om du legg inn personopplysingar om andre personar må du ha deira løyve eller anna lovleg grunnlag. Du må sikre at vedkomande er informert om at personopplysingane blir publiserte i Nasjonalt vitenarkiv.</0><0>Du kan ikkje tilgjengeleggjere/laste opp opphavsrettsleg materiale/åndsverk utan å ha løyve frå alle opphavarar.</0><0>Du er ansvarleg for at bruken din av Nasjonalt vitenarkiv ikkje er i strid med gjeldande rett.</0><0>For meir informasjon, sjå <0>Sikt Brukarvilkår <0></0></0> i sin heilskap.</0>",
       "upload_description": "<0>Lastar du opp eit bilete samtykkjer du til at biletet blir lagt inn som profilbilete på din offentlege profil i Nasjonalt vitenarkiv.</0><0>Profilbiletet er offentleg synleg for alle som nyttar Nasjonalt vitenarkiv.</0>",
       "upload_is_not_mandatory": "<0>Det er frivillig å laste opp eit bilete.</0><0>Du kan når som helst trekkje tilbake samtykket ved å slette biletet.</0>",
       "user_role_and_help": {
@@ -1163,6 +1176,7 @@
     "add_local_manager": "Legg til lokalt ansvarleg",
     "add_project_contributor": "Legg til prosjektdeltakar",
     "add_project_manager": "Legg til prosjektleiar",
+    "add_self": "Legg til meg",
     "add_unidentified_contributor": "Legg til uidentifisert prosjektdeltakar",
     "add_unidentified_project_manager": "Legg til uidentifisert prosjektleiar",
     "affiliation_modal": {
@@ -1273,7 +1287,6 @@
       "add_new_affiliation": "Legg til ny tilknyting",
       "add_new_affiliation_helper_text": "<0>Det er berre institusjonar som forskinga er gjennomført i samarbeid med som skal leggjast til som tilknyting til bidragsytaren.</0> <0>Legg til tilknyting til bidragsytaren ved å først søkje opp institusjonen og eventuelt eininga.</0> <0>Tilhøyrer bidragsytaren fleire forskjellige einingar under same institusjon, må du leggje til dette som ny tilknyting.</0>",
       "add_new_contributor": "Legg til ny bidragsytar",
-      "add_self_as_contributor": "Legg meg til som bidragsytar",
       "add_unverified_contributor": "Legg til ein uidentifisert bidragsytar.",
       "affiliation_is_unidentified": "Tilknyting er uidentifisert",
       "confirm_remove_author_text": "Er du sikker på at du ønskjer å fjerne {{contributorName}}?",
@@ -1284,6 +1297,7 @@
       "department": "Eining",
       "edit_affiliation": "Endre tilknyting",
       "edit_affiliation_helper_text": "<0>Berre institusjonar som forskinga er gjennomført i samarbeid med, skal leggjast til som tilknyting til bidragsyteren.</0> <0>Hvis tilknytinga ikkje er korrekt, endre tilknytingar ved å skrive inn korrekt institusjon eller eining i tekstfelta</0>",
+      "identify_contributor_description": "<p>Vel riktig person frå trefflista for å endre til identifisert bidragsytar.</p><p>Klikk på rundingen framfor personnamnet for å leggje dei til med alle registrerte institusjonstilknytningar, eller boksen framfor ein institusjonsadresse for å leggje til personen med den tilknytinga.</p><p>Får du ikkje treff på ein person som krediterer din institusjon, kontakt <hyperlink>administrator</hyperlink> slik at dei kan registrere dei.</p><p><strong>Førehandsutfylt namn: {{name}}</strong></p>",
       "identity_status": {
         "confirmed_identity": "Identifisert",
         "confirmed_identity_without_affiliation": "Bekrefta identitet utan tilknyting",
@@ -1296,7 +1310,6 @@
       "other_registrations_one": "+ {{count}} anna registrering",
       "other_registrations_other": "+ {{count}} andre registreringar",
       "prefilled_affiliation": "Førehandsutfylt tilknyting",
-      "prefilled_name": "Førehandsutfylt namn",
       "remove_affiliation": "Fjern tilknyting",
       "remove_contributor": "Fjern bidragsytar",
       "search_for_institution": "Søk etter institusjon",
@@ -1501,11 +1514,18 @@
       "error_description_published_result_workflow2": "Registreringa er publisert, men manglar følgjande:",
       "error_description_workflow1": "Følgjande feil må rettast opp før publisering av resultat:",
       "error_description_workflow2": "Resultatet har følgjande manglar:",
+      "files": {
+        "awaits_approval": "{{count}} ventar på godkjenning",
+        "file_awaits_approval": "Fil ventar på godkjenning"
+      },
+      "files_tab_list_label": "Vel synlegheit for filer",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",
       "in_progress": "Under behandling",
+      "internal_files": "Interne filer ({{count}})",
       "message_to_curator": "Melding til kurator",
+      "no_public_files": "Resultatet har ingen offentlege filer.",
       "other_contributors_one": "(+{{count}}) annan)",
       "other_contributors_other": "(+{{count}} andre)",
       "other_related_registrations": "Andre relaterte registreringar",
@@ -1514,6 +1534,7 @@
       "potential_duplicate": "Potensiell duplikat",
       "preview_of": "Førehandsvising av {{fileName}}",
       "preview_unavailable": "Førehandsvising ikkje tilgjengeleg. Opne fila i eigna program.",
+      "public_files": "Offentlege filer ({{count}})",
       "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
       "publishing_request_message_about": "Har du spørsmål, ta kontakt med kurator via meldingsfeltet.",
@@ -1536,7 +1557,6 @@
         "approved_publishing_request_description_for_workflow1": "<0>Skildringa av resultatet er publisert og synleg for andre. Eventuelle opne filer er offentleggjort i NVA og interne filer er arkivert og skjult.</0><0>Du kan fritt endre på fil(er) og skildringa av resultatet (metadata).</0><0>Ønskjer du å avpublisere forskingsresultatet, opne fleire val nedst i denne menyen.</0>",
         "approved_publishing_request_without_file_description_for_curator": "<0>Registrator kan endre på metadata.</0><0>Om registrator lastar opp nye filer, eller ønskjer ny vurdering av avviste filer, blir det sendt ein ny publiseringsførespurnad til kurator.</0>",
         "approved_publishing_request_without_file_description_for_registrator": "<0>Du kan fritt endre på skildringa av resultatet (metadata). Nye filer som du lastar opp, må sendast til kurator for godkjenning.</0>",
-        "assign_curator": "Set kurator",
         "assign_doi": "Tildel DOI",
         "assign_doi_about": "For at andre skal kunne bruke DOI, må du tildele denne. Metadata må vere publisert.",
         "confirm_republish_description": "Republiser resultatet om det skal vere tilgjengeleg i NVA. Dette vil gjere at resultatet blir vist blant søkjeresultata igjen.",
@@ -1583,6 +1603,7 @@
       "Anthology": "Del av bok eller rapport",
       "Architecture": "Arkitektur",
       "Artistic": "Kunstnerisk resultat",
+      "ArtisticDegreePhd": "Kunstnerisk doktorgradsresultat",
       "ArtisticDesign": "Design",
       "Book": "Bokpublikasjon",
       "BookAnthology": "Antologi",
@@ -1999,6 +2020,7 @@
       "advanced_search": "Avansert søk",
       "advanced_search_description": "Søk blant alle publiserte resultat",
       "choose_one_or_more": "Vel eitt eller fleire",
+      "nvi_reported_year": "Rapporteringsår",
       "publishing_period": "Publiseringsperiode",
       "reported": "Rapporterte",
       "scientific_value": {
@@ -2056,9 +2078,9 @@
     "include_tasks_without_curator": "Inkluder oppgåver utan kurator",
     "new_tasks": "Innmelde oppgåver: {{count}}",
     "nvi": {
-      "approval_status_count": "Kontrollert ({{checked}} av {{total}})",
       "approve_nvi_candidate": "Godkjenn resultat",
-      "approve_nvi_candidate_description": "<0>Som kurator kan du godkjenne eller avvise om forskingsresultatet skal NVI-rapporterast.</0> <0>Skal forskingsresultatet rapporterast, vel du \"{{buttonText}}\".</0>",
+      "approve_nvi_candidate_description": "<p>Kontroll av forskingsresultat for NVI-rapportering.</p><p>Trykk på \"{{buttonText}}\" om publikasjonen kan rapporterast. Sjå <hyperlink>Rapporteringsinstruksen</hyperlink> for meir informasjon.</p>",
+      "approve_rejected_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen skal rapporterast. Då vert også grunngjevinga for avvisinga fjerna.",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "correction_list_type": {
         "anthology_with_applicable_chapter": "Antologiar med teljande kapittel",
@@ -2072,17 +2094,18 @@
       "delete_note_description": "Er du sikker på at du vil slette denne kommentaren?",
       "exclude_subunits": "Ekskluder undereiningar",
       "institution_nvi_status": "Status NVI-rapportering",
-      "message_description": "Du kan skrive ein kommentar, som blir synleg for alle andre NVI-kuratorar med tilgang til denne registreringa.",
+      "message_description": "Har du relevante opplysingar for kontrollen, legg inn ein kommentar. Kommentaren er synleg for andre NVI-kuratorar med redigeringstilgang.",
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidatar",
       "note": "Kommentar",
-      "nvi_control": "",
+      "nvi_control": "NVI-kontroll (Norsk vitskapsindeks)",
       "previous_candidate": "Gå til førre kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis resultat",
-      "reject_nvi_candidate_description": "Skal forskningsresultatet ikkje NVI-rappoterast, vel \"{{buttonText}}\".",
+      "reject_nvi_candidate_description": "Trykk på \"{{buttonText}}\" om publikasjonen ikkje kan rapporterast. Du må grunngje avvisinga.",
       "reject_nvi_candidate_form_label": "Grunngjeving for avvising",
-      "reject_nvi_candidate_modal_text": "Ver venleg og gje ei detaljert grunngjeving for kvifor du avviser. Grunngjevinga må innehalde minst 10 teikn.",
+      "reject_nvi_candidate_modal_text": "<p>Gje ei grunngjeving for kvifor du avviser publikasjonen for NVI-rapportering.</p><p>Er du usikker på krava, sjå <hyperlink>Rapporteringsinstruksen</hyperlink>.</p><p>Grunngjevinga blir lagra i NVA, og vil vere synleg for NVI-kuratorar ved dei sampubliserande institusjonane.</p><p>Gje ei grunngjeving på kvifor du avviser denne publikasjonen for rapportering. Grunngjevinga må innehalde minst 10 teikn.</p>",
+      "rejection_reason": "Grunngjeving for avvising",
       "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukka.",
       "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikkje open.",
       "save_note": "Lagre kommentar",
@@ -2093,7 +2116,7 @@
         "Approved": "Godkjend",
         "Dispute": "Tvist",
         "New": "Kandidat",
-        "Pending": "Blir sjekka",
+        "Pending": "Blir kontrollert",
         "Rejected": "Avvist"
       },
       "waiting_for_other_institutions": "Ventar på andre institusjonar",
@@ -2108,6 +2131,7 @@
     "your_tasks": "Oppgåver du behandlar: {{count}}"
   },
   "unpublish_actions": {
+    "confirm_unpublish": "Eg bekreftar at informasjonen er korrekt, og at resutatet skal avpubliserast.",
     "duplicate": "Duplikat",
     "search_duplicate_facets": "Søk med DOI, handle eller tittel",
     "search_for_duplicate": "Søk etter forskingsresultat",

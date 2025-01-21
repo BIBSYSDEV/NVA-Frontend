@@ -7,10 +7,11 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, T
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
+import { TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FileType } from '../../../types/associatedArtifact.types';
@@ -19,7 +20,11 @@ import { PublishingTicket } from '../../../types/publication_types/ticket.types'
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
+import {
+  getTabErrors,
+  isPublishableForWorkflow2,
+  validateRegistrationForm,
+} from '../../../utils/formik-helpers/formik-helpers';
 import {
   getAssociatedFiles,
   isOpenFile,
@@ -27,7 +32,6 @@ import {
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
-import { registrationPublishableValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { PublishingLogPreview } from '../PublishingLogPreview';
 import { DuplicateWarningDialog } from './DuplicateWarningDialog';
 import { MoreActionsCollapse } from './MoreActionsCollapse';
@@ -52,7 +56,8 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
-  const location = useLocation<SelectedTicketTypeLocationState>();
+  const location = useLocation();
+  const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -85,7 +90,7 @@ export const PublishingAccordion = ({
   const canPublishMetadata =
     isDraftRegistration &&
     ((customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' &&
-      registrationPublishableValidationSchema.isValidSync(registration)) ||
+      isPublishableForWorkflow2(registration)) ||
       (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' && registrationIsValid));
 
   const lastPublishingRequest =
@@ -170,14 +175,20 @@ export const PublishingAccordion = ({
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
-  const defaultExpanded = location.state?.selectedTicketType
-    ? location.state.selectedTicketType === 'PublishingRequest'
+  const defaultExpanded = locationState?.selectedTicketType
+    ? locationState.selectedTicketType === 'PublishingRequest'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
-      sx={{ bgcolor: 'publishingRequest.light' }}
+      sx={{
+        bgcolor: 'publishingRequest.light',
+        '& .MuiAccordionSummary-content': {
+          alignItems: 'center',
+          gap: '0.5rem',
+        },
+      }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -185,11 +196,12 @@ export const PublishingAccordion = ({
           {isUnpublishedOrDeletedRegistration
             ? t(`registration.status.${registration.status}`)
             : t('registration.public_page.publication')}
-          {lastPublishingRequest &&
-            !isUnpublishedRegistration &&
-            !isDeletedRegistration &&
-            ` - ${t(`my_page.messages.ticket_types.${lastPublishingRequest.status}`)}`}
         </Typography>
+
+        {lastPublishingRequest && !isUnpublishedOrDeletedRegistration && (
+          <TicketStatusChip ticket={lastPublishingRequest} />
+        )}
+
         {(!registrationIsValid || showRegistrationWithSameNameWarning) && !isUnpublishedOrDeletedRegistration && (
           <Tooltip
             title={
@@ -197,7 +209,7 @@ export const PublishingAccordion = ({
                 ? t('registration.public_page.potential_duplicate')
                 : t('registration.public_page.validation_errors')
             }>
-            <ErrorIcon color="warning" sx={{ ml: '0.5rem' }} />
+            <ErrorIcon color="warning" sx={{ ml: '0.2rem' }} />
           </Tooltip>
         )}
       </AccordionSummary>
@@ -253,7 +265,7 @@ export const PublishingAccordion = ({
               to={getRegistrationLandingPagePath(duplicateRegistration.identifier)}>
               <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem' }}>
                 <Typography sx={{ textDecoration: 'underline', cursor: 'pointer', color: 'primary.light' }}>
-                  {duplicateRegistration.entityDescription?.mainTitle}
+                  {duplicateRegistration.mainTitle}
                 </Typography>
                 <OpenInNewOutlinedIcon
                   sx={{ cursor: 'pointer', color: 'primary.main', height: '1.3rem', width: '1.3rem' }}
@@ -306,6 +318,7 @@ export const PublishingAccordion = ({
         {lastPublishingRequest && !hasMismatchingPublishedStatus && (
           <PublishingAccordionLastTicketInfo
             publishingTicket={lastPublishingRequest}
+            canCreatePublishingRequest={userCanCreatePublishingRequest}
             canApprovePublishingRequest={userCanApprovePublishingRequest}
             registrationHasApprovedFile={registrationHasApprovedFile}
             registrationIsValid={registrationIsValid}

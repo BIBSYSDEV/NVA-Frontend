@@ -342,9 +342,9 @@ export enum ResultParam {
   Project = 'project',
   PublicationLanguageShould = 'publicationLanguageShould',
   PublicationPages = 'publicationPages',
+  PublicationYear = 'publicationYear',
   PublicationYearBefore = 'publicationYearBefore',
   PublicationYearSince = 'publicationYearSince',
-  PublicationYearShould = 'publicationYearShould',
   Publisher = 'publisher',
   Query = 'query',
   Results = 'results',
@@ -399,7 +399,7 @@ export interface FetchResultsParams {
   [ResultParam.PublicationPages]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.PublicationYearSince]?: string | null;
-  [ResultParam.PublicationYearShould]?: string | null;
+  [ResultParam.PublicationYear]?: string | null;
   [ResultParam.Publisher]?: string | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
@@ -499,6 +499,9 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   if (params.publicationPages) {
     searchParams.set(ResultParam.PublicationPages, params.publicationPages);
   }
+  if (params.publicationYear) {
+    searchParams.set(ResultParam.PublicationYear, params.publicationYear);
+  }
   if (params.publicationYearBefore) {
     if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
       searchParams.set(ResultParam.PublicationYearBefore, params.publicationYearBefore);
@@ -508,9 +511,6 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     if (!params.publicationYearBefore || +params.publicationYearSince <= +params.publicationYearBefore) {
       searchParams.set(ResultParam.PublicationYearSince, params.publicationYearSince);
     }
-  }
-  if (params.publicationYearShould) {
-    searchParams.set(ResultParam.PublicationYearShould, params.publicationYearShould);
   }
   if (params.publisher) {
     searchParams.set(ResultParam.Publisher, params.publisher);
@@ -557,6 +557,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
 
   const getResults = await apiRequest2<SearchResponse2<RegistrationSearchItem, RegistrationAggregations>>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
+    // TODO: Remove version when it becomes default
+    headers: { accept: 'application/json; version=2024-12-01' },
     signal,
   });
 
@@ -594,6 +596,7 @@ export const fetchCustomerResults = async (params: FetchCustomerResultsParams, s
     SearchResponse2<RegistrationSearchItem, RegistrationAggregations>
   >({
     url: `${SearchApiPath.CustomerRegistrations}?${searchParams.toString()}`,
+    headers: { accept: 'application/json; version=2024-12-01' },
     signal,
   });
 

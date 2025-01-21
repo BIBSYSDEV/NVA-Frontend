@@ -16,7 +16,7 @@ import { AxiosResponse } from 'axios';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
 import { useCreateRegistrationFromDoi } from '../../../api/hooks/useCreateRegistrationFromDoi';
 import { useLookupDoi } from '../../../api/hooks/useLookupDoi';
@@ -52,11 +52,11 @@ const doiUrlPlaceholder = `${doiUrlBase}10.1000/xyz123`;
 
 export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [doiQuery, setDoiQuery] = useState('');
 
   const onCreateRegistrationSuccess = (response: AxiosResponse<Registration, any>) => {
-    history.push(getRegistrationWizardPath(response.data.identifier), { highestValidatedTab: -1 });
+    navigate(getRegistrationWizardPath(response.data.identifier), { state: { highestValidatedTab: -1 } });
   };
 
   const { registrationsWithDoi, isLookingUpDoi, noHits, doiPreview } = useLookupDoi(doiQuery);

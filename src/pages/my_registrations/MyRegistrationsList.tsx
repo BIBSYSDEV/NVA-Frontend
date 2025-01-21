@@ -107,7 +107,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       )}
 
       <ConfirmDialog
-        open={!!showDeleteModal}
+        open={showDeleteModal}
         title={t('my_page.registrations.delete_registration')}
         onAccept={deleteDraftRegistration}
         onCancel={() => setShowDeleteModal(false)}
@@ -115,7 +115,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
         dialogDataTestId="confirm-delete-dialog">
         <Typography>
           {t('my_page.registrations.delete_registration_message', {
-            title: getTitleString(registrationToDelete?.entityDescription?.mainTitle),
+            title: getTitleString(registrationToDelete?.mainTitle),
           })}
         </Typography>
       </ConfirmDialog>

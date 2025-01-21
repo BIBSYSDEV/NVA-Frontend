@@ -1,9 +1,9 @@
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LaunchIcon from '@mui/icons-material/Launch';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -24,12 +24,13 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
 import { MessageForm } from '../../../components/MessageForm';
 import { Modal } from '../../../components/Modal';
+import { StatusChip, TicketStatusChip } from '../../../components/StatusChip';
 import { setNotification } from '../../../redux/notificationSlice';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
@@ -61,7 +62,7 @@ const doiLink = (
     target="_blank"
     rel="noopener noreferrer"
     sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-    <LaunchIcon fontSize="small" />
+    <OpenInNewIcon fontSize="small" />
   </MuiLink>
 );
 
@@ -77,7 +78,8 @@ export const DoiRequestAccordion = ({
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
 
-  const location = useLocation<SelectedTicketTypeLocationState>();
+  const location = useLocation();
+  const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
@@ -166,13 +168,6 @@ export const DoiRequestAccordion = ({
 
   const openFilesOnRegistration = getOpenFiles(registration.associatedArtifacts);
 
-  const hasReservedDoi = !doiRequestTicket && registration.doi;
-  const status = doiRequestTicket
-    ? t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)
-    : hasReservedDoi
-      ? t('registration.public_page.tasks_panel.reserved')
-      : '';
-
   const requestDoiButton = (
     <Button
       data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
@@ -211,19 +206,33 @@ export const DoiRequestAccordion = ({
   const userCanRequestDoi = userHasAccessRight(registration, 'doi-request-create');
   const userCanAssignDoi = userHasAccessRight(registration, 'doi-request-approve');
 
-  const defaultExpanded = location.state?.selectedTicketType
-    ? location.state.selectedTicketType === 'DoiRequest'
+  const defaultExpanded = locationState?.selectedTicketType
+    ? locationState.selectedTicketType === 'DoiRequest'
     : waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest;
+
+  const hasReservedDoi = !doiRequestTicket && registration.doi;
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
-      sx={{ bgcolor: 'doiRequest.light' }}
+      sx={{
+        bgcolor: 'doiRequest.light',
+        '& .MuiAccordionSummary-content': {
+          alignItems: 'center',
+          gap: '0.5rem',
+        },
+      }}
       elevation={3}
       defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('common.doi')}
-        {status && ` - ${status}`}
+        <Typography fontWeight="bold" sx={{ flexGrow: '1' }}>
+          {t('common.doi')}
+        </Typography>
+        {doiRequestTicket ? (
+          <TicketStatusChip ticket={doiRequestTicket} />
+        ) : hasReservedDoi ? (
+          <StatusChip text={t('registration.public_page.tasks_panel.reserved')} icon="hourglass" />
+        ) : null}
       </AccordionSummary>
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
@@ -300,6 +309,7 @@ export const DoiRequestAccordion = ({
                 <ConfirmDialog
                   open={openReserveDoiDialog}
                   title={t('registration.public_page.reserve_doi')}
+                  isLoading={isLoading === LoadingState.DraftDoi}
                   onAccept={addDraftDoi}
                   onCancel={toggleReserveDoiDialog}>
                   <Trans
@@ -336,7 +346,9 @@ export const DoiRequestAccordion = ({
             onChange={(event) => setMessageToCurator(event.target.value)}
           />
           <DialogActions>
-            <Button onClick={toggleRequestDoiModal}>{t('common.cancel')}</Button>
+            <Button onClick={toggleRequestDoiModal} disabled={isLoadingData || isLoading !== LoadingState.None}>
+              {t('common.cancel')}
+            </Button>
             <LoadingButton
               variant="contained"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}

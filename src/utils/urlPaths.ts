@@ -1,6 +1,6 @@
-import { RegistrationFormLocationState } from '../types/locationState.types';
+import { To } from 'react-router';
 
-export interface IdentifierParams {
+export interface IdentifierParams extends Record<string, string> {
   identifier: string;
 }
 
@@ -15,7 +15,7 @@ export enum UrlPathTemplate {
   BasicDataNvi = '/basic-data/nvi',
   BasicDataNviNew = '/basic-data/nvi/new',
   BasicDataPersonRegister = '/basic-data/person-register',
-  Home = '/',
+  Root = '/',
   Institution = '/institution',
   InstitutionCurators = '/institution/settings/curators',
   InstitutionCuratorsOverview = '/institution/overview/curators',
@@ -75,30 +75,20 @@ export enum UrlPathTemplate {
   Wildcard = '*',
 }
 
+export const getSubUrl = (path: UrlPathTemplate, basePath: UrlPathTemplate, splashRoute = false) => {
+  return `${path.replace(basePath, '')}${splashRoute ? '/*' : ''}`;
+};
+
 export const getRegistrationLandingPagePath = (identifier: string) =>
   UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(identifier));
 
 export const getImportCandidatePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidate.replace(':identifier', encodeURIComponent(identifier));
 
-export const getRegistrationWizardPath = (identifier: string) =>
-  UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
-
-interface RegistrationWizardOptions {
-  highestValidatedTab?: number;
-  tab?: number;
-  goToLandingPageAfterSaveAndSee?: boolean;
-}
-
-export const getRegistrationWizardLink = (identifier: string, options: RegistrationWizardOptions = {}) => {
+export const getRegistrationWizardPath = (identifier: string, tab?: number): To => {
   return {
     pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
-    state: {
-      highestValidatedTab: options.highestValidatedTab,
-      previousPath: window.location.pathname,
-      goToLandingPageAfterSaveAndSee: options.goToLandingPageAfterSaveAndSee,
-    } satisfies RegistrationFormLocationState,
-    search: options.tab ? `?tab=${options.tab}` : '',
+    search: tab ? `?tab=${tab}` : '',
   };
 };
 

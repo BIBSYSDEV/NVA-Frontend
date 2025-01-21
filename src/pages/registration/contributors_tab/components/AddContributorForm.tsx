@@ -2,11 +2,13 @@ import { LoadingButton } from '@mui/lab';
 import { Button, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router';
 import { apiRequest } from '../../../../api/apiRequest';
 import { ContributorSearchField } from '../../../../components/ContributorSearchField';
-import { StyledRightAlignedFooter } from '../../../../components/styled/Wrappers';
+import { OpenInNewLink } from '../../../../components/OpenInNewLink';
+import { StyledContributorModalActions } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { ContributorRole } from '../../../../types/contributor.types';
@@ -14,6 +16,7 @@ import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { UrlPathTemplate } from '../../../../utils/urlPaths';
 
 interface AddContributorFormProps {
   addContributor: (selectedUser: CristinPerson) => void;
@@ -59,9 +62,15 @@ export const AddContributorForm = ({
   return (
     <>
       {initialSearchTerm && (
-        <Typography variant="subtitle1">
-          {t('registration.contributors.prefilled_name')}: <b>{initialSearchTerm}</b>
-        </Typography>
+        <Trans
+          i18nKey="registration.contributors.identify_contributor_description"
+          components={{
+            p: <Typography sx={{ mb: '1rem' }} />,
+            strong: <strong />,
+            hyperlink: <OpenInNewLink component={Link} to={UrlPathTemplate.InstitutionOverviewPage} />,
+          }}
+          values={{ name: initialSearchTerm }}
+        />
       )}
       <ContributorSearchField
         selectedPerson={selectedPerson}
@@ -69,21 +78,24 @@ export const AddContributorForm = ({
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <StyledRightAlignedFooter>
+      <StyledContributorModalActions>
+        {!initialSearchTerm && (
+          <Button
+            data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
+            variant="outlined"
+            disabled={!searchTerm || !!selectedPerson}
+            onClick={openAddUnverifiedContributor}>
+            {t('registration.contributors.add_new_contributor')}
+          </Button>
+        )}
         {!isSelfAdded && !initialSearchTerm && (
           <LoadingButton
             data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
             onClick={addSelfAsContributor}
+            variant="outlined"
             loading={isAddingSelf}>
-            {t('registration.contributors.add_self_as_contributor')}
+            {t('project.add_self')}
           </LoadingButton>
-        )}
-        {!initialSearchTerm && (
-          <Button
-            data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
-            onClick={openAddUnverifiedContributor}>
-            {t('registration.contributors.add_new_contributor')}
-          </Button>
         )}
         <Button
           data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
@@ -95,7 +107,7 @@ export const AddContributorForm = ({
             ? t('registration.contributors.verify_contributor')
             : t('registration.contributors.add_contributor')}
         </Button>
-      </StyledRightAlignedFooter>
+      </StyledContributorModalActions>
     </>
   );
 };

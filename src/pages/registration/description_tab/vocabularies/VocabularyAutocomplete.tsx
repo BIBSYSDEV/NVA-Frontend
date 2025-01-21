@@ -46,6 +46,7 @@ export const VocabularyAutocomplete = ({
         }
       }}
       multiple
+      fullWidth
       renderInput={(params) => <TextField {...params} label={label} variant="filled" />}
     />
   );

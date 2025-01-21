@@ -1,31 +1,33 @@
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActiveOutlined';
-import { Badge, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { TicketSearchParam, fetchCustomerTickets } from '../api/searchApi';
+import { useLocation, useNavigate } from 'react-router';
+import { fetchCustomerTickets, TicketSearchParam } from '../api/searchApi';
 import { RootState } from '../redux/store';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
-import { syncParamsWithSearchFields, taskNotificationsParams } from '../utils/searchHelpers';
+import { getTaskNotificationsParams, syncParamsWithSearchFields } from '../utils/searchHelpers';
 
 const statusNew: TicketStatus = 'New';
 
 export const DialoguesWithoutCuratorButton = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const currentStatusFilter = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
   const newStatusIsSelected = currentStatusFilter.includes(statusNew);
 
+  const tasksNotificationParams = getTaskNotificationsParams(user);
   const notificationsQuery = useQuery({
     enabled: user?.isDoiCurator || user?.isSupportCurator || user?.isPublishingCurator,
-    queryKey: ['taskNotifications', taskNotificationsParams],
-    queryFn: () => fetchCustomerTickets(taskNotificationsParams),
+    queryKey: ['taskNotifications', tasksNotificationParams],
+    queryFn: () => fetchCustomerTickets(tasksNotificationParams),
     meta: { errorMessage: false },
   });
 
@@ -44,7 +46,7 @@ export const DialoguesWithoutCuratorButton = () => {
     } else {
       syncedParams.set(TicketSearchParam.Status, [...currentStatusFilter, statusNew].join(','));
     }
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (
@@ -57,7 +59,16 @@ export const DialoguesWithoutCuratorButton = () => {
       startIcon={newStatusIsSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
       endIcon={
         unassignedNotificationsCount > 0 ? (
-          <Badge badgeContent={<NotificationsActiveIcon fontSize="small" />} sx={{ ml: '1rem' }} />
+          <NotificationsActiveIcon
+            sx={{
+              width: '1.5rem',
+              height: '1.5rem',
+              bgcolor: 'info.main',
+              color: 'white',
+              borderRadius: '50%',
+              padding: '3px',
+            }}
+          />
         ) : undefined
       }
       onClick={toggleDialoguesWithoutCurators}

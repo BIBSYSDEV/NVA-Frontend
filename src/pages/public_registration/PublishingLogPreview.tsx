@@ -22,7 +22,7 @@ export const PublishingLogPreview = ({ registration, tickets }: PublishingLogPre
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', mb: '0.5rem' }}>
       {logEntries.map(({ Icon, text, date, bgcolor }, index) => (
-        <StyledStatusMessageBox key={index} sx={{ px: '0.5rem', display: 'flex', alignItems: 'center', bgcolor }}>
+        <StyledStatusMessageBox key={index} sx={{ display: 'flex', alignItems: 'center', bgcolor }}>
           <Icon fontSize="small" />
           <Typography>{text}</Typography>
           {date && <Typography sx={{ ml: 'auto' }}>{toDateString(date)}</Typography>}

@@ -2,7 +2,7 @@ import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } fro
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../../api/searchApi';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
@@ -29,7 +29,7 @@ export const CentralImportDuplicateSearch = ({
     doi: duplicateSearchFilters.doi,
     contributorName: duplicateSearchFilters.author,
     issn: duplicateSearchFilters.issn,
-    publicationYearShould: duplicateSearchFilters.yearPublished,
+    publicationYear: duplicateSearchFilters.yearPublished,
     title: duplicateSearchFilters.title,
     from: rowsPerPage * (page - 1),
     results: rowsPerPage,

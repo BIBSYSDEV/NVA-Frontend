@@ -3,7 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Button, Link, Typography } from '@mui/material';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { Contributor, ContributorRole } from '../../types/contributor.types';
@@ -23,8 +23,8 @@ export const PublicRegistrationContributors = ({
   registrationType,
 }: PublicRegistrationContributorsProps) => {
   const { t } = useTranslation();
-  const primaryContributors = getContributorsWithPrimaryRole(contributors, registrationType);
-  const secondaryContributors = getContributorsWithSecondaryRole(contributors, registrationType);
+  const primaryContributors = getContributorsWithPrimaryRole(contributors, registrationType) as Contributor[];
+  const secondaryContributors = getContributorsWithSecondaryRole(contributors, registrationType) as Contributor[];
 
   const [showAll, setShowAll] = useState(primaryContributors.length === 0);
   const toggleShowAll = () => setShowAll(!showAll);
@@ -131,7 +131,10 @@ const ContributorsRow = ({ contributors, distinctUnits, hiddenCount }: Contribut
                 <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
               )}
             </Typography>
-            <ContributorIndicators contributor={contributor} />
+            <ContributorIndicators
+              orcId={contributor.identity.orcId}
+              correspondingAuthor={contributor.correspondingAuthor}
+            />
             {index < contributors.length - 1 && <span>;</span>}
           </Box>
         );

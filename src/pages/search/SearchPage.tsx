@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
 import { SearchForm } from '../../components/SearchForm';
 import { SearchResponse, SearchResponse2 } from '../../types/common.types';
@@ -9,11 +9,11 @@ import { CristinProject, ProjectAggregations } from '../../types/project.types';
 import { RegistrationAggregations, RegistrationSearchItem } from '../../types/registration.types';
 import { CristinPerson, PersonAggregations } from '../../types/user.types';
 import { SearchParam } from '../../utils/searchHelpers';
-import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
+import { SearchTypeField, SearchTypeValue } from './SearchTypeField';
 
 const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
   display: 'grid',
@@ -38,8 +38,8 @@ export interface SearchPageProps {
 
 export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: SearchPageProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const paramsSearchType = params.get(SearchParam.Type);
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
