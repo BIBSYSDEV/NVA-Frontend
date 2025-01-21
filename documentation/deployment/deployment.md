@@ -7,14 +7,14 @@ The app is deployed via [AWS Amplify](https://aws.amazon.com/amplify/) in the `F
 AWS Amplify is designed to work with feature branch and GitFlow workflows. Read more in the official docs: [Feature branch deployments and team workflows](https://docs.aws.amazon.com/amplify/latest/userguide/multi-environments.html).
 We currently have 4 enviroments (dev, test, sandbox, prod) as described by the following table.
 
-| Enviroment | URL                         | Branch    | Description                                                                                                                                                |
-| ---------- | --------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| prod       | https://nva.sikt.no         | `main`    | Production environment.                                                                                                                                    |
-| test       | https://test.nva.sikt.no    | `staging` | Mainly used by external testers to verify work/progress before it reaches production.                                                                      |
-| dev        | https://dev.nva.sikt.no     | `develop` | Under active development. Mainley used by internal users, e.g. the development team. Is password protected against the outside world (including crawlers). |
-| sandbox    | https://sandbox.nva.sikt.no | `sandbox` | Sandbox environment. Used for testing and verifying features under development.                                                                            |
+| Enviroment | URL                         | Branch    | Description                                                                                                                                               |
+| ---------- | --------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| prod       | https://nva.sikt.no         | `main`    | Production environment.                                                                                                                                   |
+| test       | https://test.nva.sikt.no    | `staging` | Mainly used by external testers to verify work/progress before it reaches production.                                                                     |
+| dev        | https://dev.nva.sikt.no     | `develop` | Under active development. Mainly used by internal users, e.g. the development team. Is password protected against the outside world (including crawlers). |
+| sandbox    | https://sandbox.nva.sikt.no | `sandbox` | Sandbox environment. Used for testing and verifying features under development.                                                                           |
 
-In addition to these four
+In addition to these four environments, frontend has a `preview` branch, that can be used to verify features or bug fixes under development. This branch are only available through the Amplify URL that can be seen in AWS Amplify. While the other mentioned enviroments has their own backend enviroment as well, the preview deployment just uses the `dev` environment for backend.
 
 ## Work process
 
@@ -66,17 +66,19 @@ When working on new features, bug fixes, etc, one should branch out from the `de
 
 When one want to update the test environment one will usually create a PR from the `develop` branch into the `staging` branch. We prefer to write a title on the PR on the same format each time "Update staging CURRENT_DATE" to make it easier to find in the commit log. The description will typically be the change log. The merge should be done with "Create a merge commit" to ensure that all commits gets a separate commit message and to avoid merge conflicts. Once this PR is merged, Amplify will automatically update the test environment.
 
-### Update sandbox
-
-When one want to update the sandbox environment one will usually create a PR from the `develop` branch into the `sandbox` branch. Once this PR is merged, Amplify will automatically update the sandbox environment.
-
 ### Update prod
 
 To update the prod environment one will usually create a PR from the `staging` branch (that should have been verified by necessary stakeholders on the test environment) into the `main` branch. We prefer to write a title on the PR on the same format "Update main CURRENT_DATE" to make it easier to find in the commit log. The description will typically be the change log. The merge should be done with "Create a merge commit" to ensure that all commits gets a separate commit message and to avoid merge conflicts. Once this PR is merged, Amplify will automatically update the prod environment.
 
+### Update sandbox
+
+When one want to update the sandbox environment one will usually do that with `git push origin develop:sandbox --force`. One can also deploy a non-merged feature branch to sandbox to verify functionality. When deploying to sandbox, ensure that you are interferring with anyone else verifying something at the moment. Check who deployed the last changes by looking at the [commit history](https://github.com/BIBSYSDEV/NVA-Frontend/commits/sandbox/).
+
 ### Deploy a feature branch
 
 In some cases one might want to deploy a feature branch to allow PO or other stakeholders to verify the changes before they are merged to `develop`. This can be achieved by using the "Connect branch" feature in AWS Amplify. After deploying the branch, environment variables `REACT_APP_REDIRECT_SIGN_IN` and `REACT_APP_REDIRECT_SIGN_OUT` must be set, and access control for the branch must be configured (if necessary). Remember to re-deploy after configuring environment variables. Lastly, the branch url has to be added to `Allowed callback URLs` and `Allowed sign-out URLs` in `Hosted UI` in `Cognito` in the NVA environment.
+
+One static branch is set up for this up front, allowing to deploy any feature branch ready to use within the dev enviroment. Use `git push origin my-feature-branch:preview --force` to deploy. It's full URL can be seen on AWS Amplify. Make sure you are not interferring with someone else by looking at the [commit history](https://github.com/BIBSYSDEV/NVA-Frontend/commits/preview/) and talk to the last committer.
 
 ### A template for the change log
 
