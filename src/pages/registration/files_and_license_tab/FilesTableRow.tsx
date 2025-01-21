@@ -148,19 +148,19 @@ export const FilesTableRow = ({
               <DeleteIconButton
                 data-testid={dataTestId.registrationWizard.files.deleteFile}
                 onClick={toggleOpenConfirmDialog}
-                tooltip={t('registration.files_and_license.remove_file')}
+                tooltip={t('registration.files_and_license.delete_file')}
               />
             )}
             <ConfirmDialog
               open={openConfirmDialog}
-              title={t('registration.files_and_license.remove_file')}
+              title={t('registration.files_and_license.delete_file')}
               onAccept={() => {
                 removeFile();
                 toggleOpenConfirmDialog();
               }}
               onCancel={toggleOpenConfirmDialog}>
               <Typography>
-                {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
+                {t('registration.files_and_license.delete_file_description', { fileName: file.name })}
               </Typography>
             </ConfirmDialog>
           </Box>
