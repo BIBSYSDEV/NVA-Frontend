@@ -211,7 +211,9 @@ export const FileList = ({ title, files, uppy, remove, baseFieldName }: FileList
                     const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                     if (uppy) {
                       const uppyFiles = uppy.getFiles();
-                      const uppyId = uppyFiles.find((uppyFile) => uppyFile.uploadURL === file.identifier)?.id;
+                      const uppyId = uppyFiles.find(
+                        (uppyFile) => uppyFile.response?.body?.identifier === file.identifier
+                      )?.id;
                       if (uppyId) {
                         uppy.removeFile(uppyId);
                       }
