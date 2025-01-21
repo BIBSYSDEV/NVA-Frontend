@@ -1,5 +1,5 @@
 import { Box, MenuItem, Pagination, PaginationItem, Select, Typography } from '@mui/material';
-import { MutableRefObject, ReactNode } from 'react';
+import { ReactNode, RefObject } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ROWS_PER_PAGE_OPTIONS } from '../utils/constants';
 import { dataTestId } from '../utils/dataTestIds';
@@ -15,7 +15,7 @@ export interface ListPaginationBottomProps {
   pageCounterComponent: ReactNode;
   alternativePaginationText?: string;
   paginationAriaLabel?: string;
-  scrollToDivRef: MutableRefObject<HTMLDivElement | null>;
+  scrollToDivRef: RefObject<HTMLDivElement | null>;
 }
 
 export const ListPaginationBottom = ({
