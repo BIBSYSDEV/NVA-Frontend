@@ -35,7 +35,6 @@ export const Footer = () => {
         color: 'primary.main',
       }}>
       <Button
-        sx={{ width: 'fit-content' }}
         data-testid={dataTestId.footer.toTopButton}
         onClick={() => window.scroll({ top: 0, behavior: 'smooth' })}
         startIcon={<KeyboardArrowUpIcon />}>
