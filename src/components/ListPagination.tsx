@@ -54,5 +54,3 @@ export const ListPagination = ({
     </>
   );
 };
-
-// check useID and useRef
