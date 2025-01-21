@@ -14,7 +14,7 @@ We currently have 4 enviroments (dev, test, sandbox, prod) as described by the f
 | dev        | https://dev.nva.sikt.no     | `develop` | Under active development. Mainly used by internal users, e.g. the development team. Is password protected against the outside world (including crawlers). |
 | sandbox    | https://sandbox.nva.sikt.no | `sandbox` | Sandbox environment. Used for testing and verifying features under development.                                                                           |
 
-In addition to these four environments, frontend has a `preview` branch, that can be used to verify features or bug fixes under development. This branch are only available through the Amplify URL that can be seen in AWS Amplify. While the other mentioned enviroments has their own backend enviroment as well, the preview deployment just uses the `dev` environment for backend.
+In addition to these four environments, frontend has a `preview` branch, that can be used to verify features or bug fixes under development. This branch are only available through the Amplify URL that can be seen in AWS Amplify. While the other mentioned enviroments has their own backend enviroment, the preview deployment just uses the dev environment for backend.
 
 ## Work process
 
@@ -72,7 +72,7 @@ To update the prod environment one will usually create a PR from the `staging` b
 
 ### Update sandbox
 
-When one want to update the sandbox environment one will usually do that with `git push origin develop:sandbox --force`. One can also deploy a non-merged feature branch to sandbox to verify functionality. When deploying to sandbox, ensure that you are interferring with anyone else verifying something at the moment. Check who deployed the last changes by looking at the [commit history](https://github.com/BIBSYSDEV/NVA-Frontend/commits/sandbox/).
+When one want to update the sandbox environment one will usually do that with `git push origin develop:sandbox --force`. One can also deploy a non-merged feature branch to sandbox to verify functionality. When deploying to sandbox, ensure that you are not interferring with anyone else verifying something at the moment. Check who deployed the last changes by looking at the [commit history](https://github.com/BIBSYSDEV/NVA-Frontend/commits/sandbox/).
 
 ### Deploy a feature branch
 
