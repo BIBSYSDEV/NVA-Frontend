@@ -481,7 +481,6 @@ export const dataTestId = {
       licenseItemShowOlderVersion: 'license-item-show-older-versions',
       licenseModal: 'license-modal',
       linkToResourceField: 'link-to-resource-field',
-      removeFileButton: 'button-remove-file',
       selectLicenseField: 'uploaded-file-select-license',
       fileTypeSelect: 'file-type-select',
       version: 'version-radios',
