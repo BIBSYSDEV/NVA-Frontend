@@ -1,9 +1,10 @@
-import { ReactNode } from 'react';
+import { Box } from '@mui/material';
+import { ReactNode, useRef } from 'react';
 import { ListPaginationBottom, ListPaginationBottomProps } from './ListPaginationBottom';
 import { ListPaginationCounter } from './ListPaginationCounter';
 import { ListPaginationTop } from './ListPaginationTop';
 
-interface ListPaginationProps extends Omit<ListPaginationBottomProps, 'pageCounterComponent'> {
+interface ListPaginationProps extends Omit<ListPaginationBottomProps, 'pageCounterComponent' | 'scrollToDivRef'> {
   children: ReactNode;
   showPaginationTop?: boolean;
   sortingComponent?: ReactNode;
@@ -28,9 +29,11 @@ export const ListPagination = ({
   const itemsStart = count > 0 ? (page - 1) * rowsPerPage + 1 : 0;
   const itemsEnd = Math.min(page * rowsPerPage, count);
   const pageCounter = <ListPaginationCounter start={itemsStart} end={itemsEnd} total={count} />;
+  const scrollToDivRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
+      <Box ref={scrollToDivRef} sx={{ scrollMarginTop: '5rem' }} />
       {showPaginationTop && (
         <ListPaginationTop pageCounterComponent={pageCounter} sortingComponent={sortingComponent} />
       )}
@@ -46,7 +49,10 @@ export const ListPagination = ({
         rowsPerPageOptions={rowsPerPageOptions}
         alternativePaginationText={alternativePaginationText}
         paginationAriaLabel={paginationAriaLabel}
+        scrollToDivRef={scrollToDivRef}
       />
     </>
   );
 };
+
+// check useID and useRef

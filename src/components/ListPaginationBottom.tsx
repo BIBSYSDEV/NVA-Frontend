@@ -1,5 +1,5 @@
 import { Box, MenuItem, Pagination, PaginationItem, Select, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { MutableRefObject, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ROWS_PER_PAGE_OPTIONS } from '../utils/constants';
 import { dataTestId } from '../utils/dataTestIds';
@@ -15,6 +15,7 @@ export interface ListPaginationBottomProps {
   pageCounterComponent: ReactNode;
   alternativePaginationText?: string;
   paginationAriaLabel?: string;
+  scrollToDivRef: MutableRefObject<HTMLDivElement | null>;
 }
 
 export const ListPaginationBottom = ({
@@ -28,6 +29,7 @@ export const ListPaginationBottom = ({
   pageCounterComponent,
   alternativePaginationText,
   paginationAriaLabel,
+  scrollToDivRef,
 }: ListPaginationBottomProps) => {
   const { t } = useTranslation();
 
@@ -57,7 +59,10 @@ export const ListPaginationBottom = ({
         aria-label={paginationAriaLabel}
         page={page}
         count={pages}
-        onChange={(_, newPage) => onPageChange(newPage)}
+        onChange={(_, newPage) => {
+          scrollToDivRef?.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
+          onPageChange(newPage);
+        }}
         renderItem={(item) => (
           <PaginationItem {...item} variant={item.selected ? 'outlined' : 'text'} page={item.page?.toLocaleString()} />
         )}
