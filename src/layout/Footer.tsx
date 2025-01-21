@@ -26,9 +26,16 @@ export const Footer = () => {
   return (
     <Box
       component="footer"
-      sx={{ display: 'flex', flexDirection: 'column', padding: '1rem', bgcolor: 'info.light', color: 'primary.main' }}>
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '1rem',
+        bgcolor: 'info.light',
+        color: 'primary.main',
+      }}>
       <Button
-        sx={{ width: 'fit-content', alignSelf: 'center' }}
+        sx={{ width: 'fit-content' }}
         data-testid={dataTestId.footer.toTopButton}
         onClick={() => window.scroll({ top: 0, behavior: 'smooth' })}
         startIcon={<KeyboardArrowUpIcon />}>
