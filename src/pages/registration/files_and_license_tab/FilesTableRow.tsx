@@ -36,11 +36,12 @@ import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { deleteFile } from '../../../api/fileApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, FileRrs, FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
@@ -85,6 +86,7 @@ export const FilesTableRow = ({
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
+  const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.user);
   const customer = useSelector((state: RootState) => state.customer);
@@ -133,16 +135,13 @@ export const FilesTableRow = ({
     mutationFn: async () => {
       if (identifier) {
         await deleteFile(identifier, file.identifier);
+        console.log('HEI');
         removeFile();
         toggleOpenConfirmDialog();
       }
     },
-    onSuccess: () => {
-      // TODO: Show success message
-    },
-    onError: () => {
-      // TODO: Show error message
-    },
+    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.delete_file'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_file'), variant: 'error' })),
   });
 
   return (
