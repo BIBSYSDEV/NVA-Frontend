@@ -490,7 +490,6 @@ export const dataTestId = {
     },
     new: {
       emptyRegistrationAccordion: 'new-registration-empty',
-      fileAccordion: 'new-registration-file',
       linkAccordion: 'new-registration-link',
       linkMetadata: 'link-metadata',
       startRegistrationButton: 'registration-start-button',
