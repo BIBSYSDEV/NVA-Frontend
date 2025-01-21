@@ -31,7 +31,6 @@ export const Footer = () => {
         bgcolor: 'info.light',
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' },
-        gridTemplateRows: { md: 'auto 1fr' },
         columnGap: '3rem',
         color: 'primary.main',
       }}>
@@ -39,8 +38,7 @@ export const Footer = () => {
         sx={{ width: 'fit-content', justifySelf: 'center', gridColumn: { md: '1 / span 3' } }}
         data-testid={dataTestId.footer.toTopButton}
         onClick={() => window.scroll({ top: 0, behavior: 'smooth' })}
-        startIcon={<KeyboardArrowUpIcon />}
-        aria-label={t('footer.to_top')}>
+        startIcon={<KeyboardArrowUpIcon />}>
         {t('footer.to_top')}
       </Button>
       <div>
@@ -75,7 +73,9 @@ export const Footer = () => {
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
 
-        <LanguageSelector />
+        <Box sx={{ mb: '3rem' }}>
+          <LanguageSelector />
+        </Box>
       </div>
 
       <div>
