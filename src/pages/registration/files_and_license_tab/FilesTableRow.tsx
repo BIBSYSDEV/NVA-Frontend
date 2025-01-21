@@ -135,7 +135,6 @@ export const FilesTableRow = ({
     mutationFn: async () => {
       if (identifier) {
         await deleteFile(identifier, file.identifier);
-        console.log('HEI');
         removeFile();
         toggleOpenConfirmDialog();
       }
