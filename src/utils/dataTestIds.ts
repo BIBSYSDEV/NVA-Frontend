@@ -168,6 +168,7 @@ export const dataTestId = {
     privacyLink: 'privacy-link',
     systemStatusLink: 'system-status-link',
     technicalSupportLink: 'technical-support-link',
+    toTopButton: 'to-top-button',
   },
   header: {
     basicDataLink: 'basic-data-link',
