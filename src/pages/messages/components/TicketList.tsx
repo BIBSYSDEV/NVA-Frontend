@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
@@ -39,8 +39,9 @@ const viewedByLabelId = 'viewed-by-select';
 
 export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const user = useSelector((store: RootState) => store.user);
 
   const ticketStatusOptions = isOnTasksPage
@@ -70,7 +71,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
     />
   );
 
-  const searchParams = new URLSearchParams(history.location.search);
+  const searchParams = new URLSearchParams(location.search);
   const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || 'show-all';
 
   return (
@@ -106,7 +107,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
                     syncedParams.set(TicketSearchParam.ViewedByNot, value);
                   }
                   syncedParams.delete(TicketSearchParam.From);
-                  history.push({ search: syncedParams.toString() });
+                  navigate({ search: syncedParams.toString() });
                 }}>
                 <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
                 <MenuItem value={user.nvaUsername}>{t('tasks.unread_only')}</MenuItem>
@@ -130,7 +131,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
                   } else {
                     syncedParams.delete(TicketSearchParam.Assignee);
                   }
-                  history.push({ search: syncedParams.toString() });
+                  navigate({ search: syncedParams.toString() });
                 }}
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { fetchPerson } from '../../../api/cristinApi';
 import { getOrcidInfo } from '../../../api/external/orcidApi';
@@ -53,7 +53,8 @@ const getOrcidCredentials = (search: string, orcidUrl: string): OrcidCredentials
 export const UserOrcid = ({ user, sx }: UserOrcidProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   const [isAddingOrcid, setIsAddingOrcid] = useState(false);
@@ -91,7 +92,7 @@ export const UserOrcid = ({ user, sx }: UserOrcidProps) => {
         if (isSuccessStatus(addOrcidResponse.status)) {
           dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
           await fetchCristinPersonRef.current();
-          const orcidCredentials = getOrcidCredentials(history.location.search, orcidInfoResponse.data.id);
+          const orcidCredentials = getOrcidCredentials(location.search, orcidInfoResponse.data.id);
           if (!orcidCredentials) {
             dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'error' }));
           } else {
@@ -106,12 +107,10 @@ export const UserOrcid = ({ user, sx }: UserOrcidProps) => {
         }
       }
       setIsAddingOrcid(false);
-      history.replace({
-        search: '',
-      });
+      navigate({ search: '' }, { replace: true });
     };
 
-    const searchParams = new URLSearchParams(history.location.search);
+    const searchParams = new URLSearchParams(location.search);
 
     const orcidAccessToken = searchParams.get('access_token');
     if (orcidAccessToken) {
@@ -121,7 +120,7 @@ export const UserOrcid = ({ user, sx }: UserOrcidProps) => {
     if (orcidError) {
       dispatch(setNotification({ message: t('feedback.error.orcid_login'), variant: 'error' }));
     }
-  }, [dispatch, t, history, userCristinId]);
+  }, [dispatch, t, location.search, navigate, userCristinId]);
 
   const removeOrcid = async () => {
     setIsRemovingOrcid(true);

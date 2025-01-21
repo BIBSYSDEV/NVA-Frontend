@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { PersonSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { SearchParam, removeSearchParamValue } from '../../../utils/searchHelpers';
+import { removeSearchParamValue, SearchParam } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
@@ -12,11 +12,12 @@ type PersonFacetsFilterProps = Pick<SearchPageProps, 'personQuery'>;
 
 export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const organizationFacet = personQuery.data?.aggregations?.organizationFacet;
   const sectorFacet = personQuery.data?.aggregations?.sectorFacet;
 
-  const searchParams = new URLSearchParams(history.location.search);
+  const searchParams = new URLSearchParams(location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);
 
   const selectedOrganizations = searchParams.get(PersonSearchParameter.Organization)?.split(',') ?? [];
@@ -28,13 +29,13 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
       `${SearchParam.Type}=${currentSearchType}&${searchParameters.toString()}`
     );
     newSearchParams.set(SearchParam.Page, '1');
-    history.push({ search: newSearchParams.toString() });
+    navigate({ search: newSearchParams.toString() });
   };
 
   const removeFacetFilter = (parameter: PersonSearchParameter, keyToRemove: string) => {
     const newSearchParams = removeSearchParamValue(searchParams, parameter, keyToRemove);
     newSearchParams.set(SearchParam.Page, '1');
-    history.push({ search: newSearchParams.toString() });
+    navigate({ search: newSearchParams.toString() });
   };
 
   return (

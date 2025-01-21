@@ -1,7 +1,7 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { NviStatusChip } from '../../../components/StatusChip';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
@@ -58,12 +58,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset }: NviCandida
           </Typography>
         )}
         <Typography sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-          <MuiLink
-            component={Link}
-            to={{
-              pathname: getNviCandidatePath(nviCandidate.identifier),
-              state: candidateLinkState,
-            }}>
+          <MuiLink component={Link} state={candidateLinkState} to={getNviCandidatePath(nviCandidate.identifier)}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>
         </Typography>

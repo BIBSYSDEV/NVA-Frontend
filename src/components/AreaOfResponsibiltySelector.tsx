@@ -2,7 +2,7 @@ import { Autocomplete, BaseTextFieldProps, Checkbox, Chip, TextField } from '@mu
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { fetchOrganizations } from '../api/cristinApi';
 import { useFetchUserQuery } from '../api/hooks/useFetchUserQuery';
 import { RootState } from '../redux/store';
@@ -34,8 +34,9 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
   const areasOfResponsibilityIds = institutionUserQuery.data?.viewingScope?.includedUnits ?? [];
 
@@ -90,7 +91,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
             const syncedParams = syncParamsWithSearchFields(searchParams);
             syncedParams.delete(paramName);
             resetPagination(syncedParams);
-            history.push({ search: syncedParams.toString() });
+            navigate({ search: syncedParams.toString() });
           }}
         />
       )}
@@ -102,7 +103,7 @@ export const AreaOfResponsibilitySelector = ({ sx, paramName, resetPagination }:
           syncedParams.delete(paramName);
         }
         resetPagination(syncedParams);
-        history.push({ search: syncedParams.toString() });
+        navigate({ search: syncedParams.toString() });
       }}
       renderOption={({ key, ...props }, option, { selected }) => (
         <li {...props} key={option.id}>

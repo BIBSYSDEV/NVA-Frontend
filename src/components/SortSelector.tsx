@@ -1,7 +1,7 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { ParseKeys } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { SortOrder } from '../api/searchApi';
 import { dataTestId } from '../utils/dataTestIds';
 
@@ -20,8 +20,9 @@ interface SortSelectorProps extends Pick<TextFieldProps, 'sx' | 'variant' | 'siz
 
 export const SortSelector = ({ orderKey, options, paginationKey, sortKey, ...textFieldProps }: SortSelectorProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
 
   const orderBy = params.get(orderKey);
   const sortOrder = params.get(sortKey);
@@ -41,7 +42,7 @@ export const SortSelector = ({ orderKey, options, paginationKey, sortKey, ...tex
         params.set(orderKey, value.orderBy);
         params.set(sortKey, value.sortOrder);
         params.delete(paginationKey);
-        history.push({ search: params.toString() });
+        navigate({ search: params.toString() });
       }}
       slotProps={{ htmlInput: { 'aria-label': textFieldProps['aria-label'] } }}>
       {options.map((option) => (

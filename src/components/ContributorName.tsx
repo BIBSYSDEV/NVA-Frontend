@@ -1,6 +1,6 @@
 import { Box, BoxProps, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
 import OrcidLogo from '../resources/images/orcid_logo.svg';
 import { getResearchProfilePath } from '../utils/urlPaths';

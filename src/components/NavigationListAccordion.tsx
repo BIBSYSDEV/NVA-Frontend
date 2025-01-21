@@ -10,7 +10,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { ReactNode } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 interface NavigationListAccordionProps extends AccordionProps {
   title: string;
@@ -31,9 +31,10 @@ export const NavigationListAccordion = ({
   children,
   ...props
 }: NavigationListAccordionProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const isExpanded = expanded !== undefined ? expanded : currentPath.startsWith(accordionPath);
 
   return (
@@ -52,7 +53,7 @@ export const NavigationListAccordion = ({
         expandIcon={!isExpanded ? <ExpandMoreIcon /> : null}
         onClick={() => {
           if (!isExpanded) {
-            history.push(defaultPath);
+            navigate(defaultPath);
 
             if (!isMobile) {
               window.scrollTo({ top: 0, behavior: 'smooth' });

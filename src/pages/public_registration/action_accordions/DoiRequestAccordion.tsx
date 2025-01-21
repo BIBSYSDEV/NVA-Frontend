@@ -24,7 +24,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicket } from '../../../api/registrationApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ConfirmMessageDialog } from '../../../components/ConfirmMessageDialog';
@@ -78,7 +78,8 @@ export const DoiRequestAccordion = ({
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
 
-  const location = useLocation<SelectedTicketTypeLocationState>();
+  const location = useLocation();
+  const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
@@ -205,8 +206,8 @@ export const DoiRequestAccordion = ({
   const userCanRequestDoi = userHasAccessRight(registration, 'doi-request-create');
   const userCanAssignDoi = userHasAccessRight(registration, 'doi-request-approve');
 
-  const defaultExpanded = location.state?.selectedTicketType
-    ? location.state.selectedTicketType === 'DoiRequest'
+  const defaultExpanded = locationState?.selectedTicketType
+    ? locationState.selectedTicketType === 'DoiRequest'
     : waitingForRemovalOfDoi || isPendingDoiRequest || isClosedDoiRequest;
 
   const hasReservedDoi = !doiRequestTicket && registration.doi;

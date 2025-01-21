@@ -3,7 +3,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, Divider, Link as MuiLink, styled, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { dataTestId } from '../utils/dataTestIds';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { LanguageSelector } from './header/LanguageSelector';

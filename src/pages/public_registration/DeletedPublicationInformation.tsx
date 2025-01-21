@@ -1,6 +1,6 @@
 import { Box, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';

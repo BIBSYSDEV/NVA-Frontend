@@ -14,7 +14,7 @@ const ticketColor = {
 };
 
 interface TicketStatusChipProps {
-  ticket: Ticket;
+  ticket: Pick<Ticket, 'status' | 'type'>;
 }
 
 export const TicketStatusChip = ({ ticket }: TicketStatusChipProps) => {
@@ -59,6 +59,8 @@ export const StatusChip = ({ text, bgcolor = 'secondary.dark', icon }: StatusChi
   return (
     <Box
       sx={{
+        width: 'fit-content',
+        height: 'fit-content',
         bgcolor,
         display: 'flex',
         gap: '0.2rem',

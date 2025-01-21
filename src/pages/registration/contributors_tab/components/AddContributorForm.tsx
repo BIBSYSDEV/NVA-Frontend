@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { apiRequest } from '../../../../api/apiRequest';
 import { ContributorSearchField } from '../../../../components/ContributorSearchField';
 import { OpenInNewLink } from '../../../../components/OpenInNewLink';
