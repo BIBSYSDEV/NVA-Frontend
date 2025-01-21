@@ -9,14 +9,16 @@ We currently have 4 enviroments (dev, test, sandbox, prod) as described by the f
 
 | Enviroment | URL                         | Branch    | Description                                                                                                                                                |
 | ---------- | --------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| dev        | https://dev.nva.sikt.no     | `develop` | Under active development. Mainley used by internal users, e.g. the development team. Is password protected against the outside world (including crawlers). |
-| test       | https://test.nva.sikt.no    | `staging` | Mainly used by external testers to verify work/progress before it reaches production.                                                                      |
-| sandbox    | https://sandbox.nva.sikt.no | `sandbox` | Sandbox environment.                                                                                                                                       |
 | prod       | https://nva.sikt.no         | `main`    | Production environment.                                                                                                                                    |
+| test       | https://test.nva.sikt.no    | `staging` | Mainly used by external testers to verify work/progress before it reaches production.                                                                      |
+| dev        | https://dev.nva.sikt.no     | `develop` | Under active development. Mainley used by internal users, e.g. the development team. Is password protected against the outside world (including crawlers). |
+| sandbox    | https://sandbox.nva.sikt.no | `sandbox` | Sandbox environment. Used for testing and verifying features under development.                                                                            |
+
+In addition to these four
 
 ## Work process
 
-All 4 branches mentioned are protected, and should never be deleted. If that happens anyway for some reason, Amplify should still keep the last deployment running as normal, but one can not deploy a new version before the deleted branch is recreated. In the case where a faulty version is deployed, one can redeploy a previous version with the click of a button in AWS Amplify.
+All 4 environments mentioned above has protected branches that should never be deleted. If that happens anyway for some reason, Amplify should still keep the last deployment running as normal, but one can not deploy a new version before the deleted branch is recreated. In the case where a faulty version is deployed, one can redeploy a previous version with the click of a button in AWS Amplify.
 
 The following figure is a simple representation of our process in practice.
 
@@ -29,8 +31,8 @@ gitGraph
     branch staging
     branch develop
     commit
-    branch NP-1-feature1
-    checkout NP-1-feature1
+    branch NP-1-new-feature
+    checkout NP-1-new-feature
     commit
     checkout develop
     branch NP-2-bugfix
@@ -40,11 +42,11 @@ gitGraph
     merge NP-2-bugfix tag:"deploy: dev"
     checkout staging
     merge develop tag:"deploy: test"
-    checkout NP-1-feature1
+    checkout NP-1-new-feature
     commit
     commit
     checkout develop
-    merge NP-1-feature1 tag:"deploy: dev"
+    merge NP-1-new-feature tag:"deploy: dev"
     checkout staging
     checkout main
     merge staging tag:"deploy: prod"
