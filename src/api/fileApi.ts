@@ -117,3 +117,11 @@ export const signPart = async (
   });
   return prepareResponse.data;
 };
+
+export const deleteFile = async (registrationIdentifier: string, fileIdentifier: string) => {
+  const deleteResponse = await authenticatedApiRequest2<null>({
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}/file/${fileIdentifier}`,
+    method: 'DELETE',
+  });
+  return deleteResponse.data;
+};
