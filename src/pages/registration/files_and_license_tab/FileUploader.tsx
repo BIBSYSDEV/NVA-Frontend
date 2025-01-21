@@ -1,7 +1,13 @@
 import Uppy from '@uppy/core';
 import { useEffect } from 'react';
 import { UppyDashboard } from '../../../components/UppyDashboard';
-import { AssociatedFile, emptyFile } from '../../../types/associatedArtifact.types';
+import {
+  AssociatedFile,
+  emptyFile,
+  FileRrs,
+  FileType,
+  UserUploadDetails,
+} from '../../../types/associatedArtifact.types';
 
 interface FileUploaderProps {
   addFile: (file: AssociatedFile) => void;
@@ -9,17 +15,24 @@ interface FileUploaderProps {
   disabled?: boolean;
 }
 
+interface UploadedFile {
+  identifier: string;
+  mimeType: string;
+  name: string;
+  rightsRetentionStrategy: FileRrs;
+  size: number;
+  uploadDetails: UserUploadDetails;
+}
+
 export const FileUploader = ({ addFile, uppy, disabled = !uppy }: FileUploaderProps) => {
   useEffect(() => {
     if (uppy && !uppy.opts.meta.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {
+        const uploadedFile = response.body as unknown as UploadedFile;
         const newFile: AssociatedFile = {
           ...emptyFile,
-          identifier: response.uploadURL ?? '', // In reality an ID from completeMultipartUpload endpoint
-          name: file?.name ?? '',
-          mimeType: file?.type ?? '',
-          size: file?.size ?? 0,
-          rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },
+          ...uploadedFile,
+          type: FileType.PendingOpenFile,
         };
         addFile(newFile);
       });

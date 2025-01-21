@@ -40,7 +40,7 @@ export interface AssociatedFile {
   publishedDate?: string;
 }
 
-interface UserUploadDetails {
+export interface UserUploadDetails {
   type: 'UserUploadDetails';
   uploadedBy: string;
   uploadedDate: string;
