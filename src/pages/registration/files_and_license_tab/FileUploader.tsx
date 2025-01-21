@@ -16,6 +16,7 @@ interface FileUploaderProps {
 }
 
 interface UploadedFile {
+  type: 'UploadedFile';
   identifier: string;
   mimeType: string;
   name: string;
