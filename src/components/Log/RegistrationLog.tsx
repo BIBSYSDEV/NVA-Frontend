@@ -49,14 +49,14 @@ const ArchivedFilesEntry = ({
   return (
     <Box sx={{ px: '0.5rem' }}>
       <Divider />
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: '0.5rem' }}>
+      <Box sx={{ mt: '0.5rem' }}>
         {numberOfArchivedFiles > 0 && (
-          <Typography color="grey.700">
+          <Typography color="grey.700" sx={{ textAlign: 'center' }}>
             {t('log.archived_files_on_registration', { count: numberOfArchivedFiles })}
           </Typography>
         )}
         {numberOfHiddenFiles > 0 && (
-          <Typography color="grey.700">
+          <Typography color="grey.700" sx={{ textAlign: 'center' }}>
             {t('log.hidden_files_on_registration', { count: numberOfHiddenFiles })}
           </Typography>
         )}
