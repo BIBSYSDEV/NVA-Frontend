@@ -12,7 +12,10 @@ export const RegistrationLog = ({ log }: LogProps) => {
   return (
     <>
       <MetaDataLastUpdatedEntry metadataUpdated={log.metadataUpdated} />
-      <ArchivedFilesEntry numberOfArchivedFiles={log.numberOfArchivedFiles} />
+      <ArchivedFilesEntry
+        numberOfArchivedFiles={log.numberOfArchivedFiles}
+        numberOfHiddenFiles={log.numberOfHiddenFiles}
+      />
       {log.entries.map((entry, index) => (
         <LogEntry {...entry} key={index} />
       ))}
@@ -34,19 +37,29 @@ const MetaDataLastUpdatedEntry = ({ metadataUpdated }: Pick<LogType, 'metadataUp
   );
 };
 
-const ArchivedFilesEntry = ({ numberOfArchivedFiles }: Pick<LogType, 'numberOfArchivedFiles'>) => {
+const ArchivedFilesEntry = ({
+  numberOfArchivedFiles,
+  numberOfHiddenFiles,
+}: Pick<LogType, 'numberOfArchivedFiles' | 'numberOfHiddenFiles'>) => {
   const { t } = useTranslation();
-  if (!numberOfArchivedFiles) {
-    return;
+  if (numberOfArchivedFiles === 0 && numberOfHiddenFiles === 0) {
+    return null;
   }
 
   return (
     <Box sx={{ px: '0.5rem' }}>
       <Divider />
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '0.5rem' }}>
-        <Typography color="grey.700">
-          {t('log.archived_files_on_registration', { count: numberOfArchivedFiles })}
-        </Typography>
+        {numberOfArchivedFiles > 0 && (
+          <Typography color="grey.700">
+            {t('log.archived_files_on_registration', { count: numberOfArchivedFiles })}
+          </Typography>
+        )}
+        {numberOfHiddenFiles > 0 && (
+          <Typography color="grey.700">
+            {t('log.hidden_files_on_registration', { count: numberOfHiddenFiles })}
+          </Typography>
+        )}
       </Box>
     </Box>
   );
