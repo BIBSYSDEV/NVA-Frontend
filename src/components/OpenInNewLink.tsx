@@ -1,6 +1,6 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Link as MuiLink, LinkProps as MuiLinkProps } from '@mui/material';
-import { Link, LinkProps } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router';
 
 interface OpenInNewLinkWithReactRouterProps extends MuiLinkProps, Pick<LinkProps, 'to'> {
   component: typeof Link;

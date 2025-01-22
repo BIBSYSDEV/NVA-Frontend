@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { fetchResource } from '../../api/commonApi';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';

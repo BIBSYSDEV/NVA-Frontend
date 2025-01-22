@@ -1,14 +1,15 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useNviCandidatesParams } from '../../../utils/hooks/useNviCandidatesParams';
 
 export const ExcludeSubunitsCheckbox = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const { excludeSubUnits, affiliations } = useNviCandidatesParams();
 
@@ -24,7 +25,7 @@ export const ExcludeSubunitsCheckbox = () => {
           searchParams.delete(NviCandidatesSearchParam.ExcludeSubUnits);
         }
         searchParams.delete(NviCandidatesSearchParam.Offset);
-        history.push({ search: searchParams.toString() });
+        navigate({ search: searchParams.toString() });
       }}
       disabled={disableExcludeSubUnits}
       label={t('tasks.nvi.exclude_subunits')}

@@ -1,6 +1,6 @@
 import { Checkbox, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { TicketSearchParam } from '../api/searchApi';
 import { TicketStatus } from '../types/publication_types/ticket.types';
 import { dataTestId } from '../utils/dataTestIds';
@@ -14,8 +14,9 @@ interface TicketStatusFilterProps {
 
 export const TicketStatusFilter = ({ options }: TicketStatusFilterProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const currentStatusFilter = (searchParams.get(TicketSearchParam.Status)?.split(',') ?? []) as TicketStatus[];
   const selectedOptions = currentStatusFilter.filter((status) => options.includes(status));
   const otherSelectedStatuses = currentStatusFilter.filter((status) => !options.includes(status));
@@ -30,7 +31,7 @@ export const TicketStatusFilter = ({ options }: TicketStatusFilterProps) => {
     } else {
       syncedParams.delete(TicketSearchParam.Status);
     }
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (

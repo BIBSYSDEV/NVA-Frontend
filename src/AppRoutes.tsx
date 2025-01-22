@@ -1,8 +1,7 @@
-import { lazy, Suspense } from 'react';
-import { useTranslation } from 'react-i18next';
+import { lazy } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-import { PageSpinner } from './components/PageSpinner';
+import { Route, Routes } from 'react-router';
+import { Layout } from './Layout';
 import NotFound from './pages/errorpages/NotFound';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
@@ -16,17 +15,16 @@ const EditRegistration = lazy(() => import('./pages/registration/new_registratio
 const CreateProject = lazy(() => import('./pages/project/project_wizard/CreateProject'));
 const EditProject = lazy(() => import('./pages/project/project_wizard/EditProject'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
-const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
-const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
-const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
 const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
+const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
+const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
+const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
+const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
-const SignedOutPage = lazy(() => import('./pages/infopages/SignedOutPage'));
 
 export const AppRoutes = () => {
-  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
   const isAuthenticated = !!user;
@@ -34,64 +32,73 @@ export const AppRoutes = () => {
   const isCreator = hasCustomerId && user.isCreator;
   const isCurator = hasCuratorRole(user);
   const isEditor = hasCustomerId && user.isEditor;
-  const isAdmin = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin || user.isInternalImporter);
+  const canSeeBasicData = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin || user.isInternalImporter);
   const isNviCurator = hasCustomerId && user.isNviCurator;
 
   return (
-    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
-      <Switch>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path={UrlPathTemplate.Root} element={<Dashboard />}>
+          <Route path={UrlPathTemplate.Search} element={<Dashboard />} />
+          <Route path={UrlPathTemplate.Reports} element={<Dashboard />} />
+          <Route path={UrlPathTemplate.ReportsNvi} element={<Dashboard />} />
+          <Route path={UrlPathTemplate.ReportsInternationalCooperation} element={<Dashboard />} />
+          <Route path={UrlPathTemplate.ReportsClinicalTreatmentStudies} element={<Dashboard />} />
+        </Route>
+
+        <Route path={UrlPathTemplate.PrivacyPolicy} element={<PrivacyPolicy />} />
+        <Route path={UrlPathTemplate.ResearchProfile} element={<PublicResearchProfile />} />
+        <Route path={UrlPathTemplate.RegistrationLandingPage} element={<PublicRegistration />} />
+        <Route path={UrlPathTemplate.Projects} element={<ProjectsPage />} />
+        <Route path={UrlPathTemplate.Login} element={<LoginPage />} />
+        <Route path={UrlPathTemplate.Logout} element={<Logout />} />
+        <Route path={UrlPathTemplate.SignedOut} element={<SignedOutPage />} />
+
+        {/* Authenticated routes */}
         <Route
-          exact
-          path={[
-            UrlPathTemplate.Home,
-            UrlPathTemplate.Search,
-            UrlPathTemplate.Reports,
-            UrlPathTemplate.ReportsNvi,
-            UrlPathTemplate.ReportsInternationalCooperation,
-            UrlPathTemplate.ReportsClinicalTreatmentStudies,
-          ]}
-          component={Dashboard}
+          path={`${UrlPathTemplate.MyPage}/*`}
+          element={<PrivateRoute element={<MyPagePage />} isAuthorized={isAuthenticated} />}
         />
 
-        <Route exact path={UrlPathTemplate.PrivacyPolicy} component={PrivacyPolicy} />
-        <Route exact path={UrlPathTemplate.ResearchProfile} component={PublicResearchProfile} />
-        <Route exact path={UrlPathTemplate.RegistrationLandingPage} component={PublicRegistration} />
-        <Route exact path={UrlPathTemplate.Projects} component={ProjectsPage} />
-        <Route exact path={UrlPathTemplate.Login} component={LoginPage} />
-        <Route exact path={UrlPathTemplate.Logout} component={Logout} />
-        <Route path={UrlPathTemplate.SignedOut} component={SignedOutPage} />
-
-        {/* LoggedInRoute */}
-        <PrivateRoute path={UrlPathTemplate.MyPage} component={MyPagePage} isAuthorized={isAuthenticated} />
-
-        {/* CreatorRoutes */}
-        <PrivateRoute
-          exact
+        {/* Creator routes */}
+        <Route
           path={UrlPathTemplate.RegistrationWizard}
-          component={EditRegistration}
-          isAuthorized={isCreator || isCurator || isEditor}
+          element={<PrivateRoute isAuthorized={isCreator || isCurator || isEditor} element={<EditRegistration />} />}
         />
-        <PrivateRoute
-          exact
+        <Route
           path={UrlPathTemplate.RegistrationNew}
-          component={EditRegistration}
-          isAuthorized={isCreator}
+          element={<PrivateRoute isAuthorized={isCreator} element={<EditRegistration />} />}
         />
-        <PrivateRoute exact path={UrlPathTemplate.ProjectsEdit} component={EditProject} isAuthorized={isCreator} />
-        <PrivateRoute exact path={UrlPathTemplate.ProjectsNew} component={CreateProject} isAuthorized={isCreator} />
+        <Route
+          path={UrlPathTemplate.ProjectsEdit}
+          element={<PrivateRoute isAuthorized={isCreator} element={<EditProject />} />}
+        />
+        <Route
+          path={UrlPathTemplate.ProjectsNew}
+          element={<PrivateRoute isAuthorized={isCreator} element={<CreateProject />} />}
+        />
 
-        {/* CuratorRoutes */}
-        <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator || isNviCurator} />
+        {/* Curator routes */}
+        <Route
+          path={`${UrlPathTemplate.Tasks}/*`}
+          element={<PrivateRoute isAuthorized={isCurator || isNviCurator} element={<TasksPage />} />}
+        />
 
-        {/* BasicDataRoutes */}
-        <PrivateRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} isAuthorized={isAdmin} />
+        {/* Basic Data routes */}
+        <Route
+          path={`${UrlPathTemplate.BasicData}/*`}
+          element={<PrivateRoute isAuthorized={canSeeBasicData} element={<BasicDataPage />} />}
+        />
 
-        {/* InstitutionRoutes */}
-        <PrivateRoute path={UrlPathTemplate.Institution} component={EditorPage} isAuthorized={hasCustomerId} />
+        {/* Institution routes */}
+        <Route
+          path={`${UrlPathTemplate.Institution}/*`}
+          element={<PrivateRoute isAuthorized={hasCustomerId} element={<EditorPage />} />}
+        />
 
         {/* Wildcard path must be last, otherwise it will catch all routes */}
-        <Route path={UrlPathTemplate.Wildcard} component={NotFound} />
-      </Switch>
-    </Suspense>
+        <Route path={UrlPathTemplate.Wildcard} element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 };

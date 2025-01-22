@@ -1,6 +1,6 @@
 import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
 export const Forbidden = () => {
@@ -12,7 +12,7 @@ export const Forbidden = () => {
         {t('authorization.forbidden')}
       </Typography>
       <Typography sx={{ mb: '1rem' }}>{t('authorization.forbidden_description')}</Typography>
-      <MuiLink component={Link} to={UrlPathTemplate.Home}>
+      <MuiLink component={Link} to={UrlPathTemplate.Root}>
         <Typography>{t('authorization.back_to_home')}</Typography>
       </MuiLink>
     </Box>

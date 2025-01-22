@@ -1,7 +1,5 @@
 # Nasjonalt Vitenarkiv Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Environment variables
 
 To run this app, you need to add a set of environment variables to a `.env` file located at the root of the project folder (`/NVA-Frontend/.env`).

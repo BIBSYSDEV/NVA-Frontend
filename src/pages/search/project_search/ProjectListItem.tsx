@@ -1,7 +1,7 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -25,7 +25,7 @@ interface ProjectListItemProps {
 
 export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteTooltip }: ProjectListItemProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const projectManagers = getProjectManagers(project.contributors);
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
 
@@ -65,7 +65,7 @@ export const ProjectListItem = ({ project, showEdit = false, onDelete, deleteToo
         {showEdit && (
           <EditIconButton
             tooltip={t('project.edit_project')}
-            onClick={() => history.push(getEditProjectPath(project.id))}
+            onClick={() => navigate(getEditProjectPath(project.id))}
           />
         )}
         {onDelete && (

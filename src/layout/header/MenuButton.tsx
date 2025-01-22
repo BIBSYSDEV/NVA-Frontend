@@ -1,5 +1,5 @@
 import { Box, Button, ButtonProps, IconButton, IconButtonProps, styled } from '@mui/material';
-import { Link, LinkProps } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router';
 
 interface StyledMenuButtonContainerProps {
   isSelected: boolean;

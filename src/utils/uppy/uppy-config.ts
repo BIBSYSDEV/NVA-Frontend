@@ -18,9 +18,9 @@ export const createUppy = (language: string) =>
     autoProceed: true,
   }).use(AwsS3, {
     shouldUseMultipart: true,
-    abortMultipartUpload: async (file, opts) => await abortMultipartUpload(opts.uploadId, opts.key),
+    abortMultipartUpload: async (file, opts) => await abortMultipartUpload(opts.uploadId ?? '', opts.key),
     completeMultipartUpload: async (file, opts) => await completeMultipartUpload(opts.uploadId, opts.key, opts.parts),
     createMultipartUpload: async (file) => await createMultipartUpload(file),
-    listParts: async (file, opts) => await listParts(opts.uploadId, opts.key),
+    listParts: async (file, opts) => await listParts(opts.uploadId ?? '', opts.key),
     signPart: async (file, opts) => await signPart(opts.uploadId, opts.key, opts.partNumber, opts.body),
   });

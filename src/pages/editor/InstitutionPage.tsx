@@ -4,19 +4,19 @@ import GavelIcon from '@mui/icons-material/Gavel';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Switch, useHistory } from 'react-router-dom';
+import { Outlet, Route, Routes, useLocation } from 'react-router';
 import { fetchResource } from '../../api/commonApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import NotFound from '../../pages/errorpages/NotFound';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
+import NotFound from '../errorpages/NotFound';
 import { CategoriesWithFiles } from './CategoriesWithFiles';
 import { CategoriesWithFilesOverview } from './CategoriesWithFilesOverview';
 import { EditorDoi } from './EditorDoi';
@@ -48,8 +48,8 @@ const InstitutionPage = () => {
     meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
-  const history = useHistory();
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const location = useLocation();
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   return (
     <StyledPageWithSideMenu>
@@ -159,72 +159,94 @@ const InstitutionPage = () => {
         )}
       </SideMenu>
       <BackgroundDiv>
-        <Switch>
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionVocabulary}
-            component={VocabularySettings}
-            isAuthorized={isEditor}
+        <Outlet />
+
+        <Routes>
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionVocabulary, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<VocabularySettings />} isAuthorized={isEditor} />}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionVocabularyOverview}
-            component={VocabularyOverview}
-            isAuthorized={hasCustomer}
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionVocabularyOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<VocabularyOverview />} isAuthorized={hasCustomer} />}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionPublishStrategy}
-            component={PublishStrategySettings}
-            isAuthorized={isEditor}
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPublishStrategy, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<PublishStrategySettings />} isAuthorized={isEditor} />}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionPublishStrategyOverview}
-            component={PublishingStrategyOverview}
-            isAuthorized={hasCustomer}
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPublishStrategyOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<PublishingStrategyOverview />} isAuthorized={hasCustomer} />}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionOverviewPage}
-            component={EditorInstitution}
-            isAuthorized={hasCustomer}
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionOverviewPage, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<EditorInstitution />} isAuthorized={hasCustomer} />}
           />
-          <PrivateRoute exact path={UrlPathTemplate.InstitutionCuratorsOverview} isAuthorized={hasCustomer}>
-            <OrganizationCurators heading={t('editor.curators.curators')} />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.InstitutionCurators} isAuthorized={isEditor}>
-            <OrganizationCurators heading={t('editor.curators.administer_curators')} canEditUsers />
-          </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.InstitutionDoi} component={EditorDoi} isAuthorized={hasCustomer} />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionCategories}
-            component={CategoriesWithFiles}
-            isAuthorized={isEditor}
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionCuratorsOverview, UrlPathTemplate.Institution)}
+            element={
+              <PrivateRoute
+                isAuthorized={hasCustomer}
+                element={<OrganizationCurators heading={t('editor.curators.curators')} />}
+              />
+            }
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionCategoriesOverview}
-            component={CategoriesWithFilesOverview}
-            isAuthorized={hasCustomer}
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionCurators, UrlPathTemplate.Institution)}
+            element={
+              <PrivateRoute
+                isAuthorized={isEditor}
+                element={<OrganizationCurators heading={t('editor.curators.administer_curators')} canEditUsers />}
+              />
+            }
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.InstitutionOrganizationOverview}
-            component={OrganizationOverview}
-            isAuthorized={hasCustomer}
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionDoi, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<EditorDoi />} isAuthorized={hasCustomer} />}
           />
-          <PrivateRoute
-            path={UrlPathTemplate.InstitutionSupport}
-            component={InstitutionSupport}
-            isAuthorized={isEditor}
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionCategories, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<CategoriesWithFiles />} isAuthorized={isEditor} />}
           />
-          <PrivateRoute exact path={UrlPathTemplate.InstitutionPortfolio} isAuthorized={isEditor}>
-            <PortfolioSearchPage title={t('common.result_portfolio')} />
-          </PrivateRoute>
-          <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
-        </Switch>
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionCategoriesOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<CategoriesWithFilesOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionOrganizationOverview, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<OrganizationOverview />} isAuthorized={hasCustomer} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionSupport, UrlPathTemplate.Institution)}
+            element={<PrivateRoute element={<InstitutionSupport />} isAuthorized={isEditor} />}
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.InstitutionPortfolio, UrlPathTemplate.Institution)}
+            element={
+              <PrivateRoute
+                element={<PortfolioSearchPage title={t('common.result_portfolio')} />}
+                isAuthorized={isEditor}
+              />
+            }
+          />
+
+          <Route
+            path={getSubUrl(UrlPathTemplate.Institution, UrlPathTemplate.Institution, true)}
+            element={<PrivateRoute element={<NotFound />} isAuthorized={isEditor} />}
+          />
+        </Routes>
       </BackgroundDiv>
     </StyledPageWithSideMenu>
   );

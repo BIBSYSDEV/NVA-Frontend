@@ -4,7 +4,7 @@ import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormEr
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { createRegistrationFromImportCandidate, fetchImportCandidate } from '../../../../api/registrationApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { PageHeader } from '../../../../components/PageHeader';
@@ -31,17 +31,18 @@ export const CentralImportCandidateForm = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [uppy] = useState(createUppy(i18n.language));
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', identifier],
-    queryFn: () => fetchImportCandidate(identifier),
+    queryFn: () => fetchImportCandidate(identifier ?? ''),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
   const importCandidate = importCandidateQuery.data;
 
-  const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
+  const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
   const importCandidateMutation = useMutation({
@@ -53,7 +54,7 @@ export const CentralImportCandidateForm = () => {
           variant: 'success',
         })
       );
-      history.goBack();
+      navigate(-1);
     },
     onError: () =>
       dispatch(
@@ -64,8 +65,8 @@ export const CentralImportCandidateForm = () => {
       ),
   });
 
-  if (importCandidate?.importStatus.candidateStatus === 'IMPORTED') {
-    return <Redirect to={getImportCandidatePath(identifier)} />;
+  if (importCandidate?.importStatus.candidateStatus === 'IMPORTED' && identifier) {
+    return <Navigate to={getImportCandidatePath(identifier)} />;
   }
 
   const validateForm = (values: ImportCandidate): FormikErrors<ImportCandidate> => {

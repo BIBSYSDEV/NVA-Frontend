@@ -1,6 +1,6 @@
 import { Box, List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
@@ -17,8 +17,8 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
   const projectsSearchResults = projectQuery.data?.hits ?? [];
   const totalHits = projectQuery.data?.size ?? 0;
 
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const resultsParam = params.get(SearchParam.Results);
   const pageParam = params.get(SearchParam.Page);
   const page = pageParam ? +pageParam : 1;

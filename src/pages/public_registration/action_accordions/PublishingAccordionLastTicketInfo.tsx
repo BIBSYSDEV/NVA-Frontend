@@ -1,12 +1,12 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { MessageForm } from '../../../components/MessageForm';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getRegistrationWizardLink, UrlPathTemplate } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { PendingPublishingTicketForCuratorSection } from './PendingPublishingTicketForCuratorSection';
 
@@ -92,9 +92,10 @@ export const PublishingAccordionLastTicketInfo = ({
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
                 endIcon={<EditIcon />}
                 component={RouterLink}
-                to={getRegistrationWizardLink(publishingTicket.publicationIdentifier, {
-                  tab: RegistrationTab.FilesAndLicenses,
-                })}>
+                to={getRegistrationWizardPath(
+                  publishingTicket.publicationIdentifier,
+                  RegistrationTab.FilesAndLicenses
+                )}>
                 {t('registration.edit_registration')}
               </Button>
             </>

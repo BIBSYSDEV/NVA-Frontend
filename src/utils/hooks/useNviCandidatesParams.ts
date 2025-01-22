@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { FetchNviCandidatesParams, NviCandidateOrderBy, NviCandidatesSearchParam } from '../../api/searchApi';
 import { NviCandidateSearchStatus } from '../../types/nvi.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';

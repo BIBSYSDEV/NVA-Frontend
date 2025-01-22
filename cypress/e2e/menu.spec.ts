@@ -7,7 +7,7 @@ const waitBeforeUserUpdate = 500;
 
 describe('Menu', () => {
   it('Unauthenticated user should not see protected menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('not.exist');
@@ -19,7 +19,7 @@ describe('Menu', () => {
   });
 
   it('Authorized user should see protected menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux(allRoles);
@@ -35,7 +35,7 @@ describe('Menu', () => {
   });
 
   it('Unauthorized user should not see protected menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([]);
@@ -51,7 +51,7 @@ describe('Menu', () => {
   });
 
   it('User without roles sees My Page menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([]);
@@ -69,7 +69,7 @@ describe('Menu', () => {
   });
 
   it('Creator without roles sees My Page menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.Creator]);
@@ -86,7 +86,7 @@ describe('Menu', () => {
   });
 
   it('App-admin sees Basic Data menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.AppAdmin]);
@@ -99,7 +99,7 @@ describe('Menu', () => {
   });
 
   it('Insitution-admin sees Basic Data menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.InstitutionAdmin]);
@@ -113,7 +113,7 @@ describe('Menu', () => {
   });
 
   it('Internal-importer sees Basic Data menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.InternalImporter]);
@@ -127,7 +127,7 @@ describe('Menu', () => {
   });
 
   it('User sees Institution Page menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([]);
@@ -145,7 +145,7 @@ describe('Menu', () => {
   });
 
   it('Editor sees Institution Page menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.Editor]);
@@ -157,7 +157,7 @@ describe('Menu', () => {
   });
 
   it('Curator sees Tasks Page menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.SupportCurator, RoleName.DoiCurator, RoleName.PublishingCurator]);
@@ -169,8 +169,8 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.tasksPage.correctionList.correctionListAccordion}]`).should('not.exist');
   });
 
-  it('Curator sees Tasks Page menu options', () => {
-    cy.visit(UrlPathTemplate.Home);
+  it('NVI Curator sees Tasks Page menu options', () => {
+    cy.visit(UrlPathTemplate.Root);
     cy.mocklogin();
     cy.wait(waitBeforeUserUpdate);
     cy.setUserRolesInRedux([RoleName.NviCurator]);

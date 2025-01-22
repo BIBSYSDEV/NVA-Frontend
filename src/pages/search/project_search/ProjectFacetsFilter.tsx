@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { SearchParam, removeSearchParamValue } from '../../../utils/searchHelpers';
+import { removeSearchParamValue, SearchParam } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
@@ -13,7 +13,8 @@ type ProjectFacetsFilterProps = Pick<SearchPageProps, 'projectQuery'>;
 
 export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const sectorFacet = projectQuery.data?.aggregations?.sectorFacet;
   const coordinatingFacet = projectQuery.data?.aggregations?.coordinatingFacet;
   const healthProjectFacet = projectQuery.data?.aggregations?.healthProjectFacet;
@@ -23,7 +24,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const participantFacet = projectQuery.data?.aggregations?.participantFacet;
   const fundingSourceFacet = projectQuery.data?.aggregations?.fundingSourceFacet;
 
-  const searchParams = new URLSearchParams(history.location.search);
+  const searchParams = new URLSearchParams(location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);
 
   const selectedCoordinating = searchParams.get(ProjectSearchParameter.CoordinatingFacet)?.split(',') ?? [];
@@ -44,13 +45,13 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
     }
     searchParams.set(SearchParam.Type, currentSearchType ?? '');
     searchParams.set(SearchParam.Page, '1');
-    history.push({ search: searchParams.toString() });
+    navigate({ search: searchParams.toString() });
   };
 
   const removeFacetFilter = (parameter: ProjectSearchParameter, keyToRemove: string) => {
     const newSearchParams = removeSearchParamValue(searchParams, parameter, keyToRemove);
     newSearchParams.set(SearchParam.Page, '1');
-    history.push({ search: newSearchParams.toString() });
+    navigate({ search: newSearchParams.toString() });
   };
 
   return (

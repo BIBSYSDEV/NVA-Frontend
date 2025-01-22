@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../../api/searchApi';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
@@ -13,8 +13,9 @@ import { SearchPageProps } from '../../SearchPage';
 
 export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
 
   const registrationParams = useRegistrationsQueryParams();
 
@@ -37,14 +38,14 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       syncedParams.set(param, [...currentValues, key].join(','));
     }
     syncedParams.set(ResultParam.From, '0');
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   const removeFacetFilter = (param: string, key: string) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     const newSearchParams = removeSearchParamValue(syncedParams, param, key);
     newSearchParams.set(ResultParam.From, '0');
-    history.push({ search: newSearchParams.toString() });
+    navigate({ search: newSearchParams.toString() });
   };
 
   return (

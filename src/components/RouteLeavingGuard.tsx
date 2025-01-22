@@ -1,8 +1,7 @@
 import { Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Prompt, useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useBlocker } from 'react-router';
 import { ConfirmDialog } from './ConfirmDialog';
-import { PreviousPathLocationState } from '../types/locationState.types';
 
 interface RouteLeavingGuardProps {
   modalDescription: string;
@@ -15,11 +14,6 @@ export const RouteLeavingGuard = ({
   modalHeading,
   shouldBlockNavigation,
 }: RouteLeavingGuardProps) => {
-  const [showModal, setShowModal] = useState(false);
-  const [nextPath, setNextPath] = useState('');
-  const [confirmedNavigation, setConfirmedNavigation] = useState(false);
-  const history = useHistory<PreviousPathLocationState | undefined>();
-
   useEffect(() => {
     if (shouldBlockNavigation) {
       window.onbeforeunload = () => true;
@@ -29,43 +23,24 @@ export const RouteLeavingGuard = ({
     }
   }, [shouldBlockNavigation]);
 
-  useEffect(() => {
-    if (confirmedNavigation && nextPath) {
-      const { previousPath } = history.location.state ?? {};
-      if (previousPath === nextPath) {
-        history.goBack();
-      } else {
-        history.push(nextPath);
-      }
-    }
-  }, [history, confirmedNavigation, nextPath]);
+  const blocker = useBlocker(() => shouldBlockNavigation);
+
+  const isBlocked = blocker.state === 'blocked';
 
   return (
-    <>
-      <Prompt
-        when={shouldBlockNavigation}
-        message={(nextLocation) => {
-          const currentPath = `${history.location.pathname}${history.location.search}`;
-          const newPath = `${nextLocation.pathname}${nextLocation.search}${nextLocation.hash}`;
-          if (!confirmedNavigation && shouldBlockNavigation && currentPath !== newPath) {
-            setShowModal(true);
-            setNextPath(newPath);
-            return false;
-          }
-          return true;
-        }}
-      />
+    isBlocked && (
       <ConfirmDialog
-        open={showModal}
+        open={isBlocked}
         title={modalHeading}
         onAccept={() => {
-          setShowModal(false);
-          setConfirmedNavigation(true);
+          blocker.proceed();
         }}
-        onCancel={() => setShowModal(false)}
+        onCancel={() => {
+          blocker.reset();
+        }}
         dialogDataTestId="confirm-leaving-registration-form-dialog">
         <Typography>{modalDescription}</Typography>
       </ConfirmDialog>
-    </>
+    )
   );
 };

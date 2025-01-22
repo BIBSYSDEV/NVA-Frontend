@@ -1,7 +1,7 @@
 import { Button, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { RootState } from '../../redux/store';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
@@ -13,7 +13,7 @@ export const Logo = () => {
 
   const showShortLogo = showShortLogoAnonymous || showShortLogoLoggedIn;
   return (
-    <Button sx={{ gridArea: 'logo' }} data-testid="logo" component={RouterLink} to={UrlPathTemplate.Home}>
+    <Button sx={{ gridArea: 'logo' }} data-testid="logo" component={RouterLink} to={UrlPathTemplate.Root}>
       <Typography variant="h5" component="span" sx={{ color: 'white', fontWeight: 900, fontSize: '3rem' }}>
         NVA
       </Typography>

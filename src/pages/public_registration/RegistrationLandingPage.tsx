@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { useFetchRegistrationTickets } from '../../api/hooks/useFetchRegistrationTickets';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -14,19 +14,20 @@ import { ActionPanel } from './ActionPanel';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 
 export const RegistrationLandingPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
-  const shouldNotRedirect = new URLSearchParams(history.location.search).has('shouldNotRedirect');
+  const shouldNotRedirect = new URLSearchParams(location.search).has('shouldNotRedirect');
   const registrationQuery = useFetchRegistration(identifier, { shouldNotRedirect });
 
   const registration = registrationQuery.data;
   const registrationId = registration?.id;
 
-  if (identifier !== registration?.identifier && !!registration?.identifier) {
-    const newPath = history.location.pathname.replace(identifier, registration.identifier);
-    const searchParams = history.location.search ?? '';
-    history.replace(newPath + searchParams);
+  if (identifier && identifier !== registration?.identifier && !!registration?.identifier) {
+    const newPath = location.pathname.replace(identifier, registration.identifier);
+    const searchParams = location.search ?? '';
+    navigate(newPath + searchParams, { replace: true });
   }
 
   const canEditRegistration = userHasAccessRight(registration, 'update');

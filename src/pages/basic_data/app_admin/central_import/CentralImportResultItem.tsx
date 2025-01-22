@@ -1,6 +1,6 @@
 import { Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { ContributorIndicators } from '../../../../components/ContributorIndicators';
 import { SearchListItem } from '../../../../components/styled/Wrappers';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
@@ -46,10 +46,8 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
           <MuiLink
             component={Link}
-            to={{
-              pathname: getImportCandidatePath(getIdentifierFromId(importCandidate.id)),
-              state: { previousSearch: location.search } satisfies PreviousSearchLocationState,
-            }}>
+            state={{ previousSearch: location.search } satisfies PreviousSearchLocationState}
+            to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
             {getTitleString(importCandidate.mainTitle)}
           </MuiLink>
         </Typography>

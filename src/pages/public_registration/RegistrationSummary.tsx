@@ -1,5 +1,5 @@
 import { Link, Skeleton } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';

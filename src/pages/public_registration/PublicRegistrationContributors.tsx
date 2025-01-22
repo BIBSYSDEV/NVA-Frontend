@@ -3,7 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Button, Link, Typography } from '@mui/material';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { ContributorIndicators } from '../../components/ContributorIndicators';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { Contributor, ContributorRole } from '../../types/contributor.types';

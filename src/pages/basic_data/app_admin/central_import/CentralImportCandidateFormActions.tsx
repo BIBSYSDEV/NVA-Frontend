@@ -4,7 +4,7 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { ImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -19,7 +19,7 @@ export const CentralImportCandidateFormActions = ({
   setTabNumber,
 }: CentralImportCandidateFormActionsProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { isValid, isSubmitting } = useFormikContext<ImportCandidate>();
 
   const isFirstTab = tabNumber === RegistrationTab.Description;
@@ -52,7 +52,7 @@ export const CentralImportCandidateFormActions = ({
       )}
 
       <Box sx={{ gridArea: 'next', display: 'flex', alignItems: 'center', justifyContent: 'end', gap: '2rem' }}>
-        <Button size="small" onClick={() => history.goBack()}>
+        <Button size="small" onClick={() => navigate(-1)}>
           {t('common.cancel')}
         </Button>
 

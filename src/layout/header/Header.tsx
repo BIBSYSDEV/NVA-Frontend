@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { useFetchOrganization } from '../../api/hooks/useFetchOrganization';
 import { fetchCustomerTickets, TicketSearchParam } from '../../api/searchApi';
 import { setCustomer } from '../../redux/customerReducer';
@@ -97,8 +97,8 @@ export const Header = () => {
           color="inherit"
           sx={{ gridArea: 'search' }}
           title={t('common.search')}
-          isSelected={location.pathname === UrlPathTemplate.Home || currentPath === UrlPathTemplate.Home}
-          to={UrlPathTemplate.Home}>
+          isSelected={location.pathname === UrlPathTemplate.Root || currentPath === UrlPathTemplate.Root}
+          to={UrlPathTemplate.Root}>
           <SearchIcon fontSize="large" />
         </MenuIconButton>
 

@@ -2,7 +2,7 @@ import { Autocomplete } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import {
   defaultChannelSearchSize,
   fetchSerialPublication,
@@ -23,8 +23,9 @@ import { PublicationChannelOption } from '../../registration/resource_type_tab/c
 
 export const JournalFilter = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const journalParam = searchParams.get(ResultParam.Journal);
   const [journalQuery, setJournalQuery] = useState('');
   const debouncedQuery = useDebounce(journalQuery);
@@ -60,7 +61,7 @@ export const JournalFilter = () => {
     }
     syncedParams.delete(ResultParam.From);
 
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   const isFetching = journalParam ? selectedJournalQuery.isPending : journalOptionsQuery.isFetching;

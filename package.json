@@ -35,14 +35,14 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.1.1",
-    "@mui/icons-material": "^6.4.0",
-    "@mui/lab": "^6.0.0-beta.23",
+    "@mui/icons-material": "^6.4.1",
+    "@mui/lab": "^6.0.0-beta.24",
     "@mui/material": "^6.4.0",
     "@mui/x-date-pickers": "^7.23.6",
     "@reduxjs/toolkit": "^2.5.0",
     "@tanstack/react-query": "^5.64.1",
-    "@uppy/aws-s3": "^4.2.1",
-    "@uppy/core": "^4.4.0",
+    "@uppy/aws-s3": "^4.2.2",
+    "@uppy/core": "^4.4.1",
     "@uppy/dashboard": "^4.3.1",
     "@uppy/drag-drop": "^4.1.1",
     "@uppy/file-input": "^4.1.1",
@@ -66,7 +66,7 @@
     "react-i18next": "^15.4.0",
     "react-imask": "^7.6.1",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^5.3.4",
+    "react-router": "^7.1.3",
     "yup": "^1.6.1"
   },
   "devDependencies": {
@@ -76,9 +76,8 @@
     "@types/jest": "^29.5.14",
     "@types/react": "^18.3.13",
     "@types/react-dom": "^18.3.1",
-    "@types/react-router-dom": "^5.3.3",
-    "@typescript-eslint/eslint-plugin": "^8.20.0",
-    "@typescript-eslint/parser": "^8.20.0",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
     "@vitejs/plugin-react": "^4.3.4",
     "axe-core": "^4.10.2",
     "axios-mock-adapter": "^2.1.0",
@@ -96,8 +95,8 @@
     "prettier": "^3.4.2",
     "start-server-and-test": "^2.0.10",
     "typescript": "^5.7.3",
-    "vite": "^6.0.7",
+    "vite": "^6.0.11",
     "vite-plugin-eslint": "^1.8.1",
-    "vitest": "^3.0.1"
+    "vitest": "^3.0.3"
   }
 }

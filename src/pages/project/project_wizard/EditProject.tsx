@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { useFetchProject } from '../../../api/hooks/useFetchProject';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPageContent } from '../../../components/styled/Wrappers';
@@ -13,7 +13,7 @@ import { ProjectForm } from './ProjectForm';
 const EditProject = () => {
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
-  const projectQuery = useFetchProject(decodeURIComponent(identifier));
+  const projectQuery = useFetchProject(decodeURIComponent(identifier ?? ''));
   const project = projectQuery.data;
   const user = useSelector((store: RootState) => store.user);
   const userCanEditProject = canEditProject(user, project);
