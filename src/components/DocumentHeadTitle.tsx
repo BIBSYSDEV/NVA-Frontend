@@ -8,7 +8,7 @@ const DocumentHeadTitleContext = createContext<DocumentHeadTitleContextType>({
   setPageTitle: () => {},
 });
 
-export const TitleProvider = ({ children }: { children: ReactNode }) => {
+export const DocumentHeadTitleProvider = ({ children }: { children: ReactNode }) => {
   const { t } = useTranslation();
   const [pageTitle, setPageTitle] = useState('');
 

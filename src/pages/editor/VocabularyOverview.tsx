@@ -4,7 +4,7 @@ import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchVocabulary } from '../../api/customerInstitutionsApi';
-import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { RootState } from '../../redux/store';
 import {
   defaultHrcsActivity,

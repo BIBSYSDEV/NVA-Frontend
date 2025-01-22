@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
-import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { setPartialCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';

@@ -5,11 +5,11 @@ import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates'
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CuratorSelector } from '../../../components/CuratorSelector';
+import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
-import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';

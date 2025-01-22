@@ -10,10 +10,10 @@ import {
   ProjectsSearchParams,
   searchForProjects,
 } from '../../../api/cristinApi';
+import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
-import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { RootState } from '../../../redux/store';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { getIdentifierFromId } from '../../../utils/general-helpers';

@@ -9,13 +9,13 @@ import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsi
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { CuratorSelector } from '../../../components/CuratorSelector';
 import { DialoguesWithoutCuratorButton } from '../../../components/DialoguesWithoutCuratorButton';
+import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
-import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { RootState } from '../../../redux/store';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';

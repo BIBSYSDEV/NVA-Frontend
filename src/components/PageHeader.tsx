@@ -1,5 +1,5 @@
 import { Box, TypographyProps } from '@mui/material';
-import { DocumentHeadTitle } from '../context/DocumentHeadTitle';
+import { DocumentHeadTitle } from './DocumentHeadTitle';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface PageHeaderProps extends TypographyProps {

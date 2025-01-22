@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CategorySelector } from '../../components/CategorySelector';
-import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { RootState } from '../../redux/store';
 import { allPublicationInstanceTypes } from '../../types/publicationFieldNames';
 

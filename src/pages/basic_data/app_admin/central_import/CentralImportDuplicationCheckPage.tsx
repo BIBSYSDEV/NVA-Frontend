@@ -8,11 +8,11 @@ import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration
 import { fetchImportCandidate, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { fetchImportCandidates, FetchImportCandidatesParams } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
+import { DocumentHeadTitle } from '../../../../components/DocumentHeadTitle';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
-import { DocumentHeadTitle } from '../../../../context/DocumentHeadTitle';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { PreviousPathLocationState } from '../../../../types/locationState.types';

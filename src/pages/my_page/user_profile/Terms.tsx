@@ -1,8 +1,8 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Link, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
+import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
-import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 
 export const Terms = () => {
   const { t } = useTranslation();

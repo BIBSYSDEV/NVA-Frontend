@@ -5,7 +5,7 @@ import { useLocation } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { FetchResultsParams, ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
-import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
+import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { BookType } from '../../../types/publicationFieldNames';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';

@@ -1,6 +1,6 @@
 import { Box, BoxProps } from '@mui/material';
 import { ReactNode } from 'react';
-import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
+import { DocumentHeadTitle } from '../DocumentHeadTitle';
 
 interface PageHeaderProps extends BoxProps {
   children: ReactNode;

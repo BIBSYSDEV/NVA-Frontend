@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addEmployment, createCristinPerson } from '../../../api/cristinApi';
 import { createUser } from '../../../api/roleApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
-import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import {

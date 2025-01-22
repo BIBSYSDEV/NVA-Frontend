@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useCustomerRegistrationSearch } from '../../api/hooks/useFetchCustomerRegistrationSearch';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { SearchForm } from '../../components/SearchForm';
-import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 import { useRegistrationsQueryParams } from '../../utils/hooks/useRegistrationSearchParams';
 import { RegistrationSearch } from '../search/registration_search/RegistrationSearch';
 

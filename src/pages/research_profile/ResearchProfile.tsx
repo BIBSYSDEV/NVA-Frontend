@@ -11,6 +11,7 @@ import { fetchPerson, ProjectSearchParameter, ProjectsSearchParams, searchForPro
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam } from '../../api/searchApi';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -19,7 +20,6 @@ import { ProfilePicture } from '../../components/ProfilePicture';
 import { projectSortOptions } from '../../components/ProjectSortSelector';
 import { SortSelectorWithoutParams } from '../../components/SortSelectorWithoutParams';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 import { RootState } from '../../redux/store';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';

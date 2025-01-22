@@ -3,7 +3,7 @@ import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AboutContent } from '../infopages/AboutContent';

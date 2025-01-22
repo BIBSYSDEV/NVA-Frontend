@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Link as MuiLink, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { RootState } from '../../redux/store';
 
 export const EditorDoi = () => {

@@ -16,7 +16,7 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
-import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
+import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Keywords, KeywordsOld } from '../../../types/keywords.types';

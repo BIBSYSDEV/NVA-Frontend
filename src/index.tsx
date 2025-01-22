@@ -15,7 +15,7 @@ import { USE_MOCK_DATA } from './utils/constants';
 // Fonts
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
-import { TitleProvider } from './context/DocumentHeadTitle';
+import { DocumentHeadTitleProvider } from './components/DocumentHeadTitle';
 
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
@@ -36,11 +36,11 @@ if (container) {
           <ReduxProvider store={store}>
             <ThemeProvider theme={mainTheme}>
               <CssBaseline />
-              <TitleProvider>
+              <DocumentHeadTitleProvider>
                 <QueryProvider>
                   <App />
                 </QueryProvider>
-              </TitleProvider>
+              </DocumentHeadTitleProvider>
             </ThemeProvider>
           </ReduxProvider>
         </I18nextProvider>
