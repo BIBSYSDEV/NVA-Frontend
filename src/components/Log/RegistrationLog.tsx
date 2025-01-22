@@ -45,7 +45,7 @@ const ArchivedFilesEntry = ({ numberOfArchivedFiles }: Pick<LogType, 'numberOfAr
       <Divider />
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: '0.5rem' }}>
         <Typography color="grey.700">
-          {t('log.number_of_archivedFiles_on_registration', { count: numberOfArchivedFiles })}
+          {t('log.archived_files_on_registration', { count: numberOfArchivedFiles })}
         </Typography>
       </Box>
     </Box>
