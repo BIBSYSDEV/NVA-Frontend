@@ -328,6 +328,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -399,11 +403,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -707,6 +707,7 @@
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
+    "hidden_afterwards": "Endret til skjult fil i etterkant",
     "hidden_files_on_registration_one": "Registreringen har {{count}} skjult fil",
     "hidden_files_on_registration_other": "Registreringen har {{count}} skjulte filer",
     "hide_messages": "Skjul meldinger",
@@ -745,8 +746,7 @@
       "result_republished": "Resultat republisert",
       "result_unpublished": "Resultat avpublisert"
     },
-    "unknown_filename": "Ukjent filnavn",
-    "hidden_afterwards": "Endret til skjult fil i etterkant"
+    "unknown_filename": "Ukjent filnavn"
   },
   "my_page": {
     "messages": {
