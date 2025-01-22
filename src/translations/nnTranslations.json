@@ -666,7 +666,8 @@
     "language_selector": "Valt språk",
     "news_link": "Nyheitsbrev",
     "system_status_link": "Driftsmeldingar",
-    "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>"
+    "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>",
+    "to_top": "Til toppen"
   },
   "licenses": {
     "description": {
