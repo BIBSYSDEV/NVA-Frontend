@@ -666,7 +666,8 @@
     "language_selector": "Selected language",
     "news_link": "Newsletter",
     "system_status_link": "System Status",
-    "technical_support_link": "If you need technical support, please contact <0>kontakt@sikt.no</0>"
+    "technical_support_link": "If you need technical support, please contact <0>kontakt@sikt.no</0>",
+    "to_top": "To the top"
   },
   "licenses": {
     "description": {
