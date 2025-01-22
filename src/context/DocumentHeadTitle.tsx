@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 interface DocumentHeadTitleContextType {
   setPageTitle: (pageTitle: string) => void;
 }
-
-export const DocumentHeadTitleContext = createContext<DocumentHeadTitleContextType | undefined>(undefined);
+const DocumentHeadTitleContext = createContext<DocumentHeadTitleContextType>({
+  setPageTitle: () => {},
+});
 
 export const TitleProvider = ({ children }: { children: ReactNode }) => {
   const { t } = useTranslation();
@@ -24,24 +25,14 @@ export const TitleProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useDocumentHeadTitle = (pageTitle?: string) => {
-  const context = useContext(DocumentHeadTitleContext);
-  if (!context) {
-    throw new Error('useTitle must be used within a TitleProvider');
-  }
-
-  const { setPageTitle } = context;
+const useDocumentHeadTitle = (pageTitle = '') => {
+  const { setPageTitle } = useContext(DocumentHeadTitleContext);
 
   useEffect(() => {
-    if (pageTitle) {
-      setPageTitle(pageTitle);
-      return () => setPageTitle('');
-    } else {
-      setPageTitle('');
-    }
+    setPageTitle(pageTitle);
   }, [pageTitle, setPageTitle]);
 
-  return context;
+  return null;
 };
 
 interface DocumentHeadTitleProps {
