@@ -1,12 +1,12 @@
 import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { deleteRegistration, fetchRegistrationsByOwner } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
+import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus } from '../../types/registration.types';
 import { MyRegistrationsList } from './MyRegistrationsList';
@@ -82,9 +82,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
 
   return (
     <>
-      <Helmet>
-        <title>{t('common.result_registrations')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('common.result_registrations')}</DocumentHeadTitle>
       <div>
         {registrationsQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />

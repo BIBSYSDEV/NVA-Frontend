@@ -11,12 +11,12 @@ import {
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { OrganizationRenderOption } from '../../components/OrganizationRenderOption';
+import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -44,9 +44,7 @@ export const OrganizationOverview = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('editor.organization_overview')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('editor.organization_overview')}</DocumentHeadTitle>
       <Typography variant="h1" sx={{ mb: '1rem' }}>
         {t('editor.organization_overview')}
       </Typography>

@@ -1,7 +1,6 @@
 import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
@@ -14,6 +13,7 @@ import {
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ProjectSortSelector } from '../../../components/ProjectSortSelector';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { RootState } from '../../../redux/store';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
@@ -61,9 +61,7 @@ export const MyProjectRegistrations = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>{t('my_page.project_registrations')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('my_page.project_registrations')}</DocumentHeadTitle>
       <Typography variant="h2" gutterBottom>
         {t('my_page.project_registrations')}
       </Typography>

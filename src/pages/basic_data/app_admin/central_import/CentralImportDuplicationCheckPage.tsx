@@ -1,7 +1,6 @@
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router';
@@ -13,6 +12,7 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
 import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
+import { DocumentHeadTitle } from '../../../../context/DocumentHeadTitle';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { PreviousPathLocationState } from '../../../../types/locationState.types';
@@ -102,9 +102,7 @@ export const CentralImportDuplicationCheckPage = () => {
         gridTemplateAreas: { xs: '"actions" "main"', sm: '"main actions"' },
         gap: '1rem',
       }}>
-      <Helmet>
-        <title>{t('basic_data.central_import.central_import')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('basic_data.central_import.central_import')}</DocumentHeadTitle>
       <BackgroundDiv>
         {importCandidateSearchQuery.isPending || importCandidateQuery.isPending ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />

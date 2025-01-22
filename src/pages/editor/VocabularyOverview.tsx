@@ -1,10 +1,10 @@
 import { Card, CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchVocabulary } from '../../api/customerInstitutionsApi';
+import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 import { RootState } from '../../redux/store';
 import {
   defaultHrcsActivity,
@@ -32,9 +32,7 @@ export const VocabularyOverview = () => {
 
   return (
     <>
-      <Helmet>
-        <title id="vocabulary-label">{t('editor.vocabulary')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('editor.vocabulary')}</DocumentHeadTitle>
 
       <Typography gutterBottom fontWeight="600">
         {t('editor.vocabulary_controlled')}
@@ -42,7 +40,7 @@ export const VocabularyOverview = () => {
       <Typography>{t('editor.vocabulary_description')}</Typography>
 
       {vocabularyQuery.isPending ? (
-        <CircularProgress aria-labelledby="vocabulary-label" />
+        <CircularProgress aria-label={t('editor.vocabulary')} />
       ) : (
         vocabularyQuery.data?.vocabularies
           .filter((vocabulary) => visibleVocabularyStatuses.includes(vocabulary.status))

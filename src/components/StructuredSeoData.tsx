@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 
 interface StructuredSeoDataProps {
   uri: string;
@@ -26,9 +25,19 @@ export const StructuredSeoData = ({ uri }: StructuredSeoDataProps) => {
     }
   }, [uri]);
 
-  return seoData ? (
-    <Helmet>
-      <script type="application/ld+json">{seoData}</script>
-    </Helmet>
-  ) : null;
+  useEffect(() => {
+    if (seoData) {
+      const scriptTag = document.createElement('script');
+      scriptTag.type = 'application/ld+json';
+      scriptTag.text = seoData;
+
+      document.head.appendChild(scriptTag);
+
+      return () => {
+        document.head.removeChild(scriptTag);
+      };
+    }
+  }, [seoData]);
+
+  return null;
 };

@@ -3,7 +3,6 @@ import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/mat
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,6 +16,7 @@ import {
   AutocompleteListboxWithExpansionProps,
 } from '../../../components/AutocompleteListboxWithExpansion';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Keywords, KeywordsOld } from '../../../types/keywords.types';
@@ -102,9 +102,7 @@ export const MyFieldAndBackground = () => {
 
   return (
     <Box sx={{ bgcolor: 'secondary.main' }}>
-      <Helmet>
-        <title>{t('my_page.my_profile.field_and_background.field_and_background')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('my_page.my_profile.field_and_background.field_and_background')}</DocumentHeadTitle>
 
       <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
         {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (

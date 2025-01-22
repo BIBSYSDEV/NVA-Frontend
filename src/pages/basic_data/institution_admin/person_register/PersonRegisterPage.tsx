@@ -15,13 +15,13 @@ import {
 import { visuallyHidden } from '@mui/utils';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchEmployees } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
 import { BackgroundDiv } from '../../../../components/styled/Wrappers';
+import { DocumentHeadTitle } from '../../../../context/DocumentHeadTitle';
 import { RootState } from '../../../../redux/store';
 import { alternatingTableRowColor } from '../../../../themes/mainTheme';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
@@ -57,9 +57,7 @@ export const PersonRegisterPage = () => {
 
   return (
     <BackgroundDiv>
-      <Helmet>
-        <title>{t('basic_data.person_register.person_register')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('basic_data.person_register.person_register')}</DocumentHeadTitle>
 
       <TextField
         data-testid={dataTestId.basicData.personRegisterSearchBar}

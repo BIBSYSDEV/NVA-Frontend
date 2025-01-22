@@ -1,6 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Paper, Tooltip } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
@@ -8,6 +7,7 @@ import { LandingPageAccordion } from '../../components/landing_page/LandingPageA
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 import { RootState } from '../../redux/store';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -32,9 +32,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
   return (
     <Paper elevation={0}>
-      <Helmet>
-        <title>{project.title}</title>
-      </Helmet>
+      <DocumentHeadTitle>{project.title}</DocumentHeadTitle>
       <StyledPaperHeader sx={{ borderLeft: '1.5rem solid', borderColor: 'project.main' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <ProjectIconHeader projectStatus={project.status} />

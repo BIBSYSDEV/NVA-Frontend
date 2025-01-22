@@ -1,7 +1,6 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { HelmetProvider } from 'react-helmet-async';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
 import { App } from './App';
@@ -16,6 +15,7 @@ import { USE_MOCK_DATA } from './utils/constants';
 // Fonts
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
+import { TitleProvider } from './context/DocumentHeadTitle';
 
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
@@ -36,11 +36,11 @@ if (container) {
           <ReduxProvider store={store}>
             <ThemeProvider theme={mainTheme}>
               <CssBaseline />
-              <HelmetProvider>
+              <TitleProvider>
                 <QueryProvider>
                   <App />
                 </QueryProvider>
-              </HelmetProvider>
+              </TitleProvider>
             </ThemeProvider>
           </ReduxProvider>
         </I18nextProvider>

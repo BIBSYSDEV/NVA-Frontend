@@ -1,6 +1,6 @@
 import { Box, BoxProps } from '@mui/material';
 import { ReactNode } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 
 interface PageHeaderProps extends BoxProps {
   children: ReactNode;
@@ -9,11 +9,7 @@ interface PageHeaderProps extends BoxProps {
 
 export const PageHeader = ({ children, htmlTitle, sx }: PageHeaderProps) => (
   <Box sx={{ width: '100%', marginBottom: '2rem', ...sx }}>
-    {htmlTitle && (
-      <Helmet>
-        <title>{htmlTitle}</title>
-      </Helmet>
-    )}
+    {htmlTitle && <DocumentHeadTitle>{htmlTitle}</DocumentHeadTitle>}
     <Box sx={{ pb: '1rem', borderBottom: '2px solid' }}>{children}</Box>
   </Box>
 );

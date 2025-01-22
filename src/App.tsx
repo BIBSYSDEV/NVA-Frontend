@@ -1,6 +1,5 @@
 import { Amplify } from 'aws-amplify';
 import { Suspense, useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router';
@@ -18,13 +17,6 @@ import { USE_MOCK_DATA } from './utils/constants';
 import { mockUser } from './utils/testfiles/mock_feide_user';
 import { UrlPathTemplate } from './utils/urlPaths';
 
-const getLanguageTagValue = (language: string) => {
-  if (language === 'eng') {
-    return 'en';
-  }
-  return 'no';
-};
-
 if (
   (window.location.pathname === UrlPathTemplate.MyPagePersonalia ||
     window.location.pathname === UrlPathTemplate.MyPageResearchProfile) &&
@@ -38,7 +30,7 @@ if (
 const Root = () => {
   useMatomoTracking();
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [isLoadingUserAttributes, setIsLoadingUserAttributes] = useState(true);
 
@@ -74,10 +66,6 @@ const Root = () => {
 
   return (
     <>
-      <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
-        <html lang={getLanguageTagValue(i18n.language)} />
-      </Helmet>
-
       {mustAcceptTerms && <AcceptTermsDialog newTermsUri={user.currentTerms} />}
       {mustCreatePerson && <CreateCristinPersonDialog user={user} />}
       {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}

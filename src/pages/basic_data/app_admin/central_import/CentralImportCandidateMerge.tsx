@@ -3,13 +3,13 @@ import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { getLanguageByUri } from 'nva-language';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { useFetchRegistration } from '../../../../api/hooks/useFetchRegistration';
 import { fetchImportCandidate, updateImportCandidateStatus, updateRegistration } from '../../../../api/registrationApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
+import { DocumentHeadTitle } from '../../../../context/DocumentHeadTitle';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { AssociatedLink } from '../../../../types/associatedArtifact.types';
 import { BasicDataLocationState, RegistrationFormLocationState } from '../../../../types/locationState.types';
@@ -126,9 +126,7 @@ export const CentralImportCandidateMerge = () => {
             gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
           }}>
-          <Helmet>
-            <title>{t('basic_data.central_import.central_import')}</title>
-          </Helmet>
+          <DocumentHeadTitle>{t('basic_data.central_import.central_import')}</DocumentHeadTitle>
           <Typography sx={{ gridColumn: '1/-1' }}>
             {t('basic_data.central_import.merge_candidate.merge_details_1')}
           </Typography>

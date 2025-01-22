@@ -1,17 +1,15 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Link, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 
 export const Terms = () => {
   const { t } = useTranslation();
 
   return (
     <BackgroundDiv>
-      <Helmet>
-        <title>{t('common.terms')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('common.terms')}</DocumentHeadTitle>
       <Typography variant="h1" gutterBottom>
         {t('common.terms')}
       </Typography>

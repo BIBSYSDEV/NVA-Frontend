@@ -1,7 +1,6 @@
 import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
@@ -16,6 +15,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { RootState } from '../../../redux/store';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
@@ -76,9 +76,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
 
   return (
     <section>
-      <Helmet>
-        <title>{title}</title>
-      </Helmet>
+      <DocumentHeadTitle>{title}</DocumentHeadTitle>
 
       <Grid container columns={16} spacing={2} sx={{ px: { xs: '0.5rem', md: 0 }, mb: '1rem' }}>
         <Grid item xs={16} md={5} lg={4}>

@@ -1,11 +1,11 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { ParseKeys } from 'i18next';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import { useRegistrationSearch } from '../../../api/hooks/useRegistrationSearch';
 import { FetchResultsParams, ResultParam } from '../../../api/searchApi';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { BookType } from '../../../types/publicationFieldNames';
 import { useRegistrationsQueryParams } from '../../../utils/hooks/useRegistrationSearchParams';
 import { nviApplicableTypes } from '../../../utils/registration-helpers';
@@ -106,9 +106,7 @@ export const NviCorrectionList = () => {
 
   return (
     <section>
-      <Helmet>
-        <title>{t('tasks.correction_list')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('tasks.correction_list')}</DocumentHeadTitle>
 
       {listConfig && (
         <>

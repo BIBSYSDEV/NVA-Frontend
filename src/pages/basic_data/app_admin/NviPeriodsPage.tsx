@@ -1,12 +1,12 @@
 import { Box, List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { fetchNviPeriods } from '../../../api/scientificIndexApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchListItem } from '../../../components/styled/Wrappers';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { NviPeriod } from '../../../types/nvi.types';
 import { toDateString } from '../../../utils/date-helpers';
 import { UpsertNviPeriodDialog } from './UpsertNviPeriodDialog';
@@ -26,9 +26,7 @@ export const NviPeriodsPage = () => {
 
   return (
     <Box component="section">
-      <Helmet>
-        <title>{t('basic_data.nvi.reporting_periods')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('basic_data.nvi.reporting_periods')}</DocumentHeadTitle>
 
       {nviPeriodsQuery.isPending ? (
         <ListSkeleton height={100} minWidth={100} />

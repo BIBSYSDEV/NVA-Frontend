@@ -1,6 +1,5 @@
 import { List, Typography } from '@mui/material';
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ImportCandidatesSearchParam } from '../../../../api/searchApi';
@@ -9,6 +8,7 @@ import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { SearchForm } from '../../../../components/SearchForm';
 import { SortSelector } from '../../../../components/SortSelector';
+import { DocumentHeadTitle } from '../../../../context/DocumentHeadTitle';
 import { useFetchImportCandidatesQuery } from '../../../../utils/hooks/useFetchImportCandidatesQuery';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../../utils/searchHelpers';
@@ -39,9 +39,8 @@ export const CentralImportPage = () => {
 
   return (
     <section>
-      <Helmet>
-        <title>{t('basic_data.central_import.central_import')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('basic_data.central_import.central_import')}</DocumentHeadTitle>
+
       <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 
       {importCandidateQuery.isPending ? (

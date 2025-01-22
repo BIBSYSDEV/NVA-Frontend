@@ -4,7 +4,6 @@ import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
@@ -20,6 +19,7 @@ import { ProfilePicture } from '../../components/ProfilePicture';
 import { projectSortOptions } from '../../components/ProjectSortSelector';
 import { SortSelectorWithoutParams } from '../../components/SortSelectorWithoutParams';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 import { RootState } from '../../redux/store';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
@@ -168,9 +168,7 @@ const ResearchProfile = () => {
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
       <BackgroundDiv>
-        <Helmet>
-          <title>{fullName}</title>
-        </Helmet>
+        <DocumentHeadTitle>{fullName}</DocumentHeadTitle>
 
         {activeAffiliations.length > 0 ? (
           <Box

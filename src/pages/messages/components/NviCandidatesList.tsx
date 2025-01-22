@@ -1,5 +1,4 @@
 import { Box, List, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
@@ -10,6 +9,7 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { NviCandidateSearchStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -34,9 +34,7 @@ export const NviCandidatesList = () => {
 
   return (
     <section>
-      <Helmet>
-        <title>{t('common.nvi')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('common.nvi')}</DocumentHeadTitle>
 
       <Box
         sx={{

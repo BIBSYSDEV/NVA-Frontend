@@ -1,10 +1,10 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useFetchUserQuery } from '../../../api/hooks/useFetchUserQuery';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { hasCuratorRole } from '../../../utils/user-helpers';
@@ -20,9 +20,7 @@ export const UserRoleAndHelp = () => {
 
   return (
     <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Helmet>
-        <title>{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('my_page.my_profile.user_role_and_help.user_role_and_help')}</DocumentHeadTitle>
       {nvaUser?.viewingScope && hasCuratorRole(user) && (
         <div>
           <Typography gutterBottom fontWeight="bold">

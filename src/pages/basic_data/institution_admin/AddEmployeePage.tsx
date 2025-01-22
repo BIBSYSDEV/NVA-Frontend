@@ -2,13 +2,13 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addEmployment, createCristinPerson } from '../../../api/cristinApi';
 import { createUser } from '../../../api/roleApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import {
@@ -113,9 +113,8 @@ export const AddEmployeePage = () => {
 
   return (
     <BackgroundDiv>
-      <Helmet>
-        <title>{t('basic_data.add_employee.add_employee')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('basic_data.add_employee.add_employee')}</DocumentHeadTitle>
+
       <Typography variant="h2">{t('basic_data.add_employee.update_person_registry')}</Typography>
       <Formik
         initialValues={initialValues}

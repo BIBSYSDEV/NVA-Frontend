@@ -4,12 +4,12 @@ import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography } from '@
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { PageSpinner } from '../../../components/PageSpinner';
+import { DocumentHeadTitle } from '../../../context/DocumentHeadTitle';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
@@ -82,9 +82,7 @@ export const MyProfile = () => {
 
   return (
     <Box sx={{ bgcolor: 'secondary.main' }}>
-      <Helmet>
-        <title>{t('my_page.my_profile.heading.personalia')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('my_page.my_profile.heading.personalia')}</DocumentHeadTitle>
 
       <Typography variant="h2" sx={{ margin: '1rem' }}>
         {t('my_page.my_profile.heading.personalia')}

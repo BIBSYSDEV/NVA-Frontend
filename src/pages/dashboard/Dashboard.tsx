@@ -1,9 +1,9 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AboutContent } from '../infopages/AboutContent';
@@ -33,9 +33,8 @@ const Dashboard = () => {
         justifyItems: 'center',
         width: '100%',
       }}>
-      <Helmet>
-        <title>{t('common.start_page')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('common.start_page')}</DocumentHeadTitle>
+
       {showBanner && (
         <Box sx={{ bgcolor: 'secondary.main', p: '1rem 0.5rem', width: '100%' }}>
           <Box

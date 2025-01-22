@@ -1,9 +1,9 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
+import { DocumentHeadTitle } from '../../context/DocumentHeadTitle';
 import { setPartialCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
@@ -78,15 +78,13 @@ export const VocabularySettings = () => {
 
   return (
     <>
-      <Helmet>
-        <title id="vocabulary-label">{t('editor.vocabulary')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('editor.vocabulary')}</DocumentHeadTitle>
       <Typography sx={{ mb: '1rem' }} color="primary" fontWeight="600">
         {t('editor.select_vocabulary_description')}
       </Typography>
 
       {isLoadingVocabularyList ? (
-        <CircularProgress aria-labelledby="vocabulary-label" />
+        <CircularProgress aria-label={t('editor.vocabulary')} />
       ) : (
         vocabularyList && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
