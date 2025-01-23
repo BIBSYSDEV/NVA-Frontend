@@ -85,10 +85,17 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 export const getImportCandidatePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidate.replace(':identifier', encodeURIComponent(identifier));
 
-export const getRegistrationWizardPath = (identifier: string, tab?: number): To => {
+export const getRegistrationWizardPath = (identifier: string, tab?: number, shouldNotRedirect = false): To => {
+  const searchParams = new URLSearchParams();
+  if (tab !== undefined) {
+    searchParams.set('tab', tab.toString());
+  }
+  if (shouldNotRedirect) {
+    searchParams.set('shouldNotRedirect', '');
+  }
   return {
     pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
-    search: tab ? `?tab=${tab}` : '',
+    search: searchParams.toString(),
   };
 };
 

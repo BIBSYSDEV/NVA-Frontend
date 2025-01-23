@@ -46,7 +46,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
-  const registrationQuery = useFetchRegistration(identifier);
+  const shouldNotRedirect = new URLSearchParams(location.search).has('shouldNotRedirect');
+  const registrationQuery = useFetchRegistration(identifier, { shouldNotRedirect });
+
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
   const canHaveNviCandidate =
