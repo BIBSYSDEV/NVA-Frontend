@@ -2,6 +2,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import DoNotDisturbOutlinedIcon from '@mui/icons-material/DoNotDisturbOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Box, SvgIconProps, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LogActionItem as LogActionItemType } from '../../types/log.types';
@@ -33,6 +34,7 @@ export const LogActionItem = ({ description, date, fileIcon }: LogActionItemType
             <Typography>{description}</Typography>
           )}
           {fileIcon === 'deletedFile' && <Typography fontSize="x-small">{t('log.deleted_afterwards')}</Typography>}
+          {fileIcon === 'hiddenFile' && <Typography fontSize="x-small">{t('log.hidden_afterwards')}</Typography>}
         </Box>
       </Box>
       {date && (
@@ -55,6 +57,8 @@ const LogActionItemIcon = ({ fileIcon }: Pick<LogActionItemType, 'fileIcon'>) =>
       return <CloseOutlinedIcon {...iconProps} />;
     case 'rejectedFile':
       return <DoNotDisturbOutlinedIcon {...iconProps} />;
+    case 'hiddenFile':
+      return <VisibilityOffOutlinedIcon {...iconProps} />;
     default:
       return;
   }

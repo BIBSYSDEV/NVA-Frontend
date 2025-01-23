@@ -23,10 +23,13 @@ export function generateLog(registration: Registration, tickets: Ticket[], t: TF
     (file) => file.type === FileType.InternalFile
   ).length;
 
+  const hiddenFilesCount = registration.associatedArtifacts.filter((file) => file.type === FileType.HiddenFile).length;
+
   return {
     entries: entries.sort(sortLogEntries),
     metadataUpdated: registration.modifiedDate,
     numberOfArchivedFiles: internalFilesCount,
+    numberOfHiddenFiles: hiddenFilesCount,
   };
 }
 
