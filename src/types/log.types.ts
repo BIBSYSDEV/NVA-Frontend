@@ -4,6 +4,7 @@ export interface Log {
   entries: LogEntry[];
   metadataUpdated: string;
   numberOfArchivedFiles: number;
+  numberOfHiddenFiles: number;
 }
 
 export type LogEntryType = TicketType | 'Import' | 'Created' | 'MetadataPublished' | 'Republished' | 'Deleted';
@@ -25,5 +26,5 @@ export interface LogAction {
 export interface LogActionItem {
   description: string;
   date?: string;
-  fileIcon?: 'file' | 'deletedFile' | 'archivedFile' | 'rejectedFile';
+  fileIcon?: 'file' | 'deletedFile' | 'archivedFile' | 'rejectedFile' | 'hiddenFile';
 }
