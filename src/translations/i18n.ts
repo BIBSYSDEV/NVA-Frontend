@@ -30,10 +30,12 @@ const getLanguageTagValue = (language: string) => {
   return 'no';
 };
 
-// Set lang attribute on html element
-window.document.documentElement.lang = getLanguageTagValue(i18n.language);
-i18n.on('languageChanged', (newLanguage) => {
-  window.document.documentElement.lang = getLanguageTagValue(newLanguage);
-});
+if (typeof document !== 'undefined') {
+  // Set lang attribute on html element
+  document.documentElement.lang = getLanguageTagValue(i18n.language);
+  i18n.on('languageChanged', (newLanguage) => {
+    document.documentElement.lang = getLanguageTagValue(newLanguage);
+  });
+}
 
 export default i18n;
