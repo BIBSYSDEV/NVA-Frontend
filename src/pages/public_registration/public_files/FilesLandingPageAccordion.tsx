@@ -131,7 +131,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <SelectableButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
-            to={getRegistrationWizardPath(registration.identifier, RegistrationTab.FilesAndLicenses)}>
+            to={getRegistrationWizardPath(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
             {t('registration.files_and_license.add_files_or_links')}
           </SelectableButton>
         </Box>
