@@ -1,4 +1,5 @@
 import { To } from 'react-router';
+import { Registration, RegistrationStatus } from '../types/registration.types';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -107,6 +108,16 @@ export const getRegistrationWizardPath = (
     pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
     search: searchParams.toString(),
   };
+};
+
+export const getWizardPathByRegistration = (
+  registration: Registration,
+  { tab }: Pick<RegistrationWizardPathSearch, 'tab'> = {}
+): To => {
+  return getRegistrationWizardPath(registration.identifier, {
+    tab,
+    doNotRedirect: registration.status === RegistrationStatus.Unpublished && !!registration.duplicateOf,
+  });
 };
 
 export const getImportCandidateWizardPath = (identifier: string) =>

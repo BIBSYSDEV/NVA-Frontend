@@ -17,7 +17,7 @@ import {
   isTypeWithFileVersionField,
   userHasAccessRight,
 } from '../../../utils/registration-helpers';
-import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { getWizardPathByRegistration } from '../../../utils/urlPaths';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 import { PendingFilesInfo } from './PendingFilesInfo';
@@ -131,7 +131,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <SelectableButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
-            to={getRegistrationWizardPath(registration.identifier, { tab: RegistrationTab.FilesAndLicenses })}>
+            to={getWizardPathByRegistration(registration, { tab: RegistrationTab.FilesAndLicenses })}>
             {t('registration.files_and_license.add_files_or_links')}
           </SelectableButton>
         </Box>
