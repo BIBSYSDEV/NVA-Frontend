@@ -139,6 +139,8 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                   } else {
                     syncedParams.delete(TicketSearchParam.Assignee);
                   }
+
+                  syncedParams.delete(TicketSearchParam.From);
                   navigate({ search: syncedParams.toString() });
                 }}
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
