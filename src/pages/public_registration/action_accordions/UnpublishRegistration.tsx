@@ -6,12 +6,12 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
 import { useUpdateRegistrationStatus } from '../../../api/hooks/useUpdateRegistrationStatus';
-import { doNotRedirectQueryParam } from '../../../api/registrationApi';
 import { Modal } from '../../../components/Modal';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { Registration, RegistrationSearchItem } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
+import { doNotRedirectQueryParam } from '../../../utils/urlPaths';
 import { FindRegistration } from './FindRegistration';
 
 interface UnpublishRegistrationProps {

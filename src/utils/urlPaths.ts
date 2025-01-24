@@ -1,5 +1,4 @@
 import { To } from 'react-router';
-import { doNotRedirectQueryParam } from '../api/registrationApi';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -90,6 +89,8 @@ interface RegistrationWizardPathSearch {
   tab?: number;
   doNotRedirect?: boolean;
 }
+
+export const doNotRedirectQueryParam = 'doNotRedirect';
 
 export const getRegistrationWizardPath = (
   identifier: string,

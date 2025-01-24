@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 import { updatePromotedPublications } from '../api/preferencesApi';
-import { doNotRedirectQueryParam } from '../api/registrationApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
@@ -17,6 +16,7 @@ import { RegistrationSearchItem, RegistrationStatus } from '../types/registratio
 import { dataTestId } from '../utils/dataTestIds';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
+  doNotRedirectQueryParam,
   getRegistrationLandingPagePath,
   getRegistrationWizardPath,
   getResearchProfilePath,

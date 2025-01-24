@@ -6,6 +6,7 @@ import {
   Registration,
   UpdateRegistrationStatusRequest,
 } from '../types/registration.types';
+import { doNotRedirectQueryParam } from '../utils/urlPaths';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 import { userIsAuthenticated } from './authApi';
@@ -84,8 +85,6 @@ export const createDraftDoi = async (registrationId: string) =>
     url: `${registrationId}/doi`,
     method: 'POST',
   });
-
-export const doNotRedirectQueryParam = 'doNotRedirect';
 
 export const fetchRegistration = async (registrationIdentifier: string, doNotRedirect?: boolean) => {
   const isAuthenticated = await userIsAuthenticated();
