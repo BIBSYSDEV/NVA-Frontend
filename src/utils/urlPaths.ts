@@ -86,7 +86,7 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 export const getImportCandidatePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidate.replace(':identifier', encodeURIComponent(identifier));
 
-interface RegistrationWizardPathSearch {
+interface RegistrationWizardPathOptions {
   tab?: number;
   doNotRedirect?: boolean;
 }
@@ -95,7 +95,7 @@ export const doNotRedirectQueryParam = 'doNotRedirect';
 
 export const getRegistrationWizardPath = (
   identifier: string,
-  { tab, doNotRedirect }: RegistrationWizardPathSearch = {}
+  { tab, doNotRedirect }: RegistrationWizardPathOptions = {}
 ): To => {
   const searchParams = new URLSearchParams();
   if (tab !== undefined) {
@@ -112,7 +112,7 @@ export const getRegistrationWizardPath = (
 
 export const getWizardPathByRegistration = (
   registration: Registration,
-  { tab }: Pick<RegistrationWizardPathSearch, 'tab'> = {}
+  { tab }: Pick<RegistrationWizardPathOptions, 'tab'> = {}
 ): To => {
   return getRegistrationWizardPath(registration.identifier, {
     tab,
