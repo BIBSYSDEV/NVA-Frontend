@@ -20,8 +20,8 @@ export const useAuthentication = (): UseAuthentication => {
     } else {
       try {
         await signInWithRedirect({ provider: { custom: 'Dataporten' } });
-      } catch (error) {
-        if ((error as any)?.message === 'There is already a signed in user.') {
+      } catch (error: any) {
+        if (error?.name === 'UserAlreadyAuthenticatedException') {
           window.location.reload();
         }
       }
