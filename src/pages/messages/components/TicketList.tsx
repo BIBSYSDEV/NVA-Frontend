@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-import { ResultParam, TicketSearchParam } from '../../../api/searchApi';
+import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
 import { CuratorSelector } from '../../../components/CuratorSelector';
@@ -148,7 +148,7 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
               <AreaOfResponsibilitySelector
                 paramName={TicketSearchParam.OrganizationId}
                 resetPagination={(params) => {
-                  params.delete(ResultParam.From);
+                  params.delete(TicketSearchParam.From);
                 }}
               />
             </Grid>
