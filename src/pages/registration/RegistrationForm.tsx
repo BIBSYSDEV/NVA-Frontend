@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
+import { doNotRedirectQueryParam } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageHeader } from '../../components/PageHeader';
@@ -46,8 +47,8 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
-  const shouldNotRedirect = new URLSearchParams(location.search).has('shouldNotRedirect');
-  const registrationQuery = useFetchRegistration(identifier, { shouldNotRedirect });
+  const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
+  const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
 
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';

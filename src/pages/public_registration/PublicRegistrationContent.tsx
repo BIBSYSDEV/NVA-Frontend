@@ -86,7 +86,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               component={RouterLink}
               state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
               to={getRegistrationWizardPath(identifier, {
-                shouldNotRedirect: registration.status === RegistrationStatus.Unpublished,
+                doNotRedirect: registration.status === RegistrationStatus.Unpublished,
               })}
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}>

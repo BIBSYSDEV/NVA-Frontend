@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
 import { updatePromotedPublications } from '../api/preferencesApi';
+import { doNotRedirectQueryParam } from '../api/registrationApi';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { PreviousPathLocationState } from '../types/locationState.types';
@@ -97,7 +98,7 @@ export const RegistrationListItemContent = ({
       dispatch(setNotification({ message: t('feedback.error.update_promoted_publication'), variant: 'error' })),
   });
 
-  const shouldNotRedirect =
+  const doNotRedirect =
     (location.pathname === UrlPathTemplate.TasksResultRegistrations ||
       location.pathname === UrlPathTemplate.InstitutionPortfolio) &&
     registration.recordMetadata.status === RegistrationStatus.Unpublished;
@@ -133,7 +134,7 @@ export const RegistrationListItemContent = ({
               state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
               to={{
                 pathname: getRegistrationLandingPagePath(identifier),
-                search: shouldNotRedirect ? 'shouldNotRedirect' : '',
+                search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
               }}>
               {getTitleString(registration.mainTitle)}
             </MuiLink>
