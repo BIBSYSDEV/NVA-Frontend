@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { SelectableButton } from '../../../components/SelectableButton';
 import { RootState } from '../../../redux/store';
+import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { RegistrationStatus, RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
@@ -131,6 +132,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <SelectableButton
             data-testid={dataTestId.registrationLandingPage.addLinkOrFilesButton}
             startIcon={<FileUploadIcon />}
+            state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
             to={getWizardPathByRegistration(registration, { tab: RegistrationTab.FilesAndLicenses })}>
             {t('registration.files_and_license.add_files_or_links')}
           </SelectableButton>
