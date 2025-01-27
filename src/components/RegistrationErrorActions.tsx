@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { ErrorList } from '../pages/registration/ErrorList';
 import { RootState } from '../redux/store';
+import { PreviousPathLocationState } from '../types/locationState.types';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { getFirstErrorTab, TabErrors } from '../utils/formik-helpers/formik-helpers';
@@ -41,6 +42,7 @@ export const RegistrationErrorActions = ({ tabErrors, registration, ...boxProps 
         variant="outlined"
         component={Link}
         size="small"
+        state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
         to={getWizardPathByRegistration(registration, { tab: firstErrorTab })}
         endIcon={<EditIcon />}
         data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>

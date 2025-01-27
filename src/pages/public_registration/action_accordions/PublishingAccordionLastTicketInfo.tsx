@@ -3,6 +3,7 @@ import { Box, Button, Divider, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router';
 import { MessageForm } from '../../../components/MessageForm';
+import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -92,6 +93,7 @@ export const PublishingAccordionLastTicketInfo = ({
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
                 endIcon={<EditIcon />}
                 component={RouterLink}
+                state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
                 to={getRegistrationWizardPath(publishingTicket.publicationIdentifier, {
                   tab: RegistrationTab.FilesAndLicenses,
                 })}>
