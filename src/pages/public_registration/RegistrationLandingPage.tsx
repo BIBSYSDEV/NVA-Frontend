@@ -7,7 +7,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RegistrationStatus } from '../../types/registration.types';
 import { userHasAccessRight } from '../../utils/registration-helpers';
-import { IdentifierParams } from '../../utils/urlPaths';
+import { doNotRedirectQueryParam, IdentifierParams } from '../../utils/urlPaths';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { ActionPanel } from './ActionPanel';
@@ -18,8 +18,8 @@ export const RegistrationLandingPage = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
-  const shouldNotRedirect = new URLSearchParams(location.search).has('shouldNotRedirect');
-  const registrationQuery = useFetchRegistration(identifier, { shouldNotRedirect });
+  const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
+  const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
 
   const registration = registrationQuery.data;
   const registrationId = registration?.id;

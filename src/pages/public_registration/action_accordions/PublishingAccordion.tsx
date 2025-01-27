@@ -216,13 +216,8 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {tabErrors && !isUnpublishedOrDeletedRegistration && (
-          <RegistrationErrorActions
-            tabErrors={tabErrors}
-            registrationIdentifier={registration.identifier}
-            isPublished={isPublishedRegistration}
-            sx={{ mb: '0.5rem' }}
-          />
+        {tabErrors && !isDeletedRegistration && (
+          <RegistrationErrorActions tabErrors={tabErrors} registration={registration} sx={{ mb: '0.5rem' }} />
         )}
 
         {/* Show approval history */}
@@ -334,7 +329,7 @@ export const PublishingAccordion = ({
           onConfirmNotDuplicate={onConfirmNotDuplicate}
         />
 
-        <MoreActionsCollapse registration={registration} />
+        <MoreActionsCollapse registration={registration} registrationIsValid={registrationIsValid} />
       </AccordionDetails>
     </Accordion>
   );

@@ -11,6 +11,7 @@ import { RequiredDescription } from '../../../components/RequiredDescription';
 import { Registration, RegistrationSearchItem } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
+import { doNotRedirectQueryParam } from '../../../utils/urlPaths';
 import { FindRegistration } from './FindRegistration';
 
 interface UnpublishRegistrationProps {
@@ -84,7 +85,7 @@ export const UnpublishRegistration = ({ registration }: UnpublishRegistrationPro
                 },
                 onSuccess: () => {
                   toggleUnpublishModal();
-                  navigate({ search: '?shouldNotRedirect' });
+                  navigate({ search: `?${doNotRedirectQueryParam}=true` });
                 },
               })
             }>
