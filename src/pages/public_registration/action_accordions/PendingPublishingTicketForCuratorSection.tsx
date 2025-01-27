@@ -7,13 +7,14 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router';
 import { updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
+import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getRegistrationWizardLink } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 
 interface PendingPublishingTicketForCuratorSectionProps {
   publishingTicket: PublishingTicket;
@@ -101,7 +102,8 @@ export const PendingPublishingTicketForCuratorSection = ({
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
         endIcon={<EditIcon />}
         component={RouterLink}
-        to={getRegistrationWizardLink(publishingTicket.publicationIdentifier, {
+        state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+        to={getRegistrationWizardPath(publishingTicket.publicationIdentifier, {
           tab: RegistrationTab.FilesAndLicenses,
         })}>
         {t('registration.edit_registration')}

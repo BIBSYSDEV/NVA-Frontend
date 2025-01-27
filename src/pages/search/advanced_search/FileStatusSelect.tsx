@@ -1,6 +1,6 @@
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -12,8 +12,9 @@ enum FileStatus {
 
 export const FileStatusSelect = () => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const selectedParam = searchParams.get(ResultParam.Files) ?? '';
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -26,7 +27,7 @@ export const FileStatusSelect = () => {
       syncedParams.delete(ResultParam.Files);
     }
     syncedParams.delete(ResultParam.From);
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   return (

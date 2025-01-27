@@ -666,7 +666,8 @@
     "language_selector": "Valt språk",
     "news_link": "Nyheitsbrev",
     "system_status_link": "Driftsmeldingar",
-    "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>"
+    "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>",
+    "to_top": "Til toppen"
   },
   "licenses": {
     "description": {
@@ -706,12 +707,13 @@
     "archived_files_on_registration_one": "Registreringa har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringa har {{count}} arkiverte filer",
     "deleted_afterwards": "Sletta i etterkant",
+    "hidden_afterwards": "Endra til skjult fil i etterkant",
+    "hidden_files_on_registration_one": "Registreringa har {{count}} skjult fil",
+    "hidden_files_on_registration_other": "Registreringa har {{count}} skjulte filer",
     "hide_messages": "Skjul meldingar",
     "imported_from_source": "Importert frå {{source}}",
     "imported_from_source_and_archive": "Importert frå {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert:",
-    "number_of_archivedFiles_on_registration_one": "Registreringa har {{count}} arkivert fil",
-    "number_of_archivedFiles_on_registration_other": "Registreringa har {{count}} arkiverte filer",
     "show_messages": "Vis meldingar",
     "titles": {
       "created_in_nva": "Oppretta i NVA",
@@ -1568,6 +1570,7 @@
         "duplicate_title_description_introduction": "Denne registreringa har same tittel og år som fylgjande publikasjon:",
         "edit_publishing_request_description": "For å endre på synlegheita til ein eller fleire filer, trykk på \"$t(registration.edit_registration)\" og velg ein annan status i rullegardinmenyen under overskrifta \"$t(registration.files_and_license.availability)\" til fila det gjeld.",
         "files_will_soon_be_published": "Fil(er) vil vere tiljengeleg for andre om kort tid. Vent litt før du oppdaterer sida på nytt for å sjå status.",
+        "fix_validation_errors_before_republishing": "",
         "has_rejected_files_publishing_request": "<0>Filene er ikkje sletta, men skjulte frå resultatvising.</0><0>Du vil få ei ny oppgåve om registratoren ber om ei ny vurdering av ei avvist fil, eller ønskjer å godkjenne ei nyleg opplasta fil.</0><0>For å slette filer permanent, rediger registreringa og fjern fila.</0><0>Om du vil avpublisere heile resultatet, opne fleire alternativ i botnen av denne menyen.</0>",
         "has_rejected_files_publishing_request_registrator": "<0>Kurator har avvist fil(er), og dei er fjerna frå presentasjonssida til resultatet. Du finn grunngjevinga for avvisinga under meldingsfeltet i denne menyen.</0><0>Ynskjer du å slette ein eller fleire filer, trykk på \"$t(registration.edit_registration)\" og fjern filene der.</0><0>Er du ueinig i avvisinga, endre status for filen(e) under \"$t(registration.files_and_license.availability)\" frå \"Avvist\" til ny status. Fila blir då sendt til kurator for ny godkjenning. Legg gjerne inn ein grunngjeving til kurator i meldingsfeltet.</0>",
         "has_reserved_doi": "<0>Du kan dele reservert DOI med dei som skal sitere resultatet. Oppslag via DOI er ikkje mogleg før DOI er tildelt av kurator.</0><0>DOI-førespurnaden blir sendt til kurator når resultatet blir publisert. Du publiserer registreringa i publiseringsmenyen.</0>",

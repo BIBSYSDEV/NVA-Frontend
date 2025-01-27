@@ -2,7 +2,7 @@ import { Divider, Link as MuiLink, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { fetchProject } from '../../api/cristinApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ResearchProject } from '../../types/project.types';

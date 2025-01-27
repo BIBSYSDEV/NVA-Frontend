@@ -7,7 +7,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Tooltip, T
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { useDuplicateRegistrationSearch } from '../../../api/hooks/useDuplicateRegistrationSearch';
 import { createTicket } from '../../../api/registrationApi';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
@@ -56,7 +56,8 @@ export const PublishingAccordion = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customer = useSelector((store: RootState) => store.customer);
-  const location = useLocation<SelectedTicketTypeLocationState>();
+  const location = useLocation();
+  const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
@@ -174,8 +175,8 @@ export const PublishingAccordion = ({
 
   const showRegistrationWithSameNameWarning = duplicateRegistration && isDraftRegistration;
 
-  const defaultExpanded = location.state?.selectedTicketType
-    ? location.state.selectedTicketType === 'PublishingRequest'
+  const defaultExpanded = locationState?.selectedTicketType
+    ? locationState.selectedTicketType === 'PublishingRequest'
     : isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus || hasClosedTicket;
 
   return (
@@ -215,13 +216,8 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {tabErrors && !isUnpublishedOrDeletedRegistration && (
-          <RegistrationErrorActions
-            tabErrors={tabErrors}
-            registrationIdentifier={registration.identifier}
-            isPublished={isPublishedRegistration}
-            sx={{ mb: '0.5rem' }}
-          />
+        {tabErrors && !isDeletedRegistration && (
+          <RegistrationErrorActions tabErrors={tabErrors} registration={registration} sx={{ mb: '0.5rem' }} />
         )}
 
         {/* Show approval history */}
@@ -333,7 +329,7 @@ export const PublishingAccordion = ({
           onConfirmNotDuplicate={onConfirmNotDuplicate}
         />
 
-        <MoreActionsCollapse registration={registration} />
+        <MoreActionsCollapse registration={registration} registrationIsValid={registrationIsValid} />
       </AccordionDetails>
     </Accordion>
   );

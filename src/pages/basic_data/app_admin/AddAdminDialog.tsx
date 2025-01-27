@@ -5,7 +5,7 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { addEmployment } from '../../../api/cristinApi';
 import { createUser } from '../../../api/roleApi';
 import { setNotification } from '../../../redux/notificationSlice';

@@ -1,6 +1,7 @@
 import { Query } from '@tanstack/react-query';
 import { TFunction } from 'i18next';
-import { FetchTicketsParams, ResultParam } from '../api/searchApi';
+import { NavigateFunction } from 'react-router';
+import { FetchTicketsParams, ResultParam, TicketSearchParam } from '../api/searchApi';
 import { TicketType } from '../types/publication_types/ticket.types';
 import { AggregationFileKeyType } from '../types/registration.types';
 import { User } from '../types/user.types';
@@ -199,4 +200,10 @@ export const syncParamsWithSearchFields = (params: URLSearchParams) => {
   });
 
   return params;
+};
+
+export const resetPaginationAndNavigate = (params: URLSearchParams, navigate: NavigateFunction) => {
+  const syncedParams = syncParamsWithSearchFields(params);
+  syncedParams.delete(TicketSearchParam.From);
+  navigate({ search: syncedParams.toString() });
 };

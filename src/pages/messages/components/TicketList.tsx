@@ -1,10 +1,10 @@
 import { FormControl, Grid, InputLabel, List, MenuItem, Select, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { TicketSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CategorySearchFilter } from '../../../components/CategorySearchFilter';
@@ -19,6 +19,7 @@ import { TicketStatusFilter } from '../../../components/TicketStatusFilter';
 import { RootState } from '../../../redux/store';
 import { CustomerTicketSearchResponse, ticketStatusValues } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
@@ -28,19 +29,16 @@ import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
   ticketsQuery: UseQueryResult<CustomerTicketSearchResponse>;
-  setRowsPerPage: Dispatch<SetStateAction<number>>;
-  rowsPerPage: number;
-  setPage: Dispatch<SetStateAction<number>>;
-  page: number;
   title: string;
 }
 
 const viewedByLabelId = 'viewed-by-select';
 
-export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
+export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const isOnTasksPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isOnTasksPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const user = useSelector((store: RootState) => store.user);
 
   const ticketStatusOptions = isOnTasksPage
@@ -70,8 +68,19 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
     />
   );
 
-  const searchParams = new URLSearchParams(history.location.search);
+  const searchParams = new URLSearchParams(location.search);
   const viewedByNotParam = searchParams.get(TicketSearchParam.ViewedByNot) || 'show-all';
+  const resultsParam = searchParams.get(TicketSearchParam.Results);
+  const fromParam = searchParams.get(TicketSearchParam.From);
+  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
+  const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
+
+  const updatePath = (from: string, results: string) => {
+    const syncedParams = syncParamsWithSearchFields(searchParams);
+    syncedParams.set(TicketSearchParam.From, from);
+    syncedParams.set(TicketSearchParam.Results, results);
+    navigate({ search: syncedParams.toString() });
+  };
 
   return (
     <section>
@@ -106,7 +115,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
                     syncedParams.set(TicketSearchParam.ViewedByNot, value);
                   }
                   syncedParams.delete(TicketSearchParam.From);
-                  history.push({ search: syncedParams.toString() });
+                  navigate({ search: syncedParams.toString() });
                 }}>
                 <MenuItem value={'show-all'}>{t('common.show_all')}</MenuItem>
                 <MenuItem value={user.nvaUsername}>{t('tasks.unread_only')}</MenuItem>
@@ -130,7 +139,9 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
                   } else {
                     syncedParams.delete(TicketSearchParam.Assignee);
                   }
-                  history.push({ search: syncedParams.toString() });
+
+                  syncedParams.delete(TicketSearchParam.From);
+                  navigate({ search: syncedParams.toString() });
                 }}
                 roleFilter={[RoleName.SupportCurator, RoleName.PublishingCurator, RoleName.DoiCurator]}
               />
@@ -138,10 +149,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
             <Grid item xs={16} md={6} lg={5}>
               <AreaOfResponsibilitySelector
                 paramName={TicketSearchParam.OrganizationId}
-                resetPagination={() => {
-                  if (page !== 1) {
-                    setPage(1);
-                  }
+                resetPagination={(params) => {
+                  params.delete(TicketSearchParam.From);
                 }}
               />
             </Grid>
@@ -166,13 +175,10 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
           ) : (
             <ListPagination
               count={ticketsQuery.data?.totalHits ?? 0}
+              page={page + 1}
+              onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
               rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={(newPage) => setPage(newPage)}
-              onRowsPerPageChange={(newRowsPerPage) => {
-                setRowsPerPage(newRowsPerPage);
-                setPage(1);
-              }}
+              onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
               showPaginationTop
               sortingComponent={sortingComponent}
               maxHits={10_000}>

@@ -3,7 +3,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviReportedStatus } from '../../api/hooks/useFetchNviReportedStatus';
 import { useFetchRegistration } from '../../api/hooks/useFetchRegistration';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
@@ -22,7 +22,7 @@ import { Registration, RegistrationStatus, RegistrationTab } from '../../types/r
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
@@ -37,15 +37,18 @@ interface RegistrationFormProps {
 
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const { t, i18n } = useTranslation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
   const [uppy] = useState(() => createUppy(i18n.language));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
+  const location = useLocation();
+  const locationState = location.state as RegistrationFormLocationState;
 
-  const highestValidatedTab =
-    useLocation<RegistrationFormLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
+  const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
-  const registrationQuery = useFetchRegistration(identifier);
+  const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
+  const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
+
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
   const canHaveNviCandidate =
@@ -59,7 +62,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const disableNviCriticalFields = isNviCandidateApproved && !user?.isNviCurator;
   const isResettableNviStatus = isNviCandidateApproved || isNviCandidateUnderReview;
 
-  const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
+  const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
 
   const canEditRegistration = userHasAccessRight(registration, 'update');
@@ -138,7 +141,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         open={isResettableNviStatus && !hasAcceptedNviWarning && !disableNviCriticalFields}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
-        onCancel={() => (history.length > 1 ? history.goBack() : history.push(UrlPathTemplate.Home))}>
+        onCancel={() => (navigate.length > 1 ? navigate(-1) : navigate(UrlPathTemplate.Root))}>
         <Typography sx={{ mb: '1rem' }}>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>

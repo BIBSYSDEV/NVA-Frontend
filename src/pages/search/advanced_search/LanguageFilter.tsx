@@ -2,7 +2,7 @@ import { Box, Chip, MenuItem, Select } from '@mui/material';
 import { Language } from 'nva-language';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { ResultParam } from '../../../api/searchApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { registrationLanguageOptions } from '../../../utils/registration-helpers';
@@ -10,8 +10,9 @@ import { syncParamsWithSearchFields } from '../../../utils/searchHelpers';
 
 export const LanguageFilter = () => {
   const { t, i18n } = useTranslation();
-  const history = useHistory();
-  const searchParams = new URLSearchParams(history.location.search);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const languageParam = searchParams.get(ResultParam.PublicationLanguageShould)?.split(',') || [];
   const [open, setOpen] = useState(false);
 
@@ -39,7 +40,7 @@ export const LanguageFilter = () => {
     }
     syncedParams.delete(ResultParam.From);
 
-    history.push({ search: syncedParams.toString() });
+    navigate({ search: syncedParams.toString() });
   };
 
   const selectedLanguages = languageParam

@@ -4,7 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { RegistrationErrorActions } from '../../../components/RegistrationErrorActions';
@@ -13,7 +13,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
-import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { Registration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
@@ -32,7 +32,8 @@ interface SupportAccordionProps {
 export const SupportAccordion = ({ registration, supportTicket, addMessage, refetchData }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const location = useLocation<SelectedTicketTypeLocationState>();
+  const location = useLocation();
+  const locationState = location.state as SelectedTicketTypeLocationState | undefined;
 
   const user = useSelector((store: RootState) => store.user);
   const userIsTicketOwner = user && supportTicket?.owner === user.nvaUsername;
@@ -66,8 +67,8 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
 
   const userCanCompleteTicket = userHasAccessRight(registration, 'support-request-approve');
 
-  const defaultExpanded = location.state?.selectedTicketType
-    ? location.state.selectedTicketType === 'GeneralSupportCase'
+  const defaultExpanded = locationState?.selectedTicketType
+    ? locationState.selectedTicketType === 'GeneralSupportCase'
     : isPendingSupportTicket || !userHasReadTicket;
 
   return (
@@ -105,11 +106,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             )}
 
             {isOnTasksPage && tabErrors && (
-              <RegistrationErrorActions
-                tabErrors={tabErrors}
-                registrationIdentifier={registration.identifier}
-                isPublished={registration.status === RegistrationStatus.Published}
-              />
+              <RegistrationErrorActions tabErrors={tabErrors} registration={registration} />
             )}
 
             {supportTicket.messages.length > 0 && (

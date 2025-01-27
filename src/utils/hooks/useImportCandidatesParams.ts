@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { ImportCandidateOrderBy, ImportCandidatesSearchParam, SortOrder } from '../../api/searchApi';
 import { CollaborationType, ImportCandidateStatus } from '../../types/importCandidate.types';
 import { AggregationFileKeyType, PublicationInstanceType } from '../../types/registration.types';

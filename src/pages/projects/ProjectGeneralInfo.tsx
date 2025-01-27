@@ -1,6 +1,6 @@
 import { Box, Chip, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
