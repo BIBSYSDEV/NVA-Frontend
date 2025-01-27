@@ -3,19 +3,14 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Box, Divider, IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { userHasAccessRight } from '../../../utils/registration-helpers';
 import { DeleteDraftRegistration } from './DeleteDraftRegistration';
-import { RepublishRegistration } from './RepublishRegistration';
+import { RepublishRegistration, RepublishRegistrationProps } from './RepublishRegistration';
 import { TerminateRegistration } from './TerminateRegistration';
 import { UnpublishRegistration } from './UnpublishRegistration';
 
-interface MoreActionsCollapseProps {
-  registration: Registration;
-}
-
-export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) => {
+export const MoreActionsCollapse = ({ registration, registrationIsValid }: RepublishRegistrationProps) => {
   const { t } = useTranslation();
   const [openMoreActions, setOpenMoreActions] = useState(false);
 
@@ -44,7 +39,7 @@ export const MoreActionsCollapse = ({ registration }: MoreActionsCollapseProps) 
           {isPublished && <UnpublishRegistration registration={registration} />}
           {isUnpublished && (
             <>
-              <RepublishRegistration registration={registration} />
+              <RepublishRegistration registration={registration} registrationIsValid={registrationIsValid} />
               <TerminateRegistration registration={registration} />
             </>
           )}
