@@ -224,8 +224,8 @@ export const FilesTableRow = ({
         </VerticalAlignedTableCell>
         {showAllColumns && (
           <>
-            {isOpenableFile && showFileVersion && (
-              <VerticalAlignedTableCell>
+            <VerticalAlignedTableCell>
+              {isOpenableFile && showFileVersion && (
                 <Field name={publisherVersionFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
                     <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
@@ -278,8 +278,8 @@ export const FilesTableRow = ({
                     </FormControl>
                   )}
                 </Field>
-              </VerticalAlignedTableCell>
-            )}
+              )}
+            </VerticalAlignedTableCell>
             <VerticalAlignedTableCell>
               {isOpenableFile && (
                 <>
