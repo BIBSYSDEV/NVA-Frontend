@@ -1,4 +1,5 @@
 import { To } from 'react-router';
+import { Registration, RegistrationStatus } from '../types/registration.types';
 
 export interface IdentifierParams extends Record<string, string> {
   identifier: string;
@@ -85,11 +86,38 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 export const getImportCandidatePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportCandidate.replace(':identifier', encodeURIComponent(identifier));
 
-export const getRegistrationWizardPath = (identifier: string, tab?: number): To => {
+interface RegistrationWizardPathOptions {
+  tab?: number;
+  doNotRedirect?: boolean;
+}
+
+export const doNotRedirectQueryParam = 'doNotRedirect';
+
+export const getRegistrationWizardPath = (
+  identifier: string,
+  { tab, doNotRedirect }: RegistrationWizardPathOptions = {}
+): To => {
+  const searchParams = new URLSearchParams();
+  if (tab !== undefined) {
+    searchParams.set('tab', tab.toString());
+  }
+  if (doNotRedirect) {
+    searchParams.set(doNotRedirectQueryParam, 'true');
+  }
   return {
     pathname: UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier)),
-    search: tab ? `?tab=${tab}` : '',
+    search: searchParams.toString(),
   };
+};
+
+export const getWizardPathByRegistration = (
+  registration: Registration,
+  { tab }: Pick<RegistrationWizardPathOptions, 'tab'> = {}
+): To => {
+  return getRegistrationWizardPath(registration.identifier, {
+    tab,
+    doNotRedirect: registration.status === RegistrationStatus.Unpublished && !!registration.duplicateOf,
+  });
 };
 
 export const getImportCandidateWizardPath = (identifier: string) =>

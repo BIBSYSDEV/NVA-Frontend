@@ -217,12 +217,7 @@ export const PublishingAccordion = ({
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
         {tabErrors && !isUnpublishedOrDeletedRegistration && (
-          <RegistrationErrorActions
-            tabErrors={tabErrors}
-            registrationIdentifier={registration.identifier}
-            isPublished={isPublishedRegistration}
-            sx={{ mb: '0.5rem' }}
-          />
+          <RegistrationErrorActions tabErrors={tabErrors} registration={registration} sx={{ mb: '0.5rem' }} />
         )}
 
         {/* Show approval history */}

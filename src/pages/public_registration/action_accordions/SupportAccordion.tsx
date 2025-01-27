@@ -13,7 +13,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { SelectedTicketTypeLocationState } from '../../../types/locationState.types';
 import { Ticket } from '../../../types/publication_types/ticket.types';
-import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { Registration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getTabErrors, validateRegistrationForm } from '../../../utils/formik-helpers/formik-helpers';
@@ -106,11 +106,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             )}
 
             {isOnTasksPage && tabErrors && (
-              <RegistrationErrorActions
-                tabErrors={tabErrors}
-                registrationIdentifier={registration.identifier}
-                isPublished={registration.status === RegistrationStatus.Published}
-              />
+              <RegistrationErrorActions tabErrors={tabErrors} registration={registration} />
             )}
 
             {supportTicket.messages.length > 0 && (

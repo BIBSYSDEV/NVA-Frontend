@@ -6,6 +6,7 @@ import {
   Registration,
   UpdateRegistrationStatusRequest,
 } from '../types/registration.types';
+import { doNotRedirectQueryParam } from '../utils/urlPaths';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 import { userIsAuthenticated } from './authApi';
@@ -85,11 +86,11 @@ export const createDraftDoi = async (registrationId: string) =>
     method: 'POST',
   });
 
-export const fetchRegistration = async (registrationIdentifier: string, shouldNotRedirect?: boolean) => {
+export const fetchRegistration = async (registrationIdentifier: string, doNotRedirect?: boolean) => {
   const isAuthenticated = await userIsAuthenticated();
 
-  const url = shouldNotRedirect
-    ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?doNotRedirect=true`
+  const url = doNotRedirect
+    ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?${doNotRedirectQueryParam}=true`
     : `${PublicationsApiPath.Registration}/${registrationIdentifier}`;
 
   const fetchRegistrationResponse = isAuthenticated
