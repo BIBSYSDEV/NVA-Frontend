@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router';
 import { updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
+import { PreviousPathLocationState } from '../../../types/locationState.types';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { RegistrationTab } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -101,7 +102,10 @@ export const PendingPublishingTicketForCuratorSection = ({
         data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestEditButton}
         endIcon={<EditIcon />}
         component={RouterLink}
-        to={getRegistrationWizardPath(publishingTicket.publicationIdentifier, RegistrationTab.FilesAndLicenses)}>
+        state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
+        to={getRegistrationWizardPath(publishingTicket.publicationIdentifier, {
+          tab: RegistrationTab.FilesAndLicenses,
+        })}>
         {t('registration.edit_registration')}
       </Button>
 
