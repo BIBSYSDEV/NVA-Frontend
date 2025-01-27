@@ -668,7 +668,8 @@
     "language_selector": "Valgt språk",
     "news_link": "Nyhetsbrev",
     "system_status_link": "Driftsmeldinger",
-    "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>"
+    "technical_support_link": "Ved behov for teknisk støtte kontakt <0>kontakt@sikt.no</0>",
+    "to_top": "Til toppen"
   },
   "licenses": {
     "description": {
@@ -708,12 +709,13 @@
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
+    "hidden_afterwards": "Endret til skjult fil i etterkant",
+    "hidden_files_on_registration_one": "Registreringen har {{count}} skjult fil",
+    "hidden_files_on_registration_other": "Registreringen har {{count}} skjulte filer",
     "hide_messages": "Skjul meldinger",
     "imported_from_source": "Importert fra {{source}}",
     "imported_from_source_and_archive": "Importert fra {{source}} ({{archive}})",
     "metadata_last_updated": "Metadata sist oppdatert:",
-    "number_of_archivedFiles_on_registration_one": "Registreringen har {{count}} arkivert fil",
-    "number_of_archivedFiles_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "show_messages": "Vis meldinger",
     "titles": {
       "created_in_nva": "Opprettet i NVA",

@@ -53,9 +53,6 @@ const TasksPage = () => {
   const isOnNviCandidatePage =
     location.pathname.startsWith(UrlPathTemplate.TasksNvi) && !isOnNviCandidatesPage && !isOnNviStatusPage;
 
-  const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-
   const institutionUserQuery = useFetchUserQuery(user?.nvaUsername ?? '');
 
   const searchParams = new URLSearchParams(location.search);
@@ -75,12 +72,12 @@ const TasksPage = () => {
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
-    results: rowsPerPage,
-    from: (page - 1) * rowsPerPage,
+    results: Number(searchParams.get(TicketSearchParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    from: Number(searchParams.get(TicketSearchParam.From) ?? 0),
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     organizationId: organizationIdParam,
-    excludeSubUnits: organizationIdParam ? true : undefined,
+    excludeSubUnits: !!organizationIdParam,
     assignee: searchParams.get(TicketSearchParam.Assignee),
     status: searchParams.get(TicketSearchParam.Status),
     type: selectedTicketTypes.join(','),
@@ -143,7 +140,7 @@ const TasksPage = () => {
             accordionPath={UrlPathTemplate.TasksDialogue}
             onClick={() => {
               if (!isOnTicketsPage) {
-                setPage(1);
+                searchParams.delete(TicketSearchParam.From);
               }
             }}
             dataTestId={dataTestId.tasksPage.userDialogAccordion}>
@@ -232,14 +229,7 @@ const TasksPage = () => {
                 isAuthorized={isTicketCurator}
                 element={
                   <TicketListDefaultValuesWrapper>
-                    <TicketList
-                      ticketsQuery={ticketsQuery}
-                      rowsPerPage={rowsPerPage}
-                      setRowsPerPage={setRowsPerPage}
-                      page={page}
-                      setPage={setPage}
-                      title={t('common.tasks')}
-                    />
+                    <TicketList ticketsQuery={ticketsQuery} title={t('common.tasks')} />
                   </TicketListDefaultValuesWrapper>
                 }
               />

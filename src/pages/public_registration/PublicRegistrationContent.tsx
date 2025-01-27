@@ -18,7 +18,7 @@ import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } 
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString, isBook, isReport, isResearchData, userHasAccessRight } from '../../utils/registration-helpers';
-import { getRegistrationWizardPath } from '../../utils/urlPaths';
+import { getWizardPathByRegistration } from '../../utils/urlPaths';
 import { DeletedPublicationInformation } from './DeletedPublicationInformation';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
@@ -85,7 +85,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <IconButton
               component={RouterLink}
               state={{ previousPath: window.location.pathname } satisfies PreviousPathLocationState}
-              to={getRegistrationWizardPath(identifier)}
+              to={getWizardPathByRegistration(registration)}
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}>
               <EditIcon />

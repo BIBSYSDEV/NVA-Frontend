@@ -22,7 +22,7 @@ import { Registration, RegistrationStatus, RegistrationTab } from '../../types/r
 import { getTouchedTabFields, validateRegistrationForm } from '../../utils/formik-helpers/formik-helpers';
 import { getTitleString, userHasAccessRight } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { doNotRedirectQueryParam, UrlPathTemplate } from '../../utils/urlPaths';
 import { Forbidden } from '../errorpages/Forbidden';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
@@ -46,7 +46,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const highestValidatedTab = locationState?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
-  const registrationQuery = useFetchRegistration(identifier);
+  const doNotRedirect = new URLSearchParams(location.search).has(doNotRedirectQueryParam);
+  const registrationQuery = useFetchRegistration(identifier, { doNotRedirect });
+
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
   const canHaveNviCandidate =

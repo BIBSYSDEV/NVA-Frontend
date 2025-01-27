@@ -38,6 +38,12 @@ export function generatePublishingRequestLogEntry(
 const fileHasBeenRemovedFromRegistration = (file: AssociatedFile, filesOnRegistration: AssociatedFile[]) =>
   !filesOnRegistration.some((registrationFile) => registrationFile.identifier === file.identifier);
 
+const fileHasBeenChangedToHidden = (file: AssociatedFile, filesOnRegistration: AssociatedFile[]) =>
+  filesOnRegistration.some(
+    (registrationFile) =>
+      registrationFile.identifier === file.identifier && registrationFile.type === FileType.HiddenFile
+  );
+
 const generateInternalFilesLogEntry = (
   ticket: PublishingTicket,
   filesOnRegistration: AssociatedFile[],
@@ -78,7 +84,11 @@ function generateOpenFilesLogEntry(
     .sort((a, b) => a.name?.localeCompare(b.name))
     .map((file) => ({
       description: file.name,
-      fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration) ? 'deletedFile' : 'file',
+      fileIcon: fileHasBeenRemovedFromRegistration(file, filesOnRegistration)
+        ? 'deletedFile'
+        : fileHasBeenChangedToHidden(file, filesOnRegistration)
+          ? 'hiddenFile'
+          : 'file',
     }));
 
   if (openFilesItems.length === 0) {

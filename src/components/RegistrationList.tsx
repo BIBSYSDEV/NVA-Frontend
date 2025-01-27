@@ -16,6 +16,7 @@ import { RegistrationSearchItem, RegistrationStatus } from '../types/registratio
 import { dataTestId } from '../utils/dataTestIds';
 import { getContributorsWithPrimaryRole, getTitleString } from '../utils/registration-helpers';
 import {
+  doNotRedirectQueryParam,
   getRegistrationLandingPagePath,
   getRegistrationWizardPath,
   getResearchProfilePath,
@@ -97,7 +98,7 @@ export const RegistrationListItemContent = ({
       dispatch(setNotification({ message: t('feedback.error.update_promoted_publication'), variant: 'error' })),
   });
 
-  const shouldNotRedirect =
+  const doNotRedirect =
     (location.pathname === UrlPathTemplate.TasksResultRegistrations ||
       location.pathname === UrlPathTemplate.InstitutionPortfolio) &&
     registration.recordMetadata.status === RegistrationStatus.Unpublished;
@@ -133,7 +134,7 @@ export const RegistrationListItemContent = ({
               state={{ previousPath: `${location.pathname}${location.search}` } satisfies PreviousPathLocationState}
               to={{
                 pathname: getRegistrationLandingPagePath(identifier),
-                search: shouldNotRedirect ? 'shouldNotRedirect' : '',
+                search: doNotRedirect ? `${doNotRedirectQueryParam}=true` : '',
               }}>
               {getTitleString(registration.mainTitle)}
             </MuiLink>
