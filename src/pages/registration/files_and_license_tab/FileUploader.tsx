@@ -1,13 +1,7 @@
 import Uppy from '@uppy/core';
 import { useEffect } from 'react';
 import { UppyDashboard } from '../../../components/UppyDashboard';
-import {
-  AssociatedFile,
-  emptyFile,
-  FileRrs,
-  FileType,
-  UserUploadDetails,
-} from '../../../types/associatedArtifact.types';
+import { AssociatedFile, emptyFile } from '../../../types/associatedArtifact.types';
 
 interface FileUploaderProps {
   addFile: (file: AssociatedFile) => void;
@@ -15,15 +9,10 @@ interface FileUploaderProps {
   disabled?: boolean;
 }
 
-interface UploadedFile {
-  type: 'UploadedFile';
-  identifier: string;
-  mimeType: string;
-  name: string;
-  rightsRetentionStrategy: FileRrs;
-  size: number;
-  uploadDetails: UserUploadDetails;
-}
+type UploadedFile = Pick<
+  AssociatedFile,
+  'type' | 'identifier' | 'name' | 'size' | 'mimeType' | 'rightsRetentionStrategy' | 'uploadDetails'
+>;
 
 export const FileUploader = ({ addFile, uppy, disabled = !uppy }: FileUploaderProps) => {
   useEffect(() => {
@@ -33,7 +22,6 @@ export const FileUploader = ({ addFile, uppy, disabled = !uppy }: FileUploaderPr
         const newFile: AssociatedFile = {
           ...emptyFile,
           ...uploadedFile,
-          type: FileType.PendingOpenFile,
         };
         addFile(newFile);
       });
