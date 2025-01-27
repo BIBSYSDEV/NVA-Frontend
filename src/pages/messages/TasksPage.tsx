@@ -19,7 +19,7 @@ import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { deleteFromParameter, getTaskNotificationsParams } from '../../utils/searchHelpers';
+import { getTaskNotificationsParams, resetPaginationAndNavigate } from '../../utils/searchHelpers';
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import NotFound from '../errorpages/NotFound';
@@ -155,7 +155,7 @@ const TasksPage = () => {
                   color="publishingRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
-                    deleteFromParameter(searchParams, navigate);
+                    resetPaginationAndNavigate(searchParams, navigate);
                   }}>
                   {ticketTypes.publishingRequest && publishingRequestCount
                     ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
@@ -172,7 +172,7 @@ const TasksPage = () => {
                   color="doiRequest"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
-                    deleteFromParameter(searchParams, navigate);
+                    resetPaginationAndNavigate(searchParams, navigate);
                   }}>
                   {ticketTypes.doiRequest && doiRequestCount
                     ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
@@ -189,7 +189,7 @@ const TasksPage = () => {
                   color="generalSupportCase"
                   onClick={() => {
                     setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
-                    deleteFromParameter(searchParams, navigate);
+                    resetPaginationAndNavigate(searchParams, navigate);
                   }}>
                   {ticketTypes.generalSupportCase && generalSupportCaseCount
                     ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`

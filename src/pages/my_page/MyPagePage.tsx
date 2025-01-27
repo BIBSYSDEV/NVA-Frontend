@@ -26,7 +26,7 @@ import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { deleteFromParameter, getDialogueNotificationsParams } from '../../utils/searchHelpers';
+import { getDialogueNotificationsParams, resetPaginationAndNavigate } from '../../utils/searchHelpers';
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
@@ -210,7 +210,7 @@ const MyPagePage = () => {
                 color="publishingRequest"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest });
-                  deleteFromParameter(searchParams, navigate);
+                  resetPaginationAndNavigate(searchParams, navigate);
                 }}>
                 {selectedTypes.publishingRequest && publishingRequestCount
                   ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
@@ -225,7 +225,7 @@ const MyPagePage = () => {
                 color="doiRequest"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest });
-                  deleteFromParameter(searchParams, navigate);
+                  resetPaginationAndNavigate(searchParams, navigate);
                 }}>
                 {selectedTypes.doiRequest && doiRequestCount
                   ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
@@ -240,7 +240,7 @@ const MyPagePage = () => {
                 color="generalSupportCase"
                 onClick={() => {
                   setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase });
-                  deleteFromParameter(searchParams, navigate);
+                  resetPaginationAndNavigate(searchParams, navigate);
                 }}>
                 {selectedTypes.generalSupportCase && generalSupportCaseCount
                   ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
