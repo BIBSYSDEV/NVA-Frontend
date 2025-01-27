@@ -53,10 +53,6 @@ const MyPagePage = () => {
   const personId = user?.cristinId ?? '';
   const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
 
-  const [page, setPage] = useState(1);
-  const apiPage = page - 1;
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-
   const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
     published: false,
     unpublished: true,
@@ -75,9 +71,9 @@ const MyPagePage = () => {
   const ticketSearchParams: FetchTicketsParams = {
     aggregation: 'all',
     query: searchParams.get(TicketSearchParam.Query),
-    results: rowsPerPage,
+    results: Number(searchParams.get(TicketSearchParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     createdDate: searchParams.get(TicketSearchParam.CreatedDate),
-    from: apiPage * rowsPerPage,
+    from: Number(searchParams.get(TicketSearchParam.From) ?? 0),
     owner: user?.nvaUsername,
     orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
     sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
@@ -370,16 +366,7 @@ const MyPagePage = () => {
           element={
             <PrivateRoute
               isAuthorized={isCreator}
-              element={
-                <TicketList
-                  ticketsQuery={ticketsQuery}
-                  rowsPerPage={rowsPerPage}
-                  setRowsPerPage={setRowsPerPage}
-                  page={page}
-                  setPage={setPage}
-                  title={t('common.dialogue')}
-                />
-              }
+              element={<TicketList ticketsQuery={ticketsQuery} title={t('common.dialogue')} />}
             />
           }
         />
