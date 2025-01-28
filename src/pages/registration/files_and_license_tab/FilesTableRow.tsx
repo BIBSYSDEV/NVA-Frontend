@@ -211,6 +211,11 @@ export const FilesTableRow = ({
                   input: { sx: { '.MuiSelect-select': { py: '0.75rem' } } },
                   select: { inputProps: { 'aria-label': t('registration.files_and_license.availability') } },
                 }}>
+                {field.value === FileType.UpdloadedFile && (
+                  <MenuItem value={FileType.UpdloadedFile} disabled hidden>
+                    <i>{t('registration.files_and_license.select_availability')}</i>
+                  </MenuItem>
+                )}
                 <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
                   <StyledFileTypeMenuItemContent>
                     <CheckIcon fontSize="small" />
