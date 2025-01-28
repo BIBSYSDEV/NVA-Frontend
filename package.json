@@ -39,7 +39,7 @@
     "@mui/lab": "^6.0.0-beta.24",
     "@mui/material": "^6.4.0",
     "@mui/x-date-pickers": "^7.24.1",
-    "@reduxjs/toolkit": "^2.5.0",
+    "@reduxjs/toolkit": "^2.5.1",
     "@tanstack/react-query": "^5.64.1",
     "@uppy/aws-s3": "^4.2.3",
     "@uppy/core": "^4.4.1",
