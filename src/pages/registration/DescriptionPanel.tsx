@@ -6,6 +6,8 @@ import { getLanguageByIso6393Code } from 'nva-language';
 import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegistrationSearch';
+import { RichTextField as TipTap } from '../../components/EditorTipTap/RichTextField';
+import { RichTextField as Lexical } from '../../components/EditorLexical/RichTextField';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -109,14 +111,14 @@ export const DescriptionPanel = () => {
         }}>
         <Field name={DescriptionFieldNames.Abstract}>
           {({ field }: FieldProps<string>) => (
-            <TextField
-              {...field}
-              value={field.value ?? ''}
-              data-testid={dataTestId.registrationWizard.description.abstractField}
-              variant="filled"
-              fullWidth
-              multiline
+            <Lexical
+              name="test-lexical"
+              value={field.value}
               label={t('registration.description.abstract')}
+              placeholder="Skriv noe her i Lexical..."
+              onChange={(val) => setFieldValue(field.name, val)}
+              dataTestId={dataTestId.registrationWizard.description.abstractField}
+              fullWidth
             />
           )}
         </Field>
@@ -151,14 +153,14 @@ export const DescriptionPanel = () => {
       </Box>
       <Field name={DescriptionFieldNames.Description}>
         {({ field }: FieldProps<string>) => (
-          <TextField
-            {...field}
-            value={field.value ?? ''}
-            data-testid={dataTestId.registrationWizard.description.descriptionField}
+          <TipTap
+            name="tiptap-description-field"
+            value={field.value}
             label={t('registration.description.description_of_content')}
-            multiline
+            placeholder="Skriv noe her i TipTap..."
+            onChange={(val) => setFieldValue(field.name, val)}
+            dataTestId={dataTestId.registrationWizard.description.descriptionField}
             fullWidth
-            variant="filled"
           />
         )}
       </Field>
