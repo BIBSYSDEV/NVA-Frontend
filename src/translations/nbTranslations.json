@@ -328,6 +328,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -399,11 +403,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -722,18 +722,18 @@
       "doi_given": "DOI tildelt",
       "doi_rejected": "DOI avvist",
       "doi_requested": "Etterspurt DOI",
-      "file_archived_one": "Fil arkivert",
-      "file_archived_other": "Filer arkivert",
       "file_archived_count_one": "{{count}} fil arkivert",
       "file_archived_count_other": "{{count}} filer arkivert",
+      "file_archived_one": "Fil arkivert",
+      "file_archived_other": "Filer arkivert",
       "file_published_count_one": "{{count}} fil publisert",
       "file_published_count_other": "{{count}} filer publisert",
       "files_published_one": "Fil publisert",
       "files_published_other": "Filer publisert",
-      "files_rejected_one": "Fil avvist",
-      "files_rejected_other": "Filer avvist",
       "files_rejected_count_one": "{{count}} fil avvist",
       "files_rejected_count_other": "{{count}} filer avvist",
+      "files_rejected_one": "Fil avvist",
+      "files_rejected_other": "Filer avvist",
       "files_uploaded_one": "Fil lastet opp",
       "files_uploaded_other": "Filer lastet opp",
       "imported": "Importert",
@@ -1471,6 +1471,7 @@
       "registration_without_file": "Resultat uten fil",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
+      "select_availability": "Velg tilgjengelighet",
       "show_all_older_versions": "Vis alle tidligere versjoner",
       "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
       "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
@@ -1480,8 +1481,7 @@
       "version_published_helper_text": "<0>Publisert versjon</0>: Artikkelen slik den presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere eventuelle redaksjonelle forbedringer, og forlagets grafiske profil, etter utført fagfellevurdering. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Lisensen er normalt bestemt av utgiveren, så det sikre valget for lisens er «Utgivers betingelser». Mange utgivere støtter derimot Open Access og tillater bruk av CC-BY-lisensen.",
       "version_published_helper_text_metadata_only": "<0>Publisert versjon</0>: Artikkelen slik den presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere eventuelle redaksjonelle forbedringer og forlagets grafiske profil, etter utført fagfellevurdering. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Lisensen er normalt bestemt av utgiveren, så det sikre valget for lisens er «Utgivers betingelser». Mange utgivere støtter derimot Open Access og tillater bruk av CC-BY-lisensen.",
       "version_publishing_agreement_helper_text": "<0>Forfatteravtalen</0> er en kontrakt mellom en utgiver og en artist eller forfatter. Den spesifiserer forhold som intellektuelt eierskap, hvor og hvordan verket kan offentliggjøres, betalinger, ansvarsbeskyttelse, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorer når de gjør vurderinger om lisens og publiseringsdato (embargo). Slike dokumenter vil ikke være synlig for andre.",
-      "version_publishing_agreement_helper_text_metadata_only": "<0>Forfatteravtalen</0> er en kontrakt mellom en utgiver og en artist eller forfatter. Den spesifiserer forhold som intellektuelt eierskap, hvor og hvordan verket kan offentliggjøres, betalinger, ansvarsbeskyttelse, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorer når de gjør vurderinger om lisens og publiseringsdato (embargo). Slike dokumenter vil ikke være synlig for andre.",
-      "select_availability": "Velg tilgjengelighet"
+      "version_publishing_agreement_helper_text_metadata_only": "<0>Forfatteravtalen</0> er en kontrakt mellom en utgiver og en artist eller forfatter. Den spesifiserer forhold som intellektuelt eierskap, hvor og hvordan verket kan offentliggjøres, betalinger, ansvarsbeskyttelse, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorer når de gjør vurderinger om lisens og publiseringsdato (embargo). Slike dokumenter vil ikke være synlig for andre."
     },
     "heading": {
       "contributors": "Bidragsytere",
