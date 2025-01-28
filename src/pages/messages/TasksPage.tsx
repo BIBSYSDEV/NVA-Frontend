@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Navigate, Outlet, Route, Routes, useLocation } from 'react-router';
+import { Link, Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { useFetchUserQuery } from '../../api/hooks/useFetchUserQuery';
 import { fetchCustomerTickets, FetchTicketsParams, TicketSearchParam } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -19,7 +19,7 @@ import { PreviousSearchLocationState } from '../../types/locationState.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { getTaskNotificationsParams } from '../../utils/searchHelpers';
+import { getTaskNotificationsParams, resetPaginationAndNavigate } from '../../utils/searchHelpers';
 import { getSubUrl, UrlPathTemplate } from '../../utils/urlPaths';
 import { PortfolioSearchPage } from '../editor/PortfolioSearchPage';
 import NotFound from '../errorpages/NotFound';
@@ -44,6 +44,7 @@ const TasksPage = () => {
   const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
   const isNviCurator = !!user?.isNviCurator;
   const isAnyCurator = isTicketCurator || isNviCurator;
+  const navigate = useNavigate();
 
   const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
@@ -152,7 +153,10 @@ const TasksPage = () => {
                   showCheckbox
                   isSelected={ticketTypes.publishingRequest}
                   color="publishingRequest"
-                  onClick={() => setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest })}>
+                  onClick={() => {
+                    setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest });
+                    resetPaginationAndNavigate(searchParams, navigate);
+                  }}>
                   {ticketTypes.publishingRequest && publishingRequestCount
                     ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                     : t('my_page.messages.types.PublishingRequest')}
@@ -166,7 +170,10 @@ const TasksPage = () => {
                   showCheckbox
                   isSelected={ticketTypes.doiRequest}
                   color="doiRequest"
-                  onClick={() => setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest })}>
+                  onClick={() => {
+                    setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest });
+                    resetPaginationAndNavigate(searchParams, navigate);
+                  }}>
                   {ticketTypes.doiRequest && doiRequestCount
                     ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                     : t('my_page.messages.types.DoiRequest')}
@@ -180,9 +187,10 @@ const TasksPage = () => {
                   showCheckbox
                   isSelected={ticketTypes.generalSupportCase}
                   color="generalSupportCase"
-                  onClick={() =>
-                    setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase })
-                  }>
+                  onClick={() => {
+                    setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase });
+                    resetPaginationAndNavigate(searchParams, navigate);
+                  }}>
                   {ticketTypes.generalSupportCase && generalSupportCaseCount
                     ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                     : t('my_page.messages.types.GeneralSupportCase')}

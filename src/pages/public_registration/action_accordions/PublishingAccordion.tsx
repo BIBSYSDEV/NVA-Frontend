@@ -216,7 +216,7 @@ export const PublishingAccordion = ({
       <AccordionDetails>
         {lastPublishingRequest && <TicketAssignee ticket={lastPublishingRequest} refetchTickets={refetchData} />}
 
-        {tabErrors && !isUnpublishedOrDeletedRegistration && (
+        {tabErrors && !isDeletedRegistration && (
           <RegistrationErrorActions tabErrors={tabErrors} registration={registration} sx={{ mb: '0.5rem' }} />
         )}
 
@@ -329,7 +329,7 @@ export const PublishingAccordion = ({
           onConfirmNotDuplicate={onConfirmNotDuplicate}
         />
 
-        <MoreActionsCollapse registration={registration} />
+        <MoreActionsCollapse registration={registration} registrationIsValid={registrationIsValid} />
       </AccordionDetails>
     </Accordion>
   );
