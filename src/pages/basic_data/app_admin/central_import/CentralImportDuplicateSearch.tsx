@@ -44,25 +44,25 @@ export const CentralImportDuplicateSearch = ({
 
   return (
     <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 1rem' }, mt: '1rem' }}>
-      {duplicateCandidatesQuery.isPending ? (
-        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : (
-        <>
-          <Typography fontWeight={700} gutterBottom>
-            {duplicateCandidatesSize === 0
-              ? t('basic_data.central_import.duplicate_search_no_hits')
-              : t('basic_data.central_import.duplicate_search_hits')}
-          </Typography>
-          {duplicateCandidatesSize > 0 && (
-            <ListPagination
-              count={duplicateCandidatesSize}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={(newPage) => setPage(newPage)}
-              onRowsPerPageChange={(newRowsPerPage) => {
-                setRowsPerPage(newRowsPerPage);
-                setPage(1);
-              }}>
+      <Typography fontWeight={700} gutterBottom>
+        {duplicateCandidatesSize === 0
+          ? t('basic_data.central_import.duplicate_search_no_hits')
+          : t('basic_data.central_import.duplicate_search_hits')}
+      </Typography>
+      <ListPagination
+        count={duplicateCandidatesSize}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}>
+        {duplicateCandidatesQuery.isPending ? (
+          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : (
+          <>
+            {duplicateCandidatesSize > 0 && (
               <FormControl sx={{ width: '100%', mb: '0.5rem' }}>
                 <RadioGroup
                   value={registrationIdentifier}
@@ -82,10 +82,10 @@ export const CentralImportDuplicateSearch = ({
                   ))}
                 </RadioGroup>
               </FormControl>
-            </ListPagination>
-          )}
-        </>
-      )}
+            )}
+          </>
+        )}
+      </ListPagination>
     </Box>
   );
 };

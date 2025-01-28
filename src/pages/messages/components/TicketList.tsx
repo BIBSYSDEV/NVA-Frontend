@@ -166,22 +166,22 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
         </Grid>
       </Grid>
 
-      {ticketsQuery.isPending ? (
-        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : (
-        <>
-          {tickets.length === 0 ? (
-            <Typography>{t('my_page.messages.no_messages')}</Typography>
-          ) : (
-            <ListPagination
-              count={ticketsQuery.data?.totalHits ?? 0}
-              page={page + 1}
-              onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
-              rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
-              showPaginationTop
-              sortingComponent={sortingComponent}
-              maxHits={10_000}>
+      <ListPagination
+        count={ticketsQuery.data?.totalHits ?? 0}
+        page={page + 1}
+        onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
+        showPaginationTop
+        sortingComponent={sortingComponent}
+        maxHits={10_000}>
+        {ticketsQuery.isPending ? (
+          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : (
+          <>
+            {tickets.length === 0 ? (
+              <Typography>{t('my_page.messages.no_messages')}</Typography>
+            ) : (
               <List disablePadding sx={{ my: '0.5rem' }}>
                 {tickets.map((ticket) => (
                   <ErrorBoundary key={ticket.id}>
@@ -189,10 +189,10 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
                   </ErrorBoundary>
                 ))}
               </List>
-            </ListPagination>
-          )}
-        </>
-      )}
+            )}
+          </>
+        )}
+      </ListPagination>
     </section>
   );
 };

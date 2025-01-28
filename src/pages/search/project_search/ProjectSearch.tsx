@@ -27,25 +27,23 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {projectQuery.isFetching ? (
-        <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : projectsSearchResults && projectsSearchResults.length > 0 ? (
-        <div>
-          <CristinSearchPagination
-            totalCount={totalHits}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            sortingComponent={<ProjectSortSelector />}>
-            <List>
-              {projectsSearchResults.map((project) => (
-                <ProjectListItem key={project.id} project={project} />
-              ))}
-            </List>
-          </CristinSearchPagination>
-        </div>
-      ) : (
-        <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>
-      )}
+      <CristinSearchPagination
+        totalCount={totalHits}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        sortingComponent={<ProjectSortSelector />}>
+        {projectQuery.isFetching ? (
+          <ListSkeleton arrayLength={3} minWidth={40} height={100} />
+        ) : projectsSearchResults && projectsSearchResults.length > 0 ? (
+          <List>
+            {projectsSearchResults.map((project) => (
+              <ProjectListItem key={project.id} project={project} />
+            ))}
+          </List>
+        ) : (
+          <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>
+        )}
+      </CristinSearchPagination>
     </Box>
   );
 };

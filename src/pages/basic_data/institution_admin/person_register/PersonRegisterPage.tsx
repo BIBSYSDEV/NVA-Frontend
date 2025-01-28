@@ -82,19 +82,19 @@ export const PersonRegisterPage = () => {
         }}
       />
 
-      {employees.length === 0 && !employeeSearchQuery.isPending ? (
-        <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
-      ) : (
-        <>
-          <ListPagination
-            count={employeeSearchQuery.data?.size ?? 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}>
+      <ListPagination
+        count={employeeSearchQuery.data?.size ?? 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}>
+        {employees.length === 0 && !employeeSearchQuery.isPending ? (
+          <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
+        ) : (
+          <>
             <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
               <Table size="small" sx={alternatingTableRowColor}>
                 <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
@@ -136,9 +136,9 @@ export const PersonRegisterPage = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-          </ListPagination>
-        </>
-      )}
+          </>
+        )}
+      </ListPagination>
     </BackgroundDiv>
   );
 };

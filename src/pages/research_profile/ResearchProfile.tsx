@@ -1,7 +1,7 @@
 import LinkIcon from '@mui/icons-material/Link';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
-import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Chip, Divider, Grid, IconButton, Link as MuiLink, List, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -288,38 +288,37 @@ const ResearchProfile = () => {
             </Trans>
           </Typography>
         )}
-        {registrationsQuery.isFetching ? (
-          <ListSkeleton minWidth={100} height={100} />
-        ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
-          <ListPagination
-            paginationAriaLabel={t('common.pagination_result_search')}
-            count={registrationsQuery.data.totalHits}
-            rowsPerPage={registrationRowsPerPage}
-            page={registrationsPage}
-            onPageChange={(newPage) => setRegistrationsPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRegistrationRowsPerPage(newRowsPerPage);
-              setRegistrationsPage(1);
-            }}
-            sortingComponent={
-              <SortSelectorWithoutParams
-                options={registrationSortOptions}
-                value={registrationSort}
-                setValue={(value) => {
-                  setRegistrationsPage(1);
-                  setRegistrationSort(value);
-                }}
-              />
-            }>
+        <ListPagination
+          paginationAriaLabel={t('common.pagination_result_search')}
+          count={registrationsQuery.data?.totalHits ?? 0}
+          rowsPerPage={registrationRowsPerPage}
+          page={registrationsPage}
+          onPageChange={(newPage) => setRegistrationsPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRegistrationRowsPerPage(newRowsPerPage);
+            setRegistrationsPage(1);
+          }}
+          sortingComponent={
+            <SortSelectorWithoutParams
+              options={registrationSortOptions}
+              value={registrationSort}
+              setValue={(value) => {
+                setRegistrationsPage(1);
+                setRegistrationSort(value);
+              }}
+            />
+          }>
+          {registrationsQuery.isFetching ? (
+            <ListSkeleton minWidth={100} height={100} />
+          ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
             <RegistrationSearchResults
               searchResult={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
             />
-          </ListPagination>
-        ) : (
-          <Typography>{t('common.no_hits')}</Typography>
-        )}
-
+          ) : (
+            <Typography>{t('common.no_hits')}</Typography>
+          )}
+        </ListPagination>
         <Divider sx={{ my: '1rem' }} />
 
         <Typography variant="h2" gutterBottom sx={{ mt: '1rem' }}>
@@ -337,38 +336,38 @@ const ResearchProfile = () => {
             </Trans>
           </Typography>
         )}
-        {projectsQuery.isFetching ? (
-          <ListSkeleton minWidth={100} height={100} />
-        ) : projects.length > 0 ? (
-          <ListPagination
-            paginationAriaLabel={t('common.pagination_project_search')}
-            count={projectsQuery.data?.size ?? 0}
-            rowsPerPage={projectRowsPerPage}
-            page={projectsPage}
-            onPageChange={(newPage) => setProjectsPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setProjectRowsPerPage(newRowsPerPage);
-              setProjectsPage(1);
-            }}
-            sortingComponent={
-              <SortSelectorWithoutParams
-                options={projectSortOptions}
-                value={projectSort}
-                setValue={(value) => {
-                  setProjectsPage(1);
-                  setProjectSort(value);
-                }}
-              />
-            }>
+        <ListPagination
+          paginationAriaLabel={t('common.pagination_project_search')}
+          count={projectsQuery.data?.size ?? 0}
+          rowsPerPage={projectRowsPerPage}
+          page={projectsPage}
+          onPageChange={(newPage) => setProjectsPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setProjectRowsPerPage(newRowsPerPage);
+            setProjectsPage(1);
+          }}
+          sortingComponent={
+            <SortSelectorWithoutParams
+              options={projectSortOptions}
+              value={projectSort}
+              setValue={(value) => {
+                setProjectsPage(1);
+                setProjectSort(value);
+              }}
+            />
+          }>
+          {projectsQuery.isFetching ? (
+            <ListSkeleton minWidth={100} height={100} />
+          ) : projects.length > 0 ? (
             <List>
               {projects.map((project) => (
                 <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
               ))}
             </List>
-          </ListPagination>
-        ) : (
-          <Typography>{t('common.no_hits')}</Typography>
-        )}
+          ) : (
+            <Typography>{t('common.no_hits')}</Typography>
+          )}
+        </ListPagination>
       </BackgroundDiv>
     </div>
   );
