@@ -49,7 +49,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   );
   const pendingFiles = files.filter(
     (file) =>
-      isPendingOpenFile(file) || file.type === FileType.PendingInternalFile || file.type === FileType.RejectedFile
+      isPendingOpenFile(file) ||
+      file.type === FileType.PendingInternalFile ||
+      file.type === FileType.RejectedFile ||
+      file.type === FileType.UpdloadedFile
   );
 
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
