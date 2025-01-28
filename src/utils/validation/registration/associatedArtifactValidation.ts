@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
-import { FileVersion } from '../../../types/associatedArtifact.types';
+import { FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
@@ -10,6 +10,9 @@ import {
 } from '../../registration-helpers';
 
 const associatedArtifactErrorMessage = {
+  availabilityRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.files_and_license.availability'),
+  }),
   fileVersionRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.version'),
   }),
@@ -31,10 +34,12 @@ const linkValidation = Yup.string()
     associatedArtifactIsLink({ type }) ? schema.url(associatedArtifactErrorMessage.linkInvalid) : schema
   );
 
-export const associatedArtifactValidationSchema = Yup.object({
-  type: Yup.string(),
+const validFileTypes = Object.values(FileType).filter((type) => type !== FileType.UpdloadedFile);
 
-  // File validation
+export const associatedArtifactValidationSchema = Yup.object({
+  type: Yup.string()
+    .oneOf(validFileTypes, associatedArtifactErrorMessage.availabilityRequired)
+    .required(associatedArtifactErrorMessage.availabilityRequired),
   embargoDate: Yup.date()
     .nullable()
     .when(['type'], ([type], schema) =>
