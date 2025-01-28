@@ -171,7 +171,6 @@ const ResearchProfile = () => {
         <Helmet>
           <title>{fullName}</title>
         </Helmet>
-
         {activeAffiliations.length > 0 ? (
           <Box
             sx={{
@@ -281,13 +280,13 @@ const ResearchProfile = () => {
         <Typography variant="h2" gutterBottom sx={{ mt: '2rem' }}>
           {registrationsHeading}
         </Typography>
-        {registrationsQuery.data?.totalHits && (
+        {registrationsQuery.data?.totalHits && registrationsQuery.data.totalHits > 0 ? (
           <Typography>
             <Trans t={t} i18nKey="my_page.my_profile.link_to_results_search">
               <MuiLink component={Link} to={`/?${ResultParam.Contributor}=${encodeURIComponent(personId)}`} />
             </Trans>
           </Typography>
-        )}
+        ) : null}
         {registrationsQuery.isFetching ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
@@ -325,7 +324,7 @@ const ResearchProfile = () => {
         <Typography variant="h2" gutterBottom sx={{ mt: '1rem' }}>
           {projectHeading}
         </Typography>
-        {projectsQuery.data?.size && (
+        {projectsQuery.data?.size && projectsQuery.data.size > 0 ? (
           <Typography>
             <Trans t={t} i18nKey="my_page.my_profile.link_to_projects_search">
               <MuiLink
@@ -336,7 +335,7 @@ const ResearchProfile = () => {
               />
             </Trans>
           </Typography>
-        )}
+        ) : null}
         {projectsQuery.isFetching ? (
           <ListSkeleton minWidth={100} height={100} />
         ) : projects.length > 0 ? (
