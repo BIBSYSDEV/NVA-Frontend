@@ -85,7 +85,8 @@ export const FilesTableRow = ({
   showAllColumns,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
-  const { identifier } = useParams<IdentifierParams>();
+  const { identifier: registrationIdentifier } = useParams<IdentifierParams>();
+
   const dispatch = useDispatch();
 
   const user = useSelector((state: RootState) => state.user);
@@ -133,8 +134,8 @@ export const FilesTableRow = ({
 
   const deleteFileMutation = useMutation({
     mutationFn: async () => {
-      if (identifier) {
-        await deleteFile(identifier, file.identifier);
+      if (registrationIdentifier) {
+        await deleteFile(registrationIdentifier, file.identifier);
         removeFile();
         toggleOpenConfirmDialog();
       }
