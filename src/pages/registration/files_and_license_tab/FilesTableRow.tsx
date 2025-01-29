@@ -38,7 +38,7 @@ import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { deleteFile } from '../../../api/fileApi';
+import { deleteImportCandidateFile, deleteRegistrationFile } from '../../../api/fileApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -85,9 +85,10 @@ export const FilesTableRow = ({
   showAllColumns,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
-  const { identifier: registrationIdentifier } = useParams<IdentifierParams>();
+  const { identifier } = useParams<IdentifierParams>();
 
   const dispatch = useDispatch();
+  const { values } = useFormikContext<Registration>();
 
   const user = useSelector((state: RootState) => state.user);
   const customer = useSelector((state: RootState) => state.customer);
@@ -134,8 +135,12 @@ export const FilesTableRow = ({
 
   const deleteFileMutation = useMutation({
     mutationFn: async () => {
-      if (registrationIdentifier) {
-        await deleteFile(registrationIdentifier, file.identifier);
+      if (identifier) {
+        if (values.type === 'Publication') {
+          await deleteRegistrationFile(identifier, file.identifier);
+        } else if (values.type === 'ImportCandidate') {
+          await deleteImportCandidateFile(identifier, file.identifier);
+        }
         removeFile();
         toggleOpenConfirmDialog();
       }
