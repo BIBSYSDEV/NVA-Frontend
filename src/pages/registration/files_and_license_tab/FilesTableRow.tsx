@@ -31,13 +31,17 @@ import {
   Typography,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
+import { useMutation } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
+import { deleteImportCandidateFile, deleteRegistrationFile } from '../../../api/fileApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { AssociatedFile, FileRrs, FileType, FileVersion } from '../../../types/associatedArtifact.types';
 import { CustomerRrsType } from '../../../types/customerInstitution.types';
@@ -47,6 +51,7 @@ import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
 import { isOpenFile, isPendingOpenFile } from '../../../utils/registration-helpers';
+import { IdentifierParams } from '../../../utils/urlPaths';
 import { DeleteIconButton } from '../../messages/components/DeleteIconButton';
 import { DownloadFileButton } from './DownloadFileButton';
 
@@ -80,6 +85,11 @@ export const FilesTableRow = ({
   showAllColumns,
 }: FilesTableRowProps) => {
   const { t } = useTranslation();
+  const { identifier } = useParams<IdentifierParams>();
+
+  const dispatch = useDispatch();
+  const { values } = useFormikContext<Registration>();
+
   const user = useSelector((state: RootState) => state.user);
   const customer = useSelector((state: RootState) => state.customer);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -123,6 +133,22 @@ export const FilesTableRow = ({
   const isCompletedFile = isOpenFile(file) || file.type === FileType.InternalFile;
   const isOpenableFile = isOpenFile(file) || isPendingOpenFile(file);
 
+  const deleteFileMutation = useMutation({
+    mutationFn: async () => {
+      if (identifier) {
+        if (values.type === 'Publication') {
+          await deleteRegistrationFile(identifier, file.identifier);
+        } else if (values.type === 'ImportCandidate') {
+          await deleteImportCandidateFile(identifier, file.identifier);
+        }
+        removeFile();
+        toggleOpenConfirmDialog();
+      }
+    },
+    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.delete_file'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_file'), variant: 'error' })),
+  });
+
   return (
     <>
       <TableRow
@@ -148,26 +174,24 @@ export const FilesTableRow = ({
               <DeleteIconButton
                 data-testid={dataTestId.registrationWizard.files.deleteFile}
                 onClick={toggleOpenConfirmDialog}
-                tooltip={t('registration.files_and_license.remove_file')}
+                tooltip={t('registration.files_and_license.delete_file')}
               />
             )}
             <ConfirmDialog
               open={openConfirmDialog}
-              title={t('registration.files_and_license.remove_file')}
-              onAccept={() => {
-                removeFile();
-                toggleOpenConfirmDialog();
-              }}
+              title={t('registration.files_and_license.delete_file')}
+              onAccept={() => deleteFileMutation.mutate()}
+              isLoading={deleteFileMutation.isPending}
               onCancel={toggleOpenConfirmDialog}>
               <Typography>
-                {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
+                {t('registration.files_and_license.delete_file_description', { fileName: file.name })}
               </Typography>
             </ConfirmDialog>
           </Box>
         </VerticalAlignedTableCell>
         <VerticalAlignedTableCell>
           <Field name={fileTypeFieldName}>
-            {({ field }: FieldProps<FileType>) => (
+            {({ field, meta: { error, touched } }: FieldProps<FileType>) => (
               <TextField
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
@@ -186,10 +210,17 @@ export const FilesTableRow = ({
                     setFieldValue(fileTypeFieldName, newValue);
                   }
                 }}
+                error={!!error && touched}
+                helperText={<ErrorMessage name={field.name} />}
                 slotProps={{
                   input: { sx: { '.MuiSelect-select': { py: '0.75rem' } } },
                   select: { inputProps: { 'aria-label': t('registration.files_and_license.availability') } },
                 }}>
+                {field.value === FileType.UpdloadedFile && (
+                  <MenuItem value={FileType.UpdloadedFile} disabled hidden>
+                    <i>{t('registration.files_and_license.select_availability')}</i>
+                  </MenuItem>
+                )}
                 <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
                   <StyledFileTypeMenuItemContent>
                     <CheckIcon fontSize="small" />

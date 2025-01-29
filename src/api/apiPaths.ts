@@ -3,11 +3,11 @@ export enum CustomerInstitutionApiPath {
 }
 
 export enum FileApiPath {
-  Abort = '/upload/abort',
-  Complete = '/upload/complete',
-  Create = '/upload/create',
-  ListParts = '/upload/listparts',
-  Prepare = '/upload/prepare',
+  Abort = '/file-upload/abort',
+  Complete = '/file-upload/complete',
+  Create = '/file-upload/create',
+  ListParts = '/file-upload/listparts',
+  Prepare = '/file-upload/prepare',
 }
 
 export enum CristinApiPath {

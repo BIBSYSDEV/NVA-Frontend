@@ -23,6 +23,7 @@ export enum FileType {
   InternalFile = 'InternalFile',
   PendingInternalFile = 'PendingInternalFile',
   HiddenFile = 'HiddenFile',
+  UpdloadedFile = 'UploadedFile',
 }
 
 export interface AssociatedFile {
@@ -40,7 +41,7 @@ export interface AssociatedFile {
   publishedDate?: string;
 }
 
-interface UserUploadDetails {
+export interface UserUploadDetails {
   type: 'UserUploadDetails';
   uploadedBy: string;
   uploadedDate: string;

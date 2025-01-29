@@ -42,7 +42,10 @@ export const userCanEditFile = (file: AssociatedFile, user: User | null, registr
   const isPublishingCuratorForUploader = user.isPublishingCurator && userIsOnSameInstitutionAsFileUploader;
 
   const isPendingFile =
-    isPendingOpenFile(file) || file.type === FileType.PendingInternalFile || file.type === FileType.RejectedFile;
+    isPendingOpenFile(file) ||
+    file.type === FileType.PendingInternalFile ||
+    file.type === FileType.RejectedFile ||
+    file.type === FileType.UpdloadedFile;
 
   if (isPendingFile) {
     const isFileUploader =
