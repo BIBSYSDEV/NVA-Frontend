@@ -37,7 +37,7 @@
     "@fontsource/roboto": "^5.1.1",
     "@mui/icons-material": "^6.4.1",
     "@mui/lab": "^6.0.0-beta.24",
-    "@mui/material": "^6.4.0",
+    "@mui/material": "^6.4.2",
     "@mui/x-date-pickers": "^7.24.1",
     "@reduxjs/toolkit": "^2.5.1",
     "@tanstack/react-query": "^5.65.0",
