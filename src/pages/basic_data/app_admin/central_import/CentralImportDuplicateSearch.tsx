@@ -44,11 +44,6 @@ export const CentralImportDuplicateSearch = ({
 
   return (
     <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 1rem' }, mt: '1rem' }}>
-      <Typography fontWeight={700} gutterBottom>
-        {duplicateCandidatesSize === 0
-          ? t('basic_data.central_import.duplicate_search_no_hits')
-          : t('basic_data.central_import.duplicate_search_hits')}
-      </Typography>
       <ListPagination
         count={duplicateCandidatesSize}
         rowsPerPage={rowsPerPage}
@@ -62,6 +57,11 @@ export const CentralImportDuplicateSearch = ({
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <>
+            <Typography fontWeight={700} gutterBottom>
+              {duplicateCandidatesSize === 0
+                ? t('basic_data.central_import.duplicate_search_no_hits')
+                : t('basic_data.central_import.duplicate_search_hits')}
+            </Typography>
             {duplicateCandidatesSize > 0 && (
               <FormControl sx={{ width: '100%', mb: '0.5rem' }}>
                 <RadioGroup

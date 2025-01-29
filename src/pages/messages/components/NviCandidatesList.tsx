@@ -113,23 +113,19 @@ export const NviCandidatesList = () => {
         sortingComponent={<NviSortSelector />}>
         {nviCandidatesQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : nviCandidatesQuery.data?.hits.length === 0 ? (
+          <Typography>{t('tasks.nvi.no_nvi_candidates')}</Typography>
         ) : (
-          <>
-            {nviCandidatesQuery.data?.hits.length === 0 ? (
-              <Typography>{t('tasks.nvi.no_nvi_candidates')}</Typography>
-            ) : (
-              <List data-testid={dataTestId.tasksPage.nvi.candidatesList}>
-                {nviCandidatesQuery.data?.hits.map((nviCandidate, index) => {
-                  const currentOffset = (page - 1) * nviParams.size + index;
-                  return (
-                    <ErrorBoundary key={nviCandidate.identifier}>
-                      <NviCandidateListItem nviCandidate={nviCandidate} currentOffset={currentOffset} />
-                    </ErrorBoundary>
-                  );
-                })}
-              </List>
-            )}
-          </>
+          <List data-testid={dataTestId.tasksPage.nvi.candidatesList}>
+            {nviCandidatesQuery.data?.hits.map((nviCandidate, index) => {
+              const currentOffset = (page - 1) * nviParams.size + index;
+              return (
+                <ErrorBoundary key={nviCandidate.identifier}>
+                  <NviCandidateListItem nviCandidate={nviCandidate} currentOffset={currentOffset} />
+                </ErrorBoundary>
+              );
+            })}
+          </List>
         )}
       </ListPagination>
     </section>

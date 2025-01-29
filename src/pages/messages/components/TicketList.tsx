@@ -177,20 +177,16 @@ export const TicketList = ({ ticketsQuery, title }: TicketListProps) => {
         maxHits={10_000}>
         {ticketsQuery.isPending ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : tickets.length === 0 ? (
+          <Typography>{t('my_page.messages.no_messages')}</Typography>
         ) : (
-          <>
-            {tickets.length === 0 ? (
-              <Typography>{t('my_page.messages.no_messages')}</Typography>
-            ) : (
-              <List disablePadding sx={{ my: '0.5rem' }}>
-                {tickets.map((ticket) => (
-                  <ErrorBoundary key={ticket.id}>
-                    <TicketListItem ticket={ticket} />
-                  </ErrorBoundary>
-                ))}
-              </List>
-            )}
-          </>
+          <List disablePadding sx={{ my: '0.5rem' }}>
+            {tickets.map((ticket) => (
+              <ErrorBoundary key={ticket.id}>
+                <TicketListItem ticket={ticket} />
+              </ErrorBoundary>
+            ))}
+          </List>
         )}
       </ListPagination>
     </section>
