@@ -23,6 +23,7 @@ export enum FileType {
   InternalFile = 'InternalFile',
   PendingInternalFile = 'PendingInternalFile',
   HiddenFile = 'HiddenFile',
+  UpdloadedFile = 'UploadedFile',
 }
 
 export interface AssociatedFile {
