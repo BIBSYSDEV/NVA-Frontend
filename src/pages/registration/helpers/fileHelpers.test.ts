@@ -172,7 +172,7 @@ describe('userCanEditFile', () => {
     expect(result).toBe(true);
   });
 
-  test('returns false for a uploaded file if the user is not the uploader', () => {
+  test('returns false for an uploaded file if the user is not the uploader', () => {
     const file: AssociatedFile = {
       ...emptyFile,
       uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
