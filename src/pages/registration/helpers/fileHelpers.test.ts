@@ -160,6 +160,30 @@ describe('userCanEditFile', () => {
     expect(result).toBe(true);
   });
 
+  test('returns true for an uploaded file if the user is the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.UpdloadedFile,
+    };
+    const user: User = { ...emptyUser, nvaUsername: '123@1.0.0.0' };
+
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(true);
+  });
+
+  test('returns false for a uploaded file if the user is not the uploader', () => {
+    const file: AssociatedFile = {
+      ...emptyFile,
+      uploadDetails: { type: 'UserUploadDetails', uploadedBy: '123@1.0.0.0', uploadedDate: '' },
+      type: FileType.UpdloadedFile,
+    };
+    const user: User = { ...emptyUser, nvaUsername: '456@1.0.0.0' };
+
+    const result = userCanEditFile(file, user, emptyRegistration);
+    expect(result).toBe(false);
+  });
+
   test('returns true for a pending file if the user is the uploader', () => {
     const file: AssociatedFile = {
       ...emptyFile,

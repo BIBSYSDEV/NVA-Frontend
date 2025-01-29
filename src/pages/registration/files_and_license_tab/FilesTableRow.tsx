@@ -191,7 +191,7 @@ export const FilesTableRow = ({
         </VerticalAlignedTableCell>
         <VerticalAlignedTableCell>
           <Field name={fileTypeFieldName}>
-            {({ field }: FieldProps<FileType>) => (
+            {({ field, meta: { error, touched } }: FieldProps<FileType>) => (
               <TextField
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.fileTypeSelect}
@@ -210,10 +210,17 @@ export const FilesTableRow = ({
                     setFieldValue(fileTypeFieldName, newValue);
                   }
                 }}
+                error={!!error && touched}
+                helperText={<ErrorMessage name={field.name} />}
                 slotProps={{
                   input: { sx: { '.MuiSelect-select': { py: '0.75rem' } } },
                   select: { inputProps: { 'aria-label': t('registration.files_and_license.availability') } },
                 }}>
+                {field.value === FileType.UpdloadedFile && (
+                  <MenuItem value={FileType.UpdloadedFile} disabled hidden>
+                    <i>{t('registration.files_and_license.select_availability')}</i>
+                  </MenuItem>
+                )}
                 <MenuItem value={isCompletedFile ? FileType.OpenFile : FileType.PendingOpenFile}>
                   <StyledFileTypeMenuItemContent>
                     <CheckIcon fontSize="small" />
