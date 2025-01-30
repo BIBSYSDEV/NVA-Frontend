@@ -148,11 +148,6 @@
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
-      "degree_roles": {
-        "degree": "Studentoppgave",
-        "degree_tasks": "Særskilte oppgaver",
-        "embargo": "Embargo"
-      },
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
