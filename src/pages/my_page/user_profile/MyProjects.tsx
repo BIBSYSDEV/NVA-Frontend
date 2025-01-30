@@ -47,25 +47,25 @@ export const MyProjects = () => {
       <Typography variant="h2" gutterBottom>
         {t('my_page.my_profile.my_projects')}
       </Typography>
-      {projectsQuery.isPending ? (
-        <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : projects && projects.length > 0 ? (
-        <ListPagination
-          count={projectsQuery.data?.size ?? 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={(newPage) => setPage(newPage)}
-          onRowsPerPageChange={(newRowsPerPage) => {
-            setRowsPerPage(newRowsPerPage);
-            setPage(1);
-          }}
-          sortingComponent={
-            <SortSelectorWithoutParams
-              options={projectSortOptions}
-              value={projectSort}
-              setValue={(value) => setProjectSort(value)}
-            />
-          }>
+      <ListPagination
+        count={projectsQuery.data?.size ?? 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}
+        sortingComponent={
+          <SortSelectorWithoutParams
+            options={projectSortOptions}
+            value={projectSort}
+            setValue={(value) => setProjectSort(value)}
+          />
+        }>
+        {projectsQuery.isPending ? (
+          <ListSkeleton arrayLength={3} minWidth={40} height={100} />
+        ) : projects && projects.length > 0 ? (
           <List>
             {projects.map((project) => (
               <ProjectListItem
@@ -76,10 +76,10 @@ export const MyProjects = () => {
               />
             ))}
           </List>
-        </ListPagination>
-      ) : (
-        <Typography>{t('common.no_hits')}</Typography>
-      )}
+        ) : (
+          <Typography>{t('common.no_hits')}</Typography>
+        )}
+      </ListPagination>
     </div>
   );
 };
