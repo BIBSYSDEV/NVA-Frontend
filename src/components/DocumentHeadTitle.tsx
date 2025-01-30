@@ -17,10 +17,8 @@ export const DocumentHeadTitleProvider = ({ children }: { children: ReactNode })
 
   return (
     <DocumentHeadTitleContext.Provider value={{ setPageTitle }}>
-      <>
-        <title>{fullTitle}</title>
-        {children}
-      </>
+      <title>{fullTitle}</title>
+      {children}
     </DocumentHeadTitleContext.Provider>
   );
 };
