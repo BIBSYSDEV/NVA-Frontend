@@ -100,6 +100,73 @@ export const fetchRegistration = async (registrationIdentifier: string, doNotRed
   return fetchRegistrationResponse.data;
 };
 
+interface LogEntryOnBehalfOf {
+  id: string;
+  topLevelOrgCristinId: string;
+  shortName: string;
+  displayName: string;
+}
+
+interface LogEntryPerformedBy {
+  username: string;
+  givenName: string;
+  familyName: string;
+  cristinId: string;
+  organization: string;
+  onBehalfOf: LogEntryOnBehalfOf;
+}
+
+interface LogEntry {
+  type: 'LogEntry';
+  timestamp: string;
+  performedBy: LogEntryPerformedBy;
+}
+
+interface PublicationCreatedLogEntry extends LogEntry {
+  topic: 'PublicationCreated';
+}
+
+interface PublicationPublishedLogEntry extends LogEntry {
+  topic: 'PublicationPublished';
+}
+
+interface FileUploadedLogEntry extends LogEntry {
+  topic: 'FileUploaded';
+  filename: string;
+  fileIdentifier: string;
+}
+
+interface FileApprovedLogEntry extends LogEntry {
+  topic: 'FileApproved';
+  filename: string;
+  fileIdentifier: string;
+}
+
+interface FileRejectedLogEntry extends LogEntry {
+  topic: 'FileRejected';
+  filename: string;
+  fileIdentifier: string;
+}
+
+type LogEntryType =
+  | PublicationCreatedLogEntry
+  | PublicationPublishedLogEntry
+  | FileUploadedLogEntry
+  | FileApprovedLogEntry
+  | FileRejectedLogEntry;
+
+interface RegistrationLog {
+  logEntries: LogEntryType[];
+}
+
+// TODO: Must consider doNotRedirect?
+export const fetchRegistrationLog = async (registrationId: string) => {
+  const fetchRegistrationLogResponse = await authenticatedApiRequest2<RegistrationLog>({
+    url: `${registrationId}/log`,
+  });
+  return fetchRegistrationLogResponse.data;
+};
+
 export const fetchRegistrationsByOwner = async () => {
   const fetchRegistrationsByOwnerResponse = await authenticatedApiRequest2<MyRegistrationsResponse>({
     url: PublicationsApiPath.RegistrationsByOwner,
