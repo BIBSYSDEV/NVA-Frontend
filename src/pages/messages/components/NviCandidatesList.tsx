@@ -1,11 +1,11 @@
 import { Box, List, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { useFetchNviCandidates } from '../../../api/hooks/useFetchNviCandidates';
 import { NviCandidatesSearchParam } from '../../../api/searchApi';
 import { AreaOfResponsibilitySelector } from '../../../components/AreaOfResponsibiltySelector';
 import { CuratorSelector } from '../../../components/CuratorSelector';
+import { DocumentHeadTitle } from '../../../components/DocumentHeadTitle';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
@@ -34,9 +34,7 @@ export const NviCandidatesList = () => {
 
   return (
     <section>
-      <Helmet>
-        <title>{t('common.nvi')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('common.nvi')}</DocumentHeadTitle>
 
       <Box
         sx={{

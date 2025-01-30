@@ -1,9 +1,9 @@
 import { List, Typography } from '@mui/material';
 import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
 import { ImportCandidatesSearchParam } from '../../../../api/searchApi';
+import { DocumentHeadTitle } from '../../../../components/DocumentHeadTitle';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
@@ -39,9 +39,8 @@ export const CentralImportPage = () => {
 
   return (
     <section>
-      <Helmet>
-        <title>{t('basic_data.central_import.central_import')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('basic_data.central_import.central_import')}</DocumentHeadTitle>
+
       <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 
       {importCandidateQuery.isPending ? (

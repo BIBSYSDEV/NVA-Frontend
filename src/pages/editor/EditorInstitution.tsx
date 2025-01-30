@@ -1,10 +1,10 @@
 import { Box, CircularProgress, Grid, Link, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchResource } from '../../api/commonApi';
 import { fetchUsersByCustomer } from '../../api/roleApi';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
@@ -62,9 +62,8 @@ export const EditorInstitution = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{t('editor.institution.institution_profile')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('editor.institution.institution_profile')}</DocumentHeadTitle>
+
       <Typography variant="h2" gutterBottom>
         {t('editor.institution.institution_profile')}
       </Typography>

@@ -4,7 +4,6 @@ import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import { Box, Chip, Divider, Grid, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router';
@@ -12,6 +11,7 @@ import { fetchPerson, ProjectSearchParameter, ProjectsSearchParams, searchForPro
 import { useRegistrationSearch } from '../../api/hooks/useRegistrationSearch';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { FetchResultsParams, ResultParam } from '../../api/searchApi';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -168,9 +168,7 @@ const ResearchProfile = () => {
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
       <BackgroundDiv>
-        <Helmet>
-          <title>{fullName}</title>
-        </Helmet>
+        <DocumentHeadTitle>{fullName}</DocumentHeadTitle>
 
         {activeAffiliations.length > 0 ? (
           <Box

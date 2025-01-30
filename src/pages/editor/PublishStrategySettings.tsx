@@ -2,10 +2,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import { DocumentHeadTitle } from '../../components/DocumentHeadTitle';
 import { PageSpinner } from '../../components/PageSpinner';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
@@ -55,9 +55,7 @@ export const PublishStrategySettings = () => {
 
   return (
     <>
-      <Helmet>
-        <title id="publish-strategy-label">{t('editor.publish_strategy.publish_strategy')}</title>
-      </Helmet>
+      <DocumentHeadTitle>{t('editor.publish_strategy.publish_strategy')}</DocumentHeadTitle>
 
       {!customer ? (
         <PageSpinner />
@@ -103,7 +101,7 @@ export const PublishStrategySettings = () => {
               </PublishStrategyButton>
               {updateRightsRetentionStrategy.isPending &&
                 customer.publicationWorkflow !== 'RegistratorPublishesMetadataAndFiles' && (
-                  <CircularProgress aria-labelledby="publish-strategy-label" />
+                  <CircularProgress aria-label={t('editor.publish_strategy.publish_strategy')} />
                 )}
             </StyledItemContainer>
 

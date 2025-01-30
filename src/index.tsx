@@ -1,12 +1,12 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { HelmetProvider } from 'react-helmet-async';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
 import { App } from './App';
 import { QueryProvider } from './QueryProvider';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
+import { DocumentHeadTitleProvider } from './components/DocumentHeadTitle';
 import { BasicErrorBoundary } from './components/ErrorBoundary';
 import { store } from './redux/store';
 import { mainTheme } from './themes/mainTheme';
@@ -36,11 +36,11 @@ if (container) {
           <ReduxProvider store={store}>
             <ThemeProvider theme={mainTheme}>
               <CssBaseline />
-              <HelmetProvider>
+              <DocumentHeadTitleProvider>
                 <QueryProvider>
                   <App />
                 </QueryProvider>
-              </HelmetProvider>
+              </DocumentHeadTitleProvider>
             </ThemeProvider>
           </ReduxProvider>
         </I18nextProvider>
