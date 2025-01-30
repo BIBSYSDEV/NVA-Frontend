@@ -891,9 +891,9 @@
       "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
       "support_curator": "Brukerstøttekurator",
       "support_curator_description": "Kan se og behandle brukerstøttehenvendelser.",
-      "thesis_curator": "Studentoppgavekurator",
-      "thesis_curator_description": "Kan opprette og endre studentoppgaver.",
-      "thesis_embargo_curator": "Studentoppgave med embargo-kurator",
+      "thesis_curator": "Studentfilkurator",
+      "thesis_curator_description": "Kan se studentpubliseringsforespørsler og publisere filer.",
+      "thesis_embargo_curator": "Utsatt publiseringsdato",
       "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
     }
   },
