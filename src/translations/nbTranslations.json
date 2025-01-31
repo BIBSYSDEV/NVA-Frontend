@@ -328,6 +328,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1005": "Asiatiske og afrikanske studier",
     "1007": "Engelsk",
@@ -399,11 +403,7 @@
     "1162": "Konstruksjonsfag",
     "1166": "Filosofi",
     "1168": "Historie og idéhistorie",
-    "1170": "Kunst, design og arkitektur",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1170": "Kunst, design og arkitektur"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -527,6 +527,7 @@
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
       "fetch": "Kunne ikke hente {{resource}}",
+      "fetch_log": "Kunne ikke hente logg",
       "get_affiliation_name": "Kunne ikke hente navn på tilknytning for {{unitUri}}",
       "get_curators_for_institution": "Kunne ikke hente kuratorer",
       "get_customer": "Kunne ikke hente kundeinstitusjon",
@@ -589,8 +590,7 @@
       "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
-      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
-      "fetch_log": "Kunne ikke hente logg"
+      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
@@ -710,6 +710,13 @@
     "archived_files_on_registration_one": "Registreringen har {{count}} arkivert fil",
     "archived_files_on_registration_other": "Registreringen har {{count}} arkiverte filer",
     "deleted_afterwards": "Slettet i etterkant",
+    "entry_topic": {
+      "FileApproved": "Fil godkjent",
+      "FileRejected": "Fil avvist",
+      "FileUploaded": "Fil lastet opp",
+      "PublicationCreated": "Opprettet i NVA",
+      "PublicationPublished": "Metadata publisert i NVA"
+    },
     "hidden_afterwards": "Endret til skjult fil i etterkant",
     "hidden_files_on_registration_one": "Registreringen har {{count}} skjult fil",
     "hidden_files_on_registration_other": "Registreringen har {{count}} skjulte filer",

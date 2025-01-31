@@ -28,13 +28,11 @@ export const LogPanel2 = ({ registration }: LogPanelProps) => {
         </Typography>
         <LogDateItem date={new Date(registration.modifiedDate)} />
       </Box>
-
       <ArchivedFilesEntry numberOfArchivedFiles={internalFilesCount} numberOfHiddenFiles={hiddenFilesCount} />
 
+      {/* TODO: Show log skeleton */}
       {logQuery.data &&
-        logQuery.data.logEntries.map((logEntry, index) => {
-          return <LogEntry key={index} logEntry={logEntry} />;
-        })}
+        logQuery.data.logEntries.toReversed().map((logEntry, index) => <LogEntry key={index} logEntry={logEntry} />)}
     </Box>
   );
 };
