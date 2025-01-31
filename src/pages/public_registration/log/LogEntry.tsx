@@ -51,7 +51,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
           <Divider sx={{ mt: '0.5rem' }} />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mt: '0.5rem' }}>
             <InsertDriveFileOutlinedIcon color="primary" fontSize="small" />
-            <Typography sx={{ fontStyle: !logEntry.filename ? 'italic' : '' }} noWrap>
+            <Typography sx={{ fontStyle: !logEntry.filename ? 'italic' : '', overflowWrap: 'anywhere' }}>
               {logEntry.filename || t('log.unknown_filename')}
             </Typography>
           </Box>
