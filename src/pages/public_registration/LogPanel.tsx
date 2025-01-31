@@ -12,7 +12,6 @@ interface LogPanelProps {
 
 export const LogPanel = ({ tickets, registration }: LogPanelProps) => {
   const { t } = useTranslation();
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', bgcolor: 'secondary.main' }}>
       <RegistrationLog log={generateLog(registration, tickets, t)} />
