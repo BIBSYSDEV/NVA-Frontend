@@ -72,7 +72,6 @@
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.65.0",
     "@tanstack/react-query-devtools": "^5.65.1",
-    "@types/isbn-utils": "^1.1.6",
     "@types/jest": "^29.5.14",
     "@types/react": "^18.3.13",
     "@types/react-dom": "^18.3.1",
