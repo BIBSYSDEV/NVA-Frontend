@@ -1,7 +1,9 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
 import { Avatar, Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LogEntryType } from '../../../api/registrationApi';
@@ -61,14 +63,19 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
 
 const LogHeaderIcon = ({ topic }: Pick<LogEntryType, 'topic'>) => {
   switch (topic) {
+    case 'PublicationCreated':
+      return <AddCircleOutlineIcon color="primary" fontSize="small" />;
+    case 'PublicationPublished':
+    case 'PublicationRepublished':
+      return <LocalOfferOutlinedIcon color="primary" fontSize="small" />;
     case 'FileUploaded':
     case 'FileApproved':
     case 'FileRejected':
       return <InsertDriveFileOutlinedIcon color="primary" fontSize="small" />;
-    case 'PublicationCreated':
-      return <AddCircleOutlineIcon color="primary" fontSize="small" />;
-    case 'PublicationPublished':
-      return <LocalOfferOutlinedIcon color="primary" fontSize="small" />;
+    case 'PublicationUnpublished':
+      return <UnpublishedOutlinedIcon color="primary" fontSize="small" />;
+    case 'PublicationDeleted':
+      return <DeleteOutlinedIcon color="primary" fontSize="small" />;
     default:
       return null;
   }

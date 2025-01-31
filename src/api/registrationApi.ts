@@ -116,33 +116,52 @@ interface LogEntryPerformedBy {
   onBehalfOf: LogEntryOnBehalfOf;
 }
 
-interface LogEntry {
-  type: 'LogEntry';
+interface BaseLogEntry {
   timestamp: string;
   performedBy: LogEntryPerformedBy;
 }
 
-interface PublicationCreatedLogEntry extends LogEntry {
+interface PublicationLogEntry extends BaseLogEntry {
+  type: 'PublicationLogEntry';
+}
+
+interface FileLogEntry extends BaseLogEntry {
+  type: 'FileLogEntry';
+}
+
+interface PublicationCreatedLogEntry extends PublicationLogEntry {
   topic: 'PublicationCreated';
 }
 
-interface PublicationPublishedLogEntry extends LogEntry {
+interface PublicationPublishedLogEntry extends PublicationLogEntry {
   topic: 'PublicationPublished';
 }
 
-interface FileUploadedLogEntry extends LogEntry {
+interface PublicationUnpublishedLogEntry extends PublicationLogEntry {
+  topic: 'PublicationUnpublished';
+}
+
+interface PublicationDeletedLogEntry extends PublicationLogEntry {
+  topic: 'PublicationDeleted';
+}
+
+interface PublicationRepublishedLogEntry extends PublicationLogEntry {
+  topic: 'PublicationRepublished';
+}
+
+interface FileUploadedLogEntry extends FileLogEntry {
   topic: 'FileUploaded';
   filename: string;
   fileIdentifier: string;
 }
 
-interface FileApprovedLogEntry extends LogEntry {
+interface FileApprovedLogEntry extends FileLogEntry {
   topic: 'FileApproved';
   filename: string;
   fileIdentifier: string;
 }
 
-interface FileRejectedLogEntry extends LogEntry {
+interface FileRejectedLogEntry extends FileLogEntry {
   topic: 'FileRejected';
   filename: string;
   fileIdentifier: string;
@@ -151,6 +170,9 @@ interface FileRejectedLogEntry extends LogEntry {
 export type LogEntryType =
   | PublicationCreatedLogEntry
   | PublicationPublishedLogEntry
+  | PublicationUnpublishedLogEntry
+  | PublicationRepublishedLogEntry
+  | PublicationDeletedLogEntry
   | FileUploadedLogEntry
   | FileApprovedLogEntry
   | FileRejectedLogEntry;

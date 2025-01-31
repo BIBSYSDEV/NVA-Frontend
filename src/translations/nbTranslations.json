@@ -715,7 +715,10 @@
       "FileRejected": "Fil avvist",
       "FileUploaded": "Fil lastet opp",
       "PublicationCreated": "Opprettet i NVA",
-      "PublicationPublished": "Metadata publisert i NVA"
+      "PublicationDeleted": "Resultat slettet",
+      "PublicationPublished": "Metadata publisert i NVA",
+      "PublicationRepublished": "Resultat republisert",
+      "PublicationUnpublished": "Resultat avpublisert"
     },
     "hidden_afterwards": "Endret til skjult fil i etterkant",
     "hidden_files_on_registration_one": "Registreringen har {{count}} skjult fil",
