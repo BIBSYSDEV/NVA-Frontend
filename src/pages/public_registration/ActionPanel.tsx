@@ -10,8 +10,8 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { userHasAccessRight } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
+import { LogPanel2 } from './log/LogPanel2';
 import { LogPanel } from './LogPanel';
-import { LogPanel2 } from './LogPanel2';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 enum TabValue {
@@ -131,7 +131,7 @@ export const ActionPanel = ({
         <LogPanel tickets={tickets} registration={registration} />
       </TabPanel>
       <TabPanel tabValue={tabValue} index={2}>
-        <LogPanel2 tickets={tickets} registration={registration} />
+        <LogPanel2 registration={registration} />
       </TabPanel>
     </Paper>
   );

@@ -108,7 +108,7 @@ interface LogEntryOnBehalfOf {
 }
 
 interface LogEntryPerformedBy {
-  username: string;
+  userName: string;
   givenName: string;
   familyName: string;
   cristinId: string;
@@ -148,7 +148,7 @@ interface FileRejectedLogEntry extends LogEntry {
   fileIdentifier: string;
 }
 
-type LogEntryType =
+export type LogEntryType =
   | PublicationCreatedLogEntry
   | PublicationPublishedLogEntry
   | FileUploadedLogEntry
