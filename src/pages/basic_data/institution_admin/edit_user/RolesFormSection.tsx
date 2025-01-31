@@ -88,31 +88,6 @@ export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }:
               }
             />
             <FormControlLabel
-              control={<Checkbox checked={roles.includes(RoleName.CuratorThesis)} value={RoleName.CuratorThesis} />}
-              label={
-                <RoleLabel
-                  title={t('my_page.roles.thesis_curator')}
-                  description={t('my_page.roles.thesis_curator_description')}
-                />
-              }
-            />
-            <FormControlLabel
-              sx={{ ml: '1rem' }}
-              disabled={!roles.includes(RoleName.CuratorThesis) || disabled}
-              control={
-                <Checkbox
-                  checked={roles.includes(RoleName.CuratorThesisEmbargo)}
-                  value={RoleName.CuratorThesisEmbargo}
-                />
-              }
-              label={
-                <RoleLabel
-                  title={t('my_page.roles.thesis_embargo_curator')}
-                  description={t('my_page.roles.thesis_embargo_curator_description')}
-                />
-              }
-            />
-            <FormControlLabel
               control={<Checkbox checked={roles.includes(RoleName.Editor)} value={RoleName.Editor} />}
               label={
                 <RoleLabel title={t('my_page.roles.editor')} description={t('my_page.roles.editor_description')} />
