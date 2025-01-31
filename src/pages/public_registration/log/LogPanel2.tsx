@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
 import { useTranslation } from 'react-i18next';
 import { useFetchRegistrationLog } from '../../../api/hooks/useFetchRegistrationLog';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
@@ -21,7 +22,9 @@ export const LogPanel2 = ({ registration }: LogPanelProps) => {
   const hiddenFilesCount = registration.associatedArtifacts.filter((file) => file.type === FileType.HiddenFile).length;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', bgcolor: 'secondary.main' }}>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', bgcolor: 'secondary.main' }}
+      aria-busy={logQuery.isPending}>
       <Box sx={{ p: '0.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography color="grey.700" sx={{ textAlign: 'center' }}>
           {t('log.metadata_last_updated')}
@@ -30,9 +33,15 @@ export const LogPanel2 = ({ registration }: LogPanelProps) => {
       </Box>
       <ArchivedFilesEntry numberOfArchivedFiles={internalFilesCount} numberOfHiddenFiles={hiddenFilesCount} />
 
-      {/* TODO: Show log skeleton */}
-      {logQuery.data &&
-        logQuery.data.logEntries.toReversed().map((logEntry, index) => <LogEntry key={index} logEntry={logEntry} />)}
+      {logQuery.isPending ? (
+        <>
+          <Skeleton variant="rectangular" height={150} />
+          <Skeleton variant="rectangular" height={150} />
+          <Skeleton variant="rectangular" height={150} />
+        </>
+      ) : (
+        logQuery.data?.logEntries.toReversed().map((logEntry, index) => <LogEntry key={index} logEntry={logEntry} />)
+      )}
     </Box>
   );
 };
