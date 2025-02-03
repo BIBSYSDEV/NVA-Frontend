@@ -8,6 +8,7 @@ import { Avatar, Box, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LogEntryType } from '../../../api/registrationApi';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
+import { FileType } from '../../../types/associatedArtifact.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 
@@ -26,7 +27,11 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
         <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <LogHeaderIcon topic={logEntry.topic} />
           <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>
-            {t(`log.entry_topic.${logEntry.topic}`, { defaultValue: logEntry.topic })}
+            {logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.OpenFile
+              ? t('log.file_published')
+              : logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.InternalFile
+                ? t('log.file_archived')
+                : t(`log.entry_topic.${logEntry.topic}`, { defaultValue: logEntry.topic })}
           </Typography>
         </Box>
         <LogDateItem date={new Date(logEntry.timestamp)} />

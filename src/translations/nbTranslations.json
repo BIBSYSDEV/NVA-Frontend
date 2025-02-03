@@ -716,6 +716,8 @@
       "PublicationRepublished": "Resultat republisert",
       "PublicationUnpublished": "Resultat avpublisert"
     },
+    "file_archived": "Fil arkivert",
+    "file_published": "Fil publisert",
     "hidden_afterwards": "Endret til skjult fil i etterkant",
     "hidden_files_on_registration_one": "Registreringen har {{count}} skjult fil",
     "hidden_files_on_registration_other": "Registreringen har {{count}} skjulte filer",

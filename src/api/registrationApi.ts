@@ -129,7 +129,7 @@ interface PublicationLogEntry extends BaseLogEntry {
 interface FileLogEntry extends BaseLogEntry {
   type: 'FileLogEntry';
   filename: string;
-  filType: FileType;
+  fileType: FileType;
 }
 
 interface PublicationCreatedLogEntry extends PublicationLogEntry {
@@ -154,12 +154,10 @@ interface PublicationRepublishedLogEntry extends PublicationLogEntry {
 
 interface FileUploadedLogEntry extends FileLogEntry {
   topic: 'FileUploaded';
-  filename: string;
 }
 
 interface FileApprovedLogEntry extends FileLogEntry {
   topic: 'FileApproved';
-  filename: string;
 }
 
 interface FileRejectedLogEntry extends FileLogEntry {
