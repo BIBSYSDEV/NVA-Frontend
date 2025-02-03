@@ -1,3 +1,4 @@
+import { FileType } from '../types/associatedArtifact.types';
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import {
@@ -127,6 +128,8 @@ interface PublicationLogEntry extends BaseLogEntry {
 
 interface FileLogEntry extends BaseLogEntry {
   type: 'FileLogEntry';
+  filename: string;
+  filType: FileType;
 }
 
 interface PublicationCreatedLogEntry extends PublicationLogEntry {
@@ -152,19 +155,19 @@ interface PublicationRepublishedLogEntry extends PublicationLogEntry {
 interface FileUploadedLogEntry extends FileLogEntry {
   topic: 'FileUploaded';
   filename: string;
-  fileIdentifier: string;
 }
 
 interface FileApprovedLogEntry extends FileLogEntry {
   topic: 'FileApproved';
   filename: string;
-  fileIdentifier: string;
 }
 
 interface FileRejectedLogEntry extends FileLogEntry {
   topic: 'FileRejected';
-  filename: string;
-  fileIdentifier: string;
+}
+
+interface FileDeletedLogEntry extends FileLogEntry {
+  topic: 'FileDeleted';
 }
 
 export type LogEntryType =
@@ -175,13 +178,13 @@ export type LogEntryType =
   | PublicationDeletedLogEntry
   | FileUploadedLogEntry
   | FileApprovedLogEntry
-  | FileRejectedLogEntry;
+  | FileRejectedLogEntry
+  | FileDeletedLogEntry;
 
 interface RegistrationLog {
   logEntries: LogEntryType[];
 }
 
-// TODO: Must consider doNotRedirect?
 export const fetchRegistrationLog = async (registrationId: string) => {
   const fetchRegistrationLogResponse = await authenticatedApiRequest2<RegistrationLog>({
     url: `${registrationId}/log`,

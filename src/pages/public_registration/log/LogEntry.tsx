@@ -25,7 +25,9 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
           <LogHeaderIcon topic={logEntry.topic} />
-          <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>{t(`log.entry_topic.${logEntry.topic}`)}</Typography>
+          <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>
+            {t(`log.entry_topic.${logEntry.topic}`, { defaultValue: logEntry.topic })}
+          </Typography>
         </Box>
         <LogDateItem date={new Date(logEntry.timestamp)} />
       </Box>
@@ -46,7 +48,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
         <Typography>{logEntry.performedBy.onBehalfOf.displayName}</Typography>
       </Box>
 
-      {logEntry.topic === 'FileUploaded' || logEntry.topic === 'FileApproved' || logEntry.topic === 'FileRejected' ? (
+      {logEntry.type === 'FileLogEntry' ? (
         <>
           <Divider sx={{ mt: '0.5rem' }} />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mt: '0.5rem' }}>
@@ -75,6 +77,7 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryType, 'topic'>) => {
     case 'PublicationUnpublished':
       return <UnpublishedOutlinedIcon color="primary" fontSize="small" />;
     case 'PublicationDeleted':
+    case 'FileDeleted':
       return <DeleteOutlinedIcon color="primary" fontSize="small" />;
     default:
       return null;
