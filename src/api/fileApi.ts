@@ -53,6 +53,7 @@ export const completeMultipartUpload = async (
   parts: AwsS3Part[]
 ) => {
   const payload = {
+    type: 'InternalCompleteUpload',
     uploadId,
     key,
     parts,
