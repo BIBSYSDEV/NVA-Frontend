@@ -110,7 +110,7 @@ export const RegistrationListItemContent = ({
           sx={{
             display: 'flex',
             alignItems: 'center',
-            gap: { xs: '1rem', lg: '2rem' },
+            gap: '1rem',
             marginBottom: '0.5rem',
             flexWrap: 'wrap',
           }}>
