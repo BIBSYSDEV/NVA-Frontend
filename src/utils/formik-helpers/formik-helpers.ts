@@ -451,6 +451,7 @@ const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): Formi
   associatedArtifacts: associatedArtifacts.map((artifact) => {
     if (associatedArtifactIsFile(artifact)) {
       const touched: FormikTouched<AssociatedFile> = {
+        type: true,
         publisherVersion: true,
         embargoDate: true,
         license: true,

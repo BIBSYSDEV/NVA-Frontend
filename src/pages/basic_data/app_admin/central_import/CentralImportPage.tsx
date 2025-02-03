@@ -44,36 +44,36 @@ export const CentralImportPage = () => {
       </Helmet>
       <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 
-      {importCandidateQuery.isPending ? (
-        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : searchResults.length > 0 ? (
-        <ListPagination
-          count={importCandidateQuery.data?.totalHits ?? 0}
-          rowsPerPage={importCandidateParams.size}
-          page={Math.floor(importCandidateParams.from / importCandidateParams.size) + 1}
-          onPageChange={(newPage) =>
-            updatePath(((newPage - 1) * importCandidateParams.size).toString(), importCandidateParams.size.toString())
-          }
-          onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
-          showPaginationTop
-          sortingComponent={
-            <SortSelector
-              sortKey={ImportCandidatesSearchParam.SortOrder}
-              orderKey={ImportCandidatesSearchParam.OrderBy}
-              paginationKey={ImportCandidatesSearchParam.From}
-              aria-label={t('search.sort_by')}
-              size="small"
-              variant="standard"
-              options={[
-                {
-                  orderBy: 'createdDate',
-                  sortOrder: 'desc',
-                  i18nKey: 'basic_data.central_import.sort_newest_first',
-                },
-                { orderBy: 'createdDate', sortOrder: 'asc', i18nKey: 'basic_data.central_import.sort_oldest_first' },
-              ]}
-            />
-          }>
+      <ListPagination
+        count={importCandidateQuery.data?.totalHits ?? 0}
+        rowsPerPage={importCandidateParams.size}
+        page={Math.floor(importCandidateParams.from / importCandidateParams.size) + 1}
+        onPageChange={(newPage) =>
+          updatePath(((newPage - 1) * importCandidateParams.size).toString(), importCandidateParams.size.toString())
+        }
+        onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
+        showPaginationTop
+        sortingComponent={
+          <SortSelector
+            sortKey={ImportCandidatesSearchParam.SortOrder}
+            orderKey={ImportCandidatesSearchParam.OrderBy}
+            paginationKey={ImportCandidatesSearchParam.From}
+            aria-label={t('search.sort_by')}
+            size="small"
+            variant="standard"
+            options={[
+              {
+                orderBy: 'createdDate',
+                sortOrder: 'desc',
+                i18nKey: 'basic_data.central_import.sort_newest_first',
+              },
+              { orderBy: 'createdDate', sortOrder: 'asc', i18nKey: 'basic_data.central_import.sort_oldest_first' },
+            ]}
+          />
+        }>
+        {importCandidateQuery.isPending ? (
+          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : searchResults.length > 0 ? (
           <List>
             {searchResults.map((importCandidate) => (
               <ErrorBoundary key={importCandidate.id}>
@@ -81,10 +81,10 @@ export const CentralImportPage = () => {
               </ErrorBoundary>
             ))}
           </List>
-        </ListPagination>
-      ) : (
-        <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
-      )}
+        ) : (
+          <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
+        )}
+      </ListPagination>
     </section>
   );
 };

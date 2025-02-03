@@ -32,36 +32,42 @@ export const downloadRegistrationFile = async (registrationIdentifier: string, f
   return downloadFileResponse.data;
 };
 
-export const abortMultipartUpload = async (uploadId: string, key: string) => {
+export const abortMultipartUpload = async (registrationIdentifier: string, uploadId: string, key: string) => {
   const payload = {
     uploadId,
     key,
   };
 
-  const completeResponse = await authenticatedApiRequest<any>({
-    url: FileApiPath.Abort,
+  const abortResponse = await authenticatedApiRequest<any>({
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.Abort}`,
     method: 'POST',
     data: payload,
   });
-  return completeResponse.data;
+  return abortResponse.data;
 };
 
-export const completeMultipartUpload = async (uploadId: string, key: string, parts: AwsS3Part[]) => {
+export const completeMultipartUpload = async (
+  registrationIdentifier: string,
+  uploadId: string,
+  key: string,
+  parts: AwsS3Part[]
+) => {
   const payload = {
+    type: 'InternalCompleteUpload',
     uploadId,
     key,
     parts,
   };
 
   const completeResponse = await authenticatedApiRequest<any>({
-    url: FileApiPath.Complete,
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.Complete}`,
     method: 'POST',
     data: payload,
   });
   return completeResponse.data;
 };
 
-export const createMultipartUpload = async (file: UppyFile<Meta, Body>) => {
+export const createMultipartUpload = async (registrationIdentifier: string, file: UppyFile<Meta, Body>) => {
   const payload = {
     filename: file.name,
     size: file.data.size,
@@ -70,28 +76,34 @@ export const createMultipartUpload = async (file: UppyFile<Meta, Body>) => {
   };
 
   const createResponse = await authenticatedApiRequest<any>({
-    url: FileApiPath.Create,
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.Create}`,
     method: 'POST',
     data: payload,
   });
   return createResponse.data;
 };
 
-export const listParts = async (uploadId: string, key: string) => {
+export const listParts = async (registrationIdentifier: string, uploadId: string, key: string) => {
   const payload = {
     uploadId,
     key,
   };
 
   const listPartsResponse = await authenticatedApiRequest<any>({
-    url: FileApiPath.ListParts,
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.ListParts}`,
     method: 'POST',
     data: payload,
   });
   return listPartsResponse.data;
 };
 
-export const signPart = async (uploadId: string, key: string, number: number, body: Blob) => {
+export const signPart = async (
+  registrationIdentifier: string,
+  uploadId: string,
+  key: string,
+  number: number,
+  body: Blob
+) => {
   const payload = {
     uploadId,
     key,
@@ -100,9 +112,25 @@ export const signPart = async (uploadId: string, key: string, number: number, bo
   };
 
   const prepareResponse = await authenticatedApiRequest<any>({
-    url: FileApiPath.Prepare,
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.Prepare}`,
     method: 'POST',
     data: payload,
   });
   return prepareResponse.data;
+};
+
+export const deleteRegistrationFile = async (registrationIdentifier: string, fileIdentifier: string) => {
+  const deleteResponse = await authenticatedApiRequest2<null>({
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}/file/${fileIdentifier}`,
+    method: 'DELETE',
+  });
+  return deleteResponse.data;
+};
+
+export const deleteImportCandidateFile = async (importCandidateIdentifier: string, fileIdentifier: string) => {
+  const deleteResponse = await authenticatedApiRequest2<null>({
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}/file/${fileIdentifier}`,
+    method: 'DELETE',
+  });
+  return deleteResponse.data;
 };
