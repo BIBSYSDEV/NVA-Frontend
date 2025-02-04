@@ -35,22 +35,22 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
           </Typography>
         </Box>
         <LogDateItem date={new Date(logEntry.timestamp)} />
-      </Box>
 
-      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mt: '0.5rem' }}>
-        <Avatar
-          sx={{
-            height: '1.5rem',
-            width: '1.5rem',
-            fontSize: '0.7rem',
-            bgcolor: 'primary.main',
-          }}>
-          {getInitials(fullName)}
-        </Avatar>
-        <Typography>{fullName}</Typography>
+        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <Avatar
+            sx={{
+              height: '1.5rem',
+              width: '1.5rem',
+              fontSize: '0.7rem',
+              bgcolor: 'primary.main',
+            }}>
+            {getInitials(fullName)}
+          </Avatar>
+          <Typography>{fullName}</Typography>
 
-        <AccountBalanceIcon color="primary" fontSize="small" />
-        <Typography>{logEntry.performedBy.onBehalfOf.displayName}</Typography>
+          <AccountBalanceIcon color="primary" fontSize="small" />
+          <Typography>{logEntry.performedBy.onBehalfOf.displayName}</Typography>
+        </Box>
       </Box>
 
       {logEntry.type === 'FileLogEntry' ? (
