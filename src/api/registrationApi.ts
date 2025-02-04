@@ -124,67 +124,29 @@ interface BaseLogEntry {
 
 interface PublicationLogEntry extends BaseLogEntry {
   type: 'PublicationLogEntry';
+  topic:
+    | 'PublicationCreated'
+    | 'PublicationPublished'
+    | 'PublicationUnpublished'
+    | 'PublicationDeleted'
+    | 'PublicationRepublished';
 }
 
 interface FileLogEntry extends BaseLogEntry {
   type: 'FileLogEntry';
+  topic: 'FileUploaded' | 'FileApproved' | 'FileRejected' | 'FileDeleted';
   filename: string;
   fileType: FileType;
 }
 
-interface PublicationCreatedLogEntry extends PublicationLogEntry {
-  topic: 'PublicationCreated';
-}
+export type LogEntryType = PublicationLogEntry | FileLogEntry;
 
-interface PublicationPublishedLogEntry extends PublicationLogEntry {
-  topic: 'PublicationPublished';
-}
-
-interface PublicationUnpublishedLogEntry extends PublicationLogEntry {
-  topic: 'PublicationUnpublished';
-}
-
-interface PublicationDeletedLogEntry extends PublicationLogEntry {
-  topic: 'PublicationDeleted';
-}
-
-interface PublicationRepublishedLogEntry extends PublicationLogEntry {
-  topic: 'PublicationRepublished';
-}
-
-interface FileUploadedLogEntry extends FileLogEntry {
-  topic: 'FileUploaded';
-}
-
-interface FileApprovedLogEntry extends FileLogEntry {
-  topic: 'FileApproved';
-}
-
-interface FileRejectedLogEntry extends FileLogEntry {
-  topic: 'FileRejected';
-}
-
-interface FileDeletedLogEntry extends FileLogEntry {
-  topic: 'FileDeleted';
-}
-
-export type LogEntryType =
-  | PublicationCreatedLogEntry
-  | PublicationPublishedLogEntry
-  | PublicationUnpublishedLogEntry
-  | PublicationRepublishedLogEntry
-  | PublicationDeletedLogEntry
-  | FileUploadedLogEntry
-  | FileApprovedLogEntry
-  | FileRejectedLogEntry
-  | FileDeletedLogEntry;
-
-interface RegistrationLog {
+interface RegistrationLogResponse {
   logEntries: LogEntryType[];
 }
 
 export const fetchRegistrationLog = async (registrationId: string) => {
-  const fetchRegistrationLogResponse = await authenticatedApiRequest2<RegistrationLog>({
+  const fetchRegistrationLogResponse = await authenticatedApiRequest2<RegistrationLogResponse>({
     url: `${registrationId}/log`,
   });
   return fetchRegistrationLogResponse.data;
