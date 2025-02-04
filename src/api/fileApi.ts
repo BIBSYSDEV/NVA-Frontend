@@ -38,12 +38,12 @@ export const abortMultipartUpload = async (registrationIdentifier: string, uploa
     key,
   };
 
-  const completeResponse = await authenticatedApiRequest<any>({
+  const abortResponse = await authenticatedApiRequest<any>({
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}${FileApiPath.Abort}`,
     method: 'POST',
     data: payload,
   });
-  return completeResponse.data;
+  return abortResponse.data;
 };
 
 export const completeMultipartUpload = async (
@@ -53,6 +53,7 @@ export const completeMultipartUpload = async (
   parts: AwsS3Part[]
 ) => {
   const payload = {
+    type: 'InternalCompleteUpload',
     uploadId,
     key,
     parts,
