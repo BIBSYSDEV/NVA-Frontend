@@ -6,7 +6,6 @@ import { dataTestId as dataTestIdObject } from '../utils/dataTestIds';
 interface ModalProps extends Partial<DialogProps> {
   dataTestId?: string;
   headingText?: string;
-  headingDataTestId?: string;
   onClose?: () => void;
 }
 
