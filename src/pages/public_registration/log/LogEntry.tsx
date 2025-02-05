@@ -4,7 +4,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
-import { Avatar, Box, Divider, Typography } from '@mui/material';
+import { Avatar, Box, Divider, SvgIconProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LogEntryType } from '../../../api/registrationApi';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
@@ -68,22 +68,24 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
   );
 };
 
+const logIconProps: SvgIconProps = { color: 'primary', fontSize: 'small' };
+
 const LogHeaderIcon = ({ topic }: Pick<LogEntryType, 'topic'>) => {
   switch (topic) {
     case 'PublicationCreated':
-      return <AddCircleOutlineIcon color="primary" fontSize="small" />;
+      return <AddCircleOutlineIcon {...logIconProps} />;
     case 'PublicationPublished':
     case 'PublicationRepublished':
-      return <LocalOfferOutlinedIcon color="primary" fontSize="small" />;
+      return <LocalOfferOutlinedIcon {...logIconProps} />;
     case 'FileUploaded':
     case 'FileApproved':
     case 'FileRejected':
-      return <InsertDriveFileOutlinedIcon color="primary" fontSize="small" />;
+      return <InsertDriveFileOutlinedIcon {...logIconProps} />;
     case 'PublicationUnpublished':
-      return <UnpublishedOutlinedIcon color="primary" fontSize="small" />;
+      return <UnpublishedOutlinedIcon {...logIconProps} />;
     case 'PublicationDeleted':
     case 'FileDeleted':
-      return <DeleteOutlinedIcon color="primary" fontSize="small" />;
+      return <DeleteOutlinedIcon {...logIconProps} />;
     default:
       return null;
   }
