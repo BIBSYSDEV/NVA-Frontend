@@ -37,7 +37,7 @@ const MetaDataLastUpdatedEntry = ({ metadataUpdated }: Pick<LogType, 'metadataUp
   );
 };
 
-const ArchivedFilesEntry = ({
+export const ArchivedFilesEntry = ({
   numberOfArchivedFiles,
   numberOfHiddenFiles,
 }: Pick<LogType, 'numberOfArchivedFiles' | 'numberOfHiddenFiles'>) => {
