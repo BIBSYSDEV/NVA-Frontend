@@ -3,7 +3,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { Autocomplete, Box, Button, CircularProgress, Divider, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { getLanguageByIso6393Code } from 'nva-language';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDuplicateRegistrationSearch } from '../../api/hooks/useDuplicateRegistrationSearch';
 import { InputContainerBox } from '../../components/styled/Wrappers';
@@ -22,10 +22,10 @@ import { DuplicateWarning } from './DuplicateWarning';
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
   const { values, setFieldValue } = useFormikContext<Registration>();
-  const [title, setTitle] = useState('');
-  const debouncedTitle = useDebounce(title);
+  const debouncedTitle = useDebounce(values.entityDescription?.mainTitle ?? '');
+
   const { titleSearchPending, duplicateRegistration } = useDuplicateRegistrationSearch({
-    title: debouncedTitle || values.entityDescription?.mainTitle,
+    title: debouncedTitle,
     identifier: values.identifier,
   });
 
@@ -46,10 +46,6 @@ export const DescriptionPanel = () => {
               required
               data-testid={dataTestId.registrationWizard.description.titleField}
               variant="filled"
-              onChange={(event) => {
-                setTitle(event.target.value);
-                field.onChange(event);
-              }}
               fullWidth
               label={t('common.title')}
               error={touched && !!error}
