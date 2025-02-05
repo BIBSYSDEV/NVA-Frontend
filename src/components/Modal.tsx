@@ -1,9 +1,19 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Avatar, AvatarProps, Backdrop, Dialog, DialogProps, DialogTitle } from '@mui/material';
-import { Box, styled as muiStyled } from '@mui/system';
+import {
+  Avatar,
+  AvatarProps,
+  Backdrop,
+  Box,
+  Dialog,
+  DialogProps,
+  DialogTitle,
+  IconButton,
+  styled,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { dataTestId as dataTestIdObject } from '../utils/dataTestIds';
 
-const StyledSpan = muiStyled('span')({
+const StyledSpan = styled('span')({
   gridArea: 'text',
   marginLeft: '1rem',
 });
@@ -44,7 +54,7 @@ export const Modal = ({
         timeout: 500,
       }}
       PaperProps={{ 'aria-labelledby': 'titleId', ...PaperProps }}>
-      <Box sx={{ display: 'grid', pt: '1rem', gridTemplateAreas: "'text cross'", gridTemplateColumns: 'auto 1fr' }}>
+      <Box sx={{ display: 'flex', pt: '1rem', justifyContent: 'space-between' }}>
         <DialogTitle sx={{ gridArea: 'text', padding: 0 }}>
           {headingIcon ? (
             <Box
@@ -75,12 +85,13 @@ export const Modal = ({
             </StyledSpan>
           )}
         </DialogTitle>
-        <CloseIcon
+        <IconButton
+          title={t('common.close')}
           onClick={handleClose}
-          data-testid="close-modal"
-          titleAccess={t('common.close')}
           sx={{ gridArea: 'cross', cursor: 'pointer', mr: '1rem', justifySelf: 'end' }}
-        />
+          data-testid={dataTestIdObject.confirmDialog.cancelButton}>
+          <CloseIcon />
+        </IconButton>
       </Box>
 
       <Box sx={{ p: '1rem' }}>{children}</Box>
