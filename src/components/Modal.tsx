@@ -1,26 +1,16 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { AvatarProps, Backdrop, Box, Dialog, DialogProps, DialogTitle, IconButton } from '@mui/material';
+import { Backdrop, Box, Dialog, DialogProps, DialogTitle, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId as dataTestIdObject } from '../utils/dataTestIds';
 
 interface ModalProps extends Partial<DialogProps> {
   dataTestId?: string;
-  headingIcon?: AvatarProps;
   headingText?: string;
   headingDataTestId?: string;
   onClose?: () => void;
 }
 
-export const Modal = ({
-  children,
-  dataTestId,
-  headingIcon,
-  headingText,
-  onClose,
-  open,
-  PaperProps,
-  ...props
-}: ModalProps) => {
+export const Modal = ({ children, dataTestId, headingText, onClose, open, PaperProps, ...props }: ModalProps) => {
   const { t } = useTranslation();
   const handleClose = () => {
     onClose?.();
