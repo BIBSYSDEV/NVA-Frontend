@@ -255,60 +255,65 @@ export const FilesTableRow = ({
         </VerticalAlignedTableCell>
         {showAllColumns && (
           <>
-            {isOpenableFile && showFileVersion && (
+            {showFileVersion && (
               <VerticalAlignedTableCell>
-                <Field name={publisherVersionFieldName}>
-                  {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
-                    <FormControl data-testid={dataTestId.registrationWizard.files.version} required disabled={disabled}>
-                      <RadioGroup
-                        {...field}
-                        row
-                        sx={{ flexWrap: 'nowrap' }}
-                        onChange={(event) => {
-                          const fileVersion = event.target.value as FileVersion;
-                          setFieldValue(field.name, fileVersion);
+                {isOpenableFile && (
+                  <Field name={publisherVersionFieldName}>
+                    {({ field, meta: { error, touched } }: FieldProps<FileVersion | null>) => (
+                      <FormControl
+                        data-testid={dataTestId.registrationWizard.files.version}
+                        required
+                        disabled={disabled}>
+                        <RadioGroup
+                          {...field}
+                          row
+                          sx={{ flexWrap: 'nowrap' }}
+                          onChange={(event) => {
+                            const fileVersion = event.target.value as FileVersion;
+                            setFieldValue(field.name, fileVersion);
 
-                          if (showRrs) {
-                            if (fileVersion === FileVersion.Published) {
-                              const nullRrsValue: FileRrs = {
-                                type: 'NullRightsRetentionStrategy',
-                                configuredType: rrsStrategy,
-                              };
-                              setFieldValue(rrsFieldName, nullRrsValue);
-                              setFieldValue(licenseFieldName, null);
-                            } else if (isCustomerRrs || isOverridableRrs) {
-                              const customerRrsValue: FileRrs = {
-                                type: 'CustomerRightsRetentionStrategy',
-                                configuredType: rrsStrategy,
-                              };
-                              setFieldValue(rrsFieldName, customerRrsValue);
-                              setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                            if (showRrs) {
+                              if (fileVersion === FileVersion.Published) {
+                                const nullRrsValue: FileRrs = {
+                                  type: 'NullRightsRetentionStrategy',
+                                  configuredType: rrsStrategy,
+                                };
+                                setFieldValue(rrsFieldName, nullRrsValue);
+                                setFieldValue(licenseFieldName, null);
+                              } else if (isCustomerRrs || isOverridableRrs) {
+                                const customerRrsValue: FileRrs = {
+                                  type: 'CustomerRightsRetentionStrategy',
+                                  configuredType: rrsStrategy,
+                                };
+                                setFieldValue(rrsFieldName, customerRrsValue);
+                                setFieldValue(licenseFieldName, LicenseUri.CC_BY_4);
+                              }
                             }
-                          }
-                        }}>
-                        <FormControlLabel
-                          value={FileVersion.Accepted}
-                          control={<Radio />}
-                          label={
-                            <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
-                              {t('registration.files_and_license.accepted_version')}
-                            </Typography>
-                          }
-                        />
-                        <FormControlLabel
-                          value={FileVersion.Published}
-                          control={<Radio />}
-                          label={
-                            <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
-                              {t('registration.files_and_license.published_version')}
-                            </Typography>
-                          }
-                        />
-                      </RadioGroup>
-                      {error && touched && <FormHelperText error>{error}</FormHelperText>}
-                    </FormControl>
-                  )}
-                </Field>
+                          }}>
+                          <FormControlLabel
+                            value={FileVersion.Accepted}
+                            control={<Radio />}
+                            label={
+                              <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
+                                {t('registration.files_and_license.accepted_version')}
+                              </Typography>
+                            }
+                          />
+                          <FormControlLabel
+                            value={FileVersion.Published}
+                            control={<Radio />}
+                            label={
+                              <Typography variant="caption" sx={{ lineHeight: '1.1rem' }}>
+                                {t('registration.files_and_license.published_version')}
+                              </Typography>
+                            }
+                          />
+                        </RadioGroup>
+                        {error && touched && <FormHelperText error>{error}</FormHelperText>}
+                      </FormControl>
+                    )}
+                  </Field>
+                )}
               </VerticalAlignedTableCell>
             )}
             <VerticalAlignedTableCell>
