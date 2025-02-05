@@ -148,11 +148,6 @@
     },
     "person_register": {
       "current_employments": "Current employments",
-      "degree_roles": {
-        "degree": "Student assignment",
-        "degree_tasks": "Specific tasks",
-        "embargo": "Embargo"
-      },
       "edit_person": "Edit person",
       "employee_table_caption": "List of all employees",
       "employment_x_of_y": "Employment {{selected}} of {{total}}",
@@ -522,6 +517,7 @@
       "create_series": "Failed to create series",
       "create_user": "Failed to create person",
       "delete_draft_registrations": "Failed to delete all drafts",
+      "delete_file": "Could not delete file",
       "delete_message": "Could not delete message",
       "delete_registration": "Failed to delete registration",
       "download_file": "Failed to download file",
@@ -604,6 +600,7 @@
       "create_user": "Your user was created",
       "created_customer": "Institution is created",
       "delete_draft_registrations": "All drafts were deleted",
+      "delete_file": "File was deleted",
       "delete_message": "Message deleted",
       "delete_registration": "Deleted registration",
       "doi_request_approved": "The DOI request was approved",
@@ -1429,6 +1426,8 @@
       "add_files_or_links": "Add file or link",
       "availability": "Accessibility",
       "conditions_for_using_file": "Terms of use",
+      "delete_file": "Delete file",
+      "delete_file_description": "Do you wish to delete {{fileName}}? Note that the file will be permanently deleted as soon as you confirm.",
       "disabled_helper_text": "This file is already published with an approved licence. Contact the curator if you wish to edit or delete the file",
       "embargo": "Embargo/delayed publication",
       "file_and_license_info": "Every file in NVA must have a licence, to inform the reader about what they are allowed to do with the content.",
@@ -1465,10 +1464,9 @@
       "published_version": "Published version",
       "registration_with_file": "Result with a file",
       "registration_without_file": "Result without a file",
-      "remove_file": "Remove file",
-      "remove_file_description": "Do you want to remove {{fileName}}?",
       "resource_has_no_files_or_links": "The resource does not have any files or links to publish",
       "resource_is_a_reference": "The resource is a reference and has no files or links to publish",
+      "select_availability": "Select availability",
       "show_all_older_versions": "Show all previous versions",
       "version_accepted_helper_text": "<0>Accepted version</0>: the author's final revised version after the article has been peer-reviewed, as it was sent to the publisher. This version does not have the publisher's page numbers and graphic style, or any editorial rewrites, that the published version has. This version should be shared in NVA, preferably in pdf format, with a CC-BY licence.",
       "version_accepted_helper_text_metadata_only": "<0>Accepted version</0>: the author's last revised version after the article has been peer-reviewed, as sent to the publisher. This version does not have the publisher's page numbers and graphic style, or any editorial rewrites, that the published version has. This version should be shared in NVA, preferably in pdf format, with a CC-BY licence.",
@@ -1570,7 +1568,7 @@
         "duplicate_title_description_introduction": "This registration has the same title and year as this publication:",
         "edit_publishing_request_description": "To change the visibility of one or more files, click on \"$t(registration.edit_registration)\" and select a different status from the dropdown menu under the heading \"$t(registration.files_and_license.availability)\" for the file in question.",
         "files_will_soon_be_published": "The files will be available for others shortly. Wait a bit before you reload the page to see the status.",
-        "fix_validation_errors_before_republishing": "",
+        "fix_validation_errors_before_republishing": "You must fix all validation errors before you can republish.",
         "has_rejected_files_publishing_request": "<0>The files are not deleted but hidden from the result view.</0><0>You will receive a new task if the registrar requests a new assessment of a rejected file or wants to approve a newly uploaded file.</0><0>To delete files permanently, edit the registration and remove the file.</0><0>If you want to unpublish the entire result, open more options at the bottom of this menu.</0>",
         "has_rejected_files_publishing_request_registrator": "<0>The curator has rejected file(s), and they have been removed from the presentation page of the result. You can find the reason for the rejection in the message field of this menu.</0><0>If you wish to delete one or more files, press \"$t(registration.edit_registration)\" and remove the files there.</0><0>If you disagree with the rejection, change the status of the file(s) under \"$t(registration.files_and_license.availability)\" from \"Rejected\" to new status. The file will then be sent to the curator for new approval. Feel free to include a reason for the curator in the message field.</0>",
         "has_reserved_doi": "<0>You can share the reserved DOI with those who will cite the result. Lookup via DOI is not possible until the DOI is assigned by the curator.</0><0>The DOI request is sent to the curator when the result is published. You publish the registration in the publishing menu.</0>",
@@ -1679,9 +1677,7 @@
       "start_with_empty_registration_description": "Enter information later",
       "start_with_empty_registration_title": "Start in a blank registration form",
       "start_with_link_to_resource_description": "Link to the original version if the resource is already published on the Internet",
-      "start_with_link_to_resource_title": "Start with link to original version",
-      "start_with_uploading_file_description": "Upload file if the resource isn't published on the Internet",
-      "start_with_uploading_file_title": "Start by uploading a file"
+      "start_with_link_to_resource_title": "Start with link to original version"
     },
     "registration_id": "Result ID",
     "resource_type": {
