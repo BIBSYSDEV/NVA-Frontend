@@ -119,7 +119,7 @@ interface LogEntryPerformedBy {
 
 interface BaseLogEntry {
   timestamp: string;
-  performedBy: LogEntryPerformedBy;
+  performedBy?: LogEntryPerformedBy;
 }
 
 interface PublicationLogEntry extends BaseLogEntry {
@@ -132,6 +132,16 @@ interface PublicationLogEntry extends BaseLogEntry {
     | 'PublicationRepublished';
 }
 
+interface PublicationImportedLogEntry extends Omit<PublicationLogEntry, 'topic'> {
+  topic: 'PublicationImported';
+  source: {
+    importSource: {
+      archive?: string;
+      source: string;
+    };
+  };
+}
+
 interface FileLogEntry extends BaseLogEntry {
   type: 'FileLogEntry';
   topic: 'FileUploaded' | 'FileApproved' | 'FileRejected' | 'FileDeleted';
@@ -139,7 +149,7 @@ interface FileLogEntry extends BaseLogEntry {
   fileType: FileType;
 }
 
-export type LogEntryType = PublicationLogEntry | FileLogEntry;
+export type LogEntryType = PublicationLogEntry | FileLogEntry | PublicationImportedLogEntry;
 
 interface RegistrationLogResponse {
   logEntries: LogEntryType[];

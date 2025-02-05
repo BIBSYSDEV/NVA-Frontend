@@ -1,5 +1,6 @@
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CloudOutlinedIcon from '@mui/icons-material/CloudOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
@@ -27,12 +28,19 @@ interface LogEntryProps {
 export const LogEntry = ({ logEntry }: LogEntryProps) => {
   const { t } = useTranslation();
 
-  const fullName = getFullName(logEntry.performedBy.givenName, logEntry.performedBy.familyName);
-  const initials = getInitials(fullName);
+  const fullName = logEntry.performedBy
+    ? getFullName(logEntry.performedBy.givenName, logEntry.performedBy.familyName)
+    : '';
 
   return (
     <Box
-      sx={{ display: 'flex', flexDirection: 'column', p: '0.5rem', bgcolor: 'publishingRequest.light', gap: '0.5rem' }}>
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        p: '0.5rem',
+        bgcolor: getLogEntryBackgroundColor(logEntry.topic),
+        gap: '0.5rem',
+      }}>
       <StyledLogRow>
         <LogHeaderIcon topic={logEntry.topic} />
         <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>
@@ -45,15 +53,17 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
       </StyledLogRow>
       <LogDateItem date={new Date(logEntry.timestamp)} />
 
-      <StyledLogRow>
-        <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
-          {initials}
-        </Avatar>
-        <Typography>{fullName}</Typography>
+      {logEntry.performedBy && (
+        <StyledLogRow>
+          <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
+            {getInitials(fullName)}
+          </Avatar>
+          <Typography>{fullName}</Typography>
 
-        <AccountBalanceIcon {...logIconProps} />
-        <Typography>{logEntry.performedBy.onBehalfOf.displayName}</Typography>
-      </StyledLogRow>
+          <AccountBalanceIcon {...logIconProps} />
+          <Typography>{logEntry.performedBy.onBehalfOf.displayName}</Typography>
+        </StyledLogRow>
+      )}
 
       {logEntry.type === 'FileLogEntry' ? (
         <>
@@ -65,9 +75,32 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
             </Typography>
           </StyledLogRow>
         </>
+      ) : logEntry.topic === 'PublicationImported' ? (
+        <>
+          <Divider />
+          <Typography>
+            {logEntry.source.importSource.archive
+              ? t('log.imported_from_source_and_archive', {
+                  source: logEntry.source.importSource.source,
+                  archive: logEntry.source.importSource.archive,
+                })
+              : t('log.imported_from_source', {
+                  source: logEntry.source.importSource.source,
+                })}
+          </Typography>
+        </>
       ) : null}
     </Box>
   );
+};
+
+const getLogEntryBackgroundColor = (topic: LogEntryType['topic']) => {
+  switch (topic) {
+    case 'PublicationImported':
+      return 'centralImport.light';
+    default:
+      return 'publishingRequest.light';
+  }
 };
 
 const LogHeaderIcon = ({ topic }: Pick<LogEntryType, 'topic'>) => {
@@ -86,6 +119,8 @@ const LogHeaderIcon = ({ topic }: Pick<LogEntryType, 'topic'>) => {
     case 'PublicationDeleted':
     case 'FileDeleted':
       return <DeleteOutlinedIcon {...logIconProps} />;
+    case 'PublicationImported':
+      return <CloudOutlinedIcon {...logIconProps} />;
     default:
       return null;
   }
