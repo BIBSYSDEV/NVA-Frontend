@@ -12,6 +12,8 @@ import { FileType } from '../../../types/associatedArtifact.types';
 import { getInitials } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 
+const logIconProps: SvgIconProps = { color: 'primary', fontSize: 'small' };
+
 interface LogEntryProps {
   logEntry: LogEntryType;
 }
@@ -20,44 +22,38 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
   const { t } = useTranslation();
 
   const fullName = getFullName(logEntry.performedBy.givenName, logEntry.performedBy.familyName);
+  const initials = getInitials(fullName);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', p: '0.5rem', bgcolor: 'publishingRequest.light' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          <LogHeaderIcon topic={logEntry.topic} />
-          <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>
-            {logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.OpenFile
-              ? t('log.file_published')
-              : logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.InternalFile
-                ? t('log.file_archived')
-                : t(`log.entry_topic.${logEntry.topic}`, { defaultValue: logEntry.topic })}
-          </Typography>
-        </Box>
-        <LogDateItem date={new Date(logEntry.timestamp)} />
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', p: '0.5rem', bgcolor: 'publishingRequest.light', gap: '0.5rem' }}>
+      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <LogHeaderIcon topic={logEntry.topic} />
+        <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>
+          {logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.OpenFile
+            ? t('log.file_published')
+            : logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.InternalFile
+              ? t('log.file_archived')
+              : t(`log.entry_topic.${logEntry.topic}`, { defaultValue: logEntry.topic })}
+        </Typography>
+      </Box>
+      <LogDateItem date={new Date(logEntry.timestamp)} />
 
-        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          <Avatar
-            sx={{
-              height: '1.5rem',
-              width: '1.5rem',
-              fontSize: '0.7rem',
-              bgcolor: 'primary.main',
-            }}>
-            {getInitials(fullName)}
-          </Avatar>
-          <Typography>{fullName}</Typography>
+      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
+          {initials}
+        </Avatar>
+        <Typography>{fullName}</Typography>
 
-          <AccountBalanceIcon color="primary" fontSize="small" />
-          <Typography>{logEntry.performedBy.onBehalfOf.displayName}</Typography>
-        </Box>
+        <AccountBalanceIcon {...logIconProps} />
+        <Typography>{logEntry.performedBy.onBehalfOf.displayName}</Typography>
       </Box>
 
       {logEntry.type === 'FileLogEntry' ? (
         <>
-          <Divider sx={{ mt: '0.5rem' }} />
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem', mt: '0.5rem' }}>
-            <InsertDriveFileOutlinedIcon color="primary" fontSize="small" />
+          <Divider />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <InsertDriveFileOutlinedIcon {...logIconProps} />
             <Typography sx={{ fontStyle: !logEntry.filename ? 'italic' : '', overflowWrap: 'anywhere' }}>
               {logEntry.filename || t('log.unknown_filename')}
             </Typography>
@@ -67,8 +63,6 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
     </Box>
   );
 };
-
-const logIconProps: SvgIconProps = { color: 'primary', fontSize: 'small' };
 
 const LogHeaderIcon = ({ topic }: Pick<LogEntryType, 'topic'>) => {
   switch (topic) {
