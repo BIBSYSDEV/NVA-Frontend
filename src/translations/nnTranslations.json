@@ -148,11 +148,6 @@
     },
     "person_register": {
       "current_employments": "Noverande tilsetjingar",
-      "degree_roles": {
-        "degree": "Studentoppgåve",
-        "degree_tasks": "Særskilde oppgåver",
-        "embargo": "Embargo"
-      },
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle tilsette",
       "employment_x_of_y": "Tilsetjing {{selected}} av {{total}}",
@@ -522,6 +517,7 @@
       "create_series": "Kunne ikkje opprette serie",
       "create_user": "Kunne ikkje opprette person",
       "delete_draft_registrations": "Kunne ikkje slette alle kladdane",
+      "delete_file": "Kunne ikkje slette fila",
       "delete_message": "Kunne ikkje slette meldinga",
       "delete_registration": "Kunne ikkje slette registrering",
       "download_file": "Kunne ikkje laste ned fil",
@@ -604,6 +600,7 @@
       "create_user": "Din brukar vart oppretta",
       "created_customer": "Institusjon er oppretta",
       "delete_draft_registrations": "Alle kladdane blei sletta",
+      "delete_file": "Fila blei sletta",
       "delete_message": "Meldinga blei sletta",
       "delete_registration": "Registrering vart sletta",
       "doi_request_approved": "DOI-førespurnaden blei godkjent",
@@ -1429,6 +1426,8 @@
       "add_files_or_links": "Legg til fil eller lenkje",
       "availability": "Tilgjengeligheit",
       "conditions_for_using_file": "Vilkår for bruk",
+      "delete_file": "Slett fil",
+      "delete_file_description": "Ønskjer du å slette {{fileName}}? Merk at fila vert sletta for godt med ein gong du bekreftar dette.",
       "disabled_helper_text": "Denne fila er allereie publisert med ein godkjent lisens. Ta kontakt med kurator om du vil endre eller slette fila",
       "embargo": "Embargo/utsett publisering",
       "file_and_license_info": "Kvar fil i NVA må ha ein lisens, slik at lesaren er informert om kva dei har lov å gjere med innhaldet.",
@@ -1465,10 +1464,9 @@
       "published_version": "Publisert versjon",
       "registration_with_file": "Resultat med fil",
       "registration_without_file": "Resultat utan fil",
-      "remove_file": "Fjern fil",
-      "remove_file_description": "Ønskjer du å fjerne {{fileName}}?",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenkjer å publisere",
       "resource_is_a_reference": "Ressursen er ein referanse og har ingen filer eller lenkjer å publisere",
+      "select_availability": "Vel tilgjengelegheit",
       "show_all_older_versions": "Vis alle tidlegare versjonar",
       "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfattaren sin siste gjennomarbeida versjon etter at artikkelen har vore gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikkje forlaget sine sidetal og grafiske stil, eller eventuelle redaksjonelle omskrivingar, som den publiserte versjonen har. Denne versjonen bør delast i NVA, helst i pdf-format, med ein CC-BY-lisens.",
       "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfattaren sin siste gjennomarbeidde versjon etter at artikkelen har vore gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikkje forlaget sine sidetal og grafiske stil, eller eventuelle redaksjonelle omskrivingar, som den publiserte versjonen har. Denne versjonen bør delast i NVA, helst i pdf-format, med ein CC-BY-lisens.",
@@ -1570,7 +1568,7 @@
         "duplicate_title_description_introduction": "Denne registreringa har same tittel og år som fylgjande publikasjon:",
         "edit_publishing_request_description": "For å endre på synlegheita til ein eller fleire filer, trykk på \"$t(registration.edit_registration)\" og velg ein annan status i rullegardinmenyen under overskrifta \"$t(registration.files_and_license.availability)\" til fila det gjeld.",
         "files_will_soon_be_published": "Fil(er) vil vere tiljengeleg for andre om kort tid. Vent litt før du oppdaterer sida på nytt for å sjå status.",
-        "fix_validation_errors_before_republishing": "",
+        "fix_validation_errors_before_republishing": "Du må rette opp alle valideringsfeil før du kan republisere.",
         "has_rejected_files_publishing_request": "<0>Filene er ikkje sletta, men skjulte frå resultatvising.</0><0>Du vil få ei ny oppgåve om registratoren ber om ei ny vurdering av ei avvist fil, eller ønskjer å godkjenne ei nyleg opplasta fil.</0><0>For å slette filer permanent, rediger registreringa og fjern fila.</0><0>Om du vil avpublisere heile resultatet, opne fleire alternativ i botnen av denne menyen.</0>",
         "has_rejected_files_publishing_request_registrator": "<0>Kurator har avvist fil(er), og dei er fjerna frå presentasjonssida til resultatet. Du finn grunngjevinga for avvisinga under meldingsfeltet i denne menyen.</0><0>Ynskjer du å slette ein eller fleire filer, trykk på \"$t(registration.edit_registration)\" og fjern filene der.</0><0>Er du ueinig i avvisinga, endre status for filen(e) under \"$t(registration.files_and_license.availability)\" frå \"Avvist\" til ny status. Fila blir då sendt til kurator for ny godkjenning. Legg gjerne inn ein grunngjeving til kurator i meldingsfeltet.</0>",
         "has_reserved_doi": "<0>Du kan dele reservert DOI med dei som skal sitere resultatet. Oppslag via DOI er ikkje mogleg før DOI er tildelt av kurator.</0><0>DOI-førespurnaden blir sendt til kurator når resultatet blir publisert. Du publiserer registreringa i publiseringsmenyen.</0>",
@@ -1679,9 +1677,7 @@
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
       "start_with_link_to_resource_description": "Lenkje til original versjon viss ressursen allereie er publisert på Internett",
-      "start_with_link_to_resource_title": "Start med lenkje til original versjon",
-      "start_with_uploading_file_description": "Last opp fil viss ressursen ikkje er publisert på Internett",
-      "start_with_uploading_file_title": "Start med å laste opp fil"
+      "start_with_link_to_resource_title": "Start med lenkje til original versjon"
     },
     "registration_id": "Resultat-ID",
     "resource_type": {
