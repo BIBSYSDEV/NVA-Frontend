@@ -5,21 +5,23 @@ import { AssociatedFile, emptyFile } from '../../../types/associatedArtifact.typ
 
 interface FileUploaderProps {
   addFile: (file: AssociatedFile) => void;
-  uppy: Uppy;
+  uppy?: Uppy;
   disabled?: boolean;
 }
 
-export const FileUploader = ({ addFile, uppy, disabled = false }: FileUploaderProps) => {
+type UploadedFile = Pick<
+  AssociatedFile,
+  'type' | 'identifier' | 'name' | 'size' | 'mimeType' | 'rightsRetentionStrategy' | 'uploadDetails'
+>;
+
+export const FileUploader = ({ addFile, uppy, disabled = !uppy }: FileUploaderProps) => {
   useEffect(() => {
     if (uppy && !uppy.opts.meta.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {
+        const uploadedFile = response.body as unknown as UploadedFile;
         const newFile: AssociatedFile = {
           ...emptyFile,
-          identifier: response.uploadURL ?? '', // In reality an ID from completeMultipartUpload endpoint
-          name: file?.name ?? '',
-          mimeType: file?.type ?? '',
-          size: file?.size ?? 0,
-          rightsRetentionStrategy: { type: 'NullRightsRetentionStrategy' },
+          ...uploadedFile,
         };
         addFile(newFile);
       });

@@ -8,13 +8,10 @@ import { User } from '../types/user.types';
 
 export enum SearchParam {
   From = 'from',
-  OrderBy = 'orderBy',
   Query = 'query',
   Results = 'results',
-  SortOrder = 'sortOrder',
   Type = 'type',
   Page = 'page',
-  Name = 'name',
 }
 
 export interface PropertySearch {

@@ -148,11 +148,6 @@
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
-      "degree_roles": {
-        "degree": "Studentoppgave",
-        "degree_tasks": "Særskilte oppgaver",
-        "embargo": "Embargo"
-      },
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
@@ -522,6 +517,7 @@
       "create_series": "Kunne ikke opprette serie",
       "create_user": "Kunne ikke opprette person",
       "delete_draft_registrations": "Kunne ikke slette alle kladdene",
+      "delete_file": "Kunne ikke slette fil",
       "delete_message": "Kunne ikke slette meldingen",
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
@@ -604,6 +600,7 @@
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
       "delete_draft_registrations": "Alle kladdene ble slettet",
+      "delete_file": "Filen ble slettet",
       "delete_message": "Meldingen ble slettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_approved": "DOI-forespørselen ble godkjent",
@@ -889,9 +886,9 @@
       "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
       "support_curator": "Brukerstøttekurator",
       "support_curator_description": "Kan se og behandle brukerstøttehenvendelser.",
-      "thesis_curator": "Studentoppgavekurator",
-      "thesis_curator_description": "Kan opprette og endre studentoppgaver.",
-      "thesis_embargo_curator": "Studentoppgave med embargo-kurator",
+      "thesis_curator": "Studentfilkurator",
+      "thesis_curator_description": "Kan se studentpubliseringsforespørsler og publisere filer.",
+      "thesis_embargo_curator": "Utsatt publiseringsdato",
       "thesis_embargo_curator_description": "Kan se og endre embargofiler på studentoppgaver."
     }
   },
@@ -1429,6 +1426,8 @@
       "add_files_or_links": "Legg til fil eller lenke",
       "availability": "Tilgjengelighet",
       "conditions_for_using_file": "Betingelser for bruk",
+      "delete_file": "Slett fil",
+      "delete_file_description": "Ønsker du å slette {{fileName}}? Merk at fila vil slettes for godt med en gang du bekrefter dette.",
       "disabled_helper_text": "Denne filen er allerede publisert med en godkjent lisens. Ta kontakt med kurator om du vil endre eller slette filen",
       "embargo": "Embargo/utsatt publisering",
       "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
@@ -1465,10 +1464,9 @@
       "published_version": "Publisert versjon",
       "registration_with_file": "Resultat med fil",
       "registration_without_file": "Resultat uten fil",
-      "remove_file": "Fjern fil",
-      "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_is_a_reference": "Ressursen er en referanse og har ingen filer eller lenker å publisere",
+      "select_availability": "Velg tilgjengelighet",
       "show_all_older_versions": "Vis alle tidligere versjoner",
       "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
       "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
@@ -1679,9 +1677,7 @@
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
       "start_with_link_to_resource_description": "Lenke til original versjon hvis ressursen allerede er publisert på Internett",
-      "start_with_link_to_resource_title": "Start med lenke til original versjon",
-      "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett",
-      "start_with_uploading_file_title": "Start med å laste opp fil"
+      "start_with_link_to_resource_title": "Start med lenke til original versjon"
     },
     "registration_id": "Resultat-ID",
     "resource_type": {

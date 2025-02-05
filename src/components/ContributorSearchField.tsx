@@ -66,19 +66,19 @@ export const ContributorSearchField = ({
         slotProps={{ input: { startAdornment: <SearchIcon /> } }}
         sx={{ my: '1rem' }}
       />
-      {personQuery.isFetching ? (
-        <ListSkeleton arrayLength={3} minWidth={100} height={80} />
-      ) : userSearch && personQuery.data && personQuery.data.size > 0 && debouncedSearchTerm ? (
-        <ListPagination
-          count={personQuery.data.size}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={setPage}
-          onRowsPerPageChange={(newRowsPerPage) => {
-            setRowsPerPage(newRowsPerPage);
-            setPage(1);
-          }}
-          showPaginationTop>
+      <ListPagination
+        count={personQuery.data?.size ?? 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={setPage}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}
+        showPaginationTop>
+        {personQuery.isFetching ? (
+          <ListSkeleton arrayLength={3} minWidth={100} height={80} />
+        ) : userSearch && personQuery.data && personQuery.data.size > 0 && debouncedSearchTerm ? (
           <TableContainer component={Paper} sx={{ my: '0.5rem' }} elevation={3}>
             <Table size="medium">
               <caption style={visuallyHidden}>{t('search.persons')}</caption>
@@ -102,10 +102,10 @@ export const ContributorSearchField = ({
               </TableBody>
             </Table>
           </TableContainer>
-        </ListPagination>
-      ) : (
-        debouncedSearchTerm && <Typography>{t('common.no_hits')}</Typography>
-      )}
+        ) : (
+          debouncedSearchTerm && <Typography>{t('common.no_hits')}</Typography>
+        )}
+      </ListPagination>
     </>
   );
 };

@@ -87,6 +87,8 @@ export interface RejectedApproval extends FinalizedApproval {
   reason: string;
 }
 
+type NviAllowedOperation = 'approval/reject-candidate' | 'approval/approve-candidate' | 'approval/reset-approval';
+
 export interface NviCandidate {
   id: string;
   publicationId: string;
@@ -97,6 +99,7 @@ export interface NviCandidate {
     year?: string;
   };
   status?: 'Reported';
+  allowedOperations: NviAllowedOperation[];
 }
 
 export interface Note {

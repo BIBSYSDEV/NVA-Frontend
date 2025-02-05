@@ -60,7 +60,17 @@ export const ListPaginationBottom = ({
         page={page}
         count={pages}
         onChange={(_, newPage) => {
-          scrollToDivRef.current?.scrollIntoView({ behavior: 'auto', block: 'start' });
+          const div = scrollToDivRef.current;
+
+          if (div) {
+            const rect = div.getBoundingClientRect();
+            const divIsVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+
+            if (!divIsVisible) {
+              div.scrollIntoView({ behavior: 'auto', block: 'start' });
+            }
+          }
+
           onPageChange(newPage);
         }}
         renderItem={(item) => (

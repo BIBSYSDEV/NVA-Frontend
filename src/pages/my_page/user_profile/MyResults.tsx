@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchPromotedPublicationsById } from '../../../api/preferencesApi';
-import { FetchResultsParams, fetchResults } from '../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SortSelectorWithoutParams } from '../../../components/SortSelectorWithoutParams';
@@ -55,35 +55,35 @@ export const MyResults = () => {
       <Typography variant="h2" gutterBottom>
         {t('my_page.my_profile.my_research_results')}
       </Typography>
-      {registrationsQuery.isPending ? (
-        <ListSkeleton minWidth={100} height={100} />
-      ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
-        <ListPagination
-          paginationAriaLabel={t('common.pagination_project_search')}
-          count={registrationsQuery.data.totalHits}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={(newPage) => setPage(newPage)}
-          onRowsPerPageChange={(newRowsPerPage) => {
-            setRowsPerPage(newRowsPerPage);
-            setPage(1);
-          }}
-          sortingComponent={
-            <SortSelectorWithoutParams
-              options={registrationSortOptions}
-              value={registrationSort}
-              setValue={(value) => setRegistrationSort(value)}
-            />
-          }>
+      <ListPagination
+        paginationAriaLabel={t('common.pagination_project_search')}
+        count={registrationsQuery.data?.totalHits ?? 0}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}
+        sortingComponent={
+          <SortSelectorWithoutParams
+            options={registrationSortOptions}
+            value={registrationSort}
+            setValue={(value) => setRegistrationSort(value)}
+          />
+        }>
+        {registrationsQuery.isPending ? (
+          <ListSkeleton minWidth={100} height={100} />
+        ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <RegistrationSearchResults
             canEditRegistration
             searchResult={registrationsQuery.data.hits}
             promotedPublications={promotedPublications}
           />
-        </ListPagination>
-      ) : (
-        <Typography>{t('common.no_hits')}</Typography>
-      )}
+        ) : (
+          <Typography>{t('common.no_hits')}</Typography>
+        )}
+      </ListPagination>
     </div>
   );
 };

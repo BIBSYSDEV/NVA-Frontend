@@ -34,8 +34,17 @@ export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }:
             const role = event.target.value as RoleName;
             const roleExists = roles.includes(role);
             if (roleExists) {
-              updateRoles(roles.filter((selectedRole) => selectedRole !== role));
+              if (role === RoleName.CuratorThesis) {
+                updateRoles(
+                  roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
+                );
+              } else {
+                updateRoles(roles.filter((selectedRole) => selectedRole !== role));
+              }
             } else {
+              if (role === RoleName.CuratorThesisEmbargo) {
+                roles.push(RoleName.CuratorThesis);
+              }
               updateRoles([...roles, role]);
             }
           }}
@@ -84,6 +93,30 @@ export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }:
                 <RoleLabel
                   title={t('my_page.roles.nvi_curator')}
                   description={t('my_page.roles.nvi_curator_description')}
+                />
+              }
+            />
+            <FormControlLabel
+              control={<Checkbox checked={roles.includes(RoleName.CuratorThesis)} value={RoleName.CuratorThesis} />}
+              label={
+                <RoleLabel
+                  title={t('my_page.roles.thesis_curator')}
+                  description={t('my_page.roles.thesis_curator_description')}
+                />
+              }
+            />
+            <FormControlLabel
+              sx={{ ml: '1rem' }}
+              control={
+                <Checkbox
+                  checked={roles.includes(RoleName.CuratorThesisEmbargo)}
+                  value={RoleName.CuratorThesisEmbargo}
+                />
+              }
+              label={
+                <RoleLabel
+                  title={t('my_page.roles.thesis_embargo_curator')}
+                  description={t('my_page.roles.thesis_embargo_curator_description')}
                 />
               }
             />
