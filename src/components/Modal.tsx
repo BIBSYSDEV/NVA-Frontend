@@ -38,7 +38,7 @@ export const Modal = ({
         timeout: 500,
       }}
       PaperProps={{ 'aria-labelledby': 'titleId', ...PaperProps }}>
-      <Box sx={{ display: 'flex', pt: '1rem', justifyContent: 'space-between', mx: '1rem' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '1rem', mx: '1rem' }}>
         <DialogTitle id="titleId" sx={{ padding: 0 }}>
           {headingText}
         </DialogTitle>
@@ -50,7 +50,7 @@ export const Modal = ({
         </IconButton>
       </Box>
 
-      <Box sx={{ p: '1rem' }}>{children}</Box>
+      <Box sx={{ m: '1rem' }}>{children}</Box>
     </Dialog>
   );
 };
