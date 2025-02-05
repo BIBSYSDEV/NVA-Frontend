@@ -34,8 +34,17 @@ export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }:
             const role = event.target.value as RoleName;
             const roleExists = roles.includes(role);
             if (roleExists) {
-              updateRoles(roles.filter((selectedRole) => selectedRole !== role));
+              if (role === RoleName.CuratorThesis) {
+                updateRoles(
+                  roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
+                );
+              } else {
+                updateRoles(roles.filter((selectedRole) => selectedRole !== role));
+              }
             } else {
+              if (role === RoleName.CuratorThesisEmbargo) {
+                roles.push(RoleName.CuratorThesis);
+              }
               updateRoles([...roles, role]);
             }
           }}
@@ -98,7 +107,6 @@ export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }:
             />
             <FormControlLabel
               sx={{ ml: '1rem' }}
-              disabled={!roles.includes(RoleName.CuratorThesis) || disabled}
               control={
                 <Checkbox
                   checked={roles.includes(RoleName.CuratorThesisEmbargo)}
