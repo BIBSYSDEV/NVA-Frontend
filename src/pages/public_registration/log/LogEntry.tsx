@@ -4,7 +4,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import UnpublishedOutlinedIcon from '@mui/icons-material/UnpublishedOutlined';
-import { Avatar, Box, Divider, SvgIconProps, Typography } from '@mui/material';
+import { Avatar, Box, Divider, styled, SvgIconProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { LogEntryType } from '../../../api/registrationApi';
 import { LogDateItem } from '../../../components/Log/LogDateItem';
@@ -13,6 +13,12 @@ import { getInitials } from '../../../utils/general-helpers';
 import { getFullName } from '../../../utils/user-helpers';
 
 const logIconProps: SvgIconProps = { color: 'primary', fontSize: 'small' };
+
+const StyledLogRow = styled(Box)({
+  display: 'flex',
+  gap: '0.5rem',
+  alignItems: 'center',
+});
 
 interface LogEntryProps {
   logEntry: LogEntryType;
@@ -27,7 +33,7 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
   return (
     <Box
       sx={{ display: 'flex', flexDirection: 'column', p: '0.5rem', bgcolor: 'publishingRequest.light', gap: '0.5rem' }}>
-      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+      <StyledLogRow>
         <LogHeaderIcon topic={logEntry.topic} />
         <Typography sx={{ fontWeight: 900, fontSize: '1rem' }}>
           {logEntry.topic === 'FileApproved' && logEntry.fileType === FileType.OpenFile
@@ -36,10 +42,10 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
               ? t('log.file_archived')
               : t(`log.entry_topic.${logEntry.topic}`, { defaultValue: logEntry.topic })}
         </Typography>
-      </Box>
+      </StyledLogRow>
       <LogDateItem date={new Date(logEntry.timestamp)} />
 
-      <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+      <StyledLogRow>
         <Avatar sx={{ height: '1.5rem', width: '1.5rem', fontSize: '0.7rem', bgcolor: 'primary.main' }}>
           {initials}
         </Avatar>
@@ -47,17 +53,17 @@ export const LogEntry = ({ logEntry }: LogEntryProps) => {
 
         <AccountBalanceIcon {...logIconProps} />
         <Typography>{logEntry.performedBy.onBehalfOf.displayName}</Typography>
-      </Box>
+      </StyledLogRow>
 
       {logEntry.type === 'FileLogEntry' ? (
         <>
           <Divider />
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <StyledLogRow>
             <InsertDriveFileOutlinedIcon {...logIconProps} />
             <Typography sx={{ fontStyle: !logEntry.filename ? 'italic' : '', overflowWrap: 'anywhere' }}>
               {logEntry.filename || t('log.unknown_filename')}
             </Typography>
-          </Box>
+          </StyledLogRow>
         </>
       ) : null}
     </Box>
