@@ -8,6 +8,7 @@ export const rolesWithAreaOfResponsibility = [
   RoleName.PublishingCurator,
   RoleName.SupportCurator,
   RoleName.NviCurator,
+  RoleName.CuratorThesis,
 ];
 
 interface TasksFormSectionProps extends AreaOfResponsibilityProps {
