@@ -12,7 +12,7 @@ interface LogPanelProps {
   registration: Registration;
 }
 
-export const LogPanel2 = ({ registration }: LogPanelProps) => {
+export const LogPanel = ({ registration }: LogPanelProps) => {
   const { t } = useTranslation();
   const logQuery = useFetchRegistrationLog(registration.id);
 

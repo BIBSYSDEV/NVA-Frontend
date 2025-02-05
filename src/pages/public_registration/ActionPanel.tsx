@@ -10,7 +10,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { userHasAccessRight } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanelContent } from './ActionPanelContent';
-import { LogPanel2 } from './log/LogPanel2';
+import { LogPanel as LogPanel2 } from './log/LogPanel';
 import { LogPanel } from './LogPanel';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
@@ -78,6 +78,8 @@ export const ActionPanel = ({
 
   const [tabValue, setTabValue] = useState(canSeeTasksPanel ? TabValue.Tasks : TabValue.Log);
 
+  const isBeta = localStorage.getItem(LocalStorageKey.Beta) === 'true';
+
   return (
     <Paper
       elevation={0}
@@ -105,7 +107,7 @@ export const ActionPanel = ({
           id="action-panel-tab-1"
           aria-controls="action-panel-tab-panel-1"
         />
-        {localStorage.getItem(LocalStorageKey.Beta) === 'true' && (
+        {isBeta && (
           <Tab
             value={TabValue.Log2}
             label={t('common.log') + 2}
@@ -130,9 +132,11 @@ export const ActionPanel = ({
       <TabPanel tabValue={tabValue} index={1}>
         <LogPanel tickets={tickets} registration={registration} />
       </TabPanel>
-      <TabPanel tabValue={tabValue} index={2}>
-        <LogPanel2 registration={registration} />
-      </TabPanel>
+      {isBeta && (
+        <TabPanel tabValue={tabValue} index={2}>
+          <LogPanel2 registration={registration} />
+        </TabPanel>
+      )}
     </Paper>
   );
 };
