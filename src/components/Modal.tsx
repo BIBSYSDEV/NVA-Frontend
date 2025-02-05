@@ -1,22 +1,7 @@
 import CloseIcon from '@mui/icons-material/Close';
-import {
-  Avatar,
-  AvatarProps,
-  Backdrop,
-  Box,
-  Dialog,
-  DialogProps,
-  DialogTitle,
-  IconButton,
-  styled,
-} from '@mui/material';
+import { AvatarProps, Backdrop, Box, Dialog, DialogProps, DialogTitle, IconButton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { dataTestId as dataTestIdObject } from '../utils/dataTestIds';
-
-const StyledSpan = styled('span')({
-  gridArea: 'text',
-  marginLeft: '1rem',
-});
 
 interface ModalProps extends Partial<DialogProps> {
   dataTestId?: string;
@@ -31,7 +16,6 @@ export const Modal = ({
   dataTestId,
   headingIcon,
   headingText,
-  headingDataTestId,
   onClose,
   open,
   PaperProps,
@@ -54,41 +38,13 @@ export const Modal = ({
         timeout: 500,
       }}
       PaperProps={{ 'aria-labelledby': 'titleId', ...PaperProps }}>
-      <Box sx={{ display: 'flex', pt: '1rem', justifyContent: 'space-between' }}>
-        <DialogTitle sx={{ gridArea: 'text', padding: 0 }}>
-          {headingIcon ? (
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateAreas: { xs: "'text'", sm: "'avatar text'" },
-                gridTemplateColumns: { xs: '1fr', sm: '1fr 7fr' },
-                alignItems: 'center',
-              }}>
-              {headingIcon && (
-                <Avatar
-                  src={headingIcon.src}
-                  alt={headingIcon.alt}
-                  sx={{
-                    gridArea: 'avatar',
-                    ml: '1rem',
-                    display: { xs: 'none', sm: 'block' },
-                  }}
-                />
-              )}
-              <StyledSpan id="titleId" data-testid={headingDataTestId}>
-                {headingText}
-              </StyledSpan>
-            </Box>
-          ) : (
-            <StyledSpan id="titleId" data-testid={headingDataTestId}>
-              {headingText}
-            </StyledSpan>
-          )}
+      <Box sx={{ display: 'flex', pt: '1rem', justifyContent: 'space-between', mx: '1rem' }}>
+        <DialogTitle id="titleId" sx={{ padding: 0 }}>
+          {headingText}
         </DialogTitle>
         <IconButton
           title={t('common.close')}
           onClick={handleClose}
-          sx={{ gridArea: 'cross', cursor: 'pointer', mr: '1rem', justifySelf: 'end' }}
           data-testid={dataTestIdObject.confirmDialog.cancelButton}>
           <CloseIcon />
         </IconButton>
