@@ -8,6 +8,8 @@ import nviReportThumbnail from '../../resources/images/nvi-report-thumbnail.png'
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ReportButton } from './ReportButton';
 
+const headingId = 'reports-page-heading';
+
 const ReportsPage = () => {
   const { t } = useTranslation();
 
@@ -17,12 +19,12 @@ const ReportsPage = () => {
         <title>{t('search.reports.reports')}</title>
       </Helmet>
 
-      <Typography variant="h1" sx={visuallyHidden}>
+      <Typography id={headingId} variant="h1" sx={visuallyHidden}>
         {t('search.reports.reports')}
       </Typography>
       <Box
         component="nav"
-        aria-label={t('search.reports.reports_navigation')}
+        aria-labelledby={headingId}
         sx={{
           display: 'flex',
           gap: '1rem',
