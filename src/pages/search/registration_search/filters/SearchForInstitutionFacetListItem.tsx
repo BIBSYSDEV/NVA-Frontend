@@ -39,9 +39,13 @@ export const SearchForInstitutionFacetListItem = ({ onSelectInstitution }: Searc
         getOptionLabel={(option) => getLanguageString(option.labels)}
         getOptionKey={(option) => option.id}
         filterOptions={(options) => options}
-        onInputChange={(_, value) => setSearchQuery(value)}
-        onChange={(event, selectedInstitution) => {
-          event.preventDefault();
+        inputValue={searchQuery}
+        onInputChange={(_, value, reason) => {
+          if (reason !== 'blur' && reason !== 'reset') {
+            setSearchQuery(value);
+          }
+        }}
+        onChange={(_, selectedInstitution) => {
           if (selectedInstitution) {
             onSelectInstitution(selectedInstitution.id);
           }
@@ -55,7 +59,6 @@ export const SearchForInstitutionFacetListItem = ({ onSelectInstitution }: Searc
           <AutocompleteTextField
             {...params}
             variant="outlined"
-            value={null}
             isLoading={institutionSearchQuery.isLoading}
             data-testid={dataTestId.organization.searchField}
             placeholder={t('project.search_for_institution')}
