@@ -221,7 +221,7 @@ export const RegistrationFormActions = ({
         onClose={toggleSupportModal}
         headingText={t('registration.support.need_help')}
         dataTestId={dataTestId.registrationWizard.formActions.supportModal}
-        PaperProps={{ sx: { bgcolor: 'generalSupportCase.light', padding: '1rem' } }}>
+        slotProps={{ paper: { sx: { bgcolor: 'generalSupportCase.light' } } }}>
         <SupportModalContent closeModal={toggleSupportModal} registration={values} />
       </Modal>
 
