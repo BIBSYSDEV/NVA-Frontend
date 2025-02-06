@@ -19,7 +19,7 @@ interface SearchForInstitutionFacetRowProps {
 
 const defaultOrganizationSearchSize = 10;
 
-export const SearchForInstitutionFacetListItem = ({ onSelectInstitution }: SearchForInstitutionFacetRowProps) => {
+export const SearchForInstitutionFacetItem = ({ onSelectInstitution }: SearchForInstitutionFacetRowProps) => {
   const { t } = useTranslation();
 
   const [searchQuery, setSearchQuery] = useState('');
