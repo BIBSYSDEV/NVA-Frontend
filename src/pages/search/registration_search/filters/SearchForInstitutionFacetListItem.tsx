@@ -61,6 +61,7 @@ export const SearchForInstitutionFacetListItem = ({ onSelectInstitution }: Searc
             variant="outlined"
             isLoading={institutionSearchQuery.isLoading}
             data-testid={dataTestId.organization.searchField}
+            aria-label={t('project.search_for_institution')}
             placeholder={t('project.search_for_institution')}
             showSearchIcon
           />
