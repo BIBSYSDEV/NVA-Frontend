@@ -33,19 +33,21 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const addFacetFilter = (param: string, key: string) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     const currentValues = syncedParams.get(param)?.split(',') ?? [];
-    if (currentValues.length === 0) {
+    if (currentValues.includes(key)) {
+      return;
+    } else if (currentValues.length === 0) {
       syncedParams.set(param, key);
     } else {
       syncedParams.set(param, [...currentValues, key].join(','));
     }
-    syncedParams.set(ResultParam.From, '0');
+    syncedParams.delete(ResultParam.From);
     navigate({ search: syncedParams.toString() });
   };
 
   const removeFacetFilter = (param: string, key: string) => {
     const syncedParams = syncParamsWithSearchFields(searchParams);
     const newSearchParams = removeSearchParamValue(syncedParams, param, key);
-    newSearchParams.set(ResultParam.From, '0');
+    newSearchParams.delete(ResultParam.From);
     navigate({ search: newSearchParams.toString() });
   };
 
