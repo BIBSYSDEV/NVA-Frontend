@@ -9,6 +9,7 @@ import {
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { OrganizationRenderOption } from '../../../../components/OrganizationRenderOption';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
@@ -47,7 +48,7 @@ export const SearchForInstitutionFacetListItem = ({ onSelectInstitution }: Searc
         }}
         onChange={(_, selectedInstitution) => {
           if (selectedInstitution) {
-            onSelectInstitution(selectedInstitution.id);
+            onSelectInstitution(getIdentifierFromId(selectedInstitution.id));
           }
           setSearchQuery('');
         }}

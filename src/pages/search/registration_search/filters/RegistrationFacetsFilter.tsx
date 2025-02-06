@@ -61,7 +61,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
@@ -85,21 +84,21 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           />
 
           {topLevelOrganizationFacet.map((facet) => {
-            const isSelected = !!registrationParams.topLevelOrganization?.includes(facet.key);
+            const institutionIdentifier = getIdentifierFromId(facet.key);
+            const isSelected = !!registrationParams.topLevelOrganization?.includes(institutionIdentifier);
 
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
-                dataTestId={dataTestId.aggregations.facetItem(facet.key)}
+                dataTestId={dataTestId.aggregations.facetItem(institutionIdentifier)}
                 isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
-                label={getLanguageString(facet.labels) || getIdentifierFromId(facet.key)}
+                label={getLanguageString(facet.labels) || institutionIdentifier}
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
-                    ? removeFacetFilter(ResultParam.TopLevelOrganization, facet.key)
-                    : addFacetFilter(ResultParam.TopLevelOrganization, facet.key)
+                    ? removeFacetFilter(ResultParam.TopLevelOrganization, institutionIdentifier)
+                    : addFacetFilter(ResultParam.TopLevelOrganization, institutionIdentifier)
                 }
               />
             );
@@ -117,7 +116,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
@@ -142,7 +140,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
@@ -167,7 +164,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
@@ -192,7 +188,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
@@ -217,7 +212,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             return (
               <FacetListItem
                 key={facet.key}
-                identifier={facet.key}
                 dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                 isLoading={registrationQuery.isPending}
                 isSelected={isSelected}
@@ -246,7 +240,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               return (
                 <FacetListItem
                   key={facet.key}
-                  identifier={facet.key}
                   dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                   isLoading={registrationQuery.isPending}
                   isSelected={isSelected}
@@ -276,7 +269,6 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
               return (
                 <FacetListItem
                   key={facet.key}
-                  identifier={facet.key}
                   dataTestId={dataTestId.aggregations.facetItem(facet.key)}
                   isLoading={registrationQuery.isPending}
                   isSelected={isSelected}
