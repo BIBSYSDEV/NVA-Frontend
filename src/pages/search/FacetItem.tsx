@@ -7,12 +7,13 @@ import { useTranslation } from 'react-i18next';
 interface FacetItemProps {
   dataTestId: string;
   title: string;
+  renderCustomSelect?: ReactNode;
   children: ReactNode | ReactNode[];
 }
 
 const itemsToShowByDefault = 3;
 
-export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
+export const FacetItem = ({ title, children, dataTestId, renderCustomSelect }: FacetItemProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'), { noSsr: true });
   const [isOpen, setIsOpen] = useState(!isMobile);
@@ -43,6 +44,7 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
+        {renderCustomSelect}
         {childrenIsList ? (
           <List disablePadding>
             {showAll ? children : children.slice(0, itemsToShowByDefault)}

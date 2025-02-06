@@ -78,11 +78,14 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       {topLevelOrganizationFacet.length > 0 && (
-        <FacetItem title={t('common.institution')} dataTestId={dataTestId.aggregations.institutionFacets}>
-          <SearchForInstitutionFacetListItem
-            onSelectInstitution={(institutionId) => addFacetFilter(ResultParam.TopLevelOrganization, institutionId)}
-          />
-
+        <FacetItem
+          title={t('common.institution')}
+          dataTestId={dataTestId.aggregations.institutionFacets}
+          renderCustomSelect={
+            <SearchForInstitutionFacetListItem
+              onSelectInstitution={(identifier) => addFacetFilter(ResultParam.TopLevelOrganization, identifier)}
+            />
+          }>
           {topLevelOrganizationFacet.map((facet) => {
             const institutionIdentifier = getIdentifierFromId(facet.key);
             const isSelected = !!registrationParams.topLevelOrganization?.includes(institutionIdentifier);

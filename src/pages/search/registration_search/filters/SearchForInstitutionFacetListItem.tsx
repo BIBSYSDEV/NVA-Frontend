@@ -1,4 +1,4 @@
-import { Autocomplete, ListItem } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchForOrganizations } from '../../../../api/hooks/useSearchForOrganizations';
@@ -30,54 +30,53 @@ export const SearchForInstitutionFacetListItem = ({ onSelectInstitution }: Searc
   const options = institutionSearchQuery.data?.hits ?? [];
 
   return (
-    <ListItem sx={{ p: '0.25rem 0.5rem' }}>
-      <Autocomplete
-        fullWidth
-        size="small"
-        options={options}
-        inputMode="search"
-        value={null}
-        getOptionLabel={(option) => getLanguageString(option.labels)}
-        getOptionKey={(option) => option.id}
-        filterOptions={(options) => options}
-        inputValue={searchQuery}
-        onInputChange={(_, value, reason) => {
-          if (reason !== 'blur' && reason !== 'reset') {
-            setSearchQuery(value);
-          }
-        }}
-        onChange={(_, selectedInstitution) => {
-          if (selectedInstitution) {
-            onSelectInstitution(getIdentifierFromId(selectedInstitution.id));
-          }
-          setSearchQuery('');
-        }}
-        loading={institutionSearchQuery.isFetching}
-        renderOption={({ key, ...props }, option) => (
-          <OrganizationRenderOption key={option.id} props={props} option={option} />
-        )}
-        renderInput={(params) => (
-          <AutocompleteTextField
-            {...params}
-            variant="outlined"
-            isLoading={institutionSearchQuery.isLoading}
-            data-testid={dataTestId.organization.searchField}
-            aria-label={t('project.search_for_institution')}
-            placeholder={t('project.search_for_institution')}
-            showSearchIcon
-          />
-        )}
-        slotProps={{
-          listbox: {
-            component: AutocompleteListboxWithExpansion,
-            ...({
-              hasMoreHits: !!institutionSearchQuery.data?.size && institutionSearchQuery.data.size > searchSize,
-              onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
-              isLoadingMoreHits: institutionSearchQuery.isFetching && searchSize > options.length,
-            } satisfies AutocompleteListboxWithExpansionProps),
-          },
-        }}
-      />
-    </ListItem>
+    <Autocomplete
+      fullWidth
+      size="small"
+      sx={{ p: '0.25rem 0.5rem' }}
+      options={options}
+      inputMode="search"
+      value={null}
+      getOptionLabel={(option) => getLanguageString(option.labels)}
+      getOptionKey={(option) => option.id}
+      filterOptions={(options) => options}
+      inputValue={searchQuery}
+      onInputChange={(_, value, reason) => {
+        if (reason !== 'blur' && reason !== 'reset') {
+          setSearchQuery(value);
+        }
+      }}
+      onChange={(_, selectedInstitution) => {
+        if (selectedInstitution) {
+          onSelectInstitution(getIdentifierFromId(selectedInstitution.id));
+        }
+        setSearchQuery('');
+      }}
+      loading={institutionSearchQuery.isFetching}
+      renderOption={({ key, ...props }, option) => (
+        <OrganizationRenderOption key={option.id} props={props} option={option} />
+      )}
+      renderInput={(params) => (
+        <AutocompleteTextField
+          {...params}
+          variant="outlined"
+          isLoading={institutionSearchQuery.isLoading}
+          data-testid={dataTestId.organization.searchField}
+          aria-label={t('project.search_for_institution')}
+          placeholder={t('project.search_for_institution')}
+          showSearchIcon
+        />
+      )}
+      slotProps={{
+        listbox: {
+          component: AutocompleteListboxWithExpansion,
+          ...({
+            hasMoreHits: !!institutionSearchQuery.data?.size && institutionSearchQuery.data.size > searchSize,
+            onShowMoreHits: () => setSearchSize(searchSize + defaultOrganizationSearchSize),
+            isLoadingMoreHits: institutionSearchQuery.isFetching && searchSize > options.length,
+          } satisfies AutocompleteListboxWithExpansionProps),
+        },
+      }}
+    />
   );
 };
